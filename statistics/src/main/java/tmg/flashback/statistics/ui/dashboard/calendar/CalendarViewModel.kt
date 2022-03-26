@@ -3,15 +3,15 @@ package tmg.flashback.statistics.ui.dashboard.calendar
 import androidx.lifecycle.*
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.statistics.repo.OverviewRepository
-import tmg.flashback.statistics.repo.SeasonRepository
-import tmg.flashback.statistics.repository.HomeRepository
 import tmg.flashback.statistics.usecases.DefaultSeasonUseCase
 import tmg.flashback.statistics.usecases.FetchSeasonUseCase
-import tmg.flashback.statistics.usecases.WeekendOverviewUseCase
 
 interface CalendarViewModelInputs {
     fun refresh()
