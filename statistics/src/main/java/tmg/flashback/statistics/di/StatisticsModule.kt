@@ -1,9 +1,12 @@
 package tmg.flashback.statistics.di
 
 import androidx.work.WorkerParameters
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.androidx.workmanager.dsl.worker
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import tmg.flashback.statistics.controllers.HomeController
 import tmg.flashback.statistics.controllers.ScheduleController
@@ -47,9 +50,9 @@ val statisticsModule = repoModule + module {
     viewModel { SearchViewModel(get(), get(), get(), get(), get()) }
     viewModel { CategoryViewModel() }
 
-    viewModel { CalendarViewModel(get(), get()) }
-    viewModel { DriversStandingViewModel() }
-    viewModel { ConstructorsStandingViewModel() }
+    viewModel { CalendarViewModel(get(), get(), get(), get()) }
+    viewModel { DriversStandingViewModel(get(), get(), get()) }
+    viewModel { ConstructorsStandingViewModel(get(), get()) }
     viewModel { WeekendViewModel() }
 
     viewModel { UpNextSettingsViewModel(get()) }
@@ -92,4 +95,8 @@ val statisticsModule = repoModule + module {
         parameters = worker
     ) }
     single { WorkerProvider(androidContext()) }
+
+    // CoroutineDispatcher
+    // TODO: Add qualifiers for this!
+    single { Dispatchers.IO }
 }

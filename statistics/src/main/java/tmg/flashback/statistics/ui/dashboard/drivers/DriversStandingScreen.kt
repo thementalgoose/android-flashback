@@ -8,13 +8,19 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import org.koin.androidx.compose.viewModel
 import org.threeten.bp.LocalDate
 import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.model.OverviewRace
@@ -27,6 +33,7 @@ import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
+import tmg.flashback.style.text.TextTitle
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.progressbar.ProgressBar
 import kotlin.math.roundToInt
@@ -36,9 +43,15 @@ fun DriversStandingScreen(
     season: Int,
     menuClicked: (() -> Unit)?
 ) {
+    val viewModel by viewModel<DriversStandingViewModel>()
+
+    val list = viewModel.outputs.items.observeAsState()
+    val isRefreshing = viewModel.outputs.isRefreshing.observeAsState(false)
     DriversStandingScreenImpl(
         season = season,
-        list = emptyList(),
+        list = list.value ?: emptyList(),
+        isRefreshing = isRefreshing.value,
+        onRefresh = viewModel.inputs::refresh,
         menuClicked = menuClicked
     )
 }
@@ -47,35 +60,41 @@ fun DriversStandingScreen(
 private fun DriversStandingScreenImpl(
     season: Int,
     list: List<SeasonDriverStandingSeason>,
+    isRefreshing: Boolean,
+    onRefresh: () -> Unit,
     menuClicked: (() -> Unit)?
 ) {
-
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(AppTheme.colors.backgroundPrimary),
-        content = {
-            item {
-                Header(
-                    text = stringResource(id = R.string.dashboard_standings_driver, season.toString()),
-                    icon = menuClicked?.let { painterResource(id = R.drawable.ic_menu) },
-                    iconContentDescription = stringResource(id = R.string.ab_menu),
-                    actionUpClicked = {
-                        menuClicked?.invoke()
-                    }
-                )
+    SwipeRefresh(
+        state = rememberSwipeRefreshState(isRefreshing = isRefreshing),
+        onRefresh = onRefresh
+    ) {
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(AppTheme.colors.backgroundPrimary),
+            content = {
+                item {
+                    Header(
+                        text = stringResource(id = R.string.dashboard_standings_driver, season.toString()),
+                        icon = menuClicked?.let { painterResource(id = R.drawable.ic_menu) },
+                        iconContentDescription = stringResource(id = R.string.ab_menu),
+                        actionUpClicked = {
+                            menuClicked?.invoke()
+                        }
+                    )
+                }
+                items(list, key = { it.driver.id }) {
+                    DriverView(
+                        model = it,
+                        itemClicked = { }
+                    )
+                }
+                item {
+                    Spacer(Modifier.height(AppTheme.dimensions.paddingXLarge))
+                }
             }
-            items(list, key = { it.driver.id }) {
-                DriverView(
-                    model = it,
-                    itemClicked = { }
-                )
-            }
-            item {
-                Spacer(Modifier.height(AppTheme.dimensions.paddingXLarge))
-            }
-        }
-    )
+        )
+    }
 }
 
 @Composable
@@ -84,30 +103,47 @@ private fun DriverView(
     itemClicked: (SeasonDriverStandingSeason) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Row(modifier = modifier
-        .clickable(onClick = {
+    Row(
+        modifier = modifier.clickable(onClick = {
             itemClicked(model)
-        })
+        }),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
-        TextBody1(
+        TextTitle(
             text = model.championshipPosition?.toString() ?: "-",
+            bold = true,
+            textAlign = TextAlign.Center,
             modifier = Modifier.width(32.dp)
         )
         Box(modifier = Modifier
-            .size(64.dp)
+            .size(36.dp)
             .clip(RoundedCornerShape(AppTheme.dimensions.radiusSmall))
             .background(AppTheme.colors.primary)
+            .padding(top = AppTheme.dimensions.paddingSmall)
         ) {
 
         }
-        Row {
+        Row(modifier = Modifier.padding(
+            top = AppTheme.dimensions.paddingSmall,
+            start = AppTheme.dimensions.paddingSmall,
+            end = AppTheme.dimensions.paddingMedium,
+            bottom = AppTheme.dimensions.paddingSmall
+        )) {
             Column(modifier = Modifier.weight(2f)) {
-                TextBody1(text = model.driver.name)
-                TextBody2(text = model.constructors.joinToString { it.constructor.name })
+                TextBody1(
+                    text = model.driver.name,
+                    modifier = Modifier.fillMaxWidth()
+                )
+                TextBody2(
+                    text = model.constructors.joinToString { it.constructor.name },
+                    modifier = Modifier.fillMaxWidth()
+                )
             }
+            Spacer(Modifier.width(AppTheme.dimensions.paddingSmall))
             ProgressBar(
-                modifier = Modifier.weight(3f),
+                modifier = Modifier.weight(2f),
                 endProgress = 0.6f,
+                barColor = model.constructors.lastOrNull()?.constructor?.colour ?: AppTheme.colors.primary,
                 label = { it.roundToInt().toString() }
             )
         }
@@ -124,9 +160,9 @@ private fun PreviewLight(
     AppThemePreview(isLight = true) {
         DriversStandingScreenImpl(
             season = 2022,
-            list = listOf(
-                standing
-            ),
+            list = listOf(standing),
+            isRefreshing = false,
+            onRefresh = {},
             menuClicked = {}
         )
     }
@@ -140,9 +176,9 @@ private fun PreviewDark(
     AppThemePreview(isLight = false) {
         DriversStandingScreenImpl(
             season = 2022,
-            list = listOf(
-                standing
-            ),
+            list = listOf(standing),
+            isRefreshing = false,
+            onRefresh = {},
             menuClicked = {}
         )
     }
