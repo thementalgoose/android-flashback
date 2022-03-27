@@ -21,13 +21,14 @@ allprojects {
                         workmanager_ktx                         : "androidx.work:work-runtime-ktx:$android_workmanager"
                 ],
                 compose: [
-                        activity                                : "androidx.activity:activity-compose:1.4.0",
+                        activity                                : "androidx.activity:activity-compose:1.5.0-alpha04",
                         material                                : "androidx.compose.material:material:$android_compose",
                         animation                               : "androidx.compose.animation:animation:$android_compose",
                         tooling                                 : "androidx.compose.ui:ui-tooling:$android_compose",
+                        tooling_preview                         : "androidx.compose.ui:ui-tooling-preview:$android_compose",
                         runtime                                 : "androidx.compose.runtime:runtime-livedata:$android_compose",
                         viewmodel                               : "androidx.lifecycle:lifecycle-viewmodel-compose:$android_lifecycle",
-                        theme_adapter                           : "com.google.android.material:compose-theme-adapter:1.1.5",
+                        theme_adapter                           : "com.google.android.material:compose-theme-adapter:1.1.6",
                 ],
                 accompanist: [
                         swiperefresh                            : "com.google.accompanist:accompanist-swiperefresh:0.24.5-alpha"

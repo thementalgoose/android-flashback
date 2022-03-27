@@ -7,8 +7,8 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.ads.R
 import tmg.flashback.ads.repository.AdsRepository
-import tmg.flashback.testutils.assertExpectedOrder
-import tmg.flashback.testutils.findSwitch
+import tmg.flashback.ads.testutils.assertExpectedOrder
+import tmg.flashback.ads.testutils.findSwitch
 import tmg.testutils.BaseTest
 
 internal class SettingsAdvertViewModelTest: BaseTest() {

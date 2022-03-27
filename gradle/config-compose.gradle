@@ -14,7 +14,8 @@ dependencies {
     implementation deps.compose.activity
     implementation deps.compose.material
     implementation deps.compose.animation
-    implementation deps.compose.tooling
+    debugImplementation deps.compose.tooling
+    implementation deps.compose.tooling_preview
     implementation deps.compose.runtime
     implementation deps.compose.viewmodel
     implementation deps.compose.theme_adapter
@@ -23,4 +24,7 @@ dependencies {
     implementation deps.coil
 
     implementation deps.accompanist.swiperefresh
+
+    debugImplementation project(path: ':test:providers')
+    releaseImplementation project(path: ':test:providers-noop')
 }

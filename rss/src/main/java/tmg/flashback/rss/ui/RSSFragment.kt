@@ -56,7 +56,7 @@ class RSSFragment: BaseFragment() {
                         title = article.title,
                         url = article.link
                     )
-                    findNavController().navigate(action)
+                    findNavController().navigate(action, )
                 }
             }
         )
