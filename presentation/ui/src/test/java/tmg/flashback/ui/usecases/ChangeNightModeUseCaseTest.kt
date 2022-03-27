@@ -1,4 +1,4 @@
-package tmg.flashback.ui2.usecases
+package tmg.flashback.ui.usecases
 
 import androidx.appcompat.app.AppCompatDelegate
 import io.mockk.mockk
