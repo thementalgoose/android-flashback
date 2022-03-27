@@ -62,10 +62,14 @@ private fun DriversStandingScreenImpl(
     season: Int,
     list: List<SeasonDriverStandingSeason>,
     isRefreshing: Boolean,
-    maxPoints: Double = list.maxByOrNull { it.points }?.points ?: 625.0,
     onRefresh: () -> Unit,
     menuClicked: (() -> Unit)?
 ) {
+    var maxPoints: Double = list.maxByOrNull { it.points }?.points ?: 0.0
+    if (maxPoints == 0.0) {
+        maxPoints = 625.0
+    }
+
     SwipeRefresh(
         state = rememberSwipeRefreshState(isRefreshing = isRefreshing),
         onRefresh = onRefresh
@@ -104,8 +108,8 @@ private fun DriversStandingScreenImpl(
 private fun DriverView(
     model: SeasonDriverStandingSeason,
     itemClicked: (SeasonDriverStandingSeason) -> Unit,
+    maxPoints: Double,
     modifier: Modifier = Modifier,
-    maxPoints: Double = 625.0,
 ) {
     Row(
         modifier = modifier.clickable(onClick = {
@@ -117,7 +121,7 @@ private fun DriverView(
             text = model.championshipPosition?.toString() ?: "-",
             bold = true,
             textAlign = TextAlign.Center,
-            modifier = Modifier.width(32.dp)
+            modifier = Modifier.width(42.dp)
         )
         Box(modifier = Modifier
             .size(36.dp)
@@ -134,10 +138,12 @@ private fun DriverView(
             bottom = AppTheme.dimensions.paddingSmall
         )) {
             Column(modifier = Modifier.weight(2f)) {
-                TextBody1(
+                TextTitle(
                     text = model.driver.name,
+                    bold = true,
                     modifier = Modifier.fillMaxWidth()
                 )
+                Spacer(modifier = Modifier.height(2.dp))
                 TextBody2(
                     text = model.constructors.joinToString { it.constructor.name },
                     modifier = Modifier.fillMaxWidth()
@@ -146,11 +152,14 @@ private fun DriverView(
             Spacer(Modifier.width(AppTheme.dimensions.paddingSmall))
             val progress = (model.points / maxPoints).toFloat().coerceIn(0f, 1f)
             ProgressBar(
-                modifier = Modifier.weight(2f),
+                modifier = Modifier
+                    .weight(2f)
+                    .fillMaxHeight(),
                 endProgress = progress,
                 barColor = model.constructors.lastOrNull()?.constructor?.colour ?: AppTheme.colors.primary,
                 label = {
                     when (it) {
+                        0f -> "0"
                         progress -> model.points.pointsDisplay()
                         else -> (it * maxPoints).pointsDisplay()
                     }

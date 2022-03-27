@@ -16,6 +16,7 @@ data class AppDimensions(
     val paddingNSmall: Dp = 12.dp,
     val paddingSmall: Dp = 8.dp,
     val paddingXSmall: Dp = 4.dp,
+    val paddingXXSmall: Dp = 2.dp,
     val toolbarHeight: Dp = 54.dp,
     val toolbarHeightExpanded: Dp = 110.dp
 )
