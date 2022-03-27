@@ -1,16 +1,20 @@
 package tmg.flashback.statistics.ui.dashboard.constructors
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -25,6 +29,7 @@ import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.model.SeasonConstructorStandingSeason
 import tmg.flashback.formula1.model.SeasonConstructorStandingSeasonDriver
 import tmg.flashback.formula1.model.SeasonDriverStandingSeason
+import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.providers.SeasonConstructorStandingSeasonProvider
 import tmg.flashback.statistics.R
 import tmg.flashback.style.AppTheme
@@ -34,6 +39,7 @@ import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextTitle
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.progressbar.ProgressBar
+import tmg.flashback.ui.utils.isInPreview
 import tmg.flashback.ui.utils.pluralResource
 import kotlin.math.roundToInt
 
@@ -62,8 +68,12 @@ private fun ConstructorsStandingScreenImpl(
     isRefreshing: Boolean,
     onRefresh: () -> Unit,
     menuClicked: (() -> Unit)?,
-    maxPoints: Double = list.maxByOrNull { it.points }?.points ?: 625.0,
 ) {
+    var maxPoints: Double = list.maxByOrNull { it.points }?.points ?: 0.0
+    if (maxPoints == 0.0) {
+        maxPoints = 625.0
+    }
+
     SwipeRefresh(
         state = rememberSwipeRefreshState(isRefreshing = isRefreshing),
         onRefresh = onRefresh
@@ -102,8 +112,8 @@ private fun ConstructorsStandingScreenImpl(
 private fun ConstructorView(
     model: SeasonConstructorStandingSeason,
     itemClicked: (SeasonConstructorStandingSeason) -> Unit,
+    maxPoints: Double,
     modifier: Modifier = Modifier,
-    maxPoints: Double = 625.0,
 ) {
     Row(
         modifier = modifier.clickable(onClick = {
@@ -115,7 +125,9 @@ private fun ConstructorView(
             text = model.championshipPosition?.toString() ?: "-",
             bold = true,
             textAlign = TextAlign.Center,
-            modifier = Modifier.width(32.dp)
+            modifier = Modifier
+                .width(42.dp)
+                .fillMaxHeight()
         )
         Row(modifier = Modifier.padding(
             top = AppTheme.dimensions.paddingSmall,
@@ -126,12 +138,12 @@ private fun ConstructorView(
             Column(modifier = Modifier.weight(3f)) {
                 TextTitle(
                     text = model.constructor.name,
+                    bold = true,
                     modifier = Modifier.fillMaxWidth()
                 )
                 Spacer(Modifier.height(2.dp))
                 model.drivers.forEach {
                     DriverPoints(model = it)
-                    Spacer(Modifier.height(2.dp))
                 }
             }
             Spacer(Modifier.width(AppTheme.dimensions.paddingSmall))
@@ -139,11 +151,12 @@ private fun ConstructorView(
             ProgressBar(
                 modifier = Modifier
                     .weight(2f)
-                    .fillMaxHeight(),
+                    .height(IntrinsicSize.Max),
                 endProgress = progress,
                 barColor = model.constructor.colour,
                 label = {
                     when (it) {
+                        0f -> "0"
                         progress -> model.points.pointsDisplay()
                         else -> (it * maxPoints).pointsDisplay()
                     }
@@ -162,11 +175,26 @@ private fun DriverPoints(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically
     ) {
+        val resourceId = when (isInPreview()) {
+            true -> R.drawable.gb
+            false -> LocalContext.current.getFlagResourceAlpha3(model.driver.nationalityISO)
+        }
+
         TextBody2(text = model.driver.name)
-        Box(modifier = Modifier
-            .size(16.dp)
-            .padding(horizontal = AppTheme.dimensions.paddingXSmall)
-        )
+        Column(modifier = Modifier
+            .fillMaxHeight()
+            .padding(
+                vertical = AppTheme.dimensions.paddingXXSmall,
+                horizontal = AppTheme.dimensions.paddingXSmall
+            )
+        ) {
+            Image(
+                modifier = Modifier.size(16.dp),
+                painter = painterResource(id = resourceId),
+                contentDescription = null,
+                contentScale = ContentScale.Fit,
+            )
+        }
         TextBody2(text = pluralResource(R.plurals.race_points, model.points.roundToInt(), model.points.pointsDisplay()))
     }
 }

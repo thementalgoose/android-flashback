@@ -72,40 +72,41 @@ fun ProgressBar(
                 .background(barColor)
         )
 
-        MeasureTextWidth(
-            text = label(endProgress),
-            modifier = Modifier
-                .align(Alignment.CenterStart)
-        ) { textWidth ->
-
-            val onBar = when {
-                maxWidth * progress > ((textPadding * 2) + textWidth) -> true
-                else -> false
-            }
-
-            Text(
-                text = label(progress),
-                style = AppTheme.typography.body1.copy(
-                    color = when (onBar) {
-                        true -> barOnColor
-                        false -> backgroundOnColor
-                    }
-                ),
+            MeasureTextWidth(
+                text = label(endProgress),
                 modifier = Modifier
                     .align(Alignment.CenterStart)
-                    .offset(
-                        x = when (onBar) {
-                            true -> (maxWidth * progress) - (textWidth + textPadding)
-                            false -> (maxWidth * progress) + textPadding
+            ) { textWidth ->
+
+                val onBar = when {
+                    maxWidth * progress > ((textPadding * 2) + textWidth) -> true
+                    else -> false
+                }
+
+                Text(
+                    text = label(progress),
+                    style = AppTheme.typography.body1.copy(
+                        color = when (onBar) {
+                            true -> barOnColor
+                            false -> backgroundOnColor
                         }
-                    )
-            )
+                    ),
+                    modifier = Modifier
+                        .align(Alignment.CenterStart)
+                        .offset(
+                            x = when (onBar) {
+                                true -> (maxWidth * progress) - (textWidth + textPadding)
+                                false -> (maxWidth * progress) + textPadding
+                            }
+                        )
+                )
+            }
+
+            LaunchedEffect(endProgress) {
+                progressState.value = endProgress
+            }
         }
 
-        LaunchedEffect(endProgress) {
-            progressState.value = endProgress
-        }
-    }
 }
 
 @Preview
