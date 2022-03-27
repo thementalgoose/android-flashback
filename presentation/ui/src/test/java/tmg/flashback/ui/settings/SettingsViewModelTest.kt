@@ -1,4 +1,4 @@
-package tmg.flashback.ui2.settings
+package tmg.flashback.ui.settings
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test

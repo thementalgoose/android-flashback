@@ -1,4 +1,4 @@
-package tmg.flashback.ui2.repository
+package tmg.flashback.ui.repository
 
 import androidx.appcompat.app.AppCompatDelegate
 import io.mockk.every

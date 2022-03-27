@@ -1,6 +1,7 @@
 package tmg.flashback.statistics.ui.dashboard.drivers
 
 import android.view.RoundedCorner
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -12,12 +13,15 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import org.koin.androidx.compose.viewModel
@@ -27,6 +31,7 @@ import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.model.SeasonDriverStandingSeason
 import tmg.flashback.formula1.model.SeasonDriverStandingSeasonConstructor
+import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.providers.DriverProvider
 import tmg.flashback.providers.SeasonDriverStandingSeasonProvider
 import tmg.flashback.statistics.R
@@ -37,6 +42,7 @@ import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextTitle
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.progressbar.ProgressBar
+import tmg.flashback.ui.utils.isInPreview
 import kotlin.math.roundToInt
 
 @Composable
@@ -126,10 +132,14 @@ private fun DriverView(
         Box(modifier = Modifier
             .size(36.dp)
             .clip(RoundedCornerShape(AppTheme.dimensions.radiusSmall))
-            .background(AppTheme.colors.primary)
-            .padding(top = AppTheme.dimensions.paddingSmall)
+            .background(AppTheme.colors.backgroundSecondary)
         ) {
-
+            AsyncImage(
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop,
+                model = model.driver.photoUrl ?: R.drawable.unknown_avatar,
+                contentDescription = null
+            )
         }
         Row(modifier = Modifier.padding(
             top = AppTheme.dimensions.paddingSmall,
@@ -144,10 +154,28 @@ private fun DriverView(
                     modifier = Modifier.fillMaxWidth()
                 )
                 Spacer(modifier = Modifier.height(2.dp))
-                TextBody2(
-                    text = model.constructors.joinToString { it.constructor.name },
-                    modifier = Modifier.fillMaxWidth()
-                )
+                Row(modifier = Modifier
+                    .fillMaxHeight()
+                    .padding(
+                        vertical = AppTheme.dimensions.paddingXXSmall,
+                    )
+                ) {
+                    val resourceId = when (isInPreview()) {
+                        true -> R.drawable.gb
+                        false -> LocalContext.current.getFlagResourceAlpha3(model.driver.nationalityISO)
+                    }
+                    Image(
+                        modifier = Modifier.size(16.dp),
+                        painter = painterResource(id = resourceId),
+                        contentDescription = null,
+                        contentScale = ContentScale.Fit,
+                    )
+                    Spacer(Modifier.width(4.dp))
+                    TextBody2(
+                        text = model.constructors.joinToString { it.constructor.name },
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
             }
             Spacer(Modifier.width(AppTheme.dimensions.paddingSmall))
             val progress = (model.points / maxPoints).toFloat().coerceIn(0f, 1f)

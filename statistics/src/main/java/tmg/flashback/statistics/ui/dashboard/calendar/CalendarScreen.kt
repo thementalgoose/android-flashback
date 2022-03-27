@@ -159,7 +159,7 @@ private fun ScheduleView(
                 modifier = Modifier.padding(top = 2.dp)
             )
             TextBody1(
-                text = weekendOverview.date.format("'${weekendOverview.date.dayOfMonth.ordinalAbbreviation}' MMM yyyy") ?: "",
+                text = weekendOverview.date.format("'${weekendOverview.date.dayOfMonth.ordinalAbbreviation}' MMMM") ?: "",
                 modifier = Modifier.padding(top = 2.dp)
             )
         }
