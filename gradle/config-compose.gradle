@@ -26,5 +26,6 @@ dependencies {
     implementation deps.accompanist.swiperefresh
 
     debugImplementation project(path: ':test:providers')
+    debugImplementation project(path: ':test:models')
     releaseImplementation project(path: ':test:providers-noop')
 }
