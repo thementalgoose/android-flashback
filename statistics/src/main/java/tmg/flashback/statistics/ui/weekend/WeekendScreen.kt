@@ -9,13 +9,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.viewModel
-import tmg.flashback.formula1.model.Race
 import tmg.flashback.formula1.model.RaceInfo
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
-import tmg.flashback.providers.RaceProvider
 import tmg.flashback.statistics.R
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
@@ -81,9 +78,9 @@ private fun RaceDetails(
 @Preview
 @Composable
 private fun Preview(
-    @PreviewParameter(RaceProvider::class) race: Race
+//    @PreviewParameter(RaceProvider::class) race: Race
 ) {
     AppThemePreview(isLight = true) {
-        RaceDetails(race.raceInfo)
+//        RaceDetails(race.raceInfo)
     }
 }

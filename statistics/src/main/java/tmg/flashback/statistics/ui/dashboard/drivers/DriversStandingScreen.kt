@@ -1,6 +1,5 @@
 package tmg.flashback.statistics.ui.dashboard.drivers
 
-import android.view.RoundedCorner
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -19,31 +18,22 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import org.koin.androidx.compose.viewModel
-import org.threeten.bp.LocalDate
 import tmg.flashback.formula1.extensions.pointsDisplay
-import tmg.flashback.formula1.model.Driver
-import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.model.SeasonDriverStandingSeason
-import tmg.flashback.formula1.model.SeasonDriverStandingSeasonConstructor
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
-import tmg.flashback.providers.DriverProvider
-import tmg.flashback.providers.SeasonDriverStandingSeasonProvider
 import tmg.flashback.statistics.R
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
-import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextTitle
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.progressbar.ProgressBar
 import tmg.flashback.ui.utils.isInPreview
-import kotlin.math.roundToInt
 
 @Composable
 fun DriversStandingScreen(
@@ -201,12 +191,12 @@ private fun DriverView(
 @Preview
 @Composable
 private fun PreviewLight(
-    @PreviewParameter(SeasonDriverStandingSeasonProvider::class) standing: SeasonDriverStandingSeason
+//    @PreviewParameter(SeasonDriverStandingSeasonProvider::class) standing: SeasonDriverStandingSeason
 ) {
     AppThemePreview(isLight = true) {
         DriversStandingScreenImpl(
             season = 2022,
-            list = listOf(standing),
+            list = listOf(),
             isRefreshing = false,
             onRefresh = {},
             menuClicked = {}
@@ -217,12 +207,12 @@ private fun PreviewLight(
 @Preview
 @Composable
 private fun PreviewDark(
-    @PreviewParameter(SeasonDriverStandingSeasonProvider::class) standing: SeasonDriverStandingSeason
+//    @PreviewParameter(SeasonDriverStandingSeasonProvider::class) standing: SeasonDriverStandingSeason
 ) {
     AppThemePreview(isLight = false) {
         DriversStandingScreenImpl(
             season = 2022,
-            list = listOf(standing),
+            list = listOf(),
             isRefreshing = false,
             onRefresh = {},
             menuClicked = {}

@@ -6,35 +6,27 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import org.koin.androidx.compose.viewModel
 import tmg.flashback.formula1.extensions.pointsDisplay
-import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.model.SeasonConstructorStandingSeason
 import tmg.flashback.formula1.model.SeasonConstructorStandingSeasonDriver
-import tmg.flashback.formula1.model.SeasonDriverStandingSeason
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
-import tmg.flashback.providers.SeasonConstructorStandingSeasonProvider
 import tmg.flashback.statistics.R
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
-import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextTitle
 import tmg.flashback.ui.components.header.Header
@@ -202,12 +194,12 @@ private fun DriverPoints(
 @Preview
 @Composable
 private fun PreviewLight(
-    @PreviewParameter(SeasonConstructorStandingSeasonProvider::class) model: SeasonConstructorStandingSeason
+//    @PreviewParameter(SeasonConstructorStandingSeasonProvider::class) model: SeasonConstructorStandingSeason
 ) {
     AppThemePreview(isLight = true) {
         ConstructorsStandingScreenImpl(
             season = 2022,
-            list = listOf(model),
+            list = listOf(),
             isRefreshing = false,
             onRefresh = {},
             menuClicked = {}
@@ -218,12 +210,12 @@ private fun PreviewLight(
 @Preview
 @Composable
 private fun PreviewDark(
-    @PreviewParameter(SeasonConstructorStandingSeasonProvider::class) model: SeasonConstructorStandingSeason
+//    @PreviewParameter(SeasonConstructorStandingSeasonProvider::class) model: SeasonConstructorStandingSeason
 ) {
     AppThemePreview(isLight = false) {
         ConstructorsStandingScreenImpl(
             season = 2022,
-            list = listOf(model),
+            list = listOf(),
             isRefreshing = false,
             onRefresh = {},
             menuClicked = {}

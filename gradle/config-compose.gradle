@@ -14,6 +14,7 @@ dependencies {
     implementation deps.compose.activity
     implementation deps.compose.material
     implementation deps.compose.animation
+    implementation deps.compose.compiler
     debugImplementation deps.compose.tooling
     implementation deps.compose.tooling_preview
     implementation deps.compose.runtime
@@ -24,8 +25,4 @@ dependencies {
     implementation deps.coil
 
     implementation deps.accompanist.swiperefresh
-
-    debugImplementation project(path: ':test:providers')
-    debugImplementation project(path: ':test:models')
-    releaseImplementation project(path: ':test:providers-noop')
 }

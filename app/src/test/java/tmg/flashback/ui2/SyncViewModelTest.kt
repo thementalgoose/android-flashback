@@ -135,6 +135,8 @@ internal class SyncViewModelTest: BaseTest() {
             mockResetConfigUseCase.ensureReset()
             mockFetchConfigUseCase.fetchAndApply()
         }
+        verify {
+        }
         sut.outputs.loadingState.test {
             assertValue(SyncState.DONE)
         }
@@ -145,8 +147,8 @@ internal class SyncViewModelTest: BaseTest() {
             assertDataEventValue(DASHBOARD)
         }
         verify {
-            mockCacheRepository.initialSync = true
             mockSearchAppShortcutUseCase.setup()
+            mockCacheRepository.initialSync = true
         }
     }
 
@@ -170,6 +172,9 @@ internal class SyncViewModelTest: BaseTest() {
             mockResetConfigUseCase.ensureReset()
             mockFetchConfigUseCase.fetchAndApply()
         }
+        verify {
+            mockSearchAppShortcutUseCase.setup()
+        }
         sut.outputs.loadingState.test {
             assertValue(SyncState.FAILED)
         }
@@ -181,7 +186,6 @@ internal class SyncViewModelTest: BaseTest() {
         }
         verify(exactly = 0) {
             mockCacheRepository.initialSync = true
-            mockSearchAppShortcutUseCase.setup()
         }
     }
 

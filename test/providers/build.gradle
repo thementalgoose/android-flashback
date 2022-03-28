@@ -3,6 +3,9 @@ apply from: rootDir.absolutePath + "/gradle/config-android.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-util.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-junit5.gradle"
 
+ext.no_providers = true
+apply from: rootDir.absolutePath + "/gradle/config-compose.gradle"
+
 android {
     compileSdkVersion project.ext.compileSdkVersion
 
@@ -12,20 +15,9 @@ android {
         versionCode project.ext.versionCode
         versionName project.ext.versionName
     }
-
-    buildFeatures {
-        compose true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion "$android_compose"
-    }
 }
 
 dependencies {
-
-    implementation deps.compose.tooling
-    implementation deps.compose.runtime
 
     implementation project(path: ':formula1')
     implementation project(path: ':test:models')

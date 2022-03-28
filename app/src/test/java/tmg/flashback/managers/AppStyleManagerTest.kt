@@ -87,8 +87,13 @@ internal class AppStyleManagerTest {
 
         every { mockThemeRepository.enableThemePicker } returns true
 
+        val expected = when (theme) {
+            Theme.DEFAULT -> R.style.FlashbackAppTheme_Default
+            Theme.MATERIAL_YOU -> R.style.FlashbackAppTheme_MaterialYou
+        }
+
         initUnderTest()
-        assertEquals(theme.ordinal * nightMode.ordinal, underTest.getStyleResource())
+        assertEquals(expected, underTest.getStyleResource())
     }
 
     private fun mockIsInDayMode(defaultDayModeToo: Boolean) {
