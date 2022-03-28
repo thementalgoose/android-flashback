@@ -14,7 +14,7 @@ object Formula1 {
     /**
      * What season should the API have all the data up too
      */
-    val allDataUpToo: Int = 2021
+    const val allDataUpToo: Int = 2021
 
     /**
      * When did F1 start

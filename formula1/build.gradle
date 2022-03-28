@@ -21,5 +21,7 @@ dependencies {
     api deps.flagkit
     testImplementation project(path: ':test:models')
 
+    implementation project(path: ':presentation:style')
+
     // Test
 }

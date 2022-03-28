@@ -39,7 +39,7 @@ class SettingsAppearanceFragment: SettingsFragment<SettingsAppearanceViewModel>(
     }
 
     companion object {
-        val requestKey: String = "themeKey"
-        val bundleKey: String = "resetApp"
+        const val requestKey: String = "themeKey"
+        const val bundleKey: String = "resetApp"
     }
 }

@@ -24,6 +24,7 @@ allprojects {
                         activity                                : "androidx.activity:activity-compose:1.5.0-alpha04",
                         material                                : "androidx.compose.material:material:$android_compose",
                         animation                               : "androidx.compose.animation:animation:$android_compose",
+                        compiler                                : "androidx.compose.compiler:compiler:$android_compose",
                         tooling                                 : "androidx.compose.ui:ui-tooling:$android_compose",
                         tooling_preview                         : "androidx.compose.ui:ui-tooling-preview:$android_compose",
                         runtime                                 : "androidx.compose.runtime:runtime-livedata:$android_compose",

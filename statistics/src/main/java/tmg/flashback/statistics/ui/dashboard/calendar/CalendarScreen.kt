@@ -14,16 +14,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import org.koin.androidx.compose.viewModel
-import org.threeten.bp.LocalDate
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
-import tmg.flashback.providers.DriverProvider
-import tmg.flashback.providers.OverviewRaceProvider
 import tmg.flashback.statistics.R
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
@@ -169,12 +165,12 @@ private fun ScheduleView(
 @Preview
 @Composable
 private fun PreviewLight(
-    @PreviewParameter(OverviewRaceProvider::class) overviewRace: OverviewRace
+//    @PreviewParameter(OverviewRaceProvider::class) overviewRace: OverviewRace
 ) {
     AppThemePreview(isLight = true) {
         CalendarScreenImpl(
             season = 2022,
-            list = listOf(overviewRace),
+            list = listOf(),
             isRefreshing = false,
             onRefresh = {},
             menuClicked = {}
@@ -185,12 +181,12 @@ private fun PreviewLight(
 @Preview
 @Composable
 private fun PreviewDark(
-    @PreviewParameter(OverviewRaceProvider::class) overviewRace: OverviewRace
+//    @PreviewParameter(OverviewRaceProvider::class) overviewRace: OverviewRace
 ) {
     AppThemePreview(isLight = false) {
         CalendarScreenImpl(
             season = 2022,
-            list = listOf(overviewRace),
+            list = listOf(),
             isRefreshing = false,
             onRefresh = {},
             menuClicked = {}
