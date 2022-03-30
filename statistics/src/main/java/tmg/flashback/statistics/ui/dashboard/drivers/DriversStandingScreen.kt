@@ -18,6 +18,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.google.accompanist.swiperefresh.SwipeRefresh
@@ -26,6 +27,7 @@ import org.koin.androidx.compose.viewModel
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.SeasonDriverStandingSeason
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
+import tmg.flashback.providers.SeasonDriverStandingSeasonProvider
 import tmg.flashback.statistics.R
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
@@ -34,6 +36,7 @@ import tmg.flashback.style.text.TextTitle
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.progressbar.ProgressBar
 import tmg.flashback.ui.utils.isInPreview
+import kotlin.math.roundToInt
 
 @Composable
 fun DriversStandingScreen(
@@ -44,60 +47,57 @@ fun DriversStandingScreen(
 
     val list = viewModel.outputs.items.observeAsState()
     val isRefreshing = viewModel.outputs.isRefreshing.observeAsState(false)
-    DriversStandingScreenImpl(
-        season = season,
-        list = list.value ?: emptyList(),
-        isRefreshing = isRefreshing.value,
-        onRefresh = viewModel.inputs::refresh,
-        menuClicked = menuClicked
-    )
+
+
+    SwipeRefresh(
+        state = rememberSwipeRefreshState(isRefreshing = isRefreshing.value),
+        onRefresh = viewModel.inputs::refresh
+    ) {
+        DriversStandingScreenImpl(
+            season = season,
+            list = list.value ?: emptyList(),
+            menuClicked = menuClicked
+        )
+    }
 }
 
 @Composable
 private fun DriversStandingScreenImpl(
     season: Int,
     list: List<SeasonDriverStandingSeason>,
-    isRefreshing: Boolean,
-    onRefresh: () -> Unit,
     menuClicked: (() -> Unit)?
 ) {
     var maxPoints: Double = list.maxByOrNull { it.points }?.points ?: 0.0
     if (maxPoints == 0.0) {
         maxPoints = 625.0
     }
-
-    SwipeRefresh(
-        state = rememberSwipeRefreshState(isRefreshing = isRefreshing),
-        onRefresh = onRefresh
-    ) {
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(AppTheme.colors.backgroundPrimary),
-            content = {
-                item {
-                    Header(
-                        text = stringResource(id = R.string.dashboard_standings_driver, season.toString()),
-                        icon = menuClicked?.let { painterResource(id = R.drawable.ic_menu) },
-                        iconContentDescription = stringResource(id = R.string.ab_menu),
-                        actionUpClicked = {
-                            menuClicked?.invoke()
-                        }
-                    )
-                }
-                items(list, key = { it.driver.id }) {
-                    DriverView(
-                        model = it,
-                        maxPoints = maxPoints,
-                        itemClicked = { }
-                    )
-                }
-                item {
-                    Spacer(Modifier.height(AppTheme.dimensions.paddingXLarge))
-                }
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(AppTheme.colors.backgroundPrimary),
+        content = {
+            item {
+                Header(
+                    text = stringResource(id = R.string.dashboard_standings_driver, season.toString()),
+                    icon = menuClicked?.let { painterResource(id = R.drawable.ic_menu) },
+                    iconContentDescription = stringResource(id = R.string.ab_menu),
+                    actionUpClicked = {
+                        menuClicked?.invoke()
+                    }
+                )
             }
-        )
-    }
+            items(list, key = { it.driver.id }) {
+                DriverView(
+                    model = it,
+                    maxPoints = maxPoints,
+                    itemClicked = { }
+                )
+            }
+            item {
+                Spacer(Modifier.height(AppTheme.dimensions.paddingXLarge))
+            }
+        }
+    )
 }
 
 @Composable
@@ -179,7 +179,7 @@ private fun DriverView(
                     when (it) {
                         0f -> "0"
                         progress -> model.points.pointsDisplay()
-                        else -> (it * maxPoints).pointsDisplay()
+                        else -> (it * maxPoints).roundToInt().toString()
                     }
                 }
             )
@@ -191,14 +191,12 @@ private fun DriverView(
 @Preview
 @Composable
 private fun PreviewLight(
-//    @PreviewParameter(SeasonDriverStandingSeasonProvider::class) standing: SeasonDriverStandingSeason
+    @PreviewParameter(SeasonDriverStandingSeasonProvider::class) model: SeasonDriverStandingSeason
 ) {
     AppThemePreview(isLight = true) {
         DriversStandingScreenImpl(
             season = 2022,
-            list = listOf(),
-            isRefreshing = false,
-            onRefresh = {},
+            list = List(5) { model.copy(driver = model.driver.copy(id = "$it")) },
             menuClicked = {}
         )
     }
@@ -207,14 +205,12 @@ private fun PreviewLight(
 @Preview
 @Composable
 private fun PreviewDark(
-//    @PreviewParameter(SeasonDriverStandingSeasonProvider::class) standing: SeasonDriverStandingSeason
+    @PreviewParameter(SeasonDriverStandingSeasonProvider::class) model: SeasonDriverStandingSeason
 ) {
     AppThemePreview(isLight = false) {
         DriversStandingScreenImpl(
             season = 2022,
-            list = listOf(),
-            isRefreshing = false,
-            onRefresh = {},
+            list = List(5) { model.copy(driver = model.driver.copy(id = "$it")) },
             menuClicked = {}
         )
     }
