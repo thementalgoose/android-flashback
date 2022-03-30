@@ -3,6 +3,9 @@ package tmg.flashback.ui.dashboard
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import tmg.flashback.formula1.model.OverviewRace
+import tmg.flashback.formula1.model.SeasonConstructorStandings
+import tmg.flashback.formula1.model.SeasonDriverStandings
 import tmg.flashback.statistics.usecases.DefaultSeasonUseCase
 
 //region Inputs
@@ -10,6 +13,10 @@ import tmg.flashback.statistics.usecases.DefaultSeasonUseCase
 interface DashboardViewModelInputs {
     fun clickTab(tab: DashboardNavItem)
     fun clickSeason(season: Int)
+
+    fun clickRace(overviewRace: OverviewRace)
+    fun clickDriver(seasonDriverStanding: SeasonDriverStandings)
+    fun clickConstructor(seasonConstructorStanding: SeasonConstructorStandings)
 }
 
 //endregion
@@ -18,6 +25,8 @@ interface DashboardViewModelInputs {
 
 interface DashboardViewModelOutputs {
     val currentTab: LiveData<DashboardScreenState>
+
+    val subContent: LiveData<SideContentView?>
 }
 
 //endregion
@@ -31,6 +40,7 @@ class DashboardViewModel(
 
     private val defaultTab: DashboardNavItem = DashboardNavItem.CALENDAR
 
+    override val subContent: MutableLiveData<SideContentView> = MutableLiveData()
     override val currentTab: MutableLiveData<DashboardScreenState> = MutableLiveData(DashboardScreenState(
         tab = defaultTab,
         season = defaultSeasonUseCase.defaultSeason
@@ -48,5 +58,17 @@ class DashboardViewModel(
             tab = tab,
             season = currentTab.value?.season ?: defaultSeasonUseCase.defaultSeason
         ))
+    }
+
+    override fun clickRace(overviewRace: OverviewRace) {
+        subContent.value = SideContentView.Race
+    }
+
+    override fun clickConstructor(seasonConstructorStanding: SeasonConstructorStandings) {
+        subContent.value = SideContentView.Constructor
+    }
+
+    override fun clickDriver(seasonDriverStanding: SeasonDriverStandings) {
+        subContent.value = SideContentView.Driver
     }
 }

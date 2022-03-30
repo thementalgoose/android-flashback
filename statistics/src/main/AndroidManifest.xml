@@ -7,10 +7,19 @@
     <application>
 
         <activity
+            android:name=".ui.weekend.WeekendActivity"
+            android:exported="false"
+            android:label=""
+            android:theme="@style/Translucent" />
+
+
+
+        <activity
             android:name=".ui.race.RaceActivity"
             android:exported="false"
             android:label=""
             android:theme="@style/Translucent" />
+
 
         <activity
             android:name=".ui.search.SearchActivity"

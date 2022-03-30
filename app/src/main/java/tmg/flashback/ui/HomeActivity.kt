@@ -43,7 +43,12 @@ class HomeActivity: BaseActivity() {
         if (BuildConfig.DEBUG) {
             setContent {
                 val windowSize = rememberWindowSizeClass()
-                DashboardScreen(windowSize = windowSize)
+                DashboardScreen(
+                    windowSize = windowSize,
+                    contextResolver = {
+                        return@DashboardScreen this@HomeActivity
+                    }
+                )
             }
         } else {
             binding = ActivityDashboardBinding.inflate(layoutInflater)
