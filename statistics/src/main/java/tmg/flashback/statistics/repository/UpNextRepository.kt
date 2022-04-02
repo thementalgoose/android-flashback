@@ -4,6 +4,7 @@ import tmg.flashback.prefs.manager.PreferenceManager
 import tmg.flashback.statistics.repository.models.NotificationReminder
 import tmg.utilities.extensions.toEnum
 
+// TODO: Rename this to NotificationRepository
 class UpNextRepository(
     private val preferenceManager: PreferenceManager
 ) {

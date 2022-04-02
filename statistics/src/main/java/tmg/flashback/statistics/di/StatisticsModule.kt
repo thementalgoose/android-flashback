@@ -32,6 +32,9 @@ import tmg.flashback.statistics.ui.settings.notifications.UpNextSettingsViewMode
 import tmg.flashback.statistics.ui.settings.notifications.reminder.UpNextReminderViewModel
 import tmg.flashback.statistics.ui.settings.statistics.SettingsStatisticsViewModel
 import tmg.flashback.statistics.ui.weekend.WeekendViewModel
+import tmg.flashback.statistics.ui.weekend.qualifying.QualifyingViewModel
+import tmg.flashback.statistics.ui.weekend.schedule.ScheduleViewModel
+import tmg.flashback.statistics.ui.weekend.sprint.SprintViewModel
 import tmg.flashback.statistics.usecases.*
 import tmg.flashback.statistics.workmanager.ContentSyncWorker
 import tmg.flashback.statistics.workmanager.NotificationScheduleWorker
@@ -53,7 +56,12 @@ val statisticsModule = repoModule + module {
     viewModel { CalendarViewModel(get(), get(), get(), get()) }
     viewModel { DriversStandingViewModel(get(), get(), get()) }
     viewModel { ConstructorsStandingViewModel(get(), get()) }
-    viewModel { WeekendViewModel() }
+    viewModel { WeekendViewModel(get()) }
+    viewModel { ScheduleViewModel(get(), get()) }
+    viewModel { SprintViewModel() }
+    viewModel { tmg.flashback.statistics.ui.weekend.race.RaceViewModel() }
+    viewModel { QualifyingViewModel() }
+    viewModel { tmg.flashback.statistics.ui.weekend.constructor.ConstructorViewModel() }
 
     viewModel { UpNextSettingsViewModel(get()) }
     viewModel { OnboardingNotificationViewModel(get()) }

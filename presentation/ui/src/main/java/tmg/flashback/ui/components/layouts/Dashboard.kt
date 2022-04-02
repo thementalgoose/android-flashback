@@ -1,27 +1,24 @@
 package tmg.flashback.ui.components.layouts
 
-import android.graphics.RectF
-import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.slideIn
-import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.material.BottomAppBar
+import androidx.compose.material.BottomNavigationItem
+import androidx.compose.material.Icon
+import androidx.compose.material.Scaffold
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Outline
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -29,9 +26,8 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.LayoutDirection
-import androidx.compose.ui.unit.constrainWidth
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.text.TextBody1
@@ -39,7 +35,8 @@ import tmg.flashback.style.utils.WindowSize
 import tmg.flashback.ui.R
 
 private val sideMenuWidth = 72.dp
-private val expandedContentWidth = 400.dp
+private val expandedContentWidth = 420.dp
+private val expandedSlideInMenuWidth = 400.dp
 
 @Composable
 fun Dashboard(
@@ -105,19 +102,44 @@ fun Dashboard(
                             ) {
                                 VerticalMenuBar(
                                     menuItems = menuItems,
-                                    menuClicked = { showMenu.value = true },
+                                    menuClicked = {
+                                        showMenu.value = !showMenu.value
+                                    },
                                     menuItemClicked = clickMenuItem,
                                     modifier = Modifier.align(Alignment.Center)
                                 )
                             }
-                            Box(
-                                modifier = Modifier
-                                    .weight(1f)
-                                    .fillMaxHeight(),
-                                content = {
-                                    content(null)
+
+                            val menuOffset = animateDpAsState(targetValue = when (showMenu.value) {
+                                false -> 0.dp
+                                true -> expandedSlideInMenuWidth
+                            })
+                            val menuFade = animateFloatAsState(targetValue = when (showMenu.value) {
+                                false -> 1.0f
+                                true -> 0.6f
+                            })
+
+                            Box(modifier = Modifier
+                                .weight(1f)
+                                .fillMaxHeight()
+                            ) {
+                                Box(modifier = Modifier
+                                    .fillMaxHeight()
+                                    .width(expandedSlideInMenuWidth)
+                                ) {
+                                    menuContent()
                                 }
-                            )
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .fillMaxHeight()
+                                        .offset(x = menuOffset.value)
+                                        .alpha(menuFade.value),
+                                    content = {
+                                        content(null)
+                                    }
+                                )
+                            }
                         }
                     }
                     WindowSize.Expanded -> {
@@ -130,22 +152,48 @@ fun Dashboard(
                             ) {
                                 VerticalMenuBar(
                                     menuItems = menuItems,
-                                    menuClicked = { showMenu.value = true },
+                                    menuClicked = { showMenu.value = !showMenu.value },
                                     menuItemClicked = clickMenuItem,
                                     modifier = Modifier.align(Alignment.Center)
                                 )
                             }
-                            Box(modifier = Modifier
-                                .fillMaxHeight()
-                                .width(expandedContentWidth)
-                            ) {
-                                content(null)
-                            }
+
+                            val menuOffset = animateDpAsState(targetValue = when (showMenu.value) {
+                                false -> 0.dp
+                                true -> expandedSlideInMenuWidth
+                            })
+                            val menuFade = animateFloatAsState(targetValue = when (showMenu.value) {
+                                false -> 1.0f
+                                true -> 0.6f
+                            })
+
                             Box(modifier = Modifier
                                 .weight(1f)
                                 .fillMaxHeight()
                             ) {
-                                subContent()
+                                Box(modifier = Modifier
+                                    .fillMaxHeight()
+                                    .width(expandedSlideInMenuWidth)
+                                ) {
+                                    menuContent()
+                                }
+                                Row(modifier = Modifier
+                                    .offset(x = menuOffset.value)
+                                    .alpha(menuFade.value)
+                                ) {
+                                    Box(modifier = Modifier
+                                        .fillMaxHeight()
+                                        .width(expandedContentWidth)
+                                    ) {
+                                        content(null)
+                                    }
+                                    Box(modifier = Modifier
+                                        .weight(1f)
+                                        .fillMaxHeight()
+                                    ) {
+                                        subContent()
+                                    }
+                                }
                             }
                         }
                     }

@@ -10,7 +10,9 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import com.jakewharton.threetenabp.AndroidThreeTen
 import tmg.flashback.style.SupportedTheme.DEFAULT
 
 object AppTheme {
@@ -65,6 +67,7 @@ fun AppThemePreview(
     theme: SupportedTheme = DEFAULT,
     content: @Composable () -> Unit
 ) {
+    AndroidThreeTen.init(LocalContext.current)
     return AppTheme(
         isLight = isLight,
         theme = theme,

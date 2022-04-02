@@ -61,7 +61,7 @@ class DashboardViewModel(
     }
 
     override fun clickRace(overviewRace: OverviewRace) {
-        subContent.value = SideContentView.Race
+        subContent.value = SideContentView.Race(overviewRace)
     }
 
     override fun clickConstructor(seasonConstructorStanding: SeasonConstructorStandings) {
