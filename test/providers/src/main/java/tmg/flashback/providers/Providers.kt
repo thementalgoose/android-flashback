@@ -1,6 +1,8 @@
 package tmg.flashback.providers
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import org.threeten.bp.LocalDate
+import org.threeten.bp.LocalTime
 import tmg.flashback.formula1.model.*
 
 class DriverProvider: PreviewParameterProvider<Driver> {
@@ -33,6 +35,36 @@ class SeasonDriverStandingSeasonProvider: PreviewParameterProvider<SeasonDriverS
 
 class ScheduleProvider: PreviewParameterProvider<Schedule> {
     override val values: Sequence<Schedule> = sequenceOf(Schedule.model())
+}
+
+class ScheduleListProvider: PreviewParameterProvider<List<Schedule>> {
+    override val values: Sequence<List<Schedule>> = sequenceOf(listOf(
+        Schedule.model(
+            label = "FP1",
+            date = LocalDate.of(2022, 1, 1),
+            time = LocalTime.of(10, 0)
+        ),
+        Schedule.model(
+            label = "FP2",
+            date = LocalDate.of(2022, 1, 1),
+            time = LocalTime.of(14, 0)
+        ),
+        Schedule.model(
+            label = "FP3",
+            date = LocalDate.of(2022, 1, 2),
+            time = LocalTime.of(11, 0)
+        ),
+        Schedule.model(
+            label = "Qualifying",
+            date = LocalDate.of(2022, 1, 2),
+            time = LocalTime.of(15, 0)
+        ),
+        Schedule.model(
+            label = "Race",
+            date = LocalDate.of(2022, 1, 3),
+            time = LocalTime.of(15, 0)
+        )
+    ))
 }
 
 class OverviewProvider: PreviewParameterProvider<Overview> {

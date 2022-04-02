@@ -35,6 +35,10 @@ class ScheduleProvider: PreviewParameterProvider<Schedule> {
     override val values: Sequence<Schedule> = sequenceOf()
 }
 
+class ScheduleListProvider: PreviewParameterProvider<List<Schedule>> {
+    override val values: Sequence<List<Schedule>> = sequenceOf()
+}
+
 class OverviewProvider: PreviewParameterProvider<Overview> {
     override val values: Sequence<Overview> = sequenceOf()
 }
@@ -42,3 +46,4 @@ class OverviewProvider: PreviewParameterProvider<Overview> {
 class RaceProvider: PreviewParameterProvider<Race> {
     override val values: Sequence<Race> = sequenceOf()
 }
+

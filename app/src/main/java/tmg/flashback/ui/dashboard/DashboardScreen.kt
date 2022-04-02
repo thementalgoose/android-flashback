@@ -31,7 +31,9 @@ data class DashboardScreenState(
 )
 
 sealed class SideContentView {
-    object Race : SideContentView()
+    data class Race(
+        val overviewRace: OverviewRace
+    ) : SideContentView()
     object Driver : SideContentView()
     object Constructor : SideContentView()
 }
@@ -98,11 +100,14 @@ fun DashboardScreen(
             }
         },
         subContent = {
-            when (subContentState.value) {
+            when (val result = subContentState.value) {
                 SideContentView.Constructor -> {}
                 SideContentView.Driver -> {}
-                SideContentView.Race -> {
-                    WeekendScreen()
+                is SideContentView.Race -> {
+                    WeekendScreen(
+                        model = result.overviewRace,
+                        backClicked = null
+                    )
                 }
                 null -> {
                     Box(contentAlignment = Alignment.Center) {
@@ -115,6 +120,6 @@ fun DashboardScreen(
 }
 
 private fun launchRaceActivity(context: Context, overview: OverviewRace) {
-    val intent = WeekendActivity.intent(context)
+    val intent = WeekendActivity.intent(context, overview)
     startActivity(context, intent, null)
 }
