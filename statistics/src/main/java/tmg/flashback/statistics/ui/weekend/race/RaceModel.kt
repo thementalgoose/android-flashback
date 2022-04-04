@@ -12,5 +12,5 @@ sealed class RaceModel {
 
     data class Result(
         val result: RaceRaceResult
-    )
+    ): RaceModel()
 }

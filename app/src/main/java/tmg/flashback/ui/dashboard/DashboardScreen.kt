@@ -106,6 +106,7 @@ fun DashboardScreen(
                 is SideContentView.Race -> {
                     WeekendScreen(
                         model = result.overviewRace,
+                        isCompact = false,
                         backClicked = null
                     )
                 }

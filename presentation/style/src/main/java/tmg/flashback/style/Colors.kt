@@ -56,7 +56,7 @@ class AppColors(
         primaryVariant = primary,
         secondary = accent,
         secondaryVariant = accent,
-        background = backgroundPrimary,
+        background = backgroundContainer,
         surface = backgroundSecondary,
         error = Color(0xFFCC0000),
         onPrimary = Color(0xFFF8F8F8),

@@ -1,17 +1,12 @@
-package tmg.flashback.ui.components.number
+package tmg.flashback.stats.components
 
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import androidx.compose.ui.unit.sp
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 
@@ -57,17 +52,17 @@ private fun PreviewDark(
     }
 }
 
- class TeamColourProvider: PreviewParameterProvider<Pair<String, Color>> {
+class TeamColourProvider: PreviewParameterProvider<Pair<String, Color>> {
     override val values: Sequence<Pair<String, Color>> = sequenceOf(
         Pair("77", Color(0xFF900000)), // Alfa
-//        Color(0xFF2B4562), // Alpha Tauri
-//        Color(0xFF0090FF), // Alpine
-//        Color(0xFF006F62), // Aston Martin
-//        Color(0xFFDC0000), // Ferrari
-//        Color(0xFFd9d9d9), // Haas
-//        Color(0xFFFF8700), // McLaren
-//        Color(0xFF00D2BE), // Mercedes
-//        Color(0xFF0600EF), // Red Bull
-//        Color(0xFF005AFF), // Williams
+        Pair("10", Color(0xFF2B4562)), // Alpha Tauri
+        Pair("31", Color(0xFF0090FF)), // Alpine
+        Pair("5", Color(0xFF006F62)), // Aston Martin
+        Pair("16", Color(0xFFDC0000)), // Ferrari
+        Pair("8", Color(0xFFd9d9d9)), // Haas
+        Pair("3", Color(0xFFFF8700)), // McLaren
+        Pair("63", Color(0xFF00D2BE)), // Mercedes
+        Pair("33", Color(0xFF0600EF)), // Red Bull
+        Pair("6", Color(0xFF005AFF)), // Williams
     )
 }

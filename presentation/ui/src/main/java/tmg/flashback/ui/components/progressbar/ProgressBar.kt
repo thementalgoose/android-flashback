@@ -27,7 +27,7 @@ fun ProgressBar(
     endProgress: Float,
     label: (Float) -> String,
     modifier: Modifier = Modifier,
-    height: Dp = 36.dp,
+    initialValue: Float = 0f,
     animationDuration: Int = 400,
     textPadding: Dp = AppTheme.dimensions.paddingSmall,
     barColor: Color = AppTheme.colors.primary,
@@ -35,14 +35,12 @@ fun ProgressBar(
     backgroundColor: Color = AppTheme.colors.backgroundPrimary,
     backgroundOnColor: Color = AppTheme.colors.contentPrimary,
 ) {
-
     BoxWithConstraints(
         modifier = modifier
-            .fillMaxWidth()
-            .height(height)
+            .fillMaxSize()
             .clip(RoundedCornerShape(AppTheme.dimensions.radiusSmall))
     ) {
-        val progressState = remember { mutableStateOf(0f) }
+        val progressState = remember { mutableStateOf(initialValue) }
         val progress = animateFloatAsState(
             visibilityThreshold = 0.0f,
             targetValue = progressState.value,
@@ -106,17 +104,19 @@ fun ProgressBar(
                 progressState.value = endProgress
             }
         }
-
 }
 
 @Preview
 @Composable
 private fun Preview10() {
     AppThemePreview(isLight = true) {
-        ProgressBar(
-            endProgress = 0.1f,
-            label = { "$it" }
-        )
+        Box(modifier = Modifier.size(width = 180.dp, height = 40.dp)) {
+            ProgressBar(
+                endProgress = 0.1f,
+                initialValue = 0.1f,
+                label = { "$it" }
+            )
+        }
     }
 }
 
@@ -124,10 +124,13 @@ private fun Preview10() {
 @Composable
 private fun Preview50() {
     AppThemePreview(isLight = true) {
-        ProgressBar(
-            endProgress = 0.5f,
-            label = { "$it" }
-        )
+        Box(modifier = Modifier.size(width = 100.dp, height = 50.dp)) {
+            ProgressBar(
+                endProgress = 0.5f,
+                initialValue = 0.5f,
+                label = { "$it" }
+            )
+        }
     }
 }
 
@@ -136,9 +139,12 @@ private fun Preview50() {
 @Composable
 private fun Preview95() {
     AppThemePreview(isLight = true) {
-        ProgressBar(
-            endProgress = 0.95f,
-            label = { "$it" }
-        )
+        Box(modifier = Modifier.size(width = 100.dp, height = 30.dp)) {
+            ProgressBar(
+                endProgress = 0.95f,
+                initialValue = 0.95f,
+                label = { "$it" }
+            )
+        }
     }
 }

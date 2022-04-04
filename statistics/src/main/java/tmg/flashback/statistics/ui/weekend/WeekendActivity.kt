@@ -23,6 +23,7 @@ class WeekendActivity: BaseActivity() {
                 Scaffold(content = {
                     WeekendScreen(
                         model = content,
+                        isCompact = true,
                         backClicked = {
                             finish()
                         }

@@ -58,10 +58,10 @@ val statisticsModule = repoModule + module {
     viewModel { ConstructorsStandingViewModel(get(), get()) }
     viewModel { WeekendViewModel(get()) }
     viewModel { ScheduleViewModel(get(), get()) }
-    viewModel { SprintViewModel() }
-    viewModel { tmg.flashback.statistics.ui.weekend.race.RaceViewModel() }
-    viewModel { QualifyingViewModel() }
-    viewModel { tmg.flashback.statistics.ui.weekend.constructor.ConstructorViewModel() }
+    viewModel { SprintViewModel(get()) }
+    viewModel { tmg.flashback.statistics.ui.weekend.race.RaceViewModel(get()) }
+    viewModel { QualifyingViewModel(get()) }
+    viewModel { tmg.flashback.statistics.ui.weekend.constructor.ConstructorViewModel(get()) }
 
     viewModel { UpNextSettingsViewModel(get()) }
     viewModel { OnboardingNotificationViewModel(get()) }

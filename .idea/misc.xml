@@ -217,6 +217,43 @@
         <entry key="../../../../layout/compose-model-1648902110893.xml" value="0.1" />
         <entry key="../../../../layout/compose-model-1648913622305.xml" value="0.1" />
         <entry key="../../../../layout/compose-model-1648914034457.xml" value="0.15468227424749165" />
+        <entry key="../../../../layout/compose-model-1648929063124.xml" value="0.375" />
+        <entry key="../../../../layout/compose-model-1648929785599.xml" value="0.125" />
+        <entry key="../../../../layout/compose-model-1648929998545.xml" value="0.375" />
+        <entry key="../../../../layout/compose-model-1648980555391.xml" value="0.25" />
+        <entry key="../../../../layout/compose-model-1648981930254.xml" value="0.1" />
+        <entry key="../../../../layout/compose-model-1648997694938.xml" value="0.1" />
+        <entry key="../../../../layout/compose-model-1648997908645.xml" value="0.25" />
+        <entry key="../../../../layout/compose-model-1648999765761.xml" value="0.5472222222222223" />
+        <entry key="../../../../layout/compose-model-1649000190278.xml" value="0.5" />
+        <entry key="../../../../layout/compose-model-1649001455229.xml" value="0.335" />
+        <entry key="../../../../layout/compose-model-1649002294396.xml" value="0.375" />
+        <entry key="../../../../layout/compose-model-1649004521028.xml" value="0.252904989747095" />
+        <entry key="../../../../layout/compose-model-1649017440920.xml" value="0.125" />
+        <entry key="../../../../layout/compose-model-1649017925453.xml" value="0.165" />
+        <entry key="../../../../layout/compose-model-1649019571799.xml" value="0.15468227424749165" />
+        <entry key="../../../../layout/compose-model-1649019582033.xml" value="1.0" />
+        <entry key="../../../../layout/compose-model-1649019841068.xml" value="0.335" />
+        <entry key="../../../../layout/compose-model-1649019903818.xml" value="0.1" />
+        <entry key="../../../../layout/compose-model-1649023578895.xml" value="0.27043795620437955" />
+        <entry key="../../../../layout/compose-model-1649023614233.xml" value="0.375" />
+        <entry key="../../../../layout/compose-model-1649023614255.xml" value="0.1" />
+        <entry key="../../../../layout/compose-model-1649025568963.xml" value="0.79" />
+        <entry key="../../../../layout/compose-model-1649072064255.xml" value="0.1" />
+        <entry key="../../../../layout/compose-model-1649092049569.xml" value="0.1814814814814815" />
+        <entry key="../../../../layout/compose-model-1649092451863.xml" value="0.625" />
+        <entry key="../../../../layout/compose-model-1649094033602.xml" value="0.335" />
+        <entry key="../../../../layout/compose-model-1649099378241.xml" value="0.75" />
+        <entry key="../../../../layout/compose-model-1649099481593.xml" value="2.0" />
+        <entry key="../../../../layout/compose-model-1649099796101.xml" value="0.5" />
+        <entry key="../../../../layout/compose-model-1649099803242.xml" value="0.512962962962963" />
+        <entry key="../../../../layout/compose-model-1649101146066.xml" value="0.252904989747095" />
+        <entry key="../../../../layout/compose-model-1649101424551.xml" value="0.1" />
+        <entry key="../../../../layout/compose-model-1649101930309.xml" value="0.1" />
+        <entry key="../../../../layout/compose-model-1649102490062.xml" value="0.16712235133287764" />
+        <entry key="../../../../layout/compose-model-1649107786223.xml" value="0.10221571906354515" />
+        <entry key="../../../../layout/compose-model-1649107790988.xml" value="0.8056013179571664" />
+        <entry key="../../../../layout/compose-model-1649109788601.xml" value="0.55" />
         <entry key="../../../../layout/custom_preview.xml" value="0.2989583333333333" />
         <entry key="../../Library/Android/sdk/platforms/android-31/data/res/drawable/progress_indeterminate_anim_large_material.xml" value="0.177" />
         <entry key="ads/src/main/res/layout/admob_native_banner.xml" value="0.17708333333333334" />
@@ -336,9 +373,11 @@
         <entry key="presentation/ui/src/main/java/tmg/flashback/ui/components/layouts/OverlappingPanels.kt" value="0.6710963455149501" />
         <entry key="presentation/ui/src/main/java/tmg/flashback/ui/components/number/DriverNumber.kt" value="0.6225165562913907" />
         <entry key="presentation/ui/src/main/res/drawable-night/unknown_avatar.xml" value="0.1985" />
+        <entry key="presentation/ui/src/main/res/drawable/arrow_down.xml" value="0.35" />
         <entry key="presentation/ui/src/main/res/drawable/background_pill.xml" value="0.3615" />
         <entry key="presentation/ui/src/main/res/drawable/ic_back.xml" value="0.155" />
         <entry key="presentation/ui/src/main/res/drawable/ic_menu.xml" value="0.1665" />
+        <entry key="presentation/ui/src/main/res/drawable/ic_menu_expanded.xml" value="0.1" />
         <entry key="presentation/ui/src/main/res/drawable/ic_more.xml" value="0.284" />
         <entry key="presentation/ui/src/main/res/drawable/unknown_avatar.xml" value="0.1985" />
         <entry key="presentation/ui/src/main/res/layout/view_settings_category.xml" value="0.55" />
@@ -404,6 +443,7 @@
         <entry key="statistics/src/main/res/drawable/ic_laps.xml" value="0.1775" />
         <entry key="statistics/src/main/res/drawable/ic_map.xml" value="0.212" />
         <entry key="statistics/src/main/res/drawable/ic_notification_indicator_bell.xml" value="0.2465" />
+        <entry key="statistics/src/main/res/drawable/ic_notification_reminder_60.xml" value="0.2245" />
         <entry key="statistics/src/main/res/drawable/ic_regs_info.xml" value="0.155" />
         <entry key="statistics/src/main/res/drawable/ic_star_outline.xml" value="0.14375" />
         <entry key="statistics/src/main/res/drawable/ic_status_radiator.xml" value="0.14375" />
@@ -447,6 +487,15 @@
         <entry key="statistics/src/main/res/layout/view_search_race.xml" value="0.2859375" />
         <entry key="statistics/src/main/res/layout/view_shared_message.xml" value="0.26614583333333336" />
         <entry key="statistics/src/main/res/menu/season_list_item.xml" value="0.24895833333333334" />
+        <entry key="stats/src/main/res/drawable/ic_notification_bell.xml" value="0.2245" />
+        <entry key="stats/src/main/res/drawable/ic_notification_indicator_bell.xml" value="0.2245" />
+        <entry key="stats/src/main/res/drawable/ic_notification_practice.xml" value="0.2245" />
+        <entry key="stats/src/main/res/drawable/ic_notification_qualifying.xml" value="0.2245" />
+        <entry key="stats/src/main/res/drawable/ic_notification_race.xml" value="0.2245" />
+        <entry key="stats/src/main/res/drawable/ic_notification_reminder_15.xml" value="0.2245" />
+        <entry key="stats/src/main/res/drawable/ic_notification_reminder_30.xml" value="0.2245" />
+        <entry key="stats/src/main/res/drawable/ic_notification_reminder_60.xml" value="0.2245" />
+        <entry key="stats/src/main/res/drawable/ic_notification_season_info.xml" value="0.2245" />
       </map>
     </option>
   </component>

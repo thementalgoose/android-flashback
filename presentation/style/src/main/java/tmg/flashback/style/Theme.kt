@@ -74,7 +74,10 @@ fun AppThemePreview(
         content = {
             Box(
                 modifier = Modifier
-                    .background(if (isLight) Color.White else Color.Black)
+                    .background(when (isLight)  {
+                        true -> lightColours.backgroundContainer
+                        false -> darkColours.backgroundContainer
+                    })
                     .defaultMinSize(0.dp, 0.dp)
             ) {
                 content()

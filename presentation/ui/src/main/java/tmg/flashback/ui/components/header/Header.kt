@@ -85,7 +85,7 @@ private fun PreviewNoIcon() {
 private fun PreviewDark() {
     AppThemePreview(isLight = false) {
         Header(
-            text = "Daniel Ricciardo\n2022",
+            text = "Daniel Riccardo\n2022",
             icon = painterResource(id = R.drawable.ic_back),
             iconContentDescription = "Menu",
             actionUpClicked = { }
