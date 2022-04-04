@@ -6,8 +6,8 @@ import androidx.annotation.StringRes
 open class DashboardMenuItem(
     val id: String,
     @StringRes
-    val label: Int,
+    val label: Int?,
     @DrawableRes
     val icon: Int,
-    val isSelected: Boolean = false
+    val isSelected: Boolean? = false,
 )

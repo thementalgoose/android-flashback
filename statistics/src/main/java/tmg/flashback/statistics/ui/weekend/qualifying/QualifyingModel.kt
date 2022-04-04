@@ -20,12 +20,12 @@ sealed class QualifyingModel {
         val q1: RaceQualifyingResult?,
         val q2: RaceQualifyingResult?,
         val qualified: Int? = finalQualifyingPosition ?: q2?.position ?: q1?.position
-    )
+    ) : QualifyingModel()
 
     data class Q1(
         val driver: DriverConstructor,
         private val finalQualifyingPosition: Int?,
         val q1: RaceQualifyingResult?,
         val qualified: Int? = finalQualifyingPosition ?: q1?.position
-    )
+    ) : QualifyingModel()
 }

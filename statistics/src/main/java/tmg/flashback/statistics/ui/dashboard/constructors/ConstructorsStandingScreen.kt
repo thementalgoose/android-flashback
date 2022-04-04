@@ -27,6 +27,8 @@ import tmg.flashback.formula1.model.SeasonConstructorStandingSeasonDriver
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.providers.SeasonConstructorStandingSeasonProvider
 import tmg.flashback.statistics.R
+import tmg.flashback.statistics.composables.DriverPoints
+import tmg.flashback.statistics.composables.TextRanking
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.text.TextBody2
@@ -68,36 +70,33 @@ private fun ConstructorsStandingScreenImpl(
     if (maxPoints == 0.0) {
         maxPoints = 625.0
     }
-
-
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(AppTheme.colors.backgroundPrimary),
-            content = {
-                item {
-                    Header(
-                        text = stringResource(id = R.string.dashboard_standings_constructor, season.toString()),
-                        icon = menuClicked?.let { painterResource(id = R.drawable.ic_menu) },
-                        iconContentDescription = stringResource(id = R.string.ab_menu),
-                        actionUpClicked = {
-                            menuClicked?.invoke()
-                        }
-                    )
-                }
-                items(list, key = { it.constructor.id }) {
-                    ConstructorView(
-                        model = it,
-                        maxPoints = maxPoints,
-                        itemClicked = { }
-                    )
-                }
-                item {
-                    Spacer(Modifier.height(AppTheme.dimensions.paddingXLarge))
-                }
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(AppTheme.colors.backgroundPrimary),
+        content = {
+            item {
+                Header(
+                    text = stringResource(id = R.string.dashboard_standings_constructor, season.toString()),
+                    icon = menuClicked?.let { painterResource(id = R.drawable.ic_menu) },
+                    iconContentDescription = stringResource(id = R.string.ab_menu),
+                    actionUpClicked = {
+                        menuClicked?.invoke()
+                    }
+                )
             }
-        )
-//    }
+            items(list, key = { it.constructor.id }) {
+                ConstructorView(
+                    model = it,
+                    maxPoints = maxPoints,
+                    itemClicked = { }
+                )
+            }
+            item {
+                Spacer(Modifier.height(AppTheme.dimensions.paddingXLarge))
+            }
+        }
+    )
 }
 
 @Composable
@@ -113,14 +112,7 @@ private fun ConstructorView(
         }),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        TextTitle(
-            text = model.championshipPosition?.toString() ?: "-",
-            bold = true,
-            textAlign = TextAlign.Center,
-            modifier = Modifier
-                .width(42.dp)
-                .fillMaxHeight()
-        )
+        TextRanking(model.championshipPosition)
         Row(modifier = Modifier.padding(
             top = AppTheme.dimensions.paddingSmall,
             start = AppTheme.dimensions.paddingSmall,
@@ -135,7 +127,10 @@ private fun ConstructorView(
                 )
                 Spacer(Modifier.height(2.dp))
                 model.drivers.forEach {
-                    DriverPoints(model = it)
+                    DriverPoints(
+                        driver = it.driver,
+                        points = it.points
+                    )
                 }
             }
             Spacer(Modifier.width(AppTheme.dimensions.paddingSmall))
@@ -155,39 +150,6 @@ private fun ConstructorView(
                 }
             )
         }
-    }
-}
-
-@Composable
-private fun DriverPoints(
-    model: SeasonConstructorStandingSeasonDriver,
-    modifier: Modifier = Modifier
-) {
-    Row(
-        modifier = modifier,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        val resourceId = when (isInPreview()) {
-            true -> R.drawable.gb
-            false -> LocalContext.current.getFlagResourceAlpha3(model.driver.nationalityISO)
-        }
-
-        TextBody2(text = model.driver.name)
-        Column(modifier = Modifier
-            .fillMaxHeight()
-            .padding(
-                vertical = AppTheme.dimensions.paddingXXSmall,
-                horizontal = AppTheme.dimensions.paddingXSmall
-            )
-        ) {
-            Image(
-                modifier = Modifier.size(16.dp),
-                painter = painterResource(id = resourceId),
-                contentDescription = null,
-                contentScale = ContentScale.Fit,
-            )
-        }
-        TextBody2(text = pluralResource(R.plurals.race_points, model.points.roundToInt(), model.points.pointsDisplay()))
     }
 }
 

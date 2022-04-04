@@ -6,10 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.BottomAppBar
-import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.Icon
-import androidx.compose.material.Scaffold
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -60,12 +57,12 @@ fun Dashboard(
                                 icon = {
                                     Icon(
                                         painter = painterResource(id = it.icon),
-                                        contentDescription = stringResource(id = it.label)
+                                        contentDescription = it.label?.let { stringResource(id = it) }
                                     )
                                 },
                                 alwaysShowLabel = true,
                                 label = {
-                                    TextBody1(text = stringResource(id = it.label))
+                                    TextBody1(text = it.label?.let { stringResource(id = it) } ?: "")
                                 }
                             )
                         }
@@ -145,10 +142,11 @@ fun Dashboard(
                     WindowSize.Expanded -> {
                         val showMenu = remember { mutableStateOf(false) }
                         Row(modifier = Modifier.fillMaxSize()) {
-                            Box(modifier = Modifier
-                                .fillMaxHeight()
-                                .width(sideMenuWidth)
-                                .background(AppTheme.colors.backgroundNav)
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxHeight()
+                                    .width(sideMenuWidth)
+                                    .background(AppTheme.colors.backgroundNav)
                             ) {
                                 VerticalMenuBar(
                                     menuItems = menuItems,
@@ -158,41 +156,24 @@ fun Dashboard(
                                 )
                             }
 
-                            val menuOffset = animateDpAsState(targetValue = when (showMenu.value) {
-                                false -> 0.dp
-                                true -> expandedSlideInMenuWidth
-                            })
-                            val menuFade = animateFloatAsState(targetValue = when (showMenu.value) {
-                                false -> 1.0f
-                                true -> 0.6f
-                            })
-
-                            Box(modifier = Modifier
-                                .weight(1f)
-                                .fillMaxHeight()
-                            ) {
-                                Box(modifier = Modifier
+                            Row(
+                                modifier = Modifier
+                                    .weight(1f)
                                     .fillMaxHeight()
-                                    .width(expandedSlideInMenuWidth)
-                                ) {
-                                    menuContent()
-                                }
-                                Row(modifier = Modifier
-                                    .offset(x = menuOffset.value)
-                                    .alpha(menuFade.value)
-                                ) {
-                                    Box(modifier = Modifier
+                            ) {
+                                Box(
+                                    modifier = Modifier
                                         .fillMaxHeight()
                                         .width(expandedContentWidth)
-                                    ) {
-                                        content(null)
-                                    }
-                                    Box(modifier = Modifier
+                                ) {
+                                    content(null)
+                                }
+                                Box(
+                                    modifier = Modifier
                                         .weight(1f)
                                         .fillMaxHeight()
-                                    ) {
-                                        subContent()
-                                    }
+                                ) {
+                                    subContent()
                                 }
                             }
                         }
@@ -267,7 +248,7 @@ private fun MenuIcon(
                 .size(menuItemIconWidth)
                 .align(Alignment.Center),
             painter = painterResource(id = item.icon),
-            contentDescription = stringResource(id = item.label)
+            contentDescription = item.label?.let { stringResource(id = it) }
         )
     }
 }

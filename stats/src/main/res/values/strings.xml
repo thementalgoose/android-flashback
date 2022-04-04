@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="weekend_race_round">Round %d</string>
+    <string name="weekend_info_laps">%s laps</string>
+
+    <string name="notification_reminder_mins_60">1 hour</string>
+    <string name="notification_reminder_mins_30">30 minutes</string>
+    <string name="notification_reminder_mins_15">15 minutes</string>
+</resources>
