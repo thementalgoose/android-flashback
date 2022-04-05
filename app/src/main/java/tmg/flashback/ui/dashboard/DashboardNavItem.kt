@@ -3,7 +3,7 @@ package tmg.flashback.ui.dashboard
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import tmg.flashback.statistics.R
-import tmg.flashback.ui.components.layouts.DashboardMenuItem
+import tmg.flashback.ui.components.navigation.NavigationItem
 
 enum class DashboardNavItem(
     @StringRes
@@ -27,11 +27,11 @@ enum class DashboardNavItem(
     companion object
 }
 
-fun DashboardNavItem.Companion.toList(selected: DashboardNavItem?): List<DashboardMenuItem> {
+fun DashboardNavItem.Companion.toList(selected: DashboardNavItem?): List<NavigationItem> {
     return DashboardNavItem
         .values()
         .map {
-            DashboardMenuItem(
+            NavigationItem(
                 id = it.name,
                 label = it.label,
                 icon = it.icon,

@@ -1,12 +1,10 @@
-package tmg.flashback.ui.components.layouts
+package tmg.flashback.ui.components.navigation
 
-import android.view.RoundedCorner
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
@@ -14,7 +12,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -29,11 +26,14 @@ import tmg.flashback.ui.R
 
 private val widthCollapsed: Dp = 64.dp
 private val itemSize: Dp = 48.dp
+private val iconSize: Dp = 24.dp
 private val widthExpanded: Dp = 180.dp
 
 @Composable
 fun NavigationColumn(
-    list: List<DashboardMenuItem>,
+    list: List<NavigationItem>,
+    menuClicked: () -> Unit,
+    itemClicked: (NavigationItem) -> Unit,
     modifier: Modifier = Modifier,
     defaultExpanded: Boolean = false,
 ) {
@@ -46,36 +46,39 @@ fun NavigationColumn(
     Column(modifier = modifier
         .width(width.value)
         .fillMaxHeight()
+        .background(AppTheme.colors.backgroundNav)
         .padding(
             vertical = AppTheme.dimensions.paddingSmall
         )
     ) {
         NavigationItem(
-            item = DashboardMenuItem(
+            item = NavigationItem(
                 id = "menu",
                 label = null,
                 icon = R.drawable.ic_menu
             ),
+            onClick = { menuClicked() },
             isExpanded = expanded.value
         )
+        Spacer(modifier = Modifier.height(AppTheme.dimensions.paddingMedium))
         list.forEach { item ->
             NavigationItem(
                 item = item,
-                isExpanded = expanded.value
+                isExpanded = expanded.value,
+                onClick = itemClicked,
             )
             Spacer(Modifier.height(AppTheme.dimensions.paddingSmall))
         }
         Spacer(modifier = Modifier.weight(1f))
         NavigationItem(
-            modifier = Modifier
-                .clickable(onClick = {
-                    expanded.value = !expanded.value
-                }),
-            item = DashboardMenuItem(
+            item = NavigationItem(
                 id = "expand",
                 label = null,
                 icon = R.drawable.ic_menu_expanded
             ),
+            onClick = {
+                expanded.value = !expanded.value
+            },
             isExpanded = expanded.value
         )
     }
@@ -83,14 +86,18 @@ fun NavigationColumn(
 
 @Composable
 private fun NavigationItem(
-    item: DashboardMenuItem,
+    item: NavigationItem,
     isExpanded: Boolean,
+    onClick: ((NavigationItem) -> Unit)?,
     modifier: Modifier = Modifier,
 ) {
-
     val backgroundColor = animateColorAsState(targetValue = when (item.isSelected) {
-        true -> Color.Green
-        else -> AppTheme.colors.backgroundPrimary
+        true -> AppTheme.colors.primary.copy(alpha = 0.2f)
+        else -> AppTheme.colors.backgroundNav
+    })
+    val iconPadding = animateDpAsState(targetValue = when (isExpanded) {
+        true -> AppTheme.dimensions.paddingMedium
+        false -> (itemSize - iconSize) / 2
     })
 
     Row(modifier = modifier
@@ -101,15 +108,22 @@ private fun NavigationItem(
         .height(itemSize)
         .clip(RoundedCornerShape(AppTheme.dimensions.radiusMedium))
         .background(backgroundColor.value)
+        .clickable(
+            enabled = onClick != null,
+            onClick = {
+                onClick?.invoke(item)
+            }
+        )
         .padding(
-            horizontal = AppTheme.dimensions.paddingMedium,
+            horizontal = iconPadding.value,
         )
     ) {
         Icon(
             modifier = Modifier
-                .size(24.dp)
+                .size(iconSize)
                 .align(Alignment.CenterVertically),
             painter = painterResource(id = item.icon),
+            tint = AppTheme.colors.contentPrimary,
             contentDescription = item.label?.let { stringResource(id = it) }
         )
         if (isExpanded) {
@@ -126,40 +140,52 @@ private fun NavigationItem(
 
 @Preview
 @Composable
-private fun PreviewCompact() {
+private fun PreviewCompactLight() {
     AppThemePreview(isLight = true) {
         NavigationColumn(
             defaultExpanded = false,
-            list = listOf(
-                DashboardMenuItem(
-                    id = "id",
-                    label = R.string.ab_menu,
-                    icon = R.drawable.ic_menu
-                )
-            )
+            itemClicked = { },
+            menuClicked = { },
+            list = fakeNavigationItems
         )
     }
 }
 
 @Preview
 @Composable
-private fun PreviewExpanded() {
+private fun PreviewExpandedLight() {
     AppThemePreview(isLight = true) {
         NavigationColumn(
             defaultExpanded = true,
-            list = listOf(
-                DashboardMenuItem(
-                    id = "id",
-                    label = R.string.ab_menu,
-                    icon = R.drawable.ic_menu
-                ),
-                DashboardMenuItem(
-                    id = "id",
-                    label = R.string.ab_back,
-                    icon = R.drawable.ic_back,
-                    isSelected = true
-                )
-            )
+            itemClicked = { },
+            menuClicked = { },
+            list = fakeNavigationItems
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun PreviewCompactDark() {
+    AppThemePreview(isLight = false) {
+        NavigationColumn(
+            defaultExpanded = false,
+            itemClicked = { },
+            menuClicked = { },
+            list = fakeNavigationItems
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun PreviewExpandedDark() {
+    AppThemePreview(isLight = false) {
+        NavigationColumn(
+            defaultExpanded = true,
+            itemClicked = { },
+            menuClicked = { },
+            list = fakeNavigationItems
         )
     }
 }

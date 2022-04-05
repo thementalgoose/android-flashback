@@ -24,12 +24,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.utils.WindowSize
 import tmg.flashback.ui.R
+import tmg.flashback.ui.components.navigation.NavigationItem
 
 private val sideMenuWidth = 72.dp
 private val expandedContentWidth = 420.dp
@@ -38,8 +38,8 @@ private val expandedSlideInMenuWidth = 400.dp
 @Composable
 fun Dashboard(
     windowSize: WindowSize,
-    menuItems: List<DashboardMenuItem>,
-    clickMenuItem: (DashboardMenuItem) -> Unit,
+    menuItems: List<NavigationItem>,
+    clickMenuItem: (NavigationItem) -> Unit,
     menuContent: @Composable () -> Unit,
     content: @Composable (menuClicked: (() -> Unit)?) -> Unit,
     subContent: @Composable () -> Unit,
@@ -200,9 +200,9 @@ private val menuItemIconWidth = 24.dp
 
 @Composable
 private fun VerticalMenuBar(
-    menuItems: List<DashboardMenuItem>,
+    menuItems: List<NavigationItem>,
     menuClicked: () -> Unit,
-    menuItemClicked: (DashboardMenuItem) -> Unit,
+    menuItemClicked: (NavigationItem) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -211,7 +211,7 @@ private fun VerticalMenuBar(
     ) {
         Spacer(modifier = Modifier.height(AppTheme.dimensions.paddingMedium))
         MenuIcon(
-            item = DashboardMenuItem(
+            item = NavigationItem(
                 id = "menu",
                 label = R.string.ab_menu,
                 icon = R.drawable.ic_menu,
@@ -232,7 +232,7 @@ private fun VerticalMenuBar(
 
 @Composable
 private fun MenuIcon(
-    item: DashboardMenuItem,
+    item: NavigationItem,
     modifier: Modifier = Modifier,
     onClick: () -> Unit = { },
     backgroundColor: Color = AppTheme.colors.backgroundSecondary
@@ -259,9 +259,9 @@ private fun PreviewCompact() {
     Dashboard(
         windowSize = WindowSize.Compact,
         menuItems = listOf(
-            DashboardMenuItem("",0, R.drawable.ic_bar_animation_slow),
-            DashboardMenuItem("", 0, R.drawable.ic_bar_animation_medium),
-            DashboardMenuItem("", 0, R.drawable.ic_bar_animation_quick),
+            NavigationItem("",0, R.drawable.ic_bar_animation_slow),
+            NavigationItem("", 0, R.drawable.ic_bar_animation_medium),
+            NavigationItem("", 0, R.drawable.ic_bar_animation_quick),
         ),
         clickMenuItem = { },
         menuContent = { Box(modifier = Modifier
@@ -282,9 +282,9 @@ private fun PreviewMedium() {
     Dashboard(
         windowSize = WindowSize.Medium,
         menuItems = listOf(
-            DashboardMenuItem("",0, R.drawable.ic_bar_animation_slow),
-            DashboardMenuItem("",0, R.drawable.ic_bar_animation_medium),
-            DashboardMenuItem("",0, R.drawable.ic_bar_animation_quick),
+            NavigationItem("",0, R.drawable.ic_bar_animation_slow),
+            NavigationItem("",0, R.drawable.ic_bar_animation_medium),
+            NavigationItem("",0, R.drawable.ic_bar_animation_quick),
         ),
         clickMenuItem = { },
         menuContent = { Box(modifier = Modifier
@@ -305,9 +305,9 @@ private fun PreviewExpanded() {
     Dashboard(
         windowSize = WindowSize.Expanded,
         menuItems = listOf(
-            DashboardMenuItem("",0, R.drawable.ic_bar_animation_slow),
-            DashboardMenuItem("",0, R.drawable.ic_bar_animation_medium),
-            DashboardMenuItem("",0, R.drawable.ic_bar_animation_quick),
+            NavigationItem("",0, R.drawable.ic_bar_animation_slow),
+            NavigationItem("",0, R.drawable.ic_bar_animation_medium),
+            NavigationItem("",0, R.drawable.ic_bar_animation_quick),
         ),
         clickMenuItem = { },
         menuContent = { Box(modifier = Modifier
