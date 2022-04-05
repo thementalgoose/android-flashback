@@ -37,7 +37,8 @@ fun ProgressBar(
 ) {
     BoxWithConstraints(
         modifier = modifier
-            .fillMaxSize()
+            .defaultMinSize(minHeight = 48.dp)
+            .fillMaxWidth()
             .clip(RoundedCornerShape(AppTheme.dimensions.radiusSmall))
     ) {
         val progressState = remember { mutableStateOf(initialValue) }
@@ -70,40 +71,40 @@ fun ProgressBar(
                 .background(barColor)
         )
 
-            MeasureTextWidth(
-                text = label(endProgress),
+        MeasureTextWidth(
+            text = label(endProgress),
+            modifier = Modifier
+                .align(Alignment.CenterStart)
+        ) { textWidth ->
+
+            val onBar = when {
+                maxWidth * progress > ((textPadding * 2) + textWidth) -> true
+                else -> false
+            }
+
+            Text(
+                text = label(progress),
+                style = AppTheme.typography.body1.copy(
+                    color = when (onBar) {
+                        true -> barOnColor
+                        false -> backgroundOnColor
+                    }
+                ),
                 modifier = Modifier
                     .align(Alignment.CenterStart)
-            ) { textWidth ->
-
-                val onBar = when {
-                    maxWidth * progress > ((textPadding * 2) + textWidth) -> true
-                    else -> false
-                }
-
-                Text(
-                    text = label(progress),
-                    style = AppTheme.typography.body1.copy(
-                        color = when (onBar) {
-                            true -> barOnColor
-                            false -> backgroundOnColor
+                    .offset(
+                        x = when (onBar) {
+                            true -> (maxWidth * progress) - (textWidth + textPadding)
+                            false -> (maxWidth * progress) + textPadding
                         }
-                    ),
-                    modifier = Modifier
-                        .align(Alignment.CenterStart)
-                        .offset(
-                            x = when (onBar) {
-                                true -> (maxWidth * progress) - (textWidth + textPadding)
-                                false -> (maxWidth * progress) + textPadding
-                            }
-                        )
-                )
-            }
-
-            LaunchedEffect(endProgress) {
-                progressState.value = endProgress
-            }
+                    )
+            )
         }
+
+        LaunchedEffect(endProgress) {
+            progressState.value = endProgress
+        }
+    }
 }
 
 @Preview
