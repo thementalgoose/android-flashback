@@ -13,11 +13,9 @@ import tmg.flashback.common.ui.forceupgrade.ForceUpgradeActivity
 import tmg.flashback.crash_reporting.controllers.CrashController
 import tmg.flashback.databinding.ActivityDashboardBinding
 import tmg.flashback.statistics.workmanager.WorkerProvider
-import tmg.flashback.style.utils.rememberWindowSizeClass
-import tmg.flashback.ui.dashboard.DashboardScreen
 import tmg.flashback.ui.base.BaseActivity
-import tmg.flashback.ui.components.layouts.DashboardMenuItem
-import tmg.flashback.ui.components.layouts.NavigationColumn
+import tmg.flashback.ui.components.navigation.NavigationItem
+import tmg.flashback.ui.components.navigation.NavigationColumn
 import tmg.flashback.ui.model.DisplayType
 import tmg.flashback.ui.sync.SyncActivity
 
@@ -45,17 +43,17 @@ class HomeActivity: BaseActivity() {
         if (BuildConfig.DEBUG) {
             setContent {
                 NavigationColumn(list = listOf(
-                    DashboardMenuItem(
+                    NavigationItem(
                         id = "id",
                         label = R.string.settings_theme_title,
                         icon = R.drawable.arrow_up,
                     ),
-                    DashboardMenuItem(
+                    NavigationItem(
                         id = "test",
                         label = R.string.ab_menu,
                         icon = R.drawable.ic_menu,
                     ),
-                    DashboardMenuItem(
+                    NavigationItem(
                         id = "testt",
                         label = R.string.ab_back,
                         icon = R.drawable.ic_back,
