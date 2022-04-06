@@ -17,7 +17,7 @@ interface DriversStandingViewModelInputs {
 }
 
 interface DriversStandingViewModelOutputs {
-    val items: LiveData<List<SeasonDriverStandingSeason>?>
+    val items: LiveData<List<DriverStandingsModel>?>
     val isRefreshing: LiveData<Boolean>
 }
 
@@ -33,7 +33,7 @@ class DriversStandingViewModel(
     override val isRefreshing: MutableLiveData<Boolean> = MutableLiveData(false)
 
     private val season: MutableStateFlow<Int> = MutableStateFlow(2022)
-    override val items: LiveData<List<SeasonDriverStandingSeason>?> = season
+    override val items: LiveData<List<DriverStandingsModel>?> = season
         .flatMapLatest { season ->
             isRefreshing.postValue(true)
             fetchSeasonUseCase
@@ -45,7 +45,11 @@ class DriversStandingViewModel(
                             if (!hasMadeRequest && it == null) {
                                 return@map null
                             }
-                            return@map it?.standings?.sortedBy { it.championshipPosition }
+                            return@map it?.standings
+                                ?.sortedBy { it.championshipPosition }
+                                ?.map {
+                                    DriverStandingsModel(standings = it)
+                                }
                         }
                 }
         }

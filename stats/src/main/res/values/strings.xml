@@ -6,4 +6,7 @@
     <string name="notification_reminder_mins_60">1 hour</string>
     <string name="notification_reminder_mins_30">30 minutes</string>
     <string name="notification_reminder_mins_15">15 minutes</string>
+
+    <string name="season_standings_driver">%s\nDriver Standings</string>
+    <string name="season_standings_constructor">%s\nConstructor Standings</string>
 </resources>
