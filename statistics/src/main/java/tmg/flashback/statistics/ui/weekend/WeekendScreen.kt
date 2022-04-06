@@ -21,7 +21,7 @@ import tmg.flashback.statistics.R
 import tmg.flashback.statistics.ui.weekend.info.RaceInfoHeader
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
-import tmg.flashback.ui.components.layouts.CollapsingContainer
+import tmg.flashback.ui.components.layouts.ContainerCollapsing
 import tmg.flashback.ui.components.layouts.Container
 
 @Composable
@@ -88,7 +88,7 @@ private fun WeekendScreenEmbedded(
             )
         }
 
-        CollapsingContainer(
+        ContainerCollapsing(
             title = "Test",
             modifier = Modifier.padding(horizontal = AppTheme.dimensions.paddingMedium)
         ) {

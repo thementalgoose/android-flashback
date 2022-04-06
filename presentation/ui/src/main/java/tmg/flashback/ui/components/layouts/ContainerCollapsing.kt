@@ -7,7 +7,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -18,6 +17,7 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
@@ -26,9 +26,10 @@ import tmg.flashback.ui.R
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun CollapsingContainer(
+fun ContainerCollapsing(
     title: String,
     modifier: Modifier = Modifier,
+    boxRadius: Dp = AppTheme.dimensions.radiusSmall,
     initiallyExpanded: Boolean = false,
     content: @Composable () -> Unit
 ) {
@@ -37,8 +38,8 @@ fun CollapsingContainer(
 
     Container(
         modifier = modifier,
-        internalPadding = 0.dp,
-        externalPadding = 0.dp
+        boxRadius = boxRadius,
+        isOutlined = true
     ) {
         Column(modifier = Modifier
             .fillMaxWidth()
@@ -54,8 +55,6 @@ fun CollapsingContainer(
                         horizontal = AppTheme.dimensions.paddingMedium,
                         vertical = AppTheme.dimensions.paddingNSmall
                     )
-                    .clip(RoundedCornerShape(AppTheme.dimensions.radiusSmall))
-                    .background(AppTheme.colors.backgroundPrimary)
             ) {
                 TextTitle(
                     text = title,
@@ -94,7 +93,8 @@ fun CollapsingContainer(
 @Composable
 private fun PreviewLightCollapsed() {
     AppThemePreview(isLight = true) {
-        CollapsingContainer(
+        ContainerCollapsing(
+            modifier = Modifier.padding(16.dp),
             title = "Schedule",
             initiallyExpanded = false
         ) {
@@ -110,7 +110,8 @@ private fun PreviewLightCollapsed() {
 @Composable
 private fun PreviewLightExpanded() {
     AppThemePreview(isLight = true) {
-        CollapsingContainer(
+        ContainerCollapsing(
+            modifier = Modifier.padding(16.dp),
             title = "Schedule",
             initiallyExpanded = true
         ) {
@@ -126,7 +127,8 @@ private fun PreviewLightExpanded() {
 @Composable
 private fun PreviewDarkCollapsed() {
     AppThemePreview(isLight = false) {
-        CollapsingContainer(
+        ContainerCollapsing(
+            modifier = Modifier.padding(16.dp),
             title = "Schedule",
             initiallyExpanded = false
         ) {
@@ -142,7 +144,8 @@ private fun PreviewDarkCollapsed() {
 @Composable
 private fun PreviewDarkExpanded() {
     AppThemePreview(isLight = false) {
-        CollapsingContainer(
+        ContainerCollapsing(
+            modifier = Modifier.padding(16.dp),
             title = "Schedule",
             initiallyExpanded = true
         ) {
