@@ -48,7 +48,6 @@ fun DriversStandingScreen(
     val list = viewModel.outputs.items.observeAsState()
     val isRefreshing = viewModel.outputs.isRefreshing.observeAsState(false)
 
-
     SwipeRefresh(
         state = rememberSwipeRefreshState(isRefreshing = isRefreshing.value),
         onRefresh = viewModel.inputs::refresh
