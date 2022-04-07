@@ -37,6 +37,8 @@ import tmg.flashback.ui.components.progressbar.ProgressBar
 import tmg.flashback.ui.utils.isInPreview
 import kotlin.math.roundToInt
 
+
+
 @Composable
 fun DriverStandingsScreen(
     showMenu: Boolean,
