@@ -40,39 +40,11 @@ class HomeActivity: BaseActivity() {
         val splashScreen = installSplashScreen()
         setTheme(themeRes)
 
-        if (BuildConfig.DEBUG) {
-            setContent {
-                NavigationColumn(list = listOf(
-                    NavigationItem(
-                        id = "id",
-                        label = R.string.settings_theme_title,
-                        icon = R.drawable.arrow_up,
-                    ),
-                    NavigationItem(
-                        id = "test",
-                        label = R.string.ab_menu,
-                        icon = R.drawable.ic_menu,
-                    ),
-                    NavigationItem(
-                        id = "testt",
-                        label = R.string.ab_back,
-                        icon = R.drawable.ic_back,
-                    )
-                ))
-            }
-//            setContent {
-//                val windowSize = rememberWindowSizeClass()
-//                DashboardScreen(
-//                    windowSize = windowSize,
-//                    contextResolver = {
-//                        return@DashboardScreen this@HomeActivity
-//                    }
-//                )
-//            }
-        } else {
+//        if (BuildConfig.DEBUG) {
+//        } else {
             binding = ActivityDashboardBinding.inflate(layoutInflater)
             setContentView(binding.root)
-        }
+//        }
 
         splashScreen.setKeepVisibleCondition {
             viewModel.appliedChanges

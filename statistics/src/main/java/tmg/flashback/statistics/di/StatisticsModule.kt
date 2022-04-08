@@ -14,9 +14,6 @@ import tmg.flashback.statistics.repo.di.repoModule
 import tmg.flashback.statistics.repository.HomeRepository
 import tmg.flashback.statistics.repository.UpNextRepository
 import tmg.flashback.statistics.ui.circuit.CircuitViewModel
-import tmg.flashback.statistics.ui.dashboard.calendar.CalendarViewModel
-import tmg.flashback.statistics.ui.dashboard.constructors.ConstructorsStandingViewModel
-import tmg.flashback.statistics.ui.dashboard.drivers.DriversStandingViewModel
 import tmg.flashback.statistics.ui.dashboard.events.EventListViewModel
 import tmg.flashback.statistics.ui.dashboard.onboarding.OnboardingNotificationViewModel
 import tmg.flashback.statistics.ui.dashboard.racepreview.RacePreviewViewModel
@@ -31,10 +28,6 @@ import tmg.flashback.statistics.ui.settings.home.SettingsHomeViewModel
 import tmg.flashback.statistics.ui.settings.notifications.UpNextSettingsViewModel
 import tmg.flashback.statistics.ui.settings.notifications.reminder.UpNextReminderViewModel
 import tmg.flashback.statistics.ui.settings.statistics.SettingsStatisticsViewModel
-import tmg.flashback.statistics.ui.weekend.WeekendViewModel
-import tmg.flashback.statistics.ui.weekend.qualifying.QualifyingViewModel
-import tmg.flashback.statistics.ui.weekend.schedule.ScheduleViewModel
-import tmg.flashback.statistics.ui.weekend.sprint.SprintViewModel
 import tmg.flashback.statistics.usecases.*
 import tmg.flashback.statistics.workmanager.ContentSyncWorker
 import tmg.flashback.statistics.workmanager.NotificationScheduleWorker
@@ -52,16 +45,6 @@ val statisticsModule = repoModule + module {
     viewModel { RaceViewModel(get(), get(), get(), get()) }
     viewModel { SearchViewModel(get(), get(), get(), get(), get()) }
     viewModel { CategoryViewModel() }
-
-    viewModel { CalendarViewModel(get(), get(), get(), get()) }
-    viewModel { DriversStandingViewModel(get(), get(), get()) }
-    viewModel { ConstructorsStandingViewModel(get(), get()) }
-    viewModel { WeekendViewModel(get()) }
-    viewModel { ScheduleViewModel(get(), get()) }
-    viewModel { SprintViewModel(get()) }
-    viewModel { tmg.flashback.statistics.ui.weekend.race.RaceViewModel(get()) }
-    viewModel { QualifyingViewModel(get()) }
-    viewModel { tmg.flashback.statistics.ui.weekend.constructor.ConstructorViewModel(get()) }
 
     viewModel { UpNextSettingsViewModel(get()) }
     viewModel { OnboardingNotificationViewModel(get()) }

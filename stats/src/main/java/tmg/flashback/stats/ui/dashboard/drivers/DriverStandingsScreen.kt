@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -20,6 +21,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import org.koin.androidx.compose.viewModel
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.SeasonDriverStandingSeason
 import tmg.flashback.formula1.model.SeasonDriverStandings
@@ -37,7 +41,28 @@ import tmg.flashback.ui.components.progressbar.ProgressBar
 import tmg.flashback.ui.utils.isInPreview
 import kotlin.math.roundToInt
 
+@Composable
+fun DriverStandingsScreenVM(
+    showMenu: Boolean,
+    menuClicked: (() -> Unit)? = null,
+    season: Int
+) {
+    val viewModel: DriversStandingViewModel by viewModel()
 
+    val isRefreshing = viewModel.outputs.isRefreshing.observeAsState(false)
+    val items = viewModel.outputs.items.observeAsState(emptyList())
+    SwipeRefresh(
+        state = rememberSwipeRefreshState(isRefreshing = isRefreshing.value),
+        onRefresh = viewModel.inputs::refresh
+    ) {
+        DriverStandingsScreen(
+            showMenu = showMenu,
+            menuClicked = menuClicked,
+            season = season,
+            items = items.value ?: emptyList()
+        )
+    }
+}
 
 @Composable
 fun DriverStandingsScreen(
