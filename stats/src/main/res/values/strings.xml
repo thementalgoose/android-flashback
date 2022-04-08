@@ -9,4 +9,9 @@
 
     <string name="season_standings_driver">%s\nDriver Standings</string>
     <string name="season_standings_constructor">%s\nConstructor Standings</string>
+
+    <plurals name="race_points">
+        <item quantity="one">%s point</item>
+        <item quantity="other">%s points</item>
+    </plurals>
 </resources>

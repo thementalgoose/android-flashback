@@ -17,7 +17,7 @@ interface ConstructorsStandingViewModelInputs {
 }
 
 interface ConstructorsStandingViewModelOutputs {
-    val items: LiveData<List<SeasonConstructorStandingSeason>?>
+    val items: LiveData<List<ConstructorStandingsModel>?>
     val isRefreshing: LiveData<Boolean>
 }
 
@@ -33,7 +33,7 @@ class ConstructorsStandingViewModel(
     override val isRefreshing: MutableLiveData<Boolean> = MutableLiveData()
 
     private val season: MutableStateFlow<Int> = MutableStateFlow(2022)
-    override val items: LiveData<List<SeasonConstructorStandingSeason>?> = season
+    override val items: LiveData<List<ConstructorStandingsModel>?> = season
         .flatMapLatest { season ->
             isRefreshing.postValue(true)
             fetchSeasonUseCase
@@ -45,7 +45,11 @@ class ConstructorsStandingViewModel(
                             if (!hasMadeRequest && it == null) {
                                 return@map null
                             }
-                            return@map it?.standings?.sortedBy { it.championshipPosition }
+                            return@map it?.standings
+                                ?.sortedBy { it.championshipPosition }
+                                ?.map {
+                                    ConstructorStandingsModel(it)
+                                }
                         }
                 }
         }

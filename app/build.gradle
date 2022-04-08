@@ -107,6 +107,7 @@ dependencies {
 
     // Feature modules
     implementation project(path: ":statistics")
+    implementation project(path: ":stats")
     implementation project(path: ':data:repo')
     implementation project(path: ':data:network')
     implementation project(path: ":formula1")

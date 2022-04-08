@@ -18,7 +18,7 @@ interface CalendarViewModelInputs {
 }
 
 interface CalendarViewModelOutputs {
-    val items: LiveData<List<OverviewRace>?>
+    val items: LiveData<List<CalendarModel>?>
     val isRefreshing: LiveData<Boolean>
 }
 
@@ -35,7 +35,7 @@ class CalendarViewModel(
     override val isRefreshing: MutableLiveData<Boolean> = MutableLiveData(false)
 
     private val season: MutableStateFlow<Int> = MutableStateFlow(defaultSeasonUseCase.defaultSeason)
-    override val items: LiveData<List<OverviewRace>?> = season
+    override val items: LiveData<List<CalendarModel>?> = season
         .flatMapLatest { season ->
             isRefreshing.postValue(true)
             fetchSeasonUseCase
@@ -48,6 +48,9 @@ class CalendarViewModel(
                                 return@map null
                             }
                             return@map it.overviewRaces
+                                .map {
+                                    CalendarModel.List(it)
+                                }
                         }
                 }
         }
