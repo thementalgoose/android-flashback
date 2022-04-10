@@ -22,6 +22,11 @@
     <string name="dashboard_links_dark_mode">Dark Mode</string>
     <string name="dashboard_all_title">All</string>
 
+
+    <string name="dashboard_tab_calendar">Calendar</string>
+    <string name="dashboard_tab_drivers">Drivers</string>
+    <string name="dashboard_tab_constructors">Teams</string>
+
     <!-- About This App Dependencies -->
     <string name="about_this_app_dependency_rss">RSS source: %s</string>
 

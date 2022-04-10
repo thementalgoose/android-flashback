@@ -3,10 +3,7 @@ package tmg.flashback.stats.ui.dashboard.constructors
 import androidx.lifecycle.*
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import tmg.flashback.formula1.model.SeasonConstructorStandingSeason
 import tmg.flashback.statistics.repo.SeasonRepository
@@ -14,6 +11,7 @@ import tmg.flashback.stats.usecases.FetchSeasonUseCase
 
 interface ConstructorsStandingViewModelInputs {
     fun refresh()
+    fun load(season: Int)
 }
 
 interface ConstructorsStandingViewModelOutputs {
@@ -32,8 +30,9 @@ class ConstructorsStandingViewModel(
 
     override val isRefreshing: MutableLiveData<Boolean> = MutableLiveData()
 
-    private val season: MutableStateFlow<Int> = MutableStateFlow(2022)
+    private val season: MutableStateFlow<Int?> = MutableStateFlow(null)
     override val items: LiveData<List<ConstructorStandingsModel>?> = season
+        .filterNotNull()
         .flatMapLatest { season ->
             isRefreshing.postValue(true)
             fetchSeasonUseCase
@@ -56,10 +55,16 @@ class ConstructorsStandingViewModel(
         .flowOn(ioDispatcher)
         .asLiveData(viewModelScope.coroutineContext)
 
+    override fun load(season: Int) {
+        this.season.value = season
+    }
+
     override fun refresh() {
+        val season = season.value ?: return
+
         isRefreshing.postValue(true)
         viewModelScope.launch(ioDispatcher) {
-            fetchSeasonUseCase.fetchSeason(season.value)
+            fetchSeasonUseCase.fetchSeason(season)
             isRefreshing.postValue(false)
         }
     }

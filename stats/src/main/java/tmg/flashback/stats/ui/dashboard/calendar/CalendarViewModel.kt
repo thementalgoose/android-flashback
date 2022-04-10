@@ -3,10 +3,7 @@ package tmg.flashback.stats.ui.dashboard.calendar
 import androidx.lifecycle.*
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.statistics.repo.OverviewRepository
@@ -15,6 +12,7 @@ import tmg.flashback.stats.usecases.FetchSeasonUseCase
 
 interface CalendarViewModelInputs {
     fun refresh()
+    fun load(season: Int)
 }
 
 interface CalendarViewModelOutputs {
@@ -24,7 +22,6 @@ interface CalendarViewModelOutputs {
 
 class CalendarViewModel(
     private val fetchSeasonUseCase: FetchSeasonUseCase,
-    private val defaultSeasonUseCase: DefaultSeasonUseCase,
     private val overviewRepository: OverviewRepository,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), CalendarViewModelInputs, CalendarViewModelOutputs {
@@ -34,8 +31,9 @@ class CalendarViewModel(
 
     override val isRefreshing: MutableLiveData<Boolean> = MutableLiveData(false)
 
-    private val season: MutableStateFlow<Int> = MutableStateFlow(defaultSeasonUseCase.defaultSeason)
+    private val season: MutableStateFlow<Int?> = MutableStateFlow(null)
     override val items: LiveData<List<CalendarModel>?> = season
+        .filterNotNull()
         .flatMapLatest { season ->
             isRefreshing.postValue(true)
             fetchSeasonUseCase
@@ -51,16 +49,23 @@ class CalendarViewModel(
                                 .map {
                                     CalendarModel.List(it)
                                 }
+                                .sortedBy { it.model.round }
                         }
                 }
         }
         .flowOn(ioDispatcher)
         .asLiveData(viewModelScope.coroutineContext)
 
+    override fun load(season: Int) {
+        this.season.value = season
+    }
+
     override fun refresh() {
+        val season = season.value ?: return
+
         isRefreshing.postValue(true)
         viewModelScope.launch(ioDispatcher) {
-            fetchSeasonUseCase.fetchSeason(season.value)
+            fetchSeasonUseCase.fetchSeason(season)
             isRefreshing.postValue(false)
         }
     }
