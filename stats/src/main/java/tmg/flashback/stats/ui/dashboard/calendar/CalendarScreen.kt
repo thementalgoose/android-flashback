@@ -299,8 +299,7 @@ private fun PreviewDarkCalendar(
         Column(modifier = Modifier.fillMaxWidth()) {
             Schedule(
                 model = CalendarModel.List(model = race),
-                itemClicked = {},
-                modifier = Modifier.padding(16.dp)
+                itemClicked = {}
             )
         }
     }

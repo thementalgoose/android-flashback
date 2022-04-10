@@ -31,12 +31,12 @@ import tmg.flashback.style.text.TextHeadline2
 import tmg.flashback.style.text.TextSection
 
 @Composable
-fun MenuScreen() {
+fun MenuScreenVM() {
     val viewModel by viewModel<MenuViewModel>()
 
     val buttons = viewModel.outputs.buttons.observeAsState(emptyList())
     val seasons = viewModel.outputs.season.observeAsState(emptyList())
-    MenuScreenImpl(
+    MenuScreen(
         seasonClicked = viewModel.inputs::clickSeason,
         buttons = buttons.value,
         season = seasons.value
@@ -44,7 +44,7 @@ fun MenuScreen() {
 }
 
 @Composable
-private fun MenuScreenImpl(
+private fun MenuScreen(
     seasonClicked: (season: Int) -> Unit,
     buttons: List<MenuButtonItem>,
     season: List<MenuSeasonItem>,
@@ -54,7 +54,7 @@ private fun MenuScreenImpl(
         content = {
             item { Hero() }
             item { Divider() }
-            item { SubHeader(text = stringResource(id = R.string.dashboard_season_list_extra_title))}
+            item { SubHeader(text = stringResource(id = R.string.dashboard_links_title))}
             items(buttons) {
                 when (it) {
                     is MenuButtonItem.Button -> Button(
@@ -69,20 +69,24 @@ private fun MenuScreenImpl(
             }
             item { Divider() }
             item { Toggle(
-                label = R.string.dashboard_season_list_extra_dark_mode_title,
-                icon = R.drawable.ic_nightmode_dark
+                label = R.string.dashboard_links_dark_mode,
+                icon = R.drawable.dashboard_darkmode
             ) }
             item { Divider() }
-            item { SubHeader(text = stringResource(id = R.string.home_season_header_All))}
+            item { SubHeader(text = stringResource(id = R.string.dashboard_all_title))}
             items(season, key = { it.season }) {
-                Season(
-                    season = it.season,
-                    isSelected = it.isSelected,
-                    colour = it.colour,
-                    clickSeason = seasonClicked,
+                Timeline(
+                    timelineColor = it.colour,
+                    isEnabled = it.isSelected,
                     showTop = !it.isFirst,
-                    showBottom = !it.isLast
-                )
+                    showBottom = !it.isLast,
+                    modifier = Modifier
+                        .clickable(onClick = {
+                            seasonClicked(it.season)
+                        })
+                ) {
+                    TextBody1(text = it.season.toString(), bold = true)
+                }
             }
             item {
                 Spacer(modifier = Modifier.height(AppTheme.dimensions.paddingXXLarge))
@@ -205,80 +209,11 @@ private fun Toggle(
     }
 }
 
-private val pipeCircumference = 20.dp
-private val pipeCircumferenceInner = 10.dp
-private val pipeWidth = 6.dp
-
-@Composable
-private fun Season(
-    season: Int,
-    isSelected: Boolean,
-    colour: Color,
-    clickSeason: (season: Int) -> Unit,
-    modifier: Modifier = Modifier,
-    showBottom: Boolean = false,
-    showTop: Boolean = false,
-) {
-    Row(modifier = modifier
-        .clickable(onClick = { clickSeason(season) })
-    ) {
-        Box(
-            Modifier
-                .align(Alignment.CenterVertically)
-                .padding(
-                    start = AppTheme.dimensions.paddingMedium,
-                    end = AppTheme.dimensions.paddingMedium
-                )
-                .fillMaxHeight()
-                .height(IntrinsicSize.Max)
-        ) {
-            Column(
-                modifier = Modifier
-                    .width(pipeWidth)
-                    .height(IntrinsicSize.Max)
-                    .fillMaxHeight()
-                    .offset(x = (pipeCircumference / 2f) - (pipeWidth / 2f))
-            ) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1f)
-                        .background(if (showTop) colour else Color.Transparent)
-                )
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1f)
-                        .background(if (showBottom) colour else Color.Transparent)
-                )
-            }
-            Box(modifier = Modifier
-                .align(Alignment.Center)
-                .size(pipeCircumference)
-                .clip(CircleShape)
-                .background(colour))
-            Box(modifier = Modifier
-                .align(Alignment.Center)
-                .size(pipeCircumferenceInner)
-                .clip(CircleShape)
-                .background(if (!isSelected) AppTheme.colors.backgroundPrimary else colour))
-        }
-        TextBody1(
-            modifier = Modifier
-                .align(Alignment.CenterVertically)
-                .padding(vertical = AppTheme.dimensions.paddingNSmall)
-                .weight(1f),
-            bold = true,
-            text = season.toString()
-        )
-    }
-}
-
 @Preview
 @Composable
 private fun PreviewLight() {
     AppThemePreview(isLight = true) {
-        MenuScreenImpl(
+        MenuScreen(
             seasonClicked = { },
             buttons = listOf(
                 MenuButtonItem.Button(R.string.ab_menu, R.drawable.ic_menu)
@@ -295,7 +230,7 @@ private fun PreviewLight() {
 @Composable
 private fun PreviewDark() {
     AppThemePreview(isLight = false) {
-        MenuScreenImpl(
+        MenuScreen(
             seasonClicked = { },
             buttons = listOf(
                 MenuButtonItem.Button(R.string.ab_menu, R.drawable.ic_menu)

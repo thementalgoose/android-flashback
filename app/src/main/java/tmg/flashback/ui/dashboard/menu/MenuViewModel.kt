@@ -40,16 +40,16 @@ class MenuViewModel(
     override val buttons: MutableLiveData<List<MenuButtonItem>> = MutableLiveData(
         listOf(
             MenuButtonItem.Button(
-                label = R.string.dashboard_season_list_extra_settings_title,
-                icon = R.drawable.nav_settings
+                label = R.string.dashboard_links_rss,
+                icon = R.drawable.dashboard_rss
             ),
             MenuButtonItem.Button(
-                label = R.string.dashboard_season_list_extra_rss_title,
-                icon = R.drawable.nav_rss
+                label = R.string.dashboard_links_settings,
+                icon = R.drawable.dashboard_settings
             ),
             MenuButtonItem.Button(
-                label = R.string.dashboard_season_list_extra_contact_title,
-                icon = R.drawable.ic_contact
+                label = R.string.dashboard_links_contact,
+                icon = R.drawable.dashboard_contact
             )
         )
     )
