@@ -1,6 +1,7 @@
 package tmg.flashback.stats.ui.dashboard.calendar
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -46,6 +47,7 @@ fun CalendarScreenVM(
     season: Int
 ) {
     val viewModel: CalendarViewModel by viewModel()
+    viewModel.inputs.load(season)
 
     val isRefreshing = viewModel.outputs.isRefreshing.observeAsState(false)
     val items = viewModel.outputs.items.observeAsState(emptyList())
@@ -70,35 +72,40 @@ fun CalendarScreen(
     season: Int,
     items: List<CalendarModel>
 ) {
-    LazyColumn(content = {
-        item(key = "header") {
-            Header(
-                text = season.toString(),
-                icon = when (showMenu) {
-                    true -> painterResource(id = R.drawable.ic_menu)
-                    false -> null
-                },
-                iconContentDescription = when (showMenu) {
-                    true -> stringResource(id = R.string.ab_menu)
-                    false -> null
-                },
-                actionUpClicked = { menuClicked?.invoke() }
-            )
-        }
-        items(items) { item ->
-            when (item) {
-                is CalendarModel.List -> {
-                    Schedule(model = item, itemClicked = {})
-                }
-                is CalendarModel.Month -> {
-                    Month(model = item)
-                }
-                is CalendarModel.Week -> {
-                    Week(model = item)
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(AppTheme.colors.backgroundPrimary),
+        content = {
+            item(key = "header") {
+                Header(
+                    text = season.toString(),
+                    icon = when (showMenu) {
+                        true -> painterResource(id = R.drawable.ic_menu)
+                        false -> null
+                    },
+                    iconContentDescription = when (showMenu) {
+                        true -> stringResource(id = R.string.ab_menu)
+                        false -> null
+                    },
+                    actionUpClicked = { menuClicked?.invoke() }
+                )
+            }
+            items(items) { item ->
+                when (item) {
+                    is CalendarModel.List -> {
+                        Schedule(model = item, itemClicked = {})
+                    }
+                    is CalendarModel.Month -> {
+                        Month(model = item)
+                    }
+                    is CalendarModel.Week -> {
+                        Week(model = item)
+                    }
                 }
             }
         }
-    })
+    )
 }
 
 @Composable

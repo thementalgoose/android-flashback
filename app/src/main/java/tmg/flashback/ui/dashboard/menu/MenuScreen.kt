@@ -31,20 +31,25 @@ import tmg.flashback.style.text.TextHeadline2
 import tmg.flashback.style.text.TextSection
 
 @Composable
-fun MenuScreenVM() {
+fun MenuScreenVM(
+    seasonClicked: (season: Int) -> Unit
+) {
     val viewModel by viewModel<MenuViewModel>()
 
     val buttons = viewModel.outputs.buttons.observeAsState(emptyList())
     val seasons = viewModel.outputs.season.observeAsState(emptyList())
     MenuScreen(
-        seasonClicked = viewModel.inputs::clickSeason,
+        seasonClicked = { season ->
+            viewModel.inputs.clickSeason(season)
+            seasonClicked(season)
+        },
         buttons = buttons.value,
         season = seasons.value
     )
 }
 
 @Composable
-private fun MenuScreen(
+fun MenuScreen(
     seasonClicked: (season: Int) -> Unit,
     buttons: List<MenuButtonItem>,
     season: List<MenuSeasonItem>,
@@ -84,6 +89,10 @@ private fun MenuScreen(
                         .clickable(onClick = {
                             seasonClicked(it.season)
                         })
+                        .fillMaxWidth()
+                        .padding(
+                            horizontal = AppTheme.dimensions.paddingMedium
+                        )
                 ) {
                     TextBody1(text = it.season.toString(), bold = true)
                 }

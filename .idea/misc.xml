@@ -320,6 +320,11 @@
         <entry key="../../../../layout/compose-model-1649455107960.xml" value="0.1" />
         <entry key="../../../../layout/compose-model-1649600310750.xml" value="0.335" />
         <entry key="../../../../layout/compose-model-1649603222181.xml" value="0.1" />
+        <entry key="../../../../layout/compose-model-1649621119070.xml" value="0.1" />
+        <entry key="../../../../layout/compose-model-1649621450852.xml" value="0.1" />
+        <entry key="../../../../layout/compose-model-1649621473414.xml" value="0.1" />
+        <entry key="../../../../layout/compose-model-1649621566657.xml" value="0.1" />
+        <entry key="../../../../layout/compose-model-1649621587594.xml" value="0.22605247101891396" />
         <entry key="../../../../layout/custom_preview.xml" value="0.2989583333333333" />
         <entry key="../../.gradle/caches/transforms-3/a6a4a4f12ed1535a895401ca5d29f3d1/transformed/jetified-coil-base-2.0.0-rc02/res/drawable/ic_100tb.xml" value="0.2685" />
         <entry key="../../Library/Android/sdk/platforms/android-31/data/res/drawable/progress_indeterminate_anim_large_material.xml" value="0.177" />
@@ -328,6 +333,8 @@
         <entry key="app/src/main/res/drawable/app_shortcut_search.xml" value="0.2222222222222222" />
         <entry key="app/src/main/res/drawable/dashboard_contact.xml" value="0.277" />
         <entry key="app/src/main/res/drawable/dashboard_darkmode.xml" value="0.277" />
+        <entry key="app/src/main/res/drawable/dashboard_nav_constructor.xml" value="0.227" />
+        <entry key="app/src/main/res/drawable/dashboard_nav_drivers.xml" value="0.227" />
         <entry key="app/src/main/res/drawable/dashboard_rss.xml" value="0.277" />
         <entry key="app/src/main/res/drawable/dashboard_settings.xml" value="0.277" />
         <entry key="app/src/main/res/drawable/ic_close.xml" value="0.3765625" />
@@ -522,6 +529,9 @@
         <entry key="statistics/src/main/res/drawable/ic_star_outline.xml" value="0.14375" />
         <entry key="statistics/src/main/res/drawable/ic_status_radiator.xml" value="0.14375" />
         <entry key="statistics/src/main/res/drawable/ic_youtube.xml" value="0.1775" />
+        <entry key="statistics/src/main/res/drawable/nav_calendar.xml" value="0.227" />
+        <entry key="statistics/src/main/res/drawable/nav_constructor.xml" value="0.227" />
+        <entry key="statistics/src/main/res/drawable/nav_driver.xml" value="0.227" />
         <entry key="statistics/src/main/res/drawable/nav_rss.xml" value="0.277" />
         <entry key="statistics/src/main/res/drawable/nav_search.xml" value="0.18802083333333333" />
         <entry key="statistics/src/main/res/drawable/nav_settings.xml" value="0.3765625" />

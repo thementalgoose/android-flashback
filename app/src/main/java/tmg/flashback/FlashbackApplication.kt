@@ -17,6 +17,7 @@ import tmg.flashback.notifications.di.notificationModule
 import tmg.flashback.regulations.di.regulationsModule
 import tmg.flashback.rss.di.rssModule
 import tmg.flashback.statistics.di.statisticsModule
+import tmg.flashback.stats.di.statsModule
 import tmg.flashback.ui.di.uiModule
 
 class FlashbackApplication: Application() {
@@ -49,6 +50,7 @@ class FlashbackApplication: Application() {
                 uiModule
             )
             modules(statisticsModule)
+            modules(statsModule)
         }
 
         // Run startup

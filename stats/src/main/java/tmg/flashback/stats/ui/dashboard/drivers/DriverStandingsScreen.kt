@@ -48,6 +48,7 @@ fun DriverStandingsScreenVM(
     season: Int
 ) {
     val viewModel: DriversStandingViewModel by viewModel()
+    viewModel.inputs.load(season)
 
     val isRefreshing = viewModel.outputs.isRefreshing.observeAsState(false)
     val items = viewModel.outputs.items.observeAsState(emptyList())
@@ -71,31 +72,36 @@ fun DriverStandingsScreen(
     season: Int,
     items: List<DriverStandingsModel>
 ) {
-    LazyColumn(content = {
-        item(key = "header") {
-            Header(
-                text = stringResource(id = R.string.season_standings_driver, season.toString()),
-                icon = when (showMenu) {
-                    true -> painterResource(id = R.drawable.ic_menu)
-                    false -> null
-                },
-                iconContentDescription = when (showMenu) {
-                    true -> stringResource(id = R.string.ab_menu)
-                    false -> null
-                },
-                actionUpClicked = {
-                    menuClicked?.invoke()
-                }
-            )
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(AppTheme.colors.backgroundPrimary),
+        content = {
+            item(key = "header") {
+                Header(
+                    text = stringResource(id = R.string.season_standings_driver, season.toString()),
+                    icon = when (showMenu) {
+                        true -> painterResource(id = R.drawable.ic_menu)
+                        false -> null
+                    },
+                    iconContentDescription = when (showMenu) {
+                        true -> stringResource(id = R.string.ab_menu)
+                        false -> null
+                    },
+                    actionUpClicked = {
+                        menuClicked?.invoke()
+                    }
+                )
+            }
+            items(items, key = { it.id }) { item ->
+                DriverStandings(
+                    model = item,
+                    itemClicked = { },
+                    maxPoints = (items.maxOfOrNull { it.standings.points } ?: 625.0),
+                )
+            }
         }
-        items(items, key = { it.id }) { item ->
-            DriverStandings(
-                model = item,
-                itemClicked = { },
-                maxPoints = (items.maxOfOrNull { it.standings.points } ?: 625.0),
-            )
-        }
-    })
+    )
 }
 
 @Composable
