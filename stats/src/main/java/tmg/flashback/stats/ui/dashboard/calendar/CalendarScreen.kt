@@ -174,7 +174,7 @@ private fun Schedule(
                         .fillMaxWidth()
                         .padding(top = 2.dp)
                 )
-                TextBody1(
+                TextBody2(
                     text = model.model.date.format("'${model.model.date.dayOfMonth.ordinalAbbreviation}' MMMM") ?: "",
                     modifier = Modifier
                         .fillMaxWidth()

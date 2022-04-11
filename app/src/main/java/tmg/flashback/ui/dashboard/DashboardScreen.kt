@@ -41,7 +41,9 @@ fun DashboardScreenVM(
     })
 
     val tabState = viewModel.outputs.currentTab.observeAsState()
-
+    DashboardScreen(
+        windowSize = windowSize
+    )
 }
 
 @Composable

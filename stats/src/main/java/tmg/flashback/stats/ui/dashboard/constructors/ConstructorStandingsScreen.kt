@@ -144,6 +144,7 @@ private fun ConstructorStandings(
             ProgressBar(
                 modifier = Modifier
                     .weight(2f)
+                    .height(48.dp)
                     .fillMaxHeight(),
                 endProgress = progress,
                 barColor = model.standings.constructor.colour,
