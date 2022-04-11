@@ -105,11 +105,11 @@ fun DriverStandingsScreen(
 }
 
 @Composable
-fun DriverStandings(
+fun DriverStandingsCard(
     model: DriverStandingsModel,
     itemClicked: (DriverStandingsModel) -> Unit,
     maxPoints: Double,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     Container(
         modifier = Modifier.padding(
@@ -118,87 +118,102 @@ fun DriverStandings(
         ),
         isSelected = model.isSelected
     ) {
-        Row(
-            modifier = modifier
-                .clickable(onClick = {
-                    itemClicked(model)
-                }),
-            verticalAlignment = Alignment.CenterVertically,
+        DriverStandings(
+            model = model,
+            itemClicked = itemClicked,
+            maxPoints = maxPoints
+        )
+    }
+}
+
+@Composable
+fun DriverStandings(
+    model: DriverStandingsModel,
+    itemClicked: (DriverStandingsModel) -> Unit,
+    maxPoints: Double,
+    modifier: Modifier = Modifier,
+) {
+    Row(
+        modifier = modifier
+            .clickable(onClick = {
+                itemClicked(model)
+            }),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        TextTitle(
+            text = model.standings.championshipPosition?.toString() ?: "-",
+            bold = true,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.width(36.dp)
+        )
+        Box(modifier = Modifier
+            .size(36.dp)
+            .clip(RoundedCornerShape(AppTheme.dimensions.radiusSmall))
+            .background(AppTheme.colors.backgroundSecondary)
         ) {
-            TextTitle(
-                text = model.standings.championshipPosition?.toString() ?: "-",
-                bold = true,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.width(36.dp)
+            AsyncImage(
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop,
+                model = model.standings.driver.photoUrl ?: R.drawable.unknown_avatar,
+                contentDescription = null
             )
-            Box(modifier = Modifier
-                .size(36.dp)
-                .clip(RoundedCornerShape(AppTheme.dimensions.radiusSmall))
-                .background(AppTheme.colors.backgroundSecondary)
-            ) {
-                AsyncImage(
-                    modifier = Modifier.fillMaxSize(),
-                    contentScale = ContentScale.Crop,
-                    model = model.standings.driver.photoUrl ?: R.drawable.unknown_avatar,
-                    contentDescription = null
+        }
+        Row(modifier = Modifier
+            .padding(
+                top = AppTheme.dimensions.paddingSmall,
+                start = AppTheme.dimensions.paddingSmall,
+                end = AppTheme.dimensions.paddingMedium,
+                bottom = AppTheme.dimensions.paddingSmall
+            )
+            .wrapContentHeight()
+        ) {
+            Column(modifier = Modifier.weight(2f)) {
+                TextTitle(
+                    text = model.standings.driver.name,
+                    bold = true,
+                    modifier = Modifier.fillMaxWidth()
                 )
-            }
-            Row(modifier = Modifier
-                .padding(
-                    top = AppTheme.dimensions.paddingSmall,
-                    start = AppTheme.dimensions.paddingSmall,
-                    end = AppTheme.dimensions.paddingMedium,
-                    bottom = AppTheme.dimensions.paddingSmall
-                )
-                .wrapContentHeight()
-            ) {
-                Column(modifier = Modifier.weight(2f)) {
-                    TextTitle(
-                        text = model.standings.driver.name,
-                        bold = true,
+                Spacer(modifier = Modifier.height(2.dp))
+                Row(modifier = Modifier
+                    .fillMaxHeight()
+                    .padding(
+                        vertical = AppTheme.dimensions.paddingXXSmall,
+                    )
+                ) {
+                    val resourceId = when (isInPreview()) {
+                        true -> R.drawable.gb
+                        false -> LocalContext.current.getFlagResourceAlpha3(model.standings.driver.nationalityISO)
+                    }
+                    Image(
+                        modifier = Modifier.size(16.dp),
+                        painter = painterResource(id = resourceId),
+                        contentDescription = null,
+                        contentScale = ContentScale.Fit,
+                    )
+                    Spacer(Modifier.width(4.dp))
+                    TextBody2(
+                        text = model.standings.constructors.joinToString { it.constructor.name },
                         modifier = Modifier.fillMaxWidth()
                     )
-                    Spacer(modifier = Modifier.height(2.dp))
-                    Row(modifier = Modifier
-                        .fillMaxHeight()
-                        .padding(
-                            vertical = AppTheme.dimensions.paddingXXSmall,
-                        )
-                    ) {
-                        val resourceId = when (isInPreview()) {
-                            true -> R.drawable.gb
-                            false -> LocalContext.current.getFlagResourceAlpha3(model.standings.driver.nationalityISO)
-                        }
-                        Image(
-                            modifier = Modifier.size(16.dp),
-                            painter = painterResource(id = resourceId),
-                            contentDescription = null,
-                            contentScale = ContentScale.Fit,
-                        )
-                        Spacer(Modifier.width(4.dp))
-                        TextBody2(
-                            text = model.standings.constructors.joinToString { it.constructor.name },
-                            modifier = Modifier.fillMaxWidth()
-                        )
+                }
+            }
+            Spacer(Modifier.width(AppTheme.dimensions.paddingSmall))
+            val progress = (model.standings.points / maxPoints).toFloat().coerceIn(0f, 1f)
+            ProgressBar(
+                modifier = Modifier
+                    .weight(2f)
+                    .height(48.dp)
+                    .fillMaxHeight(),
+                endProgress = progress,
+                barColor = model.standings.constructors.lastOrNull()?.constructor?.colour ?: AppTheme.colors.primary,
+                label = {
+                    when (it) {
+                        0f -> "0"
+                        progress -> model.standings.points.pointsDisplay()
+                        else -> (it * maxPoints).roundToInt().toString()
                     }
                 }
-                Spacer(Modifier.width(AppTheme.dimensions.paddingSmall))
-                val progress = (model.standings.points / maxPoints).toFloat().coerceIn(0f, 1f)
-                ProgressBar(
-                    modifier = Modifier
-                        .weight(2f)
-                        .fillMaxHeight(),
-                    endProgress = progress,
-                    barColor = model.standings.constructors.lastOrNull()?.constructor?.colour ?: AppTheme.colors.primary,
-                    label = {
-                        when (it) {
-                            0f -> "0"
-                            progress -> model.standings.points.pointsDisplay()
-                            else -> (it * maxPoints).roundToInt().toString()
-                        }
-                    }
-                )
-            }
+            )
         }
     }
 }
