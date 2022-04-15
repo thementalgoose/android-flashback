@@ -25,4 +25,7 @@ class ForceUpgradeRepository(
         get() = configManager
                 .getJson(keyForceUpgrade, ForceUpgradeJson.serializer())
                 ?.convert()
+
+    val shouldForceUpgrade: Boolean
+        get() = forceUpgrade != null
 }
