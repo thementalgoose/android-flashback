@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.controllers.HomeController
+import tmg.flashback.statistics.usecases.DefaultSeasonUseCase
 import tmg.flashback.testutils.assertExpectedOrder
 import tmg.flashback.testutils.findPref
 import tmg.flashback.testutils.findSwitch
@@ -17,18 +18,19 @@ import tmg.testutils.livedata.test
 internal class SettingsHomeViewModelTest: BaseTest() {
 
     private val mockHomeController: HomeController = mockk(relaxed = true)
+    private val mockDefaultSeasonUseCase: DefaultSeasonUseCase = mockk(relaxed = true)
 
     private lateinit var sut: SettingsHomeViewModel
 
     @BeforeEach
     internal fun setUp() {
-        every { mockHomeController.isUserDefinedValueSet } returns false
+        every { mockDefaultSeasonUseCase.isUserDefinedValueSet } returns false
         every { mockHomeController.allExpanded } returns false
         every { mockHomeController.favouritesExpanded } returns false
     }
 
     private fun initSUT() {
-        sut = SettingsHomeViewModel(mockHomeController)
+        sut = SettingsHomeViewModel(mockDefaultSeasonUseCase, mockHomeController)
     }
 
     @Test
@@ -51,7 +53,7 @@ internal class SettingsHomeViewModelTest: BaseTest() {
 
     @Test
     fun `initial model list is expected when user defined value true`() {
-        every { mockHomeController.isUserDefinedValueSet } returns true
+        every { mockDefaultSeasonUseCase.isUserDefinedValueSet } returns true
 
         initSUT()
         val expected = listOf(
@@ -71,7 +73,7 @@ internal class SettingsHomeViewModelTest: BaseTest() {
 
     @Test
     fun `clicking toggle for clearing default season launches event`() {
-        every { mockHomeController.isUserDefinedValueSet } returns true
+        every { mockDefaultSeasonUseCase.isUserDefinedValueSet } returns true
         initSUT()
         sut.clickPreference(sut.models.findPref(R.string.settings_default_season_title))
         sut.outputs.defaultSeasonChanged.test {
@@ -81,11 +83,11 @@ internal class SettingsHomeViewModelTest: BaseTest() {
 
     @Test
     fun `clicking toggle for clearing default season clears toggle`() {
-        every { mockHomeController.isUserDefinedValueSet } returns true
+        every { mockDefaultSeasonUseCase.isUserDefinedValueSet } returns true
         initSUT()
         sut.clickPreference(sut.models.findPref(R.string.settings_default_season_title))
         verify {
-            mockHomeController.clearDefault()
+            mockDefaultSeasonUseCase.clearDefault()
         }
     }
 
