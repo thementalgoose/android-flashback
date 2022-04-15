@@ -7,11 +7,14 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import tmg.flashback.formula1.model.SeasonConstructorStandingSeason
 import tmg.flashback.statistics.repo.SeasonRepository
+import tmg.flashback.stats.di.StatsNavigator
 import tmg.flashback.stats.usecases.FetchSeasonUseCase
 
 interface ConstructorsStandingViewModelInputs {
     fun refresh()
     fun load(season: Int)
+
+    fun clickItem(model: ConstructorStandingsModel)
 }
 
 interface ConstructorsStandingViewModelOutputs {
@@ -22,6 +25,7 @@ interface ConstructorsStandingViewModelOutputs {
 class ConstructorsStandingViewModel(
     private val seasonRepository: SeasonRepository,
     private val fetchSeasonUseCase: FetchSeasonUseCase,
+    private val statsNavigator: StatsNavigator,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), ConstructorsStandingViewModelInputs, ConstructorsStandingViewModelOutputs {
 
@@ -67,5 +71,12 @@ class ConstructorsStandingViewModel(
             fetchSeasonUseCase.fetchSeason(season)
             isRefreshing.postValue(false)
         }
+    }
+
+    override fun clickItem(model: ConstructorStandingsModel) {
+        statsNavigator.goToConstructorOverview(
+            model.standings.constructor.id,
+            model.standings.constructor.name
+        )
     }
 }

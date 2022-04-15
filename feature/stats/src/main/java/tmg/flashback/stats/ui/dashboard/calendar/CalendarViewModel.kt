@@ -5,14 +5,18 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import org.threeten.bp.LocalDate
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.statistics.repo.OverviewRepository
+import tmg.flashback.stats.di.StatsNavigator
 import tmg.flashback.stats.usecases.DefaultSeasonUseCase
 import tmg.flashback.stats.usecases.FetchSeasonUseCase
 
 interface CalendarViewModelInputs {
     fun refresh()
     fun load(season: Int)
+
+    fun clickItem(model: CalendarModel)
 }
 
 interface CalendarViewModelOutputs {
@@ -23,6 +27,7 @@ interface CalendarViewModelOutputs {
 class CalendarViewModel(
     private val fetchSeasonUseCase: FetchSeasonUseCase,
     private val overviewRepository: OverviewRepository,
+    private val statsNavigator: StatsNavigator,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), CalendarViewModelInputs, CalendarViewModelOutputs {
 
@@ -68,5 +73,24 @@ class CalendarViewModel(
             fetchSeasonUseCase.fetchSeason(season)
             isRefreshing.postValue(false)
         }
+    }
+
+    override fun clickItem(model: CalendarModel) {
+        when (model) {
+            is CalendarModel.List -> statsNavigator.goToRace(
+                season = model.model.season,
+                round = model.model.round,
+                circuitId = model.model.circuitId,
+                defaultToRace = model.model.hasResults,
+                country = model.model.country,
+                raceName = model.model.raceName,
+                trackName = model.model.circuitName,
+                countryISO = model.model.countryISO,
+                date = model.model.date
+            )
+            is CalendarModel.Month -> TODO()
+            is CalendarModel.Week -> TODO()
+        }
+
     }
 }

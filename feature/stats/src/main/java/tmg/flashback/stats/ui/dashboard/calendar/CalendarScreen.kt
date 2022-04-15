@@ -58,6 +58,7 @@ fun CalendarScreenVM(
         CalendarScreen(
             showMenu = showMenu,
             menuClicked = menuClicked,
+            itemClicked = viewModel.inputs::clickItem,
             season = season,
             items = items.value ?: emptyList()
         )
@@ -69,6 +70,7 @@ fun CalendarScreenVM(
 fun CalendarScreen(
     showMenu: Boolean,
     menuClicked: (() -> Unit)? = null,
+    itemClicked: (CalendarModel) -> Unit,
     season: Int,
     items: List<CalendarModel>
 ) {
@@ -94,7 +96,7 @@ fun CalendarScreen(
             items(items) { item ->
                 when (item) {
                     is CalendarModel.List -> {
-                        Schedule(model = item, itemClicked = {})
+                        Schedule(model = item, itemClicked = itemClicked)
                     }
                     is CalendarModel.Month -> {
                         Month(model = item)

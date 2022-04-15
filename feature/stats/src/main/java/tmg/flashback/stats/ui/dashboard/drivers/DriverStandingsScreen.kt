@@ -59,6 +59,7 @@ fun DriverStandingsScreenVM(
         DriverStandingsScreen(
             showMenu = showMenu,
             menuClicked = menuClicked,
+            itemClicked = viewModel.inputs::clickItem,
             season = season,
             items = items.value ?: emptyList()
         )
@@ -69,6 +70,7 @@ fun DriverStandingsScreenVM(
 fun DriverStandingsScreen(
     showMenu: Boolean,
     menuClicked: (() -> Unit)? = null,
+    itemClicked: (DriverStandingsModel) -> Unit,
     season: Int,
     items: List<DriverStandingsModel>
 ) {
@@ -96,7 +98,7 @@ fun DriverStandingsScreen(
             items(items, key = { it.id }) { item ->
                 DriverStandings(
                     model = item,
-                    itemClicked = { },
+                    itemClicked = itemClicked,
                     maxPoints = (items.maxOfOrNull { it.standings.points } ?: 625.0),
                 )
             }
@@ -227,6 +229,7 @@ private fun PreviewLight(
         DriverStandingsScreen(
             showMenu = true,
             season = 2021,
+            itemClicked = { },
             items = List(5) {
                 DriverStandingsModel(
                     standings = driverStandings,
@@ -247,6 +250,7 @@ private fun PreviewDark(
         DriverStandingsScreen(
             showMenu = false,
             season = 2021,
+            itemClicked = { },
             items = List(5) {
                 DriverStandingsModel(
                     standings = driverStandings,
