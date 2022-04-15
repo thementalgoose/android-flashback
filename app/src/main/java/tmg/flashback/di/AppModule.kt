@@ -6,7 +6,7 @@ import org.koin.dsl.module
 import tmg.flashback.DebugController
 import tmg.flashback.FlashbackStartup
 import tmg.flashback.device.managers.BuildConfigManager
-import tmg.flashback.managers.AppNavigationProvider
+import tmg.flashback.managers.AppApplicationNavigationProvider
 import tmg.flashback.managers.AppNetworkConfigManager
 import tmg.flashback.managers.AppPreferencesManager
 import tmg.flashback.managers.AppStyleManager
@@ -21,7 +21,7 @@ import tmg.flashback.ui.dashboard.DashboardViewModel
 import tmg.flashback.ui.dashboard.HomeViewModel
 import tmg.flashback.ui.dashboard.list.ListViewModel
 import tmg.flashback.ui.managers.StyleManager
-import tmg.flashback.ui.navigation.NavigationProvider
+import tmg.flashback.ui.navigation.ApplicationNavigationProvider
 import tmg.flashback.ui.settings.SettingsAllViewModel
 import tmg.flashback.ui.sync.SyncViewModel
 
@@ -40,8 +40,8 @@ val appModule = module {
     single<PreferenceManager> { AppPreferencesManager(get()) }
     single<StyleManager> { AppStyleManager(get(), get()) }
 
-    single<NavigationProvider> { AppNavigationProvider(get(), get(), get(), get()) }
-    single<NotificationNavigationProvider> { AppNavigationProvider(get(), get(), get(), get()) }
+    single<ApplicationNavigationProvider> { AppApplicationNavigationProvider(get(), get(), get(), get()) }
+    single<NotificationNavigationProvider> { AppApplicationNavigationProvider(get(), get(), get(), get()) }
 
     single<BuildConfigManager> { AppBuildConfigManager() }
     single<WidgetManager> { AppWidgetManager(get()) }

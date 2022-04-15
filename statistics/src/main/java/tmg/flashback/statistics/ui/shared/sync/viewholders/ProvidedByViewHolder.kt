@@ -5,12 +5,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.ViewSharedProvidedBinding
-import tmg.flashback.ui.navigation.NavigationProvider
+import tmg.flashback.ui.navigation.ApplicationNavigationProvider
 import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.views.getString
 
 class ProvidedByViewHolder(
-    private val navigationManager: NavigationProvider,
+    private val applicationNavigationManager: ApplicationNavigationProvider,
     private val binding: ViewSharedProvidedBinding
 ) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
 
@@ -29,7 +29,7 @@ class ProvidedByViewHolder(
 
     override fun onClick(p0: View?) {
         itemView.context.apply {
-            startActivity(navigationManager.aboutAppIntent(this))
+            startActivity(applicationNavigationManager.aboutAppIntent(this))
         }
     }
 }

@@ -23,7 +23,7 @@ interface RSSSettingsViewModelOutputs {
 
 //endregion
 
-class RSSSettingsViewModel(
+internal class RSSSettingsViewModel(
         private val rssRepository: RSSRepository
 ): SettingsViewModel(), RSSSettingsViewModelInputs, RSSSettingsViewModelOutputs {
 
