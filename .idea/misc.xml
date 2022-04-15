@@ -28,8 +28,11 @@
         <entry key="../../../../layout/compose-model-1650044202190.xml" value="0.1" />
         <entry key="../../../../layout/compose-model-1650044771077.xml" value="0.15489130434782608" />
         <entry key="../../../../layout/compose-model-1650044886287.xml" value="0.15489130434782608" />
+        <entry key="../../../../layout/compose-model-1650045403533.xml" value="1.0" />
+        <entry key="../../../../layout/compose-model-1650050064268.xml" value="0.5" />
         <entry key="feature/releasenotes/src/main/res/layout/fragment_bottom_sheet_release_notes.xml" value="0.1752786220871327" />
         <entry key="feature/settings/src/main/res/layout/fragment_bottom_sheet_release_notes.xml" value="0.1752786220871327" />
+        <entry key="feature/stats/src/main/res/drawable/ic_banner_arrow.xml" value="0.1635" />
       </map>
     </option>
   </component>

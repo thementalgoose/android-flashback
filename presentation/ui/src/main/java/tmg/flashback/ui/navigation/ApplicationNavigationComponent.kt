@@ -15,4 +15,6 @@ interface ApplicationNavigationComponent {
 
     fun settings()
     fun settingsIntent(context: Context): Intent
+
+    fun openUrl(url: String)
 }
