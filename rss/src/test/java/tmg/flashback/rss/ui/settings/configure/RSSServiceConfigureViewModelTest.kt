@@ -14,7 +14,7 @@ import tmg.testutils.livedata.assertDataEventValue
 import tmg.testutils.livedata.assertListDoesNotMatchItem
 import tmg.testutils.livedata.test
 
-class RSSServiceConfigureViewModelTest: BaseTest() {
+internal class RSSServiceConfigureViewModelTest: BaseTest() {
 
     lateinit var sut: RSSConfigureViewModel
 

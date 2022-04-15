@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
 
-class ResponseTest {
+internal class ResponseTest {
 
     lateinit var underTest: Response<String>
 

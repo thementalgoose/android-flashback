@@ -12,7 +12,7 @@ import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertEventFired
 import tmg.testutils.livedata.test
 
-class RSSServiceSettingsViewModelTest: BaseTest() {
+internal class RSSSettingsViewModelTest: BaseTest() {
 
     private val mockRssRepository: RSSRepository = mockk(relaxed = true)
 
