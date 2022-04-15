@@ -10,8 +10,9 @@ import tmg.flashback.statistics.repository.HomeRepository
 import tmg.flashback.statistics.usecases.DefaultSeasonUseCase
 import tmg.flashback.ui.managers.StyleManager
 import tmg.flashback.ui.model.NightMode
+import tmg.flashback.ui.navigation.ApplicationNavigationComponent
 import tmg.flashback.ui.usecases.ChangeNightModeUseCase
-import tmg.utilities.lifecycle.SingleLiveEvent
+import tmg.flashback.ui2.settings.SettingsAllActivity
 
 //region Inputs
 
@@ -38,7 +39,8 @@ class MenuViewModel(
     private val defaultSeasonUseCase: DefaultSeasonUseCase,
     private val changeNightModeUseCase: ChangeNightModeUseCase,
     private val styleManager: StyleManager,
-    private val rssNavigationComponent: RssNavigationComponent
+    private val rssNavigationComponent: RssNavigationComponent,
+    private val navigationComponent: ApplicationNavigationComponent
 ) : ViewModel(), MenuViewModelInputs, MenuViewModelOutputs {
 
     val inputs: MenuViewModelInputs = this
@@ -72,13 +74,13 @@ class MenuViewModel(
     override fun clickButton(button: MenuItems.Button) {
         when (button) {
             MenuItems.Button.Contact -> {
-                // TODO
+                navigationComponent.aboutApp()
             }
             MenuItems.Button.Rss -> {
-                rssNavigationComponent.rssLaunch()
+                rssNavigationComponent.rss()
             }
             MenuItems.Button.Settings -> {
-                // TODO
+                navigationComponent.settings()
             }
         }
         links.value = getLinks()

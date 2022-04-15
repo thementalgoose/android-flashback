@@ -17,7 +17,7 @@ import tmg.flashback.databinding.FragmentDashboardListBinding
 import tmg.flashback.regulations.ui.FormatOverviewActivity
 import tmg.flashback.statistics.ui.dashboard.onboarding.OnboardingNotificationBottomSheetFragment
 import tmg.flashback.ui.base.BaseFragment
-import tmg.flashback.ui.navigation.ApplicationNavigationProvider
+import tmg.flashback.ui.navigation.ApplicationNavigationComponent
 import tmg.flashback.ui2.dashboard.DashboardNavigationCallback
 import tmg.flashback.ui2.settings.SettingsAllActivity
 import tmg.utilities.extensions.observe
@@ -29,7 +29,7 @@ class ListFragment: BaseFragment() {
     private val viewModel: ListViewModel by viewModel()
     private val binding by viewInflateBinding(FragmentDashboardListBinding::inflate)
 
-    private val applicationNavigationProvider: ApplicationNavigationProvider by inject()
+    private val applicationNavigationComponent: ApplicationNavigationComponent by inject()
     private val debugController: DebugController by inject()
     private val rssNavigationComponent: RssNavigationComponent by inject()
 
@@ -97,13 +97,13 @@ class ListFragment: BaseFragment() {
 
         observeEvent(viewModel.outputs.openRss) {
             context?.let {
-                rssNavigationComponent.rssLaunch()
+                rssNavigationComponent.rss()
             }
         }
 
         observeEvent(viewModel.outputs.openContact) {
             context?.let {
-                startActivity(applicationNavigationProvider.aboutAppIntent(it))
+                startActivity(applicationNavigationComponent.aboutAppIntent(it))
             }
         }
 

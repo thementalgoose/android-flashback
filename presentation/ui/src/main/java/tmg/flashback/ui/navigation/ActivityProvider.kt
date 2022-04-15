@@ -5,6 +5,7 @@ import android.app.Application
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import tmg.flashback.crash_reporting.controllers.CrashController
 import java.lang.ref.WeakReference
 
@@ -72,6 +73,7 @@ class ActivityProvider(
     @Synchronized
     private fun update(activity: Activity, lifecycleState: String) {
         this._activity = WeakReference(activity)
+        Log.i("Activity", "Top Activity updated to ${activity.javaClass.simpleName}")
         crashController.log("Activity ${activity.javaClass.simpleName}@${Integer.toHexString(activity.hashCode())} (event=${lifecycleState})")
     }
 }

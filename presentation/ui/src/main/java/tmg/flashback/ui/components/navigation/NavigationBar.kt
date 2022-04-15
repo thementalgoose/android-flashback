@@ -17,15 +17,22 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 
-private val selectedPillWidth: Dp = 48.dp
+private val selectedPillWidth: Dp = 64.dp
+private val pillHeight: Dp = 28.dp
 private val iconSize: Dp = 24.dp
+private val appBarHeight: Dp = 62.dp
+
+private val fontSize: TextUnit = 12.sp
 
 @Composable
 fun NavigationBar(
@@ -34,7 +41,8 @@ fun NavigationBar(
     modifier: Modifier = Modifier,
 ) {
     BottomAppBar(
-        modifier = modifier,
+        modifier = modifier
+            .height(appBarHeight),
         backgroundColor = AppTheme.colors.backgroundNav
     ) {
         list.forEach { item ->
@@ -51,7 +59,14 @@ fun NavigationBar(
                 },
                 label = {
                     item.label?.let { label ->
-                        Text(text = stringResource(id = label), fontSize = 9.sp)
+                        Text(
+                            text = stringResource(id = label),
+                            fontSize = fontSize,
+                            textAlign = TextAlign.Center,
+                            style = AppTheme.typography.body1.copy(
+                                fontWeight = FontWeight.Bold
+                            )
+                        )
                     }
                 },
                 selectedContentColor = AppTheme.colors.primary,
@@ -80,13 +95,13 @@ private fun SelectedIcon(
 
     Box(modifier = modifier
         .width(selectedPillWidth)
-        .height(iconSize)
+        .height(pillHeight)
     ) {
         Box(modifier = Modifier
             .width(selectedWidth.value)
-            .height(iconSize)
+            .height(pillHeight)
             .offset(x = (selectedPillWidth - selectedWidth.value) / 2)
-            .clip(RoundedCornerShape(iconSize / 2))
+            .clip(RoundedCornerShape(pillHeight / 2))
             .background(backgroundColor.value))
         Icon(
             modifier = Modifier
