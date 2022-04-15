@@ -6,7 +6,6 @@ import io.mockk.verify
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import tmg.flashback.common.constants.ReleaseNotes
-import tmg.flashback.common.controllers.ReleaseNotesController
 import tmg.flashback.common.repository.ReleaseNotesRepository
 import tmg.flashback.device.managers.BuildConfigManager
 
