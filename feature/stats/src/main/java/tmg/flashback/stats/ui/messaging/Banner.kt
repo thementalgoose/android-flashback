@@ -27,22 +27,35 @@ fun Banner(
 
     val navigationComponent: ApplicationNavigationComponent by inject()
 
-    Banner(
-        message = banner.message,
-        modifier = modifier.clickable(onClick = {
-            navigationComponent.openUrl(banner.url ?: "")
-        })
-    )
+    if (banner.url != null) {
+        Banner(
+            message = banner.message,
+            showLink = true,
+            modifier = modifier.clickable(onClick = {
+                navigationComponent.openUrl(banner.url)
+            })
+        )
+    } else {
+        Banner(
+            message = banner.message,
+            showLink = false
+        )
+    }
 }
 
 @Composable
 private fun Banner(
     message: String,
+    showLink: Boolean,
     modifier: Modifier = Modifier
 ) {
     Container(
-        isSelected = true,
+        isOutlined = true,
         modifier = modifier
+            .padding(
+                vertical = AppTheme.dimensions.paddingXSmall,
+                horizontal = AppTheme.dimensions.paddingMedium
+            )
             .fillMaxWidth()
     ) {
         Row(modifier = Modifier
@@ -56,13 +69,15 @@ private fun Banner(
                 text = message,
                 modifier = Modifier.weight(1f)
             )
-            Spacer(Modifier.width(AppTheme.dimensions.paddingMedium))
-            Icon(
-                modifier = Modifier.size(16.dp),
-                painter = painterResource(id = R.drawable.ic_banner_link),
-                tint = AppTheme.colors.contentTertiary,
-                contentDescription = null
-            )
+            if (showLink) {
+                Spacer(Modifier.width(AppTheme.dimensions.paddingMedium))
+                Icon(
+                    modifier = Modifier.size(16.dp),
+                    painter = painterResource(id = R.drawable.ic_banner_link),
+                    tint = AppTheme.colors.contentTertiary,
+                    contentDescription = null
+                )
+            }
         }
     }
 }
@@ -71,11 +86,10 @@ private fun Banner(
 @Composable
 private fun PreviewLight() {
     AppThemePreview(isLight = true) {
-        Column(Modifier.padding(16.dp)) {
-            Banner(
-                message = "We stand with Ukraine"
-            )
-        }
+        Banner(
+            message = "We stand with Ukraine",
+            showLink = false
+        )
     }
 }
 
@@ -83,10 +97,9 @@ private fun PreviewLight() {
 @Composable
 private fun PreviewDark() {
     AppThemePreview(isLight = false) {
-        Column(Modifier.padding(16.dp)) {
-            Banner(
-                message = "We stand with Ukraine"
-            )
-        }
+        Banner(
+            message = "We stand with Ukraine",
+            showLink = true
+        )
     }
 }
