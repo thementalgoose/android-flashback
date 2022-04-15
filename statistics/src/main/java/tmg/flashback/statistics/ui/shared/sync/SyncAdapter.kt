@@ -9,12 +9,12 @@ import tmg.flashback.statistics.R
 import tmg.flashback.statistics.controllers.HomeController
 import tmg.flashback.statistics.databinding.*
 import tmg.flashback.statistics.ui.shared.sync.viewholders.*
-import tmg.flashback.ui.navigation.NavigationProvider
+import tmg.flashback.ui.navigation.ApplicationNavigationProvider
 
 
 abstract class SyncAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHolder>(), KoinComponent {
 
-    private val navigationProvider: NavigationProvider by inject()
+    private val applicationNavigationProvider: ApplicationNavigationProvider by inject()
     private val homeController: HomeController by inject()
 
     open val providedByAtTopIndex: Int = 0
@@ -65,7 +65,7 @@ abstract class SyncAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
                     ViewSharedConstructorChampionshipNotAwardedBinding.inflate(layoutInflater, parent, false)
             )
             R.layout.view_shared_provided -> ProvidedByViewHolder(
-                    navigationProvider,
+                    applicationNavigationProvider,
                     ViewSharedProvidedBinding.inflate(layoutInflater, parent, false)
             )
             R.layout.view_shared_skeleton -> SkeletonViewHolder(

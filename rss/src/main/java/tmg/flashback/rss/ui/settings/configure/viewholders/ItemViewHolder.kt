@@ -15,7 +15,7 @@ import tmg.utilities.extensions.views.show
 import java.net.MalformedURLException
 import java.net.URL
 
-class ItemViewHolder(
+internal class ItemViewHolder(
     private val removeItem: (String) -> Unit,
     private val visitWebsite: (SupportedArticleSource) -> Unit,
     private val binding: ViewRssConfigureItemBinding

@@ -6,7 +6,7 @@ import tmg.flashback.rss.databinding.ViewRssConfigureHeaderBinding
 import tmg.flashback.rss.ui.settings.configure.RSSConfigureItem
 import tmg.utilities.extensions.views.show
 
-class HeaderViewHolder(
+internal class HeaderViewHolder(
     private val binding: ViewRssConfigureHeaderBinding
 ): RecyclerView.ViewHolder(binding.root) {
     fun bind(item: RSSConfigureItem.Header) {

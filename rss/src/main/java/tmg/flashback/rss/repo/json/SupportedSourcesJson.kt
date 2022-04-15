@@ -5,13 +5,13 @@ import kotlinx.serialization.Serializable
 
 @Keep
 @Serializable
-data class SupportedSourcesJson(
+internal data class SupportedSourcesJson(
     val sources: List<SupportedSourceJson>? = null
 )
 
 @Keep
 @Serializable
-data class SupportedSourceJson(
+internal data class SupportedSourceJson(
     val rssLink: String? = null,
     val sourceShort: String? = null,
     val source: String? = null,

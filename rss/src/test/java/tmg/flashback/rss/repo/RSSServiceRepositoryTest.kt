@@ -12,7 +12,7 @@ import tmg.flashback.rss.repo.json.SupportedSourceJson
 import tmg.flashback.rss.repo.json.SupportedSourcesJson
 import tmg.flashback.rss.repo.model.SupportedSource
 
-internal class RSSRepositoryTest {
+internal class RSSServiceRepositoryTest {
 
     private val mockPreferenceManager: PreferenceManager = mockk(relaxed = true)
     private val mockConfigManager: ConfigManager = mockk(relaxed = true)

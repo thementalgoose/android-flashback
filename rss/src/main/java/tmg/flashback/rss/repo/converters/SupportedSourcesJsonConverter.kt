@@ -4,11 +4,11 @@ import tmg.flashback.rss.repo.json.SupportedSourceJson
 import tmg.flashback.rss.repo.json.SupportedSourcesJson
 import tmg.flashback.rss.repo.model.SupportedSource
 
-fun SupportedSourcesJson.convert(): List<SupportedSource> {
+internal fun SupportedSourcesJson.convert(): List<SupportedSource> {
     return this.sources?.mapNotNull { it.convert() } ?: emptyList()
 }
 
-fun SupportedSourceJson.convert(): SupportedSource? {
+internal fun SupportedSourceJson.convert(): SupportedSource? {
     if (this.source == null || this.title == null || this.rssLink == null || this.colour == null || this.textColour == null) {
         return null
     }

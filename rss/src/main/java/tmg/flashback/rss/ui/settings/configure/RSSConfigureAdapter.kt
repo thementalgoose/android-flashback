@@ -9,7 +9,7 @@ import tmg.flashback.rss.databinding.*
 import tmg.flashback.rss.repo.model.SupportedArticleSource
 import tmg.flashback.rss.ui.settings.configure.viewholders.*
 
-class RSSConfigureAdapter(
+internal class RSSConfigureAdapter(
     private val customAddItem: (String) -> Unit,
     private val quickAddItem: (SupportedArticleSource) -> Unit,
     private val visitWebsite: (SupportedArticleSource) -> Unit,

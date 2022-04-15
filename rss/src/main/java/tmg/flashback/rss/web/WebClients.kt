@@ -6,7 +6,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import tmg.utilities.extensions.views.show
 
-class FlashbackWebChromeClient(
+internal class FlashbackWebChromeClient(
     val updateProgressToo: (progress: Int) -> Unit
 ): WebChromeClient() {
 
@@ -17,7 +17,7 @@ class FlashbackWebChromeClient(
     }
 }
 
-class FlashbackWebViewClient(
+internal class FlashbackWebViewClient(
     val domainChanged: (domain: String) -> Unit,
     val titleChanged: (title: String) -> Unit
 ): WebViewClient() {
