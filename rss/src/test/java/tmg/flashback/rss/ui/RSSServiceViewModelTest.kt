@@ -18,7 +18,7 @@ import tmg.flashback.rss.repo.model.Response
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.*
 
-class RSSServiceViewModelTest: BaseTest() {
+internal class RSSServiceViewModelTest: BaseTest() {
 
     private lateinit var sut: RSSViewModel
 
