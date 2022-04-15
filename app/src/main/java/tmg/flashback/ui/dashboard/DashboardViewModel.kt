@@ -22,10 +22,6 @@ import tmg.utilities.lifecycle.Event
 interface DashboardViewModelInputs {
     fun clickTab(tab: DashboardNavItem)
     fun clickSeason(season: Int)
-
-//    fun clickRace(overviewRace: OverviewRace)
-//    fun clickDriver(seasonDriverStanding: SeasonDriverStandings)
-//    fun clickConstructor(seasonConstructorStanding: SeasonConstructorStandings)
 }
 
 //endregion

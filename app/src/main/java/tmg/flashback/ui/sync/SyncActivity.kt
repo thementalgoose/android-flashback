@@ -6,9 +6,10 @@ import androidx.activity.compose.setContent
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.core.content.ContextCompat
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import tmg.flashback.R
-import tmg.flashback.common.ui.forceupgrade.ForceUpgradeActivity
+import tmg.flashback.common.CommonNavigationComponent
 import tmg.flashback.style.AppTheme
 import tmg.flashback.ui.base.BaseActivity
 import tmg.flashback.ui.HomeActivity
@@ -18,6 +19,7 @@ import tmg.utilities.extensions.setStatusBarColor
 class SyncActivity: BaseActivity() {
 
     private val viewModel: SyncViewModel by viewModel()
+    private val commonNavigationComponent: CommonNavigationComponent by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +46,7 @@ class SyncActivity: BaseActivity() {
                     finish()
                 }
                 SyncNavTarget.FORCE_UPGRADE -> {
-                    startActivity(Intent(this@SyncActivity, ForceUpgradeActivity::class.java))
+                    commonNavigationComponent.forceUpgradeLaunch()
                     finish()
                 }
             }

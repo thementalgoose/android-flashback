@@ -1,5 +1,7 @@
 package tmg.flashback.common.ui.privacypolicy
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.compose.material.Scaffold
@@ -8,7 +10,7 @@ import tmg.flashback.style.AppTheme
 import tmg.flashback.ui.base.BaseActivity
 import tmg.utilities.extensions.observeEvent
 
-class PrivacyPolicyActivity: BaseActivity() {
+internal class PrivacyPolicyActivity: BaseActivity() {
 
     private val viewModel: PrivacyPolicyViewModel by viewModel()
 
@@ -27,6 +29,12 @@ class PrivacyPolicyActivity: BaseActivity() {
 
         observeEvent(viewModel.outputs.goBack) {
             finish()
+        }
+    }
+
+    companion object {
+        fun intent(context: Context): Intent {
+            return Intent(context, PrivacyPolicyActivity::class.java)
         }
     }
 }

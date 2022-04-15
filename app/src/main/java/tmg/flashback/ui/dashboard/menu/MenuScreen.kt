@@ -1,6 +1,5 @@
 package tmg.flashback.ui.dashboard.menu
 
-import android.content.Intent
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
@@ -11,7 +10,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Icon
 import androidx.compose.material.Switch
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,20 +19,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import org.koin.androidx.compose.inject
 import org.koin.androidx.compose.viewModel
 import tmg.flashback.R
-import tmg.flashback.rss.ui.RSSActivity
 import tmg.flashback.stats.components.Timeline
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextHeadline2
 import tmg.flashback.style.text.TextSection
-import tmg.flashback.ui.extensions.Observe
-import tmg.flashback.ui.extensions.ObserveContext
-import tmg.flashback.ui.navigation.NavigationProvider
-import tmg.flashback.ui2.settings.SettingsAllActivity
 
 @Composable
 fun MenuScreenVM(
@@ -44,19 +36,6 @@ fun MenuScreenVM(
 
     val links = viewModel.outputs.links.observeAsState(emptyList())
     val seasons = viewModel.outputs.season.observeAsState(emptyList())
-
-    val navigationProvider: NavigationProvider by inject()
-    ObserveContext(liveData = viewModel.outputs.openRss, callback = { context ->
-        val intent = Intent(context, RSSActivity::class.java)
-        context.startActivity(intent)
-    })
-    ObserveContext(liveData = viewModel.outputs.openSettings, callback = { context ->
-        val intent = Intent(context, SettingsAllActivity::class.java)
-        context.startActivity(intent)
-    })
-    ObserveContext(liveData = viewModel.outputs.openContact, callback = { context ->
-        navigationProvider.aboutAppIntent(context = context)
-    })
 
     MenuScreen(
         seasonClicked = { season ->
@@ -185,7 +164,6 @@ private fun Button(
 ) {
     Row(modifier = modifier
         .fillMaxWidth()
-        .clickable(onClick = {})
         .padding(
             vertical = AppTheme.dimensions.paddingNSmall,
             horizontal = AppTheme.dimensions.paddingMedium

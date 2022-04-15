@@ -19,10 +19,12 @@ import tmg.flashback.rss.di.rssModule
 import tmg.flashback.statistics.di.statisticsModule
 import tmg.flashback.stats.di.statsModule
 import tmg.flashback.ui.di.uiModule
+import tmg.flashback.ui.navigation.ActivityProvider
 
 class FlashbackApplication: Application() {
 
     private val startup: FlashbackStartup by inject()
+    private val activityProvider: ActivityProvider by inject()
 
     override fun onCreate() {
         super.onCreate()
@@ -52,6 +54,9 @@ class FlashbackApplication: Application() {
             modules(statisticsModule)
             modules(statsModule)
         }
+
+        // Register application lifecycle callbacks
+        registerActivityLifecycleCallbacks(activityProvider)
 
         // Run startup
         startup.startup(this)

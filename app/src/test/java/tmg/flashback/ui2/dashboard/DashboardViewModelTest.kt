@@ -10,7 +10,8 @@ import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.flashback.common.controllers.ReleaseNotesController
+import tmg.flashback.common.constants.ReleaseNotes
+import tmg.flashback.common.usecases.NewReleaseNotesUseCase
 import tmg.flashback.configuration.usecases.ApplyConfigUseCase
 import tmg.flashback.configuration.usecases.FetchConfigUseCase
 import tmg.flashback.statistics.controllers.HomeController
@@ -29,12 +30,12 @@ internal class DashboardViewModelTest: BaseTest() {
     private val mockApplyConfigUseCase: ApplyConfigUseCase = mockk(relaxed = true)
     private val mockFetchConfigUseCase: FetchConfigUseCase = mockk(relaxed = true)
     private val mockHomeController: HomeController = mockk(relaxed = true)
-    private val mockReleaseNotesController: ReleaseNotesController = mockk(relaxed = true)
+    private val mockNewReleaseNotesUseCase: NewReleaseNotesUseCase = mockk(relaxed = true)
 
     @BeforeEach
     internal fun setUp() {
         coEvery { mockApplyConfigUseCase.apply() } returns false
-        every { mockReleaseNotesController.pendingReleaseNotes } returns false
+        every { mockNewReleaseNotesUseCase.getNotes() } returns emptyList()
     }
 
     private fun initSUT() {
@@ -44,7 +45,7 @@ internal class DashboardViewModelTest: BaseTest() {
             mockFetchConfigUseCase,
             mockApplyConfigUseCase,
             mockHomeController,
-            mockReleaseNotesController
+            mockNewReleaseNotesUseCase
         )
     }
 
@@ -110,7 +111,7 @@ internal class DashboardViewModelTest: BaseTest() {
     @Test
     fun `init if release notes are pending then open release notes is fired`() {
         // Because notification onboarding takes priority over release notes
-        every { mockReleaseNotesController.pendingReleaseNotes } returns true
+        every { mockNewReleaseNotesUseCase.getNotes() } returns listOf(ReleaseNotes.VERSION_110)
         initSUT()
         sut.outputs.openReleaseNotes.test {
             assertEventFired()
@@ -119,7 +120,7 @@ internal class DashboardViewModelTest: BaseTest() {
 
     @Test
     fun `init if release notes are not pending then open release notes not fired`() {
-        every { mockReleaseNotesController.pendingReleaseNotes } returns false
+        every { mockNewReleaseNotesUseCase.getNotes() } returns emptyList()
         initSUT()
         sut.outputs.openReleaseNotes.test {
             assertEventNotFired()
