@@ -12,8 +12,8 @@ import com.discord.panels.PanelState
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import tmg.flashback.R
-import tmg.flashback.common.ui.releasenotes.ReleaseBottomSheetFragment
 import tmg.flashback.databinding.FragmentDashboardBinding
+import tmg.flashback.releasenotes.ui.releasenotes.ReleaseBottomSheetFragment
 import tmg.flashback.statistics.repository.HomeRepository
 import tmg.flashback.statistics.ui.dashboard.season.SeasonFragment
 import tmg.flashback.statistics.ui.dashboard.season.SeasonFragmentCallback

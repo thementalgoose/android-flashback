@@ -5,10 +5,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import tmg.flashback.BuildConfig
-import tmg.flashback.common.repository.ForceUpgradeRepository
 import tmg.flashback.configuration.repository.ConfigRepository
 import tmg.flashback.configuration.usecases.ApplyConfigUseCase
 import tmg.flashback.crash_reporting.controllers.CrashController
+import tmg.flashback.forceupgrade.repository.ForceUpgradeRepository
 import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.statistics.controllers.ScheduleController
 import tmg.flashback.statistics.repo.repository.CacheRepository

@@ -5,10 +5,10 @@ import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.flashback.common.repository.ForceUpgradeRepository
 import tmg.flashback.configuration.repository.ConfigRepository
 import tmg.flashback.configuration.usecases.ApplyConfigUseCase
 import tmg.flashback.crash_reporting.controllers.CrashController
+import tmg.flashback.forceupgrade.repository.ForceUpgradeRepository
 import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.statistics.controllers.ScheduleController
 import tmg.flashback.statistics.repo.repository.CacheRepository
