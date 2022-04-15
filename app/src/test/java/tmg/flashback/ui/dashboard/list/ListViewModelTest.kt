@@ -14,6 +14,7 @@ import tmg.flashback.ads.repository.model.AdvertConfig
 import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.statistics.controllers.HomeController
 import tmg.flashback.statistics.controllers.ScheduleController
+import tmg.flashback.statistics.usecases.DefaultSeasonUseCase
 import tmg.flashback.ui.managers.StyleManager
 import tmg.flashback.ui.model.NightMode
 import tmg.flashback.ui.repository.ThemeRepository
@@ -29,6 +30,7 @@ internal class ListViewModelTest: BaseTest() {
     private var minYear: Int = 1950
 
     private val mockHomeController: HomeController = mockk(relaxed = true)
+    private val mockDefaultSeasonUseCase: DefaultSeasonUseCase = mockk(relaxed = true)
     private val mockRssController: RSSController = mockk(relaxed = true)
     private val mockDebugController: DebugController = mockk(relaxed = true)
     private val mockAdsRepository: AdsRepository = mockk(relaxed = true)
@@ -43,7 +45,7 @@ internal class ListViewModelTest: BaseTest() {
         every { mockHomeController.favouriteSeasons } returns setOf()
         every { mockHomeController.favouritesExpanded } returns true
         every { mockHomeController.allExpanded } returns true
-        every { mockHomeController.defaultSeason } returns 2018
+        every { mockDefaultSeasonUseCase.defaultSeason } returns 2018
         every { mockHomeController.supportedSeasons } returns List(currentYear - 1949) { it + 1950 }.toSet()
 
         every { mockAdsRepository.advertConfig } returns AdvertConfig(
@@ -64,6 +66,7 @@ internal class ListViewModelTest: BaseTest() {
     private fun initSUT() {
         sut = ListViewModel(
             mockHomeController,
+            mockDefaultSeasonUseCase,
             mockRssController,
             mockDebugController,
             mockAdsRepository,
@@ -97,7 +100,7 @@ internal class ListViewModelTest: BaseTest() {
 
         sut.inputs.clickSetDefaultSeason(2020)
         verify {
-            mockHomeController.setUserDefaultSeason(2020)
+            mockDefaultSeasonUseCase.setUserDefaultSeason(2020)
         }
         sut.outputs.defaultSeasonUpdated.test {
             assertDataEventValue(2020)
@@ -111,7 +114,7 @@ internal class ListViewModelTest: BaseTest() {
 
         sut.inputs.clickClearDefaultSeason()
         verify {
-            mockHomeController.clearDefault()
+            mockDefaultSeasonUseCase.clearDefault()
         }
         sut.outputs.defaultSeasonUpdated.test {
             assertDataEventValue(null)
@@ -121,7 +124,7 @@ internal class ListViewModelTest: BaseTest() {
     @Test
     fun `with no user defined default set the option to show clear is false`() {
 
-        every { mockHomeController.isUserDefinedValueSet } returns true
+        every { mockDefaultSeasonUseCase.isUserDefinedValueSet } returns true
 
         initSUT()
         sut.outputs.list.test {
@@ -134,7 +137,7 @@ internal class ListViewModelTest: BaseTest() {
     @Test
     fun `with no user defined default set the option to show clear is true`() {
 
-        every { mockHomeController.isUserDefinedValueSet } returns false
+        every { mockDefaultSeasonUseCase.isUserDefinedValueSet } returns false
 
         initSUT()
         sut.outputs.list.test {
