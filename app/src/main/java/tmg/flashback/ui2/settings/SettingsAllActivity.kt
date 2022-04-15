@@ -1,5 +1,7 @@
 package tmg.flashback.ui2.settings
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.annotation.StringRes
 import androidx.navigation.NavController
@@ -14,8 +16,6 @@ class SettingsAllActivity: BaseActivity(), NavController.OnDestinationChangedLis
     private lateinit var binding: ActivitySettingsBinding
 
     private var navController: NavController? = null
-
-//    override val screenAnalytics: ScreenAnalytics? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,5 +60,11 @@ class SettingsAllActivity: BaseActivity(), NavController.OnDestinationChangedLis
     private fun updateTitle(@StringRes title: Int) {
         binding.titleCollapsed.setText(title)
         binding.titleExpanded.setText(title)
+    }
+
+    companion object {
+        fun intent(context: Context): Intent {
+            return Intent(context, SettingsAllActivity::class.java)
+        }
     }
 }

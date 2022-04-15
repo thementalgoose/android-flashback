@@ -1,5 +1,6 @@
 package tmg.flashback.ui.dashboard.menu
 
+import android.widget.GridLayout
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
@@ -192,15 +193,16 @@ private fun Toggle(
     label: Int,
     @DrawableRes
     icon: Int,
+    modifier: Modifier = Modifier,
     isEnabled: Boolean = true,
-    modifier: Modifier = Modifier
 ) {
     Row(modifier = modifier
         .fillMaxWidth()
         .padding(
             vertical = AppTheme.dimensions.paddingNSmall,
             horizontal = AppTheme.dimensions.paddingMedium
-        )
+        ),
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
             modifier = Modifier.size(20.dp),
