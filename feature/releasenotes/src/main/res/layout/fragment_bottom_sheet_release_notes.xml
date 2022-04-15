@@ -30,7 +30,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/paddingSmall"
             android:gravity="center"
-            android:text="@string/settings_about_release_notes_title"
+            android:text="@string/release_notes_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/pill" />
