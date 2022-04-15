@@ -8,9 +8,9 @@ import org.junit.jupiter.api.Test
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.controllers.HomeController
 import tmg.flashback.statistics.usecases.DefaultSeasonUseCase
-import tmg.flashback.testutils.assertExpectedOrder
-import tmg.flashback.testutils.findPref
-import tmg.flashback.testutils.findSwitch
+import tmg.flashback.statistics.testutils.assertExpectedOrder
+import tmg.flashback.statistics.testutils.findPref
+import tmg.flashback.statistics.testutils.findSwitch
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertEventFired
 import tmg.testutils.livedata.test

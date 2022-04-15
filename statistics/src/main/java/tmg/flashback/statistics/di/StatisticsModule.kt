@@ -1,9 +1,12 @@
 package tmg.flashback.statistics.di
 
 import androidx.work.WorkerParameters
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.androidx.workmanager.dsl.worker
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import tmg.flashback.statistics.controllers.HomeController
 import tmg.flashback.statistics.controllers.ScheduleController
@@ -25,8 +28,7 @@ import tmg.flashback.statistics.ui.settings.home.SettingsHomeViewModel
 import tmg.flashback.statistics.ui.settings.notifications.UpNextSettingsViewModel
 import tmg.flashback.statistics.ui.settings.notifications.reminder.UpNextReminderViewModel
 import tmg.flashback.statistics.ui.settings.statistics.SettingsStatisticsViewModel
-import tmg.flashback.statistics.usecases.DefaultSeasonUseCase
-import tmg.flashback.statistics.usecases.SearchAppShortcutUseCase
+import tmg.flashback.statistics.usecases.*
 import tmg.flashback.statistics.workmanager.ContentSyncWorker
 import tmg.flashback.statistics.workmanager.NotificationScheduleWorker
 import tmg.flashback.statistics.workmanager.WorkerProvider
@@ -44,24 +46,22 @@ val statisticsModule = repoModule + module {
     viewModel { SearchViewModel(get(), get(), get(), get(), get()) }
     viewModel { CategoryViewModel() }
 
+    viewModel { UpNextSettingsViewModel(get()) }
+    viewModel { OnboardingNotificationViewModel(get()) }
+    viewModel { UpNextReminderViewModel(get()) }
     viewModel { SettingsHomeViewModel(get(), get()) }
     viewModel { SettingsStatisticsViewModel() }
 
     single { HomeController(get()) }
-
-    // App
-    single { HomeRepository(get(), get()) }
-
-    viewModel { UpNextSettingsViewModel(get()) }
-    viewModel { OnboardingNotificationViewModel(get()) }
-    viewModel { UpNextReminderViewModel(get()) }
-
     single { ScheduleController(androidContext(), get(), get(), get(), get(), get()) }
+
+    single { HomeRepository(get(), get()) }
     single { UpNextRepository(get()) }
 
     // Use Cases
     factory { SearchAppShortcutUseCase(get(), get()) }
     factory { DefaultSeasonUseCase(get()) }
+    factory { FetchSeasonUseCase(get(), get(), get()) }
 
     // Worker
     //  https://github.com/InsertKoinIO/koin/issues/992
@@ -83,4 +83,8 @@ val statisticsModule = repoModule + module {
         parameters = worker
     ) }
     single { WorkerProvider(androidContext()) }
+
+    // CoroutineDispatcher
+    // TODO: Add qualifiers for this!
+    single { Dispatchers.IO }
 }

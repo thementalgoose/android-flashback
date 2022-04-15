@@ -27,6 +27,6 @@ dependencies {
 
     // Skeleton Layout
     implementation deps.skeletonlayout
+    testImplementation project(path: ':test:models')
 
-    testImplementation project(path: ':test:stats-models')
 }

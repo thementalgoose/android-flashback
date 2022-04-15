@@ -11,6 +11,12 @@ private val montserrat = FontFamily(
     Font(R.font.montserrat_semibold, weight = FontWeight.SemiBold)
 )
 
+
+private val closeness = FontFamily(
+    Font(R.font.closeness, weight = FontWeight.Bold)
+)
+
+
 data class AppTypography(
     val h1: TextStyle = TextStyle(
         fontFamily = montserrat,
@@ -39,5 +45,11 @@ data class AppTypography(
     val caption: TextStyle = TextStyle(
         fontWeight = FontWeight.Bold,
         fontSize = 11.sp
+    ),
+
+    val block: TextStyle = TextStyle(
+        fontFamily = closeness,
+        fontWeight = FontWeight.Bold,
+        fontSize = 14.sp
     )
 )

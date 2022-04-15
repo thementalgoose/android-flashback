@@ -55,7 +55,7 @@ enum class OverlappingPanelsValue {
  * @param initialValue The initial value of the state.
  * @param confirmStateChange Optional callback invoked to confirm or veto a pending state change.
  */
-@ExperimentalMaterialApi
+@OptIn(ExperimentalMaterialApi::class)
 class OverlappingPanelsState(
     initialValue: OverlappingPanelsValue,
     confirmStateChange: (OverlappingPanelsValue) -> Boolean = { true },
@@ -129,7 +129,7 @@ class OverlappingPanelsState(
  * @param initialValue Initial state of the panels, can only be one of [OverlappingPanelsValue]
  * @param confirmStateChange Whether to consume the change.
  */
-@ExperimentalMaterialApi
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun rememberOverlappingPanelsState(
     initialValue: OverlappingPanelsValue = OverlappingPanelsValue.Closed,
@@ -152,7 +152,7 @@ fun rememberOverlappingPanelsState(
  * @param centerPanelAlpha Opacity of the center panel when side panels are closed and opened.
  * @param centerPanelElevation Elevation of the center panel.
  */
-@ExperimentalMaterialApi
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun OverlappingPanels(
     panelStart: @Composable BoxScope.() -> Unit,
@@ -210,17 +210,12 @@ fun OverlappingPanels(
                 onStartPanel = { Alignment.CenterStart },
                 onNeither = { Alignment.Center }
             )
-            val sidePanelContent = organizeSidePanel(
-                panelsState,
-                onStartPanel = { panelStart },
-                onNeither = { {} }
-            )
             Box(
                 modifier = Modifier
                     .fillMaxHeight()
                     .fillMaxWidth(fraction)
                     .align(sidePanelAlignment),
-                content = sidePanelContent
+                content = panelStart
             )
             Box(
                 modifier = Modifier
@@ -360,7 +355,7 @@ private fun PreviewCenter() {
                 Box(modifier = Modifier.fillMaxSize().background(Color.Blue))
             },
             panelCenter = {
-                Box(modifier = Modifier.fillMaxSize().background(Color.Red))
+                Box(modifier = Modifier.fillMaxSize().background(Color.Red).alpha(0.5f))
             }
         )
     }

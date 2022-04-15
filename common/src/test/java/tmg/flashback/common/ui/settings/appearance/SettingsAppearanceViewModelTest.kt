@@ -5,8 +5,8 @@ import io.mockk.mockk
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.device.managers.BuildConfigManager
-import tmg.flashback.testutils.assertExpectedOrder
-import tmg.flashback.testutils.findPref
+import tmg.flashback.common.testutils.assertExpectedOrder
+import tmg.flashback.common.testutils.findPref
 import tmg.flashback.ui.R
 import tmg.flashback.ui.repository.ThemeRepository
 import tmg.testutils.BaseTest

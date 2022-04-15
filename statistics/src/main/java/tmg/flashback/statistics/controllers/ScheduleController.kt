@@ -15,6 +15,7 @@ import tmg.flashback.statistics.workmanager.WorkerProvider
 /**
  * Information around scheduling notificatoins functionality on the home screen
  */
+@Deprecated("This class will be replaced with use cases")
 class ScheduleController(
     private val applicationContext: Context,
     private val remoteNotificationSubscribeUseCase: RemoteNotificationSubscribeUseCase,

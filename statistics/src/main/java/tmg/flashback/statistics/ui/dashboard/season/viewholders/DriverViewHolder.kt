@@ -1,9 +1,7 @@
 package tmg.flashback.statistics.ui.dashboard.season.viewholders
 
 import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.statistics.R
@@ -17,7 +15,8 @@ import tmg.utilities.extensions.views.getString
 import tmg.utilities.extensions.views.show
 import kotlin.math.roundToInt
 
-private val glideProvider: GlideProvider = GlideProvider()
+private val glideProvider: tmg.flashback.ui.animation.GlideProvider =
+    tmg.flashback.ui.animation.GlideProvider()
 
 class DriverViewHolder(
     val driverClicked: (driver: SeasonItem.Driver) -> Unit,

@@ -12,6 +12,9 @@
     <string name="nav_qualifying">Qualifying</string>
     <string name="nav_sprint_qualifying">Sprint</string>
 
+    <string name="dashboard_standings_driver">%s\nDriver Standings</string>
+    <string name="dashboard_standings_constructor">%s\nConstructor Standings</string>
+
     <!-- Dashboard -->
     <string name="home_season_header_current">Now</string>
     <string name="home_season_header_favourited">Favourites</string>
@@ -83,6 +86,14 @@
     <string name="results_accurate_for_year" formatted="false">Results as of the %d %s (round %d)</string>
     <string name="qualifying_header">Q</string>
     <string name="endash">–</string>
+
+    <!-- Weekend -->
+    <string name="weekend_tab_schedule">Schedule</string>
+    <string name="weekend_tab_qualifying">Qualifying</string>
+    <string name="weekend_tab_sprint_qualifying">Sprint Qualifying</string>
+    <string name="weekend_tab_sprint">Sprint</string>
+    <string name="weekend_tab_race">Race</string>
+    <string name="weekend_tab_constructor">Constructors</string>
 
     <!-- Race -->
     <string name="race_round" formatted="false">Round %d</string>

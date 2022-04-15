@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import tmg.flashback.style.AppTheme
@@ -14,6 +15,7 @@ import tmg.flashback.style.AppThemePreview
 fun TextBody1(
     text: String,
     modifier: Modifier = Modifier,
+    textAlign: TextAlign = TextAlign.Start,
     bold: Boolean = false,
     textColor: Color? = null,
     maxLines: Int? = null
@@ -21,6 +23,7 @@ fun TextBody1(
     Text(
         text,
         modifier = modifier,
+        textAlign = textAlign,
         maxLines = maxLines ?: Int.MAX_VALUE,
         overflow = if (maxLines != null) TextOverflow.Ellipsis else TextOverflow.Clip,
         style = AppTheme.typography.body1.copy(

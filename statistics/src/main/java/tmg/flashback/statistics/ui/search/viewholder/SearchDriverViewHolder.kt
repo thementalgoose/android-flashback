@@ -10,7 +10,8 @@ import tmg.flashback.ui.animation.GlideProvider
 import tmg.utilities.extensions.views.context
 
 
-private val glideProvider: GlideProvider = GlideProvider()
+private val glideProvider: tmg.flashback.ui.animation.GlideProvider =
+    tmg.flashback.ui.animation.GlideProvider()
 
 class SearchDriverViewHolder(
     private val binding: ViewSearchDriverBinding,

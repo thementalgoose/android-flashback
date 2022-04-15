@@ -4,6 +4,7 @@ apply from: rootDir.absolutePath + "/gradle/config-util.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-junit5.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-koin.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-compose.gradle"
+apply from: rootDir.absolutePath + "/gradle/config-compose-providers.gradle"
 
 android {
     compileSdkVersion project.ext.compileSdkVersion
@@ -33,7 +34,7 @@ dependencies {
 
     // CircleImageView
     implementation deps.circleimageview
+    testImplementation project(path: ':test:models')
 
-    testImplementation project(path: ':test:stats-models')
 
 }

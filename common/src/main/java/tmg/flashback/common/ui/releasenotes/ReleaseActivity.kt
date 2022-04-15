@@ -1,12 +1,14 @@
 package tmg.flashback.common.ui.releasenotes
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.compose.material.Scaffold
 import tmg.flashback.style.AppTheme
 import tmg.flashback.ui.base.BaseActivity
 
-class ReleaseActivity : BaseActivity() {
+internal class ReleaseActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +26,12 @@ class ReleaseActivity : BaseActivity() {
                     }
                 )
             }
+        }
+    }
+
+    companion object {
+        fun intent(context: Context): Intent {
+            return Intent(context, ReleaseActivity::class.java)
         }
     }
 }

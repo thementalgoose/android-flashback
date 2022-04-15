@@ -11,15 +11,17 @@ import tmg.flashback.common.usecases.NewReleaseNotesUseCase
 import tmg.flashback.configuration.usecases.ApplyConfigUseCase
 import tmg.flashback.configuration.usecases.FetchConfigUseCase
 import tmg.flashback.statistics.BuildConfig
-import tmg.flashback.statistics.controllers.HomeController
 import tmg.flashback.statistics.extensions.updateAllWidgets
+import tmg.flashback.statistics.repository.HomeRepository
+import tmg.flashback.statistics.usecases.DefaultSeasonUseCase
 import tmg.flashback.statistics.workmanager.WorkerProvider
 import tmg.utilities.lifecycle.Event
 
 //region Inputs
 
 interface DashboardViewModelInputs {
-    fun clickSearch()
+    fun clickTab(tab: DashboardNavItem)
+    fun clickSeason(season: Int)
 }
 
 //endregion
@@ -27,6 +29,8 @@ interface DashboardViewModelInputs {
 //region Outputs
 
 interface DashboardViewModelOutputs {
+    val currentTab: LiveData<DashboardScreenState>
+
     val openReleaseNotes: LiveData<Event>
     val openSearch: LiveData<Event>
 
@@ -40,20 +44,29 @@ interface DashboardViewModelOutputs {
 class DashboardViewModel(
     applicationContext: Context,
     private val workerProvider: WorkerProvider,
+    private val defaultSeasonUseCase: DefaultSeasonUseCase,
     private val fetchConfigUseCase: FetchConfigUseCase,
     private val applyConfigUseCase: ApplyConfigUseCase,
-    private val homeController: HomeController,
+    private val homeRepository: HomeRepository,
     private val releaseNotesUseCase: NewReleaseNotesUseCase,
 ): ViewModel(), DashboardViewModelInputs, DashboardViewModelOutputs {
+
+    val inputs: DashboardViewModelInputs = this
+    val outputs: DashboardViewModelOutputs = this
+
+    private val defaultTab: DashboardNavItem = DashboardNavItem.CALENDAR
 
     override val openReleaseNotes: MutableLiveData<Event> = MutableLiveData()
     override val appConfigSynced: MutableLiveData<Event> = MutableLiveData()
     override val openSearch: MutableLiveData<Event> = MutableLiveData()
 
-    override val defaultToSchedule: Boolean get() = homeController.dashboardDefaultToSchedule
+    override val defaultToSchedule: Boolean
+        get() = homeRepository.defaultToSchedule
 
-    var inputs: DashboardViewModelInputs = this
-    var outputs: DashboardViewModelOutputs = this
+    override val currentTab: MutableLiveData<DashboardScreenState> = MutableLiveData(DashboardScreenState(
+        tab = defaultTab,
+        season = defaultSeasonUseCase.defaultSeason
+    ))
 
     init {
         viewModelScope.launch {
@@ -74,15 +87,19 @@ class DashboardViewModel(
         }
     }
 
-    //region Inputs
-
-    override fun clickSearch() {
-        openSearch.value = Event()
+    override fun clickSeason(season: Int) {
+        currentTab.postValue(DashboardScreenState(
+            tab = currentTab.value?.tab ?: defaultTab,
+            season = season
+        ))
     }
 
-    //endregion
+    override fun clickTab(tab: DashboardNavItem) {
+        currentTab.postValue(DashboardScreenState(
+            tab = tab,
+            season = currentTab.value?.season ?: defaultSeasonUseCase.defaultSeason
+        ))
+    }
 
-    //region Outputs
-
-    //endregion
 }
+
