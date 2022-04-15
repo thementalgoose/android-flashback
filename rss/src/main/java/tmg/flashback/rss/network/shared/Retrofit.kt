@@ -8,7 +8,7 @@ import retrofit2.converter.simplexml.SimpleXmlConverterFactory
 import tmg.flashback.rss.BuildConfig
 import tmg.flashback.rss.network.interceptor.CleanupXmlInterceptor
 
-inline fun <reified T> buildRetrofit(isXML: Boolean = true): T {
+internal inline fun <reified T> buildRetrofit(isXML: Boolean = true): T {
     var builder = Retrofit.Builder()
         .baseUrl("https://testing")
 

@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import tmg.flashback.common.controllers.ReleaseNotesController
+import tmg.flashback.common.usecases.NewReleaseNotesUseCase
 import tmg.flashback.configuration.usecases.ApplyConfigUseCase
 import tmg.flashback.configuration.usecases.FetchConfigUseCase
 import tmg.flashback.statistics.BuildConfig
@@ -43,7 +43,7 @@ class DashboardViewModel(
     private val fetchConfigUseCase: FetchConfigUseCase,
     private val applyConfigUseCase: ApplyConfigUseCase,
     private val homeController: HomeController,
-    private val releaseNotesController: ReleaseNotesController,
+    private val releaseNotesUseCase: NewReleaseNotesUseCase,
 ): ViewModel(), DashboardViewModelInputs, DashboardViewModelOutputs {
 
     override val openReleaseNotes: MutableLiveData<Event> = MutableLiveData()
@@ -69,7 +69,7 @@ class DashboardViewModel(
             }
         }
 
-        if (releaseNotesController.pendingReleaseNotes) {
+        if (releaseNotesUseCase.getNotes().isNotEmpty()) {
             openReleaseNotes.value = Event()
         }
     }

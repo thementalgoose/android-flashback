@@ -3,7 +3,7 @@ package tmg.flashback.ui
 import io.mockk.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.flashback.common.controllers.ForceUpgradeController
+import tmg.flashback.common.repository.ForceUpgradeRepository
 import tmg.flashback.configuration.repository.ConfigRepository
 import tmg.flashback.configuration.usecases.FetchConfigUseCase
 import tmg.flashback.configuration.usecases.ResetConfigUseCase
@@ -35,7 +35,7 @@ internal class SyncViewModelTest: BaseTest() {
     private var mockResetConfigUseCase: ResetConfigUseCase = mockk(relaxed = true)
     private var mockFetchConfigUseCase: FetchConfigUseCase = mockk(relaxed = true)
     private var mockCacheRepository: CacheRepository = mockk(relaxed = true)
-    private var mockForceUpgradeController: ForceUpgradeController = mockk(relaxed = true)
+    private var mockForceUpgradeRepository: ForceUpgradeRepository = mockk(relaxed = true)
     private var mockScheduleController: ScheduleController = mockk(relaxed = true)
     private var mockSearchAppShortcutUseCase: SearchAppShortcutUseCase = mockk(relaxed = true)
 
@@ -43,7 +43,7 @@ internal class SyncViewModelTest: BaseTest() {
 
     @BeforeEach
     internal fun setUp() {
-        every { mockForceUpgradeController.shouldForceUpgrade } returns false
+        every { mockForceUpgradeRepository.shouldForceUpgrade } returns false
         every { mockRssController.enabled } returns false
         coEvery { mockFetchConfigUseCase.fetchAndApply() } returns true
 
@@ -63,7 +63,7 @@ internal class SyncViewModelTest: BaseTest() {
             mockConfigRepository,
             mockResetConfigUseCase,
             mockFetchConfigUseCase,
-            mockForceUpgradeController,
+            mockForceUpgradeRepository,
             mockCacheRepository,
             mockScheduleController,
             mockSearchAppShortcutUseCase,
@@ -100,7 +100,7 @@ internal class SyncViewModelTest: BaseTest() {
     @Test
     fun `start loading with config not synced sends go to force upgrade event`() = coroutineTest {
         every { mockConfigRepository.requireSynchronisation } returns true
-        every { mockForceUpgradeController.shouldForceUpgrade } returns true
+        every { mockForceUpgradeRepository.shouldForceUpgrade } returns true
 
         initSUT()
         sut.inputs.startLoading()

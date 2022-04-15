@@ -29,7 +29,7 @@ import tmg.flashback.statistics.repo.DriverRepository
 import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.style.AppTheme
 import tmg.flashback.ui.base.BaseActivity
-import tmg.flashback.ui.navigation.NavigationProvider
+import tmg.flashback.ui.navigation.ApplicationNavigationProvider
 import tmg.utilities.extensions.copyToClipboard
 
 @SuppressLint("SetTextI18n")
@@ -46,7 +46,7 @@ class DebugActivity: BaseActivity() {
     private val adsManager: AdsManager by inject()
     private val notificationRepository: NotificationRepository by inject()
 
-    private val navigationProvider: NavigationProvider by inject()
+    private val applicationNavigationProvider: ApplicationNavigationProvider by inject()
 
     @Suppress("EXPERIMENTAL_API_USAGE")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -79,7 +79,7 @@ class DebugActivity: BaseActivity() {
                         Toast.makeText(this, "Cleared local override url", Toast.LENGTH_LONG).show()
                     },
                     syncClicked = {
-                        startActivity(navigationProvider.syncActivityIntent(this))
+                        startActivity(applicationNavigationProvider.syncActivityIntent(this))
                     },
                     styleGuideLegacyClicked = {
                         startActivity(Intent(this, StyleGuideActivity::class.java))
