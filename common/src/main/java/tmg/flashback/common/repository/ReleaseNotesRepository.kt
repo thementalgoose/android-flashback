@@ -1,9 +1,11 @@
 package tmg.flashback.common.repository
 
+import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.prefs.manager.PreferenceManager
 
 class ReleaseNotesRepository(
-    private val preferenceManager: PreferenceManager
+    private val preferenceManager: PreferenceManager,
+    private val buildConfigManager: BuildConfigManager
 ) {
     companion object {
         private const val keyReleaseNotesSeenVersion: String = "RELEASE_NOTES_SEEN_VERSION"
@@ -14,5 +16,9 @@ class ReleaseNotesRepository(
      */
     var releaseNotesSeenAppVersion: Int
         get() = preferenceManager.getInt(keyReleaseNotesSeenVersion, 0)
-        set(value) = preferenceManager.save(keyReleaseNotesSeenVersion, value)
+        private set(value) = preferenceManager.save(keyReleaseNotesSeenVersion, value)
+
+    fun releaseNotesSeen() {
+        releaseNotesSeenAppVersion = buildConfigManager.versionCode
+    }
 }

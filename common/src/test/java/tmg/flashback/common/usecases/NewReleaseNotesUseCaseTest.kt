@@ -1,23 +1,24 @@
-package tmg.flashback.common.controllers
+package tmg.flashback.common.usecases
 
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import tmg.flashback.common.constants.ReleaseNotes
+import tmg.flashback.common.controllers.ReleaseNotesController
 import tmg.flashback.common.repository.ReleaseNotesRepository
 import tmg.flashback.device.managers.BuildConfigManager
 
-internal class ReleaseNotesControllerTest {
+internal class NewReleaseNotesUseCaseTest {
 
     private var mockReleaseNotesRepository: ReleaseNotesRepository = mockk(relaxed = true)
     private var mockBuildConfigManager: BuildConfigManager = mockk(relaxed = true)
 
-    private lateinit var sut: ReleaseNotesController
+    private lateinit var sut: NewReleaseNotesUseCase
 
     private fun initSUT() {
-        sut = ReleaseNotesController(mockReleaseNotesRepository, mockBuildConfigManager)
+        sut = NewReleaseNotesUseCase(mockReleaseNotesRepository, mockBuildConfigManager)
     }
 
     @Test
@@ -26,7 +27,7 @@ internal class ReleaseNotesControllerTest {
         every { mockReleaseNotesRepository.releaseNotesSeenAppVersion } returns 30
         initSUT()
 
-        assertEquals(emptyList<ReleaseNotes>(), sut.majorReleaseNotes)
+        assertEquals(emptyList<ReleaseNotes>(), sut.getNotes())
     }
 
     @Test
@@ -35,7 +36,7 @@ internal class ReleaseNotesControllerTest {
         every { mockReleaseNotesRepository.releaseNotesSeenAppVersion } returns 22
         initSUT()
 
-        assertEquals(emptyList<ReleaseNotes>(), sut.majorReleaseNotes)
+        assertEquals(emptyList<ReleaseNotes>(), sut.getNotes())
     }
 
     @Test
@@ -44,7 +45,7 @@ internal class ReleaseNotesControllerTest {
         every { mockReleaseNotesRepository.releaseNotesSeenAppVersion } returns 3
         initSUT()
 
-        assertEquals(listOf(ReleaseNotes.VERSION_4), sut.majorReleaseNotes)
+        assertEquals(listOf(ReleaseNotes.VERSION_4), sut.getNotes())
     }
 
     @Test
@@ -53,7 +54,7 @@ internal class ReleaseNotesControllerTest {
         every { mockReleaseNotesRepository.releaseNotesSeenAppVersion } returns 2
         initSUT()
 
-        assertEquals(listOf(ReleaseNotes.VERSION_4), sut.majorReleaseNotes)
+        assertEquals(listOf(ReleaseNotes.VERSION_4), sut.getNotes())
     }
 
     @Test
@@ -61,20 +62,9 @@ internal class ReleaseNotesControllerTest {
         every { mockBuildConfigManager.versionCode } returns 20
         every { mockReleaseNotesRepository.releaseNotesSeenAppVersion } returns 0
         initSUT()
-        val throwaway = sut.majorReleaseNotes
+        val throwaway = sut.getNotes()
         verify {
-            mockReleaseNotesRepository.releaseNotesSeenAppVersion = 20
-        }
-    }
-
-    @Test
-    fun `mark release notes seen saves current version in prefs`() {
-        every { mockBuildConfigManager.versionCode } returns 20
-        initSUT()
-
-        sut.markReleaseNotesSeen()
-        verify {
-            mockReleaseNotesRepository.releaseNotesSeenAppVersion = 20
+            mockReleaseNotesRepository.releaseNotesSeen()
         }
     }
 }

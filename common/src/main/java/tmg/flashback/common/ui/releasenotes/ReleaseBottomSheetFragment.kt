@@ -4,14 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import org.koin.android.ext.android.inject
-import tmg.flashback.common.controllers.ReleaseNotesController
 import tmg.flashback.common.databinding.FragmentBottomSheetReleaseNotesBinding
+import tmg.flashback.common.repository.ReleaseNotesRepository
+import tmg.flashback.common.usecases.NewReleaseNotesUseCase
 import tmg.flashback.ui.base.BaseBottomSheetFragment
 
 class ReleaseBottomSheetFragment: BaseBottomSheetFragment<FragmentBottomSheetReleaseNotesBinding>() {
 
     // TODO: Move over to view model
-    private val releaseNotesController: ReleaseNotesController by inject()
+    private val releaseNotesRepository: ReleaseNotesRepository by inject()
+    private val newReleaseNotesUseCase: NewReleaseNotesUseCase by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,15 +27,15 @@ class ReleaseBottomSheetFragment: BaseBottomSheetFragment<FragmentBottomSheetRel
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (releaseNotesController.majorReleaseNotes.isEmpty()) {
+        if (newReleaseNotesUseCase.getNotes().isEmpty()) {
             dismiss()
         }
 
-        binding.tvReleaseNotesDescription.text = releaseNotesController
-            .majorReleaseNotes
+        binding.tvReleaseNotesDescription.text = newReleaseNotesUseCase
+            .getNotes()
             .map { getString(it.release) }
             .joinToString("\n\n")
 
-        releaseNotesController.markReleaseNotesSeen()
+        releaseNotesRepository.releaseNotesSeen()
     }
 }
