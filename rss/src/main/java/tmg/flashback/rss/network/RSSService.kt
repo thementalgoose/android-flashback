@@ -17,7 +17,7 @@ import java.net.UnknownHostException
 import javax.net.ssl.SSLHandshakeException
 import javax.xml.stream.XMLStreamException
 
-class RSS(
+internal class RSSService(
     private val repository: RSSRepository,
     private val rssFeedController: RSSController
 ) : RssAPI {

@@ -13,7 +13,7 @@ import java.net.URL
 
 private const val dateFormat = "EEE, d MMM yyyy HH:mm:ss Z"
 
-fun RssXMLModel.convert(rssFeedController: RSSController, fromSource: String, showDescription: Boolean): List<Article> {
+internal fun RssXMLModel.convert(rssFeedController: RSSController, fromSource: String, showDescription: Boolean): List<Article> {
 
     if (this.channel == null) {
         Log.e("RSS", "Failed to parse RSS model from channel $fromSource")

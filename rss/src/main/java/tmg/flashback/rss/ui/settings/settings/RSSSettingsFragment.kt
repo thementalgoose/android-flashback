@@ -8,7 +8,7 @@ import tmg.flashback.rss.R
 import tmg.flashback.ui.settings.SettingsFragment
 import tmg.utilities.extensions.observeEvent
 
-class RSSSettingsFragment: SettingsFragment<RSSSettingsViewModel>() {
+internal class RSSSettingsFragment: SettingsFragment<RSSSettingsViewModel>() {
 
     override val viewModel: RSSSettingsViewModel by viewModel()
 

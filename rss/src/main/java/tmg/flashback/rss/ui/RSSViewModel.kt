@@ -29,7 +29,7 @@ interface RSSViewModelOutputs {
 //endregion
 
 @Suppress("EXPERIMENTAL_API_USAGE")
-class RSSViewModel(
+internal class RSSViewModel(
     private val RSSDB: RssAPI,
     private val prefRepository: RSSRepository,
     private val adsRepository: AdsRepository,

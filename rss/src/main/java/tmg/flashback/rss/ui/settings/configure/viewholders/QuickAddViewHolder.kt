@@ -7,7 +7,7 @@ import tmg.flashback.rss.databinding.ViewRssConfigureQuickaddBinding
 import tmg.flashback.rss.repo.model.SupportedArticleSource
 import tmg.flashback.rss.ui.settings.configure.RSSConfigureItem
 
-class QuickAddViewHolder(
+internal class QuickAddViewHolder(
     private val quickAddItem: (SupportedArticleSource) -> Unit,
     private val websiteLink: (SupportedArticleSource) -> Unit,
     private val binding: ViewRssConfigureQuickaddBinding
