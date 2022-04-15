@@ -2,6 +2,7 @@ package tmg.flashback.common.di
 
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
+import tmg.flashback.common.CommonNavigationComponent
 import tmg.flashback.common.repository.ForceUpgradeRepository
 import tmg.flashback.common.repository.ReleaseNotesRepository
 import tmg.flashback.common.ui.forceupgrade.ForceUpgradeViewModel
@@ -15,6 +16,8 @@ import tmg.flashback.common.ui.settings.support.SettingsSupportViewModel
 import tmg.flashback.common.usecases.NewReleaseNotesUseCase
 
 val commonModule = module {
+
+    single { CommonNavigationComponent(get()) }
 
     factory { NewReleaseNotesUseCase(get(), get()) }
 

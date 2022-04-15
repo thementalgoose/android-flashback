@@ -21,7 +21,6 @@ import tmg.flashback.ui.components.layouts.rememberOverlappingPanelsState
 import tmg.flashback.ui.components.navigation.NavigationBar
 import tmg.flashback.ui.components.navigation.NavigationItem
 import tmg.flashback.ui.dashboard.menu.MenuScreenVM
-import tmg.flashback.ui.extensions.Observe
 import tmg.utilities.extensions.toEnum
 
 data class DashboardScreenState(
@@ -35,11 +34,6 @@ fun DashboardScreenVM(
 ) {
     val viewModel by viewModel<DashboardViewModel>()
 
-    val context = LocalContext.current
-    Observe(viewModel.outputs.openSearch, callback = {
-        startActivity(context, SearchActivity.intent(context), null)
-    })
-
     val tabState = viewModel.outputs.currentTab.observeAsState()
     DashboardScreen(
         windowSize = windowSize
@@ -51,11 +45,6 @@ fun DashboardScreen(
     windowSize: WindowSize
 ) {
     val viewModel by viewModel<DashboardViewModel>()
-
-    val context = LocalContext.current
-    Observe(viewModel.outputs.openSearch, callback = {
-        startActivity(context, SearchActivity.intent(context), null)
-    })
 
     val tabState = viewModel.outputs.currentTab.observeAsState()
     val panelsState = rememberOverlappingPanelsState(OverlappingPanelsValue.Closed)

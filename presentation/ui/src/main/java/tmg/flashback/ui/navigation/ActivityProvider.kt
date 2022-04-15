@@ -2,6 +2,7 @@ package tmg.flashback.ui.navigation
 
 import android.app.Activity
 import android.app.Application
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import tmg.flashback.crash_reporting.controllers.CrashController
@@ -18,6 +19,7 @@ class ActivityProvider(
         get() = startCount != 0
 
     val activity: Activity?
+        @Synchronized
         get() = _activity?.get()
 
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
@@ -60,6 +62,14 @@ class ActivityProvider(
     override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) { }
     override fun onActivityDestroyed(activity: Activity) { }
 
+    fun intent(callback: (activity: Activity) -> Intent): Intent? {
+        return activity?.let { callback(it) }
+    }
+    fun launch(callback: (activity: Activity) -> Unit) {
+        activity?.let { callback(it) }
+    }
+
+    @Synchronized
     private fun update(activity: Activity, lifecycleState: String) {
         this._activity = WeakReference(activity)
         crashController.log("Activity ${activity.javaClass.simpleName}@${Integer.toHexString(activity.hashCode())} (event=${lifecycleState})")

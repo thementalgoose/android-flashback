@@ -1,6 +1,8 @@
 package tmg.flashback.common.ui.forceupgrade
 
 import android.content.ActivityNotFoundException
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.compose.material.Scaffold
@@ -11,7 +13,7 @@ import tmg.flashback.ui.base.BaseActivity
 import tmg.flashback.ui.model.DisplayType
 import tmg.utilities.extensions.viewUrl
 
-class ForceUpgradeActivity: BaseActivity() {
+internal class ForceUpgradeActivity: BaseActivity() {
 
     private val viewModel: ForceUpgradeViewModel by viewModel()
 
@@ -51,5 +53,11 @@ class ForceUpgradeActivity: BaseActivity() {
     override fun onStop() {
         super.onStop()
         finish()
+    }
+
+    companion object {
+        fun intent(context: Context): Intent {
+            return Intent(context, ForceUpgradeActivity::class.java)
+        }
     }
 }

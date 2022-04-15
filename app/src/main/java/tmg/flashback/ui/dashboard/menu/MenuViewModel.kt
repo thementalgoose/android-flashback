@@ -4,6 +4,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
+import tmg.flashback.RssNavigationComponent
 import tmg.flashback.formula1.constants.Formula1.decadeColours
 import tmg.flashback.statistics.repository.HomeRepository
 import tmg.flashback.statistics.usecases.DefaultSeasonUseCase
@@ -28,10 +29,6 @@ interface MenuViewModelInputs {
 interface MenuViewModelOutputs {
     val links: LiveData<List<MenuItems>>
     val season: LiveData<List<MenuSeasonItem>>
-
-    val openRss: LiveData<Unit>
-    val openSettings: LiveData<Unit>
-    val openContact: LiveData<Unit>
 }
 
 //endregion
@@ -40,17 +37,14 @@ class MenuViewModel(
     private val homeRepository: HomeRepository,
     private val defaultSeasonUseCase: DefaultSeasonUseCase,
     private val changeNightModeUseCase: ChangeNightModeUseCase,
-    private val styleManager: StyleManager
+    private val styleManager: StyleManager,
+    private val rssNavigationComponent: RssNavigationComponent
 ) : ViewModel(), MenuViewModelInputs, MenuViewModelOutputs {
 
     val inputs: MenuViewModelInputs = this
     val outputs: MenuViewModelOutputs = this
 
     private val selectedSeason: MutableStateFlow<Int> = MutableStateFlow(defaultSeasonUseCase.defaultSeason)
-
-    override val openRss: SingleLiveEvent<Unit> = SingleLiveEvent()
-    override val openSettings: SingleLiveEvent<Unit> = SingleLiveEvent()
-    override val openContact: SingleLiveEvent<Unit> = SingleLiveEvent()
 
     override val links: MutableLiveData<List<MenuItems>> = MutableLiveData(getLinks())
 
@@ -77,9 +71,15 @@ class MenuViewModel(
 
     override fun clickButton(button: MenuItems.Button) {
         when (button) {
-            MenuItems.Button.Contact -> openContact.call()
-            MenuItems.Button.Rss -> openRss.call()
-            MenuItems.Button.Settings -> openSettings.call()
+            MenuItems.Button.Contact -> {
+                // TODO
+            }
+            MenuItems.Button.Rss -> {
+                rssNavigationComponent.rssLaunch()
+            }
+            MenuItems.Button.Settings -> {
+                // TODO
+            }
         }
         links.value = getLinks()
     }
