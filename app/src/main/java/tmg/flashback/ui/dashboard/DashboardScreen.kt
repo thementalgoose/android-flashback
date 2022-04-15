@@ -62,9 +62,13 @@ fun DashboardScreen(
             OverlappingPanels(
                 panelsState = panelsState,
                 panelStart = {
-                    MenuScreenVM(
-                        seasonClicked = viewModel.inputs::clickSeason
-                    )
+                    val coroutineScope = rememberCoroutineScope()
+                    MenuScreenVM(seasonClicked = {
+                        viewModel.inputs.clickSeason(it)
+                        coroutineScope.launch {
+                            panelsState.closePanels()
+                        }
+                    })
                 },
                 panelCenter = {
                     val coroutineScope = rememberCoroutineScope()

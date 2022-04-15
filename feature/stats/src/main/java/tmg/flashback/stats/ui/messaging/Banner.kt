@@ -15,6 +15,7 @@ import tmg.flashback.stats.repository.HomeRepository
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.text.TextBody1
+import tmg.flashback.style.text.TextBody2
 import tmg.flashback.ui.components.layouts.Container
 import tmg.flashback.ui.navigation.ApplicationNavigationComponent
 
@@ -49,24 +50,25 @@ private fun Banner(
     showLink: Boolean,
     modifier: Modifier = Modifier
 ) {
-    Container(
-        isOutlined = true,
-        modifier = modifier
-            .padding(
-                vertical = AppTheme.dimensions.paddingXSmall,
-                horizontal = AppTheme.dimensions.paddingMedium
-            )
-            .fillMaxWidth()
-    ) {
+//    Container(
+//        isOutlined = true,
+//        modifier = modifier
+//            .padding(
+//                vertical = AppTheme.dimensions.paddingXSmall,
+//                horizontal = AppTheme.dimensions.paddingMedium
+//            )
+//            .fillMaxWidth()
+//    ) {
         Row(modifier = Modifier
             .padding(
-                vertical = AppTheme.dimensions.paddingNSmall,
+                vertical = AppTheme.dimensions.paddingXSmall,
                 horizontal = AppTheme.dimensions.paddingMedium
             ),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            TextBody1(
+            TextBody2(
                 text = message,
+                bold = true,
                 modifier = Modifier.weight(1f)
             )
             if (showLink) {
@@ -79,7 +81,7 @@ private fun Banner(
                 )
             }
         }
-    }
+//    }
 }
 
 @Preview

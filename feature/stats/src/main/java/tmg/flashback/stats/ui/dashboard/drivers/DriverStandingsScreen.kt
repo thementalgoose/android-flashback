@@ -34,6 +34,8 @@ import tmg.flashback.style.AppTheme
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextTitle
 import tmg.flashback.stats.R
+import tmg.flashback.stats.ui.messaging.Banner
+import tmg.flashback.stats.ui.messaging.ProvidedBy
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.layouts.Container
@@ -94,6 +96,10 @@ fun DriverStandingsScreen(
                         menuClicked?.invoke()
                     }
                 )
+            }
+            item {
+                Banner()
+                ProvidedBy()
             }
             items(items, key = { it.id }) { item ->
                 DriverStandings(
