@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import tmg.flashback.common.controllers.ForceUpgradeController
+import tmg.flashback.common.repository.ForceUpgradeRepository
 import tmg.flashback.configuration.repository.ConfigRepository
 import tmg.flashback.configuration.usecases.FetchConfigUseCase
 import tmg.flashback.configuration.usecases.ResetConfigUseCase
@@ -51,7 +51,7 @@ class SyncViewModel(
     private val configRepository: ConfigRepository,
     private val resetConfigUseCase: ResetConfigUseCase,
     private val fetchConfigUseCase: FetchConfigUseCase,
-    private val forceUpgradeController: ForceUpgradeController,
+    private val forceUpgradeRepository: ForceUpgradeRepository,
     private val cacheRepository: CacheRepository,
     private val scheduleController: ScheduleController,
     private val searchAppShortcutUseCase: SearchAppShortcutUseCase,
@@ -100,7 +100,7 @@ class SyncViewModel(
         .filter { it == DONE }
         .map {
             cacheRepository.initialSync = true
-            if (forceUpgradeController.shouldForceUpgrade) {
+            if (forceUpgradeRepository.shouldForceUpgrade) {
                 SyncNavTarget.FORCE_UPGRADE
             } else {
                 SyncNavTarget.DASHBOARD

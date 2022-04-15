@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import tmg.flashback.common.BuildConfig
-import tmg.flashback.common.controllers.ForceUpgradeController
+import tmg.flashback.common.repository.ForceUpgradeRepository
 import tmg.flashback.configuration.usecases.ResetConfigUseCase
 
 //region Inputs
@@ -29,7 +29,7 @@ interface ForceUpgradeViewModelOutputs {
 //endregion
 
 class ForceUpgradeViewModel(
-    private val forceUpgradeController: ForceUpgradeController,
+    private val forceUpgradeRepository: ForceUpgradeRepository,
     private val resetConfigUseCase: ResetConfigUseCase
 ): ViewModel(), ForceUpgradeViewModelInputs, ForceUpgradeViewModelOutputs {
 
@@ -41,12 +41,12 @@ class ForceUpgradeViewModel(
     override val showLink: MutableLiveData<Pair<String, String>?> = MutableLiveData()
 
     init {
-        forceUpgradeController.forceUpgrade?.let {
+        forceUpgradeRepository.forceUpgrade?.let {
             title.value = it.title
             message.value = it.message
             showLink.value = it.link
         }
-        if (forceUpgradeController.forceUpgrade == null) {
+        if (forceUpgradeRepository.forceUpgrade == null) {
             title.value = "Error :("
             message.value = "Please restart the app"
             showLink.value = null

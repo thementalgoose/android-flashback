@@ -5,7 +5,7 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Test
-import tmg.flashback.common.controllers.ForceUpgradeController
+import tmg.flashback.common.repository.ForceUpgradeRepository
 import tmg.flashback.common.repository.model.ForceUpgrade
 import tmg.flashback.configuration.usecases.ResetConfigUseCase
 import tmg.testutils.BaseTest
@@ -14,12 +14,12 @@ import tmg.testutils.livedata.test
 internal class ForceUpgradeViewModelTest: BaseTest() {
 
     private val mockResetConfigUseCase: ResetConfigUseCase = mockk(relaxed = true)
-    private val mockForceUpgradeController: ForceUpgradeController = mockk(relaxed = true)
+    private val mockForceUpgradeRepository: ForceUpgradeRepository = mockk(relaxed = true)
 
     private lateinit var sut: ForceUpgradeViewModel
 
     private fun initSUT() {
-        sut = ForceUpgradeViewModel(mockForceUpgradeController, mockResetConfigUseCase)
+        sut = ForceUpgradeViewModel(mockForceUpgradeRepository, mockResetConfigUseCase)
     }
 
     @Test
@@ -34,7 +34,7 @@ internal class ForceUpgradeViewModelTest: BaseTest() {
     @Test
     fun `force upgrade null error message displayed prompting app restart`() {
 
-        every { mockForceUpgradeController.forceUpgrade } returns null
+        every { mockForceUpgradeRepository.forceUpgrade } returns null
         initSUT()
 
         sut.outputs.title.test {
@@ -51,7 +51,7 @@ internal class ForceUpgradeViewModelTest: BaseTest() {
     @Test
     fun `force upgrade shows message from configuration with link`() {
 
-        every { mockForceUpgradeController.forceUpgrade } returns ForceUpgrade(
+        every { mockForceUpgradeRepository.forceUpgrade } returns ForceUpgrade(
             title = "title",
             message = "message",
             link = Pair("text", "https://www.google.com")
@@ -69,7 +69,7 @@ internal class ForceUpgradeViewModelTest: BaseTest() {
         }
 
         verify {
-            mockForceUpgradeController.forceUpgrade
+            mockForceUpgradeRepository.forceUpgrade
         }
         coVerify {
             mockResetConfigUseCase.reset()
@@ -79,7 +79,7 @@ internal class ForceUpgradeViewModelTest: BaseTest() {
     @Test
     fun `force upgrade shows message from configuration without link`() {
 
-        every { mockForceUpgradeController.forceUpgrade } returns ForceUpgrade(
+        every { mockForceUpgradeRepository.forceUpgrade } returns ForceUpgrade(
             title = "title",
             message = "message",
             link = null
@@ -97,7 +97,7 @@ internal class ForceUpgradeViewModelTest: BaseTest() {
         }
 
         verify {
-            mockForceUpgradeController.forceUpgrade
+            mockForceUpgradeRepository.forceUpgrade
         }
         coVerify {
             mockResetConfigUseCase.reset()

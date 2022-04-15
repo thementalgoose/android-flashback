@@ -2,7 +2,6 @@ package tmg.flashback.common.di
 
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
-import tmg.flashback.common.controllers.ForceUpgradeController
 import tmg.flashback.common.controllers.ReleaseNotesController
 import tmg.flashback.common.repository.ForceUpgradeRepository
 import tmg.flashback.common.repository.ReleaseNotesRepository
@@ -18,8 +17,8 @@ import tmg.flashback.common.ui.settings.support.SettingsSupportViewModel
 val commonModule = module {
 
     single { ReleaseNotesController(get(), get()) }
+
     single { ReleaseNotesRepository(get()) }
-    single { ForceUpgradeController(get()) }
     single { ForceUpgradeRepository(get()) }
 
     viewModel { ForceUpgradeViewModel(get(), get()) }
