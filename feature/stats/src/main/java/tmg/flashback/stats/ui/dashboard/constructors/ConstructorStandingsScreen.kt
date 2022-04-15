@@ -54,6 +54,7 @@ fun ConstructorStandingsScreenVM(
         ConstructorStandingsScreen(
             showMenu = showMenu,
             menuClicked = menuClicked,
+            itemClicked = viewModel.inputs::clickItem,
             season = season,
             items = items.value ?: emptyList()
         )
@@ -64,6 +65,7 @@ fun ConstructorStandingsScreenVM(
 fun ConstructorStandingsScreen(
     showMenu: Boolean,
     menuClicked: (() -> Unit)? = null,
+    itemClicked: (ConstructorStandingsModel) -> Unit,
     season: Int,
     items: List<ConstructorStandingsModel>
 ) {
@@ -91,7 +93,7 @@ fun ConstructorStandingsScreen(
             items(items, key = { it.id }) { item ->
                 ConstructorStandings(
                     model = item,
-                    itemClicked = { },
+                    itemClicked = itemClicked,
                     maxPoints = (items.maxOfOrNull { it.standings.points } ?: 1250.0),
                 )
             }
@@ -169,6 +171,7 @@ private fun PreviewLight(
         ConstructorStandingsScreen(
             showMenu = true,
             season = 2021,
+            itemClicked = { },
             items = List(5) {
                 ConstructorStandingsModel(
                     standings = constructorStandings,
@@ -189,6 +192,7 @@ private fun PreviewDark(
         ConstructorStandingsScreen(
             showMenu = true,
             season = 2021,
+            itemClicked = { },
             items = List(5) {
                 ConstructorStandingsModel(
                     standings = constructorStandings,
