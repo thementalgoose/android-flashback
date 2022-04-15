@@ -28,6 +28,8 @@ import tmg.flashback.providers.OverviewRaceProvider
 import tmg.flashback.stats.R
 import tmg.flashback.stats.ui.dashboard.constructors.ConstructorStandingsScreen
 import tmg.flashback.stats.ui.dashboard.constructors.ConstructorsStandingViewModel
+import tmg.flashback.stats.ui.messaging.Banner
+import tmg.flashback.stats.ui.messaging.ProvidedBy
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.text.TextBody1
@@ -92,6 +94,10 @@ fun CalendarScreen(
                     },
                     actionUpClicked = { menuClicked?.invoke() }
                 )
+            }
+            item {
+                Banner()
+                ProvidedBy()
             }
             items(items) { item ->
                 when (item) {

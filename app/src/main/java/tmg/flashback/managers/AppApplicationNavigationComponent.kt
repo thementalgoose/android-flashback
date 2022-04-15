@@ -2,6 +2,7 @@ package tmg.flashback.managers
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import tmg.aboutthisapp.AboutThisAppActivity
 import tmg.flashback.analytics.manager.AnalyticsManager
 import tmg.flashback.constants.AboutThisAppConfig
@@ -14,6 +15,7 @@ import tmg.flashback.ui.HomeActivity
 import tmg.flashback.ui.navigation.ActivityProvider
 import tmg.flashback.ui.sync.SyncActivity
 import tmg.flashback.ui2.settings.SettingsAllActivity
+import java.net.MalformedURLException
 
 class AppApplicationNavigationComponent(
     private val buildConfigManager: BuildConfigManager,
@@ -67,5 +69,12 @@ class AppApplicationNavigationComponent(
 
     override fun settingsIntent(context: Context): Intent {
         return SettingsAllActivity.intent(context)
+    }
+
+    override fun openUrl(url: String) {
+        val uri = try { Uri.parse(url) } catch (e: MalformedURLException) { null } ?: return
+        val activity = activityProvider.activity ?: return
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+        activity.startActivity(intent)
     }
 }
