@@ -29,6 +29,8 @@ import tmg.flashback.stats.ui.dashboard.drivers.DriverStandings
 import tmg.flashback.stats.ui.dashboard.drivers.DriverStandingsModel
 import tmg.flashback.stats.ui.dashboard.drivers.DriverStandingsScreen
 import tmg.flashback.stats.ui.dashboard.drivers.DriversStandingViewModel
+import tmg.flashback.stats.ui.messaging.Banner
+import tmg.flashback.stats.ui.messaging.ProvidedBy
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.text.TextTitle
@@ -89,6 +91,10 @@ fun ConstructorStandingsScreen(
                         menuClicked?.invoke()
                     }
                 )
+            }
+            item {
+                Banner()
+                ProvidedBy()
             }
             items(items, key = { it.id }) { item ->
                 ConstructorStandings(
