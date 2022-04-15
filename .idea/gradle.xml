@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="GradleMigrationSettings" migrationVersion="1" />
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
@@ -12,7 +13,6 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/ads" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/common" />
             <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/core/analytics" />
             <option value="$PROJECT_DIR$/core/appshortcuts" />
@@ -25,15 +25,19 @@
             <option value="$PROJECT_DIR$/data/network" />
             <option value="$PROJECT_DIR$/data/repo" />
             <option value="$PROJECT_DIR$/data/room" />
-            <option value="$PROJECT_DIR$/debug" />
+            <option value="$PROJECT_DIR$/feature" />
+            <option value="$PROJECT_DIR$/feature/debug" />
+            <option value="$PROJECT_DIR$/feature/forceupgrade" />
+            <option value="$PROJECT_DIR$/feature/regulations" />
+            <option value="$PROJECT_DIR$/feature/releasenotes" />
+            <option value="$PROJECT_DIR$/feature/rss" />
+            <option value="$PROJECT_DIR$/feature/settings" />
+            <option value="$PROJECT_DIR$/feature/statistics" />
+            <option value="$PROJECT_DIR$/feature/stats" />
             <option value="$PROJECT_DIR$/formula1" />
             <option value="$PROJECT_DIR$/presentation" />
             <option value="$PROJECT_DIR$/presentation/style" />
             <option value="$PROJECT_DIR$/presentation/ui" />
-            <option value="$PROJECT_DIR$/regulations" />
-            <option value="$PROJECT_DIR$/rss" />
-            <option value="$PROJECT_DIR$/statistics" />
-            <option value="$PROJECT_DIR$/stats" />
             <option value="$PROJECT_DIR$/test" />
             <option value="$PROJECT_DIR$/test/models" />
             <option value="$PROJECT_DIR$/test/providers" />

@@ -8,13 +8,15 @@ import org.koin.core.context.startKoin
 import tmg.flashback.ads.di.adsModule
 import tmg.flashback.analytics.di.analyticsModule
 import tmg.flashback.appshortcuts.di.appShortcutModule
-import tmg.flashback.common.di.commonModule
+import tmg.flashback.settings.di.settingsModule
 import tmg.flashback.configuration.di.configModule
 import tmg.flashback.crash_reporting.di.crashReportingModule
 import tmg.flashback.device.di.deviceModule
 import tmg.flashback.di.appModule
+import tmg.flashback.forceupgrade.di.forceUpgradeModule
 import tmg.flashback.notifications.di.notificationModule
 import tmg.flashback.regulations.di.regulationsModule
+import tmg.flashback.releasenotes.di.releaseNotesModule
 import tmg.flashback.rss.di.rssModule
 import tmg.flashback.statistics.di.statisticsModule
 import tmg.flashback.stats.di.statsModule
@@ -37,8 +39,10 @@ class FlashbackApplication: Application() {
                 appModule,
                 // Features
                 rssModule,
-                commonModule,
+                settingsModule,
                 regulationsModule,
+                forceUpgradeModule,
+                releaseNotesModule,
                 // Debug
                 debugModule,
                 // Core

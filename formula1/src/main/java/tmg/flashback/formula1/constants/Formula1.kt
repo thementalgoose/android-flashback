@@ -45,21 +45,21 @@ object Formula1 {
     }
 
     val decadeColours: Map<String, Color> = mapOf(
-        "1950" to Color(0xFF9fa8da),
-        "1960" to Color(0xFF80deea),
-        "1970" to Color(0xFFef9a9a),
-        "1980" to Color(0xFF90caf9),
-        "1990" to Color(0xFFa5d6a7),
-        "2000" to Color(0xFF81d4fa),
-        "2010" to Color(0xFFce93d8),
-        "2020" to Color(0xFFf48fb1),
-        "2030" to Color(0xFFb39ddb),
-        "2040" to Color(0xFFc5e1a5),
-        "2050" to Color(0xFF80cbc4),
-        "2060" to Color(0xFFb0bec5),
-        "2070" to Color(0xFFffcc80),
-        "2080" to Color(0xFFffab91),
-        "2090" to Color(0xFFb0bec5)
+        "1950" to Color(0xFF9FA8DA),
+        "1960" to Color(0xFF80DEEA),
+        "1970" to Color(0xFFEF9A9A),
+        "1980" to Color(0xFF90CAF9),
+        "1990" to Color(0xFFA5D6A7),
+        "2000" to Color(0xFF81D4FA),
+        "2010" to Color(0xFFCE93D8),
+        "2020" to Color(0xFFF48FB1),
+        "2030" to Color(0xFFB39DDB),
+        "2040" to Color(0xFFC5E1A5),
+        "2050" to Color(0xFF80CBC4),
+        "2060" to Color(0xFFB0BEC5),
+        "2070" to Color(0xFFFFCC80),
+        "2080" to Color(0xFFFFAB91),
+        "2090" to Color(0xFFB0BEC5)
     )
 
     /**
