@@ -19,7 +19,7 @@ import tmg.utilities.extensions.views.gone
 import tmg.utilities.extensions.views.visible
 import tmg.utilities.lifecycle.viewInflateBinding
 
-class RSSFragment: BaseFragment() {
+internal class RSSFragment: BaseFragment() {
 
     private val viewModel: RSSViewModel by viewModel()
     private val binding by viewInflateBinding(FragmentRssBinding::inflate)

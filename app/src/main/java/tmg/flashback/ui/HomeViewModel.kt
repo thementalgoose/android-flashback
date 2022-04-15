@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import tmg.flashback.BuildConfig
-import tmg.flashback.common.controllers.ForceUpgradeController
+import tmg.flashback.common.repository.ForceUpgradeRepository
 import tmg.flashback.configuration.repository.ConfigRepository
 import tmg.flashback.configuration.usecases.ApplyConfigUseCase
 import tmg.flashback.crash_reporting.controllers.CrashController
@@ -39,7 +39,7 @@ class HomeViewModel(
     private val applyConfigUseCase: ApplyConfigUseCase,
     private val rssController: RSSController,
     private val crashController: CrashController,
-    private val forceUpgradeController: ForceUpgradeController,
+    private val forceUpgradeRepository: ForceUpgradeRepository,
     private val cacheRepository: CacheRepository,
     private val searchAppShortcutUseCase: SearchAppShortcutUseCase,
     private val scheduleController: ScheduleController
@@ -56,7 +56,7 @@ class HomeViewModel(
             configRepository.requireSynchronisation || !cacheRepository.initialSync -> {
                 requiresSync = true
             }
-            forceUpgradeController.shouldForceUpgrade -> {
+            forceUpgradeRepository.shouldForceUpgrade -> {
                 forceUpgrade = true
             }
             else -> {

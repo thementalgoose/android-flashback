@@ -7,18 +7,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import tmg.flashback.common.controllers.ReleaseNotesController
+import tmg.flashback.common.usecases.NewReleaseNotesUseCase
 import tmg.flashback.configuration.usecases.ApplyConfigUseCase
 import tmg.flashback.configuration.usecases.FetchConfigUseCase
-import tmg.flashback.formula1.model.OverviewRace
-import tmg.flashback.formula1.model.SeasonConstructorStandings
-import tmg.flashback.formula1.model.SeasonDriverStandings
 import tmg.flashback.statistics.BuildConfig
-import tmg.flashback.statistics.controllers.HomeController
 import tmg.flashback.statistics.extensions.updateAllWidgets
+import tmg.flashback.statistics.repository.HomeRepository
 import tmg.flashback.statistics.usecases.DefaultSeasonUseCase
 import tmg.flashback.statistics.workmanager.WorkerProvider
-import tmg.flashback.stats.repository.HomeRepository
 import tmg.utilities.lifecycle.Event
 
 //region Inputs
@@ -56,7 +52,7 @@ class DashboardViewModel(
     private val fetchConfigUseCase: FetchConfigUseCase,
     private val applyConfigUseCase: ApplyConfigUseCase,
     private val homeRepository: HomeRepository,
-    private val releaseNotesController: ReleaseNotesController,
+    private val releaseNotesUseCase: NewReleaseNotesUseCase,
 ): ViewModel(), DashboardViewModelInputs, DashboardViewModelOutputs {
 
     val inputs: DashboardViewModelInputs = this
@@ -90,7 +86,7 @@ class DashboardViewModel(
             }
         }
 
-        if (releaseNotesController.pendingReleaseNotes) {
+        if (releaseNotesUseCase.getNotes().isNotEmpty()) {
             openReleaseNotes.value = Event()
         }
     }

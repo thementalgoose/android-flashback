@@ -15,7 +15,7 @@ import tmg.flashback.rss.ui.settings.InitialScreen.SETTINGS
 import tmg.flashback.ui.base.BaseActivity
 import tmg.utilities.extensions.toEnum
 
-class RSSSettingsActivity : BaseActivity(), NavController.OnDestinationChangedListener {
+internal class RSSSettingsActivity : BaseActivity(), NavController.OnDestinationChangedListener {
 
     private lateinit var binding: ActivityRssSettingsBinding
 

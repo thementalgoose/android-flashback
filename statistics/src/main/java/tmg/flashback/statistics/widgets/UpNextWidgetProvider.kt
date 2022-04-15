@@ -29,7 +29,7 @@ import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.statistics.BuildConfig
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.controllers.ScheduleController
-import tmg.flashback.ui.navigation.NavigationProvider
+import tmg.flashback.ui.navigation.ApplicationNavigationProvider
 import tmg.utilities.extensions.toEnum
 import tmg.utilities.utils.LocalDateUtils.Companion.daysBetween
 
@@ -39,7 +39,7 @@ class UpNextWidgetProvider : AppWidgetProvider(), KoinComponent {
     private val crashController: CrashController by inject()
     private val scheduleController: ScheduleController by inject()
     private val buildConfigManager: BuildConfigManager by inject()
-    private val navigationProvider: NavigationProvider by inject()
+    private val applicationNavigationProvider: ApplicationNavigationProvider by inject()
 
     private val applyConfigUseCase: ApplyConfigUseCase by inject()
     private val fetchConfigUseCase: FetchConfigUseCase by inject()
@@ -190,7 +190,7 @@ class UpNextWidgetProvider : AppWidgetProvider(), KoinComponent {
     }
 
     private fun getOpenAppPendingIntent(context: Context): PendingIntent {
-        val intent = navigationProvider.relaunchAppIntent(context)
+        val intent = applicationNavigationProvider.relaunchAppIntent(context)
         return PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
     }
 

@@ -22,7 +22,7 @@ import tmg.utilities.extensions.views.show
 import java.net.MalformedURLException
 
 @SuppressLint("SetJavaScriptEnabled")
-class WebFragment : Fragment() {
+internal class WebFragment : Fragment() {
 
     // Binding stripped out and nullable due to loading of webpages and fragment lifecycle causing
     // binding to throw NPE

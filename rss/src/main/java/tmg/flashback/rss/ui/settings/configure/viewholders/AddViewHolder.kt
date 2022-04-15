@@ -9,7 +9,7 @@ import tmg.utilities.extensions.views.getString
 import java.net.MalformedURLException
 import java.net.URL
 
-class AddViewHolder(
+internal class AddViewHolder(
         private val addCustomItem: (String) -> Unit,
         private val binding: ViewRssConfigureAddBinding
 ): RecyclerView.ViewHolder(binding.root), View.OnClickListener {
