@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="GradleMigrationSettings" migrationVersion="1" />
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
         <option name="testRunner" value="GRADLE" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="gradleJvm" value="Android Studio java home" />
+        <option name="gradleJvm" value="#JAVA_HOME" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
@@ -34,8 +33,11 @@
             <option value="$PROJECT_DIR$/regulations" />
             <option value="$PROJECT_DIR$/rss" />
             <option value="$PROJECT_DIR$/statistics" />
+            <option value="$PROJECT_DIR$/stats" />
             <option value="$PROJECT_DIR$/test" />
-            <option value="$PROJECT_DIR$/test/stats-models" />
+            <option value="$PROJECT_DIR$/test/models" />
+            <option value="$PROJECT_DIR$/test/providers" />
+            <option value="$PROJECT_DIR$/test/providers-noop" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

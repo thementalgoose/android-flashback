@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.Intent
 import tmg.flashback.configuration.services.RemoteConfigService
 import tmg.flashback.debug.DebugActivity
-import tmg.flashback.ui.dashboard.list.ListItem
+import tmg.flashback.ui2.dashboard.list.ListItem
 
 class DebugController(
     private val remoteConfigService: RemoteConfigService

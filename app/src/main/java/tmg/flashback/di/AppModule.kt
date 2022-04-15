@@ -18,20 +18,24 @@ import tmg.flashback.prefs.manager.PreferenceManager
 import tmg.flashback.repositories.NetworkConfigRepository
 import tmg.flashback.statistics.network.NetworkConfigManager
 import tmg.flashback.ui.dashboard.DashboardViewModel
-import tmg.flashback.ui.dashboard.HomeViewModel
-import tmg.flashback.ui.dashboard.list.ListViewModel
+import tmg.flashback.ui.HomeViewModel
+import tmg.flashback.ui.dashboard.menu.MenuViewModel
+import tmg.flashback.ui2.dashboard.list.ListViewModel
 import tmg.flashback.ui.managers.StyleManager
 import tmg.flashback.ui.navigation.ApplicationNavigationProvider
-import tmg.flashback.ui.settings.SettingsAllViewModel
+import tmg.flashback.ui2.settings.SettingsAllViewModel
 import tmg.flashback.ui.sync.SyncViewModel
 
 val appModule = module {
 
     viewModel { SettingsAllViewModel(get(), get()) }
-    viewModel { DashboardViewModel(androidContext(), get(), get(), get(), get(), get()) }
+    viewModel { tmg.flashback.ui2.dashboard.DashboardViewModel(androidContext(), get(), get(), get(), get(), get()) }
     viewModel { ListViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get()) }
     viewModel { HomeViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
     viewModel { SyncViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get()) }
+
+    viewModel { DashboardViewModel(get(), get(), get(), get(), get(), get(), get()) }
+    viewModel { MenuViewModel(get(), get(), get(), get(), get()) }
 
     single { FlashbackStartup(get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get()) }
 

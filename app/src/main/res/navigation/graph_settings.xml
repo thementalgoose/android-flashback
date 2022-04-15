@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="tmg.flashback.ui.settings.SettingsAllFragment"
+        android:name="tmg.flashback.ui2.settings.SettingsAllFragment"
         android:label="SettingsFragment" >
         <action
             android:id="@+id/graph_action_appearance"

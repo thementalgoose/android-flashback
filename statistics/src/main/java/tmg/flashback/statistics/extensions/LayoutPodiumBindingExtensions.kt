@@ -1,8 +1,6 @@
 package tmg.flashback.statistics.extensions
 
 import android.widget.TextView
-import com.bumptech.glide.Glide
-import org.koin.androidx.compose.inject
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.RaceRaceResult
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
@@ -16,7 +14,8 @@ import tmg.utilities.extensions.views.gone
 import tmg.utilities.extensions.views.visible
 import kotlin.math.abs
 
-private val glideProvider: GlideProvider = GlideProvider()
+private val glideProvider: tmg.flashback.ui.animation.GlideProvider =
+    tmg.flashback.ui.animation.GlideProvider()
 
 fun LayoutPodiumBinding.bindRaceModel(model: RaceRaceResult, position: Int, pointsLayout: TextView) {
     val context = pointsLayout.context

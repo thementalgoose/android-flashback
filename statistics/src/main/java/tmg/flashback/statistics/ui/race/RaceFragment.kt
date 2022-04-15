@@ -9,11 +9,9 @@ import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.android.ext.android.inject
 import tmg.flashback.formula1.enums.TrackLayout
-import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.FragmentRaceBinding
 import tmg.flashback.statistics.ui.circuit.CircuitActivity
-import tmg.flashback.statistics.ui.circuit.CircuitItem
 import tmg.flashback.statistics.ui.overview.constructor.ConstructorActivity
 import tmg.flashback.statistics.ui.overview.driver.DriverActivity
 import tmg.flashback.statistics.ui.race.RaceDisplayType.*

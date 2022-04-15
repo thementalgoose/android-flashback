@@ -14,7 +14,6 @@ class DriverStandingMapper(
     fun mapDriverStanding(list: List<DriverStandingWithConstructors>): SeasonDriverStandings? {
         if (list.isEmpty()) return null
         return SeasonDriverStandings(
-            driver = driverDataMapper.mapDriver(list.first().driver),
             standings = list.map {
                 mapDriverStanding(it)
             }

@@ -3,8 +3,6 @@ package tmg.flashback.rss.network.apis.model;
 import androidx.annotation.Keep;
 import androidx.annotation.Nullable;
 
-import com.google.gson.annotations.SerializedName;
-
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 

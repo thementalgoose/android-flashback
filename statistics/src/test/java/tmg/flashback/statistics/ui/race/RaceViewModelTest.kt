@@ -51,7 +51,7 @@ internal class RaceViewModelTest: BaseTest() {
     @BeforeEach
     internal fun setUp() {
         every { mockConnectivityManager.isConnected } returns true
-        coEvery { mockRaceRepository.shouldSyncRace(any(), any()) } returns false
+        coEvery { mockRaceRepository.hasntPreviouslySynced(any()) } returns false
         coEvery { mockRaceRepository.getRace(any(), any()) } returns flow { emit(raceModel) }
         coEvery { mockRaceRepository.fetchRaces(any()) } returns true
         every { mockThemeRepository.animationSpeed } returns AnimationSpeed.QUICK
@@ -317,7 +317,7 @@ internal class RaceViewModelTest: BaseTest() {
 
     @Test
     fun `race requests is not made when should sync is false`() = coroutineTest {
-        coEvery { mockRaceRepository.shouldSyncRace(any(), any()) } returns false
+        coEvery { mockRaceRepository.hasntPreviouslySynced(any()) } returns false
 
         initSUT()
         runBlockingTest {
@@ -332,7 +332,7 @@ internal class RaceViewModelTest: BaseTest() {
 
     @Test
     fun `race requests is made when should sync is true`() = coroutineTest {
-        coEvery { mockRaceRepository.shouldSyncRace(any(), any()) } returns true
+        coEvery { mockRaceRepository.hasntPreviouslySynced(any()) } returns true
 
         initSUT()
         val observer = sut.outputs.list.testObserve()

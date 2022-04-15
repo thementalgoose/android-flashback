@@ -2,7 +2,6 @@ package tmg.flashback.statistics.ui.overview.driver.summary.viewholders
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.statistics.R
@@ -14,7 +13,8 @@ import tmg.flashback.ui.animation.GlideProvider
 import tmg.flashback.ui.extensions.getColor
 import tmg.utilities.extensions.views.context
 
-private val glideProvider: GlideProvider = GlideProvider()
+private val glideProvider: tmg.flashback.ui.animation.GlideProvider =
+    tmg.flashback.ui.animation.GlideProvider()
 
 class HeaderViewHolder(
         pillClicked: (PillItem) -> Unit,

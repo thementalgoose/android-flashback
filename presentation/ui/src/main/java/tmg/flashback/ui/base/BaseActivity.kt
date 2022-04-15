@@ -8,7 +8,6 @@ import tmg.flashback.analytics.manager.AnalyticsManager
 import tmg.flashback.ui.managers.StyleManager
 import tmg.flashback.ui.model.DisplayType
 import tmg.flashback.ui.navigation.ActivityProvider
-import tmg.flashback.ui.repository.ThemeRepository
 
 abstract class BaseActivity : AppCompatActivity() {
 
