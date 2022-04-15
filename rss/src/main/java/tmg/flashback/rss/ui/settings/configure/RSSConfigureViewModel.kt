@@ -29,7 +29,7 @@ interface RSSConfigureViewModelOutputs {
 
 //endregion
 
-class RSSConfigureViewModel(
+internal class RSSConfigureViewModel(
     private val repository: RSSRepository,
     private val rssFeedController: RSSController
 ) : ViewModel(), RSSConfigureViewModelInputs, RSSConfigureViewModelOutputs {

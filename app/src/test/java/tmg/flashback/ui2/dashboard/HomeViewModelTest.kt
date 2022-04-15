@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.flashback.common.controllers.ForceUpgradeController
+import tmg.flashback.common.repository.ForceUpgradeRepository
 import tmg.flashback.configuration.repository.ConfigRepository
 import tmg.flashback.configuration.usecases.ApplyConfigUseCase
 import tmg.flashback.crash_reporting.controllers.CrashController
@@ -22,7 +22,7 @@ internal class HomeViewModelTest: BaseTest() {
     private var mockConfigRepository: ConfigRepository = mockk(relaxed = true)
     private var mockApplyConfigUseCase: ApplyConfigUseCase = mockk(relaxed = true)
     private var mockCrashController: CrashController = mockk(relaxed = true)
-    private var mockForceUpgradeController: ForceUpgradeController = mockk(relaxed = true)
+    private var mockForceUpgradeRepository: ForceUpgradeRepository = mockk(relaxed = true)
     private var mockCacheRepository: CacheRepository = mockk(relaxed = true)
     private var mockScheduleController: ScheduleController = mockk(relaxed = true)
     private var mockAppShortcutUseCase: SearchAppShortcutUseCase = mockk(relaxed = true)
@@ -33,7 +33,7 @@ internal class HomeViewModelTest: BaseTest() {
     internal fun setUp() {
         coEvery { mockApplyConfigUseCase.apply() } returns true
         every { mockConfigRepository.requireSynchronisation } returns false
-        every { mockForceUpgradeController.shouldForceUpgrade } returns false
+        every { mockForceUpgradeRepository.shouldForceUpgrade } returns false
         every { mockCacheRepository.initialSync } returns true
         every { mockRssController.enabled } returns false
     }
@@ -44,7 +44,7 @@ internal class HomeViewModelTest: BaseTest() {
             mockApplyConfigUseCase,
             mockRssController,
             mockCrashController,
-            mockForceUpgradeController,
+            mockForceUpgradeRepository,
             mockCacheRepository,
             mockAppShortcutUseCase,
             mockScheduleController,
@@ -77,7 +77,7 @@ internal class HomeViewModelTest: BaseTest() {
 
     @Test
     fun `initialise with force upgrade true notifies force upgrade`() = coroutineTest {
-        every { mockForceUpgradeController.shouldForceUpgrade } returns true
+        every { mockForceUpgradeRepository.shouldForceUpgrade } returns true
 
         initSUT()
         sut.initialise()

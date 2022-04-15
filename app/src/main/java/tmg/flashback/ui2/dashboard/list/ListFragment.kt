@@ -12,13 +12,13 @@ import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import tmg.flashback.DebugController
 import tmg.flashback.R
+import tmg.flashback.RssNavigationComponent
 import tmg.flashback.databinding.FragmentDashboardListBinding
 import tmg.flashback.regulations.ui.FormatOverviewActivity
-import tmg.flashback.rss.ui.RSSActivity
 import tmg.flashback.statistics.ui.dashboard.onboarding.OnboardingNotificationBottomSheetFragment
 import tmg.flashback.ui.base.BaseFragment
+import tmg.flashback.ui.navigation.ApplicationNavigationProvider
 import tmg.flashback.ui2.dashboard.DashboardNavigationCallback
-import tmg.flashback.ui.navigation.NavigationProvider
 import tmg.flashback.ui2.settings.SettingsAllActivity
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
@@ -29,8 +29,9 @@ class ListFragment: BaseFragment() {
     private val viewModel: ListViewModel by viewModel()
     private val binding by viewInflateBinding(FragmentDashboardListBinding::inflate)
 
-    private val navigationProvider: NavigationProvider by inject()
+    private val applicationNavigationProvider: ApplicationNavigationProvider by inject()
     private val debugController: DebugController by inject()
+    private val rssNavigationComponent: RssNavigationComponent by inject()
 
     private var adapter: ListAdapter? = null
     private val dashboardNavigationCallback: DashboardNavigationCallback?
@@ -96,13 +97,13 @@ class ListFragment: BaseFragment() {
 
         observeEvent(viewModel.outputs.openRss) {
             context?.let {
-                startActivity(Intent(it, RSSActivity::class.java))
+                rssNavigationComponent.rssLaunch()
             }
         }
 
         observeEvent(viewModel.outputs.openContact) {
             context?.let {
-                startActivity(navigationProvider.aboutAppIntent(it))
+                startActivity(applicationNavigationProvider.aboutAppIntent(it))
             }
         }
 

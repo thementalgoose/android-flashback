@@ -15,7 +15,7 @@ import tmg.flashback.rss.repo.model.SupportedArticleSource
 import tmg.flashback.rss.repo.model.SupportedSource
 import tmg.testutils.BaseTest
 
-internal class RSSControllerTest: BaseTest() {
+internal class RSSServiceControllerTest: BaseTest() {
 
     private val mockRssRepository: RSSRepository = mockk(relaxed = true)
     private val mockAppShortcutManager: AppShortcutManager = mockk(relaxed = true)

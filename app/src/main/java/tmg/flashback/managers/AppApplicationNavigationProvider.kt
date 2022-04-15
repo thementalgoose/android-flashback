@@ -9,16 +9,16 @@ import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.device.repository.DeviceRepository
 import tmg.flashback.notifications.navigation.NotificationNavigationProvider
 import tmg.flashback.rss.controllers.RSSController
+import tmg.flashback.ui.navigation.ApplicationNavigationProvider
 import tmg.flashback.ui.HomeActivity
-import tmg.flashback.ui.navigation.NavigationProvider
 import tmg.flashback.ui.sync.SyncActivity
 
-class AppNavigationProvider(
+class AppApplicationNavigationProvider(
     private val buildConfigManager: BuildConfigManager,
     private val deviceRepository: DeviceRepository,
     private val analyticsManager: AnalyticsManager,
     private val rssController: RSSController
-): NavigationProvider, NotificationNavigationProvider {
+): ApplicationNavigationProvider, NotificationNavigationProvider {
 
     override fun relaunchAppIntent(context: Context): Intent {
         analyticsManager.logEvent("relaunch_app")
