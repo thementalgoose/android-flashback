@@ -7,9 +7,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import tmg.flashback.common.usecases.NewReleaseNotesUseCase
 import tmg.flashback.configuration.usecases.ApplyConfigUseCase
 import tmg.flashback.configuration.usecases.FetchConfigUseCase
+import tmg.flashback.releasenotes.usecases.NewReleaseNotesUseCase
 import tmg.flashback.statistics.BuildConfig
 import tmg.flashback.statistics.extensions.updateAllWidgets
 import tmg.flashback.statistics.repository.HomeRepository

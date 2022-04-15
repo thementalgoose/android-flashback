@@ -4,20 +4,15 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import androidx.activity.compose.setContent
-import androidx.compose.material.Scaffold
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import tmg.flashback.BuildConfig
-import tmg.flashback.common.CommonNavigationComponent
 import tmg.flashback.crash_reporting.controllers.CrashController
 import tmg.flashback.databinding.ActivityDashboardBinding
+import tmg.flashback.forceupgrade.ForceUpgradeNavigationComponent
 import tmg.flashback.statistics.workmanager.WorkerProvider
-import tmg.flashback.style.AppTheme
-import tmg.flashback.style.utils.rememberWindowSizeClass
 import tmg.flashback.ui.base.BaseActivity
-import tmg.flashback.ui.dashboard.DashboardScreen
 import tmg.flashback.ui.model.DisplayType
 import tmg.flashback.ui.sync.SyncActivity
 
@@ -29,7 +24,7 @@ class HomeActivity: BaseActivity() {
 
     private val workerProvider: WorkerProvider by inject()
     private val crashController: CrashController by inject()
-    private val commonNavigationComponent: CommonNavigationComponent by inject()
+    private val forceUpgradeNavigationComponent: ForceUpgradeNavigationComponent by inject()
 
     override val themeType: DisplayType = DisplayType.DEFAULT
 
@@ -68,7 +63,7 @@ class HomeActivity: BaseActivity() {
                 finish()
             }
             viewModel.forceUpgrade -> {
-                commonNavigationComponent.forceUpgradeLaunch()
+                forceUpgradeNavigationComponent.forceUpgradeLaunch()
                 finish()
             }
         }

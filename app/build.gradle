@@ -106,17 +106,19 @@ tasks.whenTaskAdded { task ->
 dependencies {
 
     // Feature modules
-    implementation project(path: ":statistics")
-    implementation project(path: ":stats")
+    implementation project(path: ":feature:statistics")
+    implementation project(path: ":feature:stats")
+    implementation project(path: ":feature:rss")
+    implementation project(path: ':feature:settings')
+    implementation project(path: ':feature:forceupgrade')
+    implementation project(path: ':feature:releasenotes')
+    implementation project(path: ":feature:regulations")
+    debugImplementation project(path: ":feature:debug")
+
+    // Data
     implementation project(path: ':data:repo')
     implementation project(path: ':data:network')
     implementation project(path: ":formula1")
-    implementation project(path: ":rss")
-    implementation project(path: ":common")
-    implementation project(path: ":regulations")
-
-    // Debug module
-    debugImplementation project(path: ":debug")
 
     // Core modules
     implementation project(path: ":ads")
