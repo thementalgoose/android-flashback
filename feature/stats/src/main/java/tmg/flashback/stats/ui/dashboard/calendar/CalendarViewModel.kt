@@ -45,14 +45,18 @@ class CalendarViewModel(
                 .fetch(season)
                 .flatMapLatest { hasMadeRequest ->
                     overviewRepository.getOverview(season)
-                        .map {
+                        .map { overview ->
                             isRefreshing.postValue(false)
                             if (!hasMadeRequest) {
                                 return@map null
                             }
-                            return@map it.overviewRaces
+                            val upcoming = overview.overviewRaces.getLatestUpcoming()
+                            return@map overview.overviewRaces
                                 .map {
-                                    CalendarModel.List(it)
+                                    CalendarModel.List(
+                                        model = it,
+                                        showScheduleList = it == upcoming
+                                    )
                                 }
                                 .sortedBy { it.model.round }
                         }
@@ -60,6 +64,12 @@ class CalendarViewModel(
         }
         .flowOn(ioDispatcher)
         .asLiveData(viewModelScope.coroutineContext)
+
+    private fun List<OverviewRace>.getLatestUpcoming(): OverviewRace? {
+        return this
+            .sortedBy { it.date }
+            .firstOrNull { it.date >= LocalDate.now() }
+    }
 
     override fun load(season: Int) {
         this.season.value = season

@@ -232,17 +232,12 @@ private fun PreviewLight(
     @PreviewParameter(SeasonDriverStandingSeasonProvider::class) driverStandings: SeasonDriverStandingSeason
 ) {
     AppThemePreview(isLight = true) {
-        DriverStandingsScreen(
-            showMenu = true,
-            season = 2021,
+        DriverStandings(
+            model = DriverStandingsModel(
+                standings = driverStandings
+            ),
             itemClicked = { },
-            items = List(5) {
-                DriverStandingsModel(
-                    standings = driverStandings,
-                    isSelected = it == 1,
-                    id = "$it"
-                )
-            }
+            maxPoints = 25.0
         )
     }
 }
@@ -253,17 +248,12 @@ private fun PreviewDark(
     @PreviewParameter(SeasonDriverStandingSeasonProvider::class) driverStandings: SeasonDriverStandingSeason
 ) {
     AppThemePreview(isLight = false) {
-        DriverStandingsScreen(
-            showMenu = false,
-            season = 2021,
+        DriverStandings(
+            model = DriverStandingsModel(
+                standings = driverStandings
+            ),
             itemClicked = { },
-            items = List(5) {
-                DriverStandingsModel(
-                    standings = driverStandings,
-                    isSelected = it == 1,
-                    id = "$it"
-                )
-            }
+            maxPoints = 25.0
         )
     }
 }

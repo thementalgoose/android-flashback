@@ -1,15 +1,17 @@
 package tmg.flashback.stats.ui.dashboard.calendar
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -21,13 +23,13 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import org.koin.androidx.compose.viewModel
 import org.threeten.bp.DayOfWeek
+import org.threeten.bp.LocalDate
 import org.threeten.bp.format.TextStyle
 import tmg.flashback.formula1.model.OverviewRace
+import tmg.flashback.formula1.model.Schedule
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.providers.OverviewRaceProvider
 import tmg.flashback.stats.R
-import tmg.flashback.stats.ui.dashboard.constructors.ConstructorStandingsScreen
-import tmg.flashback.stats.ui.dashboard.constructors.ConstructorsStandingViewModel
 import tmg.flashback.stats.ui.messaging.Banner
 import tmg.flashback.stats.ui.messaging.ProvidedBy
 import tmg.flashback.style.AppTheme
@@ -41,6 +43,9 @@ import tmg.flashback.ui.utils.isInPreview
 import tmg.utilities.extensions.format
 import tmg.utilities.extensions.ordinalAbbreviation
 import java.util.*
+
+private val countryBadgeSize = 32.dp
+private const val pastScheduleAlpha = 0.2f
 
 @Composable
 fun CalendarScreenVM(
@@ -116,6 +121,8 @@ fun CalendarScreen(
     )
 }
 
+//region Schedule view
+
 @Composable
 private fun Schedule(
     model: CalendarModel.List,
@@ -126,72 +133,162 @@ private fun Schedule(
     Container(
         modifier = modifier
     ) {
-        Row(modifier = Modifier
-            .height(IntrinsicSize.Min)
+        Column(modifier = Modifier
             .fillMaxWidth()
             .clickable(onClick = {
                 itemClicked(model)
             })
         ) {
-            val colorForPanel = when {
-                model.model.hasResults -> AppTheme.colors.f1ResultsFull
-                model.model.hasQualifying -> AppTheme.colors.f1ResultsPartial
-                else -> AppTheme.colors.f1ResultsNeutral
-            }
+            Row {
+                val colorForPanel = when {
+                    model.model.hasResults -> AppTheme.colors.f1ResultsFull
+                    model.model.hasQualifying -> AppTheme.colors.f1ResultsPartial
+                    else -> AppTheme.colors.f1ResultsNeutral
+                }
 
-            Box(modifier = Modifier
-                .padding(
-                    top = AppTheme.dimensions.paddingMedium,
-                    end = AppTheme.dimensions.paddingNSmall,
-                    start = AppTheme.dimensions.paddingNSmall
-                )
-            ) {
-                val resourceId = when (isInPreview()) {
-                    true -> R.drawable.gb
-                    false -> LocalContext.current.getFlagResourceAlpha3(model.model.countryISO)
+                Box(modifier = Modifier
+                    .padding(
+                        top = AppTheme.dimensions.paddingMedium,
+                        end = AppTheme.dimensions.paddingNSmall,
+                        start = AppTheme.dimensions.paddingNSmall
+                    )
+                ) {
+                    val resourceId = when (isInPreview()) {
+                        true -> R.drawable.gb
+                        false -> LocalContext.current.getFlagResourceAlpha3(model.model.countryISO)
+                    }
+                    Image(
+                        painter = painterResource(id = resourceId),
+                        modifier = Modifier.size(countryBadgeSize),
+                        contentDescription = null
+                    )
                 }
-                Image(
-                    painter = painterResource(id = resourceId),
-                    modifier = Modifier.size(32.dp),
-                    contentDescription = null
-                )
+                Column(modifier = Modifier
+                    .weight(1f)
+                    .padding(
+                        top = AppTheme.dimensions.paddingSmall,
+                        bottom = AppTheme.dimensions.paddingSmall,
+                        end = AppTheme.dimensions.paddingMedium
+                    )
+                ) {
+                    Row {
+                        TextTitle(
+                            text = model.model.raceName,
+                            bold = true,
+                            modifier = Modifier.weight(1f)
+                        )
+                        Spacer(Modifier.width(AppTheme.dimensions.paddingSmall))
+                        TextTitle(
+                            text = "#${model.model.round}",
+                            bold = true
+                        )
+                    }
+                    TextBody1(
+                        text = model.model.circuitName,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 2.dp)
+                    )
+
+                    if (!model.shouldShowScheduleList) {
+                        TextBody2(
+                            text = model.model.date.format("'${model.model.date.dayOfMonth.ordinalAbbreviation}' MMMM") ?: "",
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 2.dp)
+                        )
+                    }
+                }
             }
-            Column(modifier = Modifier
-                .weight(1f)
-                .padding(
-                    top = AppTheme.dimensions.paddingSmall,
-                    bottom = AppTheme.dimensions.paddingSmall,
-                    end = AppTheme.dimensions.paddingMedium
-                )
-            ) {
-                Row {
-                    TextTitle(
-                        text = model.model.raceName,
-                        bold = true,
-                        modifier = Modifier.weight(1f)
-                    )
-                    Spacer(Modifier.width(AppTheme.dimensions.paddingSmall))
-                    TextTitle(
-                        text = "#${model.model.round}",
-                        bold = true
-                    )
-                }
-                TextBody1(
-                    text = model.model.circuitName,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 2.dp)
-                )
-                TextBody2(
-                    text = model.model.date.format("'${model.model.date.dayOfMonth.ordinalAbbreviation}' MMMM") ?: "",
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 2.dp)
-                )
+            if (model.shouldShowScheduleList) {
+                Dates(model.model.schedule)
             }
         }
     }
 }
+
+@Composable
+private fun Dates(
+    scheduleList: List<Schedule>,
+    modifier: Modifier = Modifier
+) {
+    val schedule = scheduleList.groupBy { it.timestamp.deviceLocalDateTime.toLocalDate() }
+    Row(modifier = modifier
+        .horizontalScroll(rememberScrollState())
+        .padding(bottom = AppTheme.dimensions.paddingSmall)
+    ) {
+        Spacer(Modifier.width(countryBadgeSize + (AppTheme.dimensions.paddingNSmall * 2)))
+        for ((date, list) in schedule) {
+            val alpha = if (date.isBefore(LocalDate.now())) pastScheduleAlpha else 1f
+            Column {
+                TextBody2(
+                    text = date.format("EEE '${date.dayOfMonth.ordinalAbbreviation}' MMMM") ?: "",
+                    modifier = Modifier
+                        .alpha(alpha)
+                        .padding(
+                            bottom = AppTheme.dimensions.paddingXSmall
+                        )
+                )
+                Row {
+                    list.forEach {
+                        DateCard(schedule = it)
+                        Spacer(Modifier.width(AppTheme.dimensions.paddingSmall))
+                    }
+                }
+            }
+            Spacer(Modifier.width(AppTheme.dimensions.paddingMedium))
+        }
+    }
+}
+
+@Composable
+private fun DateCard(
+    schedule: Schedule,
+    modifier: Modifier = Modifier
+) {
+    val alpha = if (schedule.timestamp.isInPast) pastScheduleAlpha else 1f
+    Column(modifier = modifier
+        .width(IntrinsicSize.Max)
+        .clip(RoundedCornerShape(AppTheme.dimensions.radiusSmall))
+        .background(AppTheme.colors.backgroundTertiary)
+        .alpha(alpha)
+        .padding(
+            vertical = AppTheme.dimensions.paddingNSmall,
+            horizontal = AppTheme.dimensions.paddingNSmall
+        )
+    ) {
+        Row(modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = AppTheme.dimensions.paddingSmall),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            TextBody1(
+                textAlign = TextAlign.Center,
+                text = schedule.label
+            )
+            Spacer(Modifier.width(4.dp))
+            Icon(
+                modifier = Modifier.size(16.dp),
+                tint = AppTheme.colors.contentSecondary,
+                painter = painterResource(id = R.drawable.ic_notification_indicator_bell),
+                contentDescription = stringResource(id = R.string.ab_notifications_enabled)
+            )
+        }
+        TextBody2(
+            modifier = Modifier.fillMaxWidth(),
+            textAlign = TextAlign.Center,
+            text = schedule.timestamp.deviceLocalDateTime.toLocalTime().format("HH:mm"),
+            bold = true
+        )
+    }
+}
+
+//endregion
+
+
+
+
+//region Calendar view
 
 @Composable
 private fun Month(
@@ -269,37 +366,46 @@ private fun CalendarContainer(
     }
 }
 
-@Preview
-@Composable
-private fun PreviewLightSchedule() {
-    AppThemePreview(isLight = true) {
-        Column(modifier = Modifier.fillMaxWidth()) {
-//            DayHeaders()
-        }
-    }
-}
+//endregion
+
+//@Preview
+//@Composable
+//private fun PreviewLightCalendar() {
+//    AppThemePreview(isLight = true) {
+//        Schedule(
+//            model = CalendarModel.List(race),
+//            itemClicked = { }
+//        )
+//    }
+//}
+//
+//@Preview
+//@Composable
+//private fun PreviewDarkCalendar() {
+//    AppThemePreview(isLight = false) {
+//        Schedule(
+//            model = CalendarModel.List(race),
+//            itemClicked = { }
+//        )
+//    }
+//}
+
 
 @Preview
 @Composable
-private fun PreviewDarkSchedule() {
-    AppThemePreview(isLight = false) {
-        Column(modifier = Modifier.fillMaxWidth()) {
-//            DayHeaders()
-        }
-    }
-}
-
-
-@Preview
-@Composable
-private fun PreviewLightCalendar(
+private fun PreviewLightSchedule(
     @PreviewParameter(OverviewRaceProvider::class) race: OverviewRace
 ) {
     AppThemePreview(isLight = true) {
-        Column(modifier = Modifier.fillMaxWidth()) {
+        Column(Modifier.fillMaxWidth()) {
             Schedule(
-                model = CalendarModel.List(model = race),
-                itemClicked = {}
+                model = CalendarModel.List(race),
+                itemClicked = { }
+            )
+            Spacer(Modifier.height(16.dp))
+            Schedule(
+                model = CalendarModel.List(race, showScheduleList = true),
+                itemClicked = { }
             )
         }
     }
@@ -307,14 +413,19 @@ private fun PreviewLightCalendar(
 
 @Preview
 @Composable
-private fun PreviewDarkCalendar(
+private fun PreviewDarkSchedule(
     @PreviewParameter(OverviewRaceProvider::class) race: OverviewRace
 ) {
     AppThemePreview(isLight = false) {
-        Column(modifier = Modifier.fillMaxWidth()) {
+        Column(Modifier.fillMaxWidth()) {
             Schedule(
-                model = CalendarModel.List(model = race),
-                itemClicked = {}
+                model = CalendarModel.List(race),
+                itemClicked = { }
+            )
+            Spacer(Modifier.height(16.dp))
+            Schedule(
+                model = CalendarModel.List(race, showScheduleList = true),
+                itemClicked = { }
             )
         }
     }
