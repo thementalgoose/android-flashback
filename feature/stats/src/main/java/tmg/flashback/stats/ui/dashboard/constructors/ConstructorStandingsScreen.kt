@@ -174,17 +174,13 @@ private fun PreviewLight(
     @PreviewParameter(SeasonConstructorStandingSeasonProvider::class) constructorStandings: SeasonConstructorStandingSeason
 ) {
     AppThemePreview(isLight = true) {
-        ConstructorStandingsScreen(
-            showMenu = true,
-            season = 2021,
+        ConstructorStandings(
+            model = ConstructorStandingsModel(
+                standings = constructorStandings,
+                isSelected = false
+            ),
             itemClicked = { },
-            items = List(5) {
-                ConstructorStandingsModel(
-                    standings = constructorStandings,
-                    isSelected = it == 1,
-                    id = "$it"
-                )
-            }
+            maxPoints = 25.0
         )
     }
 }
@@ -195,17 +191,13 @@ private fun PreviewDark(
     @PreviewParameter(SeasonConstructorStandingSeasonProvider::class) constructorStandings: SeasonConstructorStandingSeason
 ) {
     AppThemePreview(isLight = false) {
-        ConstructorStandingsScreen(
-            showMenu = true,
-            season = 2021,
+        ConstructorStandings(
+            model = ConstructorStandingsModel(
+                standings = constructorStandings,
+                isSelected = false
+            ),
             itemClicked = { },
-            items = List(5) {
-                ConstructorStandingsModel(
-                    standings = constructorStandings,
-                    isSelected = it == 1,
-                    id = "$it"
-                )
-            }
+            maxPoints = 25.0
         )
     }
 }
