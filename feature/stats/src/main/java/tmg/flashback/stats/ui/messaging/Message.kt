@@ -20,7 +20,7 @@ private fun Message(
             .fillMaxWidth()
             .padding(
                 horizontal = AppTheme.dimensions.paddingMedium,
-                vertical = AppTheme.dimensions.paddingXSmall
+                vertical = AppTheme.dimensions.paddingSmall
             ),
         text = title,
         bold = true

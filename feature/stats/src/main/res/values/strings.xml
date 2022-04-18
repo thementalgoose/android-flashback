@@ -13,4 +13,11 @@
         <item quantity="one">%s point</item>
         <item quantity="other">%s points</item>
     </plurals>
+
+    <!-- Tyres -->
+    <string name="tyres_list_title">%s tyres</string>
+    <string name="tyres_list_subtitle">These are the tyre compounds used in this season</string>
+    <string name="tyres_dry_compounds">Dry</string>
+    <string name="tyres_wet_compounds">Wet</string>
+    <string name="tyres_size">%d inch wheel rims</string>
 </resources>
