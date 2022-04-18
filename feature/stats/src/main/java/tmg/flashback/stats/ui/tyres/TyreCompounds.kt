@@ -104,6 +104,6 @@ private fun PreviewLight() {
 @Composable
 private fun PreviewDark() {
     AppThemePreview(isLight = false) {
-        TyreCompounds(season = 2022)
+        TyreCompounds(season = 2018)
     }
 }
