@@ -25,6 +25,7 @@ import org.koin.androidx.compose.viewModel
 import org.threeten.bp.DayOfWeek
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.TextStyle
+import tmg.flashback.formula1.model.Event
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.model.Schedule
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
@@ -367,6 +368,15 @@ private fun CalendarContainer(
 }
 
 //endregion
+
+
+
+
+//@Composable
+//private fun Links(
+//    events: List<Event>,
+//    showTyres: Boolean
+//)
 
 //@Preview
 //@Composable
