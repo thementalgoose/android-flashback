@@ -23,6 +23,7 @@ allprojects {
                 compose: [
                         activity                                : "androidx.activity:activity-compose:1.4.0",
                         material                                : "androidx.compose.material:material:$android_compose",
+                        material3                               : "androidx.compose.material3:material3:1.0.0-alpha09",
                         animation                               : "androidx.compose.animation:animation:$android_compose",
                         tooling                                 : "androidx.compose.ui:ui-tooling:$android_compose",
                         runtime                                 : "androidx.compose.runtime:runtime-livedata:$android_compose",

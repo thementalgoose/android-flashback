@@ -61,7 +61,7 @@ private fun Banner(
 //    ) {
         Row(modifier = Modifier
             .padding(
-                vertical = AppTheme.dimensions.paddingXSmall,
+                vertical = AppTheme.dimensions.paddingSmall,
                 horizontal = AppTheme.dimensions.paddingMedium
             ),
             verticalAlignment = Alignment.CenterVertically

@@ -43,7 +43,7 @@ private fun ProvidedBy(
             .clickable(onClick = clicked)
             .padding(
                 horizontal = AppTheme.dimensions.paddingMedium,
-                vertical = AppTheme.dimensions.paddingXSmall
+                vertical = AppTheme.dimensions.paddingSmall
             ),
         text = title,
         bold = true

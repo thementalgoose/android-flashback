@@ -10,8 +10,7 @@ sealed class CalendarModel {
         private val showScheduleList: Boolean = false,
         val id: String = model.raceName
     ): CalendarModel() {
-        val shouldShowScheduleList
-            get() = showScheduleList && model.schedule.isNotEmpty()
+        val shouldShowScheduleList = showScheduleList && model.schedule.isNotEmpty()
     }
 
     data class Month(
