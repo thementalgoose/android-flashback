@@ -1,6 +1,5 @@
 package tmg.flashback.ui.dashboard.menu
 
-import android.widget.GridLayout
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
@@ -22,6 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.viewModel
 import tmg.flashback.R
+import tmg.flashback.formula1.constants.Formula1
 import tmg.flashback.stats.components.Timeline
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
@@ -87,21 +87,40 @@ fun MenuScreen(
             item { Divider() }
             item { SubHeader(text = stringResource(id = R.string.dashboard_all_title))}
             items(season, key = { it.season }) {
-                Timeline(
-                    timelineColor = it.colour,
-                    isEnabled = it.isSelected,
-                    showTop = !it.isFirst,
-                    showBottom = !it.isLast,
-                    modifier = Modifier
-                        .clickable(onClick = {
-                            seasonClicked(it.season)
-                        })
-                        .fillMaxWidth()
-                        .padding(
-                            horizontal = AppTheme.dimensions.paddingMedium
-                        )
+                Row(modifier = Modifier
+                    .height(IntrinsicSize.Min)
+                    .clickable(onClick = {
+                        seasonClicked(it.season)
+                    })
                 ) {
-                    TextBody1(text = it.season.toString(), bold = true)
+                    Box(modifier = Modifier
+                        .width(AppTheme.dimensions.paddingMedium)
+                        .fillMaxHeight()
+                    ) {
+                        if (it.season == Formula1.currentSeasonYear) {
+                            Icon(
+                                modifier = Modifier
+                                    .align(Alignment.Center)
+                                    .alpha(0.4f),
+                                painter = painterResource(id = tmg.flashback.stats.R.drawable.ic_current_indicator),
+                                contentDescription = null,
+                                tint = AppTheme.colors.contentPrimary
+                            )
+                        }
+                    }
+                    Timeline(
+                        timelineColor = it.colour,
+                        isEnabled = it.isSelected,
+                        showTop = !it.isFirst,
+                        showBottom = !it.isLast,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(
+                                end = AppTheme.dimensions.paddingMedium
+                            )
+                    ) {
+                        TextBody1(text = it.season.toString(), bold = true)
+                    }
                 }
             }
             item {

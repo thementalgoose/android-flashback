@@ -57,14 +57,18 @@
         <entry key="../../../../layout/compose-model-1651697542906.xml" value="0.15489130434782608" />
         <entry key="../../../../layout/compose-model-1651697571399.xml" value="0.4638888888888889" />
         <entry key="../../../../layout/compose-model-1652366176283.xml" value="0.1" />
+        <entry key="../../../../layout/compose-model-1652370115346.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/dashboard_contact.xml" value="0.2495" />
         <entry key="app/src/main/res/drawable/dashboard_darkmode.xml" value="0.2495" />
         <entry key="app/src/main/res/drawable/dashboard_rss.xml" value="0.2495" />
         <entry key="app/src/main/res/drawable/dashboard_settings.xml" value="0.2495" />
+        <entry key="app/src/main/res/layout/view_season_list_season.xml" value="0.55" />
         <entry key="feature/releasenotes/src/main/res/layout/fragment_bottom_sheet_release_notes.xml" value="0.1752786220871327" />
         <entry key="feature/settings/src/main/res/layout/fragment_bottom_sheet_release_notes.xml" value="0.1752786220871327" />
+        <entry key="feature/statistics/src/main/res/drawable/ic_default_indicator.xml" value="0.223" />
         <entry key="feature/statistics/src/main/res/layout/view_tyre_item.xml" value="0.1752786220871327" />
         <entry key="feature/stats/src/main/res/drawable/ic_banner_arrow.xml" value="0.1635" />
+        <entry key="feature/stats/src/main/res/drawable/ic_current_indicator.xml" value="0.222" />
         <entry key="presentation/ui/src/main/res/drawable/ic_nightmode_dark.xml" value="0.2495" />
       </map>
     </option>
