@@ -45,7 +45,7 @@ fun Banner(
 }
 
 @Composable
-private fun Banner(
+fun Banner(
     message: String,
     showLink: Boolean,
     modifier: Modifier = Modifier

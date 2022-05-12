@@ -92,9 +92,17 @@ fun ConstructorStandingsScreen(
                     }
                 )
             }
-            item {
+            item(key = "info") {
                 Banner()
                 ProvidedBy()
+                val content = items.firstOrNull { it.standings.inProgressContent != null }?.standings?.inProgressContent
+                if (content != null) {
+                    val (name, round) = content
+                    Banner(
+                        message = stringResource(R.string.results_accurate_for, name, round),
+                        showLink = false
+                    )
+                }
             }
             items(items, key = { it.id }) { item ->
                 ConstructorStandings(
@@ -102,6 +110,9 @@ fun ConstructorStandingsScreen(
                     itemClicked = itemClicked,
                     maxPoints = (items.maxOfOrNull { it.standings.points } ?: 1250.0),
                 )
+            }
+            item(key = "footer") {
+                Spacer(Modifier.height(72.dp))
             }
         }
     )
