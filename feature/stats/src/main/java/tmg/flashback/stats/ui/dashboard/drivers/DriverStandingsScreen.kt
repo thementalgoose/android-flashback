@@ -97,9 +97,17 @@ fun DriverStandingsScreen(
                     }
                 )
             }
-            item {
+            item(key = "info") {
                 Banner()
                 ProvidedBy()
+                val content = items.firstOrNull { it.standings.inProgressContent != null }?.standings?.inProgressContent
+                if (content != null) {
+                    val (name, round) = content
+                    Banner(
+                        message = stringResource(R.string.results_accurate_for, name, round),
+                        showLink = false
+                    )
+                }
             }
             items(items, key = { it.id }) { item ->
                 DriverStandings(
@@ -107,6 +115,9 @@ fun DriverStandingsScreen(
                     itemClicked = itemClicked,
                     maxPoints = (items.maxOfOrNull { it.standings.points } ?: 625.0),
                 )
+            }
+            item(key = "footer") {
+                Spacer(Modifier.height(72.dp))
             }
         }
     )

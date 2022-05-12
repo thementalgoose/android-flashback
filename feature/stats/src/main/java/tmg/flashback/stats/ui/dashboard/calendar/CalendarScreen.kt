@@ -101,7 +101,7 @@ fun CalendarScreen(
                     actionUpClicked = { menuClicked?.invoke() }
                 )
             }
-            item {
+            item(key = "info") {
                 Banner()
                 ProvidedBy()
             }
@@ -117,6 +117,9 @@ fun CalendarScreen(
                         Week(model = item)
                     }
                 }
+            }
+            item(key = "footer") {
+                Spacer(Modifier.height(72.dp))
             }
         }
     )
