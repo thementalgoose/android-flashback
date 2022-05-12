@@ -20,12 +20,13 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
+import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 
 private val selectedPillWidth: Dp = 64.dp
 private val pillHeight: Dp = 28.dp
 private val iconSize: Dp = 24.dp
-private val appBarHeight: Dp = 72.dp
+val appBarHeight: Dp = 72.dp
 
 @Composable
 fun NavigationBar(
@@ -94,11 +95,11 @@ private fun Item(
                 contentDescription = null,
             )
         }
-        TextBody2(
+        TextBody1(
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = AppTheme.dimensions.paddingSmall),
+                .padding(bottom = 10.dp),
             text = item.label?.let { stringResource(id = it) } ?: "",
             textColor = colour.value,
             bold = true
