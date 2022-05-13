@@ -10,7 +10,11 @@ sealed class CalendarModel {
         private val showScheduleList: Boolean = false,
         val id: String = model.raceName
     ): CalendarModel() {
+
         val shouldShowScheduleList = showScheduleList && model.schedule.isNotEmpty()
+
+        val fadeItem: Boolean
+            get() = model.date.isAfter(LocalDate.now()) && !shouldShowScheduleList
     }
 
     data class Month(

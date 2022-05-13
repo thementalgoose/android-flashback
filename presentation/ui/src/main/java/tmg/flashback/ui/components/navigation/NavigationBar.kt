@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -37,6 +38,7 @@ fun NavigationBar(
     Row(
         modifier = modifier
             .height(appBarHeight)
+            .shadow(elevation = 4.dp)
             .background(AppTheme.colors.backgroundNav),
         horizontalArrangement = Arrangement.Start,
         verticalAlignment = Alignment.CenterVertically,
