@@ -18,6 +18,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
@@ -134,14 +135,24 @@ private fun Schedule(
     modifier: Modifier = Modifier,
     card: Boolean = false
 ) {
+    val alpha = when (model.fadeItem) {
+        true -> 0.6f
+        false -> 1f
+    }
     Container(
         modifier = modifier
+            .padding(
+                top = if (model.shouldShowScheduleList) AppTheme.dimensions.paddingXSmall else 0.dp,
+                bottom = if (model.shouldShowScheduleList) AppTheme.dimensions.paddingSmall else 0.dp
+            )
+            .alpha(alpha)
+            .clickable(onClick = {
+                itemClicked(model)
+            }),
+        isOutlined = model.shouldShowScheduleList
     ) {
         Column(modifier = Modifier
             .fillMaxWidth()
-            .clickable(onClick = {
-                itemClicked(model)
-            })
         ) {
             Row {
                 val colorForPanel = when {
@@ -187,12 +198,20 @@ private fun Schedule(
                             bold = true
                         )
                     }
-                    TextBody1(
-                        text = model.model.circuitName,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 2.dp)
-                    )
+                    Row {
+                        TextBody1(
+                            text = model.model.circuitName,
+                            modifier = Modifier
+                                .weight(1f)
+                                .padding(top = 2.dp)
+                        )
+                        Spacer(Modifier.width(AppTheme.dimensions.paddingSmall))
+                        IconRow(
+                            // TODO: Remove this check for 2000 and fix the API response data!
+                            showQualifying = model.model.hasQualifying && model.model.season > 2000,
+                            showRace = model.model.hasResults
+                        )
+                    }
 
                     if (!model.shouldShowScheduleList) {
                         TextBody2(
@@ -205,10 +224,47 @@ private fun Schedule(
                 }
             }
             if (model.shouldShowScheduleList) {
-                Dates(model.model.schedule)
+                Dates(
+                    model.model.schedule,
+                    modifier = Modifier.padding(top = AppTheme.dimensions.paddingXSmall)
+                )
             }
         }
     }
+}
+
+@Composable
+private fun RowScope.IconRow(
+    showQualifying: Boolean,
+    showRace: Boolean,
+    iconSize: Dp = 16.dp
+) {
+    Icon(
+        modifier = Modifier
+            .size(iconSize)
+            .align(Alignment.CenterVertically),
+        painter = painterResource(id = R.drawable.ic_status_results_qualifying),
+        contentDescription = stringResource(id = R.string.ab_has_qualifying_results),
+        tint = if (showQualifying) AppTheme.colors.f1ResultsFull else AppTheme.colors.backgroundTertiary
+    )
+    Spacer(Modifier.width(2.dp))
+    // TODO: Add support for this in the API response and then here!
+//    Icon(
+//        modifier = Modifier
+//            .size(iconSize)
+//            .align(Alignment.CenterVertically),
+//        painter = painterResource(id = R.drawable.ic_status_results_sprint),
+//        contentDescription = stringResource(id = R.string.ab_has_sprint_results),
+//        tint = AppTheme.colors.contentTertiary
+//    )
+    Icon(
+        modifier = Modifier
+            .size(iconSize)
+            .align(Alignment.CenterVertically),
+        painter = painterResource(id = R.drawable.ic_status_results_race),
+        contentDescription = stringResource(id = R.string.ab_has_race_results),
+        tint = if (showRace) AppTheme.colors.f1ResultsFull else AppTheme.colors.backgroundTertiary
+    )
 }
 
 @Composable
