@@ -25,4 +25,6 @@ interface StatsNavigator {
         constructorId: String,
         constructorName: String
     )
+
+    fun goToSearch()
 }

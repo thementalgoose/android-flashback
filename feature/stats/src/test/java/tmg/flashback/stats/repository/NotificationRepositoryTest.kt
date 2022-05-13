@@ -8,15 +8,17 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import tmg.flashback.prefs.manager.PreferenceManager
 import tmg.flashback.stats.repository.models.NotificationReminder
+import tmg.flashback.stats.repository.models.NotificationResults
+import tmg.flashback.stats.repository.models.NotificationSchedule
 
 internal class NotificationRepositoryTest {
 
     private val mockPreferenceManager: PreferenceManager = mockk(relaxed = true)
 
-    private lateinit var sut: NotificationRepository
+    private lateinit var underTest: NotificationRepository
 
-    private fun initSUT() {
-        sut = NotificationRepository(mockPreferenceManager)
+    private fun initUnderTest() {
+        underTest = NotificationRepository(mockPreferenceManager)
     }
 
     //region Notification preferences - Race
@@ -25,9 +27,9 @@ internal class NotificationRepositoryTest {
     fun `is notification race reads value from preferences repository with default to false`() {
         every { mockPreferenceManager.getBoolean(any(), any()) } returns true
 
-        initSUT()
+        initUnderTest()
 
-        Assertions.assertTrue(sut.notificationRace)
+        Assertions.assertTrue(underTest.notificationRace)
         verify {
             mockPreferenceManager.getBoolean(keyNotificationRace, false)
         }
@@ -35,9 +37,9 @@ internal class NotificationRepositoryTest {
 
     @Test
     fun `setting notification race enabled saves value from preferences repository`() {
-        initSUT()
+        initUnderTest()
 
-        sut.notificationRace = true
+        underTest.notificationRace = true
         verify {
             mockPreferenceManager.save(keyNotificationRace, true)
         }
@@ -45,9 +47,9 @@ internal class NotificationRepositoryTest {
 
     @Test
     fun `setting notification race disabled saves value from preferences repository`() {
-        initSUT()
+        initUnderTest()
 
-        sut.notificationRace = false
+        underTest.notificationRace = false
         verify {
             mockPreferenceManager.save(keyNotificationRace, false)
         }
@@ -61,9 +63,9 @@ internal class NotificationRepositoryTest {
     fun `is notification qualifying reads value from preferences repository with default to false`() {
         every { mockPreferenceManager.getBoolean(any(), any()) } returns true
 
-        initSUT()
+        initUnderTest()
 
-        Assertions.assertTrue(sut.notificationQualifying)
+        Assertions.assertTrue(underTest.notificationQualifying)
         verify {
             mockPreferenceManager.getBoolean(keyNotificationQualifying, false)
         }
@@ -71,9 +73,9 @@ internal class NotificationRepositoryTest {
 
     @Test
     fun `setting notification qualifying enabled saves value from preferences repository`() {
-        initSUT()
+        initUnderTest()
 
-        sut.notificationQualifying = true
+        underTest.notificationQualifying = true
         verify {
             mockPreferenceManager.save(keyNotificationQualifying, true)
         }
@@ -81,9 +83,9 @@ internal class NotificationRepositoryTest {
 
     @Test
     fun `setting notification qualifying disabled saves value from preferences repository`() {
-        initSUT()
+        initUnderTest()
 
-        sut.notificationQualifying = false
+        underTest.notificationQualifying = false
         verify {
             mockPreferenceManager.save(keyNotificationQualifying, false)
         }
@@ -97,9 +99,9 @@ internal class NotificationRepositoryTest {
     fun `is notification free practice reads value from preferences repository with default to false`() {
         every { mockPreferenceManager.getBoolean(any(), any()) } returns true
 
-        initSUT()
+        initUnderTest()
 
-        Assertions.assertTrue(sut.notificationFreePractice )
+        Assertions.assertTrue(underTest.notificationFreePractice )
         verify {
             mockPreferenceManager.getBoolean(keyNotificationFreePractice, false)
         }
@@ -107,9 +109,9 @@ internal class NotificationRepositoryTest {
 
     @Test
     fun `setting notification free practice enabled saves value from preferences repository`() {
-        initSUT()
+        initUnderTest()
 
-        sut.notificationFreePractice = true
+        underTest.notificationFreePractice = true
         verify {
             mockPreferenceManager.save(keyNotificationFreePractice, true)
         }
@@ -117,9 +119,9 @@ internal class NotificationRepositoryTest {
 
     @Test
     fun `setting notification free practice disabled saves value from preferences repository`() {
-        initSUT()
+        initUnderTest()
 
-        sut.notificationFreePractice = false
+        underTest.notificationFreePractice = false
         verify {
             mockPreferenceManager.save(keyNotificationFreePractice, false)
         }
@@ -133,9 +135,9 @@ internal class NotificationRepositoryTest {
     fun `is notification other reads value from preferences repository with default to false`() {
         every { mockPreferenceManager.getBoolean(any(), any()) } returns true
 
-        initSUT()
+        initUnderTest()
 
-        Assertions.assertTrue(sut.notificationOther )
+        Assertions.assertTrue(underTest.notificationOther )
         verify {
             mockPreferenceManager.getBoolean(keyNotificationOther, false)
         }
@@ -143,9 +145,9 @@ internal class NotificationRepositoryTest {
 
     @Test
     fun `setting notification other enabled saves value from preferences repository`() {
-        initSUT()
+        initUnderTest()
 
-        sut.notificationOther = true
+        underTest.notificationOther = true
         verify {
             mockPreferenceManager.save(keyNotificationOther, true)
         }
@@ -153,9 +155,9 @@ internal class NotificationRepositoryTest {
 
     @Test
     fun `setting notification other disabled saves value from preferences repository`() {
-        initSUT()
+        initUnderTest()
 
-        sut.notificationOther = false
+        underTest.notificationOther = false
         verify {
             mockPreferenceManager.save(keyNotificationOther, false)
         }
@@ -163,15 +165,39 @@ internal class NotificationRepositoryTest {
 
     //endregion
 
+
+    @Test
+    fun `getting notification schedule queries all preferences`() {
+        every { mockPreferenceManager.getBoolean(any(), any()) } returns true
+        initUnderTest()
+
+        val expected = NotificationSchedule(
+            freePractice = true,
+            qualifying = true,
+            race = true,
+            other = true,
+        )
+        assertEquals(expected, underTest.notificationSchedule)
+
+        verify {
+            mockPreferenceManager.getBoolean(keyNotificationFreePractice, any())
+            mockPreferenceManager.getBoolean(keyNotificationQualifying, any())
+            mockPreferenceManager.getBoolean(keyNotificationRace, any())
+            mockPreferenceManager.getBoolean(keyNotificationOther, any())
+        }
+    }
+
+
+
     //region Notification preferences - Onboarding
 
     @Test
     fun `is notification onboarding reads value from preferences repository with default to false`() {
         every { mockPreferenceManager.getBoolean(any(), any()) } returns true
 
-        initSUT()
+        initUnderTest()
 
-        Assertions.assertTrue(sut.seenNotificationOnboarding )
+        Assertions.assertTrue(underTest.seenNotificationOnboarding )
         verify {
             mockPreferenceManager.getBoolean(keyNotificationOnboarding, false)
         }
@@ -179,9 +205,9 @@ internal class NotificationRepositoryTest {
 
     @Test
     fun `setting notification onboarding enabled saves value from preferences repository`() {
-        initSUT()
+        initUnderTest()
 
-        sut.seenNotificationOnboarding = true
+        underTest.seenNotificationOnboarding = true
         verify {
             mockPreferenceManager.save(keyNotificationOnboarding, true)
         }
@@ -189,9 +215,9 @@ internal class NotificationRepositoryTest {
 
     @Test
     fun `setting notification onboarding disabled saves value from preferences repository`() {
-        initSUT()
+        initUnderTest()
 
-        sut.seenNotificationOnboarding = false
+        underTest.seenNotificationOnboarding = false
         verify {
             mockPreferenceManager.save(keyNotificationOnboarding, false)
         }
@@ -209,9 +235,9 @@ internal class NotificationRepositoryTest {
     fun `is notification race notify reads value from preferences repository with default to false`() {
         every { mockPreferenceManager.getBoolean(any(), any()) } returns true
 
-        initSUT()
+        initUnderTest()
 
-        Assertions.assertTrue(sut.notificationNotifyRace)
+        Assertions.assertTrue(underTest.notificationNotifyRace)
         verify {
             mockPreferenceManager.getBoolean(keyNotificationRaceNotify, false)
         }
@@ -219,9 +245,9 @@ internal class NotificationRepositoryTest {
 
     @Test
     fun `setting notification race notify enabled saves value from preferences repository`() {
-        initSUT()
+        initUnderTest()
 
-        sut.notificationNotifyRace = true
+        underTest.notificationNotifyRace = true
         verify {
             mockPreferenceManager.save(keyNotificationRaceNotify, true)
         }
@@ -229,9 +255,9 @@ internal class NotificationRepositoryTest {
 
     @Test
     fun `setting notification race notify disabled saves value from preferences repository`() {
-        initSUT()
+        initUnderTest()
 
-        sut.notificationNotifyRace = false
+        underTest.notificationNotifyRace = false
         verify {
             mockPreferenceManager.save(keyNotificationRaceNotify, false)
         }
@@ -245,9 +271,9 @@ internal class NotificationRepositoryTest {
     fun `is notification sprint notify reads value from preferences repository with default to false`() {
         every { mockPreferenceManager.getBoolean(any(), any()) } returns true
 
-        initSUT()
+        initUnderTest()
 
-        Assertions.assertTrue(sut.notificationNotifySprint)
+        Assertions.assertTrue(underTest.notificationNotifySprint)
         verify {
             mockPreferenceManager.getBoolean(keyNotificationSprintNotify, false)
         }
@@ -255,9 +281,9 @@ internal class NotificationRepositoryTest {
 
     @Test
     fun `setting notification sprint notify enabled saves value from preferences repository`() {
-        initSUT()
+        initUnderTest()
 
-        sut.notificationNotifySprint = true
+        underTest.notificationNotifySprint = true
         verify {
             mockPreferenceManager.save(keyNotificationSprintNotify, true)
         }
@@ -265,9 +291,9 @@ internal class NotificationRepositoryTest {
 
     @Test
     fun `setting notification sprint notify disabled saves value from preferences repository`() {
-        initSUT()
+        initUnderTest()
 
-        sut.notificationNotifySprint = false
+        underTest.notificationNotifySprint = false
         verify {
             mockPreferenceManager.save(keyNotificationSprintNotify, false)
         }
@@ -281,9 +307,9 @@ internal class NotificationRepositoryTest {
     fun `is notification qualifying notify reads value from preferences repository with default to false`() {
         every { mockPreferenceManager.getBoolean(any(), any()) } returns true
 
-        initSUT()
+        initUnderTest()
 
-        Assertions.assertTrue(sut.notificationNotifyQualifying)
+        Assertions.assertTrue(underTest.notificationNotifyQualifying)
         verify {
             mockPreferenceManager.getBoolean(keyNotificationQualifyingNotify, false)
         }
@@ -291,9 +317,9 @@ internal class NotificationRepositoryTest {
 
     @Test
     fun `setting notification qualifying notify enabled saves value from preferences repository`() {
-        initSUT()
+        initUnderTest()
 
-        sut.notificationNotifyQualifying = true
+        underTest.notificationNotifyQualifying = true
         verify {
             mockPreferenceManager.save(keyNotificationQualifyingNotify, true)
         }
@@ -301,9 +327,9 @@ internal class NotificationRepositoryTest {
 
     @Test
     fun `setting notification qualifying notify disabled saves value from preferences repository`() {
-        initSUT()
+        initUnderTest()
 
-        sut.notificationNotifyQualifying = false
+        underTest.notificationNotifyQualifying = false
         verify {
             mockPreferenceManager.save(keyNotificationQualifyingNotify, false)
         }
@@ -313,15 +339,39 @@ internal class NotificationRepositoryTest {
 
 
 
+
+
+
+    @Test
+    fun `getting notification results queries all preferences`() {
+        every { mockPreferenceManager.getBoolean(any(), any()) } returns true
+        initUnderTest()
+
+        val expected = NotificationResults(
+            sprint = true,
+            qualifying = true,
+            race = true,
+        )
+        assertEquals(expected, underTest.notificationResults)
+
+        verify {
+            mockPreferenceManager.getBoolean(keyNotificationQualifyingNotify, any())
+            mockPreferenceManager.getBoolean(keyNotificationSprintNotify, any())
+            mockPreferenceManager.getBoolean(keyNotificationRaceNotify, any())
+        }
+    }
+
+
+
     //region Notification preferences - Reminder
 
     @Test
     fun `is notification reminder reads value from preferences repository`() {
         every { mockPreferenceManager.getInt(any(), any()) } returns 900
 
-        initSUT()
+        initUnderTest()
 
-        assertEquals(NotificationReminder.MINUTES_15, sut.notificationReminderPeriod)
+        assertEquals(NotificationReminder.MINUTES_15, underTest.notificationReminderPeriod)
         verify {
             mockPreferenceManager.getInt(keyNotificationReminder, 1800)
         }
@@ -331,9 +381,9 @@ internal class NotificationRepositoryTest {
     fun `is notification reminder reads value from preferences repository with invalid defaults to 30 mins`() {
         every { mockPreferenceManager.getInt(any(), any()) } returns 1
 
-        initSUT()
+        initUnderTest()
 
-        assertEquals(NotificationReminder.MINUTES_30, sut.notificationReminderPeriod)
+        assertEquals(NotificationReminder.MINUTES_30, underTest.notificationReminderPeriod)
         verify {
             mockPreferenceManager.getInt(keyNotificationReminder, 1800)
         }
@@ -341,9 +391,9 @@ internal class NotificationRepositoryTest {
 
     @Test
     fun `setting notification reminder enabled saves value from preferences repository`() {
-        initSUT()
+        initUnderTest()
 
-        sut.notificationReminderPeriod = NotificationReminder.MINUTES_60
+        underTest.notificationReminderPeriod = NotificationReminder.MINUTES_60
         verify {
             mockPreferenceManager.save(keyNotificationReminder, NotificationReminder.MINUTES_60.seconds)
         }

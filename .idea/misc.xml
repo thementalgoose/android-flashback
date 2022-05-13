@@ -61,10 +61,13 @@
         <entry key="../../../../layout/compose-model-1652457167460.xml" value="0.1" />
         <entry key="../../../../layout/compose-model-1652457167461.xml" value="1.0" />
         <entry key="../../../../layout/compose-model-1652459898544.xml" value="0.1" />
+        <entry key="../../../../layout/compose-model-1652461347481.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/dashboard_contact.xml" value="0.2495" />
         <entry key="app/src/main/res/drawable/dashboard_darkmode.xml" value="0.2495" />
         <entry key="app/src/main/res/drawable/dashboard_rss.xml" value="0.2495" />
+        <entry key="app/src/main/res/drawable/dashboard_search.xml" value="0.103" />
         <entry key="app/src/main/res/drawable/dashboard_settings.xml" value="0.2495" />
+        <entry key="app/src/main/res/drawable/ic_search.xml" value="0.103" />
         <entry key="app/src/main/res/layout/view_season_list_season.xml" value="0.55" />
         <entry key="feature/releasenotes/src/main/res/layout/fragment_bottom_sheet_release_notes.xml" value="0.1752786220871327" />
         <entry key="feature/settings/src/main/res/layout/fragment_bottom_sheet_release_notes.xml" value="0.1752786220871327" />

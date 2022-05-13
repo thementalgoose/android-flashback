@@ -14,6 +14,10 @@ sealed class MenuItems(
         @DrawableRes
         val icon: Int
     ): MenuItems(label.toString()) {
+        object Search: Button(
+            label = R.string.dashboard_links_search,
+            icon = R.drawable.dashboard_search
+        )
         object Rss: Button(
             label = R.string.dashboard_links_rss,
             icon = R.drawable.dashboard_rss

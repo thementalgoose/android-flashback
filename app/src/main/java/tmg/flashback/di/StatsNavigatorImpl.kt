@@ -5,6 +5,7 @@ import tmg.flashback.statistics.ui.overview.constructor.ConstructorActivity
 import tmg.flashback.statistics.ui.overview.driver.DriverActivity
 import tmg.flashback.statistics.ui.race.RaceActivity
 import tmg.flashback.statistics.ui.race.RaceData
+import tmg.flashback.statistics.ui.search.SearchActivity
 import tmg.flashback.stats.di.StatsNavigator
 import tmg.flashback.ui.navigation.ActivityProvider
 
@@ -12,6 +13,13 @@ import tmg.flashback.ui.navigation.ActivityProvider
 class StatsNavigatorImpl(
     private val activityProvider: ActivityProvider
 ): StatsNavigator {
+
+    override fun goToSearch() {
+        val activity = activityProvider.activity ?: return
+        val intent = SearchActivity.intent(activity)
+        activity.startActivity(intent)
+    }
+
     override fun goToRace(
         season: Int,
         round: Int,

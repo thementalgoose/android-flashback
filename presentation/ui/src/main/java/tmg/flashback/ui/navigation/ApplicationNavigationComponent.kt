@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 
 interface ApplicationNavigationComponent {
+
     fun relaunchApp()
     fun relaunchAppIntent(context: Context): Intent
 
