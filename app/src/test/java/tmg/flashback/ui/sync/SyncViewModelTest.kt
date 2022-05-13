@@ -1,4 +1,4 @@
-package tmg.flashback.ui2
+package tmg.flashback.ui.sync
 
 import io.mockk.*
 import org.junit.jupiter.api.BeforeEach
@@ -17,8 +17,6 @@ import tmg.flashback.statistics.repo.repository.CacheRepository
 import tmg.flashback.statistics.usecases.SearchAppShortcutUseCase
 import tmg.flashback.ui.sync.SyncNavTarget.DASHBOARD
 import tmg.flashback.ui.sync.SyncNavTarget.FORCE_UPGRADE
-import tmg.flashback.ui.sync.SyncState
-import tmg.flashback.ui.sync.SyncViewModel
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertDataEventValue
 import tmg.testutils.livedata.assertEventNotFired
@@ -134,8 +132,6 @@ internal class SyncViewModelTest: BaseTest() {
         coVerify(exactly = 0) {
             mockResetConfigUseCase.ensureReset()
             mockFetchConfigUseCase.fetchAndApply()
-        }
-        verify {
         }
         sut.outputs.loadingState.test {
             assertValue(SyncState.DONE)

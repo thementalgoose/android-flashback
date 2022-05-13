@@ -68,7 +68,6 @@ fun DashboardScreen(
     Scaffold(
         bottomBar = {
             val position = animateDpAsState(targetValue = if (panelsState.isStartPanelOpen) appBarHeight else 0.dp)
-            println(position.value)
             NavigationBar(
                 modifier = Modifier.offset(y = position.value),
                 list = tabState.value?.tab?.toNavigationItems() ?: emptyList(),
