@@ -27,4 +27,8 @@ interface StatsNavigator {
     )
 
     fun goToSearch()
+
+    fun goToTyreOverview(
+        season: Int
+    )
 }
