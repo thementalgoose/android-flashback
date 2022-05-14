@@ -32,7 +32,7 @@ class ConstructorsStandingViewModel(
     val inputs: ConstructorsStandingViewModelInputs = this
     val outputs: ConstructorsStandingViewModelOutputs = this
 
-    override val isRefreshing: MutableLiveData<Boolean> = MutableLiveData()
+    override val isRefreshing: MutableLiveData<Boolean> = MutableLiveData(false)
 
     private val season: MutableStateFlow<Int?> = MutableStateFlow(null)
     override val items: LiveData<List<ConstructorStandingsModel>?> = season
