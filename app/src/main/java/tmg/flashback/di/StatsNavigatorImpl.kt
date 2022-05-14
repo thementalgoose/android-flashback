@@ -1,11 +1,13 @@
 package tmg.flashback.di
 
+import androidx.appcompat.app.AppCompatActivity
 import org.threeten.bp.LocalDate
 import tmg.flashback.statistics.ui.overview.constructor.ConstructorActivity
 import tmg.flashback.statistics.ui.overview.driver.DriverActivity
 import tmg.flashback.statistics.ui.race.RaceActivity
 import tmg.flashback.statistics.ui.race.RaceData
 import tmg.flashback.statistics.ui.search.SearchActivity
+import tmg.flashback.statistics.ui.shared.tyres.TyresBottomSheetFragment
 import tmg.flashback.stats.di.StatsNavigator
 import tmg.flashback.ui.navigation.ActivityProvider
 
@@ -46,6 +48,12 @@ class StatsNavigatorImpl(
         )
         val intent = RaceActivity.intent(activity, raceData = raceData)
         activity.startActivity(intent)
+    }
+
+    override fun goToTyreOverview(season: Int) {
+        val activity = (activityProvider.activity as? AppCompatActivity) ?: return
+        val fragment = TyresBottomSheetFragment.instance(season)
+        fragment.show(activity.supportFragmentManager, "TYRES")
     }
 
     override fun goToDriverOverview(driverId: String, driverName: String) {
