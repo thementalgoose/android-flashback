@@ -80,6 +80,7 @@ private fun Title(
 ) {
     TextBody1(
         text = date.format("EEEE '${date.dayOfMonth.ordinalAbbreviation}' MMMM") ?: "",
+        bold = true,
         modifier = modifier
             .fillMaxWidth()
             .padding(vertical = AppTheme.dimensions.paddingXSmall)

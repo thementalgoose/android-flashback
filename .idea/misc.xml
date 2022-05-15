@@ -219,7 +219,7 @@
         <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/dashboard/drivers/DriverStandingsScreen.kt" value="0.25" />
         <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/messaging/ProvidedBy.kt" value="0.5203703703703704" />
         <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/weekend/info/InfoScreen.kt" value="0.375" />
-        <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/weekend/schedule/ScheduleScreen.kt" value="0.625" />
+        <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/weekend/schedule/ScheduleScreen.kt" value="0.375" />
         <entry key="feature/stats/src/main/res/drawable/nav_constructor.xml" value="0.2315" />
         <entry key="feature/stats/src/main/res/drawable/nav_qualifying.xml" value="0.2315" />
         <entry key="feature/stats/src/main/res/drawable/nav_race.xml" value="0.2315" />
