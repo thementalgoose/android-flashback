@@ -34,8 +34,8 @@ private val trackSizeSmall = 80.dp
 @Composable
 fun RaceInfoHeader(
     model: RaceInfo,
-    largeTrack: Boolean,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    largeTrack: Boolean = false,
 ) {
     Column(modifier = modifier) {
         val track = TrackLayout.getTrack(model.circuit.id, model.season, model.name)

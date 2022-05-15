@@ -40,7 +40,8 @@ internal class DashboardViewModelTest: BaseTest() {
             mockDefaultSeasonUseCase,
             mockFetchConfigUseCase,
             mockApplyConfigUseCase,
-            mockNewReleaseNotesUseCase
+            mockNewReleaseNotesUseCase,
+            ioDispatcher = coroutineScope.testDispatcher
         )
     }
 

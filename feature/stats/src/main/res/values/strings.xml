@@ -16,6 +16,13 @@
         <item quantity="other">%s points</item>
     </plurals>
 
+
+    <string name="nav_constructors">Constructors</string>
+    <string name="nav_schedule">Schedule</string>
+    <string name="nav_race">Race</string>
+    <string name="nav_qualifying">Qualifying</string>
+    <string name="nav_sprint">Sprint</string>
+
     <!-- Tyres -->
     <string name="tyres_label">Tyre compounds</string>
     <string name="tyres_list_title">%s tyres</string>
