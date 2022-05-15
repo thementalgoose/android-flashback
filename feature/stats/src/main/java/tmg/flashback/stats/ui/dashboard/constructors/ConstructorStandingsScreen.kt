@@ -25,10 +25,13 @@ import tmg.flashback.providers.SeasonConstructorStandingSeasonProvider
 import tmg.flashback.providers.SeasonDriverStandingSeasonProvider
 import tmg.flashback.stats.R
 import tmg.flashback.stats.components.DriverPoints
+import tmg.flashback.stats.ui.dashboard.DashboardQuickLinks
 import tmg.flashback.stats.ui.dashboard.drivers.DriverStandings
 import tmg.flashback.stats.ui.dashboard.drivers.DriverStandingsModel
 import tmg.flashback.stats.ui.dashboard.drivers.DriverStandingsScreen
 import tmg.flashback.stats.ui.dashboard.drivers.DriversStandingViewModel
+import tmg.flashback.stats.ui.messaging.Banner
+import tmg.flashback.stats.ui.messaging.ProvidedBy
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.text.TextTitle
@@ -54,6 +57,7 @@ fun ConstructorStandingsScreenVM(
         ConstructorStandingsScreen(
             showMenu = showMenu,
             menuClicked = menuClicked,
+            itemClicked = viewModel.inputs::clickItem,
             season = season,
             items = items.value ?: emptyList()
         )
@@ -64,6 +68,7 @@ fun ConstructorStandingsScreenVM(
 fun ConstructorStandingsScreen(
     showMenu: Boolean,
     menuClicked: (() -> Unit)? = null,
+    itemClicked: (ConstructorStandingsModel) -> Unit,
     season: Int,
     items: List<ConstructorStandingsModel>
 ) {
@@ -88,12 +93,26 @@ fun ConstructorStandingsScreen(
                     }
                 )
             }
+            item(key = "info") {
+                DashboardQuickLinks()
+                val content = items.firstOrNull { it.standings.inProgressContent != null }?.standings?.inProgressContent
+                if (content != null) {
+                    val (name, round) = content
+                    Banner(
+                        message = stringResource(R.string.results_accurate_for, name, round),
+                        showLink = false
+                    )
+                }
+            }
             items(items, key = { it.id }) { item ->
                 ConstructorStandings(
                     model = item,
-                    itemClicked = { },
+                    itemClicked = itemClicked,
                     maxPoints = (items.maxOfOrNull { it.standings.points } ?: 1250.0),
                 )
+            }
+            item(key = "footer") {
+                Spacer(Modifier.height(72.dp))
             }
         }
     )
@@ -166,16 +185,13 @@ private fun PreviewLight(
     @PreviewParameter(SeasonConstructorStandingSeasonProvider::class) constructorStandings: SeasonConstructorStandingSeason
 ) {
     AppThemePreview(isLight = true) {
-        ConstructorStandingsScreen(
-            showMenu = true,
-            season = 2021,
-            items = List(5) {
-                ConstructorStandingsModel(
-                    standings = constructorStandings,
-                    isSelected = it == 1,
-                    id = "$it"
-                )
-            }
+        ConstructorStandings(
+            model = ConstructorStandingsModel(
+                standings = constructorStandings,
+                isSelected = false
+            ),
+            itemClicked = { },
+            maxPoints = 25.0
         )
     }
 }
@@ -186,16 +202,13 @@ private fun PreviewDark(
     @PreviewParameter(SeasonConstructorStandingSeasonProvider::class) constructorStandings: SeasonConstructorStandingSeason
 ) {
     AppThemePreview(isLight = false) {
-        ConstructorStandingsScreen(
-            showMenu = true,
-            season = 2021,
-            items = List(5) {
-                ConstructorStandingsModel(
-                    standings = constructorStandings,
-                    isSelected = it == 1,
-                    id = "$it"
-                )
-            }
+        ConstructorStandings(
+            model = ConstructorStandingsModel(
+                standings = constructorStandings,
+                isSelected = false
+            ),
+            itemClicked = { },
+            maxPoints = 25.0
         )
     }
 }

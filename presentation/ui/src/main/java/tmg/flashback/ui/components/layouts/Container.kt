@@ -26,7 +26,7 @@ fun Container(
 ) {
     val backgroundColor = animateColorAsState(targetValue = when (isSelected) {
         true -> AppTheme.colors.primary.copy(alpha = 0.2f)
-        false -> if (isOutlined) AppTheme.colors.backgroundPrimary else Color.Transparent
+        false -> if (isOutlined) AppTheme.colors.backgroundSecondary else Color.Transparent
     })
 
     Box(modifier = modifier

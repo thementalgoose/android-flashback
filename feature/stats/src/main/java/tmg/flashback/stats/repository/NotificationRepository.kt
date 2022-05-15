@@ -2,6 +2,8 @@ package tmg.flashback.stats.repository
 
 import tmg.flashback.prefs.manager.PreferenceManager
 import tmg.flashback.stats.repository.models.NotificationReminder
+import tmg.flashback.stats.repository.models.NotificationResults
+import tmg.flashback.stats.repository.models.NotificationSchedule
 import tmg.utilities.extensions.toEnum
 
 class NotificationRepository(
@@ -22,6 +24,8 @@ class NotificationRepository(
         private const val keyNotificationOnboarding: String = "UP_NEXT_NOTIFICATION_ONBOARDING"
     }
 
+
+
     var notificationRace: Boolean
         get() = preferenceManager.getBoolean(keyNotificationRace, false)
         set(value) = preferenceManager.save(keyNotificationRace, value)
@@ -38,6 +42,13 @@ class NotificationRepository(
         get() = preferenceManager.getBoolean(keyNotificationOther, false)
         set(value) = preferenceManager.save(keyNotificationOther, value)
 
+    val notificationSchedule: NotificationSchedule
+        get() = NotificationSchedule(
+            freePractice = notificationFreePractice,
+            qualifying = notificationQualifying,
+            race = notificationRace,
+            other = notificationOther
+        )
 
 
     var notificationNotifyRace: Boolean
@@ -52,6 +63,12 @@ class NotificationRepository(
         get() = preferenceManager.getBoolean(keyNotificationQualifyingNotify, false)
         set(value) = preferenceManager.save(keyNotificationQualifyingNotify, value)
 
+    val notificationResults: NotificationResults
+        get() = NotificationResults(
+            qualifying = notificationNotifyQualifying,
+            sprint = notificationNotifySprint,
+            race = notificationNotifyRace
+        )
 
 
     var seenNotificationOnboarding: Boolean

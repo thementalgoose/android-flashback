@@ -13,6 +13,7 @@ dependencies {
     // Compose
     implementation deps.compose.activity
     implementation deps.compose.material
+    implementation deps.compose.material3
     implementation deps.compose.animation
     implementation deps.compose.tooling
     implementation deps.compose.runtime

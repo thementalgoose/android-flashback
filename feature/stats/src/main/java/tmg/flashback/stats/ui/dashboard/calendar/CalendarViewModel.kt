@@ -5,14 +5,18 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import org.threeten.bp.LocalDate
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.statistics.repo.OverviewRepository
+import tmg.flashback.stats.di.StatsNavigator
 import tmg.flashback.stats.usecases.DefaultSeasonUseCase
 import tmg.flashback.stats.usecases.FetchSeasonUseCase
 
 interface CalendarViewModelInputs {
     fun refresh()
     fun load(season: Int)
+
+    fun clickItem(model: CalendarModel)
 }
 
 interface CalendarViewModelOutputs {
@@ -23,6 +27,7 @@ interface CalendarViewModelOutputs {
 class CalendarViewModel(
     private val fetchSeasonUseCase: FetchSeasonUseCase,
     private val overviewRepository: OverviewRepository,
+    private val statsNavigator: StatsNavigator,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), CalendarViewModelInputs, CalendarViewModelOutputs {
 
@@ -40,14 +45,18 @@ class CalendarViewModel(
                 .fetch(season)
                 .flatMapLatest { hasMadeRequest ->
                     overviewRepository.getOverview(season)
-                        .map {
+                        .map { overview ->
                             isRefreshing.postValue(false)
                             if (!hasMadeRequest) {
                                 return@map null
                             }
-                            return@map it.overviewRaces
+                            val upcoming = overview.overviewRaces.getLatestUpcoming()
+                            return@map overview.overviewRaces
                                 .map {
-                                    CalendarModel.List(it)
+                                    CalendarModel.List(
+                                        model = it,
+                                        showScheduleList = it == upcoming
+                                    )
                                 }
                                 .sortedBy { it.model.round }
                         }
@@ -55,6 +64,12 @@ class CalendarViewModel(
         }
         .flowOn(ioDispatcher)
         .asLiveData(viewModelScope.coroutineContext)
+
+    private fun List<OverviewRace>.getLatestUpcoming(): OverviewRace? {
+        return this
+            .sortedBy { it.date }
+            .firstOrNull { it.date >= LocalDate.now() }
+    }
 
     override fun load(season: Int) {
         this.season.value = season
@@ -69,4 +84,23 @@ class CalendarViewModel(
             isRefreshing.postValue(false)
         }
     }
+
+    override fun clickItem(model: CalendarModel) {
+        when (model) {
+            is CalendarModel.List -> statsNavigator.goToRace(
+                season = model.model.season,
+                round = model.model.round,
+                circuitId = model.model.circuitId,
+                defaultToRace = model.model.hasResults,
+                country = model.model.country,
+                raceName = model.model.raceName,
+                trackName = model.model.circuitName,
+                countryISO = model.model.countryISO,
+                date = model.model.date
+            )
+            is CalendarModel.Month -> TODO()
+            is CalendarModel.Week -> TODO()
+        }
+    }
 }
+

@@ -38,8 +38,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/paddingMedium"
-        android:paddingTop="@dimen/paddingNSmall"
         android:paddingStart="0dp"
+        android:paddingTop="@dimen/paddingNSmall"
         android:paddingEnd="0dp"
         android:paddingBottom="@dimen/paddingNSmall"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -124,8 +124,8 @@
         android:importantForAccessibility="no"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/cardview"
         app:layout_constraintEnd_toStartOf="@id/label"
+        app:layout_constraintStart_toEndOf="@id/cardview"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_default_tick" />
 

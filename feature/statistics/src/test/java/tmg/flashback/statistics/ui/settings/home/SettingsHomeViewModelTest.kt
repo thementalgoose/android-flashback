@@ -44,7 +44,7 @@ internal class SettingsHomeViewModelTest: BaseTest() {
             Pair(R.string.settings_information_title, null),
             Pair(R.string.settings_information_at_top_title, R.string.settings_information_at_top_description),
             Pair(R.string.settings_dashboard_title, null),
-            Pair(R.string.settings_dashboard_default_to_schedule_title, R.string.settings_dashboard_default_to_schedule_description),
+//            Pair(R.string.settings_dashboard_default_to_schedule_title, R.string.settings_dashboard_default_to_schedule_description),
             Pair(R.string.settings_dashboard_autoscroll_title, R.string.settings_dashboard_autoscroll_description)
         )
 
@@ -64,7 +64,7 @@ internal class SettingsHomeViewModelTest: BaseTest() {
             Pair(R.string.settings_information_title, null),
             Pair(R.string.settings_information_at_top_title, R.string.settings_information_at_top_description),
             Pair(R.string.settings_dashboard_title, null),
-            Pair(R.string.settings_dashboard_default_to_schedule_title, R.string.settings_dashboard_default_to_schedule_description),
+//            Pair(R.string.settings_dashboard_default_to_schedule_title, R.string.settings_dashboard_default_to_schedule_description),
             Pair(R.string.settings_dashboard_autoscroll_title, R.string.settings_dashboard_autoscroll_description)
         )
 
@@ -118,14 +118,14 @@ internal class SettingsHomeViewModelTest: BaseTest() {
         }
     }
 
-    @Test
-    fun `clicking toggle for dashboard default to schedule by at top updates toggle`() {
-        initSUT()
-        sut.clickSwitchPreference(sut.models.findSwitch(R.string.settings_dashboard_default_to_schedule_title), true)
-        verify {
-            mockHomeController.dashboardDefaultToSchedule = true
-        }
-    }
+//    @Test
+//    fun `clicking toggle for dashboard default to schedule by at top updates toggle`() {
+//        initSUT()
+//        sut.clickSwitchPreference(sut.models.findSwitch(R.string.settings_dashboard_default_to_schedule_title), true)
+//        verify {
+//            mockHomeController.dashboardDefaultToSchedule = true
+//        }
+//    }
 
     @Test
     fun `clicking toggle for dashboard autoscroll by at top updates toggle`() {

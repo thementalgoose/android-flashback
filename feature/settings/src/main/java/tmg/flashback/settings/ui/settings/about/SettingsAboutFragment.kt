@@ -8,7 +8,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import tmg.flashback.settings.ui.privacypolicy.PrivacyPolicyActivity
 import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.releasenotes.ReleaseNotesNavigationComponent
-import tmg.flashback.ui.navigation.ApplicationNavigationProvider
+import tmg.flashback.ui.navigation.ApplicationNavigationComponent
 import tmg.flashback.ui.settings.SettingsFragment
 import tmg.utilities.extensions.observeEvent
 import tmg.utilities.extensions.viewUrl
@@ -17,7 +17,7 @@ class SettingsAboutFragment: SettingsFragment<SettingsAboutViewModel>() {
 
     override val viewModel: SettingsAboutViewModel by viewModel()
 
-    private val applicationNavigationProvider: ApplicationNavigationProvider by inject()
+    private val applicationNavigationComponent: ApplicationNavigationComponent by inject()
     private val buildConfigManager: BuildConfigManager by inject()
     private val releaseNotesNavigationComponent: ReleaseNotesNavigationComponent by inject()
 
@@ -32,13 +32,13 @@ class SettingsAboutFragment: SettingsFragment<SettingsAboutViewModel>() {
 
         observeEvent(viewModel.outputs.openAboutThisApp) {
             context?.let {
-                val intent = applicationNavigationProvider.aboutAppIntent(it)
+                val intent = applicationNavigationComponent.aboutAppIntent(it)
                 startActivity(intent)
             }
         }
 
         observeEvent(viewModel.outputs.openReleaseNotes) {
-            releaseNotesNavigationComponent.releaseNotesLaunch()
+            releaseNotesNavigationComponent.releaseNotes()
         }
 
         observeEvent(viewModel.outputs.openPrivacyPolicy) {

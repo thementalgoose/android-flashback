@@ -12,8 +12,7 @@ import tmg.flashback.configuration.usecases.FetchConfigUseCase
 import tmg.flashback.releasenotes.usecases.NewReleaseNotesUseCase
 import tmg.flashback.statistics.BuildConfig
 import tmg.flashback.statistics.extensions.updateAllWidgets
-import tmg.flashback.statistics.repository.HomeRepository
-import tmg.flashback.statistics.usecases.DefaultSeasonUseCase
+import tmg.flashback.stats.usecases.DefaultSeasonUseCase
 import tmg.flashback.statistics.workmanager.WorkerProvider
 import tmg.utilities.lifecycle.Event
 
@@ -32,11 +31,8 @@ interface DashboardViewModelOutputs {
     val currentTab: LiveData<DashboardScreenState>
 
     val openReleaseNotes: LiveData<Event>
-    val openSearch: LiveData<Event>
 
     val appConfigSynced: LiveData<Event>
-
-    val defaultToSchedule: Boolean
 }
 
 //endregion
@@ -47,7 +43,6 @@ class DashboardViewModel(
     private val defaultSeasonUseCase: DefaultSeasonUseCase,
     private val fetchConfigUseCase: FetchConfigUseCase,
     private val applyConfigUseCase: ApplyConfigUseCase,
-    private val homeRepository: HomeRepository,
     private val releaseNotesUseCase: NewReleaseNotesUseCase,
 ): ViewModel(), DashboardViewModelInputs, DashboardViewModelOutputs {
 
@@ -58,10 +53,6 @@ class DashboardViewModel(
 
     override val openReleaseNotes: MutableLiveData<Event> = MutableLiveData()
     override val appConfigSynced: MutableLiveData<Event> = MutableLiveData()
-    override val openSearch: MutableLiveData<Event> = MutableLiveData()
-
-    override val defaultToSchedule: Boolean
-        get() = homeRepository.defaultToSchedule
 
     override val currentTab: MutableLiveData<DashboardScreenState> = MutableLiveData(DashboardScreenState(
         tab = defaultTab,

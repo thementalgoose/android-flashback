@@ -14,7 +14,15 @@ class ConstructorProvider: PreviewParameterProvider<Constructor> {
 }
 
 class OverviewRaceProvider: PreviewParameterProvider<OverviewRace> {
-    override val values: Sequence<OverviewRace> = sequenceOf(OverviewRace.model())
+    override val values: Sequence<OverviewRace> = sequenceOf(OverviewRace.model(
+        schedule = listOf(
+            Schedule.model(label = "FP1", date = LocalDate.now().minusDays(1), time = LocalTime.of(9, 30)),
+            Schedule.model(label = "FP2", date = LocalDate.now().minusDays(1), time = LocalTime.of(13, 0)),
+            Schedule.model(label = "FP3", date = LocalDate.now(), time = LocalTime.of(10, 0)),
+            Schedule.model(label = "Qualifying", date = LocalDate.now(), time = LocalTime.of(13, 0)),
+            Schedule.model(label = "Race", date = LocalDate.now().plusDays(1), time = LocalTime.of(13, 0))
+        )
+    ))
 }
 
 class SeasonConstructorStandingsProvider: PreviewParameterProvider<SeasonConstructorStandings> {

@@ -34,6 +34,9 @@ import tmg.flashback.style.AppTheme
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextTitle
 import tmg.flashback.stats.R
+import tmg.flashback.stats.ui.dashboard.DashboardQuickLinks
+import tmg.flashback.stats.ui.messaging.Banner
+import tmg.flashback.stats.ui.messaging.ProvidedBy
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.layouts.Container
@@ -59,6 +62,7 @@ fun DriverStandingsScreenVM(
         DriverStandingsScreen(
             showMenu = showMenu,
             menuClicked = menuClicked,
+            itemClicked = viewModel.inputs::clickItem,
             season = season,
             items = items.value ?: emptyList()
         )
@@ -69,6 +73,7 @@ fun DriverStandingsScreenVM(
 fun DriverStandingsScreen(
     showMenu: Boolean,
     menuClicked: (() -> Unit)? = null,
+    itemClicked: (DriverStandingsModel) -> Unit,
     season: Int,
     items: List<DriverStandingsModel>
 ) {
@@ -93,12 +98,26 @@ fun DriverStandingsScreen(
                     }
                 )
             }
+            item(key = "info") {
+                DashboardQuickLinks()
+                val content = items.firstOrNull { it.standings.inProgressContent != null }?.standings?.inProgressContent
+                if (content != null) {
+                    val (name, round) = content
+                    Banner(
+                        message = stringResource(R.string.results_accurate_for, name, round),
+                        showLink = false
+                    )
+                }
+            }
             items(items, key = { it.id }) { item ->
                 DriverStandings(
                     model = item,
-                    itemClicked = { },
+                    itemClicked = itemClicked,
                     maxPoints = (items.maxOfOrNull { it.standings.points } ?: 625.0),
                 )
+            }
+            item(key = "footer") {
+                Spacer(Modifier.height(72.dp))
             }
         }
     )
@@ -224,16 +243,12 @@ private fun PreviewLight(
     @PreviewParameter(SeasonDriverStandingSeasonProvider::class) driverStandings: SeasonDriverStandingSeason
 ) {
     AppThemePreview(isLight = true) {
-        DriverStandingsScreen(
-            showMenu = true,
-            season = 2021,
-            items = List(5) {
-                DriverStandingsModel(
-                    standings = driverStandings,
-                    isSelected = it == 1,
-                    id = "$it"
-                )
-            }
+        DriverStandings(
+            model = DriverStandingsModel(
+                standings = driverStandings
+            ),
+            itemClicked = { },
+            maxPoints = 25.0
         )
     }
 }
@@ -244,16 +259,12 @@ private fun PreviewDark(
     @PreviewParameter(SeasonDriverStandingSeasonProvider::class) driverStandings: SeasonDriverStandingSeason
 ) {
     AppThemePreview(isLight = false) {
-        DriverStandingsScreen(
-            showMenu = false,
-            season = 2021,
-            items = List(5) {
-                DriverStandingsModel(
-                    standings = driverStandings,
-                    isSelected = it == 1,
-                    id = "$it"
-                )
-            }
+        DriverStandings(
+            model = DriverStandingsModel(
+                standings = driverStandings
+            ),
+            itemClicked = { },
+            maxPoints = 25.0
         )
     }
 }

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ab_notifications_enabled">Notification enabled</string>
+
+    <string name="ab_has_qualifying_results">Qualifying results available</string>
+    <string name="ab_has_sprint_results">Sprint results available</string>
+    <string name="ab_has_race_results">Race results available</string>
+</resources>
