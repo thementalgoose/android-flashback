@@ -25,6 +25,7 @@ import tmg.flashback.providers.SeasonConstructorStandingSeasonProvider
 import tmg.flashback.providers.SeasonDriverStandingSeasonProvider
 import tmg.flashback.stats.R
 import tmg.flashback.stats.components.DriverPoints
+import tmg.flashback.stats.ui.dashboard.DashboardQuickLinks
 import tmg.flashback.stats.ui.dashboard.drivers.DriverStandings
 import tmg.flashback.stats.ui.dashboard.drivers.DriverStandingsModel
 import tmg.flashback.stats.ui.dashboard.drivers.DriverStandingsScreen
@@ -93,8 +94,7 @@ fun ConstructorStandingsScreen(
                 )
             }
             item(key = "info") {
-                Banner()
-                ProvidedBy()
+                DashboardQuickLinks()
                 val content = items.firstOrNull { it.standings.inProgressContent != null }?.standings?.inProgressContent
                 if (content != null) {
                     val (name, round) = content

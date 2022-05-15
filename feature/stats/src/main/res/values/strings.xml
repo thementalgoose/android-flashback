@@ -17,6 +17,7 @@
     </plurals>
 
     <!-- Tyres -->
+    <string name="tyres_label">Tyre compounds</string>
     <string name="tyres_list_title">%s tyres</string>
     <string name="tyres_list_subtitle">These are the tyre compounds used in this season</string>
     <string name="tyres_dry_compounds">Dry</string>

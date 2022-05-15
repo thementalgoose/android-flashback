@@ -34,6 +34,7 @@ import tmg.flashback.style.AppTheme
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextTitle
 import tmg.flashback.stats.R
+import tmg.flashback.stats.ui.dashboard.DashboardQuickLinks
 import tmg.flashback.stats.ui.messaging.Banner
 import tmg.flashback.stats.ui.messaging.ProvidedBy
 import tmg.flashback.style.AppThemePreview
@@ -98,8 +99,7 @@ fun DriverStandingsScreen(
                 )
             }
             item(key = "info") {
-                Banner()
-                ProvidedBy()
+                DashboardQuickLinks()
                 val content = items.firstOrNull { it.standings.inProgressContent != null }?.standings?.inProgressContent
                 if (content != null) {
                     val (name, round) = content

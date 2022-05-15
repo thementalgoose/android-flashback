@@ -32,6 +32,7 @@ import tmg.flashback.formula1.model.Schedule
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.providers.OverviewRaceProvider
 import tmg.flashback.stats.R
+import tmg.flashback.stats.ui.dashboard.DashboardQuickLinks
 import tmg.flashback.stats.ui.messaging.Banner
 import tmg.flashback.stats.ui.messaging.ProvidedBy
 import tmg.flashback.style.AppTheme
@@ -103,8 +104,7 @@ fun CalendarScreen(
                 )
             }
             item(key = "info") {
-                Banner()
-                ProvidedBy()
+               DashboardQuickLinks()
             }
             items(items) { item ->
                 when (item) {

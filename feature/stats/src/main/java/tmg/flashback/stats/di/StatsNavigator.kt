@@ -31,4 +31,6 @@ interface StatsNavigator {
     fun goToTyreOverview(
         season: Int
     )
+
+    fun goToNotificationOnboarding()
 }

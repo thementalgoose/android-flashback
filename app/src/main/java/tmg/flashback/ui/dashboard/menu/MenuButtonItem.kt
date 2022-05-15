@@ -3,6 +3,7 @@ package tmg.flashback.ui.dashboard.menu
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import tmg.flashback.R
+import java.util.*
 
 sealed class MenuItems(
     val id: String
@@ -32,7 +33,9 @@ sealed class MenuItems(
         )
     }
 
-    object Divider: MenuItems("divider")
+    data class Divider(
+        val guid: String = UUID.randomUUID().toString()
+    ): MenuItems(guid)
 
     sealed class Toggle(
         @StringRes
@@ -47,6 +50,16 @@ sealed class MenuItems(
             label = R.string.dashboard_links_dark_mode,
             icon = R.drawable.dashboard_darkmode,
             isEnabled = _isEnabled
+        )
+    }
+
+    sealed class Feature(
+        @StringRes
+        val label: Int
+    ): MenuItems(label.toString()) {
+
+        object Notifications: Feature(
+            label = R.string.feature_banner_notifications
         )
     }
 }

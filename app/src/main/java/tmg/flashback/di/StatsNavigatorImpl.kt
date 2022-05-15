@@ -2,6 +2,8 @@ package tmg.flashback.di
 
 import androidx.appcompat.app.AppCompatActivity
 import org.threeten.bp.LocalDate
+import tmg.flashback.statistics.databinding.FragmentBottomSheetNotificationsOnboardingBinding
+import tmg.flashback.statistics.ui.dashboard.onboarding.OnboardingNotificationBottomSheetFragment
 import tmg.flashback.statistics.ui.overview.constructor.ConstructorActivity
 import tmg.flashback.statistics.ui.overview.driver.DriverActivity
 import tmg.flashback.statistics.ui.race.RaceActivity
@@ -15,6 +17,9 @@ import tmg.flashback.ui.navigation.ActivityProvider
 class StatsNavigatorImpl(
     private val activityProvider: ActivityProvider
 ): StatsNavigator {
+
+    val activity: AppCompatActivity?
+        get() = (activityProvider.activity as? AppCompatActivity)
 
     override fun goToSearch() {
         val activity = activityProvider.activity ?: return
@@ -33,7 +38,7 @@ class StatsNavigatorImpl(
         countryISO: String,
         date: LocalDate
     ) {
-        val activity = activityProvider.activity ?: return
+        val activity = activity ?: return
 
         val raceData = RaceData(
             season = season,
@@ -51,13 +56,19 @@ class StatsNavigatorImpl(
     }
 
     override fun goToTyreOverview(season: Int) {
-        val activity = (activityProvider.activity as? AppCompatActivity) ?: return
+        val activity = activity ?: return
         val fragment = TyresBottomSheetFragment.instance(season)
         fragment.show(activity.supportFragmentManager, "TYRES")
     }
 
+    override fun goToNotificationOnboarding() {
+        val activity = activity ?: return
+        val fragment = OnboardingNotificationBottomSheetFragment()
+        fragment.show(activity.supportFragmentManager, "ONBOARDING")
+    }
+
     override fun goToDriverOverview(driverId: String, driverName: String) {
-        val activity = activityProvider.activity ?: return
+        val activity = activity ?: return
 
         val intent = DriverActivity.intent(
             context = activity,
@@ -68,7 +79,7 @@ class StatsNavigatorImpl(
     }
 
     override fun goToConstructorOverview(constructorId: String, constructorName: String) {
-        val activity = activityProvider.activity ?: return
+        val activity = activity ?: return
 
         val intent = ConstructorActivity.intent(
             context = activity,
