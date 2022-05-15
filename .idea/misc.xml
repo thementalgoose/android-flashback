@@ -210,6 +210,7 @@
         <entry key="core/ui/src/main/res/layout/view_bottom_sheet_item.xml" value="0.20104166666666667" />
         <entry key="debug/src/main/res/layout/activity_debug.xml" value="0.165" />
         <entry key="debug/src/main/res/layout/activity_style_guide.xml" value="0.464321608040201" />
+        <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/messaging/ProvidedBy.kt" value="0.5203703703703704" />
         <entry key="format/src/main/res/drawable/ic_format_introduced.xml" value="0.1" />
         <entry key="format/src/main/res/drawable/ic_format_race_length.xml" value="0.243" />
         <entry key="format/src/main/res/layout/activity_format.xml" value="0.2526041666666667" />
