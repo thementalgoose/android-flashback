@@ -61,6 +61,7 @@ android {
     flavorDimensions 'version'
     productFlavors {
         sand {
+            isDefault.set(true)
             dimension 'version'
             applicationIdSuffix '.sand'
             versionNameSuffix '-sand'

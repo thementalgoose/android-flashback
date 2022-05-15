@@ -6,8 +6,16 @@ import tmg.flashback.formula1.model.OverviewRace
 
 sealed class CalendarModel {
     data class List(
-        val model: OverviewRace
-    ): CalendarModel()
+        val model: OverviewRace,
+        private val showScheduleList: Boolean = false,
+        val id: String = model.raceName
+    ): CalendarModel() {
+
+        val shouldShowScheduleList = showScheduleList && model.schedule.isNotEmpty()
+
+        val fadeItem: Boolean
+            get() = model.date.isAfter(LocalDate.now()) && !shouldShowScheduleList
+    }
 
     data class Month(
         val month: org.threeten.bp.Month

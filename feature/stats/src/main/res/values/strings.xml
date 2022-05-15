@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="weekend_race_round">Round %d</string>
     <string name="weekend_info_laps">%s laps</string>
@@ -10,8 +9,18 @@
     <string name="season_standings_driver">%s\nDriver Standings</string>
     <string name="season_standings_constructor">%s\nConstructor Standings</string>
 
+    <string name="results_accurate_for" formatted="false">Results as of the %s (round %d)</string>
+
     <plurals name="race_points">
         <item quantity="one">%s point</item>
         <item quantity="other">%s points</item>
     </plurals>
+
+    <!-- Tyres -->
+    <string name="tyres_label">Tyre compounds</string>
+    <string name="tyres_list_title">%s tyres</string>
+    <string name="tyres_list_subtitle">These are the tyre compounds used in this season</string>
+    <string name="tyres_dry_compounds">Dry</string>
+    <string name="tyres_wet_compounds">Wet</string>
+    <string name="tyres_size">%d inch wheel rims</string>
 </resources>

@@ -46,7 +46,7 @@ class SyncActivity: BaseActivity() {
                     finish()
                 }
                 SyncNavTarget.FORCE_UPGRADE -> {
-                    forceUpgradeNavigationComponent.forceUpgradeLaunch()
+                    forceUpgradeNavigationComponent.forceUpgrade()
                     finish()
                 }
             }

@@ -1,4 +1,4 @@
-package tmg.flashback.ui2.dashboard
+package tmg.flashback.ui
 
 import io.mockk.*
 import org.junit.jupiter.api.Assertions.assertFalse
@@ -13,7 +13,6 @@ import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.statistics.controllers.ScheduleController
 import tmg.flashback.statistics.repo.repository.CacheRepository
 import tmg.flashback.statistics.usecases.SearchAppShortcutUseCase
-import tmg.flashback.ui.HomeViewModel
 import tmg.testutils.BaseTest
 
 internal class HomeViewModelTest: BaseTest() {

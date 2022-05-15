@@ -6,12 +6,16 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
 import tmg.flashback.RssNavigationComponent
 import tmg.flashback.formula1.constants.Formula1.decadeColours
-import tmg.flashback.statistics.repository.HomeRepository
-import tmg.flashback.statistics.usecases.DefaultSeasonUseCase
+import tmg.flashback.stats.di.StatsNavigator
+import tmg.flashback.stats.repository.HomeRepository
+import tmg.flashback.stats.repository.NotificationRepository
+import tmg.flashback.stats.usecases.DefaultSeasonUseCase
 import tmg.flashback.ui.managers.StyleManager
 import tmg.flashback.ui.model.NightMode
+import tmg.flashback.ui.navigation.ApplicationNavigationComponent
 import tmg.flashback.ui.usecases.ChangeNightModeUseCase
-import tmg.utilities.lifecycle.SingleLiveEvent
+import tmg.flashback.ui2.settings.SettingsAllActivity
+import kotlin.math.abs
 
 //region Inputs
 
@@ -20,6 +24,7 @@ interface MenuViewModelInputs {
 
     fun clickButton(button: MenuItems.Button)
     fun clickToggle(toggle: MenuItems.Toggle)
+    fun clickFeature(feature: MenuItems.Feature)
 }
 
 //endregion
@@ -35,10 +40,13 @@ interface MenuViewModelOutputs {
 
 class MenuViewModel(
     private val homeRepository: HomeRepository,
+    private val notificationRepository: NotificationRepository,
     private val defaultSeasonUseCase: DefaultSeasonUseCase,
     private val changeNightModeUseCase: ChangeNightModeUseCase,
     private val styleManager: StyleManager,
-    private val rssNavigationComponent: RssNavigationComponent
+    private val rssNavigationComponent: RssNavigationComponent,
+    private val navigationComponent: ApplicationNavigationComponent,
+    private val statsNavigator: StatsNavigator
 ) : ViewModel(), MenuViewModelInputs, MenuViewModelOutputs {
 
     val inputs: MenuViewModelInputs = this
@@ -50,16 +58,18 @@ class MenuViewModel(
 
     override val season: LiveData<List<MenuSeasonItem>> = selectedSeason
         .map { selectedSeason ->
-            homeRepository
+            val seasons = homeRepository
                 .supportedSeasons
                 .sortedDescending()
+
+            return@map seasons
                 .mapIndexed { index, it ->
                     MenuSeasonItem(
                         colour = decadeColours["${it.toString().substring(0, 3)}0"] ?: Color.Gray,
                         season = it,
                         isSelected = selectedSeason == it,
-                        isFirst = index == 0,
-                        isLast = index == (homeRepository.supportedSeasons.size - 1)
+                        isFirst = index == 0 || isGap(it, seasons.getOrNull(index - 1)),
+                        isLast = index == (homeRepository.supportedSeasons.size - 1)  || isGap(it, seasons.getOrNull(index + 1))
                     )
                 }
         }
@@ -72,13 +82,16 @@ class MenuViewModel(
     override fun clickButton(button: MenuItems.Button) {
         when (button) {
             MenuItems.Button.Contact -> {
-                // TODO
+                navigationComponent.aboutApp()
             }
             MenuItems.Button.Rss -> {
-                rssNavigationComponent.rssLaunch()
+                rssNavigationComponent.rss()
             }
             MenuItems.Button.Settings -> {
-                // TODO
+                navigationComponent.settings()
+            }
+            MenuItems.Button.Search -> {
+                statsNavigator.goToSearch()
             }
         }
         links.value = getLinks()
@@ -97,15 +110,37 @@ class MenuViewModel(
         links.value = getLinks()
     }
 
+    override fun clickFeature(feature: MenuItems.Feature) {
+        when (feature) {
+            MenuItems.Feature.Notifications -> {
+                statsNavigator.goToNotificationOnboarding()
+                notificationRepository.seenNotificationOnboarding = true
+            }
+        }
+        links.value = getLinks()
+    }
+
     private fun getLinks(): List<MenuItems> {
         val list = mutableListOf<MenuItems>()
+        list.add(MenuItems.Button.Search)
         list.add(MenuItems.Button.Rss)
         list.add(MenuItems.Button.Settings)
         list.add(MenuItems.Button.Contact)
-        list.add(MenuItems.Divider)
+        list.add(MenuItems.Divider("a"))
         list.add(MenuItems.Toggle.DarkMode(
             _isEnabled = !styleManager.isDayMode
         ))
+        if (!notificationRepository.seenNotificationOnboarding) {
+            list.add(MenuItems.Divider("b"))
+            list.add(MenuItems.Feature.Notifications)
+        }
         return list
+    }
+
+    private fun isGap(ref: Int, targetSeason: Int?): Boolean {
+        if (targetSeason == null) {
+            return true
+        }
+        return abs(targetSeason - ref) > 1
     }
 }

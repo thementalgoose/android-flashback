@@ -21,6 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.viewModel
 import tmg.flashback.R
+import tmg.flashback.formula1.constants.Formula1
 import tmg.flashback.stats.components.Timeline
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
@@ -44,6 +45,7 @@ fun MenuScreenVM(
         },
         buttonClicked = viewModel.inputs::clickButton,
         toggleClicked = viewModel.inputs::clickToggle,
+        featureClicked = viewModel.inputs::clickFeature,
         links = links.value,
         season = seasons.value
     )
@@ -55,6 +57,7 @@ fun MenuScreen(
     links: List<MenuItems>,
     buttonClicked: (MenuItems.Button) -> Unit,
     toggleClicked: (MenuItems.Toggle) -> Unit,
+    featureClicked: (MenuItems.Feature) -> Unit,
     season: List<MenuSeasonItem>,
 ) {
     LazyColumn(
@@ -72,8 +75,8 @@ fun MenuScreen(
                             buttonClicked(it)
                         })
                     )
-                    MenuItems.Divider -> Divider()
-                    is MenuItems.Toggle.DarkMode -> Toggle(
+                    is MenuItems.Divider -> Divider()
+                    is MenuItems.Toggle -> Toggle(
                         label = it.label,
                         icon = it.icon,
                         isEnabled = it.isEnabled,
@@ -81,26 +84,51 @@ fun MenuScreen(
                             toggleClicked(it)
                         })
                     )
+                    is MenuItems.Feature -> Feature(
+                        label = it.label,
+                        modifier = Modifier.clickable(onClick = {
+                            featureClicked(it)
+                        })
+                    )
                 }
             }
             item { Divider() }
             item { SubHeader(text = stringResource(id = R.string.dashboard_all_title))}
             items(season, key = { it.season }) {
-                Timeline(
-                    timelineColor = it.colour,
-                    isEnabled = it.isSelected,
-                    showTop = !it.isFirst,
-                    showBottom = !it.isLast,
-                    modifier = Modifier
-                        .clickable(onClick = {
-                            seasonClicked(it.season)
-                        })
-                        .fillMaxWidth()
-                        .padding(
-                            horizontal = AppTheme.dimensions.paddingMedium
-                        )
+                Row(modifier = Modifier
+                    .height(IntrinsicSize.Min)
+                    .clickable(onClick = {
+                        seasonClicked(it.season)
+                    })
                 ) {
-                    TextBody1(text = it.season.toString(), bold = true)
+                    Box(modifier = Modifier
+                        .width(AppTheme.dimensions.paddingMedium)
+                        .fillMaxHeight()
+                    ) {
+                        if (it.season == Formula1.currentSeasonYear) {
+                            Icon(
+                                modifier = Modifier
+                                    .align(Alignment.Center)
+                                    .alpha(0.4f),
+                                painter = painterResource(id = tmg.flashback.stats.R.drawable.ic_current_indicator),
+                                contentDescription = null,
+                                tint = AppTheme.colors.contentPrimary
+                            )
+                        }
+                    }
+                    Timeline(
+                        timelineColor = it.colour,
+                        isEnabled = it.isSelected,
+                        showTop = !it.isFirst,
+                        showBottom = !it.isLast,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(
+                                end = AppTheme.dimensions.paddingMedium
+                            )
+                    ) {
+                        TextBody1(text = it.season.toString(), bold = true)
+                    }
                 }
             }
             item {
@@ -192,15 +220,16 @@ private fun Toggle(
     label: Int,
     @DrawableRes
     icon: Int,
+    modifier: Modifier = Modifier,
     isEnabled: Boolean = true,
-    modifier: Modifier = Modifier
 ) {
     Row(modifier = modifier
         .fillMaxWidth()
         .padding(
             vertical = AppTheme.dimensions.paddingNSmall,
             horizontal = AppTheme.dimensions.paddingMedium
-        )
+        ),
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
             modifier = Modifier.size(20.dp),
@@ -223,6 +252,24 @@ private fun Toggle(
     }
 }
 
+@Composable
+private fun Feature(
+    @StringRes
+    label: Int,
+    modifier: Modifier = Modifier
+) {
+    Row(modifier = modifier
+        .fillMaxWidth()
+        .background(AppTheme.colors.backgroundSecondary)
+        .padding(
+            vertical = AppTheme.dimensions.paddingNSmall,
+            horizontal = AppTheme.dimensions.paddingMedium
+        )
+    ) {
+        TextBody1(text = stringResource(id = label))
+    }
+}
+
 @Preview
 @Composable
 private fun PreviewLight() {
@@ -231,12 +278,13 @@ private fun PreviewLight() {
             seasonClicked = { },
             links = listOf(
                 MenuItems.Button.Rss,
-                MenuItems.Divider,
+                MenuItems.Divider(),
                 MenuItems.Toggle.DarkMode(false),
                 MenuItems.Toggle.DarkMode(true)
             ),
             buttonClicked = { },
             toggleClicked = { },
+            featureClicked = { },
             season = listOf(
                 MenuSeasonItem(Color.Red, 2020, true),
                 MenuSeasonItem(Color.Red, 2021, false)
@@ -253,12 +301,13 @@ private fun PreviewDark() {
             seasonClicked = { },
             links = listOf(
                 MenuItems.Button.Rss,
-                MenuItems.Divider,
+                MenuItems.Divider(),
                 MenuItems.Toggle.DarkMode(false),
                 MenuItems.Toggle.DarkMode(true)
             ),
             buttonClicked = { },
             toggleClicked = { },
+            featureClicked = { },
             season = listOf(
                 MenuSeasonItem(Color.Red, 2020, true),
                 MenuSeasonItem(Color.Red, 2021, false)

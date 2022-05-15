@@ -31,7 +31,7 @@ fun ButtonTertiary(
             .defaultMinSize(1.dp, 1.dp),
         colors = ButtonDefaults.textButtonColors(
             backgroundColor = AppTheme.colors.backgroundTertiary,
-            contentColor = AppTheme.colors.contentPrimary
+            contentColor = AppTheme.colors.contentSecondary
         ),
         contentPadding = PaddingValues(),
         shape = RoundedCornerShape(6.dp),
