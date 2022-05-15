@@ -6,6 +6,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import tmg.flashback.configuration.usecases.ApplyConfigUseCase
 import tmg.flashback.configuration.usecases.FetchConfigUseCase
@@ -44,6 +46,7 @@ class DashboardViewModel(
     private val fetchConfigUseCase: FetchConfigUseCase,
     private val applyConfigUseCase: ApplyConfigUseCase,
     private val releaseNotesUseCase: NewReleaseNotesUseCase,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), DashboardViewModelInputs, DashboardViewModelOutputs {
 
     val inputs: DashboardViewModelInputs = this
@@ -60,7 +63,7 @@ class DashboardViewModel(
     ))
 
     init {
-        viewModelScope.launch {
+        viewModelScope.launch(ioDispatcher) {
             fetchConfigUseCase.fetch()
             val activate = applyConfigUseCase.apply()
             if (BuildConfig.DEBUG) {
