@@ -90,6 +90,9 @@
         <entry key="formula1/src/main/res/drawable/ic_cal_thu.xml" value="0.1" />
         <entry key="formula1/src/main/res/drawable/ic_cal_tue.xml" value="0.1" />
         <entry key="formula1/src/main/res/drawable/ic_cal_wed.xml" value="0.1" />
+        <entry key="formula1/src/main/res/drawable/ic_event_type_car_launch.xml" value="0.1105" />
+        <entry key="formula1/src/main/res/drawable/ic_event_type_other.xml" value="0.1105" />
+        <entry key="formula1/src/main/res/drawable/ic_event_type_testing.xml" value="0.1105" />
         <entry key="presentation/ui/src/main/res/drawable/ic_nightmode_dark.xml" value="0.2495" />
       </map>
     </option>

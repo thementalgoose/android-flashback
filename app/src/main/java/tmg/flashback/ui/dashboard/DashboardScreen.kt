@@ -82,6 +82,13 @@ fun DashboardScreen(
                 panelsState = panelsState,
                 panelStart = {
                     val coroutineScope = rememberCoroutineScope()
+
+                    // Background box
+                    Box(modifier = Modifier
+                        .fillMaxSize()
+                        .background(AppTheme.colors.backgroundPrimary)
+                    )
+
                     MenuScreenVM(seasonClicked = {
                         viewModel.inputs.clickSeason(it)
                         coroutineScope.launch {

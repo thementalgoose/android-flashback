@@ -10,6 +10,7 @@ import tmg.flashback.RssNavigationComponent
 import tmg.flashback.formula1.constants.Formula1.decadeColours
 import tmg.flashback.stats.di.StatsNavigator
 import tmg.flashback.stats.repository.HomeRepository
+import tmg.flashback.stats.repository.NotificationRepository
 import tmg.flashback.stats.usecases.DefaultSeasonUseCase
 import tmg.flashback.ui.managers.StyleManager
 import tmg.flashback.ui.model.NightMode
@@ -21,6 +22,7 @@ import tmg.testutils.livedata.test
 internal class MenuViewModelTest: BaseTest() {
 
     private val mockHomeRepository: HomeRepository = mockk(relaxed = true)
+    private val mockNotificationRepository: NotificationRepository = mockk(relaxed = true)
     private val mockDefaultSeasonUseCase: DefaultSeasonUseCase = mockk(relaxed = true)
     private val mockChangeNightModeUseCase: ChangeNightModeUseCase = mockk(relaxed = true)
     private val mockStyleManager: StyleManager = mockk(relaxed = true)
@@ -33,6 +35,7 @@ internal class MenuViewModelTest: BaseTest() {
     private fun initUnderTest() {
         underTest = MenuViewModel(
             mockHomeRepository,
+            mockNotificationRepository,
             mockDefaultSeasonUseCase,
             mockChangeNightModeUseCase,
             mockStyleManager,
@@ -47,6 +50,7 @@ internal class MenuViewModelTest: BaseTest() {
         every { mockStyleManager.isDayMode } returns true
         every { mockHomeRepository.supportedSeasons } returns fakeSupportedSeasons
         every { mockDefaultSeasonUseCase.defaultSeason } returns 2022
+        every { mockNotificationRepository.seenNotificationOnboarding } returns false
     }
 
     @Test
@@ -59,8 +63,10 @@ internal class MenuViewModelTest: BaseTest() {
                 MenuItems.Button.Rss,
                 MenuItems.Button.Settings,
                 MenuItems.Button.Contact,
-                MenuItems.Divider,
+                MenuItems.Divider("a"),
                 MenuItems.Toggle.DarkMode(_isEnabled = false),
+                MenuItems.Divider("b"),
+                MenuItems.Feature.Notifications
             ))
         }
     }
@@ -76,8 +82,10 @@ internal class MenuViewModelTest: BaseTest() {
                 MenuItems.Button.Rss,
                 MenuItems.Button.Settings,
                 MenuItems.Button.Contact,
-                MenuItems.Divider,
+                MenuItems.Divider("a"),
                 MenuItems.Toggle.DarkMode(_isEnabled = true),
+                MenuItems.Divider("b"),
+                MenuItems.Feature.Notifications
             ))
         }
     }
@@ -158,6 +166,20 @@ internal class MenuViewModelTest: BaseTest() {
 
         verify {
             mockChangeNightModeUseCase.setNightMode(NightMode.DAY)
+        }
+    }
+
+
+
+    @Test
+    fun `click feature calls stats navigator`() {
+        initUnderTest()
+
+        underTest.inputs.clickFeature(MenuItems.Feature.Notifications)
+
+        verify {
+            mockStatsNavigator.goToNotificationOnboarding()
+            mockNotificationRepository.seenNotificationOnboarding = true
         }
     }
 

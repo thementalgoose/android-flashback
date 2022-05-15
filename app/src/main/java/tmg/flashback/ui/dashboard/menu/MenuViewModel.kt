@@ -8,6 +8,7 @@ import tmg.flashback.RssNavigationComponent
 import tmg.flashback.formula1.constants.Formula1.decadeColours
 import tmg.flashback.stats.di.StatsNavigator
 import tmg.flashback.stats.repository.HomeRepository
+import tmg.flashback.stats.repository.NotificationRepository
 import tmg.flashback.stats.usecases.DefaultSeasonUseCase
 import tmg.flashback.ui.managers.StyleManager
 import tmg.flashback.ui.model.NightMode
@@ -23,6 +24,7 @@ interface MenuViewModelInputs {
 
     fun clickButton(button: MenuItems.Button)
     fun clickToggle(toggle: MenuItems.Toggle)
+    fun clickFeature(feature: MenuItems.Feature)
 }
 
 //endregion
@@ -38,6 +40,7 @@ interface MenuViewModelOutputs {
 
 class MenuViewModel(
     private val homeRepository: HomeRepository,
+    private val notificationRepository: NotificationRepository,
     private val defaultSeasonUseCase: DefaultSeasonUseCase,
     private val changeNightModeUseCase: ChangeNightModeUseCase,
     private val styleManager: StyleManager,
@@ -107,16 +110,30 @@ class MenuViewModel(
         links.value = getLinks()
     }
 
+    override fun clickFeature(feature: MenuItems.Feature) {
+        when (feature) {
+            MenuItems.Feature.Notifications -> {
+                statsNavigator.goToNotificationOnboarding()
+                notificationRepository.seenNotificationOnboarding = true
+            }
+        }
+        links.value = getLinks()
+    }
+
     private fun getLinks(): List<MenuItems> {
         val list = mutableListOf<MenuItems>()
         list.add(MenuItems.Button.Search)
         list.add(MenuItems.Button.Rss)
         list.add(MenuItems.Button.Settings)
         list.add(MenuItems.Button.Contact)
-        list.add(MenuItems.Divider)
+        list.add(MenuItems.Divider("a"))
         list.add(MenuItems.Toggle.DarkMode(
             _isEnabled = !styleManager.isDayMode
         ))
+        if (!notificationRepository.seenNotificationOnboarding) {
+            list.add(MenuItems.Divider("b"))
+            list.add(MenuItems.Feature.Notifications)
+        }
         return list
     }
 

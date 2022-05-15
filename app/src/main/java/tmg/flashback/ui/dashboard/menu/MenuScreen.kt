@@ -45,6 +45,7 @@ fun MenuScreenVM(
         },
         buttonClicked = viewModel.inputs::clickButton,
         toggleClicked = viewModel.inputs::clickToggle,
+        featureClicked = viewModel.inputs::clickFeature,
         links = links.value,
         season = seasons.value
     )
@@ -56,6 +57,7 @@ fun MenuScreen(
     links: List<MenuItems>,
     buttonClicked: (MenuItems.Button) -> Unit,
     toggleClicked: (MenuItems.Toggle) -> Unit,
+    featureClicked: (MenuItems.Feature) -> Unit,
     season: List<MenuSeasonItem>,
 ) {
     LazyColumn(
@@ -73,13 +75,19 @@ fun MenuScreen(
                             buttonClicked(it)
                         })
                     )
-                    MenuItems.Divider -> Divider()
-                    is MenuItems.Toggle.DarkMode -> Toggle(
+                    is MenuItems.Divider -> Divider()
+                    is MenuItems.Toggle -> Toggle(
                         label = it.label,
                         icon = it.icon,
                         isEnabled = it.isEnabled,
                         modifier = Modifier.clickable(onClick = {
                             toggleClicked(it)
+                        })
+                    )
+                    is MenuItems.Feature -> Feature(
+                        label = it.label,
+                        modifier = Modifier.clickable(onClick = {
+                            featureClicked(it)
                         })
                     )
                 }
@@ -244,6 +252,24 @@ private fun Toggle(
     }
 }
 
+@Composable
+private fun Feature(
+    @StringRes
+    label: Int,
+    modifier: Modifier = Modifier
+) {
+    Row(modifier = modifier
+        .fillMaxWidth()
+        .background(AppTheme.colors.backgroundSecondary)
+        .padding(
+            vertical = AppTheme.dimensions.paddingNSmall,
+            horizontal = AppTheme.dimensions.paddingMedium
+        )
+    ) {
+        TextBody1(text = stringResource(id = label))
+    }
+}
+
 @Preview
 @Composable
 private fun PreviewLight() {
@@ -252,12 +278,13 @@ private fun PreviewLight() {
             seasonClicked = { },
             links = listOf(
                 MenuItems.Button.Rss,
-                MenuItems.Divider,
+                MenuItems.Divider(),
                 MenuItems.Toggle.DarkMode(false),
                 MenuItems.Toggle.DarkMode(true)
             ),
             buttonClicked = { },
             toggleClicked = { },
+            featureClicked = { },
             season = listOf(
                 MenuSeasonItem(Color.Red, 2020, true),
                 MenuSeasonItem(Color.Red, 2021, false)
@@ -274,12 +301,13 @@ private fun PreviewDark() {
             seasonClicked = { },
             links = listOf(
                 MenuItems.Button.Rss,
-                MenuItems.Divider,
+                MenuItems.Divider(),
                 MenuItems.Toggle.DarkMode(false),
                 MenuItems.Toggle.DarkMode(true)
             ),
             buttonClicked = { },
             toggleClicked = { },
+            featureClicked = { },
             season = listOf(
                 MenuSeasonItem(Color.Red, 2020, true),
                 MenuSeasonItem(Color.Red, 2021, false)

@@ -10,6 +10,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import tmg.flashback.BuildConfig
+import tmg.flashback.configuration.manager.ConfigManager
 import tmg.flashback.crash_reporting.controllers.CrashController
 import tmg.flashback.databinding.ActivityDashboardBinding
 import tmg.flashback.forceupgrade.ForceUpgradeNavigationComponent
@@ -31,6 +32,8 @@ class HomeActivity: BaseActivity() {
     private val crashController: CrashController by inject()
     private val forceUpgradeNavigationComponent: ForceUpgradeNavigationComponent by inject()
 
+    private val configManager: ConfigManager by inject()
+
     override val themeType: DisplayType = DisplayType.DEFAULT
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,7 +46,7 @@ class HomeActivity: BaseActivity() {
         val splashScreen = installSplashScreen()
         setTheme(themeRes)
 
-        if (BuildConfig.DEBUG) {
+        if (configManager.getBoolean("dev_compose")) {
             setContent {
                 AppTheme {
                     Scaffold(content = {
