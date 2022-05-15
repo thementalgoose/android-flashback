@@ -81,6 +81,7 @@ private fun Title(
     TextBody1(
         text = date.format("EEEE '${date.dayOfMonth.ordinalAbbreviation}' MMMM") ?: "",
         modifier = modifier
+            .fillMaxWidth()
             .padding(vertical = AppTheme.dimensions.paddingXSmall)
     )
 }
@@ -93,6 +94,7 @@ private fun EventItem(
 ) {
     val timestamp = item.timestamp.deviceLocalDateTime
     Row(modifier = modifier
+        .fillMaxWidth()
         .padding(vertical = AppTheme.dimensions.paddingXSmall)
     ) {
         TextBody2(
