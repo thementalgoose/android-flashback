@@ -187,5 +187,10 @@ internal class WebFragment : Fragment() {
                 arguments = bundle
             }
         }
+
+        fun bundle(title: String, url: String) = Bundle().apply {
+            putString(keyTitle, title)
+            putString(keyUrl, url)
+        }
     }
 }
