@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test
 import tmg.flashback.configuration.usecases.ApplyConfigUseCase
 import tmg.flashback.configuration.usecases.FetchConfigUseCase
 import tmg.flashback.releasenotes.usecases.NewReleaseNotesUseCase
+import tmg.flashback.statistics.repo.OverviewRepository
+import tmg.flashback.statistics.repo.RaceRepository
 import tmg.flashback.statistics.workmanager.WorkerProvider
 import tmg.flashback.stats.usecases.DefaultSeasonUseCase
 import tmg.testutils.BaseTest
@@ -22,6 +24,8 @@ internal class DashboardViewModelTest: BaseTest() {
     private val mockContext: Context = mockk(relaxed = true)
     private val mockWorkerProvider: WorkerProvider = mockk(relaxed = true)
     private val mockDefaultSeasonUseCase: DefaultSeasonUseCase = mockk(relaxed = true)
+    private val mockRaceRepository: RaceRepository = mockk(relaxed = true)
+    private val mockOverviewRepository: OverviewRepository = mockk(relaxed = true)
     private val mockApplyConfigUseCase: ApplyConfigUseCase = mockk(relaxed = true)
     private val mockFetchConfigUseCase: FetchConfigUseCase = mockk(relaxed = true)
     private val mockNewReleaseNotesUseCase: NewReleaseNotesUseCase = mockk(relaxed = true)
@@ -40,9 +44,23 @@ internal class DashboardViewModelTest: BaseTest() {
             mockDefaultSeasonUseCase,
             mockFetchConfigUseCase,
             mockApplyConfigUseCase,
+            mockRaceRepository,
+            mockOverviewRepository,
             mockNewReleaseNotesUseCase,
             ioDispatcher = coroutineScope.testDispatcher
         )
+    }
+
+    @Test
+    fun `default season data is fetched on initial load`() {
+        every { mockDefaultSeasonUseCase.defaultSeason } returns 2020
+
+        initUnderTest()
+
+        coVerify {
+            mockRaceRepository.fetchRaces(2020)
+            mockOverviewRepository.fetchOverview(2020)
+        }
     }
 
     //region Tabs
@@ -69,6 +87,20 @@ internal class DashboardViewModelTest: BaseTest() {
         underTest.inputs.clickTab(DashboardNavItem.DRIVERS)
         underTest.outputs.currentTab.test {
             assertValue(DashboardScreenState(DashboardNavItem.DRIVERS, 2019))
+        }
+    }
+
+    @Test
+    fun `clicking season launches fetch race request if season is default`() {
+        initUnderTest()
+
+        underTest.inputs.clickTab(DashboardNavItem.DRIVERS)
+        underTest.outputs.currentTab.test {
+            assertValue(DashboardScreenState(DashboardNavItem.DRIVERS, 2019))
+        }
+        coVerify {
+            mockOverviewRepository.fetchOverview(2019)
+            mockRaceRepository.fetchRaces(2019)
         }
     }
 
