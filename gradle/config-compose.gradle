@@ -25,4 +25,5 @@ dependencies {
 
     implementation deps.accompanist.swiperefresh
     implementation deps.accompanist.horizontalpager
+    implementation deps.accompanist.placeholder
 }

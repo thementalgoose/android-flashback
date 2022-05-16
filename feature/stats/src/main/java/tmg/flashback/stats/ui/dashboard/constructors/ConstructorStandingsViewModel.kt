@@ -14,7 +14,7 @@ interface ConstructorsStandingViewModelInputs {
     fun refresh()
     fun load(season: Int)
 
-    fun clickItem(model: ConstructorStandingsModel)
+    fun clickItem(model: ConstructorStandingsModel.Standings)
 }
 
 interface ConstructorsStandingViewModelOutputs {
@@ -45,13 +45,16 @@ class ConstructorsStandingViewModel(
                     seasonRepository.getConstructorStandings(season)
                         .map {
                             isRefreshing.postValue(false)
-                            if (!hasMadeRequest && it == null) {
+                            if (!hasMadeRequest) {
+                                return@map listOf(ConstructorStandingsModel.Loading)
+                            }
+                            if (it == null) {
                                 return@map null
                             }
-                            return@map it?.standings
-                                ?.sortedBy { it.championshipPosition }
-                                ?.map {
-                                    ConstructorStandingsModel(it)
+                            return@map it.standings
+                                .sortedBy { it.championshipPosition }
+                                .map {
+                                    ConstructorStandingsModel.Standings(it)
                                 }
                         }
                 }
@@ -73,7 +76,7 @@ class ConstructorsStandingViewModel(
         }
     }
 
-    override fun clickItem(model: ConstructorStandingsModel) {
+    override fun clickItem(model: ConstructorStandingsModel.Standings) {
         statsNavigator.goToConstructorOverview(
             model.standings.constructor.id,
             model.standings.constructor.name
