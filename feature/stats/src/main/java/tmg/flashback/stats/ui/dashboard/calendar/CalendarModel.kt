@@ -26,4 +26,6 @@ sealed class CalendarModel {
         val month: org.threeten.bp.Month,
         val race: OverviewRace?
     ): CalendarModel()
+
+    object Loading: CalendarModel()
 }

@@ -58,8 +58,21 @@ internal class DriversStandingViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `null is returned when DB returns no standings and hasnt made request`() {
+    fun `loading is returned when DB returns no standings and hasnt made request`() {
         every { mockFetchSeasonUseCase.fetch(any()) } returns flow { emit(false) }
+        every { mockSeasonRepository.getDriverStandings(any()) } returns flow { emit(null) }
+
+        initUnderTest()
+        underTest.load(2020)
+
+        underTest.outputs.items.test {
+            assertValue(listOf(DriverStandingsModel.Loading))
+        }
+    }
+
+    @Test
+    fun `null is returned when DB returns no standings and has made request`() {
+        every { mockFetchSeasonUseCase.fetch(any()) } returns flow { emit(true) }
         every { mockSeasonRepository.getDriverStandings(any()) } returns flow { emit(null) }
 
         initUnderTest()
@@ -77,10 +90,10 @@ internal class DriversStandingViewModelTest: BaseTest() {
 
         underTest.outputs.items.test {
             assertValue(listOf(
-                DriverStandingsModel(
+                DriverStandingsModel.Standings(
                     standings = SeasonDriverStandingSeason.model(points = 3.0, driver = Driver.model(id = "2"), championshipPosition = 1)
                 ),
-                DriverStandingsModel(
+                DriverStandingsModel.Standings(
                     standings = SeasonDriverStandingSeason.model(points = 2.0, driver = Driver.model(id = "1"), championshipPosition = 2),
                 )
             ))
@@ -111,7 +124,7 @@ internal class DriversStandingViewModelTest: BaseTest() {
     fun `clicking item goes to driver overview`() = coroutineTest {
         initUnderTest()
         underTest.load(2020)
-        val model = DriverStandingsModel(
+        val model = DriverStandingsModel.Standings(
             standings = SeasonDriverStandingSeason.model(points = 3.0, driver = Driver.model(id = "2"), championshipPosition = 1)
         )
 
