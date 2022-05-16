@@ -74,10 +74,10 @@ internal class ConstructorsStandingViewModelTest: BaseTest() {
 
         underTest.outputs.items.test {
             assertValue(listOf(
-                ConstructorStandingsModel(
+                ConstructorStandingsModel.Standings(
                     standings = SeasonConstructorStandingSeason.model(points = 3.0, constructor = Constructor.model(id = "2"), championshipPosition = 1)
                 ),
-                ConstructorStandingsModel(
+                ConstructorStandingsModel.Standings(
                     standings = SeasonConstructorStandingSeason.model(points = 2.0, constructor = Constructor.model(id = "1"), championshipPosition = 2),
                 )
             ))
@@ -108,7 +108,7 @@ internal class ConstructorsStandingViewModelTest: BaseTest() {
     fun `clicking item goes to constructor overview`() {
         initUnderTest()
         underTest.load(2020)
-        val model = ConstructorStandingsModel(
+        val model = ConstructorStandingsModel.Standings(
             standings = SeasonConstructorStandingSeason.model(points = 3.0, constructor = Constructor.model(id = "2"), championshipPosition = 1)
         )
 

@@ -32,6 +32,7 @@ allprojects {
                 ],
                 accompanist: [
                         swiperefresh                            : "com.google.accompanist:accompanist-swiperefresh:0.23.1",
+                        placeholder                             : "com.google.accompanist:accompanist-placeholder-material:0.24.8-beta",
                         horizontalpager                         : "com.google.accompanist:accompanist-pager:0.20.0"
                 ],
                 coil                                            : "io.coil-kt:coil-compose:2.0.0-rc02",
