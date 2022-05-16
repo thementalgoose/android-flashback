@@ -14,6 +14,8 @@ import tmg.flashback.configuration.usecases.FetchConfigUseCase
 import tmg.flashback.releasenotes.usecases.NewReleaseNotesUseCase
 import tmg.flashback.statistics.BuildConfig
 import tmg.flashback.statistics.extensions.updateAllWidgets
+import tmg.flashback.statistics.repo.OverviewRepository
+import tmg.flashback.statistics.repo.RaceRepository
 import tmg.flashback.stats.usecases.DefaultSeasonUseCase
 import tmg.flashback.statistics.workmanager.WorkerProvider
 import tmg.utilities.lifecycle.Event
@@ -45,6 +47,8 @@ class DashboardViewModel(
     private val defaultSeasonUseCase: DefaultSeasonUseCase,
     private val fetchConfigUseCase: FetchConfigUseCase,
     private val applyConfigUseCase: ApplyConfigUseCase,
+    private val raceRepository: RaceRepository,
+    private val overviewRepository: OverviewRepository,
     private val releaseNotesUseCase: NewReleaseNotesUseCase,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), DashboardViewModelInputs, DashboardViewModelOutputs {
@@ -76,6 +80,13 @@ class DashboardViewModel(
             }
         }
 
+        viewModelScope.launch(ioDispatcher) {
+            raceRepository.fetchRaces(defaultSeasonUseCase.defaultSeason)
+        }
+        viewModelScope.launch(ioDispatcher) {
+            overviewRepository.fetchOverview(defaultSeasonUseCase.defaultSeason)
+        }
+
         if (releaseNotesUseCase.getNotes().isNotEmpty()) {
             openReleaseNotes.value = Event()
         }
@@ -86,6 +97,15 @@ class DashboardViewModel(
             tab = currentTab.value?.tab ?: defaultTab,
             season = season
         ))
+
+        if (season == defaultSeasonUseCase.defaultSeason) {
+            viewModelScope.launch(ioDispatcher) {
+                raceRepository.fetchRaces(season)
+            }
+            viewModelScope.launch(ioDispatcher) {
+                overviewRepository.fetchOverview(season)
+            }
+        }
     }
 
     override fun clickTab(tab: DashboardNavItem) {
