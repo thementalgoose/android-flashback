@@ -26,18 +26,17 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import org.koin.androidx.compose.viewModel
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.SeasonDriverStandingSeason
-import tmg.flashback.formula1.model.SeasonDriverStandings
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.providers.SeasonDriverStandingSeasonProvider
-import tmg.flashback.providers.SeasonDriverStandingsProvider
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextTitle
 import tmg.flashback.stats.R
 import tmg.flashback.stats.ui.dashboard.DashboardQuickLinks
 import tmg.flashback.stats.ui.messaging.Banner
-import tmg.flashback.stats.ui.messaging.ProvidedBy
 import tmg.flashback.style.AppThemePreview
+import tmg.flashback.ui.components.loading.SkeletonView
+import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.layouts.Container
 import tmg.flashback.ui.components.progressbar.ProgressBar
@@ -54,7 +53,7 @@ fun DriverStandingsScreenVM(
     viewModel.inputs.load(season)
 
     val isRefreshing = viewModel.outputs.isRefreshing.observeAsState(false)
-    val items = viewModel.outputs.items.observeAsState(emptyList())
+    val items = viewModel.outputs.items.observeAsState(listOf())
     SwipeRefresh(
         state = rememberSwipeRefreshState(isRefreshing = isRefreshing.value),
         onRefresh = viewModel.inputs::refresh
@@ -64,7 +63,7 @@ fun DriverStandingsScreenVM(
             menuClicked = menuClicked,
             itemClicked = viewModel.inputs::clickItem,
             season = season,
-            items = items.value ?: emptyList()
+            items = items.value
         )
     }
 }
@@ -73,9 +72,9 @@ fun DriverStandingsScreenVM(
 fun DriverStandingsScreen(
     showMenu: Boolean,
     menuClicked: (() -> Unit)? = null,
-    itemClicked: (DriverStandingsModel) -> Unit,
+    itemClicked: (DriverStandingsModel.Standings) -> Unit,
     season: Int,
-    items: List<DriverStandingsModel>
+    items: List<DriverStandingsModel>?
 ) {
     LazyColumn(
         modifier = Modifier
@@ -100,7 +99,9 @@ fun DriverStandingsScreen(
             }
             item(key = "info") {
                 DashboardQuickLinks()
-                val content = items.firstOrNull { it.standings.inProgressContent != null }?.standings?.inProgressContent
+                val content = (items ?: emptyList())
+                    .filterIsInstance<DriverStandingsModel.Standings>()
+                    .firstOrNull { it.standings.inProgressContent != null }?.standings?.inProgressContent
                 if (content != null) {
                     val (name, round) = content
                     Banner(
@@ -109,12 +110,31 @@ fun DriverStandingsScreen(
                     )
                 }
             }
-            items(items, key = { it.id }) { item ->
-                DriverStandings(
-                    model = item,
-                    itemClicked = itemClicked,
-                    maxPoints = (items.maxOfOrNull { it.standings.points } ?: 625.0),
-                )
+
+            if (items == null) {
+                item(key = "network") {
+                    NetworkError()
+                }
+            }
+
+            val maxPoints = (items ?: emptyList())
+                .filterIsInstance<DriverStandingsModel.Standings>()
+                .maxOfOrNull { it.standings.points } ?: 625.0
+            items(items ?: emptyList(), key = { it.id }) { item ->
+                when (item) {
+                    is DriverStandingsModel.Standings -> {
+                        DriverStandings(
+                            model = item,
+                            itemClicked = itemClicked,
+                            maxPoints = maxPoints,
+                        )
+                    }
+                    DriverStandingsModel.Loading -> {
+                        SkeletonView()
+                        SkeletonView()
+                        SkeletonView()
+                    }
+                }
             }
             item(key = "footer") {
                 Spacer(Modifier.height(72.dp))
@@ -125,13 +145,13 @@ fun DriverStandingsScreen(
 
 @Composable
 fun DriverStandingsCard(
-    model: DriverStandingsModel,
-    itemClicked: (DriverStandingsModel) -> Unit,
+    model: DriverStandingsModel.Standings,
+    itemClicked: (DriverStandingsModel.Standings) -> Unit,
     maxPoints: Double,
     modifier: Modifier = Modifier
 ) {
     Container(
-        modifier = Modifier.padding(
+        modifier = modifier.padding(
             horizontal = AppTheme.dimensions.paddingMedium,
             vertical = AppTheme.dimensions.paddingXXSmall
         ),
@@ -147,8 +167,8 @@ fun DriverStandingsCard(
 
 @Composable
 fun DriverStandings(
-    model: DriverStandingsModel,
-    itemClicked: (DriverStandingsModel) -> Unit,
+    model: DriverStandingsModel.Standings,
+    itemClicked: (DriverStandingsModel.Standings) -> Unit,
     maxPoints: Double,
     modifier: Modifier = Modifier,
 ) {
@@ -171,6 +191,7 @@ fun DriverStandings(
             .background(AppTheme.colors.backgroundSecondary)
         ) {
             AsyncImage(
+                error = painterResource(id = R.drawable.unknown_avatar),
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop,
                 model = model.standings.driver.photoUrl ?: R.drawable.unknown_avatar,
@@ -244,7 +265,7 @@ private fun PreviewLight(
 ) {
     AppThemePreview(isLight = true) {
         DriverStandings(
-            model = DriverStandingsModel(
+            model = DriverStandingsModel.Standings(
                 standings = driverStandings
             ),
             itemClicked = { },
@@ -260,7 +281,7 @@ private fun PreviewDark(
 ) {
     AppThemePreview(isLight = false) {
         DriverStandings(
-            model = DriverStandingsModel(
+            model = DriverStandingsModel.Standings(
                 standings = driverStandings
             ),
             itemClicked = { },

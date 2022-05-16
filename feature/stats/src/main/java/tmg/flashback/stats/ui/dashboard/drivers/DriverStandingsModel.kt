@@ -2,8 +2,17 @@ package tmg.flashback.stats.ui.dashboard.drivers
 
 import tmg.flashback.formula1.model.SeasonDriverStandingSeason
 
-data class DriverStandingsModel(
-    val standings: SeasonDriverStandingSeason,
-    val isSelected: Boolean = false,
-    val id: String = standings.driver.id
-)
+sealed class DriverStandingsModel(
+    val id: String
+) {
+    data class Standings(
+        val standings: SeasonDriverStandingSeason,
+        val isSelected: Boolean = false
+    ): DriverStandingsModel(
+        id = standings.driver.id
+    )
+
+    object Loading: DriverStandingsModel(
+        id = "loading"
+    )
+}

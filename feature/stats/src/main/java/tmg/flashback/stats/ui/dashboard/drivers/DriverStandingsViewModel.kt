@@ -14,7 +14,7 @@ interface DriversStandingViewModelInputs {
     fun refresh()
     fun load(season: Int)
 
-    fun clickItem(model: DriverStandingsModel)
+    fun clickItem(model: DriverStandingsModel.Standings)
 }
 
 interface DriversStandingViewModelOutputs {
@@ -45,13 +45,16 @@ class DriversStandingViewModel(
                     seasonRepository.getDriverStandings(season)
                         .map {
                             isRefreshing.postValue(false)
-                            if (!hasMadeRequest && it == null) {
+                            if (!hasMadeRequest) {
+                                return@map listOf(DriverStandingsModel.Loading)
+                            }
+                            if (it == null) {
                                 return@map null
                             }
-                            return@map it?.standings
-                                ?.sortedBy { it.championshipPosition }
-                                ?.map {
-                                    DriverStandingsModel(standings = it)
+                            return@map it.standings
+                                .sortedBy { it.championshipPosition }
+                                .map {
+                                    DriverStandingsModel.Standings(standings = it)
                                 }
                         }
                 }
@@ -73,7 +76,7 @@ class DriversStandingViewModel(
         }
     }
 
-    override fun clickItem(model: DriverStandingsModel) {
+    override fun clickItem(model: DriverStandingsModel.Standings) {
         statsNavigator.goToDriverOverview(
             model.standings.driver.id,
             model.standings.driver.name

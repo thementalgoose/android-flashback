@@ -20,21 +20,16 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import org.koin.androidx.compose.viewModel
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.SeasonConstructorStandingSeason
-import tmg.flashback.formula1.model.SeasonDriverStandingSeason
 import tmg.flashback.providers.SeasonConstructorStandingSeasonProvider
-import tmg.flashback.providers.SeasonDriverStandingSeasonProvider
 import tmg.flashback.stats.R
 import tmg.flashback.stats.components.DriverPoints
 import tmg.flashback.stats.ui.dashboard.DashboardQuickLinks
-import tmg.flashback.stats.ui.dashboard.drivers.DriverStandings
-import tmg.flashback.stats.ui.dashboard.drivers.DriverStandingsModel
-import tmg.flashback.stats.ui.dashboard.drivers.DriverStandingsScreen
-import tmg.flashback.stats.ui.dashboard.drivers.DriversStandingViewModel
 import tmg.flashback.stats.ui.messaging.Banner
-import tmg.flashback.stats.ui.messaging.ProvidedBy
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.text.TextTitle
+import tmg.flashback.ui.components.loading.SkeletonView
+import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.progressbar.ProgressBar
 import kotlin.math.roundToInt
@@ -49,7 +44,7 @@ fun ConstructorStandingsScreenVM(
     viewModel.inputs.load(season)
 
     val isRefreshing = viewModel.outputs.isRefreshing.observeAsState(false)
-    val items = viewModel.outputs.items.observeAsState(emptyList())
+    val items = viewModel.outputs.items.observeAsState(listOf(ConstructorStandingsModel.Loading))
     SwipeRefresh(
         state = rememberSwipeRefreshState(isRefreshing = isRefreshing.value),
         onRefresh = viewModel.inputs::refresh
@@ -59,7 +54,7 @@ fun ConstructorStandingsScreenVM(
             menuClicked = menuClicked,
             itemClicked = viewModel.inputs::clickItem,
             season = season,
-            items = items.value ?: emptyList()
+            items = items.value
         )
     }
 }
@@ -68,9 +63,9 @@ fun ConstructorStandingsScreenVM(
 fun ConstructorStandingsScreen(
     showMenu: Boolean,
     menuClicked: (() -> Unit)? = null,
-    itemClicked: (ConstructorStandingsModel) -> Unit,
+    itemClicked: (ConstructorStandingsModel.Standings) -> Unit,
     season: Int,
-    items: List<ConstructorStandingsModel>
+    items: List<ConstructorStandingsModel>?
 ) {
     LazyColumn(
         modifier = Modifier
@@ -95,7 +90,9 @@ fun ConstructorStandingsScreen(
             }
             item(key = "info") {
                 DashboardQuickLinks()
-                val content = items.firstOrNull { it.standings.inProgressContent != null }?.standings?.inProgressContent
+                val content = (items ?: emptyList())
+                    .filterIsInstance<ConstructorStandingsModel.Standings>()
+                    .firstOrNull { it.standings.inProgressContent != null }?.standings?.inProgressContent
                 if (content != null) {
                     val (name, round) = content
                     Banner(
@@ -104,12 +101,31 @@ fun ConstructorStandingsScreen(
                     )
                 }
             }
-            items(items, key = { it.id }) { item ->
-                ConstructorStandings(
-                    model = item,
-                    itemClicked = itemClicked,
-                    maxPoints = (items.maxOfOrNull { it.standings.points } ?: 1250.0),
-                )
+
+            if (items == null) {
+                item(key = "network") {
+                    NetworkError()
+                }
+            }
+
+            val maxPoints = (items ?: emptyList())
+                .filterIsInstance<ConstructorStandingsModel.Standings>()
+                .maxOfOrNull { it.standings.points } ?: 1125.0
+            items(items ?: emptyList(), key = { it.id }) { item ->
+                when (item) {
+                    ConstructorStandingsModel.Loading -> {
+                        SkeletonView()
+                        SkeletonView()
+                        SkeletonView()
+                    }
+                    is ConstructorStandingsModel.Standings -> {
+                        ConstructorStandings(
+                            model = item,
+                            itemClicked = itemClicked,
+                            maxPoints = maxPoints,
+                        )
+                    }
+                }
             }
             item(key = "footer") {
                 Spacer(Modifier.height(72.dp))
@@ -121,8 +137,8 @@ fun ConstructorStandingsScreen(
 
 @Composable
 private fun ConstructorStandings(
-    model: ConstructorStandingsModel,
-    itemClicked: (ConstructorStandingsModel) -> Unit,
+    model: ConstructorStandingsModel.Standings,
+    itemClicked: (ConstructorStandingsModel.Standings) -> Unit,
     maxPoints: Double,
     modifier: Modifier = Modifier,
 ) {
@@ -186,7 +202,7 @@ private fun PreviewLight(
 ) {
     AppThemePreview(isLight = true) {
         ConstructorStandings(
-            model = ConstructorStandingsModel(
+            model = ConstructorStandingsModel.Standings(
                 standings = constructorStandings,
                 isSelected = false
             ),
@@ -203,7 +219,7 @@ private fun PreviewDark(
 ) {
     AppThemePreview(isLight = false) {
         ConstructorStandings(
-            model = ConstructorStandingsModel(
+            model = ConstructorStandingsModel.Standings(
                 standings = constructorStandings,
                 isSelected = false
             ),

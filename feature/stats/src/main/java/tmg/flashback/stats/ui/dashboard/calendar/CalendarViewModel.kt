@@ -100,6 +100,7 @@ class CalendarViewModel(
             )
             is CalendarModel.Month -> TODO()
             is CalendarModel.Week -> TODO()
+            CalendarModel.Loading -> {}
         }
     }
 }
