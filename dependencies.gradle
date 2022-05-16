@@ -34,6 +34,7 @@ allprojects {
                         swiperefresh                            : "com.google.accompanist:accompanist-swiperefresh:0.24.8-beta",
                         horizontalpager                         : "com.google.accompanist:accompanist-pager:0.24.8-beta",
                         systemuicontroller                      : "com.google.accompanist:accompanist-systemuicontroller:0.24.8-beta",
+                        placeholder                             : "com.google.accompanist:accompanist-placeholder-material:0.24.8-beta",
                 ],
                 coil                                            : "io.coil-kt:coil-compose:2.0.0-rc02",
                 shakey                                          : "com.linkedin.shaky:shaky:3.0.4",
