@@ -316,6 +316,7 @@
         <entry key="presentation/ui/src/main/java/tmg/flashback/ui/components/errors/NetworkError.kt" value="0.5203703703703704" />
         <entry key="presentation/ui/src/main/java/tmg/flashback/ui/components/layouts/OverlappingPanels.kt" value="0.6710963455149501" />
         <entry key="presentation/ui/src/main/java/tmg/flashback/ui/components/loading/SkeletonView.kt" value="0.45" />
+        <entry key="presentation/ui/src/main/java/tmg/flashback/ui/components/navigation/NavigationBar.kt" value="0.35185185185185186" />
         <entry key="presentation/ui/src/main/java/tmg/flashback/ui/components/navigation/NavigationColumn.kt" value="0.45" />
         <entry key="presentation/ui/src/main/java/tmg/flashback/ui/components/number/DriverNumber.kt" value="0.6225165562913907" />
         <entry key="presentation/ui/src/main/res/drawable-night/unknown_avatar.xml" value="0.1985" />

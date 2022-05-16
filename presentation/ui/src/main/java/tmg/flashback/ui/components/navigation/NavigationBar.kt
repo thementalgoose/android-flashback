@@ -38,7 +38,7 @@ fun NavigationBar(
     Row(
         modifier = modifier
             .height(appBarHeight)
-            .shadow(elevation = 4.dp)
+            .shadow(elevation = 8.dp)
             .background(AppTheme.colors.backgroundNav),
         horizontalArrangement = Arrangement.Start,
         verticalAlignment = Alignment.CenterVertically,
