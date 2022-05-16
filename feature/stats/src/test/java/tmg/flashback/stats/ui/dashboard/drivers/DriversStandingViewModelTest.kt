@@ -58,8 +58,21 @@ internal class DriversStandingViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `null is returned when DB returns no standings and hasnt made request`() {
+    fun `loading is returned when DB returns no standings and hasnt made request`() {
         every { mockFetchSeasonUseCase.fetch(any()) } returns flow { emit(false) }
+        every { mockSeasonRepository.getDriverStandings(any()) } returns flow { emit(null) }
+
+        initUnderTest()
+        underTest.load(2020)
+
+        underTest.outputs.items.test {
+            assertValue(listOf(DriverStandingsModel.Loading))
+        }
+    }
+
+    @Test
+    fun `null is returned when DB returns no standings and has made request`() {
+        every { mockFetchSeasonUseCase.fetch(any()) } returns flow { emit(true) }
         every { mockSeasonRepository.getDriverStandings(any()) } returns flow { emit(null) }
 
         initUnderTest()
