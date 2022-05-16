@@ -26,20 +26,19 @@ import org.koin.androidx.compose.viewModel
 import org.threeten.bp.DayOfWeek
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.TextStyle
-import tmg.flashback.formula1.model.Event
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.model.Schedule
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.providers.OverviewRaceProvider
 import tmg.flashback.stats.R
 import tmg.flashback.stats.ui.dashboard.DashboardQuickLinks
-import tmg.flashback.stats.ui.messaging.Banner
-import tmg.flashback.stats.ui.messaging.ProvidedBy
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextTitle
+import tmg.flashback.ui.components.loading.SkeletonView
+import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.layouts.Container
 import tmg.flashback.ui.utils.isInPreview
@@ -60,7 +59,7 @@ fun CalendarScreenVM(
     viewModel.inputs.load(season)
 
     val isRefreshing = viewModel.outputs.isRefreshing.observeAsState(false)
-    val items = viewModel.outputs.items.observeAsState(emptyList())
+    val items = viewModel.outputs.items.observeAsState(listOf(CalendarModel.Loading))
     SwipeRefresh(
         state = rememberSwipeRefreshState(isRefreshing = isRefreshing.value),
         onRefresh = viewModel.inputs::refresh
@@ -70,7 +69,7 @@ fun CalendarScreenVM(
             menuClicked = menuClicked,
             itemClicked = viewModel.inputs::clickItem,
             season = season,
-            items = items.value ?: emptyList()
+            items = items.value
         )
     }
 }
@@ -82,7 +81,7 @@ fun CalendarScreen(
     menuClicked: (() -> Unit)? = null,
     itemClicked: (CalendarModel) -> Unit,
     season: Int,
-    items: List<CalendarModel>
+    items: List<CalendarModel>?
 ) {
     LazyColumn(
         modifier = Modifier
@@ -106,7 +105,14 @@ fun CalendarScreen(
             item(key = "info") {
                DashboardQuickLinks()
             }
-            items(items) { item ->
+
+            if (items == null) {
+                item(key = "network") {
+                    NetworkError()
+                }
+            }
+
+            items(items ?: emptyList()) { item ->
                 when (item) {
                     is CalendarModel.List -> {
                         Schedule(model = item, itemClicked = itemClicked)
@@ -116,6 +122,11 @@ fun CalendarScreen(
                     }
                     is CalendarModel.Week -> {
                         Week(model = item)
+                    }
+                    CalendarModel.Loading -> {
+                        SkeletonView()
+                        SkeletonView()
+                        SkeletonView()
                     }
                 }
             }
