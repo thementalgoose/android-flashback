@@ -216,6 +216,7 @@
         <entry key="feature/statistics/src/main/res/drawable/nav_race.xml" value="0.2325" />
         <entry key="feature/statistics/src/main/res/drawable/nav_schedule.xml" value="0.2325" />
         <entry key="feature/statistics/src/main/res/drawable/nav_sprint_qualifying.xml" value="0.2325" />
+        <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/dashboard/constructors/ConstructorStandingsScreen.kt" value="0.1" />
         <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/dashboard/drivers/DriverStandingsScreen.kt" value="0.25" />
         <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/messaging/ProvidedBy.kt" value="0.5203703703703704" />
         <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/weekend/info/InfoScreen.kt" value="0.375" />
@@ -311,11 +312,18 @@
         <entry key="formula1/src/main/res/drawable/tyre_white.xml" value="0.138" />
         <entry key="formula1/src/main/res/drawable/tyre_yellow.xml" value="0.138" />
         <entry key="presentation/style/src/main/java/tmg/flashback/style/text/TextBody1.kt" value="0.3200636942675159" />
+        <entry key="presentation/ui/src/main/java/tmg/flashback/ui/components/badges/Badges.kt" value="0.7613636363636364" />
+        <entry key="presentation/ui/src/main/java/tmg/flashback/ui/components/errors/NetworkError.kt" value="0.5203703703703704" />
+        <entry key="presentation/ui/src/main/java/tmg/flashback/ui/components/header/Header.kt" value="0.36906584992343033" />
         <entry key="presentation/ui/src/main/java/tmg/flashback/ui/components/layouts/OverlappingPanels.kt" value="0.6710963455149501" />
+        <entry key="presentation/ui/src/main/java/tmg/flashback/ui/components/loading/SkeletonView.kt" value="0.45" />
+        <entry key="presentation/ui/src/main/java/tmg/flashback/ui/components/navigation/NavigationBar.kt" value="0.35185185185185186" />
         <entry key="presentation/ui/src/main/java/tmg/flashback/ui/components/navigation/NavigationColumn.kt" value="0.45" />
         <entry key="presentation/ui/src/main/java/tmg/flashback/ui/components/number/DriverNumber.kt" value="0.6225165562913907" />
         <entry key="presentation/ui/src/main/res/drawable-night/unknown_avatar.xml" value="0.1985" />
         <entry key="presentation/ui/src/main/res/drawable/background_pill.xml" value="0.3615" />
+        <entry key="presentation/ui/src/main/res/drawable/error_internal.xml" value="0.1915" />
+        <entry key="presentation/ui/src/main/res/drawable/error_network.xml" value="0.1915" />
         <entry key="presentation/ui/src/main/res/drawable/ic_back.xml" value="0.155" />
         <entry key="presentation/ui/src/main/res/drawable/ic_menu.xml" value="0.1665" />
         <entry key="presentation/ui/src/main/res/drawable/ic_more.xml" value="0.284" />

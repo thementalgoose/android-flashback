@@ -23,6 +23,8 @@ import tmg.flashback.formula1.model.RaceInfo
 import tmg.flashback.formula1.model.Schedule
 import tmg.flashback.providers.RaceProvider
 import tmg.flashback.stats.R
+import tmg.flashback.stats.ui.weekend.WeekendInfo
+import tmg.flashback.stats.ui.weekend.from
 import tmg.flashback.stats.ui.weekend.info.RaceInfoHeader
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
@@ -35,7 +37,8 @@ import tmg.utilities.extensions.ordinalAbbreviation
 
 @Composable
 fun ScheduleScreenVM(
-    info: RaceInfo
+    info: WeekendInfo,
+    actionUpClicked: () -> Unit
 ) {
     val viewModel by viewModel<ScheduleViewModel>()
     viewModel.inputs.load(
@@ -46,23 +49,31 @@ fun ScheduleScreenVM(
     val items = viewModel.outputs.list.observeAsState(initial = emptyList())
     ScheduleScreen(
         info = info,
+        actionUpClicked = actionUpClicked,
         items = items.value
     )
 }
 
 @Composable
 fun ScheduleScreen(
-    info: RaceInfo,
-    items: List<ScheduleModel>
+    info: WeekendInfo,
+    items: List<ScheduleModel>,
+    actionUpClicked: () -> Unit
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxWidth(),
         content = {
             item("header") {
-                RaceInfoHeader(model = info)
+                RaceInfoHeader(
+                    model = info,
+                    actionUpClicked = actionUpClicked
+                )
             }
             items(items, key = { it.toString() }) {
-                Column(Modifier.fillMaxWidth()) {
+                Column(modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = AppTheme.dimensions.paddingMedium)
+                ) {
                     Title(it.date)
                     it.schedules.forEach { (schedule, isNotificationSet) ->
                         EventItem(item = schedule, showNotificationBell = isNotificationSet)
@@ -102,25 +113,25 @@ private fun EventItem(
             text = item.label,
             modifier = Modifier.weight(1f)
         )
-        TextBody2(
-            text = timestamp.format("HH:mm"),
-            modifier = Modifier
-                .padding(
-                    horizontal = AppTheme.dimensions.paddingSmall
-                )
-        )
         if (showNotificationBell) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_notification_indicator_bell),
                 contentDescription = stringResource(id = R.string.ab_notifications_enabled),
                 tint = AppTheme.colors.contentSecondary,
                 modifier = Modifier
-                    .size(12.dp)
+                    .size(16.dp)
                     .align(Alignment.CenterVertically)
             )
         } else {
-            Box(Modifier.size(12.dp))
+            Box(Modifier.size(16.dp))
         }
+        TextBody2(
+            text = timestamp.format("HH:mm"),
+            modifier = Modifier
+                .padding(
+                    start = AppTheme.dimensions.paddingSmall
+                )
+        )
     }
 }
 
@@ -131,7 +142,8 @@ private fun PreviewLight(
 ) {
     AppThemePreview(isLight = true) {
         ScheduleScreen(
-            info = race.raceInfo,
+            actionUpClicked = { },
+            info = WeekendInfo.from(race.raceInfo),
             items = listOf(
                 ScheduleModel(
                     date = LocalDate.of(2020, 1, 1),
