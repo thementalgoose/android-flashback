@@ -8,7 +8,9 @@ import kotlinx.coroutines.launch
 import org.threeten.bp.LocalDate
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.statistics.repo.OverviewRepository
+import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.stats.di.StatsNavigator
+import tmg.flashback.stats.ui.weekend.WeekendInfo
 import tmg.flashback.stats.usecases.DefaultSeasonUseCase
 import tmg.flashback.stats.usecases.FetchSeasonUseCase
 
@@ -28,6 +30,7 @@ class CalendarViewModel(
     private val fetchSeasonUseCase: FetchSeasonUseCase,
     private val overviewRepository: OverviewRepository,
     private val statsNavigator: StatsNavigator,
+    private val statsNavigationComponent: StatsNavigationComponent,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), CalendarViewModelInputs, CalendarViewModelOutputs {
 
@@ -87,17 +90,16 @@ class CalendarViewModel(
 
     override fun clickItem(model: CalendarModel) {
         when (model) {
-            is CalendarModel.List -> statsNavigator.goToRace(
+            is CalendarModel.List -> statsNavigationComponent.weekend(WeekendInfo(
                 season = model.model.season,
                 round = model.model.round,
-                circuitId = model.model.circuitId,
-                defaultToRace = model.model.hasResults,
-                country = model.model.country,
                 raceName = model.model.raceName,
-                trackName = model.model.circuitName,
+                circuitId = model.model.circuitId,
+                circuitName = model.model.circuitName,
+                country = model.model.country,
                 countryISO = model.model.countryISO,
-                date = model.model.date
-            )
+                date = model.model.date,
+            ))
             is CalendarModel.Month -> TODO()
             is CalendarModel.Week -> TODO()
             CalendarModel.Loading -> {}

@@ -3,10 +3,12 @@ package tmg.flashback.stats.ui.weekend
 import androidx.lifecycle.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
-import tmg.flashback.stats.usecases.DefaultSeasonUseCase
+import tmg.flashback.formula1.model.RaceInfo
 
 interface WeekendViewModelInputs {
+    fun load()
     fun clickTab(state: WeekendNavItem)
+    fun refresh()
 }
 
 interface WeekendViewModelOutputs {
@@ -34,5 +36,13 @@ class WeekendViewModel(): ViewModel(), WeekendViewModelInputs, WeekendViewModelO
 
     override fun clickTab(state: WeekendNavItem) {
         selectedTab.value = state
+    }
+
+    override fun load() {
+
+    }
+
+    override fun refresh() {
+
     }
 }
