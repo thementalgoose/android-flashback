@@ -3,6 +3,7 @@ package tmg.flashback.style.text
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
@@ -11,11 +12,13 @@ import tmg.flashback.style.AppThemePreview
 fun TextSection(
     text: String,
     modifier: Modifier = Modifier,
+    textAlign: TextAlign = TextAlign.Center,
     brand: Boolean = false
 ) {
     Text(
         text,
         modifier = modifier,
+        textAlign = textAlign,
         style = AppTheme.typography.section.copy(
             color = when (brand) {
                 true -> AppTheme.colors.primary

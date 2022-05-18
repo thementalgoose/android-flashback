@@ -80,6 +80,9 @@ fun ScheduleScreen(
                     }
                 }
             }
+            item(key = "footer") {
+                Spacer(Modifier.height(72.dp))
+            }
         }
     )
 }
