@@ -358,8 +358,6 @@ private fun DateCard(
                     painter = painterResource(id = R.drawable.ic_notification_indicator_bell),
                     contentDescription = stringResource(id = R.string.ab_notifications_enabled)
                 )
-            } else {
-                Box(Modifier.size(16.dp))
             }
         }
         TextBody2(
