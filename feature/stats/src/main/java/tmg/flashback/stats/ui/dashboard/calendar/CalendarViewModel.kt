@@ -9,9 +9,8 @@ import org.threeten.bp.LocalDate
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.stats.StatsNavigationComponent
-import tmg.flashback.stats.di.StatsNavigator
+import tmg.flashback.stats.repository.NotificationRepository
 import tmg.flashback.stats.ui.weekend.WeekendInfo
-import tmg.flashback.stats.usecases.DefaultSeasonUseCase
 import tmg.flashback.stats.usecases.FetchSeasonUseCase
 
 interface CalendarViewModelInputs {
@@ -29,6 +28,7 @@ interface CalendarViewModelOutputs {
 class CalendarViewModel(
     private val fetchSeasonUseCase: FetchSeasonUseCase,
     private val overviewRepository: OverviewRepository,
+    private val notificationRepository: NotificationRepository,
     private val statsNavigationComponent: StatsNavigationComponent,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), CalendarViewModelInputs, CalendarViewModelOutputs {
@@ -50,13 +50,14 @@ class CalendarViewModel(
                         .map { overview ->
                             isRefreshing.postValue(false)
                             if (!hasMadeRequest) {
-                                return@map null
+                                return@map listOf(CalendarModel.Loading)
                             }
                             val upcoming = overview.overviewRaces.getLatestUpcoming()
                             return@map overview.overviewRaces
                                 .map {
                                     CalendarModel.List(
                                         model = it,
+                                        notificationSchedule = notificationRepository.notificationSchedule,
                                         showScheduleList = it == upcoming
                                     )
                                 }

@@ -14,7 +14,8 @@ import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.model.model
 import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.stats.StatsNavigationComponent
-import tmg.flashback.stats.di.StatsNavigator
+import tmg.flashback.stats.repository.NotificationRepository
+import tmg.flashback.stats.repository.models.NotificationSchedule
 import tmg.flashback.stats.ui.weekend.toWeekendInfo
 import tmg.flashback.stats.usecases.FetchSeasonUseCase
 import tmg.testutils.BaseTest
@@ -25,6 +26,7 @@ internal class CalendarViewModelTest: BaseTest() {
 
     private val mockOverviewRepository: OverviewRepository = mockk(relaxed = true)
     private val mockFetchSeasonUseCase: FetchSeasonUseCase = mockk(relaxed = true)
+    private val mockNotificationRepository: NotificationRepository = mockk(relaxed = true)
     private val mockStatsNavigationComponent: StatsNavigationComponent = mockk(relaxed = true)
 
     private lateinit var underTest: CalendarViewModel
@@ -33,6 +35,7 @@ internal class CalendarViewModelTest: BaseTest() {
         underTest = CalendarViewModel(
             fetchSeasonUseCase = mockFetchSeasonUseCase,
             overviewRepository = mockOverviewRepository,
+            notificationRepository = mockNotificationRepository,
             statsNavigationComponent = mockStatsNavigationComponent,
             ioDispatcher = coroutineScope.testDispatcher
         )
@@ -48,6 +51,7 @@ internal class CalendarViewModelTest: BaseTest() {
                 )
             ))
         }
+        every { mockNotificationRepository.notificationSchedule } returns fakeNotificationSchedule
         every { mockFetchSeasonUseCase.fetch(any()) } returns flow { emit(true) }
     }
 
@@ -70,7 +74,7 @@ internal class CalendarViewModelTest: BaseTest() {
         underTest.load(2020)
 
         underTest.outputs.items.test {
-            assertValue(null)
+            assertValue(listOf(CalendarModel.Loading))
         }
     }
 
@@ -83,10 +87,12 @@ internal class CalendarViewModelTest: BaseTest() {
             assertValue(listOf(
                 CalendarModel.List(
                     model = OverviewRace.model(round = 1, date = LocalDate.of(2020, 1, 1)),
+                    notificationSchedule = fakeNotificationSchedule,
                     showScheduleList = false
                 ),
                 CalendarModel.List(
                     model = OverviewRace.model(round = 2, date = LocalDate.of(2020, 1, 2)),
+                    notificationSchedule = fakeNotificationSchedule,
                     showScheduleList = false
                 )
             ))
@@ -119,6 +125,7 @@ internal class CalendarViewModelTest: BaseTest() {
         underTest.load(2020)
         val model = CalendarModel.List(
             model = OverviewRace.model(round = 1),
+            notificationSchedule = fakeNotificationSchedule,
             showScheduleList = false
         )
 
@@ -141,4 +148,11 @@ internal class CalendarViewModelTest: BaseTest() {
 //            )
         }
     }
+
+    private val fakeNotificationSchedule: NotificationSchedule = NotificationSchedule(
+        freePractice = true,
+        qualifying = true,
+        race = true,
+        other = true,
+    )
 }
