@@ -133,6 +133,9 @@ fun DriverStandingsScreen(
                         SkeletonView()
                         SkeletonView()
                         SkeletonView()
+                        SkeletonView()
+                        SkeletonView()
+                        SkeletonView()
                     }
                 }
             }

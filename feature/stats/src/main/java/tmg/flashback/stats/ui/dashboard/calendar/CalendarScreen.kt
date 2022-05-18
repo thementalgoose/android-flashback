@@ -127,6 +127,9 @@ fun CalendarScreen(
                         SkeletonView()
                         SkeletonView()
                         SkeletonView()
+                        SkeletonView()
+                        SkeletonView()
+                        SkeletonView()
                     }
                 }
             }

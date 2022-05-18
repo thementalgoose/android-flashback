@@ -48,7 +48,7 @@ class CalendarViewModel(
                         .map { overview ->
                             isRefreshing.postValue(false)
                             if (!hasMadeRequest) {
-                                return@map null
+                                return@map listOf(CalendarModel.Loading)
                             }
                             val upcoming = overview.overviewRaces.getLatestUpcoming()
                             return@map overview.overviewRaces
