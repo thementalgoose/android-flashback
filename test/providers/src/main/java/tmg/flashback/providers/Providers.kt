@@ -82,3 +82,7 @@ class OverviewProvider: PreviewParameterProvider<Overview> {
 class RaceProvider: PreviewParameterProvider<Race> {
     override val values: Sequence<Race> = sequenceOf(Race.model())
 }
+
+class DriverConstructorProvider: PreviewParameterProvider<DriverConstructor> {
+    override val values: Sequence<DriverConstructor> = sequenceOf(DriverConstructor.model())
+}

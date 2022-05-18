@@ -4,6 +4,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
@@ -14,11 +15,13 @@ import tmg.flashback.style.AppThemePreview
 fun DriverNumber(
     number: String,
     modifier: Modifier = Modifier,
-    highlightNumber: Color = AppTheme.colors.backgroundSecondary,
+    textAlign: TextAlign = TextAlign.Start,
+    highlightNumber: Color = AppTheme.colors.contentTertiary,
 ) {
     Text(
         modifier = modifier,
         text = number,
+        textAlign = textAlign,
         style = AppTheme.typography.block,
         color = highlightNumber
     )

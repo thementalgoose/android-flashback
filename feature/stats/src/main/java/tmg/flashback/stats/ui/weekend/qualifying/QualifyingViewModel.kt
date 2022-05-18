@@ -1,6 +1,7 @@
 package tmg.flashback.stats.ui.weekend.qualifying
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
@@ -18,7 +19,10 @@ interface QualifyingViewModelInputs {
 
 interface QualifyingViewModelOutputs {
     val list: LiveData<List<QualifyingModel>>
+    val headersToShow: LiveData<QualifyingHeader>
 }
+
+typealias QualifyingHeader = Triple<Boolean, Boolean, Boolean>
 
 class QualifyingViewModel(
     private val raceRepository: RaceRepository
@@ -34,6 +38,24 @@ class QualifyingViewModel(
         .map {
             val race = it ?: return@map emptyList<QualifyingModel>()
 
+            when {
+                race.has(RaceQualifyingType.Q3) -> headersToShow.value = QualifyingHeader(
+                    first = true,
+                    second = true,
+                    third = true
+                )
+                race.has(RaceQualifyingType.Q2) -> headersToShow.value = QualifyingHeader(
+                    first = true,
+                    second = true,
+                    third = false
+                )
+                race.has(RaceQualifyingType.Q1) -> headersToShow.value = QualifyingHeader(
+                    first = true,
+                    second = false,
+                    third = false
+                )
+            }
+
             return@map when {
                 race.has(RaceQualifyingType.Q3) -> race.getQ1Q2Q3QualifyingList(RaceQualifyingType.Q3)
                 race.has(RaceQualifyingType.Q2) -> race.getQ1Q2QualifyingList()
@@ -42,6 +64,8 @@ class QualifyingViewModel(
             }
         }
         .asLiveData(viewModelScope.coroutineContext)
+
+    override val headersToShow: MutableLiveData<QualifyingHeader> = MutableLiveData()
 
     override fun load(season: Int, round: Int) {
         seasonRound.value = Pair(season, round)

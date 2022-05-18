@@ -13,7 +13,9 @@ import tmg.flashback.formula1.model.Overview
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.model.model
 import tmg.flashback.statistics.repo.OverviewRepository
+import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.stats.di.StatsNavigator
+import tmg.flashback.stats.ui.weekend.toWeekendInfo
 import tmg.flashback.stats.usecases.FetchSeasonUseCase
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.test
@@ -23,7 +25,7 @@ internal class CalendarViewModelTest: BaseTest() {
 
     private val mockOverviewRepository: OverviewRepository = mockk(relaxed = true)
     private val mockFetchSeasonUseCase: FetchSeasonUseCase = mockk(relaxed = true)
-    private val mockStatsNavigator: StatsNavigator = mockk(relaxed = true)
+    private val mockStatsNavigationComponent: StatsNavigationComponent = mockk(relaxed = true)
 
     private lateinit var underTest: CalendarViewModel
 
@@ -31,7 +33,7 @@ internal class CalendarViewModelTest: BaseTest() {
         underTest = CalendarViewModel(
             fetchSeasonUseCase = mockFetchSeasonUseCase,
             overviewRepository = mockOverviewRepository,
-            statsNavigator = mockStatsNavigator,
+            statsNavigationComponent = mockStatsNavigationComponent,
             ioDispatcher = coroutineScope.testDispatcher
         )
     }
@@ -123,17 +125,20 @@ internal class CalendarViewModelTest: BaseTest() {
         underTest.clickItem(model)
 
         verify {
-            mockStatsNavigator.goToRace(
-                season = model.model.season,
-                round = model.model.round,
-                circuitId = model.model.circuitId,
-                defaultToRace = model.model.hasResults,
-                country = model.model.country,
-                raceName = model.model.raceName,
-                trackName = model.model.circuitName,
-                countryISO = model.model.countryISO,
-                date = model.model.date
+            mockStatsNavigationComponent.weekend(
+                model.model.toRaceInfo().toWeekendInfo()
             )
+//            mockStatsNavigator.goToRace(
+//                season = model.model.season,
+//                round = model.model.round,
+//                circuitId = model.model.circuitId,
+//                defaultToRace = model.model.hasResults,
+//                country = model.model.country,
+//                raceName = model.model.raceName,
+//                trackName = model.model.circuitName,
+//                countryISO = model.model.countryISO,
+//                date = model.model.date
+//            )
         }
     }
 }
