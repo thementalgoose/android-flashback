@@ -74,7 +74,7 @@ internal class CalendarViewModelTest: BaseTest() {
         underTest.load(2020)
 
         underTest.outputs.items.test {
-            assertValue(null)
+            assertValue(listOf(CalendarModel.Loading))
         }
     }
 
