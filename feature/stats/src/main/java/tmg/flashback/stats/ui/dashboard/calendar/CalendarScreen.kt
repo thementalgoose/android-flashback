@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import org.koin.androidx.compose.inject
 import org.koin.androidx.compose.viewModel
 import org.threeten.bp.DayOfWeek
 import org.threeten.bp.LocalDate
@@ -29,8 +30,11 @@ import org.threeten.bp.format.TextStyle
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.model.Schedule
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
+import tmg.flashback.notifications.di.notificationModule
 import tmg.flashback.providers.OverviewRaceProvider
 import tmg.flashback.stats.R
+import tmg.flashback.stats.repository.NotificationRepository
+import tmg.flashback.stats.repository.models.NotificationSchedule
 import tmg.flashback.stats.ui.dashboard.DashboardQuickLinks
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
@@ -115,7 +119,10 @@ fun CalendarScreen(
             items(items ?: emptyList()) { item ->
                 when (item) {
                     is CalendarModel.List -> {
-                        Schedule(model = item, itemClicked = itemClicked)
+                        Schedule(
+                            model = item,
+                            itemClicked = itemClicked
+                        )
                     }
                     is CalendarModel.Month -> {
                         Month(model = item)
@@ -236,7 +243,8 @@ private fun Schedule(
             }
             if (model.shouldShowScheduleList) {
                 Dates(
-                    model.model.schedule,
+                    scheduleList = model.model.schedule,
+                    notificationSchedule = model.notificationSchedule,
                     modifier = Modifier.padding(top = AppTheme.dimensions.paddingXSmall)
                 )
             }
@@ -281,6 +289,7 @@ private fun RowScope.IconRow(
 @Composable
 private fun Dates(
     scheduleList: List<Schedule>,
+    notificationSchedule: NotificationSchedule,
     modifier: Modifier = Modifier
 ) {
     val schedule = scheduleList.groupBy { it.timestamp.deviceLocalDateTime.toLocalDate() }
@@ -302,7 +311,10 @@ private fun Dates(
                 )
                 Row {
                     list.forEach {
-                        DateCard(schedule = it)
+                        DateCard(
+                            schedule = it,
+                            showNotificationBadge = notificationSchedule.getByLabel(it.label)
+                        )
                         Spacer(Modifier.width(AppTheme.dimensions.paddingSmall))
                     }
                 }
@@ -315,6 +327,7 @@ private fun Dates(
 @Composable
 private fun DateCard(
     schedule: Schedule,
+    showNotificationBadge: Boolean,
     modifier: Modifier = Modifier
 ) {
     val alpha = if (schedule.timestamp.isInPast) pastScheduleAlpha else 1f
@@ -338,12 +351,16 @@ private fun DateCard(
                 text = schedule.label
             )
             Spacer(Modifier.width(4.dp))
-            Icon(
-                modifier = Modifier.size(16.dp),
-                tint = AppTheme.colors.contentSecondary,
-                painter = painterResource(id = R.drawable.ic_notification_indicator_bell),
-                contentDescription = stringResource(id = R.string.ab_notifications_enabled)
-            )
+            if (showNotificationBadge) {
+                Icon(
+                    modifier = Modifier.size(16.dp),
+                    tint = AppTheme.colors.contentSecondary,
+                    painter = painterResource(id = R.drawable.ic_notification_indicator_bell),
+                    contentDescription = stringResource(id = R.string.ab_notifications_enabled)
+                )
+            } else {
+                Box(Modifier.size(16.dp))
+            }
         }
         TextBody2(
             modifier = Modifier.fillMaxWidth(),
@@ -479,12 +496,12 @@ private fun PreviewLightSchedule(
     AppThemePreview(isLight = true) {
         Column(Modifier.fillMaxWidth()) {
             Schedule(
-                model = CalendarModel.List(race),
+                model = CalendarModel.List(race, notificationSchedule = fakeNotificationSchedule),
                 itemClicked = { }
             )
             Spacer(Modifier.height(16.dp))
             Schedule(
-                model = CalendarModel.List(race, showScheduleList = true),
+                model = CalendarModel.List(race, notificationSchedule = fakeNotificationSchedule, showScheduleList = true),
                 itemClicked = { }
             )
         }
@@ -499,14 +516,21 @@ private fun PreviewDarkSchedule(
     AppThemePreview(isLight = false) {
         Column(Modifier.fillMaxWidth()) {
             Schedule(
-                model = CalendarModel.List(race),
+                model = CalendarModel.List(race, notificationSchedule = fakeNotificationSchedule),
                 itemClicked = { }
             )
             Spacer(Modifier.height(16.dp))
             Schedule(
-                model = CalendarModel.List(race, showScheduleList = true),
+                model = CalendarModel.List(race, notificationSchedule = fakeNotificationSchedule, showScheduleList = true),
                 itemClicked = { }
             )
         }
     }
 }
+
+private val fakeNotificationSchedule = NotificationSchedule(
+    freePractice = true,
+    qualifying = true,
+    race = true,
+    other = true,
+)
