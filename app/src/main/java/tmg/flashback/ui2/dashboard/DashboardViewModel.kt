@@ -63,7 +63,7 @@ class DashboardViewModel(
                 Log.i("Dashboard", "Remote config change detected $activate")
             }
             if (activate) {
-                appConfigSynced.value = Event()
+                appConfigSynced.postValue(Event())
                 workerProvider.schedule()
                 applicationContext.updateAllWidgets()
             }

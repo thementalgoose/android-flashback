@@ -22,4 +22,11 @@ interface OverviewDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(overviews: List<Overview>)
+
+    @Transaction
+    @Query("SELECT * FROM overview WHERE season == :season ORDER BY round DESC LIMIT 1")
+    suspend fun getLastRound(season: Int): OverviewWithCircuit?
+
+    @Query("DELETE FROM overview WHERE season == :season AND round == :round")
+    fun deleteOverview(season: Int, round: Int)
 }
