@@ -1,5 +1,6 @@
 package tmg.flashback.stats.ui.dashboard.calendar
 
+import io.mockk.mockk
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
@@ -13,6 +14,7 @@ internal class CalendarModelTest {
     fun `should show schedule list returns true when requested and schedule not empty`() {
         val item = CalendarModel.List(
             model = OverviewRace.model(),
+            notificationSchedule = mockk(),
             showScheduleList = true
         )
 
@@ -23,6 +25,7 @@ internal class CalendarModelTest {
     fun `should show schedule list returns false when requested and schedule empty`() {
         val item = CalendarModel.List(
             model = OverviewRace.model(schedule = emptyList()),
+            notificationSchedule = mockk(),
             showScheduleList = true
         )
 
@@ -33,6 +36,7 @@ internal class CalendarModelTest {
     fun `should show schedule list returns false when not requested and schedule empty`() {
         val item = CalendarModel.List(
             model = OverviewRace.model(),
+            notificationSchedule = mockk(),
             showScheduleList = false
         )
 
@@ -48,6 +52,7 @@ internal class CalendarModelTest {
                 date = LocalDate.now().plusDays(1L),
                 schedule = emptyList()
             ),
+            notificationSchedule = mockk(),
             showScheduleList = true
         )
 
@@ -60,6 +65,7 @@ internal class CalendarModelTest {
             model = OverviewRace.model(
                 date = LocalDate.now().plusDays(1L),
             ),
+            notificationSchedule = mockk(),
             showScheduleList = true
         )
 
@@ -72,6 +78,7 @@ internal class CalendarModelTest {
             model = OverviewRace.model(
                 date = LocalDate.now(),
             ),
+            notificationSchedule = mockk(),
             showScheduleList = true
         )
 
@@ -84,6 +91,7 @@ internal class CalendarModelTest {
             model = OverviewRace.model(
                 date = LocalDate.now().minusDays(1L),
             ),
+            notificationSchedule = mockk(),
             showScheduleList = true
         )
 
