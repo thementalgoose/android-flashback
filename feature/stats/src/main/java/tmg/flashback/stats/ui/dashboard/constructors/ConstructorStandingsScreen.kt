@@ -117,6 +117,9 @@ fun ConstructorStandingsScreen(
                         SkeletonView()
                         SkeletonView()
                         SkeletonView()
+                        SkeletonView()
+                        SkeletonView()
+                        SkeletonView()
                     }
                     is ConstructorStandingsModel.Standings -> {
                         ConstructorStandings(
