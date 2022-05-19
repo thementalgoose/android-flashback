@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
 import tmg.flashback.formula1.model.Race
 import tmg.flashback.formula1.model.RaceQualifyingType
 import tmg.flashback.statistics.repo.RaceRepository
@@ -35,8 +36,17 @@ class QualifyingViewModel(
     override val list: LiveData<List<QualifyingModel>> = seasonRound
         .filterNotNull()
         .flatMapLatest { (season, round) -> raceRepository.getRace(season, round) }
-        .map {
-            val race = it ?: return@map emptyList<QualifyingModel>()
+        .map { race ->
+            if (race == null || race.qualifying.isEmpty()) {
+                val list = mutableListOf<QualifyingModel>().apply {
+                    if ((seasonRound.value?.first ?: currentSeasonYear) >= currentSeasonYear) {
+                        add(QualifyingModel.NotAvailableYet)
+                    } else {
+                        add(QualifyingModel.NotAvailable)
+                    }
+                }
+                return@map list
+            }
 
             when {
                 race.has(RaceQualifyingType.Q3) -> headersToShow.value = QualifyingHeader(
@@ -60,7 +70,7 @@ class QualifyingViewModel(
                 race.has(RaceQualifyingType.Q3) -> race.getQ1Q2Q3QualifyingList(RaceQualifyingType.Q3)
                 race.has(RaceQualifyingType.Q2) -> race.getQ1Q2QualifyingList()
                 race.has(RaceQualifyingType.Q1) -> race.getQ1QualifyingList()
-                else -> emptyList()
+                else -> listOf(QualifyingModel.NotAvailable)
             }
         }
         .asLiveData(viewModelScope.coroutineContext)

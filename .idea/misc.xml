@@ -221,8 +221,11 @@
         <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/dashboard/drivers/DriverStandingsScreen.kt" value="0.25" />
         <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/messaging/ProvidedBy.kt" value="0.5203703703703704" />
         <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/weekend/info/InfoScreen.kt" value="0.375" />
-        <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/weekend/qualifying/QualifyingScreen.kt" value="0.55" />
+        <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/weekend/qualifying/QualifyingScreen.kt" value="0.25" />
         <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/weekend/schedule/ScheduleScreen.kt" value="0.375" />
+        <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/weekend/shared/NotAvailable.kt" value="0.4703703703703704" />
+        <entry key="feature/stats/src/main/res/drawable/ic_error_not_available.xml" value="0.254" />
+        <entry key="feature/stats/src/main/res/drawable/ic_error_not_available_yet.xml" value="0.254" />
         <entry key="feature/stats/src/main/res/drawable/nav_constructor.xml" value="0.2315" />
         <entry key="feature/stats/src/main/res/drawable/nav_qualifying.xml" value="0.2315" />
         <entry key="feature/stats/src/main/res/drawable/nav_race.xml" value="0.2315" />

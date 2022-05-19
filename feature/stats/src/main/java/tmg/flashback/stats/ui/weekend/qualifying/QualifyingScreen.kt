@@ -18,7 +18,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.faltenreich.skeletonlayout.Skeleton
 import org.koin.androidx.compose.viewModel
+import org.threeten.bp.LocalDate
 import tmg.flashback.formula1.model.DriverConstructor
 import tmg.flashback.formula1.model.LapTime
 import tmg.flashback.formula1.model.Race
@@ -29,11 +31,14 @@ import tmg.flashback.providers.RaceProvider
 import tmg.flashback.stats.R
 import tmg.flashback.stats.ui.weekend.WeekendInfo
 import tmg.flashback.stats.ui.weekend.info.RaceInfoHeader
+import tmg.flashback.stats.ui.weekend.shared.NotAvailable
+import tmg.flashback.stats.ui.weekend.shared.NotAvailableYet
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextSection
+import tmg.flashback.ui.components.loading.SkeletonView
 import tmg.flashback.ui.utils.isInPreview
 import tmg.utilities.extensions.pxToDp
 
@@ -96,6 +101,20 @@ fun QualifyingScreen(
                     is QualifyingModel.Q1 -> Qualifying(it)
                     is QualifyingModel.Q1Q2 -> Qualifying(it)
                     is QualifyingModel.Q1Q2Q3 -> Qualifying(it)
+                    QualifyingModel.Loading -> {
+                        SkeletonView()
+                        SkeletonView()
+                        SkeletonView()
+                        SkeletonView()
+                        SkeletonView()
+                        SkeletonView()
+                    }
+                    QualifyingModel.NotAvailable -> {
+                        NotAvailable()
+                    }
+                    QualifyingModel.NotAvailableYet -> {
+                        NotAvailableYet()
+                    }
                 }
             }
             item(key = "footer") {
@@ -295,14 +314,50 @@ private fun PreviewLight(
     @PreviewParameter(DriverConstructorProvider::class) driverConstructor: DriverConstructor
 ) {
     AppThemePreview(isLight = true) {
-        Qualifying(
-            QualifyingModel.Q1Q2Q3(
-                driver = driverConstructor,
-                finalQualifyingPosition = 1,
-                q1 = RaceQualifyingResult(driverConstructor, lapTime = LapTime(92382), position = 1),
-                q2 = RaceQualifyingResult(driverConstructor, lapTime = LapTime(92293), position = 1),
-                q3 = RaceQualifyingResult(driverConstructor, lapTime = LapTime(91934), position = 1)
-            )
+        QualifyingScreen(
+            info = fakeWeekendInfo,
+            actionUpClicked = { },
+            list = listOf(
+                fakeQualifyingModel(driverConstructor)
+            ),
+            header = QualifyingHeader(true, true, true)
         )
     }
 }
+
+@Preview
+@Composable
+private fun PreviewDark(
+    @PreviewParameter(DriverConstructorProvider::class) driverConstructor: DriverConstructor
+) {
+    AppThemePreview(isLight = false) {
+        QualifyingScreen(
+            info = fakeWeekendInfo,
+            actionUpClicked = { },
+            list = listOf(
+                fakeQualifyingModel(driverConstructor)
+            ),
+            header = QualifyingHeader(true, true, true)
+        )
+    }
+}
+
+private fun fakeQualifyingModel(driverConstructor: DriverConstructor) = QualifyingModel.Q1Q2Q3(
+    driver = driverConstructor,
+    finalQualifyingPosition = 1,
+    q1 = RaceQualifyingResult(driverConstructor, lapTime = LapTime(92382), position = 1),
+    q2 = RaceQualifyingResult(driverConstructor, lapTime = LapTime(92293), position = 1),
+    q3 = RaceQualifyingResult(driverConstructor, lapTime = LapTime(91934), position = 1)
+)
+
+private val fakeWeekendInfo: WeekendInfo = WeekendInfo(
+    season = 2020,
+    round = 1,
+    raceName = "Testing Grand Prix",
+    circuitId = "silverstone",
+    circuitName = "Silverstone",
+    country = "Country",
+    countryISO = "GB",
+    laps = "57",
+    date = LocalDate.of(2020, 1, 1)
+)

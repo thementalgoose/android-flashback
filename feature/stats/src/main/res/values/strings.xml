@@ -20,6 +20,9 @@
     <string name="qualifying_header_q2">Q2</string>
     <string name="qualifying_header_q3">Q3</string>
 
+    <string name="error_weekend_not_available">Unfortunately we don\'t have these results.</string>
+    <string name="error_weekend_not_available_yet">We don\'t have these results just yet, please check back after the race. Results usually appear 2–12 hours after every weekend event</string>
+
     <string name="nav_constructors">Constructors</string>
     <string name="nav_schedule">Schedule</string>
     <string name="nav_race">Race</string>
