@@ -7,6 +7,12 @@ sealed class QualifyingModel(
     val id: String
 ) {
 
+    object NotAvailableYet: QualifyingModel("not_available_yet")
+
+    object NotAvailable: QualifyingModel("not_available")
+
+    object Loading: QualifyingModel("loading")
+
     data class Q1Q2Q3(
         val driver: DriverConstructor,
         private val finalQualifyingPosition: Int?,

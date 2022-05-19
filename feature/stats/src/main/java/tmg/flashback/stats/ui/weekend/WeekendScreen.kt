@@ -1,13 +1,9 @@
 package tmg.flashback.stats.ui.weekend
 
 import android.annotation.SuppressLint
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.offset
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
@@ -19,8 +15,6 @@ import tmg.flashback.stats.ui.weekend.race.RaceScreenVM
 import tmg.flashback.stats.ui.weekend.schedule.ScheduleScreenVM
 import tmg.flashback.stats.ui.weekend.sprint.SprintScreenVM
 import tmg.flashback.style.AppTheme
-import tmg.flashback.style.text.TextBody1
-import tmg.flashback.style.text.TextBody2
 import tmg.flashback.ui.components.loading.Fade
 import tmg.flashback.ui.components.navigation.NavigationBar
 import tmg.flashback.ui.components.navigation.NavigationItem
