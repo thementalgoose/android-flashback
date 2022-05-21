@@ -6,6 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
+import tmg.flashback.style.annotations.PreviewTheme
 
 @Composable
 fun TextSection(
@@ -25,41 +26,20 @@ fun TextSection(
     )
 }
 
-@Preview
+@PreviewTheme
 @Composable
-private fun PreviewLight() {
-    AppThemePreview(isLight = true) {
+private fun Preview() {
+    AppThemePreview {
         TextSection(
             text = "Section"
         )
     }
 }
 
-@Preview
+@PreviewTheme
 @Composable
-private fun PreviewDark() {
-    AppThemePreview(isLight = false) {
-        TextSection(
-            text = "Section"
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewLightBrand() {
-    AppThemePreview(isLight = true) {
-        TextSection(
-            text = "Section Brand",
-            brand = true
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewDarkBrand() {
-    AppThemePreview(isLight = false) {
+private fun PreviewBrand() {
+    AppThemePreview {
         TextSection(
             text = "Section Brand",
             brand = true

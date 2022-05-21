@@ -8,6 +8,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
+import tmg.flashback.style.annotations.PreviewTheme
 
 @Composable
 fun TextTitle(
@@ -30,41 +31,20 @@ fun TextTitle(
     )
 }
 
-@Preview
+@PreviewTheme
 @Composable
-private fun PreviewLight() {
-    AppThemePreview(isLight = true) {
+private fun Preview() {
+    AppThemePreview {
         TextTitle(
             text = "Title"
         )
     }
 }
 
-@Preview
+@PreviewTheme
 @Composable
-private fun PreviewDark() {
-    AppThemePreview(isLight = false) {
-        TextTitle(
-            text = "Title"
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewLightBold() {
+private fun PreviewBold() {
     AppThemePreview(isLight = true) {
-        TextTitle(
-            text = "Title Bold",
-            bold = true
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewDarkBold() {
-    AppThemePreview(isLight = false) {
         TextTitle(
             text = "Title Bold",
             bold = true

@@ -35,6 +35,7 @@ import tmg.flashback.stats.R
 import tmg.flashback.stats.ui.dashboard.DashboardQuickLinks
 import tmg.flashback.stats.ui.messaging.Banner
 import tmg.flashback.style.AppThemePreview
+import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.ui.components.loading.SkeletonView
 import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.header.Header
@@ -261,28 +262,12 @@ fun DriverStandings(
     }
 }
 
-@Preview
+@PreviewTheme
 @Composable
-private fun PreviewLight(
+private fun Preview(
     @PreviewParameter(SeasonDriverStandingSeasonProvider::class) driverStandings: SeasonDriverStandingSeason
 ) {
-    AppThemePreview(isLight = true) {
-        DriverStandings(
-            model = DriverStandingsModel.Standings(
-                standings = driverStandings
-            ),
-            itemClicked = { },
-            maxPoints = 25.0
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewDark(
-    @PreviewParameter(SeasonDriverStandingSeasonProvider::class) driverStandings: SeasonDriverStandingSeason
-) {
-    AppThemePreview(isLight = false) {
+    AppThemePreview {
         DriverStandings(
             model = DriverStandingsModel.Standings(
                 standings = driverStandings
