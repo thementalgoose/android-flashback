@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.FlashbackTheme
+import tmg.flashback.style.annotations.PreviewTheme
 
 @Composable
 fun ButtonPrimary(
@@ -45,21 +46,10 @@ fun ButtonPrimary(
     }
 }
 
-@Preview
+@PreviewTheme
 @Composable
-private fun PreviewLight() {
-    AppThemePreview(isLight = true) {
-        ButtonPrimary(
-            text = "Primary Button",
-            onClick = { }
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewDark() {
-    AppThemePreview(isLight = false) {
+private fun Preview() {
+    AppThemePreview {
         ButtonPrimary(
             text = "Primary Button",
             onClick = { }

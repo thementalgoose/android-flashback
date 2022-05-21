@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
+import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.ui.R
 
@@ -138,10 +139,10 @@ private fun NavigationItem(
     }
 }
 
-@Preview
+@PreviewTheme
 @Composable
-private fun PreviewCompactLight() {
-    AppThemePreview(isLight = true) {
+private fun PreviewCompact() {
+    AppThemePreview {
         NavigationColumn(
             defaultExpanded = false,
             itemClicked = { },
@@ -151,36 +152,10 @@ private fun PreviewCompactLight() {
     }
 }
 
-@Preview
+@PreviewTheme
 @Composable
-private fun PreviewExpandedLight() {
-    AppThemePreview(isLight = true) {
-        NavigationColumn(
-            defaultExpanded = true,
-            itemClicked = { },
-            menuClicked = { },
-            list = fakeNavigationItems
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewCompactDark() {
-    AppThemePreview(isLight = false) {
-        NavigationColumn(
-            defaultExpanded = false,
-            itemClicked = { },
-            menuClicked = { },
-            list = fakeNavigationItems
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewExpandedDark() {
-    AppThemePreview(isLight = false) {
+private fun PreviewExpanded() {
+    AppThemePreview {
         NavigationColumn(
             defaultExpanded = true,
             itemClicked = { },

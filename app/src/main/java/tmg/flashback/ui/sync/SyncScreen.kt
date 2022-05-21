@@ -14,6 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import tmg.flashback.R
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
+import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.buttons.ButtonSecondary
 import tmg.flashback.style.text.TextBody2
 
@@ -81,21 +82,10 @@ private fun PreviewLoading() {
     }
 }
 
-@Preview
+@PreviewTheme
 @Composable
 private fun PreviewFailed() {
-    AppThemePreview(isLight = true) {
-        SyncScreen(
-            showLoading = false,
-            tryAgainClicked = { }
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewFailedDark() {
-    AppThemePreview(isLight = false) {
+    AppThemePreview {
         SyncScreen(
             showLoading = false,
             tryAgainClicked = { }

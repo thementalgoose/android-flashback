@@ -27,6 +27,7 @@ import tmg.flashback.stats.ui.dashboard.DashboardQuickLinks
 import tmg.flashback.stats.ui.messaging.Banner
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
+import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextTitle
 import tmg.flashback.ui.components.loading.SkeletonView
 import tmg.flashback.ui.components.errors.NetworkError
@@ -198,29 +199,12 @@ private fun ConstructorStandings(
     }
 }
 
-@Preview
+@PreviewTheme
 @Composable
-private fun PreviewLight(
+private fun Preview(
     @PreviewParameter(SeasonConstructorStandingSeasonProvider::class) constructorStandings: SeasonConstructorStandingSeason
 ) {
-    AppThemePreview(isLight = true) {
-        ConstructorStandings(
-            model = ConstructorStandingsModel.Standings(
-                standings = constructorStandings,
-                isSelected = false
-            ),
-            itemClicked = { },
-            maxPoints = 25.0
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewDark(
-    @PreviewParameter(SeasonConstructorStandingSeasonProvider::class) constructorStandings: SeasonConstructorStandingSeason
-) {
-    AppThemePreview(isLight = false) {
+    AppThemePreview {
         ConstructorStandings(
             model = ConstructorStandingsModel.Standings(
                 standings = constructorStandings,

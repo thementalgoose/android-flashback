@@ -10,6 +10,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
+import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 
@@ -62,28 +63,14 @@ internal fun SwitchPreference(
     }
 }
 
-@Preview
+@PreviewTheme
 @Composable
-private fun PreviewLight() {
-    AppThemePreview(isLight = true) {
+private fun Preview() {
+    AppThemePreview {
         SwitchPreference(
             title = "Show description",
             subtitle = "Show the article description alongside the rss source if it has one",
             isChecked = true,
-            preferenceClicked = { }
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewDark() {
-    AppThemePreview(isLight = false) {
-        SwitchPreference(
-            title = "Show description",
-            subtitle = "Show the article description alongside the rss source if it has one",
-            isChecked = true,
-            beta = true,
             preferenceClicked = { }
         )
     }

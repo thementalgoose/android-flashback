@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
+import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.buttons.ButtonPrimary
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextHeadline1
@@ -72,27 +73,14 @@ internal fun ForceUpgradeScreen(
     }
 }
 
-@Preview
+@PreviewTheme
 @Composable
-private fun PreviewLight() {
-    AppThemePreview(isLight = true) {
+private fun Preview() {
+    AppThemePreview {
         ForceUpgradeScreen(
             title = "Force Upgrade",
             description = "Please update the app!",
             link = Pair("Google Play", "this is a url"),
-            openLink = {}
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewDark() {
-    AppThemePreview(isLight = false) {
-        ForceUpgradeScreen(
-            title = "Force Upgrade",
-            description = "Please update the app!",
-            link = null,
             openLink = {}
         )
     }

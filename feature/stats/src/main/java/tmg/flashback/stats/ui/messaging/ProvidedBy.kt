@@ -10,6 +10,7 @@ import org.koin.androidx.compose.inject
 import tmg.flashback.stats.repository.HomeRepository
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
+import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.ui.navigation.ApplicationNavigationComponent
 
@@ -50,21 +51,10 @@ private fun ProvidedBy(
     )
 }
 
-@Preview
+@PreviewTheme
 @Composable
-private fun PreviewLight() {
-    AppThemePreview(isLight = true) {
-        ProvidedBy(
-            title = "Data is provided with <3 by the Flashback team and Ergast API",
-            clicked = {}
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewDark() {
-    AppThemePreview(isLight = false) {
+private fun Preview() {
+    AppThemePreview {
         ProvidedBy(
             title = "Data is provided with <3 by the Flashback team and Ergast API",
             clicked = {}
