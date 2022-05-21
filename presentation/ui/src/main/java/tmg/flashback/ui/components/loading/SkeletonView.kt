@@ -11,6 +11,7 @@ import com.google.accompanist.placeholder.placeholder
 import com.google.accompanist.placeholder.shimmer
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
+import tmg.flashback.style.annotations.PreviewTheme
 
 @Composable
 fun SkeletonView(
@@ -49,18 +50,10 @@ fun SkeletonView(
     }
 }
 
-@Preview
+@PreviewTheme
 @Composable
-private fun PreviewLight() {
-    AppThemePreview(isLight = true) {
-        SkeletonView()
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewDark() {
-    AppThemePreview(isLight = false) {
+private fun Preview() {
+    AppThemePreview {
         SkeletonView()
     }
 }

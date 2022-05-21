@@ -11,6 +11,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
+import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextHeadline1
 import tmg.flashback.ui.R
 
@@ -54,10 +55,10 @@ fun Header(
     }
 }
 
-@Preview
+@PreviewTheme
 @Composable
-private fun PreviewLight() {
-    AppThemePreview(isLight = true) {
+private fun Preview() {
+    AppThemePreview {
         Header(
             text = "2022",
             icon = painterResource(id = R.drawable.ic_menu),
@@ -67,26 +68,13 @@ private fun PreviewLight() {
     }
 }
 
-@Preview
+@PreviewTheme
 @Composable
 private fun PreviewNoIcon() {
-    AppThemePreview(isLight = true) {
+    AppThemePreview {
         Header(
             text = "2022",
             icon = null,
-            iconContentDescription = "Menu",
-            actionUpClicked = { }
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewDark() {
-    AppThemePreview(isLight = false) {
-        Header(
-            text = "Daniel Riccardo\n2022",
-            icon = painterResource(id = R.drawable.ic_back),
             iconContentDescription = "Menu",
             actionUpClicked = { }
         )

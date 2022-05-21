@@ -16,6 +16,7 @@ import tmg.flashback.formula1.enums.getBySeason
 import tmg.flashback.stats.R
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
+import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextHeadline2
 import tmg.flashback.ui.components.layouts.BottomSheet
@@ -92,18 +93,10 @@ private fun TyreRow(
     }
 }
 
-@Preview
+@PreviewTheme
 @Composable
-private fun PreviewLight() {
-    AppThemePreview(isLight = true) {
+private fun Preview() {
+    AppThemePreview {
         TyreCompounds(season = 2022)
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewDark() {
-    AppThemePreview(isLight = false) {
-        TyreCompounds(season = 2018)
     }
 }
