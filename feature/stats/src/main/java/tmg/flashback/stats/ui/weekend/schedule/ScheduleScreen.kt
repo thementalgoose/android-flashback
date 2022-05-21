@@ -16,10 +16,7 @@ import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.viewModel
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
-import org.threeten.bp.format.DateTimeFormatter
-import tmg.flashback.formula1.model.Event
 import tmg.flashback.formula1.model.Race
-import tmg.flashback.formula1.model.RaceInfo
 import tmg.flashback.formula1.model.Schedule
 import tmg.flashback.providers.RaceProvider
 import tmg.flashback.stats.R
@@ -28,10 +25,9 @@ import tmg.flashback.stats.ui.weekend.from
 import tmg.flashback.stats.ui.weekend.info.RaceInfoHeader
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
+import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
-import tmg.flashback.ui.annotations.PreviewDevices
-import tmg.flashback.ui.annotations.PreviewTheme
 import tmg.utilities.extensions.format
 import tmg.utilities.extensions.ordinalAbbreviation
 
@@ -138,12 +134,12 @@ private fun EventItem(
     }
 }
 
-@Preview
+@PreviewTheme
 @Composable
-private fun PreviewLight(
+private fun Preview(
     @PreviewParameter(RaceProvider::class) race: Race
 ) {
-    AppThemePreview(isLight = true) {
+    AppThemePreview {
         ScheduleScreen(
             actionUpClicked = { },
             info = WeekendInfo.from(race.raceInfo),

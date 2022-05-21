@@ -24,6 +24,7 @@ import tmg.flashback.stats.ui.weekend.WeekendInfo
 import tmg.flashback.stats.ui.weekend.from
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
+import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextHeadline1
@@ -120,42 +121,22 @@ private fun RaceDetails(
     }
 }
 
-@Preview
+@PreviewTheme
 @Composable
-private fun PreviewCompactLight(
+private fun PreviewCompact(
     @PreviewParameter(RaceProvider::class) race: Race
 ) {
-    AppThemePreview(isLight = true) {
+    AppThemePreview {
         RaceInfoHeader(model = WeekendInfo.from(race.raceInfo), largeTrack = true)
     }
 }
 
-@Preview
+@PreviewTheme
 @Composable
-private fun PreviewCompactDark(
-    @PreviewParameter(RaceProvider::class) race: Race
-) {
-    AppThemePreview(isLight = false) {
-        RaceInfoHeader(model = WeekendInfo.from(race.raceInfo), largeTrack = true)
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewExpandedLight(
+private fun PreviewExpanded(
     @PreviewParameter(RaceProvider::class) race: Race
 ) {
     AppThemePreview(isLight = true) {
-        RaceInfoHeader(model = WeekendInfo.from(race.raceInfo), largeTrack = false)
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewExpandedDark(
-    @PreviewParameter(RaceProvider::class) race: Race
-) {
-    AppThemePreview(isLight = false) {
         RaceInfoHeader(model = WeekendInfo.from(race.raceInfo), largeTrack = false)
     }
 }

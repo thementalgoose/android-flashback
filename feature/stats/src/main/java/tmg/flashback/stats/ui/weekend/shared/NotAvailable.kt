@@ -11,6 +11,7 @@ import androidx.compose.ui.unit.dp
 import tmg.flashback.stats.R
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
+import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody1
 
 @Composable
@@ -55,34 +56,18 @@ fun NotAvailableYet(
     }
 }
 
-@Preview
+@PreviewTheme
 @Composable
-private fun PreviewNotAvailableLight() {
-    AppThemePreview(isLight = true) {
+private fun PreviewNotAvailable() {
+    AppThemePreview {
         NotAvailable()
     }
 }
 
-@Preview
+@PreviewTheme
 @Composable
-private fun PreviewNotAvailableDark() {
-    AppThemePreview(isLight = false) {
-        NotAvailable()
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewNotAvailableYetLight() {
-    AppThemePreview(isLight = true) {
-        NotAvailableYet()
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewNotAvailableYetDark() {
-    AppThemePreview(isLight = false) {
+private fun PreviewNotAvailableYet() {
+    AppThemePreview {
         NotAvailableYet()
     }
 }
