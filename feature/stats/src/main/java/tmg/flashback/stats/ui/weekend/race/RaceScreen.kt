@@ -30,6 +30,7 @@ import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.ui.extensions.getColor
 import tmg.flashback.stats.R
+import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody1
 import tmg.utilities.extensions.toEmptyIfZero
 import kotlin.math.abs
@@ -121,8 +122,12 @@ private fun Result(
                 }
             }
         )
-        Points(points = model.result.points)
+        Points(
+            modifier = Modifier.align(Alignment.CenterVertically),
+            points = model.result.points
+        )
         Time(
+            modifier = Modifier.align(Alignment.CenterVertically),
             lapTime = model.result.time,
             status = model.result.status
         )
@@ -175,32 +180,20 @@ private fun Points(
     points: Double,
     modifier: Modifier = Modifier
 ) {
-    TextBody2(
-        modifier = modifier
-            .width(pointsWidth),
+    TextBody1(
+        modifier = modifier.width(pointsWidth),
+        bold = true,
         textAlign = TextAlign.Center,
         text = points.pointsDisplay().takeIf { it.isNotEmpty() } ?: "",
     )
 }
 
-@Preview
+@PreviewTheme
 @Composable
-private fun PreviewLight(
+private fun Preview(
     @PreviewParameter(RaceRaceResultProvider::class) result: RaceRaceResult
 ) {
-    AppThemePreview(isLight = true) {
-        Result(
-            model = RaceModel.Result(result)
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewDark(
-    @PreviewParameter(RaceRaceResultProvider::class) result: RaceRaceResult
-) {
-    AppThemePreview(isLight = false) {
+    AppThemePreview {
         Result(
             model = RaceModel.Result(result)
         )

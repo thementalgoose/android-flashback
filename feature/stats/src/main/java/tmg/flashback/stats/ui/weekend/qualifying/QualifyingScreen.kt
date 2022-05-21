@@ -36,6 +36,7 @@ import tmg.flashback.stats.ui.weekend.shared.NotAvailable
 import tmg.flashback.stats.ui.weekend.shared.NotAvailableYet
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
+import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextSection
@@ -252,29 +253,12 @@ private fun Time(
     }
 }
 
-@Preview
+@PreviewTheme
 @Composable
-private fun PreviewLight(
+private fun Preview(
     @PreviewParameter(DriverConstructorProvider::class) driverConstructor: DriverConstructor
 ) {
-    AppThemePreview(isLight = true) {
-        QualifyingScreen(
-            info = fakeWeekendInfo,
-            actionUpClicked = { },
-            list = listOf(
-                fakeQualifyingModel(driverConstructor)
-            ),
-            header = QualifyingHeader(true, true, true)
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewDark(
-    @PreviewParameter(DriverConstructorProvider::class) driverConstructor: DriverConstructor
-) {
-    AppThemePreview(isLight = false) {
+    AppThemePreview {
         QualifyingScreen(
             info = fakeWeekendInfo,
             actionUpClicked = { },
