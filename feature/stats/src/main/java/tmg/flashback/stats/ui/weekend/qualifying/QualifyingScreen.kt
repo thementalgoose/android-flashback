@@ -31,6 +31,7 @@ import tmg.flashback.providers.RaceProvider
 import tmg.flashback.stats.R
 import tmg.flashback.stats.ui.weekend.WeekendInfo
 import tmg.flashback.stats.ui.weekend.info.RaceInfoHeader
+import tmg.flashback.stats.ui.weekend.shared.DriverInfo
 import tmg.flashback.stats.ui.weekend.shared.NotAvailable
 import tmg.flashback.stats.ui.weekend.shared.NotAvailableYet
 import tmg.flashback.style.AppTheme
@@ -38,11 +39,11 @@ import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextSection
+import tmg.flashback.style.text.TextTitle
 import tmg.flashback.ui.components.loading.SkeletonView
 import tmg.flashback.ui.utils.isInPreview
 import tmg.utilities.extensions.pxToDp
 
-private val colorIndicator: Dp = 6.dp
 private val lapTimeWidth: Dp = 64.dp
 
 @Composable
@@ -172,7 +173,7 @@ private fun Qualifying(
         DriverInfo(
             modifier = Modifier.weight(1f),
             driver = model.driver,
-            qualified = model.qualified
+            position = model.qualified
         )
         Time(
             modifier = Modifier.fillMaxHeight(),
@@ -201,7 +202,7 @@ private fun Qualifying(
         DriverInfo(
             modifier = Modifier.weight(1f),
             driver = model.driver,
-            qualified = model.qualified
+            position = model.qualified
         )
         Time(
             modifier = Modifier.fillMaxHeight(),
@@ -226,70 +227,13 @@ private fun Qualifying(
         DriverInfo(
             modifier = Modifier.weight(1f),
             driver = model.driver,
-            qualified = model.qualified
+            position = model.qualified
         )
         Time(
             modifier = Modifier.fillMaxHeight(),
             laptime = model.q1?.lapTime
         )
         Spacer(Modifier.width(AppTheme.dimensions.paddingMedium))
-    }
-}
-
-@Composable
-private fun DriverInfo(
-    driver: DriverConstructor,
-    qualified: Int?,
-    modifier: Modifier = Modifier
-) {
-    Row(modifier = modifier
-        .height(IntrinsicSize.Min)
-    ) {
-        Box(modifier = Modifier
-            .fillMaxHeight()
-            .width(colorIndicator)
-            .background(driver.constructor.colour)
-        )
-        TextBody1(
-            modifier = Modifier
-                .width(36.dp)
-                .padding(horizontal = AppTheme.dimensions.paddingXSmall)
-                .align(Alignment.CenterVertically),
-            bold = true,
-            textAlign = TextAlign.Center,
-            text = qualified?.toString() ?: ""
-        )
-        Column(modifier = Modifier
-            .weight(1f)
-            .padding(vertical = AppTheme.dimensions.paddingXSmall)
-        ) {
-            Row(modifier = Modifier.height(IntrinsicSize.Min)) {
-                TextBody1(text = driver.driver.name)
-//                Spacer(Modifier.width(8.dp))
-//                DriverNumber(
-//                    modifier = Modifier.fillMaxHeight(),
-//                    textAlign = TextAlign.Center,
-//                    number = driver.driver.number.toString()
-//                )
-            }
-            Spacer(Modifier.height(2.dp))
-            Row {
-                val resourceId = when (isInPreview()) {
-                    true -> R.drawable.gb
-                    false -> LocalContext.current.getFlagResourceAlpha3(driver.driver.nationalityISO)
-                }
-                Image(
-                    modifier = Modifier
-                        .size(16.dp)
-                        .align(Alignment.CenterVertically),
-                    painter = painterResource(id = resourceId),
-                    contentDescription = null,
-                    contentScale = ContentScale.Fit,
-                )
-                Spacer(Modifier.width(8.dp))
-                TextBody2(text = driver.constructor.name)
-            }
-        }
     }
 }
 

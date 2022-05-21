@@ -210,7 +210,11 @@
         <entry key="core/ui/src/main/res/layout/view_bottom_sheet_item.xml" value="0.20104166666666667" />
         <entry key="debug/src/main/res/layout/activity_debug.xml" value="0.165" />
         <entry key="debug/src/main/res/layout/activity_style_guide.xml" value="0.464321608040201" />
+        <entry key="feature/statistics/src/main/res/drawable/ic_pos_down.xml" value="0.1405" />
+        <entry key="feature/statistics/src/main/res/drawable/ic_pos_neutral.xml" value="0.1405" />
+        <entry key="feature/statistics/src/main/res/drawable/ic_pos_up.xml" value="0.1405" />
         <entry key="feature/statistics/src/main/res/drawable/ic_race_finishes.xml" value="0.2325" />
+        <entry key="feature/statistics/src/main/res/drawable/ic_race_grid.xml" value="0.1405" />
         <entry key="feature/statistics/src/main/res/drawable/nav_constructor.xml" value="0.2325" />
         <entry key="feature/statistics/src/main/res/drawable/nav_qualifying.xml" value="0.2325" />
         <entry key="feature/statistics/src/main/res/drawable/nav_race.xml" value="0.2325" />
@@ -224,6 +228,7 @@
         <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/weekend/qualifying/QualifyingScreen.kt" value="0.25" />
         <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/weekend/schedule/ScheduleScreen.kt" value="0.375" />
         <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/weekend/shared/NotAvailable.kt" value="0.4703703703703704" />
+        <entry key="feature/stats/src/main/res/drawable-xxhdpi/ic_pos_down.xml" value="0.1405" />
         <entry key="feature/stats/src/main/res/drawable/ic_error_not_available.xml" value="0.254" />
         <entry key="feature/stats/src/main/res/drawable/ic_error_not_available_yet.xml" value="0.254" />
         <entry key="feature/stats/src/main/res/drawable/nav_constructor.xml" value="0.2315" />

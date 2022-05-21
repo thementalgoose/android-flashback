@@ -5,4 +5,8 @@
     <string name="ab_has_qualifying_results">Qualifying results available</string>
     <string name="ab_has_sprint_results">Sprint results available</string>
     <string name="ab_has_race_results">Race results available</string>
+
+    <string name="ab_positions_gained">Started %s, finished %s, gained %d places</string>
+    <string name="ab_positions_neutral">Started %s, finished %s</string>
+    <string name="ab_positions_lost">Started %s, gained %d, lost %d places</string>
 </resources>
