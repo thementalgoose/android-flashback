@@ -15,6 +15,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import tmg.flashback.settings.R
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
+import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.ui.components.header.Header
 import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.getColor
@@ -51,10 +52,10 @@ internal fun PrivacyPolicyScreen(
     }
 }
 
-@Preview
+@PreviewTheme
 @Composable
 private fun Preview() {
-    AppThemePreview(isLight = true) {
+    AppThemePreview {
         PrivacyPolicyScreen(
             clickBack = {}
         )

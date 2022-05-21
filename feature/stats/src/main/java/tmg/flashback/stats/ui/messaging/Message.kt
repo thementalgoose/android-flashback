@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
+import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody2
 
 @Composable
@@ -27,20 +28,10 @@ private fun Message(
     )
 }
 
-@Preview
+@PreviewTheme
 @Composable
-private fun PreviewLight() {
-    AppThemePreview(isLight = true) {
-        Message(
-            title = "Data is provided with <3 by the Flashback team and Ergast API"
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewDark() {
-    AppThemePreview(isLight = false) {
+private fun Preview() {
+    AppThemePreview {
         Message(
             title = "Data is provided with <3 by the Flashback team and Ergast API"
         )

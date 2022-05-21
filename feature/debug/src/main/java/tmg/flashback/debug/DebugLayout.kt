@@ -15,6 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
+import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.buttons.ButtonPrimary
 import tmg.flashback.style.input.InputPrimary
 import tmg.flashback.style.text.TextBody1
@@ -138,37 +139,10 @@ fun DebugLayout(
     }
 }
 
-@Preview
+@PreviewTheme
 @Composable
-private fun PreviewLight() {
-    AppThemePreview(isLight = true) {
-        val configInput = remember { mutableStateOf(TextFieldValue("")) }
-        DebugLayout(
-            adId = "ad-id",
-            fcmId = "fcm-id",
-            deviceUdid = "device-udid",
-            configUrl = configInput,
-            adIdClicked = { },
-            fcmIdClicked = { },
-            deviceUdidClicked = { },
-            configUrlSave = { },
-            configUrlClear = { },
-            syncClicked = { },
-            styleGuideLegacyClicked = { },
-            styleGuideComposeClicked = { },
-            composeTestClicked = { },
-            sendNotificationClicked = { },
-            networkRequestClicked = { },
-            advertConfigClicked = { },
-            nativeView = { }
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewDark() {
-    AppThemePreview(isLight = false) {
+private fun Preview() {
+    AppThemePreview {
         val configInput = remember { mutableStateOf(TextFieldValue("")) }
         DebugLayout(
             adId = "ad-id",

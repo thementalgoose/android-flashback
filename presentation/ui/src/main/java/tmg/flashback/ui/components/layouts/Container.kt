@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
+import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody1
 
 @Composable
@@ -37,63 +38,10 @@ fun Container(
     }
 }
 
-@Preview
+@PreviewTheme
 @Composable
-private fun PreviewLight() {
-    AppThemePreview(isLight = true) {
-        Column {
-            Container(
-                modifier = Modifier.fillMaxWidth()
-                    .clickable(onClick = { }),
-                isSelected = false,
-                isOutlined = false
-            ) {
-                TextBody1(
-                    "Item1",
-                    modifier = Modifier.padding(16.dp)
-                )
-            }
-            Spacer(Modifier.height(8.dp))
-            Container(
-                modifier = Modifier.fillMaxWidth(),
-                isSelected = true,
-                isOutlined = false,
-            ) {
-                TextBody1(
-                    "Item2",
-                    modifier = Modifier.padding(16.dp)
-                )
-            }
-            Spacer(Modifier.height(16.dp))
-            Container(
-                modifier = Modifier.fillMaxWidth(),
-                isSelected = false,
-                isOutlined = true,
-            ) {
-                TextBody1(
-                    "Item3",
-                    modifier = Modifier.padding(16.dp)
-                )
-            }
-            Spacer(Modifier.height(8.dp))
-            Container(
-                modifier = Modifier.fillMaxWidth(),
-                isOutlined = true,
-                isSelected = true
-            ) {
-                TextBody1(
-                    "Item4",
-                    modifier = Modifier.padding(16.dp)
-                )
-            }
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewDark() {
-    AppThemePreview(isLight = false) {
+private fun Preview() {
+    AppThemePreview {
         Column {
             Container(
                 modifier = Modifier.fillMaxWidth()

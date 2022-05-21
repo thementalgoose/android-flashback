@@ -19,6 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
+import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.ui.R
 
@@ -75,35 +76,19 @@ fun BadgeView(
     }
 }
 
-@Preview
+@PreviewTheme
 @Composable
-private fun PreviewListLight() {
-    AppThemePreview(isLight = true) {
+private fun PreviewList() {
+    AppThemePreview {
         BadgesView(list = listOf(fakeMenuBadge, fakeBackIconBadge))
     }
 }
 
-@Preview
+@PreviewTheme
 @Composable
-private fun PreviewListDark() {
-    AppThemePreview(isLight = false) {
-        BadgesView(list = listOf(fakeMenuBadge, fakeBackIconBadge))
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewLight() {
-    AppThemePreview(isLight = true) {
+private fun Preview() {
+    AppThemePreview {
         BadgeView(fakeBackBadge)
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewDark() {
-    AppThemePreview(isLight = false) {
-        BadgeView(fakeMenuBadge)
     }
 }
 

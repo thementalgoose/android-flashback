@@ -6,6 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import tmg.flashback.style.AppThemePreview
+import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.ui.R
 import tmg.flashback.ui.settings.SettingsModel
 
@@ -44,18 +45,10 @@ fun SettingsSection(
     }
 }
 
-@Preview
+@PreviewTheme
 @Composable
-private fun PreviewLight() {
+private fun Preview() {
     AppThemePreview(isLight = true) {
-        SettingsSection(models = fakeSettings)
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewDark() {
-    AppThemePreview(isLight = false) {
         SettingsSection(models = fakeSettings)
     }
 }
