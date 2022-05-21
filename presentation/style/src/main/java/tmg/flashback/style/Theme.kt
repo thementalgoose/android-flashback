@@ -72,7 +72,7 @@ fun AppTheme(
 
 @Composable
 fun AppThemePreview(
-    isLight: Boolean = true,
+    isLight: Boolean = !isSystemInDarkTheme(),
     theme: SupportedTheme = DEFAULT,
     content: @Composable () -> Unit
 ) {
@@ -82,18 +82,7 @@ fun AppThemePreview(
         theme = theme,
         changeSystemUi = false,
         content = {
-            Box(
-                modifier = Modifier
-                    .background(
-                        when (isLight) {
-                            true -> lightColours.backgroundContainer
-                            false -> darkColours.backgroundContainer
-                        }
-                    )
-                    .defaultMinSize(0.dp, 0.dp)
-            ) {
-                content()
-            }
+            content()
         }
     )
 }

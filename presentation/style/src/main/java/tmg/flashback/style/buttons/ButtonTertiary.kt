@@ -16,6 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
+import tmg.flashback.style.annotations.PreviewTheme
 
 @Composable
 fun ButtonTertiary(
@@ -50,21 +51,10 @@ fun ButtonTertiary(
     }
 }
 
-@Preview
+@PreviewTheme
 @Composable
-private fun PreviewLight() {
-    AppThemePreview(isLight = true) {
-        ButtonTertiary(
-            text = "Tertiary Button",
-            onClick = { }
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewDark() {
-    AppThemePreview(isLight = false) {
+private fun Preview() {
+    AppThemePreview {
         ButtonTertiary(
             text = "Tertiary Button",
             onClick = { }

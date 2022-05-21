@@ -8,6 +8,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
+import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 
@@ -46,26 +47,14 @@ internal fun Preference(
     }
 }
 
-@Preview
+@PreviewTheme
 @Composable
-private fun PreviewLight() {
-    AppThemePreview(isLight = true) {
+private fun Preview() {
+    AppThemePreview {
         Preference(
             title = "App theme",
             subtitle = "Pick your app colour scheme",
             beta = true,
-            preferenceClicked = { }
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewDark() {
-    AppThemePreview(isLight = false) {
-        Preference(
-            title = "App theme",
-            subtitle = "Pick your app colour scheme",
             preferenceClicked = { }
         )
     }

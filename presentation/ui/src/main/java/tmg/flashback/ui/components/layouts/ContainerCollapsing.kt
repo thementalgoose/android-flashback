@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
+import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextTitle
 import tmg.flashback.ui.R
 
@@ -89,10 +90,10 @@ fun ContainerCollapsing(
     }
 }
 
-@Preview
+@PreviewTheme
 @Composable
-private fun PreviewLightCollapsed() {
-    AppThemePreview(isLight = true) {
+private fun PreviewCollapsed() {
+    AppThemePreview {
         ContainerCollapsing(
             modifier = Modifier.padding(16.dp),
             title = "Schedule",
@@ -106,44 +107,10 @@ private fun PreviewLightCollapsed() {
     }
 }
 
-@Preview
+@PreviewTheme
 @Composable
-private fun PreviewLightExpanded() {
-    AppThemePreview(isLight = true) {
-        ContainerCollapsing(
-            modifier = Modifier.padding(16.dp),
-            title = "Schedule",
-            initiallyExpanded = true
-        ) {
-            Box(modifier = Modifier
-                .background(Color.Green)
-                .size(100.dp)
-            )
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewDarkCollapsed() {
-    AppThemePreview(isLight = false) {
-        ContainerCollapsing(
-            modifier = Modifier.padding(16.dp),
-            title = "Schedule",
-            initiallyExpanded = false
-        ) {
-            Box(modifier = Modifier
-                .background(Color.Green)
-                .size(100.dp)
-            )
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewDarkExpanded() {
-    AppThemePreview(isLight = false) {
+private fun PreviewExpanded() {
+    AppThemePreview {
         ContainerCollapsing(
             modifier = Modifier.padding(16.dp),
             title = "Schedule",

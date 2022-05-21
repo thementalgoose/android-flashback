@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
+import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody1
 
 @Composable
@@ -41,25 +42,13 @@ internal fun Category(
     }
 }
 
-@Preview
+@PreviewTheme
 @Composable
-private fun PreviewLight() {
-    AppThemePreview(isLight = true) {
+private fun Preview() {
+    AppThemePreview {
         Category(
             text = "Appearance",
             beta = true
         )
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewDark() {
-    AppThemePreview(isLight = false) {
-        Column {
-            Category(
-                text = "Appearance"
-            )
-        }
     }
 }

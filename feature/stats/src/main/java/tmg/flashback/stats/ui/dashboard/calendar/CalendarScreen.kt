@@ -3,7 +3,9 @@ package tmg.flashback.stats.ui.dashboard.calendar
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
@@ -38,6 +40,7 @@ import tmg.flashback.stats.repository.models.NotificationSchedule
 import tmg.flashback.stats.ui.dashboard.DashboardQuickLinks
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
+import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextTitle
@@ -296,35 +299,49 @@ private fun Dates(
     modifier: Modifier = Modifier
 ) {
     val schedule = scheduleList.groupBy { it.timestamp.deviceLocalDateTime.toLocalDate() }
-    Row(modifier = modifier
-        .horizontalScroll(rememberScrollState())
-        .padding(bottom = AppTheme.dimensions.paddingSmall)
-    ) {
-        Spacer(Modifier.width(countryBadgeSize + (AppTheme.dimensions.paddingNSmall * 2)))
-        for ((date, list) in schedule) {
-            val alpha = if (date.isBefore(LocalDate.now())) pastScheduleAlpha else 1f
-            Column {
-                TextBody2(
-                    text = date.format("EEE '${date.dayOfMonth.ordinalAbbreviation}' MMMM") ?: "",
-                    modifier = Modifier
-                        .alpha(alpha)
-                        .padding(
-                            bottom = AppTheme.dimensions.paddingXSmall
+    var targetIndex = schedule
+        .map { it.value.any { !it.timestamp.isInPast } }
+        .indexOfFirst { it }
+    if (targetIndex == -1) targetIndex = schedule.size - 1
+    val scrollState = rememberLazyListState(
+        initialFirstVisibleItemIndex = targetIndex.coerceIn(0, schedule.size - 1)
+    )
+
+    LazyRow(
+        modifier = modifier.padding(bottom = AppTheme.dimensions.paddingSmall),
+        state = scrollState,
+        content = {
+            item {
+                Spacer(Modifier.width(countryBadgeSize + (AppTheme.dimensions.paddingNSmall * 2)))
+            }
+            for ((date, list) in schedule) {
+                val alpha = if (date.isBefore(LocalDate.now()) || list.all { it.timestamp.isInPast }) pastScheduleAlpha else 1f
+                item {
+                    Column {
+                        TextBody2(
+                            text = date.format("EEE '${date.dayOfMonth.ordinalAbbreviation}' MMMM")
+                                ?: "",
+                            modifier = Modifier
+                                .alpha(alpha)
+                                .padding(
+                                    bottom = AppTheme.dimensions.paddingXSmall
+                                )
                         )
-                )
-                Row {
-                    list.forEach {
-                        DateCard(
-                            schedule = it,
-                            showNotificationBadge = notificationSchedule.getByLabel(it.label)
-                        )
-                        Spacer(Modifier.width(AppTheme.dimensions.paddingSmall))
+                        Row {
+                            list.forEach {
+                                DateCard(
+                                    schedule = it,
+                                    showNotificationBadge = notificationSchedule.getByLabel(it.label)
+                                )
+                                Spacer(Modifier.width(AppTheme.dimensions.paddingSmall))
+                            }
+                        }
                     }
+                    Spacer(Modifier.width(AppTheme.dimensions.paddingMedium))
                 }
             }
-            Spacer(Modifier.width(AppTheme.dimensions.paddingMedium))
         }
-    }
+    )
 }
 
 @Composable
@@ -489,32 +506,12 @@ private fun CalendarContainer(
 //}
 
 
-@Preview
+@PreviewTheme
 @Composable
-private fun PreviewLightSchedule(
+private fun PreviewSchedule(
     @PreviewParameter(OverviewRaceProvider::class) race: OverviewRace
 ) {
-    AppThemePreview(isLight = true) {
-        Column(Modifier.fillMaxWidth()) {
-            Schedule(
-                model = CalendarModel.List(race, notificationSchedule = fakeNotificationSchedule),
-                itemClicked = { }
-            )
-            Spacer(Modifier.height(16.dp))
-            Schedule(
-                model = CalendarModel.List(race, notificationSchedule = fakeNotificationSchedule, showScheduleList = true),
-                itemClicked = { }
-            )
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewDarkSchedule(
-    @PreviewParameter(OverviewRaceProvider::class) race: OverviewRace
-) {
-    AppThemePreview(isLight = false) {
+    AppThemePreview {
         Column(Modifier.fillMaxWidth()) {
             Schedule(
                 model = CalendarModel.List(race, notificationSchedule = fakeNotificationSchedule),
