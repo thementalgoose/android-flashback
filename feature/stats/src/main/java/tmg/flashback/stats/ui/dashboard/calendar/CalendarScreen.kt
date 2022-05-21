@@ -40,6 +40,7 @@ import tmg.flashback.stats.repository.models.NotificationSchedule
 import tmg.flashback.stats.ui.dashboard.DashboardQuickLinks
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
+import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextTitle
@@ -505,32 +506,12 @@ private fun CalendarContainer(
 //}
 
 
-@Preview
+@PreviewTheme
 @Composable
-private fun PreviewLightSchedule(
+private fun PreviewSchedule(
     @PreviewParameter(OverviewRaceProvider::class) race: OverviewRace
 ) {
-    AppThemePreview(isLight = true) {
-        Column(Modifier.fillMaxWidth()) {
-            Schedule(
-                model = CalendarModel.List(race, notificationSchedule = fakeNotificationSchedule),
-                itemClicked = { }
-            )
-            Spacer(Modifier.height(16.dp))
-            Schedule(
-                model = CalendarModel.List(race, notificationSchedule = fakeNotificationSchedule, showScheduleList = true),
-                itemClicked = { }
-            )
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewDarkSchedule(
-    @PreviewParameter(OverviewRaceProvider::class) race: OverviewRace
-) {
-    AppThemePreview(isLight = false) {
+    AppThemePreview {
         Column(Modifier.fillMaxWidth()) {
             Schedule(
                 model = CalendarModel.List(race, notificationSchedule = fakeNotificationSchedule),

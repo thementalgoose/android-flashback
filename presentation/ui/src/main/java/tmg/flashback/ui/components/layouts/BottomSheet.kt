@@ -9,6 +9,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
+import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextHeadline2
 
@@ -45,27 +46,10 @@ fun BottomSheet(
     }
 }
 
-@Preview
+@PreviewTheme
 @Composable
-private fun PreviewLight() {
-    AppThemePreview(isLight = true) {
-        BottomSheet(
-            title = "Bottom Sheet",
-            subtitle = "See your bottom sheet content here",
-            content = {
-                Box(
-                    Modifier
-                        .size(100.dp)
-                        .background(Color.Green))
-            }
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewDark() {
-    AppThemePreview(isLight = false) {
+private fun Preview() {
+    AppThemePreview {
         BottomSheet(
             title = "Bottom Sheet",
             subtitle = "See your bottom sheet content here",

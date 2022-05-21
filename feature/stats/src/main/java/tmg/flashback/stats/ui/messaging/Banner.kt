@@ -14,6 +14,7 @@ import tmg.flashback.stats.R
 import tmg.flashback.stats.repository.HomeRepository
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
+import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.ui.components.layouts.Container
@@ -84,24 +85,13 @@ fun Banner(
 //    }
 }
 
-@Preview
+@PreviewTheme
 @Composable
-private fun PreviewLight() {
-    AppThemePreview(isLight = true) {
+private fun Preview() {
+    AppThemePreview {
         Banner(
             message = "We stand with Ukraine",
             showLink = false
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewDark() {
-    AppThemePreview(isLight = false) {
-        Banner(
-            message = "We stand with Ukraine",
-            showLink = true
         )
     }
 }

@@ -13,6 +13,7 @@ import tmg.flashback.releasenotes.constants.ReleaseNotes
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.releasenotes.R
+import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextHeadline2
 import tmg.flashback.ui.components.header.Header
@@ -63,10 +64,10 @@ private fun ReleaseNote(
     }
 }
 
-@Preview
+@PreviewTheme
 @Composable
 private fun Preview() {
-    AppThemePreview(isLight = true) {
+    AppThemePreview {
         ReleaseScreen(
             clickBack = {}
         )
