@@ -1,14 +1,19 @@
 package tmg.flashback.stats.ui.weekend.race
 
 import androidx.annotation.DrawableRes
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -16,12 +21,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import org.koin.androidx.compose.viewModel
 import tmg.flashback.formula1.enums.RaceStatus
 import tmg.flashback.formula1.enums.isStatusFinished
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.LapTime
 import tmg.flashback.formula1.model.RaceRaceResult
+import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.providers.RaceRaceResultProvider
 import tmg.flashback.stats.ui.weekend.WeekendInfo
 import tmg.flashback.stats.ui.weekend.info.RaceInfoHeader
@@ -35,6 +42,8 @@ import tmg.flashback.stats.R
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.lightColours
 import tmg.flashback.style.text.TextBody1
+import tmg.flashback.style.text.TextTitle
+import tmg.flashback.ui.utils.isInPreview
 import tmg.flashback.ui.utils.pluralResource
 import tmg.utilities.extensions.ordinalAbbreviation
 import tmg.utilities.extensions.toEmptyIfZero
@@ -85,10 +94,15 @@ private fun Podium(
     model: RaceModel.Podium,
     modifier: Modifier = Modifier
 ) {
-    Row(modifier = modifier) {
+    Row(modifier = modifier
+        .height(IntrinsicSize.Min)
+    ) {
         Column(Modifier.weight(1f), verticalArrangement = Arrangement.Bottom) {
             PodiumResult(
-                model = model.p2
+                model = model.p2,
+                modifier = Modifier.padding(
+                    bottom = p1Height - p2Height
+                )
             )
             PodiumBar(
                 position = 2,
@@ -110,7 +124,10 @@ private fun Podium(
         }
         Column(Modifier.weight(1f), verticalArrangement = Arrangement.Bottom) {
             PodiumResult(
-                model = model.p3
+                model = model.p3,
+                modifier = Modifier.padding(
+                    bottom = p1Height - p3Height
+                )
             )
             PodiumBar(
                 position = 3,
@@ -134,6 +151,8 @@ private fun PodiumBar(
         modifier = modifier
             .fillMaxWidth()
             .height(height)
+            .padding(AppTheme.dimensions.paddingSmall)
+            .clip(RoundedCornerShape(AppTheme.dimensions.radiusSmall))
             .background(color)
     ) {
         Column(Modifier.align(Alignment.TopCenter)) {
@@ -152,7 +171,7 @@ private fun PodiumBar(
                 text = pluralResource(resId = R.plurals.race_points, quantity = points.toInt(), points.pointsDisplay()),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = AppTheme.dimensions.paddingSmall)
+                    .padding(vertical = AppTheme.dimensions.paddingXSmall)
             )
         }
     }
@@ -163,7 +182,52 @@ private fun PodiumResult(
     model: RaceRaceResult,
     modifier: Modifier = Modifier
 ) {
-
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Box(Modifier
+            .size(80.dp)
+            .clip(RoundedCornerShape(AppTheme.dimensions.radiusSmall))
+            .align(Alignment.CenterHorizontally)
+            .background(model.driver.constructor.colour)
+        ) {
+            AsyncImage(
+                modifier = Modifier
+                    .padding(4.dp)
+                    .clip(RoundedCornerShape(AppTheme.dimensions.radiusSmall)),
+                model = model.driver.driver.photoUrl,
+                contentDescription = null,
+                error = painterResource(id = R.drawable.unknown_avatar)
+            )
+        }
+        TextTitle(
+            text = model.driver.driver.name,
+            bold = true,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.padding(top = AppTheme.dimensions.paddingSmall)
+        )
+        Row(
+            modifier = Modifier.fillMaxWidth()
+                .padding(top = AppTheme.dimensions.paddingSmall),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            val resourceId = when (isInPreview()) {
+                true -> R.drawable.gb
+                false -> LocalContext.current.getFlagResourceAlpha3(model.driver.driver.nationalityISO)
+            }
+            Image(
+                modifier = Modifier
+                    .size(16.dp)
+                    .align(Alignment.CenterVertically),
+                painter = painterResource(id = resourceId),
+                contentDescription = null,
+                contentScale = ContentScale.Fit,
+            )
+            Spacer(Modifier.width(8.dp))
+            TextBody2(text = model.driver.constructor.name)
+        }
+    }
 }
 
 @Composable
