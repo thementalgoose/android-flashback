@@ -46,9 +46,7 @@ class RaceViewModel(
             } else {
                 list.addAll(raceResults.map { RaceModel.Result(it) })
             }
-            return@map raceResults.map {
-                RaceModel.Result(it)
-            }
+            return@map list
         }
         .asLiveData(viewModelScope.coroutineContext)
 
