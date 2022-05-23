@@ -3,6 +3,7 @@ package tmg.flashback.formula1.enums
 typealias RaceStatus = String
 
 const val raceStatusUnknown: String = "Unknown"
+const val raceStatusFinish: String = "Finished"
 
 fun String.isStatusFinished(): Boolean {
     return raceStatusFinished.map { it.lowercase() }.contains(this.lowercase())

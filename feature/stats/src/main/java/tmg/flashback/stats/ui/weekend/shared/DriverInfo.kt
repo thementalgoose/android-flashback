@@ -53,12 +53,15 @@ fun DriverInfo(
         )
         Column(modifier = Modifier
             .weight(1f)
-            .padding(vertical = AppTheme.dimensions.paddingXSmall)
+            .padding(vertical = 3.dp)
         ) {
             Row(modifier = Modifier.height(IntrinsicSize.Min)) {
-                TextBody1(text = driver.driver.name)
+                TextTitle(
+                    text = driver.driver.name,
+                    bold = true
+                )
             }
-            Spacer(Modifier.height(2.dp))
+            Spacer(Modifier.height(4.dp))
             Row {
                 val resourceId = when (isInPreview()) {
                     true -> R.drawable.gb
@@ -72,12 +75,12 @@ fun DriverInfo(
                     contentDescription = null,
                     contentScale = ContentScale.Fit,
                 )
-                Spacer(Modifier.width(8.dp))
-                TextBody2(text = driver.constructor.name)
+                Spacer(Modifier.width(AppTheme.dimensions.paddingSmall))
                 extraContent?.let { content ->
-                    Spacer(Modifier.width(AppTheme.dimensions.paddingMedium))
                     content()
+                    Spacer(Modifier.width(AppTheme.dimensions.paddingXSmall))
                 }
+                TextBody2(text = driver.constructor.name)
             }
         }
     }
