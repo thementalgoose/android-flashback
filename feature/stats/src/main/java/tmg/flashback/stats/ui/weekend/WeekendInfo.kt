@@ -37,3 +37,15 @@ fun WeekendInfo.Companion.from(raceInfo: RaceInfo): WeekendInfo {
         date = raceInfo.date,
     )
 }
+
+internal val fakeWeekendInfo: WeekendInfo = WeekendInfo(
+    season = 2020,
+    round = 1,
+    raceName = "Testing Grand Prix",
+    circuitId = "silverstone",
+    circuitName = "Silverstone",
+    country = "Country",
+    countryISO = "GB",
+    laps = "57",
+    date = LocalDate.of(2020, 1, 1)
+)

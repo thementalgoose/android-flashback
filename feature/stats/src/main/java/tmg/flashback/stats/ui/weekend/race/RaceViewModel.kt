@@ -8,7 +8,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import tmg.flashback.formula1.constants.Formula1
 import tmg.flashback.statistics.repo.RaceRepository
+import tmg.flashback.stats.ui.weekend.qualifying.QualifyingModel
 
 interface RaceViewModelInputs {
     fun load(season: Int, round: Int)
@@ -30,9 +32,19 @@ class RaceViewModel(
         .filterNotNull()
         .flatMapLatest { (season, round) -> raceRepository.getRace(season, round) }
         .map { race ->
-            val raceResults = race?.race ?: return@map emptyList<RaceModel>()
+            val raceResults = race?.race ?: emptyList()
+            if (race == null || race.race.isEmpty()) {
+                val list = mutableListOf<RaceModel>().apply {
+                    if ((seasonRound.value?.first ?: Formula1.currentSeasonYear) >= Formula1.currentSeasonYear) {
+                        add(RaceModel.NotAvailableYet)
+                    } else {
+                        add(RaceModel.NotAvailable)
+                    }
+                }
+                return@map list
+            }
 
-            val list: MutableList<RaceModel> = mutableListOf<RaceModel>()
+            val list: MutableList<RaceModel> = mutableListOf()
             if (raceResults.size >= 3) {
                 val podium = RaceModel.Podium(
                     p1 = raceResults[0],
