@@ -32,7 +32,9 @@ import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.providers.RaceRaceResultProvider
 import tmg.flashback.stats.R
 import tmg.flashback.stats.ui.weekend.WeekendInfo
+import tmg.flashback.stats.ui.weekend.fakeWeekendInfo
 import tmg.flashback.stats.ui.weekend.info.RaceInfoHeader
+import tmg.flashback.stats.ui.weekend.qualifying.QualifyingScreen
 import tmg.flashback.stats.ui.weekend.shared.Delta
 import tmg.flashback.stats.ui.weekend.shared.DriverInfo
 import tmg.flashback.stats.ui.weekend.shared.NotAvailable
@@ -71,7 +73,7 @@ fun RaceScreenVM(
 
     RaceScreen(
         info = info,
-        items = results.value,
+        list = results.value,
         actionUpClicked
     )
 }
@@ -79,7 +81,7 @@ fun RaceScreenVM(
 @Composable
 fun RaceScreen(
     info: WeekendInfo,
-    items: List<RaceModel>,
+    list: List<RaceModel>,
     actionUpClicked: () -> Unit
 ) {
     LazyColumn(
@@ -91,7 +93,7 @@ fun RaceScreen(
                     actionUpClicked = actionUpClicked
                 )
             }
-            items(items, key = { it.id }) {
+            items(list, key = { it.id }) {
                 when (it) {
                     is RaceModel.Podium -> {
                         Podium(model = it)
@@ -374,28 +376,23 @@ private fun Points(
 
 @PreviewTheme
 @Composable
-private fun PreviewResult(
+private fun Preview(
     @PreviewParameter(RaceRaceResultProvider::class) result: RaceRaceResult
 ) {
     AppThemePreview {
-        Result(
-            model = result
-        )
-    }
-}
-
-@PreviewTheme
-@Composable
-private fun PreviewPodium(
-    @PreviewParameter(RaceRaceResultProvider::class) result: RaceRaceResult
-) {
-    AppThemePreview {
-        Podium(
-            model = RaceModel.Podium(
-                p1 = result.copy(result.driver.copy(driver = result.driver.driver.copy(id = "1"))),
-                p2 = result.copy(result.driver.copy(driver = result.driver.driver.copy(id = "2"))),
-                p3 = result.copy(result.driver.copy(driver = result.driver.driver.copy(id = "3")))
-            )
+        RaceScreen(
+            info = fakeWeekendInfo,
+            list = listOf(
+                RaceModel.Podium(
+                    p1 = result,
+                    p2 = result,
+                    p3 = result,
+                ),
+                RaceModel.Result(
+                    result = result
+                )
+            ),
+            actionUpClicked = { }
         )
     }
 }

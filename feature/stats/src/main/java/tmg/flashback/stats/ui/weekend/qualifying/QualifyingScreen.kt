@@ -30,6 +30,7 @@ import tmg.flashback.providers.DriverConstructorProvider
 import tmg.flashback.providers.RaceProvider
 import tmg.flashback.stats.R
 import tmg.flashback.stats.ui.weekend.WeekendInfo
+import tmg.flashback.stats.ui.weekend.fakeWeekendInfo
 import tmg.flashback.stats.ui.weekend.info.RaceInfoHeader
 import tmg.flashback.stats.ui.weekend.shared.DriverInfo
 import tmg.flashback.stats.ui.weekend.shared.NotAvailable
@@ -276,16 +277,4 @@ private fun fakeQualifyingModel(driverConstructor: DriverConstructor) = Qualifyi
     q1 = RaceQualifyingResult(driverConstructor, lapTime = LapTime(92382), position = 1),
     q2 = RaceQualifyingResult(driverConstructor, lapTime = LapTime(92293), position = 1),
     q3 = RaceQualifyingResult(driverConstructor, lapTime = LapTime(91934), position = 1)
-)
-
-private val fakeWeekendInfo: WeekendInfo = WeekendInfo(
-    season = 2020,
-    round = 1,
-    raceName = "Testing Grand Prix",
-    circuitId = "silverstone",
-    circuitName = "Silverstone",
-    country = "Country",
-    countryISO = "GB",
-    laps = "57",
-    date = LocalDate.of(2020, 1, 1)
 )
