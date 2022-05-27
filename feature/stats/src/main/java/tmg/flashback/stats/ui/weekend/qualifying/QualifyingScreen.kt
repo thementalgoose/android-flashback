@@ -91,13 +91,15 @@ fun QualifyingScreen(
                     actionUpClicked = actionUpClicked
                 )
             }
-            item("qheader") {
-                Spacer(Modifier.height(AppTheme.dimensions.paddingMedium))
-                Header(
-                    showQ1 = header.first,
-                    showQ2 = header.second,
-                    showQ3 = header.third,
-                )
+            if (list.any { it.isResult }) {
+                item("qheader") {
+                    Spacer(Modifier.height(AppTheme.dimensions.paddingMedium))
+                    Header(
+                        showQ1 = header.first,
+                        showQ2 = header.second,
+                        showQ3 = header.third,
+                    )
+                }
             }
             items(list, key = { it.id }) {
                 when (it) {

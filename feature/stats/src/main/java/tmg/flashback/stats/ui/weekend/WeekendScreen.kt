@@ -35,7 +35,8 @@ fun WeekendScreenEmbedded(
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun WeekendScreen(
-    weekendInfo: WeekendInfo
+    weekendInfo: WeekendInfo,
+    actionUpClicked: () -> Unit,
 ) {
     val viewModel by viewModel<WeekendViewModel>()
 
@@ -69,7 +70,7 @@ fun WeekendScreen(
                         Fade(visible = x.isSelected) {
                             ScheduleScreenVM(
                                 info = weekendInfo,
-                                actionUpClicked = { }
+                                actionUpClicked = actionUpClicked
                             )
                         }
                     }
@@ -77,7 +78,7 @@ fun WeekendScreen(
                         Fade(visible = x.isSelected) {
                             QualifyingScreenVM(
                                 info = weekendInfo,
-                                actionUpClicked = { }
+                                actionUpClicked = actionUpClicked
                             )
                         }
                     }
@@ -85,7 +86,7 @@ fun WeekendScreen(
                         Fade(visible = x.isSelected) {
                             SprintScreenVM(
                                 info = weekendInfo,
-                                actionUpClicked = { }
+                                actionUpClicked = actionUpClicked
                             )
                         }
                     }
@@ -93,7 +94,7 @@ fun WeekendScreen(
                         Fade(visible = x.isSelected) {
                             RaceScreenVM(
                                 info = weekendInfo,
-                                actionUpClicked = { }
+                                actionUpClicked = actionUpClicked
                             )
                         }
                     }
@@ -101,7 +102,7 @@ fun WeekendScreen(
                         Fade(visible = x.isSelected) {
                             ConstructorScreenVM(
                                 info = weekendInfo,
-                                actionUpClicked = { }
+                                actionUpClicked = actionUpClicked
                             )
                         }
                     }

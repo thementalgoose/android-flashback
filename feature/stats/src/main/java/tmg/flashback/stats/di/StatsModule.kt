@@ -28,7 +28,7 @@ val statsModule = module {
     viewModel { QualifyingViewModel(get()) }
     viewModel { SprintViewModel(get()) }
     viewModel { RaceViewModel(get()) }
-    viewModel { ConstructorViewModel(get()) }
+    viewModel { ConstructorViewModel(get(), get()) }
 
     single { StatsNavigationComponent(get()) }
 
