@@ -74,7 +74,7 @@ fun RaceScreenVM(
     RaceScreen(
         info = info,
         list = results.value,
-        actionUpClicked
+        actionUpClicked = actionUpClicked
     )
 }
 

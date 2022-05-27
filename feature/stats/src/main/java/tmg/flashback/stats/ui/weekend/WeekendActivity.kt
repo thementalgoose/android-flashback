@@ -14,7 +14,12 @@ class WeekendActivity: BaseActivity() {
         val weekendInfo: WeekendInfo = (intent?.extras ?: savedInstanceState)?.getParcelable(keyWeekendInfo)!!
         setContent {
             AppTheme {
-                WeekendScreen(weekendInfo)
+                WeekendScreen(
+                    weekendInfo = weekendInfo,
+                    actionUpClicked = {
+                        finish()
+                    }
+                )
             }
         }
     }

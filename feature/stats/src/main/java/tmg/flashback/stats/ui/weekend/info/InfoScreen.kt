@@ -42,7 +42,9 @@ fun RaceInfoHeader(
     actionUpClicked: () -> Unit = { },
     largeTrack: Boolean = false,
 ) {
-    Column(modifier = modifier) {
+    Column(modifier = modifier.padding(
+        bottom = AppTheme.dimensions.paddingSmall
+    )) {
         IconButton(
             onClick = actionUpClicked
         ) {
