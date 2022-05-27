@@ -69,7 +69,7 @@ fun RaceScreenVM(
         round = info.round
     )
 
-    val results = viewModel.outputs.list.observeAsState(emptyList())
+    val results = viewModel.outputs.list.observeAsState(listOf(RaceModel.Loading))
 
     RaceScreen(
         info = info,
