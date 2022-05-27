@@ -4,10 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.*
 import tmg.flashback.formula1.constants.Formula1
 import tmg.flashback.statistics.repo.RaceRepository
 import tmg.flashback.stats.ui.weekend.qualifying.QualifyingModel
@@ -21,7 +19,8 @@ interface RaceViewModelOutputs {
 }
 
 class RaceViewModel(
-    private val raceRepository: RaceRepository
+    private val raceRepository: RaceRepository,
+    private val ioDispatcher: CoroutineDispatcher
 ): ViewModel(), RaceViewModelInputs, RaceViewModelOutputs {
 
     val inputs: RaceViewModelInputs = this
@@ -31,6 +30,7 @@ class RaceViewModel(
     override val list: LiveData<List<RaceModel>> = seasonRound
         .filterNotNull()
         .flatMapLatest { (season, round) -> raceRepository.getRace(season, round) }
+        .flowOn(ioDispatcher)
         .map { race ->
             val raceResults = race?.race ?: emptyList()
             if (race == null || race.race.isEmpty()) {

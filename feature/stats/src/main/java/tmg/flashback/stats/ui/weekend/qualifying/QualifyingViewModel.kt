@@ -5,10 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.*
 import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
 import tmg.flashback.formula1.model.Race
 import tmg.flashback.formula1.model.RaceQualifyingType
@@ -26,7 +25,8 @@ interface QualifyingViewModelOutputs {
 typealias QualifyingHeader = Triple<Boolean, Boolean, Boolean>
 
 class QualifyingViewModel(
-    private val raceRepository: RaceRepository
+    private val raceRepository: RaceRepository,
+    private val ioDispatcher: CoroutineDispatcher
 ): ViewModel(), QualifyingViewModelInputs, QualifyingViewModelOutputs {
 
     val inputs: QualifyingViewModelInputs = this
@@ -36,6 +36,7 @@ class QualifyingViewModel(
     override val list: LiveData<List<QualifyingModel>> = seasonRound
         .filterNotNull()
         .flatMapLatest { (season, round) -> raceRepository.getRace(season, round) }
+        .flowOn(ioDispatcher)
         .map { race ->
             if (race == null || race.qualifying.isEmpty()) {
                 val list = mutableListOf<QualifyingModel>().apply {
@@ -49,21 +50,21 @@ class QualifyingViewModel(
             }
 
             when {
-                race.has(RaceQualifyingType.Q3) -> headersToShow.value = QualifyingHeader(
+                race.has(RaceQualifyingType.Q3) -> headersToShow.postValue(QualifyingHeader(
                     first = true,
                     second = true,
                     third = true
-                )
-                race.has(RaceQualifyingType.Q2) -> headersToShow.value = QualifyingHeader(
+                ))
+                race.has(RaceQualifyingType.Q2) -> headersToShow.postValue(QualifyingHeader(
                     first = true,
                     second = true,
                     third = false
-                )
-                race.has(RaceQualifyingType.Q1) -> headersToShow.value = QualifyingHeader(
+                ))
+                race.has(RaceQualifyingType.Q1) -> headersToShow.postValue(QualifyingHeader(
                     first = true,
                     second = false,
                     third = false
-                )
+                ))
             }
 
             return@map when {

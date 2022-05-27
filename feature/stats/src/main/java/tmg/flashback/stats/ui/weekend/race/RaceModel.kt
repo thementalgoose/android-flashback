@@ -15,9 +15,13 @@ sealed class RaceModel(
         val p1: RaceRaceResult,
         val p2: RaceRaceResult,
         val p3: RaceRaceResult
-    ): RaceModel(id = "podium")
+    ): RaceModel(id = "podium") {
+        companion object
+    }
 
     data class Result(
         val result: RaceRaceResult
-    ): RaceModel(id = result.driver.driver.id)
+    ): RaceModel(id = result.driver.driver.id) {
+        companion object
+    }
 }

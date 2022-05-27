@@ -1,33 +1,26 @@
-package tmg.flashback.stats.ui.weekend.constructor
+package tmg.flashback.stats.ui.weekend.race
 
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.verify
 import kotlinx.coroutines.flow.flow
-import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.flashback.formula1.model.Constructor
-import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.model.Race
 import tmg.flashback.formula1.model.model
 import tmg.flashback.statistics.repo.RaceRepository
-import tmg.flashback.stats.di.StatsNavigator
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.test
 import java.time.Year
 
-internal class ConstructorViewModelTest: BaseTest() {
+
+internal class RaceViewModelTest: BaseTest() {
 
     private val mockRaceRepository: RaceRepository = mockk(relaxed = true)
-    private val mockStatsNavigator: StatsNavigator = mockk(relaxed = true)
 
-    private lateinit var underTest: ConstructorViewModel
+    private lateinit var underTest: RaceViewModel
 
     private fun initUnderTest() {
-        underTest = ConstructorViewModel(
+        underTest = RaceViewModel(
             raceRepository = mockRaceRepository,
-            statsNavigator = mockStatsNavigator,
             ioDispatcher = coroutineScope.testDispatcher
         )
     }
@@ -42,7 +35,7 @@ internal class ConstructorViewModelTest: BaseTest() {
 
         underTest.outputs.list.test {
             assertValue(listOf(
-                ConstructorModel.NotAvailableYet
+                RaceModel.NotAvailableYet
             ))
         }
     }
@@ -57,7 +50,7 @@ internal class ConstructorViewModelTest: BaseTest() {
 
         underTest.outputs.list.test {
             assertValue(listOf(
-                ConstructorModel.NotAvailable
+                RaceModel.NotAvailable
             ))
         }
     }
@@ -72,21 +65,8 @@ internal class ConstructorViewModelTest: BaseTest() {
 
         underTest.outputs.list.test {
             assertValue(listOf(
-                ConstructorModel.Constructor.model()
+                RaceModel.Result.model()
             ))
-        }
-    }
-
-    @Test
-    fun `clicking item goes to constructor overview`() {
-        initUnderTest()
-        underTest.inputs.clickItem(ConstructorModel.Constructor.model())
-
-        verify {
-            mockStatsNavigator.goToConstructorOverview(
-                constructorId = ConstructorModel.Constructor.model().constructor.id,
-                constructorName = ConstructorModel.Constructor.model().constructor.name
-            )
         }
     }
 }
