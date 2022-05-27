@@ -25,10 +25,10 @@ val statsModule = module {
 
     viewModel { WeekendViewModel(get(), get()) }
     viewModel { ScheduleViewModel(get(), get()) }
-    viewModel { QualifyingViewModel(get()) }
-    viewModel { SprintViewModel(get()) }
-    viewModel { RaceViewModel(get()) }
-    viewModel { ConstructorViewModel(get(), get()) }
+    viewModel { QualifyingViewModel(get(), get()) }
+    viewModel { SprintViewModel(get(), get()) }
+    viewModel { RaceViewModel(get(), get()) }
+    viewModel { ConstructorViewModel(get(), get(), get()) }
 
     single { StatsNavigationComponent(get()) }
 
