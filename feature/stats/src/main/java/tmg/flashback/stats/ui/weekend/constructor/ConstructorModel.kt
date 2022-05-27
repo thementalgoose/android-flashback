@@ -17,5 +17,7 @@ sealed class ConstructorModel(
         val points: Double,
         val drivers: List<Pair<Driver, Double>>,
         val maxTeamPoints: Double
-    ): ConstructorModel(id = constructor.id)
+    ): ConstructorModel(id = constructor.id) {
+        companion object
+    }
 }

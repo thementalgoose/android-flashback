@@ -23,7 +23,7 @@ val statsModule = module {
     viewModel { ConstructorsStandingViewModel(get(), get(), get()) }
     viewModel { DriversStandingViewModel(get(), get(), get()) }
 
-    viewModel { WeekendViewModel() }
+    viewModel { WeekendViewModel(get(), get()) }
     viewModel { ScheduleViewModel(get(), get()) }
     viewModel { QualifyingViewModel(get()) }
     viewModel { SprintViewModel(get()) }

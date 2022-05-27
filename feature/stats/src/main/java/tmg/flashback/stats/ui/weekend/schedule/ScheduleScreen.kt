@@ -42,7 +42,7 @@ fun ScheduleScreenVM(
         round = info.round
     )
 
-    val items = viewModel.outputs.list.observeAsState(initial = emptyList())
+    val items = viewModel.outputs.list.observeAsState(emptyList())
     ScheduleScreen(
         info = info,
         actionUpClicked = actionUpClicked,

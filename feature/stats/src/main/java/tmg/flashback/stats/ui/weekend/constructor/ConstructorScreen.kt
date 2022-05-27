@@ -42,7 +42,7 @@ fun ConstructorScreenVM(
         round = info.round
     )
 
-    val list = viewModel.outputs.list.observeAsState(emptyList())
+    val list = viewModel.outputs.list.observeAsState(listOf(ConstructorModel.Loading))
     ConstructorScreen(
         info = info,
         itemClicked = viewModel.inputs::clickItem,

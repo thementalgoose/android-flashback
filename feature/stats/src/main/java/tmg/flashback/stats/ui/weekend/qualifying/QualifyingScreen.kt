@@ -59,7 +59,7 @@ fun QualifyingScreenVM(
         round = info.round
     )
 
-    val qualifying = viewModel.outputs.list.observeAsState(emptyList())
+    val qualifying = viewModel.outputs.list.observeAsState(listOf(QualifyingModel.Loading))
     val qualifyingHeader = viewModel.outputs.headersToShow.observeAsState(
         QualifyingHeader(
             first = false,

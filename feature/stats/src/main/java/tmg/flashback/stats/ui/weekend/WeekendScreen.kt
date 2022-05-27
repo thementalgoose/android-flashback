@@ -8,6 +8,8 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import org.koin.androidx.compose.viewModel
 import tmg.flashback.stats.ui.weekend.constructor.ConstructorScreenVM
 import tmg.flashback.stats.ui.weekend.qualifying.QualifyingScreenVM
@@ -57,53 +59,58 @@ fun WeekendScreen(
             )
         },
         content = {
-
             // Background box
             Box(modifier = Modifier
                 .fillMaxSize()
                 .background(AppTheme.colors.backgroundPrimary)
             )
+            val isRefreshing = viewModel.outputs.isRefreshing.observeAsState(false)
 
-            for (x in tabState.value) {
-                when (x.tab) {
-                    WeekendNavItem.SCHEDULE -> {
-                        Fade(visible = x.isSelected) {
-                            ScheduleScreenVM(
-                                info = weekendInfo,
-                                actionUpClicked = actionUpClicked
-                            )
+            SwipeRefresh(
+                state = rememberSwipeRefreshState(isRefreshing = isRefreshing.value),
+                onRefresh = viewModel.inputs::refresh
+            ) {
+                for (x in tabState.value) {
+                    when (x.tab) {
+                        WeekendNavItem.SCHEDULE -> {
+                            Fade(visible = x.isSelected) {
+                                ScheduleScreenVM(
+                                    info = weekendInfo,
+                                    actionUpClicked = actionUpClicked
+                                )
+                            }
                         }
-                    }
-                    WeekendNavItem.QUALIFYING -> {
-                        Fade(visible = x.isSelected) {
-                            QualifyingScreenVM(
-                                info = weekendInfo,
-                                actionUpClicked = actionUpClicked
-                            )
+                        WeekendNavItem.QUALIFYING -> {
+                            Fade(visible = x.isSelected) {
+                                QualifyingScreenVM(
+                                    info = weekendInfo,
+                                    actionUpClicked = actionUpClicked
+                                )
+                            }
                         }
-                    }
-                    WeekendNavItem.SPRINT -> {
-                        Fade(visible = x.isSelected) {
-                            SprintScreenVM(
-                                info = weekendInfo,
-                                actionUpClicked = actionUpClicked
-                            )
+                        WeekendNavItem.SPRINT -> {
+                            Fade(visible = x.isSelected) {
+                                SprintScreenVM(
+                                    info = weekendInfo,
+                                    actionUpClicked = actionUpClicked
+                                )
+                            }
                         }
-                    }
-                    WeekendNavItem.RACE -> {
-                        Fade(visible = x.isSelected) {
-                            RaceScreenVM(
-                                info = weekendInfo,
-                                actionUpClicked = actionUpClicked
-                            )
+                        WeekendNavItem.RACE -> {
+                            Fade(visible = x.isSelected) {
+                                RaceScreenVM(
+                                    info = weekendInfo,
+                                    actionUpClicked = actionUpClicked
+                                )
+                            }
                         }
-                    }
-                    WeekendNavItem.CONSTRUCTOR -> {
-                        Fade(visible = x.isSelected) {
-                            ConstructorScreenVM(
-                                info = weekendInfo,
-                                actionUpClicked = actionUpClicked
-                            )
+                        WeekendNavItem.CONSTRUCTOR -> {
+                            Fade(visible = x.isSelected) {
+                                ConstructorScreenVM(
+                                    info = weekendInfo,
+                                    actionUpClicked = actionUpClicked
+                                )
+                            }
                         }
                     }
                 }
