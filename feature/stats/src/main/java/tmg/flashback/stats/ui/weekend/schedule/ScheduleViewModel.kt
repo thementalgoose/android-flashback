@@ -43,23 +43,25 @@ class ScheduleViewModel(
         seasonRound.value = Pair(season, round)
     }
 
-    fun initialSchedule(models: List<Schedule>): List<ScheduleModel> {
+    private fun initialSchedule(models: List<Schedule>): List<ScheduleModel> {
         return models
             .groupBy { it.timestamp.deviceLocalDateTime.toLocalDate() }
             .toSortedMap()
             .map { (date, schedules) ->
                 ScheduleModel(
-                    date, schedules.map {
-                        val notificationsEnabled = when (NotificationUtils.getCategoryBasedOnLabel(
-                            it.label
-                        )) {
-                            RaceWeekend.FREE_PRACTICE -> notificationRepository.notificationFreePractice
-                            RaceWeekend.QUALIFYING -> notificationRepository.notificationQualifying
-                            RaceWeekend.RACE -> notificationRepository.notificationRace
-                            null -> notificationRepository.notificationOther
+                    date, schedules
+                        .sortedBy { it.timestamp.utcLocalDateTime }
+                        .map {
+                            val notificationsEnabled = when (NotificationUtils.getCategoryBasedOnLabel(
+                                it.label
+                            )) {
+                                RaceWeekend.FREE_PRACTICE -> notificationRepository.notificationFreePractice
+                                RaceWeekend.QUALIFYING -> notificationRepository.notificationQualifying
+                                RaceWeekend.RACE -> notificationRepository.notificationRace
+                                null -> notificationRepository.notificationOther
+                            }
+                            Pair(it, notificationsEnabled)
                         }
-                        Pair(it, notificationsEnabled)
-                    }
                 )
             }
     }

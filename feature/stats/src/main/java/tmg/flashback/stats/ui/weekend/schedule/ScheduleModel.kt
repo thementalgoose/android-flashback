@@ -6,4 +6,6 @@ import tmg.flashback.formula1.model.Schedule
 data class ScheduleModel(
     val date: LocalDate,
     val schedules: List<Pair<Schedule, Boolean>> // Schedule, isNotificationSet
-)
+) {
+    companion object
+}
