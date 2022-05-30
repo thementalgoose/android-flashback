@@ -34,5 +34,10 @@ internal val fakeNavigationItems: List<NavigationItem> = listOf(
         id = "light",
         label = R.string.settings_theme_nightmode_light,
         icon = R.drawable.ic_nightmode_light
+    ),
+    NavigationItem(
+        id = "experiment",
+        label = R.string.settings_experimental,
+        icon = R.drawable.ic_theme_default
     )
 )
