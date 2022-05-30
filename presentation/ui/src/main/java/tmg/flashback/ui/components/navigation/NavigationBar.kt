@@ -100,6 +100,7 @@ private fun Item(
         }
         TextBody1(
             textAlign = TextAlign.Center,
+            maxLines = 1,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 10.dp),

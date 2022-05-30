@@ -41,6 +41,10 @@ fun WeekendScreen(
     actionUpClicked: () -> Unit,
 ) {
     val viewModel by viewModel<WeekendViewModel>()
+    viewModel.inputs.load(
+        season = weekendInfo.season,
+        round = weekendInfo.round
+    )
 
     val tabState = viewModel.outputs.tabs.observeAsState(listOf(
         WeekendScreenState(tab = WeekendNavItem.SCHEDULE, isSelected = true),
