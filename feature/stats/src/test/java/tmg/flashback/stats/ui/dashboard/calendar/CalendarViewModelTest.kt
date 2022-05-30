@@ -132,20 +132,7 @@ internal class CalendarViewModelTest: BaseTest() {
         underTest.clickItem(model)
 
         verify {
-            mockStatsNavigationComponent.weekend(
-                model.model.toRaceInfo().toWeekendInfo()
-            )
-//            mockStatsNavigator.goToRace(
-//                season = model.model.season,
-//                round = model.model.round,
-//                circuitId = model.model.circuitId,
-//                defaultToRace = model.model.hasResults,
-//                country = model.model.country,
-//                raceName = model.model.raceName,
-//                trackName = model.model.circuitName,
-//                countryISO = model.model.countryISO,
-//                date = model.model.date
-//            )
+            mockStatsNavigationComponent.weekend(any())
         }
     }
 
