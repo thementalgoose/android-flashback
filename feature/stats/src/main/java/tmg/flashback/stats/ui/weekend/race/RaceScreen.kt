@@ -25,6 +25,7 @@ import org.koin.androidx.compose.viewModel
 import tmg.flashback.formula1.enums.RaceStatus
 import tmg.flashback.formula1.enums.isStatusFinished
 import tmg.flashback.formula1.enums.raceStatusFinish
+import tmg.flashback.formula1.enums.raceStatusFinished
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.LapTime
 import tmg.flashback.formula1.model.RaceRaceResult
@@ -306,7 +307,10 @@ private fun PodiumResult(
                     start = AppTheme.dimensions.paddingXSmall
                 ),
             textAlign = TextAlign.Center,
-            text = model.time?.time ?: raceStatusFinish
+            text = when (model.finish == 1) {
+                true -> model.time?.time ?: raceStatusFinish
+                false -> model.time?.time?.let { "+${it}" } ?: raceStatusFinish
+            }
         )
     }
 }
@@ -354,7 +358,7 @@ private fun Time(
             .width(timeWidth),
         textAlign = TextAlign.Center,
         text = when {
-            lapTime?.noTime == true -> lapTime.time
+            lapTime?.noTime == false -> "+${lapTime.time}"
             status.isStatusFinished() -> status
             else -> stringResource(id = R.string.race_status_retired)
         },
