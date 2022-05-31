@@ -7,7 +7,9 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.flow.map
+import tmg.flashback.formula1.constants.Formula1
 import tmg.flashback.statistics.repo.RaceRepository
+import tmg.flashback.stats.ui.weekend.race.RaceModel
 
 interface SprintViewModelInputs {
     fun load(season: Int, round: Int)
@@ -30,12 +32,22 @@ class SprintViewModel(
         .filterNotNull()
         .flatMapLatest { (season, round) -> raceRepository.getRace(season, round) }
         .flowOn(ioDispatcher)
-        .map {
-            val sprint = it?.sprint ?: return@map emptyList<SprintModel>()
+        .map { race ->
+            if (race == null || race.sprint.isEmpty()) {
+                val list = mutableListOf<SprintModel>().apply {
+                    if ((seasonRound.value?.first ?: Formula1.currentSeasonYear) >= Formula1.currentSeasonYear) {
+                        add(SprintModel.NotAvailableYet)
+                    } else {
+                        add(SprintModel.NotAvailable)
+                    }
+                }
+                return@map list
+            }
 
-            return@map sprint
+            return@map race
+                .sprint
                 .map { model ->
-                    SprintModel(model)
+                    SprintModel.Result(model)
                 }
                 .sortedBy { it.result.finish }
         }
