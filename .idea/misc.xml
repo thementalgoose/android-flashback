@@ -232,7 +232,10 @@
         <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/tyres/TyreCompounds.kt" value="0.6655629139072847" />
         <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/weekend/info/InfoScreen.kt" value="0.375" />
         <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/weekend/qualifying/QualifyingScreen.kt" value="0.25" />
+        <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/weekend/race/RaceScreen.kt" value="0.25" />
         <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/weekend/schedule/ScheduleScreen.kt" value="0.375" />
+        <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/weekend/shared/Delta.kt" value="0.5127659574468085" />
+        <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/weekend/shared/DriverInfo.kt" value="0.5083333333333333" />
         <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/weekend/shared/NotAvailable.kt" value="0.4703703703703704" />
         <entry key="feature/stats/src/main/res/drawable-xxhdpi/ic_pos_down.xml" value="0.1405" />
         <entry key="feature/stats/src/main/res/drawable/ic_error_not_available.xml" value="0.254" />

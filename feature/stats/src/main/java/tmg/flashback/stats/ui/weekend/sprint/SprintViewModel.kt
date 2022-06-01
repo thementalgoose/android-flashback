@@ -4,11 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.flow.map
+import tmg.flashback.formula1.constants.Formula1
 import tmg.flashback.statistics.repo.RaceRepository
+import tmg.flashback.stats.ui.weekend.race.RaceModel
 
 interface SprintViewModelInputs {
     fun load(season: Int, round: Int)
@@ -19,7 +20,8 @@ interface SprintViewModelOutputs {
 }
 
 class SprintViewModel(
-    private val raceRepository: RaceRepository
+    private val raceRepository: RaceRepository,
+    private val ioDispatcher: CoroutineDispatcher
 ): ViewModel(), SprintViewModelInputs, SprintViewModelOutputs {
 
     val inputs: SprintViewModelInputs = this
@@ -29,12 +31,23 @@ class SprintViewModel(
     override val list: LiveData<List<SprintModel>> = seasonRound
         .filterNotNull()
         .flatMapLatest { (season, round) -> raceRepository.getRace(season, round) }
-        .map {
-            val sprint = it?.sprint ?: return@map emptyList<SprintModel>()
+        .flowOn(ioDispatcher)
+        .map { race ->
+            if (race == null || race.sprint.isEmpty()) {
+                val list = mutableListOf<SprintModel>().apply {
+                    if ((seasonRound.value?.first ?: Formula1.currentSeasonYear) >= Formula1.currentSeasonYear) {
+                        add(SprintModel.NotAvailableYet)
+                    } else {
+                        add(SprintModel.NotAvailable)
+                    }
+                }
+                return@map list
+            }
 
-            return@map sprint
+            return@map race
+                .sprint
                 .map { model ->
-                    SprintModel(model)
+                    SprintModel.Result(model)
                 }
                 .sortedBy { it.result.finish }
         }

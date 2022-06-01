@@ -370,8 +370,8 @@ private fun DateCard(
                 textAlign = TextAlign.Center,
                 text = schedule.label
             )
-            Spacer(Modifier.width(4.dp))
             if (showNotificationBadge) {
+                Spacer(Modifier.width(4.dp))
                 Icon(
                     modifier = Modifier.size(16.dp),
                     tint = AppTheme.colors.contentSecondary,
