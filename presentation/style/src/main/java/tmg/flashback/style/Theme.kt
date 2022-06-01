@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.jakewharton.threetenabp.AndroidThreeTen
 import tmg.flashback.style.SupportedTheme.DEFAULT
 
@@ -45,6 +46,7 @@ val Dimensions = AppTheme.dimensions
 fun AppTheme(
     isLight: Boolean = !isSystemInDarkTheme(),
     theme: SupportedTheme = DEFAULT,
+    changeSystemUi: Boolean = true,
     content: @Composable () -> Unit
 ) {
     AppTheme.appTheme = theme
@@ -53,6 +55,13 @@ fun AppTheme(
     CompositionLocalProvider(
         LocalColors provides colors
     ) {
+        if (changeSystemUi) {
+            val systemUiController = rememberSystemUiController()
+            systemUiController.setNavigationBarColor(
+                color = AppTheme.colors.backgroundNav
+            )
+        }
+
         MaterialTheme(
             colors = colors.appColors
         ) {
@@ -71,6 +80,7 @@ fun AppThemePreview(
     return AppTheme(
         isLight = isLight,
         theme = theme,
+        changeSystemUi = false,
         content = {
             content()
         }

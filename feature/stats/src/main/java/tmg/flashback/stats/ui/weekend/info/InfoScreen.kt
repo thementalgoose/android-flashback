@@ -3,6 +3,7 @@ package tmg.flashback.stats.ui.weekend.info
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,8 +20,11 @@ import tmg.flashback.formula1.model.RaceInfo
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.providers.RaceProvider
 import tmg.flashback.stats.R
+import tmg.flashback.stats.ui.weekend.WeekendInfo
+import tmg.flashback.stats.ui.weekend.from
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
+import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextHeadline1
@@ -33,29 +37,45 @@ private val trackSizeSmall = 80.dp
 
 @Composable
 fun RaceInfoHeader(
-    model: RaceInfo,
-    largeTrack: Boolean,
-    modifier: Modifier = Modifier
+    model: WeekendInfo,
+    modifier: Modifier = Modifier,
+    actionUpClicked: () -> Unit = { },
+    largeTrack: Boolean = false,
 ) {
-    Column(modifier = modifier) {
-        val track = TrackLayout.getTrack(model.circuit.id, model.season, model.name)
-        Icon(
-            tint = AppTheme.colors.contentPrimary,
-            modifier = Modifier.size(if (largeTrack) trackSizeLarge else trackSizeSmall),
-            painter = painterResource(id = track?.icon ?: R.drawable.circuit_unknown),
-            contentDescription = null
-        )
-        TextHeadline1(
-            modifier = Modifier.padding(vertical = 2.dp),
-            text = model.name
-        )
-        RaceDetails(model = model)
+    Column(modifier = modifier.padding(
+        bottom = AppTheme.dimensions.paddingSmall
+    )) {
+        IconButton(
+            onClick = actionUpClicked
+        ) {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_back),
+                contentDescription = stringResource(id = R.string.ab_back),
+                tint = AppTheme.colors.contentPrimary
+            )
+        }
+        Column(modifier = Modifier.padding(
+            horizontal = AppTheme.dimensions.paddingMedium
+        )) {
+            val track = TrackLayout.getTrack(model.circuitId, model.season, model.raceName)
+            Icon(
+                tint = AppTheme.colors.contentPrimary,
+                modifier = Modifier.size(if (largeTrack) trackSizeLarge else trackSizeSmall),
+                painter = painterResource(id = track?.icon ?: R.drawable.circuit_unknown),
+                contentDescription = null
+            )
+            TextHeadline1(
+                modifier = Modifier.padding(vertical = 2.dp),
+                text = model.raceName
+            )
+            RaceDetails(model = model)
+        }
     }
 }
 
 @Composable
 private fun RaceDetails(
-    model: RaceInfo,
+    model: WeekendInfo,
     modifier: Modifier = Modifier
 ) {
     Row(modifier = modifier) {
@@ -64,13 +84,13 @@ private fun RaceDetails(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = AppTheme.dimensions.paddingXSmall),
-                text = model.circuit.name
+                text = model.circuitName
             )
             TextBody2(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = AppTheme.dimensions.paddingXSmall),
-                text = model.circuit.country
+                text = model.country
             )
             model.laps?.let {
                 TextBody2(
@@ -85,7 +105,7 @@ private fun RaceDetails(
         ) {
             val resourceId = when (isInPreview()) {
                 true -> R.drawable.gb
-                false -> LocalContext.current.getFlagResourceAlpha3(model.circuit.countryISO)
+                false -> LocalContext.current.getFlagResourceAlpha3(model.countryISO)
             }
             Image(
                 modifier = Modifier.size(32.dp),
@@ -103,42 +123,22 @@ private fun RaceDetails(
     }
 }
 
-@Preview
+@PreviewTheme
 @Composable
-private fun PreviewCompactLight(
+private fun PreviewCompact(
     @PreviewParameter(RaceProvider::class) race: Race
 ) {
-    AppThemePreview(isLight = true) {
-        RaceInfoHeader(model = race.raceInfo, largeTrack = true)
+    AppThemePreview {
+        RaceInfoHeader(model = WeekendInfo.from(race.raceInfo), largeTrack = true)
     }
 }
 
-@Preview
+@PreviewTheme
 @Composable
-private fun PreviewCompactDark(
+private fun PreviewExpanded(
     @PreviewParameter(RaceProvider::class) race: Race
 ) {
-    AppThemePreview(isLight = false) {
-        RaceInfoHeader(model = race.raceInfo, largeTrack = true)
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewExpandedLight(
-    @PreviewParameter(RaceProvider::class) race: Race
-) {
-    AppThemePreview(isLight = true) {
-        RaceInfoHeader(model = race.raceInfo, largeTrack = false)
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewExpandedDark(
-    @PreviewParameter(RaceProvider::class) race: Race
-) {
-    AppThemePreview(isLight = false) {
-        RaceInfoHeader(model = race.raceInfo, largeTrack = false)
+    AppThemePreview {
+        RaceInfoHeader(model = WeekendInfo.from(race.raceInfo), largeTrack = false)
     }
 }
