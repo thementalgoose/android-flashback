@@ -138,7 +138,7 @@ private fun PreviewCompact(
 private fun PreviewExpanded(
     @PreviewParameter(RaceProvider::class) race: Race
 ) {
-    AppThemePreview(isLight = true) {
+    AppThemePreview {
         RaceInfoHeader(model = WeekendInfo.from(race.raceInfo), largeTrack = false)
     }
 }
