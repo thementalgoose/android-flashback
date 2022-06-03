@@ -9,5 +9,8 @@
         <activity android:name=".ui.weekend.WeekendActivity"
             android:exported="false" />
 
+        <activity android:name=".ui.search.SearchActivity"
+            android:exported="false" />
+
     </application>
 </manifest>
