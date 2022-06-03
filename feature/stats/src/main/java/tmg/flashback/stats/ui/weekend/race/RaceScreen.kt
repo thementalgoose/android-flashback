@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -27,6 +28,7 @@ import tmg.flashback.formula1.enums.isStatusFinished
 import tmg.flashback.formula1.enums.raceStatusFinish
 import tmg.flashback.formula1.enums.raceStatusFinished
 import tmg.flashback.formula1.extensions.pointsDisplay
+import tmg.flashback.formula1.model.FastestLap
 import tmg.flashback.formula1.model.LapTime
 import tmg.flashback.formula1.model.RaceRaceResult
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
@@ -150,6 +152,7 @@ private fun Podium(
                 height = p2Height,
                 color = AppTheme.colors.f1Podium2,
                 grid = model.p2.grid,
+                fastestLap = model.p2.fastestLap?.rank == 1,
                 finish = model.p2.finish
             )
         }
@@ -163,6 +166,7 @@ private fun Podium(
                 height = p1Height,
                 color = AppTheme.colors.f1Podium1,
                 grid = model.p1.grid,
+                fastestLap = model.p1.fastestLap?.rank == 1,
                 finish = model.p1.finish
             )
         }
@@ -179,6 +183,7 @@ private fun Podium(
                 height = p3Height,
                 color = AppTheme.colors.f1Podium3,
                 grid = model.p3.grid,
+                fastestLap = model.p3.fastestLap?.rank == 1,
                 finish = model.p3.finish
             )
         }
@@ -193,6 +198,7 @@ private fun PodiumBar(
     color: Color,
     grid: Int?,
     finish: Int,
+    fastestLap: Boolean,
     modifier: Modifier = Modifier
 ) {
     Box(
@@ -204,22 +210,24 @@ private fun PodiumBar(
             .background(color)
     ) {
         Column(Modifier.align(Alignment.TopCenter)) {
-            Row(horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(
-                        top = AppTheme.dimensions.paddingSmall,
-                        start = AppTheme.dimensions.paddingXXSmall,
-                        end = AppTheme.dimensions.paddingXXSmall
-                    ),
+            Box(modifier = Modifier
+                .fillMaxWidth()
+                .padding(
+                    top = AppTheme.dimensions.paddingSmall,
+                    start = AppTheme.dimensions.paddingSmall,
+                    end = AppTheme.dimensions.paddingSmall
+                ),
             ) {
                 TextBody1(
+                    modifier = Modifier.fillMaxWidth(),
                     textAlign = TextAlign.Center,
                     textColor = lightColours.contentPrimary,
                     text = position.ordinalAbbreviation,
                     bold = true
                 )
+                if (fastestLap) {
+                    FastestLap(Modifier.align(Alignment.CenterEnd))
+                }
             }
             TextBody1(
                 textAlign = TextAlign.Center,
@@ -333,6 +341,10 @@ private fun Result(
                     grid = model.grid,
                     finish = model.finish
                 )
+                if (model.fastestLap?.rank == 1) {
+                    Spacer(Modifier.width(4.dp))
+                    FastestLap(Modifier.align(Alignment.CenterVertically))
+                }
             }
         )
         Points(
@@ -378,6 +390,20 @@ private fun Points(
     )
 }
 
+@Composable
+private fun FastestLap(
+    modifier: Modifier = Modifier
+) {
+    Icon(
+        painter = painterResource(id = R.drawable.ic_fastest_lap),
+        contentDescription = stringResource(id = R.string.ab_fastest_lap),
+        modifier = modifier
+            .padding(top = 4.dp)
+            .size(16.dp),
+        tint = AppTheme.colors.f1FastestSector
+    )
+}
+
 @PreviewTheme
 @Composable
 private fun Preview(
@@ -388,12 +414,12 @@ private fun Preview(
             info = fakeWeekendInfo,
             list = listOf(
                 RaceModel.Podium(
-                    p1 = result,
+                    p1 = result.copy(fastestLap = FastestLap(1, LapTime(0,1,2,3))),
                     p2 = result,
                     p3 = result,
                 ),
                 RaceModel.Result(
-                    result = result
+                    result = result.copy(fastestLap = FastestLap(1, LapTime(0,1,2,3)))
                 )
             ),
             actionUpClicked = { }
