@@ -8,6 +8,11 @@
 
     <string name="season_standings_driver">%s\nDriver Standings</string>
     <string name="season_standings_constructor">%s\nConstructor Standings</string>
+    <string name="search_title">Search</string>
+    <string name="search_category_driver">Drivers</string>
+    <string name="search_category_constructors">Constructors</string>
+    <string name="search_category_races">Races</string>
+    <string name="search_category_Circuits">Circuits</string>
 
     <string name="results_accurate_for" formatted="false">Results as of the %s (round %d)</string>
 

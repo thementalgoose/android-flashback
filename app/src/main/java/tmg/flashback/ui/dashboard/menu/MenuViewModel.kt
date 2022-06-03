@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
 import tmg.flashback.RssNavigationComponent
 import tmg.flashback.formula1.constants.Formula1.decadeColours
+import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.stats.di.StatsNavigator
 import tmg.flashback.stats.repository.HomeRepository
 import tmg.flashback.stats.repository.NotificationRepository
@@ -46,7 +47,8 @@ class MenuViewModel(
     private val styleManager: StyleManager,
     private val rssNavigationComponent: RssNavigationComponent,
     private val navigationComponent: ApplicationNavigationComponent,
-    private val statsNavigator: StatsNavigator
+    private val statsNavigator: StatsNavigator,
+    private val statsNavigationComponent: StatsNavigationComponent
 ) : ViewModel(), MenuViewModelInputs, MenuViewModelOutputs {
 
     val inputs: MenuViewModelInputs = this
@@ -91,7 +93,7 @@ class MenuViewModel(
                 navigationComponent.settings()
             }
             MenuItems.Button.Search -> {
-                statsNavigator.goToSearch()
+                statsNavigationComponent.search()
             }
         }
         links.value = getLinks()

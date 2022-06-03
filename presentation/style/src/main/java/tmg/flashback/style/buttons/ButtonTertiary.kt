@@ -21,6 +21,7 @@ import tmg.flashback.style.annotations.PreviewTheme
 @Composable
 fun ButtonTertiary(
     text: String,
+    enabled: Boolean = false,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -31,7 +32,10 @@ fun ButtonTertiary(
             .padding(0.dp)
             .defaultMinSize(1.dp, 1.dp),
         colors = ButtonDefaults.textButtonColors(
-            backgroundColor = AppTheme.colors.backgroundTertiary,
+            backgroundColor = when (enabled) {
+                true -> AppTheme.colors.primary.copy(alpha = 0.2f)
+                false -> AppTheme.colors.backgroundTertiary
+            },
             contentColor = AppTheme.colors.contentSecondary
         ),
         contentPadding = PaddingValues(),
@@ -56,6 +60,18 @@ fun ButtonTertiary(
 private fun Preview() {
     AppThemePreview {
         ButtonTertiary(
+            text = "Tertiary Button",
+            onClick = { }
+        )
+    }
+}
+
+@PreviewTheme
+@Composable
+private fun PreviewEnabled() {
+    AppThemePreview {
+        ButtonTertiary(
+            enabled = true,
             text = "Tertiary Button",
             onClick = { }
         )
