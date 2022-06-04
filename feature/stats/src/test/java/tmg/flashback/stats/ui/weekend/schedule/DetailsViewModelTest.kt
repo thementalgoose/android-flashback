@@ -44,7 +44,7 @@ internal class DetailsViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `initial loads schedule model for race`() {
+    fun `initial loads details model for race`() {
         val schedule = Schedule.model()
         every { mockRaceRepository.getRace(2020, 1) } returns flow {
             emit(Race.model(schedule = listOf(schedule)))
@@ -55,24 +55,20 @@ internal class DetailsViewModelTest: BaseTest() {
 
         underTest.outputs.list.test {
             assertValue(listOf(
-                DetailsModel.ScheduleDay(
-                    date = schedule.date,
-                    schedules = listOf(
-                        schedule to true
-                    )
-                )
+                DetailsModel.Label.model(),
+                DetailsModel.ScheduleDay.model()
             ))
         }
     }
 
     @Test
-    fun `initial loads schedule model for race weekend with notifications enabled`() {
-        `initial loads schedule model for race weekend`(true)
+    fun `initial loads details model for race weekend with notifications enabled`() {
+        `initial loads details model for race weekend`(true)
     }
 
     @Test
-    fun `initial loads schedule model for race weekend with notifications disabled`() {
-        `initial loads schedule model for race weekend`(false)
+    fun `initial loads details model for race weekend with notifications disabled`() {
+        `initial loads details model for race weekend`(false)
     }
 
     @Test
@@ -87,7 +83,7 @@ internal class DetailsViewModelTest: BaseTest() {
         }
     }
 
-    private fun `initial loads schedule model for race weekend`(enabled: Boolean) {
+    private fun `initial loads details model for race weekend`(enabled: Boolean) {
         val fp1 = Schedule.model(label = "FP1", date = LocalDate.of(2020, 1, 1))
         val fp2 = Schedule.model(label = "FP2", date = LocalDate.of(2020, 1, 2))
         val qualifying = Schedule.model(label = "Qualifying", date = LocalDate.of(2020, 1, 2), time = LocalTime.of(14, 30))
@@ -107,6 +103,7 @@ internal class DetailsViewModelTest: BaseTest() {
 
         underTest.outputs.list.test {
             assertValue(listOf(
+                DetailsModel.Label.model(),
                 DetailsModel.ScheduleDay(
                     date = fp1.date,
                     schedules = listOf(
