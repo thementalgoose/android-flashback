@@ -92,13 +92,13 @@ private fun RaceDetails(
                     .padding(bottom = AppTheme.dimensions.paddingXSmall),
                 text = model.country
             )
-            model.laps?.let {
-                TextBody2(
-                    modifier = Modifier.fillMaxWidth(),
-                    bold = true,
-                    text = stringResource(id = R.string.weekend_info_laps, it)
-                )
-            }
+            TextBody2(
+                bold = true,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = AppTheme.dimensions.paddingXSmall),
+                text = model.date.format("'${model.date.dayOfMonth.ordinalAbbreviation}' MMMM") ?: ""
+            )
         }
         Column(
             horizontalAlignment = Alignment.End
@@ -108,7 +108,7 @@ private fun RaceDetails(
                 false -> LocalContext.current.getFlagResourceAlpha3(model.countryISO)
             }
             Image(
-                modifier = Modifier.size(32.dp),
+                modifier = Modifier.size(42.dp),
                 painter = painterResource(id = resourceId),
                 contentDescription = null,
                 contentScale = ContentScale.Fit,
@@ -118,7 +118,6 @@ private fun RaceDetails(
                 bold = true,
                 modifier = Modifier.padding(vertical = 2.dp)
             )
-            TextBody2(text = model.date.format("'${model.date.dayOfMonth.ordinalAbbreviation}' MMMM") ?: "")
         }
     }
 }
