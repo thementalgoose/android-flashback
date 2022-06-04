@@ -12,7 +12,7 @@ import tmg.flashback.stats.ui.weekend.WeekendViewModel
 import tmg.flashback.stats.ui.weekend.constructor.ConstructorViewModel
 import tmg.flashback.stats.ui.weekend.qualifying.QualifyingViewModel
 import tmg.flashback.stats.ui.weekend.race.RaceViewModel
-import tmg.flashback.stats.ui.weekend.schedule.ScheduleViewModel
+import tmg.flashback.stats.ui.weekend.details.DetailsViewModel
 import tmg.flashback.stats.ui.weekend.sprint.SprintViewModel
 import tmg.flashback.stats.usecases.DefaultSeasonUseCase
 import tmg.flashback.stats.usecases.FetchSeasonUseCase
@@ -24,7 +24,7 @@ val statsModule = module {
     viewModel { DriversStandingViewModel(get(), get(), get()) }
 
     viewModel { WeekendViewModel(get(), get()) }
-    viewModel { ScheduleViewModel(get(), get()) }
+    viewModel { DetailsViewModel(get(), get(), get()) }
     viewModel { QualifyingViewModel(get(), get()) }
     viewModel { SprintViewModel(get(), get()) }
     viewModel { RaceViewModel(get(), get()) }
