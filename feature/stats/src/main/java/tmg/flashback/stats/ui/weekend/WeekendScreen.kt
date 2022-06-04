@@ -14,7 +14,7 @@ import org.koin.androidx.compose.viewModel
 import tmg.flashback.stats.ui.weekend.constructor.ConstructorScreenVM
 import tmg.flashback.stats.ui.weekend.qualifying.QualifyingScreenVM
 import tmg.flashback.stats.ui.weekend.race.RaceScreenVM
-import tmg.flashback.stats.ui.weekend.schedule.ScheduleScreenVM
+import tmg.flashback.stats.ui.weekend.details.DetailsScreenVM
 import tmg.flashback.stats.ui.weekend.sprint.SprintScreenVM
 import tmg.flashback.style.AppTheme
 import tmg.flashback.ui.components.loading.Fade
@@ -78,7 +78,7 @@ fun WeekendScreen(
                     when (x.tab) {
                         WeekendNavItem.SCHEDULE -> {
                             Fade(visible = x.isSelected) {
-                                ScheduleScreenVM(
+                                DetailsScreenVM(
                                     info = weekendInfo,
                                     actionUpClicked = actionUpClicked
                                 )
