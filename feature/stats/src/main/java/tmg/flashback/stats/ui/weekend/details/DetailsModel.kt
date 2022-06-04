@@ -26,7 +26,9 @@ sealed class DetailsModel(
         val url: String?,
     ): DetailsModel(
         id = "link-$label"
-    )
+    ) {
+        companion object
+    }
 
     data class Label(
         val label: StringHolder,
@@ -34,5 +36,7 @@ sealed class DetailsModel(
         val icon: Int,
     ): DetailsModel(
         id = "label-$label"
-    )
+    ) {
+        companion object
+    }
 }
