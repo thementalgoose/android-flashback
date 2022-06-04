@@ -1,16 +1,19 @@
-package tmg.flashback.stats.ui.weekend.schedule
+package tmg.flashback.stats.ui.weekend.details
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.rememberCompositionContext
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.viewModel
@@ -32,28 +35,30 @@ import tmg.utilities.extensions.format
 import tmg.utilities.extensions.ordinalAbbreviation
 
 @Composable
-fun ScheduleScreenVM(
+fun DetailsScreenVM(
     info: WeekendInfo,
     actionUpClicked: () -> Unit
 ) {
-    val viewModel by viewModel<ScheduleViewModel>()
+    val viewModel by viewModel<DetailsViewModel>()
     viewModel.inputs.load(
         season = info.season,
         round = info.round
     )
 
     val items = viewModel.outputs.list.observeAsState(emptyList())
-    ScheduleScreen(
+    DetailsScreen(
         info = info,
         actionUpClicked = actionUpClicked,
+        linkClicked = viewModel.inputs::linkClicked,
         items = items.value
     )
 }
 
 @Composable
-fun ScheduleScreen(
+fun DetailsScreen(
     info: WeekendInfo,
-    items: List<ScheduleModel>,
+    linkClicked: (DetailsModel.Link) -> Unit,
+    items: List<DetailsModel>,
     actionUpClicked: () -> Unit
 ) {
     LazyColumn(
@@ -65,14 +70,16 @@ fun ScheduleScreen(
                     actionUpClicked = actionUpClicked
                 )
             }
-            items(items, key = { it.toString() }) {
-                Column(modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = AppTheme.dimensions.paddingMedium)
-                ) {
-                    Title(it.date)
-                    it.schedules.forEach { (schedule, isNotificationSet) ->
-                        EventItem(item = schedule, showNotificationBell = isNotificationSet)
+            items(items, key = { it.id }) {
+                when (it) {
+                    is DetailsModel.Link -> {
+                        Link(it, linkClicked)
+                    }
+                    is DetailsModel.Label -> {
+                        Label(it)
+                    }
+                    is DetailsModel.ScheduleDay -> {
+                        Day(it)
                     }
                 }
             }
@@ -81,6 +88,97 @@ fun ScheduleScreen(
             }
         }
     )
+}
+
+@Composable
+private fun Link(
+    model: DetailsModel.Link,
+    linkClicked: (DetailsModel.Link) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = modifier
+            .fillMaxWidth()
+            .clickable(
+                onClick = { linkClicked(model) }
+            )
+            .padding(
+                vertical = AppTheme.dimensions.paddingSmall,
+                horizontal = AppTheme.dimensions.paddingMedium
+            )
+    ) {
+        Icon(
+            painter = painterResource(id = model.icon),
+            contentDescription = null,
+            modifier = Modifier.size(24.dp),
+            tint = AppTheme.colors.contentSecondary
+        )
+        Spacer(Modifier.width(AppTheme.dimensions.paddingSmall))
+        TextBody1(
+            bold = true,
+            modifier = Modifier.weight(1f),
+            text = stringResource(id = model.label)
+        )
+        Spacer(Modifier.width(AppTheme.dimensions.paddingSmall))
+        Icon(
+            painter = painterResource(id = R.drawable.arrow_more),
+            contentDescription = null,
+            modifier = Modifier
+                .size(24.dp)
+                .alpha(0.4f),
+            tint = AppTheme.colors.contentTertiary
+        )
+    }
+}
+
+@Composable
+private fun Label(
+    model: DetailsModel.Label,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(
+                vertical = AppTheme.dimensions.paddingSmall,
+                horizontal = AppTheme.dimensions.paddingMedium
+            )
+    ) {
+        Icon(
+            painter = painterResource(id = model.icon),
+            contentDescription = null,
+            modifier = Modifier.size(24.dp),
+            tint = AppTheme.colors.contentSecondary
+        )
+        Spacer(Modifier.width(AppTheme.dimensions.paddingSmall))
+        TextBody1(
+            bold = true,
+            modifier = Modifier.weight(1f),
+            text = model.label.resolve(LocalContext.current)
+        )
+    }
+}
+
+@Composable
+private fun Day(
+    model: DetailsModel.ScheduleDay,
+    modifier: Modifier = Modifier
+) {
+    Column(modifier = modifier
+        .fillMaxWidth()
+        .padding(
+            top = AppTheme.dimensions.paddingXSmall,
+            start = AppTheme.dimensions.paddingMedium,
+            end = AppTheme.dimensions.paddingMedium
+        )
+    ) {
+        Title(model.date)
+        model.schedules.forEach { (schedule, isNotificationSet) ->
+            EventItem(item = schedule, showNotificationBell = isNotificationSet)
+        }
+    }
 }
 
 @Composable
@@ -140,18 +238,24 @@ private fun Preview(
     @PreviewParameter(RaceProvider::class) race: Race
 ) {
     AppThemePreview {
-        ScheduleScreen(
+        DetailsScreen(
             actionUpClicked = { },
+            linkClicked = { },
             info = WeekendInfo.from(race.raceInfo),
             items = listOf(
-                ScheduleModel(
+                DetailsModel.Link(
+                    label = R.string.details_link_youtube,
+                    icon = R.drawable.ic_details_youtube,
+                    url = "https://www.youtube.com"
+                ),
+                DetailsModel.ScheduleDay(
                     date = LocalDate.of(2020, 1, 1),
                     schedules = listOf(
                         Schedule("FP1", LocalDate.now(), LocalTime.of(9, 0)) to true,
                         Schedule("FP2", LocalDate.now(), LocalTime.of(11, 0)) to false
                     )
                 ),
-                ScheduleModel(
+                DetailsModel.ScheduleDay(
                     date = LocalDate.of(2020, 1, 2),
                     schedules = listOf(
                         Schedule("FP3", LocalDate.now(), LocalTime.of(9, 0)) to true,

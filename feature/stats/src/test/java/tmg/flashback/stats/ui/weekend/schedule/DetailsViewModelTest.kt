@@ -2,6 +2,7 @@ package tmg.flashback.stats.ui.weekend.schedule
 
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.verify
 import kotlinx.coroutines.flow.flow
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -12,20 +13,25 @@ import tmg.flashback.formula1.model.Schedule
 import tmg.flashback.formula1.model.model
 import tmg.flashback.statistics.repo.RaceRepository
 import tmg.flashback.stats.repository.NotificationRepository
+import tmg.flashback.stats.ui.weekend.details.DetailsModel
+import tmg.flashback.stats.ui.weekend.details.DetailsViewModel
+import tmg.flashback.ui.navigation.ApplicationNavigationComponent
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.test
 
-internal class ScheduleViewModelTest: BaseTest() {
+internal class DetailsViewModelTest: BaseTest() {
 
     private val mockRaceRepository: RaceRepository = mockk(relaxed = true)
     private val mockNotificationRepository: NotificationRepository = mockk(relaxed = true)
+    private val mockApplicationNavigationComponent: ApplicationNavigationComponent = mockk(relaxed = true)
 
-    private lateinit var underTest: ScheduleViewModel
+    private lateinit var underTest: DetailsViewModel
 
     private fun initUnderTest() {
-        underTest = ScheduleViewModel(
+        underTest = DetailsViewModel(
             raceRepository = mockRaceRepository,
-            notificationRepository = mockNotificationRepository
+            notificationRepository = mockNotificationRepository,
+            applicationNavigationComponent = mockApplicationNavigationComponent
         )
     }
 
@@ -49,7 +55,7 @@ internal class ScheduleViewModelTest: BaseTest() {
 
         underTest.outputs.list.test {
             assertValue(listOf(
-                ScheduleModel(
+                DetailsModel.ScheduleDay(
                     date = schedule.date,
                     schedules = listOf(
                         schedule to true
@@ -67,6 +73,18 @@ internal class ScheduleViewModelTest: BaseTest() {
     @Test
     fun `initial loads schedule model for race weekend with notifications disabled`() {
         `initial loads schedule model for race weekend`(false)
+    }
+
+    @Test
+    fun `click link calls application component`() {
+        val link = DetailsModel.Link(0, 0, "https://url.com")
+        initUnderTest()
+
+        underTest.inputs.linkClicked(link)
+
+        verify {
+            mockApplicationNavigationComponent.openUrl("https://url.com")
+        }
     }
 
     private fun `initial loads schedule model for race weekend`(enabled: Boolean) {
@@ -89,20 +107,20 @@ internal class ScheduleViewModelTest: BaseTest() {
 
         underTest.outputs.list.test {
             assertValue(listOf(
-                ScheduleModel(
+                DetailsModel.ScheduleDay(
                     date = fp1.date,
                     schedules = listOf(
                         fp1 to enabled
                     )
                 ),
-                ScheduleModel(
+                DetailsModel.ScheduleDay(
                     date = qualifying.date,
                     schedules = listOf(
                         fp2 to enabled,
                         qualifying to enabled
                     )
                 ),
-                ScheduleModel(
+                DetailsModel.ScheduleDay(
                     date = race.date,
                     schedules = listOf(
                         race to enabled
