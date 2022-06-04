@@ -75,9 +75,7 @@ class DetailsViewModel(
     }
 
     override fun linkClicked(model: DetailsModel.Link) {
-        model.url?.let {
-            applicationNavigationComponent.openUrl(it)
-        }
+        applicationNavigationComponent.openUrl(model.url)
     }
 
     private fun initialSchedule(models: List<Schedule>): List<DetailsModel> {
