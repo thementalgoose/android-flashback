@@ -23,7 +23,7 @@ sealed class DetailsModel(
         val label: Int,
         @DrawableRes
         val icon: Int,
-        val url: String?,
+        val url: String,
     ): DetailsModel(
         id = "link-$label"
     ) {
