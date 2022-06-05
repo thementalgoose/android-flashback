@@ -31,7 +31,7 @@ private val colorIndicator: Dp = 6.dp
 fun DriverInfo(
     driver: DriverConstructor,
     position: Int?,
-    extraContent: (@Composable () -> Unit)? = null,
+    extraContent: (@Composable RowScope.() -> Unit)? = null,
     modifier: Modifier = Modifier
 ) {
     Row(modifier = modifier

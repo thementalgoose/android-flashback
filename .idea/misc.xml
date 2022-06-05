@@ -219,7 +219,6 @@
         <entry key="feature/statistics/src/main/res/drawable/ic_pos_up.xml" value="0.1405" />
         <entry key="feature/statistics/src/main/res/drawable/ic_race_finishes.xml" value="0.2325" />
         <entry key="feature/statistics/src/main/res/drawable/ic_race_grid.xml" value="0.1405" />
-        <entry key="feature/statistics/src/main/res/drawable/ic_search_driver.xml" value="0.2595" />
         <entry key="feature/statistics/src/main/res/drawable/ic_wikipedia.xml" value="0.1525" />
         <entry key="feature/statistics/src/main/res/drawable/ic_youtube.xml" value="0.1525" />
         <entry key="feature/statistics/src/main/res/drawable/nav_constructor.xml" value="0.2325" />
@@ -250,7 +249,6 @@
         <entry key="feature/stats/src/main/res/drawable/ic_error_not_available.xml" value="0.254" />
         <entry key="feature/stats/src/main/res/drawable/ic_error_not_available_yet.xml" value="0.254" />
         <entry key="feature/stats/src/main/res/drawable/ic_fastest_lap.xml" value="0.2515" />
-        <entry key="feature/stats/src/main/res/drawable/ic_search_circuits.xml" value="0.2595" />
         <entry key="feature/stats/src/main/res/drawable/nav_constructor.xml" value="0.2315" />
         <entry key="feature/stats/src/main/res/drawable/nav_qualifying.xml" value="0.2315" />
         <entry key="feature/stats/src/main/res/drawable/nav_race.xml" value="0.2315" />

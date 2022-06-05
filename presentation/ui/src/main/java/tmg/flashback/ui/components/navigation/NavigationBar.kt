@@ -103,7 +103,11 @@ private fun Item(
             maxLines = 1,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 10.dp),
+                .padding(
+                    bottom = 10.dp,
+                    start = 2.dp,
+                    end = 2.dp
+                ),
             text = item.label?.let { stringResource(id = it) } ?: "",
             textColor = colour.value,
             bold = true
