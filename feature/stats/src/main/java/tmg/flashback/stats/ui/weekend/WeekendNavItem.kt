@@ -11,7 +11,7 @@ enum class WeekendNavItem(
     val icon: Int
 ) {
     SCHEDULE(
-        label = R.string.nav_schedule,
+        label = R.string.nav_details,
         icon = R.drawable.nav_schedule
     ),
     QUALIFYING(
