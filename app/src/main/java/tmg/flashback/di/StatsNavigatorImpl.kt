@@ -3,6 +3,7 @@ package tmg.flashback.di
 import androidx.appcompat.app.AppCompatActivity
 import org.threeten.bp.LocalDate
 import tmg.flashback.statistics.databinding.FragmentBottomSheetNotificationsOnboardingBinding
+import tmg.flashback.statistics.ui.circuit.CircuitActivity
 import tmg.flashback.statistics.ui.dashboard.onboarding.OnboardingNotificationBottomSheetFragment
 import tmg.flashback.statistics.ui.overview.constructor.ConstructorActivity
 import tmg.flashback.statistics.ui.overview.driver.DriverActivity
@@ -65,6 +66,17 @@ class StatsNavigatorImpl(
         val activity = activity ?: return
         val fragment = OnboardingNotificationBottomSheetFragment()
         fragment.show(activity.supportFragmentManager, "ONBOARDING")
+    }
+
+    override fun goToCircuitOverview(circuitId: String, circuitName: String) {
+        val activity = activity ?: return
+
+        val intent = CircuitActivity.intent(
+            context = activity,
+            circuitId = circuitId,
+            circuitName = circuitName
+        )
+        activity.startActivity(intent)
     }
 
     override fun goToDriverOverview(driverId: String, driverName: String) {

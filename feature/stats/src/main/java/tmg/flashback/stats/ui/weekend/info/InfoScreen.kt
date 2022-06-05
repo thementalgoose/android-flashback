@@ -92,13 +92,6 @@ private fun RaceDetails(
                     .padding(bottom = AppTheme.dimensions.paddingXSmall),
                 text = model.country
             )
-            model.laps?.let {
-                TextBody2(
-                    modifier = Modifier.fillMaxWidth(),
-                    bold = true,
-                    text = stringResource(id = R.string.weekend_info_laps, it)
-                )
-            }
         }
         Column(
             horizontalAlignment = Alignment.End
