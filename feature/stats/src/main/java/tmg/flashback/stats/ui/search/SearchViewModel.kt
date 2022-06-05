@@ -9,6 +9,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import org.threeten.bp.LocalDate
 import tmg.flashback.ads.repository.AdsRepository
 import tmg.flashback.formula1.model.Circuit
 import tmg.flashback.formula1.model.Constructor
@@ -18,9 +19,10 @@ import tmg.flashback.statistics.repo.CircuitRepository
 import tmg.flashback.statistics.repo.ConstructorRepository
 import tmg.flashback.statistics.repo.DriverRepository
 import tmg.flashback.statistics.repo.OverviewRepository
+import tmg.flashback.stats.StatsNavigationComponent
+import tmg.flashback.stats.di.StatsNavigator
+import tmg.flashback.stats.ui.weekend.WeekendInfo
 import tmg.utilities.extensions.extend
-import tmg.utilities.lifecycle.DataEvent
-import tmg.utilities.lifecycle.SingleLiveEvent
 
 interface SearchViewModelInputs {
     fun inputSearch(search: String)
@@ -41,6 +43,8 @@ class SearchViewModel(
     private val circuitRepository: CircuitRepository,
     private val overviewRepository: OverviewRepository,
     private val adsRepository: AdsRepository,
+    private val statsNavigationComponent: StatsNavigationComponent,
+    private val statsNavigator: StatsNavigator,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), SearchViewModelInputs, SearchViewModelOutputs {
 
@@ -118,13 +122,41 @@ class SearchViewModel(
 
     override fun clickItem(item: SearchItem) {
         when (item) {
-            is SearchItem.Circuit -> TODO()
-            is SearchItem.Constructor -> TODO()
-            is SearchItem.Driver -> TODO()
-            is SearchItem.Race -> TODO()
-            SearchItem.Advert -> TODO()
-            SearchItem.ErrorItem -> TODO()
-            SearchItem.Placeholder -> TODO()
+            is SearchItem.Circuit -> {
+                statsNavigator.goToCircuitOverview(
+                    circuitId = item.circuitId,
+                    circuitName = item.name
+                )
+            }
+            is SearchItem.Constructor -> {
+                statsNavigator.goToConstructorOverview(
+                    constructorId = item.constructorId,
+                    constructorName = item.name
+                )
+            }
+            is SearchItem.Driver -> {
+                statsNavigator.goToDriverOverview(
+                    driverId = item.driverId,
+                    driverName = item.name
+                )
+            }
+            is SearchItem.Race -> {
+                statsNavigationComponent.weekend(
+                    weekendInfo = WeekendInfo(
+                        season = item.season,
+                        round = item.round,
+                        raceName = item.raceName,
+                        circuitId = item.circuitId,
+                        circuitName = item.circuitName,
+                        country = item.country,
+                        countryISO = item.countryISO,
+                        date = item.date
+                    )
+                )
+            }
+            SearchItem.Advert -> {}
+            SearchItem.ErrorItem -> {}
+            SearchItem.Placeholder -> {}
         }
     }
 

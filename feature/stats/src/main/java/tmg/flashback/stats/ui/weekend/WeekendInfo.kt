@@ -14,7 +14,6 @@ data class WeekendInfo(
     val circuitName: String,
     val country: String,
     val countryISO: String,
-    val laps: String? = null,
     val date: LocalDate
 ): Parcelable {
     companion object
@@ -33,7 +32,6 @@ fun WeekendInfo.Companion.from(raceInfo: RaceInfo): WeekendInfo {
         circuitName = raceInfo.circuit.name,
         country = raceInfo.circuit.country,
         countryISO = raceInfo.circuit.countryISO,
-        laps = raceInfo.laps,
         date = raceInfo.date,
     )
 }
@@ -46,6 +44,5 @@ internal val fakeWeekendInfo: WeekendInfo = WeekendInfo(
     circuitName = "Silverstone",
     country = "Country",
     countryISO = "GB",
-    laps = "57",
     date = LocalDate.of(2020, 1, 1)
 )

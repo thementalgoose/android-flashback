@@ -3,6 +3,7 @@ package tmg.flashback.stats.ui.search
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.verify
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runBlockingTest
@@ -16,6 +17,8 @@ import tmg.flashback.statistics.repo.CircuitRepository
 import tmg.flashback.statistics.repo.ConstructorRepository
 import tmg.flashback.statistics.repo.DriverRepository
 import tmg.flashback.statistics.repo.OverviewRepository
+import tmg.flashback.stats.StatsNavigationComponent
+import tmg.flashback.stats.di.StatsNavigator
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertDataEventValue
 import tmg.testutils.livedata.assertEventFired
@@ -28,6 +31,8 @@ internal class SearchViewModelTest: BaseTest() {
     private val mockConstructorsRepository: ConstructorRepository = mockk(relaxed = true)
     private val mockDriversRepository: DriverRepository = mockk(relaxed = true)
     private val mockOverviewRepository: OverviewRepository = mockk(relaxed = true)
+    private val mockStatsNavigator: StatsNavigator = mockk(relaxed = true)
+    private val mockStatisticsNavigationComponent: StatsNavigationComponent = mockk(relaxed = true)
     private val mockAdsRepository: AdsRepository = mockk(relaxed = true)
 
     private lateinit var sut: SearchViewModel
@@ -39,6 +44,8 @@ internal class SearchViewModelTest: BaseTest() {
             mockCircuitRepository,
             mockOverviewRepository,
             mockAdsRepository,
+            mockStatisticsNavigationComponent,
+            mockStatsNavigator,
             ioDispatcher = coroutineScope.testDispatcher
         )
     }
@@ -261,24 +268,50 @@ internal class SearchViewModelTest: BaseTest() {
     //endregion
 
     @Test
-    fun `click item fires click event`() {
-        val model = SearchItem.constructorModel()
+    fun `click item for constructor fires click event`() {
+        val model = SearchItem.Constructor.model()
 
         initSUT()
         sut.inputs.clickItem(model)
 
-        sut.outputs.openLink.test {
-            assertDataEventValue(model)
+        verify {
+            mockStatsNavigator.goToConstructorOverview(any(), any())
         }
     }
 
     @Test
-    fun `clicking open category opens the category event`() {
-        initSUT()
-        sut.inputs.openCategory()
+    fun `click item for driver fires click event`() {
+        val model = SearchItem.Driver.model()
 
-        sut.outputs.openCategoryPicker.test {
-            assertEventFired()
+        initSUT()
+        sut.inputs.clickItem(model)
+
+        verify {
+            mockStatsNavigator.goToDriverOverview(any(), any())
+        }
+    }
+
+    @Test
+    fun `click item for race fires click event`() {
+        val model = SearchItem.Race.model()
+
+        initSUT()
+        sut.inputs.clickItem(model)
+
+        verify {
+            mockStatisticsNavigationComponent.weekend(any())
+        }
+    }
+
+    @Test
+    fun `click item for circuit fires click event`() {
+        val model = SearchItem.Circuit.model()
+
+        initSUT()
+        sut.inputs.clickItem(model)
+
+        verify {
+            mockStatsNavigator.goToCircuitOverview(any(), any())
         }
     }
 }

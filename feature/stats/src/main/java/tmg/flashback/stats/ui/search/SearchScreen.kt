@@ -31,10 +31,13 @@ fun SearchScreenVM(
 ) {
     val viewModel by viewModel<SearchViewModel>()
 
-
+    val category = viewModel.outputs.selectedCategory.observeAsState()
     val list = viewModel.outputs.results.observeAsState(emptyList())
     SearchScreen(
         actionUpClicked = actionUpClicked,
+        searchInputUpdated = viewModel.inputs::inputSearch,
+        searchCategory = category.value,
+        searchCategoryUpdated = viewModel.inputs::inputCategory,
         list = list.value
     )
 }
@@ -42,6 +45,9 @@ fun SearchScreenVM(
 @Composable
 fun SearchScreen(
     actionUpClicked: () -> Unit,
+    searchCategory: SearchCategory?,
+    searchCategoryUpdated: (SearchCategory) -> Unit,
+    searchInputUpdated: (String) -> Unit,
     list: List<SearchItem>
 ) {
     LazyColumn(content = {
@@ -57,20 +63,27 @@ fun SearchScreen(
             Column(Modifier.fillMaxWidth()) {
                 Row(modifier = Modifier.horizontalScroll(rememberScrollState())) {
                     Spacer(Modifier.width(16.dp))
-                    ButtonTertiary(text = stringResource(id = R.string.search_category_driver), onClick = {  }, enabled = true)
-                    Spacer(Modifier.width(8.dp))
-                    ButtonTertiary(text = stringResource(id = R.string.search_category_constructors), onClick = {  })
-                    Spacer(Modifier.width(8.dp))
-                    ButtonTertiary(text = stringResource(id = R.string.search_category_races), onClick = {  })
-                    Spacer(Modifier.width(8.dp))
-                    ButtonTertiary(text = stringResource(id = R.string.search_category_circuits), onClick = {  })
+                    SearchCategory.values().forEach {
+                        ButtonTertiary(
+                            text = stringResource(it.label),
+                            onClick = {
+                                searchCategoryUpdated(it)
+                            },
+                            enabled = it == searchCategory
+                        )
+                        Spacer(Modifier.width(8.dp))
+                    }
                     Spacer(Modifier.width(16.dp))
                 }
             }
-            val text = remember { mutableStateOf(TextFieldValue()) }
+            val text = remember { mutableStateOf(TextFieldValue("")) }
             InputPrimary(
                 modifier = Modifier.padding(horizontal = AppTheme.dimensions.paddingMedium),
                 text = text,
+                onValueChange = {
+                    text.value = it
+                    searchInputUpdated(it.text)
+                },
                 placeholder = "INFO"
             )
         }
@@ -80,9 +93,9 @@ fun SearchScreen(
                 is SearchItem.Constructor -> ResultConstructor(it)
                 is SearchItem.Driver -> ResultDriver(it)
                 is SearchItem.Race -> ResultRace(it)
-                SearchItem.Advert -> TODO()
-                SearchItem.ErrorItem -> TODO()
-                SearchItem.Placeholder -> TODO()
+                SearchItem.Advert -> {}
+                SearchItem.ErrorItem -> {}
+                SearchItem.Placeholder -> {}
             }
         }
     })
@@ -92,26 +105,26 @@ fun SearchScreen(
 private fun ResultCircuit(
     model: SearchItem.Circuit
 ) {
-    TextBody1("Circuit")
+    TextBody1("Circuit ${model.name}")
 }
 
 @Composable
 private fun ResultRace(
     model: SearchItem.Race
 ) {
-    TextBody1("Race")
+    TextBody1("Race ${model.raceName}")
 }
 
 @Composable
 private fun ResultDriver(
     model: SearchItem.Driver
 ) {
-    TextBody1("Driver")
+    TextBody1("Driver ${model.name}")
 }
 
 @Composable
 private fun ResultConstructor(
     model: SearchItem.Constructor
 ) {
-    TextBody1("Constructor")
+    TextBody1("Constructor ${model.name}")
 }

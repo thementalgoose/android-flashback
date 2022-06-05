@@ -8,6 +8,7 @@ import tmg.flashback.stats.repository.NotificationRepository
 import tmg.flashback.stats.ui.dashboard.calendar.CalendarViewModel
 import tmg.flashback.stats.ui.dashboard.constructors.ConstructorsStandingViewModel
 import tmg.flashback.stats.ui.dashboard.drivers.DriversStandingViewModel
+import tmg.flashback.stats.ui.search.SearchViewModel
 import tmg.flashback.stats.ui.weekend.WeekendViewModel
 import tmg.flashback.stats.ui.weekend.constructor.ConstructorViewModel
 import tmg.flashback.stats.ui.weekend.qualifying.QualifyingViewModel
@@ -29,6 +30,8 @@ val statsModule = module {
     viewModel { SprintViewModel(get(), get()) }
     viewModel { RaceViewModel(get(), get()) }
     viewModel { ConstructorViewModel(get(), get(), get()) }
+
+    viewModel { SearchViewModel(get(), get(), get(), get(), get(), get(), get()) }
 
     single { StatsNavigationComponent(get()) }
 
