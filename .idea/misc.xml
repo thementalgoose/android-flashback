@@ -219,6 +219,9 @@
         <entry key="feature/statistics/src/main/res/drawable/ic_pos_up.xml" value="0.1405" />
         <entry key="feature/statistics/src/main/res/drawable/ic_race_finishes.xml" value="0.2325" />
         <entry key="feature/statistics/src/main/res/drawable/ic_race_grid.xml" value="0.1405" />
+        <entry key="feature/statistics/src/main/res/drawable/ic_search_driver.xml" value="0.2595" />
+        <entry key="feature/statistics/src/main/res/drawable/ic_wikipedia.xml" value="0.1525" />
+        <entry key="feature/statistics/src/main/res/drawable/ic_youtube.xml" value="0.1525" />
         <entry key="feature/statistics/src/main/res/drawable/nav_constructor.xml" value="0.2325" />
         <entry key="feature/statistics/src/main/res/drawable/nav_qualifying.xml" value="0.2325" />
         <entry key="feature/statistics/src/main/res/drawable/nav_race.xml" value="0.2325" />
@@ -232,6 +235,7 @@
         <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/messaging/Message.kt" value="0.67" />
         <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/messaging/ProvidedBy.kt" value="0.5203703703703704" />
         <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/tyres/TyreCompounds.kt" value="0.6655629139072847" />
+        <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/weekend/details/DetailsScreen.kt" value="0.5" />
         <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/weekend/info/InfoScreen.kt" value="0.375" />
         <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/weekend/qualifying/QualifyingScreen.kt" value="0.25" />
         <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/weekend/race/RaceScreen.kt" value="0.375" />
@@ -240,9 +244,13 @@
         <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/weekend/shared/DriverInfo.kt" value="0.5083333333333333" />
         <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/weekend/shared/NotAvailable.kt" value="0.4703703703703704" />
         <entry key="feature/stats/src/main/res/drawable-xxhdpi/ic_pos_down.xml" value="0.1405" />
+        <entry key="feature/stats/src/main/res/drawable/ic_details_laps.xml" value="0.1525" />
+        <entry key="feature/stats/src/main/res/drawable/ic_details_wikipedia.xml" value="0.1525" />
+        <entry key="feature/stats/src/main/res/drawable/ic_details_youtube.xml" value="0.1525" />
         <entry key="feature/stats/src/main/res/drawable/ic_error_not_available.xml" value="0.254" />
         <entry key="feature/stats/src/main/res/drawable/ic_error_not_available_yet.xml" value="0.254" />
         <entry key="feature/stats/src/main/res/drawable/ic_fastest_lap.xml" value="0.2515" />
+        <entry key="feature/stats/src/main/res/drawable/ic_search_circuits.xml" value="0.2595" />
         <entry key="feature/stats/src/main/res/drawable/nav_constructor.xml" value="0.2315" />
         <entry key="feature/stats/src/main/res/drawable/nav_qualifying.xml" value="0.2315" />
         <entry key="feature/stats/src/main/res/drawable/nav_race.xml" value="0.2315" />
@@ -358,11 +366,16 @@
         <entry key="presentation/ui/src/main/java/tmg/flashback/ui/components/settings/SettingsSection.kt" value="0.4068825910931174" />
         <entry key="presentation/ui/src/main/java/tmg/flashback/ui/components/settings/SwitchPreference.kt" value="0.5083333333333333" />
         <entry key="presentation/ui/src/main/res/drawable-night/unknown_avatar.xml" value="0.1985" />
+        <entry key="presentation/ui/src/main/res/drawable/arrow_more.xml" value="0.1525" />
+        <entry key="presentation/ui/src/main/res/drawable/arrow_up.xml" value="0.1525" />
+        <entry key="presentation/ui/src/main/res/drawable/background_bottom_sheet.xml" value="0.1525" />
         <entry key="presentation/ui/src/main/res/drawable/background_pill.xml" value="0.3615" />
+        <entry key="presentation/ui/src/main/res/drawable/background_selected.xml" value="0.1525" />
         <entry key="presentation/ui/src/main/res/drawable/error_internal.xml" value="0.1915" />
         <entry key="presentation/ui/src/main/res/drawable/error_network.xml" value="0.1915" />
         <entry key="presentation/ui/src/main/res/drawable/ic_back.xml" value="0.155" />
         <entry key="presentation/ui/src/main/res/drawable/ic_menu.xml" value="0.1665" />
+        <entry key="presentation/ui/src/main/res/drawable/ic_menu_expanded.xml" value="0.1525" />
         <entry key="presentation/ui/src/main/res/drawable/ic_more.xml" value="0.284" />
         <entry key="presentation/ui/src/main/res/drawable/unknown_avatar.xml" value="0.1985" />
         <entry key="presentation/ui/src/main/res/layout/view_settings_category.xml" value="0.55" />

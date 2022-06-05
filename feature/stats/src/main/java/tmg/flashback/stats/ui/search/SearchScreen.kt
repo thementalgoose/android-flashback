@@ -9,6 +9,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Badge
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -30,8 +31,11 @@ fun SearchScreenVM(
 ) {
     val viewModel by viewModel<SearchViewModel>()
 
+
+    val list = viewModel.outputs.results.observeAsState(emptyList())
     SearchScreen(
-        actionUpClicked = actionUpClicked
+        actionUpClicked = actionUpClicked,
+        list = list.value
     )
 }
 
