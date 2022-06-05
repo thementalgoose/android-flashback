@@ -399,7 +399,7 @@ private fun FastestLap(
         contentDescription = stringResource(id = R.string.ab_fastest_lap),
         modifier = modifier
             .padding(top = 4.dp)
-            .size(16.dp),
+            .size(14.dp),
         tint = AppTheme.colors.f1FastestSector
     )
 }
