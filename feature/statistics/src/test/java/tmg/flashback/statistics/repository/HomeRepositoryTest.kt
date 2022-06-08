@@ -110,20 +110,6 @@ internal class HomeRepositoryTest {
 
     //endregion
 
-    //region Server search enabled
-
-    @Test
-    fun `server search is returned from config repository`() {
-        every { mockConfigManager.getBoolean(keySearch) } returns true
-        initSUT()
-        assertTrue(sut.searchEnabled)
-        verify {
-            mockConfigManager.getBoolean(keySearch)
-        }
-    }
-
-    //endregion
-
     //region Supported Seasons
 
     @Test
@@ -351,7 +337,6 @@ internal class HomeRepositoryTest {
         private const val keyDefaultBanner: String = "banner"
         private const val keyDataProvidedBy: String = "data_provided"
         private const val keySupportedSeasons: String = "supported_seasons"
-        private const val keySearch: String = "search"
 
         // Prefs
         private const val keyDefaultToSchedule: String = "DASHBOARD_DEFAULT_TAB_SCHEDULE"

@@ -20,7 +20,6 @@ class HomeRepository(
         private const val keyDefaultBanner: String = "banner"
         private const val keyDataProvidedBy: String = "data_provided"
         private const val keySupportedSeasons: String = "supported_seasons"
-        private const val keySearch: String = "search"
 
         // Prefs
         private const val keyDefaultToSchedule: String = "DASHBOARD_DEFAULT_TAB_SCHEDULE"
@@ -61,12 +60,6 @@ class HomeRepository(
                 .getJson(keySupportedSeasons, AllSeasonsJson.serializer())
                 ?.convert()
                 ?: emptySet()
-
-    /**
-     * Is the searching of the statistics functionality enabled server side
-     */
-    val searchEnabled: Boolean
-        get() = configManager.getBoolean(keySearch)
 
     /**
      * Default to which tab
