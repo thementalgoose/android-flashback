@@ -62,7 +62,9 @@ fun DriverInfo(
                 )
             }
             Spacer(Modifier.height(4.dp))
-            Row {
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 val resourceId = when (isInPreview()) {
                     true -> R.drawable.gb
                     false -> LocalContext.current.getFlagResourceAlpha3(driver.driver.nationalityISO)
