@@ -9,20 +9,11 @@ import tmg.flashback.statistics.repository.HomeRepository
 import tmg.flashback.statistics.ui.search.SearchActivity
 
 class SearchAppShortcutUseCase(
-    private val homeRepository: HomeRepository,
     private val appShortcutManager: AppShortcutManager
 ) {
 
-    private val enabled: Boolean by lazy {
-        homeRepository.searchEnabled
-    }
-
     fun setup() {
-        if (enabled) {
-            appShortcutManager.addDynamicShortcut(searchShortcutInfo)
-        } else {
-            appShortcutManager.removeDynamicShortcut(searchShortcutInfo.id)
-        }
+        appShortcutManager.addDynamicShortcut(searchShortcutInfo)
     }
 
     companion object {
