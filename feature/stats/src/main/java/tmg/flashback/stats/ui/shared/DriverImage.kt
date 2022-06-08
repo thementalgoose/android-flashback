@@ -35,7 +35,6 @@ fun DriverImage(
     AsyncImage(
         modifier = modifier
             .size(size)
-            .padding(4.dp)
             .clip(RoundedCornerShape(AppTheme.dimensions.radiusSmall)),
         contentScale = ContentScale.Crop,
         model = photoUrl,

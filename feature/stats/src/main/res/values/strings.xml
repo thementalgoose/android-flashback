@@ -28,6 +28,9 @@
 
     <string name="error_weekend_not_available">Unfortunately we don\'t have these results.</string>
     <string name="error_weekend_not_available_yet">We don\'t have these results just yet, please check back after the race. Results usually appear 2–12 hours after every weekend event</string>
+    <string name="error_search_not_found">No results found</string>
+
+    <string name="search_placeholder">Find any driver, constructor, circuit or race from the history of Formula 1</string>
 
     <string name="nav_constructors">Constructors</string>
     <string name="nav_details">Details</string>
