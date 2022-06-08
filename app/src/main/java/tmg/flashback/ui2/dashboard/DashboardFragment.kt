@@ -56,11 +56,9 @@ class DashboardFragment : BaseFragment(),
 
         binding.panels.registerStartPanelStateListeners(this)
 
-        if (homeRepository.searchEnabled) {
-            binding.search.show()
-            binding.search.setOnClickListener {
-                viewModel.inputs.clickSearch()
-            }
+        binding.search.show()
+        binding.search.setOnClickListener {
+            viewModel.inputs.clickSearch()
         }
 
         binding.navigation.selectedItemId = when (viewModel.defaultToSchedule) {
@@ -124,23 +122,19 @@ class DashboardFragment : BaseFragment(),
                 .translationY(0.0f)
                 .setDuration(250L)
                 .start()
-            if (homeRepository.searchEnabled) {
-                binding.search.animate()
-                    .translationY(0.0f)
-                    .setDuration(250L)
-                    .start()
-            }
+            binding.search.animate()
+                .translationY(0.0f)
+                .setDuration(250L)
+                .start()
         } else {
             binding.navigation.animate()
                 .translationY(binding.navigation.height.toFloat())
                 .setDuration(250L)
                 .start()
-            if (homeRepository.searchEnabled) {
-                binding.search.animate()
-                    .translationY(binding.navigation.height.toFloat())
-                    .setDuration(250L)
-                    .start()
-            }
+            binding.search.animate()
+                .translationY(binding.navigation.height.toFloat())
+                .setDuration(250L)
+                .start()
         }
 
         when (panelState) {
@@ -182,15 +176,11 @@ class DashboardFragment : BaseFragment(),
     }
 
     override fun scrollUp() {
-        if (homeRepository.searchEnabled) {
-            binding.search.extend()
-        }
+        binding.search.extend()
     }
 
     override fun scrollDown() {
-        if (homeRepository.searchEnabled) {
-            binding.search.shrink()
-        }
+        binding.search.shrink()
     }
 
     override fun refresh() {
