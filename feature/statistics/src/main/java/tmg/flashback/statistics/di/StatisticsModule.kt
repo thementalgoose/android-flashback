@@ -59,7 +59,7 @@ val statisticsModule = repoModule + module {
     single { UpNextRepository(get()) }
 
     // Use Cases
-    factory { SearchAppShortcutUseCase(get(), get()) }
+    factory { SearchAppShortcutUseCase(get()) }
     factory { DefaultSeasonUseCase(get()) }
     factory { FetchSeasonUseCase(get(), get(), get()) }
 
