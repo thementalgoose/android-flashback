@@ -44,18 +44,6 @@ data class DashboardScreenState(
     val season: Int
 )
 
-@Composable
-fun DashboardScreenVM(
-    windowSize: WindowSize
-) {
-    val viewModel by viewModel<DashboardViewModel>()
-
-    val tabState = viewModel.outputs.currentTab.observeAsState()
-    DashboardScreen(
-        windowSize = windowSize
-    )
-}
-
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun DashboardScreen(

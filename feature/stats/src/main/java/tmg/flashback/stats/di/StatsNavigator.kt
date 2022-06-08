@@ -26,6 +26,11 @@ interface StatsNavigator {
         constructorName: String
     )
 
+    fun goToCircuitOverview(
+        circuitId: String,
+        circuitName: String
+    )
+
     fun goToSearch()
 
     fun goToTyreOverview(
