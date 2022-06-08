@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.RssNavigationComponent
 import tmg.flashback.formula1.constants.Formula1.decadeColours
+import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.stats.di.StatsNavigator
 import tmg.flashback.stats.repository.HomeRepository
 import tmg.flashback.stats.repository.NotificationRepository
@@ -29,6 +30,7 @@ internal class MenuViewModelTest: BaseTest() {
     private val mockRssNavigationComponent: RssNavigationComponent = mockk(relaxed = true)
     private val mockNavigationComponent: ApplicationNavigationComponent = mockk(relaxed = true)
     private val mockStatsNavigator: StatsNavigator = mockk(relaxed = true)
+    private val mockStatsNavigationComponent: StatsNavigationComponent = mockk(relaxed = true)
 
     private lateinit var underTest: MenuViewModel
 
@@ -41,7 +43,8 @@ internal class MenuViewModelTest: BaseTest() {
             mockStyleManager,
             mockRssNavigationComponent,
             mockNavigationComponent,
-            mockStatsNavigator
+            mockStatsNavigator,
+            mockStatsNavigationComponent
         )
     }
 
@@ -119,7 +122,7 @@ internal class MenuViewModelTest: BaseTest() {
         underTest.inputs.clickButton(MenuItems.Button.Search)
 
         verify {
-            mockStatsNavigator.goToSearch()
+            mockStatsNavigationComponent.search()
         }
     }
 

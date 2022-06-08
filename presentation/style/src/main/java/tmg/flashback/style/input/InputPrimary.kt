@@ -32,6 +32,7 @@ fun InputPrimary(
     modifier: Modifier = Modifier,
     keyboardType: KeyboardType = KeyboardType.Text,
     imeAction: ImeAction = ImeAction.Default,
+    onValueChange: (TextFieldValue) -> Unit = { text.value = it },
     maxLines: Int = 1,
 ) {
     TextField(
@@ -47,7 +48,7 @@ fun InputPrimary(
             disabledIndicatorColor = Color.Transparent
         ),
         value = text.value,
-        onValueChange = { text.value = it },
+        onValueChange = onValueChange,
         maxLines = maxLines,
         placeholder = {
             Text(placeholder)

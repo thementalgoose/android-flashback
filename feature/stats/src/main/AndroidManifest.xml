@@ -9,5 +9,9 @@
         <activity android:name=".ui.weekend.WeekendActivity"
             android:exported="false" />
 
+        <activity android:name=".ui.search.SearchActivity"
+            android:windowSoftInputMode="adjustResize"
+            android:exported="false" />
+
     </application>
 </manifest>
