@@ -344,6 +344,7 @@
         <entry key="formula1/src/main/res/drawable/tyre_white.xml" value="0.138" />
         <entry key="formula1/src/main/res/drawable/tyre_yellow.xml" value="0.138" />
         <entry key="presentation/style/src/main/java/tmg/flashback/style/buttons/ButtonPrimary.kt" value="0.5083333333333333" />
+        <entry key="presentation/style/src/main/java/tmg/flashback/style/buttons/ButtonTertiary.kt" value="0.44696969696969696" />
         <entry key="presentation/style/src/main/java/tmg/flashback/style/input/InputPrimary.kt" value="0.31802721088435376" />
         <entry key="presentation/style/src/main/java/tmg/flashback/style/text/TextBody1.kt" value="0.75" />
         <entry key="presentation/style/src/main/java/tmg/flashback/style/text/TextHeadline1.kt" value="0.5083333333333333" />
