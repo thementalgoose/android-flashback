@@ -10,6 +10,7 @@ class AppColors(
     // Theme
     val primary: Color,
     val primaryDark: Color,
+    val primaryLight: Color,
     val accent: Color,
     val error: Color,
     // Content
@@ -74,6 +75,7 @@ internal val textLight: Color = Color(0xFFF8F8F8)
 val lightColours = AppColors(
     primary = Color(0xFF0274D1),
     primaryDark = Color(0xFF0274D1),
+    primaryLight = Color(0xFFCBDDEE),
     accent = Color(0xFF00E2E4),
     error = Color(0xFFF44336),
     contentPrimary = Color(0xFF181818),
@@ -113,6 +115,7 @@ val lightColours = AppColors(
 val darkColours = AppColors(
     primary = Color(0xFF00E2E4),
     primaryDark = Color(0xFF00E2E4),
+    primaryLight = Color(0xFF203F40),
     accent = Color(0xFF0274D1),
     error = Color(0xFFF44336),
     contentPrimary = Color(0xFFF8F8F8),
