@@ -1,5 +1,6 @@
 package tmg.flashback.style.buttons
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.defaultMinSize
@@ -17,13 +18,14 @@ import androidx.compose.ui.unit.dp
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
+import tmg.flashback.style.text.TextBody2
 
 @Composable
 fun ButtonTertiary(
     text: String,
-    enabled: Boolean = false,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    enabled: Boolean = false,
 ) {
     Button(
         modifier = modifier
@@ -31,9 +33,13 @@ fun ButtonTertiary(
             .wrapContentHeight(Alignment.CenterVertically)
             .padding(0.dp)
             .defaultMinSize(1.dp, 1.dp),
-        colors = ButtonDefaults.textButtonColors(
+        border = BorderStroke(0.dp, when (enabled) {
+            true -> AppTheme.colors.primaryLight
+            false -> AppTheme.colors.backgroundTertiary
+        }),
+        colors = ButtonDefaults.outlinedButtonColors(
             backgroundColor = when (enabled) {
-                true -> AppTheme.colors.primary.copy(alpha = 0.2f)
+                true -> AppTheme.colors.primaryLight
                 false -> AppTheme.colors.backgroundTertiary
             },
             contentColor = AppTheme.colors.contentSecondary
@@ -42,14 +48,15 @@ fun ButtonTertiary(
         shape = RoundedCornerShape(6.dp),
         onClick = onClick
     ) {
-        Text(text,
-            style = AppTheme.typography.caption,
+        TextBody2(
+            text,
+            bold = true,
             modifier = Modifier
                 .padding(
-                    start = AppTheme.dimensions.paddingSmall,
-                    top = AppTheme.dimensions.paddingXSmall,
-                    end = AppTheme.dimensions.paddingSmall,
-                    bottom = AppTheme.dimensions.paddingXSmall
+                    start = AppTheme.dimensions.paddingNSmall,
+                    top = AppTheme.dimensions.paddingSmall,
+                    end = AppTheme.dimensions.paddingNSmall,
+                    bottom = AppTheme.dimensions.paddingSmall
                 )
         )
     }

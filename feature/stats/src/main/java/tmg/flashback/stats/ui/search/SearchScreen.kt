@@ -60,6 +60,7 @@ fun SearchScreen(
     list: List<SearchItem>
 ) {
     Column(Modifier
+        .background(AppTheme.colors.backgroundPrimary)
         .navigationBarsPadding()
         .statusBarsPadding()
     ) {
@@ -68,7 +69,13 @@ fun SearchScreen(
             content = {
                 item(key = "header") {
                     Header(
-                        text = stringResource(id = R.string.search_title),
+                        text = when (searchCategory) {
+                            SearchCategory.DRIVER -> stringResource(id = R.string.search_category_driver)
+                            SearchCategory.CONSTRUCTOR -> stringResource(id = R.string.search_category_constructors)
+                            SearchCategory.CIRCUIT -> stringResource(id = R.string.search_category_circuits)
+                            SearchCategory.RACE -> stringResource(id = R.string.search_category_races)
+                            null -> stringResource(id = R.string.search_title)
+                        },
                         icon = painterResource(id = R.drawable.ic_back),
                         iconContentDescription = stringResource(id = R.string.ab_back),
                         actionUpClicked = actionUpClicked
