@@ -9,7 +9,8 @@ data class CircuitHistoryRace(
     val round: Int,
     val wikiUrl: String?,
     val date: LocalDate,
-    val time: LocalTime?
+    val time: LocalTime?,
+    val preview: List<CircuitHistoryRaceResult>
 ) {
     companion object
 }

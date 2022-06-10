@@ -12,7 +12,7 @@ import tmg.flashback.statistics.room.di.roomModule
 val repoModule = networkModule + roomModule + module {
 
     // Mappers - App
-    single { CircuitMapper() }
+    single { CircuitMapper(get(), get()) }
     single { ConstructorDataMapper() }
     single { ConstructorMapper(get(), get()) }
     single { ConstructorStandingMapper(get(), get()) }
