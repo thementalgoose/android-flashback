@@ -237,6 +237,7 @@
         <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/messaging/Message.kt" value="0.67" />
         <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/messaging/ProvidedBy.kt" value="0.5203703703703704" />
         <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/tyres/TyreCompounds.kt" value="0.6655629139072847" />
+        <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/weekend/constructor/ConstructorScreen.kt" value="0.1735159817351598" />
         <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/weekend/details/DetailsScreen.kt" value="0.5" />
         <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/weekend/info/InfoScreen.kt" value="0.375" />
         <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/weekend/qualifying/QualifyingScreen.kt" value="0.25" />
