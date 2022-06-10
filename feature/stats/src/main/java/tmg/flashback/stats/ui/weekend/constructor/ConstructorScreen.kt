@@ -149,7 +149,7 @@ private fun ConstructorResult(
                     when (it) {
                         0f -> "0"
                         progress -> model.points.pointsDisplay()
-                        else -> (it * model.maxTeamPoints).roundToInt().toString()
+                        else -> (it * model.maxTeamPoints).takeIf { !it.isNaN() }?.roundToInt()?.toString() ?: model.points.pointsDisplay()
                     }
                 }
             )

@@ -191,7 +191,7 @@ private fun ConstructorStandings(
                     when (it) {
                         0f -> "0"
                         progress -> model.standings.points.pointsDisplay()
-                        else -> (it * maxPoints).roundToInt().toString()
+                        else -> (it * maxPoints).takeIf { !it.isNaN() }?.roundToInt()?.toString() ?: model.standings.points.pointsDisplay()
                     }
                 }
             )
