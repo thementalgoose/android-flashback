@@ -1,26 +1,11 @@
 package tmg.flashback.statistics.repo.mappers.network
 
+import tmg.flashback.statistics.network.models.circuits.CircuitPreviewPosition
 import tmg.flashback.statistics.network.models.circuits.CircuitResult
 import tmg.flashback.statistics.network.models.circuits.CircuitResultRace
-import tmg.flashback.statistics.room.models.circuit.CircuitHistory
-import tmg.flashback.statistics.room.models.circuit.CircuitRound
-import tmg.flashback.statistics.room.models.circuit.CircuitRoundWithResults
+import tmg.flashback.statistics.room.models.circuit.*
 
-class NetworkCircuitMapper(
-    private val networkCircuitDataMapper: NetworkCircuitDataMapper
-) {
-
-    @Throws(RuntimeException::class)
-    fun mapCircuit(circuit: tmg.flashback.statistics.network.models.circuits.CircuitHistory?): CircuitHistory? {
-        if (circuit == null) return null
-        return CircuitHistory(
-            circuit = networkCircuitDataMapper.mapCircuitData(circuit.data),
-            races = (circuit.results ?: emptyMap())
-                .map { (_, value) ->
-                    mapCircuitResult(circuit.data.id, value)
-                }
-        )
-    }
+class NetworkCircuitMapper {
 
     @Throws(RuntimeException::class)
     fun mapCircuitRounds(circuitId: String, resultRace: CircuitResult): CircuitRound {
@@ -35,23 +20,20 @@ class NetworkCircuitMapper(
         )
     }
 
-    private fun mapCircuitResult(constructorId: String, result: CircuitResult): CircuitRoundWithResults {
-        return CircuitRoundWithResults(
-            round = mapCircuitResultRace(constructorId, result.race),
-            // TODO: Circuit results preview - Map this properly
-            results = emptyList()
-        )
+    @Throws(RuntimeException::class)
+    fun mapCircuitPreviews(model: CircuitResult): List<CircuitRoundResult> {
+        return model.preview?.map { position ->
+            mapCircuitRoundResult(position, model.race.season, model.race.round)
+        } ?: emptyList()
     }
 
-    private fun mapCircuitResultRace(circuitId: String, race: CircuitResultRace): CircuitRound {
-        return CircuitRound(
-            circuitId = circuitId,
-            season = race.season,
-            round = race.round,
-            name = race.name,
-            date = race.date,
-            time = race.time,
-            wikiUrl = race.wikiUrl,
+    private fun mapCircuitRoundResult(position: CircuitPreviewPosition, season: Int, round: Int): CircuitRoundResult {
+        return CircuitRoundResult(
+            season = season,
+            round = round,
+            position = position.position,
+            driverId = position.driver.id,
+            constructorId = position.constructor.id
         )
     }
 }
