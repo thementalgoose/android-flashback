@@ -3,7 +3,7 @@ package tmg.flashback.stats.ui.circuits
 import androidx.lifecycle.ViewModel
 
 interface CircuitViewModelInputs {
-
+    fun load(circuitId: String)
 }
 
 interface CircuitViewModelOutputs {
