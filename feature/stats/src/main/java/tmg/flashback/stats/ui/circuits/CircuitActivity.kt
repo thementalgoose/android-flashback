@@ -18,7 +18,10 @@ class CircuitActivity: BaseActivity() {
             AppTheme {
                 CircuitScreenVM(
                     circuitId = circuitId,
-                    circuitName = circuitName
+                    circuitName = circuitName,
+                    actionUpClicked = {
+                        finish()
+                    }
                 )
             }
         }

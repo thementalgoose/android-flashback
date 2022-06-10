@@ -15,4 +15,7 @@ class CircuitViewModel: ViewModel(), CircuitViewModelInputs, CircuitViewModelOut
     val inputs: CircuitViewModelInputs = this
     val outputs: CircuitViewModelOutputs = this
 
+    override fun load(circuitId: String) {
+
+    }
 }
