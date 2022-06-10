@@ -1,14 +1,15 @@
 package tmg.flashback.statistics.repo.mappers.app
 
-import tmg.flashback.formula1.model.Circuit
-import tmg.flashback.formula1.model.CircuitHistory
-import tmg.flashback.formula1.model.CircuitHistoryRace
-import tmg.flashback.formula1.model.Location
+import tmg.flashback.formula1.model.*
+import tmg.flashback.statistics.room.models.circuit.CircuitRoundResultWithDriverConstructor
 import tmg.flashback.statistics.room.models.circuit.CircuitRoundWithResults
 import tmg.utilities.utils.LocalDateUtils.Companion.requireFromDate
 import tmg.utilities.utils.LocalTimeUtils.Companion.fromTime
 
-class CircuitMapper {
+class CircuitMapper(
+    private val driverMapper: DriverDataMapper,
+    private val constructorMapper: ConstructorDataMapper
+) {
 
     @Throws(NullPointerException::class)
     fun mapCircuit(circuit: tmg.flashback.statistics.room.models.circuit.Circuit?): Circuit? {
@@ -44,6 +45,15 @@ class CircuitMapper {
             wikiUrl = circuitRoundWithResults.round.wikiUrl,
             date = requireFromDate(circuitRoundWithResults.round.date),
             time = fromTime(circuitRoundWithResults.round.time),
+            preview = circuitRoundWithResults.results.map { mapCircuitRaceResult(it) }
+        )
+    }
+
+    private fun mapCircuitRaceResult(model: CircuitRoundResultWithDriverConstructor): CircuitHistoryRaceResult {
+        return CircuitHistoryRaceResult(
+            position = model.result.position,
+            driver = driverMapper.mapDriver(model.driver),
+            constructor = constructorMapper.mapConstructorData(model.constructor)
         )
     }
 

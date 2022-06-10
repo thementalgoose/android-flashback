@@ -9,8 +9,7 @@ import tmg.flashback.formula1.model.CircuitHistory
 import tmg.flashback.statistics.network.api.FlashbackApi
 import tmg.flashback.statistics.repo.base.BaseRepository
 import tmg.flashback.statistics.repo.mappers.app.CircuitMapper
-import tmg.flashback.statistics.repo.mappers.network.NetworkCircuitDataMapper
-import tmg.flashback.statistics.repo.mappers.network.NetworkCircuitMapper
+import tmg.flashback.statistics.repo.mappers.network.*
 import tmg.flashback.statistics.room.FlashbackDatabase
 
 class CircuitRepository(
@@ -19,6 +18,8 @@ class CircuitRepository(
     crashController: CrashController,
     networkConnectivityManager: NetworkConnectivityManager,
     private val networkCircuitMapper: NetworkCircuitMapper,
+    private val networkDriverDataMapper: NetworkDriverDataMapper,
+    private val networkConstructorDataMapper: NetworkConstructorDataMapper,
     private val networkCircuitDataMapper: NetworkCircuitDataMapper,
     private val circuitMapper: CircuitMapper,
 ): BaseRepository(crashController, networkConnectivityManager) {
@@ -37,8 +38,36 @@ class CircuitRepository(
             networkCircuitMapper.mapCircuitRounds(data.data.id, it)
         }
 
+        // Drivers
+        val drivers = (data.results?.values ?: emptyList())
+            .map {
+                it.preview?.map { it.driver } ?: emptyList()
+            }
+            .flatten()
+            .distinctBy { it.id }
+            .map { networkDriverDataMapper.mapDriverData(it) }
+        persistence.driverDao().insertAll(drivers)
+
+        // Constructors
+        val constructors = (data.results?.values ?: emptyList())
+            .map {
+                it.preview?.map { it.constructor } ?: emptyList()
+            }
+            .flatten()
+            .distinctBy { it.id }
+            .map { networkConstructorDataMapper.mapConstructorData(it) }
+        persistence.constructorDao().insertAll(constructors)
+
+        // Circuit results
+        val results = (data.results?.values ?: emptyList())
+            .map {
+                networkCircuitMapper.mapCircuitPreviews(it)
+            }
+            .flatten()
+
         persistence.circuitDao().insertCircuitRounds(circuitRounds)
         persistence.circuitDao().insertCircuit(listOf(circuit))
+        persistence.circuitDao().insertCircuitRoundResults(results)
 
         return@attempt true
     }
