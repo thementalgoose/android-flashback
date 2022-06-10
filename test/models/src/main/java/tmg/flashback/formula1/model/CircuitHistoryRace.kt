@@ -9,7 +9,8 @@ fun CircuitHistoryRace.Companion.model(
     round: Int = 1,
     wikiUrl: String? = "wikiUrl",
     date: LocalDate = LocalDate.of(1995, 10, 12),
-    time: LocalTime? = LocalTime.of(12, 34)
+    time: LocalTime? = LocalTime.of(12, 34),
+    preview: List<CircuitHistoryRaceResult> = listOf(CircuitHistoryRaceResult.model())
 ): CircuitHistoryRace = CircuitHistoryRace(
     name = name,
     season = season,
@@ -17,4 +18,5 @@ fun CircuitHistoryRace.Companion.model(
     wikiUrl = wikiUrl,
     date = date,
     time = time,
+    preview = preview
 )
