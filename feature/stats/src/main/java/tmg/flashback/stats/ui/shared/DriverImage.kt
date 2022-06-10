@@ -18,11 +18,13 @@ import tmg.flashback.style.AppTheme
 @Composable
 fun DriverImage(
     driver: Driver,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    size: Dp = 48.dp
 ) {
     DriverImage(
         photoUrl = driver.photoUrl,
-        modifier = modifier
+        modifier = modifier,
+        size = size
     )
 }
 
