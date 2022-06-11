@@ -2,6 +2,7 @@ package tmg.flashback.stats.ui.circuits
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -11,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -21,6 +23,7 @@ import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.formula1.enums.TrackLayout
 import tmg.flashback.formula1.model.CircuitHistoryRace
 import tmg.flashback.formula1.model.CircuitHistoryRaceResult
+import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.providers.CircuitHistoryRaceProvider
 import tmg.flashback.stats.R
 import tmg.flashback.style.AppTheme
@@ -29,6 +32,7 @@ import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.ui.components.header.Header
+import tmg.flashback.ui.utils.isInPreview
 import tmg.utilities.extensions.ordinalAbbreviation
 
 private val driverImageBoxP1: Dp = 48.dp
@@ -36,6 +40,8 @@ private val driverImageBoxP2: Dp = 42.dp
 private val driverImageBoxP3: Dp = 36.dp
 
 private val trackImageSize: Dp = 180.dp
+
+private val countryBadgeSize = 32.dp
 
 @Composable
 fun CircuitScreenVM(
@@ -49,6 +55,7 @@ fun CircuitScreenVM(
     CircuitScreen(
         circuitName = circuitName,
         list = emptyList(),
+        linkClicked = viewModel.inputs::linkClicked,
         actionUpClicked = actionUpClicked
     )
 }
@@ -57,6 +64,7 @@ fun CircuitScreenVM(
 fun CircuitScreen(
     circuitName: String,
     list: List<CircuitModel>,
+    linkClicked: (String) -> Unit,
     actionUpClicked: () -> Unit
 ) {
     LazyColumn(content = {
@@ -70,8 +78,13 @@ fun CircuitScreen(
         }
         items(list, key = { it.id }) {
             when (it) {
-                is CircuitModel.Item -> Item(model = it)
-                is CircuitModel.Stats -> Stats(model = it)
+                is CircuitModel.Item -> Item(
+                    model = it
+                )
+                is CircuitModel.Stats -> Stats(
+                    model = it,
+                    linkClicked = linkClicked
+                )
             }
         }
     })
@@ -118,19 +131,80 @@ private fun Item(
 @Composable
 private fun Stats(
     model: CircuitModel.Stats,
+    linkClicked: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val trackIcon = TrackLayout.getTrack(circuitId = model.circuitId)?.icon ?: R.drawable.circuit_unknown
-    Icon(
-        painter = painterResource(id = trackIcon),
-        contentDescription = null,
-        tint = AppTheme.colors.contentSecondary,
-        modifier = modifier
-            .size(trackImageSize)
-    )
+    Column(modifier = modifier
+        .padding(horizontal = AppTheme.dimensions.paddingMedium)
+    ) {
+        val trackIcon = TrackLayout.getTrack(circuitId = model.circuitId)?.icon ?: R.drawable.circuit_unknown
+        Icon(
+            painter = painterResource(id = trackIcon),
+            contentDescription = null,
+            tint = AppTheme.colors.contentSecondary,
+            modifier = modifier
+                .size(trackImageSize)
+        )
+        Spacer(Modifier.height(AppTheme.dimensions.paddingMedium))
+        Row {
+            Box(
+                modifier = Modifier
+                    .padding(
+                        top = AppTheme.dimensions.paddingMedium,
+                        end = AppTheme.dimensions.paddingNSmall,
+                        start = AppTheme.dimensions.paddingNSmall
+                    )
+            ) {
+                val resourceId = when (isInPreview()) {
+                    true -> R.drawable.gb
+                    false -> LocalContext.current.getFlagResourceAlpha3(model.nationalityISO)
+                }
+                Image(
+                    painter = painterResource(id = resourceId),
+                    modifier = Modifier.size(countryBadgeSize),
+                    contentDescription = null
+                )
+            }
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(
+                        top = AppTheme.dimensions.paddingSmall,
+                        bottom = AppTheme.dimensions.paddingSmall,
+                        end = AppTheme.dimensions.paddingMedium
+                    )
+            ) {
+                TextBody1(
+                    text = model.nationality,
+                    bold = true,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 2.dp)
+                )
+                TextBody2(
+                    text = stringResource(id = R.string.circuit_hosted_grand_prix, model.numberOfGrandPrix, model.startYear, model.endYear),
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
 
-
-
+            model.wikipedia?.let { wiki ->
+                Link(
+                    icon = R.drawable.ic_details_wikipedia,
+                    label = R.string.details_link_wikipedia,
+                    url = wiki,
+                    linkClicked = linkClicked
+                )
+            }
+            model.location?.let { location ->
+//                Link(
+//                    icon = R.drawable.ic_details_wikipedia,
+//                    label = R.string.details_link_wikipedia,
+//                    url = wiki,
+//                    linkClicked = linkClicked
+//                )
+            }
+        }
+    }
 }
 
 @Composable
@@ -143,7 +217,6 @@ private fun Link(
     linkClicked: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
@@ -198,6 +271,7 @@ private fun Preview(
             list = listOf(
                 CircuitModel.Item(race)
             ),
+            linkClicked = { },
             actionUpClicked = { }
         )
     }

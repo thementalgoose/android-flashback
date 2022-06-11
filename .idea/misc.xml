@@ -248,6 +248,7 @@
         <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/weekend/shared/NotAvailable.kt" value="0.4703703703703704" />
         <entry key="feature/stats/src/main/res/drawable-xxhdpi/ic_pos_down.xml" value="0.1405" />
         <entry key="feature/stats/src/main/res/drawable/ic_details_laps.xml" value="0.1525" />
+        <entry key="feature/stats/src/main/res/drawable/ic_details_maps.xml" value="0.1795" />
         <entry key="feature/stats/src/main/res/drawable/ic_details_wikipedia.xml" value="0.1525" />
         <entry key="feature/stats/src/main/res/drawable/ic_details_youtube.xml" value="0.1525" />
         <entry key="feature/stats/src/main/res/drawable/ic_error_not_available.xml" value="0.254" />

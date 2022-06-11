@@ -9,6 +9,7 @@ sealed class CircuitModel(
     data class Stats(
         val circuitId: String,
         val name: String,
+        val nationality: String,
         val nationalityISO: String,
         val numberOfGrandPrix: Int,
         val startYear: Int,
