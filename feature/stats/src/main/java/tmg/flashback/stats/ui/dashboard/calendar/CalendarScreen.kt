@@ -179,12 +179,6 @@ private fun Schedule(
             .fillMaxWidth()
         ) {
             Row {
-                val colorForPanel = when {
-                    model.model.hasResults -> AppTheme.colors.f1ResultsFull
-                    model.model.hasQualifying -> AppTheme.colors.f1ResultsPartial
-                    else -> AppTheme.colors.f1ResultsNeutral
-                }
-
                 Box(modifier = Modifier
                     .padding(
                         top = AppTheme.dimensions.paddingMedium,

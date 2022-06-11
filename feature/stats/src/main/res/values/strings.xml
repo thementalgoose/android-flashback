@@ -44,6 +44,8 @@
     <string name="details_link_wikipedia">Wikipedia</string>
 <!--    <string name="details_link_youtube">Laps</string>-->
 
+    <string name="circuit_hosted_grand_prix" formatted="false">Hosted %d grand prix between %d and %d</string>
+
     <!-- Tyres -->
     <string name="tyres_label">Tyre compounds</string>
     <string name="tyres_list_title">%s tyres</string>
