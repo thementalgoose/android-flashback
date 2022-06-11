@@ -1,14 +1,16 @@
 package tmg.flashback.stats.ui.circuits
 
-import androidx.compose.foundation.background
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -16,10 +18,11 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.viewModel
 import org.threeten.bp.format.DateTimeFormatter
+import tmg.flashback.formula1.enums.TrackLayout
 import tmg.flashback.formula1.model.CircuitHistoryRace
+import tmg.flashback.formula1.model.CircuitHistoryRaceResult
 import tmg.flashback.providers.CircuitHistoryRaceProvider
 import tmg.flashback.stats.R
-import tmg.flashback.stats.ui.shared.DriverImage
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
@@ -31,6 +34,8 @@ import tmg.utilities.extensions.ordinalAbbreviation
 private val driverImageBoxP1: Dp = 48.dp
 private val driverImageBoxP2: Dp = 42.dp
 private val driverImageBoxP3: Dp = 36.dp
+
+private val trackImageSize: Dp = 180.dp
 
 @Composable
 fun CircuitScreenVM(
@@ -65,7 +70,8 @@ fun CircuitScreen(
         }
         items(list, key = { it.id }) {
             when (it) {
-                is CircuitModel.Item -> Item(it)
+                is CircuitModel.Item -> Item(model = it)
+                is CircuitModel.Stats -> Stats(model = it)
             }
         }
     })
@@ -78,62 +84,107 @@ private fun Item(
 ) {
     Row(
         modifier = modifier
+            .padding(
+                horizontal = AppTheme.dimensions.paddingMedium,
+                vertical = AppTheme.dimensions.paddingSmall
+            )
     ) {
         Column(
-            modifier = Modifier.weight(1f)
+            modifier = Modifier
+                .weight(1f)
         ) {
             TextBody1(
                 text = model.data.name,
-                bold = true
+                bold = true,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 2.dp)
             )
             TextBody2(
-                text = model.data.date.format(DateTimeFormatter.ofPattern("'${model.data.date.dayOfMonth.ordinalAbbreviation}' MMMM yyyy"))
+                text = model.data.date.format(DateTimeFormatter.ofPattern("'${model.data.date.dayOfMonth.ordinalAbbreviation}' MMMM yyyy")),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 2.dp)
+            )
+            TextBody2(
+                text = stringResource(id = R.string.weekend_race_round_season, model.data.round, model.data.season),
+                modifier = Modifier
+                    .fillMaxWidth()
             )
         }
-
-        model.data.preview.firstOrNull { it.position == 1 }?.let { position ->
-            Box(
-                Modifier
-                    .size(driverImageBoxP1)
-                    .background(Color.Red)
-                    .clip(RoundedCornerShape(AppTheme.dimensions.radiusSmall))
-                    .padding(2.dp)
-            ) {
-                DriverImage(
-                    driver = position.driver,
-                    size = driverImageBoxP1 - 4.dp
-                )
-            }
-        }
-        model.data.preview.firstOrNull { it.position == 2 }?.let { position ->
-            Box(
-                Modifier
-                    .size(driverImageBoxP2)
-                    .background(Color.Blue)
-                    .clip(RoundedCornerShape(AppTheme.dimensions.radiusSmall))
-                    .padding(2.dp)
-            ) {
-                DriverImage(
-                    driver = position.driver,
-                    size = driverImageBoxP2 - 4.dp
-                )
-            }
-        }
-        model.data.preview.firstOrNull { it.position == 3 }?.let { position ->
-            Box(
-                Modifier
-                    .size(driverImageBoxP3)
-                    .background(Color.Green)
-                    .clip(RoundedCornerShape(AppTheme.dimensions.radiusSmall))
-                    .padding(2.dp)
-            ) {
-                DriverImage(
-                    driver = position.driver,
-                    size = driverImageBoxP3 - 4.dp
-                )
-            }
-        }
     }
+}
+
+@Composable
+private fun Stats(
+    model: CircuitModel.Stats,
+    modifier: Modifier = Modifier
+) {
+    val trackIcon = TrackLayout.getTrack(circuitId = model.circuitId)?.icon ?: R.drawable.circuit_unknown
+    Icon(
+        painter = painterResource(id = trackIcon),
+        contentDescription = null,
+        tint = AppTheme.colors.contentSecondary,
+        modifier = modifier
+            .size(trackImageSize)
+    )
+
+
+
+}
+
+@Composable
+private fun Link(
+    @DrawableRes
+    icon: Int,
+    @StringRes
+    label: Int,
+    url: String,
+    linkClicked: (String) -> Unit,
+    modifier: Modifier = Modifier
+) {
+
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = modifier
+            .fillMaxWidth()
+            .clickable(
+                onClick = { linkClicked(url) }
+            )
+            .padding(
+                vertical = AppTheme.dimensions.paddingSmall,
+                horizontal = AppTheme.dimensions.paddingMedium
+            )
+    ) {
+        Icon(
+            painter = painterResource(id = icon),
+            contentDescription = null,
+            modifier = Modifier.size(24.dp),
+            tint = AppTheme.colors.contentSecondary
+        )
+        Spacer(Modifier.width(AppTheme.dimensions.paddingSmall))
+        TextBody1(
+            bold = true,
+            modifier = Modifier.weight(1f),
+            text = stringResource(id = label)
+        )
+        Spacer(Modifier.width(AppTheme.dimensions.paddingSmall))
+        Icon(
+            painter = painterResource(id = R.drawable.arrow_more),
+            contentDescription = null,
+            modifier = Modifier
+                .size(24.dp)
+                .alpha(0.4f),
+            tint = AppTheme.colors.contentTertiary
+        )
+    }
+}
+
+@Composable
+private fun Standings(
+    preview: List<CircuitHistoryRaceResult>
+) {
+    // TODO!
 }
 
 @PreviewTheme

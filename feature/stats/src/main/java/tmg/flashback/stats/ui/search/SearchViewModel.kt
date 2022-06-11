@@ -123,7 +123,7 @@ class SearchViewModel(
     override fun clickItem(item: SearchItem) {
         when (item) {
             is SearchItem.Circuit -> {
-                statsNavigator.goToCircuitOverview(
+                statsNavigationComponent.circuit(
                     circuitId = item.circuitId,
                     circuitName = item.name
                 )
