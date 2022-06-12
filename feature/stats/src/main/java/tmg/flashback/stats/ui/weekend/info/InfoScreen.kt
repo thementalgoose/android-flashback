@@ -66,7 +66,7 @@ fun RaceInfoHeader(
             )
             TextHeadline1(
                 modifier = Modifier.padding(vertical = 2.dp),
-                text = model.raceName
+                text = "${model.season} ${model.raceName}"
             )
             RaceDetails(model = model)
         }
@@ -97,7 +97,7 @@ private fun RaceDetails(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = AppTheme.dimensions.paddingXSmall),
-                text = model.date.format("'${model.date.dayOfMonth.ordinalAbbreviation}' MMMM") ?: ""
+                text = model.date.format("'${model.date.dayOfMonth.ordinalAbbreviation}' MMMM yyyy") ?: ""
             )
         }
         Column(

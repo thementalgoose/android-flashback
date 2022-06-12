@@ -1,5 +1,6 @@
 <resources>
     <string name="weekend_race_round">Round %d</string>
+    <string name="circuit_race_round" formatted="false">%s, round %d</string>
     <string name="weekend_race_round_season" formatted="false">Round %d, %d</string>
     <string name="weekend_info_laps">%s laps</string>
 

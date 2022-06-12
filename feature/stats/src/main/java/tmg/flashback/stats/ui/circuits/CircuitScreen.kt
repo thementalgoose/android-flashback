@@ -137,16 +137,10 @@ private fun Item(
                 bold = true,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 2.dp)
+                    .padding(bottom = 4.dp)
             )
             TextBody2(
-                text = model.data.date.format(DateTimeFormatter.ofPattern("'${model.data.date.dayOfMonth.ordinalAbbreviation}' MMMM yyyy")),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 2.dp)
-            )
-            TextBody2(
-                text = stringResource(id = R.string.weekend_race_round, model.data.round),
+                text = stringResource(id = R.string.circuit_race_round,model.data.date.format(DateTimeFormatter.ofPattern("'${model.data.date.dayOfMonth.ordinalAbbreviation}' MMMM yyyy")), model.data.round),
                 modifier = Modifier
                     .fillMaxWidth()
             )
