@@ -50,6 +50,13 @@ class DetailsViewModel(
                     icon = R.drawable.ic_details_laps,
                 ))
             }
+            it.raceInfo.circuit.location?.let { location ->
+                list.add(DetailsModel.Link(
+                    label = R.string.details_link_map,
+                    icon = R.drawable.ic_details_maps,
+                    url = "geo:0,0?q=${location.lat},${location.lng} (${it.raceInfo.circuit.name})"
+                ))
+            }
             if (it.raceInfo.youtube != null && URLUtil.isValidUrl(it.raceInfo.youtube)) {
                 list.add(DetailsModel.Link(
                     label = R.string.details_link_youtube,
