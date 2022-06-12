@@ -50,6 +50,7 @@ class DetailsViewModel(
                     icon = R.drawable.ic_details_laps,
                 ))
             }
+
             it.raceInfo.circuit.location?.let { location ->
                 list.add(DetailsModel.Link(
                     label = R.string.details_link_map,
@@ -73,6 +74,7 @@ class DetailsViewModel(
             }
 
             list.addAll(initialSchedule(it.schedule))
+
             return@map list
         }
         .asLiveData(viewModelScope.coroutineContext)
