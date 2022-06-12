@@ -311,7 +311,7 @@ internal class SearchViewModelTest: BaseTest() {
         sut.inputs.clickItem(model)
 
         verify {
-            mockStatsNavigator.goToCircuitOverview(any(), any())
+            mockStatisticsNavigationComponent.circuit(any(), any())
         }
     }
 }
