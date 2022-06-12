@@ -3,18 +3,15 @@ package tmg.flashback.stats.ui.circuits
 import io.mockk.*
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.formula1.model.CircuitHistory
 import tmg.flashback.formula1.model.CircuitHistoryRace
-import tmg.flashback.formula1.model.Location
 import tmg.flashback.formula1.model.model
 import tmg.flashback.statistics.repo.CircuitRepository
 import tmg.flashback.ui.navigation.ApplicationNavigationComponent
 import tmg.testutils.BaseTest
-import tmg.testutils.livedata.assertDataEventValue
 import tmg.testutils.livedata.test
 
 internal class CircuitViewModelTest: BaseTest() {
@@ -125,7 +122,11 @@ internal class CircuitViewModelTest: BaseTest() {
 
         sut.outputs.list.test {
             assertValue(listOf(
-                CircuitModel.Stats.model(),
+                CircuitModel.Stats.model(
+                    numberOfGrandPrix = 2,
+                    startYear = 2020,
+                    endYear = 2020
+                ),
                 CircuitModel.Item.model(data = CircuitHistoryRace.model(round = 2)),
                 CircuitModel.Item.model(data = CircuitHistoryRace.model(round = 1)),
             ))
@@ -162,10 +163,14 @@ internal class CircuitViewModelTest: BaseTest() {
 
         sut.outputs.list.test {
             assertValueAt(listOf(
-                CircuitModel.Error
+                CircuitModel.Loading
             ), 0)
             assertValueAt(listOf(
-                CircuitModel.Stats.model(),
+                CircuitModel.Stats.model(
+                    numberOfGrandPrix = 1,
+                    startYear = 2020,
+                    endYear = 2020
+                ),
                 CircuitModel.Item.model(),
             ), 1)
         }
