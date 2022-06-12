@@ -48,6 +48,7 @@ import tmg.flashback.ui.components.loading.SkeletonView
 import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.layouts.Container
+import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.utils.isInPreview
 import tmg.utilities.extensions.format
 import tmg.utilities.extensions.ordinalAbbreviation
@@ -134,12 +135,7 @@ fun CalendarScreen(
                         Week(model = item)
                     }
                     CalendarModel.Loading -> {
-                        SkeletonView()
-                        SkeletonView()
-                        SkeletonView()
-                        SkeletonView()
-                        SkeletonView()
-                        SkeletonView()
+                        SkeletonViewList()
                     }
                 }
             }

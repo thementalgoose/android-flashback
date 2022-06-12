@@ -9,20 +9,32 @@ sealed class CircuitModel(
     data class Stats(
         val circuitId: String,
         val name: String,
-        val nationality: String,
-        val nationalityISO: String,
+        val country: String,
+        val countryISO: String,
         val numberOfGrandPrix: Int,
-        val startYear: Int,
-        val endYear: Int,
+        val startYear: Int?,
+        val endYear: Int?,
         val wikipedia: String?,
         val location: Location?
     ): CircuitModel(
         id = "stats"
-    )
+    ) {
+        companion object
+    }
 
     data class Item(
         val data: CircuitHistoryRace
     ): CircuitModel(
         id = "${data.season}-${data.round}"
+    ) {
+        companion object
+    }
+
+    object Loading: CircuitModel(
+        id = "loading"
+    )
+
+    object Error: CircuitModel(
+        id = "error"
     )
 }
