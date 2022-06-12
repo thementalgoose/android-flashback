@@ -12,6 +12,7 @@ import tmg.flashback.formula1.model.Race
 import tmg.flashback.formula1.model.Schedule
 import tmg.flashback.formula1.model.model
 import tmg.flashback.statistics.repo.RaceRepository
+import tmg.flashback.stats.R
 import tmg.flashback.stats.repository.NotificationRepository
 import tmg.flashback.stats.ui.weekend.details.DetailsModel
 import tmg.flashback.stats.ui.weekend.details.DetailsViewModel
@@ -56,6 +57,7 @@ internal class DetailsViewModelTest: BaseTest() {
         underTest.outputs.list.test {
             assertValue(listOf(
                 DetailsModel.Label.model(),
+                mapsLink,
                 DetailsModel.ScheduleDay.model()
             ))
         }
@@ -104,6 +106,7 @@ internal class DetailsViewModelTest: BaseTest() {
         underTest.outputs.list.test {
             assertValue(listOf(
                 DetailsModel.Label.model(),
+                mapsLink,
                 DetailsModel.ScheduleDay(
                     date = fp1.date,
                     schedules = listOf(
@@ -126,4 +129,10 @@ internal class DetailsViewModelTest: BaseTest() {
             ))
         }
     }
+
+    private val mapsLink: DetailsModel.Link get() = DetailsModel.Link(
+        label = R.string.details_link_map,
+        icon = R.drawable.ic_details_maps,
+        url = "geo:0,0?q=51.101,-1.101 (circuitName)"
+    )
 }
