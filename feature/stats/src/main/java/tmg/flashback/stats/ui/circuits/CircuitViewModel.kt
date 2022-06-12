@@ -5,14 +5,18 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import org.threeten.bp.LocalDate
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.formula1.model.CircuitHistory
 import tmg.flashback.statistics.repo.CircuitRepository
+import tmg.flashback.stats.StatsNavigationComponent
+import tmg.flashback.stats.ui.weekend.WeekendInfo
 import tmg.flashback.ui.navigation.ApplicationNavigationComponent
 
 interface CircuitViewModelInputs {
     fun load(circuitId: String)
     fun linkClicked(link: String)
+    fun itemClicked(model: CircuitModel.Item)
     fun refresh()
 }
 
@@ -25,6 +29,7 @@ class CircuitViewModel(
     private val circuitRepository: CircuitRepository,
     private val networkConnectivityManager: NetworkConnectivityManager,
     private val applicationNavigationComponent: ApplicationNavigationComponent,
+    private val statsNavigationComponent: StatsNavigationComponent,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), CircuitViewModelInputs, CircuitViewModelOutputs {
 
@@ -74,7 +79,13 @@ class CircuitViewModel(
                         else -> {
                             list.addAll(it.results
                                 .map { result ->
-                                    CircuitModel.Item(result)
+                                    CircuitModel.Item(
+                                        circuitId = it.data.id,
+                                        circuitName = it.data.name,
+                                        country = it.data.country,
+                                        countryISO = it.data.countryISO,
+                                        result
+                                    )
                                 }
                                 .sortedByDescending { it.data.season * 1000 + it.data.round }
                             )
@@ -91,6 +102,19 @@ class CircuitViewModel(
 
     override fun linkClicked(link: String) {
         this.applicationNavigationComponent.openUrl(link)
+    }
+
+    override fun itemClicked(model: CircuitModel.Item) {
+        this.statsNavigationComponent.weekend(WeekendInfo(
+            season = model.data.season,
+            round = model.data.round,
+            raceName = model.data.name,
+            circuitId = model.circuitId,
+            circuitName = model.circuitName,
+            country = model.country,
+            countryISO = model.countryISO,
+            date = model.data.date
+        ))
     }
 
     override fun refresh() {
