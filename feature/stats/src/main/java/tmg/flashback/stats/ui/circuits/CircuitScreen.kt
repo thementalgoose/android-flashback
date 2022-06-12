@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -18,20 +19,27 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.faltenreich.skeletonlayout.Skeleton
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import org.koin.androidx.compose.viewModel
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.formula1.enums.TrackLayout
 import tmg.flashback.formula1.model.CircuitHistoryRace
 import tmg.flashback.formula1.model.CircuitHistoryRaceResult
+import tmg.flashback.formula1.model.Location
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.providers.CircuitHistoryRaceProvider
 import tmg.flashback.stats.R
+import tmg.flashback.stats.ui.weekend.shared.NotAvailable
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.ui.components.header.Header
+import tmg.flashback.ui.components.loading.SkeletonView
+import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.utils.isInPreview
 import tmg.utilities.extensions.ordinalAbbreviation
 
@@ -52,12 +60,19 @@ fun CircuitScreenVM(
     val viewModel by viewModel<CircuitViewModel>()
     viewModel.inputs.load(circuitId)
 
-    CircuitScreen(
-        circuitName = circuitName,
-        list = emptyList(),
-        linkClicked = viewModel.inputs::linkClicked,
-        actionUpClicked = actionUpClicked
-    )
+    val list = viewModel.outputs.list.observeAsState(listOf(CircuitModel.Loading))
+    val isLoading = viewModel.outputs.showLoading.observeAsState(false)
+    SwipeRefresh(
+        state = rememberSwipeRefreshState(isRefreshing = isLoading.value),
+        onRefresh = viewModel.inputs::refresh
+    ) {
+        CircuitScreen(
+            circuitName = circuitName,
+            list = list.value,
+            linkClicked = viewModel.inputs::linkClicked,
+            actionUpClicked = actionUpClicked
+        )
+    }
 }
 
 @Composable
@@ -85,6 +100,12 @@ fun CircuitScreen(
                     model = it,
                     linkClicked = linkClicked
                 )
+                CircuitModel.Error -> {
+                    NotAvailable()
+                }
+                CircuitModel.Loading -> {
+                    SkeletonViewList()
+                }
             }
         }
     })
@@ -134,9 +155,7 @@ private fun Stats(
     linkClicked: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Column(modifier = modifier
-        .padding(horizontal = AppTheme.dimensions.paddingMedium)
-    ) {
+    Column(modifier = modifier) {
         val trackIcon = TrackLayout.getTrack(circuitId = model.circuitId)?.icon ?: R.drawable.circuit_unknown
         Icon(
             painter = painterResource(id = trackIcon),
@@ -157,7 +176,7 @@ private fun Stats(
             ) {
                 val resourceId = when (isInPreview()) {
                     true -> R.drawable.gb
-                    false -> LocalContext.current.getFlagResourceAlpha3(model.nationalityISO)
+                    false -> LocalContext.current.getFlagResourceAlpha3(model.countryISO)
                 }
                 Image(
                     painter = painterResource(id = resourceId),
@@ -175,34 +194,41 @@ private fun Stats(
                     )
             ) {
                 TextBody1(
-                    text = model.nationality,
+                    text = model.country,
                     bold = true,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(bottom = 2.dp)
                 )
-                TextBody2(
-                    text = stringResource(id = R.string.circuit_hosted_grand_prix, model.numberOfGrandPrix, model.startYear, model.endYear),
-                    modifier = Modifier.fillMaxWidth()
-                )
+                if (model.startYear != null && model.endYear != null) {
+                    TextBody2(
+                        text = stringResource(id = R.string.circuit_hosted_grand_prix_from, model.numberOfGrandPrix, model.startYear, model.endYear),
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                } else {
+                    TextBody2(
+                        text = stringResource(id = R.string.circuit_hosted_grand_prix, model.numberOfGrandPrix),
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
             }
+        }
 
-            model.wikipedia?.let { wiki ->
-                Link(
-                    icon = R.drawable.ic_details_wikipedia,
-                    label = R.string.details_link_wikipedia,
-                    url = wiki,
-                    linkClicked = linkClicked
-                )
-            }
-            model.location?.let { location ->
+        model.wikipedia?.let { wiki ->
+            Link(
+                icon = R.drawable.ic_details_wikipedia,
+                label = R.string.details_link_wikipedia,
+                url = wiki,
+                linkClicked = linkClicked
+            )
+        }
+        model.location?.let { location ->
 //                Link(
 //                    icon = R.drawable.ic_details_wikipedia,
 //                    label = R.string.details_link_wikipedia,
 //                    url = wiki,
 //                    linkClicked = linkClicked
 //                )
-            }
         }
     }
 }
@@ -269,6 +295,17 @@ private fun Preview(
         CircuitScreen(
             circuitName = "Circuit Name",
             list = listOf(
+                CircuitModel.Stats(
+                    circuitId = "circuitId",
+                    name = "name",
+                    country = "England",
+                    countryISO = "GBR",
+                    numberOfGrandPrix = 2,
+                    startYear = 2019,
+                    endYear = 2020,
+                    wikipedia = "wikipediaUrl",
+                    location = null,
+                ),
                 CircuitModel.Item(race)
             ),
             linkClicked = { },

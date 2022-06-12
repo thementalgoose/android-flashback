@@ -14,6 +14,20 @@ import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 
 @Composable
+fun SkeletonViewList(
+    modifier: Modifier = Modifier
+) {
+    Column(modifier = modifier) {
+        SkeletonView()
+        SkeletonView()
+        SkeletonView()
+        SkeletonView()
+        SkeletonView()
+        SkeletonView()
+    }
+}
+
+@Composable
 fun SkeletonView(
     modifier: Modifier = Modifier
 ) {

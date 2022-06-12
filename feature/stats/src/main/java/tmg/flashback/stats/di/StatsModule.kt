@@ -34,7 +34,7 @@ val statsModule = module {
 
     viewModel { SearchViewModel(get(), get(), get(), get(), get(), get(), get()) }
 
-    viewModel { CircuitViewModel() }
+    viewModel { CircuitViewModel(get(), get(), get(), get()) }
 
     single { StatsNavigationComponent(get()) }
 

@@ -1,32 +1,121 @@
 package tmg.flashback.stats.ui.circuits
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
+import androidx.lifecycle.*
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
+import tmg.flashback.device.managers.NetworkConnectivityManager
+import tmg.flashback.formula1.model.CircuitHistory
+import tmg.flashback.statistics.repo.CircuitRepository
+import tmg.flashback.ui.navigation.ApplicationNavigationComponent
 
 interface CircuitViewModelInputs {
     fun load(circuitId: String)
     fun linkClicked(link: String)
+    fun refresh()
 }
 
 interface CircuitViewModelOutputs {
     val list: LiveData<List<CircuitModel>>
+    val showLoading: LiveData<Boolean>
 }
 
-class CircuitViewModel: ViewModel(), CircuitViewModelInputs, CircuitViewModelOutputs {
+class CircuitViewModel(
+    private val circuitRepository: CircuitRepository,
+    private val networkConnectivityManager: NetworkConnectivityManager,
+    private val applicationNavigationComponent: ApplicationNavigationComponent,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+): ViewModel(), CircuitViewModelInputs, CircuitViewModelOutputs {
 
     val inputs: CircuitViewModelInputs = this
     val outputs: CircuitViewModelOutputs = this
 
-    private val circuitId: MutableStateFlow
+    override val showLoading: MutableLiveData<Boolean> = MutableLiveData()
 
-    override val list: LiveData<List<CircuitModel>> =
+    private val isConnected: Boolean
+        get() = networkConnectivityManager.isConnected
+
+    private val circuitId: MutableStateFlow<String?> = MutableStateFlow(null)
+    private val circuitIdWithRequest: Flow<String?> = circuitId
+        .filterNotNull()
+        .flatMapLatest { id ->
+            return@flatMapLatest flow {
+                if (circuitRepository.getCircuitRounds(id) == 0) {
+                    showLoading.postValue(true)
+                    emit(null)
+                    circuitRepository.fetchCircuit(id)
+                    showLoading.postValue(false)
+                    emit(id)
+                }
+                else {
+                    emit(id)
+                }
+            }
+        }
+        .flowOn(ioDispatcher)
+
+
+    override val list: LiveData<List<CircuitModel>> = circuitIdWithRequest
+        .flatMapLatest { id ->
+            if (id == null) {
+                return@flatMapLatest flow {
+                    emit(mutableListOf(CircuitModel.Loading))
+                }
+            }
+
+            return@flatMapLatest circuitRepository.getCircuitHistory(id)
+                .map {
+                    val list = mutableListOf<CircuitModel>()
+                    it?.let { list.add(it.toStatModel()) }
+                    when {
+                        (it == null || it.results.isEmpty()) && !isConnected -> list.add(CircuitModel.Error)
+                        (it == null || it.results.isEmpty()) -> list.add(CircuitModel.Error)
+                        else -> {
+                            list.addAll(it.results
+                                .map { result ->
+                                    CircuitModel.Item(result)
+                                }
+                                .sortedByDescending { it.data.season * 1000 + it.data.round }
+                            )
+                        }
+                    }
+                    return@map list
+                }
+        }
+        .asLiveData(viewModelScope.coroutineContext)
 
     override fun load(circuitId: String) {
-
+        this.circuitId.value = circuitId
     }
 
     override fun linkClicked(link: String) {
+        this.applicationNavigationComponent.openUrl(link)
+    }
 
+    override fun refresh() {
+        this.refresh(circuitId.value)
+    }
+    private fun refresh(circuitId: String? = this.circuitId.value) {
+        viewModelScope.launch(context = ioDispatcher) {
+            circuitId?.let {
+                circuitRepository.fetchCircuit(circuitId)
+                showLoading.postValue(false)
+            }
+        }
+    }
+
+    private fun CircuitHistory.toStatModel(): CircuitModel.Stats {
+        return CircuitModel.Stats(
+            circuitId = this.data.id,
+            name = this.data.name,
+            country = this.data.country,
+            countryISO = this.data.countryISO,
+            numberOfGrandPrix = this.results.size,
+            startYear = this.results.minByOrNull { it.season }?.season,
+            endYear = this.results.maxByOrNull { it.season }?.season,
+            wikipedia = this.data.wikiUrl,
+            location = this.data.location,
+        )
     }
 }
