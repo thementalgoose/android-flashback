@@ -225,12 +225,12 @@ private fun Stats(
             )
         }
         model.location?.let { location ->
-//                Link(
-//                    icon = R.drawable.ic_details_wikipedia,
-//                    label = R.string.details_link_wikipedia,
-//                    url = wiki,
-//                    linkClicked = linkClicked
-//                )
+            Link(
+                icon = R.drawable.ic_details_maps,
+                label = R.string.details_link_map,
+                url = "geo:0,0?q=${location.lat},${location.lng} (${model.name})",
+                linkClicked = linkClicked
+            )
         }
     }
 }
