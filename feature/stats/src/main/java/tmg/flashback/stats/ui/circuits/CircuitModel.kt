@@ -23,6 +23,10 @@ sealed class CircuitModel(
     }
 
     data class Item(
+        val circuitId: String,
+        val circuitName: String,
+        val country: String,
+        val countryISO: String,
         val data: CircuitHistoryRace
     ): CircuitModel(
         id = "${data.season}-${data.round}"

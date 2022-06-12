@@ -27,7 +27,15 @@ fun CircuitModel.Stats.Companion.model(
 )
 
 fun CircuitModel.Item.Companion.model(
+    circuitId: String = "circuitId",
+    circuitName: String = "circuitName",
+    country: String = "country",
+    countryISO: String = "countryISO",
     data: CircuitHistoryRace = CircuitHistoryRace.model()
 ): CircuitModel.Item = CircuitModel.Item(
+    circuitId = circuitId,
+    circuitName = circuitName,
+    country = country,
+    countryISO = countryISO,
     data = data
 )

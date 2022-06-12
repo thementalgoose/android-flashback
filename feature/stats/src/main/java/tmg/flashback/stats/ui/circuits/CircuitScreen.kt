@@ -69,6 +69,7 @@ fun CircuitScreenVM(
         CircuitScreen(
             circuitName = circuitName,
             list = list.value,
+            itemClicked = viewModel.inputs::itemClicked,
             linkClicked = viewModel.inputs::linkClicked,
             actionUpClicked = actionUpClicked
         )
@@ -79,6 +80,7 @@ fun CircuitScreenVM(
 fun CircuitScreen(
     circuitName: String,
     list: List<CircuitModel>,
+    itemClicked: (CircuitModel.Item) -> Unit,
     linkClicked: (String) -> Unit,
     actionUpClicked: () -> Unit
 ) {
@@ -94,7 +96,8 @@ fun CircuitScreen(
         items(list, key = { it.id }) {
             when (it) {
                 is CircuitModel.Item -> Item(
-                    model = it
+                    model = it,
+                    itemClicked = itemClicked
                 )
                 is CircuitModel.Stats -> Stats(
                     model = it,
@@ -114,10 +117,12 @@ fun CircuitScreen(
 @Composable
 private fun Item(
     model: CircuitModel.Item,
+    itemClicked: (CircuitModel.Item) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(
         modifier = modifier
+            .clickable(onClick = { itemClicked(model) })
             .padding(
                 horizontal = AppTheme.dimensions.paddingMedium,
                 vertical = AppTheme.dimensions.paddingSmall
@@ -128,7 +133,7 @@ private fun Item(
                 .weight(1f)
         ) {
             TextBody1(
-                text = model.data.name,
+                text = "${model.data.season} ${model.data.name}",
                 bold = true,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -141,7 +146,7 @@ private fun Item(
                     .padding(bottom = 2.dp)
             )
             TextBody2(
-                text = stringResource(id = R.string.weekend_race_round_season, model.data.round, model.data.season),
+                text = stringResource(id = R.string.weekend_race_round, model.data.round),
                 modifier = Modifier
                     .fillMaxWidth()
             )
@@ -308,8 +313,15 @@ private fun Preview(
                     wikipedia = "wikipediaUrl",
                     location = null,
                 ),
-                CircuitModel.Item(race)
+                CircuitModel.Item(
+                    circuitId = "circuitId",
+                    circuitName = "name",
+                    country = "country",
+                    countryISO = "countryISO",
+                    race
+                )
             ),
+            itemClicked = { },
             linkClicked = { },
             actionUpClicked = { }
         )
