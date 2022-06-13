@@ -2,7 +2,7 @@ package tmg.flashback
 
 import android.content.Context
 import android.content.Intent
-import tmg.flashback.rss.ui.RSSActivity
+import tmg.flashback.rss.ui.feed.RSSActivity
 import tmg.flashback.ui.navigation.ActivityProvider
 
 class RssNavigationComponent(

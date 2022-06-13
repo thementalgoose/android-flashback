@@ -1,6 +1,8 @@
 package tmg.flashback.rss.ui.feed
 
+import android.widget.TextView
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -12,11 +14,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.graphics.toColorInt
+import androidx.core.text.htmlEncode
+import androidx.core.text.parseAsHtml
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import org.koin.androidx.compose.viewModel
@@ -33,8 +41,9 @@ import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextCaption
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.messages.Message
+import tmg.utilities.extensions.fromHtml
 
-private val badgeSize: Dp = 48.dp
+private val badgeSize: Dp = 42.dp
 
 @Composable
 fun RSSScreenVM(
@@ -50,6 +59,7 @@ fun RSSScreenVM(
     ) {
         RSSScreen(
             list = list.value,
+            itemClicked = { },
             actionUpClicked = actionUpClicked
         )
     }
@@ -58,6 +68,7 @@ fun RSSScreenVM(
 @Composable
 fun RSSScreen(
     list: List<RSSModel>,
+    itemClicked: (RSSModel.RSS) -> Unit,
     actionUpClicked: () -> Unit
 ) {
     LazyColumn(
@@ -72,7 +83,7 @@ fun RSSScreen(
             }
             items(list, key = { it.key }) {
                 when (it) {
-                    is RSSModel.RSS -> Item(it)
+                    is RSSModel.RSS -> Item(it, itemClicked)
                     is RSSModel.Message -> Message(it.msg)
                     RSSModel.NoNetwork -> {
                         TextBody2(text = "No Network")
@@ -95,12 +106,18 @@ fun RSSScreen(
 @Composable
 private fun Item(
     model: RSSModel.RSS,
+    clickItem: (RSSModel.RSS) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Row(modifier = modifier.padding(
-        vertical = AppTheme.dimensions.paddingSmall,
-        horizontal = AppTheme.dimensions.paddingMedium
-    )) {
+    Row(modifier = modifier
+        .clickable(onClick = {
+            clickItem(model)
+        })
+        .padding(
+            vertical = AppTheme.dimensions.paddingNSmall,
+            horizontal = AppTheme.dimensions.paddingMedium
+        )
+    ) {
         SourceBadge(
             title = model.item.source.shortSource
                 ?: model.item.source.source.substring(0..2),
@@ -114,17 +131,24 @@ private fun Item(
                 bold = true,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 2.dp)
+                    .padding(bottom = 4.dp)
             )
             model.item.description?.let { desc ->
-                TextBody2(
-                    text = desc,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 2.dp)
-                )
+                AndroidView(factory = {
+                    TextView(it).apply {
+                        this.text = desc.split("<br").firstOrNull()
+                            ?.trim()
+                            ?.fromHtml() ?: ""
+                        this.setTextColor(when (AppTheme.isLight) {
+                            true -> android.graphics.Color.BLACK
+                            false -> android.graphics.Color.WHITE
+                        })
+                    }
+                })
             }
             TextCaption(
+                modifier = Modifier.fillMaxWidth()
+                    .padding(top = 4.dp),
                 text = "${model.item.source.source} - ${model.item.date?.format(DateTimeFormatter.ofPattern("HH:mm 'at' dd MMM"))}",
             )
         }
@@ -146,7 +170,7 @@ private fun SourceBadge(
         Text(
             text = title,
             maxLines = 1,
-            style = AppTheme.typography.title,
+            style = AppTheme.typography.title.copy(fontWeight = FontWeight.Bold),
             modifier = Modifier.align(Alignment.Center),
             color = textColour
         )
@@ -159,6 +183,7 @@ private fun Preview() {
     AppThemePreview {
         RSSScreen(
             list = listOf(RSSModel.RSS(item = fakeArticle)),
+            itemClicked = {},
             actionUpClicked = {}
         )
     }
