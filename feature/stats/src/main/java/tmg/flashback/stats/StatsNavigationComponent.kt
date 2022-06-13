@@ -2,6 +2,7 @@ package tmg.flashback.stats
 
 import android.content.Context
 import android.content.Intent
+import tmg.flashback.stats.ui.circuits.CircuitActivity
 import tmg.flashback.stats.ui.search.SearchActivity
 import tmg.flashback.stats.ui.weekend.WeekendActivity
 import tmg.flashback.stats.ui.weekend.WeekendInfo
@@ -25,6 +26,23 @@ class StatsNavigationComponent(
 
     fun search() = activityProvider.launch {
         val intent = searchIntent(it)
+        it.startActivity(intent)
+    }
+
+    fun circuitIntent(context: Context, circuitId: String, circuitName: String): Intent {
+        return CircuitActivity.intent(
+            context = context,
+            circuitId = circuitId,
+            circuitName = circuitName
+        )
+    }
+
+    fun circuit(circuitId: String, circuitName: String) = activityProvider.launch {
+        val intent = circuitIntent(
+            context = it,
+            circuitId = circuitId,
+            circuitName = circuitName
+        )
         it.startActivity(intent)
     }
 }

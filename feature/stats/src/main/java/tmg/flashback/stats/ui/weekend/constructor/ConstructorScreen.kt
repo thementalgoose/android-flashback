@@ -28,6 +28,7 @@ import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextTitle
 import tmg.flashback.ui.components.loading.SkeletonView
+import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.progressbar.ProgressBar
 import kotlin.math.roundToInt
 
@@ -76,12 +77,7 @@ fun ConstructorScreen(
                         )
                     }
                     ConstructorModel.Loading -> {
-                        SkeletonView()
-                        SkeletonView()
-                        SkeletonView()
-                        SkeletonView()
-                        SkeletonView()
-                        SkeletonView()
+                        SkeletonViewList()
                     }
                     ConstructorModel.NotAvailable -> {
                         NotAvailable()
@@ -149,7 +145,7 @@ private fun ConstructorResult(
                     when (it) {
                         0f -> "0"
                         progress -> model.points.pointsDisplay()
-                        else -> (it * model.maxTeamPoints).roundToInt().toString()
+                        else -> (it * model.maxTeamPoints).takeIf { !it.isNaN() }?.roundToInt()?.toString() ?: model.points.pointsDisplay()
                     }
                 }
             )

@@ -43,6 +43,7 @@ import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextSection
 import tmg.flashback.style.text.TextTitle
 import tmg.flashback.ui.components.loading.SkeletonView
+import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.utils.isInPreview
 import tmg.utilities.extensions.pxToDp
 
@@ -107,12 +108,7 @@ fun QualifyingScreen(
                     is QualifyingModel.Q1Q2 -> Qualifying(it)
                     is QualifyingModel.Q1Q2Q3 -> Qualifying(it)
                     QualifyingModel.Loading -> {
-                        SkeletonView()
-                        SkeletonView()
-                        SkeletonView()
-                        SkeletonView()
-                        SkeletonView()
-                        SkeletonView()
+                        SkeletonViewList()
                     }
                     QualifyingModel.NotAvailable -> {
                         NotAvailable()

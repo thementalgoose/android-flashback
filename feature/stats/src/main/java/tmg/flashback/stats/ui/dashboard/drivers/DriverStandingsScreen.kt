@@ -40,6 +40,7 @@ import tmg.flashback.ui.components.loading.SkeletonView
 import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.layouts.Container
+import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.progressbar.ProgressBar
 import tmg.flashback.ui.utils.isInPreview
 import kotlin.math.roundToInt
@@ -131,12 +132,7 @@ fun DriverStandingsScreen(
                         )
                     }
                     DriverStandingsModel.Loading -> {
-                        SkeletonView()
-                        SkeletonView()
-                        SkeletonView()
-                        SkeletonView()
-                        SkeletonView()
-                        SkeletonView()
+                        SkeletonViewList()
                     }
                 }
             }
@@ -254,7 +250,7 @@ fun DriverStandings(
                     when (it) {
                         0f -> "0"
                         progress -> model.standings.points.pointsDisplay()
-                        else -> (it * maxPoints).roundToInt().toString()
+                        else -> (it * maxPoints).takeIf { !it.isNaN() }?.roundToInt()?.toString() ?: model.standings.points.pointsDisplay()
                     }
                 }
             )

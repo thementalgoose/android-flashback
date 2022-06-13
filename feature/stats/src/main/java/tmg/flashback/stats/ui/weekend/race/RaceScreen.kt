@@ -50,6 +50,7 @@ import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextTitle
 import tmg.flashback.ui.components.loading.SkeletonView
+import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.utils.isInPreview
 import tmg.flashback.ui.utils.pluralResource
 import tmg.utilities.extensions.ordinalAbbreviation
@@ -105,12 +106,7 @@ fun RaceScreen(
                         Result(model = it.result)
                     }
                     RaceModel.Loading -> {
-                        SkeletonView()
-                        SkeletonView()
-                        SkeletonView()
-                        SkeletonView()
-                        SkeletonView()
-                        SkeletonView()
+                        SkeletonViewList()
                     }
                     RaceModel.NotAvailable -> {
                         NotAvailable()
