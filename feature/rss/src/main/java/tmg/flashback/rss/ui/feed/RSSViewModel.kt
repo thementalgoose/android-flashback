@@ -1,4 +1,4 @@
-package tmg.flashback.rss.ui
+package tmg.flashback.rss.ui.feed
 
 import androidx.lifecycle.*
 import kotlinx.coroutines.flow.*
@@ -22,7 +22,7 @@ interface RSSViewModelInputs {
 //region Outputs
 
 interface RSSViewModelOutputs {
-    val list: LiveData<List<RSSItem>>
+    val list: LiveData<List<RSSModel>>
     val isRefreshing: LiveData<Boolean>
 }
 
@@ -42,7 +42,7 @@ internal class RSSViewModel(
     private var refreshingUUID: String? = null
 
     private val refreshNews: MutableStateFlow<String> = MutableStateFlow(UUID.randomUUID().toString())
-    private val newsList: Flow<List<RSSItem>> = refreshNews
+    private val newsList: Flow<List<RSSModel>> = refreshNews
         .asStateFlow()
         .filter {
             it != refreshingUUID
@@ -56,32 +56,37 @@ internal class RSSViewModel(
         }
         .map { response ->
             if (response.isNoNetwork || !connectivityManager.isConnected) {
-                return@map listOf<RSSItem>(RSSItem.NoNetwork)
+                return@map listOf<RSSModel>(RSSModel.NoNetwork)
             }
-            val results = response.result?.map { RSSItem.RSS(it) } ?: emptyList()
+            val results = response.result?.map { RSSModel.RSS(it) } ?: emptyList()
             if (results.isEmpty()) {
                 if (prefRepository.rssUrls.isEmpty()) {
-                    return@map listOf<RSSItem>(
-                        RSSItem.SourcesDisabled)
+                    return@map listOf<RSSModel>(
+                        RSSModel.SourcesDisabled
+                    )
                 }
                 else {
-                    return@map listOf<RSSItem>(RSSItem.InternalError)
+                    return@map listOf<RSSModel>(RSSModel.InternalError)
                 }
             }
-            return@map mutableListOf<RSSItem>().apply {
-                add(RSSItem.Message(LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"))))
+            return@map mutableListOf<RSSModel>().apply {
+                add(
+                    RSSModel.Message(
+                        LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"))
+                    )
+                )
                 if (adsRepository.advertConfig.onRss) {
-                    add(RSSItem.Advert)
+                    add(RSSModel.Advert)
                 }
                 addAll(results)
             }
         }
-        .onStart { emitAll(flow { emptyList<RSSItem>() }) }
+        .onStart { emitAll(flow { emptyList<RSSModel>() }) }
         .then {
             isRefreshing.value = false
         }
 
-    override val list: LiveData<List<RSSItem>> = newsList
+    override val list: LiveData<List<RSSModel>> = newsList
         .shareIn(viewModelScope, SharingStarted.Lazily)
         .asLiveData(viewModelScope.coroutineContext)
 

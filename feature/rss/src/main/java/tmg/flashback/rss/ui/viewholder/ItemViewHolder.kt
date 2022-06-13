@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.rss.databinding.ViewRssItemBinding
 import tmg.flashback.rss.repo.model.Article
-import tmg.flashback.rss.ui.RSSItem
+import tmg.flashback.rss.ui.feed.RSSModel
 import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.views.show
 import java.net.URL
@@ -23,7 +23,7 @@ internal class ItemViewHolder(
         binding.container.setOnClickListener(this)
     }
 
-    fun bind(item: RSSItem.RSS, itemId: Long) {
+    fun bind(item: RSSModel.RSS, itemId: Long) {
         this.item = item.item
         this.expandableItemId = itemId
 

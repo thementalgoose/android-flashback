@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebViewFragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.android.ext.android.inject
@@ -12,6 +11,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import tmg.flashback.rss.R
 import tmg.flashback.rss.databinding.FragmentRssBinding
 import tmg.flashback.rss.repo.RSSRepository
+import tmg.flashback.rss.ui.feed.RSSViewModel
 import tmg.flashback.rss.ui.settings.InitialScreen
 import tmg.flashback.rss.ui.settings.RSSSettingsActivity
 import tmg.flashback.rss.web.WebFragment

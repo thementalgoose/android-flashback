@@ -7,7 +7,7 @@ import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.rss.network.RSSService
 import tmg.flashback.rss.repo.RSSRepository
 import tmg.flashback.rss.repo.RssAPI
-import tmg.flashback.rss.ui.RSSViewModel
+import tmg.flashback.rss.ui.feed.RSSViewModel
 import tmg.flashback.rss.ui.settings.configure.RSSConfigureViewModel
 import tmg.flashback.rss.ui.settings.settings.RSSSettingsViewModel
 

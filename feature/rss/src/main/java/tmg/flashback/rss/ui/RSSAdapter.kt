@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.rss.R
 import tmg.flashback.rss.databinding.*
 import tmg.flashback.rss.repo.model.Article
+import tmg.flashback.rss.ui.feed.RSSModel
 import tmg.flashback.rss.ui.viewholder.*
 
 internal class RSSAdapter(
@@ -15,7 +16,7 @@ internal class RSSAdapter(
         private val openConfigure: () -> Unit
 ): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    var list: List<RSSItem> = emptyList()
+    var list: List<RSSModel> = emptyList()
         set(value) {
             val result = calculateDiff(DiffCallback(field, value))
             field = value
@@ -51,8 +52,8 @@ internal class RSSAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (val item = list[position]) {
-            is RSSItem.RSS -> (holder as ItemViewHolder).bind(item, getItemId(position))
-            is RSSItem.Message -> (holder as MessageViewHolder).bind(holder.itemView.context.getString(
+            is RSSModel.RSS -> (holder as ItemViewHolder).bind(item, getItemId(position))
+            is RSSModel.Message -> (holder as MessageViewHolder).bind(holder.itemView.context.getString(
                 R.string.home_last_updated, item.msg))
             else -> { }
         }
@@ -63,8 +64,8 @@ internal class RSSAdapter(
     override fun getItemCount() = list.size
 
     inner class DiffCallback(
-        private val old: List<RSSItem>,
-        private val new: List<RSSItem>
+        private val old: List<RSSModel>,
+        private val new: List<RSSModel>
     ): DiffUtil.Callback() {
         override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) = old[oldItemPosition] == new[newItemPosition]
 

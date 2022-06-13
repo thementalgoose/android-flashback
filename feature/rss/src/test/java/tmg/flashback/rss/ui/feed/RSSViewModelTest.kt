@@ -1,4 +1,4 @@
-package tmg.flashback.rss.ui
+package tmg.flashback.rss.ui.feed
 
 import io.mockk.every
 import io.mockk.mockk
@@ -18,7 +18,7 @@ import tmg.flashback.rss.repo.model.Response
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.*
 
-internal class RSSServiceViewModelTest: BaseTest() {
+internal class RSSViewModelTest: BaseTest() {
 
     private lateinit var sut: RSSViewModel
 
@@ -81,9 +81,9 @@ internal class RSSServiceViewModelTest: BaseTest() {
         advanceUntilIdle()
 
         sut.outputs.list.test {
-            assertListContainsItem(RSSItem.RSS(mockArticle))
-            assertListContainsItem(RSSItem.Advert)
-            assertListMatchesItem { it is RSSItem.Message }
+            assertListContainsItem(RSSModel.RSS(mockArticle))
+            assertListContainsItem(RSSModel.Advert)
+            assertListMatchesItem { it is RSSModel.Message }
         }
 
         observer.assertEmittedItems(true, false)
@@ -104,8 +104,8 @@ internal class RSSServiceViewModelTest: BaseTest() {
         advanceUntilIdle()
 
         sut.outputs.list.test {
-            assertListContainsItem(RSSItem.RSS(mockArticle))
-            assertListDoesNotMatchItem { it is RSSItem.Advert }
+            assertListContainsItem(RSSModel.RSS(mockArticle))
+            assertListDoesNotMatchItem { it is RSSModel.Advert }
         }
     }
 
@@ -116,9 +116,9 @@ internal class RSSServiceViewModelTest: BaseTest() {
         advanceUntilIdle()
 
         sut.outputs.list.test {
-            assertListContainsItem(RSSItem.RSS(mockArticle))
-            assertListContainsItem(RSSItem.Advert)
-            assertListMatchesItem { it is RSSItem.Message && it.msg.split(":").size == 3 }
+            assertListContainsItem(RSSModel.RSS(mockArticle))
+            assertListContainsItem(RSSModel.Advert)
+            assertListMatchesItem { it is RSSModel.Message && it.msg.split(":").size == 3 }
         }
     }
 
@@ -128,8 +128,8 @@ internal class RSSServiceViewModelTest: BaseTest() {
         every { mockRSSDB.getNews() } returns mockResponse500
         every { mockRssRepository.rssUrls } returns emptySet()
 
-        val expected = listOf<RSSItem>(
-            RSSItem.SourcesDisabled
+        val expected = listOf<RSSModel>(
+            RSSModel.SourcesDisabled
         )
 
         initSUT()
@@ -145,8 +145,8 @@ internal class RSSServiceViewModelTest: BaseTest() {
 
         every { mockRSSDB.getNews() } returns mockResponse500
 
-        val expected = listOf<RSSItem>(
-            RSSItem.InternalError
+        val expected = listOf<RSSModel>(
+            RSSModel.InternalError
         )
 
         initSUT()
@@ -162,8 +162,8 @@ internal class RSSServiceViewModelTest: BaseTest() {
 
         every { mockRSSDB.getNews() } returns mockResponseNoNetwork
 
-        val expected = listOf<RSSItem>(
-            RSSItem.NoNetwork
+        val expected = listOf<RSSModel>(
+            RSSModel.NoNetwork
         )
 
         initSUT()
@@ -179,8 +179,8 @@ internal class RSSServiceViewModelTest: BaseTest() {
 
         every { mockConnectivityManager.isConnected } returns false
 
-        val expected = listOf<RSSItem>(
-            RSSItem.NoNetwork
+        val expected = listOf<RSSModel>(
+            RSSModel.NoNetwork
         )
 
         initSUT()
