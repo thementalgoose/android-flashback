@@ -5,6 +5,7 @@ import org.koin.dsl.module
 import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.stats.repository.HomeRepository
 import tmg.flashback.stats.repository.NotificationRepository
+import tmg.flashback.stats.ui.circuits.CircuitViewModel
 import tmg.flashback.stats.ui.dashboard.calendar.CalendarViewModel
 import tmg.flashback.stats.ui.dashboard.constructors.ConstructorsStandingViewModel
 import tmg.flashback.stats.ui.dashboard.drivers.DriversStandingViewModel
@@ -32,6 +33,8 @@ val statsModule = module {
     viewModel { ConstructorViewModel(get(), get(), get()) }
 
     viewModel { SearchViewModel(get(), get(), get(), get(), get(), get(), get()) }
+
+    viewModel { CircuitViewModel(get(), get(), get(), get()) }
 
     single { StatsNavigationComponent(get()) }
 

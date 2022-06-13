@@ -26,6 +26,7 @@ import tmg.flashback.stats.ui.weekend.shared.NotAvailableYet
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.ui.components.loading.SkeletonView
+import tmg.flashback.ui.components.loading.SkeletonViewList
 
 private val timeWidth = 80.dp
 private val pointsWidth = 80.dp
@@ -70,12 +71,7 @@ fun SprintScreen(
                         Result(model = it.result)
                     }
                     SprintModel.Loading -> {
-                        SkeletonView()
-                        SkeletonView()
-                        SkeletonView()
-                        SkeletonView()
-                        SkeletonView()
-                        SkeletonView()
+                        SkeletonViewList()
                     }
                     SprintModel.NotAvailable -> {
                         NotAvailable()

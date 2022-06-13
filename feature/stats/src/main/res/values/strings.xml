@@ -1,5 +1,7 @@
 <resources>
     <string name="weekend_race_round">Round %d</string>
+    <string name="circuit_race_round" formatted="false">%s, round %d</string>
+    <string name="weekend_race_round_season" formatted="false">Round %d, %d</string>
     <string name="weekend_info_laps">%s laps</string>
 
     <string name="notification_reminder_mins_60">1 hour</string>
@@ -27,6 +29,7 @@
     <string name="qualifying_header_q3">Q3</string>
 
     <string name="error_weekend_not_available">Unfortunately we don\'t have these results.</string>
+    <string name="error_data_not_available_try_again">An error occurred while getting these results. Please check your internet connection and try again</string>
     <string name="error_weekend_not_available_yet">We don\'t have these results just yet, please check back after the race. Results usually appear 2–12 hours after every weekend event</string>
     <string name="error_search_not_found">No results found</string>
 
@@ -43,6 +46,9 @@
     <string name="details_link_laps">%s laps</string>
     <string name="details_link_wikipedia">Wikipedia</string>
 <!--    <string name="details_link_youtube">Laps</string>-->
+
+    <string name="circuit_hosted_grand_prix_from" formatted="false">Hosted %d grand prix between %d and %d</string>
+    <string name="circuit_hosted_grand_prix" formatted="false">Hosted %d grand prix</string>
 
     <!-- Tyres -->
     <string name="tyres_label">Tyre compounds</string>

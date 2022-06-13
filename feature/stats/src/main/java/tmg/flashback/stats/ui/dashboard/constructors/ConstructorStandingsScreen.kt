@@ -32,6 +32,7 @@ import tmg.flashback.style.text.TextTitle
 import tmg.flashback.ui.components.loading.SkeletonView
 import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.header.Header
+import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.progressbar.ProgressBar
 import kotlin.math.roundToInt
 
@@ -115,12 +116,7 @@ fun ConstructorStandingsScreen(
             items(items ?: emptyList(), key = { it.id }) { item ->
                 when (item) {
                     ConstructorStandingsModel.Loading -> {
-                        SkeletonView()
-                        SkeletonView()
-                        SkeletonView()
-                        SkeletonView()
-                        SkeletonView()
-                        SkeletonView()
+                        SkeletonViewList()
                     }
                     is ConstructorStandingsModel.Standings -> {
                         ConstructorStandings(
@@ -191,7 +187,7 @@ private fun ConstructorStandings(
                     when (it) {
                         0f -> "0"
                         progress -> model.standings.points.pointsDisplay()
-                        else -> (it * maxPoints).roundToInt().toString()
+                        else -> (it * maxPoints).takeIf { !it.isNaN() }?.roundToInt()?.toString() ?: model.standings.points.pointsDisplay()
                     }
                 }
             )
