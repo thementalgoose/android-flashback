@@ -7,7 +7,7 @@ internal fun SearchItem.Constructor.Companion.model(
     name: String = "name",
     nationality: String = "nationality",
     nationalityISO: String = "nationalityISO",
-    colour: Int = 0xff982784.toInt(),
+    colour: Int = 0,
 ): SearchItem.Constructor = SearchItem.Constructor(
     constructorId = constructorId,
     name = name,
