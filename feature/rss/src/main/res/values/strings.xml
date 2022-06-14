@@ -4,7 +4,7 @@
     <string name="app_name">Flashback</string>
     <string name="title_rss">RSS</string>
 
-    <string name="home_last_updated"><![CDATA[Last updated <i>%s</i>]]></string>
+    <string name="home_last_updated">Last updated %s</string>
     <string name="choose_browser">Open in browser</string>
     <string name="choose_share">Share with</string>
 

@@ -1,5 +1,6 @@
 package tmg.flashback.rss.ui.feed
 
+import android.view.ViewGroup
 import android.widget.TextView
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -84,7 +85,7 @@ fun RSSScreen(
             items(list, key = { it.key }) {
                 when (it) {
                     is RSSModel.RSS -> Item(it, itemClicked)
-                    is RSSModel.Message -> Message(it.msg)
+                    is RSSModel.Message -> Message(stringResource(id = R.string.home_last_updated, it.msg))
                     RSSModel.NoNetwork -> {
                         TextBody2(text = "No Network")
                     }
@@ -139,6 +140,10 @@ private fun Item(
                         this.text = desc.split("<br").firstOrNull()
                             ?.trim()
                             ?.fromHtml() ?: ""
+                        this.layoutParams = ViewGroup.LayoutParams(
+                             ViewGroup.LayoutParams.MATCH_PARENT,
+                            ViewGroup.LayoutParams.WRAP_CONTENT,
+                        )
                         this.setTextColor(when (AppTheme.isLight) {
                             true -> android.graphics.Color.BLACK
                             false -> android.graphics.Color.WHITE
@@ -147,7 +152,8 @@ private fun Item(
                 })
             }
             TextCaption(
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
                     .padding(top = 4.dp),
                 text = "${model.item.source.source} - ${model.item.date?.format(DateTimeFormatter.ofPattern("HH:mm 'at' dd MMM"))}",
             )
