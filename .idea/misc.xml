@@ -181,7 +181,8 @@
         <entry key="../../../../layout/compose-model-1648381400736.xml" value="0.8973214285714286" />
         <entry key="../../../../layout/custom_preview.xml" value="0.2989583333333333" />
         <entry key="../../Library/Android/sdk/platforms/android-31/data/res/drawable/progress_indeterminate_anim_large_material.xml" value="0.177" />
-        <entry key="ads/src/main/res/layout/admob_native_banner.xml" value="0.17708333333333334" />
+        <entry key="ads/src/main/java/tmg/flashback/ads/components/NativeBanner.kt" value="0.8923841059602649" />
+        <entry key="ads/src/main/res/layout/admob_native_banner.xml" value="0.45" />
         <entry key="app/src/main/java/tmg/flashback/ui/sync/SyncScreen.kt" value="0.1" />
         <entry key="app/src/main/res/drawable/app_shortcut_rss.xml" value="0.2222222222222222" />
         <entry key="app/src/main/res/drawable/app_shortcut_search.xml" value="0.2222222222222222" />
@@ -231,6 +232,8 @@
         <entry key="feature/statistics/src/main/res/drawable/nav_schedule.xml" value="0.2325" />
         <entry key="feature/statistics/src/main/res/drawable/nav_sprint_qualifying.xml" value="0.2325" />
         <entry key="feature/statistics/src/main/res/layout/layout_podium.xml" value="0.3183876811594203" />
+        <entry key="feature/statistics/src/main/res/layout/view_race_advert.xml" value="0.13994565217391305" />
+        <entry key="feature/statistics/src/main/res/layout/view_search_advert.xml" value="0.13994565217391305" />
         <entry key="feature/statistics/src/main/res/layout/view_search_placeholder.xml" value="0.26979166666666665" />
         <entry key="feature/stats/src/main/java/tmg/flashback/stats/components/DriverNumber.kt" value="1.0" />
         <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/circuits/CircuitScreen.kt" value="0.45" />
