@@ -1,12 +1,14 @@
-package tmg.flashback.rss.ui
+package tmg.flashback.rss.ui.feed
 
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.verify
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.advanceUntilIdle
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDateTime
+import tmg.flashback.RssNavigationComponent
 import tmg.flashback.ads.repository.AdsRepository
 import tmg.flashback.ads.repository.model.AdvertConfig
 import tmg.flashback.device.managers.NetworkConnectivityManager
@@ -15,16 +17,19 @@ import tmg.flashback.rss.repo.RssAPI
 import tmg.flashback.rss.repo.model.Article
 import tmg.flashback.rss.repo.model.ArticleSource
 import tmg.flashback.rss.repo.model.Response
+import tmg.flashback.ui.navigation.ApplicationNavigationComponent
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.*
 
-internal class RSSServiceViewModelTest: BaseTest() {
+internal class RSSViewModelTest: BaseTest() {
 
-    private lateinit var sut: RSSViewModel
+    private lateinit var underTest: RSSViewModel
 
     private val mockRSSDB: RssAPI = mockk(relaxed = true)
     private val mockRssRepository: RSSRepository = mockk(relaxed = true)
     private val mockAdsRepository: AdsRepository = mockk(relaxed = true)
+    private val mockRssNavigationComponent: RssNavigationComponent = mockk(relaxed = true)
+    private val mockApplicationNavigationComponent: ApplicationNavigationComponent = mockk(relaxed = true)
     private val mockConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
 
     private val mockLocalDate: LocalDateTime = LocalDateTime.of(2020, 1, 1, 1, 2, 3, 0)
@@ -61,34 +66,36 @@ internal class RSSServiceViewModelTest: BaseTest() {
         )
     }
 
-    private fun initSUT() {
+    private fun initUnderTest() {
 
-        sut = RSSViewModel(
+        underTest = RSSViewModel(
             mockRSSDB,
             mockRssRepository,
             mockAdsRepository,
+            mockRssNavigationComponent,
+            mockApplicationNavigationComponent,
             mockConnectivityManager
         )
-        sut.refresh()
+        underTest.refresh()
     }
 
     @Test
     fun `is refreshing is initialised is reset after refresh flow`() = coroutineTest {
 
-        initSUT()
+        initUnderTest()
 
-        val observer = sut.outputs.isRefreshing.testObserve()
+        val observer = underTest.outputs.isRefreshing.testObserve()
         advanceUntilIdle()
 
-        sut.outputs.list.test {
-            assertListContainsItem(RSSItem.RSS(mockArticle))
-            assertListContainsItem(RSSItem.Advert)
-            assertListMatchesItem { it is RSSItem.Message }
+        underTest.outputs.list.test {
+            assertListContainsItem(RSSModel.RSS(mockArticle))
+            assertListContainsItem(RSSModel.Advert)
+            assertListMatchesItem { it is RSSModel.Message }
         }
 
         observer.assertEmittedItems(true, false)
 
-        sut.inputs.refresh()
+        underTest.inputs.refresh()
 
         advanceUntilIdle()
 
@@ -99,26 +106,26 @@ internal class RSSServiceViewModelTest: BaseTest() {
     fun `init with ads disabled doesnt show advert item`() = coroutineTest {
         every { mockAdsRepository.advertConfig } returns AdvertConfig(onRss = false)
 
-        initSUT()
+        initUnderTest()
 
         advanceUntilIdle()
 
-        sut.outputs.list.test {
-            assertListContainsItem(RSSItem.RSS(mockArticle))
-            assertListDoesNotMatchItem { it is RSSItem.Advert }
+        underTest.outputs.list.test {
+            assertListContainsItem(RSSModel.RSS(mockArticle))
+            assertListDoesNotMatchItem { it is RSSModel.Advert }
         }
     }
 
     @Test
     fun `init loads all news sources`() = coroutineTest {
 
-        initSUT()
+        initUnderTest()
         advanceUntilIdle()
 
-        sut.outputs.list.test {
-            assertListContainsItem(RSSItem.RSS(mockArticle))
-            assertListContainsItem(RSSItem.Advert)
-            assertListMatchesItem { it is RSSItem.Message && it.msg.split(":").size == 3 }
+        underTest.outputs.list.test {
+            assertListContainsItem(RSSModel.RSS(mockArticle))
+            assertListContainsItem(RSSModel.Advert)
+            assertListMatchesItem { it is RSSModel.Message && it.msg.split(":").size == 3 }
         }
     }
 
@@ -128,14 +135,14 @@ internal class RSSServiceViewModelTest: BaseTest() {
         every { mockRSSDB.getNews() } returns mockResponse500
         every { mockRssRepository.rssUrls } returns emptySet()
 
-        val expected = listOf<RSSItem>(
-            RSSItem.SourcesDisabled
+        val expected = listOf<RSSModel>(
+            RSSModel.SourcesDisabled
         )
 
-        initSUT()
+        initUnderTest()
         advanceUntilIdle()
 
-        sut.outputs.list.test {
+        underTest.outputs.list.test {
             assertValue(expected)
         }
     }
@@ -145,14 +152,14 @@ internal class RSSServiceViewModelTest: BaseTest() {
 
         every { mockRSSDB.getNews() } returns mockResponse500
 
-        val expected = listOf<RSSItem>(
-            RSSItem.InternalError
+        val expected = listOf<RSSModel>(
+            RSSModel.InternalError
         )
 
-        initSUT()
+        initUnderTest()
         advanceUntilIdle()
 
-        sut.outputs.list.test {
+        underTest.outputs.list.test {
             assertValue(expected)
         }
     }
@@ -162,14 +169,14 @@ internal class RSSServiceViewModelTest: BaseTest() {
 
         every { mockRSSDB.getNews() } returns mockResponseNoNetwork
 
-        val expected = listOf<RSSItem>(
-            RSSItem.NoNetwork
+        val expected = listOf<RSSModel>(
+            RSSModel.NoNetwork
         )
 
-        initSUT()
+        initUnderTest()
         advanceUntilIdle()
 
-        sut.outputs.list.test {
+        underTest.outputs.list.test {
             assertValue(expected)
         }
     }
@@ -179,15 +186,58 @@ internal class RSSServiceViewModelTest: BaseTest() {
 
         every { mockConnectivityManager.isConnected } returns false
 
-        val expected = listOf<RSSItem>(
-            RSSItem.NoNetwork
+        val expected = listOf<RSSModel>(
+            RSSModel.NoNetwork
         )
 
-        initSUT()
+        initUnderTest()
         advanceUntilIdle()
 
-        sut.outputs.list.test {
+        underTest.outputs.list.test {
             assertValue(expected)
+        }
+    }
+
+    @Test
+    fun `click configure opens rss settings`() = coroutineTest {
+
+        initUnderTest()
+        advanceUntilIdle()
+
+        underTest.inputs.configure()
+
+        verify {
+            mockRssNavigationComponent.rssSettings()
+        }
+    }
+
+    @Test
+    fun `click model with open in external browser enabled opens in browser`() {
+        every { mockRssRepository.newsOpenInExternalBrowser } returns true
+        val model: RSSModel.RSS = mockk {
+            every { item } returns mockk(relaxed = true)
+        }
+        initUnderTest()
+
+        underTest.inputs.clickModel(model)
+
+        verify {
+            mockApplicationNavigationComponent.openUrl(any())
+        }
+    }
+
+    @Test
+    fun `click model with open in external browser disabled opens in in-app browser`() {
+        every { mockRssRepository.newsOpenInExternalBrowser } returns false
+        val model: RSSModel.RSS = mockk {
+            every { item } returns mockk(relaxed = true)
+        }
+        initUnderTest()
+
+        underTest.inputs.clickModel(model)
+
+        verify {
+            mockRssNavigationComponent.web(any(), any())
         }
     }
 }

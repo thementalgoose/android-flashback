@@ -1,4 +1,4 @@
-package tmg.flashback.rss.web
+package tmg.flashback.rss.ui.web
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -16,6 +16,8 @@ import tmg.flashback.crash_reporting.controllers.CrashController
 import tmg.flashback.rss.R
 import tmg.flashback.rss.databinding.FragmentWebBinding
 import tmg.flashback.rss.repo.RSSRepository
+import tmg.flashback.rss.web.FlashbackWebChromeClient
+import tmg.flashback.rss.web.FlashbackWebViewClient
 import tmg.utilities.extensions.getColor
 import tmg.utilities.extensions.viewUrl
 import tmg.utilities.extensions.views.show
@@ -35,6 +37,8 @@ internal class WebFragment : Fragment() {
     private lateinit var pageTitle: String
     private lateinit var pageUrl: String
 
+    internal var callback: WebUpdated? = null
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -42,14 +46,6 @@ internal class WebFragment : Fragment() {
     ): View {
         binding = FragmentWebBinding.inflate(inflater, container, false)
         return binding!!.root
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            this.pageTitle = it.getString(keyTitle)!!
-            this.pageUrl = it.getString(keyUrl)!!
-        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -61,8 +57,8 @@ internal class WebFragment : Fragment() {
         }
 
         val webViewClient = FlashbackWebViewClient(
-            domainChanged = { binding?.domain?.text = it },
-            titleChanged = { binding?.title?.text = it }
+            domainChanged = { callback?.domainChanged(it) },
+            titleChanged = { callback?.titleChanged(it) }
         )
         val webChromeClient = FlashbackWebChromeClient(
             updateProgressToo = {
@@ -78,21 +74,6 @@ internal class WebFragment : Fragment() {
             webview.settings.loadsImagesAutomatically = true
             webview.settings.javaScriptEnabled = repository.inAppEnableJavascript
             webview.scrollBarStyle = View.SCROLLBARS_INSIDE_OVERLAY
-
-            load(pageTitle, pageUrl)
-
-            back.setOnClickListener {
-                exitWeb()
-                findNavController().navigateUp()
-            }
-
-            openInBrowser.setOnClickListener {
-                openInBrowser()
-            }
-
-            share.setOnClickListener {
-                share()
-            }
 
             try {
                 val host = Uri.parse(pageUrl).host
@@ -120,7 +101,7 @@ internal class WebFragment : Fragment() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         binding?.let {
-            outState.putString(keyTitle, it.title.text.toString())
+            outState.putString(keyTitle, it.webview.title.toString())
             outState.putString(keyUrl, it.webview.url)
         }
         super.onSaveInstanceState(outState)
@@ -132,24 +113,7 @@ internal class WebFragment : Fragment() {
 
         binding!!.apply {
             webview.loadUrl(pageUrl)
-            title.text = pageTitle
-            domain.text = Uri.parse(pageUrl).host ?: "-"
         }
-    }
-
-    private fun openInBrowser() {
-        binding?.webview?.url?.let {
-            viewUrl(it)
-        } ?: crashController.logException(NullPointerException("URL cannot be retreived from webview to open in browser"))
-    }
-
-    private fun share() {
-        binding?.webview?.url?.let {
-            val intent: Intent = Intent(Intent.ACTION_SEND)
-            intent.type = "text/plain"
-            intent.putExtra(Intent.EXTRA_TEXT, it)
-            startActivity(Intent.createChooser(intent, getString(R.string.choose_share)))
-        } ?: crashController.logException(NullPointerException("URL cannot be retreived from webview to share"))
     }
 
     override fun onPause() {
@@ -166,31 +130,19 @@ internal class WebFragment : Fragment() {
         }
     }
 
-    fun exitWeb() {
-        binding?.apply {
-            webview.onPause()
-            webview.stopLoading()
-        }
-    }
-
     companion object {
 
         private const val keyTitle: String = "title"
         private const val keyUrl: String = "url"
-
-        fun instance(title: String, url: String): WebFragment {
-            val bundle = Bundle().apply {
-                putString(keyTitle, title)
-                putString(keyUrl, url)
-            }
-            return WebFragment().apply {
-                arguments = bundle
-            }
-        }
 
         fun bundle(title: String, url: String) = Bundle().apply {
             putString(keyTitle, title)
             putString(keyUrl, url)
         }
     }
+}
+
+internal interface WebUpdated {
+    fun domainChanged(domain: String)
+    fun titleChanged(title: String)
 }

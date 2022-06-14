@@ -26,9 +26,10 @@ allprojects {
                         material3                               : "androidx.compose.material3:material3:1.0.0-alpha09",
                         animation                               : "androidx.compose.animation:animation:$android_compose",
                         tooling                                 : "androidx.compose.ui:ui-tooling:$android_compose",
+                        viewbinding                             : "androidx.compose.ui:ui-viewbinding:$android_compose",
                         runtime                                 : "androidx.compose.runtime:runtime-livedata:$android_compose",
                         viewmodel                               : "androidx.lifecycle:lifecycle-viewmodel-compose:$android_lifecycle",
-                        theme_adapter                           : "com.google.android.material:compose-theme-adapter:1.1.5",
+                        theme_adapter                           : "com.google.android.material:compose-theme-adapter:1.1.5"
                 ],
                 accompanist: [
                         swiperefresh                            : "com.google.accompanist:accompanist-swiperefresh:0.24.8-beta",

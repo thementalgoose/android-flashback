@@ -21,25 +21,31 @@ fun Header(
     icon: Painter?,
     iconContentDescription: String?,
     actionUpClicked: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    overrideIcons: @Composable () -> Unit = { },
 ) {
     Column(
         modifier = modifier
             .fillMaxWidth()
             .padding(top = AppTheme.dimensions.paddingXSmall)
     ) {
-        if (icon != null) {
-            IconButton(
-                onClick = actionUpClicked
-            ) {
-                Icon(
-                    painter = icon,
-                    contentDescription = iconContentDescription,
-                    tint = AppTheme.colors.contentPrimary
-                )
+        Row {
+            if (icon != null) {
+                IconButton(
+                    onClick = actionUpClicked
+                ) {
+                    Icon(
+                        painter = icon,
+                        contentDescription = iconContentDescription,
+                        tint = AppTheme.colors.contentPrimary
+                    )
+                }
+                Spacer(Modifier.weight(1f))
+                overrideIcons()
+
+            } else {
+                Spacer(modifier = Modifier.height(AppTheme.dimensions.paddingLarge + 16.dp))
             }
-        } else {
-            Spacer(modifier = Modifier.height(AppTheme.dimensions.paddingLarge + 16.dp))
         }
         TextHeadline1(
             text = text,

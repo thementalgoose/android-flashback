@@ -1,18 +1,17 @@
-package tmg.flashback.stats.ui.messaging
+package tmg.flashback.ui.components.messages
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody2
 
+
 @Composable
-private fun Message(
+fun Message(
     title: String,
     modifier: Modifier = Modifier
 ) {
