@@ -69,7 +69,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/paddingMedium"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="4dp"
                 android:background="?attr/backgroundSecondary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/ad_app_icon"

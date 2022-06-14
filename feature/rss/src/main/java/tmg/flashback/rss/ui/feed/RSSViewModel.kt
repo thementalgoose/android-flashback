@@ -2,12 +2,15 @@ package tmg.flashback.rss.ui.feed
 
 import androidx.lifecycle.*
 import kotlinx.coroutines.flow.*
+import org.koin.dsl.koinApplication
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
+import tmg.flashback.RssNavigationComponent
 import tmg.flashback.ads.repository.AdsRepository
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.rss.repo.RSSRepository
 import tmg.flashback.rss.repo.RssAPI
+import tmg.flashback.ui.navigation.ApplicationNavigationComponent
 import tmg.utilities.extensions.then
 import java.util.*
 
@@ -15,6 +18,8 @@ import java.util.*
 
 interface RSSViewModelInputs {
     fun refresh()
+    fun configure()
+    fun clickModel(model: RSSModel.RSS)
 }
 
 //endregion
@@ -31,11 +36,12 @@ interface RSSViewModelOutputs {
 @Suppress("EXPERIMENTAL_API_USAGE")
 internal class RSSViewModel(
     private val RSSDB: RssAPI,
-    private val prefRepository: RSSRepository,
+    private val rssRepository: RSSRepository,
     private val adsRepository: AdsRepository,
+    private val rssNavigationComponent: RssNavigationComponent,
+    private val applicationNavigationComponent: ApplicationNavigationComponent,
     private val connectivityManager: NetworkConnectivityManager
-): ViewModel(), RSSViewModelInputs,
-    RSSViewModelOutputs {
+): ViewModel(), RSSViewModelInputs, RSSViewModelOutputs {
 
     override val isRefreshing: MutableLiveData<Boolean> = MutableLiveData()
 
@@ -60,7 +66,7 @@ internal class RSSViewModel(
             }
             val results = response.result?.map { RSSModel.RSS(it) } ?: emptyList()
             if (results.isEmpty()) {
-                if (prefRepository.rssUrls.isEmpty()) {
+                if (rssRepository.rssUrls.isEmpty()) {
                     return@map listOf<RSSModel>(
                         RSSModel.SourcesDisabled
                     )
@@ -97,6 +103,18 @@ internal class RSSViewModel(
 
     override fun refresh() {
         refreshNews.value = UUID.randomUUID().toString()
+    }
+
+    override fun configure() {
+        rssNavigationComponent.rssSettings()
+    }
+
+    override fun clickModel(model: RSSModel.RSS) {
+        if (rssRepository.newsOpenInExternalBrowser) {
+            applicationNavigationComponent.openUrl(model.item.link)
+        } else {
+            rssNavigationComponent.web(model.item.title, model.item.link)
+        }
     }
 
     //endregion

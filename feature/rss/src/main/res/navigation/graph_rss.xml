@@ -26,6 +26,6 @@
     </fragment>
     <fragment
         android:id="@+id/webFragment"
-        android:name="tmg.flashback.rss.web.WebFragment"
+        android:name="tmg.flashback.rss.ui.web.WebFragment"
         android:label="WebFragment" />
 </navigation>

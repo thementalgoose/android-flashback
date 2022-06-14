@@ -2,11 +2,13 @@ package tmg.flashback.rss.ui.feed
 
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.verify
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.advanceUntilIdle
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDateTime
+import tmg.flashback.RssNavigationComponent
 import tmg.flashback.ads.repository.AdsRepository
 import tmg.flashback.ads.repository.model.AdvertConfig
 import tmg.flashback.device.managers.NetworkConnectivityManager
@@ -20,11 +22,12 @@ import tmg.testutils.livedata.*
 
 internal class RSSViewModelTest: BaseTest() {
 
-    private lateinit var sut: RSSViewModel
+    private lateinit var underTest: RSSViewModel
 
     private val mockRSSDB: RssAPI = mockk(relaxed = true)
     private val mockRssRepository: RSSRepository = mockk(relaxed = true)
     private val mockAdsRepository: AdsRepository = mockk(relaxed = true)
+    private val mockRssNavigationComponent: RssNavigationComponent = mockk(relaxed = true)
     private val mockConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
 
     private val mockLocalDate: LocalDateTime = LocalDateTime.of(2020, 1, 1, 1, 2, 3, 0)
@@ -61,26 +64,27 @@ internal class RSSViewModelTest: BaseTest() {
         )
     }
 
-    private fun initSUT() {
+    private fun initUnderTest() {
 
-        sut = RSSViewModel(
+        underTest = RSSViewModel(
             mockRSSDB,
             mockRssRepository,
             mockAdsRepository,
+            mockRssNavigationComponent,
             mockConnectivityManager
         )
-        sut.refresh()
+        underTest.refresh()
     }
 
     @Test
     fun `is refreshing is initialised is reset after refresh flow`() = coroutineTest {
 
-        initSUT()
+        initUnderTest()
 
-        val observer = sut.outputs.isRefreshing.testObserve()
+        val observer = underTest.outputs.isRefreshing.testObserve()
         advanceUntilIdle()
 
-        sut.outputs.list.test {
+        underTest.outputs.list.test {
             assertListContainsItem(RSSModel.RSS(mockArticle))
             assertListContainsItem(RSSModel.Advert)
             assertListMatchesItem { it is RSSModel.Message }
@@ -88,7 +92,7 @@ internal class RSSViewModelTest: BaseTest() {
 
         observer.assertEmittedItems(true, false)
 
-        sut.inputs.refresh()
+        underTest.inputs.refresh()
 
         advanceUntilIdle()
 
@@ -99,11 +103,11 @@ internal class RSSViewModelTest: BaseTest() {
     fun `init with ads disabled doesnt show advert item`() = coroutineTest {
         every { mockAdsRepository.advertConfig } returns AdvertConfig(onRss = false)
 
-        initSUT()
+        initUnderTest()
 
         advanceUntilIdle()
 
-        sut.outputs.list.test {
+        underTest.outputs.list.test {
             assertListContainsItem(RSSModel.RSS(mockArticle))
             assertListDoesNotMatchItem { it is RSSModel.Advert }
         }
@@ -112,10 +116,10 @@ internal class RSSViewModelTest: BaseTest() {
     @Test
     fun `init loads all news sources`() = coroutineTest {
 
-        initSUT()
+        initUnderTest()
         advanceUntilIdle()
 
-        sut.outputs.list.test {
+        underTest.outputs.list.test {
             assertListContainsItem(RSSModel.RSS(mockArticle))
             assertListContainsItem(RSSModel.Advert)
             assertListMatchesItem { it is RSSModel.Message && it.msg.split(":").size == 3 }
@@ -132,10 +136,10 @@ internal class RSSViewModelTest: BaseTest() {
             RSSModel.SourcesDisabled
         )
 
-        initSUT()
+        initUnderTest()
         advanceUntilIdle()
 
-        sut.outputs.list.test {
+        underTest.outputs.list.test {
             assertValue(expected)
         }
     }
@@ -149,10 +153,10 @@ internal class RSSViewModelTest: BaseTest() {
             RSSModel.InternalError
         )
 
-        initSUT()
+        initUnderTest()
         advanceUntilIdle()
 
-        sut.outputs.list.test {
+        underTest.outputs.list.test {
             assertValue(expected)
         }
     }
@@ -166,10 +170,10 @@ internal class RSSViewModelTest: BaseTest() {
             RSSModel.NoNetwork
         )
 
-        initSUT()
+        initUnderTest()
         advanceUntilIdle()
 
-        sut.outputs.list.test {
+        underTest.outputs.list.test {
             assertValue(expected)
         }
     }
@@ -183,11 +187,24 @@ internal class RSSViewModelTest: BaseTest() {
             RSSModel.NoNetwork
         )
 
-        initSUT()
+        initUnderTest()
         advanceUntilIdle()
 
-        sut.outputs.list.test {
+        underTest.outputs.list.test {
             assertValue(expected)
+        }
+    }
+
+    @Test
+    fun `click configure opens rss settings`() = coroutineTest {
+
+        initUnderTest()
+        advanceUntilIdle()
+
+        underTest.inputs.configure()
+
+        verify {
+            mockRssNavigationComponent.rssSettings()
         }
     }
 }
