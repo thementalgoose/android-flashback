@@ -17,6 +17,7 @@ import tmg.flashback.rss.repo.RssAPI
 import tmg.flashback.rss.repo.model.Article
 import tmg.flashback.rss.repo.model.ArticleSource
 import tmg.flashback.rss.repo.model.Response
+import tmg.flashback.ui.navigation.ApplicationNavigationComponent
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.*
 
@@ -28,6 +29,7 @@ internal class RSSViewModelTest: BaseTest() {
     private val mockRssRepository: RSSRepository = mockk(relaxed = true)
     private val mockAdsRepository: AdsRepository = mockk(relaxed = true)
     private val mockRssNavigationComponent: RssNavigationComponent = mockk(relaxed = true)
+    private val mockApplicationNavigationComponent: ApplicationNavigationComponent = mockk(relaxed = true)
     private val mockConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
 
     private val mockLocalDate: LocalDateTime = LocalDateTime.of(2020, 1, 1, 1, 2, 3, 0)
@@ -71,6 +73,7 @@ internal class RSSViewModelTest: BaseTest() {
             mockRssRepository,
             mockAdsRepository,
             mockRssNavigationComponent,
+            mockApplicationNavigationComponent,
             mockConnectivityManager
         )
         underTest.refresh()
@@ -205,6 +208,36 @@ internal class RSSViewModelTest: BaseTest() {
 
         verify {
             mockRssNavigationComponent.rssSettings()
+        }
+    }
+
+    @Test
+    fun `click model with open in external browser enabled opens in browser`() {
+        every { mockRssRepository.newsOpenInExternalBrowser } returns true
+        val model: RSSModel.RSS = mockk {
+            every { item } returns mockk(relaxed = true)
+        }
+        initUnderTest()
+
+        underTest.inputs.clickModel(model)
+
+        verify {
+            mockApplicationNavigationComponent.openUrl(any())
+        }
+    }
+
+    @Test
+    fun `click model with open in external browser disabled opens in in-app browser`() {
+        every { mockRssRepository.newsOpenInExternalBrowser } returns false
+        val model: RSSModel.RSS = mockk {
+            every { item } returns mockk(relaxed = true)
+        }
+        initUnderTest()
+
+        underTest.inputs.clickModel(model)
+
+        verify {
+            mockRssNavigationComponent.web(any(), any())
         }
     }
 }
