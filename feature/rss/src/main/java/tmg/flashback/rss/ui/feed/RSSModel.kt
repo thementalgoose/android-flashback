@@ -5,41 +5,34 @@ import tmg.flashback.rss.R
 import tmg.flashback.rss.repo.model.Article
 
 sealed class RSSModel(
-    val key: String,
-    @LayoutRes val layoutId: Int
+    val key: String
 ) {
     data class RSS(
         val item: Article
     ): RSSModel(
-        key = item.id,
-        layoutId = R.layout.view_rss_item
+        key = item.id
     )
 
     data class Message(
         val msg: String,
         val id: String = msg,
     ): RSSModel(
-        key = id,
-        layoutId = R.layout.view_rss_message
+        key = id
     )
 
     object Advert: RSSModel(
-        key = "advert",
-        layoutId = R.layout.view_rss_advert
+        key = "advert"
     )
 
     object NoNetwork: RSSModel(
-        key = "advert",
-        layoutId = R.layout.view_rss_no_network
+        key = "advert"
     )
 
     object InternalError: RSSModel(
-        key = "advert",
-        layoutId = R.layout.view_rss_internal_error
+        key = "advert"
     )
 
     object SourcesDisabled: RSSModel(
-        key = "advert",
-        layoutId = R.layout.view_rss_sources_disabled
+        key = "advert"
     )
 }

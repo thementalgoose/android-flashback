@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
@@ -78,12 +79,24 @@ fun RSSScreen(
     actionUpClicked: () -> Unit
 ) {
     LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(AppTheme.colors.backgroundPrimary),
         content = {
             item("header") {
                 Header(
                     text = stringResource(id = R.string.title_rss),
                     icon = painterResource(id = R.drawable.ic_back),
                     iconContentDescription = stringResource(id = R.string.ab_back),
+                    overrideIcons = {
+                        IconButton(onClick = configureSources) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_rss_settings),
+                                contentDescription = stringResource(id = R.string.ab_rss_settings),
+                                tint = AppTheme.colors.contentPrimary
+                            )
+                        }
+                    },
                     actionUpClicked = actionUpClicked
                 )
             }
