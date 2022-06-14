@@ -72,6 +72,7 @@ fun WebScreen(
                 )
             ) {
                 TextBody1(
+                    modifier = Modifier.padding(top = 4.dp),
                     text = titleValue.value,
                     maxLines = 1
                 )
