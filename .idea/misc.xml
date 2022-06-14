@@ -217,9 +217,11 @@
         <entry key="feature/rss/src/main/java/tmg/flashback/rss/ui/feed/RSSScreen.kt" value="0.3101851851851852" />
         <entry key="feature/rss/src/main/res/drawable/ic_close.xml" value="0.26" />
         <entry key="feature/rss/src/main/res/drawable/ic_rss_open_in_browser.xml" value="0.261" />
+        <entry key="feature/rss/src/main/res/drawable/ic_rss_settings.xml" value="0.261" />
         <entry key="feature/rss/src/main/res/drawable/ic_rss_share.xml" value="0.261" />
         <entry key="feature/rss/src/main/res/drawable/ic_web_close.xml" value="0.26" />
         <entry key="feature/rss/src/main/res/layout/activity_rss.xml" value="0.22395833333333334" />
+        <entry key="feature/rss/src/main/res/layout/activity_rss_settings.xml" value="0.22395833333333334" />
         <entry key="feature/rss/src/main/res/layout/activity_web.xml" value="0.2546875" />
         <entry key="feature/rss/src/main/res/layout/fragment_web.xml" value="0.2557291666666667" />
         <entry key="feature/rss/src/main/res/layout/view_rss_item.xml" value="0.13994565217391305" />
