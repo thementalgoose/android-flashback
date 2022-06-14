@@ -15,6 +15,11 @@
             android:label=""
             android:theme="@style/Translucent" />
 
+        <activity android:name=".ui.web.WebActivity"
+            android:exported="false"
+            android:label=""
+            android:theme="@style/Translucent" />
+
         <activity
             android:name=".ui.settings.RSSSettingsActivity"
             android:exported="false"

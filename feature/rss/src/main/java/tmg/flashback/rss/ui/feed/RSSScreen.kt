@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
@@ -41,6 +42,7 @@ import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextCaption
+import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.messages.Message
 import tmg.utilities.extensions.fromHtml
@@ -61,7 +63,8 @@ fun RSSScreenVM(
     ) {
         RSSScreen(
             list = list.value,
-            itemClicked = { },
+            itemClicked = viewModel.inputs::clickModel,
+            configureSources = viewModel.inputs::configure,
             actionUpClicked = actionUpClicked
         )
     }
@@ -71,6 +74,7 @@ fun RSSScreenVM(
 fun RSSScreen(
     list: List<RSSModel>,
     itemClicked: (RSSModel.RSS) -> Unit,
+    configureSources: () -> Unit,
     actionUpClicked: () -> Unit
 ) {
     LazyColumn(
@@ -88,16 +92,16 @@ fun RSSScreen(
                     is RSSModel.RSS -> Item(it, itemClicked)
                     is RSSModel.Message -> Message(stringResource(id = R.string.home_last_updated, it.msg))
                     RSSModel.NoNetwork -> {
-                        TextBody2(text = "No Network")
+                        NetworkError(error = NetworkError.NETWORK_ERROR)
                     }
                     RSSModel.Advert -> {
                         NativeBanner(badgeOffset = true)
                     }
                     RSSModel.InternalError -> {
-                        TextBody2(text = "Internal Error")
+                        NetworkError(error = NetworkError.INTERNAL_ERROR)
                     }
                     RSSModel.SourcesDisabled -> {
-                        TextBody2(text = "Sources Disabled")
+                        SourcesDisabled(sourceClicked = configureSources)
                     }
                 }
             }
@@ -184,6 +188,31 @@ private fun SourceBadge(
     }
 }
 
+@Composable
+private fun SourcesDisabled(
+    sourceClicked: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Row(modifier = modifier
+        .clickable(onClick = sourceClicked)
+        .padding(
+            vertical = AppTheme.dimensions.paddingMedium,
+            horizontal = AppTheme.dimensions.paddingMedium
+        )
+    ) {
+        Icon(
+            painter = painterResource(id = R.drawable.ic_rss_icon_no_sources),
+            contentDescription = null,
+            tint = AppTheme.colors.contentSecondary,
+            modifier = Modifier.size(36.dp)
+        )
+        Spacer(Modifier.width(16.dp))
+        TextBody1(
+            text = stringResource(id = R.string.rss_no_articles)
+        )
+    }
+}
+
 @PreviewTheme
 @Composable
 private fun Preview() {
@@ -191,6 +220,7 @@ private fun Preview() {
         RSSScreen(
             list = listOf(RSSModel.RSS(item = fakeArticle)),
             itemClicked = {},
+            configureSources = {},
             actionUpClicked = {}
         )
     }

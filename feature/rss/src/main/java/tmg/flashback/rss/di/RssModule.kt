@@ -17,14 +17,12 @@ val rssModule = module {
     single { RssNavigationComponent(get()) }
 
     // UI
-    viewModel { RSSViewModel(get(), get(), get(), get()) }
+    viewModel { RSSViewModel(get(), get(), get(), get(), get(), get()) }
     viewModel { RSSSettingsViewModel(get()) }
     viewModel { RSSConfigureViewModel(get(), get()) }
 
     // API
     single<RssAPI> { RSSService(get(), get()) }
-
-    // Managers
 
     // Controllers
     single { RSSController(get(), get()) }

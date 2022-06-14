@@ -14,7 +14,7 @@ import tmg.flashback.rss.repo.RSSRepository
 import tmg.flashback.rss.ui.feed.RSSViewModel
 import tmg.flashback.rss.ui.settings.InitialScreen
 import tmg.flashback.rss.ui.settings.RSSSettingsActivity
-import tmg.flashback.rss.web.WebFragment
+import tmg.flashback.rss.ui.web.WebFragment
 import tmg.flashback.ui.base.BaseFragment
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.viewUrl
