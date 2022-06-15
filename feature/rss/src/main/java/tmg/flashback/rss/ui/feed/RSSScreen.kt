@@ -66,6 +66,7 @@ fun RSSScreenVM(
             list = list.value,
             itemClicked = viewModel.inputs::clickModel,
             configureSources = viewModel.inputs::configure,
+            settings = viewModel.inputs::settings,
             actionUpClicked = actionUpClicked
         )
     }
@@ -76,6 +77,7 @@ fun RSSScreen(
     list: List<RSSModel>,
     itemClicked: (RSSModel.RSS) -> Unit,
     configureSources: () -> Unit,
+    settings: () -> Unit,
     actionUpClicked: () -> Unit
 ) {
     LazyColumn(
@@ -89,7 +91,7 @@ fun RSSScreen(
                     icon = painterResource(id = R.drawable.ic_back),
                     iconContentDescription = stringResource(id = R.string.ab_back),
                     overrideIcons = {
-                        IconButton(onClick = configureSources) {
+                        IconButton(onClick = settings) {
                             Icon(
                                 painter = painterResource(id = R.drawable.ic_rss_settings),
                                 contentDescription = stringResource(id = R.string.ab_rss_settings),
@@ -234,6 +236,7 @@ private fun Preview() {
             list = listOf(RSSModel.RSS(item = fakeArticle)),
             itemClicked = {},
             configureSources = {},
+            settings = {},
             actionUpClicked = {}
         )
     }
