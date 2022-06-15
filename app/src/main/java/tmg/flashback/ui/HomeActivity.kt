@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.compose.material.Scaffold
+import androidx.core.splashscreen.SplashScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -22,7 +23,7 @@ import tmg.flashback.ui.dashboard.DashboardScreen
 import tmg.flashback.ui.model.DisplayType
 import tmg.flashback.ui.sync.SyncActivity
 
-class HomeActivity: BaseActivity() {
+class HomeActivity: BaseActivity(), SplashScreen.KeepOnScreenCondition {
 
     private lateinit var binding: ActivityDashboardBinding
 
@@ -59,9 +60,7 @@ class HomeActivity: BaseActivity() {
             setContentView(binding.root)
         }
 
-        splashScreen.setKeepVisibleCondition {
-            viewModel.appliedChanges
-        }
+        splashScreen.setKeepOnScreenCondition(this)
 
         viewModel.initialise()
 
@@ -87,4 +86,6 @@ class HomeActivity: BaseActivity() {
             }
         }
     }
+
+    override fun shouldKeepOnScreen(): Boolean = viewModel.appliedChanges
 }
