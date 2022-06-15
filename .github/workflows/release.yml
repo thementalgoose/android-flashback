@@ -19,6 +19,7 @@ jobs:
 
   unit_test:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       # Checkout
       - uses: actions/checkout@v2
