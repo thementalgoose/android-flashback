@@ -10,6 +10,7 @@ import tmg.flashback.ads.repository.AdsRepository
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.rss.repo.RSSRepository
 import tmg.flashback.rss.repo.RssAPI
+import tmg.flashback.rss.ui.settings.InitialScreen
 import tmg.flashback.ui.navigation.ApplicationNavigationComponent
 import tmg.utilities.extensions.then
 import java.util.*
@@ -19,6 +20,7 @@ import java.util.*
 interface RSSViewModelInputs {
     fun refresh()
     fun configure()
+    fun settings()
     fun clickModel(model: RSSModel.RSS)
 }
 
@@ -106,7 +108,11 @@ internal class RSSViewModel(
     }
 
     override fun configure() {
-        rssNavigationComponent.rssSettings()
+        rssNavigationComponent.rssSettings(InitialScreen.CONFIGURE)
+    }
+
+    override fun settings() {
+        rssNavigationComponent.rssSettings(InitialScreen.SETTINGS)
     }
 
     override fun clickModel(model: RSSModel.RSS) {
