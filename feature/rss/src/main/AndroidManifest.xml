@@ -4,27 +4,18 @@
     <application>
 
         <activity
-            android:name=".ui.RSSActivity"
-            android:exported="false"
-            android:label=""
-            android:theme="@style/Translucent" />
-
-        <activity
             android:name=".ui.feed.RSSActivity"
             android:exported="false"
-            android:label=""
-            android:theme="@style/Translucent" />
+            android:label=""/>
 
         <activity android:name=".ui.web.WebActivity"
             android:exported="false"
-            android:label=""
-            android:theme="@style/Translucent" />
+            android:label="" />
 
         <activity
             android:name=".ui.settings.RSSSettingsActivity"
             android:exported="false"
-            android:label=""
-            android:theme="@style/Translucent" />
+            android:label="" />
 
     </application>
 </manifest>
