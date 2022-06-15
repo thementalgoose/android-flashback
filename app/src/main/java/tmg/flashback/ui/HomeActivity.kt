@@ -47,17 +47,12 @@ class HomeActivity: BaseActivity(), SplashScreen.KeepOnScreenCondition {
         val splashScreen = installSplashScreen()
         setTheme(themeRes)
 
-        if (configManager.getBoolean("dev_compose")) {
-            setContent {
-                AppTheme {
-                    Scaffold(content = {
-                        DashboardScreen(windowSize = rememberWindowSizeClass())
-                    })
-                }
+        setContent {
+            AppTheme {
+                Scaffold(content = {
+                    DashboardScreen(windowSize = rememberWindowSizeClass())
+                })
             }
-        } else {
-            binding = ActivityDashboardBinding.inflate(layoutInflater)
-            setContentView(binding.root)
         }
 
         splashScreen.setKeepOnScreenCondition(this)
