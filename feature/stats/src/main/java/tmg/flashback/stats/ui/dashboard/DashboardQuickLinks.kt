@@ -12,11 +12,4 @@ fun LazyItemScope.DashboardQuickLinks(
 ) {
     Banner()
     ProvidedBy()
-//        Column(modifier = Modifier
-//            .horizontalScroll(rememberScrollState())
-//        ) {
-//            Banner(
-//                message = stringResource(id = R.string.tyres_list_title)
-//            )
-//        }
 }
