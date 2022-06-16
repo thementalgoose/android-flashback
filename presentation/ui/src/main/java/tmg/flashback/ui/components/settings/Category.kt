@@ -19,17 +19,21 @@ internal fun Category(
     modifier: Modifier = Modifier,
     beta: Boolean = false,
 ) {
-    Row(modifier = Modifier.padding(top = AppTheme.dimensions.paddingSmall)) {
+    Row(modifier = Modifier
+        .padding(
+            top = AppTheme.dimensions.paddingSmall,
+            start = AppTheme.dimensions.paddingMedium,
+            end = AppTheme.dimensions.paddingMedium,
+        )
+    ) {
         TextBody1(
             text = text,
             bold = true,
             textColor = AppTheme.colors.primary,
             modifier = modifier
                 .weight(1f)
-                .align(Alignment.CenterVertically)
+                .align(CenterVertically)
                 .padding(
-                    start = AppTheme.dimensions.paddingMedium,
-                    end = AppTheme.dimensions.paddingMedium,
                     top = AppTheme.dimensions.paddingXSmall,
                     bottom = AppTheme.dimensions.paddingXSmall
                 )

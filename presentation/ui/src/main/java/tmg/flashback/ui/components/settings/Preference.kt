@@ -25,7 +25,7 @@ internal fun Preference(
             .fillMaxWidth()
             .clickable(onClick = preferenceClicked)
             .padding(
-                AppTheme.dimensions.paddingSmall, // Experimental label
+                start = AppTheme.dimensions.paddingSmall, // Experimental label
                 end = AppTheme.dimensions.paddingMedium,
                 top = AppTheme.dimensions.paddingNSmall,
                 bottom = AppTheme.dimensions.paddingNSmall
@@ -33,12 +33,16 @@ internal fun Preference(
     ) {
         TextBody1(
             text = title,
-            modifier = Modifier.padding(start = AppTheme.dimensions.paddingSmall)
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = AppTheme.dimensions.paddingSmall)
         )
         Spacer(modifier = Modifier.height(4.dp))
         TextBody2(
             text = subtitle,
-            modifier = Modifier.padding(start = AppTheme.dimensions.paddingSmall)
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = AppTheme.dimensions.paddingSmall)
         )
         if (beta) {
             Spacer(modifier = Modifier.height(4.dp))
