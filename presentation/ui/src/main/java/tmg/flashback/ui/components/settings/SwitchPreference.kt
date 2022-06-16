@@ -42,12 +42,16 @@ internal fun SwitchPreference(
         ) {
             TextBody1(
                 text = title,
-                modifier = Modifier.padding(start = AppTheme.dimensions.paddingSmall)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = AppTheme.dimensions.paddingSmall)
             )
             Spacer(modifier = Modifier.height(4.dp))
             TextBody2(
                 text = subtitle,
-                modifier = Modifier.padding(start = AppTheme.dimensions.paddingSmall)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = AppTheme.dimensions.paddingSmall)
             )
             if (beta) {
                 Spacer(modifier = Modifier.height(4.dp))

@@ -4,14 +4,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.ui.R
 import tmg.flashback.ui.settings.SettingsModel
 
 @Composable
-fun SettingsSection(
+fun SettingsScreen(
     models: List<SettingsModel>,
     modifier: Modifier = Modifier
 ) {
@@ -20,7 +19,8 @@ fun SettingsSection(
             when (x) {
                 is SettingsModel.Header -> {
                     Category(
-                        text = stringResource(id = x.title))
+                        text = stringResource(id = x.title)
+                    )
                 }
                 is SettingsModel.Pref -> {
                     Preference(
@@ -49,7 +49,7 @@ fun SettingsSection(
 @Composable
 private fun Preview() {
     AppThemePreview(isLight = true) {
-        SettingsSection(models = fakeSettings)
+        SettingsScreen(models = fakeSettings)
     }
 }
 
