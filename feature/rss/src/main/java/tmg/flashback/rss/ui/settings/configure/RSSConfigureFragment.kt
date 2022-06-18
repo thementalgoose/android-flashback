@@ -10,6 +10,7 @@ import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import tmg.flashback.rss.R
 import tmg.flashback.rss.databinding.FragmentRssSettingsConfigureBinding
+import tmg.flashback.rss.ui.configure.RSSConfigureViewModel
 import tmg.flashback.ui.base.BaseFragment
 import tmg.utilities.extensions.managerClipboard
 import tmg.utilities.extensions.observe

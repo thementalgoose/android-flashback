@@ -1,4 +1,4 @@
-package tmg.flashback.rss.ui.settings.configure
+package tmg.flashback.rss.ui.configure
 
 import io.mockk.every
 import io.mockk.mockk
@@ -9,6 +9,8 @@ import tmg.flashback.rss.R
 import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.rss.repo.RSSRepository
 import tmg.flashback.rss.repo.model.SupportedArticleSource
+import tmg.flashback.rss.ui.configure.RSSConfigureViewModel
+import tmg.flashback.rss.ui.settings.configure.RSSConfigureItem
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertDataEventValue
 import tmg.testutils.livedata.assertListDoesNotMatchItem
@@ -170,7 +172,12 @@ internal class RSSServiceConfigureViewModelTest: BaseTest() {
         quick: List<SupportedArticleSource> = mockListOfSupportedArticles
     ): List<RSSConfigureItem> {
         val list = mutableListOf<RSSConfigureItem>()
-        list.add(RSSConfigureItem.Header(R.string.rss_configure_header_items, R.string.rss_configure_header_items_subtitle))
+        list.add(
+            RSSConfigureItem.Header(
+                R.string.rss_configure_header_items,
+                R.string.rss_configure_header_items_subtitle
+            )
+        )
         if (added.isEmpty()) {
             list.add(RSSConfigureItem.NoItems)
         }
@@ -187,7 +194,12 @@ internal class RSSServiceConfigureViewModelTest: BaseTest() {
                 }
             )
         }
-        list.add(RSSConfigureItem.Header(R.string.rss_configure_header_quick_add, R.string.rss_configure_header_quick_add_subtitle))
+        list.add(
+            RSSConfigureItem.Header(
+                R.string.rss_configure_header_quick_add,
+                R.string.rss_configure_header_quick_add_subtitle
+            )
+        )
         list.addAll(quick
             .sortedBy { it.rssLink
                 .replace("https://www.", "")
@@ -199,7 +211,12 @@ internal class RSSServiceConfigureViewModelTest: BaseTest() {
                 RSSConfigureItem.QuickAdd(it)
             }
         )
-        list.add(RSSConfigureItem.Header(R.string.rss_configure_header_add, R.string.rss_configure_header_add_subtitle))
+        list.add(
+            RSSConfigureItem.Header(
+                R.string.rss_configure_header_add,
+                R.string.rss_configure_header_add_subtitle
+            )
+        )
         list.add(RSSConfigureItem.Add)
         return list
     }
