@@ -1,4 +1,4 @@
-package tmg.flashback.rss.ui.settings.configure
+package tmg.flashback.rss.ui.configure
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -7,11 +7,12 @@ import tmg.flashback.rss.R
 import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.rss.repo.RSSRepository
 import tmg.flashback.rss.repo.model.SupportedArticleSource
+import tmg.flashback.rss.ui.settings.configure.RSSConfigureItem
 import tmg.utilities.lifecycle.DataEvent
 
 //region Inputs
 
-interface RSSConfigureViewModelInputs {
+interface ConfigureRSSViewModelInputs {
     fun addQuickItem(supportedArticle: SupportedArticleSource)
     fun visitWebsite(supportedArticle: SupportedArticleSource)
     fun removeItem(link: String)
@@ -22,20 +23,20 @@ interface RSSConfigureViewModelInputs {
 
 //region Outputs
 
-interface RSSConfigureViewModelOutputs {
+interface ConfigureRSSViewModelOutputs {
     val list: LiveData<List<RSSConfigureItem>>
     val openWebsite: LiveData<DataEvent<SupportedArticleSource>>
 }
 
 //endregion
 
-internal class RSSConfigureViewModel(
+internal class ConfigureRSSViewModel(
     private val repository: RSSRepository,
     private val rssFeedController: RSSController
-) : ViewModel(), RSSConfigureViewModelInputs, RSSConfigureViewModelOutputs {
+) : ViewModel(), ConfigureRSSViewModelInputs, ConfigureRSSViewModelOutputs {
 
-    var inputs: RSSConfigureViewModelInputs = this
-    var outputs: RSSConfigureViewModelOutputs = this
+    var inputs: ConfigureRSSViewModelInputs = this
+    var outputs: ConfigureRSSViewModelOutputs = this
 
     private val rssUrls: MutableSet<String>
         get() = repository.rssUrls.toMutableSet()
@@ -87,9 +88,10 @@ internal class RSSConfigureViewModel(
         val itemList = mutableListOf<RSSConfigureItem>()
         itemList.add(
             RSSConfigureItem.Header(
-            text = R.string.rss_configure_header_items,
-            subtitle = R.string.rss_configure_header_items_subtitle
-        ))
+                text = R.string.rss_configure_header_items,
+                subtitle = R.string.rss_configure_header_items_subtitle
+            )
+        )
         if (rssUrls.isNotEmpty()) {
             itemList.addAll(rssUrls
                 .sortedBy {
@@ -108,9 +110,10 @@ internal class RSSConfigureViewModel(
         }
         itemList.add(
             RSSConfigureItem.Header(
-            text = R.string.rss_configure_header_quick_add,
-            subtitle = R.string.rss_configure_header_quick_add_subtitle
-        ))
+                text = R.string.rss_configure_header_quick_add,
+                subtitle = R.string.rss_configure_header_quick_add_subtitle
+            )
+        )
         itemList.addAll(rssFeedController
             .sources
             .filter { !rssUrls.contains(it.rssLink) }
@@ -130,7 +133,8 @@ internal class RSSConfigureViewModel(
                 RSSConfigureItem.Header(
                     text = R.string.rss_configure_header_add,
                     subtitle = R.string.rss_configure_header_add_subtitle
-                ))
+                )
+            )
             itemList.add(RSSConfigureItem.Add)
         }
         list.value = itemList

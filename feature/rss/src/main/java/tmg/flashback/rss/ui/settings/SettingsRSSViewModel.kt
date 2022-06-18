@@ -1,4 +1,4 @@
-package tmg.flashback.rss.ui.settings.settings
+package tmg.flashback.rss.ui.settings
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,22 +10,22 @@ import tmg.utilities.lifecycle.Event
 
 //region Inputs
 
-interface RSSSettingsViewModelInputs {
+interface SettingsRSSViewModelInputs {
 }
 
 //endregion
 
 //region Outputs
 
-interface RSSSettingsViewModelOutputs {
+interface SettingsRSSViewModelOutputs {
     val goToConfigure: LiveData<Event>
 }
 
 //endregion
 
-internal class RSSSettingsViewModel (
+internal class SettingsRSSViewModel (
         private val rssRepository: RSSRepository
-): SettingsViewModel(), RSSSettingsViewModelInputs, RSSSettingsViewModelOutputs {
+): SettingsViewModel(), SettingsRSSViewModelInputs, SettingsRSSViewModelOutputs {
 
     private val configureOnClick = { goToConfigure.value = Event() }
 
@@ -59,8 +59,8 @@ internal class RSSSettingsViewModel (
 
     )
 
-    var inputs: RSSSettingsViewModelInputs = this
-    var outputs: RSSSettingsViewModelOutputs = this
+    var inputs: SettingsRSSViewModelInputs = this
+    var outputs: SettingsRSSViewModelOutputs = this
 
     override val goToConfigure: MutableLiveData<Event> = MutableLiveData()
 }

@@ -8,8 +8,8 @@ import tmg.flashback.rss.network.RSSService
 import tmg.flashback.rss.repo.RSSRepository
 import tmg.flashback.rss.repo.RssAPI
 import tmg.flashback.rss.ui.feed.RSSViewModel
-import tmg.flashback.rss.ui.settings.configure.RSSConfigureViewModel
-import tmg.flashback.rss.ui.settings.settings.RSSSettingsViewModel
+import tmg.flashback.rss.ui.configure.RSSConfigureViewModel
+import tmg.flashback.rss.ui.settings.RSSSettingsViewModel
 
 val rssModule = module {
 

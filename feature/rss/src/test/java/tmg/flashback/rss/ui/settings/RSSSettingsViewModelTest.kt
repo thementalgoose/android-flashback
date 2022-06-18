@@ -1,4 +1,4 @@
-package tmg.flashback.rss.ui.settings.settings
+package tmg.flashback.rss.ui.settings
 
 import io.mockk.mockk
 import io.mockk.verify
@@ -12,14 +12,14 @@ import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertEventFired
 import tmg.testutils.livedata.test
 
-internal class RSSSettingsViewModelTest: BaseTest() {
+internal class SettingsRSSViewModelTest: BaseTest() {
 
     private val mockRssRepository: RSSRepository = mockk(relaxed = true)
 
-    lateinit var sut: RSSSettingsViewModel
+    lateinit var sut: SettingsRSSViewModel
 
     private fun initSUT() {
-        sut = RSSSettingsViewModel(mockRssRepository)
+        sut = SettingsRSSViewModel(mockRssRepository)
     }
 
     @Test
