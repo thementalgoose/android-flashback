@@ -27,7 +27,11 @@ fun SettingsAboutScreenVM(
             )
         }
         item("settings") {
-            SettingsScreen(models = list.value)
+            SettingsScreen(
+                models = list.value,
+                prefClicked = viewModel::clickPreference,
+                prefSwitchClicked = viewModel::clickSwitchPreference
+            )
         }
     })
 }

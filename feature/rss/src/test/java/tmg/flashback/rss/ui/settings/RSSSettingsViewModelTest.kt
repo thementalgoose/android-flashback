@@ -3,23 +3,23 @@ package tmg.flashback.rss.ui.settings
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Test
+import tmg.flashback.RssNavigationComponent
 import tmg.flashback.rss.R
 import tmg.flashback.rss.repo.RSSRepository
 import tmg.flashback.rss.testutils.assertExpectedOrder
 import tmg.flashback.rss.testutils.findPref
 import tmg.flashback.rss.testutils.findSwitch
 import tmg.testutils.BaseTest
-import tmg.testutils.livedata.assertEventFired
-import tmg.testutils.livedata.test
 
 internal class SettingsRSSViewModelTest: BaseTest() {
 
     private val mockRssRepository: RSSRepository = mockk(relaxed = true)
+    private val mockRssNavigationComponent: RssNavigationComponent = mockk(relaxed = true)
 
     lateinit var sut: SettingsRSSViewModel
 
     private fun initSUT() {
-        sut = SettingsRSSViewModel(mockRssRepository)
+        sut = SettingsRSSViewModel(mockRssRepository, mockRssNavigationComponent)
     }
 
     @Test
@@ -42,8 +42,8 @@ internal class SettingsRSSViewModelTest: BaseTest() {
     fun `clicking pref model for configure launches configure event`() {
         initSUT()
         sut.clickPreference(sut.models.findPref(R.string.settings_rss_configure_sources_title))
-        sut.outputs.goToConfigure.test {
-            assertEventFired()
+        verify {
+            mockRssNavigationComponent.configureRSS()
         }
     }
 

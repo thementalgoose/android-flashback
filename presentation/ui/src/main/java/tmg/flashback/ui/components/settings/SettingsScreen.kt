@@ -12,6 +12,8 @@ import tmg.flashback.ui.settings.SettingsModel
 @Composable
 fun SettingsScreen(
     models: List<SettingsModel>,
+    prefClicked: (SettingsModel.Pref) -> Unit,
+    prefSwitchClicked: (SettingsModel.SwitchPref, toState: Boolean) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier) {
@@ -26,7 +28,7 @@ fun SettingsScreen(
                     Preference(
                         title = stringResource(id = x.title),
                         subtitle = stringResource(id = x.description),
-                        preferenceClicked = { x.onClick?.invoke() }
+                        preferenceClicked = { prefClicked(x) }
                     )
                 }
                 is SettingsModel.SwitchPref -> {
@@ -34,10 +36,7 @@ fun SettingsScreen(
                         title = stringResource(id = x.title),
                         subtitle = stringResource(id = x.description),
                         isChecked = x.getState(),
-                        preferenceClicked = {
-                            x.saveState(it)
-                            x.saveStateNotification?.invoke(it)
-                        }
+                        preferenceClicked = { prefSwitchClicked(x, !x.getState()) }
                     )
                 }
             }
@@ -49,7 +48,11 @@ fun SettingsScreen(
 @Composable
 private fun Preview() {
     AppThemePreview(isLight = true) {
-        SettingsScreen(models = fakeSettings)
+        SettingsScreen(
+            models = fakeSettings,
+            prefClicked = { },
+            prefSwitchClicked = { _, _ -> }
+        )
     }
 }
 
