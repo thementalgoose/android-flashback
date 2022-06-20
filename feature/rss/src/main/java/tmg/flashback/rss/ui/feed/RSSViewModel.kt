@@ -2,7 +2,6 @@ package tmg.flashback.rss.ui.feed
 
 import androidx.lifecycle.*
 import kotlinx.coroutines.flow.*
-import org.koin.dsl.koinApplication
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.RssNavigationComponent
@@ -10,7 +9,6 @@ import tmg.flashback.ads.repository.AdsRepository
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.rss.repo.RSSRepository
 import tmg.flashback.rss.repo.RssAPI
-import tmg.flashback.rss.ui.settings.InitialScreen
 import tmg.flashback.ui.navigation.ApplicationNavigationComponent
 import tmg.utilities.extensions.then
 import java.util.*
