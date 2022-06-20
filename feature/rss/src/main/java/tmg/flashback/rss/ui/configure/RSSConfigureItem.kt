@@ -25,8 +25,8 @@ sealed class RSSConfigureItem(
 
     data class Item(
             val url: String,
+            val supportedArticleSource: SupportedArticleSource?,
             val urlModel: URL? = try { URL(url) } catch (e: MalformedURLException) { null },
-            val supportedArticleSource: SupportedArticleSource?
     ) : RSSConfigureItem(
         id = "link-${url}"
     )

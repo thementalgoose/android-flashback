@@ -9,15 +9,14 @@ import tmg.flashback.rss.R
 import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.rss.repo.RSSRepository
 import tmg.flashback.rss.repo.model.SupportedArticleSource
-import tmg.flashback.rss.ui.configure.RSSConfigureViewModel
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertDataEventValue
 import tmg.testutils.livedata.assertListDoesNotMatchItem
 import tmg.testutils.livedata.test
 
-internal class RSSServiceConfigureViewModelTest: BaseTest() {
+internal class ConfigureRSSViewModelTest: BaseTest() {
 
-    lateinit var sut: RSSConfigureViewModel
+    lateinit var sut: ConfigureRSSViewModel
 
     private val mockRepository: RSSRepository = mockk(relaxed = true)
     private val mockRssFeedController: RSSController = mockk(relaxed = true)
@@ -33,7 +32,7 @@ internal class RSSServiceConfigureViewModelTest: BaseTest() {
     }
 
     private fun initSUT() {
-        sut = RSSConfigureViewModel(mockRepository, mockRssFeedController)
+        sut = ConfigureRSSViewModel(mockRepository, mockRssFeedController)
     }
 
     @Test
