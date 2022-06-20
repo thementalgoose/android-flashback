@@ -28,7 +28,9 @@ fun SettingsAdvertScreenVM(
         }
         item("settings") {
             SettingsScreen(
-                models = list.value
+                models = list.value,
+                prefClicked = viewModel::clickPreference,
+                prefSwitchClicked = viewModel::clickSwitchPreference
             )
         }
     })

@@ -101,7 +101,7 @@ internal class ConfigureRSSViewModel(
                             .replace("http://", "")
                 }
                 .map {
-                    RSSConfigureItem.Item(it, rssFeedController.getSupportedSourceByRssUrl(it))
+                    RSSConfigureItem.Item(it, supportedArticleSource = rssFeedController.getSupportedSourceByRssUrl(it))
                 }
             )
         }

@@ -15,6 +15,7 @@ fun SettingsRSSScreenVM(
     actionUpClicked: () -> Unit
 ) {
     val viewModel by viewModel<SettingsRSSViewModel>()
+    viewModel.loadSettings()
     val list = viewModel.settings.observeAsState(emptyList())
 
     LazyColumn(content = {
@@ -27,7 +28,11 @@ fun SettingsRSSScreenVM(
             )
         }
         item("settings") {
-            SettingsScreen(models = list.value)
+            SettingsScreen(
+                models = list.value,
+                prefClicked = viewModel::clickPreference,
+                prefSwitchClicked = viewModel::clickSwitchPreference
+            )
         }
     })
 }

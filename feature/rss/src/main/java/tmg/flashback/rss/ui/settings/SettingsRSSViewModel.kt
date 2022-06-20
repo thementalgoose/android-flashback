@@ -1,12 +1,10 @@
 package tmg.flashback.rss.ui.settings
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import tmg.flashback.RssNavigationComponent
 import tmg.flashback.rss.R
 import tmg.flashback.rss.repo.RSSRepository
 import tmg.flashback.ui.settings.SettingsModel
 import tmg.flashback.ui.settings.SettingsViewModel
-import tmg.utilities.lifecycle.Event
 
 //region Inputs
 
@@ -18,49 +16,48 @@ interface SettingsRSSViewModelInputs {
 //region Outputs
 
 interface SettingsRSSViewModelOutputs {
-    val goToConfigure: LiveData<Event>
 }
 
 //endregion
 
 internal class SettingsRSSViewModel (
-        private val rssRepository: RSSRepository
+        private val rssRepository: RSSRepository,
+        private val rssNavigationComponent: RssNavigationComponent
 ): SettingsViewModel(), SettingsRSSViewModelInputs, SettingsRSSViewModelOutputs {
 
-    private val configureOnClick = { goToConfigure.value = Event() }
+    override val models: List<SettingsModel>
+        get() = listOf(
+            SettingsModel.Header(R.string.settings_rss_configure),
+            SettingsModel.Pref(
+                title = R.string.settings_rss_configure_sources_title,
+                description = R.string.settings_rss_configure_sources_description,
+                onClick = {
+                    rssNavigationComponent.configureRSS()
+                }
+            ),
+            SettingsModel.Header(R.string.settings_rss_appearance_title),
+            SettingsModel.SwitchPref(
+                title = R.string.settings_rss_show_description_title,
+                description = R.string.settings_rss_show_description_description,
+                getState = { rssRepository.rssShowDescription },
+                saveState = { rssRepository.rssShowDescription = it }
+            ),
+            SettingsModel.Header(R.string.settings_rss_browser),
+            SettingsModel.SwitchPref(
+                title = R.string.settings_rss_browser_external_title,
+                description = R.string.settings_rss_browser_external_description,
+                getState = { rssRepository.newsOpenInExternalBrowser },
+                saveState = { rssRepository.newsOpenInExternalBrowser = it }
+            ),
+            SettingsModel.SwitchPref(
+                title = R.string.settings_rss_browser_javascript_title,
+                description = R.string.settings_rss_browser_javascript_description,
+                getState = { rssRepository.inAppEnableJavascript },
+                saveState = { rssRepository.inAppEnableJavascript = it }
+            ),
 
-    override val models: List<SettingsModel> get() = listOf(
-        SettingsModel.Header(R.string.settings_rss_configure),
-        SettingsModel.Pref(
-            title = R.string.settings_rss_configure_sources_title,
-            description = R.string.settings_rss_configure_sources_description,
-            onClick = configureOnClick
-        ),
-        SettingsModel.Header(R.string.settings_rss_appearance_title),
-        SettingsModel.SwitchPref(
-            title = R.string.settings_rss_show_description_title,
-            description = R.string.settings_rss_show_description_description,
-            getState = { rssRepository.rssShowDescription },
-            saveState = { rssRepository.rssShowDescription = it }
-        ),
-        SettingsModel.Header(R.string.settings_rss_browser),
-        SettingsModel.SwitchPref(
-            title = R.string.settings_rss_browser_external_title,
-            description = R.string.settings_rss_browser_external_description,
-            getState = { rssRepository.newsOpenInExternalBrowser },
-            saveState = { rssRepository.newsOpenInExternalBrowser = it }
-        ),
-        SettingsModel.SwitchPref(
-            title = R.string.settings_rss_browser_javascript_title,
-            description = R.string.settings_rss_browser_javascript_description,
-            getState = { rssRepository.inAppEnableJavascript },
-            saveState = { rssRepository.inAppEnableJavascript = it }
-        ),
-
-    )
+            )
 
     var inputs: SettingsRSSViewModelInputs = this
     var outputs: SettingsRSSViewModelOutputs = this
-
-    override val goToConfigure: MutableLiveData<Event> = MutableLiveData()
 }

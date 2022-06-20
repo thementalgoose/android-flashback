@@ -10,7 +10,7 @@ import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import tmg.flashback.rss.R
 import tmg.flashback.rss.databinding.FragmentRssSettingsConfigureBinding
-import tmg.flashback.rss.ui.configure.RSSConfigureViewModel
+import tmg.flashback.rss.ui.configure.ConfigureRSSViewModel
 import tmg.flashback.ui.base.BaseFragment
 import tmg.utilities.extensions.managerClipboard
 import tmg.utilities.extensions.observe
@@ -20,7 +20,7 @@ import tmg.utilities.lifecycle.viewInflateBinding
 
 class RSSConfigureFragment: BaseFragment() {
 
-    private val viewModel: RSSConfigureViewModel by viewModel()
+    private val viewModel: ConfigureRSSViewModel by viewModel()
     private val binding by viewInflateBinding(FragmentRssSettingsConfigureBinding::inflate)
 
     private lateinit var adapter: RSSConfigureAdapter

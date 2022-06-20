@@ -216,6 +216,7 @@
         <entry key="feature/forceupgrade/src/main/java/tmg/flashback/forceupgrade/ui/forceupgrade/ForceUpgradeScreen.kt" value="0.6655629139072847" />
         <entry key="feature/rss/src/main/java/tmg/flashback/rss/ui/feed/RSSScreen.kt" value="0.3101851851851852" />
         <entry key="feature/rss/src/main/res/drawable/ic_close.xml" value="0.26" />
+        <entry key="feature/rss/src/main/res/drawable/ic_rss_configure_add.xml" value="0.178" />
         <entry key="feature/rss/src/main/res/drawable/ic_rss_open_in_browser.xml" value="0.261" />
         <entry key="feature/rss/src/main/res/drawable/ic_rss_settings.xml" value="0.261" />
         <entry key="feature/rss/src/main/res/drawable/ic_rss_share.xml" value="0.261" />
@@ -224,6 +225,7 @@
         <entry key="feature/rss/src/main/res/layout/activity_rss_settings.xml" value="0.22395833333333334" />
         <entry key="feature/rss/src/main/res/layout/activity_web.xml" value="0.2546875" />
         <entry key="feature/rss/src/main/res/layout/fragment_web.xml" value="0.2557291666666667" />
+        <entry key="feature/rss/src/main/res/layout/view_rss_configure_add.xml" value="0.1752786220871327" />
         <entry key="feature/rss/src/main/res/layout/view_rss_item.xml" value="0.13994565217391305" />
         <entry key="feature/settings/src/main/java/tmg/flashback/settings/ui/privacypolicy/PrivacyPolicyScreen.kt" value="0.10185185185185185" />
         <entry key="feature/statistics/src/main/res/drawable/ic_fastest_lap.xml" value="0.2515" />
@@ -391,6 +393,7 @@
         <entry key="presentation/ui/src/main/java/tmg/flashback/ui/components/progressbar/ProgressBar.kt" value="0.786692759295499" />
         <entry key="presentation/ui/src/main/java/tmg/flashback/ui/components/settings/Category.kt" value="0.5083333333333333" />
         <entry key="presentation/ui/src/main/java/tmg/flashback/ui/components/settings/Preference.kt" value="0.5083333333333333" />
+        <entry key="presentation/ui/src/main/java/tmg/flashback/ui/components/settings/SettingsScreen.kt" value="0.2814814814814815" />
         <entry key="presentation/ui/src/main/java/tmg/flashback/ui/components/settings/SettingsSection.kt" value="0.4068825910931174" />
         <entry key="presentation/ui/src/main/java/tmg/flashback/ui/components/settings/SwitchPreference.kt" value="0.5083333333333333" />
         <entry key="presentation/ui/src/main/res/drawable-night/unknown_avatar.xml" value="0.1985" />

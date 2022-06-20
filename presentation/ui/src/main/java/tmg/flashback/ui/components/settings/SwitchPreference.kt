@@ -3,9 +3,12 @@ package tmg.flashback.ui.components.settings
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Checkbox
+import androidx.compose.material.CheckboxColors
+import androidx.compose.material.CheckboxDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import tmg.flashback.style.AppTheme
@@ -60,6 +63,11 @@ internal fun SwitchPreference(
         }
         Spacer(modifier = Modifier.width(4.dp))
         Checkbox(
+            colors = CheckboxDefaults.colors(
+                checkedColor = AppTheme.colors.primary,
+                uncheckedColor = AppTheme.colors.contentTertiary,
+                checkmarkColor = AppTheme.colors.backgroundPrimary
+            ),
             checked = isChecked,
             onCheckedChange = null,
             modifier = Modifier.align(Alignment.CenterVertically)

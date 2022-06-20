@@ -108,11 +108,11 @@ internal class RSSViewModel(
     }
 
     override fun configure() {
-        rssNavigationComponent.rssSettings(InitialScreen.CONFIGURE)
+        rssNavigationComponent.configureRSS()
     }
 
     override fun settings() {
-        rssNavigationComponent.rssSettings(InitialScreen.SETTINGS)
+        rssNavigationComponent.settingsRSS()
     }
 
     override fun clickModel(model: RSSModel.RSS) {
