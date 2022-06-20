@@ -8,8 +8,7 @@ import java.net.MalformedURLException
 import java.net.URL
 
 sealed class RSSConfigureItem(
-    val id: String,
-    @LayoutRes val layoutId: Int
+    val id: String
 ) {
     data class Header(
             @StringRes
@@ -17,13 +16,11 @@ sealed class RSSConfigureItem(
             @StringRes
             val subtitle: Int? = null
     ) : RSSConfigureItem(
-        id = "header-$text",
-        layoutId = R.layout.view_rss_configure_header
+        id = "header-$text"
     )
 
     object NoItems : RSSConfigureItem(
-        id = "no-items",
-        layoutId = R.layout.view_rss_configure_no_items
+        id = "no-items"
     )
 
     data class Item(
@@ -31,20 +28,17 @@ sealed class RSSConfigureItem(
             val urlModel: URL? = try { URL(url) } catch (e: MalformedURLException) { null },
             val supportedArticleSource: SupportedArticleSource?
     ) : RSSConfigureItem(
-        id = "link-${url}",
-        layoutId = R.layout.view_rss_configure_item
+        id = "link-${url}"
     )
 
     data class QuickAdd(
             val supportedArticleSource: SupportedArticleSource,
             val urlModel: URL? = try { URL(supportedArticleSource.source) } catch (e: MalformedURLException) { null },
     ) : RSSConfigureItem(
-        id = "link-${supportedArticleSource.rssLink}",
-        layoutId = R.layout.view_rss_configure_quickadd
+        id = "link-${supportedArticleSource.rssLink}"
     )
 
     object Add : RSSConfigureItem(
-        id = "add",
-        layoutId = R.layout.view_rss_configure_add
+        id = "add"
     )
 }

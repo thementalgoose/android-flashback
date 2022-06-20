@@ -3,14 +3,17 @@ package tmg.flashback.ui2.settings
 import android.os.Bundle
 import android.view.View
 import androidx.navigation.fragment.findNavController
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import tmg.flashback.R
+import tmg.flashback.RssNavigationComponent
 import tmg.flashback.ui.settings.SettingsFragment
 import tmg.utilities.extensions.observeEvent
 
 class SettingsAllFragment: SettingsFragment<SettingsAllViewModel>() {
 
     override val viewModel: SettingsAllViewModel by viewModel()
+    private val rssNavigationComponent: RssNavigationComponent by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,7 +31,7 @@ class SettingsAllFragment: SettingsFragment<SettingsAllViewModel>() {
             findNavController().navigate(R.id.graph_action_home)
         }
         observeEvent(viewModel.outputs.openRss) {
-            findNavController().navigate(R.id.graph_action_rss)
+            rssNavigationComponent.settingsRSS()
         }
         observeEvent(viewModel.outputs.openNotifications) {
             findNavController().navigate(R.id.graph_action_notifications)
