@@ -20,7 +20,6 @@ import org.koin.androidx.compose.viewModel
 import tmg.flashback.rss.R
 import tmg.flashback.rss.repo.model.SupportedArticleSource
 import tmg.flashback.rss.ui.feed.SourceBadge
-import tmg.flashback.rss.ui.settings.configure.RSSConfigureItem
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.buttons.ButtonTertiary
 import tmg.flashback.style.input.InputPrimary
@@ -62,7 +61,7 @@ private fun SettingsRSSConfigureScreen(
             content = {
                 item("header") {
                     Header(
-                        text = stringResource(id = R.string.title_rss),
+                        text = stringResource(id = R.string.settings_rss_configure),
                         icon = painterResource(id = R.drawable.ic_back),
                         iconContentDescription = stringResource(id = R.string.ab_back),
                         actionUpClicked = actionUpClicked

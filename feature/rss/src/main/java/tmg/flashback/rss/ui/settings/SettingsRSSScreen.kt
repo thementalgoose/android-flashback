@@ -21,7 +21,7 @@ fun SettingsRSSScreenVM(
     LazyColumn(content = {
         item("header") {
             Header(
-                text = stringResource(id = R.string.title_rss),
+                text = stringResource(id = R.string.settings_rss_title),
                 icon = painterResource(id = R.drawable.ic_back),
                 iconContentDescription = stringResource(id = R.string.ab_back),
                 actionUpClicked = actionUpClicked

@@ -7,7 +7,6 @@ import tmg.flashback.rss.R
 import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.rss.repo.RSSRepository
 import tmg.flashback.rss.repo.model.SupportedArticleSource
-import tmg.flashback.rss.ui.settings.configure.RSSConfigureItem
 import tmg.utilities.lifecycle.DataEvent
 
 //region Inputs
