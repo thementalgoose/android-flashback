@@ -1,4 +1,4 @@
-package tmg.flashback.rss.ui.settings.configure
+package tmg.flashback.rss.ui.configure
 
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
