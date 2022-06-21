@@ -19,7 +19,7 @@ import tmg.flashback.statistics.ui.dashboard.onboarding.OnboardingNotificationBo
 import tmg.flashback.ui.base.BaseFragment
 import tmg.flashback.ui.navigation.ApplicationNavigationComponent
 import tmg.flashback.ui2.dashboard.DashboardNavigationCallback
-import tmg.flashback.ui2.settings.SettingsAllActivity
+import tmg.flashback.ui.settings.SettingsAllActivity
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 import tmg.utilities.lifecycle.viewInflateBinding

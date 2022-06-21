@@ -15,7 +15,7 @@ import tmg.flashback.ui.navigation.ApplicationNavigationComponent
 import tmg.flashback.ui.HomeActivity
 import tmg.flashback.ui.navigation.ActivityProvider
 import tmg.flashback.ui.sync.SyncActivity
-import tmg.flashback.ui2.settings.SettingsAllActivity
+import tmg.flashback.ui.settings.SettingsAllActivity
 import java.net.MalformedURLException
 
 class AppApplicationNavigationComponent(

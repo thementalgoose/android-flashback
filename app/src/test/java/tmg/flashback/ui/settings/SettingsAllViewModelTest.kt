@@ -1,22 +1,29 @@
-package tmg.flashback.ui2.settings
+package tmg.flashback.ui.settings
 
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.R
+import tmg.flashback.RssNavigationComponent
+import tmg.flashback.ads.AdsNavigationComponent
 import tmg.flashback.ads.repository.AdsRepository
 import tmg.flashback.rss.controllers.RSSController
+import tmg.flashback.settings.SettingsNavigationComponent
+import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.testutils.assertExpectedOrder
 import tmg.flashback.testutils.findPref
 import tmg.testutils.BaseTest
-import tmg.testutils.livedata.assertEventFired
-import tmg.testutils.livedata.test
 
 internal class SettingsAllViewModelTest: BaseTest() {
 
     private var mockRssController: RSSController = mockk(relaxed = true)
     private var mockAdsRepository: AdsRepository = mockk(relaxed = true)
+    private var mockRssNavigationController: RssNavigationComponent = mockk(relaxed = true)
+    private var mockSettingsNavigationComponent: SettingsNavigationComponent = mockk(relaxed = true)
+    private var mockStatsNavigationComponent: StatsNavigationComponent = mockk(relaxed = true)
+    private var mockAdsNavigationComponent: AdsNavigationComponent = mockk(relaxed = true)
 
     private lateinit var sut: SettingsAllViewModel
 
@@ -27,7 +34,14 @@ internal class SettingsAllViewModelTest: BaseTest() {
     }
 
     private fun initSUT() {
-        sut = SettingsAllViewModel(mockRssController, mockAdsRepository)
+        sut = SettingsAllViewModel(
+            mockRssController,
+            mockAdsRepository,
+            mockRssNavigationController,
+            mockSettingsNavigationComponent,
+            mockStatsNavigationComponent,
+            mockAdsNavigationComponent
+        )
     }
 
     @Test
@@ -85,8 +99,8 @@ internal class SettingsAllViewModelTest: BaseTest() {
     fun `clicking appearance fires open appearance event`() {
         initSUT()
         sut.clickPreference(sut.models.findPref(R.string.settings_all_appearance))
-        sut.outputs.openAppearance.test {
-            assertEventFired()
+        verify {
+            mockSettingsNavigationComponent.settingsAppearance()
         }
     }
 
@@ -94,8 +108,8 @@ internal class SettingsAllViewModelTest: BaseTest() {
     fun `clicking statistics fires open statistics event`() {
         initSUT()
         sut.clickPreference(sut.models.findPref(R.string.settings_all_home))
-        sut.outputs.openHome.test {
-            assertEventFired()
+        verify {
+            mockStatsNavigationComponent.settingsHome()
         }
     }
 
@@ -103,8 +117,8 @@ internal class SettingsAllViewModelTest: BaseTest() {
     fun `clicking rss fires open rss event`() {
         initSUT()
         sut.clickPreference(sut.models.findPref(R.string.settings_all_rss))
-        sut.outputs.openRss.test {
-            assertEventFired()
+        verify {
+            mockRssNavigationController.settingsRSS()
         }
     }
 
@@ -112,8 +126,8 @@ internal class SettingsAllViewModelTest: BaseTest() {
     fun `clicking notifications fires open notifications event`() {
         initSUT()
         sut.clickPreference(sut.models.findPref(R.string.settings_all_notifications))
-        sut.outputs.openNotifications.test {
-            assertEventFired()
+        verify {
+            mockStatsNavigationComponent.settingsNotifications()
         }
     }
 
@@ -121,8 +135,8 @@ internal class SettingsAllViewModelTest: BaseTest() {
     fun `clicking support fires open support event`() {
         initSUT()
         sut.clickPreference(sut.models.findPref(R.string.settings_all_support))
-        sut.outputs.openSupport.test {
-            assertEventFired()
+        verify {
+            mockSettingsNavigationComponent.settingsSupport()
         }
     }
 
@@ -130,8 +144,8 @@ internal class SettingsAllViewModelTest: BaseTest() {
     fun `clicking ads fires open ads event`() {
         initSUT()
         sut.clickPreference(sut.models.findPref(R.string.settings_all_ads))
-        sut.outputs.openAds.test {
-            assertEventFired()
+        verify {
+            mockAdsNavigationComponent.settingsAds()
         }
     }
 
@@ -139,8 +153,9 @@ internal class SettingsAllViewModelTest: BaseTest() {
     fun `clicking about fires open appearance event`() {
         initSUT()
         sut.clickPreference(sut.models.findPref(R.string.settings_all_about))
-        sut.outputs.openAbout.test {
-            assertEventFired()
+
+        verify {
+            mockSettingsNavigationComponent.settingsAbout()
         }
     }
 }
