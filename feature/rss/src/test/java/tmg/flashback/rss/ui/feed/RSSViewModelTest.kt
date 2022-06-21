@@ -17,7 +17,6 @@ import tmg.flashback.rss.repo.RssAPI
 import tmg.flashback.rss.repo.model.Article
 import tmg.flashback.rss.repo.model.ArticleSource
 import tmg.flashback.rss.repo.model.Response
-import tmg.flashback.rss.ui.settings.InitialScreen
 import tmg.flashback.ui.navigation.ApplicationNavigationComponent
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.*
@@ -208,7 +207,7 @@ internal class RSSViewModelTest: BaseTest() {
         underTest.inputs.configure()
 
         verify {
-            mockRssNavigationComponent.rssSettings(InitialScreen.CONFIGURE)
+            mockRssNavigationComponent.configureRSS()
         }
     }
 
@@ -221,7 +220,7 @@ internal class RSSViewModelTest: BaseTest() {
         underTest.inputs.settings()
 
         verify {
-            mockRssNavigationComponent.rssSettings(InitialScreen.SETTINGS)
+            mockRssNavigationComponent.settingsRSS()
         }
     }
 

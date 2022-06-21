@@ -4,15 +4,16 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.ui.R
 import tmg.flashback.ui.settings.SettingsModel
 
 @Composable
-fun SettingsSection(
+fun SettingsScreen(
     models: List<SettingsModel>,
+    prefClicked: (SettingsModel.Pref) -> Unit,
+    prefSwitchClicked: (SettingsModel.SwitchPref, toState: Boolean) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier) {
@@ -20,13 +21,14 @@ fun SettingsSection(
             when (x) {
                 is SettingsModel.Header -> {
                     Category(
-                        text = stringResource(id = x.title))
+                        text = stringResource(id = x.title)
+                    )
                 }
                 is SettingsModel.Pref -> {
                     Preference(
                         title = stringResource(id = x.title),
                         subtitle = stringResource(id = x.description),
-                        preferenceClicked = { x.onClick?.invoke() }
+                        preferenceClicked = { prefClicked(x) }
                     )
                 }
                 is SettingsModel.SwitchPref -> {
@@ -34,10 +36,7 @@ fun SettingsSection(
                         title = stringResource(id = x.title),
                         subtitle = stringResource(id = x.description),
                         isChecked = x.getState(),
-                        preferenceClicked = {
-                            x.saveState(it)
-                            x.saveStateNotification?.invoke(it)
-                        }
+                        preferenceClicked = { prefSwitchClicked(x, !x.getState()) }
                     )
                 }
             }
@@ -49,7 +48,11 @@ fun SettingsSection(
 @Composable
 private fun Preview() {
     AppThemePreview(isLight = true) {
-        SettingsSection(models = fakeSettings)
+        SettingsScreen(
+            models = fakeSettings,
+            prefClicked = { },
+            prefSwitchClicked = { _, _ -> }
+        )
     }
 }
 

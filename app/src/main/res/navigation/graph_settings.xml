@@ -23,13 +23,6 @@
             app:popEnterAnim="@anim/settings_pop_enter"
             app:popExitAnim="@anim/settings_pop_exit" />
         <action
-            android:id="@+id/graph_action_rss"
-            app:enterAnim="@anim/settings_enter"
-            app:exitAnim="@anim/settings_exit"
-            app:popEnterAnim="@anim/settings_pop_enter"
-            app:popExitAnim="@anim/settings_pop_exit"
-            app:destination="@id/graph_rss_settings" />
-        <action
             android:id="@+id/graph_action_notifications"
             app:destination="@id/settingsUpNextNotificationsFragment"
             app:enterAnim="@anim/settings_enter"
@@ -67,7 +60,6 @@
         android:id="@+id/settingsHomeFragment"
         android:name="tmg.flashback.statistics.ui.settings.home.SettingsHomeFragment"
         android:label="SettingsCustomisationFragment" />
-    <include app:graph="@navigation/graph_rss_settings" />
     <fragment
         android:id="@+id/settingsUpNextNotificationsFragment"
         android:name="tmg.flashback.statistics.ui.settings.notifications.UpNextSettingsFragment"

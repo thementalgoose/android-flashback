@@ -48,7 +48,7 @@ import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.messages.Message
 import tmg.utilities.extensions.fromHtml
 
-private val badgeSize: Dp = 42.dp
+private val badgeSize: Dp = 40.dp
 
 @Composable
 fun RSSScreenVM(
@@ -182,7 +182,7 @@ private fun Item(
 }
 
 @Composable
-private fun SourceBadge(
+internal fun SourceBadge(
     title: String,
     textColour: Color,
     colour: Color,
