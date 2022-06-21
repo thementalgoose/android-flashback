@@ -1,5 +1,6 @@
 package tmg.flashback.rss.ui.configure
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -55,42 +56,42 @@ private fun SettingsRSSConfigureScreen(
     addCustomItem: (String) -> Unit,
     actionUpClicked: () -> Unit
 ) {
-    Column(modifier = Modifier) {
-        LazyColumn(
-            modifier = Modifier.weight(1f),
-            content = {
-                item("header") {
-                    Header(
-                        text = stringResource(id = R.string.settings_rss_configure),
-                        icon = painterResource(id = R.drawable.ic_back),
-                        iconContentDescription = stringResource(id = R.string.ab_back),
-                        actionUpClicked = actionUpClicked
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(AppTheme.colors.backgroundPrimary),
+        content = {
+            item("header") {
+                Header(
+                    text = stringResource(id = R.string.settings_rss_configure),
+                    icon = painterResource(id = R.drawable.ic_back),
+                    iconContentDescription = stringResource(id = R.string.ab_back),
+                    actionUpClicked = actionUpClicked
+                )
+            }
+            items(list, key = { it.id }) {
+                when (it) {
+                    is RSSConfigureItem.Header -> { Header(it) }
+                    is RSSConfigureItem.Item -> Item(
+                        model = it,
+                        websiteLinkClicked = { item ->
+                            item.supportedArticleSource?.let { websiteClicked(it) }
+                        },
+                        removeClicked = { item -> removeItem(item.url) }
                     )
-                }
-                items(list, key = { it.id }) {
-                    when (it) {
-                        is RSSConfigureItem.Header -> { Header(it) }
-                        is RSSConfigureItem.Item -> Item(
-                            model = it,
-                            websiteLinkClicked = { item ->
-                                item.supportedArticleSource?.let { websiteClicked(it) }
-                            },
-                            removeClicked = { item -> removeItem(item.url) }
-                        )
-                        RSSConfigureItem.NoItems -> { NoItems() }
-                        is RSSConfigureItem.QuickAdd -> { QuickAdd(
-                            model = it,
-                            websiteLinkClicked = { item -> websiteClicked(item.supportedArticleSource) },
-                            addClicked = { item -> addQuickItemClicked(item.supportedArticleSource) }
-                        )}
-                        RSSConfigureItem.Add -> {
-                            Add(addUrl = addCustomItem)
-                        }
+                    RSSConfigureItem.NoItems -> { NoItems() }
+                    is RSSConfigureItem.QuickAdd -> { QuickAdd(
+                        model = it,
+                        websiteLinkClicked = { item -> websiteClicked(item.supportedArticleSource) },
+                        addClicked = { item -> addQuickItemClicked(item.supportedArticleSource) }
+                    )}
+                    RSSConfigureItem.Add -> {
+                        Add(addUrl = addCustomItem)
                     }
                 }
             }
-        )
-    }
+        }
+    )
 }
 
 @Composable
