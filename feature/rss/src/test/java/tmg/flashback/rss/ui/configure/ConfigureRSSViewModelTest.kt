@@ -1,4 +1,4 @@
-package tmg.flashback.rss.ui.settings.configure
+package tmg.flashback.rss.ui.configure
 
 import io.mockk.every
 import io.mockk.mockk
@@ -14,9 +14,9 @@ import tmg.testutils.livedata.assertDataEventValue
 import tmg.testutils.livedata.assertListDoesNotMatchItem
 import tmg.testutils.livedata.test
 
-internal class RSSServiceConfigureViewModelTest: BaseTest() {
+internal class ConfigureRSSViewModelTest: BaseTest() {
 
-    lateinit var sut: RSSConfigureViewModel
+    lateinit var sut: ConfigureRSSViewModel
 
     private val mockRepository: RSSRepository = mockk(relaxed = true)
     private val mockRssFeedController: RSSController = mockk(relaxed = true)
@@ -32,7 +32,7 @@ internal class RSSServiceConfigureViewModelTest: BaseTest() {
     }
 
     private fun initSUT() {
-        sut = RSSConfigureViewModel(mockRepository, mockRssFeedController)
+        sut = ConfigureRSSViewModel(mockRepository, mockRssFeedController)
     }
 
     @Test
@@ -170,7 +170,12 @@ internal class RSSServiceConfigureViewModelTest: BaseTest() {
         quick: List<SupportedArticleSource> = mockListOfSupportedArticles
     ): List<RSSConfigureItem> {
         val list = mutableListOf<RSSConfigureItem>()
-        list.add(RSSConfigureItem.Header(R.string.rss_configure_header_items, R.string.rss_configure_header_items_subtitle))
+        list.add(
+            RSSConfigureItem.Header(
+                R.string.rss_configure_header_items,
+                R.string.rss_configure_header_items_subtitle
+            )
+        )
         if (added.isEmpty()) {
             list.add(RSSConfigureItem.NoItems)
         }
@@ -187,7 +192,12 @@ internal class RSSServiceConfigureViewModelTest: BaseTest() {
                 }
             )
         }
-        list.add(RSSConfigureItem.Header(R.string.rss_configure_header_quick_add, R.string.rss_configure_header_quick_add_subtitle))
+        list.add(
+            RSSConfigureItem.Header(
+                R.string.rss_configure_header_quick_add,
+                R.string.rss_configure_header_quick_add_subtitle
+            )
+        )
         list.addAll(quick
             .sortedBy { it.rssLink
                 .replace("https://www.", "")
@@ -199,7 +209,12 @@ internal class RSSServiceConfigureViewModelTest: BaseTest() {
                 RSSConfigureItem.QuickAdd(it)
             }
         )
-        list.add(RSSConfigureItem.Header(R.string.rss_configure_header_add, R.string.rss_configure_header_add_subtitle))
+        list.add(
+            RSSConfigureItem.Header(
+                R.string.rss_configure_header_add,
+                R.string.rss_configure_header_add_subtitle
+            )
+        )
         list.add(RSSConfigureItem.Add)
         return list
     }
