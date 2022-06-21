@@ -2,6 +2,7 @@ package tmg.flashback.settings.di
 
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
+import tmg.flashback.settings.SettingsNavigationComponent
 import tmg.flashback.settings.ui.privacypolicy.PrivacyPolicyViewModel
 import tmg.flashback.settings.ui.settings.about.SettingsAboutViewModel
 import tmg.flashback.settings.ui.settings.appearance.SettingsAppearanceViewModel
@@ -14,10 +15,12 @@ val settingsModule = module {
 
     viewModel { PrivacyPolicyViewModel() }
 
-    viewModel { SettingsAppearanceViewModel(get(), get()) }
+    viewModel { SettingsAppearanceViewModel(get(), get(), get()) }
     viewModel { SettingsAboutViewModel() }
     viewModel { SettingsSupportViewModel(get(), get()) }
     viewModel { NightMoveViewModel(get(), get()) }
     viewModel { ThemeViewModel(get()) }
     viewModel { AnimationSpeedViewModel(get()) }
+
+    single { SettingsNavigationComponent(get()) }
 }

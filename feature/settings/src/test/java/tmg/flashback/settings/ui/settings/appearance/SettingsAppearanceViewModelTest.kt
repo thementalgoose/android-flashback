@@ -2,9 +2,11 @@ package tmg.flashback.settings.ui.settings.appearance
 
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.device.managers.BuildConfigManager
+import tmg.flashback.settings.SettingsNavigationComponent
 import tmg.flashback.settings.testutils.assertExpectedOrder
 import tmg.flashback.settings.testutils.findPref
 import tmg.flashback.ui.R
@@ -17,11 +19,12 @@ internal class SettingsAppearanceViewModelTest: BaseTest() {
 
     private val mockThemeRepository: ThemeRepository = mockk()
     private val mockBuildConfigManager: BuildConfigManager = mockk()
+    private val mockSettingsNavigationComponent: SettingsNavigationComponent = mockk()
 
     private lateinit var sut: SettingsAppearanceViewModel
 
     private fun initSUT() {
-        sut = SettingsAppearanceViewModel(mockThemeRepository, mockBuildConfigManager)
+        sut = SettingsAppearanceViewModel(mockThemeRepository, mockBuildConfigManager, mockSettingsNavigationComponent)
     }
 
     @BeforeEach
@@ -78,8 +81,8 @@ internal class SettingsAppearanceViewModelTest: BaseTest() {
     fun `clicking pref model for night mode shows event`() {
         initSUT()
         sut.clickPreference(sut.models.findPref(R.string.settings_theme_nightmode_title))
-        sut.outputs.openNightMode.test {
-            assertEventFired()
+        verify {
+            mockSettingsNavigationComponent.nightModeDialog()
         }
     }
 
@@ -87,8 +90,8 @@ internal class SettingsAppearanceViewModelTest: BaseTest() {
     fun `clicking pref model for animation speed shows event`() {
         initSUT()
         sut.clickPreference(sut.models.findPref(R.string.settings_theme_animation_speed_title))
-        sut.outputs.openAnimationSpeed.test {
-            assertEventFired()
+        verify {
+            mockSettingsNavigationComponent.animationDialog()
         }
     }
 
@@ -96,8 +99,8 @@ internal class SettingsAppearanceViewModelTest: BaseTest() {
     fun `clicking pref model for theme shows event`() {
         initSUT()
         sut.clickPreference(sut.models.findPref(R.string.settings_theme_theme_title))
-        sut.outputs.openTheme.test {
-            assertEventFired()
+        verify {
+            mockSettingsNavigationComponent.themeDialog()
         }
     }
 }

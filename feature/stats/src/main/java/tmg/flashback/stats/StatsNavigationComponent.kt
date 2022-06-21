@@ -2,8 +2,10 @@ package tmg.flashback.stats
 
 import android.content.Context
 import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
 import tmg.flashback.stats.ui.circuits.CircuitActivity
 import tmg.flashback.stats.ui.search.SearchActivity
+import tmg.flashback.stats.ui.settings.notifications.reminder.UpNextReminderBottomSheetFragment
 import tmg.flashback.stats.ui.weekend.WeekendActivity
 import tmg.flashback.stats.ui.weekend.WeekendInfo
 import tmg.flashback.ui.navigation.ActivityProvider
@@ -44,5 +46,10 @@ class StatsNavigationComponent(
             circuitName = circuitName
         )
         it.startActivity(intent)
+    }
+
+    internal fun upNext() = activityProvider.launch {
+        val activity = it as? AppCompatActivity ?: return@launch
+        UpNextReminderBottomSheetFragment().show(activity.supportFragmentManager, "UP_NEXT")
     }
 }
