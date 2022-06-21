@@ -24,12 +24,12 @@ import tmg.flashback.ui.dashboard.menu.MenuViewModel
 import tmg.flashback.ui2.dashboard.list.ListViewModel
 import tmg.flashback.ui.managers.StyleManager
 import tmg.flashback.ui.navigation.ApplicationNavigationComponent
-import tmg.flashback.ui2.settings.SettingsAllViewModel
+import tmg.flashback.ui.settings.SettingsAllViewModel
 import tmg.flashback.ui.sync.SyncViewModel
 
 val appModule = module {
 
-    viewModel { SettingsAllViewModel(get(), get()) }
+    viewModel { SettingsAllViewModel(get(), get(), get(), get(), get(), get()) }
     viewModel { tmg.flashback.ui2.dashboard.DashboardViewModel(androidContext(), get(), get(), get(), get(), get()) }
     viewModel { ListViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get()) }
     viewModel { HomeViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }

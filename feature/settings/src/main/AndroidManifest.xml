@@ -5,9 +5,17 @@
     <application>
 
         <activity android:name="tmg.flashback.settings.ui.privacypolicy.PrivacyPolicyActivity"
-            android:label=""
             android:exported="false"
             android:theme="@style/Translucent" />
+
+        <activity android:name=".ui.settings.about.SettingsAboutActivity"
+            android:exported="false" />
+
+        <activity android:name=".ui.settings.appearance.SettingsAppearanceActivity"
+            android:exported="false" />
+
+        <activity android:name=".ui.settings.support.SettingsSupportActivity"
+            android:exported="false" />
 
     </application>
 

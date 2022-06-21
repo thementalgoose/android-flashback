@@ -39,7 +39,7 @@
             android:theme="@style/FlashbackAppTheme.Sync" />
 
         <activity
-            android:name=".ui2.settings.SettingsAllActivity"
+            android:name=".ui.settings.SettingsAllActivity"
             android:exported="false"
             android:label=""
             android:theme="@style/Translucent" />
