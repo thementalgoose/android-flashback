@@ -45,10 +45,53 @@
     <string name="details_link_map">Location</string>
     <string name="details_link_laps">%s laps</string>
     <string name="details_link_wikipedia">Wikipedia</string>
-<!--    <string name="details_link_youtube">Laps</string>-->
 
     <string name="circuit_hosted_grand_prix_from" formatted="false">Hosted %d grand prix between %d and %d</string>
     <string name="circuit_hosted_grand_prix" formatted="false">Hosted %d grand prix</string>
+
+    <!-- Settings -->
+    <string name="settings_home">Home</string>
+    <string name="settings_statistics">Statistics</string>
+    <string name="settings_default_season_title">Reset default season</string>
+    <string name="settings_default_season_description">Reset your default season selection let flashback manage the currently active season</string>
+    <string name="settings_default_season_updated">Flashback is now managing the currently active season</string>
+    <string name="settings_customisation_season_all_expanded_title">All section</string>
+    <string name="settings_customisation_season_all_expanded_description">Expand the all section in the menu by default</string>
+    <string name="settings_customisation_season_favourited_expanded_title">Favourites section</string>
+    <string name="settings_customisation_season_favourited_expanded_description">Expand the favourites section in the menu by default</string>
+    <string name="settings_information_title">Information</string>
+    <string name="settings_information_at_top_title">Show provided by at top</string>
+    <string name="settings_information_at_top_description">Show the "Data provided by" option at the top of each screen. Otherwise it will be displayed at the bottom</string>
+    <string name="settings_dashboard_title">Dashboard</string>
+    <string name="settings_dashboard_default_to_schedule_title">Schedule tab on startup</string>
+    <string name="settings_dashboard_default_to_schedule_description">When opening the app, go to the schedule tab by default. If disabled, the calendar tab will load first</string>
+    <string name="settings_dashboard_autoscroll_title">Autoscroll</string>
+    <string name="settings_dashboard_autoscroll_description">Autoscroll to the next race when you load the app when you\'re viewing the current season</string>
+
+
+    <string name="settings_up_next_category_title">Categories</string>
+    <string name="settings_up_next_category_race_title">Race</string>
+    <string name="settings_up_next_category_race_descrition">Get notified before race or sprints starts</string>
+    <string name="settings_up_next_category_qualifying_title">Qualifying</string>
+    <string name="settings_up_next_category_qualifying_descrition">Get notified before qualifying starts</string>
+    <string name="settings_up_next_category_free_practice_title">Free Practice</string>
+    <string name="settings_up_next_category_free_practice_descrition">Get notified before free practice starts</string>
+    <string name="settings_up_next_category_other_title">Other</string>
+    <string name="settings_up_next_category_other_descrition">Get notified before other F1 events starts (ie. Winter testing)</string>
+
+    <string name="settings_up_next_results_available_title">Results available</string>
+    <string name="settings_up_next_results_qualifying_title">Qualifying</string>
+    <string name="settings_up_next_results_qualifying_descrition">Get notified when qualifying results are available</string>
+    <string name="settings_up_next_results_sprint_title">Sprint</string>
+    <string name="settings_up_next_results_sprint_descrition">Get notified when sprint results are available</string>
+    <string name="settings_up_next_results_race_title">Race</string>
+    <string name="settings_up_next_results_race_descrition">Get notified when race results are available</string>
+
+    <string name="settings_up_next_title">Notice Period</string>
+    <string name="settings_up_next_time_before_title">Notice</string>
+    <string name="settings_up_next_time_before_description">How far before an event do you want a notification?</string>
+    <string name="settings_up_next_reminder_title">Reminder</string>
+    <string name="settings_up_next_reminder_description">How long before an event do you want Flashback to notify you?</string>
 
     <!-- Tyres -->
     <string name="tyres_label">Tyre compounds</string>

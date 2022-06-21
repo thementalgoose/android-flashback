@@ -1,13 +1,56 @@
 package tmg.flashback.ui.components.settings
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.ui.R
+import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.settings.SettingsModel
+import tmg.flashback.ui.settings.SettingsViewModel
+
+@Composable
+fun SettingsScreen(
+    title: String?,
+    actionUpClicked: () -> Unit,
+    viewModel: SettingsViewModel
+) {
+    viewModel.loadSettings()
+    val list = viewModel.settings.observeAsState(emptyList())
+
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(AppTheme.colors.backgroundPrimary),
+        content = {
+            title?.let { title ->
+                item("header") {
+                    Header(
+                        text = title,
+                        icon = painterResource(id = R.drawable.ic_back),
+                        iconContentDescription = stringResource(id = R.string.ab_back),
+                        actionUpClicked = actionUpClicked
+                    )
+                }
+            }
+            item("settings") {
+                SettingsScreen(
+                    models = list.value,
+                    prefClicked = viewModel::clickPreference,
+                    prefSwitchClicked = viewModel::clickSwitchPreference
+                )
+            }
+        }
+    )
+}
 
 @Composable
 fun SettingsScreen(
