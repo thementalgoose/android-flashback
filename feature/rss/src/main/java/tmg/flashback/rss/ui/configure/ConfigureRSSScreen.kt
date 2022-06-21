@@ -145,8 +145,10 @@ private fun Item(
 ) {
     Row(modifier = modifier
         .padding(
-            horizontal = AppTheme.dimensions.paddingMedium,
-            vertical = AppTheme.dimensions.paddingSmall
+            start = AppTheme.dimensions.paddingMedium,
+            end = AppTheme.dimensions.paddingSmall,
+            top = AppTheme.dimensions.paddingSmall,
+            bottom = AppTheme.dimensions.paddingSmall
         )
     ) {
         SourceBadge(
@@ -199,8 +201,10 @@ private fun QuickAdd(
 ) {
     Row(modifier = modifier
         .padding(
-            horizontal = AppTheme.dimensions.paddingMedium,
-            vertical = AppTheme.dimensions.paddingSmall
+            start = AppTheme.dimensions.paddingMedium,
+            end = AppTheme.dimensions.paddingSmall,
+            top = AppTheme.dimensions.paddingSmall,
+            bottom = AppTheme.dimensions.paddingSmall
         )
     ) {
         SourceBadge(
@@ -248,8 +252,10 @@ private fun Add(
 ) {
     Row(modifier = modifier
         .padding(
-            horizontal = AppTheme.dimensions.paddingMedium,
-            vertical = AppTheme.dimensions.paddingSmall
+            start = AppTheme.dimensions.paddingMedium,
+            end = AppTheme.dimensions.paddingSmall,
+            top = AppTheme.dimensions.paddingSmall,
+            bottom = AppTheme.dimensions.paddingSmall
         )
     ) {
         val text = remember { mutableStateOf(TextFieldValue("")) }
