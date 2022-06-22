@@ -3,6 +3,7 @@ package tmg.flashback.settings
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
+import tmg.flashback.settings.ui.privacypolicy.PrivacyPolicyActivity
 import tmg.flashback.settings.ui.settings.about.SettingsAboutActivity
 import tmg.flashback.settings.ui.settings.appearance.SettingsAppearanceActivity
 import tmg.flashback.settings.ui.settings.appearance.animation.AnimationSpeedBottomSheetFragment
@@ -51,5 +52,13 @@ class SettingsNavigationComponent(
 
     fun settingsSupport() = activityProvider.launch {
         it.startActivity(settingsSupportIntent(it))
+    }
+
+    internal fun privacyPolicyIntent(context: Context): Intent {
+        return Intent(context, PrivacyPolicyActivity::class.java)
+    }
+
+    fun privacyPolicy() = activityProvider.launch {
+        it.startActivity(privacyPolicyIntent(it))
     }
 }

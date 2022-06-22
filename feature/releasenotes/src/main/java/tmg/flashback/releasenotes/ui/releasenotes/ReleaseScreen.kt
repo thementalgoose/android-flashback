@@ -1,5 +1,6 @@
 package tmg.flashback.releasenotes.ui.releasenotes
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -24,6 +25,7 @@ internal fun ReleaseScreen(
 ) {
     Column(
         modifier = Modifier
+            .background(AppTheme.colors.backgroundPrimary)
             .verticalScroll(rememberScrollState())
     ) {
         Header(

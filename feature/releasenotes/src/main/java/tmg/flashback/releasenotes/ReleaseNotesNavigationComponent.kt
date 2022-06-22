@@ -8,7 +8,7 @@ import tmg.flashback.ui.navigation.ActivityProvider
 class ReleaseNotesNavigationComponent(
     private val activityProvider: ActivityProvider
 ) {
-    fun releaseNotesIntent(context: Context): Intent {
+    internal fun releaseNotesIntent(context: Context): Intent {
         return ReleaseActivity.intent(context)
     }
 

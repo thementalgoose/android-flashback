@@ -29,7 +29,7 @@ interface UpNextReminderViewModelOutputs {
 
 
 class UpNextReminderViewModel(
-    private val scheduleController: NotificationRepository
+    private val notificationRepository: NotificationRepository
 ): ViewModel(), UpNextReminderViewModelInputs, UpNextReminderViewModelOutputs {
 
     var inputs: UpNextReminderViewModelInputs = this
@@ -45,7 +45,7 @@ class UpNextReminderViewModel(
     //region Inputs
 
     override fun selectNotificationReminder(reminder: NotificationReminder) {
-        scheduleController.notificationReminderPeriod = reminder
+        notificationRepository.notificationReminderPeriod = reminder
         updateList()
         updated.value = Event()
     }
@@ -55,7 +55,7 @@ class UpNextReminderViewModel(
     private fun updateList() {
         notificationPrefs.value = NotificationReminder.values()
             .map {
-                Selected(BottomSheetItem(it.ordinal, it.icon, StringHolder(it.label)), scheduleController.notificationReminderPeriod == it)
+                Selected(BottomSheetItem(it.ordinal, it.icon, StringHolder(it.label)), notificationRepository.notificationReminderPeriod == it)
             }
     }
 }
