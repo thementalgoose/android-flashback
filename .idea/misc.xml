@@ -5,6 +5,8 @@
       <map>
         <entry key="app/src/main/res/layout/activity_dashboard.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_settings.xml" value="0.1" />
+        <entry key="feature/releasenotes/src/main/java/tmg/flashback/releasenotes/ui/releasenotes/ReleaseScreen.kt" value="0.13024850042844902" />
+        <entry key="feature/settings/src/main/java/tmg/flashback/settings/ui/privacypolicy/PrivacyPolicyScreen.kt" value="0.13024850042844902" />
       </map>
     </option>
   </component>

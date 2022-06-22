@@ -4,9 +4,8 @@
 
     <application>
 
-        <activity android:name="tmg.flashback.settings.ui.privacypolicy.PrivacyPolicyActivity"
-            android:exported="false"
-            android:theme="@style/Translucent" />
+        <activity android:name=".ui.privacypolicy.PrivacyPolicyActivity"
+            android:exported="false" />
 
         <activity android:name=".ui.settings.about.SettingsAboutActivity"
             android:exported="false" />
