@@ -4,6 +4,9 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import tmg.flashback.stats.ui.circuits.CircuitActivity
+import tmg.flashback.stats.ui.constructors.overview.ConstructorOverviewActivity
+import tmg.flashback.stats.ui.drivers.overview.DriverOverviewActivity
+import tmg.flashback.stats.ui.drivers.season.DriverSeasonActivity
 import tmg.flashback.stats.ui.search.SearchActivity
 import tmg.flashback.stats.ui.settings.home.SettingsHomeActivity
 import tmg.flashback.stats.ui.settings.notifications.SettingsNotificationsActivity
@@ -15,7 +18,39 @@ import tmg.flashback.ui.navigation.ActivityProvider
 class StatsNavigationComponent(
     private val activityProvider: ActivityProvider
 ) {
-    fun weekendIntent(context: Context, weekendInfo: WeekendInfo): Intent {
+    internal fun driverOverviewIntent(context: Context, id: String, name: String): Intent {
+        return DriverOverviewActivity.intent(context, id, name)
+    }
+
+    fun driverOverview(id: String, name: String) = activityProvider.launch {
+        it.startActivity(driverOverviewIntent(it, id, name))
+    }
+
+    internal fun driverSeasonIntent(context: Context, id: String, name: String, season: Int): Intent {
+        return DriverSeasonActivity.intent(context, id, name, season)
+    }
+
+    fun driverSeason(id: String, name: String, season: Int) = activityProvider.launch {
+        it.startActivity(driverSeasonIntent(it, id, name, season))
+    }
+
+    internal fun constructorOverviewIntent(context: Context, id: String, name: String): Intent {
+        return ConstructorOverviewActivity.intent(context, id, name)
+    }
+
+    fun constructorOverview(id: String, name: String) = activityProvider.launch {
+        it.startActivity(constructorOverviewIntent(it, id, name))
+    }
+
+    internal fun constructorSeasonIntent(context: Context, id: String, name: String, season: Int): Intent {
+        return DriverSeasonActivity.intent(context, id, name, season)
+    }
+
+    fun constructorSeason(id: String, name: String, season: Int) = activityProvider.launch {
+        it.startActivity(constructorSeasonIntent(it, id, name, season))
+    }
+
+    internal fun weekendIntent(context: Context, weekendInfo: WeekendInfo): Intent {
         return WeekendActivity.intent(context, weekendInfo)
     }
 
@@ -24,7 +59,7 @@ class StatsNavigationComponent(
         it.startActivity(intent)
     }
 
-    fun searchIntent(context: Context): Intent {
+    internal fun searchIntent(context: Context): Intent {
         return SearchActivity.intent(context)
     }
 
@@ -33,7 +68,7 @@ class StatsNavigationComponent(
         it.startActivity(intent)
     }
 
-    fun circuitIntent(context: Context, circuitId: String, circuitName: String): Intent {
+    internal fun circuitIntent(context: Context, circuitId: String, circuitName: String): Intent {
         return CircuitActivity.intent(
             context = context,
             circuitId = circuitId,
