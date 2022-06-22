@@ -31,6 +31,9 @@ internal class SettingsAppearanceViewModelTest: BaseTest() {
     internal fun setUp() {
         every { mockThemeRepository.enableThemePicker } returns true
         every { mockBuildConfigManager.isMonetThemeSupported } returns true
+        every { mockSettingsNavigationComponent.themeDialog() } returns Unit
+        every { mockSettingsNavigationComponent.nightModeDialog() } returns Unit
+        every { mockSettingsNavigationComponent.animationDialog() } returns Unit
     }
 
     @Test
