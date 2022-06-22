@@ -1,11 +1,12 @@
 package tmg.flashback.settings.ui.settings.about
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import tmg.flashback.device.managers.BuildConfigManager
+import tmg.flashback.releasenotes.ReleaseNotesNavigationComponent
 import tmg.flashback.settings.R
+import tmg.flashback.settings.SettingsNavigationComponent
+import tmg.flashback.ui.navigation.ApplicationNavigationComponent
 import tmg.flashback.ui.settings.SettingsModel
 import tmg.flashback.ui.settings.SettingsViewModel
-import tmg.utilities.lifecycle.Event
 
 //region Inputs
 
@@ -18,16 +19,19 @@ interface SettingsAboutViewModelInputs {
 //region Outputs
 
 interface SettingsAboutViewModelOutputs {
-    val openAboutThisApp: LiveData<Event>
-    val openReview: LiveData<Event>
-    val openReleaseNotes: LiveData<Event>
-    val openPrivacyPolicy: LiveData<Event>
 }
 
 //endregion
 
 
-class SettingsAboutViewModel: SettingsViewModel(), SettingsAboutViewModelInputs, SettingsAboutViewModelOutputs {
+class SettingsAboutViewModel(
+    private val applicationNavigationComponent: ApplicationNavigationComponent,
+    private val releaseNotesNavigationComponent: ReleaseNotesNavigationComponent,
+    private val settingsNavigationComponent: SettingsNavigationComponent,
+    private val buildConfigManager: BuildConfigManager
+): SettingsViewModel(), SettingsAboutViewModelInputs, SettingsAboutViewModelOutputs {
+
+    private val reviewUrl: String get() = "http://play.google.com/store/apps/details?id=${buildConfigManager.applicationId}"
 
     override val models: List<SettingsModel> = listOf(
         SettingsModel.Header(R.string.settings_about),
@@ -35,37 +39,32 @@ class SettingsAboutViewModel: SettingsViewModel(), SettingsAboutViewModelInputs,
             title = R.string.settings_about_about_title,
             description = R.string.settings_about_about_description,
             onClick = {
-                openAboutThisApp.value = Event()
+                applicationNavigationComponent.aboutApp()
             }
         ),
         SettingsModel.Pref(
             title = R.string.settings_about_review_title,
             description = R.string.settings_about_review_description,
             onClick = {
-                openReview.value = Event()
+                applicationNavigationComponent.openUrl(reviewUrl)
             }
         ),
         SettingsModel.Pref(
             title = R.string.settings_about_release_notes_title,
             description = R.string.settings_about_release_notes_description,
             onClick = {
-                openReleaseNotes.value = Event()
+                releaseNotesNavigationComponent.releaseNotes()
             }
         ),
         SettingsModel.Pref(
             title = R.string.settings_about_privacy_policy_title,
             description = R.string.settings_about_privacy_policy_description,
             onClick = {
-                openPrivacyPolicy.value = Event()
+                settingsNavigationComponent.privacyPolicy()
             }
         )
     )
 
     var inputs: SettingsAboutViewModelInputs = this
     var outputs: SettingsAboutViewModelOutputs = this
-
-    override val openAboutThisApp: MutableLiveData<Event> = MutableLiveData()
-    override val openReview: MutableLiveData<Event> = MutableLiveData()
-    override val openReleaseNotes: MutableLiveData<Event> = MutableLiveData()
-    override val openPrivacyPolicy: MutableLiveData<Event> = MutableLiveData()
 }

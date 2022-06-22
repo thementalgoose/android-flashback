@@ -15,7 +15,6 @@ import tmg.flashback.ui.managers.StyleManager
 import tmg.flashback.ui.model.NightMode
 import tmg.flashback.ui.navigation.ApplicationNavigationComponent
 import tmg.flashback.ui.usecases.ChangeNightModeUseCase
-import tmg.flashback.ui2.settings.SettingsAllActivity
 import kotlin.math.abs
 
 //region Inputs

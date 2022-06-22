@@ -10,6 +10,9 @@ import tmg.flashback.stats.ui.dashboard.calendar.CalendarViewModel
 import tmg.flashback.stats.ui.dashboard.constructors.ConstructorsStandingViewModel
 import tmg.flashback.stats.ui.dashboard.drivers.DriversStandingViewModel
 import tmg.flashback.stats.ui.search.SearchViewModel
+import tmg.flashback.stats.ui.settings.home.SettingsHomeViewModel
+import tmg.flashback.stats.ui.settings.notifications.SettingsNotificationViewModel
+import tmg.flashback.stats.ui.settings.notifications.reminder.UpNextReminderViewModel
 import tmg.flashback.stats.ui.weekend.WeekendViewModel
 import tmg.flashback.stats.ui.weekend.constructor.ConstructorViewModel
 import tmg.flashback.stats.ui.weekend.qualifying.QualifyingViewModel
@@ -18,6 +21,7 @@ import tmg.flashback.stats.ui.weekend.details.DetailsViewModel
 import tmg.flashback.stats.ui.weekend.sprint.SprintViewModel
 import tmg.flashback.stats.usecases.DefaultSeasonUseCase
 import tmg.flashback.stats.usecases.FetchSeasonUseCase
+import tmg.flashback.stats.usecases.ResubscribeNotificationsUseCase
 
 val statsModule = module {
 
@@ -36,10 +40,15 @@ val statsModule = module {
 
     viewModel { CircuitViewModel(get(), get(), get(), get()) }
 
+    viewModel { SettingsHomeViewModel(get(), get()) }
+    viewModel { SettingsNotificationViewModel(get(), get(), get()) }
+    viewModel { UpNextReminderViewModel(get()) }
+
     single { StatsNavigationComponent(get()) }
 
     single { DefaultSeasonUseCase(get()) }
     single { FetchSeasonUseCase(get(), get(), get()) }
+    single { ResubscribeNotificationsUseCase(get(), get(), get()) }
 
     single { HomeRepository(get(), get()) }
     single { NotificationRepository(get()) }

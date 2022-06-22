@@ -5,8 +5,7 @@
     <application>
 
         <activity android:name=".ui.releasenotes.ReleaseActivity"
-            android:exported="false"
-            android:theme="@style/Translucent" />
+            android:exported="false" />
 
     </application>
 

@@ -1,19 +1,19 @@
-package tmg.flashback.ads.ui.settings.adverts
+package tmg.flashback.ui.settings
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import org.koin.androidx.compose.viewModel
-import tmg.flashback.ads.R
+import tmg.flashback.R
 import tmg.flashback.ui.components.settings.SettingsScreen
 
 @Composable
-fun SettingsAdvertScreenVM(
+fun SettingsAllScreenVM(
     actionUpClicked: () -> Unit
 ) {
-    val viewModel by viewModel<SettingsAdvertViewModel>()
+    val viewModel by viewModel<SettingsAllViewModel>()
 
     SettingsScreen(
-        title = stringResource(id = R.string.settings_help_adverts_title),
+        title = stringResource(id = R.string.settings_all_title),
         actionUpClicked = actionUpClicked,
         viewModel = viewModel
     )
