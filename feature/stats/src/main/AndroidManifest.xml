@@ -16,5 +16,11 @@
         <activity android:name=".ui.circuits.CircuitActivity"
             android:exported="false" />
 
+        <activity android:name=".ui.settings.home.SettingsHomeActivity"
+            android:exported="false" />
+
+        <activity android:name=".ui.settings.notifications.SettingsNotificationsActivity"
+            android:exported="false" />
+
     </application>
 </manifest>

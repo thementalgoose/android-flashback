@@ -22,20 +22,20 @@ class SettingsAppearanceFragment: SettingsFragment<SettingsAppearanceViewModel>(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        observeEvent(viewModel.outputs.openNightMode) {
-            val themeBottomSheetFragment = NightModeBottomSheetFragment()
-            themeBottomSheetFragment.show(parentFragmentManager, "NIGHT_MODE")
-        }
-
-        observeEvent(viewModel.outputs.openTheme) {
-            val themeBottomSheetFragment = ThemeBottomSheetFragment()
-            themeBottomSheetFragment.show(parentFragmentManager, "THEME")
-        }
-
-        observeEvent(viewModel.outputs.openAnimationSpeed) {
-            val animationSpeedBottomSheetFragment = AnimationSpeedBottomSheetFragment()
-            animationSpeedBottomSheetFragment.show(parentFragmentManager, "ANIMTION")
-        }
+//        observeEvent(viewModel.outputs.openNightMode) {
+//            val themeBottomSheetFragment = NightModeBottomSheetFragment()
+//            themeBottomSheetFragment.show(parentFragmentManager, "NIGHT_MODE")
+//        }
+//
+//        observeEvent(viewModel.outputs.openTheme) {
+//            val themeBottomSheetFragment = ThemeBottomSheetFragment()
+//            themeBottomSheetFragment.show(parentFragmentManager, "THEME")
+//        }
+//
+//        observeEvent(viewModel.outputs.openAnimationSpeed) {
+//            val animationSpeedBottomSheetFragment = AnimationSpeedBottomSheetFragment()
+//            animationSpeedBottomSheetFragment.show(parentFragmentManager, "ANIMTION")
+//        }
     }
 
     companion object {

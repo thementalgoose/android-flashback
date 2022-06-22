@@ -2,6 +2,7 @@ package tmg.flashback.settings.ui.privacypolicy
 
 import android.text.method.LinkMovementMethod
 import android.widget.TextView
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -26,6 +27,7 @@ internal fun PrivacyPolicyScreen(
 ) {
     Column(
         modifier = Modifier
+            .background(AppTheme.colors.backgroundPrimary)
             .verticalScroll(rememberScrollState())
     ) {
         Header(
