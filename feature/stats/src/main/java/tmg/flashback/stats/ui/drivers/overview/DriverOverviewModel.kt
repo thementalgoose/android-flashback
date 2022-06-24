@@ -1,18 +1,17 @@
 package tmg.flashback.stats.ui.drivers.overview
 
-import androidx.annotation.AttrRes
 import androidx.annotation.DrawableRes
-import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
 import org.threeten.bp.LocalDate
 import tmg.flashback.formula1.model.Constructor
+import tmg.utilities.models.StringHolder
 
 sealed class DriverOverviewModel(
-    @LayoutRes val layoutId: Int
+    val key: String
 ) {
     data class Header(
-        val driverFirstname: String,
-        val driverSurname: String,
+        val driverId: String,
+        val driverName: String,
         val driverNumber: Int?,
         val driverImg: String,
         val driverBirthday: LocalDate,
@@ -20,19 +19,24 @@ sealed class DriverOverviewModel(
         val driverNationalityISO: String,
         val constructors: List<Constructor>
     ): DriverOverviewModel(
-        R.layout.view_driver_summary_header
+        key = driverId
+    )
+
+    data class Message(
+        val message: StringHolder
+    ): DriverOverviewModel(
+        key = "message-${message}"
     )
 
     data class Stat(
-        @AttrRes
-        val tint: Int = R.attr.contentSecondary,
+        val isWinning: Boolean,
         @DrawableRes
         val icon: Int,
         @StringRes
         val label: Int,
         val value: String
     ): DriverOverviewModel(
-        R.layout.view_overview_stat
+        key = label.toString()
     )
 
     data class RacedFor(
@@ -41,14 +45,19 @@ sealed class DriverOverviewModel(
         val type: PipeType,
         val isChampionship: Boolean
     ): DriverOverviewModel(
-        R.layout.view_driver_summary_history
+        key = "raced-${season}"
     )
 
-    data class ErrorItem(
-        val item: SyncDataItem
-    ): DriverOverviewModel(item.layoutId)
+    object NetworkError: DriverOverviewModel(
+        key = "error"
+    )
+    object InternalError: DriverOverviewModel(
+        key = "error"
+    )
 
-    object Loading: DriverOverviewModel(R.layout.view_loading_podium)
+    object Loading: DriverOverviewModel(
+        key = "loading"
+    )
 
     companion object
 }
