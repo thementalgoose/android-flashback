@@ -16,6 +16,7 @@ import tmg.flashback.stats.R
 import tmg.utilities.extensions.ordinalAbbreviation
 import tmg.utilities.lifecycle.DataEvent
 import tmg.utilities.lifecycle.Event
+import tmg.utilities.models.StringHolder
 
 //region Inputs
 
@@ -79,7 +80,7 @@ class DriverOverviewViewModel(
 
             if (id == null) {
                 return@flatMapLatest flow {
-                    emit(mutableListOf<DriverOverviewModel>(DriverOverviewModel.ErrorItem(SyncDataItem.Skeleton)))
+                    emit(mutableListOf<DriverOverviewModel>(DriverOverviewModel.Loading))
                 }
             }
 
@@ -89,8 +90,8 @@ class DriverOverviewViewModel(
                     if (it != null) {
                         list.add(
                             DriverOverviewModel.Header(
-                                driverFirstname = it.driver.firstName,
-                                driverSurname = it.driver.lastName,
+                                driverId = it.driver.id,
+                                driverName = it.driver.name,
                                 driverNumber = it.driver.number,
                                 driverImg = it.driver.photoUrl ?: "",
                                 driverBirthday = it.driver.dateOfBirth,
@@ -101,13 +102,13 @@ class DriverOverviewViewModel(
                         )
                     }
                     when {
-                        (it == null || it.standings.isEmpty()) && !isConnected -> list.addError(SyncDataItem.PullRefresh)
-                        (it == null || it.standings.isEmpty()) -> list.addError(SyncDataItem.Unavailable(DataUnavailable.CONSTRUCTOR_HISTORY_INTERNAL_ERROR))
+                        (it == null || it.standings.isEmpty()) && !isConnected -> list.add(DriverOverviewModel.NetworkError)
+                        (it == null || it.standings.isEmpty()) -> list.add(DriverOverviewModel.InternalError)
                         else -> {
                             if (it.hasChampionshipCurrentlyInProgress) {
                                 val latestRound = it.standings.maxByOrNull { it.season }?.raceOverview?.maxByOrNull { it.raceInfo.round }
                                 if (latestRound != null) {
-                                    list.add(DriverOverviewModel.ErrorItem(SyncDataItem.MessageRes(R.string.results_accurate_for_year, listOf(latestRound.raceInfo.season, latestRound.raceInfo.name, latestRound.raceInfo.round))))
+                                    list.add(DriverOverviewModel.Message(StringHolder(R.string.results_accurate_for_year, listOf(latestRound.raceInfo.season, latestRound.raceInfo.name, latestRound.raceInfo.round))))
                                 }
                             }
 
@@ -249,10 +250,10 @@ class DriverOverviewViewModel(
         return list
     }
 
-    private fun MutableList<DriverOverviewModel>.addStat(@AttrRes tint: Int = R.attr.contentSecondary, @DrawableRes icon: Int, @StringRes label: Int, value: String) {
+    private fun MutableList<DriverOverviewModel>.addStat(isWinning: Boolean = false, @DrawableRes icon: Int, @StringRes label: Int, value: String) {
         this.add(
             DriverOverviewModel.Stat(
-                tint = tint,
+                isWinning = isWinning,
                 icon = icon,
                 label = label,
                 value = value
@@ -319,13 +320,5 @@ class DriverOverviewViewModel(
                 }
             }
         }
-    }
-
-    private fun MutableList<DriverOverviewModel>.addError(syncDataItem: SyncDataItem) {
-        this.add(
-            DriverOverviewModel.ErrorItem(
-                syncDataItem
-            )
-        )
     }
 }

@@ -22,7 +22,8 @@ class DriverOverviewActivity: BaseActivity() {
             AppTheme {
                 DriverOverviewScreenVM(
                     driverId = driverId,
-                    driverName = driverName
+                    driverName = driverName,
+                    actionUpClicked = { finish() }
                 )
             }
         }
