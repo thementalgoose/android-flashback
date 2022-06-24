@@ -109,7 +109,10 @@ private fun Header(
                     contentScale = ContentScale.Fit,
                 )
                 Spacer(Modifier.width(AppTheme.dimensions.paddingSmall))
-                TextBody1(text = model.constructors.joinToString { it.name })
+                TextBody1(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = model.constructors.joinToString { it.name }
+                )
             }
 
             model.driverBirthday.format("dd MMMM yyyy")?.let { birthday ->
@@ -123,6 +126,8 @@ private fun Header(
         }
     }
 }
+
+
 
 
 @PreviewTheme
