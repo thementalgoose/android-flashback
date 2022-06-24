@@ -8,7 +8,6 @@ import tmg.flashback.stats.ui.constructors.overview.ConstructorOverviewActivity
 import tmg.flashback.stats.ui.constructors.overview.ConstructorOverviewScreenVM
 import tmg.flashback.style.AppTheme
 import tmg.flashback.ui.base.BaseActivity
-import java.sql.Driver
 
 class DriverOverviewActivity: BaseActivity() {
 

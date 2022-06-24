@@ -23,9 +23,11 @@ sealed class DriverOverviewModel(
     )
 
     data class Message(
-        val message: StringHolder
+        @StringRes
+        val label: Int,
+        val args: List<Any>
     ): DriverOverviewModel(
-        key = "message-${message}"
+        key = "message-${label}"
     )
 
     data class Stat(
