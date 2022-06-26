@@ -69,6 +69,11 @@ enum class PipeType {
     SINGLE,
     START,
     START_END,
-    SINGLE_PIPE,
-    END
+    END;
+
+    val showTop: Boolean
+        get() = this == START_END || this == END
+
+    val showBottom: Boolean
+        get() = this == START_END || this == START
 }
