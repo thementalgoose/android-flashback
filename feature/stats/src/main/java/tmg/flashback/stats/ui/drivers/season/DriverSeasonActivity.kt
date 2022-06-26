@@ -21,7 +21,8 @@ class DriverSeasonActivity: BaseActivity() {
                 DriverSeasonScreenVM(
                     driverId = driverId,
                     driverName = driverName,
-                    season = season
+                    season = season,
+                    actionUpClicked = { finish() }
                 )
             }
         }

@@ -2,6 +2,7 @@ package tmg.flashback.stats.ui.drivers.overview
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -27,6 +28,7 @@ import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody1
+import tmg.flashback.ui.components.messages.Message
 import tmg.flashback.ui.utils.isInPreview
 import tmg.utilities.extensions.format
 
@@ -59,10 +61,13 @@ fun DriverOverviewScreen(
                         actionUpClicked = actionUpClicked
                     )
                     is DriverOverviewModel.Message -> {
-
+                        Message(title = stringResource(id = it.label, it.args))
                     }
                     is DriverOverviewModel.RacedFor -> {
-                        History(model = it)
+                        History(
+                            model = it,
+                            clicked = { }
+                        )
                     }
                     is DriverOverviewModel.Stat -> {
                         Stat(model = it)
@@ -129,6 +134,8 @@ private fun Header(
                     text = stringResource(id = R.string.driver_overview_stat_birthday, birthday)
                 )
             }
+
+            Spacer(Modifier.height(AppTheme.dimensions.paddingSmall))
         }
     }
 }
@@ -143,14 +150,17 @@ private fun Stat(
         modifier = modifier
             .fillMaxWidth()
             .padding(
-                vertical = AppTheme.dimensions.paddingSmall,
+                vertical = AppTheme.dimensions.paddingXSmall,
                 horizontal = AppTheme.dimensions.paddingMedium
             )
     ) {
         Icon(
             painter = painterResource(id = model.icon),
             contentDescription = null,
-            tint = AppTheme.colors.contentSecondary
+            tint = when (model.isWinning) {
+                true -> AppTheme.colors.f1Championship
+                false -> AppTheme.colors.contentSecondary
+            }
         )
         Spacer(Modifier.width(8.dp))
         TextBody1(
@@ -168,9 +178,11 @@ private fun Stat(
 @Composable
 private fun History(
     model: DriverOverviewModel.RacedFor,
+    clicked: (DriverOverviewModel.RacedFor) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(modifier = modifier
+        .clickable(onClick = { clicked(model) })
         .padding(horizontal = AppTheme.dimensions.paddingMedium)
     ) {
         Timeline(
@@ -185,19 +197,26 @@ private fun History(
                     .weight(1f)
                     .align(Alignment.CenterVertically)
             )
-            Column {
+            Column(
+                horizontalAlignment = Alignment.End
+            ) {
                 model.constructors.forEach { constructor ->
                     Row(
                         horizontalArrangement = Arrangement.End,
                         modifier = Modifier
-                            .fillMaxWidth()
+                            .width(IntrinsicSize.Min)
                             .height(IntrinsicSize.Min)
                     ) {
                         TextBody1(
                             text = constructor.name,
                             bold = true,
                             modifier = Modifier
-                                .padding(end = AppTheme.dimensions.paddingSmall)
+                                .weight(1f)
+                                .padding(
+                                    end = AppTheme.dimensions.paddingSmall,
+                                    top = 2.dp,
+                                    bottom = 2.dp
+                                )
                         )
                         Box(modifier = Modifier
                             .width(8.dp)

@@ -51,10 +51,10 @@ sealed class DriverOverviewModel(
     )
 
     object NetworkError: DriverOverviewModel(
-        key = "error"
+        key = "network-error"
     )
     object InternalError: DriverOverviewModel(
-        key = "error"
+        key = "internal-error"
     )
 
     object Loading: DriverOverviewModel(
@@ -69,11 +69,15 @@ enum class PipeType {
     SINGLE,
     START,
     START_END,
+    SINGLE_PIPE,
     END;
 
     val showTop: Boolean
-        get() = this == START_END || this == END
+        get() = this == START_END || this == END || this == SINGLE
 
     val showBottom: Boolean
-        get() = this == START_END || this == START
+        get() = this == START_END || this == START || this == SINGLE
+
+    val showMiddle: Boolean
+        get() = this == START || this == START_END || this == END || this == SINGLE
 }
