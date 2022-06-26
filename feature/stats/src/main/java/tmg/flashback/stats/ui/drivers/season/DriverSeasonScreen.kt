@@ -6,6 +6,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -14,6 +15,8 @@ import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.viewModel
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.text.TextBody1
+import tmg.flashback.ui.components.errors.NetworkError
+import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.messages.Message
 
 @Composable
@@ -25,6 +28,12 @@ fun DriverSeasonScreenVM(
 ) {
     val viewModel by viewModel<DriverSeasonViewModel>()
     viewModel.inputs.setup(driverId, season)
+
+    val list = viewModel.outputs.list.observeAsState(listOf(DriverSeasonModel.Loading))
+    DriverSeasonScreen(
+        list = list.value,
+        actionUpClicked = actionUpClicked
+    )
 }
 
 @Composable
@@ -58,10 +67,18 @@ fun DriverSeasonScreen(
                     is DriverSeasonModel.Result -> {
 
                     }
-                    DriverSeasonModel.InternalError -> TODO()
-                    DriverSeasonModel.Loading -> TODO()
-                    DriverSeasonModel.NetworkError -> TODO()
-                    DriverSeasonModel.ResultHeader -> TODO()
+                    DriverSeasonModel.InternalError -> {
+                        NetworkError(error = NetworkError.INTERNAL_ERROR)
+                    }
+                    DriverSeasonModel.Loading -> {
+                        SkeletonViewList()
+                    }
+                    DriverSeasonModel.NetworkError -> {
+                        NetworkError(error = NetworkError.NETWORK_ERROR)
+                    }
+                    DriverSeasonModel.ResultHeader -> {
+
+                    }
                 }
             }
         }

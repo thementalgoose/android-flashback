@@ -1,9 +1,6 @@
 package tmg.flashback.stats.ui.drivers.overview
 
-import io.mockk.coEvery
-import io.mockk.coVerify
-import io.mockk.every
-import io.mockk.mockk
+import io.mockk.*
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.jupiter.api.Assertions.*
@@ -14,6 +11,9 @@ import tmg.flashback.formula1.model.DriverHistory
 import tmg.flashback.formula1.model.DriverHistorySeason
 import tmg.flashback.formula1.model.model
 import tmg.flashback.statistics.repo.DriverRepository
+import tmg.flashback.stats.R
+import tmg.flashback.stats.StatsNavigationComponent
+import tmg.flashback.ui.navigation.ApplicationNavigationComponent
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertDataEventValue
 import tmg.testutils.livedata.assertListMatchesItem
@@ -23,6 +23,8 @@ internal class DriverOverviewViewModelTest: BaseTest() {
 
     private val mockDriverRepository: DriverRepository = mockk(relaxed = true)
     private val mockNetworkConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
+    private val mockStatsNavigationComponent: StatsNavigationComponent = mockk(relaxed = true)
+    private val mockApplicationNavigationComponent: ApplicationNavigationComponent = mockk(relaxed = true)
 
     private lateinit var sut: DriverOverviewViewModel
 
@@ -30,6 +32,8 @@ internal class DriverOverviewViewModelTest: BaseTest() {
         sut = DriverOverviewViewModel(
             mockDriverRepository,
             mockNetworkConnectivityManager,
+            mockStatsNavigationComponent,
+            mockApplicationNavigationComponent,
             ioDispatcher = coroutineScope.testDispatcher
         )
     }
@@ -52,12 +56,12 @@ internal class DriverOverviewViewModelTest: BaseTest() {
         every { mockNetworkConnectivityManager.isConnected } returns false
 
         initSUT()
-        sut.inputs.setup("driverId")
+        sut.inputs.setup("driverId", "firstName lastName")
 
         sut.outputs.list.test {
             assertValue(listOf(
                 DriverOverviewModel.headerModel(),
-                DriverOverviewModel.errorItemModel(SyncDataItem.PullRefresh)
+                DriverOverviewModel.NetworkError
             ))
         }
     }
@@ -68,11 +72,11 @@ internal class DriverOverviewViewModelTest: BaseTest() {
         every { mockNetworkConnectivityManager.isConnected } returns false
 
         initSUT()
-        sut.inputs.setup("driverId")
+        sut.inputs.setup("driverId", "firstName lastName")
 
         sut.outputs.list.test {
             assertValue(listOf(
-                DriverOverviewModel.errorItemModel(SyncDataItem.PullRefresh)
+                DriverOverviewModel.NetworkError
             ))
         }
     }
@@ -84,12 +88,12 @@ internal class DriverOverviewViewModelTest: BaseTest() {
         every { mockNetworkConnectivityManager.isConnected } returns true
 
         initSUT()
-        sut.inputs.setup("driverId")
+        sut.inputs.setup("driverId", "firstName lastName")
 
         sut.outputs.list.test {
             assertValue(mutableListOf(
                 DriverOverviewModel.headerModel(),
-                DriverOverviewModel.errorItemModel(SyncDataItem.Unavailable(DataUnavailable.CONSTRUCTOR_HISTORY_INTERNAL_ERROR))
+                DriverOverviewModel.InternalError
             ))
         }
     }
@@ -103,7 +107,7 @@ internal class DriverOverviewViewModelTest: BaseTest() {
         every { mockDriverRepository.getDriverOverview(any()) } returns flow { emit(input) }
 
         initSUT()
-        sut.inputs.setup("driverId")
+        sut.inputs.setup("driverId", "firstName lastName")
 
         sut.outputs.list.test {
             assertListMatchesItem { it is DriverOverviewModel.RacedFor && it.season == 2019 }
@@ -133,7 +137,7 @@ internal class DriverOverviewViewModelTest: BaseTest() {
         coEvery { mockDriverRepository.getDriverSeasonCount(any()) } returns 1
 
         initSUT()
-        sut.inputs.setup("driverId")
+        sut.inputs.setup("driverId", "firstName lastName")
 
         coVerify(exactly = 0) {
             mockDriverRepository.fetchDriver(any())
@@ -147,12 +151,12 @@ internal class DriverOverviewViewModelTest: BaseTest() {
         initSUT()
 
         runBlockingTest {
-            sut.inputs.setup("driverId")
+            sut.inputs.setup("driverId", "firstName lastName")
         }
 
         sut.outputs.list.test {
             assertValueAt(listOf(
-                DriverOverviewModel.errorItemModel(SyncDataItem.Skeleton)
+                DriverOverviewModel.Loading
             ), 0)
 
             assertListMatchesItem(atIndex = 1) { it is DriverOverviewModel.RacedFor && it.season == 2020 }
@@ -181,8 +185,8 @@ internal class DriverOverviewViewModelTest: BaseTest() {
 
         initSUT()
         sut.inputs.openUrl("url")
-        sut.outputs.openUrl.test {
-            assertDataEventValue("url")
+        verify {
+            mockApplicationNavigationComponent.openUrl("url")
         }
     }
 
@@ -193,11 +197,11 @@ internal class DriverOverviewViewModelTest: BaseTest() {
     @Test
     fun `open season opens season event`() {
         initSUT()
-        sut.inputs.setup("driverId")
+        sut.inputs.setup("driverId", "firstName lastName")
 
         sut.inputs.openSeason(2020)
-        sut.outputs.openSeason.test {
-            assertDataEventValue(Pair("driverId", 2020))
+        verify {
+            mockStatsNavigationComponent.driverSeason("driverId", "firstName lastName", 2020)
         }
     }
 
@@ -208,7 +212,7 @@ internal class DriverOverviewViewModelTest: BaseTest() {
     @Test
     fun `refresh calls driver repository`() = coroutineTest {
         initSUT()
-        sut.inputs.setup("driverId")
+        sut.inputs.setup("driverId", "firstName lastName")
 
         runBlockingTest {
             sut.inputs.refresh()

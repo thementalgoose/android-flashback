@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -17,6 +18,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import org.koin.androidx.compose.viewModel
 import tmg.flashback.formula1.model.DriverConstructor
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
@@ -28,6 +31,9 @@ import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody1
+import tmg.flashback.ui.components.errors.NetworkError
+import tmg.flashback.ui.components.loading.SkeletonView
+import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.messages.Message
 import tmg.flashback.ui.utils.isInPreview
 import tmg.utilities.extensions.format
@@ -41,12 +47,30 @@ fun DriverOverviewScreenVM(
     actionUpClicked: () -> Unit,
 ) {
     val viewModel by viewModel<DriverOverviewViewModel>()
-    viewModel.inputs.setup(driverId)
+    viewModel.inputs.setup(driverId, driverName)
+
+    val list = viewModel.outputs.list.observeAsState(emptyList())
+    val isLoading = viewModel.outputs.showLoading.observeAsState(false)
+    SwipeRefresh(
+        state = rememberSwipeRefreshState(isRefreshing = isLoading.value),
+        onRefresh = viewModel.inputs::refresh
+    ) {
+        DriverOverviewScreen(
+            list = list.value,
+            driverName = driverName,
+            racedForClicked = {
+                viewModel.inputs.openSeason(it.season)
+            },
+            actionUpClicked = actionUpClicked,
+        )
+    }
 }
 
 @Composable
 fun DriverOverviewScreen(
     actionUpClicked: () -> Unit,
+    driverName: String,
+    racedForClicked: (DriverOverviewModel.RacedFor) -> Unit,
     list: List<DriverOverviewModel>
 ) {
     LazyColumn(
@@ -54,27 +78,40 @@ fun DriverOverviewScreen(
             .fillMaxSize()
             .background(AppTheme.colors.backgroundPrimary),
         content = {
+            item("header") {
+                tmg.flashback.ui.components.header.Header(
+                    text = driverName,
+                    icon = painterResource(id = R.drawable.ic_back),
+                    iconContentDescription = stringResource(id = R.string.ab_back),
+                    actionUpClicked = actionUpClicked
+                )
+            }
             items(list, key = { it.key }) {
                 when (it) {
                     is DriverOverviewModel.Header -> Header(
-                        model = it,
-                        actionUpClicked = actionUpClicked
+                        model = it
                     )
                     is DriverOverviewModel.Message -> {
-                        Message(title = stringResource(id = it.label, it.args))
+                        Message(title = stringResource(id = it.label, *it.args.toTypedArray()))
                     }
                     is DriverOverviewModel.RacedFor -> {
                         History(
                             model = it,
-                            clicked = { }
+                            clicked = racedForClicked
                         )
                     }
                     is DriverOverviewModel.Stat -> {
                         Stat(model = it)
                     }
-                    DriverOverviewModel.InternalError -> TODO()
-                    DriverOverviewModel.Loading -> TODO()
-                    DriverOverviewModel.NetworkError -> TODO()
+                    DriverOverviewModel.InternalError -> {
+                        NetworkError(error = NetworkError.INTERNAL_ERROR)
+                    }
+                    DriverOverviewModel.Loading -> {
+                        SkeletonViewList()
+                    }
+                    DriverOverviewModel.NetworkError -> {
+                        NetworkError(error = NetworkError.NETWORK_ERROR)
+                    }
                 }
             }
         }
@@ -84,59 +121,52 @@ fun DriverOverviewScreen(
 @Composable
 private fun Header(
     model: DriverOverviewModel.Header,
-    actionUpClicked: () -> Unit,
     modifier: Modifier = Modifier
 ) { 
-    Column(modifier = modifier) {
-        tmg.flashback.ui.components.header.Header(
-            text = model.driverName,
-            icon = painterResource(id = R.drawable.ic_back),
-            iconContentDescription = stringResource(id = R.string.ab_back),
-            actionUpClicked = actionUpClicked
+    Column(modifier = modifier.padding(
+        horizontal = AppTheme.dimensions.paddingMedium
+    )) {
+        DriverImage(
+            photoUrl = model.driverImg,
+            size = headerImageSize
         )
-        Column(modifier = Modifier.padding(
-            horizontal = AppTheme.dimensions.paddingMedium
-        )) {
-            DriverImage(
-                photoUrl = model.driverImg,
-                size = headerImageSize
+        Row(
+            modifier = Modifier
+                .padding(top = 4.dp)
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            val resourceId = when (isInPreview()) {
+                true -> R.drawable.gb
+                false -> LocalContext.current.getFlagResourceAlpha3(model.driverNationalityISO)
+            }
+            Image(
+                modifier = Modifier
+                    .size(16.dp)
+                    .align(Alignment.CenterVertically),
+                painter = painterResource(id = resourceId),
+                contentDescription = null,
+                contentScale = ContentScale.Fit,
             )
-            Row(
+            Spacer(Modifier.width(AppTheme.dimensions.paddingSmall))
+            TextBody1(
+                modifier = Modifier
+                    .padding(vertical = AppTheme.dimensions.paddingXSmall)
+                    .fillMaxWidth(),
+                text = model.constructors.distinctBy { it.name }.joinToString { it.name }
+            )
+        }
+
+        model.driverBirthday.format("dd MMMM yyyy")?.let { birthday ->
+            TextBody1(
                 modifier = Modifier
                     .padding(top = 4.dp)
                     .fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                val resourceId = when (isInPreview()) {
-                    true -> R.drawable.gb
-                    false -> LocalContext.current.getFlagResourceAlpha3(model.driverNationalityISO)
-                }
-                Image(
-                    modifier = Modifier
-                        .size(16.dp)
-                        .align(Alignment.CenterVertically),
-                    painter = painterResource(id = resourceId),
-                    contentDescription = null,
-                    contentScale = ContentScale.Fit,
-                )
-                Spacer(Modifier.width(AppTheme.dimensions.paddingSmall))
-                TextBody1(
-                    modifier = Modifier.fillMaxWidth(),
-                    text = model.constructors.joinToString { it.name }
-                )
-            }
-
-            model.driverBirthday.format("dd MMMM yyyy")?.let { birthday ->
-                TextBody1(
-                    modifier = Modifier
-                        .padding(top = 4.dp)
-                        .fillMaxWidth(),
-                    text = stringResource(id = R.string.driver_overview_stat_birthday, birthday)
-                )
-            }
-
-            Spacer(Modifier.height(AppTheme.dimensions.paddingSmall))
+                text = stringResource(id = R.string.driver_overview_stat_birthday, birthday)
+            )
         }
+
+        Spacer(Modifier.height(AppTheme.dimensions.paddingSmall))
     }
 }
 
@@ -198,20 +228,19 @@ private fun History(
                     .align(Alignment.CenterVertically)
             )
             Column(
+                modifier = Modifier.padding(vertical = 2.dp),
                 horizontalAlignment = Alignment.End
             ) {
                 model.constructors.forEach { constructor ->
                     Row(
                         horizontalArrangement = Arrangement.End,
                         modifier = Modifier
-                            .width(IntrinsicSize.Min)
                             .height(IntrinsicSize.Min)
                     ) {
                         TextBody1(
                             text = constructor.name,
                             bold = true,
                             modifier = Modifier
-                                .weight(1f)
                                 .padding(
                                     end = AppTheme.dimensions.paddingSmall,
                                     top = 2.dp,
@@ -238,6 +267,8 @@ private fun Preview(
     AppThemePreview {
         DriverOverviewScreen(
             actionUpClicked = { },
+            driverName = "firstName lastName",
+            racedForClicked = { },
             list = listOf(
                 driverConstructor.toHeader(),
                 fakeStat,
@@ -265,7 +296,7 @@ private fun DriverConstructor.racedFor() = DriverOverviewModel.RacedFor(
     season = 2022,
     type = PipeType.START,
     constructors = listOf(
-        this.constructor.copy(id = "1", name = "McLaren")
+        this.constructor.copy(id = "1", name = "Toro Rosso")
     ),
     isChampionship = false
 )
