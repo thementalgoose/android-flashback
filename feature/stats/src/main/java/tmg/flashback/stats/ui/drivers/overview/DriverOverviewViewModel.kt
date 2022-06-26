@@ -1,6 +1,5 @@
 package tmg.flashback.stats.ui.drivers.overview
 
-import androidx.annotation.AttrRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.lifecycle.*
@@ -13,15 +12,14 @@ import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.DriverHistory
 import tmg.flashback.statistics.repo.DriverRepository
 import tmg.flashback.stats.R
+import tmg.flashback.stats.StatsNavigationComponent
+import tmg.flashback.ui.navigation.ApplicationNavigationComponent
 import tmg.utilities.extensions.ordinalAbbreviation
-import tmg.utilities.lifecycle.DataEvent
-import tmg.utilities.lifecycle.Event
-import tmg.utilities.models.StringHolder
 
 //region Inputs
 
 interface DriverOverviewViewModelInputs {
-    fun setup(driverId: String)
+    fun setup(driverId: String, driverName: String)
     fun openUrl(url: String)
     fun openSeason(season: Int)
 
@@ -34,10 +32,7 @@ interface DriverOverviewViewModelInputs {
 
 interface DriverOverviewViewModelOutputs {
     val list: LiveData<List<DriverOverviewModel>>
-    val openUrl: LiveData<DataEvent<String>>
-    val openSeason: LiveData<DataEvent<Pair<String, Int>>>
     val showLoading: LiveData<Boolean>
-    val showRefreshError: LiveData<Event>
 }
 
 //endregion
@@ -47,6 +42,8 @@ interface DriverOverviewViewModelOutputs {
 class DriverOverviewViewModel(
     private val driverRepository: DriverRepository,
     private val networkConnectivityManager: NetworkConnectivityManager,
+    private val statsNavigationComponent: StatsNavigationComponent,
+    private val applicationNavigationComponent: ApplicationNavigationComponent,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), DriverOverviewViewModelInputs, DriverOverviewViewModelOutputs {
 
@@ -56,9 +53,10 @@ class DriverOverviewViewModel(
     private val isConnected: Boolean
         get() = networkConnectivityManager.isConnected
 
-    private val driverId: MutableStateFlow<String?> = MutableStateFlow(null)
-    private val driverIdWithRequest: Flow<String?> = driverId
+    private val driverIdAndName: MutableStateFlow<Pair<String,String>?> = MutableStateFlow(null)
+    private val driverIdWithRequest: Flow<String?> = driverIdAndName
         .filterNotNull()
+        .map { it.first }
         .flatMapLatest { id ->
             return@flatMapLatest flow {
                 if (driverRepository.getDriverSeasonCount(id) == 0) {
@@ -129,10 +127,7 @@ class DriverOverviewViewModel(
         }
         .asLiveData(viewModelScope.coroutineContext)
 
-    override val openUrl: MutableLiveData<DataEvent<String>> = MutableLiveData()
-    override val openSeason: MutableLiveData<DataEvent<Pair<String, Int>>> = MutableLiveData()
     override val showLoading: MutableLiveData<Boolean> = MutableLiveData()
-    override val showRefreshError: MutableLiveData<Event> = MutableLiveData()
 
     init {
 
@@ -140,24 +135,25 @@ class DriverOverviewViewModel(
 
     //region Inputs
 
-    override fun setup(driverId: String) {
-        this.driverId.value = driverId
+    override fun setup(driverId: String, driverName: String) {
+        this.driverIdAndName.value = Pair(driverId, driverName)
     }
 
     override fun openUrl(url: String) {
-        openUrl.postValue(DataEvent(url))
+        applicationNavigationComponent.openUrl(url)
     }
 
     override fun openSeason(season: Int) {
-        driverId.value?.let {
-            openSeason.postValue(DataEvent(Pair(it, season)))
+        driverIdAndName.value?.let {
+            val (id, name) = it
+            statsNavigationComponent.driverSeason(id, name, season)
         }
     }
 
     override fun refresh() {
-        this.refresh(driverId.value)
+        this.refresh(driverIdAndName.value?.first)
     }
-    private fun refresh(driverId: String? = this.driverId.value) {
+    private fun refresh(driverId: String? = this.driverIdAndName.value?.first) {
         viewModelScope.launch(context = ioDispatcher) {
             driverId?.let {
                 driverRepository.fetchDriver(driverId)
@@ -178,6 +174,7 @@ class DriverOverviewViewModel(
     private fun getAllStats(history: DriverHistory): List<DriverOverviewModel> {
         val list: MutableList<DriverOverviewModel> = mutableListOf()
         list.addStat(
+            isWinning = history.championshipWins >= 1,
             icon = R.drawable.ic_menu_drivers,
             label = R.string.driver_overview_stat_career_drivers_title,
             value = history.championshipWins.toString()
