@@ -13,9 +13,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.viewModel
+import tmg.flashback.stats.R
+import tmg.flashback.stats.components.Timeline
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.ui.components.errors.NetworkError
+import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.messages.Message
 
@@ -32,6 +35,8 @@ fun DriverSeasonScreenVM(
     val list = viewModel.outputs.list.observeAsState(listOf(DriverSeasonModel.Loading))
     DriverSeasonScreen(
         list = list.value,
+        driverName = driverName,
+        season = season,
         actionUpClicked = actionUpClicked
     )
 }
@@ -39,6 +44,8 @@ fun DriverSeasonScreenVM(
 @Composable
 fun DriverSeasonScreen(
     list: List<DriverSeasonModel>,
+    driverName: String,
+    season: Int,
     actionUpClicked: () -> Unit
 ) {
     LazyColumn(
@@ -46,6 +53,14 @@ fun DriverSeasonScreen(
             .fillMaxSize()
             .background(AppTheme.colors.backgroundPrimary),
         content = {
+            item(key = "header") {
+                Header(
+                    text = "${driverName}\n${season}",
+                    icon = painterResource(id = R.drawable.ic_back),
+                    iconContentDescription = stringResource(id = R.string.ab_back),
+                    actionUpClicked = actionUpClicked
+                )
+            }
             items(list, key = { it.key }) {
                 when (it) {
 //                    is DriverSeasonModel -> Header(
@@ -56,10 +71,9 @@ fun DriverSeasonScreen(
                         Message(title = stringResource(id = it.label, it.args))
                     }
                     is DriverSeasonModel.RacedFor -> {
-//                        History(
-//                            model = it,
-//                            clicked = { }
-//                        )
+                        History(
+                            model = it
+                        )
                     }
                     is DriverSeasonModel.Stat -> {
                         Stat(model = it)
@@ -117,5 +131,55 @@ private fun Stat(
             text = model.value,
             bold = true
         )
+    }
+}
+
+@Composable
+private fun History(
+    model: DriverSeasonModel.RacedFor,
+    modifier: Modifier = Modifier
+) {
+    Row(modifier = modifier
+        .padding(horizontal = AppTheme.dimensions.paddingMedium)
+    ) {
+        Timeline(
+            timelineColor = AppTheme.colors.contentSecondary,
+            isEnabled = true,
+            showTop = model.type.showTop,
+            showBottom = model.type.showBottom
+        ) {
+            TextBody1(
+                text = model.season.toString(),
+                modifier = Modifier
+                    .weight(1f)
+                    .align(Alignment.CenterVertically)
+            )
+            Column(
+                modifier = Modifier.padding(vertical = 2.dp),
+                horizontalAlignment = Alignment.End
+            ) {
+                Row(
+                    horizontalArrangement = Arrangement.End,
+                    modifier = Modifier
+                        .height(IntrinsicSize.Min)
+                ) {
+                    TextBody1(
+                        text = model.constructors.name,
+                        bold = true,
+                        modifier = Modifier
+                            .padding(
+                                end = AppTheme.dimensions.paddingSmall,
+                                top = 2.dp,
+                                bottom = 2.dp
+                            )
+                    )
+                    Box(modifier = Modifier
+                        .width(8.dp)
+                        .fillMaxHeight()
+                        .background(model.constructors.colour)
+                    )
+                }
+            }
+        }
     }
 }
