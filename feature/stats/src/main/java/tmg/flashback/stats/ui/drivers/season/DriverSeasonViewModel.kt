@@ -109,27 +109,37 @@ class DriverSeasonViewModel(
                         )
                     }
                     else {
-                        for (x in standing.constructors.indices) {
-                            val const = standing.constructors[(standing.constructors.size - 1) - x]
-                            val dotType: PipeType = when (x) {
-                                0 -> {
-                                    PipeType.START
+                        if (standing.constructors.size == 1) {
+                            list.add(DriverSeasonModel.RacedFor(
+                                null,
+                                standing.constructors.first(),
+                                PipeType.SINGLE,
+                                false
+                            ))
+                        }
+                        else {
+                            for (x in standing.constructors.indices) {
+                                val const = standing.constructors[(standing.constructors.size - 1) - x]
+                                val dotType: PipeType = when (x) {
+                                    0 -> {
+                                        PipeType.START
+                                    }
+                                    standing.constructors.size - 1 -> {
+                                        PipeType.END
+                                    }
+                                    else -> {
+                                        PipeType.SINGLE_PIPE
+                                    }
                                 }
-                                standing.constructors.size - 1 -> {
-                                    PipeType.END
-                                }
-                                else -> {
-                                    PipeType.SINGLE_PIPE
-                                }
-                            }
-                            list.add(
-                                DriverSeasonModel.RacedFor(
-                                    null,
-                                    const,
-                                    dotType,
-                                    false
+                                list.add(
+                                    DriverSeasonModel.RacedFor(
+                                        null,
+                                        const,
+                                        dotType,
+                                        false
+                                    )
                                 )
-                            )
+                            }
                         }
                     }
 
