@@ -216,9 +216,10 @@ private fun ResultHeader(
         .padding(end = AppTheme.dimensions.paddingMedium)
     ) {
         Box(Modifier.weight(1f))
-        Box(Modifier
-            .width(resultColumnWidth)
-            .padding(vertical = AppTheme.dimensions.paddingXSmall)
+        Box(
+            Modifier
+                .width(resultColumnWidth)
+                .padding(vertical = AppTheme.dimensions.paddingXSmall)
         ) {
             Icon(
                 modifier = Modifier.align(Alignment.Center),
@@ -227,9 +228,10 @@ private fun ResultHeader(
                 tint = AppTheme.colors.contentSecondary
             )
         }
-        Box(Modifier
-            .width(resultColumnWidth)
-            .padding(vertical = AppTheme.dimensions.paddingXSmall)
+        Box(
+            Modifier
+                .width(resultColumnWidth)
+                .padding(vertical = AppTheme.dimensions.paddingXSmall)
         ) {
             Icon(
                 modifier = Modifier.align(Alignment.Center),
@@ -238,9 +240,10 @@ private fun ResultHeader(
                 tint = AppTheme.colors.contentSecondary
             )
         }
-        Box(Modifier
-            .width(resultColumnWidth)
-            .padding(vertical = AppTheme.dimensions.paddingXSmall)
+        Box(
+            Modifier
+                .width(resultColumnWidth)
+                .padding(vertical = AppTheme.dimensions.paddingXSmall)
         ) {
             Icon(
                 modifier = Modifier.align(Alignment.Center),
@@ -266,17 +269,24 @@ private fun Result(
             end = AppTheme.dimensions.paddingMedium
         )
     ) {
-        DriverInfo(
-            driverName = model.raceName,
-            driverNationalityISO = model.raceCountryISO,
-            constructorColor = model.constructor.colour.copy(alpha = 0.2f),
-            constructorName = model.constructor.name,
-            position = model.round,
-            modifier = Modifier.weight(1f)
-        )
-        Box(Modifier
-            .width(resultColumnWidth)
-            .padding(vertical = AppTheme.dimensions.paddingXSmall)
+        Column(
+            Modifier.weight(1f)
+        ) {
+            DriverInfo(
+                driverName = model.raceName,
+                driverNationalityISO = model.raceCountryISO,
+                constructorColor = model.constructor.colour.copy(alpha = 0.2f),
+                constructorName = model.circuitName,
+                position = model.round
+            )
+            if (model.showConstructorLabel) {
+                TextCaption(text = model.constructor.name)
+            }
+        }
+        Box(
+            Modifier
+                .width(resultColumnWidth)
+                .padding(vertical = AppTheme.dimensions.paddingXSmall)
         ) {
             Column(
                 verticalArrangement = Arrangement.Center,
@@ -299,9 +309,10 @@ private fun Result(
                 }
             }
         }
-        Box(Modifier
-            .width(resultColumnWidth)
-            .padding(vertical = AppTheme.dimensions.paddingXSmall)
+        Box(
+            Modifier
+                .width(resultColumnWidth)
+                .padding(vertical = AppTheme.dimensions.paddingXSmall)
         ) {
             Column(
                 verticalArrangement = Arrangement.Center,
@@ -324,9 +335,10 @@ private fun Result(
                 }
             }
         }
-        Box(Modifier
-            .width(resultColumnWidth)
-            .padding(vertical = AppTheme.dimensions.paddingXSmall)
+        Box(
+            Modifier
+                .width(resultColumnWidth)
+                .padding(vertical = AppTheme.dimensions.paddingXSmall)
         ) {
             val progress = (model.points / model.maxPoints).toFloat().coerceIn(0f, 1f)
             ProgressBar(

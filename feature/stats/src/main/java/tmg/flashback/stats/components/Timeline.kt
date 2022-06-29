@@ -27,6 +27,7 @@ fun Timeline(
     isEnabled: Boolean,
     modifier: Modifier = Modifier,
     backgroundColor: Color = AppTheme.colors.backgroundContainer,
+    overrideDotColor: Color? = null,
     showTop: Boolean = true,
     showBottom: Boolean = true,
     content: @Composable RowScope.() -> Unit,
@@ -57,7 +58,7 @@ fun Timeline(
                 .width(dotDiameter)
                 .height(dotDiameter)
                 .clip(CircleShape)
-                .background(timelineColor)
+                .background(overrideDotColor ?: timelineColor)
                 .align(Alignment.Center))
             if (!isEnabled) {
                 Box(modifier = Modifier
