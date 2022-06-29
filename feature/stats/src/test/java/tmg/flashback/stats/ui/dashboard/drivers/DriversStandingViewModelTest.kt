@@ -13,6 +13,7 @@ import tmg.flashback.formula1.model.SeasonDriverStandingSeason
 import tmg.flashback.formula1.model.SeasonDriverStandings
 import tmg.flashback.formula1.model.model
 import tmg.flashback.statistics.repo.SeasonRepository
+import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.stats.di.StatsNavigator
 import tmg.flashback.stats.usecases.FetchSeasonUseCase
 import tmg.testutils.BaseTest
@@ -23,7 +24,7 @@ internal class DriversStandingViewModelTest: BaseTest() {
 
     private val mockSeasonRepository: SeasonRepository = mockk(relaxed = true)
     private val mockFetchSeasonUseCase: FetchSeasonUseCase = mockk(relaxed = true)
-    private val mockStatsNavigator: StatsNavigator = mockk(relaxed = true)
+    private val mockStatsNavigator: StatsNavigationComponent = mockk(relaxed = true)
 
     private lateinit var underTest: DriversStandingViewModel
 
@@ -131,9 +132,9 @@ internal class DriversStandingViewModelTest: BaseTest() {
         underTest.clickItem(model)
 
         verify {
-            mockStatsNavigator.goToDriverOverview(
-                model.standings.driver.id,
-                model.standings.driver.name
+            mockStatsNavigator.driverOverview(
+                id = model.standings.driver.id,
+                name = model.standings.driver.name
             )
         }
     }

@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import tmg.flashback.formula1.model.SeasonDriverStandingSeason
 import tmg.flashback.statistics.repo.SeasonRepository
+import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.stats.di.StatsNavigator
 import tmg.flashback.stats.usecases.FetchSeasonUseCase
 
@@ -25,7 +26,7 @@ interface DriversStandingViewModelOutputs {
 class DriversStandingViewModel(
     private val seasonRepository: SeasonRepository,
     private val fetchSeasonUseCase: FetchSeasonUseCase,
-    private val statsNavigator: StatsNavigator,
+    private val statsNavigator: StatsNavigationComponent,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), DriversStandingViewModelInputs, DriversStandingViewModelOutputs {
 
@@ -77,9 +78,9 @@ class DriversStandingViewModel(
     }
 
     override fun clickItem(model: DriverStandingsModel.Standings) {
-        statsNavigator.goToDriverOverview(
-            model.standings.driver.id,
-            model.standings.driver.name
+        statsNavigator.driverOverview(
+            id = model.standings.driver.id,
+            name = model.standings.driver.name
         )
     }
 }

@@ -9,6 +9,7 @@ import org.threeten.bp.LocalDate
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.stats.StatsNavigationComponent
+import tmg.flashback.stats.di.StatsNavigator
 import tmg.flashback.stats.repository.NotificationRepository
 import tmg.flashback.stats.ui.weekend.WeekendInfo
 import tmg.flashback.stats.usecases.FetchSeasonUseCase
@@ -17,6 +18,7 @@ interface CalendarViewModelInputs {
     fun refresh()
     fun load(season: Int)
 
+    fun clickTyre(season: Int)
     fun clickItem(model: CalendarModel)
 }
 
@@ -29,6 +31,7 @@ class CalendarViewModel(
     private val fetchSeasonUseCase: FetchSeasonUseCase,
     private val overviewRepository: OverviewRepository,
     private val notificationRepository: NotificationRepository,
+    private val statsNavigator: StatsNavigator,
     private val statsNavigationComponent: StatsNavigationComponent,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), CalendarViewModelInputs, CalendarViewModelOutputs {
@@ -86,6 +89,10 @@ class CalendarViewModel(
             fetchSeasonUseCase.fetchSeason(season)
             isRefreshing.postValue(false)
         }
+    }
+
+    override fun clickTyre(season: Int) {
+        statsNavigator.goToTyreOverview(season)
     }
 
     override fun clickItem(model: CalendarModel) {
