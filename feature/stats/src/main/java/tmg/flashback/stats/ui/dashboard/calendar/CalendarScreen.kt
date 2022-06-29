@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -29,6 +30,9 @@ import org.koin.androidx.compose.viewModel
 import org.threeten.bp.DayOfWeek
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.TextStyle
+import tmg.flashback.formula1.enums.SeasonTyres
+import tmg.flashback.formula1.enums.Tyre
+import tmg.flashback.formula1.enums.getBySeason
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.model.Schedule
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
@@ -74,6 +78,7 @@ fun CalendarScreenVM(
     ) {
         CalendarScreen(
             showMenu = showMenu,
+            tyreClicked = viewModel.inputs::clickTyre,
             menuClicked = menuClicked,
             itemClicked = viewModel.inputs::clickItem,
             season = season,
@@ -86,6 +91,7 @@ fun CalendarScreenVM(
 @Composable
 fun CalendarScreen(
     showMenu: Boolean,
+    tyreClicked: (season: Int) -> Unit,
     menuClicked: (() -> Unit)? = null,
     itemClicked: (CalendarModel) -> Unit,
     season: Int,
@@ -107,7 +113,18 @@ fun CalendarScreen(
                         true -> stringResource(id = R.string.ab_menu)
                         false -> null
                     },
-                    actionUpClicked = { menuClicked?.invoke() }
+                    actionUpClicked = { menuClicked?.invoke() },
+                    overrideIcons = {
+                        SeasonTyres.getBySeason(season)?.let { _ ->
+                            IconButton(onClick = { tyreClicked(season) }) {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.ic_tyre),
+                                    contentDescription = stringResource(id = R.string.tyres_label),
+                                    tint = AppTheme.colors.contentSecondary
+                                )
+                            }
+                        }
+                    }
                 )
             }
             item(key = "info") {

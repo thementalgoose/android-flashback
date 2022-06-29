@@ -1,9 +1,6 @@
 package tmg.flashback.stats.ui.dashboard.calendar
 
-import io.mockk.coVerify
-import io.mockk.every
-import io.mockk.mockk
-import io.mockk.verify
+import io.mockk.*
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeEach
@@ -14,6 +11,7 @@ import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.model.model
 import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.stats.StatsNavigationComponent
+import tmg.flashback.stats.di.StatsNavigator
 import tmg.flashback.stats.repository.NotificationRepository
 import tmg.flashback.stats.repository.models.NotificationSchedule
 import tmg.flashback.stats.ui.weekend.toWeekendInfo
@@ -27,6 +25,7 @@ internal class CalendarViewModelTest: BaseTest() {
     private val mockOverviewRepository: OverviewRepository = mockk(relaxed = true)
     private val mockFetchSeasonUseCase: FetchSeasonUseCase = mockk(relaxed = true)
     private val mockNotificationRepository: NotificationRepository = mockk(relaxed = true)
+    private val mockStatsNavigator: StatsNavigator = mockk(relaxed = true)
     private val mockStatsNavigationComponent: StatsNavigationComponent = mockk(relaxed = true)
 
     private lateinit var underTest: CalendarViewModel
@@ -36,6 +35,7 @@ internal class CalendarViewModelTest: BaseTest() {
             fetchSeasonUseCase = mockFetchSeasonUseCase,
             overviewRepository = mockOverviewRepository,
             notificationRepository = mockNotificationRepository,
+            statsNavigator = mockStatsNavigator,
             statsNavigationComponent = mockStatsNavigationComponent,
             ioDispatcher = coroutineScope.testDispatcher
         )
@@ -133,6 +133,18 @@ internal class CalendarViewModelTest: BaseTest() {
 
         verify {
             mockStatsNavigationComponent.weekend(any())
+        }
+    }
+
+    @Test
+    fun `clicking tyre with season launches tyre sheet`() {
+        initUnderTest()
+        underTest.load(2020)
+
+        underTest.inputs.clickTyre(2020)
+
+        verify {
+            mockStatsNavigator.goToTyreOverview(2020)
         }
     }
 

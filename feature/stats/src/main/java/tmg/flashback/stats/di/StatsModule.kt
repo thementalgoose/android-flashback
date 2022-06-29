@@ -28,7 +28,7 @@ import tmg.flashback.stats.usecases.ResubscribeNotificationsUseCase
 
 val statsModule = module {
 
-    viewModel { CalendarViewModel(get(), get(), get(), get()) }
+    viewModel { CalendarViewModel(get(), get(), get(), get(), get()) }
     viewModel { ConstructorsStandingViewModel(get(), get(), get()) }
     viewModel { DriversStandingViewModel(get(), get(), get()) }
 
