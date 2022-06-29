@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -29,10 +30,13 @@ private val colorIndicator: Dp = 6.dp
 
 @Composable
 fun DriverInfo(
-    driver: DriverConstructor,
+    driverName: String,
+    driverNationalityISO: String,
+    constructorName: String,
+    constructorColor: Color,
     position: Int?,
-    extraContent: (@Composable RowScope.() -> Unit)? = null,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    extraContent: (@Composable RowScope.() -> Unit)? = null
 ) {
     Row(modifier = modifier
         .height(IntrinsicSize.Min)
@@ -40,24 +44,28 @@ fun DriverInfo(
         Box(modifier = Modifier
             .fillMaxHeight()
             .width(colorIndicator)
-            .background(driver.constructor.colour)
+            .background(constructorColor)
         )
-        TextTitle(
-            modifier = Modifier
-                .width(42.dp)
-                .padding(horizontal = AppTheme.dimensions.paddingXSmall)
-                .align(Alignment.CenterVertically),
-            bold = true,
-            textAlign = TextAlign.Center,
-            text = position?.toString() ?: ""
-        )
+        if (position != null) {
+            TextTitle(
+                modifier = Modifier
+                    .width(42.dp)
+                    .padding(horizontal = AppTheme.dimensions.paddingXSmall)
+                    .align(Alignment.CenterVertically),
+                bold = true,
+                textAlign = TextAlign.Center,
+                text = position.toString()
+            )
+        } else {
+            Spacer(Modifier.width(AppTheme.dimensions.paddingMedium - colorIndicator))
+        }
         Column(modifier = Modifier
             .weight(1f)
             .padding(vertical = 3.dp)
         ) {
             Row(modifier = Modifier.height(IntrinsicSize.Min)) {
                 TextTitle(
-                    text = driver.driver.name,
+                    text = driverName,
                     bold = true
                 )
             }
@@ -67,7 +75,7 @@ fun DriverInfo(
             ) {
                 val resourceId = when (isInPreview()) {
                     true -> R.drawable.gb
-                    false -> LocalContext.current.getFlagResourceAlpha3(driver.driver.nationalityISO)
+                    false -> LocalContext.current.getFlagResourceAlpha3(driverNationalityISO)
                 }
                 Image(
                     modifier = Modifier
@@ -82,10 +90,28 @@ fun DriverInfo(
                     content()
                     Spacer(Modifier.width(AppTheme.dimensions.paddingXSmall))
                 }
-                TextBody2(text = driver.constructor.name)
+                TextBody2(text = constructorName)
             }
         }
     }
+}
+
+@Composable
+fun DriverInfo(
+    driver: DriverConstructor,
+    position: Int?,
+    modifier: Modifier = Modifier,
+    extraContent: (@Composable RowScope.() -> Unit)? = null
+) {
+    DriverInfo(
+        driverName = driver.driver.name,
+        driverNationalityISO = driver.driver.nationalityISO,
+        constructorName = driver.constructor.name,
+        constructorColor = driver.constructor.colour,
+        position = position,
+        modifier = modifier,
+        extraContent = extraContent
+    )
 }
 
 @PreviewTheme
@@ -95,5 +121,15 @@ private fun Preview(
 ) {
     AppThemePreview {
         DriverInfo(driver = driverConstructor, position = 1)
+    }
+}
+
+@PreviewTheme
+@Composable
+private fun PreviewShowPosition(
+    @PreviewParameter(DriverConstructorProvider::class) driverConstructor: DriverConstructor
+) {
+    AppThemePreview {
+        DriverInfo(driver = driverConstructor, position = null)
     }
 }

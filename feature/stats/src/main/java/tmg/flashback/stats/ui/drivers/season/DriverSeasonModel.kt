@@ -37,7 +37,7 @@ sealed class DriverSeasonModel(
         val type: PipeType,
         val isChampionship: Boolean
     ): DriverSeasonModel(
-        key = "raced-$season"
+        key = "raced-${constructors.id}"
     )
 
     data class Result(
@@ -62,7 +62,7 @@ sealed class DriverSeasonModel(
     )
 
     object ResultHeader: DriverSeasonModel(
-        key = "header"
+        key = "result-header"
     )
 
     object NetworkError: DriverSeasonModel(
