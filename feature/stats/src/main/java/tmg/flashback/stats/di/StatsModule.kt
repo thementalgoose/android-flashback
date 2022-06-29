@@ -6,9 +6,12 @@ import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.stats.repository.HomeRepository
 import tmg.flashback.stats.repository.NotificationRepository
 import tmg.flashback.stats.ui.circuits.CircuitViewModel
+import tmg.flashback.stats.ui.constructors.overview.ConstructorOverviewViewModel
 import tmg.flashback.stats.ui.dashboard.calendar.CalendarViewModel
 import tmg.flashback.stats.ui.dashboard.constructors.ConstructorsStandingViewModel
 import tmg.flashback.stats.ui.dashboard.drivers.DriversStandingViewModel
+import tmg.flashback.stats.ui.drivers.overview.DriverOverviewViewModel
+import tmg.flashback.stats.ui.drivers.season.DriverSeasonViewModel
 import tmg.flashback.stats.ui.search.SearchViewModel
 import tmg.flashback.stats.ui.settings.home.SettingsHomeViewModel
 import tmg.flashback.stats.ui.settings.notifications.SettingsNotificationViewModel
@@ -25,7 +28,7 @@ import tmg.flashback.stats.usecases.ResubscribeNotificationsUseCase
 
 val statsModule = module {
 
-    viewModel { CalendarViewModel(get(), get(), get(), get()) }
+    viewModel { CalendarViewModel(get(), get(), get(), get(), get()) }
     viewModel { ConstructorsStandingViewModel(get(), get(), get()) }
     viewModel { DriversStandingViewModel(get(), get(), get()) }
 
@@ -43,6 +46,10 @@ val statsModule = module {
     viewModel { SettingsHomeViewModel(get(), get()) }
     viewModel { SettingsNotificationViewModel(get(), get(), get()) }
     viewModel { UpNextReminderViewModel(get()) }
+
+    viewModel { DriverOverviewViewModel(get(), get(), get(), get()) }
+    viewModel { DriverSeasonViewModel(get(), get(), get()) }
+    viewModel { ConstructorOverviewViewModel(get(), get(), get()) }
 
     single { StatsNavigationComponent(get()) }
 

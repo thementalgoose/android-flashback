@@ -5,29 +5,26 @@ import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.flow.flow
 import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.flashback.formula1.model.Constructor
-import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.model.Race
 import tmg.flashback.formula1.model.model
 import tmg.flashback.statistics.repo.RaceRepository
-import tmg.flashback.stats.di.StatsNavigator
+import tmg.flashback.stats.StatsNavigationComponent
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.test
 import java.time.Year
 
-internal class ConstructorViewModelTest: BaseTest() {
+internal class ConstructorOverviewViewModelTest: BaseTest() {
 
     private val mockRaceRepository: RaceRepository = mockk(relaxed = true)
-    private val mockStatsNavigator: StatsNavigator = mockk(relaxed = true)
+    private val mockStatsNavigationComponent: StatsNavigationComponent = mockk(relaxed = true)
 
     private lateinit var underTest: ConstructorViewModel
 
     private fun initUnderTest() {
         underTest = ConstructorViewModel(
             raceRepository = mockRaceRepository,
-            statsNavigator = mockStatsNavigator,
+            statsNavigationComponent = mockStatsNavigationComponent,
             ioDispatcher = coroutineScope.testDispatcher
         )
     }
@@ -83,9 +80,9 @@ internal class ConstructorViewModelTest: BaseTest() {
         underTest.inputs.clickItem(ConstructorModel.Constructor.model())
 
         verify {
-            mockStatsNavigator.goToConstructorOverview(
-                constructorId = ConstructorModel.Constructor.model().constructor.id,
-                constructorName = ConstructorModel.Constructor.model().constructor.name
+            mockStatsNavigationComponent.constructorOverview(
+                id = ConstructorModel.Constructor.model().constructor.id,
+                name = ConstructorModel.Constructor.model().constructor.name
             )
         }
     }
