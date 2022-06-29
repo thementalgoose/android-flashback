@@ -20,7 +20,8 @@ class ConstructorOverviewActivity: BaseActivity() {
             AppTheme {
                 ConstructorOverviewScreenVM(
                     constructorId = constructorId,
-                    constructorName = constructorName
+                    constructorName = constructorName,
+                    actionUpClicked = { }
                 )
             }
         }
