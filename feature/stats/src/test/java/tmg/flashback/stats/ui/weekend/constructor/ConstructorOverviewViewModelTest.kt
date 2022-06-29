@@ -17,7 +17,7 @@ import tmg.testutils.BaseTest
 import tmg.testutils.livedata.test
 import java.time.Year
 
-internal class ConstructorViewModelTest: BaseTest() {
+internal class ConstructorOverviewViewModelTest: BaseTest() {
 
     private val mockRaceRepository: RaceRepository = mockk(relaxed = true)
     private val mockStatsNavigator: StatsNavigator = mockk(relaxed = true)
