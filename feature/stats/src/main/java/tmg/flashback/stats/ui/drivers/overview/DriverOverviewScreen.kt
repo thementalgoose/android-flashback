@@ -217,6 +217,10 @@ private fun History(
     ) {
         Timeline(
             timelineColor = AppTheme.colors.contentSecondary,
+            overrideDotColor = when {
+                model.isChampionship -> AppTheme.colors.f1Championship
+                else -> null
+            },
             isEnabled = true,
             showTop = model.type.showTop,
             showBottom = model.type.showBottom

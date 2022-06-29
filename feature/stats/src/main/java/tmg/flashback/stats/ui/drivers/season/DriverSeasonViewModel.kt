@@ -128,7 +128,7 @@ class DriverSeasonViewModel(
                                         PipeType.END
                                     }
                                     else -> {
-                                        PipeType.SINGLE_PIPE
+                                        PipeType.SINGLE
                                     }
                                 }
                                 list.add(

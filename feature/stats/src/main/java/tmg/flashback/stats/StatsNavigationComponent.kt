@@ -46,6 +46,7 @@ class StatsNavigationComponent(
         return DriverSeasonActivity.intent(context, id, name, season)
     }
 
+    @Deprecated("Not yet implemented!")
     fun constructorSeason(id: String, name: String, season: Int) = activityProvider.launch {
         it.startActivity(constructorSeasonIntent(it, id, name, season))
     }
