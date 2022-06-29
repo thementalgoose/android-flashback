@@ -44,7 +44,6 @@ class SearchViewModel(
     private val overviewRepository: OverviewRepository,
     private val adsRepository: AdsRepository,
     private val statsNavigationComponent: StatsNavigationComponent,
-    private val statsNavigator: StatsNavigator,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), SearchViewModelInputs, SearchViewModelOutputs {
 
@@ -129,15 +128,15 @@ class SearchViewModel(
                 )
             }
             is SearchItem.Constructor -> {
-                statsNavigator.goToConstructorOverview(
-                    constructorId = item.constructorId,
-                    constructorName = item.name
+                statsNavigationComponent.constructorOverview(
+                    id = item.constructorId,
+                    name = item.name
                 )
             }
             is SearchItem.Driver -> {
-                statsNavigator.goToDriverOverview(
-                    driverId = item.driverId,
-                    driverName = item.name
+                statsNavigationComponent.driverOverview(
+                    id = item.driverId,
+                    name = item.name
                 )
             }
             is SearchItem.Race -> {

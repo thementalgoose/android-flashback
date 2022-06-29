@@ -31,7 +31,6 @@ internal class SearchViewModelTest: BaseTest() {
     private val mockConstructorsRepository: ConstructorRepository = mockk(relaxed = true)
     private val mockDriversRepository: DriverRepository = mockk(relaxed = true)
     private val mockOverviewRepository: OverviewRepository = mockk(relaxed = true)
-    private val mockStatsNavigator: StatsNavigator = mockk(relaxed = true)
     private val mockStatisticsNavigationComponent: StatsNavigationComponent = mockk(relaxed = true)
     private val mockAdsRepository: AdsRepository = mockk(relaxed = true)
 
@@ -45,7 +44,6 @@ internal class SearchViewModelTest: BaseTest() {
             mockOverviewRepository,
             mockAdsRepository,
             mockStatisticsNavigationComponent,
-            mockStatsNavigator,
             ioDispatcher = coroutineScope.testDispatcher
         )
     }
@@ -275,7 +273,7 @@ internal class SearchViewModelTest: BaseTest() {
         sut.inputs.clickItem(model)
 
         verify {
-            mockStatsNavigator.goToConstructorOverview(any(), any())
+            mockStatisticsNavigationComponent.constructorOverview(any(), any())
         }
     }
 
@@ -287,7 +285,7 @@ internal class SearchViewModelTest: BaseTest() {
         sut.inputs.clickItem(model)
 
         verify {
-            mockStatsNavigator.goToDriverOverview(any(), any())
+            mockStatisticsNavigationComponent.driverOverview(any(), any())
         }
     }
 

@@ -19,42 +19,8 @@ class StatsNavigatorImpl(
     private val activityProvider: ActivityProvider
 ): StatsNavigator {
 
-    val activity: AppCompatActivity?
+    private val activity: AppCompatActivity?
         get() = (activityProvider.activity as? AppCompatActivity)
-
-    override fun goToSearch() {
-        val activity = activityProvider.activity ?: return
-        val intent = SearchActivity.intent(activity)
-        activity.startActivity(intent)
-    }
-
-    override fun goToRace(
-        season: Int,
-        round: Int,
-        circuitId: String,
-        defaultToRace: Boolean,
-        country: String,
-        raceName: String,
-        trackName: String,
-        countryISO: String,
-        date: LocalDate
-    ) {
-        val activity = activity ?: return
-
-        val raceData = RaceData(
-            season = season,
-            round = round,
-            circuitId = circuitId,
-            defaultToRace = defaultToRace,
-            country = country,
-            raceName = raceName,
-            trackName = trackName,
-            countryISO = countryISO,
-            date = date
-        )
-        val intent = RaceActivity.intent(activity, raceData = raceData)
-        activity.startActivity(intent)
-    }
 
     override fun goToTyreOverview(season: Int) {
         val activity = activity ?: return
@@ -66,38 +32,5 @@ class StatsNavigatorImpl(
         val activity = activity ?: return
         val fragment = OnboardingNotificationBottomSheetFragment()
         fragment.show(activity.supportFragmentManager, "ONBOARDING")
-    }
-
-    override fun goToCircuitOverview(circuitId: String, circuitName: String) {
-        val activity = activity ?: return
-
-        val intent = CircuitActivity.intent(
-            context = activity,
-            circuitId = circuitId,
-            circuitName = circuitName
-        )
-        activity.startActivity(intent)
-    }
-
-    override fun goToDriverOverview(driverId: String, driverName: String) {
-        val activity = activity ?: return
-
-        val intent = DriverActivity.intent(
-            context = activity,
-            driverId = driverId,
-            driverName = driverName
-        )
-        activity.startActivity(intent)
-    }
-
-    override fun goToConstructorOverview(constructorId: String, constructorName: String) {
-        val activity = activity ?: return
-
-        val intent = ConstructorActivity.intent(
-            context = activity,
-            constructorId = constructorId,
-            constructorName = constructorName
-        )
-        activity.startActivity(intent)
     }
 }

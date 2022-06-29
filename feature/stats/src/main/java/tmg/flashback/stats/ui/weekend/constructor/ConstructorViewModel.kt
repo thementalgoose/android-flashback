@@ -10,8 +10,7 @@ import tmg.flashback.formula1.constants.Formula1
 import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.model.Race
 import tmg.flashback.statistics.repo.RaceRepository
-import tmg.flashback.stats.di.StatsNavigator
-import tmg.flashback.stats.ui.weekend.qualifying.QualifyingModel
+import tmg.flashback.stats.StatsNavigationComponent
 
 interface ConstructorViewModelInputs {
     fun load(season: Int, round: Int)
@@ -24,7 +23,7 @@ interface ConstructorViewModelOutputs {
 
 class ConstructorViewModel(
     private val raceRepository: RaceRepository,
-    private val statsNavigator: StatsNavigator,
+    private val statsNavigationComponent: StatsNavigationComponent,
     private val ioDispatcher: CoroutineDispatcher
 ): ViewModel(), ConstructorViewModelInputs, ConstructorViewModelOutputs {
 
@@ -67,9 +66,9 @@ class ConstructorViewModel(
     }
 
     override fun clickItem(model: ConstructorModel.Constructor) {
-        statsNavigator.goToConstructorOverview(
-            constructorId = model.constructor.id,
-            constructorName = model.constructor.name
+        statsNavigationComponent.constructorOverview(
+            id = model.constructor.id,
+            name = model.constructor.name
         )
     }
 
