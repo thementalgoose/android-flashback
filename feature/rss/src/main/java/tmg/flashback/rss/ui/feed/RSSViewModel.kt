@@ -116,7 +116,10 @@ internal class RSSViewModel(
     }
 
     override fun clickModel(model: RSSModel.RSS) {
-        webNavigationComponent.web(model.item.title, model.item.link)
+        webNavigationComponent.web(
+            url = model.item.link,
+            title = model.item.title
+        )
     }
 
     //endregion
