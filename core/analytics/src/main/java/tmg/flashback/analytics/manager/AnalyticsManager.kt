@@ -42,9 +42,9 @@ class AnalyticsManager(
         }
     }
 
-    fun viewScreen(screenName: String, clazz: Class<*>, params: Map<String, String>) {
+    fun viewScreen(screenName: String, params: Map<String, String> = emptyMap(), clazz: Class<*>? = null) {
         if (enabled) {
-            analyticsService.logViewScreen(screenName, clazz, params)
+            analyticsService.logViewScreen(screenName, params, clazz)
         }
     }
 }

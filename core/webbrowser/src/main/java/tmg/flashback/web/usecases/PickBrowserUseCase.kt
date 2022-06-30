@@ -6,13 +6,19 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.webkit.URLUtil
+import tmg.flashback.analytics.manager.AnalyticsManager
 import tmg.flashback.web.repository.WebBrowserRepository
 import tmg.flashback.web.ui.browser.WebActivity
 
 class PickBrowserUseCase(
-    private val webBrowserRepository: WebBrowserRepository
+    private val webBrowserRepository: WebBrowserRepository,
+    private val analyticsManager: AnalyticsManager
 ) {
     fun open(activity: Activity, url: String, title: String) {
+        analyticsManager.logEvent("Opening URL", mapOf(
+            "url" to url,
+            "title" to title
+        ))
         when {
             isMaps(url) && isLocationIntentAvailable(activity) -> {
                 activity.startActivity(openMaps(url))

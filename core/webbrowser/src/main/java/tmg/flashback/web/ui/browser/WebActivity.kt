@@ -13,6 +13,12 @@ internal class WebActivity: BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        logScreenViewed("In-app Web Browser", mapOf(
+            "url" to (intent.extras?.getString(keyUrl) ?: ""),
+            "title" to (intent.extras?.getString(keyTitle) ?: "")
+        ))
+
         val title: String = intent.extras!!.getString(keyTitle)!!
         val url: String = intent.extras!!.getString(keyUrl)!!
 

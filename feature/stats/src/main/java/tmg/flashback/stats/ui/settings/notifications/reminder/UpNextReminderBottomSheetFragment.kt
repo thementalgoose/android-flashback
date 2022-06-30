@@ -18,6 +18,11 @@ class UpNextReminderBottomSheetFragment: BaseBottomSheetFragment<FragmentBottomS
 
     private lateinit var adapter: BottomSheetAdapter
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        logScreenViewed("Up Next Reminders")
+    }
+
     override fun inflateView(inflater: LayoutInflater) =
         FragmentBottomSheetNotificationsReminderBinding.inflate(inflater)
 

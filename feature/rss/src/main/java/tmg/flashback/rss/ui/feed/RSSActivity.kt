@@ -11,6 +11,9 @@ class RSSActivity: BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        logScreenViewed("RSS")
+
         setContent {
             AppTheme {
                 RSSScreenVM(
