@@ -4,7 +4,6 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import org.threeten.bp.LocalDate
 import tmg.flashback.formula1.model.Constructor
-import tmg.utilities.models.StringHolder
 
 sealed class DriverOverviewModel(
     val key: String
@@ -17,6 +16,7 @@ sealed class DriverOverviewModel(
         val driverBirthday: LocalDate,
         val driverWikiUrl: String,
         val driverNationalityISO: String,
+        val driverNationality: String,
         val constructors: List<Constructor>
     ): DriverOverviewModel(
         key = driverId
@@ -73,10 +73,10 @@ enum class PipeType {
     END;
 
     val showTop: Boolean
-        get() = this == START_END || this == END || this == SINGLE
+        get() = this == START_END || this == END
 
     val showBottom: Boolean
-        get() = this == START_END || this == START || this == SINGLE
+        get() = this == START_END || this == START
 
     val showMiddle: Boolean
         get() = this == START || this == START_END || this == END || this == SINGLE

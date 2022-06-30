@@ -19,6 +19,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import org.koin.androidx.compose.viewModel
 import tmg.flashback.formula1.enums.TrackLayout
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
@@ -40,14 +42,21 @@ fun SearchScreenVM(
 
     val category = viewModel.outputs.selectedCategory.observeAsState()
     val list = viewModel.outputs.results.observeAsState(emptyList())
-    SearchScreen(
-        actionUpClicked = actionUpClicked,
-        searchInputUpdated = viewModel.inputs::inputSearch,
-        searchCategory = category.value,
-        searchCategoryUpdated = viewModel.inputs::inputCategory,
-        itemClicked = viewModel.inputs::clickItem,
-        list = list.value
-    )
+
+    val isLoading = viewModel.outputs.isLoading.observeAsState(false)
+    SwipeRefresh(
+        state = rememberSwipeRefreshState(isRefreshing = isLoading.value),
+        onRefresh = viewModel.inputs::refresh
+    ) {
+        SearchScreen(
+            actionUpClicked = actionUpClicked,
+            searchInputUpdated = viewModel.inputs::inputSearch,
+            searchCategory = category.value,
+            searchCategoryUpdated = viewModel.inputs::inputCategory,
+            itemClicked = viewModel.inputs::clickItem,
+            list = list.value
+        )
+    }
 }
 
 @Composable
@@ -117,8 +126,11 @@ fun SearchScreen(
             .fillMaxWidth()
             .imePadding()
         ) {
-            Row(modifier = Modifier.horizontalScroll(rememberScrollState())) {
-                Spacer(Modifier.width(16.dp))
+            Row(modifier = Modifier
+                .padding(vertical = AppTheme.dimensions.paddingSmall)
+                .horizontalScroll(rememberScrollState())
+            ) {
+                Spacer(Modifier.width(AppTheme.dimensions.paddingMedium))
                 SearchCategory.values().forEach {
                     ButtonTertiary(
                         text = stringResource(it.label),
@@ -127,9 +139,9 @@ fun SearchScreen(
                         },
                         enabled = it == searchCategory
                     )
-                    Spacer(Modifier.width(8.dp))
+                    Spacer(Modifier.width(AppTheme.dimensions.paddingMedium))
                 }
-                Spacer(Modifier.width(16.dp))
+                Spacer(Modifier.width(AppTheme.dimensions.paddingMedium))
             }
             val text = remember { mutableStateOf(TextFieldValue("")) }
             InputPrimary(
