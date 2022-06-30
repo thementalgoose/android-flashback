@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/java/tmg/flashback/ui/dashboard/menu/MenuScreen.kt" value="0.6694352159468439" />
         <entry key="app/src/main/res/layout/activity_dashboard.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_settings.xml" value="0.1" />
         <entry key="feature/releasenotes/src/main/java/tmg/flashback/releasenotes/ui/releasenotes/ReleaseScreen.kt" value="0.13024850042844902" />

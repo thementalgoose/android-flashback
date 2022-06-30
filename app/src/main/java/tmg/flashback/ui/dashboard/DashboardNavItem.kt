@@ -9,19 +9,23 @@ enum class DashboardNavItem(
     @StringRes
     val label: Int,
     @DrawableRes
-    val icon: Int
+    val icon: Int,
+    val analyticsName: String
 ) {
     CALENDAR(
         label = R.string.nav_calendar,
-        icon = R.drawable.nav_calendar
+        icon = R.drawable.nav_calendar,
+        analyticsName = "Calendar"
     ),
     DRIVERS(
         label = R.string.nav_drivers,
-        icon = R.drawable.nav_driver
+        icon = R.drawable.nav_driver,
+        analyticsName = "Drivers"
     ),
     CONSTRUCTORS(
         label = R.string.nav_constructors,
-        icon = R.drawable.nav_constructor
+        icon = R.drawable.nav_constructor,
+        analyticsName = "Constructor"
     );
 
     companion object
