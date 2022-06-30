@@ -40,6 +40,8 @@ class HomeActivity: BaseActivity(), SplashScreen.KeepOnScreenCondition {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        logScreenViewed("Dashboard")
+
         setTheme(themeRes)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             splashScreen.setSplashScreenTheme(themeRes)

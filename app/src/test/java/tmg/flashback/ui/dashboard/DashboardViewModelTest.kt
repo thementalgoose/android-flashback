@@ -5,6 +5,8 @@ import io.mockk.*
 import kotlinx.coroutines.test.advanceUntilIdle
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import tmg.flashback.analytics.di.analyticsModule
+import tmg.flashback.analytics.manager.AnalyticsManager
 import tmg.flashback.configuration.usecases.ApplyConfigUseCase
 import tmg.flashback.configuration.usecases.FetchConfigUseCase
 import tmg.flashback.releasenotes.usecases.NewReleaseNotesUseCase
@@ -28,6 +30,7 @@ internal class DashboardViewModelTest: BaseTest() {
     private val mockOverviewRepository: OverviewRepository = mockk(relaxed = true)
     private val mockApplyConfigUseCase: ApplyConfigUseCase = mockk(relaxed = true)
     private val mockFetchConfigUseCase: FetchConfigUseCase = mockk(relaxed = true)
+    private val mockAnalyticsManager: AnalyticsManager = mockk(relaxed = true)
     private val mockNewReleaseNotesUseCase: NewReleaseNotesUseCase = mockk(relaxed = true)
 
     @BeforeEach
@@ -47,6 +50,7 @@ internal class DashboardViewModelTest: BaseTest() {
             mockRaceRepository,
             mockOverviewRepository,
             mockNewReleaseNotesUseCase,
+            mockAnalyticsManager,
             ioDispatcher = coroutineScope.testDispatcher
         )
     }
@@ -76,6 +80,10 @@ internal class DashboardViewModelTest: BaseTest() {
             ))
         }
         verify {
+            mockAnalyticsManager.viewScreen("Dashboard", mapOf(
+                "season" to "2019",
+                "tab" to "Calendar"
+            ))
             mockDefaultSeasonUseCase.defaultSeason
         }
     }
@@ -88,6 +96,10 @@ internal class DashboardViewModelTest: BaseTest() {
         underTest.outputs.currentTab.test {
             assertValue(DashboardScreenState(DashboardNavItem.DRIVERS, 2019))
         }
+        mockAnalyticsManager.viewScreen("Dashboard", mapOf(
+            "season" to "2019",
+            "tab" to "Drivers"
+        ))
     }
 
     @Test
@@ -111,6 +123,12 @@ internal class DashboardViewModelTest: BaseTest() {
         underTest.inputs.clickSeason(2018)
         underTest.outputs.currentTab.test {
             assertValue(DashboardScreenState(DashboardNavItem.CALENDAR, 2018))
+        }
+        verify {
+            mockAnalyticsManager.viewScreen("Dashboard", mapOf(
+                "season" to "2018",
+                "tab" to "Calendar"
+            ))
         }
     }
 

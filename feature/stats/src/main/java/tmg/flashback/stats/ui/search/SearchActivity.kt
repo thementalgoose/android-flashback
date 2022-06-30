@@ -11,6 +11,9 @@ import tmg.flashback.ui.base.BaseActivity
 class SearchActivity: BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        logScreenViewed("Search")
+
         WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
             AppTheme {

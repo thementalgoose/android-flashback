@@ -42,9 +42,9 @@ class AppApplicationNavigationComponent(
     }
 
     override fun aboutAppIntent(context: Context): Intent {
-        analyticsManager.viewScreen("open_about_this_app", AboutThisAppActivity::class.java, mapOf(
+        analyticsManager.viewScreen("About This App", mapOf(
             "version" to buildConfigManager.versionName
-        ))
+        ), AboutThisAppActivity::class.java)
         return AboutThisAppActivity.intent(context, AboutThisAppConfig.configuration(context,
             appVersion = buildConfigManager.versionName,
             deviceUdid = deviceRepository.deviceUdid,

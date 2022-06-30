@@ -12,7 +12,7 @@ interface AnalyticsService {
 
     fun logEvent(key: String, bundle: Bundle? = null)
 
-    fun logViewScreen(screenName: String, clazz: Class<*>, mapOfParams: Map<String, String>)
+    fun logViewScreen(screenName: String, mapOfParams: Map<String, String>, clazz: Class<*>? = null)
 
     fun setUserId(userId: String)
 

@@ -9,6 +9,7 @@ class SettingsAdvertActivity: BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        logScreenViewed("Settings Ads")
         setContent {
             AppTheme {
                 SettingsAdvertScreenVM(

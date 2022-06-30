@@ -32,7 +32,7 @@ abstract class BaseBottomSheetFragment<T: ViewBinding>: BottomSheetDialogFragmen
      * Logging screen analytics
      */
     fun logScreenViewed(name: String, params: Map<String, String> = mapOf()) {
-        analyticsManager.viewScreen(name, this::class.java, params)
+        analyticsManager.viewScreen(name, params, this::class.java)
     }
 
     val behavior: BottomSheetBehavior<*>
