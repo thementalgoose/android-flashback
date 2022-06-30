@@ -24,15 +24,17 @@ internal class FirebaseAnalyticsService(
 
     override fun logViewScreen(
         screenName: String,
-        clazz: Class<*>,
-        mapOfParams: Map<String, String>
+        mapOfParams: Map<String, String>,
+        clazz: Class<*>?
     ) {
         if (BuildConfig.DEBUG) {
             Log.i("Analytics", "View screen $screenName -> $mapOfParams")
         }
         val bundle = Bundle().apply {
             putString(FirebaseAnalytics.Param.SCREEN_NAME, screenName)
-            putString(FirebaseAnalytics.Param.SCREEN_CLASS, clazz.simpleName)
+            if (clazz != null) {
+                putString(FirebaseAnalytics.Param.SCREEN_CLASS, clazz.simpleName)
+            }
             for (x in mapOfParams) {
                 putString(x.key, x.value)
             }

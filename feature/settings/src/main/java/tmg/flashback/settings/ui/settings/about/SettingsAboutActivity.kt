@@ -9,6 +9,9 @@ class SettingsAboutActivity: BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        logScreenViewed("Settings About")
+
         setContent {
             AppTheme {
                 SettingsAboutScreenVM(

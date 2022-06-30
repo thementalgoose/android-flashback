@@ -11,6 +11,7 @@ class SettingsWebBrowserActivity: BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        logScreenViewed("Settings Web Browser")
         setContent {
             AppTheme {
                 SettingsWebBrowserScreenVM(

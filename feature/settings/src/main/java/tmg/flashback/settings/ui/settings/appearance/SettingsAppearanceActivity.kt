@@ -8,6 +8,9 @@ import tmg.flashback.ui.base.BaseActivity
 class SettingsAppearanceActivity: BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        logScreenViewed("Settings Appearance")
+
         setContent {
             AppTheme {
                 SettingsAppearanceScreenVM(

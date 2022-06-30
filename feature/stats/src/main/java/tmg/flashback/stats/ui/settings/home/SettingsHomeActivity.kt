@@ -9,6 +9,9 @@ class SettingsHomeActivity: BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        logScreenViewed("Settings Home")
+
         setContent {
             AppTheme {
                 SettingsHomeScreenVM(

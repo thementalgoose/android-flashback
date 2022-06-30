@@ -4,6 +4,10 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import tmg.flashback.stats.analytics.AnalyticsConstants
+import tmg.flashback.stats.analytics.AnalyticsConstants.analyticsDriverId
+import tmg.flashback.stats.analytics.AnalyticsConstants.analyticsSeason
+import tmg.flashback.stats.ui.drivers.overview.DriverOverviewActivity
 import tmg.flashback.style.AppTheme
 import tmg.flashback.ui.base.BaseActivity
 
@@ -11,6 +15,12 @@ class DriverSeasonActivity: BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
+        logScreenViewed("Driver Season", mapOf(
+            analyticsDriverId to (intent.extras?.getString(keyDriverId) ?: ""),
+            analyticsSeason to (intent.extras?.getInt(keySeason)?.toString() ?: "")
+        ))
 
         val driverId: String = intent.extras?.getString(keyDriverId)!!
         val driverName: String = intent.extras?.getString(keyDriverName)!!
