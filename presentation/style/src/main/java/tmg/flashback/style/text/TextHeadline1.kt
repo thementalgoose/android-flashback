@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
+import tmg.flashback.style.annotations.PreviewTheme
 
 @Composable
 fun TextHeadline1(
@@ -26,7 +27,7 @@ fun TextHeadline1(
     )
 }
 
-@Preview
+@PreviewTheme
 @Composable
 private fun PreviewLight() {
     AppThemePreview(isLight = true) {
@@ -36,34 +37,13 @@ private fun PreviewLight() {
     }
 }
 
-@Preview
+@PreviewTheme
 @Composable
-private fun PreviewDark() {
-    AppThemePreview(isLight = false) {
-        TextHeadline1(
-            text = "Headline 1"
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewLightBrand() {
-    AppThemePreview(isLight = true) {
+private fun PreviewBrand() {
+    AppThemePreview {
         TextHeadline1(
             text = "Headline 1 Brand",
             brand = true
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewDarkBrand() {
-    AppThemePreview(isLight = false) {
-        TextHeadline1(
-            text = "Headline 1 Brand",
-            brand = false
         )
     }
 }

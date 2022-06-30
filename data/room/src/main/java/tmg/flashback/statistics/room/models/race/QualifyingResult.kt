@@ -23,8 +23,6 @@ data class QualifyingResult(
     val q2: String?,
     @ColumnInfo(name = "q3")
     val q3: String?,
-    @Embedded
-    val qSprint: QualifyingSprintResult?,
     @PrimaryKey
     @ColumnInfo(name = "id")
     val id: String = "${driverId}_${season}_${round}",

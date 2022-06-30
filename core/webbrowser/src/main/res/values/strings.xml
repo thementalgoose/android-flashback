@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="settings_web_browser_title">Web Browser</string>
+
+    <string name="settings_web_browser_in_app_title">Open in external browser</string>
+    <string name="settings_web_browser_in_app_description">Open any links or webpages in your device browser instead of the in-app one</string>
+
+    <string name="settings_web_browser_javascript_title">Enable Javascript?</string>
+    <string name="settings_web_browser_javascript_description">Enable javascript in the in-app browser. This can help webpages load quicker, but may affect page functionality</string>
+
+    <string name="choose_browser">Open in browser</string>
+    <string name="choose_share">Share with</string>
+</resources>

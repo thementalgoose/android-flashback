@@ -1,5 +1,7 @@
 package tmg.flashback.formula1.model
 
+import androidx.compose.ui.graphics.Color
+
 /**
  * Data class for a specific constructor
  */
@@ -12,4 +14,7 @@ data class Constructor(
     val color: Int
 ) {
     companion object
+
+    val colour: Color
+        get() = Color(color)
 }

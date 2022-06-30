@@ -23,7 +23,10 @@ import tmg.flashback.statistics.controllers.ScheduleController
 import tmg.flashback.statistics.extensions.updateAllWidgets
 import tmg.flashback.statistics.repository.models.NotificationChannel
 import tmg.flashback.statistics.workmanager.WorkerProvider
+import tmg.flashback.style.AppTheme
+import tmg.flashback.style.SupportedTheme
 import tmg.flashback.ui.model.NightMode
+import tmg.flashback.ui.model.Theme
 import tmg.flashback.ui.repository.ThemeRepository
 import tmg.utilities.extensions.isInDayMode
 
@@ -54,6 +57,10 @@ class FlashbackStartup(
         AndroidThreeTen.init(application)
 
         // Theming
+        AppTheme.appTheme = when (themeRepository.theme) {
+            Theme.DEFAULT -> SupportedTheme.Default
+            Theme.MATERIAL_YOU -> SupportedTheme.MaterialYou
+        }
         when (themeRepository.nightMode) {
             NightMode.DEFAULT -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
             NightMode.DAY -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
@@ -104,11 +111,19 @@ class FlashbackStartup(
             "notify_qualifying",
             R.string.notification_channel_qualifying_notify
         )
+        systemNotificationManager.createChannel(
+            "notify_sprint",
+            R.string.notification_channel_sprint_notify
+        )
         val applicationScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
         applicationScope.launch(Dispatchers.IO) {
             when (scheduleController.notificationQualifyingNotify) {
                 true -> remoteNotificationSubscribeUseCase.subscribe("notify_qualifying")
                 false -> remoteNotificationUnsubscribeUseCase.unsubscribe("notify_qualifying")
+            }
+            when (scheduleController.notificationSprintNotify) {
+                true -> remoteNotificationSubscribeUseCase.subscribe("notify_sprint")
+                false -> remoteNotificationUnsubscribeUseCase.unsubscribe("notify_sprint")
             }
             when (scheduleController.notificationRaceNotify) {
                 true -> remoteNotificationSubscribeUseCase.subscribe("notify_race")

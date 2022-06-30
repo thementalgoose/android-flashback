@@ -1,15 +1,20 @@
 package tmg.flashback.style
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.material.Colors
+import androidx.compose.material3.ColorScheme
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
+import androidx.core.content.ContextCompat
 
 internal val LocalColors = staticCompositionLocalOf { lightColours }
 
-class AppColors(
+data class AppColors(
     // Theme
     val primary: Color,
     val primaryDark: Color,
+    val primaryLight: Color,
     val accent: Color,
     val error: Color,
     // Content
@@ -39,6 +44,7 @@ class AppColors(
     val f1ResultsFull: Color,
     val f1ResultsNeutral: Color = contentSecondary,
     val f1ResultsPartial: Color,
+    val f1ResultsUpcoming: Color = primary,
     val f1FastestSector: Color,
     val f1FavouriteSeason: Color,
     val f1Championship: Color,
@@ -50,21 +56,23 @@ class AppColors(
     val isLight: Boolean
 ) {
 
-    val appColors: Colors = Colors(
-        primary = primary,
-        primaryVariant = primary,
-        secondary = accent,
-        secondaryVariant = accent,
-        background = backgroundPrimary,
-        surface = backgroundSecondary,
-        error = Color(0xFFCC0000),
-        onPrimary = Color(0xFFF8F8F8),
-        onSecondary = Color(0xFFF8F8F8),
-        onBackground = contentPrimary,
-        onSurface = contentSecondary,
-        onError = Color(0xFFF8F8F8),
-        isLight = isLight
-    )
+    val appColors: Colors by lazy {
+        Colors(
+            primary = primary,
+            primaryVariant = primary,
+            secondary = accent,
+            secondaryVariant = accent,
+            background = backgroundContainer,
+            surface = backgroundSecondary,
+            error = Color(0xFFCC0000),
+            onPrimary = Color(0xFFF8F8F8),
+            onSecondary = Color(0xFFF8F8F8),
+            onBackground = contentPrimary,
+            onSurface = contentSecondary,
+            onError = Color(0xFFF8F8F8),
+            isLight = isLight
+        )
+    }
 }
 
 internal val textDark: Color = Color(0xFF181818)
@@ -73,6 +81,7 @@ internal val textLight: Color = Color(0xFFF8F8F8)
 val lightColours = AppColors(
     primary = Color(0xFF0274D1),
     primaryDark = Color(0xFF0274D1),
+    primaryLight = Color(0xFFCBDDEE),
     accent = Color(0xFF00E2E4),
     error = Color(0xFFF44336),
     contentPrimary = Color(0xFF181818),
@@ -112,6 +121,7 @@ val lightColours = AppColors(
 val darkColours = AppColors(
     primary = Color(0xFF00E2E4),
     primaryDark = Color(0xFF00E2E4),
+    primaryLight = Color(0xFF203F40),
     accent = Color(0xFF0274D1),
     error = Color(0xFFF44336),
     contentPrimary = Color(0xFFF8F8F8),
@@ -146,4 +156,21 @@ val darkColours = AppColors(
     rssRemove = Color(0xFFF44336),
 //    rssNewsBar =
     isLight = false
+)
+
+@RequiresApi(Build.VERSION_CODES.S)
+fun AppColors.dynamic(colorScheme: ColorScheme) = copy(
+    primary = colorScheme.primary,
+    primaryDark = colorScheme.primary,
+    accent = colorScheme.secondary,
+
+    backgroundContainer = colorScheme.background,
+    backgroundPrimary = colorScheme.background,
+    backgroundSecondary = colorScheme.primaryContainer,
+    backgroundTertiary = colorScheme.secondaryContainer,
+    backgroundPrimaryInverse = colorScheme.inverseSurface,
+    backgroundSecondaryInverse = colorScheme.inversePrimary,
+    backgroundTertiaryInverse = colorScheme.inversePrimary,
+    backgroundNav = colorScheme.primaryContainer,
+    backgroundSplash = colorScheme.primary
 )

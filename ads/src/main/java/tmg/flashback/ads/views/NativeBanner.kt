@@ -3,6 +3,7 @@ package tmg.flashback.ads.views
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.lifecycle.findViewTreeLifecycleOwner
@@ -22,8 +23,8 @@ class NativeBanner: FrameLayout, KoinComponent {
 
     private var binding: AdmobNativeBannerBinding? = null
 
-    private var alignIcon: Boolean = true
-    private var adIndex: Int = 0
+    var adIndex: Int = 0
+    var offsetCard: Boolean = true
 
     constructor(context: Context) : super(context) {
         initView(null, null)
@@ -39,23 +40,12 @@ class NativeBanner: FrameLayout, KoinComponent {
         initView(attrs, defStyleAttr)
     }
 
-    constructor(
-        context: Context,
-        attrs: AttributeSet?,
-        defStyleAttr: Int,
-        defStyleRes: Int
-    ) : super(context, attrs, defStyleAttr, defStyleRes) {
-        initView(attrs, defStyleAttr)
-    }
-
-
     private fun initView(attributeSet: AttributeSet?, defStyleAttr: Int? = -1) {
 
         context.theme
             .obtainStyledAttributes(attributeSet, R.styleable.NativeBanner, defStyleAttr ?: -1, 0)
             .apply {
                 try {
-                    alignIcon = getBoolean(R.styleable.NativeBanner_alignIcon, alignIcon)
                     adIndex = getInt(R.styleable.NativeBanner_adIndex, adIndex)
                 } finally {
                     recycle()
@@ -66,9 +56,12 @@ class NativeBanner: FrameLayout, KoinComponent {
             val layoutInflater = LayoutInflater.from(context)
             binding = AdmobNativeBannerBinding.inflate(layoutInflater, this, false)
             binding?.let { binding ->
-                addView(binding.root)
-                binding.skeleton.alpha = 0.1f
-                binding.skeleton.showSkeleton()
+                addView(binding.root, LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                ))
+//                binding.skeleton.alpha = 0.1f
+//                binding.skeleton.showSkeleton()
                 binding.adView.mediaView = binding.adMedia
                 binding.adView.headlineView = binding.adHeadline
 
@@ -76,8 +69,7 @@ class NativeBanner: FrameLayout, KoinComponent {
                 binding.adView.bodyView = binding.adBody
                 binding.adMedia.setImageScaleType(ImageView.ScaleType.CENTER_CROP)
 
-                if (!alignIcon) {
-                    binding.spacer.gone()
+                if (!offsetCard) {
                     binding.adSpacer.gone()
                 }
             }
@@ -93,8 +85,8 @@ class NativeBanner: FrameLayout, KoinComponent {
                 val ad = getAdUseCase.getAd(context, adIndex)
                 if (ad != null) {
                     binding?.let { binding ->
-                        binding.skeleton.alpha = 1.0f
-                        binding.skeleton.showOriginal()
+//                        binding.skeleton.alpha = 1.0f
+//                        binding.skeleton.showOriginal()
                         binding.adView.setNativeAd(ad)
                         binding.adHeadline.text = ad.headline
                         binding.adBody.text = ad.body

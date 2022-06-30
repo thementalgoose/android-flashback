@@ -1,0 +1,38 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="tmg.flashback.stats">
+
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+
+    <application>
+
+        <activity android:name=".ui.weekend.WeekendActivity"
+            android:exported="false" />
+
+        <activity android:name=".ui.search.SearchActivity"
+            android:windowSoftInputMode="adjustResize"
+            android:exported="false" />
+
+        <activity android:name=".ui.drivers.overview.DriverOverviewActivity"
+            android:exported="false" />
+
+        <activity android:name=".ui.drivers.season.DriverSeasonActivity"
+            android:exported="false" />
+
+        <activity android:name=".ui.constructors.overview.ConstructorOverviewActivity"
+            android:exported="false" />
+
+        <activity android:name=".ui.constructors.season.ConstructorSeasonActivity"
+            android:exported="false" />
+
+        <activity android:name=".ui.circuits.CircuitActivity"
+            android:exported="false" />
+
+        <activity android:name=".ui.settings.home.SettingsHomeActivity"
+            android:exported="false" />
+
+        <activity android:name=".ui.settings.notifications.SettingsNotificationsActivity"
+            android:exported="false" />
+
+    </application>
+</manifest>

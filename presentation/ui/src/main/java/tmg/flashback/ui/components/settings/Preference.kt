@@ -8,6 +8,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
+import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 
@@ -24,7 +25,7 @@ internal fun Preference(
             .fillMaxWidth()
             .clickable(onClick = preferenceClicked)
             .padding(
-                AppTheme.dimensions.paddingSmall, // Experimental label
+                start = AppTheme.dimensions.paddingSmall, // Experimental label
                 end = AppTheme.dimensions.paddingMedium,
                 top = AppTheme.dimensions.paddingNSmall,
                 bottom = AppTheme.dimensions.paddingNSmall
@@ -32,12 +33,16 @@ internal fun Preference(
     ) {
         TextBody1(
             text = title,
-            modifier = Modifier.padding(start = AppTheme.dimensions.paddingSmall)
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = AppTheme.dimensions.paddingSmall)
         )
         Spacer(modifier = Modifier.height(4.dp))
         TextBody2(
             text = subtitle,
-            modifier = Modifier.padding(start = AppTheme.dimensions.paddingSmall)
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = AppTheme.dimensions.paddingSmall)
         )
         if (beta) {
             Spacer(modifier = Modifier.height(4.dp))
@@ -46,26 +51,14 @@ internal fun Preference(
     }
 }
 
-@Preview
+@PreviewTheme
 @Composable
-private fun PreviewLight() {
-    AppThemePreview(isLight = true) {
+private fun Preview() {
+    AppThemePreview {
         Preference(
             title = "App theme",
             subtitle = "Pick your app colour scheme",
             beta = true,
-            preferenceClicked = { }
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewDark() {
-    AppThemePreview(isLight = false) {
-        Preference(
-            title = "App theme",
-            subtitle = "Pick your app colour scheme",
             preferenceClicked = { }
         )
     }

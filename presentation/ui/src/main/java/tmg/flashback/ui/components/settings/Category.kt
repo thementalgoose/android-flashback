@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
+import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody1
 
 @Composable
@@ -18,17 +19,21 @@ internal fun Category(
     modifier: Modifier = Modifier,
     beta: Boolean = false,
 ) {
-    Row(modifier = Modifier.padding(top = AppTheme.dimensions.paddingSmall)) {
+    Row(modifier = Modifier
+        .padding(
+            top = AppTheme.dimensions.paddingSmall,
+            start = AppTheme.dimensions.paddingMedium,
+            end = AppTheme.dimensions.paddingMedium,
+        )
+    ) {
         TextBody1(
             text = text,
             bold = true,
             textColor = AppTheme.colors.primary,
             modifier = modifier
                 .weight(1f)
-                .align(Alignment.CenterVertically)
+                .align(CenterVertically)
                 .padding(
-                    start = AppTheme.dimensions.paddingMedium,
-                    end = AppTheme.dimensions.paddingMedium,
                     top = AppTheme.dimensions.paddingXSmall,
                     bottom = AppTheme.dimensions.paddingXSmall
                 )
@@ -41,25 +46,13 @@ internal fun Category(
     }
 }
 
-@Preview
+@PreviewTheme
 @Composable
-private fun PreviewLight() {
-    AppThemePreview(isLight = true) {
+private fun Preview() {
+    AppThemePreview {
         Category(
             text = "Appearance",
             beta = true
         )
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewDark() {
-    AppThemePreview(isLight = false) {
-        Column {
-            Category(
-                text = "Appearance"
-            )
-        }
     }
 }

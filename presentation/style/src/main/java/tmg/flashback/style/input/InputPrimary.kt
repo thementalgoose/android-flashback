@@ -23,6 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
+import tmg.flashback.style.annotations.PreviewTheme
 
 @Composable
 fun InputPrimary(
@@ -31,6 +32,7 @@ fun InputPrimary(
     modifier: Modifier = Modifier,
     keyboardType: KeyboardType = KeyboardType.Text,
     imeAction: ImeAction = ImeAction.Default,
+    onValueChange: (TextFieldValue) -> Unit = { text.value = it },
     maxLines: Int = 1,
 ) {
     TextField(
@@ -46,7 +48,7 @@ fun InputPrimary(
             disabledIndicatorColor = Color.Transparent
         ),
         value = text.value,
-        onValueChange = { text.value = it },
+        onValueChange = onValueChange,
         maxLines = maxLines,
         placeholder = {
             Text(placeholder)
@@ -59,10 +61,10 @@ fun InputPrimary(
     )
 }
 
-@Preview
+@PreviewTheme
 @Composable
-private fun PreviewLight() {
-    AppThemePreview(isLight = true) {
+private fun Preview() {
+    AppThemePreview {
         Box(
             modifier = Modifier
                 .padding(32.dp)
@@ -87,24 +89,6 @@ private fun PreviewEmpty() {
                 .background(Color.White)
         ) {
             val textState = remember { mutableStateOf(TextFieldValue("")) }
-            InputPrimary(
-                text = textState,
-                placeholder = "https://flashback.pages.dev"
-            )
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewDark() {
-    AppThemePreview(isLight = false) {
-        Box(
-            modifier = Modifier
-                .padding(32.dp)
-                .background(Color.Black)
-        ) {
-            val textState = remember { mutableStateOf(TextFieldValue("Input Field")) }
             InputPrimary(
                 text = textState,
                 placeholder = "https://flashback.pages.dev"

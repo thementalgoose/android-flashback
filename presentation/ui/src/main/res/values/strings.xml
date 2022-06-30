@@ -23,4 +23,7 @@
     <string name="settings_experimental">Experimental</string>
     <string name="settings_experimental_description">This feature is in beta, and as such may not be working correctly.</string>
 
+    <string name="network_error_network">A network error occurred. Please make sure you are connected to the internet and try again</string>
+    <string name="network_error_internal">A unknown error occurred</string>
+
 </resources>
