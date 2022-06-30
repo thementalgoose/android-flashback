@@ -2,64 +2,42 @@ package tmg.flashback.ui.sync
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.compose.setContent
+import androidx.compose.material.Scaffold
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.core.content.ContextCompat
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import tmg.flashback.R
-import tmg.flashback.common.ui.forceupgrade.ForceUpgradeActivity
-import tmg.flashback.databinding.ActivitySyncBinding
+import tmg.flashback.forceupgrade.ForceUpgradeNavigationComponent
+import tmg.flashback.style.AppTheme
 import tmg.flashback.ui.base.BaseActivity
-import tmg.flashback.ui.dashboard.HomeActivity
-import tmg.utilities.extensions.observe
+import tmg.flashback.ui.HomeActivity
 import tmg.utilities.extensions.observeEvent
 import tmg.utilities.extensions.setStatusBarColor
-import tmg.utilities.extensions.views.gone
-import tmg.utilities.extensions.views.invisible
-import tmg.utilities.extensions.views.visible
 
 class SyncActivity: BaseActivity() {
 
     private val viewModel: SyncViewModel by viewModel()
-
-    private lateinit var binding: ActivitySyncBinding
+    private val forceUpgradeNavigationComponent: ForceUpgradeNavigationComponent by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivitySyncBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContent {
+            AppTheme {
+                Scaffold(content = {
+                    val showRetry = viewModel.outputs.showRetry.observeAsState(false)
+
+                    SyncScreen(
+                        showLoading = !showRetry.value,
+                        tryAgainClicked = viewModel.inputs::startLoading
+                    )
+                })
+            }
+        }
 
         setStatusBarColor(ContextCompat.getColor(this, R.color.splash_screen))
-
-        binding.tryAgain.setOnClickListener {
-            viewModel.inputs.startLoading()
-        }
-
-        observe(viewModel.outputs.loadingState) {
-            when (it) {
-                SyncState.LOADING -> {
-                    binding.progress.visible()
-                    binding.tryAgain.invisible()
-                }
-                SyncState.DONE -> binding.progress.visible()
-                SyncState.FAILED -> {
-                    binding.progress.invisible()
-                    binding.tryAgain.visible()
-                }
-            }
-        }
-
-        observe(viewModel.outputs.showRetry) {
-            when (it) {
-                true -> {
-                    binding.failedToSync.visible()
-                    binding.tryAgain.visible()
-                }
-                false -> {
-                    binding.failedToSync.gone()
-                    binding.tryAgain.invisible()
-                }
-            }
-        }
 
         observeEvent(viewModel.outputs.navigate) {
             when (it) {
@@ -68,7 +46,7 @@ class SyncActivity: BaseActivity() {
                     finish()
                 }
                 SyncNavTarget.FORCE_UPGRADE -> {
-                    startActivity(Intent(this@SyncActivity, ForceUpgradeActivity::class.java))
+                    forceUpgradeNavigationComponent.forceUpgrade()
                     finish()
                 }
             }

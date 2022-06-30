@@ -7,16 +7,18 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import tmg.flashback.common.controllers.ForceUpgradeController
-import tmg.flashback.configuration.controllers.ConfigController
+import tmg.flashback.configuration.repository.ConfigRepository
+import tmg.flashback.configuration.usecases.FetchConfigUseCase
+import tmg.flashback.configuration.usecases.ResetConfigUseCase
+import tmg.flashback.forceupgrade.repository.ForceUpgradeRepository
 import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.statistics.controllers.ScheduleController
-import tmg.flashback.statistics.controllers.SearchController
 import tmg.flashback.statistics.repo.CircuitRepository
 import tmg.flashback.statistics.repo.ConstructorRepository
 import tmg.flashback.statistics.repo.DriverRepository
 import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.statistics.repo.repository.CacheRepository
+import tmg.flashback.statistics.usecases.SearchAppShortcutUseCase
 import tmg.flashback.ui.sync.SyncState.*
 import tmg.utilities.lifecycle.DataEvent
 
@@ -46,11 +48,13 @@ class SyncViewModel(
     private val constructorRepository: ConstructorRepository,
     private val driverRepository: DriverRepository,
     private val overviewRepository: OverviewRepository,
-    private val configurationController: ConfigController,
-    private val forceUpgradeController: ForceUpgradeController,
+    private val configRepository: ConfigRepository,
+    private val resetConfigUseCase: ResetConfigUseCase,
+    private val fetchConfigUseCase: FetchConfigUseCase,
+    private val forceUpgradeRepository: ForceUpgradeRepository,
     private val cacheRepository: CacheRepository,
     private val scheduleController: ScheduleController,
-    private val searchController: SearchController,
+    private val searchAppShortcutUseCase: SearchAppShortcutUseCase,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), SyncViewModelInputs, SyncViewModelOutputs {
 
@@ -96,7 +100,7 @@ class SyncViewModel(
         .filter { it == DONE }
         .map {
             cacheRepository.initialSync = true
-            if (forceUpgradeController.shouldForceUpgrade) {
+            if (forceUpgradeRepository.shouldForceUpgrade) {
                 SyncNavTarget.FORCE_UPGRADE
             } else {
                 SyncNavTarget.DASHBOARD
@@ -106,6 +110,7 @@ class SyncViewModel(
         .asLiveData(viewModelScope.coroutineContext)
 
     override fun startLoading() {
+        showRetry.value = false
         startRemoteConfig()
         startSyncDrivers()
         startSyncConstructors()
@@ -115,16 +120,16 @@ class SyncViewModel(
 
     private fun startRemoteConfig() {
 
-        if (!configurationController.requireSynchronisation) {
+        if (!configRepository.requireSynchronisation) {
             configState.value = DONE
             return
         }
 
         configState.value = LOADING
         viewModelScope.launch(ioDispatcher) {
-            configurationController.ensureCacheReset()
+            resetConfigUseCase.ensureReset()
 
-            val result = configurationController.fetchAndApply()
+            val result = fetchConfigUseCase.fetchAndApply()
 
             performConfigUpdates()
             if (result) {
@@ -188,10 +193,7 @@ class SyncViewModel(
         }
 
         // Shortcuts for Search
-        when (searchController.enabled) {
-            true -> searchController.addAppShortcut()
-            false -> searchController.removeAppShortcut()
-        }
+        searchAppShortcutUseCase.setup()
 
         // Schedule notifications
         scheduleController.scheduleNotifications()

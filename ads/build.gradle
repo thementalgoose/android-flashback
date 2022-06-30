@@ -3,6 +3,7 @@ apply from: rootDir.absolutePath + "/gradle/config-android.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-util.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-junit5.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-koin.gradle"
+apply from: rootDir.absolutePath + "/gradle/config-compose.gradle"
 
 android {
     compileSdkVersion project.ext.compileSdkVersion
@@ -27,6 +28,6 @@ dependencies {
 
     // Skeleton Layout
     implementation deps.skeletonlayout
+    testImplementation project(path: ':test:models')
 
-    testImplementation project(path: ':test:stats-models')
 }

@@ -1,5 +1,6 @@
 package tmg.flashback.statistics.repo
 
+import android.util.Log
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import tmg.flashback.crash_reporting.controllers.CrashController
@@ -66,6 +67,16 @@ class OverviewRepository(
         persistence.circuitDao().insertCircuit(allCircuits)
         persistence.overviewDao().insertAll(allOverview)
         persistence.scheduleDao().replaceAllForSeason(season, scheduled)
+
+        val maxRoundRemote = allOverview.maxOfOrNull { it.round } ?: 0
+        val maxRoundLocal = persistence.overviewDao().getLastRound(season)?.overview?.round ?: 0
+        if (maxRoundLocal > maxRoundRemote) {
+            // We need to remove old rounds!
+            for (round in (maxRoundRemote + 1) until maxRoundLocal + 1) {
+                Log.i("Overview", "Deleting season $season round $round overview")
+                persistence.overviewDao().deleteOverview(season, round)
+            }
+        }
 
         return@attempt true
     }

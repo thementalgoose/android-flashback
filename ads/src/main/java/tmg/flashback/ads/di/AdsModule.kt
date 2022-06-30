@@ -3,6 +3,7 @@ package tmg.flashback.ads.di
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
+import tmg.flashback.ads.AdsNavigationComponent
 import tmg.flashback.ads.manager.AdsManager
 import tmg.flashback.ads.repository.AdsRepository
 import tmg.flashback.ads.ui.settings.adverts.SettingsAdvertViewModel
@@ -20,4 +21,6 @@ val adsModule = module {
     factory { ClearCachedAdvertsUseCase(get()) }
     factory { InitialiseAdsUseCase(androidContext(), get(), get()) }
     factory { GetAdUseCase(get(), get()) }
+
+    single { AdsNavigationComponent(get()) }
 }

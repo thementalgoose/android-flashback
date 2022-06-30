@@ -4,19 +4,23 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
+import tmg.flashback.style.annotations.PreviewTheme
 
 @Composable
 fun TextTitle(
     text: String,
     modifier: Modifier = Modifier,
+    textAlign: TextAlign = TextAlign.Start,
     bold: Boolean = false
 ) {
     Text(
         text,
         modifier = modifier,
+        textAlign = textAlign,
         style = AppTheme.typography.title.copy(
             fontWeight = when (bold) {
                 true -> FontWeight.Bold
@@ -27,41 +31,20 @@ fun TextTitle(
     )
 }
 
-@Preview
+@PreviewTheme
 @Composable
-private fun PreviewLight() {
-    AppThemePreview(isLight = true) {
+private fun Preview() {
+    AppThemePreview {
         TextTitle(
             text = "Title"
         )
     }
 }
 
-@Preview
+@PreviewTheme
 @Composable
-private fun PreviewDark() {
-    AppThemePreview(isLight = false) {
-        TextTitle(
-            text = "Title"
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewLightBold() {
+private fun PreviewBold() {
     AppThemePreview(isLight = true) {
-        TextTitle(
-            text = "Title Bold",
-            bold = true
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewDarkBold() {
-    AppThemePreview(isLight = false) {
         TextTitle(
             text = "Title Bold",
             bold = true

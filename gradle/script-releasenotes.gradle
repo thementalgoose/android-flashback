@@ -13,12 +13,12 @@ task generateReleaseNotes {
     // Folder with release notes json
     def releaseNotes = "releases.json"
 
-    def stringsXMLLocation = "common/src/main/res/values/release-notes.xml"
-    def kotlinFileLocation = "common/src/main/java/tmg/flashback/common/constants/ReleaseNotes.kt"
-    def kotlinFileContents = """package tmg.flashback.common.constants
+    def stringsXMLLocation = "feature/releasenotes/src/main/res/values/release-notes.xml"
+    def kotlinFileLocation = "feature/releasenotes/src/main/java/tmg/flashback/releasenotes/constants/ReleaseNotes.kt"
+    def kotlinFileContents = """package tmg.flashback.releasenotes.constants
 
 import androidx.annotation.StringRes
-import tmg.flashback.common.R
+import tmg.flashback.releasenotes.R
 
 /** 
  * This file is auto generated! Please do not modify! 

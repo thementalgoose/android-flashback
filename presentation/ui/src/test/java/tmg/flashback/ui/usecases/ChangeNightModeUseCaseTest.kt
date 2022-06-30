@@ -4,9 +4,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import io.mockk.mockk
 import io.mockk.mockkStatic
 import io.mockk.verify
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.params.ParameterizedTest
 import tmg.flashback.ui.model.NightMode
 import tmg.flashback.ui.repository.ThemeRepository
 

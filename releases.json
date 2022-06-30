@@ -179,6 +179,30 @@
         "Fixes shake to report functionality by migrating to Shaky",
         "Fixes RSS loading indicator appearing when no sources are selected"
       ]
+    },
+    {
+      "versionCode": 180,
+      "versionName": "8.2.183",
+      "isMajor": false,
+      "title": "",
+      "notes": [
+        "Adds driver placeholder for when drivers images are not available",
+        "Adds dark mode quick toggle",
+        "Fixes handles for constructor standings pre 1958",
+        "Fixes ordering of driver and constructor lineup when no races have taken place",
+        "Updates some circuit icons to match layout at time of race"
+      ]
+    },
+    {
+      "versionCode": 197,
+      "versionName": "8.3.197",
+      "isMajor": false,
+      "title": "",
+      "notes": [
+        "Updates race notification information",
+        "Tweaks layouts of settings sub screens",
+        "Updates sprint handling for format change for 2022"
+      ]
     }
   ]
 }

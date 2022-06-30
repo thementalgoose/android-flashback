@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Flashback</string>
+    <string name="title_rss">RSS</string>
+
+    <string name="home_last_updated">Last updated %s</string>
+    <string name="choose_browser">Open in browser</string>
+    <string name="choose_share">Share with</string>
+
+
+    <string name="rss_internal_error">A network error occurred and we weren\'t able to find any articles. Please check your internet connection or try again later</string>
+    <string name="rss_network_error">A network error occurred! Please check you have added a valid set of RSS sources and you are connected to the internet and try again. </string>
+    <string name="rss_no_articles">Welcome to the RSS feed!\nYou don\'t have any RSS sources enabled - Click here to configure them now. Pull to refresh when setup</string>
+
+    <!-- Settings -->
+
+    <string name="settings_rss_title">RSS</string>
+    <string name="settings_rss_appearance_title">Appearance</string>
+    <string name="settings_rss_show_description_title">Show description</string>
+    <string name="settings_rss_show_description_description">Show the article description alongside the rss source if it has one</string>
+    <string name="settings_rss_configure">Configure</string>
+    <string name="settings_rss_configure_sources_title">Configure sources</string>
+    <string name="settings_rss_configure_sources_description">Setup which RSS feeds you wish to subscribe too</string>
+
+    <!-- Configure -->
+
+    <string name="rss_configure_title">Configure RSS</string>
+    <string name="rss_configure_header_items">Your RSS list</string>
+    <string name="rss_configure_header_items_subtitle">Configure your personalised RSS feed here!</string>
+    <string name="rss_configure_header_items_no_items">0 items</string>
+    <string name="rss_configure_header_add">Add custom</string>
+    <string name="rss_configure_header_add_subtitle">Add your own RSS link or feed to curate your own formula 1 news.</string>
+    <string name="rss_configure_header_quick_add">Quick links</string>
+    <string name="rss_configure_header_quick_add_subtitle">Quick links for some popular news sources for formula 1. Flashback is in no way affiliated with any sources listed, you can visit the websites and contact information of these sources by clicking the website link next each item below. If you wish to include another RSS feed in this list, send us an email!</string>
+    <string name="rss_configure_malformed_url">Error in URL</string>
+    <string name="rss_configure_hint">www.formula1.com/link/to/rss</string>
+    <string name="rss_configure_valid_url">Valid URL required</string>
+    <string name="rss_configure_visit_website">Website</string>
+    <string name="rss_configure_cannot_open_page">Cannot open website</string>
+    <string name="rss_configure_cannot_open_page_action">Copy URL to clipboard</string>
+
+    <!-- App Shortcut -->
+
+    <string name="app_shortcut_rss_shorttitle">RSS</string>
+    <string name="app_shortcut_rss_longtitle">Formula 1 RSS feed</string>
+    <string name="app_shortcut_rss_disabled">RSS (Unavailable)</string>
+
+</resources>

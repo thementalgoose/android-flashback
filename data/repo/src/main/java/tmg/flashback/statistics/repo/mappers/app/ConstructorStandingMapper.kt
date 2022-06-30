@@ -14,7 +14,6 @@ class ConstructorStandingMapper(
     fun mapConstructorStanding(list: List<ConstructorStandingWithDrivers>): SeasonConstructorStandings? {
         if (list.isEmpty()) return null
         return SeasonConstructorStandings(
-            constructor = constructorDataMapper.mapConstructorData(list.first().constructor),
             standings = list.map {
                 mapConstructorStanding(it)
             }

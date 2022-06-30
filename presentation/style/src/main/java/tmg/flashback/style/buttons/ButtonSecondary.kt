@@ -13,12 +13,13 @@ import androidx.compose.ui.unit.dp
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.FlashbackTheme
+import tmg.flashback.style.annotations.PreviewTheme
 
 @Composable
 fun ButtonSecondary(
     text: String,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    onClick: () -> Unit = { }
 ) {
     return Button(
         modifier = modifier
@@ -43,24 +44,13 @@ fun ButtonSecondary(
     }
 }
 
-@Preview
+@PreviewTheme
 @Composable
-private fun PreviewLight() {
-    AppThemePreview(isLight = true) {
+private fun Preview() {
+    AppThemePreview {
         ButtonSecondary(
             text = "Secondary Button",
-            modifier = Modifier
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewDark() {
-    AppThemePreview(isLight = false) {
-        ButtonSecondary(
-            text = "Secondary Button",
-            modifier = Modifier
+            onClick = { }
         )
     }
 }
