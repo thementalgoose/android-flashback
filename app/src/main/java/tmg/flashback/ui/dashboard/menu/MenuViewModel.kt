@@ -4,7 +4,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
-import tmg.flashback.RssNavigationComponent
+import tmg.flashback.rss.RssNavigationComponent
 import tmg.flashback.formula1.constants.Formula1.decadeColours
 import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.stats.di.StatsNavigator

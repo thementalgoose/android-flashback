@@ -18,36 +18,18 @@ android {
 
 dependencies {
 
-
     // Core modules
-    implementation project(path: ':ads')
     implementation project(path: ':core:analytics')
-    implementation project(path: ':core:appshortcuts')
     implementation project(path: ':core:configuration')
     implementation project(path: ':core:crash-reporting')
     implementation project(path: ':core:device')
     implementation project(path: ':core:notifications')
     implementation project(path: ':core:preferences')
-    implementation project(path: ':core:webbrowser')
+    implementation project(path: ':presentation:style')
     implementation project(path: ':presentation:ui')
-
-    // Swipe refresh
-    implementation deps.androidx.swiperefreshlayout
-
-    // Retrofit
-    implementation deps.retrofit.retrofit
-    implementation deps.retrofit.retrofit_simplexml
-    implementation deps.retrofit.retrofit_jaxb
-    implementation deps.retrofit.retrofit_gson
-    implementation deps.retrofit.okhttp
-    implementation deps.retrofit.okhttp_logging
 
     // TMG dependencies
     implementation deps.tmg.labelledprogressbar
 
-    // Lottie
-    implementation deps.lottie
-    testImplementation project(path: ':test:models')
 
-    // Test models and methods
 }

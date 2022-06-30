@@ -19,6 +19,7 @@
             <option value="$PROJECT_DIR$/core/device" />
             <option value="$PROJECT_DIR$/core/notifications" />
             <option value="$PROJECT_DIR$/core/preferences" />
+            <option value="$PROJECT_DIR$/core/webbrowser" />
             <option value="$PROJECT_DIR$/data" />
             <option value="$PROJECT_DIR$/data/network" />
             <option value="$PROJECT_DIR$/data/repo" />

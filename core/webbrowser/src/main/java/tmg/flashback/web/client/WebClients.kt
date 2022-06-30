@@ -1,4 +1,4 @@
-package tmg.flashback.rss.web
+package tmg.flashback.web.client
 
 import android.net.Uri
 import android.webkit.WebChromeClient

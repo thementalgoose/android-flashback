@@ -12,7 +12,7 @@ import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import tmg.flashback.DebugController
 import tmg.flashback.R
-import tmg.flashback.RssNavigationComponent
+import tmg.flashback.rss.RssNavigationComponent
 import tmg.flashback.databinding.FragmentDashboardListBinding
 import tmg.flashback.regulations.ui.FormatOverviewActivity
 import tmg.flashback.statistics.ui.dashboard.onboarding.OnboardingNotificationBottomSheetFragment

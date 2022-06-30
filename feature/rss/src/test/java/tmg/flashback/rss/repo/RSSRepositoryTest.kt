@@ -12,7 +12,7 @@ import tmg.flashback.rss.repo.json.SupportedSourceJson
 import tmg.flashback.rss.repo.json.SupportedSourcesJson
 import tmg.flashback.rss.repo.model.SupportedSource
 
-internal class RSSServiceRepositoryTest {
+internal class RSSRepositoryTest {
 
     private val mockPreferenceManager: PreferenceManager = mockk(relaxed = true)
     private val mockConfigManager: ConfigManager = mockk(relaxed = true)
@@ -158,31 +158,6 @@ internal class RSSServiceRepositoryTest {
 
     //endregion
 
-    //region inAppEnableJavascript
-
-    @Test
-    fun `in app enable javascript reads value from preferences repository`() {
-        every { mockPreferenceManager.getBoolean(keyInAppEnableJavascript, true) } returns true
-        initSUT()
-
-        assertTrue(sut.inAppEnableJavascript)
-        verify {
-            mockPreferenceManager.getBoolean(keyInAppEnableJavascript, true)
-        }
-    }
-
-    @Test
-    fun `in app enable javascript saves value to shared prefs repository`() {
-        initSUT()
-
-        sut.inAppEnableJavascript = true
-        verify {
-            mockPreferenceManager.save(keyInAppEnableJavascript, true)
-        }
-    }
-
-    //endregion
-
     //region rssShowDescription
 
     @Test
@@ -208,31 +183,6 @@ internal class RSSServiceRepositoryTest {
 
     //endregion
 
-    //region newsOpenInExternalBrowser
-
-    @Test
-    fun `news open in external browser reads value from preferences repository`() {
-        every { mockPreferenceManager.getBoolean(keyNewsOpenInExternalBrowser, false) } returns true
-        initSUT()
-
-        assertTrue(sut.newsOpenInExternalBrowser)
-        verify {
-            mockPreferenceManager.getBoolean(keyNewsOpenInExternalBrowser, false)
-        }
-    }
-
-    @Test
-    fun `news open in external browser saves value to shared prefs repository`() {
-        initSUT()
-
-        sut.newsOpenInExternalBrowser = true
-        verify {
-            mockPreferenceManager.save(keyNewsOpenInExternalBrowser, true)
-        }
-    }
-
-    //endregion
-
     companion object {
 
         // Config
@@ -243,7 +193,5 @@ internal class RSSServiceRepositoryTest {
         // Prefs
         private const val keyRssList: String = "RSS_LIST"
         private const val keyRssShowDescription: String = "NEWS_SHOW_DESCRIPTIONS"
-        private const val keyInAppEnableJavascript: String = "IN_APP_ENABLE_JAVASCRIPT"
-        private const val keyNewsOpenInExternalBrowser: String = "NEWS_OPEN_IN_EXTERNAL_BROWSER"
     }
 }
