@@ -14,6 +14,7 @@ import tmg.flashback.formula1.model.ConstructorHistory
 import tmg.flashback.statistics.repo.ConstructorRepository
 import tmg.flashback.stats.R
 import tmg.flashback.stats.ui.drivers.overview.PipeType
+import tmg.flashback.ui.navigation.ApplicationNavigationComponent
 import tmg.utilities.extensions.ordinalAbbreviation
 import tmg.utilities.lifecycle.DataEvent
 
@@ -34,8 +35,6 @@ interface ConstructorOverviewViewModelInputs {
 
 interface ConstructorOverviewViewModelOutputs {
     val list: LiveData<List<ConstructorOverviewModel>>
-    val openUrl: LiveData<DataEvent<String>>
-    val openSeason: LiveData<DataEvent<Pair<String, Int>>>
 
     val showLoading: LiveData<Boolean>
 }
@@ -46,6 +45,7 @@ interface ConstructorOverviewViewModelOutputs {
 class ConstructorOverviewViewModel(
     private val constructorRepository: ConstructorRepository,
     private val networkConnectivityManager: NetworkConnectivityManager,
+    private val applicationNavigator: ApplicationNavigationComponent,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), ConstructorOverviewViewModelInputs, ConstructorOverviewViewModelOutputs {
 
@@ -117,9 +117,6 @@ class ConstructorOverviewViewModel(
         }
         .asLiveData(viewModelScope.coroutineContext)
 
-    override val openUrl: MutableLiveData<DataEvent<String>> = MutableLiveData()
-    override val openSeason: MutableLiveData<DataEvent<Pair<String, Int>>> = MutableLiveData()
-
     override val showLoading: MutableLiveData<Boolean> = MutableLiveData()
 
     init {
@@ -133,13 +130,13 @@ class ConstructorOverviewViewModel(
     }
 
     override fun openUrl(url: String) {
-        openUrl.postValue(DataEvent(url))
+        applicationNavigator.openUrl(url)
     }
 
     override fun openSeason(season: Int) {
-        constructorId.value?.let {
-            openSeason.postValue(DataEvent(Pair(it, season)))
-        }
+//        constructorId.value?.let {
+//            openSeason.postValue(DataEvent(Pair(it, season)))
+//        }
     }
 
     override fun refresh() {
