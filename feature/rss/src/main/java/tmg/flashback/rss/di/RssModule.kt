@@ -17,7 +17,7 @@ val rssModule = module {
     single { RssNavigationComponent(get()) }
 
     // UI
-    viewModel { RSSViewModel(get(), get(), get(), get(), get(), get()) }
+    viewModel { RSSViewModel(get(), get(), get(), get(), get(), get(), get()) }
     viewModel { SettingsRSSViewModel(get(), get()) }
     viewModel { ConfigureRSSViewModel(get(), get()) }
 

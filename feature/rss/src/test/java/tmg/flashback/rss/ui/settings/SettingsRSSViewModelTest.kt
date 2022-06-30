@@ -30,9 +30,6 @@ internal class SettingsRSSViewModelTest: BaseTest() {
                 Pair(R.string.settings_rss_configure_sources_title, R.string.settings_rss_configure_sources_description),
                 Pair(R.string.settings_rss_appearance_title, null),
                 Pair(R.string.settings_rss_show_description_title, R.string.settings_rss_show_description_description),
-                Pair(R.string.settings_rss_browser, null),
-                Pair(R.string.settings_rss_browser_external_title, R.string.settings_rss_browser_external_description),
-                Pair(R.string.settings_rss_browser_javascript_title, R.string.settings_rss_browser_javascript_description),
         )
 
         sut.models.assertExpectedOrder(expected)
@@ -53,24 +50,6 @@ internal class SettingsRSSViewModelTest: BaseTest() {
         sut.clickSwitchPreference(sut.models.findSwitch(R.string.settings_rss_show_description_title), true)
         verify {
             mockRssRepository.rssShowDescription = true
-        }
-    }
-
-    @Test
-    fun `clicking pref model for rss external browser updates toggle`() {
-        initSUT()
-        sut.clickSwitchPreference(sut.models.findSwitch(R.string.settings_rss_browser_external_title), true)
-        verify {
-            mockRssRepository.newsOpenInExternalBrowser = true
-        }
-    }
-
-    @Test
-    fun `clicking pref model for broswer javascript updates toggle`() {
-        initSUT()
-        sut.clickSwitchPreference(sut.models.findSwitch(R.string.settings_rss_browser_javascript_title), true)
-        verify {
-            mockRssRepository.inAppEnableJavascript = true
         }
     }
 }
