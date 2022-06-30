@@ -15,6 +15,7 @@ import tmg.flashback.web.R
 import tmg.flashback.web.databinding.FragmentWebBinding
 import tmg.flashback.web.client.FlashbackWebChromeClient
 import tmg.flashback.web.client.FlashbackWebViewClient
+import tmg.flashback.web.repository.WebBrowserRepository
 import tmg.utilities.extensions.getColor
 import tmg.utilities.extensions.views.show
 import java.net.MalformedURLException
@@ -28,6 +29,8 @@ internal class WebFragment : Fragment() {
 
     private val analyticsManager: AnalyticsManager by inject()
     private val crashController: CrashController by inject()
+
+    private val webBrowserRepository: WebBrowserRepository by inject()
 
     private lateinit var pageTitle: String
     private lateinit var pageUrl: String
@@ -67,7 +70,7 @@ internal class WebFragment : Fragment() {
             webview.webChromeClient = webChromeClient
             webview.webViewClient = webViewClient
             webview.settings.loadsImagesAutomatically = true
-            webview.settings.javaScriptEnabled = true
+            webview.settings.javaScriptEnabled = webBrowserRepository.enableJavascript
             webview.scrollBarStyle = View.SCROLLBARS_INSIDE_OVERLAY
 
             try {
