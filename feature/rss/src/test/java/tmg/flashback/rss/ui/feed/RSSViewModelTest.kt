@@ -8,7 +8,7 @@ import kotlinx.coroutines.test.advanceUntilIdle
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDateTime
-import tmg.flashback.RssNavigationComponent
+import tmg.flashback.rss.RssNavigationComponent
 import tmg.flashback.ads.repository.AdsRepository
 import tmg.flashback.ads.repository.model.AdvertConfig
 import tmg.flashback.device.managers.NetworkConnectivityManager
@@ -18,6 +18,7 @@ import tmg.flashback.rss.repo.model.Article
 import tmg.flashback.rss.repo.model.ArticleSource
 import tmg.flashback.rss.repo.model.Response
 import tmg.flashback.ui.navigation.ApplicationNavigationComponent
+import tmg.flashback.web.WebNavigationComponent
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.*
 
@@ -30,6 +31,7 @@ internal class RSSViewModelTest: BaseTest() {
     private val mockAdsRepository: AdsRepository = mockk(relaxed = true)
     private val mockRssNavigationComponent: RssNavigationComponent = mockk(relaxed = true)
     private val mockApplicationNavigationComponent: ApplicationNavigationComponent = mockk(relaxed = true)
+    private val mockWebNavigationComponent: WebNavigationComponent = mockk(relaxed = true)
     private val mockConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
 
     private val mockLocalDate: LocalDateTime = LocalDateTime.of(2020, 1, 1, 1, 2, 3, 0)
@@ -74,6 +76,7 @@ internal class RSSViewModelTest: BaseTest() {
             mockAdsRepository,
             mockRssNavigationComponent,
             mockApplicationNavigationComponent,
+            mockWebNavigationComponent,
             mockConnectivityManager
         )
         underTest.refresh()
@@ -225,23 +228,7 @@ internal class RSSViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `click model with open in external browser enabled opens in browser`() {
-        every { mockRssRepository.newsOpenInExternalBrowser } returns true
-        val model: RSSModel.RSS = mockk {
-            every { item } returns mockk(relaxed = true)
-        }
-        initUnderTest()
-
-        underTest.inputs.clickModel(model)
-
-        verify {
-            mockApplicationNavigationComponent.openUrl(any())
-        }
-    }
-
-    @Test
     fun `click model with open in external browser disabled opens in in-app browser`() {
-        every { mockRssRepository.newsOpenInExternalBrowser } returns false
         val model: RSSModel.RSS = mockk {
             every { item } returns mockk(relaxed = true)
         }
@@ -250,7 +237,7 @@ internal class RSSViewModelTest: BaseTest() {
         underTest.inputs.clickModel(model)
 
         verify {
-            mockRssNavigationComponent.web(any(), any())
+            mockWebNavigationComponent.web(any(), any())
         }
     }
 }

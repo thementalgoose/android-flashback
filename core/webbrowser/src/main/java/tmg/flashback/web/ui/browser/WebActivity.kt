@@ -1,17 +1,15 @@
-package tmg.flashback.rss.ui.web
+package tmg.flashback.web.ui.browser
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
-import tmg.flashback.rss.R
-import tmg.flashback.rss.databinding.ActivityWebBinding
+import tmg.flashback.web.R
 import tmg.flashback.style.AppTheme
 import tmg.flashback.ui.base.BaseActivity
-import tmg.utilities.extensions.loadFragment
 import tmg.utilities.extensions.viewUrl
 
-class WebActivity: BaseActivity() {
+internal class WebActivity: BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +43,7 @@ class WebActivity: BaseActivity() {
         private const val keyTitle: String = "title"
         private const val keyUrl: String = "url"
 
-        fun intent(context: Context, title: String, url: String): Intent {
+        fun intent(context: Context, url: String, title: String = ""): Intent {
             return Intent(context, WebActivity::class.java).apply {
                 putExtra(keyUrl, url)
                 putExtra(keyTitle, title)

@@ -3,7 +3,7 @@ package tmg.flashback.rss.ui.settings
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Test
-import tmg.flashback.RssNavigationComponent
+import tmg.flashback.rss.RssNavigationComponent
 import tmg.flashback.rss.R
 import tmg.flashback.rss.repo.RSSRepository
 import tmg.flashback.rss.testutils.assertExpectedOrder

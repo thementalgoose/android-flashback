@@ -130,6 +130,7 @@ dependencies {
     implementation project(path: ":core:device")
     implementation project(path: ":core:notifications")
     implementation project(path: ":core:preferences")
+    implementation project(path: ":core:webbrowser")
 
     implementation project(path: ":presentation:ui")
     implementation project(path: ":presentation:style")

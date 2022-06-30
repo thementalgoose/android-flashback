@@ -1,6 +1,6 @@
 package tmg.flashback.rss.ui.settings
 
-import tmg.flashback.RssNavigationComponent
+import tmg.flashback.rss.RssNavigationComponent
 import tmg.flashback.rss.R
 import tmg.flashback.rss.repo.RSSRepository
 import tmg.flashback.ui.settings.SettingsModel

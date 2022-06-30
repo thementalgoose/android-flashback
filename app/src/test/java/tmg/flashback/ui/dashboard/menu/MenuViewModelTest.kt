@@ -3,10 +3,9 @@ package tmg.flashback.ui.dashboard.menu
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.flashback.RssNavigationComponent
+import tmg.flashback.rss.RssNavigationComponent
 import tmg.flashback.formula1.constants.Formula1.decadeColours
 import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.stats.di.StatsNavigator
