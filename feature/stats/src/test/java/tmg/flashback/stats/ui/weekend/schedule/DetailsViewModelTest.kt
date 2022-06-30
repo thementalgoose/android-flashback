@@ -130,9 +130,11 @@ internal class DetailsViewModelTest: BaseTest() {
         }
     }
 
-    private val mapsLink: DetailsModel.Link get() = DetailsModel.Link(
-        label = R.string.details_link_map,
-        icon = R.drawable.ic_details_maps,
-        url = "geo:0,0?q=51.101,-1.101 (circuitName)"
+    private val mapsLink: DetailsModel.Links get() = DetailsModel.Links(
+        listOf(DetailsModel.Link(
+            label = R.string.details_link_map,
+            icon = R.drawable.ic_details_maps,
+            url = "geo:0,0?q=51.101,-1.101 (circuitName)"
+        ))
     )
 }

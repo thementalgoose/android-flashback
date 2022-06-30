@@ -18,14 +18,18 @@ sealed class DetailsModel(
         companion object
     }
 
+    data class Links(
+        val links: List<Link>
+    ): DetailsModel(
+        id = "links"
+    )
+
     data class Link(
         @StringRes
         val label: Int,
         @DrawableRes
         val icon: Int,
         val url: String,
-    ): DetailsModel(
-        id = "link-$label"
     ) {
         companion object
     }
