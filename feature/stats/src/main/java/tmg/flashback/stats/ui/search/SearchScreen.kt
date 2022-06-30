@@ -117,8 +117,11 @@ fun SearchScreen(
             .fillMaxWidth()
             .imePadding()
         ) {
-            Row(modifier = Modifier.horizontalScroll(rememberScrollState())) {
-                Spacer(Modifier.width(16.dp))
+            Row(modifier = Modifier
+                .padding(vertical = AppTheme.dimensions.paddingSmall)
+                .horizontalScroll(rememberScrollState())
+            ) {
+                Spacer(Modifier.width(AppTheme.dimensions.paddingMedium))
                 SearchCategory.values().forEach {
                     ButtonTertiary(
                         text = stringResource(it.label),
@@ -127,9 +130,9 @@ fun SearchScreen(
                         },
                         enabled = it == searchCategory
                     )
-                    Spacer(Modifier.width(8.dp))
+                    Spacer(Modifier.width(AppTheme.dimensions.paddingMedium))
                 }
-                Spacer(Modifier.width(16.dp))
+                Spacer(Modifier.width(AppTheme.dimensions.paddingMedium))
             }
             val text = remember { mutableStateOf(TextFieldValue("")) }
             InputPrimary(
