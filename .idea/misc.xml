@@ -29,6 +29,7 @@
         <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/dashboard/drivers/DriverStandingsScreen.kt" value="0.1" />
         <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/drivers/overview/DriverOverviewScreen.kt" value="0.375" />
         <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/drivers/season/DriverSeasonScreen.kt" value="0.375" />
+        <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/messaging/Banner.kt" value="0.37222222222222223" />
         <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/weekend/details/DetailsScreen.kt" value="0.2525597269624573" />
         <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/weekend/info/InfoScreen.kt" value="0.21203438395415472" />
         <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/weekend/qualifying/QualifyingScreen.kt" value="0.26547352721849365" />
