@@ -4,9 +4,11 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
@@ -35,6 +37,7 @@ import tmg.flashback.stats.ui.weekend.shared.NotAvailable
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
+import tmg.flashback.style.buttons.ButtonTertiary
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.ui.components.header.Header
@@ -215,22 +218,28 @@ private fun Stats(
             }
         }
 
-        model.wikipedia?.let { wiki ->
-            Link(
-                icon = R.drawable.ic_details_wikipedia,
-                label = R.string.details_link_wikipedia,
-                url = wiki,
-                linkClicked = linkClicked
-            )
+        Row(modifier = Modifier
+            .horizontalScroll(rememberScrollState())
+            .padding(horizontal = AppTheme.dimensions.paddingMedium)
+        ) {
+            model.wikipedia?.let { wiki ->
+                ButtonTertiary(
+                    text = stringResource(id = R.string.details_link_wikipedia),
+                    onClick = { linkClicked(wiki) },
+                    icon = R.drawable.ic_details_wikipedia
+                )
+                Spacer(Modifier.width(AppTheme.dimensions.paddingMedium))
+            }
+            model.location?.let { location ->
+                ButtonTertiary(
+                    text = stringResource(id = R.string.details_link_map),
+                    onClick = { linkClicked("geo:0,0?q=${location.lat},${location.lng} (${model.name})") },
+                    icon = R.drawable.ic_details_maps
+                )
+                Spacer(Modifier.width(AppTheme.dimensions.paddingMedium))
+            }
         }
-        model.location?.let { location ->
-            Link(
-                icon = R.drawable.ic_details_maps,
-                label = R.string.details_link_map,
-                url = "geo:0,0?q=${location.lat},${location.lng} (${model.name})",
-                linkClicked = linkClicked
-            )
-        }
+
     }
 }
 

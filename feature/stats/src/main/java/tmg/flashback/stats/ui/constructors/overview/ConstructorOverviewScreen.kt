@@ -36,6 +36,7 @@ import tmg.flashback.stats.ui.drivers.overview.PipeType
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
+import tmg.flashback.style.buttons.ButtonTertiary
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextCaption
@@ -46,8 +47,8 @@ import tmg.flashback.ui.utils.isInPreview
 import tmg.utilities.extensions.ordinalAbbreviation
 
 
-private val pointsWidth: Dp = 70.dp
-private val positionWidth: Dp = 70.dp
+private val pointsWidth: Dp = 64.dp
+private val positionWidth: Dp = 64.dp
 
 
 @Composable
@@ -68,7 +69,8 @@ fun ConstructorOverviewScreenVM(
         ConstructorOverviewScreen(
             list = list.value,
             constructorName = constructorName,
-            actionUpClicked = actionUpClicked
+            actionUpClicked = actionUpClicked,
+            linkClicked = viewModel.inputs::openUrl
         )
     }
 }
@@ -77,6 +79,7 @@ fun ConstructorOverviewScreenVM(
 fun ConstructorOverviewScreen(
     list: List<ConstructorOverviewModel>,
     constructorName: String,
+    linkClicked: (String) -> Unit,
     actionUpClicked: () -> Unit
 ) {
     LazyColumn(
@@ -95,7 +98,10 @@ fun ConstructorOverviewScreen(
             items(list, key = { it.key }) {
                 when (it) {
                     is ConstructorOverviewModel.Header -> {
-                        HeaderTop(model = it)
+                        HeaderTop(
+                            model = it,
+                            wikipediaClicked = linkClicked
+                        )
                     }
                     is ConstructorOverviewModel.History -> {
                         History(model = it)
@@ -127,9 +133,13 @@ fun ConstructorOverviewScreen(
 @Composable
 private fun HeaderTop(
     model: ConstructorOverviewModel.Header,
+    wikipediaClicked: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Column(modifier = modifier.fillMaxWidth()) {
+    Column(modifier = modifier
+        .fillMaxWidth()
+        .padding(horizontal = AppTheme.dimensions.paddingMedium)
+    ) {
         val resourceId = when (isInPreview()) {
             true -> R.drawable.gb
             false -> LocalContext.current.getFlagResourceAlpha3(model.constructorNationalityISO)
@@ -140,6 +150,14 @@ private fun HeaderTop(
             contentDescription = null,
             contentScale = ContentScale.Fit,
         )
+
+        model.constructorWikiUrl?.let { wiki ->
+            ButtonTertiary(
+                text = stringResource(id = R.string.details_link_wikipedia),
+                onClick = { wikipediaClicked(wiki) },
+                icon = R.drawable.ic_details_wikipedia
+            )
+        }
     }
 }
 
@@ -232,7 +250,7 @@ private fun History(
         TimelineTop(
             modifier = modifier
                 .fillMaxWidth()
-                .padding(horizontal = AppTheme.dimensions.paddingMedium),
+                .padding(start = AppTheme.dimensions.paddingMedium),
             timelineColor = AppTheme.colors.contentTertiary,
             overrideDotColor = when {
                 !model.isInProgress && model.championshipPosition == 1 -> AppTheme.colors.f1Championship
@@ -332,6 +350,7 @@ private fun Preview(
         ConstructorOverviewScreen(
             actionUpClicked = { },
             constructorName = "name",
+            linkClicked = { },
             list = listOf(
                 fakeStat,
                 fakeStatWinning,

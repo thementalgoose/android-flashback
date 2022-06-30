@@ -30,6 +30,7 @@ import tmg.flashback.stats.ui.shared.DriverImage
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
+import tmg.flashback.style.buttons.ButtonTertiary
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.loading.SkeletonView
@@ -58,6 +59,7 @@ fun DriverOverviewScreenVM(
         DriverOverviewScreen(
             list = list.value,
             driverName = driverName,
+            linkClicked = viewModel.inputs::openUrl,
             racedForClicked = {
                 viewModel.inputs.openSeason(it.season)
             },
@@ -69,6 +71,7 @@ fun DriverOverviewScreenVM(
 @Composable
 fun DriverOverviewScreen(
     actionUpClicked: () -> Unit,
+    linkClicked: (String) -> Unit,
     driverName: String,
     racedForClicked: (DriverOverviewModel.RacedFor) -> Unit,
     list: List<DriverOverviewModel>
@@ -89,7 +92,8 @@ fun DriverOverviewScreen(
             items(list, key = { it.key }) {
                 when (it) {
                     is DriverOverviewModel.Header -> Header(
-                        model = it
+                        model = it,
+                        linkClicked = linkClicked
                     )
                     is DriverOverviewModel.Message -> {
                         Message(title = stringResource(id = it.label, *it.args.toTypedArray()))
@@ -121,6 +125,7 @@ fun DriverOverviewScreen(
 @Composable
 private fun Header(
     model: DriverOverviewModel.Header,
+    linkClicked: (String) -> Unit,
     modifier: Modifier = Modifier
 ) { 
     Column(modifier = modifier.padding(
@@ -149,24 +154,32 @@ private fun Header(
                 contentScale = ContentScale.Fit,
             )
             Spacer(Modifier.width(AppTheme.dimensions.paddingSmall))
+
+            val birthday = model.driverBirthday
+                .format("dd MMMM yyyy")
+                ?.let { birthday -> stringResource(id = R.string.driver_overview_stat_birthday, birthday) } ?: ""
             TextBody1(
                 modifier = Modifier
                     .padding(vertical = AppTheme.dimensions.paddingXSmall)
                     .fillMaxWidth(),
-                text = model.constructors.distinctBy { it.name }.joinToString { it.name }
+                text = "${model.driverNationality} - $birthday"
             )
         }
 
-        model.driverBirthday.format("dd MMMM yyyy")?.let { birthday ->
-            TextBody1(
-                modifier = Modifier
-                    .padding(top = 4.dp)
-                    .fillMaxWidth(),
-                text = stringResource(id = R.string.driver_overview_stat_birthday, birthday)
+        TextBody1(
+            modifier = Modifier
+                .padding(vertical = AppTheme.dimensions.paddingXSmall)
+                .fillMaxWidth(),
+            text = model.constructors.distinctBy { it.name }.joinToString { it.name }
+        )
+        Spacer(Modifier.height(AppTheme.dimensions.paddingXSmall))
+        if (model.driverWikiUrl.isNotEmpty()) {
+            ButtonTertiary(
+                text = stringResource(id = R.string.details_link_wikipedia),
+                onClick = { linkClicked(model.driverWikiUrl) }
             )
+            Spacer(Modifier.height(AppTheme.dimensions.paddingXSmall))
         }
-
-        Spacer(Modifier.height(AppTheme.dimensions.paddingSmall))
     }
 }
 
@@ -273,6 +286,7 @@ private fun Preview(
             actionUpClicked = { },
             driverName = "firstName lastName",
             racedForClicked = { },
+            linkClicked = { },
             list = listOf(
                 driverConstructor.toHeader(),
                 fakeStat,
@@ -321,6 +335,7 @@ private fun DriverConstructor.toHeader(): DriverOverviewModel.Header = DriverOve
     driverBirthday = this.driver.dateOfBirth,
     driverWikiUrl = this.driver.wikiUrl ?: "",
     driverNationalityISO = this.driver.nationalityISO,
+    driverNationality = this.driver.nationality,
     constructors = listOf(
         this.constructor,
         this.constructor.copy(id = "constructor2", name = "Alpine"),
@@ -330,6 +345,5 @@ private fun DriverConstructor.toHeader(): DriverOverviewModel.Header = DriverOve
         this.constructor.copy(id = "constructor6", name = "Red Bull"),
         this.constructor.copy(id = "constructor7", name = "Ferrari"),
         this.constructor.copy(id = "constructor8", name = "Mercedes"),
-
     )
 )
