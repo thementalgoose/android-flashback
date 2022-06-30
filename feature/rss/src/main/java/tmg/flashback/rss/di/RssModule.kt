@@ -2,7 +2,7 @@ package tmg.flashback.rss.di
 
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
-import tmg.flashback.RssNavigationComponent
+import tmg.flashback.rss.RssNavigationComponent
 import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.rss.network.RSSService
 import tmg.flashback.rss.repo.RSSRepository
@@ -17,7 +17,7 @@ val rssModule = module {
     single { RssNavigationComponent(get()) }
 
     // UI
-    viewModel { RSSViewModel(get(), get(), get(), get(), get(), get()) }
+    viewModel { RSSViewModel(get(), get(), get(), get(), get(), get(), get()) }
     viewModel { SettingsRSSViewModel(get(), get()) }
     viewModel { ConfigureRSSViewModel(get(), get()) }
 

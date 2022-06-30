@@ -7,6 +7,7 @@ import tmg.flashback.settings.SettingsNavigationComponent
 import tmg.flashback.ui.navigation.ApplicationNavigationComponent
 import tmg.flashback.ui.settings.SettingsModel
 import tmg.flashback.ui.settings.SettingsViewModel
+import tmg.flashback.web.WebNavigationComponent
 
 //region Inputs
 
@@ -26,6 +27,7 @@ interface SettingsAboutViewModelOutputs {
 
 class SettingsAboutViewModel(
     private val applicationNavigationComponent: ApplicationNavigationComponent,
+    private val webNavigationComponent: WebNavigationComponent,
     private val releaseNotesNavigationComponent: ReleaseNotesNavigationComponent,
     private val settingsNavigationComponent: SettingsNavigationComponent,
     private val buildConfigManager: BuildConfigManager
@@ -46,7 +48,7 @@ class SettingsAboutViewModel(
             title = R.string.settings_about_review_title,
             description = R.string.settings_about_review_description,
             onClick = {
-                applicationNavigationComponent.openUrl(reviewUrl)
+                webNavigationComponent.web(reviewUrl)
             }
         ),
         SettingsModel.Pref(

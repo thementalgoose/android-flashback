@@ -12,6 +12,7 @@ import tmg.flashback.formula1.model.model
 import tmg.flashback.statistics.repo.CircuitRepository
 import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.ui.navigation.ApplicationNavigationComponent
+import tmg.flashback.web.WebNavigationComponent
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.test
 
@@ -21,7 +22,7 @@ internal class CircuitViewModelTest: BaseTest() {
 
     private val mockCircuitRepository: CircuitRepository = mockk(relaxed = true)
     private val mockConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
-    private val mockApplicationNavigationComponent: ApplicationNavigationComponent = mockk(relaxed = true)
+    private val mockWebNavigationComponent: WebNavigationComponent = mockk(relaxed = true)
     private val mockStatsNavigationComponent: StatsNavigationComponent = mockk(relaxed = true)
 
     @BeforeEach
@@ -36,7 +37,7 @@ internal class CircuitViewModelTest: BaseTest() {
         sut = CircuitViewModel(
             mockCircuitRepository,
             mockConnectivityManager,
-            mockApplicationNavigationComponent,
+            mockWebNavigationComponent,
             mockStatsNavigationComponent,
             ioDispatcher = coroutineScope.testDispatcher
         )
@@ -192,7 +193,7 @@ internal class CircuitViewModelTest: BaseTest() {
         sut.inputs.linkClicked("link")
 
         verify {
-            mockApplicationNavigationComponent.openUrl("link")
+            mockWebNavigationComponent.web("link")
         }
     }
 

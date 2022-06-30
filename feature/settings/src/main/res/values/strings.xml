@@ -11,6 +11,8 @@
     <string name="settings_all_rss_subtitle">Browser and RSS preferences</string>
     <string name="settings_all_notifications">Notifications</string>
     <string name="settings_all_notifications_subtitle">Customise what notifications you receive</string>
+    <string name="settings_all_web_browser">Web Browser</string>
+    <string name="settings_all_web_browser_subtitle">In-App web browser settings</string>
     <string name="settings_all_support">Support</string>
     <string name="settings_all_support_subtitle">General app settings for crash reporting, analytics, etc.</string>
     <string name="settings_all_ads">Adverts</string>

@@ -1,7 +1,6 @@
-package tmg.flashback.rss.ui.web
+package tmg.flashback.web.ui.browser
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
@@ -9,17 +8,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import org.koin.android.ext.android.inject
 import tmg.flashback.analytics.manager.AnalyticsManager
 import tmg.flashback.crash_reporting.controllers.CrashController
-import tmg.flashback.rss.R
-import tmg.flashback.rss.databinding.FragmentWebBinding
-import tmg.flashback.rss.repo.RSSRepository
-import tmg.flashback.rss.web.FlashbackWebChromeClient
-import tmg.flashback.rss.web.FlashbackWebViewClient
+import tmg.flashback.web.R
+import tmg.flashback.web.databinding.FragmentWebBinding
+import tmg.flashback.web.client.FlashbackWebChromeClient
+import tmg.flashback.web.client.FlashbackWebViewClient
 import tmg.utilities.extensions.getColor
-import tmg.utilities.extensions.viewUrl
 import tmg.utilities.extensions.views.show
 import java.net.MalformedURLException
 
@@ -30,7 +26,6 @@ internal class WebFragment : Fragment() {
     // binding to throw NPE
     private var binding: FragmentWebBinding? = null
 
-    private val repository: RSSRepository by inject()
     private val analyticsManager: AnalyticsManager by inject()
     private val crashController: CrashController by inject()
 
@@ -72,7 +67,7 @@ internal class WebFragment : Fragment() {
             webview.webChromeClient = webChromeClient
             webview.webViewClient = webViewClient
             webview.settings.loadsImagesAutomatically = true
-            webview.settings.javaScriptEnabled = repository.inAppEnableJavascript
+            webview.settings.javaScriptEnabled = true
             webview.scrollBarStyle = View.SCROLLBARS_INSIDE_OVERLAY
 
             try {

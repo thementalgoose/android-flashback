@@ -11,7 +11,6 @@ import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.device.repository.DeviceRepository
 import tmg.flashback.notifications.navigation.NotificationNavigationProvider
 import tmg.flashback.rss.controllers.RSSController
-import tmg.flashback.rss.ui.web.WebActivity
 import tmg.flashback.ui.navigation.ApplicationNavigationComponent
 import tmg.flashback.ui.HomeActivity
 import tmg.flashback.ui.navigation.ActivityProvider
@@ -72,23 +71,6 @@ class AppApplicationNavigationComponent(
     override fun settingsIntent(context: Context): Intent {
         return SettingsAllActivity.intent(context)
     }
-
-    override fun openUrl(url: String) {
-        val uri = try { Uri.parse(url) } catch (e: MalformedURLException) { null } ?: return
-        val activity = activityProvider.activity ?: return
-        val intent = Intent(Intent.ACTION_VIEW, uri)
-        when {
-            url.startsWith("geo:") && isLocationIntentAvailable(activity) -> activity.startActivity(intent)
-            else -> activity.startActivity(intent)
-        }
-    }
-
-//    override fun openInAppBrowser(url: String, title: String?) {
-//        val uri = try { Uri.parse(url) } catch (e: MalformedURLException) { null } ?: return
-//        val activity = activityProvider.activity ?: return
-//
-//        val intent = WebActivity.intent(activity)
-//    }
 
     private fun isLocationIntentAvailable(context: Context): Boolean {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse("geo:32.5558485,34.65522447"))

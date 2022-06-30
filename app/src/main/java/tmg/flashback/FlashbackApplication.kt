@@ -22,6 +22,7 @@ import tmg.flashback.statistics.di.statisticsModule
 import tmg.flashback.stats.di.statsModule
 import tmg.flashback.ui.di.uiModule
 import tmg.flashback.ui.navigation.ActivityProvider
+import tmg.flashback.web.di.webBrowserModule
 
 class FlashbackApplication: Application() {
 
@@ -43,6 +44,7 @@ class FlashbackApplication: Application() {
                 regulationsModule,
                 forceUpgradeModule,
                 releaseNotesModule,
+                webBrowserModule,
                 // Debug
                 debugModule,
                 // Core

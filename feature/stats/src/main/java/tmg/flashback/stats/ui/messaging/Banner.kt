@@ -19,6 +19,7 @@ import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.ui.components.layouts.Container
 import tmg.flashback.ui.navigation.ApplicationNavigationComponent
+import tmg.flashback.web.WebNavigationComponent
 
 @Composable
 fun Banner(
@@ -27,14 +28,14 @@ fun Banner(
     val homeRepository: HomeRepository by inject()
     val banner = homeRepository.banner ?: return
 
-    val navigationComponent: ApplicationNavigationComponent by inject()
+    val navigationComponent: WebNavigationComponent by inject()
 
     if (banner.url != null) {
         Banner(
             message = banner.message,
             showLink = true,
             modifier = modifier.clickable(onClick = {
-                navigationComponent.openUrl(banner.url)
+                navigationComponent.web(banner.url)
             })
         )
     } else {

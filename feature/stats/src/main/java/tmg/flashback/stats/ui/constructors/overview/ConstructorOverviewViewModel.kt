@@ -15,6 +15,7 @@ import tmg.flashback.statistics.repo.ConstructorRepository
 import tmg.flashback.stats.R
 import tmg.flashback.stats.ui.drivers.overview.PipeType
 import tmg.flashback.ui.navigation.ApplicationNavigationComponent
+import tmg.flashback.web.WebNavigationComponent
 import tmg.utilities.extensions.ordinalAbbreviation
 import tmg.utilities.lifecycle.DataEvent
 
@@ -45,7 +46,7 @@ interface ConstructorOverviewViewModelOutputs {
 class ConstructorOverviewViewModel(
     private val constructorRepository: ConstructorRepository,
     private val networkConnectivityManager: NetworkConnectivityManager,
-    private val applicationNavigator: ApplicationNavigationComponent,
+    private val webNavigationComponent: WebNavigationComponent,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), ConstructorOverviewViewModelInputs, ConstructorOverviewViewModelOutputs {
 
@@ -130,7 +131,7 @@ class ConstructorOverviewViewModel(
     }
 
     override fun openUrl(url: String) {
-        applicationNavigator.openUrl(url)
+        webNavigationComponent.web(url)
     }
 
     override fun openSeason(season: Int) {

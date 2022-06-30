@@ -4,12 +4,13 @@ import androidx.lifecycle.*
 import kotlinx.coroutines.flow.*
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
-import tmg.flashback.RssNavigationComponent
+import tmg.flashback.rss.RssNavigationComponent
 import tmg.flashback.ads.repository.AdsRepository
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.rss.repo.RSSRepository
 import tmg.flashback.rss.repo.RssAPI
 import tmg.flashback.ui.navigation.ApplicationNavigationComponent
+import tmg.flashback.web.WebNavigationComponent
 import tmg.utilities.extensions.then
 import java.util.*
 
@@ -40,6 +41,7 @@ internal class RSSViewModel(
     private val adsRepository: AdsRepository,
     private val rssNavigationComponent: RssNavigationComponent,
     private val applicationNavigationComponent: ApplicationNavigationComponent,
+    private val webNavigationComponent: WebNavigationComponent,
     private val connectivityManager: NetworkConnectivityManager
 ): ViewModel(), RSSViewModelInputs, RSSViewModelOutputs {
 
@@ -114,11 +116,10 @@ internal class RSSViewModel(
     }
 
     override fun clickModel(model: RSSModel.RSS) {
-        if (rssRepository.newsOpenInExternalBrowser) {
-            applicationNavigationComponent.openUrl(model.item.link)
-        } else {
-            rssNavigationComponent.web(model.item.title, model.item.link)
-        }
+        webNavigationComponent.web(
+            url = model.item.link,
+            title = model.item.title
+        )
     }
 
     //endregion

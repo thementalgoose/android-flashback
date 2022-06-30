@@ -22,11 +22,6 @@
     <string name="settings_rss_configure">Configure</string>
     <string name="settings_rss_configure_sources_title">Configure sources</string>
     <string name="settings_rss_configure_sources_description">Setup which RSS feeds you wish to subscribe too</string>
-    <string name="settings_rss_browser">Web Browser</string>
-    <string name="settings_rss_browser_external_title">Open articles in external browser</string>
-    <string name="settings_rss_browser_external_description">Open web links in an external browser by default and not inline in the app</string>
-    <string name="settings_rss_browser_javascript_title">Enable Javascript</string>
-    <string name="settings_rss_browser_javascript_description">For the in app browser: Toggle javascript being loaded. Disabling javascript should make the page and content load quicker but areas of the website may not perform properly</string>
 
     <!-- Configure -->
 

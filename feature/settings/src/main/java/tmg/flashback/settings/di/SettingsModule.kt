@@ -16,7 +16,7 @@ val settingsModule = module {
     viewModel { PrivacyPolicyViewModel() }
 
     viewModel { SettingsAppearanceViewModel(get(), get(), get()) }
-    viewModel { SettingsAboutViewModel(get(), get(), get(), get()) }
+    viewModel { SettingsAboutViewModel(get(), get(), get(), get(), get()) }
     viewModel { SettingsSupportViewModel(get(), get()) }
     viewModel { NightMoveViewModel(get(), get()) }
     viewModel { ThemeViewModel(get()) }

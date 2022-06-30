@@ -1,6 +1,6 @@
 package tmg.flashback.rss.ui.settings
 
-import tmg.flashback.RssNavigationComponent
+import tmg.flashback.rss.RssNavigationComponent
 import tmg.flashback.rss.R
 import tmg.flashback.rss.repo.RSSRepository
 import tmg.flashback.ui.settings.SettingsModel
@@ -41,22 +41,8 @@ internal class SettingsRSSViewModel (
                 description = R.string.settings_rss_show_description_description,
                 getState = { rssRepository.rssShowDescription },
                 saveState = { rssRepository.rssShowDescription = it }
-            ),
-            SettingsModel.Header(R.string.settings_rss_browser),
-            SettingsModel.SwitchPref(
-                title = R.string.settings_rss_browser_external_title,
-                description = R.string.settings_rss_browser_external_description,
-                getState = { rssRepository.newsOpenInExternalBrowser },
-                saveState = { rssRepository.newsOpenInExternalBrowser = it }
-            ),
-            SettingsModel.SwitchPref(
-                title = R.string.settings_rss_browser_javascript_title,
-                description = R.string.settings_rss_browser_javascript_description,
-                getState = { rssRepository.inAppEnableJavascript },
-                saveState = { rssRepository.inAppEnableJavascript = it }
-            ),
-
             )
+        )
 
     var inputs: SettingsRSSViewModelInputs = this
     var outputs: SettingsRSSViewModelOutputs = this

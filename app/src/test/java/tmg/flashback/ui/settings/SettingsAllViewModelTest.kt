@@ -6,7 +6,7 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.R
-import tmg.flashback.RssNavigationComponent
+import tmg.flashback.rss.RssNavigationComponent
 import tmg.flashback.ads.AdsNavigationComponent
 import tmg.flashback.ads.repository.AdsRepository
 import tmg.flashback.rss.controllers.RSSController
@@ -14,6 +14,7 @@ import tmg.flashback.settings.SettingsNavigationComponent
 import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.testutils.assertExpectedOrder
 import tmg.flashback.testutils.findPref
+import tmg.flashback.web.WebNavigationComponent
 import tmg.testutils.BaseTest
 
 internal class SettingsAllViewModelTest: BaseTest() {
@@ -23,6 +24,7 @@ internal class SettingsAllViewModelTest: BaseTest() {
     private var mockRssNavigationController: RssNavigationComponent = mockk(relaxed = true)
     private var mockSettingsNavigationComponent: SettingsNavigationComponent = mockk(relaxed = true)
     private var mockStatsNavigationComponent: StatsNavigationComponent = mockk(relaxed = true)
+    private var mockWebNavigationComponent: WebNavigationComponent = mockk(relaxed = true)
     private var mockAdsNavigationComponent: AdsNavigationComponent = mockk(relaxed = true)
 
     private lateinit var sut: SettingsAllViewModel
@@ -40,7 +42,8 @@ internal class SettingsAllViewModelTest: BaseTest() {
             mockRssNavigationController,
             mockSettingsNavigationComponent,
             mockStatsNavigationComponent,
-            mockAdsNavigationComponent
+            mockAdsNavigationComponent,
+            mockWebNavigationComponent,
         )
     }
 
@@ -53,6 +56,7 @@ internal class SettingsAllViewModelTest: BaseTest() {
                 Pair(R.string.settings_all_home, R.string.settings_all_home_subtitle),
                 Pair(R.string.settings_all_rss, R.string.settings_all_rss_subtitle),
                 Pair(R.string.settings_all_notifications, R.string.settings_all_notifications_subtitle),
+                Pair(R.string.settings_all_web_browser, R.string.settings_all_web_browser_subtitle),
                 Pair(R.string.settings_all_support, R.string.settings_all_support_subtitle),
                 Pair(R.string.settings_all_ads, R.string.settings_all_ads_subtitle),
                 Pair(R.string.settings_all_about, R.string.settings_all_about_subtitle)
@@ -70,6 +74,7 @@ internal class SettingsAllViewModelTest: BaseTest() {
             Pair(R.string.settings_all_appearance, R.string.settings_all_appearance_subtitle),
             Pair(R.string.settings_all_home, R.string.settings_all_home_subtitle),
             Pair(R.string.settings_all_notifications, R.string.settings_all_notifications_subtitle),
+            Pair(R.string.settings_all_web_browser, R.string.settings_all_web_browser_subtitle),
             Pair(R.string.settings_all_support, R.string.settings_all_support_subtitle),
             Pair(R.string.settings_all_ads, R.string.settings_all_ads_subtitle),
             Pair(R.string.settings_all_about, R.string.settings_all_about_subtitle)
@@ -88,6 +93,7 @@ internal class SettingsAllViewModelTest: BaseTest() {
             Pair(R.string.settings_all_home, R.string.settings_all_home_subtitle),
             Pair(R.string.settings_all_rss, R.string.settings_all_rss_subtitle),
             Pair(R.string.settings_all_notifications, R.string.settings_all_notifications_subtitle),
+            Pair(R.string.settings_all_web_browser, R.string.settings_all_web_browser_subtitle),
             Pair(R.string.settings_all_support, R.string.settings_all_support_subtitle),
             Pair(R.string.settings_all_about, R.string.settings_all_about_subtitle)
         )
@@ -137,6 +143,15 @@ internal class SettingsAllViewModelTest: BaseTest() {
         sut.clickPreference(sut.models.findPref(R.string.settings_all_support))
         verify {
             mockSettingsNavigationComponent.settingsSupport()
+        }
+    }
+
+    @Test
+    fun `clicking web browser fires open web browser event`() {
+        initSUT()
+        sut.clickPreference(sut.models.findPref(R.string.settings_all_web_browser))
+        verify {
+            mockWebNavigationComponent.webSettings()
         }
     }
 
