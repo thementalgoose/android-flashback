@@ -172,13 +172,13 @@ private fun Header(
                 .fillMaxWidth(),
             text = model.constructors.distinctBy { it.name }.joinToString { it.name }
         )
-        Spacer(Modifier.height(AppTheme.dimensions.paddingSmall))
+        Spacer(Modifier.height(AppTheme.dimensions.paddingXSmall))
         if (model.driverWikiUrl.isNotEmpty()) {
             ButtonTertiary(
                 text = stringResource(id = R.string.details_link_wikipedia),
                 onClick = { linkClicked(model.driverWikiUrl) }
             )
-            Spacer(Modifier.height(AppTheme.dimensions.paddingSmall))
+            Spacer(Modifier.height(AppTheme.dimensions.paddingXSmall))
         }
     }
 }
