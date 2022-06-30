@@ -1,11 +1,10 @@
-package tmg.flashback
+package tmg.flashback.rss
 
 import android.content.Context
 import android.content.Intent
 import tmg.flashback.rss.ui.configure.ConfigureRSSActivity
 import tmg.flashback.rss.ui.feed.RSSActivity
 import tmg.flashback.rss.ui.settings.SettingsRSSActivity
-import tmg.flashback.rss.ui.web.WebActivity
 import tmg.flashback.ui.navigation.ActivityProvider
 
 class RssNavigationComponent(
@@ -33,13 +32,5 @@ class RssNavigationComponent(
 
     internal fun configureRSS() = activityProvider.launch {
         it.startActivity(configureRSSIntent(it))
-    }
-
-    internal fun webIntent(context: Context, title: String, url: String): Intent {
-        return WebActivity.intent(context, title, url)
-    }
-
-    internal fun web(title: String, url: String) = activityProvider.launch {
-        it.startActivity(webIntent(it, title, url))
     }
 }

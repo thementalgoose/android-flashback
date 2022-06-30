@@ -16,6 +16,7 @@ import tmg.flashback.statistics.repo.RaceRepository
 import tmg.flashback.stats.R
 import tmg.flashback.stats.repository.NotificationRepository
 import tmg.flashback.ui.navigation.ApplicationNavigationComponent
+import tmg.flashback.web.WebNavigationComponent
 import tmg.utilities.models.StringHolder
 
 interface DetailsViewModelInputs {
@@ -30,7 +31,7 @@ interface DetailsViewModelOutputs {
 class DetailsViewModel(
     private val raceRepository: RaceRepository,
     private val notificationRepository: NotificationRepository,
-    private val applicationNavigationComponent: ApplicationNavigationComponent
+    private val webNavigationComponent: WebNavigationComponent
 ): ViewModel(), DetailsViewModelInputs, DetailsViewModelOutputs {
 
     val inputs: DetailsViewModelInputs = this
@@ -86,7 +87,7 @@ class DetailsViewModel(
     }
 
     override fun linkClicked(model: DetailsModel.Link) {
-        applicationNavigationComponent.openUrl(model.url)
+        webNavigationComponent.web(model.url)
     }
 
     private fun initialSchedule(models: List<Schedule>): List<DetailsModel> {

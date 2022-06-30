@@ -29,7 +29,7 @@ import tmg.flashback.ui.sync.SyncViewModel
 
 val appModule = module {
 
-    viewModel { SettingsAllViewModel(get(), get(), get(), get(), get(), get()) }
+    viewModel { SettingsAllViewModel(get(), get(), get(), get(), get(), get(), get()) }
     viewModel { tmg.flashback.ui2.dashboard.DashboardViewModel(androidContext(), get(), get(), get(), get(), get()) }
     viewModel { ListViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get()) }
     viewModel { HomeViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }

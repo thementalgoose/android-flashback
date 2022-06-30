@@ -12,6 +12,7 @@ import tmg.flashback.statistics.repo.CircuitRepository
 import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.stats.ui.weekend.WeekendInfo
 import tmg.flashback.ui.navigation.ApplicationNavigationComponent
+import tmg.flashback.web.WebNavigationComponent
 
 interface CircuitViewModelInputs {
     fun load(circuitId: String)
@@ -28,7 +29,7 @@ interface CircuitViewModelOutputs {
 class CircuitViewModel(
     private val circuitRepository: CircuitRepository,
     private val networkConnectivityManager: NetworkConnectivityManager,
-    private val applicationNavigationComponent: ApplicationNavigationComponent,
+    private val webNavigationComponent: WebNavigationComponent,
     private val statsNavigationComponent: StatsNavigationComponent,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), CircuitViewModelInputs, CircuitViewModelOutputs {
@@ -101,7 +102,7 @@ class CircuitViewModel(
     }
 
     override fun linkClicked(link: String) {
-        this.applicationNavigationComponent.openUrl(link)
+        this.webNavigationComponent.web(link)
     }
 
     override fun itemClicked(model: CircuitModel.Item) {

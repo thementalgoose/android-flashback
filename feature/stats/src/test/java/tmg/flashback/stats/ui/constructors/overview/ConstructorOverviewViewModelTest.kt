@@ -13,6 +13,7 @@ import tmg.flashback.formula1.model.model
 import tmg.flashback.statistics.repo.ConstructorRepository
 import tmg.flashback.stats.R
 import tmg.flashback.ui.navigation.ApplicationNavigationComponent
+import tmg.flashback.web.WebNavigationComponent
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertDataEventValue
 import tmg.testutils.livedata.assertListMatchesItem
@@ -23,7 +24,7 @@ internal class ConstructorOverviewViewModelTest: BaseTest() {
 
     private val mockConstructorRepository: ConstructorRepository = mockk(relaxed = true)
     private val mockNetworkConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
-    private val mockApplicationNavigationComponent: ApplicationNavigationComponent = mockk(relaxed = true)
+    private val mockWebNavigationComponent: WebNavigationComponent = mockk(relaxed = true)
 
     private lateinit var sut: ConstructorOverviewViewModel
 
@@ -31,7 +32,7 @@ internal class ConstructorOverviewViewModelTest: BaseTest() {
         sut = ConstructorOverviewViewModel(
             mockConstructorRepository,
             mockNetworkConnectivityManager,
-            mockApplicationNavigationComponent,
+            mockWebNavigationComponent,
             ioDispatcher = coroutineScope.testDispatcher
         )
     }
@@ -174,7 +175,7 @@ internal class ConstructorOverviewViewModelTest: BaseTest() {
         initSUT()
         sut.inputs.openUrl("url")
         verify {
-            mockApplicationNavigationComponent.openUrl("url")
+            mockWebNavigationComponent.web("url")
         }
     }
 

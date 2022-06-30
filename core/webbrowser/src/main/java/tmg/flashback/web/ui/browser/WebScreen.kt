@@ -1,4 +1,4 @@
-package tmg.flashback.rss.ui.web
+package tmg.flashback.web.ui.browser
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -15,8 +15,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidViewBinding
-import tmg.flashback.rss.R
-import tmg.flashback.rss.databinding.ActivityWebBinding
+import tmg.flashback.web.R
+import tmg.flashback.web.databinding.ActivityWebBinding
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
@@ -85,7 +85,7 @@ fun WebScreen(
 
             IconButton(onClick = { shareClicked(urlValue.value) }) {
                 Icon(
-                    painter = painterResource(id = R.drawable.ic_rss_share),
+                    painter = painterResource(id = R.drawable.ic_share),
                     contentDescription = stringResource(id = R.string.ab_rss_share),
                     tint = AppTheme.colors.contentPrimary
                 )
@@ -93,7 +93,7 @@ fun WebScreen(
 
             IconButton(onClick = { openInBrowser(urlValue.value) }) {
                 Icon(
-                    painter = painterResource(id = R.drawable.ic_rss_open_in_browser),
+                    painter = painterResource(id = R.drawable.ic_open_browser),
                     contentDescription = stringResource(id = R.string.ab_rss_open_in_browser),
                     tint = AppTheme.colors.contentPrimary
                 )

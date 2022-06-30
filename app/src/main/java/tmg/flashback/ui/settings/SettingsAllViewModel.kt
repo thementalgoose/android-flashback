@@ -1,12 +1,13 @@
 package tmg.flashback.ui.settings
 
 import tmg.flashback.R
-import tmg.flashback.RssNavigationComponent
+import tmg.flashback.rss.RssNavigationComponent
 import tmg.flashback.ads.AdsNavigationComponent
 import tmg.flashback.ads.repository.AdsRepository
 import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.settings.SettingsNavigationComponent
 import tmg.flashback.stats.StatsNavigationComponent
+import tmg.flashback.web.WebNavigationComponent
 
 //region Inputs
 
@@ -30,6 +31,7 @@ class SettingsAllViewModel(
     private val settingsNavigationComponent: SettingsNavigationComponent,
     private val statsNavigationComponent: StatsNavigationComponent,
     private val adsNavigationComponent: AdsNavigationComponent,
+    private val webNavigationComponent: WebNavigationComponent
 ): SettingsViewModel(), SettingsAllViewModelInputs, SettingsAllViewModelOutputs {
 
     override val models: List<SettingsModel> = mutableListOf<SettingsModel>().apply {
@@ -63,6 +65,13 @@ class SettingsAllViewModel(
                 onClick = {
                     statsNavigationComponent.settingsNotifications()
                 }
+        ))
+        add(SettingsModel.Pref(
+            title = R.string.settings_all_web_browser,
+            description = R.string.settings_all_web_browser_subtitle,
+            onClick = {
+                webNavigationComponent.webSettings()
+            }
         ))
         add(SettingsModel.Pref(
                 title = R.string.settings_all_support,
