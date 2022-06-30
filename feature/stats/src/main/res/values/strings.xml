@@ -1,0 +1,140 @@
+<resources>
+    <string name="weekend_race_round">Round %d</string>
+    <string name="circuit_race_round" formatted="false">%s, round %d</string>
+    <string name="weekend_race_round_season" formatted="false">Round %d, %d</string>
+    <string name="weekend_info_laps">%s laps</string>
+
+    <string name="notification_reminder_mins_60">1 hour</string>
+    <string name="notification_reminder_mins_30">30 minutes</string>
+    <string name="notification_reminder_mins_15">15 minutes</string>
+
+    <string name="season_standings_driver">%s\nDriver Standings</string>
+    <string name="season_standings_constructor">%s\nConstructor Standings</string>
+    <string name="search_title">Search</string>
+    <string name="search_category_driver">Drivers</string>
+    <string name="search_category_constructors">Constructors</string>
+    <string name="search_category_races">Races</string>
+    <string name="search_category_circuits">Circuits</string>
+
+    <string name="results_accurate_for" formatted="false">Results as of the %s (round %d)</string>
+
+    <plurals name="race_points">
+        <item quantity="one">%s point</item>
+        <item quantity="other">%s points</item>
+    </plurals>
+    <string name="race_status_retired">DNF</string>
+
+    <string name="qualifying_header_q1">Q1</string>
+    <string name="qualifying_header_q2">Q2</string>
+    <string name="qualifying_header_q3">Q3</string>
+
+    <string name="error_weekend_not_available">Unfortunately we don\'t have these results.</string>
+    <string name="error_data_not_available_try_again">An error occurred while getting these results. Please check your internet connection and try again</string>
+    <string name="error_weekend_not_available_yet">We don\'t have these results just yet, please check back after the race. Results usually appear 2–12 hours after every weekend event</string>
+    <string name="error_search_not_found">No results found</string>
+
+    <string name="search_placeholder">Find any driver, constructor, circuit or race from the history of Formula 1</string>
+
+    <string name="nav_constructors">Constructors</string>
+    <string name="nav_details">Details</string>
+    <string name="nav_race">Race</string>
+    <string name="nav_qualifying">Qualifying</string>
+    <string name="nav_sprint">Sprint</string>
+
+    <string name="details_link_youtube">Youtube</string>
+    <string name="details_link_map">Location</string>
+    <string name="details_link_laps">%s laps</string>
+    <string name="details_link_wikipedia">Wikipedia</string>
+
+    <string name="circuit_hosted_grand_prix_from" formatted="false">Hosted %d grand prix between %d and %d</string>
+    <string name="circuit_hosted_grand_prix" formatted="false">Hosted %d grand prix</string>
+
+    <!-- Settings -->
+    <string name="settings_home">Home</string>
+    <string name="settings_statistics">Statistics</string>
+    <string name="settings_default_season_title">Reset default season</string>
+    <string name="settings_default_season_description">Reset your default season selection let flashback manage the currently active season</string>
+    <string name="settings_default_season_updated">Flashback is now managing the currently active season</string>
+    <string name="settings_customisation_season_all_expanded_title">All section</string>
+    <string name="settings_customisation_season_all_expanded_description">Expand the all section in the menu by default</string>
+    <string name="settings_customisation_season_favourited_expanded_title">Favourites section</string>
+    <string name="settings_customisation_season_favourited_expanded_description">Expand the favourites section in the menu by default</string>
+    <string name="settings_information_title">Information</string>
+    <string name="settings_information_at_top_title">Show provided by at top</string>
+    <string name="settings_information_at_top_description">Show the "Data provided by" option at the top of each screen. Otherwise it will be displayed at the bottom</string>
+    <string name="settings_dashboard_title">Dashboard</string>
+    <string name="settings_dashboard_default_to_schedule_title">Schedule tab on startup</string>
+    <string name="settings_dashboard_default_to_schedule_description">When opening the app, go to the schedule tab by default. If disabled, the calendar tab will load first</string>
+    <string name="settings_dashboard_autoscroll_title">Autoscroll</string>
+    <string name="settings_dashboard_autoscroll_description">Autoscroll to the next race when you load the app when you\'re viewing the current season</string>
+
+
+    <string name="settings_up_next_category_title">Categories</string>
+    <string name="settings_up_next_category_race_title">Race</string>
+    <string name="settings_up_next_category_race_descrition">Get notified before race or sprints starts</string>
+    <string name="settings_up_next_category_qualifying_title">Qualifying</string>
+    <string name="settings_up_next_category_qualifying_descrition">Get notified before qualifying starts</string>
+    <string name="settings_up_next_category_free_practice_title">Free Practice</string>
+    <string name="settings_up_next_category_free_practice_descrition">Get notified before free practice starts</string>
+    <string name="settings_up_next_category_other_title">Other</string>
+    <string name="settings_up_next_category_other_descrition">Get notified before other F1 events starts (ie. Winter testing)</string>
+
+    <string name="settings_up_next_results_available_title">Results available</string>
+    <string name="settings_up_next_results_qualifying_title">Qualifying</string>
+    <string name="settings_up_next_results_qualifying_descrition">Get notified when qualifying results are available</string>
+    <string name="settings_up_next_results_sprint_title">Sprint</string>
+    <string name="settings_up_next_results_sprint_descrition">Get notified when sprint results are available</string>
+    <string name="settings_up_next_results_race_title">Race</string>
+    <string name="settings_up_next_results_race_descrition">Get notified when race results are available</string>
+
+    <string name="settings_up_next_title">Notice Period</string>
+    <string name="settings_up_next_time_before_title">Notice</string>
+    <string name="settings_up_next_time_before_description">How far before an event do you want a notification?</string>
+    <string name="settings_up_next_reminder_title">Reminder</string>
+    <string name="settings_up_next_reminder_description">How long before an event do you want Flashback to notify you?</string>
+
+    <!-- Driver overview -->
+    <string name="driver_overview_stat_career_drivers_title">Drivers championships</string>
+    <string name="driver_overview_stat_career_best_championship_position">Best championship position</string>
+    <string name="driver_overview_stat_career_championship_standing">Championship standing</string>
+    <string name="driver_overview_stat_career_championship_standing_so_far">Current championship standing</string>
+    <string name="driver_overview_stat_career_wins">Wins</string>
+    <string name="driver_overview_stat_career_podiums">Podiums</string>
+    <string name="driver_overview_stat_race_starts">Race starts</string>
+    <string name="driver_overview_stat_race_finishes">Race finishes</string>
+    <string name="driver_overview_stat_race_retirements">Race retirements</string>
+    <string name="driver_overview_stat_career_points">Points</string>
+    <string name="driver_overview_stat_career_best_finish">Best finish</string>
+    <string name="driver_overview_stat_career_points_finishes">Points finishes</string>
+    <string name="driver_overview_stat_career_qualifying_pole">Qualified on pole</string>
+    <string name="driver_overview_stat_career_qualifying_top_3">Qualified in top 3</string>
+    <string name="driver_overview_stat_career_qualifying_top_10">Qualified within top 10</string>
+    <string name="driver_overview_stat_career_team_history">History</string>
+    <string name="driver_overview_stat_career_team">Team</string>
+    <string name="driver_overview_constructor">Constructor: %s</string>
+    <string name="driver_overview_stat_birthday">Born %s</string>
+
+    <!-- Constructor Overview -->
+    <string name="constructor_overview_stat_titles">Constructors championships</string>
+    <string name="constructor_overview_stat_races">Races</string>
+    <string name="constructor_overview_stat_race_wins">Wins</string>
+    <string name="constructor_overview_stat_race_podiums">Podiums</string>
+    <string name="constructor_overview_stat_qualifying_poles">Qualifying on pole</string>
+    <string name="constructor_overview_stat_qualifying_top_3">Qualifying in the top 3</string>
+    <string name="constructor_overview_stat_points">Points</string>
+    <string name="constructor_overview_stat_points_finishes">Points finishes</string>
+    <string name="constructor_overview_stat_best_finish">Best finish</string>
+    <string name="constructor_overview_stat_best_championship_position">Best championship position</string>
+    <string name="constructor_overview_in_progress">Season in progress</string>
+
+    <string name="results_accurate_for_round" formatted="false">Results as of the %d, round %s</string>
+    <string name="results_accurate_for_year" formatted="false">Results as of the %d %s (round %d)</string>
+
+    <!-- Tyres -->
+    <string name="tyres_label">Tyre compounds</string>
+    <string name="tyres_list_title">%s tyres</string>
+    <string name="tyres_list_subtitle">These are the Pirelli tyre compounds used in this season</string>
+    <string name="tyres_dry_compounds">Dry</string>
+    <string name="tyres_wet_compounds">Wet</string>
+    <string name="tyres_size">%d inch wheel rims</string>
+</resources>

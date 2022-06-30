@@ -15,7 +15,3 @@ android {
         versionName project.ext.versionName
     }
 }
-
-dependencies {
-
-}

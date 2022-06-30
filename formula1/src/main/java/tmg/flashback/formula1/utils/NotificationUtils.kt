@@ -10,16 +10,16 @@ object NotificationUtils {
     fun getCategoryBasedOnLabel(label: String): RaceWeekend? {
         return when {
             label.includes(
-                "race",
-                "grand prix"
-            ) -> RaceWeekend.RACE
-            label.includes(
                 "qualifying",
                 "sprint qualifying",
                 "sprint quali",
-                "sprint",
                 "quali"
             ) -> RaceWeekend.QUALIFYING
+            label.includes(
+                "race",
+                "grand prix",
+                "sprint",
+            ) -> RaceWeekend.RACE
             label.includes(
                 "fp",
                 "free practice",

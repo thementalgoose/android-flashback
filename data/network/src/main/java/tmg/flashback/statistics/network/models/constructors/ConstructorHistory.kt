@@ -17,10 +17,10 @@ data class ConstructorHistory(
 @Serializable
 data class ConstructorHistoryStanding(
     val season: Int,
-    val championshipPosition: Int?,
-    val points: Double?,
+    val championshipPosition: Int? = null,
+    val points: Double? = 0.0,
     val inProgress: Boolean,
-    val races: Int?,
+    val races: Int? = 0,
     val drivers: Map<String, ConstructorHistoryStandingDriver>
 ) {
     companion object
@@ -31,12 +31,12 @@ data class ConstructorHistoryStanding(
 data class ConstructorHistoryStandingDriver(
     val driver: Driver,
     val points: Double,
-    val wins: Int?,
-    val races: Int?,
-    val podiums: Int?,
-    val pointsFinishes: Int?,
-    val pole: Int?,
-    val championshipPosition: Int?
+    val wins: Int? = null,
+    val races: Int? = null,
+    val podiums: Int? = null,
+    val pointsFinishes: Int? = null,
+    val pole: Int? = null,
+    val championshipPosition: Int? = null
 ) {
     companion object
 }

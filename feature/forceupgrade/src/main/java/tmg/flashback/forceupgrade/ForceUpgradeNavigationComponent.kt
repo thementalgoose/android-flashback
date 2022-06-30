@@ -1,0 +1,20 @@
+package tmg.flashback.forceupgrade
+
+import android.content.Context
+import android.content.Intent
+import tmg.flashback.forceupgrade.ui.forceupgrade.ForceUpgradeActivity
+import tmg.flashback.ui.navigation.ActivityProvider
+
+class ForceUpgradeNavigationComponent(
+    private val activityProvider: ActivityProvider
+) {
+
+    fun forceUpgradeIntent(context: Context): Intent {
+        return ForceUpgradeActivity.intent(context)
+    }
+
+    fun forceUpgrade() = activityProvider.launch {
+        val intent = forceUpgradeIntent(it)
+        it.startActivity(intent)
+    }
+}

@@ -1,21 +1,30 @@
 package tmg.flashback.statistics.repo.mappers.app
 
+import io.mockk.every
+import io.mockk.mockk
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.flashback.formula1.model.Circuit
-import tmg.flashback.formula1.model.CircuitHistory
-import tmg.flashback.formula1.model.model
+import tmg.flashback.formula1.model.*
 import tmg.flashback.statistics.room.models.circuit.model
 
 internal class CircuitMapperTest {
+
+    private val mockDriverDataMapper: DriverDataMapper = mockk(relaxed = true)
+    private val mockConstructorDataMapper: ConstructorDataMapper = mockk(relaxed = true)
 
     private lateinit var underTest: CircuitMapper
 
     @BeforeEach
     internal fun setUp() {
-        underTest = CircuitMapper()
+        underTest = CircuitMapper(
+            driverMapper = mockDriverDataMapper,
+            constructorMapper = mockConstructorDataMapper
+        )
+
+        every { mockDriverDataMapper.mapDriver(any()) } returns Driver.model()
+        every { mockConstructorDataMapper.mapConstructorData(any()) } returns Constructor.model()
     }
 
     @Test

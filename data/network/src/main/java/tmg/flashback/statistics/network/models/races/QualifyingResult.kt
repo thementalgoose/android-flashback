@@ -13,8 +13,7 @@ data class QualifyingResult(
     val qualified: Int?,
     val q1: String? = null,
     val q2: String? = null,
-    val q3: String? = null,
-    val qSprint: SprintQualifyingResult? = null
+    val q3: String? = null
 ) {
     companion object
 }

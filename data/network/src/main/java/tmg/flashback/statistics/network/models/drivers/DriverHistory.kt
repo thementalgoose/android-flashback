@@ -18,7 +18,7 @@ data class DriverHistory(
 @Serializable
 data class DriverHistoryStanding(
     val season: Int,
-    val championshipPosition: Int?,
+    val championshipPosition: Int? = null,
     val points: Double,
     val inProgress: Boolean,
     val races: Map<String, DriverHistoryStandingRace>

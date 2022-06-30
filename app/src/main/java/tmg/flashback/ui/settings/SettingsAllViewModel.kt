@@ -1,11 +1,13 @@
 package tmg.flashback.ui.settings
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import tmg.flashback.R
+import tmg.flashback.rss.RssNavigationComponent
+import tmg.flashback.ads.AdsNavigationComponent
 import tmg.flashback.ads.repository.AdsRepository
 import tmg.flashback.rss.controllers.RSSController
-import tmg.utilities.lifecycle.Event
+import tmg.flashback.settings.SettingsNavigationComponent
+import tmg.flashback.stats.StatsNavigationComponent
+import tmg.flashback.web.WebNavigationComponent
 
 //region Inputs
 
@@ -18,20 +20,18 @@ interface SettingsAllViewModelInputs {
 //region Outputs
 
 interface SettingsAllViewModelOutputs {
-    val openAppearance: LiveData<Event>
-    val openHome: LiveData<Event>
-    val openRss: LiveData<Event>
-    val openNotifications: LiveData<Event>
-    val openSupport: LiveData<Event>
-    val openAbout: LiveData<Event>
-    val openAds: LiveData<Event>
 }
 
 //endregion
 
 class SettingsAllViewModel(
-        private val rssController: RSSController,
-        private val adsRepository: AdsRepository
+    private val rssController: RSSController,
+    private val adsRepository: AdsRepository,
+    private val rssNavigationComponent: RssNavigationComponent,
+    private val settingsNavigationComponent: SettingsNavigationComponent,
+    private val statsNavigationComponent: StatsNavigationComponent,
+    private val adsNavigationComponent: AdsNavigationComponent,
+    private val webNavigationComponent: WebNavigationComponent
 ): SettingsViewModel(), SettingsAllViewModelInputs, SettingsAllViewModelOutputs {
 
     override val models: List<SettingsModel> = mutableListOf<SettingsModel>().apply {
@@ -40,14 +40,14 @@ class SettingsAllViewModel(
                 title = R.string.settings_all_appearance,
                 description = R.string.settings_all_appearance_subtitle,
                 onClick = {
-                    openAppearance.value = Event()
+                    settingsNavigationComponent.settingsAppearance()
                 }
         ))
         add(SettingsModel.Pref(
                 title = R.string.settings_all_home,
                 description = R.string.settings_all_home_subtitle,
                 onClick = {
-                    openHome.value = Event()
+                    statsNavigationComponent.settingsHome()
                 }
         ))
         if (rssController.enabled) {
@@ -55,7 +55,7 @@ class SettingsAllViewModel(
                     title = R.string.settings_all_rss,
                     description = R.string.settings_all_rss_subtitle,
                     onClick = {
-                        openRss.value = Event()
+                        rssNavigationComponent.settingsRSS()
                     }
             ))
         }
@@ -63,14 +63,21 @@ class SettingsAllViewModel(
                 title = R.string.settings_all_notifications,
                 description = R.string.settings_all_notifications_subtitle,
                 onClick = {
-                    openNotifications.value = Event()
+                    statsNavigationComponent.settingsNotifications()
                 }
+        ))
+        add(SettingsModel.Pref(
+            title = R.string.settings_all_web_browser,
+            description = R.string.settings_all_web_browser_subtitle,
+            onClick = {
+                webNavigationComponent.webSettings()
+            }
         ))
         add(SettingsModel.Pref(
                 title = R.string.settings_all_support,
                 description = R.string.settings_all_support_subtitle,
                 onClick = {
-                    openSupport.value = Event()
+                    settingsNavigationComponent.settingsSupport()
                 }
         ))
         if (adsRepository.allowUserConfig) {
@@ -78,7 +85,7 @@ class SettingsAllViewModel(
                 title = R.string.settings_all_ads,
                 description = R.string.settings_all_ads_subtitle,
                 onClick = {
-                    openAds.value = Event()
+                    adsNavigationComponent.settingsAds()
                 }
             ))
         }
@@ -86,18 +93,10 @@ class SettingsAllViewModel(
                 title = R.string.settings_all_about,
                 description = R.string.settings_all_about_subtitle,
                 onClick = {
-                    openAbout.value = Event()
+                    settingsNavigationComponent.settingsAbout()
                 }
         ))
     }
-
-    override val openAbout: MutableLiveData<Event> = MutableLiveData()
-    override val openAppearance: MutableLiveData<Event> = MutableLiveData()
-    override val openHome: MutableLiveData<Event> = MutableLiveData()
-    override val openRss: MutableLiveData<Event> = MutableLiveData()
-    override val openNotifications: MutableLiveData<Event> = MutableLiveData()
-    override val openSupport: MutableLiveData<Event> = MutableLiveData()
-    override val openAds: MutableLiveData<Event> = MutableLiveData()
 
     var inputs: SettingsAllViewModelInputs = this
     var outputs: SettingsAllViewModelOutputs = this

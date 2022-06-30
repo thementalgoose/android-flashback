@@ -5,6 +5,7 @@ apply from: rootDir.absolutePath + "/gradle/config-android.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-util.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-junit5.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-compose.gradle"
+apply from: rootDir.absolutePath + "/gradle/config-compose-providers.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-koin.gradle"
 
 apply plugin: 'com.google.firebase.crashlytics'
@@ -60,6 +61,7 @@ android {
     flavorDimensions 'version'
     productFlavors {
         sand {
+            isDefault.set(true)
             dimension 'version'
             applicationIdSuffix '.sand'
             versionNameSuffix '-sand'
@@ -105,16 +107,19 @@ tasks.whenTaskAdded { task ->
 dependencies {
 
     // Feature modules
-    implementation project(path: ":statistics")
+    implementation project(path: ":feature:statistics")
+    implementation project(path: ":feature:stats")
+    implementation project(path: ":feature:rss")
+    implementation project(path: ':feature:settings')
+    implementation project(path: ':feature:forceupgrade')
+    implementation project(path: ':feature:releasenotes')
+    implementation project(path: ":feature:regulations")
+    debugImplementation project(path: ":feature:debug")
+
+    // Data
     implementation project(path: ':data:repo')
     implementation project(path: ':data:network')
     implementation project(path: ":formula1")
-    implementation project(path: ":rss")
-    implementation project(path: ":common")
-    implementation project(path: ":regulations")
-
-    // Debug module
-    debugImplementation project(path: ":debug")
 
     // Core modules
     implementation project(path: ":ads")
@@ -125,6 +130,7 @@ dependencies {
     implementation project(path: ":core:device")
     implementation project(path: ":core:notifications")
     implementation project(path: ":core:preferences")
+    implementation project(path: ":core:webbrowser")
 
     implementation project(path: ":presentation:ui")
     implementation project(path: ":presentation:style")
@@ -193,7 +199,7 @@ dependencies {
     implementation deps.kotlin.playservices
 
     // Test Utils
-    testImplementation project(':test:stats-models')
+    testImplementation project(':test:models')
 }
 
 apply plugin: 'com.google.gms.google-services'

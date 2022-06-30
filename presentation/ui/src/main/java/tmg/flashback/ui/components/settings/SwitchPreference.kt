@@ -3,13 +3,17 @@ package tmg.flashback.ui.components.settings
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Checkbox
+import androidx.compose.material.CheckboxColors
+import androidx.compose.material.CheckboxDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
+import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 
@@ -41,12 +45,16 @@ internal fun SwitchPreference(
         ) {
             TextBody1(
                 text = title,
-                modifier = Modifier.padding(start = AppTheme.dimensions.paddingSmall)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = AppTheme.dimensions.paddingSmall)
             )
             Spacer(modifier = Modifier.height(4.dp))
             TextBody2(
                 text = subtitle,
-                modifier = Modifier.padding(start = AppTheme.dimensions.paddingSmall)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = AppTheme.dimensions.paddingSmall)
             )
             if (beta) {
                 Spacer(modifier = Modifier.height(4.dp))
@@ -55,6 +63,11 @@ internal fun SwitchPreference(
         }
         Spacer(modifier = Modifier.width(4.dp))
         Checkbox(
+            colors = CheckboxDefaults.colors(
+                checkedColor = AppTheme.colors.primary,
+                uncheckedColor = AppTheme.colors.contentTertiary,
+                checkmarkColor = AppTheme.colors.backgroundPrimary
+            ),
             checked = isChecked,
             onCheckedChange = null,
             modifier = Modifier.align(Alignment.CenterVertically)
@@ -62,28 +75,14 @@ internal fun SwitchPreference(
     }
 }
 
-@Preview
+@PreviewTheme
 @Composable
-private fun PreviewLight() {
-    AppThemePreview(isLight = true) {
+private fun Preview() {
+    AppThemePreview {
         SwitchPreference(
             title = "Show description",
             subtitle = "Show the article description alongside the rss source if it has one",
             isChecked = true,
-            preferenceClicked = { }
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewDark() {
-    AppThemePreview(isLight = false) {
-        SwitchPreference(
-            title = "Show description",
-            subtitle = "Show the article description alongside the rss source if it has one",
-            isChecked = true,
-            beta = true,
             preferenceClicked = { }
         )
     }

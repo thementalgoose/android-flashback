@@ -12,7 +12,7 @@ import tmg.flashback.statistics.room.di.roomModule
 val repoModule = networkModule + roomModule + module {
 
     // Mappers - App
-    single { CircuitMapper() }
+    single { CircuitMapper(get(), get()) }
     single { ConstructorDataMapper() }
     single { ConstructorMapper(get(), get()) }
     single { ConstructorStandingMapper(get(), get()) }
@@ -27,7 +27,7 @@ val repoModule = networkModule + roomModule + module {
 
     // Mappers - Network
     single { NetworkCircuitDataMapper() }
-    single { NetworkCircuitMapper(get()) }
+    single { NetworkCircuitMapper() }
     single { NetworkConstructorDataMapper() }
     single { NetworkConstructorMapper() }
     single { NetworkConstructorStandingMapper() }
@@ -44,7 +44,7 @@ val repoModule = networkModule + roomModule + module {
     single<CacheRepository> { RepoCacheRepository(get()) }
 
     // Repositories
-    single { CircuitRepository(get(), get(), get(), get(), get(), get(), get()) }
+    single { CircuitRepository(get(), get(), get(), get(), get(), get(), get(), get(), get()) }
     single { ConstructorRepository(get(), get(), get(), get(), get(), get(), get(), get(), get()) }
     single { DriverRepository(get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get()) }
     single { OverviewRepository(get(), get(), get(), get(), get(), get(), get(), get()) }

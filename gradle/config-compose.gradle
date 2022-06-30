@@ -13,9 +13,19 @@ dependencies {
     // Compose
     implementation deps.compose.activity
     implementation deps.compose.material
+    implementation deps.compose.material3
     implementation deps.compose.animation
     implementation deps.compose.tooling
     implementation deps.compose.runtime
     implementation deps.compose.viewmodel
     implementation deps.compose.theme_adapter
+    implementation deps.compose.viewbinding
+
+    implementation deps.androidx.windowmanager
+    implementation deps.coil
+
+    implementation deps.accompanist.swiperefresh
+    implementation deps.accompanist.horizontalpager
+    implementation deps.accompanist.systemuicontroller
+    implementation deps.accompanist.placeholder
 }
