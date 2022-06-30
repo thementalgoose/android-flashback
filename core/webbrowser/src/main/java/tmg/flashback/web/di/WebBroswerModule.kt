@@ -12,7 +12,7 @@ val webBrowserModule = module {
 
     single { WebBrowserRepository(get()) }
 
-    single { PickBrowserUseCase(get()) }
+    single { PickBrowserUseCase(get(), get()) }
 
     viewModel { SettingsWebBrowserViewModel(get()) }
 }

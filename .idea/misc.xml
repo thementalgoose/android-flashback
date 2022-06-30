@@ -54,6 +54,7 @@
         <entry key="feature/webbrowser/src/main/res/layout/fragment_web.xml" value="0.17083333333333334" />
         <entry key="presentation/style/src/main/java/tmg/flashback/style/buttons/ButtonTertiary.kt" value="0.5" />
         <entry key="presentation/ui/src/main/java/tmg/flashback/ui/components/errors/NetworkError.kt" value="0.33425925925925926" />
+        <entry key="presentation/ui/src/main/java/tmg/flashback/ui/components/layouts/Dashboard.kt" value="0.1" />
         <entry key="presentation/ui/src/main/java/tmg/flashback/ui/components/messages/Message.kt" value="0.33425925925925926" />
       </map>
     </option>

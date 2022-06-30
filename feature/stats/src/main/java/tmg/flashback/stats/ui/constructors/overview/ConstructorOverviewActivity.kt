@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.compose.setContent
+import tmg.flashback.stats.analytics.AnalyticsConstants.analyticsConstructorId
 import tmg.flashback.style.AppTheme
 import tmg.flashback.ui.base.BaseActivity
 
@@ -12,6 +13,10 @@ class ConstructorOverviewActivity: BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        logScreenViewed("Constructor Overview", mapOf(
+            analyticsConstructorId to (intent.extras?.getString(keyConstructorId) ?: "")
+        ))
 
         val constructorId: String = intent.extras?.getString(keyConstructorId)!!
         val constructorName: String = intent.extras?.getString(keyConstructorName)!!

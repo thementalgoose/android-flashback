@@ -10,6 +10,9 @@ import tmg.flashback.ui.base.BaseActivity
 class ConfigureRSSActivity: BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        logScreenViewed("Configure RSS")
+
         setContent {
             AppTheme {
                 SettingsRSSConfigureScreenVM(

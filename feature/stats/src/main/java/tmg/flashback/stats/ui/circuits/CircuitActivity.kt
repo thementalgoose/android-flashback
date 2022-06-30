@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import tmg.flashback.stats.analytics.AnalyticsConstants.analyticsCircuitId
 import tmg.flashback.style.AppTheme
 import tmg.flashback.ui.base.BaseActivity
 
@@ -11,6 +12,10 @@ class CircuitActivity: BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        logScreenViewed("Circuit Overview", mapOf(
+            analyticsCircuitId to  ((intent?.extras ?: savedInstanceState)?.getString(keyCircuitId) ?: "")
+        ))
 
         val circuitId: String = (intent?.extras ?: savedInstanceState)?.getString(keyCircuitId)!!
         val circuitName: String = (intent?.extras ?: savedInstanceState)?.getString(keyCircuitName)!!
