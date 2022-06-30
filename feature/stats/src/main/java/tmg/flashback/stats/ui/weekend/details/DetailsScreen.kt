@@ -1,9 +1,11 @@
 package tmg.flashback.stats.ui.weekend.details
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
@@ -29,6 +31,7 @@ import tmg.flashback.stats.ui.weekend.info.RaceInfoHeader
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
+import tmg.flashback.style.buttons.ButtonTertiary
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.utilities.extensions.format
@@ -72,7 +75,7 @@ fun DetailsScreen(
             }
             items(items, key = { it.id }) {
                 when (it) {
-                    is DetailsModel.Link -> {
+                    is DetailsModel.Links -> {
                         Link(it, linkClicked)
                     }
                     is DetailsModel.Label -> {
@@ -92,43 +95,22 @@ fun DetailsScreen(
 
 @Composable
 private fun Link(
-    model: DetailsModel.Link,
+    model: DetailsModel.Links,
     linkClicked: (DetailsModel.Link) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier
-            .fillMaxWidth()
-            .clickable(
-                onClick = { linkClicked(model) }
-            )
-            .padding(
-                vertical = AppTheme.dimensions.paddingSmall,
-                horizontal = AppTheme.dimensions.paddingMedium
-            )
+    Row(modifier = Modifier
+        .horizontalScroll(rememberScrollState())
+        .padding(horizontal = AppTheme.dimensions.paddingMedium)
     ) {
-        Icon(
-            painter = painterResource(id = model.icon),
-            contentDescription = null,
-            modifier = Modifier.size(24.dp),
-            tint = AppTheme.colors.contentSecondary
-        )
-        Spacer(Modifier.width(AppTheme.dimensions.paddingSmall))
-        TextBody1(
-            bold = true,
-            modifier = Modifier.weight(1f),
-            text = stringResource(id = model.label)
-        )
-        Spacer(Modifier.width(AppTheme.dimensions.paddingSmall))
-        Icon(
-            painter = painterResource(id = R.drawable.arrow_more),
-            contentDescription = null,
-            modifier = Modifier
-                .size(24.dp)
-                .alpha(0.4f),
-            tint = AppTheme.colors.contentTertiary
-        )
+        model.links.forEach { link ->
+            ButtonTertiary(
+                text = stringResource(id = link.label),
+                onClick = { linkClicked(link) },
+                icon = link.icon
+            )
+            Spacer(Modifier.width(AppTheme.dimensions.paddingMedium))
+        }
     }
 }
 
@@ -243,11 +225,18 @@ private fun Preview(
             linkClicked = { },
             info = WeekendInfo.from(race.raceInfo),
             items = listOf(
-                DetailsModel.Link(
-                    label = R.string.details_link_youtube,
-                    icon = R.drawable.ic_details_youtube,
-                    url = "https://www.youtube.com"
-                ),
+                DetailsModel.Links(listOf(
+                    DetailsModel.Link(
+                        label = R.string.details_link_youtube,
+                        icon = R.drawable.ic_details_youtube,
+                        url = "https://www.youtube.com"
+                    ),
+                    DetailsModel.Link(
+                        label = R.string.details_link_wikipedia,
+                        icon = R.drawable.ic_details_wikipedia,
+                        url = "https://www.wiki.com"
+                    )
+                )),
                 DetailsModel.ScheduleDay(
                     date = LocalDate.of(2020, 1, 1),
                     schedules = listOf(

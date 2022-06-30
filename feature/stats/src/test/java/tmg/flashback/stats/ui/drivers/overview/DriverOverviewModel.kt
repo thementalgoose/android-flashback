@@ -17,6 +17,7 @@ fun DriverOverviewModel.Companion.headerModel(
     driverBirthday: LocalDate = LocalDate.of(1995, 10, 12),
     driverWikiUrl: String = "wikiUrl",
     driverNationalityISO: String = "nationalityISO",
+    driverNationality: String = "nationality",
     constructors: List<Constructor> = listOf()
 ): DriverOverviewModel.Header = DriverOverviewModel.Header(
     driverId = driverId,
@@ -26,6 +27,7 @@ fun DriverOverviewModel.Companion.headerModel(
     driverBirthday = driverBirthday,
     driverWikiUrl = driverWikiUrl,
     driverNationalityISO = driverNationalityISO,
+    driverNationality = driverNationality,
     constructors = constructors
 )
 
