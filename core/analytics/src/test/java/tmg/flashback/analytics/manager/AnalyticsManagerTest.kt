@@ -145,7 +145,7 @@ internal class AnalyticsManagerTest {
         every { mockAnalyticsRepository.isEnabled } returns true
         initSUT()
 
-        sut.viewScreen("screen", this.javaClass, emptyMap())
+        sut.viewScreen("screen", emptyMap(), this.javaClass)
 
         verify {
             mockAnalyticsService.logViewScreen(any(), any(), any())
@@ -158,7 +158,7 @@ internal class AnalyticsManagerTest {
         every { mockAnalyticsRepository.isEnabled } returns false
         initSUT()
 
-        sut.viewScreen("screen", this.javaClass, emptyMap())
+        sut.viewScreen("screen", emptyMap(), this.javaClass)
 
         verify(exactly = 0) {
             mockAnalyticsService.logViewScreen(any(), any(), any())
