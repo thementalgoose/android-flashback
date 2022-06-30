@@ -14,6 +14,7 @@ import tmg.flashback.statistics.repo.DriverRepository
 import tmg.flashback.stats.R
 import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.ui.navigation.ApplicationNavigationComponent
+import tmg.flashback.web.WebNavigationComponent
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertDataEventValue
 import tmg.testutils.livedata.assertListMatchesItem
@@ -24,7 +25,7 @@ internal class DriverOverviewViewModelTest: BaseTest() {
     private val mockDriverRepository: DriverRepository = mockk(relaxed = true)
     private val mockNetworkConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
     private val mockStatsNavigationComponent: StatsNavigationComponent = mockk(relaxed = true)
-    private val mockApplicationNavigationComponent: ApplicationNavigationComponent = mockk(relaxed = true)
+    private val mockWebNavigationComponent: WebNavigationComponent = mockk(relaxed = true)
 
     private lateinit var sut: DriverOverviewViewModel
 
@@ -33,7 +34,7 @@ internal class DriverOverviewViewModelTest: BaseTest() {
             mockDriverRepository,
             mockNetworkConnectivityManager,
             mockStatsNavigationComponent,
-            mockApplicationNavigationComponent,
+            mockWebNavigationComponent,
             ioDispatcher = coroutineScope.testDispatcher
         )
     }
@@ -186,7 +187,7 @@ internal class DriverOverviewViewModelTest: BaseTest() {
         initSUT()
         sut.inputs.openUrl("url")
         verify {
-            mockApplicationNavigationComponent.openUrl("url")
+            mockWebNavigationComponent.web("url")
         }
     }
 

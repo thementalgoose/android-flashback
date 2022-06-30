@@ -11,6 +11,7 @@ import tmg.flashback.settings.SettingsNavigationComponent
 import tmg.flashback.settings.testutils.assertExpectedOrder
 import tmg.flashback.settings.testutils.findPref
 import tmg.flashback.ui.navigation.ApplicationNavigationComponent
+import tmg.flashback.web.WebNavigationComponent
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertEventFired
 import tmg.testutils.livedata.test
@@ -20,6 +21,7 @@ internal class SettingsAboutViewModelTest: BaseTest() {
     private val mockApplicationNavigationComponent: ApplicationNavigationComponent = mockk(relaxed = true)
     private val mockReleaseNotesNavigationComponent: ReleaseNotesNavigationComponent = mockk(relaxed = true)
     private val mockSettingsNavigationComponent: SettingsNavigationComponent = mockk(relaxed = true)
+    private val mockWebNavigationComponent: WebNavigationComponent = mockk(relaxed = true)
     private val mockBuildConfigManager: BuildConfigManager = mockk(relaxed = true)
 
     private lateinit var sut: SettingsAboutViewModel
@@ -27,9 +29,10 @@ internal class SettingsAboutViewModelTest: BaseTest() {
     private fun initSUT() {
         sut = SettingsAboutViewModel(
             mockApplicationNavigationComponent,
+            mockWebNavigationComponent,
             mockReleaseNotesNavigationComponent,
             mockSettingsNavigationComponent,
-            mockBuildConfigManager
+            mockBuildConfigManager,
         )
     }
 
@@ -65,7 +68,7 @@ internal class SettingsAboutViewModelTest: BaseTest() {
         initSUT()
         sut.models.findPref(R.string.settings_about_review_title).onClick?.invoke()
         verify {
-            mockApplicationNavigationComponent.openUrl(expected)
+            mockWebNavigationComponent.web(expected)
         }
     }
 

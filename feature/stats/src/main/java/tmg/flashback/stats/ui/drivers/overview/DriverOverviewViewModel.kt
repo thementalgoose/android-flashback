@@ -14,6 +14,7 @@ import tmg.flashback.statistics.repo.DriverRepository
 import tmg.flashback.stats.R
 import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.ui.navigation.ApplicationNavigationComponent
+import tmg.flashback.web.WebNavigationComponent
 import tmg.utilities.extensions.ordinalAbbreviation
 
 //region Inputs
@@ -43,7 +44,7 @@ class DriverOverviewViewModel(
     private val driverRepository: DriverRepository,
     private val networkConnectivityManager: NetworkConnectivityManager,
     private val statsNavigationComponent: StatsNavigationComponent,
-    private val applicationNavigationComponent: ApplicationNavigationComponent,
+    private val webNavigationComponent: WebNavigationComponent,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), DriverOverviewViewModelInputs, DriverOverviewViewModelOutputs {
 
@@ -141,7 +142,7 @@ class DriverOverviewViewModel(
     }
 
     override fun openUrl(url: String) {
-        applicationNavigationComponent.openUrl(url)
+        webNavigationComponent.web(url)
     }
 
     override fun openSeason(season: Int) {
