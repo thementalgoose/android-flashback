@@ -16,9 +16,4 @@ interface ApplicationNavigationComponent {
 
     fun settings()
     fun settingsIntent(context: Context): Intent
-
-    fun openUrl(url: String)
-
-//    fun openInAppBrowser(url: String, title: String? = null)
-//    fun openInExternalBrowser(url: String)
 }

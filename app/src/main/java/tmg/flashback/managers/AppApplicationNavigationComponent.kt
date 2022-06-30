@@ -72,16 +72,6 @@ class AppApplicationNavigationComponent(
         return SettingsAllActivity.intent(context)
     }
 
-    override fun openUrl(url: String) {
-        val uri = try { Uri.parse(url) } catch (e: MalformedURLException) { null } ?: return
-        val activity = activityProvider.activity ?: return
-        val intent = Intent(Intent.ACTION_VIEW, uri)
-        when {
-            url.startsWith("geo:") && isLocationIntentAvailable(activity) -> activity.startActivity(intent)
-            else -> activity.startActivity(intent)
-        }
-    }
-
     private fun isLocationIntentAvailable(context: Context): Boolean {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse("geo:32.5558485,34.65522447"))
         return context.packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY).isNotEmpty()

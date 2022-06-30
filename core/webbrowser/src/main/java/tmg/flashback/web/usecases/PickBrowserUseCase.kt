@@ -13,14 +13,17 @@ class PickBrowserUseCase(
     private val webBrowserRepository: WebBrowserRepository
 ) {
     fun open(activity: Activity, url: String, title: String) {
-        if (!URLUtil.isValidUrl(url)) { return }
-
         when {
-            isLocationIntentAvailable(activity) -> {
+            isMaps(url) && isLocationIntentAvailable(activity) -> {
                 activity.startActivity(openMaps(url))
             }
-            webBrowserRepository.openInExternal ||
-            isPlayStore(url) -> {
+            isYoutube(url) && URLUtil.isValidUrl(url) -> {
+                activity.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+            }
+            isPlayStore(url) && URLUtil.isValidUrl(url) -> {
+                activity.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+            }
+            webBrowserRepository.openInExternal && URLUtil.isValidUrl(url) -> {
                 activity.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
             }
             else -> {
@@ -31,8 +34,14 @@ class PickBrowserUseCase(
 
     private fun openMaps(url: String): Intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
 
+    private fun isMaps(url: String): Boolean {
+        return url.startsWith("geo:")
+    }
     private fun isPlayStore(url: String): Boolean {
         return url.startsWith("https://play.google.com")
+    }
+    private fun isYoutube(url: String): Boolean {
+        return url.startsWith("https://youtube.com") || url.startsWith("https://www.youtube.com")
     }
 
     private fun isLocationIntentAvailable(context: Context): Boolean {
