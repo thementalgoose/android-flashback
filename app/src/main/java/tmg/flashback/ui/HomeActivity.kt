@@ -25,17 +25,11 @@ import tmg.flashback.ui.sync.SyncActivity
 
 class HomeActivity: BaseActivity(), SplashScreen.KeepOnScreenCondition {
 
-    private lateinit var binding: ActivityDashboardBinding
-
     private val viewModel: HomeViewModel by viewModel()
 
     private val workerProvider: WorkerProvider by inject()
     private val crashController: CrashController by inject()
     private val forceUpgradeNavigationComponent: ForceUpgradeNavigationComponent by inject()
-
-    private val configManager: ConfigManager by inject()
-
-    override val themeType: DisplayType = DisplayType.DEFAULT
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,9 +45,7 @@ class HomeActivity: BaseActivity(), SplashScreen.KeepOnScreenCondition {
 
         setContent {
             AppTheme {
-                Scaffold(content = {
-                    DashboardScreen(windowSize = rememberWindowSizeClass())
-                })
+                DashboardScreen(windowSize = rememberWindowSizeClass())
             }
         }
 
