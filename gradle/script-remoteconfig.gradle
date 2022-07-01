@@ -65,10 +65,6 @@ task generateRemoteConfigDefaults {
                 value('false')
             }
             entry {
-                key('dev_compose')
-                value('false')
-            }
-            entry {
                 key('rss_add_custom')
                 value('true')
             }
