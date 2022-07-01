@@ -25,7 +25,7 @@
         <entry key="feature/statistics/src/main/res/layout/view_tyre_header.xml" value="0.17527173913043478" />
         <entry key="feature/stats/src/main/java/tmg/flashback/stats/components/Timeline.kt" value="0.25" />
         <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/circuits/CircuitScreen.kt" value="0.375" />
-        <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/constructors/overview/ConstructorOverviewScreen.kt" value="0.5" />
+        <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/constructors/overview/ConstructorOverviewScreen.kt" value="0.375" />
         <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/dashboard/constructors/ConstructorStandingsScreen.kt" value="0.1" />
         <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/dashboard/drivers/DriverStandingsScreen.kt" value="0.1" />
         <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/drivers/overview/DriverOverviewScreen.kt" value="0.375" />

@@ -200,9 +200,7 @@ private fun Stat(
 private fun HistoryHeader(
     modifier: Modifier = Modifier
 ) {
-    Row(modifier = modifier
-        .padding(horizontal = AppTheme.dimensions.paddingMedium)
-    ) {
+    Row(modifier = modifier) {
         Box(Modifier.weight(1f))
         Box(modifier = Modifier.width(pointsWidth)) {
             Icon(
