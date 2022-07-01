@@ -32,6 +32,7 @@ import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.buttons.ButtonTertiary
 import tmg.flashback.style.text.TextBody1
+import tmg.flashback.style.text.TextBody2
 import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.loading.SkeletonView
 import tmg.flashback.ui.components.loading.SkeletonViewList
@@ -165,14 +166,6 @@ private fun Header(
                 text = "${model.driverNationality} - $birthday"
             )
         }
-
-        TextBody1(
-            modifier = Modifier
-                .padding(vertical = AppTheme.dimensions.paddingXSmall)
-                .fillMaxWidth(),
-            text = model.constructors.distinctBy { it.name }.joinToString { it.name }
-        )
-        Spacer(Modifier.height(AppTheme.dimensions.paddingXSmall))
         if (model.driverWikiUrl.isNotEmpty()) {
             ButtonTertiary(
                 text = stringResource(id = R.string.details_link_wikipedia),
