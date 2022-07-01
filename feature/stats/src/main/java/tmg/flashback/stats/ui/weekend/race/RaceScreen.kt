@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -264,13 +265,25 @@ private fun PodiumResult(
             )
         }
         TextTitle(
-            text = model.driver.driver.name,
+            text = model.driver.driver.firstName,
             bold = true,
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(
                     top = AppTheme.dimensions.paddingSmall,
+                    start = 2.dp,
+                    end = 2.dp
+                )
+        )
+        TextTitle(
+            text = model.driver.driver.lastName,
+            bold = true,
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(
+                    top = AppTheme.dimensions.paddingXXSmall,
                     start = 2.dp,
                     end = 2.dp
                 )
@@ -325,7 +338,15 @@ private fun Result(
     modifier: Modifier = Modifier
 ) {
     Row(
-        modifier = modifier.height(IntrinsicSize.Min),
+        modifier = modifier.height(IntrinsicSize.Min)
+            .alpha(when (model.status.isStatusFinished()) {
+                true -> 1.0f
+                false -> 0.7f
+            })
+            .background(when (model.status.isStatusFinished()) {
+                true -> AppTheme.colors.backgroundPrimary
+                false -> AppTheme.colors.backgroundSecondary
+            }),
         horizontalArrangement = Arrangement.Center
     ) {
         DriverInfo(
