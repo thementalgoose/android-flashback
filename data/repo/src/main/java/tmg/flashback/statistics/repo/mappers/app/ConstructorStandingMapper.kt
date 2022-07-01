@@ -30,9 +30,11 @@ class ConstructorStandingMapper(
             inProgressRound = data.standing.inProgressRound,
             races = data.standing.races,
             championshipPosition = data.standing.position,
-            drivers = data.drivers.map {
-                mapConstructorStandingDriver(it)
-            }
+            drivers = data.drivers
+                .sortedByDescending { it.standing.points }
+                .map {
+                    mapConstructorStandingDriver(it)
+                }
         )
     }
 
