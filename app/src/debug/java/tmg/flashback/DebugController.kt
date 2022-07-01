@@ -9,11 +9,6 @@ import tmg.flashback.ui2.dashboard.list.ListItem
 class DebugController(
     private val remoteConfigService: RemoteConfigService
 ) {
-
-    // TODO: Remove this once migration to Jetpack Compose is done!
-    val compose: Boolean
-        get() = remoteConfigService.getBoolean("dev_compose")
-
     val listItem: ListItem.Button?
         get() {
             return ListItem.Button(

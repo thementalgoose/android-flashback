@@ -9,10 +9,6 @@ class DebugController(
     private val remoteConfigService: RemoteConfigService
 ) {
 
-    // TODO: Remove this once migration to Jetpack Compose is done!
-    val compose: Boolean
-        get() = remoteConfigService.getBoolean("dev_compose")
-
     val listItem: ListItem.Button? = null
 
     fun goToDebugActivity(context: Context) {
