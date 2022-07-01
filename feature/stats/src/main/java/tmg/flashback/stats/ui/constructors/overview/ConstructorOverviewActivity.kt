@@ -26,7 +26,7 @@ class ConstructorOverviewActivity: BaseActivity() {
                 ConstructorOverviewScreenVM(
                     constructorId = constructorId,
                     constructorName = constructorName,
-                    actionUpClicked = { }
+                    actionUpClicked = { finish() }
                 )
             }
         }
