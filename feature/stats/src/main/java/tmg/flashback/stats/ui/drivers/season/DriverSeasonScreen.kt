@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -263,6 +264,14 @@ private fun Result(
 ) {
     Row(modifier = modifier
         .clickable(onClick = { clickResult(model) })
+        .alpha(when (model.raceStatus.isStatusFinished()) {
+            true -> 1.0f
+            false -> 0.7f
+        })
+        .background(when (model.raceStatus.isStatusFinished()) {
+            true -> AppTheme.colors.backgroundPrimary
+            false -> AppTheme.colors.backgroundSecondary
+        })
         .padding(
             top = AppTheme.dimensions.paddingXSmall,
             bottom = AppTheme.dimensions.paddingXSmall,
@@ -280,7 +289,15 @@ private fun Result(
                 position = model.round
             )
             if (model.showConstructorLabel) {
-                TextCaption(text = model.constructor.name)
+                TextCaption(
+                    modifier = Modifier
+                        .padding(
+                            start = 48.dp,
+                            bottom = AppTheme.dimensions.paddingXSmall
+                        )
+                        .fillMaxWidth(),
+                    text = model.constructor.name
+                )
             }
         }
         Box(
@@ -346,6 +363,7 @@ private fun Result(
                     .fillMaxWidth()
                     .height(36.dp),
                 endProgress = progress,
+                backgroundColor = Color.Transparent,
                 barColor = model.constructor.colour,
                 label = {
                     when (it) {
