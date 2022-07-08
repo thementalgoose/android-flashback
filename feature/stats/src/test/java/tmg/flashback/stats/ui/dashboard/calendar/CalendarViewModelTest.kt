@@ -25,7 +25,6 @@ internal class CalendarViewModelTest: BaseTest() {
     private val mockOverviewRepository: OverviewRepository = mockk(relaxed = true)
     private val mockFetchSeasonUseCase: FetchSeasonUseCase = mockk(relaxed = true)
     private val mockNotificationRepository: NotificationRepository = mockk(relaxed = true)
-    private val mockStatsNavigator: StatsNavigator = mockk(relaxed = true)
     private val mockStatsNavigationComponent: StatsNavigationComponent = mockk(relaxed = true)
 
     private lateinit var underTest: CalendarViewModel
@@ -35,7 +34,6 @@ internal class CalendarViewModelTest: BaseTest() {
             fetchSeasonUseCase = mockFetchSeasonUseCase,
             overviewRepository = mockOverviewRepository,
             notificationRepository = mockNotificationRepository,
-            statsNavigator = mockStatsNavigator,
             statsNavigationComponent = mockStatsNavigationComponent,
             ioDispatcher = coroutineScope.testDispatcher
         )
@@ -144,7 +142,7 @@ internal class CalendarViewModelTest: BaseTest() {
         underTest.inputs.clickTyre(2020)
 
         verify {
-            mockStatsNavigator.goToTyreOverview(2020)
+            mockStatsNavigationComponent.tyres(2020)
         }
     }
 

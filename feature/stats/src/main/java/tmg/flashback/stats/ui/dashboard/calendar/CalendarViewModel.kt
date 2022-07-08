@@ -31,7 +31,6 @@ class CalendarViewModel(
     private val fetchSeasonUseCase: FetchSeasonUseCase,
     private val overviewRepository: OverviewRepository,
     private val notificationRepository: NotificationRepository,
-    private val statsNavigator: StatsNavigator,
     private val statsNavigationComponent: StatsNavigationComponent,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), CalendarViewModelInputs, CalendarViewModelOutputs {
@@ -92,7 +91,7 @@ class CalendarViewModel(
     }
 
     override fun clickTyre(season: Int) {
-        statsNavigator.goToTyreOverview(season)
+        statsNavigationComponent.tyres(season)
     }
 
     override fun clickItem(model: CalendarModel) {
