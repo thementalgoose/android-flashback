@@ -9,6 +9,7 @@
         <entry key="app/src/main/java/tmg/flashback/ui/window/WindowExpanded.kt" value="0.165" />
         <entry key="app/src/main/res/layout/activity_dashboard.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_settings.xml" value="0.1" />
+        <entry key="core/webbrowser/src/main/res/layout/fragment_web.xml" value="0.25104166666666666" />
         <entry key="feature/releasenotes/src/main/java/tmg/flashback/releasenotes/ui/releasenotes/ReleaseScreen.kt" value="0.13024850042844902" />
         <entry key="feature/rss/src/main/java/tmg/flashback/rss/ui/feed/RSSScreen.kt" value="0.1" />
         <entry key="feature/rss/src/main/res/drawable/ic_rss_icon_no_sources.xml" value="0.1795" />
@@ -37,6 +38,7 @@
         <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/drivers/overview/DriverOverviewScreen.kt" value="0.375" />
         <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/drivers/season/DriverSeasonScreen.kt" value="0.375" />
         <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/messaging/Banner.kt" value="0.37222222222222223" />
+        <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/tyres/TyreCompounds.kt" value="0.17785234899328858" />
         <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/weekend/details/DetailsScreen.kt" value="0.2525597269624573" />
         <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/weekend/info/InfoScreen.kt" value="0.21203438395415472" />
         <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/weekend/qualifying/QualifyingScreen.kt" value="0.26547352721849365" />
@@ -62,6 +64,7 @@
         <entry key="presentation/style/src/main/java/tmg/flashback/style/buttons/ButtonTertiary.kt" value="0.5" />
         <entry key="presentation/style/src/main/res/drawable/ripple_rectangle.xml" value="0.2095" />
         <entry key="presentation/ui/src/main/java/tmg/flashback/ui/components/errors/NetworkError.kt" value="0.33425925925925926" />
+        <entry key="presentation/ui/src/main/java/tmg/flashback/ui/components/layouts/BottomSheet.kt" value="0.25922330097087376" />
         <entry key="presentation/ui/src/main/java/tmg/flashback/ui/components/layouts/Dashboard.kt" value="0.1" />
         <entry key="presentation/ui/src/main/java/tmg/flashback/ui/components/messages/Message.kt" value="0.33425925925925926" />
         <entry key="presentation/ui/src/main/java/tmg/flashback/ui/components/navigation/NavigationColumn.kt" value="0.335" />

@@ -11,6 +11,7 @@ import tmg.flashback.stats.ui.search.SearchActivity
 import tmg.flashback.stats.ui.settings.home.SettingsHomeActivity
 import tmg.flashback.stats.ui.settings.notifications.SettingsNotificationsActivity
 import tmg.flashback.stats.ui.settings.notifications.reminder.UpNextReminderBottomSheetFragment
+import tmg.flashback.stats.ui.tyres.TyreBottomSheetFragment
 import tmg.flashback.stats.ui.weekend.WeekendActivity
 import tmg.flashback.stats.ui.weekend.WeekendInfo
 import tmg.flashback.ui.navigation.ActivityProvider
@@ -103,5 +104,10 @@ class StatsNavigationComponent(
     }
     fun settingsNotifications() = activityProvider.launch {
         it.startActivity(settingsNotificationsIntent(it))
+    }
+
+    internal fun tyres(season: Int) = activityProvider.launch {
+        val activity = it as? AppCompatActivity ?: return@launch
+        TyreBottomSheetFragment.instance(season).show(activity.supportFragmentManager, "TYRES")
     }
 }
