@@ -60,7 +60,7 @@ fun DriverSeasonScreenVM(
     val viewModel by viewModel<DriverSeasonViewModel>()
     viewModel.inputs.setup(driverId, season)
 
-    val list = viewModel.outputs.list.observeAsState(listOf(DriverSeasonModel.Loading))
+    val list = viewModel.outputs.list.observeAsState(emptyList())
     val isLoading = viewModel.outputs.isLoading.observeAsState(false)
     SwipeRefresh(
         state = rememberSwipeRefreshState(isRefreshing = isLoading.value),
