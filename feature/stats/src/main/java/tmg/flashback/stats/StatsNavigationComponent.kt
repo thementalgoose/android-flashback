@@ -7,6 +7,7 @@ import tmg.flashback.stats.ui.circuits.CircuitActivity
 import tmg.flashback.stats.ui.constructors.overview.ConstructorOverviewActivity
 import tmg.flashback.stats.ui.drivers.overview.DriverOverviewActivity
 import tmg.flashback.stats.ui.drivers.season.DriverSeasonActivity
+import tmg.flashback.stats.ui.feature.notificationonboarding.NotificationOnboardingBottomSheetFragment
 import tmg.flashback.stats.ui.search.SearchActivity
 import tmg.flashback.stats.ui.settings.home.SettingsHomeActivity
 import tmg.flashback.stats.ui.settings.notifications.SettingsNotificationsActivity
@@ -109,5 +110,10 @@ class StatsNavigationComponent(
     internal fun tyres(season: Int) = activityProvider.launch {
         val activity = it as? AppCompatActivity ?: return@launch
         TyreBottomSheetFragment.instance(season).show(activity.supportFragmentManager, "TYRES")
+    }
+
+    fun featureNotificationOnboarding() = activityProvider.launch {
+        val activity = it as? AppCompatActivity ?: return@launch
+        NotificationOnboardingBottomSheetFragment.instance().show(activity.supportFragmentManager, "FEATURE_NOTIFICATIONS")
     }
 }

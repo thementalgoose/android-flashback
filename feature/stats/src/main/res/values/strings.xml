@@ -7,6 +7,8 @@
     <string name="notification_reminder_mins_60">1 hour</string>
     <string name="notification_reminder_mins_30">30 minutes</string>
     <string name="notification_reminder_mins_15">15 minutes</string>
+    <string name="notification_onboarding_title">Notifications</string>
+    <string name="notification_onboarding_description">Get notified just before race, qualifying, free practice or testing events are coming up next in the formula 1. You can change these anytime in the settings, as well as how long before you wish to be notified</string>
 
     <string name="season_standings_driver">%s\nDriver Standings</string>
     <string name="season_standings_constructor">%s\nConstructor Standings</string>

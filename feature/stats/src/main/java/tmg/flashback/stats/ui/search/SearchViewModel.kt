@@ -9,7 +9,6 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import org.threeten.bp.LocalDate
 import tmg.flashback.ads.repository.AdsRepository
 import tmg.flashback.formula1.model.Circuit
 import tmg.flashback.formula1.model.Constructor
@@ -20,7 +19,6 @@ import tmg.flashback.statistics.repo.ConstructorRepository
 import tmg.flashback.statistics.repo.DriverRepository
 import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.stats.StatsNavigationComponent
-import tmg.flashback.stats.di.StatsNavigator
 import tmg.flashback.stats.ui.weekend.WeekendInfo
 import tmg.utilities.extensions.extend
 

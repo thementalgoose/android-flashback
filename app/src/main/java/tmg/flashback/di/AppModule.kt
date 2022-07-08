@@ -17,7 +17,6 @@ import tmg.flashback.notifications.navigation.NotificationNavigationProvider
 import tmg.flashback.prefs.manager.PreferenceManager
 import tmg.flashback.repositories.NetworkConfigRepository
 import tmg.flashback.statistics.network.NetworkConfigManager
-import tmg.flashback.stats.di.StatsNavigator
 import tmg.flashback.ui.dashboard.DashboardViewModel
 import tmg.flashback.ui.HomeViewModel
 import tmg.flashback.ui.dashboard.menu.MenuViewModel
@@ -36,7 +35,7 @@ val appModule = module {
     viewModel { SyncViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get()) }
 
     viewModel { DashboardViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get()) }
-    viewModel { MenuViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get()) }
+    viewModel { MenuViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
 
     single { FlashbackStartup(get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get()) }
 
@@ -53,7 +52,4 @@ val appModule = module {
 
     single { NetworkConfigRepository(get()) }
     single<NetworkConfigManager> { AppNetworkConfigManager(get()) }
-
-    // Temporary for stats migration to compose
-    single<StatsNavigator> { StatsNavigatorImpl(get()) }
 }

@@ -12,6 +12,7 @@ import tmg.flashback.stats.ui.dashboard.constructors.ConstructorsStandingViewMod
 import tmg.flashback.stats.ui.dashboard.drivers.DriversStandingViewModel
 import tmg.flashback.stats.ui.drivers.overview.DriverOverviewViewModel
 import tmg.flashback.stats.ui.drivers.season.DriverSeasonViewModel
+import tmg.flashback.stats.ui.feature.notificationonboarding.NotificationOnboardingViewModel
 import tmg.flashback.stats.ui.search.SearchViewModel
 import tmg.flashback.stats.ui.settings.home.SettingsHomeViewModel
 import tmg.flashback.stats.ui.settings.notifications.SettingsNotificationViewModel
@@ -50,6 +51,8 @@ val statsModule = module {
     viewModel { DriverOverviewViewModel(get(), get(), get(), get()) }
     viewModel { DriverSeasonViewModel(get(), get(), get()) }
     viewModel { ConstructorOverviewViewModel(get(), get(), get()) }
+
+    viewModel { NotificationOnboardingViewModel(get()) }
 
     single { StatsNavigationComponent(get()) }
 

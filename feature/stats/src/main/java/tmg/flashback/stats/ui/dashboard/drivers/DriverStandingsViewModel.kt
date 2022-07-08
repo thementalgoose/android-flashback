@@ -5,10 +5,8 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import tmg.flashback.formula1.model.SeasonDriverStandingSeason
 import tmg.flashback.statistics.repo.SeasonRepository
 import tmg.flashback.stats.StatsNavigationComponent
-import tmg.flashback.stats.di.StatsNavigator
 import tmg.flashback.stats.usecases.FetchSeasonUseCase
 
 interface DriversStandingViewModelInputs {
