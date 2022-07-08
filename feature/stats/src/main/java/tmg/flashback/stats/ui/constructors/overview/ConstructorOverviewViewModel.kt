@@ -237,7 +237,8 @@ class ConstructorOverviewViewModel(
                     championshipPosition = item.championshipStanding,
                     points = item.points,
                     isInProgress = item.isInProgress,
-                    drivers = item.drivers.values.toList()
+                    drivers = item.drivers.values
+                        .sortedByDescending { it.points }
                 )
             }
     }
