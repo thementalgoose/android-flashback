@@ -9,7 +9,6 @@ import org.threeten.bp.LocalDate
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.stats.StatsNavigationComponent
-import tmg.flashback.stats.di.StatsNavigator
 import tmg.flashback.stats.repository.NotificationRepository
 import tmg.flashback.stats.ui.weekend.WeekendInfo
 import tmg.flashback.stats.usecases.FetchSeasonUseCase

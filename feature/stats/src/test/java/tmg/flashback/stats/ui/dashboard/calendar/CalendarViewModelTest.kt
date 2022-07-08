@@ -11,10 +11,8 @@ import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.model.model
 import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.stats.StatsNavigationComponent
-import tmg.flashback.stats.di.StatsNavigator
 import tmg.flashback.stats.repository.NotificationRepository
 import tmg.flashback.stats.repository.models.NotificationSchedule
-import tmg.flashback.stats.ui.weekend.toWeekendInfo
 import tmg.flashback.stats.usecases.FetchSeasonUseCase
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.test
