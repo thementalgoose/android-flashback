@@ -18,6 +18,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import org.koin.androidx.compose.viewModel
 import org.threeten.bp.LocalDate
 import tmg.flashback.formula1.enums.isStatusFinished
@@ -59,13 +61,19 @@ fun DriverSeasonScreenVM(
     viewModel.inputs.setup(driverId, season)
 
     val list = viewModel.outputs.list.observeAsState(listOf(DriverSeasonModel.Loading))
-    DriverSeasonScreen(
-        list = list.value,
-        driverName = driverName,
-        season = season,
-        actionUpClicked = actionUpClicked,
-        resultClicked = viewModel.inputs::clickSeasonRound
-    )
+    val isLoading = viewModel.outputs.isLoading.observeAsState(false)
+    SwipeRefresh(
+        state = rememberSwipeRefreshState(isRefreshing = isLoading.value),
+        onRefresh = viewModel.inputs::refresh
+    ) {
+        DriverSeasonScreen(
+            list = list.value,
+            driverName = driverName,
+            season = season,
+            actionUpClicked = actionUpClicked,
+            resultClicked = viewModel.inputs::clickSeasonRound
+        )
+    }
 }
 
 @Composable
