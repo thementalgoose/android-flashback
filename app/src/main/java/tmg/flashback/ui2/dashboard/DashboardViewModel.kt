@@ -12,8 +12,8 @@ import tmg.flashback.configuration.usecases.FetchConfigUseCase
 import tmg.flashback.releasenotes.usecases.NewReleaseNotesUseCase
 import tmg.flashback.statistics.BuildConfig
 import tmg.flashback.statistics.controllers.HomeController
-import tmg.flashback.statistics.extensions.updateAllWidgets
 import tmg.flashback.statistics.workmanager.WorkerProvider
+import tmg.flashback.widgets.updateAllWidgets
 import tmg.utilities.lifecycle.Event
 
 //region Inputs
