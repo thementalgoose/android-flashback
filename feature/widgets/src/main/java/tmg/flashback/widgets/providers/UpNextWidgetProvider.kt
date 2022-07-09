@@ -1,4 +1,4 @@
-package tmg.flashback.statistics.widgets
+package tmg.flashback.widgets.providers
 
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
@@ -14,7 +14,10 @@ import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.threeten.bp.LocalDate
@@ -26,22 +29,21 @@ import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.formula1.enums.TrackLayout
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
-import tmg.flashback.statistics.BuildConfig
-import tmg.flashback.statistics.R
-import tmg.flashback.statistics.controllers.ScheduleController
-import tmg.flashback.ui.navigation.ApplicationNavigationComponent
+import tmg.flashback.statistics.repo.ScheduleRepository
+import tmg.flashback.widgets.BuildConfig
+import tmg.flashback.widgets.R
+import tmg.flashback.widgets.WidgetNavigationComponent
 import tmg.utilities.extensions.toEnum
-import tmg.utilities.utils.LocalDateUtils.Companion.daysBetween
+import tmg.utilities.utils.LocalDateUtils
 
 class UpNextWidgetProvider : AppWidgetProvider(), KoinComponent {
 
     private val crashController: CrashController by inject()
-    private val scheduleController: ScheduleController by inject()
     private val buildConfigManager: BuildConfigManager by inject()
-    private val applicationNavigationComponent: ApplicationNavigationComponent by inject()
-
     private val applyConfigUseCase: ApplyConfigUseCase by inject()
     private val fetchConfigUseCase: FetchConfigUseCase by inject()
+    private val scheduleRepository: ScheduleRepository by inject()
+    private val widgetNavigationComponent: WidgetNavigationComponent by inject()
 
     override fun onReceive(context: Context?, intent: Intent?) {
         super.onReceive(context, intent)
@@ -57,7 +59,10 @@ class UpNextWidgetProvider : AppWidgetProvider(), KoinComponent {
         }
 
         // Pre app checks
-        val nextEvent: OverviewRace? = runBlocking { scheduleController.getNextEvent() }
+        val nextEvent: OverviewRace? = runBlocking {
+            scheduleRepository.getUpcomingEvents()
+                .minByOrNull { it.date }
+        }
         if (BuildConfig.DEBUG) {
             Log.i("Widgets", "Next event found to be $nextEvent")
         }
@@ -120,7 +125,8 @@ class UpNextWidgetProvider : AppWidgetProvider(), KoinComponent {
 
                     remoteView.setTextViewText(R.id.days, context.getString(R.string.dashboard_up_next_date_today))
                     remoteView.setTextViewText(R.id.daystogo, eventsToday.joinToString(separator = ", ") {
-                        val result: String = it.timestamp.deviceLocalDateTime.toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm"))
+                        val result: String = it.timestamp.deviceLocalDateTime.toLocalTime().format(
+                            DateTimeFormatter.ofPattern("HH:mm"))
                         return@joinToString "${it.label} ($result)"
                     })
                     remoteView.setViewVisibility(R.id.daystogo, View.VISIBLE)
@@ -132,11 +138,15 @@ class UpNextWidgetProvider : AppWidgetProvider(), KoinComponent {
                         .filter {
                             it.timestamp.utcLocalDateTime.toLocalDate() == eventsInFuture.first().timestamp.utcLocalDateTime.toLocalDate()
                         }
-                    val days = daysBetween(LocalDate.now(), eventsInFuture.first().timestamp.utcLocalDateTime.toLocalDate())
+                    val days = LocalDateUtils.daysBetween(
+                        LocalDate.now(),
+                        eventsInFuture.first().timestamp.utcLocalDateTime.toLocalDate()
+                    )
 
                     remoteView.setTextViewText(R.id.days, context.resources.getQuantityString(R.plurals.dashboard_up_next_suffix_days, days, days))
                     remoteView.setTextViewText(R.id.daystogo, next.joinToString(separator = ", ") {
-                        val result: String = it.timestamp.deviceLocalDateTime.toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm"))
+                        val result: String = it.timestamp.deviceLocalDateTime.toLocalTime().format(
+                            DateTimeFormatter.ofPattern("HH:mm"))
                         return@joinToString "${it.label} ($result)"
                     })
                     remoteView.setViewVisibility(R.id.daystogo, View.VISIBLE)
@@ -189,7 +199,7 @@ class UpNextWidgetProvider : AppWidgetProvider(), KoinComponent {
     }
 
     private fun getOpenAppPendingIntent(context: Context): PendingIntent {
-        val intent = applicationNavigationComponent.relaunchAppIntent(context)
+        val intent = widgetNavigationComponent.launchApp(context)
         return PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
     }
 

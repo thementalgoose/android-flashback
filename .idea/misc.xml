@@ -9,6 +9,8 @@
         <entry key="app/src/main/java/tmg/flashback/ui/window/WindowExpanded.kt" value="0.165" />
         <entry key="app/src/main/res/layout/activity_dashboard.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_settings.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.1480978260869565" />
+        <entry key="app/src/main/res/layout/view_season_list_season.xml" value="0.1480978260869565" />
         <entry key="core/webbrowser/src/main/res/layout/fragment_web.xml" value="0.25104166666666666" />
         <entry key="feature/releasenotes/src/main/java/tmg/flashback/releasenotes/ui/releasenotes/ReleaseScreen.kt" value="0.13024850042844902" />
         <entry key="feature/rss/src/main/java/tmg/flashback/rss/ui/feed/RSSScreen.kt" value="0.1" />
@@ -27,10 +29,14 @@
         <entry key="feature/statistics/src/main/res/drawable/ic_standings.xml" value="0.1085" />
         <entry key="feature/statistics/src/main/res/drawable/ic_team.xml" value="0.1085" />
         <entry key="feature/statistics/src/main/res/drawable/ic_tyre.xml" value="0.193" />
+        <entry key="feature/statistics/src/main/res/drawable/ic_widget_refresh.xml" value="0.1855" />
         <entry key="feature/statistics/src/main/res/drawable/nav_rss.xml" value="0.2095" />
         <entry key="feature/statistics/src/main/res/drawable/nav_search.xml" value="0.2095" />
+        <entry key="feature/statistics/src/main/res/drawable/widget_circuit_unknown.xml" value="0.1855" />
+        <entry key="feature/statistics/src/main/res/drawable/widget_up_next_preview.xml" value="0.1855" />
         <entry key="feature/statistics/src/main/res/layout/fragment_bottom_sheet_notifications_onboarding.xml" value="0.25104166666666666" />
         <entry key="feature/statistics/src/main/res/layout/view_tyre_header.xml" value="0.17527173913043478" />
+        <entry key="feature/statistics/src/main/res/layout/widget_up_next.xml" value="0.45" />
         <entry key="feature/stats/src/main/java/tmg/flashback/stats/components/Timeline.kt" value="0.25" />
         <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/circuits/CircuitScreen.kt" value="0.375" />
         <entry key="feature/stats/src/main/java/tmg/flashback/stats/ui/constructors/overview/ConstructorOverviewScreen.kt" value="0.375" />
@@ -63,6 +69,11 @@
         <entry key="feature/webbrowser/src/main/res/drawable/ic_web_close.xml" value="0.1785" />
         <entry key="feature/webbrowser/src/main/res/layout/activity_web.xml" value="0.17083333333333334" />
         <entry key="feature/webbrowser/src/main/res/layout/fragment_web.xml" value="0.17083333333333334" />
+        <entry key="feature/widgets/src/main/res/drawable/ic_widget_refresh.xml" value="0.1855" />
+        <entry key="feature/widgets/src/main/res/drawable/widget_circuit_unknown.xml" value="0.1855" />
+        <entry key="feature/widgets/src/main/res/drawable/widget_up_next_preview.xml" value="0.1855" />
+        <entry key="feature/widgets/src/main/res/layout/widget_up_next.xml" value="0.1956521739130435" />
+        <entry key="feature/widgets/src/main/res/xml/widget_up_next.xml" value="0.1956521739130435" />
         <entry key="presentation/style/src/main/java/tmg/flashback/style/buttons/ButtonTertiary.kt" value="0.5" />
         <entry key="presentation/style/src/main/res/drawable/ripple_rectangle.xml" value="0.2095" />
         <entry key="presentation/ui/src/main/java/tmg/flashback/ui/components/errors/NetworkError.kt" value="0.33425925925925926" />

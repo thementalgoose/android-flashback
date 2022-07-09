@@ -114,6 +114,7 @@ dependencies {
     implementation project(path: ':feature:forceupgrade')
     implementation project(path: ':feature:releasenotes')
     implementation project(path: ":feature:regulations")
+    implementation project(path: ":feature:widgets")
     debugImplementation project(path: ":feature:debug")
 
     // Data

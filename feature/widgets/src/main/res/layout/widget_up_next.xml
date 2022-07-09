@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    tools:background="#181818">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerInParent="true"
+        android:paddingStart="0dp"
+        android:paddingEnd="@dimen/paddingSmall">
+
+        <TextView
+            android:id="@+id/name"
+            style="@style/Text.Widget.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="@dimen/paddingMedium"
+            android:layout_marginEnd="@dimen/paddingMedium"
+            android:layout_toStartOf="@id/circuit"
+            tools:text="Pre-season testing" />
+
+        <TextView
+            android:id="@+id/subtitle"
+            style="@style/Text.Widget.Subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/name"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="@dimen/paddingMedium"
+            android:layout_marginEnd="@dimen/paddingMedium"
+            android:layout_toStartOf="@id/circuit"
+            tools:text="Bahrain International Circuit" />
+
+        <TextView
+            android:id="@+id/days"
+            style="@style/Text.Widget.Days"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/subtitle"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="@dimen/paddingSmall"
+            android:layout_marginEnd="@dimen/paddingSmall"
+            android:gravity="center|start"
+            tools:text="13" />
+
+        <TextView
+            android:id="@+id/daystogo"
+            style="@style/Text.Widget.DaysUntil"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/days"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="@dimen/paddingSmall"
+            android:layout_toStartOf="@id/circuit"
+            android:gravity="center|start"
+            tools:text="days to go" />
+
+        <ImageView
+            android:id="@+id/refresh"
+            android:layout_width="@dimen/widgetRefreshWidth"
+            android:layout_height="match_parent"
+            android:layout_alignTop="@id/flag"
+            android:layout_alignBottom="@id/flag"
+            android:layout_alignParentEnd="true"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_widget_refresh"
+            app:tint="#fcfcfc" />
+
+        <ImageView
+            android:id="@+id/circuit"
+            android:layout_width="@dimen/widgetCircuitWidth"
+            android:layout_height="@dimen/widgetCircuitHeight"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:importantForAccessibility="no"
+            app:tint="#fcfcfc"
+            tools:src="@drawable/circuit_bahrain" />
+
+        <ImageView
+            android:id="@+id/flag"
+            android:layout_width="@dimen/widgetFlagSize"
+            android:layout_height="@dimen/widgetFlagSize"
+            android:layout_below="@id/circuit"
+            android:layout_alignStart="@id/circuit"
+            android:layout_alignEnd="@id/circuit"
+            android:layout_marginEnd="@dimen/paddingMedium"
+            android:importantForAccessibility="no"
+            app:srcCompat="@drawable/bh" />
+
+    </RelativeLayout>
+
+</RelativeLayout>
