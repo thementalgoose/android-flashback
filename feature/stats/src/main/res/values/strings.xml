@@ -4,6 +4,10 @@
     <string name="weekend_race_round_season" formatted="false">Round %d, %d</string>
     <string name="weekend_info_laps">%s laps</string>
 
+
+    <string name="notification_content_title" formatted="false">%s starts in %s</string>
+    <string name="notification_content_text" formatted="false">%s %s starts in %s at %s</string>
+    <string name="notification_content_text_device_time" formatted="false">%s %s (device time)</string>
     <string name="notification_reminder_mins_60">1 hour</string>
     <string name="notification_reminder_mins_30">30 minutes</string>
     <string name="notification_reminder_mins_15">15 minutes</string>

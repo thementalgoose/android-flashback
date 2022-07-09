@@ -1,6 +1,9 @@
 package tmg.flashback.stats.di
 
+import androidx.work.WorkerParameters
+import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.androidx.workmanager.dsl.worker
 import org.koin.dsl.module
 import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.stats.repository.HomeRepository
@@ -23,9 +26,9 @@ import tmg.flashback.stats.ui.weekend.qualifying.QualifyingViewModel
 import tmg.flashback.stats.ui.weekend.race.RaceViewModel
 import tmg.flashback.stats.ui.weekend.details.DetailsViewModel
 import tmg.flashback.stats.ui.weekend.sprint.SprintViewModel
-import tmg.flashback.stats.usecases.DefaultSeasonUseCase
-import tmg.flashback.stats.usecases.FetchSeasonUseCase
-import tmg.flashback.stats.usecases.ResubscribeNotificationsUseCase
+import tmg.flashback.stats.usecases.*
+import tmg.flashback.stats.workmanager.ContentSyncJob
+import tmg.flashback.stats.workmanager.ScheduleNotificationsJob
 
 val statsModule = module {
 
@@ -62,5 +65,28 @@ val statsModule = module {
 
     single { HomeRepository(get(), get()) }
     single { NotificationRepository(get()) }
+
+    single { ContentSyncJobScheduleUseCase(get()) }
+    single { ScheduleNotificationsUseCase(get()) }
+
+    worker { (worker: WorkerParameters) ->
+        ContentSyncJob(
+            defaultSeasonUseCase = get(),
+            overviewRepository = get(),
+            context = androidContext(),
+            params = worker
+        )
+    }
+    worker { (worker: WorkerParameters) ->
+        ScheduleNotificationsJob(
+            scheduleRepository = get(),
+            notificationRepository = get(),
+            localNotificationCancelUseCase = get(),
+            localNotificationScheduleUseCase = get(),
+            notificationConfigRepository = get(),
+            context = androidContext(),
+            parameters = worker
+        )
+    }
 
 }
