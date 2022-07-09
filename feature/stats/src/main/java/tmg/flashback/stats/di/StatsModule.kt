@@ -73,6 +73,7 @@ val statsModule = module {
         ContentSyncJob(
             defaultSeasonUseCase = get(),
             overviewRepository = get(),
+            scheduleNotificationsUseCase = get(),
             context = androidContext(),
             params = worker
         )
