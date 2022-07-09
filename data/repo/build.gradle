@@ -32,5 +32,8 @@ dependencies {
     implementation project(path: ':core:device')
 
     testImplementation project(':test:models')
-    // Tests
+
+    // WorkManager
+    implementation deps.androidx.workmanager
+    implementation deps.androidx.workmanager_ktx
 }

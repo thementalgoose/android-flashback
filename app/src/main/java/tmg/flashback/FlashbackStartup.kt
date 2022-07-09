@@ -20,7 +20,6 @@ import tmg.flashback.notifications.managers.SystemNotificationManager
 import tmg.flashback.notifications.usecases.RemoteNotificationSubscribeUseCase
 import tmg.flashback.notifications.usecases.RemoteNotificationUnsubscribeUseCase
 import tmg.flashback.statistics.controllers.ScheduleController
-import tmg.flashback.statistics.extensions.updateAllWidgets
 import tmg.flashback.statistics.repository.models.NotificationChannel
 import tmg.flashback.statistics.workmanager.WorkerProvider
 import tmg.flashback.style.AppTheme
@@ -28,6 +27,7 @@ import tmg.flashback.style.SupportedTheme
 import tmg.flashback.ui.model.NightMode
 import tmg.flashback.ui.model.Theme
 import tmg.flashback.ui.repository.ThemeRepository
+import tmg.flashback.widgets.updateAllWidgets
 import tmg.utilities.extensions.isInDayMode
 
 /**
