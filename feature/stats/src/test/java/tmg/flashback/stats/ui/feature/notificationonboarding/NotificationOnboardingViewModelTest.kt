@@ -7,11 +7,9 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.stats.repository.NotificationRepository
 import tmg.flashback.stats.repository.models.NotificationChannel
-import tmg.flashback.ui.bottomsheet.BottomSheetItem
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.test
 import tmg.utilities.models.Selected
-import tmg.utilities.models.StringHolder
 
 internal class NotificationOnboardingViewModelTest: BaseTest() {
 
@@ -46,7 +44,7 @@ internal class NotificationOnboardingViewModelTest: BaseTest() {
         underTest.notificationPreferences.test {
             assertValue(NotificationChannel.values().map {
                 Selected(
-                    BottomSheetItem(it.ordinal, it.icon, StringHolder(it.label)),
+                    NotificationOnboardingModel(it.name, it, it.label, it.icon),
                     true
                 )
             })
@@ -95,7 +93,7 @@ internal class NotificationOnboardingViewModelTest: BaseTest() {
         underTest.notificationPreferences.test {
             assertValue(NotificationChannel.values().map {
                 Selected(
-                    BottomSheetItem(it.ordinal, it.icon, StringHolder(it.label)),
+                    NotificationOnboardingModel(it.name, it, it.label, it.icon),
                     true
                 )
             })
@@ -108,7 +106,7 @@ internal class NotificationOnboardingViewModelTest: BaseTest() {
         underTest.notificationPreferences.test {
             assertValue(NotificationChannel.values().map {
                 Selected(
-                    BottomSheetItem(it.ordinal, it.icon, StringHolder(it.label)),
+                    NotificationOnboardingModel(it.name, it, it.label, it.icon),
                     it != NotificationChannel.RACE
                 )
             })

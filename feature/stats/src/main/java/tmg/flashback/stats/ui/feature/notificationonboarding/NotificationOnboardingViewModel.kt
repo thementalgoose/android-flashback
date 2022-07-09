@@ -14,7 +14,7 @@ interface NotificationOnboardingViewModelInputs {
 }
 
 interface NotificationOnboardingViewModelOutputs {
-    val notificationPreferences: LiveData<List<Selected<BottomSheetItem>>>
+    val notificationPreferences: LiveData<List<Selected<NotificationOnboardingModel>>>
 }
 
 class NotificationOnboardingViewModel(
@@ -24,7 +24,7 @@ class NotificationOnboardingViewModel(
     val inputs: NotificationOnboardingViewModelInputs = this
     val outputs: NotificationOnboardingViewModelOutputs = this
 
-    override val notificationPreferences: MutableLiveData<List<Selected<BottomSheetItem>>> = MutableLiveData()
+    override val notificationPreferences: MutableLiveData<List<Selected<NotificationOnboardingModel>>> = MutableLiveData()
 
     init {
         notificationRepository.seenNotificationOnboarding = true
@@ -48,18 +48,15 @@ class NotificationOnboardingViewModel(
     private fun updateList() {
         notificationPreferences.value = NotificationChannel.values()
             .map {
-                Selected(BottomSheetItem(
-                    id = it.ordinal,
-                    image = it.icon,
-                    text = StringHolder(it.label)
-                ),
+                Selected(
+                    NotificationOnboardingModel(id = it.name, channel = it, name = it.label, icon = it.icon),
                     when (it) {
                         NotificationChannel.RACE -> notificationRepository.notificationRace
                         NotificationChannel.QUALIFYING -> notificationRepository.notificationQualifying
                         NotificationChannel.FREE_PRACTICE -> notificationRepository.notificationFreePractice
                         NotificationChannel.SEASON_INFO -> notificationRepository.notificationOther
-                    })
+                    }
+                )
             }
     }
-
 }
