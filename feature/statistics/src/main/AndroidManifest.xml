@@ -7,14 +7,6 @@
     <application>
 
         <activity
-            android:name=".ui.weekend.WeekendActivity"
-            android:exported="false"
-            android:label=""
-            android:theme="@style/Translucent" />
-
-
-
-        <activity
             android:name=".ui.race.RaceActivity"
             android:exported="false"
             android:label=""
@@ -57,18 +49,6 @@
         </receiver>
 
         <!-- Widgets -->
-
-        <receiver
-            android:name=".widgets.UpNextWidgetProvider"
-            android:exported="true"
-            android:label="@string/widget_up_next_title">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-            </intent-filter>
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/widget_up_next" />
-        </receiver>
 
     </application>
 </manifest>

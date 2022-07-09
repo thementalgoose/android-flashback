@@ -6,6 +6,7 @@ import org.koin.dsl.module
 import tmg.flashback.DebugController
 import tmg.flashback.FlashbackStartup
 import tmg.flashback.device.managers.BuildConfigManager
+import tmg.flashback.di.navigation.AppWidgetNavigationComponent
 import tmg.flashback.managers.AppApplicationNavigationComponent
 import tmg.flashback.managers.AppNetworkConfigManager
 import tmg.flashback.managers.AppPreferencesManager
@@ -25,6 +26,7 @@ import tmg.flashback.ui.managers.StyleManager
 import tmg.flashback.ui.navigation.ApplicationNavigationComponent
 import tmg.flashback.ui.settings.SettingsAllViewModel
 import tmg.flashback.ui.sync.SyncViewModel
+import tmg.flashback.widgets.WidgetNavigationComponent
 
 val appModule = module {
 
@@ -52,4 +54,6 @@ val appModule = module {
 
     single { NetworkConfigRepository(get()) }
     single<NetworkConfigManager> { AppNetworkConfigManager(get()) }
+
+    single<WidgetNavigationComponent> { AppWidgetNavigationComponent(get()) }
 }

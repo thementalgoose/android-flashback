@@ -11,6 +11,7 @@ include ':feature:settings'
 include ':feature:forceupgrade'
 include ':feature:releasenotes'
 include ':feature:debug'
+include ':feature:widgets'
 
 include ':data:repo'
 include ':data:room'

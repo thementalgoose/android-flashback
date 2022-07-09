@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="widget_up_next_title">Up next</string>
+    <string name="widget_up_next_nothing_title">Nothing coming up</string>
+    <string name="widget_up_next_nothing_subtitle">We will get this information as soon as it\'s available. Click here to check for updates</string>
+    <string name="dashboard_up_next_title">Up next</string>
+    <plurals name="dashboard_up_next_suffix_days">
+        <item quantity="one">Tomorrow</item>
+        <item quantity="other">%d days to go</item>
+    </plurals>
+    <string name="dashboard_up_next_your_time">Device time</string>
+    <string name="dashboard_up_next_shown_in_device_time">All times shown in your timezone</string>
+    <plurals name="dashboard_up_next_starts_in">
+        <item quantity="zero">The first event starts today</item>
+        <item quantity="one">The first event starts in %d day</item>
+        <item quantity="other">The first event starts in %d days</item>
+    </plurals>
+    <string name="dashboard_up_next_starts_in">All times shown in your timezone</string>
+    <string name="dashboard_up_next_all_day">All day</string>
+    <string name="dashboard_up_next_date_today">Today</string>
+    <string name="dashboard_up_next_date_next">%s days</string>
+    <string name="dashboard_up_next_date_previous">%s days ago</string>
+</resources>
