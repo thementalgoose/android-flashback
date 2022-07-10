@@ -18,6 +18,7 @@ import tmg.flashback.statistics.repo.ConstructorRepository
 import tmg.flashback.statistics.repo.DriverRepository
 import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.statistics.repo.repository.CacheRepository
+import tmg.flashback.stats.usecases.ScheduleNotificationsUseCase
 import tmg.flashback.stats.usecases.SearchAppShortcutUseCase
 import tmg.flashback.ui.sync.SyncState.*
 import tmg.utilities.lifecycle.DataEvent
@@ -53,7 +54,7 @@ class SyncViewModel(
     private val fetchConfigUseCase: FetchConfigUseCase,
     private val forceUpgradeRepository: ForceUpgradeRepository,
     private val cacheRepository: CacheRepository,
-    private val scheduleController: ScheduleController,
+    private val scheduleNotificationsUseCase: ScheduleNotificationsUseCase,
     private val searchAppShortcutUseCase: SearchAppShortcutUseCase,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), SyncViewModelInputs, SyncViewModelOutputs {
@@ -196,6 +197,6 @@ class SyncViewModel(
         searchAppShortcutUseCase.setup()
 
         // Schedule notifications
-        scheduleController.scheduleNotifications()
+        scheduleNotificationsUseCase.schedule()
     }
 }

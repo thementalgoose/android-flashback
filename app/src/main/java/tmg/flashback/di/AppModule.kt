@@ -37,7 +37,7 @@ val appModule = module {
     viewModel { DashboardViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get()) }
     viewModel { MenuViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
 
-    single { FlashbackStartup(get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get()) }
+    single { FlashbackStartup(get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get()) }
 
     single { DebugController(get()) }
 

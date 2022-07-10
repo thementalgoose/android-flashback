@@ -3,14 +3,12 @@ package tmg.flashback.statistics.controllers
 import android.content.Context
 import android.util.Log
 import tmg.flashback.formula1.model.OverviewRace
-import tmg.flashback.notifications.repository.NotificationRepository
 import tmg.flashback.notifications.usecases.RemoteNotificationSubscribeUseCase
 import tmg.flashback.notifications.usecases.RemoteNotificationUnsubscribeUseCase
 import tmg.flashback.statistics.BuildConfig
 import tmg.flashback.statistics.repo.ScheduleRepository
 import tmg.flashback.statistics.repository.UpNextRepository
 import tmg.flashback.statistics.repository.models.NotificationReminder
-import tmg.flashback.statistics.workmanager.WorkerProvider
 
 /**
  * Information around scheduling notificatoins functionality on the home screen
@@ -22,7 +20,6 @@ class ScheduleController(
     private val remoteNotificationUnsubscribeUseCase: RemoteNotificationUnsubscribeUseCase,
     private val upNextRepository: UpNextRepository,
     private val scheduleRepository: ScheduleRepository,
-    private val workerProvider: WorkerProvider
 ) {
     /**
      * Get the next race to display in the up next schedule
@@ -124,6 +121,5 @@ class ScheduleController(
         if (BuildConfig.DEBUG) {
             Log.i("Notifications", "WorkManager performing notification scheduling")
         }
-        workerProvider.schedule()
     }
 }

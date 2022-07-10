@@ -29,9 +29,6 @@ import tmg.flashback.statistics.ui.settings.notifications.UpNextSettingsViewMode
 import tmg.flashback.statistics.ui.settings.notifications.reminder.UpNextReminderViewModel
 import tmg.flashback.statistics.ui.settings.statistics.SettingsStatisticsViewModel
 import tmg.flashback.statistics.usecases.*
-import tmg.flashback.statistics.workmanager.ContentSyncWorker
-import tmg.flashback.statistics.workmanager.NotificationScheduleWorker
-import tmg.flashback.statistics.workmanager.WorkerProvider
 
 val statisticsModule = repoModule + module {
 
@@ -53,7 +50,7 @@ val statisticsModule = repoModule + module {
     viewModel { SettingsStatisticsViewModel() }
 
     single { HomeController(get()) }
-    single { ScheduleController(androidContext(), get(), get(), get(), get(), get()) }
+    single { ScheduleController(androidContext(), get(), get(), get(), get()) }
 
     single { HomeRepository(get(), get()) }
     single { UpNextRepository(get()) }
@@ -61,27 +58,6 @@ val statisticsModule = repoModule + module {
     // Use Cases
     factory { DefaultSeasonUseCase(get()) }
     factory { FetchSeasonUseCase(get(), get(), get()) }
-
-    // Worker
-    //  https://github.com/InsertKoinIO/koin/issues/992
-    worker { (worker: WorkerParameters) -> NotificationScheduleWorker(
-        scheduleRepository = get(),
-        notificationRepository = get(),
-        localNotificationCancelUseCase = get(),
-        localNotificationScheduleUseCase = get(),
-        upNextRepository = get(),
-        context = androidContext(),
-        parameters = worker)
-    }
-    worker { (worker: WorkerParameters) -> ContentSyncWorker(
-        defaultSeasonUseCase = get(),
-        fetchConfigUseCase = get(),
-        overviewRepository = get(),
-        workerProvider = get(),
-        context = androidContext(),
-        parameters = worker
-    ) }
-    single { WorkerProvider(androidContext()) }
 
     // CoroutineDispatcher
     // TODO: Add qualifiers for this!

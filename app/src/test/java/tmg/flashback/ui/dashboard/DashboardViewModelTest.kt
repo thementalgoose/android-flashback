@@ -14,6 +14,7 @@ import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.statistics.repo.RaceRepository
 import tmg.flashback.statistics.workmanager.WorkerProvider
 import tmg.flashback.stats.usecases.DefaultSeasonUseCase
+import tmg.flashback.stats.usecases.ScheduleNotificationsUseCase
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertEventFired
 import tmg.testutils.livedata.assertEventNotFired
@@ -24,7 +25,7 @@ internal class DashboardViewModelTest: BaseTest() {
     lateinit var underTest: DashboardViewModel
 
     private val mockContext: Context = mockk(relaxed = true)
-    private val mockWorkerProvider: WorkerProvider = mockk(relaxed = true)
+    private val mockScheduleNotificationsUseCase: ScheduleNotificationsUseCase = mockk(relaxed = true)
     private val mockDefaultSeasonUseCase: DefaultSeasonUseCase = mockk(relaxed = true)
     private val mockRaceRepository: RaceRepository = mockk(relaxed = true)
     private val mockOverviewRepository: OverviewRepository = mockk(relaxed = true)
@@ -43,7 +44,7 @@ internal class DashboardViewModelTest: BaseTest() {
     private fun initUnderTest() {
         underTest = DashboardViewModel(
             mockContext,
-            mockWorkerProvider,
+            mockScheduleNotificationsUseCase,
             mockDefaultSeasonUseCase,
             mockFetchConfigUseCase,
             mockApplyConfigUseCase,
@@ -161,7 +162,7 @@ internal class DashboardViewModelTest: BaseTest() {
             assertEventFired()
         }
         coVerify {
-            mockWorkerProvider.schedule()
+            mockScheduleNotificationsUseCase.schedule()
         }
     }
 
