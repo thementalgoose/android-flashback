@@ -9,6 +9,7 @@ fun Overview.Companion.model(
     date: String = "2020-10-12",
     time: String? = "12:34",
     hasRace: Boolean = false,
+    hasSprint: Boolean = false,
     hasQualifying: Boolean = true,
     id: String = "${season}_${round}"
 ): Overview = Overview(
@@ -20,6 +21,7 @@ fun Overview.Companion.model(
     date = date,
     time = time,
     hasRace = hasRace,
+    hasSprint = hasSprint,
     hasQualifying = hasQualifying,
     id = id
 )

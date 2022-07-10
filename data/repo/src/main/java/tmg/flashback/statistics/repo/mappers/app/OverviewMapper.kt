@@ -23,6 +23,7 @@ class OverviewMapper(
             laps = overview.overview.laps,
             countryISO = overview.circuit.countryISO,
             hasQualifying = overview.overview.hasQualifying,
+            hasSprint = overview.overview.hasSprint,
             hasResults = overview.overview.hasRace,
             schedule = overview.schedule.mapNotNull { scheduleMapper.mapSchedule(it) }
         )

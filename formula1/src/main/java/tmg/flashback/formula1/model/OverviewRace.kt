@@ -18,6 +18,7 @@ data class OverviewRace(
     val country: String,
     val countryISO: String,
     val hasQualifying: Boolean,
+    val hasSprint: Boolean,
     val hasResults: Boolean,
     val schedule: List<Schedule>
 ): Parcelable {
