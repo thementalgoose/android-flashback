@@ -12,6 +12,7 @@ fun OverviewRace.Companion.model(
     time: String? = "12:34",
     laps: String? = "12",
     hasQualifying: Boolean = true,
+    hasSprint: Boolean = false,
     hasRace: Boolean = false,
     schedule: List<Schedule>? = listOf(
         Schedule.model()
@@ -26,5 +27,6 @@ fun OverviewRace.Companion.model(
     time = time,
     hasQualifying = hasQualifying,
     hasRace = hasRace,
+    hasSprint = hasSprint,
     schedule = schedule
 )

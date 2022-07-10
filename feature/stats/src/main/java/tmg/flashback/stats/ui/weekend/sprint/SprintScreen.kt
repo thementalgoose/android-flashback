@@ -81,8 +81,8 @@ fun SprintScreen(
                     }
                 }
             }
-            item("content") {
-                TextBody2(text = "Sprint")
+            item(key = "footer") {
+                Spacer(Modifier.height(72.dp))
             }
         }
     )

@@ -15,6 +15,7 @@ fun OverviewRace.Companion.model(
     countryISO: String = "countryISO",
     laps: String? = "12",
     hasQualifying: Boolean = true,
+    hasSprint: Boolean = false,
     hasResults: Boolean = false,
     schedule: List<Schedule> = listOf(
         Schedule.model()
@@ -31,6 +32,7 @@ fun OverviewRace.Companion.model(
     country = country,
     countryISO = countryISO,
     hasQualifying = hasQualifying,
+    hasSprint = hasSprint,
     hasResults = hasResults,
     schedule = schedule
 )

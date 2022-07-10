@@ -16,6 +16,7 @@ class NetworkOverviewMapper {
             date = overview.date,
             time = overview.time,
             hasRace = overview.hasRace,
+            hasSprint = overview.hasSprint,
             hasQualifying = overview.hasQualifying
         )
     }
