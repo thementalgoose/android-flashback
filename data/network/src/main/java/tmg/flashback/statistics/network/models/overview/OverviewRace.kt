@@ -17,6 +17,7 @@ data class OverviewRace(
     val laps: String? = null,
     val time: String? = null,
     val hasQualifying: Boolean,
+    val hasSprint: Boolean,
     val hasRace: Boolean,
     val schedule: List<Schedule>? = null,
 ) {

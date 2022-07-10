@@ -238,8 +238,8 @@ private fun Schedule(
                         )
                         Spacer(Modifier.width(AppTheme.dimensions.paddingSmall))
                         IconRow(
-                            // TODO: Remove this check for 2000 and fix the API response data!
                             showQualifying = model.model.hasQualifying && model.model.season > 2000,
+                            showSprint = model.model.hasSprint && model.model.season > 2020,
                             showRace = model.model.hasResults
                         )
                     }
@@ -268,6 +268,7 @@ private fun Schedule(
 @Composable
 private fun RowScope.IconRow(
     showQualifying: Boolean,
+    showSprint: Boolean,
     showRace: Boolean,
     iconSize: Dp = 16.dp
 ) {
@@ -281,14 +282,17 @@ private fun RowScope.IconRow(
     )
     Spacer(Modifier.width(2.dp))
     // TODO: Add support for this in the API response and then here!
-//    Icon(
-//        modifier = Modifier
-//            .size(iconSize)
-//            .align(Alignment.CenterVertically),
-//        painter = painterResource(id = R.drawable.ic_status_results_sprint),
-//        contentDescription = stringResource(id = R.string.ab_has_sprint_results),
-//        tint = AppTheme.colors.contentTertiary
-//    )
+    if (showSprint) {
+        Icon(
+            modifier = Modifier
+                .size(iconSize)
+                .align(Alignment.CenterVertically),
+            painter = painterResource(id = R.drawable.ic_status_results_sprint),
+            contentDescription = stringResource(id = R.string.ab_has_sprint_results),
+            tint = AppTheme.colors.f1ResultsFull
+        )
+        Spacer(Modifier.width(2.dp))
+    }
     Icon(
         modifier = Modifier
             .size(iconSize)
