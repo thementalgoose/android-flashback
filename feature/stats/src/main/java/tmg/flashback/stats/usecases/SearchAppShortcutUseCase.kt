@@ -1,12 +1,11 @@
-package tmg.flashback.statistics.usecases
+package tmg.flashback.stats.usecases
 
 import android.content.Intent
 import android.net.Uri
 import tmg.flashback.appshortcuts.manager.AppShortcutManager
 import tmg.flashback.appshortcuts.models.ShortcutInfo
-import tmg.flashback.statistics.R
-import tmg.flashback.statistics.repository.HomeRepository
-import tmg.flashback.statistics.ui.search.SearchActivity
+import tmg.flashback.stats.R
+import tmg.flashback.stats.ui.search.SearchActivity
 
 class SearchAppShortcutUseCase(
     private val appShortcutManager: AppShortcutManager

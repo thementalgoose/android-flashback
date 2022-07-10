@@ -4,6 +4,10 @@
     <string name="weekend_race_round_season" formatted="false">Round %d, %d</string>
     <string name="weekend_info_laps">%s laps</string>
 
+    <!-- App Shortcuts -->
+    <string name="app_shortcut_search_shorttitle">Search</string>
+    <string name="app_shortcut_search_longtitle">Search Formula 1 Drivers, Constructors and Circuits</string>
+    <string name="app_shortcut_search_disabled">Search (Unavailable)</string>
 
     <string name="notification_content_title" formatted="false">%s starts in %s</string>
     <string name="notification_content_text" formatted="false">%s %s starts in %s at %s</string>

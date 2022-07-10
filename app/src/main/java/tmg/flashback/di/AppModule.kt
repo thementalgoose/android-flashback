@@ -1,5 +1,6 @@
 package tmg.flashback.di
 
+import kotlinx.coroutines.Dispatchers
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -53,4 +54,6 @@ val appModule = module {
     single<NetworkConfigManager> { AppNetworkConfigManager(get()) }
 
     single<WidgetNavigationComponent> { AppWidgetNavigationComponent(get()) }
+
+    single { Dispatchers.IO }
 }
