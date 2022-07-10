@@ -18,7 +18,7 @@ import tmg.flashback.statistics.repo.ConstructorRepository
 import tmg.flashback.statistics.repo.DriverRepository
 import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.statistics.repo.repository.CacheRepository
-import tmg.flashback.statistics.usecases.SearchAppShortcutUseCase
+import tmg.flashback.stats.usecases.SearchAppShortcutUseCase
 import tmg.flashback.ui.sync.SyncState.*
 import tmg.utilities.lifecycle.DataEvent
 

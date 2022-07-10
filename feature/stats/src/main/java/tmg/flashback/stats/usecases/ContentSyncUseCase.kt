@@ -8,7 +8,7 @@ import tmg.flashback.stats.workmanager.ContentSyncJob
 import tmg.utilities.extensions.secondsToHHmm
 import java.util.concurrent.TimeUnit
 
-class ContentSyncJobScheduleUseCase(
+class ContentSyncUseCase(
     private val applicationContext: Context
 ) {
 

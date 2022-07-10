@@ -66,7 +66,8 @@ val statsModule = module {
     single { HomeRepository(get(), get()) }
     single { NotificationRepository(get()) }
 
-    single { ContentSyncJobScheduleUseCase(get()) }
+    single { SearchAppShortcutUseCase(get()) }
+    single { ContentSyncUseCase(get()) }
     single { ScheduleNotificationsUseCase(get()) }
 
     worker { (worker: WorkerParameters) ->

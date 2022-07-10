@@ -4,13 +4,11 @@ import android.content.Context
 import android.util.Log
 import androidx.work.*
 import org.threeten.bp.LocalTime
-import org.threeten.bp.format.DateTimeFormatter
-import tmg.flashback.configuration.BuildConfig
 import tmg.flashback.configuration.workmanager.ConfigSyncJob
 import tmg.utilities.extensions.secondsToHHmm
 import java.util.concurrent.TimeUnit
 
-class ConfigSyncJobScheduleUseCase(
+class ConfigSyncUseCase(
     private val applicationContext: Context
 ) {
 
