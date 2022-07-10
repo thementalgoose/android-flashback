@@ -22,8 +22,8 @@ import tmg.flashback.managers.widgets.WidgetManager
 import tmg.flashback.notifications.managers.SystemNotificationManager
 import tmg.flashback.notifications.usecases.RemoteNotificationSubscribeUseCase
 import tmg.flashback.notifications.usecases.RemoteNotificationUnsubscribeUseCase
-import tmg.flashback.statistics.repository.models.NotificationChannel
 import tmg.flashback.stats.repository.NotificationRepository
+import tmg.flashback.stats.repository.models.NotificationChannel
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.SupportedTheme
 import tmg.flashback.ui.model.NightMode

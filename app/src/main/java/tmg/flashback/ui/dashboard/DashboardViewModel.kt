@@ -11,7 +11,7 @@ import tmg.flashback.analytics.manager.AnalyticsManager
 import tmg.flashback.configuration.usecases.ApplyConfigUseCase
 import tmg.flashback.configuration.usecases.FetchConfigUseCase
 import tmg.flashback.releasenotes.usecases.NewReleaseNotesUseCase
-import tmg.flashback.statistics.BuildConfig
+import tmg.flashback.BuildConfig
 import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.statistics.repo.RaceRepository
 import tmg.flashback.stats.usecases.DefaultSeasonUseCase
