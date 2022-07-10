@@ -8,10 +8,7 @@ import tmg.flashback.configuration.firebase.FirebaseRemoteConfigService
 import tmg.flashback.configuration.manager.ConfigManager
 import tmg.flashback.configuration.repository.ConfigRepository
 import tmg.flashback.configuration.services.RemoteConfigService
-import tmg.flashback.configuration.usecases.ApplyConfigUseCase
-import tmg.flashback.configuration.usecases.FetchConfigUseCase
-import tmg.flashback.configuration.usecases.InitialiseConfigUseCase
-import tmg.flashback.configuration.usecases.ResetConfigUseCase
+import tmg.flashback.configuration.usecases.*
 import tmg.flashback.configuration.workmanager.ConfigSyncJob
 
 val configModule = module {
@@ -23,6 +20,7 @@ val configModule = module {
     factory { ResetConfigUseCase(get(), get()) }
     factory { ApplyConfigUseCase(get(), get()) }
     factory { FetchConfigUseCase(get(), get()) }
+    factory { ConfigSyncUseCase(get()) }
 
     //  https://github.com/InsertKoinIO/koin/issues/992
     worker { (worker: WorkerParameters) ->

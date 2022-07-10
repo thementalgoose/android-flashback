@@ -22,6 +22,8 @@ data class Overview(
     val laps: String?,
     @ColumnInfo(name = "has_race_data")
     val hasRace: Boolean,
+    @ColumnInfo(name = "has_sprint_data")
+    val hasSprint: Boolean,
     @ColumnInfo(name = "has_qualifying_data")
     val hasQualifying: Boolean,
     @PrimaryKey

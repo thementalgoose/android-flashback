@@ -14,7 +14,8 @@ val roomModule = module {
             MIGRATION_1_2,
             MIGRATION_2_3,
             MIGRATION_3_4,
-            MIGRATION_4_5
+            MIGRATION_4_5,
+            MIGRATION_5_6
         )
         .build()
     }
@@ -82,5 +83,12 @@ private val MIGRATION_4_5 = object : Migration(4, 5) {
                 "time TEXT, " +
                 "id TEXT NOT NULL PRIMARY KEY," +
                 "season_round_id TEXT NOT NULL)")
+    }
+}
+
+private val MIGRATION_5_6 = object : Migration(5, 6) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        database.execSQL("ALTER TABLE Overview ADD COLUMN has_sprint_data INTEGER NOT NULL DEFAULT 0")
+        Log.i("Database", "Migrated DB from version $startVersion to $endVersion")
     }
 }
