@@ -14,6 +14,7 @@ import tmg.flashback.statistics.repo.ConstructorRepository
 import tmg.flashback.statistics.repo.DriverRepository
 import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.statistics.repo.repository.CacheRepository
+import tmg.flashback.stats.usecases.ScheduleNotificationsUseCase
 import tmg.flashback.stats.usecases.SearchAppShortcutUseCase
 import tmg.flashback.ui.sync.SyncNavTarget.DASHBOARD
 import tmg.flashback.ui.sync.SyncNavTarget.FORCE_UPGRADE
@@ -34,7 +35,7 @@ internal class SyncViewModelTest: BaseTest() {
     private var mockFetchConfigUseCase: FetchConfigUseCase = mockk(relaxed = true)
     private var mockCacheRepository: CacheRepository = mockk(relaxed = true)
     private var mockForceUpgradeRepository: ForceUpgradeRepository = mockk(relaxed = true)
-    private var mockScheduleController: ScheduleController = mockk(relaxed = true)
+    private var mockScheduleNotificationsUseCase: ScheduleNotificationsUseCase = mockk(relaxed = true)
     private var mockSearchAppShortcutUseCase: SearchAppShortcutUseCase = mockk(relaxed = true)
 
     private lateinit var sut: SyncViewModel
@@ -63,7 +64,7 @@ internal class SyncViewModelTest: BaseTest() {
             mockFetchConfigUseCase,
             mockForceUpgradeRepository,
             mockCacheRepository,
-            mockScheduleController,
+            mockScheduleNotificationsUseCase,
             mockSearchAppShortcutUseCase,
             ioDispatcher = coroutineScope.testDispatcher
         )
@@ -92,6 +93,7 @@ internal class SyncViewModelTest: BaseTest() {
         verify {
             mockCacheRepository.initialSync = true
             mockSearchAppShortcutUseCase.setup()
+            mockScheduleNotificationsUseCase.schedule()
         }
     }
 
@@ -119,6 +121,7 @@ internal class SyncViewModelTest: BaseTest() {
         verify {
             mockCacheRepository.initialSync = true
             mockSearchAppShortcutUseCase.setup()
+            mockScheduleNotificationsUseCase.schedule()
         }
     }
 
@@ -144,6 +147,7 @@ internal class SyncViewModelTest: BaseTest() {
         }
         verify {
             mockSearchAppShortcutUseCase.setup()
+            mockScheduleNotificationsUseCase.schedule()
             mockCacheRepository.initialSync = true
         }
     }

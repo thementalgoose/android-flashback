@@ -38,16 +38,6 @@
             android:theme="@style/Translucent" />
 
         <!-- Boot Receiver -->
-
-        <receiver
-            android:name=".receivers.UpNextNotificationBootReceiver"
-            android:enabled="true"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
-
         <!-- Widgets -->
 
     </application>

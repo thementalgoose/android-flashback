@@ -1,13 +1,12 @@
-package tmg.flashback.statistics.receivers
+package tmg.flashback.stats.receivers
 
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
-
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import tmg.flashback.statistics.workmanager.WorkerProvider
+import tmg.flashback.stats.usecases.ScheduleNotificationsUseCase
 
 class UpNextNotificationBootReceiver: BroadcastReceiver() {
 
@@ -25,12 +24,12 @@ class UpNextNotificationBootReceiver: BroadcastReceiver() {
 
 
 class UpNextNotification: KoinComponent {
-    private val workerProvider: WorkerProvider by inject()
+    private val scheduleNotificationsUseCase: ScheduleNotificationsUseCase by inject()
 
     fun onReceive(context: Context, intent: Intent) {
 
         // Reschedule notifications
         Log.i("Notifications", "Scheduling upcoming notifications")
-        workerProvider.schedule()
+        scheduleNotificationsUseCase.schedule()
     }
 }
