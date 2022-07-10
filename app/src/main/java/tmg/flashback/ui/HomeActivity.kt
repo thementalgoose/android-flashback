@@ -5,29 +5,27 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.compose.setContent
-import androidx.compose.material.Scaffold
 import androidx.core.splashscreen.SplashScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import tmg.flashback.BuildConfig
-import tmg.flashback.configuration.manager.ConfigManager
+import tmg.flashback.configuration.usecases.ConfigSyncUseCase
 import tmg.flashback.crash_reporting.controllers.CrashController
-import tmg.flashback.databinding.ActivityDashboardBinding
 import tmg.flashback.forceupgrade.ForceUpgradeNavigationComponent
-import tmg.flashback.statistics.workmanager.WorkerProvider
+import tmg.flashback.stats.usecases.ContentSyncUseCase
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.utils.rememberWindowSizeClass
 import tmg.flashback.ui.base.BaseActivity
 import tmg.flashback.ui.dashboard.DashboardScreen
-import tmg.flashback.ui.model.DisplayType
 import tmg.flashback.ui.sync.SyncActivity
 
 class HomeActivity: BaseActivity(), SplashScreen.KeepOnScreenCondition {
 
     private val viewModel: HomeViewModel by viewModel()
 
-    private val workerProvider: WorkerProvider by inject()
+    private val contentSyncUseCase: ContentSyncUseCase by inject()
+    private val configSyncUseCase: ConfigSyncUseCase by inject()
     private val crashController: CrashController by inject()
     private val forceUpgradeNavigationComponent: ForceUpgradeNavigationComponent by inject()
 
@@ -66,7 +64,8 @@ class HomeActivity: BaseActivity(), SplashScreen.KeepOnScreenCondition {
 
         // Content sync
         try {
-            workerProvider.contentSync()
+            contentSyncUseCase.schedule()
+            configSyncUseCase.schedule()
         } catch (e: Exception) {
             crashController.logException(e, "Failed to synchronise content when reaching home screen")
             if (BuildConfig.DEBUG) {

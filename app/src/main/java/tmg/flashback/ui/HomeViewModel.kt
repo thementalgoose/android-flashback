@@ -10,9 +10,9 @@ import tmg.flashback.configuration.usecases.ApplyConfigUseCase
 import tmg.flashback.crash_reporting.controllers.CrashController
 import tmg.flashback.forceupgrade.repository.ForceUpgradeRepository
 import tmg.flashback.rss.controllers.RSSController
-import tmg.flashback.statistics.controllers.ScheduleController
 import tmg.flashback.statistics.repo.repository.CacheRepository
-import tmg.flashback.statistics.usecases.SearchAppShortcutUseCase
+import tmg.flashback.stats.usecases.ScheduleNotificationsUseCase
+import tmg.flashback.stats.usecases.SearchAppShortcutUseCase
 
 //region Inputs
 
@@ -33,7 +33,6 @@ interface HomeViewModelOutputs {
 
 //endregion
 
-
 class HomeViewModel(
     private val configRepository: ConfigRepository,
     private val applyConfigUseCase: ApplyConfigUseCase,
@@ -42,7 +41,7 @@ class HomeViewModel(
     private val forceUpgradeRepository: ForceUpgradeRepository,
     private val cacheRepository: CacheRepository,
     private val searchAppShortcutUseCase: SearchAppShortcutUseCase,
-    private val scheduleController: ScheduleController
+    private val scheduleNotificationsUseCase: ScheduleNotificationsUseCase
 ): ViewModel(), HomeViewModelInputs, HomeViewModelOutputs {
 
     override var requiresSync: Boolean = false
@@ -88,6 +87,6 @@ class HomeViewModel(
         searchAppShortcutUseCase.setup()
 
         // Schedule notifications
-        scheduleController.scheduleNotifications()
+        scheduleNotificationsUseCase.schedule()
     }
 }

@@ -7,7 +7,6 @@ import io.mockk.verify
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.ads.repository.AdsRepository
@@ -18,10 +17,7 @@ import tmg.flashback.statistics.repo.ConstructorRepository
 import tmg.flashback.statistics.repo.DriverRepository
 import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.stats.StatsNavigationComponent
-import tmg.flashback.stats.di.StatsNavigator
 import tmg.testutils.BaseTest
-import tmg.testutils.livedata.assertDataEventValue
-import tmg.testutils.livedata.assertEventFired
 import tmg.testutils.livedata.assertListDoesNotMatchItem
 import tmg.testutils.livedata.test
 

@@ -6,7 +6,10 @@ import androidx.appcompat.app.AppCompatDelegate
 import com.jakewharton.threetenabp.AndroidThreeTen
 import com.linkedin.android.shaky.EmailShakeDelegate
 import com.linkedin.android.shaky.Shaky
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 import tmg.flashback.ads.usecases.InitialiseAdsUseCase
 import tmg.flashback.analytics.UserProperty.*
 import tmg.flashback.analytics.manager.AnalyticsManager
@@ -19,15 +22,14 @@ import tmg.flashback.managers.widgets.WidgetManager
 import tmg.flashback.notifications.managers.SystemNotificationManager
 import tmg.flashback.notifications.usecases.RemoteNotificationSubscribeUseCase
 import tmg.flashback.notifications.usecases.RemoteNotificationUnsubscribeUseCase
-import tmg.flashback.statistics.controllers.ScheduleController
-import tmg.flashback.statistics.extensions.updateAllWidgets
-import tmg.flashback.statistics.repository.models.NotificationChannel
-import tmg.flashback.statistics.workmanager.WorkerProvider
+import tmg.flashback.stats.repository.NotificationRepository
+import tmg.flashback.stats.repository.models.NotificationChannel
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.SupportedTheme
 import tmg.flashback.ui.model.NightMode
 import tmg.flashback.ui.model.Theme
 import tmg.flashback.ui.repository.ThemeRepository
+import tmg.flashback.widgets.updateAllWidgets
 import tmg.utilities.extensions.isInDayMode
 
 /**
@@ -40,14 +42,13 @@ class FlashbackStartup(
     private val crashRepository: CrashRepository,
     private val initialiseCrashReportingUseCase: InitialiseCrashReportingUseCase,
     private val widgetManager: WidgetManager,
-    private val scheduleController: ScheduleController,
+    private val notificationRepository: NotificationRepository,
     private val themeRepository: ThemeRepository,
     private val analyticsManager: AnalyticsManager,
     private val initialiseConfigUseCase: InitialiseConfigUseCase,
     private val systemNotificationManager: SystemNotificationManager,
     private val remoteNotificationSubscribeUseCase: RemoteNotificationSubscribeUseCase,
     private val remoteNotificationUnsubscribeUseCase: RemoteNotificationUnsubscribeUseCase,
-    private val workerProvider: WorkerProvider,
     private val appOpenedUseCase: AppOpenedUseCase,
     private val initialiseAdsUseCase: InitialiseAdsUseCase
 ) {
@@ -117,15 +118,15 @@ class FlashbackStartup(
         )
         val applicationScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
         applicationScope.launch(Dispatchers.IO) {
-            when (scheduleController.notificationQualifyingNotify) {
+            when (notificationRepository.notificationNotifyQualifying) {
                 true -> remoteNotificationSubscribeUseCase.subscribe("notify_qualifying")
                 false -> remoteNotificationUnsubscribeUseCase.unsubscribe("notify_qualifying")
             }
-            when (scheduleController.notificationSprintNotify) {
+            when (notificationRepository.notificationNotifySprint) {
                 true -> remoteNotificationSubscribeUseCase.subscribe("notify_sprint")
                 false -> remoteNotificationUnsubscribeUseCase.unsubscribe("notify_sprint")
             }
-            when (scheduleController.notificationRaceNotify) {
+            when (notificationRepository.notificationNotifyRace) {
                 true -> remoteNotificationSubscribeUseCase.subscribe("notify_race")
                 false -> remoteNotificationUnsubscribeUseCase.unsubscribe("notify_race")
             }

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Text.Widget.Title" parent="Text">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/textSizeMedium</item>
+        <item name="android:textColor">#fcfcfc</item>
+    </style>
+
+    <style name="Text.Widget.Subtitle" parent="Text">
+        <item name="android:textSize">@dimen/textSizeSmall</item>
+        <item name="android:textColor">#fcfcfc</item>
+    </style>
+
+    <style name="Text.Widget.Days" parent="Text">
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:textSize">@dimen/textSizeXLarge</item>
+        <item name="android:textColor">#fcfcfc</item>
+    </style>
+
+    <style name="Text.Widget.DaysUntil" parent="Text">
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:textSize">@dimen/textSizeMedium</item>
+        <item name="android:textColor">#fcfcfc</item>
+    </style>
+</resources>
