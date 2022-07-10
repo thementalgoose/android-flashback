@@ -107,7 +107,6 @@ tasks.whenTaskAdded { task ->
 dependencies {
 
     // Feature modules
-    implementation project(path: ":feature:statistics")
     implementation project(path: ":feature:stats")
     implementation project(path: ":feature:rss")
     implementation project(path: ':feature:settings')

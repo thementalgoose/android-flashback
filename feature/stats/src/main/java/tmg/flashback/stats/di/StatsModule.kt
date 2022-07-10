@@ -5,6 +5,7 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.androidx.workmanager.dsl.worker
 import org.koin.dsl.module
+import tmg.flashback.statistics.repo.di.repoModule
 import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.stats.repository.HomeRepository
 import tmg.flashback.stats.repository.NotificationRepository
@@ -30,7 +31,7 @@ import tmg.flashback.stats.usecases.*
 import tmg.flashback.stats.workmanager.ContentSyncJob
 import tmg.flashback.stats.workmanager.ScheduleNotificationsJob
 
-val statsModule = module {
+val statsModule = repoModule + module {
 
     viewModel { CalendarViewModel(get(), get(), get(), get(), get()) }
     viewModel { ConstructorsStandingViewModel(get(), get(), get()) }
@@ -90,5 +91,4 @@ val statsModule = module {
             parameters = worker
         )
     }
-
 }
