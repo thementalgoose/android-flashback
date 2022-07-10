@@ -11,12 +11,12 @@ import tmg.flashback.analytics.manager.AnalyticsManager
 import tmg.flashback.configuration.usecases.ApplyConfigUseCase
 import tmg.flashback.configuration.usecases.FetchConfigUseCase
 import tmg.flashback.releasenotes.usecases.NewReleaseNotesUseCase
-import tmg.flashback.statistics.BuildConfig
-import tmg.flashback.statistics.extensions.updateAllWidgets
+import tmg.flashback.BuildConfig
 import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.statistics.repo.RaceRepository
 import tmg.flashback.stats.usecases.DefaultSeasonUseCase
-import tmg.flashback.statistics.workmanager.WorkerProvider
+import tmg.flashback.stats.usecases.ScheduleNotificationsUseCase
+import tmg.flashback.widgets.updateAllWidgets
 import tmg.utilities.extensions.then
 import tmg.utilities.lifecycle.Event
 
@@ -43,7 +43,7 @@ interface DashboardViewModelOutputs {
 
 class DashboardViewModel(
     applicationContext: Context,
-    private val workerProvider: WorkerProvider,
+    private val scheduleNotificationsUseCase: ScheduleNotificationsUseCase,
     private val defaultSeasonUseCase: DefaultSeasonUseCase,
     private val fetchConfigUseCase: FetchConfigUseCase,
     private val applyConfigUseCase: ApplyConfigUseCase,
@@ -84,7 +84,7 @@ class DashboardViewModel(
             }
             if (activate) {
                 appConfigSynced.postValue(Event())
-                workerProvider.schedule()
+                scheduleNotificationsUseCase.schedule()
                 applicationContext.updateAllWidgets()
             }
         }

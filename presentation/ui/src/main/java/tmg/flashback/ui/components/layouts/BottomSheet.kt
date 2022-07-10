@@ -21,7 +21,8 @@ fun BottomSheet(
     content: @Composable ColumnScope.() -> Unit
 ){
     Column(modifier = modifier
-        .background(AppTheme.colors.backgroundContainer)
+        .background(AppTheme.colors.backgroundPrimary)
+        .padding(bottom = AppTheme.dimensions.paddingMedLarge)
     ) {
         TextHeadline2(
             text = title,

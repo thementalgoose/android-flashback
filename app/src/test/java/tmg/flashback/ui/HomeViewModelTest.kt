@@ -12,7 +12,6 @@ import tmg.flashback.forceupgrade.repository.ForceUpgradeRepository
 import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.statistics.controllers.ScheduleController
 import tmg.flashback.statistics.repo.repository.CacheRepository
-import tmg.flashback.statistics.usecases.SearchAppShortcutUseCase
 import tmg.testutils.BaseTest
 
 internal class HomeViewModelTest: BaseTest() {

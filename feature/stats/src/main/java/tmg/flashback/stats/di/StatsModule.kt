@@ -1,7 +1,11 @@
 package tmg.flashback.stats.di
 
+import androidx.work.WorkerParameters
+import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.androidx.workmanager.dsl.worker
 import org.koin.dsl.module
+import tmg.flashback.statistics.repo.di.repoModule
 import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.stats.repository.HomeRepository
 import tmg.flashback.stats.repository.NotificationRepository
@@ -12,6 +16,7 @@ import tmg.flashback.stats.ui.dashboard.constructors.ConstructorsStandingViewMod
 import tmg.flashback.stats.ui.dashboard.drivers.DriversStandingViewModel
 import tmg.flashback.stats.ui.drivers.overview.DriverOverviewViewModel
 import tmg.flashback.stats.ui.drivers.season.DriverSeasonViewModel
+import tmg.flashback.stats.ui.feature.notificationonboarding.NotificationOnboardingViewModel
 import tmg.flashback.stats.ui.search.SearchViewModel
 import tmg.flashback.stats.ui.settings.home.SettingsHomeViewModel
 import tmg.flashback.stats.ui.settings.notifications.SettingsNotificationViewModel
@@ -22,11 +27,11 @@ import tmg.flashback.stats.ui.weekend.qualifying.QualifyingViewModel
 import tmg.flashback.stats.ui.weekend.race.RaceViewModel
 import tmg.flashback.stats.ui.weekend.details.DetailsViewModel
 import tmg.flashback.stats.ui.weekend.sprint.SprintViewModel
-import tmg.flashback.stats.usecases.DefaultSeasonUseCase
-import tmg.flashback.stats.usecases.FetchSeasonUseCase
-import tmg.flashback.stats.usecases.ResubscribeNotificationsUseCase
+import tmg.flashback.stats.usecases.*
+import tmg.flashback.stats.workmanager.ContentSyncJob
+import tmg.flashback.stats.workmanager.ScheduleNotificationsJob
 
-val statsModule = module {
+val statsModule = repoModule + module {
 
     viewModel { CalendarViewModel(get(), get(), get(), get(), get()) }
     viewModel { ConstructorsStandingViewModel(get(), get(), get()) }
@@ -51,6 +56,8 @@ val statsModule = module {
     viewModel { DriverSeasonViewModel(get(), get(), get()) }
     viewModel { ConstructorOverviewViewModel(get(), get(), get()) }
 
+    viewModel { NotificationOnboardingViewModel(get()) }
+
     single { StatsNavigationComponent(get()) }
 
     single { DefaultSeasonUseCase(get()) }
@@ -60,4 +67,28 @@ val statsModule = module {
     single { HomeRepository(get(), get()) }
     single { NotificationRepository(get()) }
 
+    single { SearchAppShortcutUseCase(get()) }
+    single { ContentSyncUseCase(get()) }
+    single { ScheduleNotificationsUseCase(get()) }
+
+    worker { (worker: WorkerParameters) ->
+        ContentSyncJob(
+            defaultSeasonUseCase = get(),
+            overviewRepository = get(),
+            scheduleNotificationsUseCase = get(),
+            context = androidContext(),
+            params = worker
+        )
+    }
+    worker { (worker: WorkerParameters) ->
+        ScheduleNotificationsJob(
+            scheduleRepository = get(),
+            notificationRepository = get(),
+            localNotificationCancelUseCase = get(),
+            localNotificationScheduleUseCase = get(),
+            notificationConfigRepository = get(),
+            context = androidContext(),
+            parameters = worker
+        )
+    }
 }

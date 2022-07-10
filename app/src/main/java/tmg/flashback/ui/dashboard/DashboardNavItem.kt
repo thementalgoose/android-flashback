@@ -2,7 +2,7 @@ package tmg.flashback.ui.dashboard
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import tmg.flashback.statistics.R
+import tmg.flashback.R
 import tmg.flashback.ui.components.navigation.NavigationItem
 
 enum class DashboardNavItem(

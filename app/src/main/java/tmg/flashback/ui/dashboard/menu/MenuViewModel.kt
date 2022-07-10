@@ -7,7 +7,6 @@ import kotlinx.coroutines.flow.map
 import tmg.flashback.rss.RssNavigationComponent
 import tmg.flashback.formula1.constants.Formula1.decadeColours
 import tmg.flashback.stats.StatsNavigationComponent
-import tmg.flashback.stats.di.StatsNavigator
 import tmg.flashback.stats.repository.HomeRepository
 import tmg.flashback.stats.repository.NotificationRepository
 import tmg.flashback.stats.usecases.DefaultSeasonUseCase
@@ -46,7 +45,6 @@ class MenuViewModel(
     private val styleManager: StyleManager,
     private val rssNavigationComponent: RssNavigationComponent,
     private val navigationComponent: ApplicationNavigationComponent,
-    private val statsNavigator: StatsNavigator,
     private val statsNavigationComponent: StatsNavigationComponent
 ) : ViewModel(), MenuViewModelInputs, MenuViewModelOutputs {
 
@@ -114,7 +112,7 @@ class MenuViewModel(
     override fun clickFeature(feature: MenuItems.Feature) {
         when (feature) {
             MenuItems.Feature.Notifications -> {
-                statsNavigator.goToNotificationOnboarding()
+                statsNavigationComponent.featureNotificationOnboarding()
                 notificationRepository.seenNotificationOnboarding = true
             }
         }

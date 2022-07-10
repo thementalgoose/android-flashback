@@ -30,4 +30,8 @@ dependencies {
     implementation deps.kotlin.playservices
     implementation deps.kotlin.core
     implementation deps.kotlin.android
+
+    // WorkManager
+    implementation deps.androidx.workmanager
+    implementation deps.androidx.workmanager_ktx
 }
