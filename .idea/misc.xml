@@ -87,7 +87,7 @@
         <entry key="feature/widgets/src/main/res/drawable/ic_widget_refresh.xml" value="0.1855" />
         <entry key="feature/widgets/src/main/res/drawable/widget_circuit_unknown.xml" value="0.1855" />
         <entry key="feature/widgets/src/main/res/drawable/widget_up_next_preview.xml" value="0.1855" />
-        <entry key="feature/widgets/src/main/res/layout/widget_up_next.xml" value="0.1956521739130435" />
+        <entry key="feature/widgets/src/main/res/layout/widget_up_next.xml" value="0.25" />
         <entry key="feature/widgets/src/main/res/xml/widget_up_next.xml" value="0.1956521739130435" />
         <entry key="presentation/style/src/main/java/tmg/flashback/style/buttons/ButtonTertiary.kt" value="0.5" />
         <entry key="presentation/style/src/main/res/drawable/ripple_rectangle.xml" value="0.2095" />
