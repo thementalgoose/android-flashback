@@ -169,7 +169,8 @@ private fun Header(
         if (model.driverWikiUrl.isNotEmpty()) {
             ButtonTertiary(
                 text = stringResource(id = R.string.details_link_wikipedia),
-                onClick = { linkClicked(model.driverWikiUrl) }
+                onClick = { linkClicked(model.driverWikiUrl) },
+                icon = R.drawable.ic_details_wikipedia
             )
             Spacer(Modifier.height(AppTheme.dimensions.paddingXSmall))
         }
