@@ -30,7 +30,7 @@ import tmg.flashback.widgets.WidgetNavigationComponent
 
 val appModule = module {
 
-    viewModel { SettingsAllViewModel(get(), get(), get(), get(), get(), get(), get()) }
+    viewModel { SettingsAllViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
     viewModel { HomeViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
     viewModel { SyncViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get()) }
 

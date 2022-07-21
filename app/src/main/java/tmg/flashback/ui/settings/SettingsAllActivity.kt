@@ -14,9 +14,7 @@ class SettingsAllActivity: BaseActivity() {
         logScreenViewed("Settings")
         setContent {
             AppTheme {
-                SettingsAllScreenVM(
-                    actionUpClicked = { finish() }
-                )
+                SettingsAll()
             }
         }
     }
