@@ -7,7 +7,6 @@ import tmg.flashback.ads.repository.AdsRepository
 import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.settings.SettingsNavigationComponent
 import tmg.flashback.stats.StatsNavigationComponent
-import tmg.flashback.ui.navigation.NavigationService
 import tmg.flashback.web.WebNavigationComponent
 
 //region Inputs
@@ -32,8 +31,7 @@ class SettingsAllViewModel(
     private val settingsNavigationComponent: SettingsNavigationComponent,
     private val statsNavigationComponent: StatsNavigationComponent,
     private val adsNavigationComponent: AdsNavigationComponent,
-    private val webNavigationComponent: WebNavigationComponent,
-    private val navigationService: NavigationService
+    private val webNavigationComponent: WebNavigationComponent
 ): SettingsViewModel(), SettingsAllViewModelInputs, SettingsAllViewModelOutputs {
 
     override val models: List<SettingsModel> = mutableListOf<SettingsModel>().apply {
@@ -42,8 +40,7 @@ class SettingsAllViewModel(
                 title = R.string.settings_all_appearance,
                 description = R.string.settings_all_appearance_subtitle,
                 onClick = {
-                    navigationService.navController.navigate("appearance")
-//                    settingsNavigationComponent.settingsAppearance()
+                    settingsNavigationComponent.settingsAppearance()
                 }
         ))
         add(SettingsModel.Pref(

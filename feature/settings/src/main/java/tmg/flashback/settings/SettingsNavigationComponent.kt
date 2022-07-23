@@ -1,18 +1,36 @@
 package tmg.flashback.settings
 
-import android.content.Context
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
-import tmg.flashback.settings.ui.privacypolicy.PrivacyPolicyActivity
-import tmg.flashback.settings.ui.settings.about.SettingsAboutActivity
-import tmg.flashback.settings.ui.settings.appearance.SettingsAppearanceActivity
 import tmg.flashback.settings.ui.settings.appearance.animation.AnimationSpeedBottomSheetFragment
 import tmg.flashback.settings.ui.settings.appearance.nightmode.NightModeBottomSheetFragment
 import tmg.flashback.settings.ui.settings.appearance.theme.ThemeBottomSheetFragment
-import tmg.flashback.settings.ui.settings.support.SettingsSupportActivity
 import tmg.flashback.ui.navigation.ActivityProvider
+import tmg.flashback.ui.navigation.NavigationDestination
+import tmg.flashback.ui.navigation.Navigator
+import tmg.flashback.ui.navigation.Screen
+
+val Screen.Settings.About: NavigationDestination
+    get() = object : NavigationDestination {
+        override val route: String = "settings/about"
+    }
+
+val Screen.Settings.Appearance: NavigationDestination
+    get() = object : NavigationDestination {
+        override val route: String = "settings/appearance"
+    }
+
+val Screen.Settings.Support: NavigationDestination
+    get() = object : NavigationDestination {
+        override val route: String = "settings/support"
+    }
+
+val Screen.Settings.PrivacyPolicy: NavigationDestination
+    get() = object : NavigationDestination {
+        override val route: String = "privacy_policy"
+    }
 
 class SettingsNavigationComponent(
+    private val navigator: Navigator,
     private val activityProvider: ActivityProvider
 ) {
     internal fun animationDialog() = activityProvider.launch {
@@ -30,35 +48,19 @@ class SettingsNavigationComponent(
         ThemeBottomSheetFragment().show(activity.supportFragmentManager, "THEME")
     }
 
-    internal fun settingsAboutIntent(context: Context): Intent {
-        return Intent(context, SettingsAboutActivity::class.java)
+    fun settingsAbout() {
+        navigator.navigate(Screen.Settings.About)
     }
 
-    fun settingsAbout() = activityProvider.launch {
-        it.startActivity(settingsAboutIntent(it))
+    fun settingsAppearance() {
+        navigator.navigate(Screen.Settings.Appearance)
     }
 
-    internal fun settingsAppearanceIntent(context: Context): Intent {
-        return Intent(context, SettingsAppearanceActivity::class.java)
+    fun settingsSupport() {
+        navigator.navigate(Screen.Settings.Support)
     }
 
-    fun settingsAppearance() = activityProvider.launch {
-        it.startActivity(settingsAppearanceIntent(it))
-    }
-
-    internal fun settingsSupportIntent(context: Context): Intent {
-        return Intent(context, SettingsSupportActivity::class.java)
-    }
-
-    fun settingsSupport() = activityProvider.launch {
-        it.startActivity(settingsSupportIntent(it))
-    }
-
-    internal fun privacyPolicyIntent(context: Context): Intent {
-        return Intent(context, PrivacyPolicyActivity::class.java)
-    }
-
-    fun privacyPolicy() = activityProvider.launch {
-        it.startActivity(privacyPolicyIntent(it))
+    fun privacyPolicy() {
+        navigator.navigate(Screen.Settings.PrivacyPolicy)
     }
 }

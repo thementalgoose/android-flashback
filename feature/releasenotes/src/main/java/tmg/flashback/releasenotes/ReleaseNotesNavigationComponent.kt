@@ -1,19 +1,18 @@
 package tmg.flashback.releasenotes
 
-import android.content.Context
-import android.content.Intent
-import tmg.flashback.releasenotes.ui.releasenotes.ReleaseActivity
-import tmg.flashback.ui.navigation.ActivityProvider
+import tmg.flashback.ui.navigation.NavigationDestination
+import tmg.flashback.ui.navigation.Navigator
+import tmg.flashback.ui.navigation.Screen
 
-class ReleaseNotesNavigationComponent(
-    private val activityProvider: ActivityProvider
-) {
-    internal fun releaseNotesIntent(context: Context): Intent {
-        return ReleaseActivity.intent(context)
+val Screen.ReleaseNotes: NavigationDestination
+    get() = object : NavigationDestination {
+        override val route: String = "release_notes"
     }
 
-    fun releaseNotes() = activityProvider.launch {
-        val intent = releaseNotesIntent(it)
-        it.startActivity(intent)
+class ReleaseNotesNavigationComponent(
+    private val navigator: Navigator
+) {
+    fun releaseNotes() {
+        navigator.navigate(Screen.ReleaseNotes)
     }
 }
