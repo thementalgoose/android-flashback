@@ -11,9 +11,12 @@ import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.device.repository.DeviceRepository
 import tmg.flashback.notifications.navigation.NotificationNavigationProvider
 import tmg.flashback.rss.controllers.RSSController
+import tmg.flashback.ui.All
 import tmg.flashback.ui.navigation.ApplicationNavigationComponent
 import tmg.flashback.ui.HomeActivity
 import tmg.flashback.ui.navigation.ActivityProvider
+import tmg.flashback.ui.navigation.Navigator
+import tmg.flashback.ui.navigation.Screen
 import tmg.flashback.ui.sync.SyncActivity
 import tmg.flashback.ui.settings.SettingsAllActivity
 import java.net.MalformedURLException
@@ -23,7 +26,8 @@ class AppApplicationNavigationComponent(
     private val deviceRepository: DeviceRepository,
     private val analyticsManager: AnalyticsManager,
     private val rssController: RSSController,
-    private val activityProvider: ActivityProvider
+    private val activityProvider: ActivityProvider,
+    private val navigator: Navigator,
 ): ApplicationNavigationComponent, NotificationNavigationProvider {
 
     override fun relaunchApp() = activityProvider.launch {
@@ -64,16 +68,7 @@ class AppApplicationNavigationComponent(
 
 
 
-    override fun settings() = activityProvider.launch {
-        it.startActivity(settingsIntent(it))
-    }
-
-    override fun settingsIntent(context: Context): Intent {
-        return SettingsAllActivity.intent(context)
-    }
-
-    private fun isLocationIntentAvailable(context: Context): Boolean {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("geo:32.5558485,34.65522447"))
-        return context.packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY).isNotEmpty()
+    override fun settings() {
+        navigator.navigate(Screen.Settings.All)
     }
 }

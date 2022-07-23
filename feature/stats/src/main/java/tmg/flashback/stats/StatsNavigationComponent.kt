@@ -1,110 +1,112 @@
 package tmg.flashback.stats
 
-import android.content.Context
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
-import tmg.flashback.stats.ui.circuits.CircuitActivity
-import tmg.flashback.stats.ui.constructors.overview.ConstructorOverviewActivity
-import tmg.flashback.stats.ui.drivers.overview.DriverOverviewActivity
-import tmg.flashback.stats.ui.drivers.season.DriverSeasonActivity
 import tmg.flashback.stats.ui.feature.notificationonboarding.NotificationOnboardingBottomSheetFragment
-import tmg.flashback.stats.ui.search.SearchActivity
-import tmg.flashback.stats.ui.settings.home.SettingsHomeActivity
-import tmg.flashback.stats.ui.settings.notifications.SettingsNotificationsActivity
 import tmg.flashback.stats.ui.settings.notifications.reminder.UpNextReminderBottomSheetFragment
 import tmg.flashback.stats.ui.tyres.TyreBottomSheetFragment
-import tmg.flashback.stats.ui.weekend.WeekendActivity
 import tmg.flashback.stats.ui.weekend.WeekendInfo
 import tmg.flashback.ui.navigation.ActivityProvider
+import tmg.flashback.ui.navigation.NavigationDestination
+import tmg.flashback.ui.navigation.Navigator
+import tmg.flashback.ui.navigation.Screen
+
+val Screen.DriverPlaceholder: String get() = "drivers/{driverId}"
+fun Screen.Driver(driverId: String): NavigationDestination = object : NavigationDestination {
+    override val route: String = "drivers/$driverId"
+}
+
+val Screen.DriverSeasonPlaceholder: String get() = "drivers/{driverId}/{season}"
+fun Screen.Driver(driverId: String, season: Int): NavigationDestination = object : NavigationDestination {
+    override val route: String = "drivers/$driverId/$season"
+}
+
+val ConstructorPlaceholder: String get() = "constructors/{constructorId}"
+fun Screen.Constructor(constructorId: String): NavigationDestination = object : NavigationDestination {
+    override val route: String = "constructors/$constructorId"
+}
+
+val Screen.WeekendPlaceholder: String get() = "weekend/{season}/{round}"
+fun Screen.Weekend(season: Int, round: Int): NavigationDestination = object : NavigationDestination {
+    override val route: String = "weekend/$season/$round"
+}
+
+val Screen.CircuitPlaceholder: String get() = "circuit/{circuitId}"
+fun Screen.Circuit(circuitId: String): NavigationDestination = object : NavigationDestination {
+    override val route: String = "circuit/$circuitId"
+}
+
+val Screen.Settings.Home: NavigationDestination
+    get() = object : NavigationDestination {
+        override val route: String = "settings/home"
+    }
+
+val Screen.Settings.Notifications: NavigationDestination
+    get() = object : NavigationDestination {
+        override val route: String = "settings/notifications"
+    }
+
+val Screen.Search: NavigationDestination
+    get() = object : NavigationDestination {
+        override val route: String = "search"
+    }
 
 class StatsNavigationComponent(
+    private val navigator: Navigator,
     private val activityProvider: ActivityProvider
 ) {
-    internal fun driverOverviewIntent(context: Context, id: String, name: String): Intent {
-        return DriverOverviewActivity.intent(context, id, name)
+    fun driverOverview(id: String, name: String) {
+        navigator.navigate(Screen.Driver(
+            driverId = id
+        ))
     }
 
-    fun driverOverview(id: String, name: String) = activityProvider.launch {
-        it.startActivity(driverOverviewIntent(it, id, name))
+    fun driverSeason(id: String, name: String, season: Int) {
+        navigator.navigate(Screen.Driver(
+            driverId = id,
+            season = season
+        ))
     }
 
-    internal fun driverSeasonIntent(context: Context, id: String, name: String, season: Int): Intent {
-        return DriverSeasonActivity.intent(context, id, name, season)
-    }
-
-    fun driverSeason(id: String, name: String, season: Int) = activityProvider.launch {
-        it.startActivity(driverSeasonIntent(it, id, name, season))
-    }
-
-    internal fun constructorOverviewIntent(context: Context, id: String, name: String): Intent {
-        return ConstructorOverviewActivity.intent(context, id, name)
-    }
-
-    fun constructorOverview(id: String, name: String) = activityProvider.launch {
-        it.startActivity(constructorOverviewIntent(it, id, name))
-    }
-
-    internal fun constructorSeasonIntent(context: Context, id: String, name: String, season: Int): Intent {
-        return DriverSeasonActivity.intent(context, id, name, season)
+    fun constructorOverview(id: String, name: String) {
+        navigator.navigate(Screen.Constructor(
+            constructorId = id
+        ))
     }
 
     @Deprecated("Not yet implemented!")
-    fun constructorSeason(id: String, name: String, season: Int) = activityProvider.launch {
-        it.startActivity(constructorSeasonIntent(it, id, name, season))
+    fun constructorSeason(id: String, name: String, season: Int) {
+        TODO()
     }
 
-    internal fun weekendIntent(context: Context, weekendInfo: WeekendInfo): Intent {
-        return WeekendActivity.intent(context, weekendInfo)
+    fun weekend(weekendInfo: WeekendInfo) {
+        navigator.navigate(Screen.Weekend(
+            season = weekendInfo.season,
+            round = weekendInfo.round
+        ))
     }
 
-    fun weekend(weekendInfo: WeekendInfo) = activityProvider.launch {
-        val intent = weekendIntent(it, weekendInfo)
-        it.startActivity(intent)
+    fun search() {
+        navigator.navigate(Screen.Search)
     }
 
-    internal fun searchIntent(context: Context): Intent {
-        return SearchActivity.intent(context)
+    fun circuit(circuitId: String, circuitName: String) {
+        navigator.navigate(Screen.Circuit(
+            circuitId = circuitId
+        ))
     }
 
-    fun search() = activityProvider.launch {
-        val intent = searchIntent(it)
-        it.startActivity(intent)
+
+    fun settingsHome() {
+        navigator.navigate(Screen.Settings.Home)
     }
 
-    internal fun circuitIntent(context: Context, circuitId: String, circuitName: String): Intent {
-        return CircuitActivity.intent(
-            context = context,
-            circuitId = circuitId,
-            circuitName = circuitName
-        )
-    }
-
-    fun circuit(circuitId: String, circuitName: String) = activityProvider.launch {
-        val intent = circuitIntent(
-            context = it,
-            circuitId = circuitId,
-            circuitName = circuitName
-        )
-        it.startActivity(intent)
+    fun settingsNotifications() {
+        navigator.navigate(Screen.Settings.Notifications)
     }
 
     internal fun upNext() = activityProvider.launch {
         val activity = it as? AppCompatActivity ?: return@launch
         UpNextReminderBottomSheetFragment().show(activity.supportFragmentManager, "UP_NEXT")
-    }
-
-    internal fun settingsHomeIntent(context: Context): Intent {
-        return Intent(context, SettingsHomeActivity::class.java)
-    }
-    fun settingsHome() = activityProvider.launch {
-        it.startActivity(settingsHomeIntent(it))
-    }
-
-    internal fun settingsNotificationsIntent(context: Context): Intent {
-        return Intent(context, SettingsNotificationsActivity::class.java)
-    }
-    fun settingsNotifications() = activityProvider.launch {
-        it.startActivity(settingsNotificationsIntent(it))
     }
 
     internal fun tyres(season: Int) = activityProvider.launch {

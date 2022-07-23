@@ -43,7 +43,8 @@ class HomeActivity: BaseActivity(), SplashScreen.KeepOnScreenCondition {
 
         setContent {
             AppTheme {
-                DashboardScreen(windowSize = rememberWindowSizeClass())
+                HomeScreen(windowSize = rememberWindowSizeClass())
+//                DashboardScreen(windowSize = rememberWindowSizeClass())
             }
         }
 

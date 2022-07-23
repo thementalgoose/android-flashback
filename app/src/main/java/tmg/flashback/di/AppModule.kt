@@ -30,7 +30,7 @@ import tmg.flashback.widgets.WidgetNavigationComponent
 
 val appModule = module {
 
-    viewModel { SettingsAllViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
+    viewModel { SettingsAllViewModel(get(), get(), get(), get(), get(), get(), get()) }
     viewModel { HomeViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
     viewModel { SyncViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get()) }
 
@@ -44,8 +44,8 @@ val appModule = module {
     single<PreferenceManager> { AppPreferencesManager(get()) }
     single<StyleManager> { AppStyleManager(get(), get()) }
 
-    single<ApplicationNavigationComponent> { AppApplicationNavigationComponent(get(), get(), get(), get(), get()) }
-    single<NotificationNavigationProvider> { AppApplicationNavigationComponent(get(), get(), get(), get(), get()) }
+    single<ApplicationNavigationComponent> { AppApplicationNavigationComponent(get(), get(), get(), get(), get(), get()) }
+    single<NotificationNavigationProvider> { AppApplicationNavigationComponent(get(), get(), get(), get(), get(), get()) }
 
     single<BuildConfigManager> { AppBuildConfigManager() }
     single<WidgetManager> { AppWidgetManager(get()) }
