@@ -1,16 +1,12 @@
 package tmg.flashback.ui
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.navigation.NavController
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavType
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
+import androidx.navigation.*
+import androidx.navigation.compose.*
 import org.koin.androidx.compose.inject
 import tmg.flashback.settings.About
 import tmg.flashback.settings.Appearance
@@ -42,9 +38,13 @@ fun HomeScreen(
         }
     }
 
+    BackHandler {
+        navController.popBackStack()
+    }
+
     NavHost(
         navController = navController,
-        startDestination = navigator.destination.value.route
+        startDestination = Screen.Home.route
     ) {
         composable(Screen.Home.route) {
             DashboardScreen(windowSize = windowSize)
@@ -68,5 +68,5 @@ fun HomeScreen(
 }
 
 fun NavController.navigate(destination: NavigationDestination) {
-    this.navigate(destination.route)
+    this.navigate(route = destination.route)
 }

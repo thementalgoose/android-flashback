@@ -7,6 +7,9 @@ import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.core.splashscreen.SplashScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.ComposeNavigator
+import androidx.navigation.compose.DialogNavigator
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import tmg.flashback.BuildConfig
@@ -41,9 +44,17 @@ class HomeActivity: BaseActivity(), SplashScreen.KeepOnScreenCondition {
         val splashScreen = installSplashScreen()
         setTheme(themeRes)
 
+//        val navController: NavHostController = NavHostController(this).apply {
+//            this.navigatorProvider.addNavigator(ComposeNavigator())
+//            this.navigatorProvider.addNavigator(DialogNavigator())
+//        }
+
         setContent {
             AppTheme {
-                HomeScreen(windowSize = rememberWindowSizeClass())
+                HomeScreen(
+//                    navController = navController,
+                    windowSize = rememberWindowSizeClass()
+                )
 //                DashboardScreen(windowSize = rememberWindowSizeClass())
             }
         }
