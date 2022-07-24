@@ -11,7 +11,6 @@ import androidx.compose.ui.Modifier
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import org.koin.androidx.compose.viewModel
-import org.threeten.bp.LocalDate
 import tmg.flashback.stats.ui.weekend.constructor.ConstructorScreenVM
 import tmg.flashback.stats.ui.weekend.qualifying.QualifyingScreenVM
 import tmg.flashback.stats.ui.weekend.race.RaceScreenVM
@@ -38,26 +37,16 @@ fun WeekendScreenEmbedded(
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun WeekendScreenVM(
-    season: Int,
-    round: Int,
+    weekendInfo: WeekendInfo,
     actionUpClicked: () -> Unit,
 ) {
     val viewModel by viewModel<WeekendViewModel>()
     viewModel.inputs.load(
-        season = season,
-        round = round
+        season = weekendInfo.season,
+        round = weekendInfo.round
     )
 
-    val weekendInfo = viewModel.outputs.weekendInfo.observeAsState(WeekendInfo(
-        season = season,
-        round = round,
-        raceName = "",
-        circuitId = "",
-        circuitName = "",
-        countryISO = "",
-        country = "",
-        date = LocalDate.now()
-    ))
+    val dbWeekendInfo = viewModel.outputs.weekendInfo.observeAsState(weekendInfo)
     val tabState = viewModel.outputs.tabs.observeAsState(listOf(
         WeekendScreenState(tab = WeekendNavItem.SCHEDULE, isSelected = true),
         WeekendScreenState(tab = WeekendNavItem.QUALIFYING, isSelected = false),
@@ -91,7 +80,7 @@ fun WeekendScreenVM(
                         WeekendNavItem.SCHEDULE -> {
                             Fade(visible = x.isSelected) {
                                 DetailsScreenVM(
-                                    info = weekendInfo.value,
+                                    info = dbWeekendInfo.value,
                                     actionUpClicked = actionUpClicked
                                 )
                             }
@@ -99,7 +88,7 @@ fun WeekendScreenVM(
                         WeekendNavItem.QUALIFYING -> {
                             Fade(visible = x.isSelected) {
                                 QualifyingScreenVM(
-                                    info = weekendInfo.value,
+                                    info = dbWeekendInfo.value,
                                     actionUpClicked = actionUpClicked
                                 )
                             }
@@ -107,7 +96,7 @@ fun WeekendScreenVM(
                         WeekendNavItem.SPRINT -> {
                             Fade(visible = x.isSelected) {
                                 SprintScreenVM(
-                                    info = weekendInfo.value,
+                                    info = dbWeekendInfo.value,
                                     actionUpClicked = actionUpClicked
                                 )
                             }
@@ -115,7 +104,7 @@ fun WeekendScreenVM(
                         WeekendNavItem.RACE -> {
                             Fade(visible = x.isSelected) {
                                 RaceScreenVM(
-                                    info = weekendInfo.value,
+                                    info = dbWeekendInfo.value,
                                     actionUpClicked = actionUpClicked
                                 )
                             }
@@ -123,7 +112,7 @@ fun WeekendScreenVM(
                         WeekendNavItem.CONSTRUCTOR -> {
                             Fade(visible = x.isSelected) {
                                 ConstructorScreenVM(
-                                    info = weekendInfo.value,
+                                    info = dbWeekendInfo.value,
                                     actionUpClicked = actionUpClicked
                                 )
                             }

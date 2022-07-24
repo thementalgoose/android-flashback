@@ -10,9 +10,12 @@ import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.stats.repository.HomeRepository
 import tmg.flashback.stats.repository.NotificationRepository
 import tmg.flashback.stats.usecases.DefaultSeasonUseCase
+import tmg.flashback.ui.Home
 import tmg.flashback.ui.managers.StyleManager
 import tmg.flashback.ui.model.NightMode
 import tmg.flashback.ui.navigation.ApplicationNavigationComponent
+import tmg.flashback.ui.navigation.Navigator
+import tmg.flashback.ui.navigation.Screen
 import tmg.flashback.ui.usecases.ChangeNightModeUseCase
 import kotlin.math.abs
 
@@ -99,6 +102,7 @@ class MenuViewModel(
     override fun clickToggle(toggle: MenuItems.Toggle) {
         when (toggle) {
             is MenuItems.Toggle.DarkMode -> {
+                navigationComponent.home()
                 if (toggle.isEnabled) {
                     changeNightModeUseCase.setNightMode(NightMode.DAY)
                 } else {

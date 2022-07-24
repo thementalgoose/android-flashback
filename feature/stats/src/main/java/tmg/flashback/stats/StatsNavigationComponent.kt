@@ -3,6 +3,7 @@ package tmg.flashback.stats
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.*
 import androidx.navigation.compose.composable
+import org.threeten.bp.LocalDate
 import tmg.flashback.stats.ui.circuits.CircuitScreenVM
 import tmg.flashback.stats.ui.constructors.overview.ConstructorOverviewScreenVM
 import tmg.flashback.stats.ui.constructors.season.ConstructorSeasonScreenVM
@@ -16,30 +17,51 @@ import tmg.flashback.stats.ui.weekend.WeekendInfo
 import tmg.flashback.stats.ui.weekend.WeekendScreenVM
 import tmg.flashback.ui.navigation.*
 import tmg.flashback.ui.navigation.Navigator
+import tmg.utilities.extensions.format
+import tmg.utilities.extensions.toLocalDate
 
-val Screen.DriverPlaceholder: String get() = "drivers/{driverId}"
-fun Screen.Driver(driverId: String): NavigationDestination = object : NavigationDestination {
-    override val route: String = "drivers/$driverId"
+val Screen.DriverPlaceholder: String get() = "drivers/{driverId}?driverName={driverName}"
+fun Screen.Driver(driverId: String, driverName: String): NavigationDestination = object : NavigationDestination {
+    override val route: String = "drivers/$driverId?driverName=$driverName"
 }
 
-val Screen.DriverSeasonPlaceholder: String get() = "drivers/{driverId}/{season}"
-fun Screen.Driver(driverId: String, season: Int): NavigationDestination = object : NavigationDestination {
-    override val route: String = "drivers/$driverId/$season"
+val Screen.DriverSeasonPlaceholder: String get() = "drivers/{driverId}/{season}?driverName={driverName}"
+fun Screen.Driver(driverId: String, driverName: String, season: Int): NavigationDestination = object : NavigationDestination {
+    override val route: String = "drivers/$driverId/$season?driverName=$driverName"
 }
 
-val Screen.ConstructorPlaceholder: String get() = "constructors/{constructorId}"
-fun Screen.Constructor(constructorId: String): NavigationDestination = object : NavigationDestination {
-    override val route: String = "constructors/$constructorId"
+val Screen.ConstructorPlaceholder: String get() = "constructors/{constructorId}?constructorName={constructorName}"
+fun Screen.Constructor(constructorId: String, constructorName: String): NavigationDestination = object : NavigationDestination {
+    override val route: String = "constructors/$constructorId?constructorName=$constructorName"
 }
 
-val Screen.WeekendPlaceholder: String get() = "weekend/{season}/{round}"
-fun Screen.Weekend(season: Int, round: Int): NavigationDestination = object : NavigationDestination {
-    override val route: String = "weekend/$season/$round"
+
+//val raceName: String,
+//val circuitId: String,
+//val circuitName: String,
+//val country: String,
+//val countryISO: String,
+//val date: LocalDate
+val Screen.WeekendPlaceholder: String get() = "weekend/{season}/{round}?" +
+        "raceName={raceName}" + "&" +
+        "circuitId={circuitId}" + "&" +
+        "circuitName={circuitName}" + "&" +
+        "country={country}" + "&" +
+        "countryISO={countryISO}" + "&" +
+        "date={date}"
+fun Screen.Weekend(weekendInfo: WeekendInfo): NavigationDestination = object : NavigationDestination {
+    override val route: String = "weekend/${weekendInfo.season}/${weekendInfo.round}?" +
+            "raceName=${weekendInfo.raceName}" + "&" +
+            "circuitId=${weekendInfo.circuitId}" + "&" +
+            "circuitName=${weekendInfo.circuitName}" + "&" +
+            "country=${weekendInfo.country}" + "&" +
+            "countryISO=${weekendInfo.countryISO}" + "&" +
+            "date=${weekendInfo.date.format("yyyy-MM-dd")}"
 }
 
-val Screen.CircuitPlaceholder: String get() = "circuit/{circuitId}"
-fun Screen.Circuit(circuitId: String): NavigationDestination = object : NavigationDestination {
-    override val route: String = "circuit/$circuitId"
+val Screen.CircuitPlaceholder: String get() = "circuit/{circuitId}?circuitName={circuitName}"
+fun Screen.Circuit(circuitId: String, circuitName: String): NavigationDestination = object : NavigationDestination {
+    override val route: String = "circuit/$circuitId?circuitName=$circuitName"
 }
 
 val Screen.Settings.Home: NavigationDestination
@@ -58,7 +80,6 @@ val Screen.Search: NavigationDestination
     }
 
 fun NavGraphBuilder.stats(navController: NavController) {
-
     composable(Screen.WeekendPlaceholder, arguments = listOf(
         navIntRequired("season"),
         navIntRequired("round")
@@ -66,8 +87,16 @@ fun NavGraphBuilder.stats(navController: NavController) {
         val season = it.arguments?.getInt("season")!!
         val round = it.arguments?.getInt("round")!!
         WeekendScreenVM(
-            season = season,
-            round = round,
+            weekendInfo = WeekendInfo(
+                season = season,
+                round = round,
+                raceName = it.arguments?.getString("raceName") ?: "",
+                circuitId = it.arguments?.getString("circuitId") ?: "",
+                circuitName = it.arguments?.getString("circuitName") ?: "",
+                country = it.arguments?.getString("country") ?: "",
+                countryISO = it.arguments?.getString("countryISO") ?: "",
+                date = it.arguments?.getString("date")?.toLocalDate("yyyy-MM-dd") ?: LocalDate.now(),
+            ),
             actionUpClicked = { navController.popBackStack() }
         )
     }
@@ -76,9 +105,10 @@ fun NavGraphBuilder.stats(navController: NavController) {
         navStringRequired("circuitId")
     )) {
         val circuitId = it.arguments?.getString("circuitId")!!
+        val circuitName = it.arguments?.getString("circuitName")
         CircuitScreenVM(
             circuitId = circuitId,
-            circuitName = "",
+            circuitName = circuitName ?: "",
             actionUpClicked = { navController.popBackStack() }
         )
     }
@@ -132,20 +162,23 @@ class StatsNavigationComponent(
 ) {
     fun driverOverview(id: String, name: String) {
         navigator.navigate(Screen.Driver(
-            driverId = id
+            driverId = id,
+            driverName = name
         ))
     }
 
     fun driverSeason(id: String, name: String, season: Int) {
         navigator.navigate(Screen.Driver(
             driverId = id,
+            driverName = name,
             season = season
         ))
     }
 
     fun constructorOverview(id: String, name: String) {
         navigator.navigate(Screen.Constructor(
-            constructorId = id
+            constructorId = id,
+            constructorName = name
         ))
     }
 
@@ -156,8 +189,7 @@ class StatsNavigationComponent(
 
     fun weekend(weekendInfo: WeekendInfo) {
         navigator.navigate(Screen.Weekend(
-            season = weekendInfo.season,
-            round = weekendInfo.round
+            weekendInfo = weekendInfo
         ))
     }
 
@@ -167,7 +199,8 @@ class StatsNavigationComponent(
 
     fun circuit(circuitId: String, circuitName: String) {
         navigator.navigate(Screen.Circuit(
-            circuitId = circuitId
+            circuitId = circuitId,
+            circuitName = circuitName
         ))
     }
 

@@ -5,21 +5,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.navigation.*
-import androidx.navigation.compose.*
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import org.koin.androidx.compose.inject
-import tmg.flashback.releasenotes.ReleaseNotes
 import tmg.flashback.releasenotes.releaseNotes
-import tmg.flashback.releasenotes.ui.releasenotes.ReleaseScreenVM
 import tmg.flashback.rss.rss
-import tmg.flashback.stats.Search
-import tmg.flashback.stats.WeekendPlaceholder
 import tmg.flashback.stats.stats
-import tmg.flashback.stats.ui.search.SearchScreenVM
-import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.utils.WindowSize
 import tmg.flashback.ui.dashboard.DashboardScreen
-import tmg.flashback.ui.navigation.NavigationDestination
 import tmg.flashback.ui.navigation.Navigator
 import tmg.flashback.ui.navigation.Screen
 import tmg.flashback.ui.navigation.navigate
@@ -34,7 +28,13 @@ fun HomeScreen(
     val destination by navigator.destination.collectAsState()
     LaunchedEffect(destination) {
         if (navController.currentDestination?.route != destination.route) {
-            navController.navigate(destination)
+            if (destination == Screen.Home) {
+                navController.navigate(destination) {
+                    this.launchSingleTop = true
+                }
+            } else {
+                navController.navigate(destination)
+            }
         }
     }
 

@@ -25,8 +25,7 @@ class WeekendActivity: BaseActivity() {
         setContent {
             AppTheme {
                 WeekendScreenVM(
-                    season = weekendInfo.season,
-                    round = weekendInfo.round,
+                    weekendInfo = weekendInfo,
                     actionUpClicked = {
                         finish()
                     }
