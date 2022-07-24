@@ -105,10 +105,9 @@ fun NavGraphBuilder.stats(navController: NavController) {
         navStringRequired("circuitId")
     )) {
         val circuitId = it.arguments?.getString("circuitId")!!
-        val circuitName = it.arguments?.getString("circuitName")
         CircuitScreenVM(
             circuitId = circuitId,
-            circuitName = circuitName ?: "",
+            circuitName = it.arguments?.getString("circuitName") ?: "",
             actionUpClicked = { navController.popBackStack() }
         )
     }
@@ -119,7 +118,7 @@ fun NavGraphBuilder.stats(navController: NavController) {
         val driverId = it.arguments?.getString("driverId")!!
         DriverOverviewScreenVM(
             driverId = driverId,
-            driverName = "",
+            driverName = it.arguments?.getString("driverName") ?: "",
             actionUpClicked = { navController.popBackStack() }
         )
     }
@@ -132,7 +131,7 @@ fun NavGraphBuilder.stats(navController: NavController) {
         val season = it.arguments?.getInt("season")!!
         DriverSeasonScreenVM(
             driverId = driverId,
-            driverName = "",
+            driverName = it.arguments?.getString("driverName") ?: "",
             season = season,
             actionUpClicked = { navController.popBackStack() }
         )
@@ -144,7 +143,7 @@ fun NavGraphBuilder.stats(navController: NavController) {
         val constructorId = it.arguments?.getString("constructorId")!!
         ConstructorOverviewScreenVM(
             constructorId = constructorId,
-            constructorName = "",
+            constructorName = it.arguments?.getString("constructorName") ?: "",
             actionUpClicked = { navController.popBackStack() }
         )
     }
