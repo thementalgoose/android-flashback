@@ -8,21 +8,21 @@ import androidx.compose.runtime.getValue
 import androidx.navigation.*
 import androidx.navigation.compose.*
 import org.koin.androidx.compose.inject
-import tmg.flashback.settings.About
-import tmg.flashback.settings.Appearance
-import tmg.flashback.settings.ui.settings.appearance.SettingsAppearanceScreenVM
-import tmg.flashback.stats.Home
-import tmg.flashback.stats.Weekend
+import tmg.flashback.releasenotes.ReleaseNotes
+import tmg.flashback.releasenotes.releaseNotes
+import tmg.flashback.releasenotes.ui.releasenotes.ReleaseScreenVM
+import tmg.flashback.rss.rss
+import tmg.flashback.stats.Search
 import tmg.flashback.stats.WeekendPlaceholder
-import tmg.flashback.stats.ui.weekend.WeekendInfo
-import tmg.flashback.stats.ui.weekend.WeekendScreen
+import tmg.flashback.stats.stats
+import tmg.flashback.stats.ui.search.SearchScreenVM
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.utils.WindowSize
 import tmg.flashback.ui.dashboard.DashboardScreen
 import tmg.flashback.ui.navigation.NavigationDestination
 import tmg.flashback.ui.navigation.Navigator
 import tmg.flashback.ui.navigation.Screen
-import tmg.flashback.ui.settings.SettingsAllScreenVM
+import tmg.flashback.ui.navigation.navigate
 import tmg.flashback.ui.settings.appSettings
 
 @Composable
@@ -50,23 +50,12 @@ fun HomeScreen(
             DashboardScreen(windowSize = windowSize)
         }
 
-        composable(
-            Screen.WeekendPlaceholder,
-            arguments = listOf(
-                navArgument("season") { this.type = NavType.IntType },
-                navArgument("round") { this.type = NavType.IntType }
-            )
-        ) {
-            val season = it.arguments?.getInt("season")
-            val round = it.arguments?.getInt("round")
+        releaseNotes(navController)
 
-            TextBody1(text = "SEASON $season ROUND $round")
-        }
+        stats(navController)
+
+        rss(navController)
 
         appSettings(navController)
     }
-}
-
-fun NavController.navigate(destination: NavigationDestination) {
-    this.navigate(route = destination.route)
 }

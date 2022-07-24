@@ -1,5 +1,11 @@
 package tmg.flashback.rss
 
+import androidx.navigation.NavController
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.compose.composable
+import tmg.flashback.rss.ui.configure.SettingsRSSConfigureScreenVM
+import tmg.flashback.rss.ui.feed.RSSScreenVM
+import tmg.flashback.rss.ui.settings.SettingsRSSScreenVM
 import tmg.flashback.ui.navigation.NavigationDestination
 import tmg.flashback.ui.navigation.Navigator
 import tmg.flashback.ui.navigation.Screen
@@ -18,6 +24,26 @@ val Screen.RSS: NavigationDestination
     get() = object : NavigationDestination {
         override val route: String = "rss"
     }
+
+fun NavGraphBuilder.rss(navController: NavController) {
+    composable(Screen.RSS.route) {
+        RSSScreenVM(
+            actionUpClicked = { navController.popBackStack() }
+        )
+    }
+
+    composable(Screen.Settings.RSSConfigure.route) {
+        SettingsRSSScreenVM(
+            actionUpClicked = { navController.popBackStack() }
+        )
+    }
+
+    composable(Screen.Settings.RSSConfigure.route) {
+        SettingsRSSConfigureScreenVM(
+            actionUpClicked = { navController.popBackStack() }
+        )
+    }
+}
 
 class RssNavigationComponent(
     private val navigator: Navigator

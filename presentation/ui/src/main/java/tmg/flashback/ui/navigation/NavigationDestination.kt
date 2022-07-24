@@ -1,7 +1,11 @@
 package tmg.flashback.ui.navigation
 
-import android.os.Bundle
+import androidx.navigation.NavController
 
 interface NavigationDestination {
     val route: String
+}
+
+fun NavController.navigate(destination: NavigationDestination) {
+    this.navigate(route = destination.route)
 }

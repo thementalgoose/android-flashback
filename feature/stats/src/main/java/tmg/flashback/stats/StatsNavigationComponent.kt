@@ -1,14 +1,21 @@
 package tmg.flashback.stats
 
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.*
+import androidx.navigation.compose.composable
+import tmg.flashback.stats.ui.circuits.CircuitScreenVM
+import tmg.flashback.stats.ui.constructors.overview.ConstructorOverviewScreenVM
+import tmg.flashback.stats.ui.constructors.season.ConstructorSeasonScreenVM
+import tmg.flashback.stats.ui.drivers.overview.DriverOverviewScreenVM
+import tmg.flashback.stats.ui.drivers.season.DriverSeasonScreenVM
 import tmg.flashback.stats.ui.feature.notificationonboarding.NotificationOnboardingBottomSheetFragment
+import tmg.flashback.stats.ui.search.SearchScreenVM
 import tmg.flashback.stats.ui.settings.notifications.reminder.UpNextReminderBottomSheetFragment
 import tmg.flashback.stats.ui.tyres.TyreBottomSheetFragment
 import tmg.flashback.stats.ui.weekend.WeekendInfo
-import tmg.flashback.ui.navigation.ActivityProvider
-import tmg.flashback.ui.navigation.NavigationDestination
+import tmg.flashback.stats.ui.weekend.WeekendScreenVM
+import tmg.flashback.ui.navigation.*
 import tmg.flashback.ui.navigation.Navigator
-import tmg.flashback.ui.navigation.Screen
 
 val Screen.DriverPlaceholder: String get() = "drivers/{driverId}"
 fun Screen.Driver(driverId: String): NavigationDestination = object : NavigationDestination {
@@ -20,7 +27,7 @@ fun Screen.Driver(driverId: String, season: Int): NavigationDestination = object
     override val route: String = "drivers/$driverId/$season"
 }
 
-val ConstructorPlaceholder: String get() = "constructors/{constructorId}"
+val Screen.ConstructorPlaceholder: String get() = "constructors/{constructorId}"
 fun Screen.Constructor(constructorId: String): NavigationDestination = object : NavigationDestination {
     override val route: String = "constructors/$constructorId"
 }
@@ -49,6 +56,75 @@ val Screen.Search: NavigationDestination
     get() = object : NavigationDestination {
         override val route: String = "search"
     }
+
+fun NavGraphBuilder.stats(navController: NavController) {
+
+    composable(Screen.WeekendPlaceholder, arguments = listOf(
+        navIntRequired("season"),
+        navIntRequired("round")
+    )) {
+        val season = it.arguments?.getInt("season")!!
+        val round = it.arguments?.getInt("round")!!
+        WeekendScreenVM(
+            season = season,
+            round = round,
+            actionUpClicked = { navController.popBackStack() }
+        )
+    }
+
+    composable(Screen.CircuitPlaceholder, arguments = listOf(
+        navStringRequired("circuitId")
+    )) {
+        val circuitId = it.arguments?.getString("circuitId")!!
+        CircuitScreenVM(
+            circuitId = circuitId,
+            circuitName = "",
+            actionUpClicked = { navController.popBackStack() }
+        )
+    }
+
+    composable(Screen.DriverPlaceholder, arguments = listOf(
+        navStringRequired("driverId")
+    )) {
+        val driverId = it.arguments?.getString("driverId")!!
+        DriverOverviewScreenVM(
+            driverId = driverId,
+            driverName = "",
+            actionUpClicked = { navController.popBackStack() }
+        )
+    }
+
+    composable(Screen.DriverSeasonPlaceholder, arguments = listOf(
+        navStringRequired("driverId"),
+        navIntRequired("season")
+    )) {
+        val driverId = it.arguments?.getString("driverId")!!
+        val season = it.arguments?.getInt("season")!!
+        DriverSeasonScreenVM(
+            driverId = driverId,
+            driverName = "",
+            season = season,
+            actionUpClicked = { navController.popBackStack() }
+        )
+    }
+
+    composable(Screen.ConstructorPlaceholder, arguments = listOf(
+        navStringRequired("constructorId")
+    )) {
+        val constructorId = it.arguments?.getString("constructorId")!!
+        ConstructorOverviewScreenVM(
+            constructorId = constructorId,
+            constructorName = "",
+            actionUpClicked = { navController.popBackStack() }
+        )
+    }
+
+    composable(Screen.Search.route) {
+        SearchScreenVM(
+            actionUpClicked = { navController.popBackStack() }
+        )
+    }
+}
 
 class StatsNavigationComponent(
     private val navigator: Navigator,
