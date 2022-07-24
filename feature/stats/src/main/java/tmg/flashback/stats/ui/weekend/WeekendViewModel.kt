@@ -4,6 +4,7 @@ import androidx.lifecycle.*
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import tmg.flashback.formula1.model.Race
 import tmg.flashback.formula1.model.RaceInfo
 import tmg.flashback.statistics.repo.RaceRepository
 import tmg.utilities.extensions.combinePair
@@ -17,6 +18,7 @@ interface WeekendViewModelInputs {
 interface WeekendViewModelOutputs {
     val tabs: LiveData<List<WeekendScreenState>>
     val isRefreshing: LiveData<Boolean>
+    val weekendInfo: LiveData<WeekendInfo>
 }
 
 class WeekendViewModel(
@@ -30,9 +32,19 @@ class WeekendViewModel(
     private val selectedTab: MutableStateFlow<WeekendNavItem> = MutableStateFlow(WeekendNavItem.SCHEDULE)
     private val seasonRound: MutableStateFlow<Pair<Int, Int>?> = MutableStateFlow(null)
 
-    override val tabs: LiveData<List<WeekendScreenState>> = seasonRound
+    private val raceFlow: Flow<Race?> = seasonRound
         .filterNotNull()
         .flatMapLatest { (season, round) -> raceRepository.getRace(season, round) }
+        .shareIn(viewModelScope, started = SharingStarted.Eagerly)
+
+    override val weekendInfo: LiveData<WeekendInfo> = raceFlow
+        .filterNotNull()
+        .map {
+            it.raceInfo.toWeekendInfo()
+        }
+        .asLiveData(viewModelScope.coroutineContext)
+
+    override val tabs: LiveData<List<WeekendScreenState>> = raceFlow
         .combinePair(selectedTab)
         .map { (race, navItem) ->
             val list = mutableListOf<WeekendScreenState>()

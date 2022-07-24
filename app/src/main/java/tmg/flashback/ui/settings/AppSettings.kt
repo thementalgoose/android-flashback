@@ -26,53 +26,53 @@ import tmg.flashback.web.ui.settings.SettingsWebBrowserScreenVM
 
 fun NavGraphBuilder.appSettings(navController: NavController) {
     composable(Screen.Settings.All.route) {
-        SettingsAllScreenVM(actionUpClicked = {
-            navController.popBackStack()
-        })
+        SettingsAllScreenVM(
+            actionUpClicked = { navController.popBackStack() }
+        )
     }
     composable(Screen.Settings.Appearance.route) {
-        SettingsAppearanceScreenVM(actionUpClicked = {
-            navController.popBackStack()
-        })
+        SettingsAppearanceScreenVM(
+            actionUpClicked = { navController.popBackStack() }
+        )
     }
     composable(Screen.Settings.Home.route) {
-        SettingsHomeScreenVM(actionUpClicked = {
-            navController.popBackStack()
-        })
+        SettingsHomeScreenVM(
+            actionUpClicked = { navController.popBackStack() }
+        )
     }
     composable(Screen.Settings.RSS.route) {
-        SettingsRSSScreenVM(actionUpClicked = {
-            navController.popBackStack()
-        })
+        SettingsRSSScreenVM(
+            actionUpClicked = { navController.popBackStack() }
+        )
     }
     composable(Screen.Settings.RSSConfigure.route) {
-        SettingsRSSConfigureScreenVM(actionUpClicked = {
-            navController.popBackStack()
-        })
+        SettingsRSSConfigureScreenVM(
+            actionUpClicked = { navController.popBackStack() }
+        )
     }
     composable(Screen.Settings.Notifications.route) {
-        SettingsNotificationScreenVM(actionUpClicked = {
-            navController.popBackStack()
-        })
+        SettingsNotificationScreenVM(
+            actionUpClicked = { navController.popBackStack() }
+        )
     }
     composable(Screen.Settings.WebBrowser.route) {
-        SettingsWebBrowserScreenVM(actionUpClicked = {
-            navController.popBackStack()
-        })
+        SettingsWebBrowserScreenVM(
+            actionUpClicked = { navController.popBackStack() }
+        )
     }
     composable(Screen.Settings.Support.route) {
-        SettingsWebBrowserScreenVM(actionUpClicked = {
-            navController.popBackStack()
-        })
+        SettingsWebBrowserScreenVM(
+            actionUpClicked = { navController.popBackStack() }
+        )
     }
     composable(Screen.Settings.Adverts.route) {
-        SettingsAdvertScreenVM(actionUpClicked = {
-            navController.popBackStack()
-        })
+        SettingsAdvertScreenVM(
+            actionUpClicked = { navController.popBackStack() }
+        )
     }
     composable(Screen.Settings.About.route) {
-        SettingsAboutScreenVM(actionUpClicked = {
-            navController.popBackStack()
-        })
+        SettingsAboutScreenVM(
+            actionUpClicked = { navController.popBackStack() }
+        )
     }
 }
