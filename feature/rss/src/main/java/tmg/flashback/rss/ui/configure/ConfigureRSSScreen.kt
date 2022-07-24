@@ -277,4 +277,7 @@ private fun Add(
             )
         }
     }
+    Box(Modifier
+        .fillMaxWidth()
+        .imePadding())
 }

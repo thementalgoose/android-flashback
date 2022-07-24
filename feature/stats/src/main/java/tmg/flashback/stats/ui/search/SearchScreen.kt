@@ -70,8 +70,8 @@ fun SearchScreen(
 ) {
     Column(Modifier
         .background(AppTheme.colors.backgroundPrimary)
-        .navigationBarsPadding()
         .statusBarsPadding()
+        .navigationBarsPadding()
     ) {
         LazyColumn(
             modifier = Modifier.weight(1f),
