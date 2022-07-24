@@ -11,7 +11,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.viewinterop.AndroidView
 import tmg.flashback.settings.R
 import tmg.flashback.style.AppTheme
@@ -22,8 +21,8 @@ import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.getColor
 
 @Composable
-internal fun PrivacyPolicyScreen(
-    clickBack: () -> Unit
+fun PrivacyPolicyScreenVM(
+    actionUpClicked: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -34,7 +33,7 @@ internal fun PrivacyPolicyScreen(
             text = stringResource(id = R.string.privacy_policy_title),
             icon = painterResource(id = R.drawable.ic_back),
             iconContentDescription = stringResource(id = R.string.ab_back),
-            actionUpClicked = clickBack
+            actionUpClicked = actionUpClicked
         )
         AndroidView(
             modifier = Modifier.padding(
@@ -58,8 +57,8 @@ internal fun PrivacyPolicyScreen(
 @Composable
 private fun Preview() {
     AppThemePreview {
-        PrivacyPolicyScreen(
-            clickBack = {}
+        PrivacyPolicyScreenVM(
+            actionUpClicked = {}
         )
     }
 }

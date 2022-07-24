@@ -12,7 +12,9 @@ import tmg.flashback.rss.ui.configure.SettingsRSSConfigureScreenVM
 import tmg.flashback.rss.ui.settings.SettingsRSSScreenVM
 import tmg.flashback.settings.About
 import tmg.flashback.settings.Appearance
+import tmg.flashback.settings.PrivacyPolicy
 import tmg.flashback.settings.Support
+import tmg.flashback.settings.ui.privacypolicy.PrivacyPolicyScreenVM
 import tmg.flashback.settings.ui.settings.about.SettingsAboutScreenVM
 import tmg.flashback.settings.ui.settings.appearance.SettingsAppearanceScreenVM
 import tmg.flashback.stats.Home
@@ -72,6 +74,12 @@ fun NavGraphBuilder.appSettings(navController: NavController) {
     }
     composable(Screen.Settings.About.route) {
         SettingsAboutScreenVM(
+            actionUpClicked = { navController.popBackStack() }
+        )
+    }
+
+    composable(Screen.Settings.PrivacyPolicy.route) {
+        PrivacyPolicyScreenVM(
             actionUpClicked = { navController.popBackStack() }
         )
     }

@@ -20,8 +20,8 @@ internal class PrivacyPolicyActivity: BaseActivity() {
         setContent {
             AppTheme {
                 Scaffold(content = {
-                    PrivacyPolicyScreen(
-                        clickBack = viewModel.inputs::clickBack
+                    PrivacyPolicyScreenVM(
+                        actionUpClicked = viewModel.inputs::clickBack
                     )
                 })
             }
