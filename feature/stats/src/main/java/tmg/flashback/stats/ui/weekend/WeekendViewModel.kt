@@ -35,13 +35,12 @@ class WeekendViewModel(
     private val raceFlow: Flow<Race?> = seasonRound
         .filterNotNull()
         .flatMapLatest { (season, round) -> raceRepository.getRace(season, round) }
-        .shareIn(viewModelScope, started = SharingStarted.Eagerly)
+        .flowOn(ioDispatcher)
+        .shareIn(viewModelScope, started = SharingStarted.Lazily)
 
     override val weekendInfo: LiveData<WeekendInfo> = raceFlow
         .filterNotNull()
-        .map {
-            it.raceInfo.toWeekendInfo()
-        }
+        .map { it.raceInfo.toWeekendInfo() }
         .asLiveData(viewModelScope.coroutineContext)
 
     override val tabs: LiveData<List<WeekendScreenState>> = raceFlow
@@ -63,6 +62,7 @@ class WeekendViewModel(
             WeekendScreenState(WeekendNavItem.RACE, isSelected = selectedTab.value == WeekendNavItem.RACE),
             WeekendScreenState(WeekendNavItem.CONSTRUCTOR, isSelected = selectedTab.value == WeekendNavItem.CONSTRUCTOR)
         ) }
+        .flowOn(ioDispatcher)
         .asLiveData(viewModelScope.coroutineContext)
 
     override val isRefreshing: MutableLiveData<Boolean> = MutableLiveData()

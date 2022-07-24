@@ -31,11 +31,11 @@ internal class WeekendViewModelTest: BaseTest() {
 
     @BeforeEach
     internal fun setUp() {
-        every { mockRaceRepository.getRace(season = any(), round = any()) } returns flow { Race.model() }
+        every { mockRaceRepository.getRace(season = 2020, round = 1) } returns flow { emit(Race.model()) }
     }
 
     @Test
-    fun `loading season and round outputs weekend info`() {
+    fun `loading season and round outputs weekend info`() = coroutineTest {
         underTest()
         underTest.inputs.load(season = 2020, round = 1)
 
@@ -45,7 +45,7 @@ internal class WeekendViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `loading season and round outputs default schedule tab`() {
+    fun `loading season and round outputs default schedule tab`() = coroutineTest {
         underTest()
         underTest.inputs.load(season = 2020, round = 1)
 
@@ -57,10 +57,10 @@ internal class WeekendViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `loading season and round with no sprint quali hides quali tab`() {
-        every { mockRaceRepository.getRace(season = any(), round = any()) } returns flow { Race.model(
+    fun `loading season and round with no sprint quali hides quali tab`() = coroutineTest {
+        every { mockRaceRepository.getRace(season = any(), round = any()) } returns flow { emit(Race.model(
             sprint = emptyList()
-        ) }
+        )) }
 
         underTest()
         underTest.inputs.load(season = 2020, round = 1)
@@ -75,9 +75,7 @@ internal class WeekendViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `loading season and round with sprint quali shows all tabs`() {
-        every { mockRaceRepository.getRace(season = any(), round = any()) } returns flow { Race.model() }
-
+    fun `loading season and round with sprint quali shows all tabs`() = coroutineTest {
         underTest()
         underTest.inputs.load(season = 2020, round = 1)
 
@@ -91,7 +89,7 @@ internal class WeekendViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `loading season and round and select tab schedule outputs schedule`() {
+    fun `loading season and round and select tab schedule outputs schedule`() = coroutineTest {
         underTest()
         underTest.inputs.load(season = 2020, round = 1)
 
@@ -102,7 +100,7 @@ internal class WeekendViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `loading season and round and select tab qualifying outputs qualifying`() {
+    fun `loading season and round and select tab qualifying outputs qualifying`() = coroutineTest {
         underTest()
         underTest.inputs.load(season = 2020, round = 1)
 
@@ -113,7 +111,7 @@ internal class WeekendViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `loading season and round and select tab sprint outputs sprint`() {
+    fun `loading season and round and select tab sprint outputs sprint`() = coroutineTest {
         underTest()
         underTest.inputs.load(season = 2020, round = 1)
 
@@ -124,7 +122,7 @@ internal class WeekendViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `loading season and round and select tab race outputs race`() {
+    fun `loading season and round and select tab race outputs race`() = coroutineTest {
         underTest()
         underTest.inputs.load(season = 2020, round = 1)
 
@@ -135,7 +133,7 @@ internal class WeekendViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `loading season and round and select tab constructor outputs constructor`() {
+    fun `loading season and round and select tab constructor outputs constructor`() = coroutineTest {
         underTest()
         underTest.inputs.load(season = 2020, round = 1)
 
