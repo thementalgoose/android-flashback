@@ -21,7 +21,8 @@ import tmg.flashback.ui.settings.appSettings
 
 @Composable
 fun HomeScreen(
-    windowSize: WindowSize
+    windowSize: WindowSize,
+    closeApp: () -> Unit,
 ) {
     val navController = rememberNavController()
     val navigator: Navigator by inject()
@@ -39,7 +40,9 @@ fun HomeScreen(
     }
 
     BackHandler {
-        navController.popBackStack()
+        if (!navController.popBackStack()) {
+            closeApp()
+        }
     }
 
     NavHost(

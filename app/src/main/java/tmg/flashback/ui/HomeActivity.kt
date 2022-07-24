@@ -44,18 +44,14 @@ class HomeActivity: BaseActivity(), SplashScreen.KeepOnScreenCondition {
         val splashScreen = installSplashScreen()
         setTheme(themeRes)
 
-//        val navController: NavHostController = NavHostController(this).apply {
-//            this.navigatorProvider.addNavigator(ComposeNavigator())
-//            this.navigatorProvider.addNavigator(DialogNavigator())
-//        }
-
         setContent {
             AppTheme {
                 HomeScreen(
-//                    navController = navController,
-                    windowSize = rememberWindowSizeClass()
+                    windowSize = rememberWindowSizeClass(),
+                    closeApp = {
+                        finish()
+                    }
                 )
-//                DashboardScreen(windowSize = rememberWindowSizeClass())
             }
         }
 
