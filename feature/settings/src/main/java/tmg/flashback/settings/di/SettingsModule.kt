@@ -22,5 +22,5 @@ val settingsModule = module {
     viewModel { ThemeViewModel(get()) }
     viewModel { AnimationSpeedViewModel(get()) }
 
-    single { SettingsNavigationComponent(get()) }
+    single { SettingsNavigationComponent(get(), get()) }
 }

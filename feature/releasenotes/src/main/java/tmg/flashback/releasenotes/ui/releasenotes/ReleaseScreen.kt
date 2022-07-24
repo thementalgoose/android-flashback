@@ -20,8 +20,8 @@ import tmg.flashback.style.text.TextHeadline2
 import tmg.flashback.ui.components.header.Header
 
 @Composable
-internal fun ReleaseScreen(
-    clickBack: () -> Unit
+fun ReleaseScreenVM(
+    actionUpClicked: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -32,7 +32,7 @@ internal fun ReleaseScreen(
             text = stringResource(id = R.string.release_notes_title),
             icon = painterResource(id = R.drawable.ic_back),
             iconContentDescription = stringResource(id = R.string.ab_back),
-            actionUpClicked = clickBack
+            actionUpClicked = actionUpClicked
         )
         ReleaseNotes.values()
             .sortedByDescending { it.version }
@@ -70,8 +70,8 @@ private fun ReleaseNote(
 @Composable
 private fun Preview() {
     AppThemePreview {
-        ReleaseScreen(
-            clickBack = {}
+        ReleaseScreenVM(
+            actionUpClicked = {}
         )
     }
 }
