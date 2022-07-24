@@ -7,6 +7,7 @@ import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.core.splashscreen.SplashScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.core.view.WindowCompat
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.ComposeNavigator
 import androidx.navigation.compose.DialogNavigator
@@ -43,6 +44,8 @@ class HomeActivity: BaseActivity(), SplashScreen.KeepOnScreenCondition {
         }
         val splashScreen = installSplashScreen()
         setTheme(themeRes)
+
+        WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContent {
             AppTheme {
