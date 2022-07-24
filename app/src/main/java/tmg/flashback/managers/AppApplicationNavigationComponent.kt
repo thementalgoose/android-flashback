@@ -11,7 +11,9 @@ import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.device.repository.DeviceRepository
 import tmg.flashback.notifications.navigation.NotificationNavigationProvider
 import tmg.flashback.rss.controllers.RSSController
+import tmg.flashback.stats.Home
 import tmg.flashback.ui.All
+import tmg.flashback.ui.Home
 import tmg.flashback.ui.navigation.ApplicationNavigationComponent
 import tmg.flashback.ui.HomeActivity
 import tmg.flashback.ui.navigation.ActivityProvider
@@ -70,5 +72,9 @@ class AppApplicationNavigationComponent(
 
     override fun settings() {
         navigator.navigate(Screen.Settings.All)
+    }
+
+    override fun home() {
+        navigator.navigate(Screen.Home)
     }
 }
