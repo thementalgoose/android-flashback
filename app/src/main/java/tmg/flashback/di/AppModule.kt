@@ -44,8 +44,8 @@ val appModule = module {
     single<PreferenceManager> { AppPreferencesManager(get()) }
     single<StyleManager> { AppStyleManager(get(), get()) }
 
-    single<ApplicationNavigationComponent> { AppApplicationNavigationComponent(get(), get(), get(), get(), get()) }
-    single<NotificationNavigationProvider> { AppApplicationNavigationComponent(get(), get(), get(), get(), get()) }
+    single<ApplicationNavigationComponent> { AppApplicationNavigationComponent(get(), get(), get(), get(), get(), get()) }
+    single<NotificationNavigationProvider> { AppApplicationNavigationComponent(get(), get(), get(), get(), get(), get()) }
 
     single<BuildConfigManager> { AppBuildConfigManager() }
     single<WidgetManager> { AppWidgetManager(get()) }

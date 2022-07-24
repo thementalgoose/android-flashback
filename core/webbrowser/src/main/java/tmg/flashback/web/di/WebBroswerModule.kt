@@ -8,7 +8,7 @@ import tmg.flashback.web.ui.settings.SettingsWebBrowserViewModel
 import tmg.flashback.web.usecases.PickBrowserUseCase
 
 val webBrowserModule = module {
-    single { WebNavigationComponent(get(), get()) }
+    single { WebNavigationComponent(get(), get(), get()) }
 
     single { WebBrowserRepository(get()) }
 

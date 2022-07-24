@@ -1,36 +1,62 @@
 package tmg.flashback.rss
 
-import android.content.Context
-import android.content.Intent
-import tmg.flashback.rss.ui.configure.ConfigureRSSActivity
-import tmg.flashback.rss.ui.feed.RSSActivity
-import tmg.flashback.rss.ui.settings.SettingsRSSActivity
-import tmg.flashback.ui.navigation.ActivityProvider
+import androidx.navigation.NavController
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.compose.composable
+import tmg.flashback.rss.ui.configure.SettingsRSSConfigureScreenVM
+import tmg.flashback.rss.ui.feed.RSSScreenVM
+import tmg.flashback.rss.ui.settings.SettingsRSSScreenVM
+import tmg.flashback.ui.navigation.NavigationDestination
+import tmg.flashback.ui.navigation.Navigator
+import tmg.flashback.ui.navigation.Screen
+
+val Screen.Settings.RSS: NavigationDestination
+    get() = object : NavigationDestination {
+        override val route: String = "settings/rss"
+    }
+
+val Screen.Settings.RSSConfigure: NavigationDestination
+    get() = object : NavigationDestination {
+        override val route: String = "settings/rss/configure"
+    }
+
+val Screen.RSS: NavigationDestination
+    get() = object : NavigationDestination {
+        override val route: String = "rss"
+    }
+
+fun NavGraphBuilder.rss(navController: NavController) {
+    composable(Screen.RSS.route) {
+        RSSScreenVM(
+            actionUpClicked = { navController.popBackStack() }
+        )
+    }
+
+    composable(Screen.Settings.RSSConfigure.route) {
+        SettingsRSSScreenVM(
+            actionUpClicked = { navController.popBackStack() }
+        )
+    }
+
+    composable(Screen.Settings.RSSConfigure.route) {
+        SettingsRSSConfigureScreenVM(
+            actionUpClicked = { navController.popBackStack() }
+        )
+    }
+}
 
 class RssNavigationComponent(
-    private val activityProvider: ActivityProvider
+    private val navigator: Navigator
 ) {
-    fun rssIntent(context: Context): Intent {
-        return RSSActivity.intent(context)
+    fun rss() {
+        navigator.navigate(Screen.RSS)
     }
 
-    fun rss() = activityProvider.launch {
-        it.startActivity(rssIntent(it))
+    fun settingsRSS() {
+        navigator.navigate(Screen.Settings.RSS)
     }
 
-    fun settingsRSSIntent(context: Context): Intent {
-        return SettingsRSSActivity.intent(context)
-    }
-
-    fun settingsRSS() = activityProvider.launch {
-        it.startActivity(settingsRSSIntent(it))
-    }
-
-    internal fun configureRSSIntent(context: Context): Intent {
-        return ConfigureRSSActivity.intent(context)
-    }
-
-    internal fun configureRSS() = activityProvider.launch {
-        it.startActivity(configureRSSIntent(it))
+    fun configureRSS() {
+        navigator.navigate(Screen.Settings.RSSConfigure)
     }
 }

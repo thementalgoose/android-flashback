@@ -15,5 +15,6 @@ interface ApplicationNavigationComponent {
     fun syncActivityIntent(context: Context): Intent
 
     fun settings()
-    fun settingsIntent(context: Context): Intent
+
+    fun home()
 }

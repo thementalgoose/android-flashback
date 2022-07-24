@@ -58,7 +58,7 @@ val statsModule = repoModule + module {
 
     viewModel { NotificationOnboardingViewModel(get()) }
 
-    single { StatsNavigationComponent(get()) }
+    single { StatsNavigationComponent(get(), get()) }
 
     single { DefaultSeasonUseCase(get()) }
     single { FetchSeasonUseCase(get(), get(), get()) }

@@ -18,8 +18,8 @@ internal class ReleaseActivity : BaseActivity() {
             AppTheme {
                 Scaffold(
                     content = {
-                        ReleaseScreen(
-                            clickBack = {
+                        ReleaseScreenVM(
+                            actionUpClicked = {
                                 finish()
                             }
                         )
