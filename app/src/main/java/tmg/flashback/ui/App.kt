@@ -11,6 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import org.koin.androidx.compose.inject
 import tmg.flashback.releasenotes.releaseNotes
 import tmg.flashback.rss.rss
+import tmg.flashback.stats.Search
 import tmg.flashback.stats.stats
 import tmg.flashback.style.utils.WindowSize
 import tmg.flashback.ui.dashboard.DashboardScreen
