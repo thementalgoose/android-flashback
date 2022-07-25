@@ -20,12 +20,15 @@ import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody1
+import tmg.flashback.ui.components.analytics.ScreenView
 import tmg.flashback.ui.components.layouts.BottomSheet
 import tmg.utilities.models.Selected
 
 @Composable
 fun NotificationOnboardingScreenVM() {
     val viewModel by viewModel<NotificationOnboardingViewModel>()
+    
+    ScreenView(screenName = "Onboarding Notifications")
 
     val list = viewModel.outputs.notificationPreferences.observeAsState(emptyList())
 
