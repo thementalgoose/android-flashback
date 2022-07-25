@@ -6,10 +6,6 @@
 
     <application>
 
-        <activity android:name=".ui.search.SearchActivity"
-            android:windowSoftInputMode="adjustResize"
-            android:exported="false" />
-
         <activity android:name=".ui.drivers.overview.DriverOverviewActivity"
             android:exported="false" />
 
