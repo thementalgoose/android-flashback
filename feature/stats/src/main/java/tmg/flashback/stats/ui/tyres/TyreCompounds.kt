@@ -15,11 +15,14 @@ import tmg.flashback.formula1.enums.Tyre
 import tmg.flashback.formula1.enums.TyreLabel
 import tmg.flashback.formula1.enums.getBySeason
 import tmg.flashback.stats.R
+import tmg.flashback.stats.analytics.AnalyticsConstants
+import tmg.flashback.stats.analytics.AnalyticsConstants.analyticsSeason
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextHeadline2
+import tmg.flashback.ui.components.analytics.ScreenView
 import tmg.flashback.ui.components.layouts.BottomSheet
 
 @Composable
@@ -27,6 +30,10 @@ fun TyreCompounds(
     season: Int,
     modifier: Modifier = Modifier
 ) {
+    ScreenView(screenName = "Tyre Compounds", args = mapOf(
+        analyticsSeason to season.toString()
+    ))
+
     val tyres = SeasonTyres.getBySeason(season)
     BottomSheet(
         modifier = modifier.background(AppTheme.colors.backgroundPrimary),
