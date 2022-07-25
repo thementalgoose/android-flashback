@@ -7,9 +7,6 @@
         <activity android:name=".ui.browser.WebActivity"
             android:exported="false" />
 
-        <activity android:name=".ui.settings.SettingsWebBrowserActivity"
-            android:exported="false" />
-
     </application>
 
 </manifest>
