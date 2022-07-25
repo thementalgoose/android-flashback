@@ -17,12 +17,15 @@ import tmg.flashback.releasenotes.R
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextHeadline2
+import tmg.flashback.ui.components.analytics.ScreenView
 import tmg.flashback.ui.components.header.Header
 
 @Composable
 fun ReleaseScreenVM(
     actionUpClicked: () -> Unit
 ) {
+    ScreenView(screenName = "Release Notes")
+
     Column(
         modifier = Modifier
             .background(AppTheme.colors.backgroundPrimary)
