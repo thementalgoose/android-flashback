@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="ab_led_to">determines</string>
-
-    <string name="ab_qualifying_knockout">Knockout qualifying</string>
-
-    <string name="ab_section_expanded">Collapsible %s section, expanded</string>
-    <string name="ab_section_collapsed">Collapsible %s section, collapsed</string>
-</resources>

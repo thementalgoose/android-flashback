@@ -15,7 +15,6 @@ import tmg.flashback.device.di.deviceModule
 import tmg.flashback.di.appModule
 import tmg.flashback.forceupgrade.di.forceUpgradeModule
 import tmg.flashback.notifications.di.notificationModule
-import tmg.flashback.regulations.di.regulationsModule
 import tmg.flashback.releasenotes.di.releaseNotesModule
 import tmg.flashback.rss.di.rssModule
 import tmg.flashback.stats.di.statsModule
@@ -40,7 +39,6 @@ class FlashbackApplication: Application() {
                 // Features
                 rssModule,
                 settingsModule,
-                regulationsModule,
                 forceUpgradeModule,
                 releaseNotesModule,
                 webBrowserModule,

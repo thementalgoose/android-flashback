@@ -31,9 +31,6 @@ dependencies {
     implementation project(path: ':core:webbrowser')
     implementation project(path: ':presentation:ui')
 
-    // Swipe refresh
-    implementation deps.androidx.swiperefreshlayout
-
     // Retrofit
     implementation deps.retrofit.retrofit
     implementation deps.retrofit.retrofit_simplexml

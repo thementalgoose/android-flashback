@@ -33,7 +33,7 @@ ext {
 
     kotlin_version = "1.6.21"
     koin_version = "3.1.6"
-    coroutines = "1.6.2"
+    coroutines = "1.6.4"
     kotlinx_serialization = "1.3.3"
     room = "2.4.2"
     navigation = "2.5.0"
@@ -51,7 +51,6 @@ ext {
     android_workmanager = "2.7.1"
     android_accompanist = "0.24.13-rc"
     play_ads = "20.5.0"
-    swipe_refresh = "1.1.0"
     circleimageview = "3.1.0"
     glide = "4.12.0"
     tmg_utils = "2.4.2"
@@ -59,7 +58,7 @@ ext {
     tmg_about_this_app = "5.3.0"
     tmg_test_utils = "1.1.0"
     lottie = "4.2.2"
-    firebase_bom = "30.1.0"
+    firebase_bom = "30.3.0"
     retrofit = "2.9.0"
     okhttp3 = "4.9.3"
 }

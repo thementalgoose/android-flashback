@@ -43,9 +43,6 @@ dependencies {
     implementation deps.androidx.navigation_fragment
     implementation deps.androidx.navigation_ui
 
-    // Swipe refresh
-    implementation deps.androidx.swiperefreshlayout
-
     // TMG dependencies
     implementation deps.tmg.labelledprogressbar
 
