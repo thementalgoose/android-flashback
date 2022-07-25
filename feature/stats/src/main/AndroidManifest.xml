@@ -6,12 +6,6 @@
 
     <application>
 
-        <activity android:name=".ui.constructors.season.ConstructorSeasonActivity"
-            android:exported="false" />
-
-        <activity android:name=".ui.circuits.CircuitActivity"
-            android:exported="false" />
-
         <receiver
             android:name=".receivers.UpNextNotificationBootReceiver"
             android:enabled="true"
