@@ -6,7 +6,9 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import tmg.flashback.DebugController
 import tmg.flashback.FlashbackStartup
+import tmg.flashback.appshortcuts.provider.HomeClassProvider
 import tmg.flashback.device.managers.BuildConfigManager
+import tmg.flashback.di.navigation.AppHomeClassProvider
 import tmg.flashback.di.navigation.AppWidgetNavigationComponent
 import tmg.flashback.managers.AppApplicationNavigationComponent
 import tmg.flashback.managers.AppNetworkConfigManager
@@ -44,6 +46,7 @@ val appModule = module {
     single<PreferenceManager> { AppPreferencesManager(get()) }
     single<StyleManager> { AppStyleManager(get(), get()) }
 
+    single<HomeClassProvider> { AppHomeClassProvider() }
     single<ApplicationNavigationComponent> { AppApplicationNavigationComponent(get(), get(), get(), get(), get(), get()) }
     single<NotificationNavigationProvider> { AppApplicationNavigationComponent(get(), get(), get(), get(), get(), get()) }
 

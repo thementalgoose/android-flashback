@@ -17,11 +17,15 @@ import tmg.flashback.BuildConfig
 import tmg.flashback.configuration.usecases.ConfigSyncUseCase
 import tmg.flashback.crash_reporting.controllers.CrashController
 import tmg.flashback.forceupgrade.ForceUpgradeNavigationComponent
+import tmg.flashback.rss.RSS
+import tmg.flashback.stats.Search
 import tmg.flashback.stats.usecases.ContentSyncUseCase
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.utils.rememberWindowSizeClass
 import tmg.flashback.ui.base.BaseActivity
 import tmg.flashback.ui.dashboard.DashboardScreen
+import tmg.flashback.ui.navigation.Navigator
+import tmg.flashback.ui.navigation.Screen
 import tmg.flashback.ui.sync.SyncActivity
 
 class HomeActivity: BaseActivity(), SplashScreen.KeepOnScreenCondition {
@@ -31,6 +35,7 @@ class HomeActivity: BaseActivity(), SplashScreen.KeepOnScreenCondition {
     private val contentSyncUseCase: ContentSyncUseCase by inject()
     private val configSyncUseCase: ConfigSyncUseCase by inject()
     private val crashController: CrashController by inject()
+    private val navigator: Navigator by inject()
     private val forceUpgradeNavigationComponent: ForceUpgradeNavigationComponent by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,6 +76,13 @@ class HomeActivity: BaseActivity(), SplashScreen.KeepOnScreenCondition {
                 forceUpgradeNavigationComponent.forceUpgrade()
                 finish()
             }
+        }
+
+        // Deep links
+        when (intent.extras?.getString("screen")) {
+            "search" -> { navigator.navigate(Screen.Search) }
+            "rss" -> { navigator.navigate(Screen.RSS) }
+            else -> {}
         }
 
         // Content sync

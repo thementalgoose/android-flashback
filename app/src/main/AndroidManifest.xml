@@ -30,6 +30,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
+            <intent-filter>
+                <data android:scheme="flashback" android:host="rss" />
+                <data android:scheme="flashback" android:host="search" />
+
+            </intent-filter>
+
         </activity>
 
         <activity

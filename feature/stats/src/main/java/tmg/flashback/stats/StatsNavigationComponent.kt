@@ -148,7 +148,10 @@ fun NavGraphBuilder.stats(navController: NavController) {
         )
     }
 
-    composable(Screen.Search.route) {
+    composable(
+        Screen.Search.route,
+        deepLinks = listOf(navDeepLink { uriPattern = "flashback://search" })
+    ) {
         SearchScreenVM(
             actionUpClicked = { navController.popBackStack() }
         )
