@@ -22,6 +22,7 @@ import tmg.flashback.stats.ui.dashboard.constructors.ConstructorStandingsScreenV
 import tmg.flashback.stats.ui.dashboard.drivers.DriverStandingsScreenVM
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.utils.WindowSize
+import tmg.flashback.ui.components.analytics.ScreenView
 import tmg.flashback.ui.components.layouts.OverlappingPanels
 import tmg.flashback.ui.components.layouts.OverlappingPanelsValue
 import tmg.flashback.ui.components.layouts.rememberOverlappingPanelsState
@@ -45,6 +46,12 @@ fun DashboardScreen(
 
     val tabState = viewModel.outputs.currentTab.observeAsState()
     val panelsState = rememberOverlappingPanelsState(OverlappingPanelsValue.Closed)
+
+    ScreenView(updateKey = tabState.value, screenName = "Dashboard", args = mapOf(
+        "season" to (tabState.value?.season?.toString() ?: "-"),
+        "tab" to (tabState.value?.tab?.analyticsName ?: "-")
+    ))
+
     Scaffold(
         bottomBar = {
             val position = animateDpAsState(targetValue = if (panelsState.isStartPanelOpen) appBarHeight else 0.dp)
