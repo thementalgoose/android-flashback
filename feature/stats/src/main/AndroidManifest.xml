@@ -6,9 +6,6 @@
 
     <application>
 
-        <activity android:name=".ui.drivers.overview.DriverOverviewActivity"
-            android:exported="false" />
-
         <activity android:name=".ui.drivers.season.DriverSeasonActivity"
             android:exported="false" />
 
