@@ -27,6 +27,7 @@ import tmg.flashback.style.input.InputPrimary
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextCaption
+import tmg.flashback.ui.components.analytics.ScreenView
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.utils.hexToColor
 
@@ -34,6 +35,8 @@ import tmg.flashback.ui.utils.hexToColor
 fun SettingsRSSConfigureScreenVM(
     actionUpClicked: () -> Unit
 ) {
+    ScreenView(screenName = "Configure RSS")
+    
     val viewModel by viewModel<ConfigureRSSViewModel>()
     val list = viewModel.outputs.list.observeAsState(emptyList())
 
@@ -277,7 +280,8 @@ private fun Add(
             )
         }
     }
-    Box(Modifier
-        .fillMaxWidth()
-        .imePadding())
+    Box(
+        Modifier
+            .fillMaxWidth()
+            .imePadding())
 }
