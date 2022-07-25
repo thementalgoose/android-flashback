@@ -11,6 +11,7 @@ import androidx.compose.ui.res.stringResource
 import org.koin.androidx.compose.viewModel
 import tmg.flashback.rss.R
 import tmg.flashback.style.AppTheme
+import tmg.flashback.ui.components.analytics.ScreenView
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.settings.SettingsScreen
 
@@ -18,6 +19,8 @@ import tmg.flashback.ui.components.settings.SettingsScreen
 fun SettingsRSSScreenVM(
     actionUpClicked: () -> Unit
 ) {
+    ScreenView(screenName = "Settings RSS")
+    
     val viewModel by viewModel<SettingsRSSViewModel>()
     viewModel.loadSettings()
     val list = viewModel.settings.observeAsState(emptyList())
