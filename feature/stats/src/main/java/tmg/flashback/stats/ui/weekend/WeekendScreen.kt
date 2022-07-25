@@ -11,12 +11,16 @@ import androidx.compose.ui.Modifier
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import org.koin.androidx.compose.viewModel
+import tmg.flashback.stats.analytics.AnalyticsConstants
+import tmg.flashback.stats.analytics.AnalyticsConstants.analyticsRound
+import tmg.flashback.stats.analytics.AnalyticsConstants.analyticsSeason
 import tmg.flashback.stats.ui.weekend.constructor.ConstructorScreenVM
 import tmg.flashback.stats.ui.weekend.qualifying.QualifyingScreenVM
 import tmg.flashback.stats.ui.weekend.race.RaceScreenVM
 import tmg.flashback.stats.ui.weekend.details.DetailsScreenVM
 import tmg.flashback.stats.ui.weekend.sprint.SprintScreenVM
 import tmg.flashback.style.AppTheme
+import tmg.flashback.ui.components.analytics.ScreenView
 import tmg.flashback.ui.components.loading.Fade
 import tmg.flashback.ui.components.navigation.NavigationBar
 import tmg.flashback.ui.components.navigation.NavigationItem
@@ -45,6 +49,11 @@ fun WeekendScreenVM(
         season = weekendInfo.season,
         round = weekendInfo.round
     )
+
+    ScreenView(screenName = "Weekend", args = mapOf(
+        analyticsSeason to weekendInfo.season.toString(),
+        analyticsRound to weekendInfo.round.toString()
+    ))
 
     val dbWeekendInfo = viewModel.outputs.weekendInfo.observeAsState(weekendInfo)
     val tabState = viewModel.outputs.tabs.observeAsState(listOf(
