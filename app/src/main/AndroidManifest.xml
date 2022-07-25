@@ -37,13 +37,7 @@
             android:exported="false"
             android:label=""
             android:theme="@style/FlashbackAppTheme.Sync" />
-
-        <activity
-            android:name=".ui.settings.SettingsAllActivity"
-            android:exported="false"
-            android:label=""
-            android:theme="@style/Translucent" />
-
+        
         <activity
             android:name="tmg.aboutthisapp.AboutThisAppActivity"
             android:exported="false"

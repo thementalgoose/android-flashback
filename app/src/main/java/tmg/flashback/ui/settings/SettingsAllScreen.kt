@@ -4,12 +4,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import org.koin.androidx.compose.viewModel
 import tmg.flashback.R
+import tmg.flashback.ui.components.analytics.ScreenView
 import tmg.flashback.ui.components.settings.SettingsScreen
 
 @Composable
 fun SettingsAllScreenVM(
     actionUpClicked: () -> Unit
 ) {
+    ScreenView(screenName = "Settings All")
+    
     val viewModel by viewModel<SettingsAllViewModel>()
 
     SettingsScreen(
