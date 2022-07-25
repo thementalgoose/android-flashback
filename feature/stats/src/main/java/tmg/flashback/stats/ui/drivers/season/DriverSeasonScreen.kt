@@ -27,6 +27,8 @@ import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.DriverConstructor
 import tmg.flashback.providers.DriverConstructorProvider
 import tmg.flashback.stats.R
+import tmg.flashback.stats.analytics.AnalyticsConstants.analyticsDriverId
+import tmg.flashback.stats.analytics.AnalyticsConstants.analyticsSeason
 import tmg.flashback.stats.components.Timeline
 import tmg.flashback.stats.ui.drivers.overview.PipeType
 import tmg.flashback.stats.ui.weekend.shared.DriverInfo
@@ -35,6 +37,7 @@ import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextCaption
+import tmg.flashback.ui.components.analytics.ScreenView
 import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.loading.SkeletonViewList
@@ -57,6 +60,11 @@ fun DriverSeasonScreenVM(
     season: Int,
     actionUpClicked: () -> Unit
 ) {
+    ScreenView(screenName = "Driver Season", args = mapOf(
+        analyticsDriverId to driverId,
+        analyticsSeason to season.toString()
+    ))
+
     val viewModel by viewModel<DriverSeasonViewModel>()
     viewModel.inputs.setup(driverId, season)
 
@@ -272,14 +280,18 @@ private fun Result(
 ) {
     Row(modifier = modifier
         .clickable(onClick = { clickResult(model) })
-        .alpha(when (model.raceStatus.isStatusFinished()) {
-            true -> 1.0f
-            false -> 0.7f
-        })
-        .background(when (model.raceStatus.isStatusFinished()) {
-            true -> AppTheme.colors.backgroundPrimary
-            false -> AppTheme.colors.backgroundSecondary
-        })
+        .alpha(
+            when (model.raceStatus.isStatusFinished()) {
+                true -> 1.0f
+                false -> 0.7f
+            }
+        )
+        .background(
+            when (model.raceStatus.isStatusFinished()) {
+                true -> AppTheme.colors.backgroundPrimary
+                false -> AppTheme.colors.backgroundSecondary
+            }
+        )
         .padding(
             top = AppTheme.dimensions.paddingXSmall,
             bottom = AppTheme.dimensions.paddingXSmall,

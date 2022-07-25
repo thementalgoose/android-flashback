@@ -177,10 +177,6 @@ class DriverSeasonViewModel(
         }
         .asLiveData(viewModelScope.coroutineContext)
 
-    init {
-
-    }
-
     //region Inputs
 
     override fun setup(driverId: String, season: Int) {
