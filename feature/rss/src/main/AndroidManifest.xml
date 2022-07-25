@@ -1,11 +1,2 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="tmg.flashback.rss">
-
-    <application>
-
-        <activity android:name=".ui.settings.SettingsRSSActivity"
-            android:exported="false"
-            android:label="" />
-
-    </application>
-</manifest>
+    package="tmg.flashback.rss" />
