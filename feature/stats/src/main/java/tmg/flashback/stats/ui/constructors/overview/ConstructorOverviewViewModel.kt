@@ -67,6 +67,9 @@ class ConstructorOverviewViewModel(
                 }
                 else {
                     emit(id)
+                    showLoading.postValue(true)
+                    constructorRepository.fetchConstructor(id)
+                    showLoading.postValue(false)
                 }
             }
         }
@@ -120,9 +123,6 @@ class ConstructorOverviewViewModel(
 
     override val showLoading: MutableLiveData<Boolean> = MutableLiveData()
 
-    init {
-
-    }
 
     //region Inputs
 
