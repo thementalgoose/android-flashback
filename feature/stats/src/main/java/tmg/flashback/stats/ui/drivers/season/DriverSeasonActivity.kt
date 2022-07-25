@@ -4,10 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
-import tmg.flashback.stats.analytics.AnalyticsConstants
 import tmg.flashback.stats.analytics.AnalyticsConstants.analyticsDriverId
 import tmg.flashback.stats.analytics.AnalyticsConstants.analyticsSeason
-import tmg.flashback.stats.ui.drivers.overview.DriverOverviewActivity
 import tmg.flashback.style.AppTheme
 import tmg.flashback.ui.base.BaseActivity
 

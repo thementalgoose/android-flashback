@@ -25,6 +25,7 @@ import tmg.flashback.formula1.model.DriverConstructor
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.providers.DriverConstructorProvider
 import tmg.flashback.stats.R
+import tmg.flashback.stats.analytics.AnalyticsConstants.analyticsDriverId
 import tmg.flashback.stats.components.Timeline
 import tmg.flashback.stats.ui.shared.DriverImage
 import tmg.flashback.style.AppTheme
@@ -33,6 +34,7 @@ import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.buttons.ButtonTertiary
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
+import tmg.flashback.ui.components.analytics.ScreenView
 import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.loading.SkeletonView
 import tmg.flashback.ui.components.loading.SkeletonViewList
@@ -48,6 +50,10 @@ fun DriverOverviewScreenVM(
     driverName: String,
     actionUpClicked: () -> Unit,
 ) {
+    ScreenView(screenName = "Driver Overview", args = mapOf(
+        analyticsDriverId to driverId
+    ))
+
     val viewModel by viewModel<DriverOverviewViewModel>()
     viewModel.inputs.setup(driverId, driverName)
 
