@@ -16,6 +16,7 @@ import tmg.flashback.settings.R
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
+import tmg.flashback.ui.components.analytics.ScreenView
 import tmg.flashback.ui.components.header.Header
 import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.getColor
@@ -24,6 +25,8 @@ import tmg.utilities.extensions.getColor
 fun PrivacyPolicyScreenVM(
     actionUpClicked: () -> Unit
 ) {
+    ScreenView(screenName = "Privacy Policy")
+    
     Column(
         modifier = Modifier
             .background(AppTheme.colors.backgroundPrimary)

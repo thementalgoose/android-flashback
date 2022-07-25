@@ -16,7 +16,6 @@ internal class PrivacyPolicyActivity: BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        logScreenViewed("Privacy Policy")
         setContent {
             AppTheme {
                 Scaffold(content = {
