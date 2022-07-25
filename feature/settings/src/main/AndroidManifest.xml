@@ -7,9 +7,6 @@
         <activity android:name=".ui.privacypolicy.PrivacyPolicyActivity"
             android:exported="false" />
 
-        <activity android:name=".ui.settings.appearance.SettingsAppearanceActivity"
-            android:exported="false" />
-
         <activity android:name=".ui.settings.support.SettingsSupportActivity"
             android:exported="false" />
 
