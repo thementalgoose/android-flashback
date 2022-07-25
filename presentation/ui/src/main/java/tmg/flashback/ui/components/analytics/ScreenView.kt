@@ -8,10 +8,11 @@ import tmg.flashback.analytics.manager.AnalyticsManager
 @Composable
 fun ScreenView(
     screenName: String,
-    args: Map<String, String> = mapOf()
+    args: Map<String, String> = mapOf(),
+    updateKey: Any? = Unit
 ) {
 //    val analyticsManager: AnalyticsManager by inject()
-    DisposableEffect(key1 = Unit, effect = {
+    DisposableEffect(key1 = updateKey, effect = {
         println("SCREEN VIEW $screenName")
 //        analyticsManager.viewScreen(screenName, args)
         this.onDispose {
