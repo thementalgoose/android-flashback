@@ -6,9 +6,6 @@
 
     <application>
 
-        <activity android:name=".ui.constructors.overview.ConstructorOverviewActivity"
-            android:exported="false" />
-
         <activity android:name=".ui.constructors.season.ConstructorSeasonActivity"
             android:exported="false" />
 

@@ -29,6 +29,7 @@ import tmg.flashback.formula1.model.DriverConstructor
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.providers.DriverConstructorProvider
 import tmg.flashback.stats.R
+import tmg.flashback.stats.analytics.AnalyticsConstants.analyticsConstructorId
 import tmg.flashback.stats.components.TimelineTop
 import tmg.flashback.stats.components.dotDiameter
 import tmg.flashback.stats.components.heightOfTopDot
@@ -40,6 +41,7 @@ import tmg.flashback.style.buttons.ButtonTertiary
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextCaption
+import tmg.flashback.ui.components.analytics.ScreenView
 import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.loading.SkeletonViewList
@@ -57,6 +59,10 @@ fun ConstructorOverviewScreenVM(
     constructorName: String,
     actionUpClicked: () -> Unit,
 ) {
+    ScreenView(screenName = "Constructor Overview", args = mapOf(
+        analyticsConstructorId to constructorId
+    ))
+
     val viewModel by viewModel<ConstructorOverviewViewModel>()
     viewModel.inputs.setup(constructorId)
 
