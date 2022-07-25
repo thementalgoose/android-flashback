@@ -4,6 +4,7 @@ import androidx.annotation.AttrRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.lifecycle.*
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.filterNotNull
@@ -51,7 +52,8 @@ interface DriverSeasonViewModelOutputs {
 class DriverSeasonViewModel(
     private val driverRepository: DriverRepository,
     private val connectivityManager: NetworkConnectivityManager,
-    private val themeRepository: ThemeRepository
+    private val themeRepository: ThemeRepository,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : ViewModel(),
     DriverSeasonViewModelInputs,
     DriverSeasonViewModelOutputs {
@@ -184,6 +186,7 @@ class DriverSeasonViewModel(
             this.season = season
             this.driverId.value = driverId
         }
+        refresh()
     }
 
     override fun clickSeasonRound(result: DriverSeasonModel.Result) {
@@ -192,7 +195,7 @@ class DriverSeasonViewModel(
 
     override fun refresh() {
         isLoading.value = true
-        viewModelScope.launch(context = Dispatchers.IO) {
+        viewModelScope.launch(context = ioDispatcher) {
             driverId.value?.let {
                 val result = driverRepository.fetchDriver(it)
                 isLoading.postValue(false)

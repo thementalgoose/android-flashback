@@ -69,6 +69,9 @@ class DriverOverviewViewModel(
                 }
                 else {
                     emit(id)
+                    showLoading.postValue(true)
+                    driverRepository.fetchDriver(id)
+                    showLoading.postValue(false)
                 }
             }
         }
