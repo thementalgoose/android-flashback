@@ -7,7 +7,6 @@ import tmg.flashback.appshortcuts.models.ShortcutInfo
 import tmg.flashback.rss.R
 import tmg.flashback.rss.repo.RSSRepository
 import tmg.flashback.rss.repo.model.SupportedArticleSource
-import tmg.flashback.rss.ui.feed.RSSActivity
 import java.net.MalformedURLException
 import java.net.URL
 
