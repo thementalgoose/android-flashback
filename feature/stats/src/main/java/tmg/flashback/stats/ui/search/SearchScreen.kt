@@ -31,6 +31,7 @@ import tmg.flashback.style.buttons.ButtonTertiary
 import tmg.flashback.style.input.InputPrimary
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
+import tmg.flashback.ui.components.analytics.ScreenView
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.utils.isInPreview
 
@@ -39,6 +40,8 @@ fun SearchScreenVM(
     actionUpClicked: () -> Unit
 ) {
     val viewModel by viewModel<SearchViewModel>()
+
+    ScreenView(screenName = "Search")
 
     val category = viewModel.outputs.selectedCategory.observeAsState()
     val list = viewModel.outputs.results.observeAsState(emptyList())
@@ -68,10 +71,11 @@ fun SearchScreen(
     itemClicked: (SearchItem) -> Unit,
     list: List<SearchItem>
 ) {
-    Column(Modifier
-        .background(AppTheme.colors.backgroundPrimary)
-        .statusBarsPadding()
-        .navigationBarsPadding()
+    Column(
+        Modifier
+            .background(AppTheme.colors.backgroundPrimary)
+            .statusBarsPadding()
+            .navigationBarsPadding()
     ) {
         LazyColumn(
             modifier = Modifier.weight(1f),
@@ -122,9 +126,10 @@ fun SearchScreen(
             }
         )
 
-        Column(Modifier
-            .fillMaxWidth()
-            .imePadding()
+        Column(
+            Modifier
+                .fillMaxWidth()
+                .imePadding()
         ) {
             Row(modifier = Modifier
                 .padding(vertical = AppTheme.dimensions.paddingSmall)
