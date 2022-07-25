@@ -1,9 +1,5 @@
 package tmg.flashback.ads
 
-import android.content.Context
-import android.content.Intent
-import tmg.flashback.ads.ui.settings.adverts.SettingsAdvertActivity
-import tmg.flashback.ui.navigation.ActivityProvider
 import tmg.flashback.ui.navigation.NavigationDestination
 import tmg.flashback.ui.navigation.Navigator
 import tmg.flashback.ui.navigation.Screen
