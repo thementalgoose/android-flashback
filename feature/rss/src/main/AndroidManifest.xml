@@ -17,10 +17,6 @@
             android:exported="false"
             android:label="" />
 
-        <activity android:name=".ui.configure.ConfigureRSSActivity"
-            android:exported="false"
-            android:label="" />
-
         <activity android:name=".ui.settings.SettingsRSSActivity"
             android:exported="false"
             android:label="" />
