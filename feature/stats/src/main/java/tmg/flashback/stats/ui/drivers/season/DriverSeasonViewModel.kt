@@ -186,7 +186,6 @@ class DriverSeasonViewModel(
             this.season = season
             this.driverId.value = driverId
         }
-        refresh()
     }
 
     override fun clickSeasonRound(result: DriverSeasonModel.Result) {
