@@ -25,9 +25,6 @@
         <activity android:name=".ui.circuits.CircuitActivity"
             android:exported="false" />
 
-        <activity android:name=".ui.settings.notifications.SettingsNotificationsActivity"
-            android:exported="false" />
-
         <receiver
             android:name=".receivers.UpNextNotificationBootReceiver"
             android:enabled="true"
