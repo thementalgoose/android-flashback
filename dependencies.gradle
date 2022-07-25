@@ -15,7 +15,6 @@ allprojects {
                         navigation_ui                           : "androidx.navigation:navigation-ui-ktx:$navigation",
                         preference                              : "androidx.preference:preference-ktx:1.2.0",
                         splashscreen                            : "androidx.core:core-splashscreen:$android_splashscreen",
-                        swiperefreshlayout                      : "androidx.swiperefreshlayout:swiperefreshlayout:$swipe_refresh",
                         windowmanager                           : "androidx.window:window:1.0.0",
                         workmanager                             : "androidx.work:work-runtime:$android_workmanager",
                         workmanager_ktx                         : "androidx.work:work-runtime-ktx:$android_workmanager"

@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <dimen name="fromToArrowSize">24dp</dimen>
-    <dimen name="formatStatIconSize">24dp</dimen>
-    
-    <dimen name="collapsibleSectionIconSize">36dp</dimen>
-</resources>
