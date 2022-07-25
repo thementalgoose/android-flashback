@@ -2,13 +2,16 @@ package tmg.flashback.appshortcuts.manager
 
 import android.content.Context
 import android.os.Build
+import android.os.PersistableBundle
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
 import tmg.flashback.appshortcuts.models.ShortcutInfo
+import tmg.flashback.appshortcuts.provider.HomeClassProvider
 
 class AppShortcutManager(
-    private val applicationContext: Context
+    private val applicationContext: Context,
+    private val homeClassProvider: HomeClassProvider
 ) {
 
     fun setDynamicShortcuts(shortcuts: List<ShortcutInfo>) {
@@ -44,7 +47,7 @@ class AppShortcutManager(
                     .setLongLabel(applicationContext.getString(model.longLabel))
                     .setIcon(IconCompat.createWithResource(applicationContext, model.icon))
                     .setDisabledMessage(applicationContext.getString(model.unavailableMessage))
-                    .setIntent(model.intentResolver(applicationContext.applicationContext))
+                    .setIntent(model.intentResolver(applicationContext.applicationContext, homeClassProvider.getHomeActivity()))
                     .build()
             } catch (e: IncompatibleClassChangeError) {
                 // If it fails to generate the icon for the app shortcut

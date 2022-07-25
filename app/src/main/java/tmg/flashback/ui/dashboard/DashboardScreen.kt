@@ -47,11 +47,6 @@ fun DashboardScreen(
     val tabState = viewModel.outputs.currentTab.observeAsState()
     val panelsState = rememberOverlappingPanelsState(OverlappingPanelsValue.Closed)
 
-    ScreenView(updateKey = tabState.value, screenName = "Dashboard", args = mapOf(
-        "season" to (tabState.value?.season?.toString() ?: "-"),
-        "tab" to (tabState.value?.tab?.analyticsName ?: "-")
-    ))
-
     Scaffold(
         bottomBar = {
             val position = animateDpAsState(targetValue = if (panelsState.isStartPanelOpen) appBarHeight else 0.dp)

@@ -11,13 +11,9 @@ fun ScreenView(
     args: Map<String, String> = mapOf(),
     updateKey: Any? = Unit
 ) {
-//    val analyticsManager: AnalyticsManager by inject()
+    val analyticsManager: AnalyticsManager by inject()
     DisposableEffect(key1 = updateKey, effect = {
-        println("SCREEN VIEW $screenName")
-//        analyticsManager.viewScreen(screenName, args)
-        this.onDispose {
-            println("SCREEN Navigate up $screenName")
-//            analyticsManager.logEvent("")
-        }
+        analyticsManager.viewScreen(screenName, args)
+        this.onDispose { }
     })
 }

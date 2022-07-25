@@ -3,6 +3,7 @@ package tmg.flashback.rss
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import androidx.navigation.navDeepLink
 import tmg.flashback.rss.ui.configure.SettingsRSSConfigureScreenVM
 import tmg.flashback.rss.ui.feed.RSSScreenVM
 import tmg.flashback.rss.ui.settings.SettingsRSSScreenVM
@@ -26,7 +27,10 @@ val Screen.RSS: NavigationDestination
     }
 
 fun NavGraphBuilder.rss(navController: NavController) {
-    composable(Screen.RSS.route) {
+    composable(
+        Screen.RSS.route,
+        deepLinks = listOf(navDeepLink { uriPattern = "flashback://rss" })
+    ) {
         RSSScreenVM(
             actionUpClicked = { navController.popBackStack() }
         )

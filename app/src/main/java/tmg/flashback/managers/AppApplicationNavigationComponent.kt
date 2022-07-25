@@ -69,6 +69,8 @@ class AppApplicationNavigationComponent(
         navigator.navigate(Screen.Settings.All)
     }
 
+    override fun homeClass(): Class<*> = HomeActivity::class.java
+
     override fun home() {
         navigator.navigate(Screen.Home)
     }

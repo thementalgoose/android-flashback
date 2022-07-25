@@ -15,5 +15,5 @@ data class ShortcutInfo(
     val icon: Int,
     @StringRes
     val unavailableMessage: Int,
-    val intentResolver: (Context) -> Intent
+    val intentResolver: (Context, Class<*>) -> Intent
 )

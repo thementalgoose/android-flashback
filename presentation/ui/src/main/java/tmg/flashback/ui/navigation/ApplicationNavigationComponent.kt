@@ -16,5 +16,6 @@ interface ApplicationNavigationComponent {
 
     fun settings()
 
+    fun homeClass(): Class<*>
     fun home()
 }
