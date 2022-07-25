@@ -43,6 +43,7 @@ import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextCaption
+import tmg.flashback.ui.components.analytics.ScreenView
 import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.messages.Message
@@ -54,6 +55,8 @@ private val badgeSize: Dp = 40.dp
 fun RSSScreenVM(
     actionUpClicked: () -> Unit
 ) {
+    ScreenView(screenName = "RSS")
+
     val viewModel by viewModel<RSSViewModel>()
 
     val list = viewModel.outputs.list.observeAsState(emptyList())
