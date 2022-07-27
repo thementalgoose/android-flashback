@@ -33,7 +33,6 @@ fun HomeScreen(
     val destination by navigator.destination.collectAsState()
 
     LaunchedEffect(destination) {
-        println("Current destination ${navController.currentDestination?.route} and wanting ${destination.route}")
         if (navController.currentDestination?.route != destination.route) {
             if (destination == Screen.Home) {
                 navController.navigate(destination) {
