@@ -5,6 +5,7 @@ import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.workmanager.koin.workManagerFactory
 import org.koin.core.context.startKoin
+import tmg.flashback.ads.config.di.adsConfigModule
 import tmg.flashback.ads.di.adsModule
 import tmg.flashback.analytics.di.analyticsModule
 import tmg.flashback.appshortcuts.di.appShortcutModule
@@ -46,6 +47,7 @@ class FlashbackApplication: Application() {
                 debugModule,
                 // Core
                 adsModule,
+                adsConfigModule,
                 analyticsModule,
                 appShortcutModule,
                 configModule,

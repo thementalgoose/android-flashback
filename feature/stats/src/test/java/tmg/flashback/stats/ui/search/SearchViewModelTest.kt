@@ -9,8 +9,8 @@ import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.flashback.ads.repository.AdsRepository
-import tmg.flashback.ads.repository.model.AdvertConfig
+import tmg.flashback.ads.config.repository.AdsRepository
+import tmg.flashback.ads.config.repository.model.AdvertConfig
 import tmg.flashback.formula1.model.*
 import tmg.flashback.statistics.repo.CircuitRepository
 import tmg.flashback.statistics.repo.ConstructorRepository
