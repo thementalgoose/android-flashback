@@ -121,7 +121,8 @@ dependencies {
     implementation project(path: ":formula1")
 
     // Core modules
-    implementation project(path: ":ads")
+    implementation project(path: ":ads:ads")
+    implementation project(path: ":ads:ads-config")
     implementation project(path: ":core:analytics")
     implementation project(path: ":core:appshortcuts")
     implementation project(path: ":core:configuration")

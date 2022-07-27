@@ -2,7 +2,8 @@ rootProject.name = "android-flashback"
 
 include ':app'
 
-include ':ads'
+include ':ads:ads'
+include ':ads:ads-config'
 include ':feature:stats'
 include ':feature:rss'
 include ':feature:settings'
