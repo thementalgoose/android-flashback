@@ -33,7 +33,7 @@ dependencies {
     implementation project(path: ':core:preferences')
     implementation project(path: ':core:webbrowser')
     implementation project(path: ':presentation:ui')
-    implementation project(path: ':ads:ads')
+    implementation project(path: ":ads:ads-config")
 
     // WorkManager
     implementation deps.androidx.workmanager
