@@ -5,6 +5,8 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import tmg.flashback.debug.DebugNavigationComponent
+import tmg.flashback.debug.R
 import tmg.flashback.rss.RssNavigationComponent
 import tmg.flashback.formula1.constants.Formula1.decadeColours
 import tmg.flashback.stats.StatsNavigationComponent
@@ -28,6 +30,7 @@ internal class MenuViewModelTest: BaseTest() {
     private val mockRssNavigationComponent: RssNavigationComponent = mockk(relaxed = true)
     private val mockNavigationComponent: ApplicationNavigationComponent = mockk(relaxed = true)
     private val mockStatsNavigationComponent: StatsNavigationComponent = mockk(relaxed = true)
+    private val mockDebugNavigationComponent: DebugNavigationComponent = mockk(relaxed = true)
 
     private lateinit var underTest: MenuViewModel
 
@@ -40,7 +43,8 @@ internal class MenuViewModelTest: BaseTest() {
             mockStyleManager,
             mockRssNavigationComponent,
             mockNavigationComponent,
-            mockStatsNavigationComponent
+            mockStatsNavigationComponent,
+            mockDebugNavigationComponent
         )
     }
 
@@ -62,6 +66,8 @@ internal class MenuViewModelTest: BaseTest() {
                 MenuItems.Button.Rss,
                 MenuItems.Button.Settings,
                 MenuItems.Button.Contact,
+                MenuItems.Divider("debug"),
+                MenuItems.Button.Custom(R.string.debug_title, R.drawable.debug_list_item, "debug"),
                 MenuItems.Divider("a"),
                 MenuItems.Toggle.DarkMode(_isEnabled = false),
                 MenuItems.Divider("b"),
@@ -81,6 +87,8 @@ internal class MenuViewModelTest: BaseTest() {
                 MenuItems.Button.Rss,
                 MenuItems.Button.Settings,
                 MenuItems.Button.Contact,
+                MenuItems.Divider("debug"),
+                MenuItems.Button.Custom(R.string.debug_title, R.drawable.debug_list_item, "debug"),
                 MenuItems.Divider("a"),
                 MenuItems.Toggle.DarkMode(_isEnabled = true),
                 MenuItems.Divider("b"),
