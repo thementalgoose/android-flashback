@@ -13,8 +13,9 @@ sealed class MenuItems(
         @StringRes
         val label: Int,
         @DrawableRes
-        val icon: Int
-    ): MenuItems(label.toString()) {
+        val icon: Int,
+        id: String = label.toString()
+    ): MenuItems(id) {
         object Search: Button(
             label = R.string.dashboard_links_search,
             icon = R.drawable.dashboard_search
@@ -31,6 +32,30 @@ sealed class MenuItems(
             label = R.string.dashboard_links_contact,
             icon = R.drawable.dashboard_contact
         )
+
+        class Custom(
+            @StringRes
+            label: Int,
+            @DrawableRes
+            icon: Int,
+            id: String
+        ): Button(
+            label = label,
+            icon = icon,
+            id = id
+        ) {
+            override fun equals(other: Any?): Boolean {
+                if (this === other) return true
+                if (javaClass != other?.javaClass) return false
+                return true
+            }
+
+            override fun hashCode(): Int {
+                return javaClass.hashCode()
+            }
+        }
+
+        companion object
     }
 
     data class Divider(

@@ -27,6 +27,7 @@
             <option value="$PROJECT_DIR$/data/room" />
             <option value="$PROJECT_DIR$/feature" />
             <option value="$PROJECT_DIR$/feature/debug" />
+            <option value="$PROJECT_DIR$/feature/debug-noop" />
             <option value="$PROJECT_DIR$/feature/forceupgrade" />
             <option value="$PROJECT_DIR$/feature/releasenotes" />
             <option value="$PROJECT_DIR$/feature/rss" />

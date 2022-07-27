@@ -11,6 +11,7 @@ import tmg.flashback.appshortcuts.di.appShortcutModule
 import tmg.flashback.settings.di.settingsModule
 import tmg.flashback.configuration.di.configModule
 import tmg.flashback.crash_reporting.di.crashReportingModule
+import tmg.flashback.debug.di.debugModule
 import tmg.flashback.device.di.deviceModule
 import tmg.flashback.di.appModule
 import tmg.flashback.forceupgrade.di.forceUpgradeModule
