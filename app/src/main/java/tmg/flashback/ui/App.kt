@@ -14,12 +14,12 @@ import androidx.navigation.compose.rememberNavController
 import org.koin.androidx.compose.inject
 import tmg.flashback.releasenotes.releaseNotes
 import tmg.flashback.rss.rss
-import tmg.flashback.stats.Search
 import tmg.flashback.stats.stats
 import tmg.flashback.style.utils.WindowSize
 import tmg.flashback.ui.dashboard.DashboardScreen
 import tmg.flashback.ui.navigation.Navigator
 import tmg.flashback.ui.navigation.Screen
+import tmg.flashback.ui.navigation.asNavigationDestination
 import tmg.flashback.ui.navigation.navigate
 import tmg.flashback.ui.settings.appSettings
 
@@ -31,7 +31,9 @@ fun HomeScreen(
     val navController = rememberNavController()
     val navigator: Navigator by inject()
     val destination by navigator.destination.collectAsState()
+
     LaunchedEffect(destination) {
+        println("Current destination ${navController.currentDestination?.route} and wanting ${destination.route}")
         if (navController.currentDestination?.route != destination.route) {
             if (destination == Screen.Home) {
                 navController.navigate(destination) {
@@ -39,6 +41,13 @@ fun HomeScreen(
                 }
             } else {
                 navController.navigate(destination)
+            }
+        }
+    }
+    LaunchedEffect(Unit) {
+        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+            destination.route?.asNavigationDestination()?.let {
+                navigator.navigate(it)
             }
         }
     }
