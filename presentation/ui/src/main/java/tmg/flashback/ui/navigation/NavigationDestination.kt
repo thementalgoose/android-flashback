@@ -10,3 +10,10 @@ interface NavigationDestination {
 fun NavController.navigate(destination: NavigationDestination, builder: NavOptionsBuilder.() -> Unit = { }) {
     this.navigate(route = destination.route, builder = builder)
 }
+
+fun String.asNavigationDestination(): NavigationDestination {
+    val route = this
+    return object : NavigationDestination {
+        override val route get() = route
+    }
+}
