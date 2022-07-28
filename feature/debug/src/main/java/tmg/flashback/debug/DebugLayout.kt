@@ -35,14 +35,10 @@ fun DebugLayout(
     configUrlSave: () -> Unit,
     configUrlClear: () -> Unit,
     syncClicked: () -> Unit,
-    styleGuideLegacyClicked: () -> Unit,
     styleGuideComposeClicked: () -> Unit,
-    composeTestClicked: () -> Unit,
     sendNotificationClicked: () -> Unit,
     networkRequestClicked: (String) -> Unit,
-    advertConfigClicked: () -> Unit,
-    modifier: Modifier = Modifier,
-    nativeView: @Composable () -> Unit
+    modifier: Modifier = Modifier
 ) {
 //    Scroll
     Column(
@@ -56,7 +52,7 @@ fun DebugLayout(
                 bottom = AppTheme.dimensions.paddingMedium
             )
     ) {
-        TextHeadline1(text = stringResource(id = R.string.debug_title))
+        TextHeadline1(text = stringResource(id = R.string.debug_menu_debug))
         Spacer(modifier = Modifier.height(16.dp))
         TextBody1(text = "Ads ID")
         TextBody2(text = adId, modifier = Modifier
@@ -78,27 +74,6 @@ fun DebugLayout(
         Spacer(modifier = Modifier.height(16.dp))
         TextSection(text = "Sync")
         ButtonPrimary(text = "Sync Clicked", onClick = syncClicked)
-        Spacer(modifier = Modifier.height(16.dp))
-        TextSection(text = "Style Guide")
-        Row(
-            horizontalArrangement = Arrangement.SpaceEvenly,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            ButtonPrimary(
-                text = "Style Guide",
-                modifier = Modifier.weight(1f),
-                onClick = styleGuideLegacyClicked
-            )
-            Spacer(modifier = Modifier.width(16.dp))
-            ButtonPrimary(
-                text = "Compose Guide",
-                modifier = Modifier.weight(1f),
-                onClick = styleGuideComposeClicked
-            )
-        }
-        Spacer(modifier = Modifier.height(16.dp))
-        TextSection(text = "Compose test")
-        ButtonPrimary(text = "Compose test activity", onClick = composeTestClicked)
         Spacer(modifier = Modifier.height(16.dp))
         TextSection(text = "Config URL")
         InputPrimary(text = configUrl, placeholder = "https://flashback.pages.dev")
@@ -133,9 +108,6 @@ fun DebugLayout(
         Spacer(modifier = Modifier.height(4.dp))
         ButtonPrimary(text = "circuits.json", onClick = { networkRequestClicked("circuits.json") })
         Spacer(modifier = Modifier.height(16.dp))
-        TextSection(text = "Advert")
-        ButtonPrimary(text = "Advert config", onClick = advertConfigClicked)
-        nativeView()
     }
 }
 
@@ -155,13 +127,9 @@ private fun Preview() {
             configUrlSave = { },
             configUrlClear = { },
             syncClicked = { },
-            styleGuideLegacyClicked = { },
             styleGuideComposeClicked = { },
-            composeTestClicked = { },
             sendNotificationClicked = { },
-            networkRequestClicked = { },
-            advertConfigClicked = { },
-            nativeView = { }
+            networkRequestClicked = { }
         )
     }
 }

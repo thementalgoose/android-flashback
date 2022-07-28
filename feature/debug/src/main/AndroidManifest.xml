@@ -6,13 +6,7 @@
         <activity android:name=".DebugActivity"
             android:exported="false" />
 
-        <activity android:name=".styleguide.StyleGuideActivity"
-            android:exported="false" />
-
         <activity android:name=".styleguide.StyleGuideComposeActivity"
-            android:exported="false" />
-
-        <activity android:name=".compose.ComposeActivity"
             android:exported="false" />
 
         <activity android:name=".adverts.AdvertsActivity"

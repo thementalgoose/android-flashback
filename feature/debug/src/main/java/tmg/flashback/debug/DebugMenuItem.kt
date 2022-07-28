@@ -12,7 +12,11 @@ data class DebugMenuItem(
 )
 
 internal const val MENU_DEBUG = "debug"
+internal const val MENU_STYLEGUIDE = "styleguide"
+internal const val MENU_ADVERTS = "adverts"
 
 val debugMenuItemList: List<DebugMenuItem> = listOf(
-    DebugMenuItem(R.string.debug_title, R.drawable.debug_list_item, MENU_DEBUG)
+    DebugMenuItem(R.string.debug_menu_debug, R.drawable.debug_list_debug, MENU_DEBUG),
+    DebugMenuItem(R.string.debug_menu_styleguide, R.drawable.debug_list_styleguide, MENU_STYLEGUIDE),
+    DebugMenuItem(R.string.debug_menu_ads_config, R.drawable.debug_list_adverts, MENU_ADVERTS)
 )
