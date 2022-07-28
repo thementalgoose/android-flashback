@@ -9,8 +9,8 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDateTime
 import tmg.flashback.rss.RssNavigationComponent
-import tmg.flashback.ads.repository.AdsRepository
-import tmg.flashback.ads.repository.model.AdvertConfig
+import tmg.flashback.ads.config.repository.AdsRepository
+import tmg.flashback.ads.config.repository.model.AdvertConfig
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.rss.repo.RSSRepository
 import tmg.flashback.rss.repo.RssAPI

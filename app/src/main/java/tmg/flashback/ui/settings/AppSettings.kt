@@ -4,8 +4,8 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
-import tmg.flashback.ads.Adverts
-import tmg.flashback.ads.ui.settings.adverts.SettingsAdvertScreenVM
+import tmg.flashback.ads.config.Adverts
+import tmg.flashback.ads.config.ui.settings.adverts.SettingsAdvertScreenVM
 import tmg.flashback.rss.RSS
 import tmg.flashback.rss.RSSConfigure
 import tmg.flashback.rss.ui.configure.SettingsRSSConfigureScreenVM
