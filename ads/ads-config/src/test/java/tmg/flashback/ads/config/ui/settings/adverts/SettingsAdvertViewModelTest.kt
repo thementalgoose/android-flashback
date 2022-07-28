@@ -5,7 +5,7 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.flashback.ads.R
+import tmg.flashback.ads.config.R
 import tmg.flashback.ads.config.repository.AdsRepository
 import tmg.flashback.ads.config.ui.settings.adverts.SettingsAdvertViewModel
 import tmg.flashback.ads.config.testutils.assertExpectedOrder
