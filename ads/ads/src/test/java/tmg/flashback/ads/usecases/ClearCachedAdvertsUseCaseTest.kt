@@ -6,22 +6,22 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.flashback.ads.config.repository.AdsRepository
+import tmg.flashback.ads.repository.AdsCacheRepository
 
 internal class ClearCachedAdvertsUseCaseTest {
 
-    private val mockRepository: AdsRepository = mockk(relaxed = true)
+    private val mockAdsCacheRepository: AdsCacheRepository = mockk(relaxed = true)
     private val mockAdvert: NativeAd = mockk(relaxed = true)
 
     private lateinit var underTest: ClearCachedAdvertsUseCase
 
     private fun initUnderTest() {
-        underTest = ClearCachedAdvertsUseCase(mockRepository)
+        underTest = ClearCachedAdvertsUseCase(mockAdsCacheRepository)
     }
 
     @BeforeEach
     internal fun setUp() {
-        every { mockRepository.listOfAds } returns listOf(mockAdvert)
+        every { mockAdsCacheRepository.listOfAds } returns listOf(mockAdvert)
     }
 
     @Test
@@ -31,7 +31,7 @@ internal class ClearCachedAdvertsUseCaseTest {
 
         verify {
             mockAdvert.destroy()
-            mockRepository.listOfAds = emptyList()
+            mockAdsCacheRepository.listOfAds = emptyList()
         }
     }
 }
