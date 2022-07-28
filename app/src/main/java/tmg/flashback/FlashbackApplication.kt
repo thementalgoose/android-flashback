@@ -43,8 +43,6 @@ class FlashbackApplication: Application() {
                 forceUpgradeModule,
                 releaseNotesModule,
                 webBrowserModule,
-                // Debug
-                debugModule,
                 // Core
                 adsConfigModule,
                 analyticsModule,
@@ -55,6 +53,7 @@ class FlashbackApplication: Application() {
                 notificationModule,
                 uiModule
             )
+            modules(debugModule)
             modules(statsModule)
         }
 

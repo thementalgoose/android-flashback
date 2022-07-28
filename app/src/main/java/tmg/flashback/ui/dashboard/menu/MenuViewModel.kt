@@ -138,7 +138,7 @@ class MenuViewModel(
         list.add(MenuItems.Button.Settings)
         list.add(MenuItems.Button.Contact)
         if (debugMenuItemList.isNotEmpty()) {
-            list.add(MenuItems.Divider("debug"))
+            list.add(MenuItems.Divider("z"))
             debugMenuItemList.forEach {
                 list.add(MenuItems.Button.Custom(it.label, it.icon, it.id))
             }
