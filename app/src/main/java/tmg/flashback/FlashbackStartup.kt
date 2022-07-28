@@ -10,7 +10,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
-import tmg.flashback.ads.usecases.InitialiseAdsUseCase
 import tmg.flashback.analytics.UserProperty.*
 import tmg.flashback.analytics.manager.AnalyticsManager
 import tmg.flashback.configuration.usecases.InitialiseConfigUseCase
@@ -49,8 +48,9 @@ class FlashbackStartup(
     private val systemNotificationManager: SystemNotificationManager,
     private val remoteNotificationSubscribeUseCase: RemoteNotificationSubscribeUseCase,
     private val remoteNotificationUnsubscribeUseCase: RemoteNotificationUnsubscribeUseCase,
-    private val appOpenedUseCase: AppOpenedUseCase,
-    private val initialiseAdsUseCase: InitialiseAdsUseCase
+    private val appOpenedUseCase: AppOpenedUseCase
+    // Adverts
+//    private val initialiseAdsUseCase: InitialiseAdsUseCase
 ) {
     fun startup(application: FlashbackApplication) {
 
@@ -92,7 +92,7 @@ class FlashbackStartup(
         )
 
         // Adverts
-        initialiseAdsUseCase.initialise()
+//        initialiseAdsUseCase.initialise()
 
         //region Notifications Legacy: Remove these existing channels which were previously used for remote notifications
         systemNotificationManager.cancelChannel("race")
