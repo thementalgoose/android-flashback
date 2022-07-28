@@ -2,8 +2,8 @@ package tmg.flashback.ui.settings
 
 import tmg.flashback.R
 import tmg.flashback.rss.RssNavigationComponent
-import tmg.flashback.ads.AdsNavigationComponent
-import tmg.flashback.ads.repository.AdsRepository
+import tmg.flashback.ads.config.AdsNavigationComponent
+import tmg.flashback.ads.config.repository.AdsRepository
 import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.settings.SettingsNavigationComponent
 import tmg.flashback.stats.StatsNavigationComponent
