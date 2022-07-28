@@ -33,7 +33,6 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import org.koin.androidx.compose.viewModel
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
-import tmg.flashback.ads.components.NativeBanner
 import tmg.flashback.rss.R
 import tmg.flashback.rss.repo.model.Article
 import tmg.flashback.rss.repo.model.ArticleSource
@@ -113,7 +112,7 @@ fun RSSScreen(
                         NetworkError(error = NetworkError.NETWORK_ERROR)
                     }
                     RSSModel.Advert -> {
-                        NativeBanner(badgeOffset = true)
+                        Box(Modifier.size(0.dp)) // Adverts
                     }
                     RSSModel.InternalError -> {
                         NetworkError(error = NetworkError.INTERNAL_ERROR)
