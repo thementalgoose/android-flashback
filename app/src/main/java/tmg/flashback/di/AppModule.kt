@@ -4,7 +4,6 @@ import kotlinx.coroutines.Dispatchers
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
-import tmg.flashback.DebugController
 import tmg.flashback.FlashbackStartup
 import tmg.flashback.appshortcuts.provider.HomeClassProvider
 import tmg.flashback.device.managers.BuildConfigManager
@@ -37,11 +36,9 @@ val appModule = module {
     viewModel { SyncViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get()) }
 
     viewModel { DashboardViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get()) }
-    viewModel { MenuViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
+    viewModel { MenuViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get()) }
 
     single { FlashbackStartup(get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get()) }
-
-    single { DebugController(get()) }
 
     single<PreferenceManager> { AppPreferencesManager(get()) }
     single<StyleManager> { AppStyleManager(get(), get()) }
