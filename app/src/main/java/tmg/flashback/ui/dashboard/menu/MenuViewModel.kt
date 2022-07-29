@@ -4,6 +4,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
+import tmg.flashback.BuildConfig
+import tmg.flashback.debug.DebugNavigationComponent
+import tmg.flashback.debug.debugMenuItemList
+import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.rss.RssNavigationComponent
 import tmg.flashback.formula1.constants.Formula1.decadeColours
 import tmg.flashback.stats.StatsNavigationComponent
@@ -48,7 +52,8 @@ class MenuViewModel(
     private val styleManager: StyleManager,
     private val rssNavigationComponent: RssNavigationComponent,
     private val navigationComponent: ApplicationNavigationComponent,
-    private val statsNavigationComponent: StatsNavigationComponent
+    private val statsNavigationComponent: StatsNavigationComponent,
+    private val debugNavigationComponent: DebugNavigationComponent
 ) : ViewModel(), MenuViewModelInputs, MenuViewModelOutputs {
 
     val inputs: MenuViewModelInputs = this
@@ -95,6 +100,9 @@ class MenuViewModel(
             MenuItems.Button.Search -> {
                 statsNavigationComponent.search()
             }
+            is MenuItems.Button.Custom -> {
+                debugNavigationComponent.navigateTo(button.id)
+            }
         }
         links.value = getLinks()
     }
@@ -129,6 +137,12 @@ class MenuViewModel(
         list.add(MenuItems.Button.Rss)
         list.add(MenuItems.Button.Settings)
         list.add(MenuItems.Button.Contact)
+        if (debugMenuItemList.isNotEmpty()) {
+            list.add(MenuItems.Divider("z"))
+            debugMenuItemList.forEach {
+                list.add(MenuItems.Button.Custom(it.label, it.icon, it.id))
+            }
+        }
         list.add(MenuItems.Divider("a"))
         list.add(MenuItems.Toggle.DarkMode(
             _isEnabled = !styleManager.isDayMode
