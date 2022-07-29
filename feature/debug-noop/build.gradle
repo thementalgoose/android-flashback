@@ -15,5 +15,8 @@ android {
 }
 
 dependencies {
+    // Core modules
 
+    // Feature
+    implementation project(path: ':data:network')
 }
