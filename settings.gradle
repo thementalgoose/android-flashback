@@ -10,6 +10,7 @@ include ':feature:settings'
 include ':feature:forceupgrade'
 include ':feature:releasenotes'
 include ':feature:debug'
+include ':feature:debug-noop'
 include ':feature:widgets'
 
 include ':data:repo'

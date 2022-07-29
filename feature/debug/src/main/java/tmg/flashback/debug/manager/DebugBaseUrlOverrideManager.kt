@@ -3,7 +3,7 @@ package tmg.flashback.debug.manager
 import tmg.flashback.prefs.manager.PreferenceManager
 import tmg.flashback.statistics.network.manager.BaseUrlLocalOverrideManager
 
-class DebugBaseUrlLocalOverrideManager(
+class DebugBaseUrlOverrideManager(
     private val preferenceManager: PreferenceManager
 ) : BaseUrlLocalOverrideManager {
 

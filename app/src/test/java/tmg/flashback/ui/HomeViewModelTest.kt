@@ -10,8 +10,9 @@ import tmg.flashback.configuration.usecases.ApplyConfigUseCase
 import tmg.flashback.crash_reporting.controllers.CrashController
 import tmg.flashback.forceupgrade.repository.ForceUpgradeRepository
 import tmg.flashback.rss.controllers.RSSController
-import tmg.flashback.statistics.controllers.ScheduleController
 import tmg.flashback.statistics.repo.repository.CacheRepository
+import tmg.flashback.stats.usecases.ScheduleNotificationsUseCase
+import tmg.flashback.stats.usecases.SearchAppShortcutUseCase
 import tmg.testutils.BaseTest
 
 internal class HomeViewModelTest: BaseTest() {
@@ -22,7 +23,7 @@ internal class HomeViewModelTest: BaseTest() {
     private var mockCrashController: CrashController = mockk(relaxed = true)
     private var mockForceUpgradeRepository: ForceUpgradeRepository = mockk(relaxed = true)
     private var mockCacheRepository: CacheRepository = mockk(relaxed = true)
-    private var mockScheduleController: ScheduleController = mockk(relaxed = true)
+    private var mockScheduleNotificationsUseCase: ScheduleNotificationsUseCase = mockk(relaxed = true)
     private var mockAppShortcutUseCase: SearchAppShortcutUseCase = mockk(relaxed = true)
 
     private lateinit var sut: HomeViewModel
@@ -45,7 +46,7 @@ internal class HomeViewModelTest: BaseTest() {
             mockForceUpgradeRepository,
             mockCacheRepository,
             mockAppShortcutUseCase,
-            mockScheduleController,
+            mockScheduleNotificationsUseCase,
         )
     }
 
@@ -95,7 +96,7 @@ internal class HomeViewModelTest: BaseTest() {
         coVerify { mockApplyConfigUseCase.apply() }
         verify { mockRssController.removeAppShortcut() }
         verify { mockAppShortcutUseCase.setup() }
-        coVerify { mockScheduleController.scheduleNotifications() }
+        coVerify { mockScheduleNotificationsUseCase.schedule() }
 
         assertFalse(sut.requiresSync)
         assertFalse(sut.forceUpgrade)
@@ -112,7 +113,7 @@ internal class HomeViewModelTest: BaseTest() {
         coVerify { mockApplyConfigUseCase.apply() }
         verify { mockRssController.addAppShortcut() }
         verify { mockAppShortcutUseCase.setup() }
-        coVerify { mockScheduleController.scheduleNotifications() }
+        coVerify { mockScheduleNotificationsUseCase.schedule() }
 
         assertFalse(sut.requiresSync)
         assertFalse(sut.forceUpgrade)
