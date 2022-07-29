@@ -41,7 +41,7 @@ jobs:
 
       # Unit Tests
       - name: :app
-        run: ./gradlew testDebugUnitTest
+        run: ./gradlew testDebugUnitTest :app:testSandDebugUnitTest
 
       # Publish test report
       - name: Publish Test Report
