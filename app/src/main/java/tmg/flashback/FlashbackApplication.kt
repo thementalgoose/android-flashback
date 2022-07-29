@@ -11,6 +11,7 @@ import tmg.flashback.appshortcuts.di.appShortcutModule
 import tmg.flashback.settings.di.settingsModule
 import tmg.flashback.configuration.di.configModule
 import tmg.flashback.crash_reporting.di.crashReportingModule
+import tmg.flashback.debug.di.debugModule
 import tmg.flashback.device.di.deviceModule
 import tmg.flashback.di.appModule
 import tmg.flashback.forceupgrade.di.forceUpgradeModule
@@ -42,8 +43,6 @@ class FlashbackApplication: Application() {
                 forceUpgradeModule,
                 releaseNotesModule,
                 webBrowserModule,
-                // Debug
-                debugModule,
                 // Core
                 adsConfigModule,
                 analyticsModule,
@@ -54,6 +53,7 @@ class FlashbackApplication: Application() {
                 notificationModule,
                 uiModule
             )
+            modules(debugModule)
             modules(statsModule)
         }
 

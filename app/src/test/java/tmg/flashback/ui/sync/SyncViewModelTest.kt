@@ -8,7 +8,6 @@ import tmg.flashback.configuration.usecases.FetchConfigUseCase
 import tmg.flashback.configuration.usecases.ResetConfigUseCase
 import tmg.flashback.forceupgrade.repository.ForceUpgradeRepository
 import tmg.flashback.rss.controllers.RSSController
-import tmg.flashback.statistics.controllers.ScheduleController
 import tmg.flashback.statistics.repo.CircuitRepository
 import tmg.flashback.statistics.repo.ConstructorRepository
 import tmg.flashback.statistics.repo.DriverRepository
@@ -146,8 +145,6 @@ internal class SyncViewModelTest: BaseTest() {
             assertDataEventValue(DASHBOARD)
         }
         verify {
-            mockSearchAppShortcutUseCase.setup()
-            mockScheduleNotificationsUseCase.schedule()
             mockCacheRepository.initialSync = true
         }
     }

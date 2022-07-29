@@ -16,8 +16,6 @@ import org.koin.android.ext.android.inject
 import tmg.flashback.ads.manager.AdsManager
 import tmg.flashback.ads.views.NativeBanner
 import tmg.flashback.debug.adverts.AdvertsActivity
-import tmg.flashback.debug.compose.ComposeActivity
-import tmg.flashback.debug.styleguide.StyleGuideActivity
 import tmg.flashback.debug.styleguide.StyleGuideComposeActivity
 import tmg.flashback.device.repository.DeviceRepository
 import tmg.flashback.notifications.receiver.LocalNotificationBroadcastReceiver
@@ -81,14 +79,8 @@ class DebugActivity: BaseActivity() {
                     syncClicked = {
                         startActivity(applicationNavigationComponent.syncActivityIntent(this))
                     },
-                    styleGuideLegacyClicked = {
-                        startActivity(Intent(this, StyleGuideActivity::class.java))
-                    },
                     styleGuideComposeClicked = {
                         startActivity(Intent(this, StyleGuideComposeActivity::class.java))
-                    },
-                    composeTestClicked = {
-                        startActivity(Intent(this, ComposeActivity::class.java))
                     },
                     sendNotificationClicked = {
                         val intent = LocalNotificationBroadcastReceiver.intent(
@@ -106,14 +98,6 @@ class DebugActivity: BaseActivity() {
                             "constructors.json" -> syncConstructors()
                             "circuits.json" -> syncCircuits()
                         }
-                    },
-                    advertConfigClicked = {
-                        startActivity(Intent(this, AdvertsActivity::class.java))
-                    },
-                    nativeView = {
-                        AndroidView(factory = { context ->
-                            NativeBanner(context)
-                        })
                     }
                 )
             }

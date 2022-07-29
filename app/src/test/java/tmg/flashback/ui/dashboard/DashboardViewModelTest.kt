@@ -5,14 +5,12 @@ import io.mockk.*
 import kotlinx.coroutines.test.advanceUntilIdle
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.flashback.analytics.di.analyticsModule
 import tmg.flashback.analytics.manager.AnalyticsManager
 import tmg.flashback.configuration.usecases.ApplyConfigUseCase
 import tmg.flashback.configuration.usecases.FetchConfigUseCase
 import tmg.flashback.releasenotes.usecases.NewReleaseNotesUseCase
 import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.statistics.repo.RaceRepository
-import tmg.flashback.statistics.workmanager.WorkerProvider
 import tmg.flashback.stats.usecases.DefaultSeasonUseCase
 import tmg.flashback.stats.usecases.ScheduleNotificationsUseCase
 import tmg.testutils.BaseTest
