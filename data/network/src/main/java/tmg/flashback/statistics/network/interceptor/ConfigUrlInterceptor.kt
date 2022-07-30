@@ -8,8 +8,9 @@ import okhttp3.Response
 import tmg.flashback.statistics.network.BuildConfig
 import tmg.flashback.statistics.network.NetworkConfigManager
 import tmg.flashback.statistics.network.manager.BaseUrlLocalOverrideManager
+import javax.inject.Inject
 
-class ConfigUrlInterceptor(
+class ConfigUrlInterceptor @Inject constructor(
     private val baseUrlLocalOverrideManager: BaseUrlLocalOverrideManager,
     private val networkConfigManager: NetworkConfigManager
 ): Interceptor {
