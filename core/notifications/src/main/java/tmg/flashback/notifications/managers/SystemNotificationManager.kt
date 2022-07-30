@@ -15,8 +15,11 @@ import tmg.flashback.crash_reporting.controllers.CrashController
 import tmg.flashback.notifications.R
 import tmg.flashback.notifications.model.NotificationPriority
 import tmg.flashback.notifications.navigation.NotificationNavigationProvider
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class SystemNotificationManager(
+@Singleton
+class SystemNotificationManager @Inject constructor(
     private val applicationContext: Context,
     private val crashController: CrashController,
     private val navigationProvider: NotificationNavigationProvider

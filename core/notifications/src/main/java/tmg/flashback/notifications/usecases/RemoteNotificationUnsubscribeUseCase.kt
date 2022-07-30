@@ -2,8 +2,9 @@ package tmg.flashback.notifications.usecases
 
 import tmg.flashback.notifications.managers.RemoteNotificationManager
 import tmg.flashback.notifications.repository.NotificationRepository
+import javax.inject.Inject
 
-class RemoteNotificationUnsubscribeUseCase(
+class RemoteNotificationUnsubscribeUseCase @Inject constructor(
     private val remoteNotificationManager: RemoteNotificationManager,
     private val notificationRepository: NotificationRepository
 ) {

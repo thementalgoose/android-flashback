@@ -11,8 +11,11 @@ import org.threeten.bp.ZoneOffset
 import tmg.flashback.crash_reporting.controllers.CrashController
 import tmg.flashback.notifications.BuildConfig
 import tmg.flashback.notifications.receiver.LocalNotificationBroadcastReceiver
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class SystemAlarmManager(
+@Singleton
+class SystemAlarmManager @Inject constructor(
     private val applicationContext: Context,
     private val crashController: CrashController
 ) {
