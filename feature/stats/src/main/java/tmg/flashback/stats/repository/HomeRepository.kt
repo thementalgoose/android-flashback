@@ -7,8 +7,11 @@ import tmg.flashback.stats.repository.converters.convert
 import tmg.flashback.stats.repository.json.AllSeasonsJson
 import tmg.flashback.stats.repository.json.BannerJson
 import tmg.flashback.stats.repository.models.Banner
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class HomeRepository(
+@Singleton
+class HomeRepository @Inject constructor(
         private val preferenceManager: PreferenceManager,
         private val configManager: ConfigManager
 ) {

@@ -5,8 +5,11 @@ import tmg.flashback.stats.repository.models.NotificationReminder
 import tmg.flashback.stats.repository.models.NotificationResults
 import tmg.flashback.stats.repository.models.NotificationSchedule
 import tmg.utilities.extensions.toEnum
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class NotificationRepository(
+@Singleton
+class NotificationRepository @Inject constructor(
     private val preferenceManager: PreferenceManager
 ) {
 
