@@ -1,10 +1,12 @@
 package tmg.flashback.settings.ui.settings.support
 
+import dagger.hilt.android.lifecycle.HiltViewModel
 import tmg.flashback.analytics.manager.AnalyticsManager
 import tmg.flashback.settings.R
 import tmg.flashback.crash_reporting.repository.CrashRepository
 import tmg.flashback.ui.settings.SettingsModel
 import tmg.flashback.ui.settings.SettingsViewModel
+import javax.inject.Inject
 
 //region Inputs
 
@@ -22,7 +24,8 @@ interface SettingsSupportViewModelOutputs {
 
 //endregion
 
-class SettingsSupportViewModel(
+@HiltViewModel
+class SettingsSupportViewModel @Inject constructor(
     private val crashRepository: CrashRepository,
     private val analyticsManager: AnalyticsManager
 ): SettingsViewModel(), SettingsSupportViewModelInputs, SettingsSupportViewModelOutputs {

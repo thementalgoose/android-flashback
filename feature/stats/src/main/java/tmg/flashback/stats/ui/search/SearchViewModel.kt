@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -21,6 +22,7 @@ import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.stats.ui.weekend.WeekendInfo
 import tmg.utilities.extensions.extend
+import javax.inject.Inject
 
 interface SearchViewModelInputs {
     fun inputSearch(search: String)
@@ -35,7 +37,8 @@ interface SearchViewModelOutputs {
     val isLoading: LiveData<Boolean>
 }
 
-class SearchViewModel(
+@HiltViewModel
+class SearchViewModel @Inject constructor(
     private val driverRepository: DriverRepository,
     private val constructorRepository: ConstructorRepository,
     private val circuitRepository: CircuitRepository,

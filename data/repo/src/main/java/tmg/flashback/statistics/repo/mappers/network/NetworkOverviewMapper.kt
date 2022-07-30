@@ -2,8 +2,9 @@ package tmg.flashback.statistics.repo.mappers.network
 
 import tmg.flashback.statistics.network.models.overview.OverviewRace
 import tmg.flashback.statistics.room.models.overview.Overview
+import javax.inject.Inject
 
-class NetworkOverviewMapper {
+class NetworkOverviewMapper @Inject constructor() {
     @Throws(RuntimeException::class)
     fun mapOverview(overview: OverviewRace?): Overview? {
         if (overview == null) return null

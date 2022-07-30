@@ -1,51 +1,56 @@
 package tmg.flashback.statistics.network.di
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-import kotlinx.serialization.ExperimentalSerializationApi
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import org.koin.dsl.module
 import retrofit2.Retrofit
 import tmg.flashback.statistics.network.NetworkConfigManager
 import tmg.flashback.statistics.network.api.FlashbackApi
 import tmg.flashback.statistics.network.interceptor.ConfigUrlInterceptor
 import java.util.concurrent.TimeUnit
 
-val networkModule = module {
+@Module
+@InstallIn(SingletonComponent::class)
+class NetworkModule {
 
-    factory { buildFlashbackApi(get()) }
-    single { buildRetrofit(get(), get()) }
-    single { ConfigUrlInterceptor(get(), get()) }
-}
-
-private fun buildFlashbackApi(retrofit: Retrofit): FlashbackApi {
-    return retrofit.create(FlashbackApi::class.java)
-}
-
-private fun buildRetrofit(baseUrlManager: NetworkConfigManager, configUrlInterceptor: ConfigUrlInterceptor): Retrofit {
-    val json = Json {
-        ignoreUnknownKeys = true
+    @Provides
+    fun provideFlashbackApi(retrofit: Retrofit): FlashbackApi {
+        return retrofit.create(FlashbackApi::class.java)
     }
 
-    val builder = Retrofit.Builder()
-        .baseUrl(baseUrlManager.defaultBaseUrl)
-        .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
+    @Provides
+    fun providesRetrofit(
+        baseUrlManager: NetworkConfigManager,
+        configUrlInterceptor: ConfigUrlInterceptor
+    ): Retrofit {
+        val json = Json {
+            ignoreUnknownKeys = true
+        }
 
-    val client = OkHttpClient.Builder()
-    client.callTimeout(10L, TimeUnit.SECONDS)
+        val builder = Retrofit.Builder()
+            .baseUrl(baseUrlManager.defaultBaseUrl)
+            .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
 
-    // Debug
-    if (baseUrlManager.isDebug) {
-        val interceptor = HttpLoggingInterceptor()
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
-        client.addInterceptor(interceptor)
+        val client = OkHttpClient.Builder()
+        client.callTimeout(10L, TimeUnit.SECONDS)
+
+        // Debug
+        if (baseUrlManager.isDebug) {
+            val interceptor = HttpLoggingInterceptor()
+            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+            client.addInterceptor(interceptor)
+        }
+
+        // Config URL Intercept
+        client.addInterceptor(configUrlInterceptor)
+
+        builder.client(client.build())
+        return builder.build()
     }
-
-    // Config URL Intercept
-    client.addInterceptor(configUrlInterceptor)
-
-    builder.client(client.build())
-    return builder.build()
 }

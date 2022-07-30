@@ -3,8 +3,9 @@ package tmg.flashback.statistics.repo.mappers.app
 import tmg.flashback.formula1.model.Schedule
 import tmg.utilities.utils.LocalDateUtils.Companion.fromDate
 import tmg.utilities.utils.LocalTimeUtils.Companion.fromTime
+import javax.inject.Inject
 
-class ScheduleMapper {
+class ScheduleMapper @Inject constructor() {
 
     fun mapSchedule(schedule: tmg.flashback.statistics.room.models.overview.Schedule?): Schedule? {
         if (schedule == null) return null

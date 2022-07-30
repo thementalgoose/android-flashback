@@ -2,8 +2,9 @@ package tmg.flashback.statistics.repo.mappers.app
 
 import tmg.flashback.formula1.model.Season
 import tmg.flashback.statistics.room.models.overview.Event
+import javax.inject.Inject
 
-class SeasonMapper(
+class SeasonMapper @Inject constructor(
     private val raceMapper: RaceMapper,
     private val eventMapper: EventMapper
 ) {

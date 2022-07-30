@@ -7,8 +7,9 @@ import tmg.flashback.ads.BuildConfig
 import tmg.flashback.ads.manager.AdsManager
 import tmg.flashback.ads.repository.AdsCacheRepository
 import tmg.flashback.ads.config.repository.AdsRepository
+import javax.inject.Inject
 
-class GetAdUseCase(
+class GetAdUseCase @Inject constructor(
     private val adsRepository: AdsRepository,
     private val adsCacheRepository: AdsCacheRepository,
     private val adsManager: AdsManager

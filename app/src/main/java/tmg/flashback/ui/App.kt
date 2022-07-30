@@ -11,7 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import org.koin.androidx.compose.inject
 import tmg.flashback.releasenotes.releaseNotes
 import tmg.flashback.rss.rss
 import tmg.flashback.stats.stats
@@ -26,10 +25,10 @@ import tmg.flashback.ui.settings.appSettings
 @Composable
 fun HomeScreen(
     windowSize: WindowSize,
+    navigator: Navigator,
     closeApp: () -> Unit,
 ) {
     val navController = rememberNavController()
-    val navigator: Navigator by inject()
     val destination by navigator.destination.collectAsState()
 
     LaunchedEffect(destination) {

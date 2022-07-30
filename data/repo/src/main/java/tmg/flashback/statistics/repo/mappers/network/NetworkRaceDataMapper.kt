@@ -2,8 +2,9 @@ package tmg.flashback.statistics.repo.mappers.network
 
 import tmg.flashback.statistics.network.models.races.RaceData
 import tmg.flashback.statistics.room.models.race.RaceInfo
+import javax.inject.Inject
 
-class NetworkRaceDataMapper {
+class NetworkRaceDataMapper @Inject constructor() {
 
     @Throws(RuntimeException::class)
     fun mapRaceData(raceData: RaceData): RaceInfo {

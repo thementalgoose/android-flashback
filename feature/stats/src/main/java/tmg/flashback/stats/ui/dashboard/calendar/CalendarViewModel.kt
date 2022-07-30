@@ -1,6 +1,7 @@
 package tmg.flashback.stats.ui.dashboard.calendar
 
 import androidx.lifecycle.*
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -9,9 +10,11 @@ import org.threeten.bp.LocalDate
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.stats.StatsNavigationComponent
+import tmg.flashback.stats.repository.HomeRepository
 import tmg.flashback.stats.repository.NotificationRepository
 import tmg.flashback.stats.ui.weekend.WeekendInfo
 import tmg.flashback.stats.usecases.FetchSeasonUseCase
+import javax.inject.Inject
 
 interface CalendarViewModelInputs {
     fun refresh()
@@ -24,13 +27,17 @@ interface CalendarViewModelInputs {
 interface CalendarViewModelOutputs {
     val items: LiveData<List<CalendarModel>?>
     val isRefreshing: LiveData<Boolean>
+
+    val dashboardAutoscroll: LiveData<Boolean>
 }
 
-class CalendarViewModel(
+@HiltViewModel
+class CalendarViewModel @Inject constructor(
     private val fetchSeasonUseCase: FetchSeasonUseCase,
     private val overviewRepository: OverviewRepository,
     private val notificationRepository: NotificationRepository,
     private val statsNavigationComponent: StatsNavigationComponent,
+    private val homeRepository: HomeRepository,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), CalendarViewModelInputs, CalendarViewModelOutputs {
 
@@ -68,6 +75,12 @@ class CalendarViewModel(
         }
         .flowOn(ioDispatcher)
         .asLiveData(viewModelScope.coroutineContext)
+
+    override val dashboardAutoscroll: MutableLiveData<Boolean> = MutableLiveData()
+
+    init {
+        dashboardAutoscroll.value = homeRepository.dashboardAutoscroll
+    }
 
     private fun List<OverviewRace>.getLatestUpcoming(): OverviewRace? {
         return this

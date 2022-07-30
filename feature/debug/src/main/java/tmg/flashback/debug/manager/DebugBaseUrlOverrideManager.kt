@@ -2,8 +2,11 @@ package tmg.flashback.debug.manager
 
 import tmg.flashback.prefs.manager.PreferenceManager
 import tmg.flashback.statistics.network.manager.BaseUrlLocalOverrideManager
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class DebugBaseUrlOverrideManager(
+@Singleton
+class DebugBaseUrlOverrideManager @Inject constructor(
     private val preferenceManager: PreferenceManager
 ) : BaseUrlLocalOverrideManager {
 

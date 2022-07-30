@@ -1,9 +1,11 @@
 package tmg.flashback.ads.config.ui.settings.adverts
 
+import dagger.hilt.android.lifecycle.HiltViewModel
 import tmg.flashback.ads.config.R
 import tmg.flashback.ads.config.repository.AdsRepository
 import tmg.flashback.ui.settings.SettingsModel
 import tmg.flashback.ui.settings.SettingsViewModel
+import javax.inject.Inject
 
 //region Inputs
 
@@ -21,8 +23,8 @@ interface SettingsAdvertViewModelOutputs {
 
 //endregion
 
-
-class SettingsAdvertViewModel(
+@HiltViewModel
+class SettingsAdvertViewModel @Inject constructor(
     private val adsRepository: AdsRepository
 ): SettingsViewModel(), SettingsAdvertViewModelInputs, SettingsAdvertViewModelOutputs {
 

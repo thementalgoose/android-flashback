@@ -7,8 +7,11 @@ import org.threeten.bp.temporal.ChronoUnit
 import tmg.flashback.prefs.manager.PreferenceManager
 import tmg.flashback.statistics.repo.constants.CacheTimeout
 import java.util.*
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class RepoCacheRepository(
+@Singleton
+class RepoCacheRepository @Inject constructor(
     private val preferenceManager: PreferenceManager
 ): CacheRepository {
 

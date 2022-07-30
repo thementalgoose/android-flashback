@@ -3,8 +3,11 @@ package tmg.flashback.managers
 import tmg.flashback.BuildConfig
 import tmg.flashback.repositories.NetworkConfigRepository
 import tmg.flashback.statistics.network.NetworkConfigManager
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class AppNetworkConfigManager(
+@Singleton
+class AppNetworkConfigManager @Inject constructor(
     private val networkConfigRepository: NetworkConfigRepository
 ): NetworkConfigManager {
 

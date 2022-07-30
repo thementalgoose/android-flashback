@@ -3,8 +3,9 @@ package tmg.flashback.configuration.usecases
 import tmg.flashback.configuration.constants.Migrations
 import tmg.flashback.configuration.repository.ConfigRepository
 import tmg.flashback.configuration.services.RemoteConfigService
+import javax.inject.Inject
 
-class FetchConfigUseCase(
+class FetchConfigUseCase @Inject constructor(
     private val configService: RemoteConfigService,
     private val configRepository: ConfigRepository
 ) {

@@ -6,8 +6,11 @@ import tmg.flashback.ui.model.AnimationSpeed
 import tmg.flashback.ui.model.NightMode
 import tmg.flashback.ui.model.Theme
 import tmg.utilities.extensions.toEnum
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class ThemeRepository(
+@Singleton
+class ThemeRepository @Inject constructor(
     private val preferenceManager: PreferenceManager,
     private val configManager: ConfigManager
 ) {

@@ -2,8 +2,11 @@ package tmg.flashback.repositories
 
 import tmg.flashback.BuildConfig
 import tmg.flashback.configuration.manager.ConfigManager
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class NetworkConfigRepository(
+@Singleton
+class NetworkConfigRepository @Inject constructor(
     private val configManager: ConfigManager
 ) {
 

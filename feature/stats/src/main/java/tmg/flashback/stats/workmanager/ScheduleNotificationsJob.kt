@@ -2,10 +2,12 @@ package tmg.flashback.stats.workmanager
 
 import android.content.Context
 import android.util.Log
+import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.ListenableWorker
 import androidx.work.WorkerParameters
-import org.koin.core.component.KoinComponent
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedInject
 import org.threeten.bp.LocalDateTime
 import tmg.flashback.formula1.enums.RaceWeekend
 import tmg.flashback.formula1.model.Timestamp
@@ -17,18 +19,19 @@ import tmg.flashback.statistics.repo.ScheduleRepository
 import tmg.flashback.stats.BuildConfig
 import tmg.flashback.stats.repository.models.NotificationChannel
 
-class ScheduleNotificationsJob(
+@HiltWorker
+class ScheduleNotificationsJob @AssistedInject constructor(
     private val scheduleRepository: ScheduleRepository,
     private val notificationConfigRepository: NotificationRepository,
     private val localNotificationCancelUseCase: LocalNotificationCancelUseCase,
     private val localNotificationScheduleUseCase: LocalNotificationScheduleUseCase,
     private val notificationRepository: tmg.flashback.stats.repository.NotificationRepository,
-    context: Context,
-    parameters: WorkerParameters
+    @Assisted context: Context,
+    @Assisted parameters: WorkerParameters
 ): CoroutineWorker(
     context,
     parameters
-), KoinComponent {
+) {
     override suspend fun doWork(): ListenableWorker.Result {
 
         val force: Boolean = inputData.getBoolean("force", false)

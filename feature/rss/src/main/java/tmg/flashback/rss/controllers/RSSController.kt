@@ -10,8 +10,9 @@ import tmg.flashback.rss.repo.RSSRepository
 import tmg.flashback.rss.repo.model.SupportedArticleSource
 import java.net.MalformedURLException
 import java.net.URL
+import javax.inject.Inject
 
-class RSSController(
+class RSSController @Inject constructor(
     private val rssRepository: RSSRepository,
     private val appShortcutManager: AppShortcutManager
 ) {

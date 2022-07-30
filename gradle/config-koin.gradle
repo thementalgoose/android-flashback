@@ -1,8 +1,0 @@
-dependencies {
-    implementation deps.koin.koin
-    implementation deps.koin.koin_workmanager
-    implementation deps.koin.koin_navigation
-    implementation deps.koin.koin_compose
-
-    testImplementation depsTest.koin
-}

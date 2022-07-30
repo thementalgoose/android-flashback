@@ -10,8 +10,11 @@ import tmg.flashback.statistics.repo.mappers.app.ConstructorStandingMapper
 import tmg.flashback.statistics.repo.mappers.app.DriverStandingMapper
 import tmg.flashback.statistics.repo.mappers.app.SeasonMapper
 import tmg.flashback.statistics.room.FlashbackDatabase
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class SeasonRepository(
+@Singleton
+class SeasonRepository @Inject constructor(
     private val persistence: FlashbackDatabase,
     private val raceRepository: RaceRepository,
     private val driverStandingMapper: DriverStandingMapper,

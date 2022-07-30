@@ -15,9 +15,9 @@ import tmg.flashback.web.R
 import tmg.flashback.web.repository.WebBrowserRepository
 import tmg.flashback.web.ui.browser.WebActivity
 import tmg.utilities.extensions.managerClipboard
-import tmg.utilities.utils.ClipboardUtils.Companion.copyToClipboard
+import javax.inject.Inject
 
-class PickBrowserUseCase(
+class PickBrowserUseCase @Inject constructor(
     private val webBrowserRepository: WebBrowserRepository,
     private val analyticsManager: AnalyticsManager
 ) {

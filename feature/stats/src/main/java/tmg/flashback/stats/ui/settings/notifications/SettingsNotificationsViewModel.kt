@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import tmg.flashback.stats.R
 import tmg.flashback.stats.StatsNavigationComponent
@@ -16,6 +17,7 @@ import tmg.flashback.ui.settings.SettingsViewModel
 import tmg.utilities.lifecycle.Event
 import tmg.utilities.models.Selected
 import tmg.utilities.models.StringHolder
+import javax.inject.Inject
 
 //region Inputs
 
@@ -32,7 +34,8 @@ interface SettingsNotificationViewModelOutputs {
 
 //endregion
 
-class SettingsNotificationViewModel(
+@HiltViewModel
+class SettingsNotificationViewModel @Inject constructor(
     private val notificationRepository: NotificationRepository,
     private val resubscribeNotificationsUseCase: ResubscribeNotificationsUseCase,
     private val statsNavigationComponent: StatsNavigationComponent

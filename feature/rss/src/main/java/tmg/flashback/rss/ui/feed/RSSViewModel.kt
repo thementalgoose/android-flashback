@@ -1,6 +1,7 @@
 package tmg.flashback.rss.ui.feed
 
 import androidx.lifecycle.*
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
@@ -13,6 +14,7 @@ import tmg.flashback.ui.navigation.ApplicationNavigationComponent
 import tmg.flashback.web.WebNavigationComponent
 import tmg.utilities.extensions.then
 import java.util.*
+import javax.inject.Inject
 
 //region Inputs
 
@@ -35,7 +37,8 @@ interface RSSViewModelOutputs {
 //endregion
 
 @Suppress("EXPERIMENTAL_API_USAGE")
-internal class RSSViewModel(
+@HiltViewModel
+internal class RSSViewModel @Inject constructor(
     private val RSSDB: RssAPI,
     private val rssRepository: RSSRepository,
     private val adsRepository: AdsRepository,

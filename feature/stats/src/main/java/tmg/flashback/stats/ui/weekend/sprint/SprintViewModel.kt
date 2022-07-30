@@ -4,12 +4,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.flow.map
 import tmg.flashback.formula1.constants.Formula1
 import tmg.flashback.statistics.repo.RaceRepository
 import tmg.flashback.stats.ui.weekend.race.RaceModel
+import javax.inject.Inject
 
 interface SprintViewModelInputs {
     fun load(season: Int, round: Int)
@@ -19,7 +21,8 @@ interface SprintViewModelOutputs {
     val list: LiveData<List<SprintModel>>
 }
 
-class SprintViewModel(
+@HiltViewModel
+class SprintViewModel @Inject constructor(
     private val raceRepository: RaceRepository,
     private val ioDispatcher: CoroutineDispatcher
 ): ViewModel(), SprintViewModelInputs, SprintViewModelOutputs {

@@ -9,8 +9,11 @@ import kotlinx.coroutines.tasks.await
 import tmg.flashback.configuration.BuildConfig
 import tmg.flashback.configuration.R
 import tmg.flashback.configuration.services.RemoteConfigService
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class FirebaseRemoteConfigService: RemoteConfigService {
+@Singleton
+class FirebaseRemoteConfigService @Inject constructor(): RemoteConfigService {
 
     private val remoteConfig: FirebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
     private val remoteConfigSettings = FirebaseRemoteConfigSettings
