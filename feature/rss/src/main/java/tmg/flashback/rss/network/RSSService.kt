@@ -14,10 +14,11 @@ import tmg.flashback.rss.repo.model.Response
 import java.net.ConnectException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
+import javax.inject.Inject
 import javax.net.ssl.SSLHandshakeException
 import javax.xml.stream.XMLStreamException
 
-internal class RSSService(
+internal class RSSService @Inject constructor(
     private val repository: RSSRepository,
     private val rssFeedController: RSSController
 ) : RssAPI {
