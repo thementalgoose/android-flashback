@@ -4,8 +4,9 @@ import android.content.Intent
 import tmg.flashback.debug.adverts.AdvertsActivity
 import tmg.flashback.debug.styleguide.StyleGuideComposeActivity
 import tmg.flashback.ui.navigation.ActivityProvider
+import javax.inject.Inject
 
-class DebugNavigationComponent(
+class DebugNavigationComponent @Inject constructor(
     private val activityProvider: ActivityProvider
 ) {
     fun navigateTo(id: String) {
