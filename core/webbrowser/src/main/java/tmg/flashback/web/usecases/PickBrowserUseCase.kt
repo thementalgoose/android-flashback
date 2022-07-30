@@ -9,8 +9,9 @@ import android.webkit.URLUtil
 import tmg.flashback.analytics.manager.AnalyticsManager
 import tmg.flashback.web.repository.WebBrowserRepository
 import tmg.flashback.web.ui.browser.WebActivity
+import javax.inject.Inject
 
-class PickBrowserUseCase(
+class PickBrowserUseCase @Inject constructor(
     private val webBrowserRepository: WebBrowserRepository,
     private val analyticsManager: AnalyticsManager
 ) {

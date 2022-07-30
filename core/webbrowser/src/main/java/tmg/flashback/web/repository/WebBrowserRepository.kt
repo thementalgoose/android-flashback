@@ -1,8 +1,11 @@
 package tmg.flashback.web.repository
 
 import tmg.flashback.prefs.manager.PreferenceManager
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class WebBrowserRepository(
+@Singleton
+class WebBrowserRepository @Inject constructor(
     private val preferenceManager: PreferenceManager
 ) {
 
