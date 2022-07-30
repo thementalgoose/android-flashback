@@ -1,8 +1,11 @@
 package tmg.flashback.notifications.repository
 
 import tmg.flashback.prefs.manager.PreferenceManager
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class NotificationRepository(
+@Singleton
+class NotificationRepository @Inject constructor(
     private val preferenceManager: PreferenceManager
 ) {
 
