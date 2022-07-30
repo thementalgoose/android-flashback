@@ -7,8 +7,9 @@ import org.threeten.bp.LocalTime
 import tmg.flashback.configuration.workmanager.ConfigSyncJob
 import tmg.utilities.extensions.secondsToHHmm
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
-class ConfigSyncUseCase(
+class ConfigSyncUseCase @Inject constructor(
     private val applicationContext: Context
 ) {
 
