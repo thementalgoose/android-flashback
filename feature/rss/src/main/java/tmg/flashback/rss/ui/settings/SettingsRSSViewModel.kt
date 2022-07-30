@@ -1,10 +1,12 @@
 package tmg.flashback.rss.ui.settings
 
+import dagger.hilt.android.lifecycle.HiltViewModel
 import tmg.flashback.rss.RssNavigationComponent
 import tmg.flashback.rss.R
 import tmg.flashback.rss.repo.RSSRepository
 import tmg.flashback.ui.settings.SettingsModel
 import tmg.flashback.ui.settings.SettingsViewModel
+import javax.inject.Inject
 
 //region Inputs
 
@@ -20,7 +22,8 @@ interface SettingsRSSViewModelOutputs {
 
 //endregion
 
-internal class SettingsRSSViewModel (
+@HiltViewModel
+internal class SettingsRSSViewModel @Inject constructor(
         private val rssRepository: RSSRepository,
         private val rssNavigationComponent: RssNavigationComponent
 ): SettingsViewModel(), SettingsRSSViewModelInputs, SettingsRSSViewModelOutputs {
