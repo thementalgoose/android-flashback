@@ -3,6 +3,7 @@ package tmg.flashback.stats.ui.drivers.overview
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.lifecycle.*
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -16,6 +17,7 @@ import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.ui.navigation.ApplicationNavigationComponent
 import tmg.flashback.web.WebNavigationComponent
 import tmg.utilities.extensions.ordinalAbbreviation
+import javax.inject.Inject
 
 //region Inputs
 
@@ -40,7 +42,8 @@ interface DriverOverviewViewModelOutputs {
 
 
 @Suppress("EXPERIMENTAL_API_USAGE")
-class DriverOverviewViewModel(
+@HiltViewModel
+class DriverOverviewViewModel @Inject constructor(
     private val driverRepository: DriverRepository,
     private val networkConnectivityManager: NetworkConnectivityManager,
     private val statsNavigationComponent: StatsNavigationComponent,

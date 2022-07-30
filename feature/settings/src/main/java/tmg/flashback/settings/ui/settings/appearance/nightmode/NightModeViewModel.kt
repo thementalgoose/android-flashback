@@ -3,6 +3,7 @@ package tmg.flashback.settings.ui.settings.appearance.nightmode
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import tmg.flashback.ui.bottomsheet.BottomSheetItem
 import tmg.flashback.ui.extensions.icon
 import tmg.flashback.ui.extensions.label
@@ -12,6 +13,7 @@ import tmg.flashback.ui.usecases.ChangeNightModeUseCase
 import tmg.utilities.lifecycle.DataEvent
 import tmg.utilities.models.Selected
 import tmg.utilities.models.StringHolder
+import javax.inject.Inject
 
 //region Inputs
 
@@ -31,7 +33,8 @@ interface NightModeViewModelOutputs {
 
 //endregion
 
-class NightMoveViewModel(
+@HiltViewModel
+class NightMoveViewModel @Inject constructor(
         private val themeRepository: ThemeRepository,
         private val changeNightModeUseCase: ChangeNightModeUseCase
 ): ViewModel(), NightModeViewModelInputs, NightModeViewModelOutputs {

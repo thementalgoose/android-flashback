@@ -4,11 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.*
 import tmg.flashback.formula1.constants.Formula1
 import tmg.flashback.statistics.repo.RaceRepository
 import tmg.flashback.stats.ui.weekend.qualifying.QualifyingModel
+import javax.inject.Inject
 
 interface RaceViewModelInputs {
     fun load(season: Int, round: Int)
@@ -18,7 +20,8 @@ interface RaceViewModelOutputs {
     val list: LiveData<List<RaceModel>>
 }
 
-class RaceViewModel(
+@HiltViewModel
+class RaceViewModel @Inject constructor(
     private val raceRepository: RaceRepository,
     private val ioDispatcher: CoroutineDispatcher
 ): ViewModel(), RaceViewModelInputs, RaceViewModelOutputs {

@@ -4,6 +4,7 @@ import androidx.annotation.AttrRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.lifecycle.*
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -18,6 +19,7 @@ import tmg.flashback.ui.navigation.ApplicationNavigationComponent
 import tmg.flashback.web.WebNavigationComponent
 import tmg.utilities.extensions.ordinalAbbreviation
 import tmg.utilities.lifecycle.DataEvent
+import javax.inject.Inject
 
 
 //region Inputs
@@ -43,7 +45,8 @@ interface ConstructorOverviewViewModelOutputs {
 //endregion
 
 @Suppress("EXPERIMENTAL_API_USAGE")
-class ConstructorOverviewViewModel(
+@HiltViewModel
+class ConstructorOverviewViewModel @Inject constructor(
     private val constructorRepository: ConstructorRepository,
     private val networkConnectivityManager: NetworkConnectivityManager,
     private val webNavigationComponent: WebNavigationComponent,

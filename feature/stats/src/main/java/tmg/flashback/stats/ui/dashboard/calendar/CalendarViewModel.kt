@@ -1,6 +1,7 @@
 package tmg.flashback.stats.ui.dashboard.calendar
 
 import androidx.lifecycle.*
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -12,6 +13,7 @@ import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.stats.repository.NotificationRepository
 import tmg.flashback.stats.ui.weekend.WeekendInfo
 import tmg.flashback.stats.usecases.FetchSeasonUseCase
+import javax.inject.Inject
 
 interface CalendarViewModelInputs {
     fun refresh()
@@ -26,7 +28,8 @@ interface CalendarViewModelOutputs {
     val isRefreshing: LiveData<Boolean>
 }
 
-class CalendarViewModel(
+@HiltViewModel
+class CalendarViewModel @Inject constructor(
     private val fetchSeasonUseCase: FetchSeasonUseCase,
     private val overviewRepository: OverviewRepository,
     private val notificationRepository: NotificationRepository,

@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
@@ -18,6 +19,7 @@ import tmg.flashback.stats.repository.NotificationRepository
 import tmg.flashback.ui.navigation.ApplicationNavigationComponent
 import tmg.flashback.web.WebNavigationComponent
 import tmg.utilities.models.StringHolder
+import javax.inject.Inject
 
 interface DetailsViewModelInputs {
     fun load(season: Int, round: Int)
@@ -28,7 +30,8 @@ interface DetailsViewModelOutputs {
     val list: LiveData<List<DetailsModel>>
 }
 
-class DetailsViewModel(
+@HiltViewModel
+class DetailsViewModel @Inject constructor(
     private val raceRepository: RaceRepository,
     private val notificationRepository: NotificationRepository,
     private val webNavigationComponent: WebNavigationComponent

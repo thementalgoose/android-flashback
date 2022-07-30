@@ -1,6 +1,7 @@
 package tmg.flashback.stats.ui.dashboard.constructors
 
 import androidx.lifecycle.*
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -8,6 +9,7 @@ import kotlinx.coroutines.launch
 import tmg.flashback.statistics.repo.SeasonRepository
 import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.stats.usecases.FetchSeasonUseCase
+import javax.inject.Inject
 
 interface ConstructorsStandingViewModelInputs {
     fun refresh()
@@ -21,7 +23,8 @@ interface ConstructorsStandingViewModelOutputs {
     val isRefreshing: LiveData<Boolean>
 }
 
-class ConstructorsStandingViewModel(
+@HiltViewModel
+class ConstructorsStandingViewModel @Inject constructor(
     private val seasonRepository: SeasonRepository,
     private val fetchSeasonUseCase: FetchSeasonUseCase,
     private val statsNavigationComponent: StatsNavigationComponent,
