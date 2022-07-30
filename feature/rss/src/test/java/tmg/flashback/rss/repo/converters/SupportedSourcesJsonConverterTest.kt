@@ -3,8 +3,8 @@ package tmg.flashback.rss.repo.converters
 import org.junit.jupiter.api.Test
 import tmg.flashback.rss.repo.json.SupportedSourceJson
 import tmg.flashback.rss.repo.model.SupportedSource
-import kotlin.test.assertEquals
-import kotlin.test.assertNull
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNull
 
 internal class SupportedSourcesJsonConverterTest {
 
