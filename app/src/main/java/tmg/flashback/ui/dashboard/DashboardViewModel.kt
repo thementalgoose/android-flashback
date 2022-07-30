@@ -3,6 +3,7 @@ package tmg.flashback.ui.dashboard
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.*
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,6 +20,7 @@ import tmg.flashback.stats.usecases.ScheduleNotificationsUseCase
 import tmg.flashback.widgets.updateAllWidgets
 import tmg.utilities.extensions.then
 import tmg.utilities.lifecycle.Event
+import javax.inject.Inject
 
 //region Inputs
 
@@ -41,7 +43,8 @@ interface DashboardViewModelOutputs {
 
 //endregion
 
-class DashboardViewModel(
+@HiltViewModel
+class DashboardViewModel @Inject constructor(
     applicationContext: Context,
     private val scheduleNotificationsUseCase: ScheduleNotificationsUseCase,
     private val defaultSeasonUseCase: DefaultSeasonUseCase,

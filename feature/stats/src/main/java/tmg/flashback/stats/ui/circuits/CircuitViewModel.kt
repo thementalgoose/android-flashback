@@ -1,6 +1,7 @@
 package tmg.flashback.stats.ui.circuits
 
 import androidx.lifecycle.*
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -13,6 +14,7 @@ import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.stats.ui.weekend.WeekendInfo
 import tmg.flashback.ui.navigation.ApplicationNavigationComponent
 import tmg.flashback.web.WebNavigationComponent
+import javax.inject.Inject
 
 interface CircuitViewModelInputs {
     fun load(circuitId: String)
@@ -26,7 +28,8 @@ interface CircuitViewModelOutputs {
     val showLoading: LiveData<Boolean>
 }
 
-class CircuitViewModel(
+@HiltViewModel
+class CircuitViewModel @Inject constructor(
     private val circuitRepository: CircuitRepository,
     private val networkConnectivityManager: NetworkConnectivityManager,
     private val webNavigationComponent: WebNavigationComponent,
