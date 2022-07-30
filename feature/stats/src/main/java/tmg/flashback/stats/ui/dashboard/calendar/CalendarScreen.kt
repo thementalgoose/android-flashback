@@ -39,6 +39,7 @@ import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.notifications.di.notificationModule
 import tmg.flashback.providers.OverviewRaceProvider
 import tmg.flashback.stats.R
+import tmg.flashback.stats.repository.HomeRepository
 import tmg.flashback.stats.repository.NotificationRepository
 import tmg.flashback.stats.repository.models.NotificationSchedule
 import tmg.flashback.stats.ui.dashboard.DashboardQuickLinks
@@ -70,6 +71,8 @@ fun CalendarScreenVM(
     val viewModel: CalendarViewModel by viewModel()
     viewModel.inputs.load(season)
 
+    val homeRepository: HomeRepository by inject()
+
     val isRefreshing = viewModel.outputs.isRefreshing.observeAsState(false)
     val items = viewModel.outputs.items.observeAsState(listOf(CalendarModel.Loading))
     SwipeRefresh(
@@ -81,6 +84,7 @@ fun CalendarScreenVM(
             tyreClicked = viewModel.inputs::clickTyre,
             menuClicked = menuClicked,
             itemClicked = viewModel.inputs::clickItem,
+            autoScrollToUpcoming = homeRepository.dashboardAutoscroll,
             season = season,
             items = items.value
         )
@@ -95,9 +99,20 @@ fun CalendarScreen(
     menuClicked: (() -> Unit)? = null,
     itemClicked: (CalendarModel) -> Unit,
     season: Int,
+    autoScrollToUpcoming: Boolean,
     items: List<CalendarModel>?
 ) {
+    val indexOf: Int? = items
+        ?.indexOfFirst { it is CalendarModel.List && it.shouldShowScheduleList }
+        ?.takeIf { autoScrollToUpcoming}
+
+    println("Index $indexOf")
+    val scrollState = rememberLazyListState(
+        initialFirstVisibleItemIndex = indexOf?.coerceIn(0, items.size - 1) ?: 0
+    )
+
     LazyColumn(
+        state = scrollState,
         modifier = Modifier
             .fillMaxSize()
             .background(AppTheme.colors.backgroundPrimary),
@@ -281,7 +296,6 @@ private fun RowScope.IconRow(
         tint = if (showQualifying) AppTheme.colors.f1ResultsFull else AppTheme.colors.backgroundTertiary
     )
     Spacer(Modifier.width(2.dp))
-    // TODO: Add support for this in the API response and then here!
     if (showSprint) {
         Icon(
             modifier = Modifier
