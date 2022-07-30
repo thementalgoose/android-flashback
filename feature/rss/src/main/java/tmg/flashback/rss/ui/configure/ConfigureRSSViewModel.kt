@@ -3,11 +3,13 @@ package tmg.flashback.rss.ui.configure
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import tmg.flashback.rss.R
 import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.rss.repo.RSSRepository
 import tmg.flashback.rss.repo.model.SupportedArticleSource
 import tmg.utilities.lifecycle.DataEvent
+import javax.inject.Inject
 
 //region Inputs
 
@@ -29,7 +31,8 @@ interface ConfigureRSSViewModelOutputs {
 
 //endregion
 
-internal class ConfigureRSSViewModel(
+@HiltViewModel
+internal class ConfigureRSSViewModel @Inject constructor(
     private val repository: RSSRepository,
     private val rssFeedController: RSSController
 ) : ViewModel(), ConfigureRSSViewModelInputs, ConfigureRSSViewModelOutputs {
