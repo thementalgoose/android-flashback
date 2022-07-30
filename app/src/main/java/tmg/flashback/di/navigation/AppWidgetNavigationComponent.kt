@@ -5,8 +5,9 @@ import android.content.Intent
 import tmg.flashback.analytics.manager.AnalyticsManager
 import tmg.flashback.ui.HomeActivity
 import tmg.flashback.widgets.WidgetNavigationComponent
+import javax.inject.Inject
 
-class AppWidgetNavigationComponent(
+class AppWidgetNavigationComponent @Inject constructor(
     private val analyticsManager: AnalyticsManager
 ): WidgetNavigationComponent {
     override fun launchApp(context: Context): Intent {
