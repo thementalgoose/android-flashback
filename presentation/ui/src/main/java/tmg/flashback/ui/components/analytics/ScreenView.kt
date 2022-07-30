@@ -2,8 +2,7 @@ package tmg.flashback.ui.components.analytics
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import org.koin.androidx.compose.inject
-import tmg.flashback.analytics.manager.AnalyticsManager
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
 fun ScreenView(
@@ -11,9 +10,9 @@ fun ScreenView(
     args: Map<String, String> = mapOf(),
     updateKey: Any? = Unit
 ) {
-    val analyticsManager: AnalyticsManager by inject()
+    val viewModel = viewModel<ScreenViewViewModel>()
     DisposableEffect(key1 = updateKey, effect = {
-        analyticsManager.viewScreen(screenName, args)
+        viewModel.viewScreen(screenName, args)
         this.onDispose { }
     })
 }
