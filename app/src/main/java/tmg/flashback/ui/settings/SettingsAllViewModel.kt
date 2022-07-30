@@ -1,5 +1,6 @@
 package tmg.flashback.ui.settings
 
+import dagger.hilt.android.lifecycle.HiltViewModel
 import tmg.flashback.R
 import tmg.flashback.rss.RssNavigationComponent
 import tmg.flashback.ads.config.AdsNavigationComponent
@@ -8,6 +9,7 @@ import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.settings.SettingsNavigationComponent
 import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.web.WebNavigationComponent
+import javax.inject.Inject
 
 //region Inputs
 
@@ -24,7 +26,8 @@ interface SettingsAllViewModelOutputs {
 
 //endregion
 
-class SettingsAllViewModel(
+@HiltViewModel
+class SettingsAllViewModel @Inject constructor(
     private val rssController: RSSController,
     private val adsRepository: AdsRepository,
     private val rssNavigationComponent: RssNavigationComponent,
