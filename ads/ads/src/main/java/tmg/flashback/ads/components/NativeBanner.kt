@@ -6,7 +6,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
-import org.koin.androidx.compose.inject
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import tmg.flashback.ads.R
 import tmg.flashback.ads.config.repository.AdsRepository
 import tmg.flashback.ads.views.NativeBanner
@@ -15,6 +17,15 @@ import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.ui.components.badges.Badge
 import tmg.flashback.ui.components.badges.BadgeView
+import javax.inject.Inject
+
+@HiltViewModel
+class NativeBannerViewModel @Inject constructor(
+    private val adsRepository: AdsRepository
+): ViewModel() {
+    val areAdvertsEnabled: Boolean
+        get() = adsRepository.areAdvertsEnabled
+}
 
 @Composable
 fun NativeBanner(
@@ -22,10 +33,10 @@ fun NativeBanner(
     badgeOffset: Boolean = false,
     adIndex: Int = 0,
 ) {
-    val advertsRepository: AdsRepository by inject()
+    val viewModel = viewModel<NativeBannerViewModel>()
 
     NativeBanner(
-        showAdverts = advertsRepository.areAdvertsEnabled,
+        showAdverts = viewModel.areAdvertsEnabled,
         modifier = modifier,
         badgeOffset = badgeOffset,
         adIndex = adIndex

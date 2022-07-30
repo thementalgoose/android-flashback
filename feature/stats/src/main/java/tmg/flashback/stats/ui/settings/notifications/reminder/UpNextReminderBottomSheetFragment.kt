@@ -16,7 +16,7 @@ import tmg.utilities.extensions.observeEvent
 @AndroidEntryPoint
 class UpNextReminderBottomSheetFragment: BaseBottomSheetFragment<FragmentBottomSheetNotificationsReminderBinding>() {
 
-    private val viewModel: UpNextReminderViewModel by viewModels()
+    private val viewModel: UpNextReminderviewModel = viewModels()
 
     private lateinit var adapter: BottomSheetAdapter
 

@@ -18,7 +18,7 @@ import tmg.utilities.extensions.observeEvent
 @AndroidEntryPoint
 internal class NightModeBottomSheetFragment: BaseBottomSheetFragment<FragmentBottomSheetNightModeBinding>() {
 
-    private val viewModel: NightMoveViewModel by viewModels()
+    private val viewModel: NightMoveviewModel = viewModels()
 
     private lateinit var adapter: BottomSheetAdapter
 

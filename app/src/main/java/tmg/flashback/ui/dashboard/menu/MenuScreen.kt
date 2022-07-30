@@ -19,7 +19,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import org.koin.androidx.compose.viewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import tmg.flashback.R
 import tmg.flashback.formula1.constants.Formula1
 import tmg.flashback.stats.components.Timeline
@@ -33,7 +33,7 @@ import tmg.flashback.style.text.TextSection
 fun MenuScreenVM(
     seasonClicked: (season: Int) -> Unit
 ) {
-    val viewModel by viewModel<MenuViewModel>()
+    val viewModel = viewModel<MenuViewModel>()
 
     val links = viewModel.outputs.links.observeAsState(emptyList())
     val seasons = viewModel.outputs.season.observeAsState(emptyList())

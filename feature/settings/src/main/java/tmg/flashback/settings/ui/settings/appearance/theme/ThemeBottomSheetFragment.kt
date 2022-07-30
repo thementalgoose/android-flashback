@@ -18,7 +18,7 @@ import tmg.utilities.extensions.observeEvent
 @AndroidEntryPoint
 internal class ThemeBottomSheetFragment: BaseBottomSheetFragment<FragmentBottomSheetThemeBinding>() {
 
-    private val viewModel: ThemeViewModel by viewModels()
+    private val viewModel: ThemeviewModel = viewModels()
 
     private lateinit var adapter: BottomSheetAdapter
 
