@@ -5,8 +5,9 @@ import android.os.Bundle
 import android.util.Log
 import com.google.firebase.analytics.FirebaseAnalytics
 import tmg.flashback.analytics.BuildConfig
+import javax.inject.Inject
 
-internal class FirebaseAnalyticsService(
+internal class FirebaseAnalyticsService @Inject constructor(
     val context: Context
 ): AnalyticsService {
 
