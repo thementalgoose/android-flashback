@@ -2,7 +2,7 @@ package tmg.flashback.settings.ui.settings.support
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import org.koin.androidx.compose.viewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import tmg.flashback.settings.R
 import tmg.flashback.ui.components.analytics.ScreenView
 import tmg.flashback.ui.components.settings.SettingsScreen
@@ -13,7 +13,7 @@ fun SettingsSupportScreenVM(
 ) {
     ScreenView(screenName = "Settings Support")
     
-    val viewModel by viewModel<SettingsSupportViewModel>()
+    val viewModel = viewModel<SettingsSupportViewModel>()
 
     SettingsScreen(
         title = stringResource(id = R.string.settings_all_support),

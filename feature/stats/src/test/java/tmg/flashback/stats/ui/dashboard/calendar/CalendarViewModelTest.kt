@@ -11,6 +11,7 @@ import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.model.model
 import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.stats.StatsNavigationComponent
+import tmg.flashback.stats.repository.HomeRepository
 import tmg.flashback.stats.repository.NotificationRepository
 import tmg.flashback.stats.repository.models.NotificationSchedule
 import tmg.flashback.stats.usecases.FetchSeasonUseCase
@@ -24,6 +25,7 @@ internal class CalendarViewModelTest: BaseTest() {
     private val mockFetchSeasonUseCase: FetchSeasonUseCase = mockk(relaxed = true)
     private val mockNotificationRepository: NotificationRepository = mockk(relaxed = true)
     private val mockStatsNavigationComponent: StatsNavigationComponent = mockk(relaxed = true)
+    private val mockHomeRepository: HomeRepository = mockk(relaxed = true)
 
     private lateinit var underTest: CalendarViewModel
 
@@ -33,6 +35,7 @@ internal class CalendarViewModelTest: BaseTest() {
             overviewRepository = mockOverviewRepository,
             notificationRepository = mockNotificationRepository,
             statsNavigationComponent = mockStatsNavigationComponent,
+            homeRepository = mockHomeRepository,
             ioDispatcher = coroutineScope.testDispatcher
         )
     }
@@ -47,8 +50,21 @@ internal class CalendarViewModelTest: BaseTest() {
                 )
             ))
         }
+        every { mockHomeRepository.dashboardAutoscroll } returns false
         every { mockNotificationRepository.notificationSchedule } returns fakeNotificationSchedule
         every { mockFetchSeasonUseCase.fetch(any()) } returns flow { emit(true) }
+    }
+
+    @Test
+    fun `autoscroll reads value from home repository`() {
+        every { mockHomeRepository.dashboardAutoscroll } returns true
+        initUnderTest()
+        underTest.dashboardAutoscroll.test {
+            assertValue(true)
+        }
+        verify {
+            mockHomeRepository.dashboardAutoscroll
+        }
     }
 
     @Test

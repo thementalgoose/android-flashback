@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import org.koin.androidx.compose.viewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import org.threeten.bp.LocalDate
 import tmg.flashback.formula1.enums.isStatusFinished
 import tmg.flashback.formula1.extensions.pointsDisplay
@@ -65,7 +65,7 @@ fun DriverSeasonScreenVM(
         analyticsSeason to season.toString()
     ))
 
-    val viewModel by viewModel<DriverSeasonViewModel>()
+    val viewModel = viewModel<DriverSeasonViewModel>()
     viewModel.inputs.setup(driverId, season)
 
     val list = viewModel.outputs.list.observeAsState(emptyList())

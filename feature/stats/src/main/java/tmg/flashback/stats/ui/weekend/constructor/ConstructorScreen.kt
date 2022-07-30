@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import org.koin.androidx.compose.viewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.DriverConstructor
 import tmg.flashback.providers.DriverConstructorProvider
@@ -37,7 +37,7 @@ fun ConstructorScreenVM(
     info: WeekendInfo,
     actionUpClicked: () -> Unit
 ) {
-    val viewModel by viewModel<ConstructorViewModel>()
+    val viewModel = viewModel<ConstructorViewModel>()
     viewModel.inputs.load(
         season = info.season,
         round = info.round

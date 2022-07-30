@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import org.koin.androidx.compose.viewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.SeasonDriverStandingSeason
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
@@ -51,7 +51,7 @@ fun DriverStandingsScreenVM(
     menuClicked: (() -> Unit)? = null,
     season: Int
 ) {
-    val viewModel: DriversStandingViewModel by viewModel()
+    val viewModel: DriversStandingviewModel = viewModel()
     viewModel.inputs.load(season)
 
     val isRefreshing = viewModel.outputs.isRefreshing.observeAsState(false)

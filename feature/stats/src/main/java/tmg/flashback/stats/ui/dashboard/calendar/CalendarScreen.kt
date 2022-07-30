@@ -1,6 +1,8 @@
 package tmg.flashback.stats.ui.dashboard.calendar
 
-import androidx.compose.foundation.*
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -19,28 +21,22 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import org.koin.androidx.compose.inject
-import org.koin.androidx.compose.viewModel
 import org.threeten.bp.DayOfWeek
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.TextStyle
 import tmg.flashback.formula1.enums.SeasonTyres
-import tmg.flashback.formula1.enums.Tyre
 import tmg.flashback.formula1.enums.getBySeason
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.model.Schedule
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
-import tmg.flashback.notifications.di.notificationModule
 import tmg.flashback.providers.OverviewRaceProvider
 import tmg.flashback.stats.R
-import tmg.flashback.stats.repository.HomeRepository
-import tmg.flashback.stats.repository.NotificationRepository
 import tmg.flashback.stats.repository.models.NotificationSchedule
 import tmg.flashback.stats.ui.dashboard.DashboardQuickLinks
 import tmg.flashback.style.AppTheme
@@ -49,7 +45,6 @@ import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextTitle
-import tmg.flashback.ui.components.loading.SkeletonView
 import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.layouts.Container
@@ -68,10 +63,8 @@ fun CalendarScreenVM(
     menuClicked: (() -> Unit)? = null,
     season: Int
 ) {
-    val viewModel: CalendarViewModel by viewModel()
+    val viewModel: CalendarViewModel = viewModel()
     viewModel.inputs.load(season)
-
-    val homeRepository: HomeRepository by inject()
 
     val isRefreshing = viewModel.outputs.isRefreshing.observeAsState(false)
     val items = viewModel.outputs.items.observeAsState(listOf(CalendarModel.Loading))
@@ -84,7 +77,7 @@ fun CalendarScreenVM(
             tyreClicked = viewModel.inputs::clickTyre,
             menuClicked = menuClicked,
             itemClicked = viewModel.inputs::clickItem,
-            autoScrollToUpcoming = homeRepository.dashboardAutoscroll,
+            autoScrollToUpcoming = false, // TODO: Fix
             season = season,
             items = items.value
         )

@@ -4,13 +4,15 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
+import dagger.hilt.android.AndroidEntryPoint
 import tmg.flashback.stats.usecases.ScheduleNotificationsUseCase
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class UpNextNotificationBootReceiver: BroadcastReceiver() {
 
-    private val upNextNotificationBootReceiver: UpNextNotification by lazy { UpNextNotification() }
+    @Inject
+    protected lateinit var upNextNotificationBootReceiver: UpNextNotification
 
     override fun onReceive(context: Context?, intent: Intent?) {
 
@@ -23,9 +25,9 @@ class UpNextNotificationBootReceiver: BroadcastReceiver() {
 }
 
 
-class UpNextNotification: KoinComponent {
-    private val scheduleNotificationsUseCase: ScheduleNotificationsUseCase by inject()
-
+class UpNextNotification @Inject constructor(
+    private val scheduleNotificationsUseCase: ScheduleNotificationsUseCase
+) {
     fun onReceive(context: Context, intent: Intent) {
 
         // Reschedule notifications
