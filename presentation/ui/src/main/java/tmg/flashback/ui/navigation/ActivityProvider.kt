@@ -8,8 +8,11 @@ import android.os.Bundle
 import android.util.Log
 import tmg.flashback.crash_reporting.controllers.CrashController
 import java.lang.ref.WeakReference
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class ActivityProvider(
+@Singleton
+class ActivityProvider @Inject constructor(
     private val crashController: CrashController
 ): Application.ActivityLifecycleCallbacks {
 
