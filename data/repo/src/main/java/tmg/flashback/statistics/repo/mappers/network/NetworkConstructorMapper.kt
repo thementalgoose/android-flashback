@@ -4,8 +4,9 @@ import tmg.flashback.statistics.network.models.constructors.ConstructorHistorySt
 import tmg.flashback.statistics.network.models.constructors.ConstructorHistoryStandingDriver
 import tmg.flashback.statistics.room.models.constructors.ConstructorSeason
 import tmg.flashback.statistics.room.models.constructors.ConstructorSeasonDriver
+import javax.inject.Inject
 
-class NetworkConstructorMapper {
+class NetworkConstructorMapper @Inject constructor() {
 
     @Throws(RuntimeException::class)
     fun mapConstructorSeason(constructorId: String, constructor: ConstructorHistoryStanding): ConstructorSeason {

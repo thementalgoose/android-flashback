@@ -10,8 +10,11 @@ import tmg.flashback.statistics.repo.base.BaseRepository
 import tmg.flashback.statistics.repo.mappers.app.EventMapper
 import tmg.flashback.statistics.repo.mappers.network.NetworkEventMapper
 import tmg.flashback.statistics.room.FlashbackDatabase
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class EventsRepository(
+@Singleton
+class EventsRepository @Inject constructor(
     private val api: FlashbackApi,
     private val persistence: FlashbackDatabase,
     crashController: CrashController,
