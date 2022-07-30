@@ -8,6 +8,7 @@ import tmg.flashback.releasenotes.ui.releasenotes.ReleaseScreenVM
 import tmg.flashback.ui.navigation.NavigationDestination
 import tmg.flashback.ui.navigation.Navigator
 import tmg.flashback.ui.navigation.Screen
+import javax.inject.Inject
 
 val Screen.ReleaseNotes: NavigationDestination
     get() = object : NavigationDestination {
@@ -22,7 +23,7 @@ fun NavGraphBuilder.releaseNotes(navController: NavController) {
     }
 }
 
-class ReleaseNotesNavigationComponent(
+class ReleaseNotesNavigationComponent @Inject constructor(
     private val navigator: Navigator
 ) {
     fun releaseNotes() {
