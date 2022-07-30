@@ -4,8 +4,9 @@ import android.content.Context
 import android.content.Intent
 import tmg.flashback.forceupgrade.ui.forceupgrade.ForceUpgradeActivity
 import tmg.flashback.ui.navigation.ActivityProvider
+import javax.inject.Inject
 
-class ForceUpgradeNavigationComponent(
+class ForceUpgradeNavigationComponent @Inject constructor(
     private val activityProvider: ActivityProvider
 ) {
 
