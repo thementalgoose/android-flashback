@@ -16,7 +16,7 @@ import tmg.utilities.extensions.observeEvent
 @AndroidEntryPoint
 internal class AnimationSpeedBottomSheetFragment: BaseBottomSheetFragment<FragmentBottomSheetAnimationSpeedBinding>() {
 
-    private val viewModel: AnimationSpeedviewModel = viewModels()
+    private val viewModel: AnimationSpeedViewModel by viewModels()
 
     private lateinit var adapter: BottomSheetAdapter
 

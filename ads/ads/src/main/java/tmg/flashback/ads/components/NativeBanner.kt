@@ -7,7 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import tmg.flashback.ads.R
 import tmg.flashback.ads.config.repository.AdsRepository
@@ -33,7 +33,7 @@ fun NativeBanner(
     badgeOffset: Boolean = false,
     adIndex: Int = 0,
 ) {
-    val viewModel = viewModel<NativeBannerViewModel>()
+    val viewModel = hiltViewModel<NativeBannerViewModel>()
 
     NativeBanner(
         showAdverts = viewModel.areAdvertsEnabled,

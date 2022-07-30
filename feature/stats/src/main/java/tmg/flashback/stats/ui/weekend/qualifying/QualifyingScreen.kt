@@ -19,7 +19,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.faltenreich.skeletonlayout.Skeleton
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import org.threeten.bp.LocalDate
 import tmg.flashback.formula1.model.DriverConstructor
 import tmg.flashback.formula1.model.LapTime
@@ -54,7 +54,7 @@ fun QualifyingScreenVM(
     info: WeekendInfo,
     actionUpClicked: () -> Unit
 ) {
-    val viewModel = viewModel<QualifyingViewModel>()
+    val viewModel = hiltViewModel<QualifyingViewModel>()
     viewModel.inputs.load(
         season = info.season,
         round = info.round

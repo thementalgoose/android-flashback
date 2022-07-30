@@ -30,7 +30,7 @@ import androidx.core.text.htmlEncode
 import androidx.core.text.parseAsHtml
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.rss.R
@@ -56,7 +56,7 @@ fun RSSScreenVM(
 ) {
     ScreenView(screenName = "RSS")
 
-    val viewModel = viewModel<RSSViewModel>()
+    val viewModel = hiltViewModel<RSSViewModel>()
 
     val list = viewModel.outputs.list.observeAsState(emptyList())
     val isLoading = viewModel.outputs.isRefreshing.observeAsState(false)

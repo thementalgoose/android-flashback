@@ -18,7 +18,7 @@ import tmg.utilities.extensions.observeEvent
 @AndroidEntryPoint
 internal class NightModeBottomSheetFragment: BaseBottomSheetFragment<FragmentBottomSheetNightModeBinding>() {
 
-    private val viewModel: NightMoveviewModel = viewModels()
+    private val viewModel: NightMoveViewModel by viewModels()
 
     private lateinit var adapter: BottomSheetAdapter
 
@@ -47,9 +47,6 @@ internal class NightModeBottomSheetFragment: BaseBottomSheetFragment<FragmentBot
         }
 
         observeEvent(viewModel.outputs.nightModeUpdated) { (value, isSameSelection) ->
-            setFragmentResult(SettingsAppearanceFragment.requestKey, bundleOf(
-                SettingsAppearanceFragment.bundleKey to !isSameSelection
-            ))
             dismiss()
         }
     }

@@ -11,6 +11,7 @@ import android.os.Build
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.core.app.NotificationCompat
+import dagger.hilt.android.qualifiers.ApplicationContext
 import tmg.flashback.crash_reporting.controllers.CrashController
 import tmg.flashback.notifications.R
 import tmg.flashback.notifications.model.NotificationPriority
@@ -20,6 +21,7 @@ import javax.inject.Singleton
 
 @Singleton
 class SystemNotificationManager @Inject constructor(
+    @ApplicationContext
     private val applicationContext: Context,
     private val crashController: CrashController,
     private val navigationProvider: NotificationNavigationProvider

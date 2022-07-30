@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.SeasonDriverStandingSeason
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
@@ -51,7 +51,7 @@ fun DriverStandingsScreenVM(
     menuClicked: (() -> Unit)? = null,
     season: Int
 ) {
-    val viewModel: DriversStandingviewModel = viewModel()
+    val viewModel: DriversStandingViewModel = hiltViewModel()
     viewModel.inputs.load(season)
 
     val isRefreshing = viewModel.outputs.isRefreshing.observeAsState(false)

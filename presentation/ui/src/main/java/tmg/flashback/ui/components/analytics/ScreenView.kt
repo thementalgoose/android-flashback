@@ -2,7 +2,7 @@ package tmg.flashback.ui.components.analytics
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 
 @Composable
 fun ScreenView(
@@ -10,7 +10,7 @@ fun ScreenView(
     args: Map<String, String> = mapOf(),
     updateKey: Any? = Unit
 ) {
-    val viewModel = viewModel<ScreenViewViewModel>()
+    val viewModel = hiltViewModel<ScreenViewViewModel>()
     DisposableEffect(key1 = updateKey, effect = {
         viewModel.viewScreen(screenName, args)
         this.onDispose { }

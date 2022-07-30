@@ -6,17 +6,14 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.json.Json
-import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import tmg.flashback.statistics.network.NetworkConfigManager
 import tmg.flashback.statistics.network.api.FlashbackApi
-import tmg.flashback.statistics.network.interceptor.ConfigUrl
 import tmg.flashback.statistics.network.interceptor.ConfigUrlInterceptor
 import java.util.concurrent.TimeUnit
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -30,7 +27,6 @@ class NetworkModule {
     @Provides
     fun providesRetrofit(
         baseUrlManager: NetworkConfigManager,
-        @ConfigUrl
         configUrlInterceptor: ConfigUrlInterceptor
     ): Retrofit {
         val json = Json {
@@ -57,9 +53,4 @@ class NetworkModule {
         builder.client(client.build())
         return builder.build()
     }
-
-    @Provides
-    @Singleton
-    @ConfigUrl
-    fun provideConfigUrlInterceptor(impl: ConfigUrlInterceptor): Interceptor = impl
 }

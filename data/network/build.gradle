@@ -21,8 +21,8 @@ dependencies {
     implementation project(path: ':core:crash-reporting')
 
     // Retrofit
-    implementation deps.retrofit.retrofit
-    implementation deps.retrofit.kotlinx_serialization
-    implementation deps.retrofit.okhttp
-    implementation deps.retrofit.okhttp_logging
+    api deps.retrofit.retrofit
+    api deps.retrofit.kotlinx_serialization
+    api deps.retrofit.okhttp
+    api deps.retrofit.okhttp_logging
 }
