@@ -8,8 +8,9 @@ import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
 import tmg.flashback.appshortcuts.models.ShortcutInfo
 import tmg.flashback.appshortcuts.provider.HomeClassProvider
+import javax.inject.Inject
 
-class AppShortcutManager(
+class AppShortcutManager @Inject constructor(
     private val applicationContext: Context,
     private val homeClassProvider: HomeClassProvider
 ) {
