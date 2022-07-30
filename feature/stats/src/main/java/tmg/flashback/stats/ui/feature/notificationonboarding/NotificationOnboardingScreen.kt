@@ -78,6 +78,7 @@ private fun Item(
                 .size(24.dp)
                 .align(Alignment.CenterVertically),
             painter = painterResource(id = model.value.icon),
+            tint = AppTheme.colors.contentPrimary,
             contentDescription = null,
         )
         TextBody1(
