@@ -8,7 +8,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import org.koin.androidx.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.rss.R
 import tmg.flashback.style.AppTheme
 import tmg.flashback.ui.components.analytics.ScreenView
@@ -21,7 +21,7 @@ fun SettingsRSSScreenVM(
 ) {
     ScreenView(screenName = "Settings RSS")
     
-    val viewModel by viewModel<SettingsRSSViewModel>()
+    val viewModel = hiltViewModel<SettingsRSSViewModel>()
     viewModel.loadSettings()
     val list = viewModel.settings.observeAsState(emptyList())
 

@@ -3,8 +3,9 @@ package tmg.flashback.statistics.repo.mappers.network
 import tmg.flashback.statistics.network.models.races.DriverStandings
 import tmg.flashback.statistics.room.models.standings.DriverStanding
 import tmg.flashback.statistics.room.models.standings.DriverStandingConstructor
+import javax.inject.Inject
 
-class NetworkDriverStandingMapper {
+class NetworkDriverStandingMapper @Inject constructor() {
 
     @Throws(RuntimeException::class)
     fun mapDriverStanding(season: Int, data: DriverStandings): DriverStanding {

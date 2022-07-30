@@ -3,6 +3,7 @@ package tmg.flashback.settings.ui.settings.appearance.theme
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import tmg.flashback.ui.bottomsheet.BottomSheetItem
 import tmg.flashback.ui.extensions.icon
 import tmg.flashback.ui.extensions.label
@@ -11,6 +12,7 @@ import tmg.flashback.ui.repository.ThemeRepository
 import tmg.utilities.lifecycle.DataEvent
 import tmg.utilities.models.Selected
 import tmg.utilities.models.StringHolder
+import javax.inject.Inject
 
 //region Inputs
 
@@ -29,7 +31,8 @@ interface ThemeViewModelOutputs {
 
 //endregion
 
-class ThemeViewModel(
+@HiltViewModel
+class ThemeViewModel @Inject constructor(
     private val themeRepository: ThemeRepository
 ): ViewModel(), ThemeViewModelInputs, ThemeViewModelOutputs {
 

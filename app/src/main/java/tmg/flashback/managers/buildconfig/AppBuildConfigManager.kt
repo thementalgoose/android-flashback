@@ -3,8 +3,11 @@ package tmg.flashback.managers.buildconfig
 import android.os.Build
 import tmg.flashback.BuildConfig
 import tmg.flashback.device.managers.BuildConfigManager
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class AppBuildConfigManager : BuildConfigManager {
+@Singleton
+class AppBuildConfigManager @Inject constructor() : BuildConfigManager {
 
     override val versionCode: Int
         get() = BuildConfig.VERSION_CODE

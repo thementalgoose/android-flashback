@@ -3,8 +3,9 @@ package tmg.flashback.ui.usecases
 import androidx.appcompat.app.AppCompatDelegate
 import tmg.flashback.ui.model.NightMode
 import tmg.flashback.ui.repository.ThemeRepository
+import javax.inject.Inject
 
-class ChangeNightModeUseCase(
+class ChangeNightModeUseCase @Inject constructor(
     private val themeRepository: ThemeRepository
 ) {
 

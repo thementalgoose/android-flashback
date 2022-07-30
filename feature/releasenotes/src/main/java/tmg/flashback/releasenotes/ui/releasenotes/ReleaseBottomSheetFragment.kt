@@ -3,17 +3,20 @@ package tmg.flashback.releasenotes.ui.releasenotes
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import org.koin.android.ext.android.inject
+import dagger.hilt.android.AndroidEntryPoint
 import tmg.flashback.releasenotes.databinding.FragmentBottomSheetReleaseNotesBinding
 import tmg.flashback.releasenotes.repository.ReleaseNotesRepository
 import tmg.flashback.releasenotes.usecases.NewReleaseNotesUseCase
 import tmg.flashback.ui.base.BaseBottomSheetFragment
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class ReleaseBottomSheetFragment: BaseBottomSheetFragment<FragmentBottomSheetReleaseNotesBinding>() {
 
-    // TODO: Move over to view model
-    private val releaseNotesRepository: ReleaseNotesRepository by inject()
-    private val newReleaseNotesUseCase: NewReleaseNotesUseCase by inject()
+    @Inject
+    protected lateinit var releaseNotesRepository: ReleaseNotesRepository
+    @Inject
+    protected lateinit var newReleaseNotesUseCase: NewReleaseNotesUseCase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

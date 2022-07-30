@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -12,6 +13,7 @@ import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
 import tmg.flashback.formula1.model.Race
 import tmg.flashback.formula1.model.RaceQualifyingType
 import tmg.flashback.statistics.repo.RaceRepository
+import javax.inject.Inject
 
 interface QualifyingViewModelInputs {
     fun load(season: Int, round: Int)
@@ -24,7 +26,8 @@ interface QualifyingViewModelOutputs {
 
 typealias QualifyingHeader = Triple<Boolean, Boolean, Boolean>
 
-class QualifyingViewModel(
+@HiltViewModel
+class QualifyingViewModel @Inject constructor(
     private val raceRepository: RaceRepository,
     private val ioDispatcher: CoroutineDispatcher
 ): ViewModel(), QualifyingViewModelInputs, QualifyingViewModelOutputs {

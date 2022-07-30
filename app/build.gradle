@@ -6,7 +6,7 @@ apply from: rootDir.absolutePath + "/gradle/config-util.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-junit5.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-compose.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-compose-providers.gradle"
-apply from: rootDir.absolutePath + "/gradle/config-koin.gradle"
+apply from: rootDir.absolutePath + "/gradle/config-hilt.gradle"
 
 apply plugin: 'com.google.firebase.crashlytics'
 apply plugin: 'de.mannodermaus.android-junit5'
@@ -114,10 +114,12 @@ dependencies {
     implementation project(path: ':feature:releasenotes')
     implementation project(path: ":feature:widgets")
     debugImplementation project(path: ":feature:debug")
+    debugImplementation project(path: ":ads:ads")
     releaseImplementation project(path: ":feature:debug-noop")
 
     // Data
     implementation project(path: ':data:repo')
+    implementation project(path: ':data:room')
     implementation project(path: ':data:network')
     implementation project(path: ":formula1")
 

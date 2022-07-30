@@ -1,15 +1,26 @@
 package tmg.flashback.statistics.room.di
 
+import android.content.Context
 import android.util.Log
 import androidx.room.Room
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
-import org.koin.dsl.module
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import tmg.flashback.statistics.room.FlashbackDatabase
+import javax.inject.Singleton
 
-val roomModule = module {
-    single { Room
-        .databaseBuilder(get(), FlashbackDatabase::class.java, "flashback-database")
+@Module
+@InstallIn(SingletonComponent::class)
+internal class RoomModule {
+
+    @Provides
+    @Singleton
+    fun flashbackDatabase(@ApplicationContext applicationContext: Context) = Room
+        .databaseBuilder(applicationContext, FlashbackDatabase::class.java, "flashback-database")
         .addMigrations(
             MIGRATION_1_2,
             MIGRATION_2_3,
@@ -18,7 +29,7 @@ val roomModule = module {
             MIGRATION_5_6
         )
         .build()
-    }
+
 }
 
 private val MIGRATION_1_2 = object : Migration(1,2) {

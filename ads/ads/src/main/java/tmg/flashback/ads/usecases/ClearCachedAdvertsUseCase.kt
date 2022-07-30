@@ -1,8 +1,9 @@
 package tmg.flashback.ads.usecases
 
 import tmg.flashback.ads.repository.AdsCacheRepository
+import javax.inject.Inject
 
-internal class ClearCachedAdvertsUseCase(
+internal class ClearCachedAdvertsUseCase @Inject constructor(
     val repository: AdsCacheRepository
 ) {
     fun clear() {

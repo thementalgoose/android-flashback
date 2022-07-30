@@ -5,8 +5,11 @@ import org.threeten.bp.format.DateTimeFormatter
 import org.threeten.bp.format.DateTimeParseException
 import tmg.flashback.prefs.manager.PreferenceManager
 import java.util.*
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class DeviceRepository(
+@Singleton
+class DeviceRepository @Inject constructor(
     private val preferenceManager: PreferenceManager
 ) {
     companion object {

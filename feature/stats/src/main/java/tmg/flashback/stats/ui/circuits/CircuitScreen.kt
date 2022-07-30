@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import com.faltenreich.skeletonlayout.Skeleton
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import org.koin.androidx.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.formula1.enums.TrackLayout
 import tmg.flashback.formula1.model.CircuitHistoryRace
@@ -66,7 +66,7 @@ fun CircuitScreenVM(
         analyticsCircuitId to circuitId
     ))
 
-    val viewModel by viewModel<CircuitViewModel>()
+    val viewModel = hiltViewModel<CircuitViewModel>()
     viewModel.inputs.load(circuitId)
 
     val list = viewModel.outputs.list.observeAsState(listOf(CircuitModel.Loading))

@@ -1,8 +1,11 @@
 package tmg.flashback.ui.navigation
 
 import kotlinx.coroutines.flow.MutableStateFlow
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class Navigator {
+@Singleton
+class Navigator @Inject constructor() {
 
     var destination: MutableStateFlow<NavigationDestination> = MutableStateFlow(object : NavigationDestination {
         override val route: String = "home"

@@ -5,19 +5,20 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.hilt.android.AndroidEntryPoint
 import tmg.flashback.settings.databinding.FragmentBottomSheetNightModeBinding
-import tmg.flashback.settings.ui.settings.appearance.SettingsAppearanceFragment
 import tmg.flashback.ui.base.BaseBottomSheetFragment
 import tmg.flashback.ui.bottomsheet.BottomSheetAdapter
 import tmg.flashback.ui.model.NightMode
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 
+@AndroidEntryPoint
 internal class NightModeBottomSheetFragment: BaseBottomSheetFragment<FragmentBottomSheetNightModeBinding>() {
 
-    private val viewModel: NightMoveViewModel by viewModel()
+    private val viewModel: NightMoveViewModel by viewModels()
 
     private lateinit var adapter: BottomSheetAdapter
 
@@ -46,9 +47,6 @@ internal class NightModeBottomSheetFragment: BaseBottomSheetFragment<FragmentBot
         }
 
         observeEvent(viewModel.outputs.nightModeUpdated) { (value, isSameSelection) ->
-            setFragmentResult(SettingsAppearanceFragment.requestKey, bundleOf(
-                SettingsAppearanceFragment.bundleKey to !isSameSelection
-            ))
             dismiss()
         }
     }

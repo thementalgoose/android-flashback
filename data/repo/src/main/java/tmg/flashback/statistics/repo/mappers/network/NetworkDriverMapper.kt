@@ -4,8 +4,9 @@ import tmg.flashback.statistics.network.models.drivers.DriverHistoryStanding
 import tmg.flashback.statistics.network.models.drivers.DriverHistoryStandingRace
 import tmg.flashback.statistics.room.models.drivers.DriverSeason
 import tmg.flashback.statistics.room.models.drivers.DriverSeasonRace
+import javax.inject.Inject
 
-class NetworkDriverMapper {
+class NetworkDriverMapper @Inject constructor() {
 
     @Throws(RuntimeException::class)
     fun mapDriverSeason(driverId: String, driver: DriverHistoryStanding): DriverSeason {

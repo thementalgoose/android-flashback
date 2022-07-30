@@ -7,13 +7,14 @@ import android.view.ViewGroup
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.ComposeView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import org.koin.android.ext.android.inject
 import tmg.flashback.analytics.manager.AnalyticsManager
 import tmg.flashback.style.AppTheme
+import javax.inject.Inject
 
 abstract class BaseBottomSheetComposeFragment: BottomSheetDialogFragment() {
 
-    protected val analyticsManager: AnalyticsManager by inject()
+    @Inject
+    protected lateinit var analyticsManager: AnalyticsManager
 
     override fun onCreateView(
         inflater: LayoutInflater,

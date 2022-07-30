@@ -1,13 +1,16 @@
 package tmg.flashback.analytics.di
 
-import org.koin.dsl.module
-import tmg.flashback.analytics.manager.AnalyticsManager
-import tmg.flashback.analytics.repository.AnalyticsRepository
+import dagger.Binds
+import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import tmg.flashback.analytics.services.AnalyticsService
 import tmg.flashback.analytics.services.FirebaseAnalyticsService
 
-val analyticsModule = module {
-    single<AnalyticsService> { FirebaseAnalyticsService(get()) }
-    single { AnalyticsRepository(get()) }
-    single { AnalyticsManager(get(), get()) }
+@Module
+@InstallIn(SingletonComponent::class)
+internal abstract class AnalyticsModule {
+
+    @Binds
+    abstract fun bindsAnalyticsService(impl: FirebaseAnalyticsService): AnalyticsService
 }

@@ -9,13 +9,10 @@ import androidx.activity.compose.setContent
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.viewinterop.AndroidView
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import org.koin.android.ext.android.inject
 import tmg.flashback.ads.manager.AdsManager
-import tmg.flashback.ads.views.NativeBanner
-import tmg.flashback.debug.adverts.AdvertsActivity
 import tmg.flashback.debug.styleguide.StyleGuideComposeActivity
 import tmg.flashback.device.repository.DeviceRepository
 import tmg.flashback.notifications.receiver.LocalNotificationBroadcastReceiver
@@ -29,22 +26,33 @@ import tmg.flashback.style.AppTheme
 import tmg.flashback.ui.base.BaseActivity
 import tmg.flashback.ui.navigation.ApplicationNavigationComponent
 import tmg.utilities.extensions.copyToClipboard
+import javax.inject.Inject
 
 @SuppressLint("SetTextI18n")
+@AndroidEntryPoint
 class DebugActivity: BaseActivity() {
 
-    private val overviewRepository: OverviewRepository by inject()
-    private val circuitRepository: CircuitRepository by inject()
-    private val driverRepository: DriverRepository by inject()
-    private val constructorRepository: ConstructorRepository by inject()
+    @Inject
+    protected lateinit var overviewRepository: OverviewRepository
+    @Inject
+    protected lateinit var circuitRepository: CircuitRepository
+    @Inject
+    protected lateinit var driverRepository: DriverRepository
+    @Inject
+    protected lateinit var constructorRepository: ConstructorRepository
 
-    private val baseUrlLocalOverrideManager: BaseUrlLocalOverrideManager by inject()
+    @Inject
+    protected lateinit var baseUrlLocalOverrideManager: BaseUrlLocalOverrideManager
 
-    private val deviceRepository: DeviceRepository by inject()
-    private val adsManager: AdsManager by inject()
-    private val notificationRepository: NotificationRepository by inject()
+    @Inject
+    protected lateinit var deviceRepository: DeviceRepository
+    @Inject
+    protected lateinit var adsManager: AdsManager
+    @Inject
+    protected lateinit var notificationRepository: NotificationRepository
 
-    private val applicationNavigationComponent: ApplicationNavigationComponent by inject()
+    @Inject
+    protected lateinit var applicationNavigationComponent: ApplicationNavigationComponent
 
     @Suppress("EXPERIMENTAL_API_USAGE")
     override fun onCreate(savedInstanceState: Bundle?) {

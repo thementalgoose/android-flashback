@@ -1,6 +1,7 @@
 package tmg.flashback.stats.ui.weekend
 
 import androidx.lifecycle.*
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -8,6 +9,7 @@ import tmg.flashback.formula1.model.Race
 import tmg.flashback.formula1.model.RaceInfo
 import tmg.flashback.statistics.repo.RaceRepository
 import tmg.utilities.extensions.combinePair
+import javax.inject.Inject
 
 interface WeekendViewModelInputs {
     fun load(season: Int, round: Int)
@@ -21,7 +23,8 @@ interface WeekendViewModelOutputs {
     val weekendInfo: LiveData<WeekendInfo>
 }
 
-class WeekendViewModel(
+@HiltViewModel
+class WeekendViewModel @Inject constructor(
     private val raceRepository: RaceRepository,
     private val ioDispatcher: CoroutineDispatcher
 ): ViewModel(), WeekendViewModelInputs, WeekendViewModelOutputs {

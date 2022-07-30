@@ -4,17 +4,20 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
+import dagger.hilt.android.AndroidEntryPoint
 import tmg.flashback.crash_reporting.controllers.CrashController
 import tmg.flashback.notifications.BuildConfig
 import tmg.flashback.notifications.managers.SystemNotificationManager
+import javax.inject.Inject
 
-class LocalNotificationBroadcastReceiver: BroadcastReceiver(), KoinComponent {
+@AndroidEntryPoint
+class LocalNotificationBroadcastReceiver @Inject constructor(): BroadcastReceiver() {
 
-    private val notificationManager: SystemNotificationManager by inject()
+    @Inject
+    protected lateinit var notificationManager: SystemNotificationManager
 
-    private val crashController: CrashController by inject()
+    @Inject
+    protected lateinit var crashController: CrashController
 
     override fun onReceive(context: Context?, intent: Intent?) {
         if (BuildConfig.DEBUG) {

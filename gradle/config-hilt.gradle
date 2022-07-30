@@ -1,0 +1,8 @@
+apply plugin: 'dagger.hilt.android.plugin'
+
+dependencies {
+    implementation deps.hilt.hilt_android
+    kapt deps.hilt.hilt_compiler
+    implementation deps.hilt.hilt_compose
+    implementation deps.hilt.hilt_work
+}

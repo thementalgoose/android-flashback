@@ -6,8 +6,9 @@ import tmg.flashback.notifications.BuildConfig
 import tmg.flashback.notifications.managers.SystemAlarmManager
 import tmg.flashback.notifications.repository.NotificationRepository
 import tmg.utilities.extensions.format
+import javax.inject.Inject
 
-class LocalNotificationScheduleUseCase(
+class LocalNotificationScheduleUseCase @Inject constructor(
     private val notificationRepository: NotificationRepository,
     private val alarmManager: SystemAlarmManager
 ) {

@@ -30,13 +30,16 @@ import tmg.flashback.ui.model.Theme
 import tmg.flashback.ui.repository.ThemeRepository
 import tmg.flashback.widgets.updateAllWidgets
 import tmg.utilities.extensions.isInDayMode
+import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * Startup handler
  *
  * Ran when the application is first started
  */
-class FlashbackStartup(
+@Singleton
+class FlashbackStartup @Inject constructor(
     private val deviceRepository: DeviceRepository,
     private val crashRepository: CrashRepository,
     private val initialiseCrashReportingUseCase: InitialiseCrashReportingUseCase,

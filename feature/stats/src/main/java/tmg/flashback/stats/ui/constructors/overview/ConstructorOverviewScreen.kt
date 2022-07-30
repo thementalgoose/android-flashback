@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import org.koin.androidx.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.formula1.constants.Formula1
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.ConstructorHistorySeasonDriver
@@ -63,7 +63,7 @@ fun ConstructorOverviewScreenVM(
         analyticsConstructorId to constructorId
     ))
 
-    val viewModel by viewModel<ConstructorOverviewViewModel>()
+    val viewModel = hiltViewModel<ConstructorOverviewViewModel>()
     viewModel.inputs.setup(constructorId)
 
     val list = viewModel.outputs.list.observeAsState(emptyList())
