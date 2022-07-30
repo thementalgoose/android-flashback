@@ -4,7 +4,7 @@ apply from: rootDir.absolutePath + "/gradle/config-util.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-junit5.gradle"
 
 ext.no_providers = true
-apply from: rootDir.absolutePath + "/gradle/config-compose.gradle"
+apply from: rootDir.absolutePath + "/gradle/config-hilt.gradle"
 
 android {
     compileSdkVersion project.ext.compileSdkVersion
