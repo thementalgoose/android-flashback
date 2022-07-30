@@ -3,17 +3,20 @@ package tmg.flashback.ui.base
 import android.os.Bundle
 import androidx.annotation.StyleRes
 import androidx.appcompat.app.AppCompatActivity
-import org.koin.android.ext.android.inject
 import tmg.flashback.analytics.manager.AnalyticsManager
 import tmg.flashback.ui.managers.StyleManager
 import tmg.flashback.ui.model.DisplayType
 import tmg.flashback.ui.navigation.ActivityProvider
+import javax.inject.Inject
 
 abstract class BaseActivity : AppCompatActivity() {
 
-    private val styleManager: StyleManager by inject()
-    private val activityProvider: ActivityProvider by inject()
-    protected val analyticsManager: AnalyticsManager by inject()
+    @Inject
+    protected lateinit var styleManager: StyleManager
+    @Inject
+    protected lateinit var activityProvider: ActivityProvider
+    @Inject
+    protected lateinit var analyticsManager: AnalyticsManager
 
     /**
      * Should we use the translucent variant of the theme or not

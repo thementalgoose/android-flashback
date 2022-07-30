@@ -4,11 +4,13 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import dagger.hilt.android.AndroidEntryPoint
 import tmg.flashback.web.R
 import tmg.flashback.style.AppTheme
 import tmg.flashback.ui.base.BaseActivity
 import tmg.utilities.extensions.viewUrl
 
+@AndroidEntryPoint
 internal class WebActivity: BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -3,23 +3,27 @@ package tmg.flashback.ui.sync
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.core.content.ContextCompat
-import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.hilt.android.AndroidEntryPoint
 import tmg.flashback.R
 import tmg.flashback.forceupgrade.ForceUpgradeNavigationComponent
 import tmg.flashback.style.AppTheme
-import tmg.flashback.ui.base.BaseActivity
 import tmg.flashback.ui.HomeActivity
+import tmg.flashback.ui.base.BaseActivity
 import tmg.utilities.extensions.observeEvent
 import tmg.utilities.extensions.setStatusBarColor
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class SyncActivity: BaseActivity() {
 
-    private val viewModel: SyncViewModel by viewModel()
-    private val forceUpgradeNavigationComponent: ForceUpgradeNavigationComponent by inject()
+    private val viewModel: SyncViewModel by viewModels()
+
+    @Inject
+    protected lateinit var forceUpgradeNavigationComponent: ForceUpgradeNavigationComponent
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
