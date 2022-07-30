@@ -59,6 +59,7 @@ class HomeActivity: BaseActivity(), SplashScreen.KeepOnScreenCondition {
             AppTheme {
                 HomeScreen(
                     windowSize = rememberWindowSizeClass(),
+                    navigator = navigator,
                     closeApp = {
                         finish()
                     }
