@@ -1,5 +1,7 @@
 package tmg.flashback.debug
 
-interface DebugNavigationComponent {
-    fun navigateTo(id: String)
+class DebugNavigationComponent {
+    fun navigateTo(id: String) {
+        /* No op */
+    }
 }
