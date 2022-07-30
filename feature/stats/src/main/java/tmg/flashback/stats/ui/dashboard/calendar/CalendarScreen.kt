@@ -24,7 +24,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import org.threeten.bp.DayOfWeek
@@ -63,7 +63,7 @@ fun CalendarScreenVM(
     menuClicked: (() -> Unit)? = null,
     season: Int
 ) {
-    val viewModel: CalendarViewModel = viewModel()
+    val viewModel: CalendarViewModel = hiltViewModel()
     viewModel.inputs.load(season)
 
     val isRefreshing = viewModel.outputs.isRefreshing.observeAsState(false)

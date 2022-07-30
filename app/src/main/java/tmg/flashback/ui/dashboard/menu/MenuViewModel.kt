@@ -2,6 +2,7 @@ package tmg.flashback.ui.dashboard.menu
 
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.*
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
 import tmg.flashback.BuildConfig
@@ -21,6 +22,7 @@ import tmg.flashback.ui.navigation.ApplicationNavigationComponent
 import tmg.flashback.ui.navigation.Navigator
 import tmg.flashback.ui.navigation.Screen
 import tmg.flashback.ui.usecases.ChangeNightModeUseCase
+import javax.inject.Inject
 import kotlin.math.abs
 
 //region Inputs
@@ -44,7 +46,8 @@ interface MenuViewModelOutputs {
 
 //endregion
 
-class MenuViewModel(
+@HiltViewModel
+class MenuViewModel @Inject constructor(
     private val homeRepository: HomeRepository,
     private val notificationRepository: NotificationRepository,
     private val defaultSeasonUseCase: DefaultSeasonUseCase,

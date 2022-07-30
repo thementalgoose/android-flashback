@@ -5,7 +5,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.stats.R
 import tmg.flashback.stats.repository.NotificationRepository
 import tmg.flashback.stats.repository.models.NotificationReminder
@@ -20,7 +20,7 @@ import tmg.utilities.models.StringHolder
 fun SettingsNotificationScreenVM(
     actionUpClicked: () -> Unit
 ) {
-    val viewModel = viewModel<SettingsNotificationViewModel>()
+    val viewModel = hiltViewModel<SettingsNotificationViewModel>()
     
     ScreenView(screenName = "Settings Notifications")
 

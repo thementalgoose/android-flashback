@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.DriverConstructor
 import tmg.flashback.providers.DriverConstructorProvider
@@ -37,7 +37,7 @@ fun ConstructorScreenVM(
     info: WeekendInfo,
     actionUpClicked: () -> Unit
 ) {
-    val viewModel = viewModel<ConstructorViewModel>()
+    val viewModel = hiltViewModel<ConstructorViewModel>()
     viewModel.inputs.load(
         season = info.season,
         round = info.round

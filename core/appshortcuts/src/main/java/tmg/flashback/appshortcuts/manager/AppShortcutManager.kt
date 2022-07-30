@@ -6,11 +6,13 @@ import android.os.PersistableBundle
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
+import dagger.hilt.android.qualifiers.ApplicationContext
 import tmg.flashback.appshortcuts.models.ShortcutInfo
 import tmg.flashback.appshortcuts.provider.HomeClassProvider
 import javax.inject.Inject
 
 class AppShortcutManager @Inject constructor(
+    @ApplicationContext
     private val applicationContext: Context,
     private val homeClassProvider: HomeClassProvider
 ) {

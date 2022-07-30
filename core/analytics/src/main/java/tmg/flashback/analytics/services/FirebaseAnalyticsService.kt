@@ -4,11 +4,13 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import com.google.firebase.analytics.FirebaseAnalytics
+import dagger.hilt.android.qualifiers.ApplicationContext
 import tmg.flashback.analytics.BuildConfig
 import javax.inject.Inject
 
 internal class FirebaseAnalyticsService @Inject constructor(
-    val context: Context
+    @ApplicationContext
+    private val context: Context
 ): AnalyticsService {
 
     private val analytics: FirebaseAnalytics = FirebaseAnalytics.getInstance(context)

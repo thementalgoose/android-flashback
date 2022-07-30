@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.stats.R
 import tmg.flashback.stats.repository.models.NotificationChannel
 import tmg.flashback.style.AppTheme
@@ -26,7 +26,7 @@ import tmg.utilities.models.Selected
 
 @Composable
 fun NotificationOnboardingScreenVM() {
-    val viewModel = viewModel<NotificationOnboardingViewModel>()
+    val viewModel = hiltViewModel<NotificationOnboardingViewModel>()
     
     ScreenView(screenName = "Onboarding Notifications")
 

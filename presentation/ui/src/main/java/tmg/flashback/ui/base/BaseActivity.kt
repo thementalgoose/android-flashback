@@ -12,11 +12,11 @@ import javax.inject.Inject
 abstract class BaseActivity : AppCompatActivity() {
 
     @Inject
-    protected lateinit var styleManager: StyleManager
+    lateinit var styleManager: StyleManager
     @Inject
-    protected lateinit var activityProvider: ActivityProvider
+    lateinit var activityProvider: ActivityProvider
     @Inject
-    protected lateinit var analyticsManager: AnalyticsManager
+    lateinit var analyticsManager: AnalyticsManager
 
     /**
      * Should we use the translucent variant of the theme or not
@@ -24,8 +24,8 @@ abstract class BaseActivity : AppCompatActivity() {
     open val themeType: DisplayType = DisplayType.TRANSLUCENT
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(themeRes)
         super.onCreate(savedInstanceState)
+        setTheme(themeRes)
     }
 
     protected val themeRes: Int

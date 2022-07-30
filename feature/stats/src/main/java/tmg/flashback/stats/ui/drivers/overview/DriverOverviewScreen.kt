@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.formula1.model.DriverConstructor
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.providers.DriverConstructorProvider
@@ -54,7 +54,7 @@ fun DriverOverviewScreenVM(
         analyticsDriverId to driverId
     ))
 
-    val viewModel = viewModel<DriverOverviewViewModel>()
+    val viewModel = hiltViewModel<DriverOverviewViewModel>()
     viewModel.inputs.setup(driverId, driverName)
 
     val list = viewModel.outputs.list.observeAsState(emptyList())

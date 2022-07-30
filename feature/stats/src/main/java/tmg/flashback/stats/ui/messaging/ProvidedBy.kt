@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
@@ -15,7 +15,7 @@ import tmg.flashback.style.text.TextBody2
 fun ProvidedBy(
     modifier: Modifier = Modifier
 ) {
-    val viewModel = viewModel<ProvidedByViewModel>()
+    val viewModel = hiltViewModel<ProvidedByViewModel>()
     val message = viewModel.message ?: return
 
     ProvidedBy(

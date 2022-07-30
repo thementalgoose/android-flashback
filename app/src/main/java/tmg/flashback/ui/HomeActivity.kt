@@ -31,15 +31,15 @@ class HomeActivity: BaseActivity(), SplashScreen.KeepOnScreenCondition {
     private val viewModel: HomeViewModel by viewModels()
 
     @Inject
-    protected lateinit var contentSyncUseCase: ContentSyncUseCase
+    lateinit var contentSyncUseCase: ContentSyncUseCase
     @Inject
-    protected lateinit var configSyncUseCase: ConfigSyncUseCase
+    lateinit var configSyncUseCase: ConfigSyncUseCase
     @Inject
-    protected lateinit var crashController: CrashController
+    lateinit var crashController: CrashController
     @Inject
-    protected lateinit var navigator: Navigator
+    lateinit var navigator: Navigator
     @Inject
-    protected lateinit var forceUpgradeNavigationComponent: ForceUpgradeNavigationComponent
+    lateinit var forceUpgradeNavigationComponent: ForceUpgradeNavigationComponent
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
