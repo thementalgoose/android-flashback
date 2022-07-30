@@ -1,8 +1,11 @@
 package tmg.flashback.analytics.repository
 
 import tmg.flashback.prefs.manager.PreferenceManager
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class AnalyticsRepository(
+@Singleton
+class AnalyticsRepository @Inject constructor(
     private val preferenceManager: PreferenceManager
 ) {
 

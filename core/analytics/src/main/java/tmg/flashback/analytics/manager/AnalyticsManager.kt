@@ -4,8 +4,11 @@ import android.os.Bundle
 import tmg.flashback.analytics.UserProperty
 import tmg.flashback.analytics.repository.AnalyticsRepository
 import tmg.flashback.analytics.services.AnalyticsService
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class AnalyticsManager(
+@Singleton
+class AnalyticsManager @Inject constructor(
     private val analyticsRepository: AnalyticsRepository,
     private val analyticsService: AnalyticsService
 ) {
