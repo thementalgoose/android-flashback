@@ -5,9 +5,12 @@ import androidx.work.Data
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
+import dagger.hilt.android.qualifiers.ApplicationContext
 import tmg.flashback.stats.workmanager.ScheduleNotificationsJob
+import javax.inject.Inject
 
-class ScheduleNotificationsUseCase(
+class ScheduleNotificationsUseCase @Inject constructor(
+    @ApplicationContext
     private val applicationContext: Context
 ) {
     fun schedule() {

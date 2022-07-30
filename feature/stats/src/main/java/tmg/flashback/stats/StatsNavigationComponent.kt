@@ -19,6 +19,7 @@ import tmg.flashback.ui.navigation.*
 import tmg.flashback.ui.navigation.Navigator
 import tmg.utilities.extensions.format
 import tmg.utilities.extensions.toLocalDate
+import javax.inject.Inject
 
 val Screen.DriverPlaceholder: String get() = "drivers/{driverId}?driverName={driverName}"
 fun Screen.Driver(driverId: String, driverName: String): NavigationDestination = object : NavigationDestination {
@@ -158,7 +159,7 @@ fun NavGraphBuilder.stats(navController: NavController) {
     }
 }
 
-class StatsNavigationComponent(
+class StatsNavigationComponent @Inject constructor(
     private val navigator: Navigator,
     private val activityProvider: ActivityProvider
 ) {
