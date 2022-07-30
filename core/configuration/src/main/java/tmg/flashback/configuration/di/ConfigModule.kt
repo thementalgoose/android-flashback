@@ -1,33 +1,16 @@
 package tmg.flashback.configuration.di
 
-import androidx.work.WorkerParameters
-import org.koin.android.ext.koin.androidContext
-import org.koin.androidx.workmanager.dsl.worker
-import org.koin.dsl.module
+import dagger.Binds
+import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import tmg.flashback.configuration.firebase.FirebaseRemoteConfigService
-import tmg.flashback.configuration.manager.ConfigManager
-import tmg.flashback.configuration.repository.ConfigRepository
 import tmg.flashback.configuration.services.RemoteConfigService
-import tmg.flashback.configuration.usecases.*
-import tmg.flashback.configuration.workmanager.ConfigSyncJob
 
-val configModule = module {
-    single<RemoteConfigService> { FirebaseRemoteConfigService() }
-    single { ConfigRepository(get()) }
-    single { ConfigManager(get(), get()) }
+@Module
+@InstallIn(SingletonComponent::class)
+abstract class ConfigModule {
 
-    factory { InitialiseConfigUseCase(get()) }
-    factory { ResetConfigUseCase(get(), get()) }
-    factory { ApplyConfigUseCase(get(), get()) }
-    factory { FetchConfigUseCase(get(), get()) }
-    factory { ConfigSyncUseCase(get()) }
-
-    //  https://github.com/InsertKoinIO/koin/issues/992
-    worker { (worker: WorkerParameters) ->
-        ConfigSyncJob(
-            fetchConfigUseCase = get(),
-            context = androidContext(),
-            params = worker
-        )
-    }
+    @Binds
+    abstract fun bindsRemoteConfigService(impl: FirebaseRemoteConfigService): RemoteConfigService
 }

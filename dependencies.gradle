@@ -70,7 +70,8 @@ allprojects {
                 hilt : [
                         hilt_android                            : "com.google.dagger:hilt-android:$hilt",
                         hilt_compiler                           : "com.google.dagger:hilt-compiler:$hilt",
-                        hilt_compose                            : "androidx.hilt:hilt-navigation-compose:1.0.0"
+                        hilt_compose                            : "androidx.hilt:hilt-navigation-compose:1.0.0",
+                        hilt_work                               : "androidx.hilt:hilt-work:1.0.0"
                 ],
                 koin : [
                         koin                                    : "io.insert-koin:koin-android:$koin_version",
