@@ -12,7 +12,6 @@ val uiModule = module {
     single { ActivityProvider(get()) }
 
     single { ThemeRepository(get(), get()) }
-    single { GlideProvider() }
 
     single { Navigator() }
 

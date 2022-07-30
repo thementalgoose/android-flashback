@@ -6,8 +6,11 @@ import com.bumptech.glide.Glide
 import com.facebook.shimmer.Shimmer
 import com.facebook.shimmer.ShimmerDrawable
 import tmg.flashback.ui.R
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class GlideProvider {
+@Singleton
+class GlideProvider @Inject constructor() {
 
     fun load(
         imageView: ImageView,

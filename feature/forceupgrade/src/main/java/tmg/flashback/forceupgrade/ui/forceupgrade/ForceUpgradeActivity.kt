@@ -5,17 +5,19 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.livedata.observeAsState
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.hilt.android.AndroidEntryPoint
 import tmg.flashback.style.AppTheme
 import tmg.flashback.ui.base.BaseActivity
 import tmg.flashback.ui.model.DisplayType
 import tmg.utilities.extensions.viewUrl
 
+@AndroidEntryPoint
 internal class ForceUpgradeActivity: BaseActivity() {
 
-    private val viewModel: ForceUpgradeViewModel by viewModel()
+    private val viewModel: ForceUpgradeViewModel by viewModels()
 
     override val themeType: DisplayType = DisplayType.DEFAULT
 
