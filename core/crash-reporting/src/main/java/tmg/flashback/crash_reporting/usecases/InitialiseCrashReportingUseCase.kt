@@ -5,8 +5,9 @@ import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.crash_reporting.repository.CrashRepository
 import tmg.flashback.crash_reporting.services.CrashService
 import java.util.*
+import javax.inject.Inject
 
-class InitialiseCrashReportingUseCase(
+class InitialiseCrashReportingUseCase @Inject constructor(
     private val crashRepository: CrashRepository,
     private val crashService: CrashService
 ) {

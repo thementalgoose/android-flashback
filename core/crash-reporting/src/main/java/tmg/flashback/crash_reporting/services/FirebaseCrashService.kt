@@ -4,8 +4,9 @@ import android.os.Build
 import android.util.Log
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import tmg.flashback.crash_reporting.BuildConfig
+import javax.inject.Inject
 
-internal class FirebaseCrashService: CrashService {
+internal class FirebaseCrashService @Inject constructor(): CrashService {
 
     private val isDebug: Boolean
         get() = BuildConfig.DEBUG
