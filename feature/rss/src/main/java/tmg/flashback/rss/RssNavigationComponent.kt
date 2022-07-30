@@ -10,6 +10,7 @@ import tmg.flashback.rss.ui.settings.SettingsRSSScreenVM
 import tmg.flashback.ui.navigation.NavigationDestination
 import tmg.flashback.ui.navigation.Navigator
 import tmg.flashback.ui.navigation.Screen
+import javax.inject.Inject
 
 val Screen.Settings.RSS: NavigationDestination
     get() = object : NavigationDestination {
@@ -49,7 +50,7 @@ fun NavGraphBuilder.rss(navController: NavController) {
     }
 }
 
-class RssNavigationComponent(
+class RssNavigationComponent @Inject constructor(
     private val navigator: Navigator
 ) {
     fun rss() {
