@@ -1,14 +1,21 @@
 package tmg.flashback.web.usecases
 
 import android.app.Activity
+import android.content.ActivityNotFoundException
+import android.content.ClipData
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.webkit.URLUtil
+import android.widget.Toast
 import tmg.flashback.analytics.manager.AnalyticsManager
+import tmg.flashback.web.R
 import tmg.flashback.web.repository.WebBrowserRepository
 import tmg.flashback.web.ui.browser.WebActivity
+import tmg.utilities.extensions.managerClipboard
+import tmg.utilities.utils.ClipboardUtils.Companion.copyToClipboard
 
 class PickBrowserUseCase(
     private val webBrowserRepository: WebBrowserRepository,
@@ -21,21 +28,60 @@ class PickBrowserUseCase(
         ))
         when {
             isMaps(url) && isLocationIntentAvailable(activity) -> {
-                activity.startActivity(openMaps(url))
+                tryOpen(activity, url) {
+                    activity.startActivity(openMaps(url))
+                }
             }
             isYoutube(url) && URLUtil.isValidUrl(url) -> {
-                activity.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+                tryOpen(activity, url) {
+                    activity.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+                }
             }
             isPlayStore(url) && URLUtil.isValidUrl(url) -> {
-                activity.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+                tryOpen(activity, url) {
+                    activity.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+                }
             }
             webBrowserRepository.openInExternal && URLUtil.isValidUrl(url) -> {
-                activity.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+                tryOpen(activity, url) {
+                    activity.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+                }
             }
             else -> {
-                activity.startActivity(WebActivity.intent(context = activity, url = url, title = title))
+                activity.startActivity(
+                    WebActivity.intent(
+                        context = activity,
+                        url = url,
+                        title = title
+                    )
+                )
             }
         }
+    }
+
+    private fun tryOpen(activity: Activity, url: String, content: () -> Unit) {
+        try {
+            content()
+        } catch (e: ActivityNotFoundException) {
+            val clipboard = copyToClipboard(activity, url)
+            if (!clipboard) {
+                Toast.makeText(
+                    activity,
+                    activity.getString(R.string.unable_to_open_url),
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }
+    }
+
+    private fun copyToClipboard(activity: Activity, url: String): Boolean {
+        val clipboardManager = activity.managerClipboard ?: return false
+        clipboardManager.setPrimaryClip(ClipData.newPlainText("", url))
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2) {
+            Toast.makeText(activity, R.string.copy_to_clipboard, Toast.LENGTH_LONG)
+                .show()
+        }
+        return true
     }
 
     private fun openMaps(url: String): Intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
