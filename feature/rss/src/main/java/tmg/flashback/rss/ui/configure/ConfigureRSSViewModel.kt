@@ -8,6 +8,7 @@ import tmg.flashback.rss.R
 import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.rss.repo.RSSRepository
 import tmg.flashback.rss.repo.model.SupportedArticleSource
+import tmg.flashback.web.WebNavigationComponent
 import tmg.utilities.lifecycle.DataEvent
 import javax.inject.Inject
 
@@ -26,7 +27,6 @@ interface ConfigureRSSViewModelInputs {
 
 interface ConfigureRSSViewModelOutputs {
     val list: LiveData<List<RSSConfigureItem>>
-    val openWebsite: LiveData<DataEvent<SupportedArticleSource>>
 }
 
 //endregion
@@ -34,7 +34,8 @@ interface ConfigureRSSViewModelOutputs {
 @HiltViewModel
 internal class ConfigureRSSViewModel @Inject constructor(
     private val repository: RSSRepository,
-    private val rssFeedController: RSSController
+    private val rssFeedController: RSSController,
+    private val webNavigationComponent: WebNavigationComponent,
 ) : ViewModel(), ConfigureRSSViewModelInputs, ConfigureRSSViewModelOutputs {
 
     var inputs: ConfigureRSSViewModelInputs = this
@@ -44,7 +45,6 @@ internal class ConfigureRSSViewModel @Inject constructor(
         get() = repository.rssUrls.toMutableSet()
 
     override val list: MutableLiveData<List<RSSConfigureItem>> = MutableLiveData()
-    override val openWebsite: MutableLiveData<DataEvent<SupportedArticleSource>> = MutableLiveData()
 
     init {
         loadState()
@@ -68,7 +68,7 @@ internal class ConfigureRSSViewModel @Inject constructor(
     }
 
     override fun visitWebsite(supportedArticle: SupportedArticleSource) {
-        openWebsite.value = DataEvent(supportedArticle)
+        webNavigationComponent.web(supportedArticle.contactLink)
     }
 
     //endregion
