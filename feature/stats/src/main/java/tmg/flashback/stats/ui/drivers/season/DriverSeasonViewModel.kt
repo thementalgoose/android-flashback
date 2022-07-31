@@ -1,9 +1,9 @@
 package tmg.flashback.stats.ui.drivers.season
 
-import androidx.annotation.AttrRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.lifecycle.*
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,7 +22,7 @@ import tmg.flashback.ui.repository.ThemeRepository
 import tmg.utilities.extensions.ordinalAbbreviation
 import tmg.utilities.lifecycle.DataEvent
 import tmg.utilities.lifecycle.Event
-
+import javax.inject.Inject
 
 //region Inputs
 
@@ -49,14 +49,13 @@ interface DriverSeasonViewModelOutputs {
 //endregion
 
 @Suppress("EXPERIMENTAL_API_USAGE")
-class DriverSeasonViewModel(
+@HiltViewModel
+class DriverSeasonViewModel @Inject constructor(
     private val driverRepository: DriverRepository,
     private val connectivityManager: NetworkConnectivityManager,
     private val themeRepository: ThemeRepository,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
-) : ViewModel(),
-    DriverSeasonViewModelInputs,
-    DriverSeasonViewModelOutputs {
+) : ViewModel(), DriverSeasonViewModelInputs, DriverSeasonViewModelOutputs {
 
     var inputs: DriverSeasonViewModelInputs = this
     var outputs: DriverSeasonViewModelOutputs = this
