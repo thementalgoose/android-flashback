@@ -133,6 +133,7 @@ class CalendarViewModel @Inject constructor(
                 countryISO = model.model.countryISO,
                 date = model.model.date,
             ))
+            is CalendarModel.Event -> {}
             is CalendarModel.Month -> TODO()
             is CalendarModel.Week -> TODO()
             CalendarModel.Loading -> {}
