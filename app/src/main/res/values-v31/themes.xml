@@ -20,8 +20,6 @@
         <item name="backgroundSecondaryInverse">@android:color/system_neutral1_900</item>
         <item name="backgroundTertiaryInverse">@android:color/system_neutral1_800</item>
         <item name="backgroundNav">@android:color/system_neutral1_10</item>
-        <item name="backgroundItem">?attr/backgroundPrimary</item>
-        <item name="backgroundItemSelected">?attr/backgroundSecondary</item>
 
     </style>
 

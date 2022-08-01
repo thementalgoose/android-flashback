@@ -4,15 +4,13 @@ import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
 import tmg.flashback.ui.R
 
-sealed class SettingsModel(
-    @LayoutRes val layoutId: Int
-) {
+sealed class SettingsModel {
 
     data class Header(
         @StringRes
         val title: Int,
         val beta: Boolean = false
-    ): SettingsModel(R.layout.view_settings_category)
+    ): SettingsModel()
 
     data class SwitchPref(
         @StringRes
@@ -23,7 +21,7 @@ sealed class SettingsModel(
         val saveState: (value: Boolean) -> Unit,
         val saveStateNotification: ((value: Boolean) -> Unit)? = null,
         val beta: Boolean = false
-    ): SettingsModel(R.layout.view_settings_preference_switch) {
+    ): SettingsModel() {
         val initialState: Boolean = getState()
     }
 
@@ -34,5 +32,5 @@ sealed class SettingsModel(
         val description: Int,
         val onClick: (() -> Unit)?,
         val beta: Boolean = false
-    ): SettingsModel(R.layout.view_settings_preference)
+    ): SettingsModel()
 }
