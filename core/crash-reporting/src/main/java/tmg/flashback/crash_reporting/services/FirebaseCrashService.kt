@@ -3,10 +3,13 @@ package tmg.flashback.crash_reporting.services
 import android.os.Build
 import android.util.Log
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.scottyab.rootbeer.RootBeer
 import tmg.flashback.crash_reporting.BuildConfig
 import javax.inject.Inject
 
-internal class FirebaseCrashService @Inject constructor(): CrashService {
+internal class FirebaseCrashService @Inject constructor(
+    private val rootBeer: RootBeer
+): CrashService {
 
     private val isDebug: Boolean
         get() = BuildConfig.DEBUG
@@ -24,6 +27,7 @@ internal class FirebaseCrashService @Inject constructor(): CrashService {
     private val keyDevice: String = "device"
     private val keyAppFirstOpen: String = "appFirstOpen"
     private val keyAppOpenCount: String = "appOpenCount"
+    private val keyRootDetection: String = "rooted"
 
     override fun initialise(
         enableCrashReporting: Boolean,
@@ -54,6 +58,7 @@ internal class FirebaseCrashService @Inject constructor(): CrashService {
         instance.setCustomKey(keyManufacturer, Build.MANUFACTURER)
         instance.setCustomKey(keyProduct, Build.PRODUCT)
         instance.setCustomKey(keyDevice, Build.DEVICE)
+        instance.setCustomKey(keyRootDetection, rootBeer.isRooted)
 
         if (BuildConfig.DEBUG) {
             Log.i("Crashlytics", "$keyDeviceUuid -> $deviceUdid")
@@ -65,6 +70,7 @@ internal class FirebaseCrashService @Inject constructor(): CrashService {
             Log.i("Crashlytics", "$keyManufacturer -> ${Build.MANUFACTURER}")
             Log.i("Crashlytics", "$keyProduct -> ${Build.PRODUCT}")
             Log.i("Crashlytics", "$keyDevice -> ${Build.DEVICE}")
+            Log.i("Crashlytics", "$keyRootDetection -> ${rootBeer.isRooted}")
         }
 
         appFirstOpened.let {

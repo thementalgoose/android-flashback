@@ -200,6 +200,9 @@ dependencies {
     implementation deps.firebase.messaging
     implementation deps.kotlin.playservices
 
+    // Root detection
+    implementation deps.rootbeer
+
     // Test Utils
     testImplementation project(':test:models')
 }

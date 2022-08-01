@@ -92,6 +92,7 @@ allprojects {
                         okhttp_logging                          : "com.squareup.okhttp3:logging-interceptor:$okhttp3",
                         kotlinx_serialization                   : "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0"
                 ],
+                rootbeer                                        : "com.scottyab:rootbeer-lib:0.1.0",
                 room : [
                         runtime                                 : "androidx.room:room-runtime:$room",
                         compiler                                : "androidx.room:room-compiler:$room",

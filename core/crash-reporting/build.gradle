@@ -23,4 +23,7 @@ dependencies {
     // Firebase analytics
     implementation platform(deps.firebase.bom)
     implementation deps.firebase.crashlytics
+
+    // Root detection
+    implementation deps.rootbeer
 }
