@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="event_type_testing">Test Sessions</string>
-    <string name="event_type_car_launch">Car Launches</string>
+    <string name="event_type_testing">Test Session</string>
+    <string name="event_type_car_launch">Car Launch</string>
     <string name="event_type_other">Other</string>
 
     <!-- Tyres -->

@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import org.threeten.bp.LocalDate
 import tmg.flashback.formula1.model.OverviewRace
+import tmg.flashback.statistics.repo.EventsRepository
 import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.stats.repository.HomeRepository
@@ -37,6 +38,7 @@ class CalendarViewModel @Inject constructor(
     private val overviewRepository: OverviewRepository,
     private val notificationRepository: NotificationRepository,
     private val statsNavigationComponent: StatsNavigationComponent,
+    private val eventsRepository: EventsRepository,
     private val homeRepository: HomeRepository,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), CalendarViewModelInputs, CalendarViewModelOutputs {
@@ -54,23 +56,36 @@ class CalendarViewModel @Inject constructor(
             fetchSeasonUseCase
                 .fetch(season)
                 .flatMapLatest { hasMadeRequest ->
-                    overviewRepository.getOverview(season)
-                        .map { overview ->
-                            isRefreshing.postValue(false)
-                            if (!hasMadeRequest) {
-                                return@map listOf(CalendarModel.Loading)
-                            }
-                            val upcoming = overview.overviewRaces.getLatestUpcoming()
-                            return@map overview.overviewRaces
-                                .map {
+                    combine(overviewRepository.getOverview(season), eventsRepository.getEvents(season)) { overview, events ->
+                        isRefreshing.postValue(false)
+                        if (!hasMadeRequest) {
+                            return@combine listOf(CalendarModel.Loading)
+                        }
+
+                        val upcoming = overview.overviewRaces.getLatestUpcoming()
+                        val upcomingEvents = events.filter { it.date > LocalDate.now() }
+
+                        return@combine mutableListOf<CalendarModel>()
+                            .apply {
+                                addAll(overview.overviewRaces.map {
                                     CalendarModel.List(
                                         model = it,
                                         notificationSchedule = notificationRepository.notificationSchedule,
                                         showScheduleList = it == upcoming
                                     )
+                                })
+                                addAll(upcomingEvents.map {
+                                    CalendarModel.Event(it)
+                                })
+                            }
+                            .sortedBy {
+                                when (it) {
+                                    is CalendarModel.Event -> it.date
+                                    is CalendarModel.List -> it.date
+                                    else -> null
                                 }
-                                .sortedBy { it.model.round }
-                        }
+                            }
+                    }
                 }
         }
         .flowOn(ioDispatcher)
