@@ -47,8 +47,7 @@
         <activity
             android:name="tmg.aboutthisapp.AboutThisAppActivity"
             android:exported="false"
-            android:label=""
-            android:theme="@style/Translucent" />
+            android:label="" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
