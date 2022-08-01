@@ -32,6 +32,8 @@ import org.threeten.bp.LocalDate
 import org.threeten.bp.format.TextStyle
 import tmg.flashback.formula1.enums.SeasonTyres
 import tmg.flashback.formula1.enums.getBySeason
+import tmg.flashback.formula1.extensions.icon
+import tmg.flashback.formula1.extensions.label
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.model.Schedule
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
@@ -55,6 +57,7 @@ import tmg.utilities.extensions.ordinalAbbreviation
 import java.util.*
 
 private val countryBadgeSize = 32.dp
+private const val listAlpha = 0.6f
 private const val pastScheduleAlpha = 0.2f
 
 @Composable
@@ -145,13 +148,16 @@ fun CalendarScreen(
                 }
             }
 
-            items(items ?: emptyList()) { item ->
+            items(items ?: emptyList(), key = { it.key }) { item ->
                 when (item) {
                     is CalendarModel.List -> {
                         Schedule(
                             model = item,
                             itemClicked = itemClicked
                         )
+                    }
+                    is CalendarModel.Event -> {
+                        Event(event = item)
                     }
                     is CalendarModel.Month -> {
                         Month(model = item)
@@ -181,7 +187,7 @@ private fun Schedule(
     card: Boolean = false
 ) {
     val alpha = when (model.fadeItem) {
-        true -> 0.6f
+        true -> listAlpha
         false -> 1f
     }
     Container(
@@ -270,6 +276,35 @@ private fun Schedule(
                 )
             }
         }
+    }
+}
+
+@Composable
+private fun Event(
+    event: CalendarModel.Event
+) {
+    Row(modifier = Modifier
+        .alpha(listAlpha)
+        .padding(
+            vertical = AppTheme.dimensions.paddingXSmall,
+            horizontal = AppTheme.dimensions.paddingMedium
+        )
+    ) {
+        Icon(
+            painter = painterResource(id = event.event.type.icon),
+            contentDescription = null,
+            modifier = Modifier.size(16.dp),
+            tint = AppTheme.colors.contentSecondary
+        )
+        TextBody1(
+            text = "${stringResource(id = event.event.type.label)}: ${event.event.label}",
+            modifier = Modifier
+                .padding(horizontal = AppTheme.dimensions.paddingSmall)
+                .weight(1f)
+        )
+        TextBody2(
+            text = event.event.date.format("dd MMM") ?: "",
+        )
     }
 }
 
