@@ -1,5 +1,6 @@
 package tmg.flashback.stats.ui.weekend.details
 
+import android.net.Uri
 import android.webkit.URLUtil
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
@@ -67,7 +68,7 @@ class DetailsViewModel @Inject constructor(
                 links.add(DetailsModel.Link(
                     label = R.string.details_link_map,
                     icon = R.drawable.ic_details_maps,
-                    url = "geo:0,0?q=${location.lat},${location.lng} (${it.raceInfo.circuit.name})"
+                    url = "geo:${location.lat},${location.lng}?q=${Uri.encode(it.raceInfo.circuit.name)}"
                 ))
             }
             if (it.raceInfo.wikipediaUrl != null && URLUtil.isValidUrl(it.raceInfo.wikipediaUrl)) {

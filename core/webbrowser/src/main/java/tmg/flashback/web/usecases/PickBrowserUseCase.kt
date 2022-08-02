@@ -97,7 +97,18 @@ class PickBrowserUseCase @Inject constructor(
     }
 
     private fun isLocationIntentAvailable(context: Context): Boolean {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("geo:32.5558485,34.65522447"))
-        return context.packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY).isNotEmpty()
+        return listOf(
+            context.isPackageInstalled("com.google.android.apps.maps"),
+            context.isPackageInstalled("com.waze")
+        ).any()
+    }
+
+    private fun Context.isPackageInstalled(packageName: String): Boolean = try {
+        val packageInfo = this.packageManager.getApplicationInfo(packageName, 0)
+        true
+    } catch (e: PackageManager.NameNotFoundException) {
+        false
+    } catch (e: java.lang.RuntimeException) {
+        false
     }
 }
