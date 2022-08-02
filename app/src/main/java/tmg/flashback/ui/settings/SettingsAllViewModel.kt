@@ -77,11 +77,11 @@ class SettingsAllViewModel @Inject constructor(
             }
         ))
         add(SettingsModel.Pref(
-                title = R.string.settings_all_support,
-                description = R.string.settings_all_support_subtitle,
-                onClick = {
-                    settingsNavigationComponent.settingsSupport()
-                }
+            title = R.string.settings_all_support,
+            description = R.string.settings_all_support_subtitle,
+            onClick = {
+                settingsNavigationComponent.settingsSupport()
+            }
         ))
         if (adsRepository.allowUserConfig) {
             add(SettingsModel.Pref(
