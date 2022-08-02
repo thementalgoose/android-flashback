@@ -126,7 +126,7 @@ internal class QualifyingViewModelTest: BaseTest() {
         underTest.load(2020, 1)
 
         val input = RaceQualifyingResult.model()
-        underTest.inputs.clickDriver(input)
+        underTest.inputs.clickDriver(input.driver.driver)
 
         underTest.outputs.list.testObserve()
 

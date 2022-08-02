@@ -10,6 +10,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
+import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.model.Race
 import tmg.flashback.formula1.model.RaceQualifyingResult
 import tmg.flashback.formula1.model.RaceQualifyingType
@@ -19,7 +20,7 @@ import javax.inject.Inject
 
 interface QualifyingViewModelInputs {
     fun load(season: Int, round: Int)
-    fun clickDriver(result: RaceQualifyingResult)
+    fun clickDriver(result: Driver)
 }
 
 interface QualifyingViewModelOutputs {
@@ -138,11 +139,11 @@ class QualifyingViewModel @Inject constructor(
             ?: emptyList()
     }
 
-    override fun clickDriver(result: RaceQualifyingResult) {
+    override fun clickDriver(result: Driver) {
         val season = seasonRound.value?.first ?: return
         statsNavigationComponent.driverSeason(
-            id = result.driver.driver.id,
-            name = result.driver.driver.name,
+            id = result.id,
+            name = result.name,
             season = season
         )
     }
