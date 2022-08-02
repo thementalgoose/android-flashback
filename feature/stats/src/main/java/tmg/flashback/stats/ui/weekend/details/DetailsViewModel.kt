@@ -68,7 +68,7 @@ class DetailsViewModel @Inject constructor(
                 links.add(DetailsModel.Link(
                     label = R.string.details_link_map,
                     icon = R.drawable.ic_details_maps,
-                    url = "geo:${location.lat},${location.lng}?q=${Uri.encode(it.raceInfo.circuit.name)})"
+                    url = "geo:${location.lat},${location.lng}?q=${Uri.encode(it.raceInfo.circuit.name)}"
                 ))
             }
             if (it.raceInfo.wikipediaUrl != null && URLUtil.isValidUrl(it.raceInfo.wikipediaUrl)) {
