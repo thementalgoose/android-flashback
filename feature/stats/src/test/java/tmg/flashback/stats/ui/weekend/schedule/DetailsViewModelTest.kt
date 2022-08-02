@@ -1,5 +1,6 @@
 package tmg.flashback.stats.ui.weekend.schedule
 
+import android.net.Uri
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -135,7 +136,7 @@ internal class DetailsViewModelTest: BaseTest() {
         listOf(DetailsModel.Link(
             label = R.string.details_link_map,
             icon = R.drawable.ic_details_maps,
-            url = "geo:0,0?q=51.101,-1.101 (circuitName)"
+            url = "geo:51.101,-1.101?q=${Uri.encode("circuitName")}"
         ))
     )
 }
