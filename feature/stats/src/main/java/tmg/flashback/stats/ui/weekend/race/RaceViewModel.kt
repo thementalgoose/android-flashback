@@ -8,12 +8,15 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.*
 import tmg.flashback.formula1.constants.Formula1
+import tmg.flashback.formula1.model.RaceRaceResult
 import tmg.flashback.statistics.repo.RaceRepository
+import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.stats.ui.weekend.qualifying.QualifyingModel
 import javax.inject.Inject
 
 interface RaceViewModelInputs {
     fun load(season: Int, round: Int)
+    fun clickDriver(result: RaceRaceResult)
 }
 
 interface RaceViewModelOutputs {
@@ -23,6 +26,7 @@ interface RaceViewModelOutputs {
 @HiltViewModel
 class RaceViewModel @Inject constructor(
     private val raceRepository: RaceRepository,
+    private val statsNavigationComponent: StatsNavigationComponent,
     private val ioDispatcher: CoroutineDispatcher
 ): ViewModel(), RaceViewModelInputs, RaceViewModelOutputs {
 
@@ -67,5 +71,14 @@ class RaceViewModel @Inject constructor(
 
     override fun load(season: Int, round: Int) {
         seasonRound.value = Pair(season, round)
+    }
+
+    override fun clickDriver(result: RaceRaceResult) {
+        val season = seasonRound.value?.first ?: return
+        statsNavigationComponent.driverSeason(
+            id = result.driver.driver.id,
+            name = result.driver.driver.name,
+            season = season
+        )
     }
 }

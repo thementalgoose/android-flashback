@@ -2,23 +2,28 @@ package tmg.flashback.stats.ui.weekend.qualifying
 
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.verify
 import kotlinx.coroutines.flow.flow
 import org.junit.jupiter.api.Test
 import tmg.flashback.formula1.model.*
 import tmg.flashback.statistics.repo.RaceRepository
+import tmg.flashback.stats.StatsNavigationComponent
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.test
+import tmg.testutils.livedata.testObserve
 import java.time.Year
 
 internal class QualifyingViewModelTest: BaseTest() {
 
     private val mockRaceRepository: RaceRepository = mockk(relaxed = true)
+    private val mockStatsNavigationComponent: StatsNavigationComponent = mockk(relaxed = true)
 
     private lateinit var underTest: QualifyingViewModel
 
     private fun initUnderTest() {
         underTest = QualifyingViewModel(
             raceRepository = mockRaceRepository,
+            statsNavigationComponent = mockStatsNavigationComponent,
             ioDispatcher = coroutineScope.testDispatcher
         )
     }
@@ -112,6 +117,25 @@ internal class QualifyingViewModelTest: BaseTest() {
             assertValue(listOf(
                 QualifyingModel.Q1.model()
             ))
+        }
+    }
+
+    @Test
+    fun `clicking qualifying result launches stats navigation component`() {
+        initUnderTest()
+        underTest.load(2020, 1)
+
+        val input = RaceQualifyingResult.model()
+        underTest.inputs.clickDriver(input.driver.driver)
+
+        underTest.outputs.list.testObserve()
+
+        verify {
+            mockStatsNavigationComponent.driverSeason(
+                id = input.driver.driver.id,
+                name = input.driver.driver.name,
+                season = 2020
+            )
         }
     }
 }
