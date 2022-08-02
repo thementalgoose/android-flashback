@@ -17,6 +17,7 @@ import tmg.flashback.settings.Support
 import tmg.flashback.settings.ui.privacypolicy.PrivacyPolicyScreenVM
 import tmg.flashback.settings.ui.settings.about.SettingsAboutScreenVM
 import tmg.flashback.settings.ui.settings.appearance.SettingsAppearanceScreenVM
+import tmg.flashback.settings.ui.settings.support.SettingsSupportScreenVM
 import tmg.flashback.stats.Home
 import tmg.flashback.stats.Notifications
 import tmg.flashback.stats.ui.settings.home.SettingsHomeScreenVM
@@ -63,7 +64,7 @@ fun NavGraphBuilder.appSettings(navController: NavController) {
         )
     }
     composable(Screen.Settings.Support.route) {
-        SettingsWebBrowserScreenVM(
+        SettingsSupportScreenVM(
             actionUpClicked = { navController.popBackStack() }
         )
     }
