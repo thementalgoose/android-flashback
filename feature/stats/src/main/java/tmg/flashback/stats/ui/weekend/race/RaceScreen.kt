@@ -2,6 +2,7 @@ package tmg.flashback.stats.ui.weekend.race
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -103,10 +104,16 @@ fun RaceScreen(
             items(list, key = { it.id }) {
                 when (it) {
                     is RaceModel.Podium -> {
-                        Podium(model = it)
+                        Podium(
+                            model = it,
+                            driverClicked = driverClicked
+                        )
                     }
                     is RaceModel.Result -> {
-                        Result(model = it.result)
+                        Result(
+                            model = it.result,
+                            driverClicked = driverClicked
+                        )
                     }
                     RaceModel.Loading -> {
                         SkeletonViewList()
@@ -129,6 +136,7 @@ fun RaceScreen(
 @Composable
 private fun Podium(
     model: RaceModel.Podium,
+    driverClicked: (RaceRaceResult) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(modifier = modifier
@@ -143,7 +151,8 @@ private fun Podium(
                 model = model.p2,
                 modifier = Modifier.padding(
                     top = p1Height - p2Height
-                )
+                ),
+                driverClicked = driverClicked
             )
             PodiumBar(
                 position = 2,
@@ -157,7 +166,8 @@ private fun Podium(
         }
         Column(Modifier.weight(1f), verticalArrangement = Arrangement.Bottom) {
             PodiumResult(
-                model = model.p1
+                model = model.p1,
+                driverClicked = driverClicked
             )
             PodiumBar(
                 position = 1,
@@ -171,6 +181,7 @@ private fun Podium(
         }
         Column(Modifier.weight(1f), verticalArrangement = Arrangement.Bottom) {
             PodiumResult(
+                driverClicked = driverClicked,
                 model = model.p3,
                 modifier = Modifier.padding(
                     top = p1Height - p3Height
@@ -243,6 +254,7 @@ private fun PodiumBar(
 @Composable
 private fun PodiumResult(
     model: RaceRaceResult,
+    driverClicked: (RaceRaceResult) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -255,6 +267,7 @@ private fun PodiumResult(
                 .clip(RoundedCornerShape(AppTheme.dimensions.radiusSmall))
                 .align(Alignment.CenterHorizontally)
                 .background(model.driver.constructor.colour)
+                .clickable(onClick = { driverClicked(model) })
         ) {
             AsyncImage(
                 modifier = Modifier
@@ -337,6 +350,7 @@ private fun PodiumResult(
 @Composable
 private fun Result(
     model: RaceRaceResult,
+    driverClicked: (RaceRaceResult) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -352,7 +366,9 @@ private fun Result(
         horizontalArrangement = Arrangement.Center
     ) {
         DriverInfo(
-            modifier = Modifier.weight(1f),
+            modifier = Modifier
+                .weight(1f)
+                .clickable(onClick = { driverClicked(model) }),
             driver = model.driver,
             position = model.finish,
             extraContent = {
