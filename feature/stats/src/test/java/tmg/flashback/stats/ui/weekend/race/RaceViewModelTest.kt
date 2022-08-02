@@ -2,25 +2,31 @@ package tmg.flashback.stats.ui.weekend.race
 
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.verify
 import kotlinx.coroutines.flow.flow
 import org.junit.jupiter.api.Test
 import tmg.flashback.formula1.model.Race
+import tmg.flashback.formula1.model.RaceRaceResult
 import tmg.flashback.formula1.model.model
 import tmg.flashback.statistics.repo.RaceRepository
+import tmg.flashback.stats.StatsNavigationComponent
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.test
+import tmg.testutils.livedata.testObserve
 import java.time.Year
 
 
 internal class RaceViewModelTest: BaseTest() {
 
     private val mockRaceRepository: RaceRepository = mockk(relaxed = true)
+    private val mockStatsNavigationComponent: StatsNavigationComponent = mockk(relaxed = true)
 
     private lateinit var underTest: RaceViewModel
 
     private fun initUnderTest() {
         underTest = RaceViewModel(
             raceRepository = mockRaceRepository,
+            statsNavigationComponent = mockStatsNavigationComponent,
             ioDispatcher = coroutineScope.testDispatcher
         )
     }
@@ -67,6 +73,25 @@ internal class RaceViewModelTest: BaseTest() {
             assertValue(listOf(
                 RaceModel.Result.model()
             ))
+        }
+    }
+
+    @Test
+    fun `clicking race result launches stats navigation component`() {
+        initUnderTest()
+        underTest.load(2020, 1)
+
+        val input = RaceRaceResult.model()
+        underTest.inputs.clickDriver(input)
+
+        underTest.outputs.list.testObserve()
+
+        verify {
+            mockStatsNavigationComponent.driverSeason(
+                id = input.driver.driver.id,
+                name = input.driver.driver.name,
+                season = 2020
+            )
         }
     }
 }

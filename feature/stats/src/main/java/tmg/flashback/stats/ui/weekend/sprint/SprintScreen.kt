@@ -46,6 +46,7 @@ fun SprintScreenVM(
     SprintScreen(
         info = info,
         actionUpClicked = actionUpClicked,
+        driverClicked = viewModel.inputs::clickDriver,
         list = list.value
     )
 }
@@ -54,6 +55,7 @@ fun SprintScreenVM(
 fun SprintScreen(
     info: WeekendInfo,
     list: List<SprintModel>,
+    driverClicked: (RaceSprintResult) -> Unit,
     actionUpClicked: () -> Unit
 ) {
     LazyColumn(

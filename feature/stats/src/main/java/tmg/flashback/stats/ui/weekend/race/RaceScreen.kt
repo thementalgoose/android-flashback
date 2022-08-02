@@ -79,6 +79,7 @@ fun RaceScreenVM(
     RaceScreen(
         info = info,
         list = results.value,
+        driverClicked = viewModel.inputs::clickDriver,
         actionUpClicked = actionUpClicked
     )
 }
@@ -87,6 +88,7 @@ fun RaceScreenVM(
 fun RaceScreen(
     info: WeekendInfo,
     list: List<RaceModel>,
+    driverClicked: (RaceRaceResult) -> Unit,
     actionUpClicked: () -> Unit
 ) {
     LazyColumn(
@@ -439,6 +441,7 @@ private fun Preview(
                     result = result.copy(fastestLap = FastestLap(1, LapTime(0,1,2,3)))
                 )
             ),
+            driverClicked = { },
             actionUpClicked = { }
         )
     }

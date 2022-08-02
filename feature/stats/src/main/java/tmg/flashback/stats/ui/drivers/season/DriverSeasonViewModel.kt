@@ -6,10 +6,7 @@ import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.formula1.constants.Formula1
@@ -64,10 +61,31 @@ class DriverSeasonViewModel @Inject constructor(
     override val isLoading: MutableLiveData<Boolean> = MutableLiveData()
     override val showRefreshError: MutableLiveData<Event> = MutableLiveData()
 
-    private var driverId: MutableStateFlow<String?> = MutableStateFlow(null)
     private var season: Int = -1
 
-    override val list: LiveData<List<DriverSeasonModel>> = driverId
+    private val driverId: MutableStateFlow<String?> = MutableStateFlow(null)
+    private val driverIdWithRequest: Flow<String?> = driverId
+        .filterNotNull()
+        .flatMapLatest { id ->
+            return@flatMapLatest flow {
+                if (driverRepository.getDriverSeasonCount(id) == 0) {
+                    isLoading.postValue(true)
+                    emit(null)
+                    driverRepository.fetchDriver(id)
+                    isLoading.postValue(false)
+                    emit(id)
+                }
+                else {
+                    emit(id)
+                    isLoading.postValue(true)
+                    driverRepository.fetchDriver(id)
+                    isLoading.postValue(false)
+                }
+            }
+        }
+        .flowOn(ioDispatcher)
+
+    override val list: LiveData<List<DriverSeasonModel>> = driverIdWithRequest
         .filterNotNull()
         .flatMapLatest { driverRepository.getDriverOverview(it) }
         .map { overview ->

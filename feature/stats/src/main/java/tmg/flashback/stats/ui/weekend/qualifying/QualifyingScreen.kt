@@ -71,6 +71,7 @@ fun QualifyingScreenVM(
     QualifyingScreen(
         info = info,
         actionUpClicked = actionUpClicked,
+        driverClicked = viewModel.inputs::clickDriver,
         list = qualifying.value,
         header = qualifyingHeader.value,
     )
@@ -80,6 +81,7 @@ fun QualifyingScreenVM(
 fun QualifyingScreen(
     info: WeekendInfo,
     actionUpClicked: () -> Unit,
+    driverClicked: (RaceQualifyingResult) -> Unit,
     list: List<QualifyingModel>,
     header: QualifyingHeader
 ) {
@@ -261,6 +263,7 @@ private fun Preview(
         QualifyingScreen(
             info = fakeWeekendInfo,
             actionUpClicked = { },
+            driverClicked = { },
             list = listOf(
                 fakeQualifyingModel(driverConstructor)
             ),
