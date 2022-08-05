@@ -1,0 +1,32 @@
+name: Dependency Report
+'on':
+  workflow_run:
+
+jobs:
+  dependency_report:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      # Checkout
+      - uses: actions/checkout@v2
+
+      # Caching gradle
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      # Dependency report
+      - name: Generating Dependency Report
+        run: ./gradlew dependencyUpdates
+
+      # Archive report
+      - name: Archive
+        uses: actions/upload-artifact@v3
+        with:
+          name: report
+          path: reports/android-flashback-dependencies-result.html
