@@ -32,6 +32,8 @@ dependencyUpdates {
                             th("Latest version")
                         }
                         updatable.each { dependency ->
+                            println("DEPENDENCY $dependency.name")
+                            println(dependency.available)
                             tr {
                                 td(dependency.group)
                                 td(dependency.name)
