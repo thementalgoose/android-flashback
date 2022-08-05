@@ -31,17 +31,18 @@ ext {
 
     baseUrl = "https://flashback.pages.dev"
 
-    kotlin_version = "1.6.21"
+    kotlin_version = "1.7.10"
     koin_version = "3.1.6"
     coroutines = "1.6.4"
     kotlinx_serialization = "1.3.3"
     room = "2.4.2"
-    navigation = "2.5.0"
+    navigation = "2.5.1"
     mockk = "1.12.4"
     junit = "5.8.2"
     threeten = "1.3.1"
     threetenbp = "1.5.2"
-    android_compose = "1.2.0-rc02"
+    android_compose = "1.3.0-alpha02"
+    android_compose_compiler = "1.3.0-rc02"
     android_constraint = "2.1.4"
     android_material = "1.7.0-alpha02"
     android_lifecycle = "2.5.0-rc01"
@@ -61,5 +62,5 @@ ext {
     firebase_bom = "30.3.0"
     retrofit = "2.9.0"
     okhttp3 = "4.9.3"
-    hilt = "2.38.1"
+    hilt = "2.43.2"
 }
