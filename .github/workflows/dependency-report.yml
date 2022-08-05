@@ -1,6 +1,6 @@
 name: Dependency Report
 'on':
-  workflow_run:
+  workflow_dispatch:
 
 jobs:
   dependency_report:
