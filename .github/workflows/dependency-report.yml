@@ -31,5 +31,5 @@ jobs:
       - name: Archive
         uses: actions/upload-artifact@v3
         with:
-          name: report
+          name: report.html
           path: reports/android-flashback-dependencies-result.html
