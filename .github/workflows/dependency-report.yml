@@ -27,6 +27,10 @@ jobs:
       - name: Generating Dependency Report
         run: ./gradlew dependencyUpdates
 
+      # Print Dependency summary
+      - name: Dumping summary in job
+        run: cat reports/android-flashback-dependencies-result.html >> $GITHUB_STEP_SUMMARY
+
       # Archive report
       - name: Archive
         uses: actions/upload-artifact@v3
