@@ -19,6 +19,30 @@ dependencyUpdates {
             def fileWriter = new FileWriter(file)
             def html = new MarkupBuilder(fileWriter)
 
+            def list = []
+
+            updatable.eachWithIndex { dependency, index ->
+                def max = null
+                updatable.each { newDep ->
+                    if (newDep.name == dependency.name && newDep.group == dependency.group) {
+                        if (max == null || max < newDep.version) {
+                            max = newDep.version
+                        }
+                    }
+                }
+                if (dependency.version != max) {
+                    dependency.available.integration = max
+                } else {
+                    dependency.available.integration = ''
+                }
+                if (list.find { dep -> dep.name == dependency.name && dep.group == dependency.group } == null) {
+                    println("Adding new dependency ${dependency.name} ${dependency.group} ${dependency.version}")
+                    list.push(dependency)
+                } else {
+                    println("    - Skipping adding ${dependency.name} ${dependency.group} ${dependency.version}")
+                }
+            }
+
             html.html {
                 body {
                     h3("Module: $project.name")
@@ -27,18 +51,21 @@ dependencyUpdates {
                     table {
                         tr {
                             th("Group")
-                            th("Module")
                             th("Current version")
-                            th("Latest version")
+                            th("Latest Stable")
+                            th("Latest Release")
                         }
-                        updatable.each { dependency ->
-                            println("DEPENDENCY $dependency.name")
-                            println(dependency.available)
+                        list.eachWithIndex { dependency, index ->
+                            def version = ~'^\\d+(\\.\\d+)*$'
+                            def rel = dependency.available.release ?: dependency.available.milestone
+                            if (!version.matcher(rel).matches()) {
+                                rel = ''
+                            }
                             tr {
-                                td(dependency.group)
-                                td(dependency.name)
+                                td("${dependency.group}:${dependency.name}")
                                 td(dependency.version)
-                                td(dependency.available.release ?: dependency.available.milestone)
+                                td(dependency.available.release ?: dependency.available.integration ?: rel)
+                                td(dependency.available.milestone)
                             }
                         }
                     }
