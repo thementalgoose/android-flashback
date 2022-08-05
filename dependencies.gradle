@@ -20,16 +20,16 @@ allprojects {
                         workmanager_ktx                         : "androidx.work:work-runtime-ktx:$android_workmanager"
                 ],
                 compose: [
-                        activity                                : "androidx.activity:activity-compose:1.4.0",
+                        activity                                : "androidx.activity:activity-compose:1.5.1",
                         material                                : "androidx.compose.material:material:$android_compose",
-                        material3                               : "androidx.compose.material3:material3:1.0.0-alpha09",
+                        material3                               : "androidx.compose.material3:material3:1.0.0-alpha15",
                         navigation                              : "androidx.navigation:navigation-compose:$navigation",
                         animation                               : "androidx.compose.animation:animation:$android_compose",
                         tooling                                 : "androidx.compose.ui:ui-tooling:$android_compose",
                         viewbinding                             : "androidx.compose.ui:ui-viewbinding:$android_compose",
                         runtime                                 : "androidx.compose.runtime:runtime-livedata:$android_compose",
                         viewmodel                               : "androidx.lifecycle:lifecycle-viewmodel-compose:$android_lifecycle",
-                        theme_adapter                           : "com.google.android.material:compose-theme-adapter:1.1.5"
+                        theme_adapter                           : "com.google.android.material:compose-theme-adapter:1.1.15"
                 ],
                 accompanist: [
                         swiperefresh                            : "com.google.accompanist:accompanist-swiperefresh:$android_accompanist",
