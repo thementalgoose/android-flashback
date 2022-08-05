@@ -1,14 +1,11 @@
 name: Dependency Report
 'on':
   workflow_dispatch:
-  pull_request:
-    branches:
-      - main
 
 jobs:
   dependency_report:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 7
     steps:
       # Checkout
       - uses: actions/checkout@v2
@@ -30,10 +27,3 @@ jobs:
       # Print Dependency summary
       - name: Dumping summary in job
         run: cat reports/android-flashback-dependencies-result.html >> $GITHUB_STEP_SUMMARY
-
-      # Archive report
-      - name: Archive
-        uses: actions/upload-artifact@v3
-        with:
-          name: report.html
-          path: reports/android-flashback-dependencies-result.html
