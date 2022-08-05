@@ -62,5 +62,5 @@ ext {
     firebase_bom = "30.3.0"
     retrofit = "2.9.0"
     okhttp3 = "4.9.3"
-    hilt = "2.38.1"
+    hilt = "2.43.2"
 }
