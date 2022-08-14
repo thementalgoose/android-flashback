@@ -21,13 +21,11 @@ import tmg.testutils.livedata.test
 internal class WeekendViewModelTest: BaseTest() {
 
     private val mockRaceRepository: RaceRepository = mockk(relaxed = true)
-    private val mockGetDefaultSeasonUseCase: DefaultSeasonUseCase = mockk(relaxed = true)
 
     private lateinit var underTest: WeekendViewModel
 
     private fun underTest() {
         underTest = WeekendViewModel(
-            getDefaultSeasonUseCase = mockGetDefaultSeasonUseCase,
             raceRepository = mockRaceRepository,
             ioDispatcher = coroutineScope.testDispatcher
         )
@@ -35,7 +33,6 @@ internal class WeekendViewModelTest: BaseTest() {
 
     @BeforeEach
     internal fun setUp() {
-        every { mockGetDefaultSeasonUseCase.serverDefaultSeason } returns currentSeasonYear
         every { mockRaceRepository.getRace(season = 2020, round = 1) } returns flow { emit(Race.model()) }
     }
 
@@ -57,19 +54,6 @@ internal class WeekendViewModelTest: BaseTest() {
         underTest.outputs.tabs.test {
             assertListMatchesItem {
                 it.isSelected && it.tab == WeekendNavItem.SCHEDULE
-            }
-        }
-    }
-
-    @Test
-    fun `loading season and round on not default season default race tab`() = coroutineTest {
-        every { mockGetDefaultSeasonUseCase.serverDefaultSeason } returns 1950
-        underTest()
-        underTest.inputs.load(season = 2020, round = 1)
-
-        underTest.outputs.tabs.test {
-            assertListMatchesItem {
-                it.isSelected && it.tab == WeekendNavItem.RACE
             }
         }
     }
