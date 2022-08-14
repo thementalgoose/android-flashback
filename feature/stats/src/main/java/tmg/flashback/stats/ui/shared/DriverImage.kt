@@ -48,6 +48,7 @@ fun DriverImage(
             .clip(RoundedCornerShape(AppTheme.dimensions.radiusSmall)),
     ) {
         AsyncImage(
+            modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop,
             model = photoUrl,
             contentDescription = null,

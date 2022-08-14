@@ -19,7 +19,7 @@ data class CircuitRoundResult(
     @PrimaryKey
     @ColumnInfo(name = "id")
     val id: String = "${season}_${round}_${position}",
-    @ColumnInfo(name = "season_round")
+    @ColumnInfo(name = "season_round_id")
     val seasonRound: String = "${season}_${round}",
 ) {
     companion object
