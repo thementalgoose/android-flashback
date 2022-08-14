@@ -99,6 +99,7 @@ class DriverSeasonViewModel @Inject constructor(
                     }
                 }
                 else -> {
+                    list.add(DriverSeasonModel.Header(overview.driver))
 
                     if (standing.isInProgress) {
                         standing.raceOverview.maxByOrNull { it.raceInfo.round }?.let {
