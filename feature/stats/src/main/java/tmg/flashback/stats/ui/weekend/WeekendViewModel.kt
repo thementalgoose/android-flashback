@@ -34,8 +34,28 @@ class WeekendViewModel @Inject constructor(
 
     private val selectedTab: MutableStateFlow<WeekendNavItem> = MutableStateFlow(WeekendNavItem.SCHEDULE)
     private val seasonRound: MutableStateFlow<Pair<Int, Int>?> = MutableStateFlow(null)
+    private val seasonRoundWithRequest: Flow<Pair<Int, Int>?> = seasonRound
+        .filterNotNull()
+        .flatMapLatest { (season, round) ->
+            return@flatMapLatest flow {
+                if (!raceRepository.hasntPreviouslySynced(season)) {
+                    isRefreshing.postValue(true)
+                    emit(null)
+                    raceRepository.fetchRaces(season)
+                    isRefreshing.postValue(false)
+                    emit(Pair(season, round))
+                }
+                else {
+                    emit(Pair(season, round))
+                    isRefreshing.postValue(true)
+                    raceRepository.fetchRaces(season)
+                    isRefreshing.postValue(false)
+                }
+            }
+        }
+        .flowOn(ioDispatcher)
 
-    private val raceFlow: Flow<Race?> = seasonRound
+    private val raceFlow: Flow<Race?> = seasonRoundWithRequest
         .filterNotNull()
         .flatMapLatest { (season, round) -> raceRepository.getRace(season, round) }
         .flowOn(ioDispatcher)
