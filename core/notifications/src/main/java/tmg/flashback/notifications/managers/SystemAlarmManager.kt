@@ -6,6 +6,7 @@ import android.content.Context
 import android.os.Build
 import android.util.Log
 import androidx.core.app.AlarmManagerCompat
+import dagger.hilt.android.qualifiers.ApplicationContext
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.ZoneOffset
 import tmg.flashback.crash_reporting.controllers.CrashController
@@ -16,6 +17,7 @@ import javax.inject.Singleton
 
 @Singleton
 class SystemAlarmManager @Inject constructor(
+    @ApplicationContext
     private val applicationContext: Context,
     private val crashController: CrashController
 ) {
