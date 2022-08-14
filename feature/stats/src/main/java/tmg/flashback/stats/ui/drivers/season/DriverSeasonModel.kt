@@ -5,6 +5,7 @@ import androidx.annotation.StringRes
 import org.threeten.bp.LocalDate
 import tmg.flashback.formula1.enums.RaceStatus
 import tmg.flashback.formula1.model.Constructor
+import tmg.flashback.formula1.model.Driver
 import tmg.flashback.stats.ui.drivers.overview.DriverOverviewModel
 import tmg.flashback.stats.ui.drivers.overview.PipeType
 import tmg.flashback.ui.model.AnimationSpeed
@@ -13,6 +14,12 @@ import tmg.flashback.ui.model.AnimationSpeed
 sealed class DriverSeasonModel(
     val key: String
 ) {
+    data class Header(
+        val driver: Driver
+    ): DriverSeasonModel(
+        key = "driver-header-${driver.id}"
+    )
+
     data class Stat(
         val isWinning: Boolean,
         @DrawableRes
