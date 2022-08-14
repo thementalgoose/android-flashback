@@ -27,7 +27,6 @@ interface WeekendViewModelOutputs {
 
 @HiltViewModel
 class WeekendViewModel @Inject constructor(
-    private val getDefaultSeasonUseCase: DefaultSeasonUseCase,
     private val raceRepository: RaceRepository,
     private val ioDispatcher: CoroutineDispatcher
 ): ViewModel(), WeekendViewModelInputs, WeekendViewModelOutputs {
@@ -35,12 +34,7 @@ class WeekendViewModel @Inject constructor(
     val inputs: WeekendViewModelInputs = this
     val outputs: WeekendViewModelOutputs = this
 
-    private val defaultTab = when (getDefaultSeasonUseCase.serverDefaultSeason) {
-        currentSeasonYear -> WeekendNavItem.SCHEDULE
-        else -> WeekendNavItem.RACE
-    }
-
-    private val selectedTab: MutableStateFlow<WeekendNavItem> = MutableStateFlow(defaultTab)
+    private val selectedTab: MutableStateFlow<WeekendNavItem> = MutableStateFlow(WeekendNavItem.SCHEDULE)
     private val seasonRound: MutableStateFlow<Pair<Int, Int>?> = MutableStateFlow(null)
     private val seasonRoundWithRequest: Flow<Pair<Int, Int>?> = seasonRound
         .filterNotNull()
@@ -77,6 +71,7 @@ class WeekendViewModel @Inject constructor(
     override val tabs: LiveData<List<WeekendScreenState>> = raceFlow
         .combinePair(selectedTab)
         .map { (race, navItem) ->
+            println("NAVIGATION ITEM $navItem")
             val list = mutableListOf<WeekendScreenState>()
             list.add(WeekendScreenState(WeekendNavItem.SCHEDULE, isSelected = navItem == WeekendNavItem.SCHEDULE))
             list.add(WeekendScreenState(WeekendNavItem.QUALIFYING, isSelected = navItem == WeekendNavItem.QUALIFYING))
@@ -103,6 +98,10 @@ class WeekendViewModel @Inject constructor(
     }
 
     override fun load(season: Int, round: Int) {
+        selectedTab.value = when (season) {
+            currentSeasonYear -> WeekendNavItem.SCHEDULE
+            else -> WeekendNavItem.RACE
+        }
         seasonRound.value = Pair(season, round)
     }
 
