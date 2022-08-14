@@ -2,13 +2,10 @@ package tmg.flashback.stats.ui.circuits
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
@@ -34,6 +31,7 @@ import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.providers.CircuitHistoryRaceProvider
 import tmg.flashback.stats.R
 import tmg.flashback.stats.analytics.AnalyticsConstants.analyticsCircuitId
+import tmg.flashback.stats.components.DriverNumber
 import tmg.flashback.stats.ui.weekend.shared.NotAvailable
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
@@ -154,6 +152,9 @@ private fun Item(
                     .fillMaxWidth()
             )
         }
+        Standings(
+            preview = model.data.preview
+        )
     }
 }
 
@@ -297,9 +298,40 @@ private fun Link(
 
 @Composable
 private fun Standings(
-    preview: List<CircuitHistoryRaceResult>
+    preview: List<CircuitHistoryRaceResult>,
+    modifier: Modifier = Modifier
 ) {
-    
+    Column(modifier = modifier) {
+        preview.forEach {
+            StandingResult(
+                modifier = Modifier.width(140.dp),
+                model = it
+            )
+        }
+    }
+}
+
+@Composable
+private fun StandingResult(
+    model: CircuitHistoryRaceResult,
+    modifier: Modifier = Modifier
+) {
+    Row(modifier = modifier
+        .height(IntrinsicSize.Min)
+    ) {
+        TextBody1(
+            text = model.position.ordinalAbbreviation,
+            modifier = Modifier.weight(1f)
+        )
+        DriverNumber(
+            number = model.driver.code ?: model.driver.lastName.substring(0, 3),
+        )
+        Box(modifier = Modifier
+            .width(6.dp)
+            .fillMaxHeight()
+            .background(model.constructor.colour)
+        )
+    }
 }
 
 @PreviewTheme

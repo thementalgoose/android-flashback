@@ -9,7 +9,7 @@ data class CircuitRoundWithResults(
     @Relation(
         entity = CircuitRoundResult::class,
         parentColumn = "id",
-        entityColumn = "id"
+        entityColumn = "season_round_id"
     )
     val results: List<CircuitRoundResultWithDriverConstructor>
 ) {
