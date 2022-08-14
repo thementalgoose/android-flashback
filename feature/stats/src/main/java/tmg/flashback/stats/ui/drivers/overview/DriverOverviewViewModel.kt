@@ -99,6 +99,7 @@ class DriverOverviewViewModel @Inject constructor(
                                 driverName = it.driver.name,
                                 driverNumber = it.driver.number,
                                 driverImg = it.driver.photoUrl ?: "",
+                                driverCode = it.driver.code,
                                 driverBirthday = it.driver.dateOfBirth,
                                 driverWikiUrl = it.driver.wikiUrl ?: "",
                                 driverNationalityISO = it.driver.nationalityISO,

@@ -13,6 +13,7 @@ sealed class DriverOverviewModel(
         val driverName: String,
         val driverNumber: Int?,
         val driverImg: String,
+        val driverCode: String?,
         val driverBirthday: LocalDate,
         val driverWikiUrl: String,
         val driverNationalityISO: String,

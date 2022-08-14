@@ -299,7 +299,7 @@ private fun Link(
 private fun Standings(
     preview: List<CircuitHistoryRaceResult>
 ) {
-    // TODO!
+    
 }
 
 @PreviewTheme
