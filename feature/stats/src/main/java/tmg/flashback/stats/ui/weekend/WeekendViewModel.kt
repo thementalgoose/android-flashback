@@ -5,9 +5,11 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
 import tmg.flashback.formula1.model.Race
 import tmg.flashback.formula1.model.RaceInfo
 import tmg.flashback.statistics.repo.RaceRepository
+import tmg.flashback.stats.usecases.DefaultSeasonUseCase
 import tmg.utilities.extensions.combinePair
 import javax.inject.Inject
 
@@ -25,6 +27,7 @@ interface WeekendViewModelOutputs {
 
 @HiltViewModel
 class WeekendViewModel @Inject constructor(
+    private val getDefaultSeasonUseCase: DefaultSeasonUseCase,
     private val raceRepository: RaceRepository,
     private val ioDispatcher: CoroutineDispatcher
 ): ViewModel(), WeekendViewModelInputs, WeekendViewModelOutputs {
@@ -32,7 +35,12 @@ class WeekendViewModel @Inject constructor(
     val inputs: WeekendViewModelInputs = this
     val outputs: WeekendViewModelOutputs = this
 
-    private val selectedTab: MutableStateFlow<WeekendNavItem> = MutableStateFlow(WeekendNavItem.SCHEDULE)
+    private val defaultTab = when (getDefaultSeasonUseCase.serverDefaultSeason) {
+        currentSeasonYear -> WeekendNavItem.SCHEDULE
+        else -> WeekendNavItem.RACE
+    }
+
+    private val selectedTab: MutableStateFlow<WeekendNavItem> = MutableStateFlow(defaultTab)
     private val seasonRound: MutableStateFlow<Pair<Int, Int>?> = MutableStateFlow(null)
     private val seasonRoundWithRequest: Flow<Pair<Int, Int>?> = seasonRound
         .filterNotNull()

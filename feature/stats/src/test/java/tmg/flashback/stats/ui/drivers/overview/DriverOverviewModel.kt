@@ -13,7 +13,7 @@ fun DriverOverviewModel.Companion.headerModel(
     driverId: String = "driverId",
     driverName: String = "firstName lastName",
     driverNumber: Int = 23,
-    driverCode: String = "ABC",
+    driverCode: String = "code",
     driverImg: String = "photoUrl",
     driverBirthday: LocalDate = LocalDate.of(1995, 10, 12),
     driverWikiUrl: String = "wikiUrl",
