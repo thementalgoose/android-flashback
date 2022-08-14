@@ -5,9 +5,11 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
 import tmg.flashback.formula1.model.Race
 import tmg.flashback.formula1.model.RaceInfo
 import tmg.flashback.statistics.repo.RaceRepository
+import tmg.flashback.stats.usecases.DefaultSeasonUseCase
 import tmg.utilities.extensions.combinePair
 import javax.inject.Inject
 
@@ -69,6 +71,7 @@ class WeekendViewModel @Inject constructor(
     override val tabs: LiveData<List<WeekendScreenState>> = raceFlow
         .combinePair(selectedTab)
         .map { (race, navItem) ->
+            println("NAVIGATION ITEM $navItem")
             val list = mutableListOf<WeekendScreenState>()
             list.add(WeekendScreenState(WeekendNavItem.SCHEDULE, isSelected = navItem == WeekendNavItem.SCHEDULE))
             list.add(WeekendScreenState(WeekendNavItem.QUALIFYING, isSelected = navItem == WeekendNavItem.QUALIFYING))
@@ -95,6 +98,10 @@ class WeekendViewModel @Inject constructor(
     }
 
     override fun load(season: Int, round: Int) {
+        selectedTab.value = when (season) {
+            currentSeasonYear -> WeekendNavItem.SCHEDULE
+            else -> WeekendNavItem.RACE
+        }
         seasonRound.value = Pair(season, round)
     }
 

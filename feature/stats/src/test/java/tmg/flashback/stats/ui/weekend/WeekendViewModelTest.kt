@@ -7,10 +7,12 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
 import tmg.flashback.formula1.model.Race
 import tmg.flashback.formula1.model.RaceInfo
 import tmg.flashback.formula1.model.model
 import tmg.flashback.statistics.repo.RaceRepository
+import tmg.flashback.stats.usecases.DefaultSeasonUseCase
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertListDoesNotMatchItem
 import tmg.testutils.livedata.assertListMatchesItem
@@ -46,12 +48,26 @@ internal class WeekendViewModelTest: BaseTest() {
 
     @Test
     fun `loading season and round outputs default schedule tab`() = coroutineTest {
+        every { mockRaceRepository.getRace(season = currentSeasonYear, round = 1) } returns flow { emit(Race.model()) }
+        underTest()
+        underTest.inputs.load(season = currentSeasonYear, round = 1)
+
+        underTest.outputs.tabs.test {
+            assertListMatchesItem {
+                it.isSelected && it.tab == WeekendNavItem.SCHEDULE
+            }
+        }
+    }
+
+    @Test
+    fun `loading season and round outputs on not current season year defaults to race tab`() = coroutineTest {
+        every { mockRaceRepository.getRace(season = currentSeasonYear, round = 1) } returns flow { emit(Race.model()) }
         underTest()
         underTest.inputs.load(season = 2020, round = 1)
 
         underTest.outputs.tabs.test {
             assertListMatchesItem {
-                it.isSelected && it.tab == WeekendNavItem.SCHEDULE
+                it.isSelected && it.tab == WeekendNavItem.RACE
             }
         }
     }

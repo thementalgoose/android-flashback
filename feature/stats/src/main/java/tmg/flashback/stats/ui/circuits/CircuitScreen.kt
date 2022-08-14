@@ -2,22 +2,21 @@ package tmg.flashback.stats.ui.circuits
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -27,6 +26,7 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import androidx.hilt.navigation.compose.hiltViewModel
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.formula1.enums.TrackLayout
+import tmg.flashback.formula1.extensions.positionIcon
 import tmg.flashback.formula1.model.CircuitHistoryRace
 import tmg.flashback.formula1.model.CircuitHistoryRaceResult
 import tmg.flashback.formula1.model.Location
@@ -34,6 +34,7 @@ import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.providers.CircuitHistoryRaceProvider
 import tmg.flashback.stats.R
 import tmg.flashback.stats.analytics.AnalyticsConstants.analyticsCircuitId
+import tmg.flashback.stats.components.DriverNumber
 import tmg.flashback.stats.ui.weekend.shared.NotAvailable
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
@@ -48,13 +49,13 @@ import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.utils.isInPreview
 import tmg.utilities.extensions.ordinalAbbreviation
 
-private val driverImageBoxP1: Dp = 48.dp
-private val driverImageBoxP2: Dp = 42.dp
-private val driverImageBoxP3: Dp = 36.dp
-
 private val trackImageSize: Dp = 180.dp
-
+private val resultIconSize = 16.dp
 private val countryBadgeSize = 32.dp
+
+private val driverPodiumHeightP1 = 18.dp
+private val driverPodiumHeightP2 = 12.dp
+private val driverPodiumHeightP3 = 6.dp
 
 @Composable
 fun CircuitScreenVM(
@@ -154,6 +155,10 @@ private fun Item(
                     .fillMaxWidth()
             )
         }
+        Standings(
+            modifier = Modifier.width(130.dp),
+            preview = model.data.preview
+        )
     }
 }
 
@@ -297,9 +302,103 @@ private fun Link(
 
 @Composable
 private fun Standings(
-    preview: List<CircuitHistoryRaceResult>
+    preview: List<CircuitHistoryRaceResult>,
+    modifier: Modifier = Modifier
 ) {
-    // TODO!
+    val first = preview.firstOrNull { it.position == 1 } ?: return
+    val second = preview.firstOrNull { it.position == 2 } ?: return
+    val third = preview.firstOrNull { it.position == 3 } ?: return
+
+    Row(
+        modifier = modifier,
+        verticalAlignment = Alignment.Bottom
+    ) {
+        Column(modifier = Modifier.weight(1f)) {
+            DriverCode(
+                code = second.driver.code ?: second.driver.lastName.substring(0..2),
+                colour = second.constructor.colour
+            )
+            Box(modifier = Modifier
+                .fillMaxWidth()
+                .height(driverPodiumHeightP2)
+                .background(AppTheme.colors.f1Podium2))
+        }
+        Column(modifier = Modifier.weight(1f)) {
+            DriverCode(
+                code = first.driver.code ?: first.driver.lastName.substring(0..2),
+                colour = first.constructor.colour
+            )
+            Box(modifier = Modifier
+                .fillMaxWidth()
+                .height(driverPodiumHeightP1)
+                .background(AppTheme.colors.f1Podium1))
+        }
+        Column(modifier = Modifier.weight(1f)) {
+            DriverCode(
+                code = third.driver.code ?: third.driver.lastName.substring(0..2),
+                colour = third.constructor.colour
+            )
+            Box(modifier = Modifier
+                .fillMaxWidth()
+                .height(driverPodiumHeightP3)
+                .background(AppTheme.colors.f1Podium3))
+        }
+    }
+}
+
+@Composable
+private fun DriverCode(
+    code: String,
+    colour: Color
+) {
+    Row(Modifier
+        .height(IntrinsicSize.Min)
+        .padding(2.dp)
+    ) {
+        Box(modifier = Modifier
+            .fillMaxHeight()
+            .width(4.dp)
+            .background(colour))
+        DriverNumber(
+            textAlign = TextAlign.Center,
+            small = true,
+            modifier = Modifier.weight(1f),
+            number = code
+        )
+        Box(modifier = Modifier
+            .fillMaxHeight()
+            .width(4.dp)
+            .background(Color.Transparent))
+    }
+}
+
+@Composable
+private fun StandingResult(
+    model: CircuitHistoryRaceResult,
+    modifier: Modifier = Modifier
+) {
+    val icon = model.position.positionIcon
+    Row(modifier = modifier
+        .height(IntrinsicSize.Min)
+    ){
+        Icon(
+            modifier = Modifier.size(resultIconSize),
+            painter = painterResource(id = icon),
+            contentDescription = null,
+            tint = if (model.position == 1) AppTheme.colors.f1Championship else AppTheme.colors.contentSecondary
+        )
+        Spacer(Modifier.width(AppTheme.dimensions.paddingXSmall))
+        Box(modifier = Modifier
+            .fillMaxHeight()
+            .width(6.dp)
+            .background(model.constructor.colour))
+        Spacer(Modifier.width(AppTheme.dimensions.paddingXSmall))
+        DriverNumber(
+            modifier = Modifier.width(resultIconSize * 3),
+            small = true,
+            number = model.driver.code ?: model.driver.lastName.substring(0..3)
+        )
+    }
 }
 
 @PreviewTheme

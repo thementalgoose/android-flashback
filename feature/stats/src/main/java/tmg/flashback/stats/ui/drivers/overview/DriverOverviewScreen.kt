@@ -140,6 +140,8 @@ private fun Header(
     )) {
         DriverImage(
             photoUrl = model.driverImg,
+            code = model.driverCode,
+            number = model.driverNumber,
             size = headerImageSize
         )
         Row(
@@ -332,6 +334,7 @@ private fun DriverConstructor.toHeader(): DriverOverviewModel.Header = DriverOve
     driverName = this.driver.name,
     driverNumber = this.driver.number,
     driverImg = this.driver.photoUrl ?: "",
+    driverCode = this.driver.code,
     driverBirthday = this.driver.dateOfBirth,
     driverWikiUrl = this.driver.wikiUrl ?: "",
     driverNationalityISO = this.driver.nationalityISO,

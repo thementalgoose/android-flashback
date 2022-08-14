@@ -50,6 +50,6 @@ data class AppTypography(
     val block: TextStyle = TextStyle(
         fontFamily = closeness,
         fontWeight = FontWeight.Bold,
-        fontSize = 14.sp
+        fontSize = 16.sp
     )
 )
