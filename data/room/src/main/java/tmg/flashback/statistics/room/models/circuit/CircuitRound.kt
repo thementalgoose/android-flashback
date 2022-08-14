@@ -22,7 +22,7 @@ data class CircuitRound(
     val wikiUrl: String?,
     @PrimaryKey
     @ColumnInfo(name = "id")
-    val id: String = "${circuitId}_${season}_${round}"
+    val id: String = "${season}_${round}"
 ) {
     companion object
 }

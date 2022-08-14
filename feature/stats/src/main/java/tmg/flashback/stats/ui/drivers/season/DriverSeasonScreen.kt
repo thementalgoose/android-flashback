@@ -422,6 +422,8 @@ private fun Header(
     )) {
         DriverImage(
             photoUrl = model.driver.photoUrl,
+            number = model.driver.number,
+            code = model.driver.code,
             size = headerImageSize
         )
         Row(
