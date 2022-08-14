@@ -48,12 +48,26 @@ internal class WeekendViewModelTest: BaseTest() {
 
     @Test
     fun `loading season and round outputs default schedule tab`() = coroutineTest {
+        every { mockRaceRepository.getRace(season = currentSeasonYear, round = 1) } returns flow { emit(Race.model()) }
+        underTest()
+        underTest.inputs.load(season = currentSeasonYear, round = 1)
+
+        underTest.outputs.tabs.test {
+            assertListMatchesItem {
+                it.isSelected && it.tab == WeekendNavItem.SCHEDULE
+            }
+        }
+    }
+
+    @Test
+    fun `loading season and round outputs on not current season year defaults to race tab`() = coroutineTest {
+        every { mockRaceRepository.getRace(season = currentSeasonYear, round = 1) } returns flow { emit(Race.model()) }
         underTest()
         underTest.inputs.load(season = 2020, round = 1)
 
         underTest.outputs.tabs.test {
             assertListMatchesItem {
-                it.isSelected && it.tab == WeekendNavItem.SCHEDULE
+                it.isSelected && it.tab == WeekendNavItem.RACE
             }
         }
     }
