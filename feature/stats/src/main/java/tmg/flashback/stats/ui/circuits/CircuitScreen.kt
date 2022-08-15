@@ -94,7 +94,11 @@ fun CircuitScreen(
     linkClicked: (String) -> Unit,
     actionUpClicked: () -> Unit
 ) {
-    LazyColumn(content = {
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(AppTheme.colors.backgroundPrimary),
+        content = {
         item(key = "header") {
             Header(
                 text = circuitName,
