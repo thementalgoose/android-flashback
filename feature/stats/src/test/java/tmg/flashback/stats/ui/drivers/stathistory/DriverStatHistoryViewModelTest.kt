@@ -91,16 +91,6 @@ internal class DriverStatHistoryViewModelTest: BaseTest() {
                                 raceInfo = RaceInfo.model(season = 2020, round = 3)
                             )
                         )
-                    ),
-                    DriverHistorySeason.model(
-                        season = 2022,
-                        isInProgress = true,
-                        raceOverview = listOf(
-                            DriverHistorySeasonRace.model(
-                                finished = 1,
-                                raceInfo = RaceInfo.model(season = 2022, round = 1)
-                            )
-                        )
                     )
                 )
             ))
@@ -166,16 +156,6 @@ internal class DriverStatHistoryViewModelTest: BaseTest() {
                             DriverHistorySeasonRace.model(
                                 qualified = 3,
                                 raceInfo = RaceInfo.model(season = 2020, round = 3)
-                            )
-                        )
-                    ),
-                    DriverHistorySeason.model(
-                        season = 2022,
-                        isInProgress = true,
-                        raceOverview = listOf(
-                            DriverHistorySeasonRace.model(
-                                qualified = 1,
-                                raceInfo = RaceInfo.model(season = 2022, round = 1)
                             )
                         )
                     )
