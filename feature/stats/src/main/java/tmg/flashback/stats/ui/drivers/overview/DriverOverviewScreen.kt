@@ -27,6 +27,7 @@ import tmg.flashback.providers.DriverConstructorProvider
 import tmg.flashback.stats.R
 import tmg.flashback.stats.analytics.AnalyticsConstants.analyticsDriverId
 import tmg.flashback.stats.components.Timeline
+import tmg.flashback.stats.ui.drivers.stathistory.DriverStatHistoryType
 import tmg.flashback.stats.ui.shared.DriverImage
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
@@ -70,6 +71,7 @@ fun DriverOverviewScreenVM(
             racedForClicked = {
                 viewModel.inputs.openSeason(it.season)
             },
+            statHistoryClicked = viewModel.inputs::openStatHistory,
             actionUpClicked = actionUpClicked,
         )
     }
@@ -80,6 +82,7 @@ fun DriverOverviewScreen(
     actionUpClicked: () -> Unit,
     linkClicked: (String) -> Unit,
     driverName: String,
+    statHistoryClicked: (DriverStatHistoryType) -> Unit,
     racedForClicked: (DriverOverviewModel.RacedFor) -> Unit,
     list: List<DriverOverviewModel>
 ) {
@@ -112,7 +115,10 @@ fun DriverOverviewScreen(
                         )
                     }
                     is DriverOverviewModel.Stat -> {
-                        Stat(model = it)
+                        Stat(
+                            model = it,
+                            statHistoryClicked = statHistoryClicked
+                        )
                     }
                     DriverOverviewModel.InternalError -> {
                         NetworkError(error = NetworkError.INTERNAL_ERROR)
@@ -188,11 +194,18 @@ private fun Header(
 @Composable
 private fun Stat(
     model: DriverOverviewModel.Stat,
+    statHistoryClicked: (DriverStatHistoryType) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val initialModifier = when (model.driverStatHistoryType != null) {
+        true -> modifier.clickable(onClick = {
+            statHistoryClicked(model.driverStatHistoryType)
+        })
+        false -> modifier
+    }
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier
+        modifier = initialModifier
             .fillMaxWidth()
             .padding(
                 vertical = AppTheme.dimensions.paddingXSmall,
@@ -289,6 +302,7 @@ private fun Preview(
             driverName = "firstName lastName",
             racedForClicked = { },
             linkClicked = { },
+            statHistoryClicked = { },
             list = listOf(
                 driverConstructor.toHeader(),
                 fakeStat,

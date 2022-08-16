@@ -1,6 +1,7 @@
 package tmg.flashback.stats.ui.drivers.stathistory
 
 import tmg.flashback.formula1.model.Constructor
+import tmg.flashback.formula1.model.RaceInfo
 import tmg.flashback.formula1.model.model
 
 fun DriverStatHistoryModel.Companion.modelYear(
@@ -10,22 +11,10 @@ fun DriverStatHistoryModel.Companion.modelYear(
 )
 
 fun DriverStatHistoryModel.Companion.modelRace(
-    raceName: String = "name",
-    nationality: String = "country",
-    nationalityISO: String = "countryISO",
-    season: Int = 2020,
-    round: Int = 1,
-    circuitName: String = "circuitName",
-    circuitId: String = "circuitId",
+    raceInfo: RaceInfo = RaceInfo.model(),
     constructor: Constructor? = Constructor.model(),
 ): DriverStatHistoryModel.Race = DriverStatHistoryModel.Race(
-    raceName = raceName,
-    nationality = nationality,
-    nationalityISO = nationalityISO,
-    season = season,
-    round = round,
-    circuitName = circuitName,
-    circuitId = circuitId,
+    raceInfo = raceInfo,
     constructor = constructor
 )
 

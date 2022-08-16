@@ -103,14 +103,14 @@ internal class DriverStatHistoryViewModelTest: BaseTest() {
             assertValue(listOf(
                 DriverStatHistoryModel.modelLabel("2020"),
                 DriverStatHistoryModel.modelRace(
-                    season = 2020, round = 2,
+                    raceInfo = RaceInfo.model(season = 2020, round = 2),
                 ),
                 DriverStatHistoryModel.modelLabel("2021"),
                 DriverStatHistoryModel.modelRace(
-                    season = 2021, round = 1,
+                    raceInfo = RaceInfo.model(season = 2021, round = 1),
                 ),
                 DriverStatHistoryModel.modelRace(
-                    season = 2021, round = 3,
+                    raceInfo = RaceInfo.model(season = 2021, round = 3),
                 )
             ))
         }
@@ -170,14 +170,14 @@ internal class DriverStatHistoryViewModelTest: BaseTest() {
             assertValue(listOf(
                 DriverStatHistoryModel.modelLabel("2020"),
                 DriverStatHistoryModel.modelRace(
-                    season = 2020, round = 2,
+                    raceInfo = RaceInfo.model(season = 2020, round = 2),
                 ),
                 DriverStatHistoryModel.modelLabel("2021"),
                 DriverStatHistoryModel.modelRace(
-                    season = 2021, round = 1,
+                    raceInfo = RaceInfo.model(season = 2021, round = 1),
                 ),
                 DriverStatHistoryModel.modelRace(
-                    season = 2021, round = 3,
+                    raceInfo = RaceInfo.model(season = 2021, round = 3),
                 )
             ))
         }
