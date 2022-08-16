@@ -80,7 +80,7 @@ allprojects {
                         koin_navigation                         : "io.insert-koin:koin-androidx-navigation:$koin_version",
                         koin_compose                            : "io.insert-koin:koin-androidx-compose:$koin_version",
                 ],
-                lottie                                          : "com.airbnb.android:lottie:$lottie",
+                lottie                                          : "com.airbnb.android:lottie-compose:$lottie",
                 play : [
                         ads                                     : "com.google.android.gms:play-services-ads:$play_ads"
                 ],

@@ -21,6 +21,7 @@
             <option value="$PROJECT_DIR$/core/crash-reporting" />
             <option value="$PROJECT_DIR$/core/device" />
             <option value="$PROJECT_DIR$/core/notifications" />
+            <option value="$PROJECT_DIR$/core/permissions" />
             <option value="$PROJECT_DIR$/core/preferences" />
             <option value="$PROJECT_DIR$/core/webbrowser" />
             <option value="$PROJECT_DIR$/data" />
