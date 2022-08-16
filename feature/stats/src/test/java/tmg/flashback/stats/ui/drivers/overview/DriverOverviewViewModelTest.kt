@@ -13,6 +13,7 @@ import tmg.flashback.formula1.model.model
 import tmg.flashback.statistics.repo.DriverRepository
 import tmg.flashback.stats.R
 import tmg.flashback.stats.StatsNavigationComponent
+import tmg.flashback.stats.ui.drivers.stathistory.DriverStatHistoryType
 import tmg.flashback.ui.navigation.ApplicationNavigationComponent
 import tmg.flashback.web.WebNavigationComponent
 import tmg.testutils.BaseTest
@@ -46,6 +47,18 @@ internal class DriverOverviewViewModelTest: BaseTest() {
         every { mockNetworkConnectivityManager.isConnected } returns true
         coEvery { mockDriverRepository.getDriverSeasonCount(any()) } returns 1
         coEvery { mockDriverRepository.fetchDriver(any()) } returns true
+    }
+
+    @Test
+    fun `opening driver stat history launches stats navigation component`() = coroutineTest {
+        initSUT()
+        sut.inputs.setup("driverId", "firstName lastName")
+
+        sut.inputs.openStatHistory(DriverStatHistoryType.POLES)
+
+        verify {
+            mockStatsNavigationComponent.driverStatHistory("driverId", "firstName lastName", DriverStatHistoryType.POLES)
+        }
     }
 
     //region List
