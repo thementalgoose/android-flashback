@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <string name="world_champion">World Champion</string>
+
     <string name="event_type_testing">Test Session</string>
     <string name="event_type_car_launch">Car Launch</string>
     <string name="event_type_other">Other</string>

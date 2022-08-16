@@ -22,6 +22,6 @@ fun Double.pointsDisplay(): String {
         result
     }
     else {
-        result.toDoubleOrNull()?.roundToInt()?.toString() ?: this.toString()
+        result.toDoubleOrNull()?.takeIf { !it.isNaN() }?.roundToInt()?.toString() ?: this.toString()
     }
 }

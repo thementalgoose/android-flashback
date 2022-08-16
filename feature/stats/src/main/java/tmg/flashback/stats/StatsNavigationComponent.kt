@@ -9,6 +9,8 @@ import tmg.flashback.stats.ui.constructors.overview.ConstructorOverviewScreenVM
 import tmg.flashback.stats.ui.constructors.season.ConstructorSeasonScreenVM
 import tmg.flashback.stats.ui.drivers.overview.DriverOverviewScreenVM
 import tmg.flashback.stats.ui.drivers.season.DriverSeasonScreenVM
+import tmg.flashback.stats.ui.drivers.stathistory.DriverStatHistoryBottomSheetFragment
+import tmg.flashback.stats.ui.drivers.stathistory.DriverStatHistoryType
 import tmg.flashback.stats.ui.feature.notificationonboarding.NotificationOnboardingBottomSheetFragment
 import tmg.flashback.stats.ui.search.SearchScreenVM
 import tmg.flashback.stats.ui.settings.notifications.reminder.UpNextReminderBottomSheetFragment
@@ -229,5 +231,14 @@ class StatsNavigationComponent @Inject constructor(
     fun featureNotificationOnboarding() = activityProvider.launch {
         val activity = it as? AppCompatActivity ?: return@launch
         NotificationOnboardingBottomSheetFragment.instance().show(activity.supportFragmentManager, "FEATURE_NOTIFICATIONS")
+    }
+
+    fun driverStatHistory(
+        driverId: String,
+        driverName: String,
+        driverStatHistoryType: DriverStatHistoryType
+    ) = activityProvider.launch {
+        val activity = it as? AppCompatActivity ?: return@launch
+        DriverStatHistoryBottomSheetFragment.instance(driverId, driverName, driverStatHistoryType).show(activity.supportFragmentManager, "DRIVER_STAT_HISTORY")
     }
 }
