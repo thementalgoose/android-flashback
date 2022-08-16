@@ -26,6 +26,7 @@ fun ButtonTertiary(
     text: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    narrow: Boolean = true,
     @DrawableRes
     icon: Int? = null,
     enabled: Boolean = false,
@@ -57,9 +58,9 @@ fun ButtonTertiary(
             modifier = Modifier
                 .padding(
                     start = AppTheme.dimensions.paddingNSmall,
-                    top = AppTheme.dimensions.paddingSmall,
+                    top = if (narrow) AppTheme.dimensions.paddingSmall else AppTheme.dimensions.paddingMedium,
                     end = AppTheme.dimensions.paddingNSmall,
-                    bottom = AppTheme.dimensions.paddingSmall
+                    bottom = if (narrow) AppTheme.dimensions.paddingSmall else AppTheme.dimensions.paddingMedium
                 )
         )
         if (icon != null) {
@@ -103,6 +104,7 @@ private fun PreviewWithIcon() {
     AppThemePreview {
         ButtonTertiary(
             enabled = true,
+            icon = R.drawable.lb_ic_fast_forward,
             text = "Tertiary Button",
             onClick = { }
         )
