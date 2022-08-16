@@ -1,29 +1,40 @@
 package tmg.flashback.stats.ui.drivers.stathistory
 
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Divider
+import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.rememberNestedScrollInteropConnection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import tmg.flashback.formula1.model.Race
+import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.providers.RaceProvider
 import tmg.flashback.stats.R
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
-import tmg.flashback.style.text.TextBody1
-import tmg.flashback.style.text.TextSection
-import tmg.flashback.style.text.TextTitle
+import tmg.flashback.style.text.*
 import tmg.flashback.ui.components.header.Header
+import tmg.flashback.ui.utils.isInPreview
+import tmg.utilities.extensions.format
 
 @Composable
 fun DriverStatHistoryScreenVM(
@@ -77,6 +88,9 @@ private fun DriverStatHistoryScreen(
                     )
                 }
             }
+            item(key = "footer") {
+                Spacer(Modifier.height(AppTheme.dimensions.paddingXLarge))
+            }
         }
     )
 }
@@ -94,24 +108,98 @@ private fun Label(
         modifier = Modifier.padding(horizontal = AppTheme.dimensions.paddingMedium),
         text = model.text
     )
-    Divider()
+    Divider(
+        modifier = Modifier.padding(horizontal = AppTheme.dimensions.paddingMedium),
+        color = AppTheme.colors.backgroundTertiary
+    )
 }
 
 @Composable
 private fun Race(
     model: DriverStatHistoryModel.Race
 ) {
-    TextBody1(text = "Race")
+    Row(modifier = Modifier
+        .padding(
+            vertical = AppTheme.dimensions.paddingSmall,
+            horizontal = AppTheme.dimensions.paddingMedium
+        )
+    ) {
+        val resourceId = when (isInPreview()) {
+            true -> R.drawable.gb
+            false -> LocalContext.current.getFlagResourceAlpha3(model.raceInfo.circuit.countryISO)
+        }
+        Image(
+            modifier = Modifier.size(32.dp),
+            painter = painterResource(id = resourceId),
+            contentDescription = null,
+            contentScale = ContentScale.Fit,
+        )
+        Column(
+            modifier = Modifier
+                .weight(1f)
+                .padding(horizontal = AppTheme.dimensions.paddingSmall)
+        ) {
+            TextBody1(
+                text = model.raceInfo.name,
+                bold = true
+            )
+            TextBody2(
+                modifier = Modifier.padding(vertical = 2.dp),
+                text = model.raceInfo.circuit.name
+            )
+        }
+        Column(
+            horizontalAlignment = Alignment.End
+        ) {
+            TextBody2(
+                bold = true,
+                text = "#${model.raceInfo.round}",
+                textAlign = TextAlign.End,
+            )
+            if (model.constructor != null) {
+                Spacer(Modifier.height(2.dp))
+                Row(Modifier.height(IntrinsicSize.Min)) {
+                    TextBody2(
+                        modifier = Modifier.padding(horizontal = AppTheme.dimensions.paddingXSmall),
+                        text = model.constructor.name
+                    )
+                    Box(
+                        Modifier
+                            .fillMaxHeight()
+                            .width(4.dp)
+                            .clip(RoundedCornerShape(2.dp))
+                            .background(model.constructor.colour)
+                    )
+                }
+            }
+        }
+    }
 }
 
 @Composable
 private fun Year(
     model: DriverStatHistoryModel.Year
 ) {
-    TextSection(
-        modifier = Modifier.padding(horizontal = AppTheme.dimensions.paddingMedium),
-        text = model.season.toString()
-    )
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.padding(
+            horizontal = AppTheme.dimensions.paddingMedium,
+            vertical = AppTheme.dimensions.paddingSmall
+        )
+    ) {
+        Icon(
+            painter = painterResource(id = R.drawable.ic_trophy),
+            contentDescription = stringResource(id = R.string.world_champion),
+            tint = AppTheme.colors.f1Championship,
+            modifier = Modifier.size(32.dp)
+        )
+        TextHeadline2(
+            modifier = Modifier
+                .padding(horizontal = AppTheme.dimensions.paddingMedium)
+                .weight(1f),
+            text = model.season.toString()
+        )
+    }
 }
 
 @PreviewTheme

@@ -154,12 +154,34 @@ class DebugActivity: BaseActivity() {
 
                         Button(
                             label = "Driver Stats History",
-                            value = "Driver Stats History",
+                            value = "Wins",
                             buttonClicked = {
                                 statsNavigationComponent.driverStatHistory(
-                                    "hamilton",
-                                    "Lewis Hamilton",
+                                    "vettel",
+                                    "Sebastian Vettel",
                                     DriverStatHistoryType.WINS
+                                )
+                            }
+                        )
+                        Button(
+                            label = null,
+                            value = "Poles",
+                            buttonClicked = {
+                                statsNavigationComponent.driverStatHistory(
+                                    "vettel",
+                                    "Sebastian Vettel",
+                                    DriverStatHistoryType.POLES
+                                )
+                            }
+                        )
+                        Button(
+                            label = null,
+                            value = "Championships",
+                            buttonClicked = {
+                                statsNavigationComponent.driverStatHistory(
+                                    "vettel",
+                                    "Sebastian Vettel",
+                                    DriverStatHistoryType.CHAMPIONSHIPS
                                 )
                             }
                         )

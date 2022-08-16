@@ -67,7 +67,6 @@ class DriverStatHistoryViewModel @Inject constructor(
 
     private fun buildWinsList(driverHistory: DriverHistory): List<DriverStatHistoryModel> {
         return driverHistory.standings
-            .filter { !it.isInProgress }
             .filter { it.wins >= 1 }
             .sortedBy { it.season }
             .map { it.raceOverview.filter { it.finished == 1 } }
@@ -92,7 +91,6 @@ class DriverStatHistoryViewModel @Inject constructor(
 
     private fun buildPoleList(driverHistory: DriverHistory): List<DriverStatHistoryModel> {
         return driverHistory.standings
-            .filter { !it.isInProgress }
             .sortedBy { it.season }
             .map { it.raceOverview.filter { it.qualified == 1 } }
             .flatten()
