@@ -78,6 +78,7 @@ fun SettingsScreen(
                     SwitchPreference(
                         title = stringResource(id = x.title),
                         subtitle = stringResource(id = x.description),
+                        isEnabled = x.isEnabled,
                         isChecked = x.getState(),
                         preferenceClicked = { prefSwitchClicked(x, !x.getState()) }
                     )

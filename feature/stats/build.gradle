@@ -46,10 +46,6 @@ dependencies {
     // TMG dependencies
     implementation deps.tmg.labelledprogressbar
 
-    // Glide
-    implementation deps.glide.glide
-    kapt deps.glide.kapt
-
     // Flagkit
     implementation deps.flagkit
 

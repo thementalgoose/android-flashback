@@ -63,10 +63,6 @@ allprojects {
                         firestore_ktx                           : "com.google.firebase:firebase-firestore-ktx",
                         messaging                               : "com.google.firebase:firebase-messaging"
                 ],
-                glide : [
-                        glide                                   : "com.github.bumptech.glide:glide:$glide",
-                        kapt                                    : "com.github.bumptech.glide:compiler:$glide"
-                ],
                 hilt : [
                         hilt_android                            : "com.google.dagger:hilt-android:$hilt",
                         hilt_compiler                           : "com.google.dagger:hilt-compiler:$hilt",
@@ -80,7 +76,7 @@ allprojects {
                         koin_navigation                         : "io.insert-koin:koin-androidx-navigation:$koin_version",
                         koin_compose                            : "io.insert-koin:koin-androidx-compose:$koin_version",
                 ],
-                lottie                                          : "com.airbnb.android:lottie:$lottie",
+                lottie                                          : "com.airbnb.android:lottie-compose:$lottie",
                 play : [
                         ads                                     : "com.google.android.gms:play-services-ads:$play_ads"
                 ],

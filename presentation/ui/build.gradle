@@ -29,12 +29,11 @@ dependencies {
     implementation deps.androidx.core
     implementation deps.androidx.appcompat
 
-    // Glide
-    implementation deps.glide.glide
-    kapt deps.glide.kapt
-
     // Shimmer
     implementation deps.shimmer
+
+    // Lottie
+    implementation deps.lottie
 
     // Navigation
     implementation deps.androidx.navigation_fragment

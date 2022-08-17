@@ -83,6 +83,10 @@ sealed class MenuItems(
         val label: Int
     ): MenuItems(label.toString()) {
 
+        object RuntimeNotifications: Feature(
+            label = R.string.feature_banner_runtime_notifications
+        )
+
         object Notifications: Feature(
             label = R.string.feature_banner_notifications
         )
