@@ -7,6 +7,7 @@ import io.mockk.verify
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.stats.R
 import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.stats.repository.NotificationRepository
@@ -22,20 +23,52 @@ internal class UpNextSettingsViewModelTest: BaseTest() {
 
     private val mockNotificationRepository: NotificationRepository = mockk(relaxed = true)
     private val mockResubscribeNotificationUseCase: ResubscribeNotificationsUseCase = mockk(relaxed = true)
+    private val mockBuildConfigManager: BuildConfigManager = mockk(relaxed = true)
     private val mockStatsNavigationComponent: StatsNavigationComponent = mockk(relaxed = true)
 
     private lateinit var sut: SettingsNotificationViewModel
 
     private fun initSUT() {
-        sut = SettingsNotificationViewModel(mockNotificationRepository, mockResubscribeNotificationUseCase, mockStatsNavigationComponent)
+        sut = SettingsNotificationViewModel(
+            notificationRepository = mockNotificationRepository,
+            resubscribeNotificationsUseCase = mockResubscribeNotificationUseCase,
+            buildConfigManager = mockBuildConfigManager,
+            statsNavigationComponent = mockStatsNavigationComponent
+        )
     }
 
     @BeforeEach
     internal fun setUp() {
+        every { mockBuildConfigManager.isRuntimeNotificationsSupported } returns true
         every { mockNotificationRepository.notificationRace } returns true
         every { mockNotificationRepository.notificationQualifying } returns true
         every { mockNotificationRepository.notificationFreePractice } returns true
         every { mockNotificationRepository.notificationOther } returns true
+    }
+
+    @Test
+    fun `initial model list with runtime permissions disabled is expected`() {
+        every { mockBuildConfigManager.isRuntimeNotificationsSupported } returns false
+
+        initSUT()
+
+        val expected = listOf(
+            Pair(R.string.settings_notifications_runtime_enabled, null),
+            Pair(R.string.settings_notifications_runtime_title, R.string.settings_notifications_runtime_description),
+            Pair(R.string.settings_up_next_category_title, null),
+            Pair(R.string.settings_up_next_category_race_title, R.string.settings_up_next_category_race_descrition),
+            Pair(R.string.settings_up_next_category_qualifying_title, R.string.settings_up_next_category_qualifying_descrition),
+            Pair(R.string.settings_up_next_category_free_practice_title, R.string.settings_up_next_category_free_practice_descrition),
+            Pair(R.string.settings_up_next_category_other_title, R.string.settings_up_next_category_other_descrition),
+            Pair(R.string.settings_up_next_title, null),
+            Pair(R.string.settings_up_next_time_before_title, R.string.settings_up_next_time_before_description),
+            Pair(R.string.settings_up_next_results_available_title, null),
+            Pair(R.string.settings_up_next_results_race_title, R.string.settings_up_next_results_race_descrition),
+            Pair(R.string.settings_up_next_results_sprint_title, R.string.settings_up_next_results_sprint_descrition),
+            Pair(R.string.settings_up_next_results_qualifying_title, R.string.settings_up_next_results_qualifying_descrition)
+        )
+
+        sut.models.assertExpectedOrder(expected)
     }
 
     @Test
@@ -57,6 +90,16 @@ internal class UpNextSettingsViewModelTest: BaseTest() {
         )
 
         sut.models.assertExpectedOrder(expected)
+    }
+
+    @Test
+    fun `clicking enable notifications launches enable notification flow`() {
+        initSUT()
+        sut.clickPreference(sut.models.findPref(R.string.settings_notifications_runtime_title))
+
+        verify {
+            TODO()
+        }
     }
 
     @Test

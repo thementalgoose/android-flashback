@@ -17,6 +17,7 @@ sealed class SettingsModel {
         val title: Int,
         @StringRes
         val description: Int,
+        val isEnabled: Boolean = true,
         val getState: () -> Boolean,
         val saveState: (value: Boolean) -> Unit,
         val saveStateNotification: ((value: Boolean) -> Unit)? = null,

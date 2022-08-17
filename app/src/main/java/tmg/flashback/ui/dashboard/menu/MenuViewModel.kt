@@ -11,6 +11,8 @@ import tmg.flashback.debug.debugMenuItemList
 import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.rss.RssNavigationComponent
 import tmg.flashback.formula1.constants.Formula1.decadeColours
+import tmg.flashback.permissions.PermissionNavigationComponent
+import tmg.flashback.permissions.ui.RationaleType
 import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.stats.repository.HomeRepository
 import tmg.flashback.stats.repository.NotificationRepository
@@ -49,6 +51,8 @@ interface MenuViewModelOutputs {
 @HiltViewModel
 class MenuViewModel @Inject constructor(
     private val homeRepository: HomeRepository,
+    private val buildConfigManager: BuildConfigManager,
+    private val permissionNavigationComponent: PermissionNavigationComponent,
     private val notificationRepository: NotificationRepository,
     private val defaultSeasonUseCase: DefaultSeasonUseCase,
     private val changeNightModeUseCase: ChangeNightModeUseCase,
@@ -56,7 +60,7 @@ class MenuViewModel @Inject constructor(
     private val rssNavigationComponent: RssNavigationComponent,
     private val navigationComponent: ApplicationNavigationComponent,
     private val statsNavigationComponent: StatsNavigationComponent,
-    private val debugNavigationComponent: DebugNavigationComponent
+    private val debugNavigationComponent: DebugNavigationComponent,
 ) : ViewModel(), MenuViewModelInputs, MenuViewModelOutputs {
 
     val inputs: MenuViewModelInputs = this
@@ -130,6 +134,9 @@ class MenuViewModel @Inject constructor(
                 statsNavigationComponent.featureNotificationOnboarding()
                 notificationRepository.seenNotificationOnboarding = true
             }
+            MenuItems.Feature.RuntimeNotifications -> {
+                permissionNavigationComponent.showRationale(RationaleType.RuntimeNotifications)
+            }
         }
         links.value = getLinks()
     }
@@ -150,9 +157,15 @@ class MenuViewModel @Inject constructor(
         list.add(MenuItems.Toggle.DarkMode(
             _isEnabled = !styleManager.isDayMode
         ))
-        if (!notificationRepository.seenNotificationOnboarding) {
-            list.add(MenuItems.Divider("b"))
+        list.add(MenuItems.Divider("b"))
+        if (!buildConfigManager.isRuntimeNotificationsSupported) {
+            list.add(MenuItems.Feature.RuntimeNotifications)
+        }
+        if (!notificationRepository.seenNotificationOnboarding && buildConfigManager.isRuntimeNotificationsSupported) {
             list.add(MenuItems.Feature.Notifications)
+        }
+        if (list.any { it is MenuItems.Feature }) {
+            list.add(MenuItems.Divider("c"))
         }
         return list
     }

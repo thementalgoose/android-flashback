@@ -19,7 +19,7 @@ import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextHeadline2
 
 @Composable
-fun RationaleScreen(
+internal fun RationaleScreen(
     type: RationaleType,
     confirmClicked: () -> Unit,
     cancelClicked: () -> Unit,
@@ -57,13 +57,13 @@ fun RationaleScreen(
             ButtonTertiary(
                 modifier = Modifier.weight(1f),
                 narrow = false,
-                text = stringResource(id = R.string.permission_cancel),
+                text = stringResource(id = R.string.permissions_cancel),
                 onClick = cancelClicked
             )
             Spacer(Modifier.width(AppTheme.dimensions.paddingMedium))
             ButtonPrimary(
                 modifier = Modifier.weight(1f),
-                text = stringResource(id = R.string.permission_confirm),
+                text = stringResource(id = R.string.permissions_confirm),
                 onClick = confirmClicked
             )
         }

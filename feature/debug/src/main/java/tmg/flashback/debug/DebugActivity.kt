@@ -26,7 +26,7 @@ import tmg.flashback.debug.styleguide.StyleGuideComposeActivity
 import tmg.flashback.device.repository.DeviceRepository
 import tmg.flashback.notifications.receiver.LocalNotificationBroadcastReceiver
 import tmg.flashback.notifications.repository.NotificationRepository
-import tmg.flashback.permissions.ui.RationaleBottomSheetFragment
+import tmg.flashback.permissions.ui.RationaleType
 import tmg.flashback.statistics.network.manager.BaseUrlLocalOverrideManager
 import tmg.flashback.statistics.repo.CircuitRepository
 import tmg.flashback.statistics.repo.ConstructorRepository
@@ -152,14 +152,6 @@ class DebugActivity: BaseActivity() {
                                 }
                             )
                         }
-
-                        Button(
-                            label = "Rationale",
-                            value = "Rationale",
-                            buttonClicked = {
-                                RationaleBottomSheetFragment().show(supportFragmentManager, "RATIONALE")
-                            }
-                        )
 
                         Button(
                             label = "Driver Stats History",
