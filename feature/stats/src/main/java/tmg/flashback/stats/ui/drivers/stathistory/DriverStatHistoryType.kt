@@ -5,9 +5,10 @@ import tmg.flashback.stats.R
 
 enum class DriverStatHistoryType(
     @StringRes
-    val label: Int
+    val label: Int,
+    val analyticsKey: String
 ) {
-    CHAMPIONSHIPS(R.string.stat_history_championships),
-    WINS(R.string.stat_history_wins),
-    POLES(R.string.stat_history_poles);
+    CHAMPIONSHIPS(R.string.stat_history_championships, "Championships"),
+    WINS(R.string.stat_history_wins, "Wins"),
+    POLES(R.string.stat_history_poles, "Poles");
 }

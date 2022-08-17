@@ -28,10 +28,12 @@ import tmg.flashback.formula1.model.Race
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.providers.RaceProvider
 import tmg.flashback.stats.R
+import tmg.flashback.stats.analytics.AnalyticsConstants.analyticsDriverId
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.*
+import tmg.flashback.ui.components.analytics.ScreenView
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.utils.isInPreview
 import tmg.utilities.extensions.format
@@ -45,6 +47,11 @@ fun DriverStatHistoryScreenVM(
 ) {
     val viewModel = viewModel<DriverStatHistoryViewModel>()
     viewModel.inputs.load(driverId, driverStatHistoryType)
+
+    ScreenView(screenName = "Driver Stat History", mapOf(
+        analyticsDriverId to driverId,
+        "stat" to driverStatHistoryType.analyticsKey
+    ))
 
     val list = viewModel.outputs.results.observeAsState(emptyList())
     DriverStatHistoryScreen(
@@ -97,7 +104,16 @@ private fun DriverStatHistoryScreen(
 
 @Composable
 private fun Empty() {
-    TextBody1(text = "Empty")
+    Column(modifier = Modifier
+        .fillMaxWidth()
+        .padding(
+            start = AppTheme.dimensions.paddingMedium,
+            end = AppTheme.dimensions.paddingMedium,
+            bottom = AppTheme.dimensions.paddingXLarge
+        )
+    ) {
+        TextBody1(text = stringResource(id = R.string.stat_history_empty))
+    }
 }
 
 @Composable
