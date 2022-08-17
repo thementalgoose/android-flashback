@@ -132,7 +132,6 @@ dependencies {
     implementation project(path: ":core:device")
     implementation project(path: ":core:notifications")
     implementation project(path: ":core:preferences")
-    implementation project(path: ":core:permissions")
     implementation project(path: ":core:webbrowser")
 
     implementation project(path: ":presentation:ui")
@@ -171,10 +170,6 @@ dependencies {
 
     // Preferences
     implementation deps.androidx.preference
-
-    // Glide
-    implementation deps.glide.glide
-    kapt deps.glide.kapt
 
     // BugShaker
     implementation deps.falcon
