@@ -1,4 +1,4 @@
-package tmg.flashback.permissions.ui
+package tmg.flashback.ui.permissions
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
@@ -11,12 +11,12 @@ import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
-import tmg.flashback.permissions.R
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.buttons.ButtonPrimary
 import tmg.flashback.style.buttons.ButtonTertiary
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextHeadline2
+import tmg.flashback.ui.R
 
 @Composable
 internal fun RationaleScreen(
@@ -57,13 +57,13 @@ internal fun RationaleScreen(
             ButtonTertiary(
                 modifier = Modifier.weight(1f),
                 narrow = false,
-                text = stringResource(id = R.string.permissions_cancel),
+                text = stringResource(id = R.string.permissions_rationale_cancel),
                 onClick = cancelClicked
             )
             Spacer(Modifier.width(AppTheme.dimensions.paddingMedium))
             ButtonPrimary(
                 modifier = Modifier.weight(1f),
-                text = stringResource(id = R.string.permissions_confirm),
+                text = stringResource(id = R.string.permissions_rationale_confirm),
                 onClick = confirmClicked
             )
         }

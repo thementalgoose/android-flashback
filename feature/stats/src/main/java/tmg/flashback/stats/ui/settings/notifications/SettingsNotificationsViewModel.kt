@@ -14,6 +14,9 @@ import tmg.flashback.stats.repository.NotificationRepository
 import tmg.flashback.stats.repository.models.NotificationReminder
 import tmg.flashback.stats.usecases.ResubscribeNotificationsUseCase
 import tmg.flashback.ui.bottomsheet.BottomSheetItem
+import tmg.flashback.ui.managers.PermissionManager
+import tmg.flashback.ui.permissions.RationaleType
+import tmg.flashback.ui.repository.PermissionRepository
 import tmg.flashback.ui.settings.SettingsModel
 import tmg.flashback.ui.settings.SettingsViewModel
 import tmg.utilities.lifecycle.Event
@@ -40,7 +43,8 @@ interface SettingsNotificationViewModelOutputs {
 class SettingsNotificationViewModel @Inject constructor(
     private val notificationRepository: NotificationRepository,
     private val resubscribeNotificationsUseCase: ResubscribeNotificationsUseCase,
-    private val buildConfigManager: BuildConfigManager,
+    private val permissionRepository: PermissionRepository,
+    private val permissionManager: PermissionManager,
     private val statsNavigationComponent: StatsNavigationComponent
 ): SettingsViewModel(), SettingsNotificationViewModelInputs, SettingsNotificationViewModelOutputs {
 
@@ -48,13 +52,19 @@ class SettingsNotificationViewModel @Inject constructor(
     var outputs: SettingsNotificationViewModelOutputs = this
 
     override val models: List<SettingsModel> get() = mutableListOf<SettingsModel>().apply {
-        if (!buildConfigManager.isRuntimeNotificationsSupported) {
+        if (!permissionRepository.isRuntimeNotificationsEnabled) {
             add(SettingsModel.Header(R.string.settings_notifications_runtime_enabled, beta = true))
             add(SettingsModel.Pref(
                 title = R.string.settings_notifications_runtime_title,
                 description = R.string.settings_notifications_runtime_description,
                 onClick = {
-                    println("ENABLE NOTIFICATIONS!")
+                    if (!permissionRepository.isRuntimeNotificationsEnabled) {
+                        permissionManager
+                            .requestPermission(RationaleType.RuntimeNotifications)
+                            .invokeOnCompletion {
+                                refreshList()
+                            }
+                    }
                 }
             ))
         }
@@ -63,7 +73,7 @@ class SettingsNotificationViewModel @Inject constructor(
             SettingsModel.SwitchPref(
             title = R.string.settings_up_next_category_race_title,
             description = R.string.settings_up_next_category_race_descrition,
-            isEnabled = buildConfigManager.isRuntimeNotificationsSupported,
+            isEnabled = permissionRepository.isRuntimeNotificationsEnabled,
             getState = { notificationRepository.notificationRace },
             saveState = {
                 notificationRepository.notificationRace = it
@@ -73,7 +83,7 @@ class SettingsNotificationViewModel @Inject constructor(
             SettingsModel.SwitchPref(
             title = R.string.settings_up_next_category_qualifying_title,
             description = R.string.settings_up_next_category_qualifying_descrition,
-            isEnabled = buildConfigManager.isRuntimeNotificationsSupported,
+            isEnabled = permissionRepository.isRuntimeNotificationsEnabled,
             getState = { notificationRepository.notificationQualifying },
             saveState = {
                 notificationRepository.notificationQualifying = it
@@ -83,7 +93,7 @@ class SettingsNotificationViewModel @Inject constructor(
             SettingsModel.SwitchPref(
             title = R.string.settings_up_next_category_free_practice_title,
             description = R.string.settings_up_next_category_free_practice_descrition,
-            isEnabled = buildConfigManager.isRuntimeNotificationsSupported,
+            isEnabled = permissionRepository.isRuntimeNotificationsEnabled,
             getState = { notificationRepository.notificationFreePractice },
             saveState = {
                 notificationRepository.notificationFreePractice = it
@@ -93,7 +103,7 @@ class SettingsNotificationViewModel @Inject constructor(
             SettingsModel.SwitchPref(
             title = R.string.settings_up_next_category_other_title,
             description = R.string.settings_up_next_category_other_descrition,
-            isEnabled = buildConfigManager.isRuntimeNotificationsSupported,
+            isEnabled = permissionRepository.isRuntimeNotificationsEnabled,
             getState = { notificationRepository.notificationOther },
             saveState = {
                 notificationRepository.notificationOther = it
@@ -114,7 +124,7 @@ class SettingsNotificationViewModel @Inject constructor(
             SettingsModel.SwitchPref(
             title = R.string.settings_up_next_results_race_title,
             description = R.string.settings_up_next_results_race_descrition,
-            isEnabled = buildConfigManager.isRuntimeNotificationsSupported,
+            isEnabled = permissionRepository.isRuntimeNotificationsEnabled,
             getState = { notificationRepository.notificationNotifyRace },
             saveState = {
                 notificationRepository.notificationNotifyRace = it
@@ -127,7 +137,7 @@ class SettingsNotificationViewModel @Inject constructor(
             SettingsModel.SwitchPref(
             title = R.string.settings_up_next_results_sprint_title,
             description = R.string.settings_up_next_results_sprint_descrition,
-            isEnabled = buildConfigManager.isRuntimeNotificationsSupported,
+            isEnabled = permissionRepository.isRuntimeNotificationsEnabled,
             getState = { notificationRepository.notificationNotifySprint },
             saveState = {
                 notificationRepository.notificationNotifySprint = it
@@ -140,7 +150,7 @@ class SettingsNotificationViewModel @Inject constructor(
             SettingsModel.SwitchPref(
             title = R.string.settings_up_next_results_qualifying_title,
             description = R.string.settings_up_next_results_qualifying_descrition,
-            isEnabled = buildConfigManager.isRuntimeNotificationsSupported,
+            isEnabled = permissionRepository.isRuntimeNotificationsEnabled,
             getState = { notificationRepository.notificationNotifyQualifying },
             saveState = {
                 notificationRepository.notificationNotifyQualifying = it

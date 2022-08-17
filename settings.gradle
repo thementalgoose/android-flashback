@@ -26,7 +26,6 @@ include ':core:crash-reporting'
 include ':core:device'
 include ':core:notifications'
 include ':core:preferences'
-include ':core:permissions'
 include ':core:webbrowser'
 
 include ':presentation:ui'

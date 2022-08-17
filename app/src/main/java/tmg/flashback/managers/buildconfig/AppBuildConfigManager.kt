@@ -35,9 +35,5 @@ class AppBuildConfigManager @Inject constructor(
         get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1
 
     override val isRuntimeNotificationsSupported: Boolean
-        get() {
-            val activity = topActivityProvider.activity ?: return false
-            return Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU ||
-                    ContextCompat.checkSelfPermission(activity, POST_NOTIFICATIONS) == PERMISSION_GRANTED
-        }
+        get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
 }

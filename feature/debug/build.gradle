@@ -26,7 +26,6 @@ dependencies {
     implementation project(path: ':core:device')
     implementation project(path: ':core:notifications')
     implementation project(path: ':core:preferences')
-    implementation project(path: ':core:permissions')
     implementation project(path: ':presentation:ui')
 
     // Feature
