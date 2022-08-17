@@ -1,6 +1,7 @@
 package tmg.flashback.ui.base
 
 import android.os.Bundle
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.StyleRes
 import androidx.appcompat.app.AppCompatActivity
 import tmg.flashback.analytics.manager.AnalyticsManager

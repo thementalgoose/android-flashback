@@ -1,18 +1,28 @@
 package tmg.flashback.permissions.ui
 
+import android.Manifest
+import android.os.Build
+import android.os.Parcelable
 import androidx.annotation.RawRes
+import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
+import kotlinx.parcelize.Parcelize
 import tmg.flashback.permissions.R
 
-enum class RationaleType(
+@Parcelize
+sealed class RationaleType(
+    val permission: String,
     @StringRes
     val description: Int,
     @StringRes
     val title: Int = R.string.permissions_title,
     @RawRes
     val raw: Int? = null
-){
-    RUNTIME_NOTIFICATIONS(
+): Parcelable {
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    object RuntimeNotifications: RationaleType(
+        permission = Manifest.permission.POST_NOTIFICATIONS,
         description = R.string.permissions_rationale_notifications,
         raw = R.raw.notification
     )

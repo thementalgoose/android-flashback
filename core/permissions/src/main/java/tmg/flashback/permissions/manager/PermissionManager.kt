@@ -6,8 +6,11 @@ import androidx.activity.result.contract.ActivityResultContracts.RequestPermissi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat.shouldShowRequestPermissionRationale
 import androidx.core.content.ContextCompat
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
+import tmg.flashback.permissions.ui.RationaleType
 import tmg.flashback.ui.navigation.ActivityProvider
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -16,27 +19,23 @@ import javax.inject.Singleton
 class PermissionManager @Inject constructor(
     private val topActivityProvider: ActivityProvider
 ) {
-//    suspend fun isPermissionGranted(permission: String): Boolean {
-//
-//    }
+    suspend fun isPermissionGranted(rationale: RationaleType): Boolean {
+        return observePermissionGranted(rationale).first()
+    }
 
-    fun isPermissionGranted(permission: String, info: String) = flow<Boolean> {
-        val flowCollector = this
+    fun observePermissionGranted(rationale: RationaleType) = flow<Boolean> {
         val activity = topActivityProvider.activity ?: throw java.lang.IllegalStateException("Trying to request permission when no activity is present")
 
         when {
-            ContextCompat.checkSelfPermission(activity, permission) == PERMISSION_GRANTED -> {
+            ContextCompat.checkSelfPermission(activity, rationale.permission) == PERMISSION_GRANTED -> {
                 emit(true)
-            }
-            shouldShowRequestPermissionRationale(activity, permission) -> {
-
             }
             else -> {
                 val requestPermissionLauncher = (activity as AppCompatActivity)
                     .registerForActivityResult(RequestPermission()) { isGranted ->
                         runBlocking { this@flow.emit(isGranted) }
                     }
-                requestPermissionLauncher.launch(permission)
+                requestPermissionLauncher.launch(rationale.permission)
             }
         }
     }

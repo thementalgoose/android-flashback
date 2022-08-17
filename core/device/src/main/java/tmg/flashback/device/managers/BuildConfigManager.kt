@@ -17,4 +17,6 @@ interface BuildConfigManager {
     val isMonetThemeSupported: Boolean
 
     val isAppShortcutsSupported: Boolean
+
+    val isRuntimeNotificationsSupported: Boolean
 }

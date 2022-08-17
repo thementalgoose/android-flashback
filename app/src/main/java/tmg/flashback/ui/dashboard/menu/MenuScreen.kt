@@ -92,7 +92,6 @@ fun MenuScreen(
                     )
                 }
             }
-            item { Divider() }
             item { SubHeader(text = stringResource(id = R.string.dashboard_all_title))}
             items(season, key = { it.season }) {
                 Row(modifier = Modifier
