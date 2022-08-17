@@ -102,7 +102,6 @@ fun CalendarScreen(
         ?.indexOfFirst { it is CalendarModel.List && it.shouldShowScheduleList }
         ?.takeIf { autoScrollToUpcoming}
 
-    println("Index $indexOf")
     val scrollState = rememberLazyListState(
         initialFirstVisibleItemIndex = indexOf?.coerceIn(0, items.size - 1) ?: 0
     )

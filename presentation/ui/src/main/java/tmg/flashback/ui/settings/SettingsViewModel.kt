@@ -29,7 +29,7 @@ abstract class SettingsViewModel: ViewModel() {
 
     //endregion
 
-    private fun refreshList() {
+    protected fun refreshList() {
         _settings.value = models
     }
 }

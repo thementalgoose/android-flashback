@@ -26,4 +26,11 @@
     <string name="network_error_network">A network error occurred. Please make sure you are connected to the internet and try again</string>
     <string name="network_error_internal">A unknown error occurred</string>
 
+
+    <string name="permissions_rationale_title">We need your permission</string>
+    <string name="permissions_rationale_confirm">Confirm</string>
+    <string name="permissions_rationale_cancel">Not now</string>
+    <string name="permissions_rationale_permission_denied">Permission denied, please check your app settings</string>
+    <string name="permissions_rationale_runtime_notifications_description">If you wish to take advantage of Flashback\'s notifications for both upcoming events and when results are available in the app, we\'ll need your permission to show them!</string>
+
 </resources>

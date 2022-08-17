@@ -1,7 +1,6 @@
 package tmg.flashback.debug
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -13,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
@@ -22,7 +20,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import tmg.flashback.ads.manager.AdsManager
-import tmg.flashback.debug.styleguide.StyleGuideComposeActivity
 import tmg.flashback.device.repository.DeviceRepository
 import tmg.flashback.notifications.receiver.LocalNotificationBroadcastReceiver
 import tmg.flashback.notifications.repository.NotificationRepository
@@ -41,7 +38,6 @@ import tmg.flashback.style.text.TextSection
 import tmg.flashback.ui.base.BaseActivity
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.navigation.ApplicationNavigationComponent
-import tmg.utilities.extensions.copyToClipboard
 import javax.inject.Inject
 
 @SuppressLint("SetTextI18n")
