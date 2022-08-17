@@ -99,20 +99,6 @@ internal class UpNextSettingsViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `clicking enable notifications launches that are enabled dont launch notification flow`() {
-        every { mockPermissionRepository.isRuntimeNotificationsEnabled } returns false
-
-        initSUT()
-
-        every { mockPermissionRepository.isRuntimeNotificationsEnabled } returns true
-        sut.clickPreference(sut.models.findPref(R.string.settings_notifications_runtime_title))
-
-        verify(exactly = 0) {
-            mockPermissionManager.requestPermission(RationaleType.RuntimeNotifications)
-        }
-    }
-
-    @Test
     fun `clicking enable notifications launches that are disabled launches notification flow`() {
         every { mockPermissionRepository.isRuntimeNotificationsEnabled } returns false
         val completableDeferred = CompletableDeferred<Boolean>()
