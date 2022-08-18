@@ -14,12 +14,11 @@ import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.configuration.usecases.ApplyConfigUseCase
@@ -35,15 +34,23 @@ import tmg.flashback.widgets.R
 import tmg.flashback.widgets.WidgetNavigationComponent
 import tmg.utilities.extensions.toEnum
 import tmg.utilities.utils.LocalDateUtils
+import javax.inject.Inject
 
-class UpNextWidgetProvider : AppWidgetProvider(), KoinComponent {
+@AndroidEntryPoint
+class UpNextWidgetProvider @Inject constructor() : AppWidgetProvider() {
 
-    private val crashController: CrashController by inject()
-    private val buildConfigManager: BuildConfigManager by inject()
-    private val applyConfigUseCase: ApplyConfigUseCase by inject()
-    private val fetchConfigUseCase: FetchConfigUseCase by inject()
-    private val scheduleRepository: ScheduleRepository by inject()
-    private val widgetNavigationComponent: WidgetNavigationComponent by inject()
+    @Inject
+    protected lateinit var crashController: CrashController
+    @Inject
+    protected lateinit var buildConfigManager: BuildConfigManager
+    @Inject
+    protected lateinit var applyConfigUseCase: ApplyConfigUseCase
+    @Inject
+    protected lateinit var fetchConfigUseCase: FetchConfigUseCase
+    @Inject
+    protected lateinit var scheduleRepository: ScheduleRepository
+    @Inject
+    protected lateinit var widgetNavigationComponent: WidgetNavigationComponent
 
     override fun onReceive(context: Context?, intent: Intent?) {
         super.onReceive(context, intent)

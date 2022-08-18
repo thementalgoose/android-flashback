@@ -8,7 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import org.koin.android.ext.android.inject
+import dagger.hilt.android.AndroidEntryPoint
 import tmg.flashback.analytics.manager.AnalyticsManager
 import tmg.flashback.crash_reporting.controllers.CrashController
 import tmg.flashback.web.R
@@ -19,18 +19,23 @@ import tmg.flashback.web.repository.WebBrowserRepository
 import tmg.utilities.extensions.getColor
 import tmg.utilities.extensions.views.show
 import java.net.MalformedURLException
+import javax.inject.Inject
 
 @SuppressLint("SetJavaScriptEnabled")
+@AndroidEntryPoint
 internal class WebFragment : Fragment() {
 
     // Binding stripped out and nullable due to loading of webpages and fragment lifecycle causing
     // binding to throw NPE
     private var binding: FragmentWebBinding? = null
 
-    private val analyticsManager: AnalyticsManager by inject()
-    private val crashController: CrashController by inject()
+    @Inject
+    protected lateinit var analyticsManager: AnalyticsManager
+    @Inject
+    protected lateinit var crashController: CrashController
 
-    private val webBrowserRepository: WebBrowserRepository by inject()
+    @Inject
+    protected lateinit var webBrowserRepository: WebBrowserRepository
 
     private lateinit var pageTitle: String
     private lateinit var pageUrl: String

@@ -17,7 +17,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import org.koin.androidx.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.rss.R
 import tmg.flashback.rss.repo.model.SupportedArticleSource
 import tmg.flashback.rss.ui.feed.SourceBadge
@@ -37,7 +37,7 @@ fun SettingsRSSConfigureScreenVM(
 ) {
     ScreenView(screenName = "Configure RSS")
     
-    val viewModel by viewModel<ConfigureRSSViewModel>()
+    val viewModel = hiltViewModel<ConfigureRSSViewModel>()
     val list = viewModel.outputs.list.observeAsState(emptyList())
 
     SettingsRSSConfigureScreen(

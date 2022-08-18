@@ -21,7 +21,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import org.koin.androidx.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.formula1.enums.TrackLayout
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.stats.R
@@ -39,7 +39,7 @@ import tmg.flashback.ui.utils.isInPreview
 fun SearchScreenVM(
     actionUpClicked: () -> Unit
 ) {
-    val viewModel by viewModel<SearchViewModel>()
+    val viewModel = hiltViewModel<SearchViewModel>()
 
     ScreenView(screenName = "Search")
 

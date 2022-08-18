@@ -17,6 +17,31 @@ jobs:
         with:
           pattern: "\\.json$"
 
+  dependency_report:
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      # Checkout
+      - uses: actions/checkout@v2
+
+      # Caching gradle
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      # Dependency report
+      - name: Generating Dependency Report
+        run: ./gradlew dependencyUpdates
+
+      # Print Dependency summary
+      - name: Dumping summary in job
+        run: cat reports/android-flashback-dependencies-result.html >> $GITHUB_STEP_SUMMARY
+
   unit_test:
     runs-on: ubuntu-latest
     timeout-minutes: 15

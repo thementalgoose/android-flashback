@@ -1,10 +1,12 @@
 package tmg.flashback.stats.ui.weekend.details
 
+import android.net.Uri
 import android.webkit.URLUtil
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
@@ -18,6 +20,7 @@ import tmg.flashback.stats.repository.NotificationRepository
 import tmg.flashback.ui.navigation.ApplicationNavigationComponent
 import tmg.flashback.web.WebNavigationComponent
 import tmg.utilities.models.StringHolder
+import javax.inject.Inject
 
 interface DetailsViewModelInputs {
     fun load(season: Int, round: Int)
@@ -28,7 +31,8 @@ interface DetailsViewModelOutputs {
     val list: LiveData<List<DetailsModel>>
 }
 
-class DetailsViewModel(
+@HiltViewModel
+class DetailsViewModel @Inject constructor(
     private val raceRepository: RaceRepository,
     private val notificationRepository: NotificationRepository,
     private val webNavigationComponent: WebNavigationComponent
@@ -64,7 +68,7 @@ class DetailsViewModel(
                 links.add(DetailsModel.Link(
                     label = R.string.details_link_map,
                     icon = R.drawable.ic_details_maps,
-                    url = "geo:0,0?q=${location.lat},${location.lng} (${it.raceInfo.circuit.name})"
+                    url = "geo:${location.lat},${location.lng}?q=${Uri.encode(it.raceInfo.circuit.name)}"
                 ))
             }
             if (it.raceInfo.wikipediaUrl != null && URLUtil.isValidUrl(it.raceInfo.wikipediaUrl)) {

@@ -2,8 +2,9 @@ package tmg.flashback.stats.usecases
 
 import tmg.flashback.formula1.constants.Formula1
 import tmg.flashback.stats.repository.HomeRepository
+import javax.inject.Inject
 
-class DefaultSeasonUseCase(
+class DefaultSeasonUseCase @Inject constructor(
     private val homeRepository: HomeRepository
 ) {
     fun clearDefault() {

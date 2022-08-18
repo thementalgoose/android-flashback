@@ -9,6 +9,8 @@ import tmg.flashback.stats.ui.constructors.overview.ConstructorOverviewScreenVM
 import tmg.flashback.stats.ui.constructors.season.ConstructorSeasonScreenVM
 import tmg.flashback.stats.ui.drivers.overview.DriverOverviewScreenVM
 import tmg.flashback.stats.ui.drivers.season.DriverSeasonScreenVM
+import tmg.flashback.stats.ui.drivers.stathistory.DriverStatHistoryBottomSheetFragment
+import tmg.flashback.stats.ui.drivers.stathistory.DriverStatHistoryType
 import tmg.flashback.stats.ui.feature.notificationonboarding.NotificationOnboardingBottomSheetFragment
 import tmg.flashback.stats.ui.search.SearchScreenVM
 import tmg.flashback.stats.ui.settings.notifications.reminder.UpNextReminderBottomSheetFragment
@@ -19,6 +21,7 @@ import tmg.flashback.ui.navigation.*
 import tmg.flashback.ui.navigation.Navigator
 import tmg.utilities.extensions.format
 import tmg.utilities.extensions.toLocalDate
+import javax.inject.Inject
 
 val Screen.DriverPlaceholder: String get() = "drivers/{driverId}?driverName={driverName}"
 fun Screen.Driver(driverId: String, driverName: String): NavigationDestination = object : NavigationDestination {
@@ -158,7 +161,7 @@ fun NavGraphBuilder.stats(navController: NavController) {
     }
 }
 
-class StatsNavigationComponent(
+class StatsNavigationComponent @Inject constructor(
     private val navigator: Navigator,
     private val activityProvider: ActivityProvider
 ) {
@@ -228,5 +231,14 @@ class StatsNavigationComponent(
     fun featureNotificationOnboarding() = activityProvider.launch {
         val activity = it as? AppCompatActivity ?: return@launch
         NotificationOnboardingBottomSheetFragment.instance().show(activity.supportFragmentManager, "FEATURE_NOTIFICATIONS")
+    }
+
+    fun driverStatHistory(
+        driverId: String,
+        driverName: String,
+        driverStatHistoryType: DriverStatHistoryType
+    ) = activityProvider.launch {
+        val activity = it as? AppCompatActivity ?: return@launch
+        DriverStatHistoryBottomSheetFragment.instance(driverId, driverName, driverStatHistoryType).show(activity.supportFragmentManager, "DRIVER_STAT_HISTORY")
     }
 }

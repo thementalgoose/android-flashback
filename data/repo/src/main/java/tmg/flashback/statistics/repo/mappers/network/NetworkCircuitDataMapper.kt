@@ -1,8 +1,9 @@
 package tmg.flashback.statistics.repo.mappers.network
 
 import tmg.flashback.statistics.room.models.circuit.Circuit
+import javax.inject.Inject
 
-class NetworkCircuitDataMapper {
+class NetworkCircuitDataMapper @Inject constructor() {
 
     @Throws(RuntimeException::class)
     fun mapCircuitData(data: tmg.flashback.statistics.network.models.circuits.Circuit): Circuit {

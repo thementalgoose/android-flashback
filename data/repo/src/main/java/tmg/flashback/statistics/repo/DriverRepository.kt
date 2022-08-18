@@ -11,8 +11,11 @@ import tmg.flashback.statistics.repo.mappers.app.DriverDataMapper
 import tmg.flashback.statistics.repo.mappers.app.DriverMapper
 import tmg.flashback.statistics.repo.mappers.network.*
 import tmg.flashback.statistics.room.FlashbackDatabase
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class DriverRepository(
+@Singleton
+class DriverRepository @Inject constructor(
     private val api: FlashbackApi,
     private val persistence: FlashbackDatabase,
     crashController: CrashController,

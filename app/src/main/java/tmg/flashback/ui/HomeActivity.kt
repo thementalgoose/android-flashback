@@ -5,14 +5,11 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.core.splashscreen.SplashScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.ComposeNavigator
-import androidx.navigation.compose.DialogNavigator
-import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.hilt.android.AndroidEntryPoint
 import tmg.flashback.BuildConfig
 import tmg.flashback.configuration.usecases.ConfigSyncUseCase
 import tmg.flashback.crash_reporting.controllers.CrashController
@@ -23,20 +20,26 @@ import tmg.flashback.stats.usecases.ContentSyncUseCase
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.utils.rememberWindowSizeClass
 import tmg.flashback.ui.base.BaseActivity
-import tmg.flashback.ui.dashboard.DashboardScreen
 import tmg.flashback.ui.navigation.Navigator
 import tmg.flashback.ui.navigation.Screen
 import tmg.flashback.ui.sync.SyncActivity
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class HomeActivity: BaseActivity(), SplashScreen.KeepOnScreenCondition {
 
-    private val viewModel: HomeViewModel by viewModel()
+    private val viewModel: HomeViewModel by viewModels()
 
-    private val contentSyncUseCase: ContentSyncUseCase by inject()
-    private val configSyncUseCase: ConfigSyncUseCase by inject()
-    private val crashController: CrashController by inject()
-    private val navigator: Navigator by inject()
-    private val forceUpgradeNavigationComponent: ForceUpgradeNavigationComponent by inject()
+    @Inject
+    lateinit var contentSyncUseCase: ContentSyncUseCase
+    @Inject
+    lateinit var configSyncUseCase: ConfigSyncUseCase
+    @Inject
+    lateinit var crashController: CrashController
+    @Inject
+    lateinit var navigator: Navigator
+    @Inject
+    lateinit var forceUpgradeNavigationComponent: ForceUpgradeNavigationComponent
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +59,7 @@ class HomeActivity: BaseActivity(), SplashScreen.KeepOnScreenCondition {
             AppTheme {
                 HomeScreen(
                     windowSize = rememberWindowSizeClass(),
+                    navigator = navigator,
                     closeApp = {
                         finish()
                     }

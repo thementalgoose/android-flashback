@@ -2,7 +2,7 @@ apply plugin:  'com.android.library'
 apply from: rootDir.absolutePath + "/gradle/config-android.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-util.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-junit5.gradle"
-apply from: rootDir.absolutePath + "/gradle/config-koin.gradle"
+apply from: rootDir.absolutePath + "/gradle/config-hilt.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-compose.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-compose-providers.gradle"
 
@@ -45,10 +45,6 @@ dependencies {
 
     // TMG dependencies
     implementation deps.tmg.labelledprogressbar
-
-    // Glide
-    implementation deps.glide.glide
-    kapt deps.glide.kapt
 
     // Flagkit
     implementation deps.flagkit

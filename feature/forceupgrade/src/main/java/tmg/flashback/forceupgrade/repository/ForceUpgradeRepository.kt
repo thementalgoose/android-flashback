@@ -4,8 +4,11 @@ import tmg.flashback.configuration.manager.ConfigManager
 import tmg.flashback.forceupgrade.repository.converters.convert
 import tmg.flashback.forceupgrade.repository.json.ForceUpgradeJson
 import tmg.flashback.forceupgrade.repository.model.ForceUpgrade
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class ForceUpgradeRepository(
+@Singleton
+class ForceUpgradeRepository @Inject constructor(
         private val configManager: ConfigManager
 ) {
     companion object {

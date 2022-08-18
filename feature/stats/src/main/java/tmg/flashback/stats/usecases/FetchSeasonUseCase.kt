@@ -5,8 +5,9 @@ import kotlinx.coroutines.flow.flow
 import tmg.flashback.statistics.repo.EventsRepository
 import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.statistics.repo.RaceRepository
+import javax.inject.Inject
 
-class FetchSeasonUseCase(
+class FetchSeasonUseCase @Inject constructor(
     private val overviewRepository: OverviewRepository,
     private val eventsRepository: EventsRepository,
     private val raceRepository: RaceRepository,

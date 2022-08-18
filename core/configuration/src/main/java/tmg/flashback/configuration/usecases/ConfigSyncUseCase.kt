@@ -3,12 +3,15 @@ package tmg.flashback.configuration.usecases
 import android.content.Context
 import android.util.Log
 import androidx.work.*
+import dagger.hilt.android.qualifiers.ApplicationContext
 import org.threeten.bp.LocalTime
 import tmg.flashback.configuration.workmanager.ConfigSyncJob
 import tmg.utilities.extensions.secondsToHHmm
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
-class ConfigSyncUseCase(
+class ConfigSyncUseCase @Inject constructor(
+    @ApplicationContext
     private val applicationContext: Context
 ) {
 

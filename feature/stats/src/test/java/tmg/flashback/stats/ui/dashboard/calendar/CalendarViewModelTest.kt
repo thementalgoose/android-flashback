@@ -6,11 +6,14 @@ import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
+import tmg.flashback.formula1.model.Event
 import tmg.flashback.formula1.model.Overview
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.model.model
+import tmg.flashback.statistics.repo.EventsRepository
 import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.stats.StatsNavigationComponent
+import tmg.flashback.stats.repository.HomeRepository
 import tmg.flashback.stats.repository.NotificationRepository
 import tmg.flashback.stats.repository.models.NotificationSchedule
 import tmg.flashback.stats.usecases.FetchSeasonUseCase
@@ -21,9 +24,11 @@ import tmg.testutils.livedata.testObserve
 internal class CalendarViewModelTest: BaseTest() {
 
     private val mockOverviewRepository: OverviewRepository = mockk(relaxed = true)
+    private val mockEventsRepository: EventsRepository = mockk(relaxed = true)
     private val mockFetchSeasonUseCase: FetchSeasonUseCase = mockk(relaxed = true)
     private val mockNotificationRepository: NotificationRepository = mockk(relaxed = true)
     private val mockStatsNavigationComponent: StatsNavigationComponent = mockk(relaxed = true)
+    private val mockHomeRepository: HomeRepository = mockk(relaxed = true)
 
     private lateinit var underTest: CalendarViewModel
 
@@ -31,8 +36,10 @@ internal class CalendarViewModelTest: BaseTest() {
         underTest = CalendarViewModel(
             fetchSeasonUseCase = mockFetchSeasonUseCase,
             overviewRepository = mockOverviewRepository,
+            eventsRepository = mockEventsRepository,
             notificationRepository = mockNotificationRepository,
             statsNavigationComponent = mockStatsNavigationComponent,
+            homeRepository = mockHomeRepository,
             ioDispatcher = coroutineScope.testDispatcher
         )
     }
@@ -43,12 +50,26 @@ internal class CalendarViewModelTest: BaseTest() {
             Overview.model(
                 overviewRaces = listOf(
                     OverviewRace.model(round = 1, date = LocalDate.of(2020, 1, 1)),
-                    OverviewRace.model(round = 2, date = LocalDate.of(2020, 1, 2))
+                    OverviewRace.model(round = 2, date = LocalDate.of(2020, 1, 3))
                 )
             ))
         }
+        every { mockEventsRepository.getEvents(any()) } returns flow { emit(emptyList()) }
+        every { mockHomeRepository.dashboardAutoscroll } returns false
         every { mockNotificationRepository.notificationSchedule } returns fakeNotificationSchedule
         every { mockFetchSeasonUseCase.fetch(any()) } returns flow { emit(true) }
+    }
+
+    @Test
+    fun `autoscroll reads value from home repository`() {
+        every { mockHomeRepository.dashboardAutoscroll } returns true
+        initUnderTest()
+        underTest.dashboardAutoscroll.test {
+            assertValue(true)
+        }
+        verify {
+            mockHomeRepository.dashboardAutoscroll
+        }
     }
 
     @Test
@@ -87,9 +108,38 @@ internal class CalendarViewModelTest: BaseTest() {
                     showScheduleList = false
                 ),
                 CalendarModel.List(
-                    model = OverviewRace.model(round = 2, date = LocalDate.of(2020, 1, 2)),
+                    model = OverviewRace.model(round = 2, date = LocalDate.of(2020, 1, 3)),
                     notificationSchedule = fakeNotificationSchedule,
                     showScheduleList = false
+                )
+            ))
+        }
+    }
+
+    @Test
+    fun `expected list shows upcoming events intertwined with calendar models`() {
+        every { mockEventsRepository.getEvents(2020) } returns flow { emit(listOf(
+            Event.model(date = LocalDate.of(2020, 1, 2)),
+            Event.model(date = LocalDate.now().plusDays(1))
+        )) }
+
+        initUnderTest()
+        underTest.load(2020)
+
+        underTest.outputs.items.test {
+            assertValue(listOf(
+                CalendarModel.List(
+                    model = OverviewRace.model(round = 1, date = LocalDate.of(2020, 1, 1)),
+                    notificationSchedule = fakeNotificationSchedule,
+                    showScheduleList = false
+                ),
+                CalendarModel.List(
+                    model = OverviewRace.model(round = 2, date = LocalDate.of(2020, 1, 3)),
+                    notificationSchedule = fakeNotificationSchedule,
+                    showScheduleList = false
+                ),
+                CalendarModel.Event(
+                    Event.model(date = LocalDate.now().plusDays(1))
                 )
             ))
         }

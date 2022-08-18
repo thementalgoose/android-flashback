@@ -6,8 +6,9 @@ import androidx.core.net.toUri
 import tmg.flashback.appshortcuts.manager.AppShortcutManager
 import tmg.flashback.appshortcuts.models.ShortcutInfo
 import tmg.flashback.stats.R
+import javax.inject.Inject
 
-class SearchAppShortcutUseCase(
+class SearchAppShortcutUseCase @Inject constructor(
     private val appShortcutManager: AppShortcutManager
 ) {
 

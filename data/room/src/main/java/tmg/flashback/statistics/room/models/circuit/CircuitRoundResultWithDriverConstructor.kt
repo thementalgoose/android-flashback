@@ -9,12 +9,12 @@ data class CircuitRoundResultWithDriverConstructor(
     @Embedded
     val result: CircuitRoundResult,
     @Relation(
-        parentColumn = "id",
+        parentColumn = "constructor_id",
         entityColumn = "id"
     )
     val constructor: Constructor,
     @Relation(
-        parentColumn = "id",
+        parentColumn = "driver_id",
         entityColumn = "id"
     )
     val driver: Driver

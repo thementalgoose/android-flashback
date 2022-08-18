@@ -1,14 +1,17 @@
 package tmg.flashback.managers
 
 import android.content.Context
+import dagger.hilt.android.qualifiers.ApplicationContext
 import tmg.flashback.R
 import tmg.flashback.ui.managers.StyleManager
 import tmg.flashback.ui.model.NightMode
 import tmg.flashback.ui.model.Theme
 import tmg.flashback.ui.repository.ThemeRepository
 import tmg.utilities.extensions.isInDayMode
+import javax.inject.Inject
 
-class AppStyleManager(
+class AppStyleManager @Inject constructor(
+    @ApplicationContext
     private val applicationContext: Context,
     private val themeRepository: ThemeRepository
 ): StyleManager {

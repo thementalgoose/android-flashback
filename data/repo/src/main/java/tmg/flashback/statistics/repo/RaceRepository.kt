@@ -16,8 +16,11 @@ import tmg.flashback.statistics.repo.mappers.app.RaceMapper
 import tmg.flashback.statistics.repo.mappers.network.*
 import tmg.flashback.statistics.repo.repository.CacheRepository
 import tmg.flashback.statistics.room.FlashbackDatabase
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class RaceRepository(
+@Singleton
+class RaceRepository @Inject constructor(
     private val api: FlashbackApi,
     private val persistence: FlashbackDatabase,
     crashController: CrashController,

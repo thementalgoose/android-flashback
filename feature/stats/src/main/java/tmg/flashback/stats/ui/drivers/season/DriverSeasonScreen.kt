@@ -1,5 +1,6 @@
 package tmg.flashback.stats.ui.drivers.season
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -12,25 +13,29 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import org.koin.androidx.compose.viewModel
 import org.threeten.bp.LocalDate
 import tmg.flashback.formula1.enums.isStatusFinished
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.DriverConstructor
+import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.providers.DriverConstructorProvider
 import tmg.flashback.stats.R
 import tmg.flashback.stats.analytics.AnalyticsConstants.analyticsDriverId
 import tmg.flashback.stats.analytics.AnalyticsConstants.analyticsSeason
 import tmg.flashback.stats.components.Timeline
 import tmg.flashback.stats.ui.drivers.overview.PipeType
+import tmg.flashback.stats.ui.shared.DriverImage
 import tmg.flashback.stats.ui.weekend.shared.DriverInfo
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
@@ -44,6 +49,8 @@ import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.messages.Message
 import tmg.flashback.ui.components.progressbar.ProgressBar
 import tmg.flashback.ui.model.AnimationSpeed
+import tmg.flashback.ui.utils.isInPreview
+import tmg.utilities.extensions.format
 import tmg.utilities.extensions.ordinalAbbreviation
 import kotlin.math.roundToInt
 
@@ -52,6 +59,7 @@ import kotlin.math.roundToInt
  */
 private val resultColumnFlexBorder: Dp = 300.dp
 private val resultColumnWidth: Dp = 60.dp
+private val headerImageSize: Dp = 120.dp
 
 @Composable
 fun DriverSeasonScreenVM(
@@ -65,7 +73,7 @@ fun DriverSeasonScreenVM(
         analyticsSeason to season.toString()
     ))
 
-    val viewModel by viewModel<DriverSeasonViewModel>()
+    val viewModel = hiltViewModel<DriverSeasonViewModel>()
     viewModel.inputs.setup(driverId, season)
 
     val list = viewModel.outputs.list.observeAsState(emptyList())
@@ -107,6 +115,12 @@ fun DriverSeasonScreen(
             }
             items(list, key = { it.key }) {
                 when (it) {
+                    is DriverSeasonModel.Header -> {
+                        tmg.flashback.stats.ui.drivers.season.Header(
+                            model = it,
+                            linkClicked = { }
+                        )
+                    }
                     is DriverSeasonModel.Message -> {
                         Message(title = stringResource(id = it.label, *it.args.toTypedArray()))
                     }
@@ -394,6 +408,62 @@ private fun Result(
                 }
             )
         }
+    }
+}
+
+@Composable
+private fun Header(
+    model: DriverSeasonModel.Header,
+    linkClicked: (String) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Column(modifier = modifier.padding(
+        horizontal = AppTheme.dimensions.paddingMedium
+    )) {
+        DriverImage(
+            photoUrl = model.driver.photoUrl,
+            number = model.driver.number,
+            code = model.driver.code,
+            size = headerImageSize
+        )
+        Row(
+            modifier = Modifier
+                .padding(top = 4.dp)
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            val resourceId = when (isInPreview()) {
+                true -> R.drawable.gb
+                false -> LocalContext.current.getFlagResourceAlpha3(model.driver.nationalityISO)
+            }
+            Image(
+                modifier = Modifier
+                    .size(16.dp)
+                    .align(Alignment.CenterVertically),
+                painter = painterResource(id = resourceId),
+                contentDescription = null,
+                contentScale = ContentScale.Fit,
+            )
+            Spacer(Modifier.width(AppTheme.dimensions.paddingSmall))
+
+            val birthday = model.driver.dateOfBirth
+                .format("dd MMMM yyyy")
+                ?.let { birthday -> stringResource(id = R.string.driver_overview_stat_birthday, birthday) } ?: ""
+            TextBody1(
+                modifier = Modifier
+                    .padding(vertical = AppTheme.dimensions.paddingXSmall)
+                    .fillMaxWidth(),
+                text = "${model.driver.nationality} - $birthday"
+            )
+        }
+//        if (model.driver.wikiUrl?.isNotEmpty() == true) {
+//            ButtonTertiary(
+//                text = stringResource(id = R.string.details_link_wikipedia),
+//                onClick = { linkClicked(model.driver.wikiUrl!!) },
+//                icon = R.drawable.ic_details_wikipedia
+//            )
+//            Spacer(Modifier.height(AppTheme.dimensions.paddingXSmall))
+//        }
     }
 }
 

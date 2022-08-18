@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.*
 import tmg.flashback.formula1.constants.Formula1
@@ -11,6 +12,7 @@ import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.model.Race
 import tmg.flashback.statistics.repo.RaceRepository
 import tmg.flashback.stats.StatsNavigationComponent
+import javax.inject.Inject
 
 interface ConstructorViewModelInputs {
     fun load(season: Int, round: Int)
@@ -21,7 +23,8 @@ interface ConstructorViewModelOutputs {
     val list: LiveData<List<ConstructorModel>>
 }
 
-class ConstructorViewModel(
+@HiltViewModel
+class ConstructorViewModel @Inject constructor(
     private val raceRepository: RaceRepository,
     private val statsNavigationComponent: StatsNavigationComponent,
     private val ioDispatcher: CoroutineDispatcher

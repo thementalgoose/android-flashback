@@ -3,6 +3,7 @@ package tmg.flashback.ui
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import tmg.flashback.BuildConfig
 import tmg.flashback.configuration.repository.ConfigRepository
@@ -13,6 +14,7 @@ import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.statistics.repo.repository.CacheRepository
 import tmg.flashback.stats.usecases.ScheduleNotificationsUseCase
 import tmg.flashback.stats.usecases.SearchAppShortcutUseCase
+import javax.inject.Inject
 
 //region Inputs
 
@@ -33,7 +35,8 @@ interface HomeViewModelOutputs {
 
 //endregion
 
-class HomeViewModel(
+@HiltViewModel
+class HomeViewModel @Inject constructor(
     private val configRepository: ConfigRepository,
     private val applyConfigUseCase: ApplyConfigUseCase,
     private val rssController: RSSController,

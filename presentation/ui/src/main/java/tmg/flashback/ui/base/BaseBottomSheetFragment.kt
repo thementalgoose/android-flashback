@@ -8,14 +8,15 @@ import androidx.viewbinding.ViewBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import org.koin.android.ext.android.inject
 import tmg.flashback.analytics.manager.AnalyticsManager
+import javax.inject.Inject
 
 abstract class BaseBottomSheetFragment<T: ViewBinding>: BottomSheetDialogFragment() {
 
     lateinit var binding: T
 
-    protected val analyticsManager: AnalyticsManager by inject()
+    @Inject
+    protected lateinit var analyticsManager: AnalyticsManager
 
     override fun onCreateView(
         inflater: LayoutInflater,

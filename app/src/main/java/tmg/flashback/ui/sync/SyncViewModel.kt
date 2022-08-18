@@ -1,6 +1,7 @@
 package tmg.flashback.ui.sync
 
 import androidx.lifecycle.*
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.combine
@@ -21,6 +22,7 @@ import tmg.flashback.stats.usecases.ScheduleNotificationsUseCase
 import tmg.flashback.stats.usecases.SearchAppShortcutUseCase
 import tmg.flashback.ui.sync.SyncState.*
 import tmg.utilities.lifecycle.DataEvent
+import javax.inject.Inject
 
 //region Inputs
 
@@ -42,7 +44,8 @@ interface SyncViewModelOutputs {
 
 //endregion
 
-class SyncViewModel(
+@HiltViewModel
+class SyncViewModel @Inject constructor(
     private val rssController: RSSController,
     private val circuitRepository: CircuitRepository,
     private val constructorRepository: ConstructorRepository,

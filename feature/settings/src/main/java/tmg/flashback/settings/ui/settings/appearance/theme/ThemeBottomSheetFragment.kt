@@ -4,8 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.hilt.android.AndroidEntryPoint
 import tmg.flashback.settings.R
 import tmg.flashback.settings.databinding.FragmentBottomSheetThemeBinding
 import tmg.flashback.ui.base.BaseBottomSheetFragment
@@ -14,9 +15,10 @@ import tmg.flashback.ui.model.Theme
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 
+@AndroidEntryPoint
 internal class ThemeBottomSheetFragment: BaseBottomSheetFragment<FragmentBottomSheetThemeBinding>() {
 
-    private val viewModel: ThemeViewModel by viewModel()
+    private val viewModel: ThemeViewModel by viewModels()
 
     private lateinit var adapter: BottomSheetAdapter
 

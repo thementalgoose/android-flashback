@@ -2,12 +2,14 @@ package tmg.flashback.stats.ui.settings.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import dagger.hilt.android.lifecycle.HiltViewModel
 import tmg.flashback.stats.R
 import tmg.flashback.stats.repository.HomeRepository
 import tmg.flashback.stats.usecases.DefaultSeasonUseCase
 import tmg.flashback.ui.settings.SettingsModel
 import tmg.flashback.ui.settings.SettingsViewModel
 import tmg.utilities.lifecycle.Event
+import javax.inject.Inject
 
 //region Inputs
 
@@ -24,7 +26,8 @@ interface SettingsHomeViewModelOutputs {
 //endregion
 
 
-class SettingsHomeViewModel(
+@HiltViewModel
+class SettingsHomeViewModel @Inject constructor(
     private val defaultSeasonUseCase: DefaultSeasonUseCase,
     private val homeRepository: HomeRepository,
 ): SettingsViewModel(), SettingsHomeViewModelInputs, SettingsHomeViewModelOutputs {

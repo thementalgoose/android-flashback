@@ -53,7 +53,7 @@ fun DriverPoints(
                 contentScale = ContentScale.Fit,
             )
         }
-        TextBody2(text = pluralResource(R.plurals.race_points, points.roundToInt(), points.pointsDisplay()))
+        TextBody2(text = pluralResource(R.plurals.race_points, points.takeIf { !it.isNaN() }?.roundToInt() ?: 0, points.pointsDisplay()))
     }
 }
 

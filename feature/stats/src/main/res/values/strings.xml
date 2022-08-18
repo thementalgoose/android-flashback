@@ -4,6 +4,11 @@
     <string name="weekend_race_round_season" formatted="false">Round %d, %d</string>
     <string name="weekend_info_laps">%s laps</string>
 
+    <string name="stat_history_championships">Championships</string>
+    <string name="stat_history_wins">Wins</string>
+    <string name="stat_history_poles">Pole Positions</string>
+    <string name="stat_history_empty">No results found!</string>
+
     <!-- App Shortcuts -->
     <string name="app_shortcut_search_shorttitle">Search</string>
     <string name="app_shortcut_search_longtitle">Search Formula 1 Drivers, Constructors and Circuits</string>
@@ -78,6 +83,9 @@
     <string name="settings_dashboard_autoscroll_title">Autoscroll</string>
     <string name="settings_dashboard_autoscroll_description">Autoscroll to the next race when you load the app when you\'re viewing the current season</string>
 
+    <string name="settings_notifications_runtime_enabled">Permissions</string>
+    <string name="settings_notifications_runtime_title">Enable Notifications</string>
+    <string name="settings_notifications_runtime_description">Grant permission for Flashback to send you notifications</string>
 
     <string name="settings_up_next_category_title">Categories</string>
     <string name="settings_up_next_category_race_title">Race</string>

@@ -5,10 +5,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import tmg.flashback.configuration.usecases.ResetConfigUseCase
 import tmg.flashback.forceupgrade.BuildConfig
 import tmg.flashback.forceupgrade.repository.ForceUpgradeRepository
+import javax.inject.Inject
 
 //region Inputs
 
@@ -28,7 +30,8 @@ interface ForceUpgradeViewModelOutputs {
 
 //endregion
 
-internal class ForceUpgradeViewModel(
+@HiltViewModel
+internal class ForceUpgradeViewModel @Inject constructor(
     private val forceUpgradeRepository: ForceUpgradeRepository,
     private val resetConfigUseCase: ResetConfigUseCase
 ): ViewModel(), ForceUpgradeViewModelInputs, ForceUpgradeViewModelOutputs {

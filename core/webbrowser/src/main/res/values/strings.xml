@@ -11,4 +11,7 @@
 
     <string name="choose_browser">Open in browser</string>
     <string name="choose_share">Share with</string>
+
+    <string name="copy_to_clipboard">URL Copied to clipboard</string>
+    <string name="unable_to_open_url">Unable to open url</string>
 </resources>

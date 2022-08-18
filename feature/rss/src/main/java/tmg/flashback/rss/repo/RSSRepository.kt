@@ -5,8 +5,11 @@ import tmg.flashback.prefs.manager.PreferenceManager
 import tmg.flashback.rss.repo.converters.convert
 import tmg.flashback.rss.repo.json.SupportedSourcesJson
 import tmg.flashback.rss.repo.model.SupportedSource
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class RSSRepository(
+@Singleton
+class RSSRepository @Inject constructor(
     private val preferenceManager: PreferenceManager,
     private val configManager: ConfigManager
 ) {

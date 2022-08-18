@@ -2,8 +2,11 @@ package tmg.flashback.configuration.repository
 
 import tmg.flashback.configuration.constants.Migrations
 import tmg.flashback.prefs.manager.PreferenceManager
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class ConfigRepository(
+@Singleton
+class ConfigRepository @Inject constructor(
         private val preferenceManager: PreferenceManager
 ) {
 

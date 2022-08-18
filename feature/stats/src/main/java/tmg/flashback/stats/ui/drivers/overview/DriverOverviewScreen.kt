@@ -20,13 +20,14 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import org.koin.androidx.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.formula1.model.DriverConstructor
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.providers.DriverConstructorProvider
 import tmg.flashback.stats.R
 import tmg.flashback.stats.analytics.AnalyticsConstants.analyticsDriverId
 import tmg.flashback.stats.components.Timeline
+import tmg.flashback.stats.ui.drivers.stathistory.DriverStatHistoryType
 import tmg.flashback.stats.ui.shared.DriverImage
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
@@ -54,7 +55,7 @@ fun DriverOverviewScreenVM(
         analyticsDriverId to driverId
     ))
 
-    val viewModel by viewModel<DriverOverviewViewModel>()
+    val viewModel = hiltViewModel<DriverOverviewViewModel>()
     viewModel.inputs.setup(driverId, driverName)
 
     val list = viewModel.outputs.list.observeAsState(emptyList())
@@ -70,6 +71,7 @@ fun DriverOverviewScreenVM(
             racedForClicked = {
                 viewModel.inputs.openSeason(it.season)
             },
+            statHistoryClicked = viewModel.inputs::openStatHistory,
             actionUpClicked = actionUpClicked,
         )
     }
@@ -80,6 +82,7 @@ fun DriverOverviewScreen(
     actionUpClicked: () -> Unit,
     linkClicked: (String) -> Unit,
     driverName: String,
+    statHistoryClicked: (DriverStatHistoryType) -> Unit,
     racedForClicked: (DriverOverviewModel.RacedFor) -> Unit,
     list: List<DriverOverviewModel>
 ) {
@@ -112,7 +115,10 @@ fun DriverOverviewScreen(
                         )
                     }
                     is DriverOverviewModel.Stat -> {
-                        Stat(model = it)
+                        Stat(
+                            model = it,
+                            statHistoryClicked = statHistoryClicked
+                        )
                     }
                     DriverOverviewModel.InternalError -> {
                         NetworkError(error = NetworkError.INTERNAL_ERROR)
@@ -140,6 +146,8 @@ private fun Header(
     )) {
         DriverImage(
             photoUrl = model.driverImg,
+            code = model.driverCode,
+            number = model.driverNumber,
             size = headerImageSize
         )
         Row(
@@ -186,11 +194,18 @@ private fun Header(
 @Composable
 private fun Stat(
     model: DriverOverviewModel.Stat,
+    statHistoryClicked: (DriverStatHistoryType) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val initialModifier = when (model.driverStatHistoryType != null) {
+        true -> modifier.clickable(onClick = {
+            statHistoryClicked(model.driverStatHistoryType)
+        })
+        false -> modifier
+    }
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier
+        modifier = initialModifier
             .fillMaxWidth()
             .padding(
                 vertical = AppTheme.dimensions.paddingXSmall,
@@ -287,6 +302,7 @@ private fun Preview(
             driverName = "firstName lastName",
             racedForClicked = { },
             linkClicked = { },
+            statHistoryClicked = { },
             list = listOf(
                 driverConstructor.toHeader(),
                 fakeStat,
@@ -332,6 +348,7 @@ private fun DriverConstructor.toHeader(): DriverOverviewModel.Header = DriverOve
     driverName = this.driver.name,
     driverNumber = this.driver.number,
     driverImg = this.driver.photoUrl ?: "",
+    driverCode = this.driver.code,
     driverBirthday = this.driver.dateOfBirth,
     driverWikiUrl = this.driver.wikiUrl ?: "",
     driverNationalityISO = this.driver.nationalityISO,

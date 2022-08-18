@@ -15,14 +15,13 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.launch
-import org.koin.androidx.compose.viewModel
 import tmg.flashback.stats.ui.dashboard.calendar.CalendarScreenVM
 import tmg.flashback.stats.ui.dashboard.constructors.ConstructorStandingsScreenVM
 import tmg.flashback.stats.ui.dashboard.drivers.DriverStandingsScreenVM
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.utils.WindowSize
-import tmg.flashback.ui.components.analytics.ScreenView
 import tmg.flashback.ui.components.layouts.OverlappingPanels
 import tmg.flashback.ui.components.layouts.OverlappingPanelsValue
 import tmg.flashback.ui.components.layouts.rememberOverlappingPanelsState
@@ -42,7 +41,7 @@ data class DashboardScreenState(
 fun DashboardScreen(
     windowSize: WindowSize
 ) {
-    val viewModel by viewModel<DashboardViewModel>()
+    val viewModel = hiltViewModel<DashboardViewModel>()
 
     val tabState = viewModel.outputs.currentTab.observeAsState()
     val panelsState = rememberOverlappingPanelsState(OverlappingPanelsValue.Closed)

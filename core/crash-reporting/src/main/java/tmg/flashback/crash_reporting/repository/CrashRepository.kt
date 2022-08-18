@@ -1,8 +1,11 @@
 package tmg.flashback.crash_reporting.repository
 
 import tmg.flashback.prefs.manager.PreferenceManager
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class CrashRepository(
+@Singleton
+class CrashRepository @Inject constructor(
     private val preferenceManager: PreferenceManager
 ) {
     companion object {

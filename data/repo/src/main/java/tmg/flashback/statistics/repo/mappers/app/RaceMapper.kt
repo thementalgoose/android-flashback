@@ -9,8 +9,9 @@ import tmg.flashback.statistics.room.models.race.RaceInfoWithCircuit
 import tmg.flashback.statistics.room.models.race.SprintDriverResult
 import tmg.utilities.utils.LocalDateUtils.Companion.requireFromDate
 import tmg.utilities.utils.LocalTimeUtils.Companion.fromTime
+import javax.inject.Inject
 
-class RaceMapper(
+class RaceMapper @Inject constructor(
     private val circuitMapper: CircuitMapper,
     private val driverDataMapper: DriverDataMapper,
     private val constructorDataMapper: ConstructorDataMapper,

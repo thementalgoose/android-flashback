@@ -1,10 +1,20 @@
 package tmg.flashback.managers.buildconfig
 
+import android.Manifest
+import android.Manifest.permission.POST_NOTIFICATIONS
+import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.os.Build
+import androidx.core.content.ContextCompat
 import tmg.flashback.BuildConfig
 import tmg.flashback.device.managers.BuildConfigManager
+import tmg.flashback.ui.navigation.ActivityProvider
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class AppBuildConfigManager : BuildConfigManager {
+@Singleton
+class AppBuildConfigManager @Inject constructor(
+    private val topActivityProvider: ActivityProvider
+) : BuildConfigManager {
 
     override val versionCode: Int
         get() = BuildConfig.VERSION_CODE
@@ -23,4 +33,7 @@ class AppBuildConfigManager : BuildConfigManager {
 
     override val isAppShortcutsSupported: Boolean
         get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1
+
+    override val isRuntimeNotificationsSupported: Boolean
+        get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
 }

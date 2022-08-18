@@ -4,8 +4,9 @@ import tmg.flashback.statistics.network.models.circuits.CircuitPreviewPosition
 import tmg.flashback.statistics.network.models.circuits.CircuitResult
 import tmg.flashback.statistics.network.models.circuits.CircuitResultRace
 import tmg.flashback.statistics.room.models.circuit.*
+import javax.inject.Inject
 
-class NetworkCircuitMapper {
+class NetworkCircuitMapper @Inject constructor() {
 
     @Throws(RuntimeException::class)
     fun mapCircuitRounds(circuitId: String, resultRace: CircuitResult): CircuitRound {

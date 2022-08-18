@@ -7,8 +7,11 @@ import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.statistics.repo.base.BaseRepository
 import tmg.flashback.statistics.repo.mappers.app.OverviewMapper
 import tmg.flashback.statistics.room.FlashbackDatabase
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class ScheduleRepository(
+@Singleton
+class ScheduleRepository @Inject constructor(
     private val persistence: FlashbackDatabase,
     crashController: CrashController,
     networkConnectivityManager: NetworkConnectivityManager,

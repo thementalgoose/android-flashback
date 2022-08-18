@@ -1,24 +1,37 @@
 package tmg.flashback.statistics.room.di
 
+import android.content.Context
 import android.util.Log
 import androidx.room.Room
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
-import org.koin.dsl.module
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import tmg.flashback.statistics.room.FlashbackDatabase
+import java.util.*
+import javax.inject.Singleton
 
-val roomModule = module {
-    single { Room
-        .databaseBuilder(get(), FlashbackDatabase::class.java, "flashback-database")
+@Module
+@InstallIn(SingletonComponent::class)
+internal class RoomModule {
+
+    @Provides
+    @Singleton
+    fun flashbackDatabase(@ApplicationContext applicationContext: Context) = Room
+        .databaseBuilder(applicationContext, FlashbackDatabase::class.java, "flashback-database")
         .addMigrations(
             MIGRATION_1_2,
             MIGRATION_2_3,
             MIGRATION_3_4,
             MIGRATION_4_5,
-            MIGRATION_5_6
+            MIGRATION_5_6,
+            MIGRATION_6_7
         )
         .build()
-    }
+
 }
 
 private val MIGRATION_1_2 = object : Migration(1,2) {
@@ -89,6 +102,14 @@ private val MIGRATION_4_5 = object : Migration(4, 5) {
 private val MIGRATION_5_6 = object : Migration(5, 6) {
     override fun migrate(database: SupportSQLiteDatabase) {
         database.execSQL("ALTER TABLE Overview ADD COLUMN has_sprint_data INTEGER NOT NULL DEFAULT 0")
+        Log.i("Database", "Migrated DB from version $startVersion to $endVersion")
+    }
+}
+
+private val MIGRATION_6_7 = object : Migration(6, 7) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        database.execSQL("ALTER TABLE CircuitRound ADD COLUMN season_round TEXT NOT NULL DEFAULT 'CIRCUIT_ROUND_ADDED'")
+        database.execSQL("ALTER TABLE CircuitRoundResult ADD COLUMN season_round_id TEXT NOT NULL DEFAULT 'CIRCUIT_ROUND_RESULT_ADDED'")
         Log.i("Database", "Migrated DB from version $startVersion to $endVersion")
     }
 }

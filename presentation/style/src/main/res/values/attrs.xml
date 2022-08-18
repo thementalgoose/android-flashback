@@ -12,19 +12,11 @@
     <attr name="backgroundTertiaryInverse" format="color" />
     <attr name="backgroundNav" format="color" />
 
-    <!-- Items -->
-
-    <attr name="backgroundItem" format="color" />
-    <attr name="backgroundItemSelected" format="color" />
-
     <!-- Content -->
 
     <attr name="contentPrimary" format="color" />
     <attr name="contentSecondary" format="color" />
     <attr name="contentTertiary" format="color" />
-    <attr name="contentPrimaryInverse" format="color" />
-    <attr name="contentSecondaryInverse" format="color" />
-    <attr name="contentTertiaryInverse" format="color" />
 
     <!-- Ripple -->
 

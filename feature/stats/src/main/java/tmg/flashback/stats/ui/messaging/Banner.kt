@@ -7,35 +7,28 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import org.koin.androidx.compose.inject
+import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.stats.R
-import tmg.flashback.stats.repository.HomeRepository
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
-import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
-import tmg.flashback.ui.components.layouts.Container
-import tmg.flashback.ui.navigation.ApplicationNavigationComponent
-import tmg.flashback.web.WebNavigationComponent
+
 
 @Composable
 fun Banner(
     modifier: Modifier = Modifier
 ) {
-    val homeRepository: HomeRepository by inject()
-    val banner = homeRepository.banner ?: return
-
-    val navigationComponent: WebNavigationComponent by inject()
+    val viewModel = hiltViewModel<BannerViewModel>()
+    val banner = viewModel.message ?: return
 
     if (banner.url != null) {
         Banner(
             message = banner.message,
             showLink = true,
             modifier = modifier.clickable(onClick = {
-                navigationComponent.web(banner.url)
+                viewModel.navigateToWeb(banner.url)
             })
         )
     } else {

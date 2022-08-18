@@ -1,0 +1,77 @@
+import groovy.xml.MarkupBuilder
+
+apply plugin: 'com.github.ben-manes.versions'
+
+def gitSha() {
+    return 'git rev-parse --short HEAD'.execute([], rootDir).text.trim()
+}
+
+dependencyUpdates {
+    outputFormatter = { result ->
+        def updatable = result.outdated.dependencies
+        if (!updatable.isEmpty()) {
+            def filepath = "reports/${project.name}-dependencies-result.html"
+            def file = new File(filepath)
+            if (!file.exists()) {
+                // Make the
+                file.getParentFile().mkdirs()
+            }
+            def fileWriter = new FileWriter(file)
+            def html = new MarkupBuilder(fileWriter)
+
+            def list = []
+
+            updatable.eachWithIndex { dependency, index ->
+                def max = null
+                updatable.each { newDep ->
+                    if (newDep.name == dependency.name && newDep.group == dependency.group) {
+                        if (max == null || max < newDep.version) {
+                            max = newDep.version
+                        }
+                    }
+                }
+                if (dependency.version != max) {
+                    dependency.available.integration = max
+                } else {
+                    dependency.available.integration = ''
+                }
+                if (list.find { dep -> dep.name == dependency.name && dep.group == dependency.group } == null) {
+                    println("Adding new dependency ${dependency.name} ${dependency.group} ${dependency.version}")
+                    list.push(dependency)
+                } else {
+                    println("    - Skipping adding ${dependency.name} ${dependency.group} ${dependency.version}")
+                }
+            }
+
+            html.html {
+                body {
+                    h3("Module: $project.name")
+                    h3("Git commit: ${gitSha()}")
+                    h4("Last updated: ${LocalDateTime.now()}")
+                    table {
+                        tr {
+                            th("Group")
+                            th("Current version")
+                            th("Latest Stable")
+                            th("Latest Release")
+                        }
+                        list.eachWithIndex { dependency, index ->
+                            def version = ~'^\\d+(\\.\\d+)*$'
+                            def rel = dependency.available.release ?: dependency.available.milestone
+                            if (!version.matcher(rel).matches()) {
+                                rel = ''
+                            }
+                            tr {
+                                td("${dependency.group}:${dependency.name}")
+                                td(dependency.version)
+                                td(dependency.available.release ?: dependency.available.integration ?: rel)
+                                td(dependency.available.milestone)
+                            }
+                        }
+                    }
+                }
+            }
+            println "[DEPENDENCY REPORTER] Generated file: $filepath"
+        }
+    }
+}

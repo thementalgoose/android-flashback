@@ -1,5 +1,6 @@
 package tmg.flashback.stats.ui.weekend.sprint
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -10,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import org.koin.androidx.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.formula1.enums.RaceStatus
 import tmg.flashback.formula1.enums.isStatusFinished
 import tmg.flashback.formula1.extensions.pointsDisplay
@@ -36,7 +37,7 @@ fun SprintScreenVM(
     info: WeekendInfo,
     actionUpClicked: () -> Unit
 ) {
-    val viewModel by viewModel<SprintViewModel>()
+    val viewModel = hiltViewModel<SprintViewModel>()
     viewModel.inputs.load(
         season = info.season,
         round = info.round
@@ -46,6 +47,7 @@ fun SprintScreenVM(
     SprintScreen(
         info = info,
         actionUpClicked = actionUpClicked,
+        driverClicked = viewModel.inputs::clickDriver,
         list = list.value
     )
 }
@@ -54,6 +56,7 @@ fun SprintScreenVM(
 fun SprintScreen(
     info: WeekendInfo,
     list: List<SprintModel>,
+    driverClicked: (RaceSprintResult) -> Unit,
     actionUpClicked: () -> Unit
 ) {
     LazyColumn(
@@ -68,7 +71,10 @@ fun SprintScreen(
             items(list, key = { it.id }) {
                 when (it) {
                     is SprintModel.Result -> {
-                        Result(model = it.result)
+                        Result(
+                            model = it.result,
+                            driverClicked = driverClicked
+                        )
                     }
                     SprintModel.Loading -> {
                         SkeletonViewList()
@@ -91,6 +97,7 @@ fun SprintScreen(
 @Composable
 private fun Result(
     model: RaceSprintResult,
+    driverClicked: (RaceSprintResult) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -98,7 +105,9 @@ private fun Result(
         horizontalArrangement = Arrangement.Center
     ) {
         DriverInfo(
-            modifier = Modifier.weight(1f),
+            modifier = Modifier
+                .weight(1f)
+                .clickable(onClick = { driverClicked(model) }),
             driver = model.driver,
             position = model.finish,
             extraContent = {

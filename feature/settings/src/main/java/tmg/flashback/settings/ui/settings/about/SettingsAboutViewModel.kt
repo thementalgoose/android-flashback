@@ -1,5 +1,6 @@
 package tmg.flashback.settings.ui.settings.about
 
+import dagger.hilt.android.lifecycle.HiltViewModel
 import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.releasenotes.ReleaseNotesNavigationComponent
 import tmg.flashback.settings.R
@@ -8,6 +9,7 @@ import tmg.flashback.ui.navigation.ApplicationNavigationComponent
 import tmg.flashback.ui.settings.SettingsModel
 import tmg.flashback.ui.settings.SettingsViewModel
 import tmg.flashback.web.WebNavigationComponent
+import javax.inject.Inject
 
 //region Inputs
 
@@ -24,8 +26,8 @@ interface SettingsAboutViewModelOutputs {
 
 //endregion
 
-
-class SettingsAboutViewModel(
+@HiltViewModel
+class SettingsAboutViewModel @Inject constructor(
     private val applicationNavigationComponent: ApplicationNavigationComponent,
     private val webNavigationComponent: WebNavigationComponent,
     private val releaseNotesNavigationComponent: ReleaseNotesNavigationComponent,
