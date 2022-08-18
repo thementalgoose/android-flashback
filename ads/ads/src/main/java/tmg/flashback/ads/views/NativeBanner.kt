@@ -8,18 +8,21 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.lifecycle.lifecycleScope
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
+import dagger.hilt.android.AndroidEntryPoint
 import tmg.flashback.ads.R
 import tmg.flashback.ads.databinding.AdmobNativeBannerBinding
 import tmg.flashback.ads.config.repository.AdsRepository
 import tmg.flashback.ads.usecases.GetAdUseCase
 import tmg.utilities.extensions.views.gone
+import javax.inject.Inject
 
-class NativeBanner: FrameLayout, KoinComponent {
+@AndroidEntryPoint
+class NativeBanner: FrameLayout {
 
-    private val adsRepository: AdsRepository by inject()
-    private val getAdUseCase: GetAdUseCase by inject()
+    @Inject
+    protected lateinit var adsRepository: AdsRepository
+    @Inject
+    protected lateinit var getAdUseCase: GetAdUseCase
 
     private var binding: AdmobNativeBannerBinding? = null
 

@@ -8,6 +8,7 @@ import tmg.flashback.ui.navigation.ActivityProvider
 import tmg.flashback.ui.navigation.NavigationDestination
 import tmg.flashback.ui.navigation.Navigator
 import tmg.flashback.ui.navigation.Screen
+import javax.inject.Inject
 
 val Screen.Settings.About: NavigationDestination
     get() = object : NavigationDestination {
@@ -29,7 +30,7 @@ val Screen.Settings.PrivacyPolicy: NavigationDestination
         override val route: String = "privacy_policy"
     }
 
-class SettingsNavigationComponent(
+class SettingsNavigationComponent @Inject constructor(
     private val navigator: Navigator,
     private val activityProvider: ActivityProvider
 ) {

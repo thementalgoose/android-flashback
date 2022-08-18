@@ -3,11 +3,13 @@ package tmg.flashback.stats.ui.feature.notificationonboarding
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import tmg.flashback.stats.repository.NotificationRepository
 import tmg.flashback.stats.repository.models.NotificationChannel
 import tmg.flashback.ui.bottomsheet.BottomSheetItem
 import tmg.utilities.models.Selected
 import tmg.utilities.models.StringHolder
+import javax.inject.Inject
 
 interface NotificationOnboardingViewModelInputs {
     fun selectNotificationChannel(notificationChannel: NotificationChannel)
@@ -17,7 +19,8 @@ interface NotificationOnboardingViewModelOutputs {
     val notificationPreferences: LiveData<List<Selected<NotificationOnboardingModel>>>
 }
 
-class NotificationOnboardingViewModel(
+@HiltViewModel
+class NotificationOnboardingViewModel @Inject constructor(
     val notificationRepository: NotificationRepository
 ): ViewModel(), NotificationOnboardingViewModelInputs, NotificationOnboardingViewModelOutputs {
 

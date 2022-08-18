@@ -1,6 +1,10 @@
 package tmg.flashback.debug
 
-class DebugNavigationComponent {
+import javax.inject.Inject
+import javax.inject.Singleton
+
+@Singleton
+class DebugNavigationComponent @Inject constructor() {
     fun navigateTo(id: String) {
         /* No op */
     }

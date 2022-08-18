@@ -1,55 +1,16 @@
 package tmg.flashback.statistics.repo.di
 
-import org.koin.dsl.module
-import tmg.flashback.statistics.network.di.networkModule
-import tmg.flashback.statistics.repo.*
-import tmg.flashback.statistics.repo.mappers.app.*
-import tmg.flashback.statistics.repo.mappers.network.*
+import dagger.Binds
+import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import tmg.flashback.statistics.repo.repository.CacheRepository
 import tmg.flashback.statistics.repo.repository.RepoCacheRepository
-import tmg.flashback.statistics.room.di.roomModule
 
-val repoModule = networkModule + roomModule + module {
+@Module
+@InstallIn(SingletonComponent::class)
+internal abstract class RepoModule {
 
-    // Mappers - App
-    single { CircuitMapper(get(), get()) }
-    single { ConstructorDataMapper() }
-    single { ConstructorMapper(get(), get()) }
-    single { ConstructorStandingMapper(get(), get()) }
-    single { DriverDataMapper() }
-    single { DriverMapper(get(), get(), get()) }
-    single { DriverStandingMapper(get(), get()) }
-    single { EventMapper() }
-    single { OverviewMapper(get()) }
-    single { RaceMapper(get(), get(), get(), get()) }
-    single { SeasonMapper(get(), get()) }
-    single { ScheduleMapper() }
-
-    // Mappers - Network
-    single { NetworkCircuitDataMapper() }
-    single { NetworkCircuitMapper() }
-    single { NetworkConstructorDataMapper() }
-    single { NetworkConstructorMapper() }
-    single { NetworkConstructorStandingMapper() }
-    single { NetworkDriverDataMapper() }
-    single { NetworkDriverMapper() }
-    single { NetworkDriverStandingMapper() }
-    single { NetworkEventMapper() }
-    single { NetworkOverviewMapper() }
-    single { NetworkRaceDataMapper() }
-    single { NetworkRaceMapper() }
-    single { NetworkScheduleMapper() }
-
-    // Cache tracking
-    single<CacheRepository> { RepoCacheRepository(get()) }
-
-    // Repositories
-    single { CircuitRepository(get(), get(), get(), get(), get(), get(), get(), get(), get()) }
-    single { ConstructorRepository(get(), get(), get(), get(), get(), get(), get(), get(), get()) }
-    single { DriverRepository(get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get()) }
-    single { OverviewRepository(get(), get(), get(), get(), get(), get(), get(), get()) }
-    single { RaceRepository(get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get()) }
-    single { SeasonRepository(get(), get(), get(), get(), get()) }
-    single { ScheduleRepository(get(), get(), get(), get(), get()) }
-    single { EventsRepository(get(), get(), get(), get(), get(), get()) }
+    @Binds
+    abstract fun bindsCacheRepository(impl: RepoCacheRepository): CacheRepository
 }

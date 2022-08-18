@@ -3,8 +3,9 @@ package tmg.flashback.statistics.repo.mappers.network
 import tmg.flashback.statistics.network.models.races.ConstructorStandings
 import tmg.flashback.statistics.room.models.standings.ConstructorStanding
 import tmg.flashback.statistics.room.models.standings.ConstructorStandingDriver
+import javax.inject.Inject
 
-class NetworkConstructorStandingMapper {
+class NetworkConstructorStandingMapper @Inject constructor() {
 
     @Throws(RuntimeException::class)
     fun mapConstructorStanding(season: Int, data: ConstructorStandings): ConstructorStanding {

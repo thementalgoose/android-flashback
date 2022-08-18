@@ -4,6 +4,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import org.threeten.bp.LocalDate
 import tmg.flashback.formula1.model.Constructor
+import tmg.flashback.stats.ui.drivers.stathistory.DriverStatHistoryType
 
 sealed class DriverOverviewModel(
     val key: String
@@ -13,6 +14,7 @@ sealed class DriverOverviewModel(
         val driverName: String,
         val driverNumber: Int?,
         val driverImg: String,
+        val driverCode: String?,
         val driverBirthday: LocalDate,
         val driverWikiUrl: String,
         val driverNationalityISO: String,
@@ -36,7 +38,8 @@ sealed class DriverOverviewModel(
         val icon: Int,
         @StringRes
         val label: Int,
-        val value: String
+        val value: String,
+        val driverStatHistoryType: DriverStatHistoryType? = null
     ): DriverOverviewModel(
         key = label.toString()
     )

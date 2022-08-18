@@ -4,8 +4,9 @@ import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.statistics.room.models.overview.OverviewWithCircuit
 import tmg.utilities.utils.LocalDateUtils.Companion.requireFromDate
 import tmg.utilities.utils.LocalTimeUtils.Companion.fromTime
+import javax.inject.Inject
 
-class OverviewMapper(
+class OverviewMapper @Inject constructor(
     private val scheduleMapper: ScheduleMapper
 ) {
 

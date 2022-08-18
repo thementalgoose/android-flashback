@@ -4,8 +4,9 @@ import tmg.flashback.statistics.room.models.race.SprintResult
 import tmg.flashback.statistics.room.models.race.FastestLap
 import tmg.flashback.statistics.room.models.race.QualifyingResult
 import tmg.flashback.statistics.room.models.race.RaceResult
+import javax.inject.Inject
 
-class NetworkRaceMapper {
+class NetworkRaceMapper @Inject constructor() {
 
     @Throws(RuntimeException::class)
     fun mapRaceResults(season: Int, round: Int, data: tmg.flashback.statistics.network.models.races.RaceResult): RaceResult {

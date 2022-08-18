@@ -2,8 +2,10 @@ package tmg.flashback.stats.ui.feature.notificationonboarding
 
 import androidx.compose.runtime.Composable
 import androidx.core.os.bundleOf
+import dagger.hilt.android.AndroidEntryPoint
 import tmg.flashback.ui.base.BaseBottomSheetComposeFragment
 
+@AndroidEntryPoint
 class NotificationOnboardingBottomSheetFragment: BaseBottomSheetComposeFragment() {
 
     override val content = @Composable {

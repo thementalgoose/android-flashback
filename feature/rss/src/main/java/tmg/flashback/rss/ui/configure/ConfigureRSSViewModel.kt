@@ -3,11 +3,14 @@ package tmg.flashback.rss.ui.configure
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import tmg.flashback.rss.R
 import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.rss.repo.RSSRepository
 import tmg.flashback.rss.repo.model.SupportedArticleSource
+import tmg.flashback.web.WebNavigationComponent
 import tmg.utilities.lifecycle.DataEvent
+import javax.inject.Inject
 
 //region Inputs
 
@@ -24,14 +27,15 @@ interface ConfigureRSSViewModelInputs {
 
 interface ConfigureRSSViewModelOutputs {
     val list: LiveData<List<RSSConfigureItem>>
-    val openWebsite: LiveData<DataEvent<SupportedArticleSource>>
 }
 
 //endregion
 
-internal class ConfigureRSSViewModel(
+@HiltViewModel
+internal class ConfigureRSSViewModel @Inject constructor(
     private val repository: RSSRepository,
-    private val rssFeedController: RSSController
+    private val rssFeedController: RSSController,
+    private val webNavigationComponent: WebNavigationComponent,
 ) : ViewModel(), ConfigureRSSViewModelInputs, ConfigureRSSViewModelOutputs {
 
     var inputs: ConfigureRSSViewModelInputs = this
@@ -41,7 +45,6 @@ internal class ConfigureRSSViewModel(
         get() = repository.rssUrls.toMutableSet()
 
     override val list: MutableLiveData<List<RSSConfigureItem>> = MutableLiveData()
-    override val openWebsite: MutableLiveData<DataEvent<SupportedArticleSource>> = MutableLiveData()
 
     init {
         loadState()
@@ -65,7 +68,7 @@ internal class ConfigureRSSViewModel(
     }
 
     override fun visitWebsite(supportedArticle: SupportedArticleSource) {
-        openWebsite.value = DataEvent(supportedArticle)
+        webNavigationComponent.web(supportedArticle.contactLink)
     }
 
     //endregion

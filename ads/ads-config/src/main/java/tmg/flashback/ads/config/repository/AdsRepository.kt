@@ -5,8 +5,11 @@ import tmg.flashback.ads.config.repository.json.AdvertConfigJson
 import tmg.flashback.ads.config.repository.model.AdvertConfig
 import tmg.flashback.configuration.manager.ConfigManager
 import tmg.flashback.prefs.manager.PreferenceManager
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class AdsRepository(
+@Singleton
+class AdsRepository @Inject constructor(
     private val configManager: ConfigManager,
     private val preferenceManager: PreferenceManager
 ) {

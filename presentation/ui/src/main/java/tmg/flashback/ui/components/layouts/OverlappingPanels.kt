@@ -224,7 +224,7 @@ fun OverlappingPanels(
                     .alpha(animatedCenterPanelAlpha)
                     .offset {
                         IntOffset(
-                            x = panelsState.offset.value.roundToInt(),
+                            x = panelsState.offset.value.takeIf { !it.isNaN() }?.roundToInt() ?: 0,
                             y = 0
                         )
                     }

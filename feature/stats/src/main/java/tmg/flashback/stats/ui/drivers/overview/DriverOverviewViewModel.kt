@@ -3,6 +3,7 @@ package tmg.flashback.stats.ui.drivers.overview
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.lifecycle.*
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -13,9 +14,11 @@ import tmg.flashback.formula1.model.DriverHistory
 import tmg.flashback.statistics.repo.DriverRepository
 import tmg.flashback.stats.R
 import tmg.flashback.stats.StatsNavigationComponent
+import tmg.flashback.stats.ui.drivers.stathistory.DriverStatHistoryType
 import tmg.flashback.ui.navigation.ApplicationNavigationComponent
 import tmg.flashback.web.WebNavigationComponent
 import tmg.utilities.extensions.ordinalAbbreviation
+import javax.inject.Inject
 
 //region Inputs
 
@@ -23,6 +26,8 @@ interface DriverOverviewViewModelInputs {
     fun setup(driverId: String, driverName: String)
     fun openUrl(url: String)
     fun openSeason(season: Int)
+
+    fun openStatHistory(type: DriverStatHistoryType)
 
     fun refresh()
 }
@@ -40,7 +45,8 @@ interface DriverOverviewViewModelOutputs {
 
 
 @Suppress("EXPERIMENTAL_API_USAGE")
-class DriverOverviewViewModel(
+@HiltViewModel
+class DriverOverviewViewModel @Inject constructor(
     private val driverRepository: DriverRepository,
     private val networkConnectivityManager: NetworkConnectivityManager,
     private val statsNavigationComponent: StatsNavigationComponent,
@@ -96,6 +102,7 @@ class DriverOverviewViewModel(
                                 driverName = it.driver.name,
                                 driverNumber = it.driver.number,
                                 driverImg = it.driver.photoUrl ?: "",
+                                driverCode = it.driver.code,
                                 driverBirthday = it.driver.dateOfBirth,
                                 driverWikiUrl = it.driver.wikiUrl ?: "",
                                 driverNationalityISO = it.driver.nationalityISO,
@@ -155,6 +162,12 @@ class DriverOverviewViewModel(
         }
     }
 
+    override fun openStatHistory(type: DriverStatHistoryType) {
+        driverIdAndName.value?.let { (id, name) ->
+            statsNavigationComponent.driverStatHistory(id, name, type)
+        }
+    }
+
     override fun refresh() {
         this.refresh(driverIdAndName.value?.first)
     }
@@ -182,7 +195,8 @@ class DriverOverviewViewModel(
             isWinning = history.championshipWins >= 1,
             icon = R.drawable.ic_menu_drivers,
             label = R.string.driver_overview_stat_career_drivers_title,
-            value = history.championshipWins.toString()
+            value = history.championshipWins.toString(),
+            driverStatHistoryType = if (history.championshipWins >= 1) DriverStatHistoryType.CHAMPIONSHIPS else null
         )
 
         history.careerBestChampionship?.let {
@@ -196,7 +210,8 @@ class DriverOverviewViewModel(
         list.addStat(
             icon = R.drawable.ic_standings,
             label = R.string.driver_overview_stat_career_wins,
-            value = history.careerWins.toString()
+            value = history.careerWins.toString(),
+            driverStatHistoryType = if (history.careerWins >= 1) DriverStatHistoryType.WINS else null
         )
         list.addStat(
             icon = R.drawable.ic_podium,
@@ -236,7 +251,8 @@ class DriverOverviewViewModel(
         list.addStat(
             icon = R.drawable.ic_qualifying_pole,
             label = R.string.driver_overview_stat_career_qualifying_pole,
-            value = history.careerQualifyingPoles.toString()
+            value = history.careerQualifyingPoles.toString(),
+            driverStatHistoryType = if (history.careerQualifyingPoles >= 1) DriverStatHistoryType.POLES else null
         )
         list.addStat(
             icon = R.drawable.ic_qualifying_front_row,
@@ -252,13 +268,20 @@ class DriverOverviewViewModel(
         return list
     }
 
-    private fun MutableList<DriverOverviewModel>.addStat(isWinning: Boolean = false, @DrawableRes icon: Int, @StringRes label: Int, value: String) {
+    private fun MutableList<DriverOverviewModel>.addStat(
+        isWinning: Boolean = false,
+        @DrawableRes icon: Int,
+        @StringRes label: Int,
+        value: String,
+        driverStatHistoryType: DriverStatHistoryType? = null
+    ) {
         this.add(
             DriverOverviewModel.Stat(
                 isWinning = isWinning,
                 icon = icon,
                 label = label,
-                value = value
+                value = value,
+                driverStatHistoryType = driverStatHistoryType
             ))
     }
 

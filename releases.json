@@ -203,6 +203,34 @@
         "Tweaks layouts of settings sub screens",
         "Updates sprint handling for format change for 2022"
       ]
+    },
+    {
+      "versionCode": 228,
+      "versionName": "8.4.228",
+      "isMajor": false,
+      "title": "Material3",
+      "notes": [
+        "Material3 updates! All screens have been subtly redesigned with Material3 in mind",
+        "Better native and API support for the Sprint format, including notification filtering and displaying",
+        "Reorganised settings again to simply the heirachy of options",
+        "Reduced latency in notification delivery. Be notified within 2 minutes of when Flashback gets race result",
+        "Adds lap counts and youtube highlight links for all upcoming races",
+        "For the devs: The app has been rewritten in Jetpack Compose and the modularised further from 8 modules to 28!"
+      ]
+    },
+    {
+      "versionCode": 239,
+      "versionName": "8.5.239",
+      "isMajor": false,
+      "title": "Android 13",
+      "notes": [
+        "Android 13 Support! Adds support for new runtime notification permissions",
+        "Adds race result previews to circuit search results",
+        "Adds an overview for total wins, championships and pole positions for drivers",
+        "Adds driver code and number to driver overview screen",
+        "Adds event support in prep for upcoming 2022 news items and 2023 winter testing",
+        "For the devs: Kotlin 1.7.10, Compose 1.3 alpha, and uses Hilt instead of Koin for DI"
+      ]
     }
   ]
 }

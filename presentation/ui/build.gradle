@@ -2,7 +2,7 @@ apply plugin:  'com.android.library'
 apply from: rootDir.absolutePath + "/gradle/config-android.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-util.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-junit5.gradle"
-apply from: rootDir.absolutePath + "/gradle/config-koin.gradle"
+apply from: rootDir.absolutePath + "/gradle/config-hilt.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-compose.gradle"
 
 android {
@@ -29,12 +29,11 @@ dependencies {
     implementation deps.androidx.core
     implementation deps.androidx.appcompat
 
-    // Glide
-    implementation deps.glide.glide
-    kapt deps.glide.kapt
-
     // Shimmer
     implementation deps.shimmer
+
+    // Lottie
+    implementation deps.lottie
 
     // Navigation
     implementation deps.androidx.navigation_fragment

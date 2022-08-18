@@ -7,8 +7,11 @@ import tmg.flashback.crash_reporting.BuildConfig
 import tmg.flashback.crash_reporting.repository.CrashRepository
 import tmg.flashback.crash_reporting.services.CrashService
 import java.util.*
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class CrashController(
+@Singleton
+class CrashController @Inject constructor(
     private val crashRepository: CrashRepository,
     private val crashService: CrashService
 ) {

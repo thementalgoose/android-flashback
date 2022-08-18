@@ -2,8 +2,9 @@ package tmg.flashback.statistics.repo.mappers.app
 
 import tmg.flashback.formula1.model.Driver
 import tmg.utilities.utils.LocalDateUtils
+import javax.inject.Inject
 
-class DriverDataMapper {
+class DriverDataMapper @Inject constructor() {
 
     fun mapDriver(driver: tmg.flashback.statistics.room.models.drivers.Driver): Driver {
         return Driver(

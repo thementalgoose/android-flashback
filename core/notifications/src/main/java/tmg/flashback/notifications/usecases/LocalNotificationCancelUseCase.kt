@@ -4,8 +4,9 @@ import android.util.Log
 import tmg.flashback.notifications.BuildConfig
 import tmg.flashback.notifications.managers.SystemAlarmManager
 import tmg.flashback.notifications.repository.NotificationRepository
+import javax.inject.Inject
 
-class LocalNotificationCancelUseCase(
+class LocalNotificationCancelUseCase @Inject constructor(
     private val notificationRepository: NotificationRepository,
     private val alarmManager: SystemAlarmManager
 ) {

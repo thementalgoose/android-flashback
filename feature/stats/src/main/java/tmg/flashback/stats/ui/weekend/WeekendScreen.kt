@@ -10,7 +10,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import org.koin.androidx.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.stats.analytics.AnalyticsConstants
 import tmg.flashback.stats.analytics.AnalyticsConstants.analyticsRound
 import tmg.flashback.stats.analytics.AnalyticsConstants.analyticsSeason
@@ -44,7 +44,7 @@ fun WeekendScreenVM(
     weekendInfo: WeekendInfo,
     actionUpClicked: () -> Unit,
 ) {
-    val viewModel by viewModel<WeekendViewModel>()
+    val viewModel = hiltViewModel<WeekendViewModel>()
     viewModel.inputs.load(
         season = weekendInfo.season,
         round = weekendInfo.round

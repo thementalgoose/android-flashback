@@ -3,26 +3,35 @@ package tmg.flashback.ui.dashboard.menu
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
+import kotlinx.coroutines.CompletableDeferred
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.debug.DebugNavigationComponent
 import tmg.flashback.debug.R
+import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.rss.RssNavigationComponent
 import tmg.flashback.formula1.constants.Formula1.decadeColours
 import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.stats.repository.HomeRepository
 import tmg.flashback.stats.repository.NotificationRepository
 import tmg.flashback.stats.usecases.DefaultSeasonUseCase
+import tmg.flashback.ui.managers.PermissionManager
 import tmg.flashback.ui.managers.StyleManager
 import tmg.flashback.ui.model.NightMode
 import tmg.flashback.ui.navigation.ApplicationNavigationComponent
+import tmg.flashback.ui.repository.PermissionRepository
 import tmg.flashback.ui.usecases.ChangeNightModeUseCase
 import tmg.testutils.BaseTest
+import tmg.testutils.livedata.assertListDoesNotMatchItem
+import tmg.testutils.livedata.assertListMatchesItem
 import tmg.testutils.livedata.test
 
 internal class MenuViewModelTest: BaseTest() {
 
     private val mockHomeRepository: HomeRepository = mockk(relaxed = true)
+    private val mockBuildConfigManager: BuildConfigManager = mockk(relaxed = true)
+    private val mockPermissionManager: PermissionManager = mockk(relaxed = true)
+    private val mockPermissionRepository: PermissionRepository = mockk(relaxed = true)
     private val mockNotificationRepository: NotificationRepository = mockk(relaxed = true)
     private val mockDefaultSeasonUseCase: DefaultSeasonUseCase = mockk(relaxed = true)
     private val mockChangeNightModeUseCase: ChangeNightModeUseCase = mockk(relaxed = true)
@@ -37,6 +46,9 @@ internal class MenuViewModelTest: BaseTest() {
     private fun initUnderTest() {
         underTest = MenuViewModel(
             mockHomeRepository,
+            mockBuildConfigManager,
+            mockPermissionManager,
+            mockPermissionRepository,
             mockNotificationRepository,
             mockDefaultSeasonUseCase,
             mockChangeNightModeUseCase,
@@ -73,8 +85,88 @@ internal class MenuViewModelTest: BaseTest() {
                 MenuItems.Divider("a"),
                 MenuItems.Toggle.DarkMode(_isEnabled = false),
                 MenuItems.Divider("b"),
-                MenuItems.Feature.Notifications
+                MenuItems.Feature.Notifications,
+                MenuItems.Divider("c")
             ))
+        }
+    }
+
+    @Test
+    fun `initial load with runtime notifications, not seen and not enabled shows runtime feature`() {
+        every { mockBuildConfigManager.isRuntimeNotificationsSupported } returns true
+        every { mockNotificationRepository.seenRuntimeNotifications } returns false
+        every { mockPermissionRepository.isRuntimeNotificationsEnabled } returns false
+
+        initUnderTest()
+
+        underTest.outputs.links.test {
+            assertListMatchesItem {
+                it is MenuItems.Feature.RuntimeNotifications
+            }
+            assertListDoesNotMatchItem {
+                it is MenuItems.Feature.Notifications
+            }
+        }
+    }
+
+    @Test
+    fun `initial load hides runtime notifications if seen before `() {
+        every { mockBuildConfigManager.isRuntimeNotificationsSupported } returns true
+        every { mockNotificationRepository.seenRuntimeNotifications } returns true
+        every { mockPermissionRepository.isRuntimeNotificationsEnabled } returns false
+
+        initUnderTest()
+
+        underTest.outputs.links.test {
+            assertListDoesNotMatchItem {
+                it is MenuItems.Feature.RuntimeNotifications
+            }
+        }
+    }
+
+    @Test
+    fun `initial load hides runtime notifications if notifications are enabled `() {
+        every { mockBuildConfigManager.isRuntimeNotificationsSupported } returns true
+        every { mockNotificationRepository.seenRuntimeNotifications } returns false
+        every { mockPermissionRepository.isRuntimeNotificationsEnabled } returns true
+
+        initUnderTest()
+
+        underTest.outputs.links.test {
+            assertListDoesNotMatchItem {
+                it is MenuItems.Feature.RuntimeNotifications
+            }
+        }
+    }
+
+    @Test
+    fun `initial load with notifications, not seen and not enabled shows runtime feature`() {
+        every { mockBuildConfigManager.isRuntimeNotificationsSupported } returns false
+        every { mockNotificationRepository.seenNotificationOnboarding } returns false
+
+        initUnderTest()
+
+        underTest.outputs.links.test {
+            assertListMatchesItem {
+                it is MenuItems.Feature.Notifications
+            }
+            assertListDoesNotMatchItem {
+                it is MenuItems.Feature.RuntimeNotifications
+            }
+        }
+    }
+
+    @Test
+    fun `initial load hides notifications if notifications seen before `() {
+        every { mockBuildConfigManager.isRuntimeNotificationsSupported } returns false
+        every { mockNotificationRepository.seenNotificationOnboarding } returns true
+
+        initUnderTest()
+
+        underTest.outputs.links.test {
+            assertListDoesNotMatchItem {
+                it is MenuItems.Feature.Notifications
+            }
         }
     }
 
@@ -96,7 +188,8 @@ internal class MenuViewModelTest: BaseTest() {
                 MenuItems.Divider("a"),
                 MenuItems.Toggle.DarkMode(_isEnabled = true),
                 MenuItems.Divider("b"),
-                MenuItems.Feature.Notifications
+                MenuItems.Feature.Notifications,
+                MenuItems.Divider("c")
             ))
         }
     }
@@ -183,7 +276,7 @@ internal class MenuViewModelTest: BaseTest() {
 
 
     @Test
-    fun `click feature calls stats navigator`() {
+    fun `click feature notifications calls stats navigator`() {
         initUnderTest()
 
         underTest.inputs.clickFeature(MenuItems.Feature.Notifications)
@@ -191,6 +284,25 @@ internal class MenuViewModelTest: BaseTest() {
         verify {
             mockStatsNavigationComponent.featureNotificationOnboarding()
             mockNotificationRepository.seenNotificationOnboarding = true
+        }
+    }
+
+    @Test
+    fun `click feature runtime notifications calls stats navigator`() = coroutineTest {
+        initUnderTest()
+        every { mockPermissionRepository.isRuntimeNotificationsEnabled } returns true
+
+        val completableDeferred: CompletableDeferred<Boolean> = CompletableDeferred()
+        every { mockPermissionManager.requestPermission(any()) } returns completableDeferred
+
+        underTest.inputs.clickFeature(MenuItems.Feature.RuntimeNotifications)
+        completableDeferred.complete(true)
+
+        verify {
+            mockPermissionManager.requestPermission(any())
+            mockNotificationRepository.seenRuntimeNotifications = true
+            mockPermissionRepository.isRuntimeNotificationsEnabled
+            mockStatsNavigationComponent.featureNotificationOnboarding()
         }
     }
 

@@ -3,11 +3,16 @@ package tmg.flashback.device.managers
 import android.content.Context
 import android.net.NetworkCapabilities
 import android.util.Log
+import dagger.hilt.android.qualifiers.ApplicationContext
 import tmg.flashback.device.BuildConfig
 import tmg.utilities.extensions.managerConnectivity
+import javax.inject.Inject
+import javax.inject.Singleton
 
-internal class AndroidNetworkConnectivityManager(
-    val context: Context
+@Singleton
+internal class AndroidNetworkConnectivityManager @Inject constructor(
+    @ApplicationContext
+    private val context: Context
 ) : NetworkConnectivityManager {
     override val isConnected: Boolean
         get() {

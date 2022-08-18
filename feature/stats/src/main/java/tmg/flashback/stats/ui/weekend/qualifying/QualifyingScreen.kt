@@ -2,6 +2,7 @@ package tmg.flashback.stats.ui.weekend.qualifying
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -19,12 +20,9 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.faltenreich.skeletonlayout.Skeleton
-import org.koin.androidx.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import org.threeten.bp.LocalDate
-import tmg.flashback.formula1.model.DriverConstructor
-import tmg.flashback.formula1.model.LapTime
-import tmg.flashback.formula1.model.Race
-import tmg.flashback.formula1.model.RaceQualifyingResult
+import tmg.flashback.formula1.model.*
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.providers.DriverConstructorProvider
 import tmg.flashback.providers.RaceProvider
@@ -54,7 +52,7 @@ fun QualifyingScreenVM(
     info: WeekendInfo,
     actionUpClicked: () -> Unit
 ) {
-    val viewModel by viewModel<QualifyingViewModel>()
+    val viewModel = hiltViewModel<QualifyingViewModel>()
     viewModel.inputs.load(
         season = info.season,
         round = info.round
@@ -71,6 +69,7 @@ fun QualifyingScreenVM(
     QualifyingScreen(
         info = info,
         actionUpClicked = actionUpClicked,
+        driverClicked = viewModel.inputs::clickDriver,
         list = qualifying.value,
         header = qualifyingHeader.value,
     )
@@ -80,6 +79,7 @@ fun QualifyingScreenVM(
 fun QualifyingScreen(
     info: WeekendInfo,
     actionUpClicked: () -> Unit,
+    driverClicked: (Driver) -> Unit,
     list: List<QualifyingModel>,
     header: QualifyingHeader
 ) {
@@ -104,9 +104,18 @@ fun QualifyingScreen(
             }
             items(list, key = { it.id }) {
                 when (it) {
-                    is QualifyingModel.Q1 -> Qualifying(it)
-                    is QualifyingModel.Q1Q2 -> Qualifying(it)
-                    is QualifyingModel.Q1Q2Q3 -> Qualifying(it)
+                    is QualifyingModel.Q1 -> Qualifying(
+                        model = it,
+                        driverClicked = driverClicked
+                    )
+                    is QualifyingModel.Q1Q2 -> Qualifying(
+                        model = it,
+                        driverClicked = driverClicked
+                    )
+                    is QualifyingModel.Q1Q2Q3 -> Qualifying(
+                        model = it,
+                        driverClicked = driverClicked
+                    )
                     QualifyingModel.Loading -> {
                         SkeletonViewList()
                     }
@@ -165,13 +174,16 @@ private fun Header(
 @Composable
 private fun Qualifying(
     model: QualifyingModel.Q1Q2Q3,
+    driverClicked: (Driver) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(modifier = modifier
         .height(IntrinsicSize.Min)
     ) {
         DriverInfo(
-            modifier = Modifier.weight(1f),
+            modifier = Modifier
+                .weight(1f)
+                .clickable(onClick = { driverClicked(model.driver.driver) }),
             driver = model.driver,
             position = model.qualified
         )
@@ -194,13 +206,16 @@ private fun Qualifying(
 @Composable
 private fun Qualifying(
     model: QualifyingModel.Q1Q2,
+    driverClicked: (Driver) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(modifier = modifier
         .height(IntrinsicSize.Min)
     ) {
         DriverInfo(
-            modifier = Modifier.weight(1f),
+            modifier = Modifier
+                .weight(1f)
+                .clickable(onClick = { driverClicked(model.driver.driver) }),
             driver = model.driver,
             position = model.qualified
         )
@@ -219,13 +234,16 @@ private fun Qualifying(
 @Composable
 private fun Qualifying(
     model: QualifyingModel.Q1,
+    driverClicked: (Driver) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(modifier = modifier
         .height(IntrinsicSize.Min)
     ) {
         DriverInfo(
-            modifier = Modifier.weight(1f),
+            modifier = Modifier
+                .weight(1f)
+                .clickable(onClick = { driverClicked(model.driver.driver) }),
             driver = model.driver,
             position = model.qualified
         )
@@ -261,6 +279,7 @@ private fun Preview(
         QualifyingScreen(
             info = fakeWeekendInfo,
             actionUpClicked = { },
+            driverClicked = { },
             list = listOf(
                 fakeQualifyingModel(driverConstructor)
             ),

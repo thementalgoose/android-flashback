@@ -5,8 +5,9 @@ import tmg.flashback.formula1.model.SeasonConstructorStandingSeasonDriver
 import tmg.flashback.formula1.model.SeasonConstructorStandings
 import tmg.flashback.statistics.room.models.standings.ConstructorStandingDriverWithDriver
 import tmg.flashback.statistics.room.models.standings.ConstructorStandingWithDrivers
+import javax.inject.Inject
 
-class ConstructorStandingMapper(
+class ConstructorStandingMapper @Inject constructor(
     private val driverDataMapper: DriverDataMapper,
     private val constructorDataMapper: ConstructorDataMapper
 ) {

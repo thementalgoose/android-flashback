@@ -5,8 +5,11 @@ import tmg.flashback.stats.repository.models.NotificationReminder
 import tmg.flashback.stats.repository.models.NotificationResults
 import tmg.flashback.stats.repository.models.NotificationSchedule
 import tmg.utilities.extensions.toEnum
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class NotificationRepository(
+@Singleton
+class NotificationRepository @Inject constructor(
     private val preferenceManager: PreferenceManager
 ) {
 
@@ -21,6 +24,7 @@ class NotificationRepository(
         private const val keyNotificationSprintNotify: String = "UP_NEXT_NOTIFICATION_SPRINT_NOTIFY"
         private const val keyNotificationQualifyingNotify: String = "UP_NEXT_NOTIFICATION_QUALIFYING_NOTIFY"
 
+        private const val keyRuntimeNotifications: String = "RUNTIME_NOTIFICATION_PROMPT"
         private const val keyNotificationOnboarding: String = "UP_NEXT_NOTIFICATION_ONBOARDING"
     }
 
@@ -74,6 +78,10 @@ class NotificationRepository(
     var seenNotificationOnboarding: Boolean
         get() = preferenceManager.getBoolean(keyNotificationOnboarding, false)
         set(value) = preferenceManager.save(keyNotificationOnboarding, value)
+
+    var seenRuntimeNotifications: Boolean
+        get() = preferenceManager.getBoolean(keyRuntimeNotifications, false)
+        set(value) = preferenceManager.save(keyRuntimeNotifications, value)
 
     var notificationReminderPeriod: NotificationReminder
         get() = preferenceManager.getInt(keyNotificationReminder, NotificationReminder.MINUTES_30.seconds).toEnum<NotificationReminder> { it.seconds } ?: NotificationReminder.MINUTES_30

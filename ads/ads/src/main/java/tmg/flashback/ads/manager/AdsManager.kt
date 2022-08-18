@@ -11,9 +11,12 @@ import com.google.android.gms.ads.nativead.NativeAdOptions
 import tmg.flashback.ads.BuildConfig
 import tmg.flashback.ads.R
 import tmg.utilities.extensions.md5
+import javax.inject.Inject
+import javax.inject.Singleton
 import kotlin.coroutines.suspendCoroutine
 
-class AdsManager {
+@Singleton
+class AdsManager @Inject constructor() {
     companion object {
         private const val numberOfAdsToLoad = 4
     }

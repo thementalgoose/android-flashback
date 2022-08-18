@@ -15,21 +15,21 @@ allprojects {
                         navigation_ui                           : "androidx.navigation:navigation-ui-ktx:$navigation",
                         preference                              : "androidx.preference:preference-ktx:1.2.0",
                         splashscreen                            : "androidx.core:core-splashscreen:$android_splashscreen",
-                        windowmanager                           : "androidx.window:window:1.0.0",
+                        windowmanager                           : "androidx.window:window:1.1.0-alpha03",
                         workmanager                             : "androidx.work:work-runtime:$android_workmanager",
                         workmanager_ktx                         : "androidx.work:work-runtime-ktx:$android_workmanager"
                 ],
                 compose: [
-                        activity                                : "androidx.activity:activity-compose:1.4.0",
+                        activity                                : "androidx.activity:activity-compose:1.5.1",
                         material                                : "androidx.compose.material:material:$android_compose",
-                        material3                               : "androidx.compose.material3:material3:1.0.0-alpha09",
+                        material3                               : "androidx.compose.material3:material3:1.0.0-alpha15",
                         navigation                              : "androidx.navigation:navigation-compose:$navigation",
                         animation                               : "androidx.compose.animation:animation:$android_compose",
                         tooling                                 : "androidx.compose.ui:ui-tooling:$android_compose",
                         viewbinding                             : "androidx.compose.ui:ui-viewbinding:$android_compose",
                         runtime                                 : "androidx.compose.runtime:runtime-livedata:$android_compose",
                         viewmodel                               : "androidx.lifecycle:lifecycle-viewmodel-compose:$android_lifecycle",
-                        theme_adapter                           : "com.google.android.material:compose-theme-adapter:1.1.5"
+                        theme_adapter                           : "com.google.android.material:compose-theme-adapter:1.1.15"
                 ],
                 accompanist: [
                         swiperefresh                            : "com.google.accompanist:accompanist-swiperefresh:$android_accompanist",
@@ -63,9 +63,12 @@ allprojects {
                         firestore_ktx                           : "com.google.firebase:firebase-firestore-ktx",
                         messaging                               : "com.google.firebase:firebase-messaging"
                 ],
-                glide : [
-                        glide                                   : "com.github.bumptech.glide:glide:$glide",
-                        kapt                                    : "com.github.bumptech.glide:compiler:$glide"
+                hilt : [
+                        hilt_android                            : "com.google.dagger:hilt-android:$hilt",
+                        hilt_compiler                           : "com.google.dagger:hilt-compiler:$hilt",
+                        hilt_compose                            : "androidx.hilt:hilt-navigation-compose:1.0.0",
+                        hilt_kapt_compiler                      : "androidx.hilt:hilt-compiler:1.0.0",
+                        hilt_work                               : "androidx.hilt:hilt-work:1.0.0"
                 ],
                 koin : [
                         koin                                    : "io.insert-koin:koin-android:$koin_version",
@@ -73,7 +76,7 @@ allprojects {
                         koin_navigation                         : "io.insert-koin:koin-androidx-navigation:$koin_version",
                         koin_compose                            : "io.insert-koin:koin-androidx-compose:$koin_version",
                 ],
-                lottie                                          : "com.airbnb.android:lottie:$lottie",
+                lottie                                          : "com.airbnb.android:lottie-compose:$lottie",
                 play : [
                         ads                                     : "com.google.android.gms:play-services-ads:$play_ads"
                 ],

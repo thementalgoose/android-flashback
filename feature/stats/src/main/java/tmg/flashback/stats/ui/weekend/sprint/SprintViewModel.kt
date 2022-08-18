@@ -4,23 +4,30 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.flow.map
 import tmg.flashback.formula1.constants.Formula1
+import tmg.flashback.formula1.model.RaceSprintResult
 import tmg.flashback.statistics.repo.RaceRepository
+import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.stats.ui.weekend.race.RaceModel
+import javax.inject.Inject
 
 interface SprintViewModelInputs {
     fun load(season: Int, round: Int)
+    fun clickDriver(result: RaceSprintResult)
 }
 
 interface SprintViewModelOutputs {
     val list: LiveData<List<SprintModel>>
 }
 
-class SprintViewModel(
+@HiltViewModel
+class SprintViewModel @Inject constructor(
     private val raceRepository: RaceRepository,
+    private val statsNavigationComponent: StatsNavigationComponent,
     private val ioDispatcher: CoroutineDispatcher
 ): ViewModel(), SprintViewModelInputs, SprintViewModelOutputs {
 
@@ -55,5 +62,14 @@ class SprintViewModel(
 
     override fun load(season: Int, round: Int) {
         seasonRound.value = Pair(season, round)
+    }
+
+    override fun clickDriver(result: RaceSprintResult) {
+        val season = seasonRound.value?.first ?: return
+        statsNavigationComponent.driverSeason(
+            id = result.driver.driver.id,
+            name = result.driver.driver.name,
+            season = season
+        )
     }
 }

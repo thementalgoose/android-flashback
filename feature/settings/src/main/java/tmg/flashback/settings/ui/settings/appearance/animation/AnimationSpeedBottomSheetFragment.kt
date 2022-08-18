@@ -3,8 +3,9 @@ package tmg.flashback.settings.ui.settings.appearance.animation
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.hilt.android.AndroidEntryPoint
 import tmg.flashback.settings.databinding.FragmentBottomSheetAnimationSpeedBinding
 import tmg.flashback.ui.base.BaseBottomSheetFragment
 import tmg.flashback.ui.bottomsheet.BottomSheetAdapter
@@ -12,9 +13,10 @@ import tmg.flashback.ui.model.AnimationSpeed
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 
+@AndroidEntryPoint
 internal class AnimationSpeedBottomSheetFragment: BaseBottomSheetFragment<FragmentBottomSheetAnimationSpeedBinding>() {
 
-    private val viewModel: AnimationSpeedViewModel by viewModel()
+    private val viewModel: AnimationSpeedViewModel by viewModels()
 
     private lateinit var adapter: BottomSheetAdapter
 

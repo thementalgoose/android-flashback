@@ -227,6 +227,44 @@ internal class NotificationRepositoryTest {
 
 
 
+    //region Runtime Notifications - Onboarding
+
+    @Test
+    fun `is runtime notifications reads value from preferences repository with default to false`() {
+        every { mockPreferenceManager.getBoolean(any(), any()) } returns true
+
+        initUnderTest()
+
+        Assertions.assertTrue(underTest.seenRuntimeNotifications )
+        verify {
+            mockPreferenceManager.getBoolean(keyRuntimeNotifications, false)
+        }
+    }
+
+    @Test
+    fun `setting runtime notifications enabled saves value from preferences repository`() {
+        initUnderTest()
+
+        underTest.seenRuntimeNotifications = true
+        verify {
+            mockPreferenceManager.save(keyRuntimeNotifications, true)
+        }
+    }
+
+    @Test
+    fun `setting runtime notifications disabled saves value from preferences repository`() {
+        initUnderTest()
+
+        underTest.seenRuntimeNotifications = false
+        verify {
+            mockPreferenceManager.save(keyRuntimeNotifications, false)
+        }
+    }
+
+    //endregion
+
+
+
 
 
     //region Notification preferences - Race Notify
@@ -412,6 +450,7 @@ internal class NotificationRepositoryTest {
         private const val keyNotificationSprintNotify: String = "UP_NEXT_NOTIFICATION_SPRINT_NOTIFY"
         private const val keyNotificationQualifyingNotify: String = "UP_NEXT_NOTIFICATION_QUALIFYING_NOTIFY"
 
+        private const val keyRuntimeNotifications: String = "RUNTIME_NOTIFICATION_PROMPT"
         private const val keyNotificationOnboarding: String = "UP_NEXT_NOTIFICATION_ONBOARDING"
     }
 }

@@ -8,16 +8,21 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import org.koin.android.ext.android.inject
+import dagger.hilt.android.AndroidEntryPoint
 import tmg.flashback.notifications.BuildConfig
 import tmg.flashback.notifications.R
 import tmg.flashback.notifications.navigation.NotificationNavigationProvider
 import tmg.flashback.notifications.repository.NotificationRepository
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class RemoteNotificationService : FirebaseMessagingService() {
 
-    private val navigationProvider: NotificationNavigationProvider by inject()
-    private val notificationRepository: NotificationRepository by inject()
+    @Inject
+    protected lateinit var navigationProvider: NotificationNavigationProvider
+
+    @Inject
+    protected lateinit var notificationRepository: NotificationRepository
 
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)

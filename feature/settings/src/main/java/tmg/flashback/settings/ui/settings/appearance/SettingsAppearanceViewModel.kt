@@ -2,6 +2,7 @@ package tmg.flashback.settings.ui.settings.appearance
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import dagger.hilt.android.lifecycle.HiltViewModel
 import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.settings.SettingsNavigationComponent
 import tmg.flashback.ui.R
@@ -9,6 +10,7 @@ import tmg.flashback.ui.repository.ThemeRepository
 import tmg.flashback.ui.settings.SettingsModel
 import tmg.flashback.ui.settings.SettingsViewModel
 import tmg.utilities.lifecycle.Event
+import javax.inject.Inject
 
 //region Inputs
 
@@ -24,7 +26,8 @@ interface SettingsAppearanceViewModelOutputs {
 
 //endregion
 
-class SettingsAppearanceViewModel(
+@HiltViewModel
+class SettingsAppearanceViewModel @Inject constructor(
     private val themeRepository: ThemeRepository,
     private val buildConfig: BuildConfigManager,
     private val settingsNavigationComponent: SettingsNavigationComponent

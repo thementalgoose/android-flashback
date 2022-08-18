@@ -8,6 +8,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.sp
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 
@@ -16,13 +18,16 @@ fun DriverNumber(
     number: String,
     modifier: Modifier = Modifier,
     textAlign: TextAlign = TextAlign.Start,
+    small: Boolean = false,
     highlightNumber: Color = AppTheme.colors.contentTertiary,
 ) {
     Text(
         modifier = modifier,
         text = number,
         textAlign = textAlign,
-        style = AppTheme.typography.block,
+        style = AppTheme.typography.block.copy(
+            fontSize = if (small) 12.sp else 16.sp
+        ),
         color = highlightNumber
     )
 }

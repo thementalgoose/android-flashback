@@ -14,8 +14,11 @@ import tmg.flashback.statistics.repo.mappers.network.NetworkCircuitDataMapper
 import tmg.flashback.statistics.repo.mappers.network.NetworkOverviewMapper
 import tmg.flashback.statistics.repo.mappers.network.NetworkScheduleMapper
 import tmg.flashback.statistics.room.FlashbackDatabase
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class OverviewRepository(
+@Singleton
+class OverviewRepository @Inject constructor(
     private val api: FlashbackApi,
     private val persistence: FlashbackDatabase,
     crashController: CrashController,

@@ -17,8 +17,9 @@ import tmg.flashback.ui.navigation.ActivityProvider
 import tmg.flashback.ui.navigation.Navigator
 import tmg.flashback.ui.navigation.Screen
 import tmg.flashback.ui.sync.SyncActivity
+import javax.inject.Inject
 
-class AppApplicationNavigationComponent(
+class AppApplicationNavigationComponent @Inject constructor(
     private val buildConfigManager: BuildConfigManager,
     private val deviceRepository: DeviceRepository,
     private val analyticsManager: AnalyticsManager,

@@ -3,10 +3,11 @@ package tmg.flashback.notifications.managers
 import android.util.Log
 import com.google.firebase.messaging.FirebaseMessaging
 import tmg.flashback.notifications.BuildConfig
+import javax.inject.Inject
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-internal class FirebaseRemoteNotificationManager: RemoteNotificationManager {
+internal class FirebaseRemoteNotificationManager @Inject constructor(): RemoteNotificationManager {
 
     override suspend fun subscribeToTopic(topic: String): Boolean {
         return suspendCoroutine { continuation ->

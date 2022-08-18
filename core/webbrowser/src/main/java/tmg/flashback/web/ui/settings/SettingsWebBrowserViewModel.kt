@@ -1,10 +1,12 @@
 package tmg.flashback.web.ui.settings
 
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import tmg.flashback.ui.settings.SettingsModel
 import tmg.flashback.ui.settings.SettingsViewModel
 import tmg.flashback.web.R
 import tmg.flashback.web.repository.WebBrowserRepository
+import javax.inject.Inject
 
 interface SettingsWebBrowserViewModelInputs {
 
@@ -14,7 +16,8 @@ interface SettingsWebBrowserViewModelOutputs {
 
 }
 
-internal class SettingsWebBrowserViewModel(
+@HiltViewModel
+internal class SettingsWebBrowserViewModel @Inject constructor(
     private val webBrowserRepository: WebBrowserRepository
 ): SettingsViewModel(), SettingsWebBrowserViewModelInputs, SettingsWebBrowserViewModelOutputs {
 

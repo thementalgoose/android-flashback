@@ -2,8 +2,11 @@ package tmg.flashback.releasenotes.repository
 
 import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.prefs.manager.PreferenceManager
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class ReleaseNotesRepository(
+@Singleton
+class ReleaseNotesRepository @Inject constructor(
     private val preferenceManager: PreferenceManager,
     private val buildConfigManager: BuildConfigManager
 ) {

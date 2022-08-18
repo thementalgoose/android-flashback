@@ -5,16 +5,22 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
+import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.model.Race
+import tmg.flashback.formula1.model.RaceQualifyingResult
 import tmg.flashback.formula1.model.RaceQualifyingType
 import tmg.flashback.statistics.repo.RaceRepository
+import tmg.flashback.stats.StatsNavigationComponent
+import javax.inject.Inject
 
 interface QualifyingViewModelInputs {
     fun load(season: Int, round: Int)
+    fun clickDriver(result: Driver)
 }
 
 interface QualifyingViewModelOutputs {
@@ -24,8 +30,10 @@ interface QualifyingViewModelOutputs {
 
 typealias QualifyingHeader = Triple<Boolean, Boolean, Boolean>
 
-class QualifyingViewModel(
+@HiltViewModel
+class QualifyingViewModel @Inject constructor(
     private val raceRepository: RaceRepository,
+    private val statsNavigationComponent: StatsNavigationComponent,
     private val ioDispatcher: CoroutineDispatcher
 ): ViewModel(), QualifyingViewModelInputs, QualifyingViewModelOutputs {
 
@@ -129,6 +137,15 @@ class QualifyingViewModel(
             }
             ?.sortedBy { it.qualified }
             ?: emptyList()
+    }
+
+    override fun clickDriver(result: Driver) {
+        val season = seasonRound.value?.first ?: return
+        statsNavigationComponent.driverSeason(
+            id = result.id,
+            name = result.name,
+            season = season
+        )
     }
 
 }

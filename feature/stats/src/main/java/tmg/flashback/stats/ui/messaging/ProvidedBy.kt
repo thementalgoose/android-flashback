@@ -5,30 +5,23 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import org.koin.androidx.compose.inject
-import tmg.flashback.stats.repository.HomeRepository
+import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody2
-import tmg.flashback.ui.navigation.ApplicationNavigationComponent
 
 @Composable
 fun ProvidedBy(
     modifier: Modifier = Modifier
 ) {
-    val homeRepository: HomeRepository by inject()
-    val message = homeRepository.dataProvidedBy ?: return
-
-    val navigationComponent: ApplicationNavigationComponent by inject()
+    val viewModel = hiltViewModel<ProvidedByViewModel>()
+    val message = viewModel.message ?: return
 
     ProvidedBy(
         modifier = modifier,
         title = message,
-        clicked = {
-            navigationComponent.aboutApp()
-        }
+        clicked = viewModel::navigateToAboutApp
     )
 }
 

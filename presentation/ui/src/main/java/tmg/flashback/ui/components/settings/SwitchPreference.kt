@@ -8,6 +8,7 @@ import androidx.compose.material.CheckboxDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -22,16 +23,23 @@ internal fun SwitchPreference(
     title: String,
     subtitle: String,
     isChecked: Boolean,
+    isEnabled: Boolean = true,
     preferenceClicked: (newState: Boolean) -> Unit,
     modifier: Modifier = Modifier,
     beta: Boolean = false
 ) {
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
+    val initialModifier = if (isEnabled) {
+        modifier
+            .alpha(1.0f)
             .clickable(onClick = {
                 preferenceClicked(isChecked)
             })
+    } else {
+        modifier.alpha(0.4f)
+    }
+    Row(
+        modifier = initialModifier
+            .fillMaxWidth()
             .padding(
                 start = AppTheme.dimensions.paddingSmall, // Experimental label
                 end = AppTheme.dimensions.paddingMedium,
