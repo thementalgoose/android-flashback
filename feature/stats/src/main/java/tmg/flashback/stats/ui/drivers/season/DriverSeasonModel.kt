@@ -82,4 +82,6 @@ sealed class DriverSeasonModel(
     object Loading: DriverSeasonModel(
         key = "loading"
     )
+
+    companion object
 }
