@@ -93,6 +93,9 @@ class DriverSeasonViewModel @Inject constructor(
             val standing = overview?.standings?.firstOrNull { it.season == season }
             when {
                 overview == null || standing == null -> {
+                    if (overview != null) {
+                        list.add(DriverSeasonModel.Header(overview.driver))
+                    }
                     when {
                         !connectivityManager.isConnected -> list.add(DriverSeasonModel.NetworkError)
                         else -> list.add(DriverSeasonModel.InternalError)
