@@ -50,7 +50,7 @@ internal class DriverStatHistoryViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `initialise with wins type returns wins`() {
+    fun `initialise with podiums type returns podiums`() {
         every { mockDriverRepository.getDriverOverview(any()) } returns flow {
             emit(DriverHistory.model(
                 standings = listOf(
@@ -110,6 +110,90 @@ internal class DriverStatHistoryViewModelTest: BaseTest() {
                     raceInfo = RaceInfo.model(season = 2021, round = 1),
                 ),
                 DriverStatHistoryModel.modelRace(
+                    raceInfo = RaceInfo.model(season = 2021, round = 3),
+                )
+            ))
+        }
+    }
+
+
+
+    @Test
+    fun `initialise with wins type returns wins`() {
+        every { mockDriverRepository.getDriverOverview(any()) } returns flow {
+            emit(DriverHistory.model(
+                standings = listOf(
+                    DriverHistorySeason.model(
+                        championshipStanding = 1,
+                        season = 2021,
+                        isInProgress = false,
+                        raceOverview = listOf(
+                            DriverHistorySeasonRace.model(
+                                finished = 1,
+                                raceInfo = RaceInfo.model(season = 2021, round = 1)
+                            ),
+                            DriverHistorySeasonRace.model(
+                                finished = 2,
+                                raceInfo = RaceInfo.model(season = 2021, round = 2)
+                            ),
+                            DriverHistorySeasonRace.model(
+                                finished = 1,
+                                raceInfo = RaceInfo.model(season = 2021, round = 3)
+                            )
+                        )
+                    ),
+                    DriverHistorySeason.model(
+                        championshipStanding = 2,
+                        season = 2020,
+                        isInProgress = false,
+                        raceOverview = listOf(
+                            DriverHistorySeasonRace.model(
+                                finished = 3,
+                                raceInfo = RaceInfo.model(season = 2020, round = 1)
+                            ),
+                            DriverHistorySeasonRace.model(
+                                finished = 1,
+                                raceInfo = RaceInfo.model(season = 2020, round = 2)
+                            ),
+                            DriverHistorySeasonRace.model(
+                                finished = 3,
+                                raceInfo = RaceInfo.model(season = 2020, round = 3)
+                            )
+                        )
+                    )
+                )
+            ))
+        }
+
+        initUnderTest()
+        underTest.inputs.load("driverId", DriverStatHistoryType.PODIUMS)
+
+        underTest.outputs.results.test {
+            assertValue(listOf(
+                DriverStatHistoryModel.modelLabel("2020"),
+                DriverStatHistoryModel.modelRacePosition(
+                    position = 1,
+                    raceInfo = RaceInfo.model(season = 2020, round = 1),
+                ),
+                DriverStatHistoryModel.modelRacePosition(
+                    position = 2,
+                    raceInfo = RaceInfo.model(season = 2020, round = 2),
+                ),
+                DriverStatHistoryModel.modelRacePosition(
+                    position = 1,
+                    raceInfo = RaceInfo.model(season = 2020, round = 3),
+                ),
+                DriverStatHistoryModel.modelLabel("2021"),
+                DriverStatHistoryModel.modelRacePosition(
+                    position = 3,
+                    raceInfo = RaceInfo.model(season = 2021, round = 1),
+                ),
+                DriverStatHistoryModel.modelRacePosition(
+                    position = 1,
+                    raceInfo = RaceInfo.model(season = 2021, round = 2),
+                ),
+                DriverStatHistoryModel.modelRacePosition(
+                    position = 2,
                     raceInfo = RaceInfo.model(season = 2021, round = 3),
                 )
             ))

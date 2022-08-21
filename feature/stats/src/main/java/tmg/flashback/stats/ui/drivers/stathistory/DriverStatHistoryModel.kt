@@ -25,6 +25,14 @@ sealed class DriverStatHistoryModel(
         key = "race-${raceInfo.season}-${raceInfo.round}"
     )
 
+    data class RacePosition(
+        val position: Int,
+        val raceInfo: RaceInfo,
+        val constructor: Constructor?
+    ): DriverStatHistoryModel(
+        key = "race-position-${raceInfo.season}-${raceInfo.round}"
+    )
+
     object Empty: DriverStatHistoryModel(key = "empty")
 
     companion object

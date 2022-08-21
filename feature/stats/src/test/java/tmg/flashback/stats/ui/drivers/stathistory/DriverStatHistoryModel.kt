@@ -18,6 +18,17 @@ fun DriverStatHistoryModel.Companion.modelRace(
     constructor = constructor
 )
 
+
+fun DriverStatHistoryModel.Companion.modelRacePosition(
+    position: Int = 1,
+    raceInfo: RaceInfo = RaceInfo.model(),
+    constructor: Constructor? = Constructor.model(),
+): DriverStatHistoryModel.RacePosition = DriverStatHistoryModel.RacePosition(
+    position = position,
+    raceInfo = raceInfo,
+    constructor = constructor
+)
+
 fun DriverStatHistoryModel.Companion.modelLabel(
     text: String = "label"
 ): DriverStatHistoryModel.Label = DriverStatHistoryModel.Label(
