@@ -10,5 +10,6 @@ enum class DriverStatHistoryType(
 ) {
     CHAMPIONSHIPS(R.string.stat_history_championships, "Championships"),
     WINS(R.string.stat_history_wins, "Wins"),
-    POLES(R.string.stat_history_poles, "Poles");
+    POLES(R.string.stat_history_poles, "Poles"),
+    PODIUMS(R.string.stat_history_podiums, "Podiums");
 }

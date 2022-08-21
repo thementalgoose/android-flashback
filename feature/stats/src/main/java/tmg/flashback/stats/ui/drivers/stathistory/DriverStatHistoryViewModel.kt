@@ -45,6 +45,7 @@ class DriverStatHistoryViewModel @Inject constructor(
                 DriverStatHistoryType.CHAMPIONSHIPS -> buildChampionshipList(driverHistory)
                 DriverStatHistoryType.WINS -> buildWinsList(driverHistory)
                 DriverStatHistoryType.POLES -> buildPoleList(driverHistory)
+                DriverStatHistoryType.PODIUMS -> buildPodiumList(driverHistory)
             }
         }
         .flowOn(ioDispatcher)
@@ -80,6 +81,31 @@ class DriverStatHistoryViewModel @Inject constructor(
                         DriverStatHistoryModel.Race(
                             raceInfo = it.raceInfo,
                             constructor = it.constructor
+                        )
+                    }
+                    .sortedBy { it.raceInfo.round }
+                )
+                return@map list
+            }
+            .flatten()
+    }
+
+    private fun buildPodiumList(driverHistory: DriverHistory): List<DriverStatHistoryModel> {
+        return driverHistory.standings
+            .filter { it.podiums >= 1 }
+            .sortedBy { it.season }
+            .map { it.raceOverview.filter { it.finished == 1 || it.finished == 2 || it.finished == 3 } }
+            .flatten()
+            .groupBy { it.raceInfo.season }
+            .map {
+                val list = mutableListOf<DriverStatHistoryModel>()
+                list.add(DriverStatHistoryModel.Label(it.key.toString()))
+                list.addAll(it.value
+                    .map {
+                        DriverStatHistoryModel.RacePosition(
+                            raceInfo = it.raceInfo,
+                            constructor = it.constructor,
+                            position = it.finished
                         )
                     }
                     .sortedBy { it.raceInfo.round }

@@ -216,7 +216,8 @@ class DriverOverviewViewModel @Inject constructor(
         list.addStat(
             icon = R.drawable.ic_podium,
             label = R.string.driver_overview_stat_career_podiums,
-            value = history.careerPodiums.toString()
+            value = history.careerPodiums.toString(),
+            driverStatHistoryType = if (history.careerPodiums >= 1) DriverStatHistoryType.PODIUMS else null
         )
         list.addStat(
             icon = R.drawable.ic_race_starts,

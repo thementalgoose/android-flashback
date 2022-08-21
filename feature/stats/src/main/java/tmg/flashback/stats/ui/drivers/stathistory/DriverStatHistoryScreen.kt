@@ -24,7 +24,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import tmg.flashback.formula1.extensions.positionIcon
+import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.Race
+import tmg.flashback.formula1.model.RaceInfo
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.providers.RaceProvider
 import tmg.flashback.stats.R
@@ -37,6 +40,7 @@ import tmg.flashback.ui.components.analytics.ScreenView
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.utils.isInPreview
 import tmg.utilities.extensions.format
+import tmg.utilities.extensions.ordinalAbbreviation
 
 @Composable
 fun DriverStatHistoryScreenVM(
@@ -93,6 +97,9 @@ private fun DriverStatHistoryScreen(
                     is DriverStatHistoryModel.Year -> Year(
                         model = it
                     )
+                    is DriverStatHistoryModel.RacePosition -> Race(
+                        model = it
+                    )
                 }
             }
             item(key = "footer") {
@@ -132,7 +139,30 @@ private fun Label(
 
 @Composable
 private fun Race(
-    model: DriverStatHistoryModel.Race
+    model: DriverStatHistoryModel.Race,
+) {
+    Race(
+        raceInfo = model.raceInfo,
+        constructor = model.constructor
+    )
+}
+
+@Composable
+private fun Race(
+    model: DriverStatHistoryModel.RacePosition
+) {
+    Race(
+        raceInfo = model.raceInfo,
+        constructor = model.constructor,
+        position = model.position
+    )
+}
+
+@Composable
+private fun Race(
+    raceInfo: RaceInfo,
+    constructor: Constructor?,
+    position: Int? = null
 ) {
     Row(modifier = Modifier
         .padding(
@@ -142,7 +172,41 @@ private fun Race(
     ) {
         val resourceId = when (isInPreview()) {
             true -> R.drawable.gb
-            false -> LocalContext.current.getFlagResourceAlpha3(model.raceInfo.circuit.countryISO)
+            false -> LocalContext.current.getFlagResourceAlpha3(raceInfo.circuit.countryISO)
+        }
+        if (position != null) {
+            Column(modifier = Modifier
+                .padding(vertical = 3.dp)
+                .width(IntrinsicSize.Min)
+            ) {
+                TextTitle(
+                    bold = true,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = AppTheme.dimensions.paddingXSmall),
+                    textAlign = TextAlign.Center,
+                    text = "P$position"
+                )
+//                Icon(
+//                    painter = painterResource(
+//                        id = when (position) {
+//                            1 -> R.drawable.ic_p1_podium
+//                            2 -> R.drawable.ic_p2_podium
+//                            3 -> R.drawable.ic_p3_podium
+//                            else -> position.positionIcon
+//                        }
+//                    ),
+//                    modifier = Modifier
+//                        .size(16.dp)
+//                        .align(Alignment.CenterHorizontally),
+//                    contentDescription = null,
+//                    tint = when (position) {
+//                        1 -> AppTheme.colors.contentPrimary
+//                        else -> AppTheme.colors.contentTertiary
+//                    }
+//                )
+            }
+            Spacer(Modifier.width(AppTheme.dimensions.paddingSmall))
         }
         Image(
             modifier = Modifier.size(32.dp),
@@ -156,12 +220,12 @@ private fun Race(
                 .padding(horizontal = AppTheme.dimensions.paddingSmall)
         ) {
             TextBody1(
-                text = model.raceInfo.name,
+                text = raceInfo.name,
                 bold = true
             )
             TextBody2(
                 modifier = Modifier.padding(vertical = 2.dp),
-                text = model.raceInfo.circuit.name
+                text = raceInfo.circuit.name
             )
         }
         Column(
@@ -169,22 +233,22 @@ private fun Race(
         ) {
             TextBody2(
                 bold = true,
-                text = "#${model.raceInfo.round}",
+                text = "#${raceInfo.round}",
                 textAlign = TextAlign.End,
             )
-            if (model.constructor != null) {
+            if (constructor != null) {
                 Spacer(Modifier.height(2.dp))
                 Row(Modifier.height(IntrinsicSize.Min)) {
                     TextBody2(
                         modifier = Modifier.padding(horizontal = AppTheme.dimensions.paddingXSmall),
-                        text = model.constructor.name
+                        text = constructor.name
                     )
                     Box(
                         Modifier
                             .fillMaxHeight()
                             .width(4.dp)
                             .clip(RoundedCornerShape(2.dp))
-                            .background(model.constructor.colour)
+                            .background(constructor.colour)
                     )
                 }
             }
@@ -234,6 +298,21 @@ private fun Preview(
                     text = "label"
                 ),
                 DriverStatHistoryModel.Race(
+                    raceInfo = race.raceInfo,
+                    constructor = race.constructors.first()
+                ),
+                DriverStatHistoryModel.RacePosition(
+                    position = 1,
+                    raceInfo = race.raceInfo,
+                    constructor = race.constructors.first()
+                ),
+                DriverStatHistoryModel.RacePosition(
+                    position = 2,
+                    raceInfo = race.raceInfo,
+                    constructor = race.constructors.first()
+                ),
+                DriverStatHistoryModel.RacePosition(
+                    position = 3,
                     raceInfo = race.raceInfo,
                     constructor = race.constructors.first()
                 )
