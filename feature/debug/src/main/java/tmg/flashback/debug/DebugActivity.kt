@@ -155,7 +155,7 @@ class DebugActivity: BaseActivity() {
                                 statsNavigationComponent.driverStatHistory(
                                     "vettel",
                                     "Sebastian Vettel",
-                                    DriverStatHistoryType.WINS
+                                    DriverStatHistoryType.PODIUMS
                                 )
                             }
                         )
