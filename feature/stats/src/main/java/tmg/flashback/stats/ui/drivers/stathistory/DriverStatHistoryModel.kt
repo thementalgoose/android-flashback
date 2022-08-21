@@ -30,7 +30,7 @@ sealed class DriverStatHistoryModel(
         val raceInfo: RaceInfo,
         val constructor: Constructor?
     ): DriverStatHistoryModel(
-        key = "race-position-${raceInfo.season}-${raceInfo.round}"
+        key = "race-position-$position-${raceInfo.season}-${raceInfo.round}"
     )
 
     object Empty: DriverStatHistoryModel(key = "empty")
