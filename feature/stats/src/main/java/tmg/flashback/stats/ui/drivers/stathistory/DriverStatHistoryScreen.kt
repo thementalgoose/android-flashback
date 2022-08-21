@@ -175,26 +175,38 @@ private fun Race(
             false -> LocalContext.current.getFlagResourceAlpha3(raceInfo.circuit.countryISO)
         }
         if (position != null) {
-            Column(modifier = Modifier.width(IntrinsicSize.Min)) {
-                Icon(
-                    painter = painterResource(
-                        id = when (position) {
-                            1 -> R.drawable.ic_p1_podium
-                            2 -> R.drawable.ic_p2_podium
-                            3 -> R.drawable.ic_p3_podium
-                            else -> position.positionIcon
-                        }
-                    ),
-                    modifier = Modifier.align(Alignment.CenterHorizontally),
-                    contentDescription = null,
-                    tint = AppTheme.colors.contentTertiary
-                )
-                TextBody1(
-                    modifier = Modifier.fillMaxWidth(),
+            Column(modifier = Modifier
+                .padding(vertical = 3.dp)
+                .width(IntrinsicSize.Min)
+            ) {
+                TextTitle(
+                    bold = true,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = AppTheme.dimensions.paddingXSmall),
                     textAlign = TextAlign.Center,
-                    text = position.ordinalAbbreviation
+                    text = "P$position"
                 )
+//                Icon(
+//                    painter = painterResource(
+//                        id = when (position) {
+//                            1 -> R.drawable.ic_p1_podium
+//                            2 -> R.drawable.ic_p2_podium
+//                            3 -> R.drawable.ic_p3_podium
+//                            else -> position.positionIcon
+//                        }
+//                    ),
+//                    modifier = Modifier
+//                        .size(16.dp)
+//                        .align(Alignment.CenterHorizontally),
+//                    contentDescription = null,
+//                    tint = when (position) {
+//                        1 -> AppTheme.colors.contentPrimary
+//                        else -> AppTheme.colors.contentTertiary
+//                    }
+//                )
             }
+            Spacer(Modifier.width(AppTheme.dimensions.paddingSmall))
         }
         Image(
             modifier = Modifier.size(32.dp),
