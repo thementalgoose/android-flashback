@@ -11,4 +11,6 @@
     <string name="ab_positions_lost">Started %s, gained %d, lost %d places</string>
 
     <string name="ab_fastest_lap">Fastest Lap</string>
+
+    <string name="ab_constructor_logo">%s logo</string>
 </resources>
