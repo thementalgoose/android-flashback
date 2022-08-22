@@ -1,5 +1,6 @@
 package tmg.flashback.stats.ui.constructors.overview
 
+import android.view.RoundedCorner
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -162,13 +163,18 @@ private fun HeaderTop(
                 contentScale = ContentScale.Fit,
             )
         } else {
-            AsyncImage(
-                model = model.constructorPhotoUrl,
-                contentDescription = stringResource(id = R.string.ab_constructor_logo, model.constructorName),
-                modifier = Modifier.size(108.dp)
-                    .clip(RoundedCornerShape(AppTheme.dimensions.radiusSmall)),
-                contentScale = ContentScale.Crop
-            )
+            Box(modifier = Modifier
+                .size(108.dp)
+                .clip(RoundedCornerShape(AppTheme.dimensions.radiusSmall))
+                .background(AppTheme.colors.backgroundSecondary)
+            ) {
+                AsyncImage(
+                    model = model.constructorPhotoUrl,
+                    contentDescription = stringResource(id = R.string.ab_constructor_logo, model.constructorName),
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop
+                )
+            }
         }
 
         Row(modifier = Modifier.height(IntrinsicSize.Min)) {
