@@ -115,7 +115,7 @@ private val MIGRATION_6_7 = object : Migration(6, 7) {
     }
 }
 
-private val MIGRATION_7_8 = object : Migration(6, 7) {
+private val MIGRATION_7_8 = object : Migration(7, 8) {
     override fun migrate(database: SupportSQLiteDatabase) {
         database.execSQL("ALTER TABLE Constructor ADD COLUMN photoUrl TEXT DEFAULT NULL")
         Log.i("Database", "Migrated DB from version $startVersion to $endVersion")
