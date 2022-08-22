@@ -9,6 +9,7 @@ data class Constructor(
     val id: String,
     val colour: String,
     val name: String,
+    val photoUrl: String?,
     val nationality: String,
     val nationalityISO: String,
     val wikiUrl: String?

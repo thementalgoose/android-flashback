@@ -13,6 +13,8 @@ data class Constructor(
     val colour: String,
     @ColumnInfo(name = "name")
     val name: String,
+    @ColumnInfo(name = "photoUrl")
+    val photoUrl: String?,
     @ColumnInfo(name = "nationality")
     val nationality: String,
     @ColumnInfo(name = "nationality_iso")
