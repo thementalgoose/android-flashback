@@ -97,6 +97,7 @@ class ConstructorOverviewViewModel @Inject constructor(
                         list.add(
                             ConstructorOverviewModel.Header(
                                 constructorName = it.constructor.name,
+                                constructorPhotoUrl = it.constructor.photoUrl,
                                 constructorColor = it.constructor.color,
                                 constructorNationality = it.constructor.nationality,
                                 constructorNationalityISO = it.constructor.nationalityISO,

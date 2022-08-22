@@ -1,16 +1,19 @@
 package tmg.flashback.stats.ui.constructors.overview
 
+import android.view.RoundedCorner
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -22,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import androidx.hilt.navigation.compose.hiltViewModel
+import coil.compose.AsyncImage
 import tmg.flashback.formula1.constants.Formula1
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.ConstructorHistorySeasonDriver
@@ -150,20 +154,49 @@ private fun HeaderTop(
             true -> R.drawable.gb
             false -> LocalContext.current.getFlagResourceAlpha3(model.constructorNationalityISO)
         }
-        Image(
-            modifier = Modifier.size(108.dp),
-            painter = painterResource(id = resourceId),
-            contentDescription = null,
-            contentScale = ContentScale.Fit,
-        )
 
-        model.constructorWikiUrl?.let { wiki ->
-            ButtonTertiary(
-                text = stringResource(id = R.string.details_link_wikipedia),
-                onClick = { wikipediaClicked(wiki) },
-                icon = R.drawable.ic_details_wikipedia
+        if (model.constructorPhotoUrl == null) {
+            Image(
+                modifier = Modifier.size(108.dp),
+                painter = painterResource(id = resourceId),
+                contentDescription = null,
+                contentScale = ContentScale.Fit,
             )
+        } else {
+            Box(modifier = Modifier
+                .size(108.dp)
+                .clip(RoundedCornerShape(AppTheme.dimensions.radiusSmall))
+                .background(AppTheme.colors.backgroundSecondary)
+            ) {
+                AsyncImage(
+                    model = model.constructorPhotoUrl,
+                    contentDescription = stringResource(id = R.string.ab_constructor_logo, model.constructorName),
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop
+                )
+            }
         }
+
+        Row(modifier = Modifier.height(IntrinsicSize.Min)) {
+            model.constructorWikiUrl?.let { wiki ->
+                ButtonTertiary(
+                    text = stringResource(id = R.string.details_link_wikipedia),
+                    onClick = { wikipediaClicked(wiki) },
+                    icon = R.drawable.ic_details_wikipedia
+                )
+            }
+            if (model.constructorPhotoUrl != null) {
+                Spacer(Modifier.width(8.dp))
+                Image(
+                    modifier = Modifier.size(32.dp)
+                        .align(Alignment.CenterVertically),
+                    painter = painterResource(id = resourceId),
+                    contentDescription = model.constructorNationality,
+                    contentScale = ContentScale.Fit,
+                )
+            }
+        }
+
     }
 }
 
