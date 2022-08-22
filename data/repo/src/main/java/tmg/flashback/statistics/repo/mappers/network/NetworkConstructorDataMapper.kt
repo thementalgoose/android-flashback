@@ -11,6 +11,7 @@ class NetworkConstructorDataMapper @Inject constructor() {
             id = constructor.id,
             colour = constructor.colour,
             name = constructor.name,
+            photoUrl = constructor.photoUrl,
             nationality = constructor.nationality,
             nationalityISO = constructor.nationalityISO,
             wikiUrl = constructor.wikiUrl

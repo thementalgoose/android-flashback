@@ -9,6 +9,7 @@ sealed class ConstructorOverviewModel(
 ) {
     data class Header(
         val constructorName: String,
+        val constructorPhotoUrl: String?,
         val constructorColor: Int,
         val constructorNationality: String,
         val constructorNationalityISO: String,

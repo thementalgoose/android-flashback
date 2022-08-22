@@ -28,7 +28,8 @@ internal class RoomModule {
             MIGRATION_3_4,
             MIGRATION_4_5,
             MIGRATION_5_6,
-            MIGRATION_6_7
+            MIGRATION_6_7,
+            MIGRATION_7_8
         )
         .build()
 
@@ -110,6 +111,13 @@ private val MIGRATION_6_7 = object : Migration(6, 7) {
     override fun migrate(database: SupportSQLiteDatabase) {
         database.execSQL("ALTER TABLE CircuitRound ADD COLUMN season_round TEXT NOT NULL DEFAULT 'CIRCUIT_ROUND_ADDED'")
         database.execSQL("ALTER TABLE CircuitRoundResult ADD COLUMN season_round_id TEXT NOT NULL DEFAULT 'CIRCUIT_ROUND_RESULT_ADDED'")
+        Log.i("Database", "Migrated DB from version $startVersion to $endVersion")
+    }
+}
+
+private val MIGRATION_7_8 = object : Migration(7, 8) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        database.execSQL("ALTER TABLE Constructor ADD COLUMN photoUrl TEXT DEFAULT NULL")
         Log.i("Database", "Migrated DB from version $startVersion to $endVersion")
     }
 }

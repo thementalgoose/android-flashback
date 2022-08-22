@@ -12,12 +12,14 @@ import tmg.flashback.stats.ui.drivers.overview.PipeType
 
 fun ConstructorOverviewModel.Companion.headerModel(
     constructorName: String = "name",
+    constructorPhotoUrl: String? = "photoUrl",
     constructorColor: Int = 0,
     constructorNationality: String = "nationality",
     constructorNationalityISO: String = "nationalityISO",
     constructorWikiUrl: String? = "wikiUrl"
 ): ConstructorOverviewModel.Header = ConstructorOverviewModel.Header(
     constructorName = constructorName,
+    constructorPhotoUrl = constructorPhotoUrl,
     constructorColor = constructorColor,
     constructorNationality = constructorNationality,
     constructorNationalityISO = constructorNationalityISO,

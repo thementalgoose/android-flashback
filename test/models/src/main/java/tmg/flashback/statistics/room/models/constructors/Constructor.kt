@@ -4,6 +4,7 @@ fun Constructor.Companion.model(
     id: String = "constructorId",
     colour: String = "#123456",
     name: String = "name",
+    photoUrl: String? = "photoUrl",
     nationality: String = "nationality",
     nationalityISO: String = "nationalityISO",
     wikiUrl: String? = "wikiUrl"
@@ -11,6 +12,7 @@ fun Constructor.Companion.model(
     id = id,
     colour = colour,
     name = name,
+    photoUrl = photoUrl,
     nationality = nationality,
     nationalityISO = nationalityISO,
     wikiUrl = wikiUrl,
