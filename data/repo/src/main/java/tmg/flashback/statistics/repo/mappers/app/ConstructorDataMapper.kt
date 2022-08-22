@@ -11,6 +11,7 @@ class ConstructorDataMapper @Inject constructor() {
             id = constructor.id,
             name = constructor.name,
             wikiUrl = constructor.wikiUrl,
+            photoUrl = constructor.photoUrl,
             nationality = constructor.nationality,
             nationalityISO = constructor.nationalityISO,
             color = constructor.colour.toColorInt(),
