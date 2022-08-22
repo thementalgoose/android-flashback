@@ -13,7 +13,11 @@ class StyleGuideComposeActivity: BaseActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             AppTheme {
-                StyleGuideComposeLayout()
+                StyleGuideComposeLayout(
+                    actionUpClicked = {
+                        finish()
+                    }
+                )
             }
         }
     }
