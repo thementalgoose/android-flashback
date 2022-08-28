@@ -29,6 +29,7 @@ import tmg.flashback.stats.analytics.AnalyticsConstants.analyticsDriverId
 import tmg.flashback.stats.components.Timeline
 import tmg.flashback.stats.ui.drivers.stathistory.DriverStatHistoryType
 import tmg.flashback.stats.ui.shared.DriverImage
+import tmg.flashback.stats.ui.shared.Flag
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
@@ -156,17 +157,12 @@ private fun Header(
                 .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            val resourceId = when (isInPreview()) {
-                true -> R.drawable.gb
-                false -> LocalContext.current.getFlagResourceAlpha3(model.driverNationalityISO)
-            }
-            Image(
+            Flag(
+                iso = model.driverNationalityISO,
+                nationality = model.driverNationality,
                 modifier = Modifier
                     .size(16.dp)
                     .align(Alignment.CenterVertically),
-                painter = painterResource(id = resourceId),
-                contentDescription = null,
-                contentScale = ContentScale.Fit,
             )
             Spacer(Modifier.width(AppTheme.dimensions.paddingSmall))
 

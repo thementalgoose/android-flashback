@@ -35,6 +35,7 @@ import tmg.flashback.providers.CircuitHistoryRaceProvider
 import tmg.flashback.stats.R
 import tmg.flashback.stats.analytics.AnalyticsConstants.analyticsCircuitId
 import tmg.flashback.stats.components.DriverNumber
+import tmg.flashback.stats.ui.shared.Flag
 import tmg.flashback.stats.ui.weekend.shared.NotAvailable
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
@@ -193,14 +194,10 @@ private fun Stats(
                         start = AppTheme.dimensions.paddingNSmall
                     )
             ) {
-                val resourceId = when (isInPreview()) {
-                    true -> R.drawable.gb
-                    false -> LocalContext.current.getFlagResourceAlpha3(model.countryISO)
-                }
-                Image(
-                    painter = painterResource(id = resourceId),
+                Flag(
+                    iso = model.countryISO,
+                    nationality = model.country,
                     modifier = Modifier.size(countryBadgeSize),
-                    contentDescription = null
                 )
             }
             Column(

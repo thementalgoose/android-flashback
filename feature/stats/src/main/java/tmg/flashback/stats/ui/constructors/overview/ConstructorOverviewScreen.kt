@@ -38,6 +38,7 @@ import tmg.flashback.stats.components.TimelineTop
 import tmg.flashback.stats.components.dotDiameter
 import tmg.flashback.stats.components.heightOfTopDot
 import tmg.flashback.stats.ui.drivers.overview.PipeType
+import tmg.flashback.stats.ui.shared.Flag
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
@@ -150,17 +151,11 @@ private fun HeaderTop(
         .fillMaxWidth()
         .padding(horizontal = AppTheme.dimensions.paddingMedium)
     ) {
-        val resourceId = when (isInPreview()) {
-            true -> R.drawable.gb
-            false -> LocalContext.current.getFlagResourceAlpha3(model.constructorNationalityISO)
-        }
-
         if (model.constructorPhotoUrl == null) {
-            Image(
-                modifier = Modifier.size(108.dp),
-                painter = painterResource(id = resourceId),
-                contentDescription = null,
-                contentScale = ContentScale.Fit,
+            Flag(
+                iso = model.constructorNationalityISO,
+                nationality = model.constructorNationality,
+                modifier = Modifier.size(108.dp)
             )
         } else {
             Box(modifier = Modifier
@@ -187,12 +182,11 @@ private fun HeaderTop(
             }
             if (model.constructorPhotoUrl != null) {
                 Spacer(Modifier.width(8.dp))
-                Image(
+                Flag(
+                    iso = model.constructorNationalityISO,
+                    nationality = model.constructorNationality,
                     modifier = Modifier.size(32.dp)
-                        .align(Alignment.CenterVertically),
-                    painter = painterResource(id = resourceId),
-                    contentDescription = model.constructorNationality,
-                    contentScale = ContentScale.Fit,
+                        .align(Alignment.CenterVertically)
                 )
             }
         }
@@ -348,17 +342,12 @@ private fun DriverPerSeason(
 ) {
     Row(modifier = modifier) {
         Row(Modifier.weight(1f)) {
-            val resourceId = when (isInPreview()) {
-                true -> R.drawable.gb
-                false -> LocalContext.current.getFlagResourceAlpha3(model.driver.driver.nationalityISO)
-            }
-            Image(
+            Flag(
+                iso = model.driver.driver.nationalityISO,
+                nationality = model.driver.driver.nationality,
                 modifier = Modifier
                     .size(16.dp)
                     .align(Alignment.CenterVertically),
-                painter = painterResource(id = resourceId),
-                contentDescription = null,
-                contentScale = ContentScale.Fit,
             )
             TextBody2(
                 modifier = Modifier
