@@ -325,7 +325,16 @@ private fun ResultConstructor(
                 .size(42.dp)
                 .clip(RoundedCornerShape(AppTheme.dimensions.radiusSmall))
                 .background(Color(model.colour))
-        )
+        ) {
+            if (model.photoUrl != null) {
+                AsyncImage(
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop,
+                    model = model.photoUrl,
+                    contentDescription = null
+                )
+            }
+        }
         Spacer(Modifier.width(AppTheme.dimensions.paddingNSmall))
         Column(modifier = Modifier.weight(1f)) {
             TextBody1(
