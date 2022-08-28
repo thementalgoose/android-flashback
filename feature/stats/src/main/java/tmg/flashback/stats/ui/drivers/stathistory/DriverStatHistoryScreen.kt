@@ -32,6 +32,7 @@ import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.providers.RaceProvider
 import tmg.flashback.stats.R
 import tmg.flashback.stats.analytics.AnalyticsConstants.analyticsDriverId
+import tmg.flashback.stats.ui.shared.Flag
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
@@ -170,10 +171,6 @@ private fun Race(
             horizontal = AppTheme.dimensions.paddingMedium
         )
     ) {
-        val resourceId = when (isInPreview()) {
-            true -> R.drawable.gb
-            false -> LocalContext.current.getFlagResourceAlpha3(raceInfo.circuit.countryISO)
-        }
         if (position != null) {
             Column(modifier = Modifier
                 .padding(vertical = 3.dp)
@@ -208,11 +205,10 @@ private fun Race(
             }
             Spacer(Modifier.width(AppTheme.dimensions.paddingSmall))
         }
-        Image(
+        Flag(
+            iso = raceInfo.circuit.countryISO,
+            nationality = raceInfo.circuit.country,
             modifier = Modifier.size(32.dp),
-            painter = painterResource(id = resourceId),
-            contentDescription = null,
-            contentScale = ContentScale.Fit,
         )
         Column(
             modifier = Modifier

@@ -22,10 +22,12 @@ import androidx.compose.ui.unit.dp
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import androidx.hilt.navigation.compose.hiltViewModel
+import coil.compose.AsyncImage
 import tmg.flashback.formula1.enums.TrackLayout
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.stats.R
 import tmg.flashback.stats.ui.shared.DriverImage
+import tmg.flashback.stats.ui.shared.Flag
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.buttons.ButtonTertiary
 import tmg.flashback.style.input.InputPrimary
@@ -207,15 +209,10 @@ private fun ResultCircuit(
                     .fillMaxWidth()
                     .padding(bottom = AppTheme.dimensions.paddingXSmall)
             )
-            val resourceId = when (isInPreview()) {
-                true -> R.drawable.gb
-                false -> LocalContext.current.getFlagResourceAlpha3(model.nationalityISO)
-            }
-            Image(
+            Flag(
+                iso = model.nationalityISO,
+                nationality = model.nationality,
                 modifier = Modifier.size(24.dp),
-                painter = painterResource(id = resourceId),
-                contentDescription = null,
-                contentScale = ContentScale.Fit,
             )
         }
     }
@@ -239,16 +236,11 @@ private fun ResultRace(
                 .size(42.dp)
                 .clip(RoundedCornerShape(AppTheme.dimensions.radiusSmall))
         ) {
-            val resourceId = when (isInPreview()) {
-                true -> R.drawable.gb
-                false -> LocalContext.current.getFlagResourceAlpha3(model.countryISO)
-            }
-            Image(
+            Flag(
+                iso = model.countryISO,
+                nationality = model.country,
                 modifier = Modifier
                     .size(42.dp),
-                painter = painterResource(id = resourceId),
-                contentDescription = null,
-                contentScale = ContentScale.Fit,
             )
         }
         Spacer(Modifier.width(AppTheme.dimensions.paddingNSmall))
