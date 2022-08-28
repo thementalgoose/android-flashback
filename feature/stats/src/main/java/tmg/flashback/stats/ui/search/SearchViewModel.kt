@@ -213,6 +213,7 @@ class SearchViewModel @Inject constructor(
                         name = it.name,
                         nationality = it.nationality,
                         nationalityISO = it.nationalityISO,
+                        photoUrl = it.photoUrl,
                         colour = it.color
                     )
                 })
