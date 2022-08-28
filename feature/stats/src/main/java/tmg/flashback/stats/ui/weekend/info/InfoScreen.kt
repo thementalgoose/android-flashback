@@ -20,6 +20,7 @@ import tmg.flashback.formula1.model.RaceInfo
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.providers.RaceProvider
 import tmg.flashback.stats.R
+import tmg.flashback.stats.ui.shared.Flag
 import tmg.flashback.stats.ui.weekend.WeekendInfo
 import tmg.flashback.stats.ui.weekend.from
 import tmg.flashback.style.AppTheme
@@ -103,15 +104,10 @@ private fun RaceDetails(
         Column(
             horizontalAlignment = Alignment.End
         ) {
-            val resourceId = when (isInPreview()) {
-                true -> R.drawable.gb
-                false -> LocalContext.current.getFlagResourceAlpha3(model.countryISO)
-            }
-            Image(
+            Flag(
+                iso = model.countryISO,
+                nationality = model.country,
                 modifier = Modifier.size(42.dp),
-                painter = painterResource(id = resourceId),
-                contentDescription = null,
-                contentScale = ContentScale.Fit,
             )
             TextBody2(
                 text = stringResource(id = R.string.weekend_race_round, model.round),

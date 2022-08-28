@@ -34,6 +34,7 @@ import tmg.flashback.style.text.TextTitle
 import tmg.flashback.stats.R
 import tmg.flashback.stats.ui.dashboard.DashboardQuickLinks
 import tmg.flashback.stats.ui.messaging.Banner
+import tmg.flashback.stats.ui.shared.Flag
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.ui.components.loading.SkeletonView
@@ -220,15 +221,10 @@ fun DriverStandings(
                         vertical = AppTheme.dimensions.paddingXXSmall,
                     )
                 ) {
-                    val resourceId = when (isInPreview()) {
-                        true -> R.drawable.gb
-                        false -> LocalContext.current.getFlagResourceAlpha3(model.standings.driver.nationalityISO)
-                    }
-                    Image(
+                    Flag(
+                        iso = model.standings.driver.nationalityISO,
+                        nationality = model.standings.driver.nationality,
                         modifier = Modifier.size(16.dp),
-                        painter = painterResource(id = resourceId),
-                        contentDescription = null,
-                        contentScale = ContentScale.Fit,
                     )
                     Spacer(Modifier.width(4.dp))
                     TextBody2(

@@ -36,6 +36,7 @@ import tmg.flashback.formula1.model.RaceRaceResult
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.providers.RaceRaceResultProvider
 import tmg.flashback.stats.R
+import tmg.flashback.stats.ui.shared.Flag
 import tmg.flashback.stats.ui.weekend.WeekendInfo
 import tmg.flashback.stats.ui.weekend.fakeWeekendInfo
 import tmg.flashback.stats.ui.weekend.info.RaceInfoHeader
@@ -313,17 +314,12 @@ private fun PodiumResult(
                 ),
             horizontalArrangement = Arrangement.Center
         ) {
-            val resourceId = when (isInPreview()) {
-                true -> R.drawable.gb
-                false -> LocalContext.current.getFlagResourceAlpha3(model.driver.driver.nationalityISO)
-            }
-            Image(
+            Flag(
+                iso = model.driver.driver.nationalityISO,
+                nationality = model.driver.driver.nationality,
                 modifier = Modifier
                     .size(16.dp)
                     .align(Alignment.CenterVertically),
-                painter = painterResource(id = resourceId),
-                contentDescription = null,
-                contentScale = ContentScale.Fit,
             )
             Spacer(Modifier.width(AppTheme.dimensions.paddingXSmall))
             Delta(grid = model.grid, finish = model.finish)

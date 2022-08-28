@@ -26,6 +26,7 @@ sealed class SearchItem(
         val name: String,
         val nationality: String,
         val nationalityISO: String,
+        val photoUrl: String?,
         val colour: Int
     ): SearchItem(
         id = "constructor-$constructorId",

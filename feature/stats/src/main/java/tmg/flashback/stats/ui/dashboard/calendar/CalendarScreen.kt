@@ -41,6 +41,7 @@ import tmg.flashback.providers.OverviewRaceProvider
 import tmg.flashback.stats.R
 import tmg.flashback.stats.repository.models.NotificationSchedule
 import tmg.flashback.stats.ui.dashboard.DashboardQuickLinks
+import tmg.flashback.stats.ui.shared.Flag
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
@@ -212,14 +213,10 @@ private fun Schedule(
                         start = AppTheme.dimensions.paddingNSmall
                     )
                 ) {
-                    val resourceId = when (isInPreview()) {
-                        true -> R.drawable.gb
-                        false -> LocalContext.current.getFlagResourceAlpha3(model.model.countryISO)
-                    }
-                    Image(
-                        painter = painterResource(id = resourceId),
+                    Flag(
+                        iso = model.model.countryISO,
+                        nationality = model.model.country,
                         modifier = Modifier.size(countryBadgeSize),
-                        contentDescription = null
                     )
                 }
                 Column(modifier = Modifier
