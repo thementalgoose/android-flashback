@@ -18,6 +18,7 @@ import tmg.flashback.formula1.model.DriverConstructor
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.providers.DriverConstructorProvider
 import tmg.flashback.stats.R
+import tmg.flashback.stats.ui.shared.Flag
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
@@ -73,17 +74,11 @@ fun DriverInfo(
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                val resourceId = when (isInPreview()) {
-                    true -> R.drawable.gb
-                    false -> LocalContext.current.getFlagResourceAlpha3(driverNationalityISO)
-                }
-                Image(
+                Flag(
+                    iso = driverNationalityISO,
                     modifier = Modifier
                         .size(16.dp)
                         .align(Alignment.CenterVertically),
-                    painter = painterResource(id = resourceId),
-                    contentDescription = null,
-                    contentScale = ContentScale.Fit,
                 )
                 Spacer(Modifier.width(AppTheme.dimensions.paddingSmall))
                 extraContent?.let { content ->

@@ -17,6 +17,7 @@ import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.providers.DriverProvider
 import tmg.flashback.style.AppTheme
 import tmg.flashback.stats.R
+import tmg.flashback.stats.ui.shared.Flag
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.ui.utils.isInPreview
@@ -33,11 +34,6 @@ fun DriverPoints(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        val resourceId = when (isInPreview()) {
-            true -> R.drawable.gb
-            false -> LocalContext.current.getFlagResourceAlpha3(driver.nationalityISO)
-        }
-
         TextBody2(text = driver.name)
         Column(modifier = Modifier
             .fillMaxHeight()
@@ -46,11 +42,10 @@ fun DriverPoints(
                 horizontal = AppTheme.dimensions.paddingXSmall
             )
         ) {
-            Image(
-                modifier = Modifier.size(16.dp),
-                painter = painterResource(id = resourceId),
-                contentDescription = null,
-                contentScale = ContentScale.Fit,
+            Flag(
+                iso = driver.nationalityISO,
+                nationality = driver.nationality,
+                modifier = Modifier.size(16.dp)
             )
         }
         TextBody2(text = pluralResource(R.plurals.race_points, points.takeIf { !it.isNaN() }?.roundToInt() ?: 0, points.pointsDisplay()))
