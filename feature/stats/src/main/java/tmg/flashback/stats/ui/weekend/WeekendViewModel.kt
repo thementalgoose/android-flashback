@@ -56,12 +56,11 @@ class WeekendViewModel @Inject constructor(
             }
         }
         .flowOn(ioDispatcher)
+        .shareIn(viewModelScope, started = SharingStarted.Lazily)
 
     private val raceFlow: Flow<Race?> = seasonRoundWithRequest
         .filterNotNull()
         .flatMapLatest { (season, round) -> raceRepository.getRace(season, round) }
-        .flowOn(ioDispatcher)
-        .shareIn(viewModelScope, started = SharingStarted.Lazily)
 
     override val weekendInfo: LiveData<WeekendInfo> = raceFlow
         .filterNotNull()
@@ -71,7 +70,6 @@ class WeekendViewModel @Inject constructor(
     override val tabs: LiveData<List<WeekendScreenState>> = raceFlow
         .combinePair(selectedTab)
         .map { (race, navItem) ->
-            println("NAVIGATION ITEM $navItem")
             val list = mutableListOf<WeekendScreenState>()
             list.add(WeekendScreenState(WeekendNavItem.SCHEDULE, isSelected = navItem == WeekendNavItem.SCHEDULE))
             list.add(WeekendScreenState(WeekendNavItem.QUALIFYING, isSelected = navItem == WeekendNavItem.QUALIFYING))
@@ -82,13 +80,6 @@ class WeekendViewModel @Inject constructor(
             list.add(WeekendScreenState(WeekendNavItem.CONSTRUCTOR, isSelected = navItem == WeekendNavItem.CONSTRUCTOR))
             return@map list
         }
-        .onStart { listOf(
-            WeekendScreenState(WeekendNavItem.SCHEDULE, isSelected = selectedTab.value == WeekendNavItem.SCHEDULE),
-            WeekendScreenState(WeekendNavItem.QUALIFYING, isSelected = selectedTab.value == WeekendNavItem.QUALIFYING),
-            WeekendScreenState(WeekendNavItem.RACE, isSelected = selectedTab.value == WeekendNavItem.RACE),
-            WeekendScreenState(WeekendNavItem.CONSTRUCTOR, isSelected = selectedTab.value == WeekendNavItem.CONSTRUCTOR)
-        ) }
-        .flowOn(ioDispatcher)
         .asLiveData(viewModelScope.coroutineContext)
 
     override val isRefreshing: MutableLiveData<Boolean> = MutableLiveData()
