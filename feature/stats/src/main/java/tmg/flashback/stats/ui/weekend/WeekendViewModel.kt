@@ -40,6 +40,7 @@ class WeekendViewModel @Inject constructor(
         .filterNotNull()
         .flatMapLatest { (season, round) ->
             return@flatMapLatest flow {
+                println("SEASON ROUND WITH REQUEST $season $round")
                 if (!raceRepository.hasntPreviouslySynced(season)) {
                     isRefreshing.postValue(true)
                     emit(null)
@@ -56,7 +57,6 @@ class WeekendViewModel @Inject constructor(
             }
         }
         .flowOn(ioDispatcher)
-        .shareIn(viewModelScope, started = SharingStarted.Lazily)
 
     private val raceFlow: Flow<Race?> = seasonRoundWithRequest
         .filterNotNull()
@@ -67,7 +67,9 @@ class WeekendViewModel @Inject constructor(
         .map { it.raceInfo.toWeekendInfo() }
         .asLiveData(viewModelScope.coroutineContext)
 
-    override val tabs: LiveData<List<WeekendScreenState>> = raceFlow
+    override val tabs: LiveData<List<WeekendScreenState>> = seasonRound
+        .filterNotNull()
+        .flatMapLatest { (season, round) -> raceRepository.getRace(season, round) }
         .combinePair(selectedTab)
         .map { (race, navItem) ->
             val list = mutableListOf<WeekendScreenState>()
