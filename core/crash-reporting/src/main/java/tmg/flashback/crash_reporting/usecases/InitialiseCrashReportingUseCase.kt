@@ -20,7 +20,7 @@ class InitialiseCrashReportingUseCase @Inject constructor(
             enableCrashReporting = crashRepository.isEnabled,
             deviceUdid = deviceUdid,
             appOpenedCount = appOpenedCount,
-            appFirstOpened = appFirstOpened.format(DateTimeFormatter.ofPattern("dd MMM yyyy", Locale.UK))
+            appFirstOpened = appFirstOpened.format(DateTimeFormatter.ofPattern("dd MMM yyyy", Locale.ENGLISH))
         )
     }
 }
