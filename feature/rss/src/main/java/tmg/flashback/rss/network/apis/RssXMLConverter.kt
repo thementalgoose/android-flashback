@@ -10,6 +10,7 @@ import tmg.flashback.rss.repo.model.Article
 import tmg.flashback.rss.repo.model.ArticleSource
 import tmg.utilities.extensions.md5
 import java.net.URL
+import java.util.*
 
 private const val dateFormat = "EEE, d MMM yyyy HH:mm:ss Z"
 
@@ -56,7 +57,7 @@ internal fun RssXMLModel.convert(rssFeedController: RSSController, fromSource: S
                     true -> it.description?.trim()
                 },
                 link = it.link!!.replace("http://", "https://"),
-                date = LocalDateTime.parse(it.pubDate!!.replace("GMT", "+0000"), DateTimeFormatter.ofPattern(dateFormat)),
+                date = LocalDateTime.parse(it.pubDate!!.replace("GMT", "+0000"), DateTimeFormatter.ofPattern(dateFormat, Locale.ENGLISH)),
                 source = source
             )
         } ?: emptyList()
