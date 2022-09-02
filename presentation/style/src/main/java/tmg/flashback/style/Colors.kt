@@ -24,6 +24,9 @@ data class AppColors(
     val contentPrimaryInverse: Color,
     val contentSecondaryInverse: Color,
     val contentTertiaryInverse: Color,
+    // System
+    val systemStatusBarColor: Color,
+    val systemNavigationBarColor: Color,
     // Background
     val backgroundContainer: Color,
     val backgroundPrimary: Color,
@@ -90,6 +93,8 @@ val lightColours = AppColors(
     contentPrimaryInverse = Color(0xFFF8F8F8),
     contentSecondaryInverse = Color(0xFFF2F2F2),
     contentTertiaryInverse = Color(0xFFEEEEEE),
+    systemStatusBarColor = Color(0xFF0274D1),
+    systemNavigationBarColor = Color(0xFFFCFCFC),
     backgroundContainer = Color(0xFFF4F4F4),
     backgroundPrimary = Color(0xFFF8F8F8),
     backgroundSecondary = Color(0xFFF2F2F2),
@@ -130,6 +135,8 @@ val darkColours = AppColors(
     contentPrimaryInverse = Color(0xFF181818),
     contentSecondaryInverse = Color(0xFF383838),
     contentTertiaryInverse = Color(0xFF484848),
+    systemStatusBarColor = Color(0xFF181818),
+    systemNavigationBarColor = Color(0xFF383838),
     backgroundContainer = Color(0xFF040404),
     backgroundPrimary = Color(0xFF181818),
     backgroundSecondary = Color(0xFF383838),
@@ -159,7 +166,7 @@ val darkColours = AppColors(
 )
 
 @RequiresApi(Build.VERSION_CODES.S)
-fun AppColors.dynamic(colorScheme: ColorScheme) = copy(
+fun AppColors.dynamic(colorScheme: ColorScheme, isLightMode: Boolean) = copy(
     primary = colorScheme.primary,
     primaryDark = colorScheme.primary,
     accent = colorScheme.secondary,
@@ -172,5 +179,11 @@ fun AppColors.dynamic(colorScheme: ColorScheme) = copy(
     backgroundSecondaryInverse = colorScheme.inversePrimary,
     backgroundTertiaryInverse = colorScheme.inversePrimary,
     backgroundNav = colorScheme.primaryContainer,
-    backgroundSplash = colorScheme.primary
+    backgroundSplash = colorScheme.primary,
+
+    systemStatusBarColor = when (isLightMode) {
+        true -> colorScheme.primary
+        false -> colorScheme.primaryContainer
+    },
+    systemNavigationBarColor = colorScheme.primaryContainer
 )

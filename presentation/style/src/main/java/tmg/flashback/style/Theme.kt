@@ -64,8 +64,11 @@ fun AppTheme(
     ) {
         if (changeSystemUi) {
             val systemUiController = rememberSystemUiController()
+            systemUiController.setStatusBarColor(
+                color = AppTheme.colors.systemStatusBarColor
+            )
             systemUiController.setNavigationBarColor(
-                color = AppTheme.colors.backgroundNav
+                color = AppTheme.colors.systemNavigationBarColor
             )
         }
 
@@ -108,10 +111,10 @@ sealed class SupportedTheme{
     @RequiresApi(Build.VERSION_CODES.S)
     object MaterialYou: SupportedTheme() {
         fun lightColors(context: Context): AppColors {
-            return lightColours.dynamic(dynamicLightColorScheme(context))
+            return lightColours.dynamic(dynamicLightColorScheme(context), isLightMode = true)
         }
         fun darkColors(context: Context): AppColors {
-            return darkColours.dynamic(dynamicDarkColorScheme(context))
+            return darkColours.dynamic(dynamicDarkColorScheme(context), isLightMode = false)
         }
     }
 
