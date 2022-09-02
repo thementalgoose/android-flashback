@@ -8,6 +8,7 @@ import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.formula1.model.Timestamp
 import tmg.flashback.stats.R
 import tmg.flashback.stats.repository.models.NotificationReminder
+import java.util.*
 
 object NotificationUtils {
 
@@ -32,7 +33,7 @@ object NotificationUtils {
 
         val deviceDateTime: LocalDateTime = timestamp.deviceLocalDateTime
 
-        val timeString = deviceDateTime.format(DateTimeFormatter.ofPattern("HH:mm"))
+        val timeString = deviceDateTime.format(DateTimeFormatter.ofPattern("HH:mm", Locale.UK))
         val deviceTimeString = context.getString(R.string.notification_content_text_device_time, timeString, ZoneId.systemDefault().id)
         val notificationText = context.getString(R.string.notification_content_text, title, label, reminderString, deviceTimeString)
 
