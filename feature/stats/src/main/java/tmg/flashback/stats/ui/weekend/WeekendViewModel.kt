@@ -40,7 +40,6 @@ class WeekendViewModel @Inject constructor(
         .filterNotNull()
         .flatMapLatest { (season, round) ->
             return@flatMapLatest flow {
-                println("SEASON ROUND WITH REQUEST $season $round")
                 if (!raceRepository.hasntPreviouslySynced(season)) {
                     isRefreshing.postValue(true)
                     emit(null)
