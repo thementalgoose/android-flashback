@@ -20,7 +20,7 @@ import tmg.flashback.ui.navigation.Navigator
 import tmg.flashback.ui.navigation.Screen
 import tmg.flashback.ui.navigation.asNavigationDestination
 import tmg.flashback.ui.navigation.navigate
-import tmg.flashback.ui.settings.appSettings
+import tmg.flashback.ui.settings_old.appSettings
 
 @Composable
 fun HomeScreen(

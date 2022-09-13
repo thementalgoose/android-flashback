@@ -1,4 +1,4 @@
-package tmg.flashback.ui.settings
+package tmg.flashback.ui.settings_old
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 import tmg.flashback.R
@@ -8,6 +8,8 @@ import tmg.flashback.ads.config.repository.AdsRepository
 import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.settings.SettingsNavigationComponent
 import tmg.flashback.stats.StatsNavigationComponent
+import tmg.flashback.ui.settings.SettingsModel
+import tmg.flashback.ui.settings.SettingsViewModel
 import tmg.flashback.web.WebNavigationComponent
 import javax.inject.Inject
 
@@ -40,34 +42,34 @@ class SettingsAllViewModel @Inject constructor(
     override val models: List<SettingsModel> = mutableListOf<SettingsModel>().apply {
         add(SettingsModel.Header(R.string.settings_title))
         add(SettingsModel.Pref(
-                title = R.string.settings_all_appearance,
-                description = R.string.settings_all_appearance_subtitle,
-                onClick = {
-                    settingsNavigationComponent.settingsAppearance()
-                }
+            title = R.string.settings_all_appearance,
+            description = R.string.settings_all_appearance_subtitle,
+            onClick = {
+                settingsNavigationComponent.settingsAppearance()
+            }
         ))
         add(SettingsModel.Pref(
-                title = R.string.settings_all_home,
-                description = R.string.settings_all_home_subtitle,
-                onClick = {
-                    statsNavigationComponent.settingsHome()
-                }
+            title = R.string.settings_all_home,
+            description = R.string.settings_all_home_subtitle,
+            onClick = {
+                statsNavigationComponent.settingsHome()
+            }
         ))
         if (rssController.enabled) {
             add(SettingsModel.Pref(
-                    title = R.string.settings_all_rss,
-                    description = R.string.settings_all_rss_subtitle,
-                    onClick = {
-                        rssNavigationComponent.settingsRSS()
-                    }
+                title = R.string.settings_all_rss,
+                description = R.string.settings_all_rss_subtitle,
+                onClick = {
+                    rssNavigationComponent.settingsRSS()
+                }
             ))
         }
         add(SettingsModel.Pref(
-                title = R.string.settings_all_notifications,
-                description = R.string.settings_all_notifications_subtitle,
-                onClick = {
-                    statsNavigationComponent.settingsNotifications()
-                }
+            title = R.string.settings_all_notifications,
+            description = R.string.settings_all_notifications_subtitle,
+            onClick = {
+                statsNavigationComponent.settingsNotifications()
+            }
         ))
         add(SettingsModel.Pref(
             title = R.string.settings_all_web_browser,
@@ -93,11 +95,11 @@ class SettingsAllViewModel @Inject constructor(
             ))
         }
         add(SettingsModel.Pref(
-                title = R.string.settings_all_about,
-                description = R.string.settings_all_about_subtitle,
-                onClick = {
-                    settingsNavigationComponent.settingsAbout()
-                }
+            title = R.string.settings_all_about,
+            description = R.string.settings_all_about_subtitle,
+            onClick = {
+                settingsNavigationComponent.settingsAbout()
+            }
         ))
     }
 

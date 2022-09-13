@@ -14,6 +14,7 @@ import tmg.flashback.settings.SettingsNavigationComponent
 import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.testutils.assertExpectedOrder
 import tmg.flashback.testutils.findPref
+import tmg.flashback.ui.settings_old.SettingsAllViewModel
 import tmg.flashback.web.WebNavigationComponent
 import tmg.testutils.BaseTest
 
