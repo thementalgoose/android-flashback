@@ -1,4 +1,4 @@
-package tmg.flashback.ui.settings
+package tmg.flashback.ui.settings_old
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
