@@ -31,6 +31,7 @@ fun SettingsAllScreenVM(
     val isRSSEnabled = viewModel.outputs.isRSSEnabled.observeAsState(false)
     SettingsAllScreen(
         actionUpClicked = actionUpClicked,
+        prefClicked = viewModel.inputs::itemClicked,
         isThemeEnabled = isThemeEnabled.value,
         isAdsEnabled = isAdsEnabled.value,
         isRSSEnabled = isRSSEnabled.value
@@ -40,6 +41,7 @@ fun SettingsAllScreenVM(
 @Composable
 fun SettingsAllScreen(
     actionUpClicked: () -> Unit,
+    prefClicked: (Setting) -> Unit,
     isThemeEnabled: Boolean,
     isAdsEnabled: Boolean,
     isRSSEnabled: Boolean
@@ -72,55 +74,55 @@ fun SettingsAllScreen(
             Header(title = R.string.settings_header_appearance)
             Section(
                 model = AppSettings.Theme.darkMode,
-                onClick = {}
+                onClick = prefClicked
             )
             if (isThemeEnabled) {
                 Section(
                     model = AppSettings.Theme.theme,
-                    onClick = {}
+                    onClick = prefClicked
                 )
             }
             Header(title = R.string.settings_header_layout)
             Section(
                 model = AppSettings.Layout.home,
-                onClick = {}
+                onClick = prefClicked
             )
             if (isRSSEnabled) {
                 Header(title = R.string.settings_header_rss_feed)
                 Section(
                     model = AppSettings.RSS.rss,
-                    onClick = {}
+                    onClick = prefClicked
                 )
             }
             Header(title = R.string.settings_header_web_browser)
             Section(
                 model = AppSettings.Web.inAppBrowser,
-                onClick = {}
+                onClick = prefClicked
             )
             Header(title = R.string.settings_header_notifications)
             Section(
                 model = AppSettings.Notifications.notificationUpcoming,
-                onClick = {}
+                onClick = prefClicked
             )
             Section(
                 model = AppSettings.Notifications.notificationResults,
-                onClick = {}
+                onClick = prefClicked
             )
             if (isAdsEnabled) {
                 Header(title = R.string.settings_header_ads)
                 Section(
                     model = AppSettings.Ads.ads,
-                    onClick = {}
+                    onClick = prefClicked
                 )
             }
             Header(title = R.string.settings_header_other)
             Section(
                 model = AppSettings.Other.privacy,
-                onClick = {}
+                onClick = prefClicked
             )
             Section(
                 model = AppSettings.Other.about,
-                onClick = {}
+                onClick = prefClicked
             )
         }
     )
@@ -132,6 +134,7 @@ private fun Preview() {
     AppThemePreview {
         SettingsAllScreen(
             actionUpClicked = {},
+            prefClicked = {},
             isThemeEnabled = true,
             isAdsEnabled = true,
             isRSSEnabled = true
@@ -145,6 +148,7 @@ private fun PreviewNoTheme() {
     AppThemePreview {
         SettingsAllScreen(
             actionUpClicked = {},
+            prefClicked = {},
             isThemeEnabled = false,
             isAdsEnabled = false,
             isRSSEnabled = false
