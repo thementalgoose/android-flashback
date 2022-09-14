@@ -1,7 +1,9 @@
 package tmg.flashback.ui.components.settings
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Switch
 import androidx.compose.runtime.Composable
@@ -22,6 +24,18 @@ import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.settings.Setting
 
 private const val disabledAlpha = 0.5f
+
+fun LazyListScope.Pref(
+    model: Setting.Pref,
+    onClick: (Setting.Pref) -> Unit
+) {
+    item(key = model.key) {
+        SettingPref(
+            model = model,
+            onClick = onClick
+        )
+    }
+}
 
 @Composable
 fun SettingPref(
@@ -61,6 +75,19 @@ fun SettingPref(
                 )
             }
         }
+    }
+}
+
+
+fun LazyListScope.Switch(
+    model: Setting.Switch,
+    onClick: (Setting.Switch) -> Unit
+) {
+    item(key = model.key) {
+        SettingSwitch(
+            model = model,
+            onClick = onClick
+        )
     }
 }
 
@@ -109,6 +136,23 @@ fun SettingSwitch(
     }
 }
 
+fun LazyListScope.Header(
+    @StringRes
+    title: Int
+) {
+    this.Header(model = Setting.Heading(
+        _key = "heading_$title",
+        title = title
+    ))
+}
+fun LazyListScope.Header(
+    model: Setting.Heading
+) {
+    item(key = model.key) {
+        SettingHeader(model = model)
+    }
+}
+
 @Composable
 fun SettingHeader(
     model: Setting.Heading
@@ -133,6 +177,19 @@ fun SettingHeader(
     }
 }
 
+
+fun LazyListScope.Section(
+    model: Setting.Section,
+    onClick: (Setting.Section) -> Unit
+) {
+    item(key = model.key) {
+        SettingSection(
+            model = model,
+            onClick = onClick
+        )
+    }
+}
+
 @Composable
 fun SettingSection(
     model: Setting.Section,
@@ -151,7 +208,9 @@ fun SettingSection(
         )
     ) {
         Icon(
-            modifier = Modifier.align(Alignment.CenterVertically),
+            modifier = Modifier
+                .align(Alignment.CenterVertically)
+                .padding(start = AppTheme.dimensions.paddingSmall),
             painter = painterResource(id = model.icon),
             contentDescription = null,
             tint = AppTheme.colors.contentPrimary
