@@ -4,10 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import tmg.flashback.BuildConfig
 import tmg.flashback.ads.config.repository.AdsRepository
 import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.rss.repo.RSSRepository
 import tmg.flashback.settings.SettingsNavigationComponent
+import tmg.flashback.ui.navigation.Navigator
 import tmg.flashback.ui.repository.ThemeRepository
 import javax.inject.Inject
 
@@ -27,6 +29,7 @@ class SettingsAllViewModel @Inject constructor(
     buildConfig: BuildConfigManager,
     adsRepository: AdsRepository,
     rssRepository: RSSRepository,
+    private val navigator: Navigator,
     private val settingsNavigationComponent: SettingsNavigationComponent
 ): ViewModel(), SettingsAllViewModelInputs, SettingsAllViewModelOutputs {
 
@@ -50,6 +53,33 @@ class SettingsAllViewModel @Inject constructor(
             }
             AppSettings.Theme.theme.key -> {
                 settingsNavigationComponent.themeDialog()
+            }
+            AppSettings.Layout.home.key -> {
+                // Navigate
+            }
+            AppSettings.RSS.rss.key -> {
+                // Navigate
+            }
+            AppSettings.Web.inAppBrowser.key -> {
+                // Navigate
+            }
+            AppSettings.Notifications.notificationResults.key -> {
+                // Navigate
+            }
+            AppSettings.Notifications.notificationUpcoming.key -> {
+                // Navigate
+            }
+            AppSettings.Ads.ads.key -> {
+                // Navigate
+            }
+            AppSettings.Other.privacy.key -> {
+                // Navigate
+            }
+            AppSettings.Other.about.key -> {
+                // Navigate
+            }
+            else -> if (BuildConfig.DEBUG) {
+                throw UnsupportedOperationException("Preference with key ${pref.key} is not handled")
             }
         }
     }
