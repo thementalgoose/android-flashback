@@ -34,17 +34,17 @@ class SettingsNavigationComponent @Inject constructor(
     private val navigator: Navigator,
     private val activityProvider: ActivityProvider
 ) {
-    internal fun animationDialog() = activityProvider.launch {
+    fun animationDialog() = activityProvider.launch {
         val activity = it as? AppCompatActivity ?: return@launch
         AnimationSpeedBottomSheetFragment().show(activity.supportFragmentManager, "ANIMATION")
     }
 
-    internal fun nightModeDialog() = activityProvider.launch {
+    fun nightModeDialog() = activityProvider.launch {
         val activity = it as? AppCompatActivity ?: return@launch
         NightModeBottomSheetFragment().show(activity.supportFragmentManager, "NIGHT_MODE")
     }
 
-    internal fun themeDialog() = activityProvider.launch {
+    fun themeDialog() = activityProvider.launch {
         val activity = it as? AppCompatActivity ?: return@launch
         ThemeBottomSheetFragment().show(activity.supportFragmentManager, "THEME")
     }
