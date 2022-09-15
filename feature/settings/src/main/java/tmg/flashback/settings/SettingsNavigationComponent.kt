@@ -6,6 +6,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import tmg.flashback.releasenotes.ReleaseNotes
 import tmg.flashback.releasenotes.ui.releasenotes.ReleaseScreenVM
+import tmg.flashback.settings.ui.privacypolicy.PrivacyPolicyScreenVM
 import tmg.flashback.settings.ui.settings.appearance.nightmode.NightModeBottomSheetFragment
 import tmg.flashback.settings.ui.settings.appearance.theme.ThemeBottomSheetFragment
 import tmg.flashback.ui.navigation.ActivityProvider
@@ -16,7 +17,7 @@ import javax.inject.Inject
 
 fun NavGraphBuilder.misc(navController: NavController) {
     composable(Screen.Settings.PrivacyPolicy.route) {
-        ReleaseScreenVM(
+        PrivacyPolicyScreenVM(
             actionUpClicked = { navController.popBackStack() }
         )
     }

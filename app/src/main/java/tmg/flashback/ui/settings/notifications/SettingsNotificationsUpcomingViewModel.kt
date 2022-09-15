@@ -6,6 +6,9 @@ import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.stats.repository.NotificationRepository
+import tmg.flashback.ui.managers.PermissionManager
+import tmg.flashback.ui.permissions.RationaleType
+import tmg.flashback.ui.repository.PermissionRepository
 import tmg.flashback.ui.settings.Settings
 import tmg.flashback.ui.settings.Setting
 import javax.inject.Inject
@@ -25,13 +28,15 @@ interface SettingsNotificationsUpcomingViewModelOutputs {
 @HiltViewModel
 class SettingsNotificationsUpcomingViewModel @Inject constructor(
     private val notificationRepository: NotificationRepository,
+    private val permissionRepository: PermissionRepository,
+    private val permissionManager: PermissionManager,
     private val statsNavigationComponent: StatsNavigationComponent
 ): ViewModel(), SettingsNotificationsUpcomingViewModelInputs, SettingsNotificationsUpcomingViewModelOutputs {
 
     val inputs: SettingsNotificationsUpcomingViewModelInputs = this
     val outputs: SettingsNotificationsUpcomingViewModelOutputs = this
 
-    override val permissionEnabled: MutableLiveData<Boolean> = MutableLiveData()
+    override val permissionEnabled: MutableLiveData<Boolean> = MutableLiveData(permissionRepository.isRuntimeNotificationsEnabled)
     override val freePracticeEnabled: MutableLiveData<Boolean> = MutableLiveData(notificationRepository.notificationFreePractice)
     override val qualifyingEnabled: MutableLiveData<Boolean> = MutableLiveData(notificationRepository.notificationQualifying)
     override val raceEnabled: MutableLiveData<Boolean> = MutableLiveData(notificationRepository.notificationRace)
@@ -39,6 +44,22 @@ class SettingsNotificationsUpcomingViewModel @Inject constructor(
 
     override fun prefClicked(pref: Setting) {
         when (pref.key) {
+            Settings.Notifications.notificationPermissionEnable.key -> {
+                if (!permissionRepository.isRuntimeNotificationsEnabled) {
+                    permissionManager
+                        .requestPermission(RationaleType.RuntimeNotifications)
+                        .invokeOnCompletion {
+                            if (it != null) {
+                                // Open app settings!
+                            } else {
+                                refresh()
+                            }
+                        }
+                } else {
+                    refresh()
+                }
+            }
+
             Settings.Notifications.notificationUpcomingOtherKey -> {
                 notificationRepository.notificationOther = !notificationRepository.notificationOther
                 otherEnabled.value = notificationRepository.notificationOther
@@ -60,5 +81,9 @@ class SettingsNotificationsUpcomingViewModel @Inject constructor(
                 statsNavigationComponent.upNext()
             }
         }
+    }
+
+    fun refresh() {
+        permissionEnabled.value = permissionRepository.isRuntimeNotificationsEnabled
     }
 }

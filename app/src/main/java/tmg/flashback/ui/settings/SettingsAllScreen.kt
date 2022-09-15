@@ -58,18 +58,18 @@ fun SettingsAllScreen(
                 )
             }
 
-            val input = mutableStateOf(TextFieldValue(""))
-            item("search") {
-                InputPrimary(
-                    modifier = Modifier.padding(
-                        vertical = AppTheme.dimensions.paddingSmall,
-                        horizontal = AppTheme.dimensions.paddingMedium
-                    ),
-                    icon = R.drawable.ic_settings_search,
-                    text = input,
-                    placeholder = stringResource(id = R.string.settings_search)
-                )
-            }
+//            val input = mutableStateOf(TextFieldValue(""))
+//            item("search") {
+//                InputPrimary(
+//                    modifier = Modifier.padding(
+//                        vertical = AppTheme.dimensions.paddingSmall,
+//                        horizontal = AppTheme.dimensions.paddingMedium
+//                    ),
+//                    icon = R.drawable.ic_settings_search,
+//                    text = input,
+//                    placeholder = stringResource(id = R.string.settings_search)
+//                )
+//            }
 
             Header(title = R.string.settings_header_appearance)
             Section(
