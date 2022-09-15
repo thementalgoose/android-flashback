@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.Modifier
 import dagger.hilt.android.AndroidEntryPoint
 import tmg.flashback.ads.components.NativeBanner
-import tmg.flashback.ads.config.ui.settings.adverts.SettingsAdvertScreenVM
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.text.TextTitle
 
@@ -35,9 +34,6 @@ class AdvertsActivity: AppCompatActivity() {
                         text = "Config",
                         modifier = Modifier.padding(vertical = AppTheme.dimensions.paddingMedium)
                     )
-                    SettingsAdvertScreenVM(actionUpClicked = {
-                        finish()
-                    })
                 }
             }
         }
