@@ -5,9 +5,7 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.CompletableDeferred
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
-import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.stats.repository.NotificationRepository
 import tmg.flashback.stats.usecases.ResubscribeNotificationsUseCase
 import tmg.flashback.ui.managers.PermissionManager
@@ -17,23 +15,21 @@ import tmg.testutils.BaseTest
 import tmg.testutils.livedata.test
 import tmg.testutils.livedata.testObserve
 
-internal class SettingsNotificationsUpcomingViewModelTest: BaseTest() {
+internal class SettingsNotificationsResultsViewModelTest: BaseTest() {
 
     private val mockNotificationRepository: NotificationRepository = mockk(relaxed = true)
     private val mockResubscribeNotificationsUseCase: ResubscribeNotificationsUseCase = mockk(relaxed = true)
     private val mockPermissionRepository: PermissionRepository = mockk(relaxed = true)
     private val mockPermissionManager: PermissionManager = mockk(relaxed = true)
-    private val mockStatsNavigationComponent: StatsNavigationComponent = mockk(relaxed = true)
 
-    private lateinit var underTest: SettingsNotificationsUpcomingViewModel
+    private lateinit var underTest: SettingsNotificationsResultsViewModel
 
     private fun initUnderTest() {
-        underTest = SettingsNotificationsUpcomingViewModel(
+        underTest = SettingsNotificationsResultsViewModel(
             notificationRepository = mockNotificationRepository,
             resubscribeNotificationsUseCase = mockResubscribeNotificationsUseCase,
             permissionRepository = mockPermissionRepository,
-            permissionManager = mockPermissionManager,
-            statsNavigationComponent = mockStatsNavigationComponent,
+            permissionManager = mockPermissionManager
         )
     }
 
@@ -58,38 +54,18 @@ internal class SettingsNotificationsUpcomingViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `free practice enabled is true when free practice pref are enabled`() {
-        every { mockNotificationRepository.notificationFreePractice } returns true
-
-        initUnderTest()
-        underTest.outputs.freePracticeEnabled.test {
-            assertValue(true)
-        }
-    }
-
-    @Test
-    fun `free practice enabled is false when free practice pref are disabled`() {
-        every { mockNotificationRepository.notificationFreePractice } returns false
-
-        initUnderTest()
-        underTest.outputs.freePracticeEnabled.test {
-            assertValue(false)
-        }
-    }
-
-    @Test
     fun `qualifying enabled is true when qualifying pref are enabled`() {
-        every { mockNotificationRepository.notificationFreePractice } returns true
+        every { mockNotificationRepository.notificationNotifyQualifying } returns true
 
         initUnderTest()
-        underTest.outputs.freePracticeEnabled.test {
+        underTest.outputs.qualifyingEnabled.test {
             assertValue(true)
         }
     }
 
     @Test
     fun `qualifying enabled is false when qualifying pref are disabled`() {
-        every { mockNotificationRepository.notificationQualifying } returns false
+        every { mockNotificationRepository.notificationNotifyQualifying } returns false
 
         initUnderTest()
         underTest.outputs.qualifyingEnabled.test {
@@ -99,7 +75,7 @@ internal class SettingsNotificationsUpcomingViewModelTest: BaseTest() {
 
     @Test
     fun `race enabled is true when race pref are enabled`() {
-        every { mockNotificationRepository.notificationRace } returns true
+        every { mockNotificationRepository.notificationNotifyRace } returns true
 
         initUnderTest()
         underTest.outputs.raceEnabled.test {
@@ -109,7 +85,7 @@ internal class SettingsNotificationsUpcomingViewModelTest: BaseTest() {
 
     @Test
     fun `race enabled is false when race pref are disabled`() {
-        every { mockNotificationRepository.notificationRace } returns false
+        every { mockNotificationRepository.notificationNotifyRace } returns false
 
         initUnderTest()
         underTest.outputs.raceEnabled.test {
@@ -119,20 +95,20 @@ internal class SettingsNotificationsUpcomingViewModelTest: BaseTest() {
 
     @Test
     fun `other enabled is true when other pref are enabled`() {
-        every { mockNotificationRepository.notificationOther } returns true
+        every { mockNotificationRepository.notificationNotifySprint } returns true
 
         initUnderTest()
-        underTest.outputs.otherEnabled.test {
+        underTest.outputs.sprintEnabled.test {
             assertValue(true)
         }
     }
 
     @Test
     fun `other enabled is false when other pref are disabled`() {
-        every { mockNotificationRepository.notificationOther } returns false
+        every { mockNotificationRepository.notificationNotifySprint } returns false
 
         initUnderTest()
-        underTest.outputs.otherEnabled.test {
+        underTest.outputs.sprintEnabled.test {
             assertValue(false)
         }
     }
@@ -173,15 +149,15 @@ internal class SettingsNotificationsUpcomingViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `clicking free practice updates pref and updates value`() {
-        every { mockNotificationRepository.notificationFreePractice } returns false
+    fun `clicking sprint updates pref and updates value`() {
+        every { mockNotificationRepository.notificationNotifySprint } returns false
 
         initUnderTest()
-        val observer = underTest.outputs.freePracticeEnabled.testObserve()
-        underTest.inputs.prefClicked(Settings.Notifications.notificationUpcomingFreePractice(true))
+        val observer = underTest.outputs.sprintEnabled.testObserve()
+        underTest.inputs.prefClicked(Settings.Notifications.notificationResultsSprint(true))
 
         verify {
-            mockNotificationRepository.notificationFreePractice = true
+            mockNotificationRepository.notificationNotifySprint = true
         }
         coVerify {
             mockResubscribeNotificationsUseCase.resubscribe()
@@ -191,14 +167,14 @@ internal class SettingsNotificationsUpcomingViewModelTest: BaseTest() {
 
     @Test
     fun `clicking qualifying updates pref and updates value`() {
-        every { mockNotificationRepository.notificationQualifying } returns false
+        every { mockNotificationRepository.notificationNotifyQualifying } returns false
 
         initUnderTest()
         val observer = underTest.outputs.qualifyingEnabled.testObserve()
-        underTest.inputs.prefClicked(Settings.Notifications.notificationUpcomingQualifying(true))
+        underTest.inputs.prefClicked(Settings.Notifications.notificationResultsQualifying(true))
 
         verify {
-            mockNotificationRepository.notificationQualifying = true
+            mockNotificationRepository.notificationNotifyQualifying = true
         }
         coVerify {
             mockResubscribeNotificationsUseCase.resubscribe()
@@ -208,45 +184,18 @@ internal class SettingsNotificationsUpcomingViewModelTest: BaseTest() {
 
     @Test
     fun `clicking race updates pref and updates value`() {
-        every { mockNotificationRepository.notificationRace } returns false
+        every { mockNotificationRepository.notificationNotifyRace } returns false
 
         initUnderTest()
         val observer = underTest.outputs.raceEnabled.testObserve()
-        underTest.inputs.prefClicked(Settings.Notifications.notificationUpcomingRace(true))
+        underTest.inputs.prefClicked(Settings.Notifications.notificationResultsRace(true))
 
         verify {
-            mockNotificationRepository.notificationRace = true
+            mockNotificationRepository.notificationNotifyRace = true
         }
         coVerify {
             mockResubscribeNotificationsUseCase.resubscribe()
         }
         observer.assertEmittedCount(2)
-    }
-
-    @Test
-    fun `clicking other updates pref and updates value`() {
-        every { mockNotificationRepository.notificationOther } returns false
-
-        initUnderTest()
-        val observer = underTest.outputs.otherEnabled.testObserve()
-        underTest.inputs.prefClicked(Settings.Notifications.notificationUpcomingOther(true))
-
-        verify {
-            mockNotificationRepository.notificationOther = true
-        }
-        coVerify {
-            mockResubscribeNotificationsUseCase.resubscribe()
-        }
-        observer.assertEmittedCount(2)
-    }
-
-    @Test
-    fun `clicking minutes before opens up next notice period`() {
-        initUnderTest()
-        underTest.inputs.prefClicked(Settings.Notifications.notificationNoticePeriod())
-
-        verify {
-            mockStatsNavigationComponent.upNext()
-        }
     }
 }

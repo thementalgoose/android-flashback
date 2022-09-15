@@ -3,9 +3,12 @@ package tmg.flashback.ui.settings.notifications
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.stats.repository.NotificationRepository
+import tmg.flashback.stats.usecases.ResubscribeNotificationsUseCase
 import tmg.flashback.ui.managers.PermissionManager
 import tmg.flashback.ui.permissions.RationaleType
 import tmg.flashback.ui.repository.PermissionRepository
@@ -28,6 +31,7 @@ interface SettingsNotificationsUpcomingViewModelOutputs {
 @HiltViewModel
 class SettingsNotificationsUpcomingViewModel @Inject constructor(
     private val notificationRepository: NotificationRepository,
+    private val resubscribeNotificationsUseCase: ResubscribeNotificationsUseCase,
     private val permissionRepository: PermissionRepository,
     private val permissionManager: PermissionManager,
     private val statsNavigationComponent: StatsNavigationComponent
@@ -63,18 +67,22 @@ class SettingsNotificationsUpcomingViewModel @Inject constructor(
             Settings.Notifications.notificationUpcomingOtherKey -> {
                 notificationRepository.notificationOther = !notificationRepository.notificationOther
                 otherEnabled.value = notificationRepository.notificationOther
+                resubscribe()
             }
             Settings.Notifications.notificationUpcomingFreePracticeKey -> {
                 notificationRepository.notificationFreePractice = !notificationRepository.notificationFreePractice
                 freePracticeEnabled.value = notificationRepository.notificationFreePractice
+                resubscribe()
             }
             Settings.Notifications.notificationUpcomingQualifyingKey -> {
                 notificationRepository.notificationQualifying = !notificationRepository.notificationQualifying
                 qualifyingEnabled.value = notificationRepository.notificationQualifying
+                resubscribe()
             }
             Settings.Notifications.notificationUpcomingRaceKey -> {
                 notificationRepository.notificationRace = !notificationRepository.notificationRace
                 raceEnabled.value = notificationRepository.notificationRace
+                resubscribe()
             }
 
             Settings.Notifications.notificationNoticePeriodKey -> {
@@ -83,7 +91,14 @@ class SettingsNotificationsUpcomingViewModel @Inject constructor(
         }
     }
 
+    private fun resubscribe() {
+        viewModelScope.launch {
+            resubscribeNotificationsUseCase.resubscribe()
+        }
+    }
+
     fun refresh() {
         permissionEnabled.value = permissionRepository.isRuntimeNotificationsEnabled
+        resubscribe()
     }
 }
