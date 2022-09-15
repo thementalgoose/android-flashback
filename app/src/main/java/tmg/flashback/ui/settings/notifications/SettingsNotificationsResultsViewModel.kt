@@ -3,8 +3,11 @@ package tmg.flashback.ui.settings.notifications
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import tmg.flashback.stats.repository.NotificationRepository
+import tmg.flashback.stats.usecases.ResubscribeNotificationsUseCase
 import tmg.flashback.ui.managers.PermissionManager
 import tmg.flashback.ui.permissions.RationaleType
 import tmg.flashback.ui.repository.PermissionRepository
@@ -26,6 +29,7 @@ interface SettingsNotificationsResultsViewModelOutputs {
 @HiltViewModel
 class SettingsNotificationsResultsViewModel @Inject constructor(
     private val notificationRepository: NotificationRepository,
+    private val resubscribeNotificationsUseCase: ResubscribeNotificationsUseCase,
     private val permissionRepository: PermissionRepository,
     private val permissionManager: PermissionManager,
 ): ViewModel(), SettingsNotificationsResultsViewModelInputs, SettingsNotificationsResultsViewModelOutputs {
@@ -58,19 +62,29 @@ class SettingsNotificationsResultsViewModel @Inject constructor(
             Settings.Notifications.notificationResultsQualifyingKey -> {
                 notificationRepository.notificationNotifyQualifying = !notificationRepository.notificationNotifyQualifying
                 qualifyingEnabled.value = notificationRepository.notificationNotifyQualifying
+                resubscribe()
             }
             Settings.Notifications.notificationResultsSprintKey -> {
                 notificationRepository.notificationNotifySprint = !notificationRepository.notificationNotifySprint
                 sprintEnabled.value = notificationRepository.notificationNotifySprint
+                resubscribe()
             }
             Settings.Notifications.notificationResultsRaceKey -> {
                 notificationRepository.notificationNotifyRace = !notificationRepository.notificationNotifyRace
                 raceEnabled.value = notificationRepository.notificationNotifyRace
+                resubscribe()
             }
+        }
+    }
+
+    private fun resubscribe() {
+        viewModelScope.launch {
+            resubscribeNotificationsUseCase.resubscribe()
         }
     }
 
     fun refresh() {
         permissionEnabled.value = permissionRepository.isRuntimeNotificationsEnabled
+        resubscribe()
     }
 }
