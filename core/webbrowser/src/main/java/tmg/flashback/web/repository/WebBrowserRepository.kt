@@ -9,13 +9,13 @@ class WebBrowserRepository @Inject constructor(
     private val preferenceManager: PreferenceManager
 ) {
 
-    internal var openInExternal: Boolean
+    var openInExternal: Boolean
         get() = preferenceManager.getBoolean(keyOpenInExternal, true)
         set(value) {
             preferenceManager.save(keyOpenInExternal, value)
         }
 
-    internal var enableJavascript: Boolean
+    var enableJavascript: Boolean
         get() = preferenceManager.getBoolean(keyEnableJavascript, true)
         set(value) {
             preferenceManager.save(keyEnableJavascript, value)

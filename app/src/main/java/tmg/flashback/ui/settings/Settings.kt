@@ -2,7 +2,7 @@ package tmg.flashback.ui.settings
 
 import tmg.flashback.R
 
-object AppSettings {
+object Settings {
 
     object Theme {
 
@@ -29,25 +29,31 @@ object AppSettings {
             icon = R.drawable.ic_settings_home
         )
 
-        fun menuAllExpanded(isChecked: Boolean) = Setting.Switch(
-            _key = "menu_all_expanded",
+        val menuAllExpandedKey = "menu_all_expanded"
+        fun menuAllExpanded(isChecked: Boolean, isEnabled: Boolean = true) = Setting.Switch(
+            _key = menuAllExpandedKey,
             title = R.string.settings_pref_menu_all_title,
             subtitle = R.string.settings_pref_menu_all_description,
-            isChecked = isChecked
+            isChecked = isChecked,
+            isEnabled = isEnabled
         )
 
-        fun menuFavouriteExpanded(isChecked: Boolean) = Setting.Switch(
-            _key = "menu_favourite_expanded",
+        val menuFavouriteExpandedKey = "menu_favourite_expanded"
+        fun menuFavouriteExpanded(isChecked: Boolean, isEnabled: Boolean = true) = Setting.Switch(
+            _key = menuFavouriteExpandedKey,
             title = R.string.settings_pref_menu_favourites_title,
             subtitle = R.string.settings_pref_menu_favourites_description,
-            isChecked = isChecked
+            isChecked = isChecked,
+            isEnabled = isEnabled
         )
 
-        fun providedByAtTop(isChecked: Boolean) = Setting.Switch(
-            _key = "provided_by_at_top",
+        val providedByAtTopKey = "provided_by_at_top"
+        fun providedByAtTop(isChecked: Boolean, isEnabled: Boolean = true) = Setting.Switch(
+            _key = providedByAtTopKey,
             title = R.string.settings_pref_provided_by_at_top_title,
             subtitle = R.string.settings_pref_provided_by_at_top_description,
-            isChecked = isChecked
+            isChecked = isChecked,
+            isEnabled = isEnabled
         )
     }
 
@@ -68,16 +74,22 @@ object AppSettings {
             icon = R.drawable.ic_settings_web
         )
 
-        val enable = Setting.Pref(
-            _key = "in_app_browser_enable",
+        val enableKey = "in_app_browser_enable"
+        fun enable(isChecked: Boolean, isEnabled: Boolean = true) = Setting.Switch(
+            _key = enableKey,
             title = R.string.settings_switch_enable_web_browser_title,
-            subtitle = R.string.settings_switch_enable_web_browser_description
+            subtitle = R.string.settings_switch_enable_web_browser_description,
+            isChecked = isChecked,
+            isEnabled = isEnabled
         )
 
-        val javascript = Setting.Pref(
-            _key = "enable_javascript",
+        val javascriptKey = "enable_javascript"
+        fun javascript(isChecked: Boolean, isEnabled: Boolean = true) = Setting.Switch(
+            _key = javascriptKey,
             title = R.string.settings_switch_enable_javascript_title,
-            subtitle = R.string.settings_switch_enable_javascript_description
+            subtitle = R.string.settings_switch_enable_javascript_description,
+            isChecked = isChecked,
+            isEnabled = isEnabled
         )
     }
     object Notifications {
@@ -101,55 +113,71 @@ object AppSettings {
             subtitle = R.string.settings_pref_notification_permission_description
         )
 
-        fun notificationUpcomingFreePractice(isChecked: Boolean) = Setting.Switch(
-            _key = "notification_upcoming_fp",
+        val notificationUpcomingFreePracticeKey = "notification_upcoming_fp"
+        fun notificationUpcomingFreePractice(isChecked: Boolean, isEnabled: Boolean = true) = Setting.Switch(
+            _key = notificationUpcomingFreePracticeKey,
             title = R.string.settings_switch_notification_upcoming_fp_title,
             subtitle = null,
-            isChecked = isChecked
+            isChecked = isChecked,
+            isEnabled = isEnabled
         )
-        fun notificationUpcomingQualifying(isChecked: Boolean) = Setting.Switch(
-            _key = "notification_upcoming_qualifying",
+        val notificationUpcomingQualifyingKey = "notification_upcoming_qualifying"
+        fun notificationUpcomingQualifying(isChecked: Boolean, isEnabled: Boolean = true) = Setting.Switch(
+            _key = notificationUpcomingQualifyingKey,
             title = R.string.settings_switch_notification_upcoming_qualifying_title,
             subtitle = null,
-            isChecked = isChecked
+            isChecked = isChecked,
+            isEnabled = isEnabled
         )
-        fun notificationUpcomingSprint(isChecked: Boolean) = Setting.Switch(
-            _key = "notification_upcoming_sprint",
-            title = R.string.settings_switch_notification_upcoming_sprint_title,
+        val notificationUpcomingOtherKey = "notification_upcoming_other"
+        fun notificationUpcomingOther(isChecked: Boolean, isEnabled: Boolean = true) = Setting.Switch(
+            _key = notificationUpcomingOtherKey,
+            title = R.string.settings_switch_notification_upcoming_other_title,
             subtitle = null,
-            isChecked = isChecked
+            isChecked = isChecked,
+            isEnabled = isEnabled
         )
-        fun notificationUpcomingRace(isChecked: Boolean) = Setting.Switch(
-            _key = "notification_upcoming_race",
+        val notificationUpcomingRaceKey = "notification_upcoming_race"
+        fun notificationUpcomingRace(isChecked: Boolean, isEnabled: Boolean = true) = Setting.Switch(
+            _key = notificationUpcomingRaceKey,
             title = R.string.settings_switch_notification_upcoming_race_title,
             subtitle = null,
-            isChecked = isChecked
+            isChecked = isChecked,
+            isEnabled = isEnabled
         )
 
-        val notificationNoticePeriod = Setting.Pref(
-            _key = "notification_notice_period",
+        val notificationNoticePeriodKey = "notification_notice_period"
+        fun notificationNoticePeriod(isEnabled: Boolean = true) = Setting.Pref(
+            _key = notificationNoticePeriodKey,
             title = R.string.settings_pref_notification_notice_period_title,
-            subtitle = R.string.settings_pref_notification_notice_period_description
+            subtitle = R.string.settings_pref_notification_notice_period_description,
+            isEnabled = isEnabled
         )
 
 
-        fun notificationResultsQualifying(isChecked: Boolean) = Setting.Switch(
-            _key = "notification_results_qualifying",
+        val notificationResultsQualifyingKey = "notification_results_qualifying"
+        fun notificationResultsQualifying(isChecked: Boolean, isEnabled: Boolean = true) = Setting.Switch(
+            _key = notificationResultsQualifyingKey,
             title = R.string.settings_switch_notification_results_qualifying_title,
             subtitle = null,
-            isChecked = isChecked
+            isChecked = isChecked,
+            isEnabled = isEnabled
         )
-        fun notificationResultsSprint(isChecked: Boolean) = Setting.Switch(
-            _key = "notification_results_sprint",
+        val notificationResultsSprintKey = "notification_results_sprint"
+        fun notificationResultsSprint(isChecked: Boolean, isEnabled: Boolean = true) = Setting.Switch(
+            _key = notificationResultsSprintKey,
             title = R.string.settings_switch_notification_results_sprint_title,
             subtitle = null,
-            isChecked = isChecked
+            isChecked = isChecked,
+            isEnabled = isEnabled
         )
-        fun notificationResultsRace(isChecked: Boolean) = Setting.Switch(
-            _key = "notification_results_race",
+        val notificationResultsRaceKey = "notification_results_race"
+        fun notificationResultsRace(isChecked: Boolean, isEnabled: Boolean = true) = Setting.Switch(
+            _key = notificationResultsRaceKey,
             title = R.string.settings_switch_notification_results_race_title,
             subtitle = null,
-            isChecked = isChecked
+            isChecked = isChecked,
+            isEnabled = isEnabled
         )
 
     }
@@ -160,11 +188,13 @@ object AppSettings {
             subtitle = R.string.settings_section_ads_description,
             icon = R.drawable.ic_settings_ads
         )
-        fun enableAds(isChecked: Boolean) = Setting.Switch(
-            _key = "ads_enable",
+        val enableAdsKey = "ads_enable"
+        fun enableAds(isChecked: Boolean, isEnabled: Boolean = true) = Setting.Switch(
+            _key = enableAdsKey,
             title = R.string.settings_switch_ads_enable_title,
-            subtitle = R.string.settings_switch_ads_enable_title,
-            isChecked = isChecked
+            subtitle = R.string.settings_switch_ads_enable_description,
+            isChecked = isChecked,
+            isEnabled = isEnabled
         )
     }
     object Other {
@@ -179,15 +209,21 @@ object AppSettings {
             title = R.string.settings_pref_privacy_policy_title,
             subtitle = R.string.settings_pref_privacy_policy_description
         )
-        val crashReporting = Setting.Pref(
-            _key = "crash_reporting",
+        val crashReportingKey = "crash_reporting"
+        fun crashReporting(isChecked: Boolean, isEnabled: Boolean = true) = Setting.Switch(
+            _key = crashReportingKey,
             title = R.string.settings_pref_crash_reporting_title,
-            subtitle = R.string.settings_pref_crash_reporting_description
+            subtitle = R.string.settings_pref_crash_reporting_description,
+            isChecked = isChecked,
+            isEnabled = isEnabled
         )
-        val analytics = Setting.Pref(
+        val analyticsKey = "analytics"
+        fun analytics(isChecked: Boolean, isEnabled: Boolean = true) = Setting.Switch(
             _key = "analytics",
             title = R.string.settings_pref_analytics_title,
-            subtitle = R.string.settings_pref_analytics_description
+            subtitle = R.string.settings_pref_analytics_description,
+            isChecked = isChecked,
+            isEnabled = isEnabled
         )
 
 
@@ -212,11 +248,13 @@ object AppSettings {
             title = R.string.settings_switch_release_notes_title,
             subtitle = R.string.settings_switch_release_notes_description
         )
-        fun shakeToReport(isChecked: Boolean) = Setting.Switch(
-            _key = "shake_to_report",
+        val shakeToReportKey = "shake_to_report"
+        fun shakeToReport(isChecked: Boolean, isEnabled: Boolean = true) = Setting.Switch(
+            _key = shakeToReportKey,
             title = R.string.settings_pref_shake_to_report_title,
             subtitle = R.string.settings_pref_shake_to_report_description,
-            isChecked = isChecked
+            isChecked = isChecked,
+            isEnabled = isEnabled
         )
     }
 }

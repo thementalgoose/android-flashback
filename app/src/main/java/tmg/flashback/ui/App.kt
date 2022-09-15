@@ -13,6 +13,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import tmg.flashback.releasenotes.releaseNotes
 import tmg.flashback.rss.rss
+import tmg.flashback.settings.misc
 import tmg.flashback.stats.stats
 import tmg.flashback.style.utils.WindowSize
 import tmg.flashback.ui.dashboard.DashboardScreen
@@ -20,7 +21,7 @@ import tmg.flashback.ui.navigation.Navigator
 import tmg.flashback.ui.navigation.Screen
 import tmg.flashback.ui.navigation.asNavigationDestination
 import tmg.flashback.ui.navigation.navigate
-import tmg.flashback.ui.settings_old.appSettings
+import tmg.flashback.ui.settings.settings
 
 @Composable
 fun HomeScreen(
@@ -69,10 +70,12 @@ fun HomeScreen(
 
         releaseNotes(navController)
 
+        misc(navController)
+
+        settings(navController)
+
         stats(navController)
 
         rss(navController)
-
-        appSettings(navController)
     }
 }
