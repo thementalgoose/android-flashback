@@ -20,10 +20,10 @@ internal class NotificationOnboardingViewModelTest: BaseTest() {
     @BeforeEach
     internal fun setUp() {
         every { mockNotificationRepository.seenNotificationOnboarding } returns false
-        every { mockNotificationRepository.notificationRace } returns true
-        every { mockNotificationRepository.notificationQualifying } returns true
-        every { mockNotificationRepository.notificationFreePractice } returns true
-        every { mockNotificationRepository.notificationOther } returns true
+        every { mockNotificationRepository.notificationUpcomingRace } returns true
+        every { mockNotificationRepository.notificationUpcomingQualifying } returns true
+        every { mockNotificationRepository.notificationUpcomingFreePractice } returns true
+        every { mockNotificationRepository.notificationUpcomingOther } returns true
     }
 
     private fun initUnderTest() {
@@ -56,7 +56,7 @@ internal class NotificationOnboardingViewModelTest: BaseTest() {
         initUnderTest()
         underTest.inputs.selectNotificationChannel(NotificationChannel.RACE)
         verify {
-            mockNotificationRepository.notificationRace = false
+            mockNotificationRepository.notificationUpcomingRace = false
         }
     }
 
@@ -65,7 +65,7 @@ internal class NotificationOnboardingViewModelTest: BaseTest() {
         initUnderTest()
         underTest.inputs.selectNotificationChannel(NotificationChannel.QUALIFYING)
         verify {
-            mockNotificationRepository.notificationQualifying = false
+            mockNotificationRepository.notificationUpcomingQualifying = false
         }
     }
 
@@ -74,7 +74,7 @@ internal class NotificationOnboardingViewModelTest: BaseTest() {
         initUnderTest()
         underTest.inputs.selectNotificationChannel(NotificationChannel.FREE_PRACTICE)
         verify {
-            mockNotificationRepository.notificationFreePractice = false
+            mockNotificationRepository.notificationUpcomingFreePractice = false
         }
     }
 
@@ -83,7 +83,7 @@ internal class NotificationOnboardingViewModelTest: BaseTest() {
         initUnderTest()
         underTest.inputs.selectNotificationChannel(NotificationChannel.SEASON_INFO)
         verify {
-            mockNotificationRepository.notificationOther = false
+            mockNotificationRepository.notificationUpcomingOther = false
         }
     }
 
@@ -100,7 +100,7 @@ internal class NotificationOnboardingViewModelTest: BaseTest() {
         }
 
         // Assumes selecting channel works
-        every { mockNotificationRepository.notificationRace } returns false
+        every { mockNotificationRepository.notificationUpcomingRace } returns false
         underTest.inputs.selectNotificationChannel(NotificationChannel.RACE)
 
         underTest.notificationPreferences.test {
