@@ -41,10 +41,10 @@ class SettingsNotificationsUpcomingViewModel @Inject constructor(
     val outputs: SettingsNotificationsUpcomingViewModelOutputs = this
 
     override val permissionEnabled: MutableLiveData<Boolean> = MutableLiveData(permissionRepository.isRuntimeNotificationsEnabled)
-    override val freePracticeEnabled: MutableLiveData<Boolean> = MutableLiveData(notificationRepository.notificationFreePractice)
-    override val qualifyingEnabled: MutableLiveData<Boolean> = MutableLiveData(notificationRepository.notificationQualifying)
-    override val raceEnabled: MutableLiveData<Boolean> = MutableLiveData(notificationRepository.notificationRace)
-    override val otherEnabled: MutableLiveData<Boolean> = MutableLiveData(notificationRepository.notificationOther)
+    override val freePracticeEnabled: MutableLiveData<Boolean> = MutableLiveData(notificationRepository.notificationUpcomingFreePractice)
+    override val qualifyingEnabled: MutableLiveData<Boolean> = MutableLiveData(notificationRepository.notificationUpcomingQualifying)
+    override val raceEnabled: MutableLiveData<Boolean> = MutableLiveData(notificationRepository.notificationUpcomingRace)
+    override val otherEnabled: MutableLiveData<Boolean> = MutableLiveData(notificationRepository.notificationUpcomingOther)
 
     override fun prefClicked(pref: Setting) {
         when (pref.key) {
@@ -65,23 +65,23 @@ class SettingsNotificationsUpcomingViewModel @Inject constructor(
             }
 
             Settings.Notifications.notificationUpcomingOtherKey -> {
-                notificationRepository.notificationOther = !notificationRepository.notificationOther
-                otherEnabled.value = notificationRepository.notificationOther
+                notificationRepository.notificationUpcomingOther = !notificationRepository.notificationUpcomingOther
+                otherEnabled.value = notificationRepository.notificationUpcomingOther
                 resubscribe()
             }
             Settings.Notifications.notificationUpcomingFreePracticeKey -> {
-                notificationRepository.notificationFreePractice = !notificationRepository.notificationFreePractice
-                freePracticeEnabled.value = notificationRepository.notificationFreePractice
+                notificationRepository.notificationUpcomingFreePractice = !notificationRepository.notificationUpcomingFreePractice
+                freePracticeEnabled.value = notificationRepository.notificationUpcomingFreePractice
                 resubscribe()
             }
             Settings.Notifications.notificationUpcomingQualifyingKey -> {
-                notificationRepository.notificationQualifying = !notificationRepository.notificationQualifying
-                qualifyingEnabled.value = notificationRepository.notificationQualifying
+                notificationRepository.notificationUpcomingQualifying = !notificationRepository.notificationUpcomingQualifying
+                qualifyingEnabled.value = notificationRepository.notificationUpcomingQualifying
                 resubscribe()
             }
             Settings.Notifications.notificationUpcomingRaceKey -> {
-                notificationRepository.notificationRace = !notificationRepository.notificationRace
-                raceEnabled.value = notificationRepository.notificationRace
+                notificationRepository.notificationUpcomingRace = !notificationRepository.notificationUpcomingRace
+                raceEnabled.value = notificationRepository.notificationUpcomingRace
                 resubscribe()
             }
 

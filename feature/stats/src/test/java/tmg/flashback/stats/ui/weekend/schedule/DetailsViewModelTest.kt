@@ -17,7 +17,6 @@ import tmg.flashback.stats.R
 import tmg.flashback.stats.repository.NotificationRepository
 import tmg.flashback.stats.ui.weekend.details.DetailsModel
 import tmg.flashback.stats.ui.weekend.details.DetailsViewModel
-import tmg.flashback.ui.navigation.ApplicationNavigationComponent
 import tmg.flashback.web.WebNavigationComponent
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.test
@@ -40,10 +39,10 @@ internal class DetailsViewModelTest: BaseTest() {
 
     @BeforeEach
     internal fun setUp() {
-        every { mockNotificationRepository.notificationFreePractice } returns true
-        every { mockNotificationRepository.notificationQualifying } returns true
-        every { mockNotificationRepository.notificationRace } returns true
-        every { mockNotificationRepository.notificationOther } returns true
+        every { mockNotificationRepository.notificationUpcomingFreePractice } returns true
+        every { mockNotificationRepository.notificationUpcomingQualifying } returns true
+        every { mockNotificationRepository.notificationUpcomingRace } returns true
+        every { mockNotificationRepository.notificationUpcomingOther } returns true
     }
 
     @Test
@@ -93,10 +92,10 @@ internal class DetailsViewModelTest: BaseTest() {
         val qualifying = Schedule.model(label = "Qualifying", date = LocalDate.of(2020, 1, 2), time = LocalTime.of(14, 30))
         val race = Schedule.model(label = "Race", date = LocalDate.of(2020, 1, 3))
 
-        every { mockNotificationRepository.notificationFreePractice } returns enabled
-        every { mockNotificationRepository.notificationQualifying } returns enabled
-        every { mockNotificationRepository.notificationRace } returns enabled
-        every { mockNotificationRepository.notificationOther } returns enabled
+        every { mockNotificationRepository.notificationUpcomingFreePractice } returns enabled
+        every { mockNotificationRepository.notificationUpcomingQualifying } returns enabled
+        every { mockNotificationRepository.notificationUpcomingRace } returns enabled
+        every { mockNotificationRepository.notificationUpcomingOther } returns enabled
 
         every { mockRaceRepository.getRace(2020, 1) } returns flow {
             emit(Race.model(schedule = listOf(fp1, qualifying, race, fp2)))
