@@ -6,7 +6,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navDeepLink
 import tmg.flashback.rss.ui.configure.SettingsRSSConfigureScreenVM
 import tmg.flashback.rss.ui.feed.RSSScreenVM
-import tmg.flashback.rss.ui.settings.SettingsRSSScreenVM
 import tmg.flashback.ui.navigation.NavigationDestination
 import tmg.flashback.ui.navigation.Navigator
 import tmg.flashback.ui.navigation.Screen
@@ -33,12 +32,6 @@ fun NavGraphBuilder.rss(navController: NavController) {
         deepLinks = listOf(navDeepLink { uriPattern = "flashback://rss" })
     ) {
         RSSScreenVM(
-            actionUpClicked = { navController.popBackStack() }
-        )
-    }
-
-    composable(Screen.Settings.RSSConfigure.route) {
-        SettingsRSSScreenVM(
             actionUpClicked = { navController.popBackStack() }
         )
     }
