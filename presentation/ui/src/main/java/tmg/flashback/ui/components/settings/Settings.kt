@@ -108,7 +108,12 @@ fun SettingSwitch(
             horizontal = AppTheme.dimensions.paddingMedium
         )
     ) {
-        Column(Modifier.weight(1f)) {
+        Column(
+            modifier = Modifier
+                .weight(1f)
+                .padding(end = AppTheme.dimensions.paddingMedium),
+            verticalArrangement = Arrangement.Center
+        ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {

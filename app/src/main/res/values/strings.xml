@@ -64,7 +64,7 @@
     <string name="settings_section_theme_title">Theme</string>
     <string name="settings_section_theme_description">Follow Material You colour schemes</string>
 
-    <string name="settings_section_home_title">Home</string>
+    <string name="settings_section_home_title">Layout</string>
     <string name="settings_section_home_description">Customise the menu and dashboard layouts</string>
     <string name="settings_header_menu">Menu</string>
     <string name="settings_pref_menu_all_title">Expanded all section</string>
@@ -98,8 +98,8 @@
     <string name="settings_pref_notification_notice_period_description">Get notified 15, 30 or 60 minutes before one of the above events starts</string>
     <string name="settings_switch_notification_upcoming_fp_title">Free Practice</string>
     <string name="settings_switch_notification_upcoming_qualifying_title">Qualifying</string>
-    <string name="settings_switch_notification_upcoming_sprint_title">Sprint</string>
     <string name="settings_switch_notification_upcoming_race_title">Race</string>
+    <string name="settings_switch_notification_upcoming_other_title">Other</string>
     <string name="settings_switch_notification_results_qualifying_title">Qualifying</string>
     <string name="settings_switch_notification_results_sprint_title">Sprint</string>
     <string name="settings_switch_notification_results_race_title">Race</string>

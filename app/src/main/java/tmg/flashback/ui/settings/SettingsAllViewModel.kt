@@ -7,9 +7,11 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import tmg.flashback.BuildConfig
 import tmg.flashback.ads.config.repository.AdsRepository
 import tmg.flashback.device.managers.BuildConfigManager
+import tmg.flashback.rss.RSSConfigure
 import tmg.flashback.rss.repo.RSSRepository
 import tmg.flashback.settings.SettingsNavigationComponent
 import tmg.flashback.ui.navigation.Navigator
+import tmg.flashback.ui.navigation.Screen
 import tmg.flashback.ui.repository.ThemeRepository
 import javax.inject.Inject
 
@@ -36,47 +38,41 @@ class SettingsAllViewModel @Inject constructor(
     val inputs: SettingsAllViewModelInputs = this
     val outputs: SettingsAllViewModelOutputs = this
 
-    override val isThemeEnabled: MutableLiveData<Boolean> = MutableLiveData()
-    override val isAdsEnabled: MutableLiveData<Boolean> = MutableLiveData()
-    override val isRSSEnabled: MutableLiveData<Boolean> = MutableLiveData()
-
-    init {
-        isThemeEnabled.value = themeRepository.enableThemePicker && buildConfig.isMonetThemeSupported
-        isAdsEnabled.value = adsRepository.allowUserConfig
-        isRSSEnabled.value = rssRepository.enabled
-    }
+    override val isThemeEnabled: MutableLiveData<Boolean> = MutableLiveData(themeRepository.enableThemePicker && buildConfig.isMonetThemeSupported)
+    override val isAdsEnabled: MutableLiveData<Boolean> = MutableLiveData(adsRepository.allowUserConfig)
+    override val isRSSEnabled: MutableLiveData<Boolean> = MutableLiveData(rssRepository.enabled)
 
     override fun itemClicked(pref: Setting) {
         when (pref.key) {
-            AppSettings.Theme.darkMode.key -> {
+            Settings.Theme.darkMode.key -> {
                 settingsNavigationComponent.nightModeDialog()
             }
-            AppSettings.Theme.theme.key -> {
+            Settings.Theme.theme.key -> {
                 settingsNavigationComponent.themeDialog()
             }
-            AppSettings.Layout.home.key -> {
-                // Navigate
+            Settings.Layout.home.key -> {
+                navigator.navigate(Screen.Settings.Home)
             }
-            AppSettings.RSS.rss.key -> {
-                // Navigate
+            Settings.RSS.rss.key -> {
+                navigator.navigate(Screen.Settings.RSSConfigure)
             }
-            AppSettings.Web.inAppBrowser.key -> {
-                // Navigate
+            Settings.Web.inAppBrowser.key -> {
+                navigator.navigate(Screen.Settings.Web)
             }
-            AppSettings.Notifications.notificationResults.key -> {
-                // Navigate
+            Settings.Notifications.notificationResults.key -> {
+                navigator.navigate(Screen.Settings.NotificationsResults)
             }
-            AppSettings.Notifications.notificationUpcoming.key -> {
-                // Navigate
+            Settings.Notifications.notificationUpcoming.key -> {
+                navigator.navigate(Screen.Settings.NotificationsUpcoming)
             }
-            AppSettings.Ads.ads.key -> {
-                // Navigate
+            Settings.Ads.ads.key -> {
+                navigator.navigate(Screen.Settings.Ads)
             }
-            AppSettings.Other.privacy.key -> {
-                // Navigate
+            Settings.Other.privacy.key -> {
+                navigator.navigate(Screen.Settings.Privacy)
             }
-            AppSettings.Other.about.key -> {
-                // Navigate
+            Settings.Other.about.key -> {
+                navigator.navigate(Screen.Settings.About)
             }
             else -> if (BuildConfig.DEBUG) {
                 throw UnsupportedOperationException("Preference with key ${pref.key} is not handled")

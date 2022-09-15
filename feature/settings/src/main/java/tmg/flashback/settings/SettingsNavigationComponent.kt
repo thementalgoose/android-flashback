@@ -1,7 +1,11 @@
 package tmg.flashback.settings
 
 import androidx.appcompat.app.AppCompatActivity
-import tmg.flashback.settings.ui.settings.appearance.animation.AnimationSpeedBottomSheetFragment
+import androidx.navigation.NavController
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.compose.composable
+import tmg.flashback.releasenotes.ReleaseNotes
+import tmg.flashback.releasenotes.ui.releasenotes.ReleaseScreenVM
 import tmg.flashback.settings.ui.settings.appearance.nightmode.NightModeBottomSheetFragment
 import tmg.flashback.settings.ui.settings.appearance.theme.ThemeBottomSheetFragment
 import tmg.flashback.ui.navigation.ActivityProvider
@@ -10,20 +14,13 @@ import tmg.flashback.ui.navigation.Navigator
 import tmg.flashback.ui.navigation.Screen
 import javax.inject.Inject
 
-val Screen.Settings.About: NavigationDestination
-    get() = object : NavigationDestination {
-        override val route: String = "settings/about"
+fun NavGraphBuilder.misc(navController: NavController) {
+    composable(Screen.Settings.PrivacyPolicy.route) {
+        ReleaseScreenVM(
+            actionUpClicked = { navController.popBackStack() }
+        )
     }
-
-val Screen.Settings.Appearance: NavigationDestination
-    get() = object : NavigationDestination {
-        override val route: String = "settings/appearance"
-    }
-
-val Screen.Settings.Support: NavigationDestination
-    get() = object : NavigationDestination {
-        override val route: String = "settings/support"
-    }
+}
 
 val Screen.Settings.PrivacyPolicy: NavigationDestination
     get() = object : NavigationDestination {
@@ -34,11 +31,6 @@ class SettingsNavigationComponent @Inject constructor(
     private val navigator: Navigator,
     private val activityProvider: ActivityProvider
 ) {
-    fun animationDialog() = activityProvider.launch {
-        val activity = it as? AppCompatActivity ?: return@launch
-        AnimationSpeedBottomSheetFragment().show(activity.supportFragmentManager, "ANIMATION")
-    }
-
     fun nightModeDialog() = activityProvider.launch {
         val activity = it as? AppCompatActivity ?: return@launch
         NightModeBottomSheetFragment().show(activity.supportFragmentManager, "NIGHT_MODE")
@@ -49,19 +41,7 @@ class SettingsNavigationComponent @Inject constructor(
         ThemeBottomSheetFragment().show(activity.supportFragmentManager, "THEME")
     }
 
-    fun settingsAbout() {
-        navigator.navigate(Screen.Settings.About)
-    }
-
-    fun settingsAppearance() {
-        navigator.navigate(Screen.Settings.Appearance)
-    }
-
-    fun settingsSupport() {
-        navigator.navigate(Screen.Settings.Support)
-    }
-
-    fun privacyPolicy() {
+    fun privacyPolicy() = activityProvider.launch {
         navigator.navigate(Screen.Settings.PrivacyPolicy)
     }
 }

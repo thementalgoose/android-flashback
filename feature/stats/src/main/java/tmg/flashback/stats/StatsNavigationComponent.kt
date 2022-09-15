@@ -218,7 +218,7 @@ class StatsNavigationComponent @Inject constructor(
         navigator.navigate(Screen.Settings.Notifications)
     }
 
-    internal fun upNext() = activityProvider.launch {
+    fun upNext() = activityProvider.launch {
         val activity = it as? AppCompatActivity ?: return@launch
         UpNextReminderBottomSheetFragment().show(activity.supportFragmentManager, "UP_NEXT")
     }

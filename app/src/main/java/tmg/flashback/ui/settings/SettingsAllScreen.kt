@@ -73,55 +73,55 @@ fun SettingsAllScreen(
 
             Header(title = R.string.settings_header_appearance)
             Section(
-                model = AppSettings.Theme.darkMode,
+                model = Settings.Theme.darkMode,
                 onClick = prefClicked
             )
             if (isThemeEnabled) {
                 Section(
-                    model = AppSettings.Theme.theme,
+                    model = Settings.Theme.theme,
                     onClick = prefClicked
                 )
             }
             Header(title = R.string.settings_header_layout)
             Section(
-                model = AppSettings.Layout.home,
+                model = Settings.Layout.home,
                 onClick = prefClicked
             )
             if (isRSSEnabled) {
                 Header(title = R.string.settings_header_rss_feed)
                 Section(
-                    model = AppSettings.RSS.rss,
+                    model = Settings.RSS.rss,
                     onClick = prefClicked
                 )
             }
             Header(title = R.string.settings_header_web_browser)
             Section(
-                model = AppSettings.Web.inAppBrowser,
+                model = Settings.Web.inAppBrowser,
                 onClick = prefClicked
             )
             Header(title = R.string.settings_header_notifications)
             Section(
-                model = AppSettings.Notifications.notificationUpcoming,
+                model = Settings.Notifications.notificationUpcoming,
                 onClick = prefClicked
             )
             Section(
-                model = AppSettings.Notifications.notificationResults,
+                model = Settings.Notifications.notificationResults,
                 onClick = prefClicked
             )
             if (isAdsEnabled) {
                 Header(title = R.string.settings_header_ads)
                 Section(
-                    model = AppSettings.Ads.ads,
+                    model = Settings.Ads.ads,
                     onClick = prefClicked
                 )
             }
             Header(title = R.string.settings_header_other)
             Section(
-                model = AppSettings.Other.privacy,
+                model = Settings.Other.privacy,
                 onClick = prefClicked
             )
             Section(
-                model = AppSettings.Other.about,
+                model = Settings.Other.about,
                 onClick = prefClicked
             )
         }

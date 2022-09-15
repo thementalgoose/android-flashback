@@ -1,4 +1,85 @@
 package tmg.flashback.ui.settings.about
 
-class SettingsAboutScreen {
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.hilt.navigation.compose.hiltViewModel
+import tmg.flashback.R
+import tmg.flashback.style.AppThemePreview
+import tmg.flashback.style.annotations.PreviewTheme
+import tmg.flashback.ui.components.header.Header
+import tmg.flashback.ui.components.settings.Header
+import tmg.flashback.ui.components.settings.Pref
+import tmg.flashback.ui.components.settings.Switch
+import tmg.flashback.ui.settings.Settings
+import tmg.flashback.ui.settings.Setting
+
+@Composable
+fun SettingsAboutScreenVM(
+    actionUpClicked: () -> Unit
+) {
+    val viewModel = hiltViewModel<SettingsAboutViewModel>()
+
+    val shakeToReportEnabled = viewModel.outputs.shakeToReportEnabled.observeAsState(false)
+
+    SettingsAboutScreen(
+        actionUpClicked = actionUpClicked,
+        prefClicked = viewModel.inputs::prefClicked,
+        shakeToReportEnabled = shakeToReportEnabled.value
+    )
+}
+
+@Composable
+fun SettingsAboutScreen(
+    actionUpClicked: () -> Unit,
+    prefClicked: (Setting) -> Unit,
+    shakeToReportEnabled: Boolean
+) {
+    LazyColumn(
+        modifier = Modifier.fillMaxSize(),
+        content = {
+            item("header") {
+                Header(
+                    text = stringResource(id = R.string.settings_section_about_title),
+                    icon = painterResource(id = R.drawable.ic_back),
+                    iconContentDescription = stringResource(id = R.string.ab_back),
+                    actionUpClicked = actionUpClicked
+                )
+            }
+
+            Header(title = R.string.settings_header_about)
+            Pref(
+                model = Settings.Other.aboutThisApp,
+                onClick = prefClicked
+            )
+            Pref(
+                model = Settings.Other.review,
+                onClick = prefClicked
+            )
+            Pref(
+                model = Settings.Other.releaseNotes,
+                onClick = prefClicked
+            )
+            Switch(
+                model = Settings.Other.shakeToReport(shakeToReportEnabled),
+                onClick = prefClicked
+            )
+        }
+    )
+}
+
+@PreviewTheme
+@Composable
+private fun Preview() {
+    AppThemePreview {
+        SettingsAboutScreen(
+            actionUpClicked = {},
+            prefClicked = {},
+            shakeToReportEnabled = true
+        )
+    }
 }
