@@ -94,6 +94,7 @@ internal val Screen.Settings.NotificationsUpcoming: NavigationDestination
     get() = object : NavigationDestination {
         override val route: String = "settings/notifications/upcoming"
     }
+
 internal val Screen.Settings.NotificationsResults: NavigationDestination
     get() = object : NavigationDestination {
         override val route: String = "settings/notifications/results"

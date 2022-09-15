@@ -3,6 +3,7 @@ package tmg.flashback.ui.settings.notifications
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -28,6 +29,11 @@ fun SettingsNotificationsUpcomingScreenVM(
     val qualifyingEnabled = viewModel.outputs.qualifyingEnabled.observeAsState(false)
     val otherEnabled = viewModel.outputs.otherEnabled.observeAsState(false)
     val raceEnabled = viewModel.outputs.raceEnabled.observeAsState(false)
+
+    LaunchedEffect(Unit) {
+        viewModel.refresh()
+    }
+
     SettingsNotificationsUpcomingScreen(
         actionUpClicked = actionUpClicked,
         prefClicked = viewModel.inputs::prefClicked,
