@@ -511,6 +511,5 @@ private fun DriverConstructor.result() = DriverSeasonModel.Result(
     finished = 1,
     raceStatus = "Retired",
     points = 10.0,
-    maxPoints = 25,
-    animationSpeed = AnimationSpeed.MEDIUM,
+    maxPoints = 25
 )

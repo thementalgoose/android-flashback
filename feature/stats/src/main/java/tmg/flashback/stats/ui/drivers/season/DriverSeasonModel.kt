@@ -60,8 +60,7 @@ sealed class DriverSeasonModel(
         val finished: Int?,
         val raceStatus: RaceStatus,
         val points: Double,
-        val maxPoints: Int,
-        val animationSpeed: AnimationSpeed
+        val maxPoints: Int
     ): DriverSeasonModel(
         key = "result-s${season}r${round}"
     )
