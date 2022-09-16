@@ -5,10 +5,12 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
+import tmg.flashback.R
 import tmg.flashback.analytics.manager.AnalyticsManager
 import tmg.flashback.crash_reporting.repository.CrashRepository
 import tmg.flashback.settings.PrivacyPolicy
 import tmg.flashback.settings.SettingsNavigationComponent
+import tmg.flashback.ui.managers.ToastManager
 import tmg.flashback.ui.navigation.Screen
 import tmg.flashback.ui.settings.Settings
 import tmg.testutils.BaseTest
@@ -19,6 +21,7 @@ internal class SettingsPrivacyViewModelTest: BaseTest() {
 
     private val mockCrashRepository: CrashRepository = mockk(relaxed = true)
     private val mockAnalyticsManager: AnalyticsManager = mockk(relaxed = true)
+    private val mockToastManager: ToastManager = mockk(relaxed = true)
     private val mockSettingsNavigationComponent: SettingsNavigationComponent = mockk(relaxed = true)
 
     private lateinit var underTest: SettingsPrivacyViewModel
@@ -27,6 +30,7 @@ internal class SettingsPrivacyViewModelTest: BaseTest() {
         underTest = SettingsPrivacyViewModel(
             crashRepository = mockCrashRepository,
             analyticsManager = mockAnalyticsManager,
+            toastManager = mockToastManager,
             settingsNavigationComponent = mockSettingsNavigationComponent
         )
     }
@@ -91,6 +95,7 @@ internal class SettingsPrivacyViewModelTest: BaseTest() {
 
         verify {
             mockCrashRepository.isEnabled = true
+            mockToastManager.displayToast(R.string.settings_restart_app_required)
         }
         observer.assertEmittedCount(2)
     }
@@ -105,6 +110,7 @@ internal class SettingsPrivacyViewModelTest: BaseTest() {
 
         verify {
             mockAnalyticsManager.enabled = true
+            mockToastManager.displayToast(R.string.settings_restart_app_required)
         }
         observer.assertEmittedCount(2)
     }

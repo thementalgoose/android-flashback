@@ -11,7 +11,7 @@
     <string name="settings_theme_theme_title">App theme</string>
     <string name="settings_theme_theme_description">Pick your app colour schemes</string>
     <string name="settings_theme_theme_default">Default</string>
-    <string name="settings_theme_theme_material_you">Android 12 Material You</string>
+    <string name="settings_theme_theme_material_you">Material You</string>
     <string name="settings_theme_theme_applied_later">Your theme will be applied after you restart the app</string>
     <string name="settings_theme_animation_speed_title">Animation speed</string>
     <string name="settings_theme_animation_speed_description">Pick the speed of the animated views throughout the app.</string>

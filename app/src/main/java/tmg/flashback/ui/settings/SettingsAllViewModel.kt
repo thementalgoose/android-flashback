@@ -27,10 +27,10 @@ interface SettingsAllViewModelOutputs {
 
 @HiltViewModel
 class SettingsAllViewModel @Inject constructor(
-    themeRepository: ThemeRepository,
-    buildConfig: BuildConfigManager,
-    adsRepository: AdsRepository,
-    rssRepository: RSSRepository,
+    private val themeRepository: ThemeRepository,
+    private val buildConfig: BuildConfigManager,
+    private val adsRepository: AdsRepository,
+    private val rssRepository: RSSRepository,
     private val navigator: Navigator,
     private val settingsNavigationComponent: SettingsNavigationComponent
 ): ViewModel(), SettingsAllViewModelInputs, SettingsAllViewModelOutputs {
@@ -38,9 +38,13 @@ class SettingsAllViewModel @Inject constructor(
     val inputs: SettingsAllViewModelInputs = this
     val outputs: SettingsAllViewModelOutputs = this
 
-    override val isThemeEnabled: MutableLiveData<Boolean> = MutableLiveData(themeRepository.enableThemePicker && buildConfig.isMonetThemeSupported)
-    override val isAdsEnabled: MutableLiveData<Boolean> = MutableLiveData(adsRepository.allowUserConfig)
-    override val isRSSEnabled: MutableLiveData<Boolean> = MutableLiveData(rssRepository.enabled)
+    override val isThemeEnabled: MutableLiveData<Boolean> = MutableLiveData()
+    override val isAdsEnabled: MutableLiveData<Boolean> = MutableLiveData()
+    override val isRSSEnabled: MutableLiveData<Boolean> = MutableLiveData()
+
+    init {
+        refresh()
+    }
 
     override fun itemClicked(pref: Setting) {
         when (pref.key) {
@@ -78,5 +82,11 @@ class SettingsAllViewModel @Inject constructor(
                 throw UnsupportedOperationException("Preference with key ${pref.key} is not handled")
             }
         }
+    }
+
+    fun refresh() {
+        isThemeEnabled.value = themeRepository.enableThemePicker && buildConfig.isMonetThemeSupported
+        isAdsEnabled.value = adsRepository.allowUserConfig
+        isRSSEnabled.value = rssRepository.enabled
     }
 }

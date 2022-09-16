@@ -24,7 +24,7 @@ internal class SettingsWebViewModelTest: BaseTest() {
 
     @Test
     fun `browser is enabled when open in external enabled`() {
-        every { mockWebBrowserRepository.openInExternal } returns true
+        every { mockWebBrowserRepository.openInExternal } returns false
 
         initUnderTest()
         underTest.outputs.enable.test {
@@ -34,7 +34,7 @@ internal class SettingsWebViewModelTest: BaseTest() {
 
     @Test
     fun `browser is disabled when open in external disabled`() {
-        every { mockWebBrowserRepository.openInExternal } returns false
+        every { mockWebBrowserRepository.openInExternal } returns true
 
         initUnderTest()
         underTest.outputs.enable.test {

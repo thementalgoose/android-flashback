@@ -1,9 +1,11 @@
 package tmg.flashback.ui.settings
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
@@ -29,6 +31,11 @@ fun SettingsAllScreenVM(
     val isThemeEnabled = viewModel.outputs.isThemeEnabled.observeAsState(false)
     val isAdsEnabled = viewModel.outputs.isAdsEnabled.observeAsState(false)
     val isRSSEnabled = viewModel.outputs.isRSSEnabled.observeAsState(false)
+
+    LaunchedEffect(Unit) {
+        viewModel.refresh()
+    }
+
     SettingsAllScreen(
         actionUpClicked = actionUpClicked,
         prefClicked = viewModel.inputs::itemClicked,
@@ -47,7 +54,9 @@ fun SettingsAllScreen(
     isRSSEnabled: Boolean
 ) {
     LazyColumn(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(AppTheme.colors.backgroundPrimary),
         content = {
             item("header") {
                 Header(
@@ -82,11 +91,12 @@ fun SettingsAllScreen(
                     onClick = prefClicked
                 )
             }
-            Header(title = R.string.settings_header_layout)
-            Section(
-                model = Settings.Layout.home,
-                onClick = prefClicked
-            )
+            // Settings currently empty
+//            Header(title = R.string.settings_header_layout)
+//            Section(
+//                model = Settings.Layout.home,
+//                onClick = prefClicked
+//            )
             if (isRSSEnabled) {
                 Header(title = R.string.settings_header_rss_feed)
                 Section(

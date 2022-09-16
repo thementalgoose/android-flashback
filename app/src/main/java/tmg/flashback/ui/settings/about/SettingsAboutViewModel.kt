@@ -4,9 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import tmg.flashback.R
 import tmg.flashback.crash_reporting.repository.CrashRepository
 import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.releasenotes.ReleaseNotesNavigationComponent
+import tmg.flashback.ui.managers.ToastManager
 import tmg.flashback.ui.navigation.ApplicationNavigationComponent
 import tmg.flashback.ui.settings.Settings
 import tmg.flashback.ui.settings.Setting
@@ -27,6 +29,7 @@ class SettingsAboutViewModel @Inject constructor(
     private val releaseNotesNavigationComponent: ReleaseNotesNavigationComponent,
     private val applicationNavigationComponent: ApplicationNavigationComponent,
     private val webNavigationComponent: WebNavigationComponent,
+    private val toastManager: ToastManager,
     private val buildConfigManager: BuildConfigManager
 ): ViewModel(), SettingsAboutViewModelInputs, SettingsAboutViewModelOutputs {
 
@@ -51,6 +54,7 @@ class SettingsAboutViewModel @Inject constructor(
             Settings.Other.shakeToReportKey -> {
                 crashRepository.shakeToReport = !crashRepository.shakeToReport
                 shakeToReportEnabled.value = crashRepository.shakeToReport
+                toastManager.displayToast(R.string.settings_restart_app_required)
             }
         }
     }

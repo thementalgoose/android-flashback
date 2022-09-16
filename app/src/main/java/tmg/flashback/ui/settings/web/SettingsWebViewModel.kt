@@ -26,14 +26,14 @@ class SettingsWebViewModel @Inject constructor(
     val inputs: SettingsWebViewModelInputs = this
     val outputs: SettingsWebViewModelOutputs = this
 
-    override val enable: MutableLiveData<Boolean> = MutableLiveData(webBrowserRepository.openInExternal)
+    override val enable: MutableLiveData<Boolean> = MutableLiveData(!webBrowserRepository.openInExternal)
     override val enableJavascript: MutableLiveData<Boolean> = MutableLiveData(webBrowserRepository.enableJavascript)
 
     override fun prefClicked(pref: Setting) {
         when (pref.key) {
             Settings.Web.enableKey -> {
                 webBrowserRepository.openInExternal = !webBrowserRepository.openInExternal
-                enable.value = webBrowserRepository.openInExternal
+                enable.value = !webBrowserRepository.openInExternal
             }
             Settings.Web.javascriptKey -> {
                 webBrowserRepository.enableJavascript = !webBrowserRepository.enableJavascript

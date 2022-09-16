@@ -34,6 +34,8 @@ class PermissionManager @Inject constructor(
     fun requestPermission(rationaleType: RationaleType): CompletableDeferred<Boolean> {
         completableDeferred = CompletableDeferred()
         baseActivity?.requestPermission(rationaleType)
-        return completableDeferred!!
+        return completableDeferred ?: CompletableDeferred<Boolean>().apply {
+            this.complete(false)
+        }
     }
 }
