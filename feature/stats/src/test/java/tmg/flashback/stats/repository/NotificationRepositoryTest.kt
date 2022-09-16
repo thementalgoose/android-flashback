@@ -29,7 +29,7 @@ internal class NotificationRepositoryTest {
 
         initUnderTest()
 
-        Assertions.assertTrue(underTest.notificationRace)
+        Assertions.assertTrue(underTest.notificationUpcomingRace)
         verify {
             mockPreferenceManager.getBoolean(keyNotificationRace, false)
         }
@@ -39,7 +39,7 @@ internal class NotificationRepositoryTest {
     fun `setting notification race enabled saves value from preferences repository`() {
         initUnderTest()
 
-        underTest.notificationRace = true
+        underTest.notificationUpcomingRace = true
         verify {
             mockPreferenceManager.save(keyNotificationRace, true)
         }
@@ -49,7 +49,7 @@ internal class NotificationRepositoryTest {
     fun `setting notification race disabled saves value from preferences repository`() {
         initUnderTest()
 
-        underTest.notificationRace = false
+        underTest.notificationUpcomingRace = false
         verify {
             mockPreferenceManager.save(keyNotificationRace, false)
         }
@@ -65,7 +65,7 @@ internal class NotificationRepositoryTest {
 
         initUnderTest()
 
-        Assertions.assertTrue(underTest.notificationQualifying)
+        Assertions.assertTrue(underTest.notificationUpcomingQualifying)
         verify {
             mockPreferenceManager.getBoolean(keyNotificationQualifying, false)
         }
@@ -75,7 +75,7 @@ internal class NotificationRepositoryTest {
     fun `setting notification qualifying enabled saves value from preferences repository`() {
         initUnderTest()
 
-        underTest.notificationQualifying = true
+        underTest.notificationUpcomingQualifying = true
         verify {
             mockPreferenceManager.save(keyNotificationQualifying, true)
         }
@@ -85,7 +85,7 @@ internal class NotificationRepositoryTest {
     fun `setting notification qualifying disabled saves value from preferences repository`() {
         initUnderTest()
 
-        underTest.notificationQualifying = false
+        underTest.notificationUpcomingQualifying = false
         verify {
             mockPreferenceManager.save(keyNotificationQualifying, false)
         }
@@ -101,7 +101,7 @@ internal class NotificationRepositoryTest {
 
         initUnderTest()
 
-        Assertions.assertTrue(underTest.notificationFreePractice )
+        Assertions.assertTrue(underTest.notificationUpcomingFreePractice )
         verify {
             mockPreferenceManager.getBoolean(keyNotificationFreePractice, false)
         }
@@ -111,7 +111,7 @@ internal class NotificationRepositoryTest {
     fun `setting notification free practice enabled saves value from preferences repository`() {
         initUnderTest()
 
-        underTest.notificationFreePractice = true
+        underTest.notificationUpcomingFreePractice = true
         verify {
             mockPreferenceManager.save(keyNotificationFreePractice, true)
         }
@@ -121,7 +121,7 @@ internal class NotificationRepositoryTest {
     fun `setting notification free practice disabled saves value from preferences repository`() {
         initUnderTest()
 
-        underTest.notificationFreePractice = false
+        underTest.notificationUpcomingFreePractice = false
         verify {
             mockPreferenceManager.save(keyNotificationFreePractice, false)
         }
@@ -137,7 +137,7 @@ internal class NotificationRepositoryTest {
 
         initUnderTest()
 
-        Assertions.assertTrue(underTest.notificationOther )
+        Assertions.assertTrue(underTest.notificationUpcomingOther )
         verify {
             mockPreferenceManager.getBoolean(keyNotificationOther, false)
         }
@@ -147,7 +147,7 @@ internal class NotificationRepositoryTest {
     fun `setting notification other enabled saves value from preferences repository`() {
         initUnderTest()
 
-        underTest.notificationOther = true
+        underTest.notificationUpcomingOther = true
         verify {
             mockPreferenceManager.save(keyNotificationOther, true)
         }
@@ -157,7 +157,7 @@ internal class NotificationRepositoryTest {
     fun `setting notification other disabled saves value from preferences repository`() {
         initUnderTest()
 
-        underTest.notificationOther = false
+        underTest.notificationUpcomingOther = false
         verify {
             mockPreferenceManager.save(keyNotificationOther, false)
         }

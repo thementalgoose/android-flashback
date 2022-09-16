@@ -67,16 +67,6 @@ fun Screen.Circuit(circuitId: String, circuitName: String): NavigationDestinatio
     override val route: String = "circuit/$circuitId?circuitName=$circuitName"
 }
 
-val Screen.Settings.Home: NavigationDestination
-    get() = object : NavigationDestination {
-        override val route: String = "settings/home"
-    }
-
-val Screen.Settings.Notifications: NavigationDestination
-    get() = object : NavigationDestination {
-        override val route: String = "settings/notifications"
-    }
-
 val Screen.Search: NavigationDestination
     get() = object : NavigationDestination {
         override val route: String = "search"
@@ -209,16 +199,7 @@ class StatsNavigationComponent @Inject constructor(
         ))
     }
 
-
-    fun settingsHome() {
-        navigator.navigate(Screen.Settings.Home)
-    }
-
-    fun settingsNotifications() {
-        navigator.navigate(Screen.Settings.Notifications)
-    }
-
-    internal fun upNext() = activityProvider.launch {
+    fun upNext() = activityProvider.launch {
         val activity = it as? AppCompatActivity ?: return@launch
         UpNextReminderBottomSheetFragment().show(activity.supportFragmentManager, "UP_NEXT")
     }

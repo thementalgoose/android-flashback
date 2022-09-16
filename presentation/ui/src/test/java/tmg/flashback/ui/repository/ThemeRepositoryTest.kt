@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import tmg.flashback.configuration.manager.ConfigManager
 import tmg.flashback.prefs.manager.PreferenceManager
-import tmg.flashback.ui.model.AnimationSpeed
 import tmg.flashback.ui.model.NightMode
 import tmg.flashback.ui.model.Theme
 
@@ -26,29 +25,6 @@ internal class ThemeRepositoryTest {
             mockConfigManager
         )
     }
-
-    //region Animation Speed
-
-    @Test
-    fun `saving animation speed writes correct value to preference manager`() {
-        initUnderTest()
-        underTest.animationSpeed = AnimationSpeed.QUICK
-        verify {
-            mockPreferenceManager.save(keyAnimationSpeed, AnimationSpeed.QUICK.key)
-        }
-    }
-
-    @Test
-    fun `retrieving animation speed queries preference manager`() {
-        every { mockPreferenceManager.getString(any()) } returns AnimationSpeed.MEDIUM.key
-        initUnderTest()
-        assertEquals(AnimationSpeed.MEDIUM, underTest.animationSpeed)
-        verify {
-            mockPreferenceManager.getString(keyAnimationSpeed, null)
-        }
-    }
-
-    //endregion
 
     //region Night Mode
 

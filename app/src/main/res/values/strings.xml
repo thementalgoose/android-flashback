@@ -42,13 +42,92 @@
 
     <!-- About This App Dependencies -->
     <string name="about_this_app_dependency_rss">RSS source: %s</string>
-
-    <!-- Settings -->
-    <string name="settings_title">Settings</string>
-
+    
     <!-- Feature banners -->
     <string name="feature_banner_runtime_notifications">Grant permission for Flashback to send you notifications</string>
     <string name="feature_banner_notifications">Get notifications for practice, qualifying and race events for upcoming race weekends!</string>
     <string name="feature_banner_notifications_finished">You can change this in the settings at any time</string>
+    
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_search">Search settings</string>
+    
+    <string name="settings_header_appearance">Appearance</string>
+    <string name="settings_header_layout">Layout</string>
+    <string name="settings_header_rss_feed">RSS Feed</string>
+    <string name="settings_header_web_browser">Web Browser</string>
+    <string name="settings_header_notifications">Notifications</string>
+    <string name="settings_header_other">Other</string>
+
+    <string name="settings_section_dark_mode_title">Dark mode</string>
+    <string name="settings_section_dark_mode_description">Force dark mode or light mode</string>
+    <string name="settings_section_theme_title">Theme</string>
+    <string name="settings_section_theme_description">Follow Material You colour schemes</string>
+
+    <string name="settings_section_home_title">Layout</string>
+    <string name="settings_section_home_description">Customise the menu and dashboard layouts</string>
+    <string name="settings_header_home">Home</string>
+    <string name="settings_pref_provided_by_at_top_title">Show provided by at top</string>
+    <string name="settings_pref_provided_by_at_top_description">Show the provided by section at the top of the screen. Disable to move it to the bottom</string>
+
+    <string name="settings_section_rss_configure_title">Configure</string>
+    <string name="settings_section_rss_configure_description">Setup RSS sources or customise appearance</string>
+
+    <string name="settings_section_web_browser_title">In-app Browser</string>
+    <string name="settings_section_web_browser_description">Customise or disable the in app browser</string>
+    <string name="settings_header_in_app_browser">In App Browser</string>
+    <string name="settings_switch_enable_web_browser_title">Enable</string>
+    <string name="settings_switch_enable_web_browser_description">Turn on the in-app web browser</string>
+    <string name="settings_switch_enable_javascript_title">Enable Javascript</string>
+    <string name="settings_switch_enable_javascript_description">Render Javascript in the in-app browser. Web pages may not function correctly with this disabled</string>
+
+    <string name="settings_section_notifications_upcoming_title">Upcoming races</string>
+    <string name="settings_section_notifications_upcoming_description">Get notified for upcoming races</string>
+    <string name="settings_section_notifications_results_title">Race results</string>
+    <string name="settings_section_notifications_results_description">Get notified when race results are available</string>
+    <string name="settings_header_notice">Notice</string>
+    <string name="settings_header_permissions">Permission</string>
+    <string name="settings_pref_notification_permission_title">Enable notifications</string>
+    <string name="settings_pref_notification_permission_description">Grant permission for Flashback to send you notifications</string>
+    <string name="settings_pref_notification_notice_period_title">Minutes before</string>
+    <string name="settings_pref_notification_notice_period_description">Get notified 15, 30 or 60 minutes before one of the above events starts</string>
+    <string name="settings_switch_notification_upcoming_fp_title">Free Practice</string>
+    <string name="settings_switch_notification_upcoming_qualifying_title">Qualifying</string>
+    <string name="settings_switch_notification_upcoming_race_title">Race</string>
+    <string name="settings_switch_notification_upcoming_other_title">Other</string>
+    <string name="settings_switch_notification_results_qualifying_title">Qualifying</string>
+    <string name="settings_switch_notification_results_sprint_title">Sprint</string>
+    <string name="settings_switch_notification_results_race_title">Race</string>
+
+    <string name="settings_section_ads_title">Ads</string>
+    <string name="settings_section_ads_description">Ads settings</string>
+    <string name="settings_header_ads">Ads</string>
+    <string name="settings_switch_ads_enable_title">Show ads?</string>
+    <string name="settings_switch_ads_enable_description">Do you want ads to be displayed? Every developer appreciates your support leaving adverts enabled</string>
+
+    <string name="settings_section_privacy_title">Privacy</string>
+    <string name="settings_section_privacy_description">Crashlytics, Analytics, Privacy Policy</string>
+    <string name="settings_header_legal">Legal</string>
+    <string name="settings_pref_privacy_policy_title">Privacy Policy</string>
+    <string name="settings_pref_privacy_policy_description">The apps privacy policy</string>
+    <string name="settings_header_device_info">Device Info</string>
+    <string name="settings_pref_crash_reporting_title">Crash Reporting</string>
+    <string name="settings_pref_crash_reporting_description">Allow crash reports to be sent to the developer when an issue occurs</string>
+    <string name="settings_pref_analytics_title">Anonymous Analytics</string>
+    <string name="settings_pref_analytics_description">Send anonymous analytics data about your app experience. This can also aid crash reporting</string>
+
+    <string name="settings_section_about_title">About</string>
+    <string name="settings_section_about_description">About this app</string>
+    <string name="settings_header_about">About</string>
+    <string name="settings_switch_about_this_app_title">About this app</string>
+    <string name="settings_switch_about_this_app_description">About the app, the devs and the dependencies</string>
+    <string name="settings_switch_review_title">Review</string>
+    <string name="settings_switch_review_description">Review the app on the play store</string>
+    <string name="settings_switch_release_notes_title">Release Notes</string>
+    <string name="settings_switch_release_notes_description">What\'s changed between builds</string>
+    <string name="settings_pref_shake_to_report_title">Shake to report</string>
+    <string name="settings_pref_shake_to_report_description">Shake the screen to provide feedback or bug reports to the developer</string>
+
+    <string name="settings_restart_app_required">Your change will take effect when the app restarts</string>
 
 </resources>

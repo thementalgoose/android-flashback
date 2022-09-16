@@ -1,106 +1,92 @@
 package tmg.flashback.ui.settings
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import tmg.flashback.R
-import tmg.flashback.rss.RssNavigationComponent
-import tmg.flashback.ads.config.AdsNavigationComponent
+import tmg.flashback.BuildConfig
 import tmg.flashback.ads.config.repository.AdsRepository
-import tmg.flashback.rss.controllers.RSSController
+import tmg.flashback.device.managers.BuildConfigManager
+import tmg.flashback.rss.RSSConfigure
+import tmg.flashback.rss.repo.RSSRepository
 import tmg.flashback.settings.SettingsNavigationComponent
-import tmg.flashback.stats.StatsNavigationComponent
-import tmg.flashback.web.WebNavigationComponent
+import tmg.flashback.ui.navigation.Navigator
+import tmg.flashback.ui.navigation.Screen
+import tmg.flashback.ui.repository.ThemeRepository
 import javax.inject.Inject
 
-//region Inputs
-
 interface SettingsAllViewModelInputs {
-
+    fun itemClicked(pref: Setting)
 }
-
-//endregion
-
-//region Outputs
 
 interface SettingsAllViewModelOutputs {
+    val isThemeEnabled: LiveData<Boolean>
+    val isAdsEnabled: LiveData<Boolean>
+    val isRSSEnabled: LiveData<Boolean>
 }
-
-//endregion
 
 @HiltViewModel
 class SettingsAllViewModel @Inject constructor(
-    private val rssController: RSSController,
+    private val themeRepository: ThemeRepository,
+    private val buildConfig: BuildConfigManager,
     private val adsRepository: AdsRepository,
-    private val rssNavigationComponent: RssNavigationComponent,
-    private val settingsNavigationComponent: SettingsNavigationComponent,
-    private val statsNavigationComponent: StatsNavigationComponent,
-    private val adsNavigationComponent: AdsNavigationComponent,
-    private val webNavigationComponent: WebNavigationComponent
-): SettingsViewModel(), SettingsAllViewModelInputs, SettingsAllViewModelOutputs {
+    private val rssRepository: RSSRepository,
+    private val navigator: Navigator,
+    private val settingsNavigationComponent: SettingsNavigationComponent
+): ViewModel(), SettingsAllViewModelInputs, SettingsAllViewModelOutputs {
 
-    override val models: List<SettingsModel> = mutableListOf<SettingsModel>().apply {
-        add(SettingsModel.Header(R.string.settings_title))
-        add(SettingsModel.Pref(
-                title = R.string.settings_all_appearance,
-                description = R.string.settings_all_appearance_subtitle,
-                onClick = {
-                    settingsNavigationComponent.settingsAppearance()
-                }
-        ))
-        add(SettingsModel.Pref(
-                title = R.string.settings_all_home,
-                description = R.string.settings_all_home_subtitle,
-                onClick = {
-                    statsNavigationComponent.settingsHome()
-                }
-        ))
-        if (rssController.enabled) {
-            add(SettingsModel.Pref(
-                    title = R.string.settings_all_rss,
-                    description = R.string.settings_all_rss_subtitle,
-                    onClick = {
-                        rssNavigationComponent.settingsRSS()
-                    }
-            ))
-        }
-        add(SettingsModel.Pref(
-                title = R.string.settings_all_notifications,
-                description = R.string.settings_all_notifications_subtitle,
-                onClick = {
-                    statsNavigationComponent.settingsNotifications()
-                }
-        ))
-        add(SettingsModel.Pref(
-            title = R.string.settings_all_web_browser,
-            description = R.string.settings_all_web_browser_subtitle,
-            onClick = {
-                webNavigationComponent.webSettings()
-            }
-        ))
-        add(SettingsModel.Pref(
-            title = R.string.settings_all_support,
-            description = R.string.settings_all_support_subtitle,
-            onClick = {
-                settingsNavigationComponent.settingsSupport()
-            }
-        ))
-        if (adsRepository.allowUserConfig) {
-            add(SettingsModel.Pref(
-                title = R.string.settings_all_ads,
-                description = R.string.settings_all_ads_subtitle,
-                onClick = {
-                    adsNavigationComponent.settingsAds()
-                }
-            ))
-        }
-        add(SettingsModel.Pref(
-                title = R.string.settings_all_about,
-                description = R.string.settings_all_about_subtitle,
-                onClick = {
-                    settingsNavigationComponent.settingsAbout()
-                }
-        ))
+    val inputs: SettingsAllViewModelInputs = this
+    val outputs: SettingsAllViewModelOutputs = this
+
+    override val isThemeEnabled: MutableLiveData<Boolean> = MutableLiveData()
+    override val isAdsEnabled: MutableLiveData<Boolean> = MutableLiveData()
+    override val isRSSEnabled: MutableLiveData<Boolean> = MutableLiveData()
+
+    init {
+        refresh()
     }
 
-    var inputs: SettingsAllViewModelInputs = this
-    var outputs: SettingsAllViewModelOutputs = this
+    override fun itemClicked(pref: Setting) {
+        when (pref.key) {
+            Settings.Theme.darkMode.key -> {
+                settingsNavigationComponent.nightModeDialog()
+            }
+            Settings.Theme.theme.key -> {
+                settingsNavigationComponent.themeDialog()
+            }
+            Settings.Layout.home.key -> {
+                navigator.navigate(Screen.Settings.Home)
+            }
+            Settings.RSS.rss.key -> {
+                navigator.navigate(Screen.Settings.RSSConfigure)
+            }
+            Settings.Web.inAppBrowser.key -> {
+                navigator.navigate(Screen.Settings.Web)
+            }
+            Settings.Notifications.notificationResults.key -> {
+                navigator.navigate(Screen.Settings.NotificationsResults)
+            }
+            Settings.Notifications.notificationUpcoming.key -> {
+                navigator.navigate(Screen.Settings.NotificationsUpcoming)
+            }
+            Settings.Ads.ads.key -> {
+                navigator.navigate(Screen.Settings.Ads)
+            }
+            Settings.Other.privacy.key -> {
+                navigator.navigate(Screen.Settings.Privacy)
+            }
+            Settings.Other.about.key -> {
+                navigator.navigate(Screen.Settings.About)
+            }
+            else -> if (BuildConfig.DEBUG) {
+                throw UnsupportedOperationException("Preference with key ${pref.key} is not handled")
+            }
+        }
+    }
+
+    fun refresh() {
+        isThemeEnabled.value = themeRepository.enableThemePicker && buildConfig.isMonetThemeSupported
+        isAdsEnabled.value = adsRepository.allowUserConfig
+        isRSSEnabled.value = rssRepository.enabled
+    }
 }

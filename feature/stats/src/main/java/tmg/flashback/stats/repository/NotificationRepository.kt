@@ -30,28 +30,28 @@ class NotificationRepository @Inject constructor(
 
 
 
-    var notificationRace: Boolean
+    var notificationUpcomingRace: Boolean
         get() = preferenceManager.getBoolean(keyNotificationRace, false)
         set(value) = preferenceManager.save(keyNotificationRace, value)
 
-    var notificationQualifying: Boolean
+    var notificationUpcomingQualifying: Boolean
         get() = preferenceManager.getBoolean(keyNotificationQualifying, false)
         set(value) = preferenceManager.save(keyNotificationQualifying, value)
 
-    var notificationFreePractice: Boolean
+    var notificationUpcomingFreePractice: Boolean
         get() = preferenceManager.getBoolean(keyNotificationFreePractice, false)
         set(value) = preferenceManager.save(keyNotificationFreePractice, value)
 
-    var notificationOther: Boolean
+    var notificationUpcomingOther: Boolean
         get() = preferenceManager.getBoolean(keyNotificationOther, false)
         set(value) = preferenceManager.save(keyNotificationOther, value)
 
     val notificationSchedule: NotificationSchedule
         get() = NotificationSchedule(
-            freePractice = notificationFreePractice,
-            qualifying = notificationQualifying,
-            race = notificationRace,
-            other = notificationOther
+            freePractice = notificationUpcomingFreePractice,
+            qualifying = notificationUpcomingQualifying,
+            race = notificationUpcomingRace,
+            other = notificationUpcomingOther
         )
 
 

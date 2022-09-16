@@ -17,7 +17,6 @@ import tmg.flashback.formula1.utils.NotificationUtils
 import tmg.flashback.statistics.repo.RaceRepository
 import tmg.flashback.stats.R
 import tmg.flashback.stats.repository.NotificationRepository
-import tmg.flashback.ui.navigation.ApplicationNavigationComponent
 import tmg.flashback.web.WebNavigationComponent
 import tmg.utilities.models.StringHolder
 import javax.inject.Inject
@@ -106,10 +105,10 @@ class DetailsViewModel @Inject constructor(
                             val notificationsEnabled = when (NotificationUtils.getCategoryBasedOnLabel(
                                 it.label
                             )) {
-                                RaceWeekend.FREE_PRACTICE -> notificationRepository.notificationFreePractice
-                                RaceWeekend.QUALIFYING -> notificationRepository.notificationQualifying
-                                RaceWeekend.RACE -> notificationRepository.notificationRace
-                                null -> notificationRepository.notificationOther
+                                RaceWeekend.FREE_PRACTICE -> notificationRepository.notificationUpcomingFreePractice
+                                RaceWeekend.QUALIFYING -> notificationRepository.notificationUpcomingQualifying
+                                RaceWeekend.RACE -> notificationRepository.notificationUpcomingRace
+                                null -> notificationRepository.notificationUpcomingOther
                             }
                             Pair(it, notificationsEnabled)
                         }
