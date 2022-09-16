@@ -4,9 +4,11 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Test
+import tmg.flashback.R
 import tmg.flashback.crash_reporting.repository.CrashRepository
 import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.releasenotes.ReleaseNotesNavigationComponent
+import tmg.flashback.ui.managers.ToastManager
 import tmg.flashback.ui.navigation.ApplicationNavigationComponent
 import tmg.flashback.ui.settings.Settings
 import tmg.flashback.web.WebNavigationComponent
@@ -20,6 +22,7 @@ internal class SettingsAboutViewModelTest: BaseTest() {
     private val mockReleaseNotesNavigationComponent: ReleaseNotesNavigationComponent = mockk(relaxed = true)
     private val mockApplicationNavigationComponent: ApplicationNavigationComponent = mockk(relaxed = true)
     private val mockWebNavigationComponent: WebNavigationComponent = mockk(relaxed = true)
+    private val mockToastManager: ToastManager = mockk(relaxed = true)
     private val mockBuildConfigManager: BuildConfigManager = mockk(relaxed = true)
 
     private lateinit var underTest: SettingsAboutViewModel
@@ -30,6 +33,7 @@ internal class SettingsAboutViewModelTest: BaseTest() {
             releaseNotesNavigationComponent = mockReleaseNotesNavigationComponent,
             applicationNavigationComponent = mockApplicationNavigationComponent,
             webNavigationComponent = mockWebNavigationComponent,
+            toastManager = mockToastManager,
             buildConfigManager = mockBuildConfigManager,
         )
     }
@@ -94,6 +98,7 @@ internal class SettingsAboutViewModelTest: BaseTest() {
 
         verify {
             mockCrashRepository.shakeToReport = true
+            mockToastManager.displayToast(R.string.settings_restart_app_required)
         }
         observer.assertEmittedCount(2)
     }

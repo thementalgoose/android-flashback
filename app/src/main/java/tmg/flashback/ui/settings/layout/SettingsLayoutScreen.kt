@@ -1,5 +1,6 @@
 package tmg.flashback.ui.settings.layout
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
@@ -9,6 +10,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.R
+import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.ui.components.settings.Header
@@ -22,14 +24,10 @@ fun SettingsLayoutScreenVM(
 ) {
     val viewModel = hiltViewModel<SettingsLayoutViewModel>()
 
-    val menuAllExpandedEnabled = viewModel.outputs.menuAllExpandedEnabled.observeAsState(true)
-    val menuFavouriteExpandedEnabled = viewModel.outputs.menuFavouriteExpandedEnabled.observeAsState(true)
     val providedByAtTopEnabled = viewModel.outputs.providedByAtTopEnabled.observeAsState(true)
     SettingsLayoutScreen(
         actionUpClicked = actionUpClicked,
         prefClicked = viewModel.inputs::prefClicked,
-        menuAllExpandedEnabled = menuAllExpandedEnabled.value,
-        menuFavouriteExpandedEnabled = menuFavouriteExpandedEnabled.value,
         providedByAtTopEnabled = providedByAtTopEnabled.value
     )
 }
@@ -38,12 +36,11 @@ fun SettingsLayoutScreenVM(
 fun SettingsLayoutScreen(
     actionUpClicked: () -> Unit,
     prefClicked: (Setting) -> Unit,
-    menuAllExpandedEnabled: Boolean,
-    menuFavouriteExpandedEnabled: Boolean,
     providedByAtTopEnabled: Boolean
 ) {
     LazyColumn(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize()
+            .background(AppTheme.colors.backgroundPrimary),
         content = {
             item("header") {
                 tmg.flashback.ui.components.header.Header(
@@ -53,16 +50,6 @@ fun SettingsLayoutScreen(
                     actionUpClicked = actionUpClicked
                 )
             }
-
-            Header(title = R.string.settings_header_menu)
-            Switch(
-                model = Settings.Layout.menuAllExpanded(menuAllExpandedEnabled),
-                onClick = prefClicked
-            )
-            Switch(
-                model = Settings.Layout.menuFavouriteExpanded(menuFavouriteExpandedEnabled),
-                onClick = prefClicked
-            )
 
             Header(title = R.string.settings_header_home)
             Switch(
@@ -80,8 +67,6 @@ private fun Preview() {
         SettingsLayoutScreen(
             actionUpClicked = {},
             prefClicked = {},
-            menuAllExpandedEnabled = true,
-            menuFavouriteExpandedEnabled = false,
             providedByAtTopEnabled = true
         )
     }

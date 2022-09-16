@@ -45,7 +45,6 @@ class ThemeRepository @Inject constructor(
     /**
      * Enable the theme picker for material you preference
      */
-    val enableThemePicker: Boolean by lazy {
-        return@lazy configManager.getBoolean(keyMaterialYou)
-    }
+    val enableThemePicker: Boolean
+        get() = configManager.getBoolean(keyMaterialYou)
 }

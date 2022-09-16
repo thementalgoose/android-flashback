@@ -66,11 +66,6 @@
 
     <string name="settings_section_home_title">Layout</string>
     <string name="settings_section_home_description">Customise the menu and dashboard layouts</string>
-    <string name="settings_header_menu">Menu</string>
-    <string name="settings_pref_menu_all_title">Expanded all section</string>
-    <string name="settings_pref_menu_all_description">Show the all seasons section expanded on app startup</string>
-    <string name="settings_pref_menu_favourites_title">Expanded favourites section</string>
-    <string name="settings_pref_menu_favourites_description">Show the favourite seasons section expanded on app startup</string>
     <string name="settings_header_home">Home</string>
     <string name="settings_pref_provided_by_at_top_title">Show provided by at top</string>
     <string name="settings_pref_provided_by_at_top_description">Show the provided by section at the top of the screen. Disable to move it to the bottom</string>
@@ -133,5 +128,6 @@
     <string name="settings_pref_shake_to_report_title">Shake to report</string>
     <string name="settings_pref_shake_to_report_description">Shake the screen to provide feedback or bug reports to the developer</string>
 
+    <string name="settings_restart_app_required">Your change will take effect when the app restarts</string>
 
 </resources>

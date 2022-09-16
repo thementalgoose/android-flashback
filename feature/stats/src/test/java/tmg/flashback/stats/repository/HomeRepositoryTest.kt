@@ -178,56 +178,6 @@ internal class HomeRepositoryTest {
 
     //endregion
 
-    //region Show list favourited
-
-    @Test
-    fun `show list favourited reads value from preferences repository`() {
-        every { mockPreferenceManager.getBoolean(keyShowListFavourited, true) } returns true
-        initSUT()
-
-        assertTrue(sut.showListFavourited)
-        verify {
-            mockPreferenceManager.getBoolean(keyShowListFavourited, true)
-        }
-    }
-
-    @Test
-    fun `show list favourited saves value to shared prefs repository`() {
-        initSUT()
-
-        sut.showListFavourited = true
-        verify {
-            mockPreferenceManager.save(keyShowListFavourited, true)
-        }
-    }
-
-    //endregion
-
-    //region Show list all
-
-    @Test
-    fun `show list all reads value from preferences repository`() {
-        every { mockPreferenceManager.getBoolean(keyShowListAll, true) } returns true
-        initSUT()
-
-        assertTrue(sut.showListAll)
-        verify {
-            mockPreferenceManager.getBoolean(keyShowListAll, true)
-        }
-    }
-
-    @Test
-    fun `show list all saves value to shared prefs repository`() {
-        initSUT()
-
-        sut.showListAll = true
-        verify {
-            mockPreferenceManager.save(keyShowListAll, true)
-        }
-    }
-
-    //endregion
-
     //region Dashboard Autoscroll
 
     @Test

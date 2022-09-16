@@ -27,8 +27,6 @@ class HomeRepository @Inject constructor(
 
         // Prefs
         private const val keyDefaultToSchedule: String = "DASHBOARD_DEFAULT_TAB_SCHEDULE"
-        private const val keyShowListFavourited: String = "BOTTOM_SHEET_FAVOURITED"
-        private const val keyShowListAll: String = "BOTTOM_SHEET_ALL"
         private const val keyDashboardAutoscroll: String = "DASHBOARD_AUTOSCROLL"
         private const val keyFavouriteSeasons: String = "FAVOURITE_SEASONS"
         private const val keyDefaultSeason: String = "DEFAULT_SEASON"
@@ -77,20 +75,6 @@ class HomeRepository @Inject constructor(
     var defaultToSchedule: Boolean
         get() = preferenceManager.getBoolean(keyDefaultToSchedule, true)
         set(value) = preferenceManager.save(keyDefaultToSchedule, value)
-
-    /**
-     * Show the favourited bottom sheet section expanded by default
-     */
-    var showListFavourited: Boolean
-        get() = preferenceManager.getBoolean(keyShowListFavourited, true)
-        set(value) = preferenceManager.save(keyShowListFavourited, value)
-
-    /**
-     * Show the all bottom sheet section expanded by default
-     */
-    var showListAll: Boolean
-        get() = preferenceManager.getBoolean(keyShowListAll, true)
-        set(value) = preferenceManager.save(keyShowListAll, value)
 
     /**
      * When loading the dashboard, should the app autoscroll to the current season if it's applicable

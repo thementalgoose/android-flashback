@@ -29,24 +29,6 @@ object Settings {
             icon = R.drawable.ic_settings_home
         )
 
-        val menuAllExpandedKey = "menu_all_expanded"
-        fun menuAllExpanded(isChecked: Boolean, isEnabled: Boolean = true) = Setting.Switch(
-            _key = menuAllExpandedKey,
-            title = R.string.settings_pref_menu_all_title,
-            subtitle = R.string.settings_pref_menu_all_description,
-            isChecked = isChecked,
-            isEnabled = isEnabled
-        )
-
-        val menuFavouriteExpandedKey = "menu_favourite_expanded"
-        fun menuFavouriteExpanded(isChecked: Boolean, isEnabled: Boolean = true) = Setting.Switch(
-            _key = menuFavouriteExpandedKey,
-            title = R.string.settings_pref_menu_favourites_title,
-            subtitle = R.string.settings_pref_menu_favourites_description,
-            isChecked = isChecked,
-            isEnabled = isEnabled
-        )
-
         val providedByAtTopKey = "provided_by_at_top"
         fun providedByAtTop(isChecked: Boolean, isEnabled: Boolean = true) = Setting.Switch(
             _key = providedByAtTopKey,
