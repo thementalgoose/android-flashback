@@ -188,8 +188,7 @@ class DriverSeasonViewModel @Inject constructor(
                                 finished = it.finished,
                                 raceStatus = it.status,
                                 points = it.points,
-                                maxPoints = Formula1.maxPointsBySeason(it.raceInfo.season),
-                                animationSpeed = themeRepository.animationSpeed
+                                maxPoints = Formula1.maxPointsBySeason(it.raceInfo.season)
                             )
                         }
                         .sortedBy { it.round }

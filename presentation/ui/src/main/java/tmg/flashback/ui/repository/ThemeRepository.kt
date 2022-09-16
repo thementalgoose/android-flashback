@@ -2,7 +2,6 @@ package tmg.flashback.ui.repository
 
 import tmg.flashback.configuration.manager.ConfigManager
 import tmg.flashback.prefs.manager.PreferenceManager
-import tmg.flashback.ui.model.AnimationSpeed
 import tmg.flashback.ui.model.NightMode
 import tmg.flashback.ui.model.Theme
 import tmg.utilities.extensions.toEnum
@@ -17,17 +16,10 @@ class ThemeRepository @Inject constructor(
     companion object {
         private const val keyNightMode: String = "THEME" // Used to be theme pref
         private const val keyTheme: String = "THEME_CHOICE" //
-        private const val keyAnimationSpeed: String = "BAR_ANIMATION"
 
         private const val keyMaterialYou: String = "material_you"
     }
 
-    /**
-     * Animation speed preference
-     */
-    var animationSpeed: AnimationSpeed
-        get() = preferenceManager.getString(keyAnimationSpeed)?.toEnum<AnimationSpeed> { it.key } ?: AnimationSpeed.MEDIUM
-        set(value) = preferenceManager.save(keyAnimationSpeed, value.key)
 
     /**
      * Night Mode preference
@@ -53,7 +45,6 @@ class ThemeRepository @Inject constructor(
     /**
      * Enable the theme picker for material you preference
      */
-    val enableThemePicker: Boolean by lazy {
-        return@lazy configManager.getBoolean(keyMaterialYou)
-    }
+    val enableThemePicker: Boolean
+        get() = configManager.getBoolean(keyMaterialYou)
 }

@@ -83,7 +83,7 @@ internal val textLight: Color = Color(0xFFF8F8F8)
 
 val lightColours = AppColors(
     primary = Color(0xFF0274D1),
-    primaryDark = Color(0xFF0274D1),
+    primaryDark = Color(0xFF02589e),
     primaryLight = Color(0xFFCBDDEE),
     accent = Color(0xFF00E2E4),
     error = Color(0xFFF44336),
@@ -125,7 +125,7 @@ val lightColours = AppColors(
 
 val darkColours = AppColors(
     primary = Color(0xFF00E2E4),
-    primaryDark = Color(0xFF00E2E4),
+    primaryDark = Color(0xFF009698),
     primaryLight = Color(0xFF203F40),
     accent = Color(0xFF0274D1),
     error = Color(0xFFF44336),

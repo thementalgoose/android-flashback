@@ -259,9 +259,9 @@ private fun PreviewCompact() {
     Dashboard(
         windowSize = WindowSize.Compact,
         menuItems = listOf(
-            NavigationItem("",0, R.drawable.ic_bar_animation_slow),
-            NavigationItem("", 0, R.drawable.ic_bar_animation_medium),
-            NavigationItem("", 0, R.drawable.ic_bar_animation_quick),
+            NavigationItem("",0, R.drawable.ic_nightmode_auto),
+            NavigationItem("", 0, R.drawable.ic_nightmode_light),
+            NavigationItem("", 0, R.drawable.ic_nightmode_dark),
         ),
         clickMenuItem = { },
         menuContent = { Box(modifier = Modifier
@@ -282,9 +282,9 @@ private fun PreviewMedium() {
     Dashboard(
         windowSize = WindowSize.Medium,
         menuItems = listOf(
-            NavigationItem("",0, R.drawable.ic_bar_animation_slow),
-            NavigationItem("",0, R.drawable.ic_bar_animation_medium),
-            NavigationItem("",0, R.drawable.ic_bar_animation_quick),
+            NavigationItem("",0, R.drawable.ic_nightmode_auto),
+            NavigationItem("", 0, R.drawable.ic_nightmode_light),
+            NavigationItem("", 0, R.drawable.ic_nightmode_dark),
         ),
         clickMenuItem = { },
         menuContent = { Box(modifier = Modifier
@@ -305,9 +305,9 @@ private fun PreviewExpanded() {
     Dashboard(
         windowSize = WindowSize.Expanded,
         menuItems = listOf(
-            NavigationItem("",0, R.drawable.ic_bar_animation_slow),
-            NavigationItem("",0, R.drawable.ic_bar_animation_medium),
-            NavigationItem("",0, R.drawable.ic_bar_animation_quick),
+            NavigationItem("",0, R.drawable.ic_nightmode_auto),
+            NavigationItem("", 0, R.drawable.ic_nightmode_light),
+            NavigationItem("", 0, R.drawable.ic_nightmode_dark),
         ),
         clickMenuItem = { },
         menuContent = { Box(modifier = Modifier

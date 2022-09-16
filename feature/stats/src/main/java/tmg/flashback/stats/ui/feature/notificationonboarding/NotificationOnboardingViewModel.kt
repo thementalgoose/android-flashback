@@ -6,9 +6,7 @@ import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import tmg.flashback.stats.repository.NotificationRepository
 import tmg.flashback.stats.repository.models.NotificationChannel
-import tmg.flashback.ui.bottomsheet.BottomSheetItem
 import tmg.utilities.models.Selected
-import tmg.utilities.models.StringHolder
 import javax.inject.Inject
 
 interface NotificationOnboardingViewModelInputs {
@@ -38,10 +36,10 @@ class NotificationOnboardingViewModel @Inject constructor(
 
     override fun selectNotificationChannel(notificationChannel: NotificationChannel) {
         when (notificationChannel) {
-            NotificationChannel.RACE -> notificationRepository.notificationRace = !notificationRepository.notificationRace
-            NotificationChannel.QUALIFYING -> notificationRepository.notificationQualifying = !notificationRepository.notificationQualifying
-            NotificationChannel.FREE_PRACTICE -> notificationRepository.notificationFreePractice = !notificationRepository.notificationFreePractice
-            NotificationChannel.SEASON_INFO -> notificationRepository.notificationOther = !notificationRepository.notificationOther
+            NotificationChannel.RACE -> notificationRepository.notificationUpcomingRace = !notificationRepository.notificationUpcomingRace
+            NotificationChannel.QUALIFYING -> notificationRepository.notificationUpcomingQualifying = !notificationRepository.notificationUpcomingQualifying
+            NotificationChannel.FREE_PRACTICE -> notificationRepository.notificationUpcomingFreePractice = !notificationRepository.notificationUpcomingFreePractice
+            NotificationChannel.SEASON_INFO -> notificationRepository.notificationUpcomingOther = !notificationRepository.notificationUpcomingOther
         }
         updateList()
     }
@@ -54,10 +52,10 @@ class NotificationOnboardingViewModel @Inject constructor(
                 Selected(
                     NotificationOnboardingModel(id = it.name, channel = it, name = it.label, icon = it.icon),
                     when (it) {
-                        NotificationChannel.RACE -> notificationRepository.notificationRace
-                        NotificationChannel.QUALIFYING -> notificationRepository.notificationQualifying
-                        NotificationChannel.FREE_PRACTICE -> notificationRepository.notificationFreePractice
-                        NotificationChannel.SEASON_INFO -> notificationRepository.notificationOther
+                        NotificationChannel.RACE -> notificationRepository.notificationUpcomingRace
+                        NotificationChannel.QUALIFYING -> notificationRepository.notificationUpcomingQualifying
+                        NotificationChannel.FREE_PRACTICE -> notificationRepository.notificationUpcomingFreePractice
+                        NotificationChannel.SEASON_INFO -> notificationRepository.notificationUpcomingOther
                     }
                 )
             }

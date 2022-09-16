@@ -65,10 +65,10 @@ class ScheduleNotificationsJob @AssistedInject constructor(
             }
             .filter {
                 when (it.channel) {
-                    NotificationChannel.RACE -> notificationRepository.notificationRace
-                    NotificationChannel.QUALIFYING -> notificationRepository.notificationQualifying
-                    NotificationChannel.FREE_PRACTICE -> notificationRepository.notificationFreePractice
-                    NotificationChannel.SEASON_INFO -> notificationRepository.notificationOther
+                    NotificationChannel.RACE -> notificationRepository.notificationUpcomingRace
+                    NotificationChannel.QUALIFYING -> notificationRepository.notificationUpcomingQualifying
+                    NotificationChannel.FREE_PRACTICE -> notificationRepository.notificationUpcomingFreePractice
+                    NotificationChannel.SEASON_INFO -> notificationRepository.notificationUpcomingOther
                 }
             }
 
