@@ -6,9 +6,7 @@ import org.threeten.bp.LocalDate
 import tmg.flashback.formula1.enums.RaceStatus
 import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.Driver
-import tmg.flashback.stats.ui.drivers.overview.DriverOverviewModel
 import tmg.flashback.stats.ui.drivers.overview.PipeType
-import tmg.flashback.ui.model.AnimationSpeed
 
 
 sealed class DriverSeasonModel(

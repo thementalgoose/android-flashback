@@ -1,6 +1,5 @@
 package tmg.flashback.stats.ui.drivers.season
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -13,8 +12,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -28,7 +25,6 @@ import org.threeten.bp.LocalDate
 import tmg.flashback.formula1.enums.isStatusFinished
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.DriverConstructor
-import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.providers.DriverConstructorProvider
 import tmg.flashback.stats.R
 import tmg.flashback.stats.analytics.AnalyticsConstants.analyticsDriverId
@@ -49,8 +45,6 @@ import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.messages.Message
 import tmg.flashback.ui.components.progressbar.ProgressBar
-import tmg.flashback.ui.model.AnimationSpeed
-import tmg.flashback.ui.utils.isInPreview
 import tmg.utilities.extensions.format
 import tmg.utilities.extensions.ordinalAbbreviation
 import kotlin.math.roundToInt
