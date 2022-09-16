@@ -72,6 +72,8 @@
 
     <string name="settings_section_rss_configure_title">Configure</string>
     <string name="settings_section_rss_configure_description">Setup RSS sources or customise appearance</string>
+    <string name="settings_header_rss_list">RSS List</string>
+    <string name="settings_header_custom">Custom</string>
 
     <string name="settings_section_web_browser_title">In-app Browser</string>
     <string name="settings_section_web_browser_description">Customise or disable the in app browser</string>

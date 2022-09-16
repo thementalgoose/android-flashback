@@ -37,7 +37,7 @@ fun SettingsRSSConfigureScreenVM(
 ) {
     ScreenView(screenName = "Configure RSS")
     
-    val viewModel = hiltViewModel<ConfigureRSSViewModel>()
+    val viewModel = hiltViewModel<ConfigureRSS_ViewModel>()
     val list = viewModel.outputs.list.observeAsState(emptyList())
 
     SettingsRSSConfigureScreen(
