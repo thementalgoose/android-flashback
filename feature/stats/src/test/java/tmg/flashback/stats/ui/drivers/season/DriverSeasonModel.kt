@@ -5,12 +5,10 @@ import androidx.annotation.StringRes
 import org.threeten.bp.LocalDate
 import tmg.flashback.formula1.enums.RaceStatus
 import tmg.flashback.formula1.enums.raceStatusFinish
-import tmg.flashback.formula1.enums.raceStatusFinished
 import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.model.model
 import tmg.flashback.stats.ui.drivers.overview.PipeType
-import tmg.flashback.ui.model.AnimationSpeed
 
 fun DriverSeasonModel.Companion.headerModel(
     driver: Driver = Driver.model()
