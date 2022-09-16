@@ -28,7 +28,7 @@ internal val fakeNavigationItems: List<NavigationItem> = listOf(
     NavigationItem(
         id = "settings",
         label = R.string.settings_theme_title,
-        icon = R.drawable.ic_bar_animation_medium
+        icon = R.drawable.ic_nightmode_auto
     ),
     NavigationItem(
         id = "light",

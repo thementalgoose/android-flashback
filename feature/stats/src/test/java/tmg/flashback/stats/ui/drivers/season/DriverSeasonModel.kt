@@ -65,8 +65,7 @@ fun DriverSeasonModel.Companion.resultModel(
     finished: Int? = 1,
     raceStatus: RaceStatus = raceStatusFinish,
     points: Double = 0.0,
-    maxPoints: Int = 25,
-    animationSpeed: AnimationSpeed = AnimationSpeed.MEDIUM,
+    maxPoints: Int = 25
 ): DriverSeasonModel.Result = DriverSeasonModel.Result(
     season = season,
     round = round,
@@ -82,6 +81,5 @@ fun DriverSeasonModel.Companion.resultModel(
     finished = finished,
     raceStatus = raceStatus,
     points = points,
-    maxPoints = maxPoints,
-    animationSpeed = animationSpeed,
+    maxPoints = maxPoints
 )
