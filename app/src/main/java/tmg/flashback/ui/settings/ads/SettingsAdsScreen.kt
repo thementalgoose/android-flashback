@@ -13,6 +13,7 @@ import tmg.flashback.R
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
+import tmg.flashback.ui.components.analytics.ScreenView
 import tmg.flashback.ui.components.settings.Header
 import tmg.flashback.ui.components.settings.Switch
 import tmg.flashback.ui.settings.Settings
@@ -23,6 +24,8 @@ fun SettingsAdsScreenVM(
     actionUpClicked: () -> Unit
 ) {
     val viewModel = hiltViewModel<SettingsAdsViewModel>()
+
+    ScreenView(screenName = "Settings - Ads")
 
     val adsEnabled = viewModel.outputs.adsEnabled.observeAsState(false)
     SettingsAdsScreen(

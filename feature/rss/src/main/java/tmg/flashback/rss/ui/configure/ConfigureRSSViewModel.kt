@@ -15,6 +15,7 @@ interface ConfigureRSSViewModelInputs {
     fun addItem(rssLink: String, isChecked: Boolean)
     fun visitWebsite(article: SupportedArticleSource)
     fun addCustomItem(link: String)
+    fun clickContactLink(link: String)
 }
 
 interface ConfigureRSSViewModelOutputs {
@@ -36,9 +37,9 @@ class ConfigureRSSViewModel @Inject constructor(
     private val rssUrls: MutableSet<String>
         get() = repository.rssUrls.toMutableSet()
 
-    override val showAddCustom: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
-    override val rssSources: MutableLiveData<List<RSSSource>> = MutableLiveData()
-    override val showDescriptionEnabled: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    override val showAddCustom: MutableLiveData<Boolean> = MutableLiveData<Boolean>(repository.addCustom)
+    override val rssSources: MutableLiveData<List<RSSSource>> = MutableLiveData(emptyList())
+    override val showDescriptionEnabled: MutableLiveData<Boolean> = MutableLiveData<Boolean>(repository.rssShowDescription)
 
     init {
         updateList()
@@ -67,11 +68,15 @@ class ConfigureRSSViewModel @Inject constructor(
         updateList()
     }
 
+    override fun clickContactLink(link: String) {
+        webNavigationComponent.web(link)
+    }
+
     private fun updateList() {
         rssSources.value = mutableListOf<RSSSource>().apply {
             addAll(rssUrls
                 .filter { rssLink ->
-                    rssFeedController.sources.any { it.rssLink == rssLink }
+                    rssFeedController.sources.all { it.rssLink != rssLink }
                 }
                 .map {
                     RSSSource(

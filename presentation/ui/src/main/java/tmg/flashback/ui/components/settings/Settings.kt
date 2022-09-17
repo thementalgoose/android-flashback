@@ -166,8 +166,10 @@ fun SettingHeader(
         modifier = Modifier
             .fillMaxWidth()
             .padding(
-                vertical = AppTheme.dimensions.paddingSmall,
-                horizontal = AppTheme.dimensions.paddingMedium
+                top = AppTheme.dimensions.paddingMedium,
+                bottom = AppTheme.dimensions.paddingSmall,
+                start = AppTheme.dimensions.paddingMedium,
+                end = AppTheme.dimensions.paddingMedium
             ),
         verticalAlignment = Alignment.CenterVertically
     ) {
