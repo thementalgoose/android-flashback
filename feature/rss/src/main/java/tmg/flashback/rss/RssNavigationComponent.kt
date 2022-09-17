@@ -4,7 +4,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navDeepLink
-import tmg.flashback.rss.ui.configure.SettingsRSSConfigureScreenVM
+import tmg.flashback.rss.ui.configure.ConfigureRSSScreenVM
 import tmg.flashback.rss.ui.feed.RSSScreenVM
 import tmg.flashback.ui.navigation.NavigationDestination
 import tmg.flashback.ui.navigation.Navigator
@@ -37,7 +37,7 @@ fun NavGraphBuilder.rss(navController: NavController) {
     }
 
     composable(Screen.Settings.RSSConfigure.route) {
-        SettingsRSSConfigureScreenVM(
+        ConfigureRSSScreenVM(
             actionUpClicked = { navController.popBackStack() }
         )
     }

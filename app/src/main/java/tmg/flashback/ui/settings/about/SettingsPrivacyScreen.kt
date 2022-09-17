@@ -13,6 +13,7 @@ import tmg.flashback.R
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
+import tmg.flashback.ui.components.analytics.ScreenView
 import tmg.flashback.ui.components.settings.Header
 import tmg.flashback.ui.components.settings.Pref
 import tmg.flashback.ui.components.settings.Switch
@@ -24,6 +25,8 @@ fun SettingsPrivacyScreenVM(
     actionUpClicked: () -> Unit
 ) {
     val viewModel = hiltViewModel<SettingsPrivacyViewModel>()
+
+    ScreenView(screenName = "Settings - Privacy")
 
     val crashReportingEnabled = viewModel.outputs.crashReportingEnabled.observeAsState(false)
     val analyticsEnabled = viewModel.outputs.analyticsEnabled.observeAsState(false)

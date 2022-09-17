@@ -13,6 +13,7 @@ import tmg.flashback.R
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
+import tmg.flashback.ui.components.analytics.ScreenView
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.settings.Header
 import tmg.flashback.ui.components.settings.Pref
@@ -25,6 +26,8 @@ fun SettingsAboutScreenVM(
     actionUpClicked: () -> Unit
 ) {
     val viewModel = hiltViewModel<SettingsAboutViewModel>()
+
+    ScreenView(screenName = "Settings - About")
 
     val shakeToReportEnabled = viewModel.outputs.shakeToReportEnabled.observeAsState(false)
 
