@@ -50,10 +50,6 @@ class RssNavigationComponent @Inject constructor(
         navigator.navigate(Screen.RSS)
     }
 
-    fun settingsRSS() {
-        navigator.navigate(Screen.Settings.RSS)
-    }
-
     fun configureRSS() {
         navigator.navigate(Screen.Settings.RSSConfigure)
     }

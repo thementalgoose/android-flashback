@@ -21,7 +21,6 @@ import javax.inject.Inject
 interface RSSViewModelInputs {
     fun refresh()
     fun configure()
-    fun settings()
     fun clickModel(model: RSSModel.RSS)
 }
 
@@ -112,10 +111,6 @@ internal class RSSViewModel @Inject constructor(
 
     override fun configure() {
         rssNavigationComponent.configureRSS()
-    }
-
-    override fun settings() {
-        rssNavigationComponent.settingsRSS()
     }
 
     override fun clickModel(model: RSSModel.RSS) {

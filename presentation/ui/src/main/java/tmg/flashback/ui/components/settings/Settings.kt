@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.Dp
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
@@ -184,6 +185,14 @@ fun SettingHeader(
     }
 }
 
+
+fun LazyListScope.Footer(
+    height: Dp = AppTheme.dimensions.paddingLarge
+) {
+    item(key = "footer") {
+        Spacer(Modifier.height(height))
+    }
+}
 
 fun LazyListScope.Section(
     model: Setting.Section,

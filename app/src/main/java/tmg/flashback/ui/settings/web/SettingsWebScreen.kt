@@ -14,6 +14,7 @@ import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.ui.components.analytics.ScreenView
+import tmg.flashback.ui.components.settings.Footer
 import tmg.flashback.ui.components.settings.Header
 import tmg.flashback.ui.components.settings.Switch
 import tmg.flashback.ui.settings.Settings
@@ -68,6 +69,7 @@ fun SettingsWebScreen(
                 model = Settings.Web.javascript(javascriptEnabled, isEnabled = webBrowserEnabled),
                 onClick = prefClicked
             )
+            Footer()
         }
     )
 }
