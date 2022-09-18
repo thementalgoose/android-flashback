@@ -14,8 +14,6 @@ interface ConfigureRSSViewModelInputs {
     fun clickShowDescription(state: Boolean)
     fun addItem(rssLink: String, isChecked: Boolean)
     fun visitWebsite(article: SupportedArticleSource)
-    fun addCustomItem(link: String)
-    fun clickContactLink(link: String)
 }
 
 interface ConfigureRSSViewModelOutputs {
@@ -61,15 +59,6 @@ class ConfigureRSSViewModel @Inject constructor(
             repository.rssUrls = rssUrls - rssLink
         }
         updateList()
-    }
-
-    override fun addCustomItem(link: String) {
-        repository.rssUrls = rssUrls + link
-        updateList()
-    }
-
-    override fun clickContactLink(link: String) {
-        webNavigationComponent.web(link)
     }
 
     private fun updateList() {
