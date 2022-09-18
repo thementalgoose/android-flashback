@@ -14,6 +14,8 @@ import tmg.flashback.R
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
+import tmg.flashback.ui.components.analytics.ScreenView
+import tmg.flashback.ui.components.settings.Footer
 import tmg.flashback.ui.components.settings.Header
 import tmg.flashback.ui.components.settings.Pref
 import tmg.flashback.ui.components.settings.Switch
@@ -25,6 +27,8 @@ fun SettingsNotificationsResultsScreenVM(
     actionUpClicked: () -> Unit
 ) {
     val viewModel = hiltViewModel<SettingsNotificationsResultsViewModel>()
+
+    ScreenView(screenName = "Settings - Notification Results")
 
     val permissionEnabled = viewModel.outputs.permissionEnabled.observeAsState(false)
     val qualifyingEnabled = viewModel.outputs.qualifyingEnabled.observeAsState(false)
@@ -87,6 +91,8 @@ fun SettingsNotificationsResultsScreen(
                 model = Settings.Notifications.notificationResultsRace(raceEnabled, isEnabled = permissionEnabled),
                 onClick = prefClicked
             )
+
+            Footer()
         }
     )
 }

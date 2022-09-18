@@ -18,7 +18,9 @@ import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.input.InputPrimary
+import tmg.flashback.ui.components.analytics.ScreenView
 import tmg.flashback.ui.components.header.Header
+import tmg.flashback.ui.components.settings.Footer
 import tmg.flashback.ui.components.settings.Header
 import tmg.flashback.ui.components.settings.Section
 
@@ -27,6 +29,8 @@ fun SettingsAllScreenVM(
     actionUpClicked: () -> Unit
 ) {
     val viewModel = hiltViewModel<SettingsAllViewModel>()
+
+    ScreenView(screenName = "Settings")
 
     val isThemeEnabled = viewModel.outputs.isThemeEnabled.observeAsState(false)
     val isAdsEnabled = viewModel.outputs.isAdsEnabled.observeAsState(false)
@@ -134,6 +138,7 @@ fun SettingsAllScreen(
                 model = Settings.Other.about,
                 onClick = prefClicked
             )
+            Footer()
         }
     )
 }

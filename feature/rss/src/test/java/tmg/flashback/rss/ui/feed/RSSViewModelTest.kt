@@ -220,10 +220,10 @@ internal class RSSViewModelTest: BaseTest() {
         initUnderTest()
         advanceUntilIdle()
 
-        underTest.inputs.settings()
+        underTest.inputs.configure()
 
         verify {
-            mockRssNavigationComponent.settingsRSS()
+            mockRssNavigationComponent.configureRSS()
         }
     }
 
