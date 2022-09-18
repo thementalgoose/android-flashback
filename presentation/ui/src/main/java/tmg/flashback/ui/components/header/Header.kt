@@ -47,6 +47,7 @@ fun Header(
                 Spacer(modifier = Modifier.height(AppTheme.dimensions.paddingLarge + 16.dp))
             }
         }
+        Spacer(Modifier.height(AppTheme.dimensions.paddingLarge))
         TextHeadline1(
             text = text,
             modifier = Modifier
