@@ -29,8 +29,6 @@ import tmg.flashback.rss.repo.model.SupportedArticleSource
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
-import tmg.flashback.style.buttons.ButtonPrimary
-import tmg.flashback.style.buttons.ButtonSecondary
 import tmg.flashback.style.buttons.ButtonTertiary
 import tmg.flashback.style.input.InputPrimary
 import tmg.flashback.style.input.InputSwitch
@@ -68,7 +66,9 @@ fun ConfigureRSSScreenVM(
         sourceRemoved = {
             viewModel.inputs.addItem(it, isChecked = false)
         },
-        contactLinkClicked = viewModel.inputs::clickContactLink,
+        contactLinkClicked = { source ->
+            source.supportedArticleSource?.let { viewModel.inputs.visitWebsite(it) }
+        },
         showCustomAdd = showCustomAdd.value,
         sources = sources.value,
     )
@@ -81,7 +81,7 @@ fun ConfigureRSSScreen(
     showDescriptionClicked: (newState: Boolean) -> Unit,
     sourceAdded: (rssLink: String) -> Unit,
     sourceRemoved: (rssLink: String) -> Unit,
-    contactLinkClicked: (link: String) -> Unit,
+    contactLinkClicked: (link: RSSSource) -> Unit,
     showCustomAdd: Boolean,
     sources: List<RSSSource>
 ) {
@@ -133,7 +133,9 @@ fun ConfigureRSSScreen(
                     model = it,
                     sourceAdded = sourceAdded,
                     sourceRemoved = sourceRemoved,
-                    contactLink = contactLinkClicked
+                    contactLink = {
+                        contactLinkClicked(it)
+                    }
                 )
             }
 
@@ -192,7 +194,7 @@ private fun Source(
     model: RSSSource,
     sourceAdded: (rssLink: String) -> Unit,
     sourceRemoved: (rssLink: String) -> Unit,
-    contactLink: (link: String) -> Unit
+    contactLink: (link: RSSSource) -> Unit
 ) {
     Row(modifier = modifier
         .fillMaxWidth()
@@ -231,7 +233,7 @@ private fun Source(
                     modifier = Modifier.padding(top = 4.dp),
                     text = stringResource(id = R.string.settings_rss_contact_link),
                     onClick = {
-                        contactLink(it.contactLink)
+                        contactLink(model)
                     }
                 )
             }
