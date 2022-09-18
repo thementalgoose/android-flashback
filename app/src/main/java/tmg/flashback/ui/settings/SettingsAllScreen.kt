@@ -20,6 +20,7 @@ import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.input.InputPrimary
 import tmg.flashback.ui.components.analytics.ScreenView
 import tmg.flashback.ui.components.header.Header
+import tmg.flashback.ui.components.settings.Footer
 import tmg.flashback.ui.components.settings.Header
 import tmg.flashback.ui.components.settings.Section
 
@@ -137,6 +138,7 @@ fun SettingsAllScreen(
                 model = Settings.Other.about,
                 onClick = prefClicked
             )
+            Footer()
         }
     )
 }

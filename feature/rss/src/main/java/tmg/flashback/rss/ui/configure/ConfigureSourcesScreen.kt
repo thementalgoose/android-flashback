@@ -6,9 +6,12 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.AlertDialog
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -16,6 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.toColorInt
@@ -25,12 +29,18 @@ import tmg.flashback.rss.repo.model.SupportedArticleSource
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
+import tmg.flashback.style.buttons.ButtonPrimary
+import tmg.flashback.style.buttons.ButtonSecondary
 import tmg.flashback.style.buttons.ButtonTertiary
+import tmg.flashback.style.input.InputPrimary
 import tmg.flashback.style.input.InputSwitch
 import tmg.flashback.style.text.TextBody2
+import tmg.flashback.style.text.TextHeadline2
 import tmg.flashback.style.text.TextTitle
 import tmg.flashback.ui.components.analytics.ScreenView
+import tmg.flashback.ui.components.settings.Footer
 import tmg.flashback.ui.components.settings.Header
+import tmg.flashback.ui.components.settings.Pref
 import tmg.flashback.ui.components.settings.Switch
 import tmg.flashback.ui.settings.Setting
 
@@ -75,6 +85,8 @@ fun ConfigureRSSScreen(
     showCustomAdd: Boolean,
     sources: List<RSSSource>
 ) {
+    val customRssBox = remember { mutableStateOf(false) }
+
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -101,6 +113,20 @@ fun ConfigureRSSScreen(
                 }
             )
 
+            if (showCustomAdd) {
+                Header(title = R.string.settings_rss_add_custom)
+                Pref(
+                    model = Setting.Pref(
+                        _key = "add_custom",
+                        title = R.string.settings_rss_add_title,
+                        subtitle = R.string.settings_rss_add_description,
+                    ),
+                    onClick = {
+                        customRssBox.value = true
+                    }
+                )
+            }
+
             Header(title = R.string.settings_rss_configure)
             items(sources, key = { it.url }) {
                 Source(
@@ -111,11 +137,53 @@ fun ConfigureRSSScreen(
                 )
             }
 
-            if (showCustomAdd) {
-                Header(title = R.string.settings_rss_add_custom)
-            }
+            Footer()
         }
     )
+
+    if (customRssBox.value) {
+        val input = remember { mutableStateOf(TextFieldValue("")) }
+        AlertDialog(
+            title = {
+                TextHeadline2(text = stringResource(id = R.string.settings_rss_add_title))
+            },
+            text = {
+                Column(Modifier.fillMaxWidth()) {
+                    TextBody2(text = stringResource(id = R.string.settings_rss_add_description))
+                    Spacer(Modifier.height(AppTheme.dimensions.paddingMedium))
+                    InputPrimary(
+                        text = input,
+                        placeholder = "https://www.website.com/rss"
+                    )
+                }
+            },
+            onDismissRequest = {
+                customRssBox.value = false
+            },
+            confirmButton = {
+                ButtonTertiary(
+                    narrow = false,
+                    text = stringResource(id = R.string.settings_rss_add_confirm),
+                    onClick = {
+                        if (input.value.text.isNotEmpty()) {
+                            sourceAdded(input.value.text)
+                        }
+                        customRssBox.value = false
+                    }
+                )
+            },
+            dismissButton = {
+                ButtonTertiary(
+                    narrow = false,
+                    text = stringResource(id = R.string.settings_rss_add_cancel),
+                    onClick = {
+                        input.value = TextFieldValue("")
+                        customRssBox.value = false
+                    }
+                )
+            }
+        )
+    }
 }
 
 @Composable

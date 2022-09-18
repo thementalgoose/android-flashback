@@ -14,6 +14,7 @@ import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.ui.components.analytics.ScreenView
+import tmg.flashback.ui.components.settings.Footer
 import tmg.flashback.ui.components.settings.Header
 import tmg.flashback.ui.components.settings.Pref
 import tmg.flashback.ui.components.settings.Switch
@@ -73,6 +74,8 @@ fun SettingsPrivacyScreen(
                 model = Settings.Other.analytics(analyticsEnabled),
                 onClick = prefClicked
             )
+
+            Footer()
         }
     )
 }

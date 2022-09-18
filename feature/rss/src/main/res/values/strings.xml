@@ -22,8 +22,12 @@
     <string name="settings_rss_configure">Your list</string>
     <string name="settings_rss_configure_sources_title">Configure sources</string>
     <string name="settings_rss_configure_sources_description">Setup which RSS feeds you wish to subscribe too</string>
-    <string name="settings_rss_add_custom">Add Custom</string>
+    <string name="settings_rss_add_custom">Custom RSS feed</string>
     <string name="settings_rss_contact_link">Contact Link</string>
+    <string name="settings_rss_add_title">Add custom RSS feed</string>
+    <string name="settings_rss_add_description">Add a custom RSS feed url to your feed. Contact the developer to get this added as a quick link above!</string>
+    <string name="settings_rss_add_confirm">Add</string>
+    <string name="settings_rss_add_cancel">Cancel</string>
 
     <!-- Configure -->
 
