@@ -21,7 +21,7 @@ data class AppTypography(
     val h1: TextStyle = TextStyle(
         fontFamily = montserrat,
         fontWeight = FontWeight.SemiBold,
-        fontSize = 30.sp
+        fontSize = 36.sp
     ),
     val h2: TextStyle = TextStyle(
         fontFamily = montserrat,
