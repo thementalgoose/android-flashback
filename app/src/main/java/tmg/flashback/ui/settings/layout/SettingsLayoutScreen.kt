@@ -13,6 +13,8 @@ import tmg.flashback.R
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
+import tmg.flashback.ui.components.analytics.ScreenView
+import tmg.flashback.ui.components.settings.Footer
 import tmg.flashback.ui.components.settings.Header
 import tmg.flashback.ui.components.settings.Switch
 import tmg.flashback.ui.settings.Settings
@@ -23,6 +25,8 @@ fun SettingsLayoutScreenVM(
     actionUpClicked: () -> Unit
 ) {
     val viewModel = hiltViewModel<SettingsLayoutViewModel>()
+
+    ScreenView(screenName = "Settings - Layout")
 
     val providedByAtTopEnabled = viewModel.outputs.providedByAtTopEnabled.observeAsState(true)
     SettingsLayoutScreen(
@@ -56,6 +60,8 @@ fun SettingsLayoutScreen(
                 model = Settings.Layout.providedByAtTop(providedByAtTopEnabled),
                 onClick = prefClicked
             )
+
+            Footer()
         }
     )
 }

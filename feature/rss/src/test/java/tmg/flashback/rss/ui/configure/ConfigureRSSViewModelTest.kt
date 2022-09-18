@@ -3,222 +3,216 @@ package tmg.flashback.rss.ui.configure
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import org.junit.jupiter.api.BeforeEach
+import kotlinx.coroutines.test.advanceUntilIdle
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
-import tmg.flashback.rss.R
 import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.rss.repo.RSSRepository
 import tmg.flashback.rss.repo.model.SupportedArticleSource
 import tmg.flashback.web.WebNavigationComponent
 import tmg.testutils.BaseTest
-import tmg.testutils.livedata.assertDataEventValue
 import tmg.testutils.livedata.assertListDoesNotMatchItem
+import tmg.testutils.livedata.assertListMatchesItem
 import tmg.testutils.livedata.test
+import tmg.testutils.livedata.testObserve
 
 internal class ConfigureRSSViewModelTest: BaseTest() {
 
-    lateinit var sut: ConfigureRSSViewModel
+    private val mockRssRepository: RSSRepository = mockk(relaxed = true)
+    private val mockRssController: RSSController = mockk(relaxed = true)
+    private val mockWebNavigationComponent: WebNavigationComponent = mockk(relaxed = true)
 
-    private val mockRepository: RSSRepository = mockk(relaxed = true)
-    private val mockRssFeedController: RSSController = mockk(relaxed = true)
-    private val webNavigationComponent: WebNavigationComponent = mockk(relaxed = true)
+    private lateinit var underTest: ConfigureRSSViewModel
 
-    private val contactLink: String = "https://www.test.com/contact"
-    private val mockSupportedArticle = SupportedArticleSource("https://www.test.com/rss", "", "https://www.test.com", "", "", "", contactLink)
-    private val mockListOfSupportedArticles: List<SupportedArticleSource> = listOf(mockSupportedArticle)
-
-    @BeforeEach
-    fun setUp() {
-        every { mockRssFeedController.showAddCustomFeeds } returns true
-        every { mockRepository.rssUrls } returns emptySet()
-        every { mockRssFeedController.sources } returns mockListOfSupportedArticles
-    }
-
-    private fun initSUT() {
-        sut = ConfigureRSSViewModel(mockRepository, mockRssFeedController, webNavigationComponent)
+    private fun initUnderTest() {
+        underTest = ConfigureRSSViewModel(
+            repository = mockRssRepository,
+            rssFeedController = mockRssController,
+            webNavigationComponent = mockWebNavigationComponent
+        )
     }
 
     @Test
-    fun `list is initialised with no items shown by default`() {
+    fun `show add custom is enabled when config is true`() = coroutineTest {
+        every { mockRssRepository.addCustom } returns true
 
-        initSUT()
-
-        val expected = buildList(
-            added = emptyList(),
-            quick = mockListOfSupportedArticles
-        )
-
-        sut.outputs.list.test {
-            assertValue(expected)
+        initUnderTest()
+        underTest.outputs.showAddCustom.test {
+            assertValue(true)
         }
     }
 
     @Test
-    fun `add quick item will update the prefs DB`() {
+    fun `show add custom is disabled when config is false`() = coroutineTest {
+        every { mockRssRepository.addCustom } returns false
 
-        every { mockRepository.rssUrls } returns emptySet()
-
-        initSUT()
-
-        sut.inputs.addQuickItem(mockListOfSupportedArticles.first())
-
-        verify { mockRepository.rssUrls = setOf(mockSupportedArticle.rssLink) }
+        initUnderTest()
+        underTest.outputs.showAddCustom.test {
+            assertValue(false)
+        }
     }
 
     @Test
-    fun `removing item will update the prefs DB`() {
+    fun `show description is enabled when pref is true`() = coroutineTest {
+        every { mockRssRepository.rssShowDescription } returns true
 
-        val link = mockSupportedArticle.rssLink
-        every { mockRepository.rssUrls } returns setOf(link)
-
-        initSUT()
-
-        sut.inputs.removeItem(link)
-
-        verify { mockRepository.rssUrls = emptySet() }
+        initUnderTest()
+        underTest.outputs.showDescriptionEnabled.test {
+            assertValue(true)
+        }
     }
 
     @Test
-    fun `visit website fires open website event`() {
+    fun `show description is disabled when pref is false`() = coroutineTest {
+        every { mockRssRepository.rssShowDescription } returns false
 
-        initSUT()
-        sut.inputs.visitWebsite(mockSupportedArticle)
+        initUnderTest()
+        underTest.outputs.showDescriptionEnabled.test {
+            assertValue(false)
+        }
+    }
+
+    @Test
+    fun `clicking show description updates pref and updates value`() = coroutineTest {
+        every { mockRssRepository.rssShowDescription } returns false
+
+        initUnderTest()
+        val observer = underTest.outputs.showDescriptionEnabled.testObserve()
+        underTest.inputs.clickShowDescription(true)
 
         verify {
-            webNavigationComponent.web(contactLink)
+            mockRssRepository.rssShowDescription = true
+        }
+        observer.assertEmittedCount(2)
+    }
+
+    @Test
+    fun `rss list is emitted with supported and custom sources`() = coroutineTest {
+        every { mockRssRepository.rssUrls } returns setOf(
+            fakeSupportedArticleSource.rssLink,
+            "https://www.custom_rss.com/rss"
+        )
+        every { mockRssController.sources } returns listOf(fakeSupportedArticleSource)
+
+        initUnderTest()
+        underTest.outputs.rssSources.test {
+            assertListMatchesItem { it.isChecked && it.url == "https://www.custom_rss.com/rss" }
+            assertListMatchesItem { it.isChecked && it.url == fakeSupportedArticleSource.rssLink && it.supportedArticleSource == fakeSupportedArticleSource }
         }
     }
 
     @Test
-    fun `disabling add custom list toggle means section is not shown `() {
+    fun `adding custom source updates rss list`() = coroutineTest {
+        every { mockRssRepository.rssUrls } returns setOf(
+            fakeSupportedArticleSource.rssLink
+        )
+        every { mockRssController.sources } returns listOf(fakeSupportedArticleSource)
 
-        every { mockRssFeedController.showAddCustomFeeds } returns false
-        every { mockRssFeedController.getSupportedSourceByRssUrl(any()) } returns null
-        initSUT()
+        initUnderTest()
 
-        sut.outputs.list.test {
-            assertListDoesNotMatchItem { it is RSSConfigureItem.Add }
-            assertListDoesNotMatchItem { it is RSSConfigureItem.Header && it.text == R.string.rss_configure_header_add }
+        every { mockRssRepository.rssUrls } returns setOf(
+            "https://www.custom_rss.com/rss",
+            fakeSupportedArticleSource.rssLink
+        )
+        underTest.inputs.addItem("https://www.custom_rss.com/rss", isChecked = true)
+
+        underTest.outputs.rssSources.test {
+            assertListMatchesItem { it.isChecked && it.url == "https://www.custom_rss.com/rss" }
+            assertListMatchesItem { it.isChecked && it.url == fakeSupportedArticleSource.rssLink && it.supportedArticleSource == fakeSupportedArticleSource }
         }
     }
 
     @Test
-    fun `adding custom item updates list`() {
-
-        val item = "https://www.google.com/testlink"
-        val expected = buildList(
-                added = listOf(item),
-                quick = mockListOfSupportedArticles
+    fun `removing custom source updates rss list`() = coroutineTest {
+        every { mockRssRepository.rssUrls } returns setOf(
+            fakeSupportedArticleSource.rssLink,
+            "https://www.custom_rss.com/rss"
         )
-        every { mockRssFeedController.getSupportedSourceByRssUrl(any()) } returns null
-        initSUT()
+        every { mockRssController.sources } returns listOf(fakeSupportedArticleSource)
 
-        // Assume preferences updated
-        every { mockRepository.rssUrls } returns setOf(item)
-        sut.inputs.addCustomItem(item)
+        initUnderTest()
 
-        sut.outputs.list.test {
-            assertValue(expected)
+        every { mockRssRepository.rssUrls } returns setOf(
+            fakeSupportedArticleSource.rssLink
+        )
+        underTest.inputs.addItem("https://www.custom_rss.com/rss", isChecked = false)
+
+        underTest.outputs.rssSources.test {
+            assertListDoesNotMatchItem { it.isChecked && it.url == "https://www.custom_rss.com/rss"}
+            assertListMatchesItem { it.isChecked && it.url == fakeSupportedArticleSource.rssLink && it.supportedArticleSource == fakeSupportedArticleSource }
         }
     }
 
     @Test
-    fun `removing custom item updates list`() {
-
-        val item = "https://www.google.com/testlink"
-        val expected = buildList(
-            added = emptyList()
+    fun `adding supported source updates rss list`() = coroutineTest {
+        every { mockRssRepository.rssUrls } returns setOf(
+            "https://www.custom_rss.com/rss"
         )
-        every { mockRepository.rssUrls } returns setOf(item)
+        every { mockRssController.sources } returns listOf(fakeSupportedArticleSource)
 
-        initSUT()
-        // Assume preferences updated
-        every { mockRepository.rssUrls } returns emptySet()
-        sut.inputs.removeItem(item)
+        initUnderTest()
+        underTest.outputs.rssSources.test {
+            assertListMatchesItem { it.isChecked && it.url == "https://www.custom_rss.com/rss" }
+            assertListMatchesItem { !it.isChecked && it.url == fakeSupportedArticleSource.rssLink && it.supportedArticleSource == fakeSupportedArticleSource }
+        }
 
-        sut.outputs.list.test {
-            assertValue(expected)
+        every { mockRssRepository.rssUrls } returns setOf(
+            "https://www.custom_rss.com/rss",
+            fakeSupportedArticleSource.rssLink
+        )
+        underTest.inputs.addItem(fakeSupportedArticleSource.rssLink, isChecked = true)
+
+        underTest.outputs.rssSources.test {
+            assertListMatchesItem { it.isChecked && it.url == "https://www.custom_rss.com/rss" }
+            assertListMatchesItem { it.isChecked && it.url == fakeSupportedArticleSource.rssLink }
         }
     }
 
     @Test
-    fun `adding custom item updates value in preferences`() {
+    fun `removing supported source updates rss list`() = coroutineTest {
+        every { mockRssRepository.rssUrls } returns setOf(
+            "https://www.custom_rss.com/rss",
+            fakeSupportedArticleSource.rssLink
+        )
+        every { mockRssController.sources } returns listOf(fakeSupportedArticleSource)
 
-        val item = "https://www.google.com/testlink"
-        val expected = setOf(item)
-        every { mockRepository.rssUrls } returns emptySet()
+        initUnderTest()
+        underTest.outputs.rssSources.test {
+            assertListMatchesItem { it.url == "https://www.custom_rss.com/rss" }
+            assertListMatchesItem { it.isChecked && it.url == fakeSupportedArticleSource.rssLink && it.supportedArticleSource == fakeSupportedArticleSource }
+        }
 
-        initSUT()
-        sut.inputs.addCustomItem(item)
+        every { mockRssRepository.rssUrls } returns setOf(
+            "https://www.custom_rss.com/rss"
+        )
+        underTest.inputs.addItem(fakeSupportedArticleSource.rssLink, isChecked = false)
 
-        verify { mockRepository.rssUrls = expected }
+
+        underTest.outputs.rssSources.test {
+            assertListMatchesItem { it.url == "https://www.custom_rss.com/rss" }
+            assertListMatchesItem { !it.isChecked && it.url == fakeSupportedArticleSource.rssLink && it.supportedArticleSource == fakeSupportedArticleSource }
+        }
     }
 
     @Test
-    fun `removing custom item updates value in preferences`() {
+    fun `visit website forwards call to website navigator`() = coroutineTest {
+        initUnderTest()
+        underTest.inputs.visitWebsite(fakeSupportedArticleSource)
 
-        val item = "https://www.google.com/testlink"
-        val expected = emptySet<String>()
-        every { mockRepository.rssUrls } returns setOf(item)
-
-        initSUT()
-        sut.inputs.removeItem(item)
-
-        verify { mockRepository.rssUrls = expected }
-    }
-
-
-    private fun buildList(
-        added: List<String>,
-        quick: List<SupportedArticleSource> = mockListOfSupportedArticles
-    ): List<RSSConfigureItem> {
-        val list = mutableListOf<RSSConfigureItem>()
-        list.add(
-            RSSConfigureItem.Header(
-                R.string.rss_configure_header_items,
-                R.string.rss_configure_header_items_subtitle
-            )
-        )
-        if (added.isEmpty()) {
-            list.add(RSSConfigureItem.NoItems)
+        verify {
+            mockWebNavigationComponent.web(fakeSupportedArticleSource.contactLink)
         }
-        else {
-            list.addAll(added
-                .sortedBy { it
-                    .replace("https://www.", "")
-                    .replace("http://www.", "")
-                    .replace("https://", "")
-                    .replace("http://", "")
-                }
-                .map {
-                    RSSConfigureItem.Item(it, null)
-                }
-            )
-        }
-        list.add(
-            RSSConfigureItem.Header(
-                R.string.rss_configure_header_quick_add,
-                R.string.rss_configure_header_quick_add_subtitle
-            )
-        )
-        list.addAll(quick
-            .sortedBy { it.rssLink
-                .replace("https://www.", "")
-                .replace("http://www.", "")
-                .replace("https://", "")
-                .replace("http://", "")
-            }
-            .map {
-                RSSConfigureItem.QuickAdd(it)
-            }
-        )
-        list.add(
-            RSSConfigureItem.Header(
-                R.string.rss_configure_header_add,
-                R.string.rss_configure_header_add_subtitle
-            )
-        )
-        list.add(RSSConfigureItem.Add)
-        return list
     }
 }
+
+
+
+private val fakeSupportedArticleSource: SupportedArticleSource = SupportedArticleSource(
+    rssLink = "https://www.url.com/f1/rss.xml",
+    sourceShort = "URL",
+    source = "https://www.url.com/",
+    colour = "#928284",
+    textColour = "#efefef",
+    title = "Motorsport API",
+    contactLink = "https://www.url.com/contact",
+)

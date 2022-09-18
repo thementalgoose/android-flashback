@@ -4,141 +4,91 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import tmg.flashback.rss.R
 import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.rss.repo.RSSRepository
 import tmg.flashback.rss.repo.model.SupportedArticleSource
 import tmg.flashback.web.WebNavigationComponent
-import tmg.utilities.lifecycle.DataEvent
 import javax.inject.Inject
 
-//region Inputs
-
 interface ConfigureRSSViewModelInputs {
-    fun addQuickItem(supportedArticle: SupportedArticleSource)
-    fun visitWebsite(supportedArticle: SupportedArticleSource)
-    fun removeItem(link: String)
-    fun addCustomItem(link: String)
+    fun clickShowDescription(state: Boolean)
+    fun addItem(rssLink: String, isChecked: Boolean)
+    fun visitWebsite(article: SupportedArticleSource)
 }
-
-//endregion
-
-//region Outputs
 
 interface ConfigureRSSViewModelOutputs {
-    val list: LiveData<List<RSSConfigureItem>>
+    val showDescriptionEnabled: LiveData<Boolean>
+    val rssSources: LiveData<List<RSSSource>>
+    val showAddCustom: LiveData<Boolean>
 }
 
-//endregion
-
 @HiltViewModel
-internal class ConfigureRSSViewModel @Inject constructor(
+class ConfigureRSSViewModel @Inject constructor(
     private val repository: RSSRepository,
     private val rssFeedController: RSSController,
     private val webNavigationComponent: WebNavigationComponent,
-) : ViewModel(), ConfigureRSSViewModelInputs, ConfigureRSSViewModelOutputs {
+): ViewModel(), ConfigureRSSViewModelInputs, ConfigureRSSViewModelOutputs {
 
-    var inputs: ConfigureRSSViewModelInputs = this
-    var outputs: ConfigureRSSViewModelOutputs = this
+    val inputs: ConfigureRSSViewModelInputs = this
+    val outputs: ConfigureRSSViewModelOutputs = this
 
     private val rssUrls: MutableSet<String>
         get() = repository.rssUrls.toMutableSet()
 
-    override val list: MutableLiveData<List<RSSConfigureItem>> = MutableLiveData()
+    override val showAddCustom: MutableLiveData<Boolean> = MutableLiveData<Boolean>(repository.addCustom)
+    override val rssSources: MutableLiveData<List<RSSSource>> = MutableLiveData(emptyList())
+    override val showDescriptionEnabled: MutableLiveData<Boolean> = MutableLiveData<Boolean>(repository.rssShowDescription)
 
     init {
-        loadState()
-    }
-
-    //region Inputs
-
-    override fun addQuickItem(supportedArticle: SupportedArticleSource) {
-        repository.rssUrls = rssUrls + supportedArticle.rssLink
         updateList()
     }
 
-    override fun removeItem(link: String) {
-        repository.rssUrls = rssUrls - link
+    override fun clickShowDescription(state: Boolean) {
+        repository.rssShowDescription = state
+        showDescriptionEnabled.value = repository.rssShowDescription
+    }
+
+    override fun visitWebsite(article: SupportedArticleSource) {
+        webNavigationComponent.web(article.contactLink)
+    }
+
+    override fun addItem(rssLink: String, isChecked: Boolean) {
+        if (isChecked) {
+            repository.rssUrls = rssUrls + rssLink
+        } else {
+            repository.rssUrls = rssUrls - rssLink
+        }
         updateList()
     }
 
-    override fun addCustomItem(link: String) {
-        repository.rssUrls = rssUrls + link
-        updateList()
-    }
-
-    override fun visitWebsite(supportedArticle: SupportedArticleSource) {
-        webNavigationComponent.web(supportedArticle.contactLink)
-    }
-
-    //endregion
-
-    /**
-     * Load the state of the rss urls from shared preferences
-     */
-    private fun loadState() {
-        this.rssUrls.clear()
-        val urls = repository.rssUrls
-        this.rssUrls.addAll(urls)
-        updateList()
-    }
-
-    /**
-     * Process the "Added" URL list into a sectioned list to be displayed on the screen
-     */
     private fun updateList() {
-        val itemList = mutableListOf<RSSConfigureItem>()
-        itemList.add(
-            RSSConfigureItem.Header(
-                text = R.string.rss_configure_header_items,
-                subtitle = R.string.rss_configure_header_items_subtitle
-            )
-        )
-        if (rssUrls.isNotEmpty()) {
-            itemList.addAll(rssUrls
-                .sortedBy {
-                    it.replace("https://www.", "")
-                            .replace("http://www.", "")
-                            .replace("https://", "")
-                            .replace("http://", "")
+        rssSources.value = mutableListOf<RSSSource>().apply {
+            addAll(rssUrls
+                .filter { rssLink ->
+                    rssFeedController.sources.all { it.rssLink != rssLink }
                 }
                 .map {
-                    RSSConfigureItem.Item(it, supportedArticleSource = rssFeedController.getSupportedSourceByRssUrl(it))
+                    RSSSource(
+                        url = it,
+                        supportedArticleSource = rssFeedController.getSupportedSourceByRssUrl(it),
+                        isChecked = true
+                    )
                 }
             )
-        }
-        else {
-            itemList.add(RSSConfigureItem.NoItems)
-        }
-        itemList.add(
-            RSSConfigureItem.Header(
-                text = R.string.rss_configure_header_quick_add,
-                subtitle = R.string.rss_configure_header_quick_add_subtitle
-            )
-        )
-        itemList.addAll(rssFeedController
-            .sources
-            .filter { !rssUrls.contains(it.rssLink) }
-            .sortedBy {
-                it.rssLink.replace("https://www.", "")
+            addAll(rssFeedController.sources
+                .sortedBy {
+                    it.rssLink.replace("https://www.", "")
                         .replace("http://www.", "")
                         .replace("https://", "")
                         .replace("http://", "")
-            }
-            .map {
-                RSSConfigureItem.QuickAdd(it)
-            }
-        )
-
-        if (rssFeedController.showAddCustomFeeds) {
-            itemList.add(
-                RSSConfigureItem.Header(
-                    text = R.string.rss_configure_header_add,
-                    subtitle = R.string.rss_configure_header_add_subtitle
-                )
-            )
-            itemList.add(RSSConfigureItem.Add)
+                }
+                .map {
+                    RSSSource(
+                        url = it.rssLink,
+                        supportedArticleSource = it,
+                        isChecked = rssUrls.contains(it.rssLink)
+                    )
+                })
         }
-        list.value = itemList
     }
 }
