@@ -35,19 +35,16 @@ sealed class CalendarModel(
             get() = event.date
     }
 
-    data class Month(
-        val month: org.threeten.bp.Month
-    ): CalendarModel(
-        key = "month-${month.value}"
-    )
-
     data class Week(
-        val weekBeginning: LocalDate,
-        val month: org.threeten.bp.Month,
+        val season: Int,
+        val startOfWeek: LocalDate,
         val race: OverviewRace?
     ): CalendarModel(
-        key = "week-${weekBeginning}"
-    )
+        key = "week-${startOfWeek}"
+    ) {
+        val endOfWeek: LocalDate
+            get() = startOfWeek.plusDays(6L)
+    }
 
     object Loading: CalendarModel(
         key = "loading"

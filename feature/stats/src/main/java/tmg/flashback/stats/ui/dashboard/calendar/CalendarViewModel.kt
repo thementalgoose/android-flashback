@@ -6,15 +6,22 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import org.intellij.lang.annotations.JdkConstants.CalendarMonth
 import org.threeten.bp.LocalDate
+import org.threeten.bp.Month
+import org.threeten.bp.temporal.TemporalField
+import org.threeten.bp.temporal.WeekFields
+import tmg.flashback.formula1.model.Event
+import tmg.flashback.formula1.model.Overview
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.statistics.repo.EventsRepository
 import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.stats.StatsNavigationComponent
-import tmg.flashback.stats.repository.HomeRepository
 import tmg.flashback.stats.repository.NotificationRepository
 import tmg.flashback.stats.ui.weekend.WeekendInfo
 import tmg.flashback.stats.usecases.FetchSeasonUseCase
+import tmg.utilities.extensions.startOfWeek
+import java.util.*
 import javax.inject.Inject
 
 interface CalendarViewModelInputs {
@@ -28,8 +35,6 @@ interface CalendarViewModelInputs {
 interface CalendarViewModelOutputs {
     val items: LiveData<List<CalendarModel>?>
     val isRefreshing: LiveData<Boolean>
-
-    val dashboardAutoscroll: LiveData<Boolean>
 }
 
 @HiltViewModel
@@ -39,7 +44,6 @@ class CalendarViewModel @Inject constructor(
     private val notificationRepository: NotificationRepository,
     private val statsNavigationComponent: StatsNavigationComponent,
     private val eventsRepository: EventsRepository,
-    private val homeRepository: HomeRepository,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), CalendarViewModelInputs, CalendarViewModelOutputs {
 
@@ -47,6 +51,8 @@ class CalendarViewModel @Inject constructor(
     val outputs: CalendarViewModelOutputs = this
 
     override val isRefreshing: MutableLiveData<Boolean> = MutableLiveData(false)
+
+    private val calendar: MutableLiveData<Boolean> = MutableLiveData(true)
 
     private val season: MutableStateFlow<Int?> = MutableStateFlow(null)
     override val items: LiveData<List<CalendarModel>?> = season
@@ -56,7 +62,12 @@ class CalendarViewModel @Inject constructor(
             fetchSeasonUseCase
                 .fetch(season)
                 .flatMapLatest { hasMadeRequest ->
-                    combine(overviewRepository.getOverview(season), eventsRepository.getEvents(season)) { overview, events ->
+                    combine(
+                        overviewRepository.getOverview(season),
+                        eventsRepository.getEvents(season),
+                        calendar.asFlow()
+
+                    ) { overview, events, isCalendar ->
                         isRefreshing.postValue(false)
                         if (!hasMadeRequest) {
                             return@combine listOf(CalendarModel.Loading)
@@ -65,37 +76,16 @@ class CalendarViewModel @Inject constructor(
                         val upcoming = overview.overviewRaces.getLatestUpcoming()
                         val upcomingEvents = events.filter { it.date > LocalDate.now() }
 
-                        return@combine mutableListOf<CalendarModel>()
-                            .apply {
-                                addAll(overview.overviewRaces.map {
-                                    CalendarModel.List(
-                                        model = it,
-                                        notificationSchedule = notificationRepository.notificationSchedule,
-                                        showScheduleList = it == upcoming
-                                    )
-                                })
-                                addAll(upcomingEvents.map {
-                                    CalendarModel.Event(it)
-                                })
-                            }
-                            .sortedBy {
-                                when (it) {
-                                    is CalendarModel.Event -> it.date
-                                    is CalendarModel.List -> it.date
-                                    else -> null
-                                }
-                            }
+                        return@combine if (isCalendar) {
+                            calendar(overview, upcomingEvents, upcoming)
+                        } else {
+                            schedule(overview, upcomingEvents, upcoming)
+                        }
                     }
                 }
         }
         .flowOn(ioDispatcher)
         .asLiveData(viewModelScope.coroutineContext)
-
-    override val dashboardAutoscroll: MutableLiveData<Boolean> = MutableLiveData()
-
-    init {
-        dashboardAutoscroll.value = homeRepository.dashboardAutoscroll
-    }
 
     private fun List<OverviewRace>.getLatestUpcoming(): OverviewRace? {
         return this
@@ -134,10 +124,55 @@ class CalendarViewModel @Inject constructor(
                 date = model.model.date,
             ))
             is CalendarModel.Event -> {}
-            is CalendarModel.Month -> TODO()
-            is CalendarModel.Week -> TODO()
+            is CalendarModel.Week -> {
+
+            }
             CalendarModel.Loading -> {}
         }
+    }
+
+    private fun calendar(
+        overview: Overview,
+        upcomingEvents: List<Event>,
+        upcoming: OverviewRace?
+    ): List<CalendarModel> {
+        val first = LocalDate.of(overview.season, Month.JANUARY, 1).startOfWeek()
+        return List(60) { index -> first.plusDays((index * 7).toLong()) }
+            .filter { it.year <= overview.season }
+            .map { weekBeginning ->
+                CalendarModel.Week(
+                    season = overview.season,
+                    startOfWeek = weekBeginning,
+                    race = null
+                )
+            }
+    }
+
+    private fun schedule(
+        overview: Overview,
+        upcomingEvents: List<Event>,
+        upcoming: OverviewRace?
+    ): List<CalendarModel> {
+        return mutableListOf<CalendarModel>()
+            .apply {
+                addAll(overview.overviewRaces.map {
+                    CalendarModel.List(
+                        model = it,
+                        notificationSchedule = notificationRepository.notificationSchedule,
+                        showScheduleList = it == upcoming
+                    )
+                })
+                addAll(upcomingEvents.map {
+                    CalendarModel.Event(it)
+                })
+            }
+            .sortedBy {
+                when (it) {
+                    is CalendarModel.Event -> it.date
+                    is CalendarModel.List -> it.date
+                    else -> null
+                }
+            }
     }
 }
 
