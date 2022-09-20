@@ -29,6 +29,7 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import org.threeten.bp.DayOfWeek
 import org.threeten.bp.LocalDate
+import org.threeten.bp.Month
 import org.threeten.bp.format.TextStyle
 import tmg.flashback.formula1.enums.SeasonTyres
 import tmg.flashback.formula1.enums.getBySeason
@@ -158,9 +159,6 @@ fun CalendarScreen(
                     }
                     is CalendarModel.Event -> {
                         Event(event = item)
-                    }
-                    is CalendarModel.Month -> {
-                        Month(model = item)
                     }
                     is CalendarModel.Week -> {
                         Week(model = item)
@@ -446,20 +444,6 @@ private fun DateCard(
 //region Calendar view
 
 @Composable
-private fun Month(
-    model: CalendarModel.Month
-) {
-    TextBody1(
-        modifier = Modifier.padding(
-            horizontal = AppTheme.dimensions.paddingMedium,
-            vertical = AppTheme.dimensions.paddingXSmall
-        ),
-        text = model.month.getDisplayName(TextStyle.FULL, Locale.getDefault()),
-        bold = true
-    )
-}
-
-@Composable
 private fun DayHeaders() {
     CalendarContainer {
         DayOfWeek.values().forEach {
@@ -477,32 +461,26 @@ private fun Week(
     model: CalendarModel.Week
 ) {
     CalendarContainer {
-        for (x in 0 until 7) {
-            val date = model.weekBeginning.plusDays(x.toLong())
-            if (date.month != model.month) {
-                Box(modifier = Modifier.weight(1f))
-            } else {
-                Box(modifier = Modifier.weight(1f)) {
-                    Container(
-                        modifier = Modifier
-                            .size(24.dp)
-                            .align(Alignment.Center),
-                        boxRadius = 12.dp,
-                        isOutlined = true
-                    ) {
-                        TextBody2(
-                            modifier = Modifier
-                                .width(24.dp)
-                                .align(Alignment.Center),
-                            textAlign = TextAlign.Center,
-                            maxLines = 1,
-                            text = date.dayOfMonth.toString()
-                        )
-                    }
-                }
+        Column {
+            if (model.season == model.startOfWeek.year) {
+                TextBody1(text = model.startOfWeek.format("dd MMM yyyy") ?: "-")
+            }
+            if (model.startOfWeek.dayOfMonth == 1) {
+                Month(model.startOfWeek.month)
+            }
+            if (model.startOfWeek.month != model.endOfWeek.month && model.endOfWeek.year == model.season) {
+                Month(model.endOfWeek.month)
+                TextBody2(text = model.endOfWeek.format("dd MMM yyyy") ?: "-")
             }
         }
     }
+}
+
+@Composable
+private fun Month(
+    model: Month
+) {
+    TextTitle(text = model.getDisplayName(TextStyle.FULL, Locale.getDefault()))
 }
 
 @Composable
