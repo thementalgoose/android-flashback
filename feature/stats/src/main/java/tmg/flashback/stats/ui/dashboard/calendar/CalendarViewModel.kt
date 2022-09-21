@@ -52,7 +52,7 @@ class CalendarViewModel @Inject constructor(
 
     override val isRefreshing: MutableLiveData<Boolean> = MutableLiveData(false)
 
-    private val calendar: MutableLiveData<Boolean> = MutableLiveData(true)
+    private val calendar: MutableLiveData<Boolean> = MutableLiveData(false)
 
     private val season: MutableStateFlow<Int?> = MutableStateFlow(null)
     override val items: LiveData<List<CalendarModel>?> = season
@@ -66,7 +66,6 @@ class CalendarViewModel @Inject constructor(
                         overviewRepository.getOverview(season),
                         eventsRepository.getEvents(season),
                         calendar.asFlow()
-
                     ) { overview, events, isCalendar ->
                         isRefreshing.postValue(false)
                         if (!hasMadeRequest) {
@@ -125,7 +124,17 @@ class CalendarViewModel @Inject constructor(
             ))
             is CalendarModel.Event -> {}
             is CalendarModel.Week -> {
-
+                val race = model.race ?: return
+                statsNavigationComponent.weekend(WeekendInfo(
+                    season = race.season,
+                    round = race.round,
+                    raceName = race.raceName,
+                    circuitId = race.circuitId,
+                    circuitName = race.circuitName,
+                    country = race.country,
+                    countryISO = race.countryISO,
+                    date = race.date,
+                ))
             }
             CalendarModel.Loading -> {}
         }
@@ -143,7 +152,7 @@ class CalendarViewModel @Inject constructor(
                 CalendarModel.Week(
                     season = overview.season,
                     startOfWeek = weekBeginning,
-                    race = null
+                    race = overview.overviewRaces.firstOrNull { it.date >= weekBeginning && it.date <= weekBeginning.plusDays(6L) }
                 )
             }
     }
