@@ -39,7 +39,6 @@ internal class CalendarViewModelTest: BaseTest() {
             eventsRepository = mockEventsRepository,
             notificationRepository = mockNotificationRepository,
             statsNavigationComponent = mockStatsNavigationComponent,
-            homeRepository = mockHomeRepository,
             ioDispatcher = coroutineScope.testDispatcher
         )
     }
@@ -58,18 +57,6 @@ internal class CalendarViewModelTest: BaseTest() {
         every { mockHomeRepository.dashboardAutoscroll } returns false
         every { mockNotificationRepository.notificationSchedule } returns fakeNotificationSchedule
         every { mockFetchSeasonUseCase.fetch(any()) } returns flow { emit(true) }
-    }
-
-    @Test
-    fun `autoscroll reads value from home repository`() {
-        every { mockHomeRepository.dashboardAutoscroll } returns true
-        initUnderTest()
-        underTest.dashboardAutoscroll.test {
-            assertValue(true)
-        }
-        verify {
-            mockHomeRepository.dashboardAutoscroll
-        }
     }
 
     @Test
