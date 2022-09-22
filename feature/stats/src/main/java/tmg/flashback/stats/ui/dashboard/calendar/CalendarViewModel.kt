@@ -30,11 +30,16 @@ interface CalendarViewModelInputs {
 
     fun clickTyre(season: Int)
     fun clickItem(model: CalendarModel)
+
+    fun clickCalendar()
+    fun clickSchedule()
 }
 
 interface CalendarViewModelOutputs {
     val items: LiveData<List<CalendarModel>?>
     val isRefreshing: LiveData<Boolean>
+
+    val isCalendar: LiveData<Boolean>
 }
 
 @HiltViewModel
@@ -51,6 +56,7 @@ class CalendarViewModel @Inject constructor(
     val outputs: CalendarViewModelOutputs = this
 
     override val isRefreshing: MutableLiveData<Boolean> = MutableLiveData(false)
+    override val isCalendar: MutableLiveData<Boolean> = MutableLiveData()
 
     private val calendar: MutableLiveData<Boolean> = MutableLiveData(false)
 
@@ -104,6 +110,14 @@ class CalendarViewModel @Inject constructor(
             fetchSeasonUseCase.fetchSeason(season)
             isRefreshing.postValue(false)
         }
+    }
+
+    override fun clickCalendar() {
+        isCalendar.value = true
+    }
+
+    override fun clickSchedule() {
+        isCalendar.value = false
     }
 
     override fun clickTyre(season: Int) {
