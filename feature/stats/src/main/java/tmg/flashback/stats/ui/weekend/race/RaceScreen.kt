@@ -1,6 +1,5 @@
 package tmg.flashback.stats.ui.weekend.race
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -16,7 +15,6 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -28,19 +26,16 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.formula1.enums.RaceStatus
 import tmg.flashback.formula1.enums.isStatusFinished
 import tmg.flashback.formula1.enums.raceStatusFinish
-import tmg.flashback.formula1.enums.raceStatusFinished
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.FastestLap
 import tmg.flashback.formula1.model.LapTime
 import tmg.flashback.formula1.model.RaceRaceResult
-import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.providers.RaceRaceResultProvider
 import tmg.flashback.stats.R
 import tmg.flashback.stats.ui.shared.Flag
 import tmg.flashback.stats.ui.weekend.WeekendInfo
 import tmg.flashback.stats.ui.weekend.fakeWeekendInfo
 import tmg.flashback.stats.ui.weekend.info.RaceInfoHeader
-import tmg.flashback.stats.ui.weekend.qualifying.QualifyingScreen
 import tmg.flashback.stats.ui.weekend.shared.Delta
 import tmg.flashback.stats.ui.weekend.shared.DriverInfo
 import tmg.flashback.stats.ui.weekend.shared.NotAvailable
@@ -52,9 +47,7 @@ import tmg.flashback.style.lightColours
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextTitle
-import tmg.flashback.ui.components.loading.SkeletonView
 import tmg.flashback.ui.components.loading.SkeletonViewList
-import tmg.flashback.ui.utils.isInPreview
 import tmg.flashback.ui.utils.pluralResource
 import tmg.utilities.extensions.ordinalAbbreviation
 
@@ -143,8 +136,8 @@ private fun Podium(
     Row(modifier = modifier
         .height(IntrinsicSize.Min)
         .padding(
-            horizontal = AppTheme.dimensions.paddingXSmall,
-            vertical = AppTheme.dimensions.paddingXSmall
+            horizontal = AppTheme.dimens.xsmall,
+            vertical = AppTheme.dimens.xsmall
         )
     ) {
         Column(Modifier.weight(1f), verticalArrangement = Arrangement.Bottom) {
@@ -216,17 +209,17 @@ private fun PodiumBar(
         modifier = modifier
             .fillMaxWidth()
             .height(height)
-            .padding(AppTheme.dimensions.paddingSmall)
-            .clip(RoundedCornerShape(AppTheme.dimensions.radiusSmall))
+            .padding(AppTheme.dimens.small)
+            .clip(RoundedCornerShape(AppTheme.dimens.radiusSmall))
             .background(color)
     ) {
         Column(Modifier.align(Alignment.TopCenter)) {
             Box(modifier = Modifier
                 .fillMaxWidth()
                 .padding(
-                    top = AppTheme.dimensions.paddingSmall,
-                    start = AppTheme.dimensions.paddingSmall,
-                    end = AppTheme.dimensions.paddingSmall
+                    top = AppTheme.dimens.small,
+                    start = AppTheme.dimens.small,
+                    end = AppTheme.dimens.small
                 ),
             ) {
                 TextBody1(
@@ -246,7 +239,7 @@ private fun PodiumBar(
                 text = pluralResource(resId = R.plurals.race_points, quantity = points.toInt(), points.pointsDisplay()),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = AppTheme.dimensions.paddingXSmall)
+                    .padding(vertical = AppTheme.dimens.xsmall)
             )
         }
     }
@@ -265,7 +258,7 @@ private fun PodiumResult(
         Box(
             Modifier
                 .size(80.dp)
-                .clip(RoundedCornerShape(AppTheme.dimensions.radiusSmall))
+                .clip(RoundedCornerShape(AppTheme.dimens.radiusSmall))
                 .align(Alignment.CenterHorizontally)
                 .background(model.driver.constructor.colour)
                 .clickable(onClick = { driverClicked(model) })
@@ -273,7 +266,7 @@ private fun PodiumResult(
             AsyncImage(
                 modifier = Modifier
                     .padding(4.dp)
-                    .clip(RoundedCornerShape(AppTheme.dimensions.radiusSmall)),
+                    .clip(RoundedCornerShape(AppTheme.dimens.radiusSmall)),
                 contentScale = ContentScale.Crop,
                 model = model.driver.driver.photoUrl,
                 contentDescription = null,
@@ -287,7 +280,7 @@ private fun PodiumResult(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(
-                    top = AppTheme.dimensions.paddingSmall,
+                    top = AppTheme.dimens.small,
                     start = 2.dp,
                     end = 2.dp
                 )
@@ -299,7 +292,7 @@ private fun PodiumResult(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(
-                    top = AppTheme.dimensions.paddingXXSmall,
+                    top = AppTheme.dimens.xxsmall,
                     start = 2.dp,
                     end = 2.dp
                 )
@@ -308,9 +301,9 @@ private fun PodiumResult(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(
-                    top = AppTheme.dimensions.paddingXSmall,
-                    end = AppTheme.dimensions.paddingXSmall,
-                    start = AppTheme.dimensions.paddingXSmall
+                    top = AppTheme.dimens.xsmall,
+                    end = AppTheme.dimens.xsmall,
+                    start = AppTheme.dimens.xsmall
                 ),
             horizontalArrangement = Arrangement.Center
         ) {
@@ -321,18 +314,18 @@ private fun PodiumResult(
                     .size(16.dp)
                     .align(Alignment.CenterVertically),
             )
-            Spacer(Modifier.width(AppTheme.dimensions.paddingXSmall))
+            Spacer(Modifier.width(AppTheme.dimens.xsmall))
             Delta(grid = model.grid, finish = model.finish)
-            Spacer(Modifier.width(AppTheme.dimensions.paddingXXSmall))
+            Spacer(Modifier.width(AppTheme.dimens.xxsmall))
             TextBody2(text = model.driver.constructor.name)
         }
         TextBody2(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(
-                    top = AppTheme.dimensions.paddingXSmall,
-                    end = AppTheme.dimensions.paddingXSmall,
-                    start = AppTheme.dimensions.paddingXSmall
+                    top = AppTheme.dimens.xsmall,
+                    end = AppTheme.dimens.xsmall,
+                    start = AppTheme.dimens.xsmall
                 ),
             textAlign = TextAlign.Center,
             text = when (model.finish == 1) {

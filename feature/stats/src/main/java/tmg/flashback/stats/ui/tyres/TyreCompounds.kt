@@ -3,19 +3,15 @@ package tmg.flashback.stats.ui.tyres
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import tmg.flashback.formula1.enums.SeasonTyres
-import tmg.flashback.formula1.enums.Tyre
 import tmg.flashback.formula1.enums.TyreLabel
 import tmg.flashback.formula1.enums.getBySeason
 import tmg.flashback.stats.R
-import tmg.flashback.stats.analytics.AnalyticsConstants
 import tmg.flashback.stats.analytics.AnalyticsConstants.analyticsSeason
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
@@ -67,8 +63,8 @@ private fun Header(
         modifier = modifier
             .fillMaxWidth()
             .padding(
-                horizontal = AppTheme.dimensions.paddingMedium,
-                vertical = AppTheme.dimensions.paddingXSmall
+                horizontal = AppTheme.dimens.medium,
+                vertical = AppTheme.dimens.xsmall
             ),
         text = title
     )
@@ -80,8 +76,8 @@ private fun TyreRow(
     modifier: Modifier = Modifier
 ) {
     Row(modifier = modifier.padding(
-        horizontal = AppTheme.dimensions.paddingMedium,
-        vertical = AppTheme.dimensions.paddingSmall
+        horizontal = AppTheme.dimens.medium,
+        vertical = AppTheme.dimens.small
     )) {
         Image(
             modifier = Modifier.size(64.dp),
@@ -91,8 +87,8 @@ private fun TyreRow(
         Column(modifier = Modifier
             .weight(1f)
             .padding(
-                horizontal = AppTheme.dimensions.paddingMedium,
-                vertical = AppTheme.dimensions.paddingXSmall
+                horizontal = AppTheme.dimens.medium,
+                vertical = AppTheme.dimens.xsmall
             )
         ) {
             TextHeadline2(text = stringResource(id = tyreLabel.label))

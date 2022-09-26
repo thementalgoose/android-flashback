@@ -5,7 +5,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Switch
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -51,8 +50,8 @@ fun SettingPref(
             onClick = { onClick(model) }
         )
         .padding(
-            vertical = AppTheme.dimensions.paddingSmall,
-            horizontal = AppTheme.dimensions.paddingMedium
+            vertical = AppTheme.dimens.small,
+            horizontal = AppTheme.dimens.medium
         )
     ) {
         Column(Modifier.fillMaxWidth()) {
@@ -63,7 +62,7 @@ fun SettingPref(
                     text = stringResource(id = model.title)
                 )
                 if (model.isBeta) {
-                    Spacer(Modifier.width(AppTheme.dimensions.paddingSmall))
+                    Spacer(Modifier.width(AppTheme.dimens.small))
                     ExperimentalLabel()
                 }
             }
@@ -72,7 +71,7 @@ fun SettingPref(
                     text = stringResource(id = it),
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = AppTheme.dimensions.paddingXSmall)
+                        .padding(top = AppTheme.dimens.xsmall)
                 )
             }
         }
@@ -105,14 +104,14 @@ fun SettingSwitch(
             onClick = { onClick(model) }
         )
         .padding(
-            vertical = AppTheme.dimensions.paddingSmall,
-            horizontal = AppTheme.dimensions.paddingMedium
+            vertical = AppTheme.dimens.small,
+            horizontal = AppTheme.dimens.medium
         )
     ) {
         Column(
             modifier = Modifier
                 .weight(1f)
-                .padding(end = AppTheme.dimensions.paddingMedium),
+                .padding(end = AppTheme.dimens.medium),
             verticalArrangement = Arrangement.Center
         ) {
             Row(
@@ -122,7 +121,7 @@ fun SettingSwitch(
                     text = stringResource(id = model.title)
                 )
                 if (model.isBeta) {
-                    Spacer(Modifier.width(AppTheme.dimensions.paddingSmall))
+                    Spacer(Modifier.width(AppTheme.dimens.small))
                     ExperimentalLabel()
                 }
             }
@@ -131,7 +130,7 @@ fun SettingSwitch(
                     text = stringResource(id = it),
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = AppTheme.dimensions.paddingXSmall)
+                        .padding(top = AppTheme.dimens.xsmall)
                 )
             }
         }
@@ -167,10 +166,10 @@ fun SettingHeader(
         modifier = Modifier
             .fillMaxWidth()
             .padding(
-                top = AppTheme.dimensions.paddingMedium,
-                bottom = AppTheme.dimensions.paddingSmall,
-                start = AppTheme.dimensions.paddingMedium,
-                end = AppTheme.dimensions.paddingMedium
+                top = AppTheme.dimens.medium,
+                bottom = AppTheme.dimens.small,
+                start = AppTheme.dimens.medium,
+                end = AppTheme.dimens.medium
             ),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -179,7 +178,7 @@ fun SettingHeader(
             text = stringResource(id = model.title)
         )
         if (model.isBeta) {
-            Spacer(Modifier.width(AppTheme.dimensions.paddingSmall))
+            Spacer(Modifier.width(AppTheme.dimens.small))
             ExperimentalLabel()
         }
     }
@@ -187,7 +186,7 @@ fun SettingHeader(
 
 
 fun LazyListScope.Footer(
-    height: Dp = AppTheme.dimensions.paddingLarge
+    height: Dp = AppTheme.dimens.large
 ) {
     item(key = "footer") {
         Spacer(Modifier.height(height))
@@ -219,19 +218,19 @@ fun SettingSection(
             onClick = { onClick(model) }
         )
         .padding(
-            vertical = AppTheme.dimensions.paddingSmall,
-            horizontal = AppTheme.dimensions.paddingMedium
+            vertical = AppTheme.dimens.small,
+            horizontal = AppTheme.dimens.medium
         )
     ) {
         Icon(
             modifier = Modifier
                 .align(Alignment.CenterVertically)
-                .padding(start = AppTheme.dimensions.paddingSmall),
+                .padding(start = AppTheme.dimens.small),
             painter = painterResource(id = model.icon),
             contentDescription = null,
             tint = AppTheme.colors.contentPrimary
         )
-        Spacer(Modifier.width(AppTheme.dimensions.paddingMedium))
+        Spacer(Modifier.width(AppTheme.dimens.medium))
         Column(Modifier.fillMaxWidth()) {
             Row(
                 verticalAlignment = Alignment.CenterVertically
@@ -240,7 +239,7 @@ fun SettingSection(
                     text = stringResource(id = model.title)
                 )
                 if (model.isBeta) {
-                    Spacer(Modifier.width(AppTheme.dimensions.paddingSmall))
+                    Spacer(Modifier.width(AppTheme.dimens.small))
                     ExperimentalLabel()
                 }
             }
@@ -248,7 +247,7 @@ fun SettingSection(
                 text = stringResource(id = model.subtitle),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = AppTheme.dimensions.paddingXSmall)
+                    .padding(top = AppTheme.dimens.xsmall)
             )
         }
     }

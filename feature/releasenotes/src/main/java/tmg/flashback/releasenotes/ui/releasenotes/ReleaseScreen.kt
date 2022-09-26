@@ -8,7 +8,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import tmg.flashback.releasenotes.constants.ReleaseNotes
 import tmg.flashback.style.AppTheme
@@ -57,10 +56,10 @@ private fun ReleaseNote(
     Column(modifier = modifier
         .fillMaxWidth()
         .padding(
-            start = AppTheme.dimensions.paddingMedium,
-            end = AppTheme.dimensions.paddingMedium,
-            top = AppTheme.dimensions.paddingSmall,
-            bottom = AppTheme.dimensions.paddingSmall
+            start = AppTheme.dimens.medium,
+            end = AppTheme.dimens.medium,
+            top = AppTheme.dimens.small,
+            bottom = AppTheme.dimens.small
         )
     ) {
         TextHeadline2(text = title)

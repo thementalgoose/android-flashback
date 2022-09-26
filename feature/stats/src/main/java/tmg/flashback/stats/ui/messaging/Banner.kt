@@ -56,8 +56,8 @@ fun Banner(
 //    ) {
         Row(modifier = Modifier
             .padding(
-                vertical = AppTheme.dimensions.paddingSmall,
-                horizontal = AppTheme.dimensions.paddingMedium
+                vertical = AppTheme.dimens.small,
+                horizontal = AppTheme.dimens.medium
             ),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -67,7 +67,7 @@ fun Banner(
                 modifier = Modifier.weight(1f)
             )
             if (showLink) {
-                Spacer(Modifier.width(AppTheme.dimensions.paddingMedium))
+                Spacer(Modifier.width(AppTheme.dimens.medium))
                 Icon(
                     modifier = Modifier.size(16.dp),
                     painter = painterResource(id = R.drawable.ic_banner_link),

@@ -53,7 +53,7 @@ private fun NativeBanner(
     if (showAdverts) {
         Column(
             modifier = modifier
-                .padding(horizontal = AppTheme.dimensions.paddingMedium)
+                .padding(horizontal = AppTheme.dimens.medium)
         ) {
             AndroidView(factory = { context ->
                 NativeBanner(context).apply {

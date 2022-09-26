@@ -1,26 +1,20 @@
 package tmg.flashback.stats.components
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.Driver
-import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.providers.DriverProvider
 import tmg.flashback.style.AppTheme
 import tmg.flashback.stats.R
 import tmg.flashback.stats.ui.shared.Flag
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.text.TextBody2
-import tmg.flashback.ui.utils.isInPreview
 import tmg.flashback.ui.utils.pluralResource
 import kotlin.math.roundToInt
 
@@ -38,8 +32,8 @@ fun DriverPoints(
         Column(modifier = Modifier
             .fillMaxHeight()
             .padding(
-                vertical = AppTheme.dimensions.paddingXXSmall,
-                horizontal = AppTheme.dimensions.paddingXSmall
+                vertical = AppTheme.dimens.xxsmall,
+                horizontal = AppTheme.dimens.xsmall
             )
         ) {
             Flag(

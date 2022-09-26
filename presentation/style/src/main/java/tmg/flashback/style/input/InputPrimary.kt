@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
-import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -26,8 +25,6 @@ import androidx.compose.ui.unit.dp
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
-import tmg.flashback.style.text.TextBody1
-import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextTitle
 
 @Composable
@@ -68,7 +65,7 @@ fun InputPrimary(
                         contentDescription = null,
                         tint = AppTheme.colors.contentTertiary.copy(alpha = 0.5f)
                     )
-                    Spacer(Modifier.width(AppTheme.dimensions.paddingSmall))
+                    Spacer(Modifier.width(AppTheme.dimens.small))
                 }
                 TextTitle(
                     placeholder,

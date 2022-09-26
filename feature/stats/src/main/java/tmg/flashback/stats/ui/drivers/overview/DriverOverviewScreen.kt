@@ -1,6 +1,5 @@
 package tmg.flashback.stats.ui.drivers.overview
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -11,8 +10,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -22,7 +19,6 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.formula1.model.DriverConstructor
-import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.providers.DriverConstructorProvider
 import tmg.flashback.stats.R
 import tmg.flashback.stats.analytics.AnalyticsConstants.analyticsDriverId
@@ -35,13 +31,10 @@ import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.buttons.ButtonTertiary
 import tmg.flashback.style.text.TextBody1
-import tmg.flashback.style.text.TextBody2
 import tmg.flashback.ui.components.analytics.ScreenView
 import tmg.flashback.ui.components.errors.NetworkError
-import tmg.flashback.ui.components.loading.SkeletonView
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.messages.Message
-import tmg.flashback.ui.utils.isInPreview
 import tmg.utilities.extensions.format
 
 private val headerImageSize: Dp = 120.dp
@@ -143,7 +136,7 @@ private fun Header(
     modifier: Modifier = Modifier
 ) { 
     Column(modifier = modifier.padding(
-        horizontal = AppTheme.dimensions.paddingMedium
+        horizontal = AppTheme.dimens.medium
     )) {
         DriverImage(
             photoUrl = model.driverImg,
@@ -164,14 +157,14 @@ private fun Header(
                     .size(16.dp)
                     .align(Alignment.CenterVertically),
             )
-            Spacer(Modifier.width(AppTheme.dimensions.paddingSmall))
+            Spacer(Modifier.width(AppTheme.dimens.small))
 
             val birthday = model.driverBirthday
                 .format("dd MMMM yyyy")
                 ?.let { birthday -> stringResource(id = R.string.driver_overview_stat_birthday, birthday) } ?: ""
             TextBody1(
                 modifier = Modifier
-                    .padding(vertical = AppTheme.dimensions.paddingXSmall)
+                    .padding(vertical = AppTheme.dimens.xsmall)
                     .fillMaxWidth(),
                 text = "${model.driverNationality} - $birthday"
             )
@@ -182,7 +175,7 @@ private fun Header(
                 onClick = { linkClicked(model.driverWikiUrl) },
                 icon = R.drawable.ic_details_wikipedia
             )
-            Spacer(Modifier.height(AppTheme.dimensions.paddingXSmall))
+            Spacer(Modifier.height(AppTheme.dimens.xsmall))
         }
     }
 }
@@ -204,8 +197,8 @@ private fun Stat(
         modifier = initialModifier
             .fillMaxWidth()
             .padding(
-                vertical = AppTheme.dimensions.paddingXSmall,
-                horizontal = AppTheme.dimensions.paddingMedium
+                vertical = AppTheme.dimens.xsmall,
+                horizontal = AppTheme.dimens.medium
             )
     ) {
         Icon(
@@ -237,7 +230,7 @@ private fun History(
 ) {
     Row(modifier = modifier
         .clickable(onClick = { clicked(model) })
-        .padding(horizontal = AppTheme.dimensions.paddingMedium)
+        .padding(horizontal = AppTheme.dimens.medium)
     ) {
         Timeline(
             timelineColor = AppTheme.colors.contentSecondary,
@@ -270,7 +263,7 @@ private fun History(
                             bold = true,
                             modifier = Modifier
                                 .padding(
-                                    end = AppTheme.dimensions.paddingSmall,
+                                    end = AppTheme.dimens.small,
                                     top = 2.dp,
                                     bottom = 2.dp
                                 )

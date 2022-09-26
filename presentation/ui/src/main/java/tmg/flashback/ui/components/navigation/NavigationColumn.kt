@@ -13,10 +13,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import tmg.flashback.style.AppTheme
@@ -49,7 +47,7 @@ fun NavigationColumn(
         .fillMaxHeight()
         .background(AppTheme.colors.backgroundNav)
         .padding(
-            vertical = AppTheme.dimensions.paddingSmall
+            vertical = AppTheme.dimens.small
         )
     ) {
         NavigationItem(
@@ -61,14 +59,14 @@ fun NavigationColumn(
             onClick = { menuClicked() },
             isExpanded = expanded.value
         )
-        Spacer(modifier = Modifier.height(AppTheme.dimensions.paddingMedium))
+        Spacer(modifier = Modifier.height(AppTheme.dimens.medium))
         list.forEach { item ->
             NavigationItem(
                 item = item,
                 isExpanded = expanded.value,
                 onClick = itemClicked,
             )
-            Spacer(Modifier.height(AppTheme.dimensions.paddingSmall))
+            Spacer(Modifier.height(AppTheme.dimens.small))
         }
         Spacer(modifier = Modifier.weight(1f))
         NavigationItem(
@@ -97,7 +95,7 @@ private fun NavigationItem(
         else -> AppTheme.colors.backgroundNav
     })
     val iconPadding = animateDpAsState(targetValue = when (isExpanded) {
-        true -> AppTheme.dimensions.paddingMedium
+        true -> AppTheme.dimens.medium
         false -> (itemSize - iconSize) / 2
     })
 
@@ -107,7 +105,7 @@ private fun NavigationItem(
         )
         .fillMaxWidth()
         .height(itemSize)
-        .clip(RoundedCornerShape(AppTheme.dimensions.radiusMedium))
+        .clip(RoundedCornerShape(AppTheme.dimens.radiusMedium))
         .background(backgroundColor.value)
         .clickable(
             enabled = onClick != null,
@@ -130,7 +128,7 @@ private fun NavigationItem(
         if (isExpanded) {
             TextBody1(
                 modifier = Modifier
-                    .padding(start = AppTheme.dimensions.paddingSmall)
+                    .padding(start = AppTheme.dimens.small)
                     .align(Alignment.CenterVertically)
                     .fillMaxWidth(),
                 text = item.label?.let { stringResource(id = it) } ?: ""

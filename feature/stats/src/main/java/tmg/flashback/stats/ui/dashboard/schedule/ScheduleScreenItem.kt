@@ -56,8 +56,8 @@ internal fun Schedule(
     Container(
         modifier = modifier
             .padding(
-                top = if (model.shouldShowScheduleList) AppTheme.dimensions.paddingXSmall else 0.dp,
-                bottom = if (model.shouldShowScheduleList) AppTheme.dimensions.paddingSmall else 0.dp
+                top = if (model.shouldShowScheduleList) AppTheme.dimens.xsmall else 0.dp,
+                bottom = if (model.shouldShowScheduleList) AppTheme.dimens.small else 0.dp
             )
             .alpha(alpha)
             .clickable(onClick = {
@@ -71,9 +71,9 @@ internal fun Schedule(
             Row {
                 Box(modifier = Modifier
                     .padding(
-                        top = AppTheme.dimensions.paddingMedium,
-                        end = AppTheme.dimensions.paddingNSmall,
-                        start = AppTheme.dimensions.paddingNSmall
+                        top = AppTheme.dimens.medium,
+                        end = AppTheme.dimens.nsmall,
+                        start = AppTheme.dimens.nsmall
                     )
                 ) {
                     Flag(
@@ -85,9 +85,9 @@ internal fun Schedule(
                 Column(modifier = Modifier
                     .weight(1f)
                     .padding(
-                        top = AppTheme.dimensions.paddingSmall,
-                        bottom = AppTheme.dimensions.paddingSmall,
-                        end = AppTheme.dimensions.paddingMedium
+                        top = AppTheme.dimens.small,
+                        bottom = AppTheme.dimens.small,
+                        end = AppTheme.dimens.medium
                     )
                 ) {
                     Row {
@@ -96,7 +96,7 @@ internal fun Schedule(
                             bold = true,
                             modifier = Modifier.weight(1f)
                         )
-                        Spacer(Modifier.width(AppTheme.dimensions.paddingSmall))
+                        Spacer(Modifier.width(AppTheme.dimens.small))
                         TextTitle(
                             text = "#${model.model.round}",
                             bold = true
@@ -109,7 +109,7 @@ internal fun Schedule(
                                 .weight(1f)
                                 .padding(top = 2.dp)
                         )
-                        Spacer(Modifier.width(AppTheme.dimensions.paddingSmall))
+                        Spacer(Modifier.width(AppTheme.dimens.small))
                         IconRow(
                             showQualifying = model.model.hasQualifying && model.model.season > 2000,
                             showSprint = model.model.hasSprint && model.model.season > 2020,
@@ -131,7 +131,7 @@ internal fun Schedule(
                 Dates(
                     scheduleList = model.model.schedule,
                     notificationSchedule = model.notificationSchedule,
-                    modifier = Modifier.padding(top = AppTheme.dimensions.paddingXSmall)
+                    modifier = Modifier.padding(top = AppTheme.dimens.xsmall)
                 )
             }
         }
@@ -191,11 +191,11 @@ private fun Dates(
     )
 
     LazyRow(
-        modifier = modifier.padding(bottom = AppTheme.dimensions.paddingSmall),
+        modifier = modifier.padding(bottom = AppTheme.dimens.small),
         state = scrollState,
         content = {
             item {
-                Spacer(Modifier.width(countryBadgeSize + (AppTheme.dimensions.paddingNSmall * 2)))
+                Spacer(Modifier.width(countryBadgeSize + (AppTheme.dimens.nsmall * 2)))
             }
             for ((date, list) in schedule) {
                 val alpha = if (date.isBefore(LocalDate.now()) || list.all { it.timestamp.isInPast }) pastScheduleAlpha else 1f
@@ -207,7 +207,7 @@ private fun Dates(
                             modifier = Modifier
                                 .alpha(alpha)
                                 .padding(
-                                    bottom = AppTheme.dimensions.paddingXSmall
+                                    bottom = AppTheme.dimens.xsmall
                                 )
                         )
                         Row {
@@ -216,11 +216,11 @@ private fun Dates(
                                     schedule = it,
                                     showNotificationBadge = notificationSchedule.getByLabel(it.label)
                                 )
-                                Spacer(Modifier.width(AppTheme.dimensions.paddingSmall))
+                                Spacer(Modifier.width(AppTheme.dimens.small))
                             }
                         }
                     }
-                    Spacer(Modifier.width(AppTheme.dimensions.paddingMedium))
+                    Spacer(Modifier.width(AppTheme.dimens.medium))
                 }
             }
         }
@@ -236,17 +236,17 @@ private fun DateCard(
     val alpha = if (schedule.timestamp.isInPast) pastScheduleAlpha else 1f
     Column(modifier = modifier
         .width(IntrinsicSize.Max)
-        .clip(RoundedCornerShape(AppTheme.dimensions.radiusSmall))
+        .clip(RoundedCornerShape(AppTheme.dimens.radiusSmall))
         .background(AppTheme.colors.backgroundTertiary)
         .alpha(alpha)
         .padding(
-            vertical = AppTheme.dimensions.paddingNSmall,
-            horizontal = AppTheme.dimensions.paddingNSmall
+            vertical = AppTheme.dimens.nsmall,
+            horizontal = AppTheme.dimens.nsmall
         )
     ) {
         Row(modifier = Modifier
             .fillMaxWidth()
-            .padding(bottom = AppTheme.dimensions.paddingSmall),
+            .padding(bottom = AppTheme.dimens.small),
             verticalAlignment = Alignment.CenterVertically
         ) {
             TextBody1(

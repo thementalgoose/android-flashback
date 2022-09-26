@@ -1,23 +1,17 @@
 package tmg.flashback.stats.ui.weekend.info
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import tmg.flashback.formula1.enums.TrackLayout
 import tmg.flashback.formula1.model.Race
-import tmg.flashback.formula1.model.RaceInfo
-import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.providers.RaceProvider
 import tmg.flashback.stats.R
 import tmg.flashback.stats.ui.shared.Flag
@@ -29,7 +23,6 @@ import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextHeadline1
-import tmg.flashback.ui.utils.isInPreview
 import tmg.utilities.extensions.format
 import tmg.utilities.extensions.ordinalAbbreviation
 
@@ -44,7 +37,7 @@ fun RaceInfoHeader(
     largeTrack: Boolean = false,
 ) {
     Column(modifier = modifier.padding(
-        bottom = AppTheme.dimensions.paddingSmall
+        bottom = AppTheme.dimens.small
     )) {
         IconButton(
             onClick = actionUpClicked
@@ -56,7 +49,7 @@ fun RaceInfoHeader(
             )
         }
         Column(modifier = Modifier.padding(
-            horizontal = AppTheme.dimensions.paddingMedium
+            horizontal = AppTheme.dimens.medium
         )) {
             val track = TrackLayout.getTrack(model.circuitId, model.season, model.raceName)
             Icon(
@@ -84,20 +77,20 @@ private fun RaceDetails(
             TextBody1(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = AppTheme.dimensions.paddingXSmall),
+                    .padding(bottom = AppTheme.dimens.xsmall),
                 text = model.circuitName
             )
             TextBody2(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = AppTheme.dimensions.paddingXSmall),
+                    .padding(bottom = AppTheme.dimens.xsmall),
                 text = model.country
             )
             TextBody2(
                 bold = true,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = AppTheme.dimensions.paddingXSmall),
+                    .padding(bottom = AppTheme.dimens.xsmall),
                 text = model.date.format("'${model.date.dayOfMonth.ordinalAbbreviation}' MMMM yyyy") ?: ""
             )
         }
