@@ -14,7 +14,7 @@ import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.DriverHistorySeason
 import tmg.flashback.statistics.repo.DriverRepository
 import tmg.flashback.stats.R
-import tmg.flashback.stats.ui.drivers.overview.PipeType
+import tmg.flashback.ui.components.navigation.PipeType
 import tmg.flashback.ui.repository.ThemeRepository
 import tmg.utilities.extensions.ordinalAbbreviation
 import tmg.utilities.lifecycle.DataEvent
