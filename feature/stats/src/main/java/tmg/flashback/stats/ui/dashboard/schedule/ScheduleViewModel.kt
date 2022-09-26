@@ -50,7 +50,7 @@ class ScheduleViewModel @Inject constructor(
 
     override val isRefreshing: MutableLiveData<Boolean> = MutableLiveData(false)
 
-    private var showCollapsablePlaceholder: MutableLiveData<Boolean> = MutableLiveData(false)
+    private var showCollapsablePlaceholder: MutableLiveData<Boolean> = MutableLiveData(homeRepository.collapseList)
 
     private val season: MutableStateFlow<Int?> = MutableStateFlow(null)
     override val items: LiveData<List<ScheduleModel>?> = season

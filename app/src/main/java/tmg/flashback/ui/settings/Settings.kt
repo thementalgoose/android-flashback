@@ -29,11 +29,12 @@ object Settings {
             icon = R.drawable.ic_settings_home
         )
 
-        val providedByAtTopKey = "provided_by_at_top"
-        fun providedByAtTop(isChecked: Boolean, isEnabled: Boolean = true) = Setting.Switch(
-            _key = providedByAtTopKey,
-            title = R.string.settings_pref_provided_by_at_top_title,
-            subtitle = R.string.settings_pref_provided_by_at_top_description,
+        val collapseListKey = "collapse_list"
+        fun collapseList(isChecked: Boolean, isEnabled: Boolean = true) = Setting.Switch(
+            _key = collapseListKey,
+            title = R.string.settings_pref_collapsed_list_title,
+            subtitle = R.string.settings_pref_collapsed_list_description,
+            isBeta = true,
             isChecked = isChecked,
             isEnabled = isEnabled
         )
