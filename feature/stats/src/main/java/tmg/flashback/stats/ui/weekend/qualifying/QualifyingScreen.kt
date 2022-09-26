@@ -1,7 +1,5 @@
 package tmg.flashback.stats.ui.weekend.qualifying
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -10,22 +8,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.faltenreich.skeletonlayout.Skeleton
 import androidx.hilt.navigation.compose.hiltViewModel
-import org.threeten.bp.LocalDate
 import tmg.flashback.formula1.model.*
-import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.providers.DriverConstructorProvider
-import tmg.flashback.providers.RaceProvider
 import tmg.flashback.stats.R
 import tmg.flashback.stats.ui.weekend.WeekendInfo
 import tmg.flashback.stats.ui.weekend.fakeWeekendInfo
@@ -36,14 +26,9 @@ import tmg.flashback.stats.ui.weekend.shared.NotAvailableYet
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
-import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextSection
-import tmg.flashback.style.text.TextTitle
-import tmg.flashback.ui.components.loading.SkeletonView
 import tmg.flashback.ui.components.loading.SkeletonViewList
-import tmg.flashback.ui.utils.isInPreview
-import tmg.utilities.extensions.pxToDp
 
 private val lapTimeWidth: Dp = 64.dp
 
@@ -94,7 +79,7 @@ fun QualifyingScreen(
             }
             if (list.any { it.isResult }) {
                 item("qheader") {
-                    Spacer(Modifier.height(AppTheme.dimensions.paddingMedium))
+                    Spacer(Modifier.height(AppTheme.dimens.medium))
                     Header(
                         showQ1 = header.first,
                         showQ2 = header.second,
@@ -142,7 +127,7 @@ private fun Header(
     showQ3: Boolean = true,
 ) {
     Row(modifier = modifier
-        .padding(vertical = AppTheme.dimensions.paddingSmall)
+        .padding(vertical = AppTheme.dimens.small)
     ) {
         Box(Modifier.weight(1f))
 
@@ -167,7 +152,7 @@ private fun Header(
                 textAlign = TextAlign.Center
             )
         }
-        Spacer(Modifier.width(AppTheme.dimensions.paddingMedium))
+        Spacer(Modifier.width(AppTheme.dimens.medium))
     }
 }
 
@@ -199,7 +184,7 @@ private fun Qualifying(
             modifier = Modifier.fillMaxHeight(),
             laptime = model.q3?.lapTime
         )
-        Spacer(Modifier.width(AppTheme.dimensions.paddingMedium))
+        Spacer(Modifier.width(AppTheme.dimens.medium))
     }
 }
 
@@ -227,7 +212,7 @@ private fun Qualifying(
             modifier = Modifier.fillMaxHeight(),
             laptime = model.q2?.lapTime
         )
-        Spacer(Modifier.width(AppTheme.dimensions.paddingMedium))
+        Spacer(Modifier.width(AppTheme.dimens.medium))
     }
 }
 
@@ -251,7 +236,7 @@ private fun Qualifying(
             modifier = Modifier.fillMaxHeight(),
             laptime = model.q1?.lapTime
         )
-        Spacer(Modifier.width(AppTheme.dimensions.paddingMedium))
+        Spacer(Modifier.width(AppTheme.dimens.medium))
     }
 }
 
