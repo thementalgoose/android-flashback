@@ -53,7 +53,6 @@ internal class CalendarViewModelTest: BaseTest() {
             Overview.model(overviewRaces = listOf(race1, race2)))
         }
         every { mockEventsRepository.getEvents(any()) } returns flow { emit(emptyList()) }
-        every { mockHomeRepository.dashboardAutoscroll } returns false
         every { mockNotificationRepository.notificationSchedule } returns fakeNotificationSchedule
         every { mockFetchSeasonUseCase.fetch(any()) } returns flow { emit(true) }
     }
