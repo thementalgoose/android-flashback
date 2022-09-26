@@ -24,6 +24,13 @@ sealed class ScheduleModel(
             get() = model.date.isAfter(LocalDate.now()) && !shouldShowScheduleList
     }
 
+    data class CollapsableList(
+        val first: OverviewRace,
+        val last: OverviewRace?
+    ): ScheduleModel(
+        key = "collapsable-${first.round}-${last?.round}"
+    )
+
     data class Event(
         val event: tmg.flashback.formula1.model.Event
     ): ScheduleModel(
