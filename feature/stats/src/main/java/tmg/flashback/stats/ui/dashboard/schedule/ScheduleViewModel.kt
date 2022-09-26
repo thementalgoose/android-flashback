@@ -1,4 +1,4 @@
-package tmg.flashback.stats.ui.dashboard.calendar
+package tmg.flashback.stats.ui.dashboard.schedule
 
 import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -7,6 +7,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import org.threeten.bp.LocalDate
+import org.threeten.bp.Month
 import tmg.flashback.formula1.model.Event
 import tmg.flashback.formula1.model.Overview
 import tmg.flashback.formula1.model.OverviewRace
@@ -19,36 +20,38 @@ import tmg.flashback.stats.usecases.FetchSeasonUseCase
 import tmg.utilities.extensions.startOfWeek
 import javax.inject.Inject
 
-interface CalendarViewModelInputs {
+interface ScheduleViewModelInputs {
     fun refresh()
     fun load(season: Int)
 
     fun clickTyre(season: Int)
-    fun clickItem(model: CalendarModel)
+    fun clickItem(model: ScheduleModel)
 }
 
-interface CalendarViewModelOutputs {
-    val items: LiveData<List<CalendarModel>>
+interface ScheduleViewModelOutputs {
+    val items: LiveData<List<ScheduleModel>?>
     val isRefreshing: LiveData<Boolean>
 }
 
 @HiltViewModel
-class CalendarViewModel @Inject constructor(
+class ScheduleViewModel @Inject constructor(
     private val fetchSeasonUseCase: FetchSeasonUseCase,
     private val overviewRepository: OverviewRepository,
+    private val notificationRepository: NotificationRepository,
     private val statsNavigationComponent: StatsNavigationComponent,
     private val eventsRepository: EventsRepository,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
-): ViewModel(), CalendarViewModelInputs, CalendarViewModelOutputs {
+): ViewModel(), ScheduleViewModelInputs, ScheduleViewModelOutputs {
 
-    val inputs: CalendarViewModelInputs = this
-    val outputs: CalendarViewModelOutputs = this
-
+    val inputs: ScheduleViewModelInputs = this
+    val outputs: ScheduleViewModelOutputs = this
 
     override val isRefreshing: MutableLiveData<Boolean> = MutableLiveData(false)
 
+    private val calendar: MutableLiveData<Boolean> = MutableLiveData(false)
+
     private val season: MutableStateFlow<Int?> = MutableStateFlow(null)
-    override val items: LiveData<List<CalendarModel>> = season
+    override val items: LiveData<List<ScheduleModel>?> = season
         .filterNotNull()
         .flatMapLatest { season ->
             isRefreshing.postValue(true)
@@ -61,13 +64,13 @@ class CalendarViewModel @Inject constructor(
                     ) { overview, events ->
                         isRefreshing.postValue(false)
                         if (!hasMadeRequest) {
-                            return@combine listOf(CalendarModel.Loading)
+                            return@combine listOf(ScheduleModel.Loading)
                         }
 
                         val upcoming = overview.overviewRaces.getLatestUpcoming()
                         val upcomingEvents = events.filter { it.date > LocalDate.now() }
 
-                        return@combine calendar(overview, upcomingEvents, upcoming)
+                        return@combine schedule(overview, upcomingEvents, upcoming)
 
                     }
                 }
@@ -99,45 +102,48 @@ class CalendarViewModel @Inject constructor(
         statsNavigationComponent.tyres(season)
     }
 
-    override fun clickItem(model: CalendarModel) {
+    override fun clickItem(model: ScheduleModel) {
         when (model) {
-            is CalendarModel.Week -> {
-                val race = model.race ?: return
-                statsNavigationComponent.weekend(
-                    WeekendInfo(
-                        season = race.season,
-                        round = race.round,
-                        raceName = race.raceName,
-                        circuitId = race.circuitId,
-                        circuitName = race.circuitName,
-                        country = race.country,
-                        countryISO = race.countryISO,
-                        date = race.date,
-                    )
-                )
-            }
-            CalendarModel.Loading -> {}
+            is ScheduleModel.List -> statsNavigationComponent.weekend(WeekendInfo(
+                season = model.model.season,
+                round = model.model.round,
+                raceName = model.model.raceName,
+                circuitId = model.model.circuitId,
+                circuitName = model.model.circuitName,
+                country = model.model.country,
+                countryISO = model.model.countryISO,
+                date = model.model.date,
+            ))
+            is ScheduleModel.Event -> {}
+            ScheduleModel.Loading -> {}
         }
     }
 
-    private fun calendar(
+    private fun schedule(
         overview: Overview,
         upcomingEvents: List<Event>,
         upcoming: OverviewRace?
-    ): List<CalendarModel> {
-        val first = LocalDate.of(overview.season, org.threeten.bp.Month.JANUARY, 1).startOfWeek()
-        return List(60) { index -> first.plusDays((index * 7).toLong()) }
-            .filter { it.year <= overview.season }
-            .map { weekBeginning ->
-                CalendarModel.Week(
-                    season = overview.season,
-                    startOfWeek = weekBeginning,
-                    race = overview.overviewRaces.firstOrNull {
-                        it.date >= weekBeginning && it.date <= weekBeginning.plusDays(
-                            6L
-                        )
-                    }
-                )
+    ): List<ScheduleModel> {
+        return mutableListOf<ScheduleModel>()
+            .apply {
+                addAll(overview.overviewRaces.map {
+                    ScheduleModel.List(
+                        model = it,
+                        notificationSchedule = notificationRepository.notificationSchedule,
+                        showScheduleList = it == upcoming
+                    )
+                })
+                addAll(upcomingEvents.map {
+                    ScheduleModel.Event(it)
+                })
+            }
+            .sortedBy {
+                when (it) {
+                    is ScheduleModel.Event -> it.date
+                    is ScheduleModel.List -> it.date
+                    else -> null
+                }
             }
     }
 }
+

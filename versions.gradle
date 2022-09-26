@@ -54,7 +54,7 @@ ext {
     play_ads = "21.1.0"
     circleimageview = "3.1.0"
     glide = "4.13.2"
-    tmg_utils = "2.4.2"
+    tmg_utils = "2.4.3"
     tmg_labelled_progressbar = "1.0.7"
     tmg_about_this_app = "5.3.1"
     tmg_test_utils = "1.1.0"

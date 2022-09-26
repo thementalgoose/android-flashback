@@ -1,14 +1,16 @@
-package tmg.flashback.stats.ui.dashboard.calendar
+package tmg.flashback.stats.ui.dashboard.schedule
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -16,45 +18,51 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import org.threeten.bp.LocalDate
 import tmg.flashback.formula1.enums.SeasonTyres
 import tmg.flashback.formula1.enums.getBySeason
+import tmg.flashback.formula1.extensions.icon
+import tmg.flashback.formula1.extensions.label
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.providers.OverviewRaceProvider
 import tmg.flashback.stats.R
 import tmg.flashback.stats.repository.models.NotificationSchedule
 import tmg.flashback.stats.ui.dashboard.DashboardQuickLinks
+import tmg.flashback.stats.ui.dashboard.schedule.schedule.Schedule
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
+import tmg.flashback.style.text.TextBody1
+import tmg.flashback.style.text.TextBody2
 import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.loading.SkeletonViewList
+import tmg.utilities.extensions.format
 
 private val countryBadgeSize = 32.dp
 private const val listAlpha = 0.6f
 private const val pastScheduleAlpha = 0.2f
 
 @Composable
-fun CalendarScreenVM(
+fun ScheduleScreenVM(
     showMenu: Boolean,
     menuClicked: (() -> Unit)? = null,
     season: Int
 ) {
-    val viewModel: CalendarViewModel = hiltViewModel()
+    val viewModel: ScheduleViewModel = hiltViewModel()
     viewModel.inputs.load(season)
 
     val isRefreshing = viewModel.outputs.isRefreshing.observeAsState(false)
-    val items = viewModel.outputs.items.observeAsState(listOf(CalendarModel.Loading))
+    val items = viewModel.outputs.items.observeAsState(listOf(ScheduleModel.Loading))
     SwipeRefresh(
         state = rememberSwipeRefreshState(isRefreshing = isRefreshing.value),
         onRefresh = viewModel.inputs::refresh
     ) {
-        CalendarScreen(
+        ScheduleScreen(
             showMenu = showMenu,
             tyreClicked = viewModel.inputs::clickTyre,
             menuClicked = menuClicked,
             itemClicked = viewModel.inputs::clickItem,
+            autoScrollToUpcoming = false, // TODO: Fix
             season = season,
             items = items.value
         )
@@ -63,15 +71,25 @@ fun CalendarScreenVM(
 
 
 @Composable
-fun CalendarScreen(
+fun ScheduleScreen(
     showMenu: Boolean,
     tyreClicked: (season: Int) -> Unit,
     menuClicked: (() -> Unit)? = null,
-    itemClicked: (CalendarModel) -> Unit,
+    itemClicked: (ScheduleModel) -> Unit,
     season: Int,
-    items: List<CalendarModel>?
+    autoScrollToUpcoming: Boolean,
+    items: List<ScheduleModel>?
 ) {
+    val indexOf: Int? = items
+        ?.indexOfFirst { it is ScheduleModel.List && it.shouldShowScheduleList }
+        ?.takeIf { autoScrollToUpcoming}
+
+    val scrollState = rememberLazyListState(
+        initialFirstVisibleItemIndex = indexOf?.coerceIn(0, items.size - 1) ?: 0
+    )
+
     LazyColumn(
+        state = scrollState,
         modifier = Modifier
             .fillMaxSize()
             .background(AppTheme.colors.backgroundPrimary),
@@ -102,7 +120,7 @@ fun CalendarScreen(
                 )
             }
             item(key = "info") {
-                DashboardQuickLinks()
+               DashboardQuickLinks()
             }
 
             if (items == null) {
@@ -113,13 +131,16 @@ fun CalendarScreen(
 
             items(items ?: emptyList(), key = { it.key }) { item ->
                 when (item) {
-                    is CalendarModel.Week -> {
-                        Week(
+                    is ScheduleModel.List -> {
+                        Schedule(
                             model = item,
                             itemClicked = itemClicked
                         )
                     }
-                    CalendarModel.Loading -> {
+                    is ScheduleModel.Event -> {
+                        Event(event = item)
+                    }
+                    ScheduleModel.Loading -> {
                         SkeletonViewList()
                     }
                 }
@@ -131,6 +152,35 @@ fun CalendarScreen(
     )
 }
 
+@Composable
+private fun Event(
+    event: ScheduleModel.Event
+) {
+    Row(modifier = Modifier
+        .alpha(listAlpha)
+        .padding(
+            vertical = AppTheme.dimensions.paddingXSmall,
+            horizontal = AppTheme.dimensions.paddingMedium
+        )
+    ) {
+        Icon(
+            painter = painterResource(id = event.event.type.icon),
+            contentDescription = null,
+            modifier = Modifier.size(16.dp),
+            tint = AppTheme.colors.contentSecondary
+        )
+        TextBody1(
+            text = "${stringResource(id = event.event.type.label)}: ${event.event.label}",
+            modifier = Modifier
+                .padding(horizontal = AppTheme.dimensions.paddingSmall)
+                .weight(1f)
+        )
+        TextBody2(
+            text = event.event.date.format("dd MMM") ?: "",
+        )
+    }
+}
+
 @PreviewTheme
 @Composable
 private fun PreviewSchedule(
@@ -138,15 +188,15 @@ private fun PreviewSchedule(
 ) {
     AppThemePreview {
         Column(Modifier.fillMaxWidth()) {
-            Week(
-                model = CalendarModel.Week(
-                    season = 2022,
-                    startOfWeek = LocalDate.of(2022, 9, 26),
-                    race = null
-                ),
+            Schedule(
+                model = ScheduleModel.List(race, notificationSchedule = fakeNotificationSchedule),
                 itemClicked = { }
             )
             Spacer(Modifier.height(16.dp))
+            Schedule(
+                model = ScheduleModel.List(race, notificationSchedule = fakeNotificationSchedule, showScheduleList = true),
+                itemClicked = { }
+            )
         }
     }
 }

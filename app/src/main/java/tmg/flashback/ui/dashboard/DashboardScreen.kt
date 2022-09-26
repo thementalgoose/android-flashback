@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.launch
-import tmg.flashback.stats.ui.dashboard.calendar.CalendarScreenVM
+import tmg.flashback.stats.ui.dashboard.schedule.ScheduleScreenVM
 import tmg.flashback.stats.ui.dashboard.constructors.ConstructorStandingsScreenVM
 import tmg.flashback.stats.ui.dashboard.drivers.DriverStandingsScreenVM
 import tmg.flashback.style.AppTheme
@@ -93,7 +93,7 @@ fun DashboardScreen(
                         enter = fadeIn(),
                         exit = fadeOut()
                     ) {
-                        CalendarScreenVM(
+                        ScheduleScreenVM(
                             showMenu = true,
                             season = value!!.season,
                             menuClicked = {
