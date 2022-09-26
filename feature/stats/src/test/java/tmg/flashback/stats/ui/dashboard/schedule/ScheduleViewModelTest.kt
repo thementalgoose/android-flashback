@@ -56,6 +56,7 @@ internal class ScheduleViewModelTest: BaseTest() {
                 )
             ))
         }
+        every { mockHomeRepository.collapseList } returns false
         every { mockEventsRepository.getEvents(any()) } returns flow { emit(emptyList()) }
         every { mockNotificationRepository.notificationSchedule } returns fakeNotificationSchedule
         every { mockFetchSeasonUseCase.fetch(any()) } returns flow { emit(true) }
