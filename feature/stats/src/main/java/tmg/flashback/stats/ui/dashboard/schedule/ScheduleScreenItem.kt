@@ -1,4 +1,4 @@
-package tmg.flashback.stats.ui.dashboard.calendar.schedule
+package tmg.flashback.stats.ui.dashboard.schedule.schedule
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -19,14 +19,12 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import org.threeten.bp.LocalDate
-import tmg.flashback.formula1.extensions.icon
-import tmg.flashback.formula1.extensions.label
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.model.Schedule
 import tmg.flashback.providers.OverviewRaceProvider
 import tmg.flashback.stats.R
 import tmg.flashback.stats.repository.models.NotificationSchedule
-import tmg.flashback.stats.ui.dashboard.calendar.CalendarModel
+import tmg.flashback.stats.ui.dashboard.schedule.ScheduleModel
 import tmg.flashback.stats.ui.shared.Flag
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
@@ -46,8 +44,8 @@ private const val pastScheduleAlpha = 0.2f
 
 @Composable
 internal fun Schedule(
-    model: CalendarModel.List,
-    itemClicked: (CalendarModel.List) -> Unit,
+    model: ScheduleModel.List,
+    itemClicked: (ScheduleModel.List) -> Unit,
     modifier: Modifier = Modifier,
     card: Boolean = false
 ) {
@@ -284,7 +282,7 @@ private fun Preview(
     AppThemePreview {
         Column(Modifier.fillMaxWidth()) {
             Schedule(
-                model = CalendarModel.List(
+                model = ScheduleModel.List(
                     model = overviewRace,
                     showScheduleList = false,
                     notificationSchedule = fakeNotificationSchedule,
@@ -293,7 +291,7 @@ private fun Preview(
                 itemClicked = {}
             )
             Schedule(
-                model = CalendarModel.List(
+                model = ScheduleModel.List(
                     model = overviewRace,
                     showScheduleList = true,
                     notificationSchedule = fakeNotificationSchedule,

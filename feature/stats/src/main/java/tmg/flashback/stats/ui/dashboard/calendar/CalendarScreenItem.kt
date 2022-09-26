@@ -1,4 +1,4 @@
-package tmg.flashback.stats.ui.dashboard.calendar.calendar
+package tmg.flashback.stats.ui.dashboard.calendar
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -17,7 +17,7 @@ import org.threeten.bp.Month
 import org.threeten.bp.format.TextStyle
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.providers.OverviewRaceProvider
-import tmg.flashback.stats.ui.dashboard.calendar.CalendarModel
+import tmg.flashback.stats.ui.dashboard.schedule.ScheduleModel
 import tmg.flashback.stats.ui.shared.Flag
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
