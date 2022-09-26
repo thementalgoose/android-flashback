@@ -14,7 +14,7 @@ interface SettingsLayoutViewModelInputs {
 }
 
 interface SettingsLayoutViewModelOutputs {
-    val providedByAtTopEnabled: LiveData<Boolean>
+    val collapsedListEnabled: LiveData<Boolean>
 }
 
 @HiltViewModel
@@ -25,13 +25,13 @@ class SettingsLayoutViewModel @Inject constructor(
     val inputs: SettingsLayoutViewModelInputs = this
     val outputs: SettingsLayoutViewModelOutputs = this
 
-    override val providedByAtTopEnabled: MutableLiveData<Boolean> = MutableLiveData(homeRepository.dataProvidedByAtTop)
+    override val collapsedListEnabled: MutableLiveData<Boolean> = MutableLiveData(homeRepository.collapseList)
 
     override fun prefClicked(pref: Setting) {
         when (pref.key) {
-            Settings.Layout.providedByAtTopKey -> {
-                homeRepository.dataProvidedByAtTop = !homeRepository.dataProvidedByAtTop
-                providedByAtTopEnabled.value = homeRepository.dataProvidedByAtTop
+            Settings.Layout.collapseListKey -> {
+                homeRepository.collapseList = !homeRepository.collapseList
+                collapsedListEnabled.value = homeRepository.collapseList
             }
         }
     }

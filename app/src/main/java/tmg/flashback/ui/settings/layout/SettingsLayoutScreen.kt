@@ -28,11 +28,11 @@ fun SettingsLayoutScreenVM(
 
     ScreenView(screenName = "Settings - Layout")
 
-    val providedByAtTopEnabled = viewModel.outputs.providedByAtTopEnabled.observeAsState(true)
+    val providedByAtTopEnabled = viewModel.outputs.collapsedListEnabled.observeAsState(true)
     SettingsLayoutScreen(
         actionUpClicked = actionUpClicked,
         prefClicked = viewModel.inputs::prefClicked,
-        providedByAtTopEnabled = providedByAtTopEnabled.value
+        collapsedListEnabled = providedByAtTopEnabled.value
     )
 }
 
@@ -40,7 +40,7 @@ fun SettingsLayoutScreenVM(
 fun SettingsLayoutScreen(
     actionUpClicked: () -> Unit,
     prefClicked: (Setting) -> Unit,
-    providedByAtTopEnabled: Boolean
+    collapsedListEnabled: Boolean
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxSize()
@@ -57,7 +57,7 @@ fun SettingsLayoutScreen(
 
             Header(title = R.string.settings_header_home)
             Switch(
-                model = Settings.Layout.providedByAtTop(providedByAtTopEnabled),
+                model = Settings.Layout.collapseList(collapsedListEnabled),
                 onClick = prefClicked
             )
 
@@ -73,7 +73,7 @@ private fun Preview() {
         SettingsLayoutScreen(
             actionUpClicked = {},
             prefClicked = {},
-            providedByAtTopEnabled = true
+            collapsedListEnabled = true
         )
     }
 }

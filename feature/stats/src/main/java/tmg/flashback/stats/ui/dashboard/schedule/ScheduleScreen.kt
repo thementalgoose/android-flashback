@@ -136,12 +136,12 @@ fun ScheduleScreen(
                         Event(event = item)
                     }
                     is ScheduleModel.CollapsableList -> {
-                        Spacer(Modifier.height(AppTheme.dimensions.paddingSmall))
+                        Spacer(Modifier.height(AppTheme.dimensions.paddingXSmall))
                         CollapsableList(
                             model = item,
                             itemClicked = itemClicked
                         )
-                        Spacer(Modifier.height(AppTheme.dimensions.paddingSmall))
+                        Spacer(Modifier.height(AppTheme.dimensions.paddingXSmall))
                     }
                     ScheduleModel.Loading -> {
                         SkeletonViewList()
