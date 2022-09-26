@@ -50,7 +50,7 @@ class ScheduleViewModel @Inject constructor(
 
     override val isRefreshing: MutableLiveData<Boolean> = MutableLiveData(false)
 
-    private var showCollapsablePlaceholder: MutableLiveData<Boolean> = MutableLiveData(homeRepository.collapseList)
+    private var showCollapsablePlaceholder: MutableStateFlow<Boolean> = MutableStateFlow(homeRepository.collapseList)
 
     private val season: MutableStateFlow<Int?> = MutableStateFlow(null)
     override val items: LiveData<List<ScheduleModel>?> = season
@@ -63,7 +63,7 @@ class ScheduleViewModel @Inject constructor(
                     combine(
                         overviewRepository.getOverview(season),
                         eventsRepository.getEvents(season),
-                        showCollapsablePlaceholder.asFlow()
+                        showCollapsablePlaceholder
                     ) { overview, events, showCollapsible ->
                         isRefreshing.postValue(false)
                         if (!hasMadeRequest) {
@@ -93,7 +93,7 @@ class ScheduleViewModel @Inject constructor(
 
     override fun load(season: Int) {
         this.season.value = season
-        this.showCollapsablePlaceholder.value = true
+        this.showCollapsablePlaceholder.value = homeRepository.collapseList
     }
 
     override fun refresh() {
@@ -136,6 +136,7 @@ class ScheduleViewModel @Inject constructor(
         upcoming: OverviewRace?,
         showCollapsible: Boolean
     ): List<ScheduleModel> {
+        println("SHOW COLLAPSIBLE: $showCollapsible")
         return mutableListOf<ScheduleModel>()
             .apply {
                 val first = overview.overviewRaces.minByOrNull { it.round }
