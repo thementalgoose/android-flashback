@@ -182,12 +182,12 @@ internal class HomeRepositoryTest {
 
     @Test
     fun `dashboard autoscroll reads value from preferences repository`() {
-        every { mockPreferenceManager.getBoolean(keyDashboardAutoscroll, true) } returns true
+        every { mockPreferenceManager.getBoolean(keyDashboardCollapseList, false) } returns true
         initSUT()
 
-        assertTrue(sut.dashboardAutoscroll)
+        assertTrue(sut.collapseList)
         verify {
-            mockPreferenceManager.getBoolean(keyDashboardAutoscroll, true)
+            mockPreferenceManager.getBoolean(keyDashboardCollapseList, false)
         }
     }
 
@@ -195,9 +195,9 @@ internal class HomeRepositoryTest {
     fun `dashboard autoscroll saves value to shared prefs repository`() {
         initSUT()
 
-        sut.dashboardAutoscroll = true
+        sut.collapseList = true
         verify {
-            mockPreferenceManager.save(keyDashboardAutoscroll, true)
+            mockPreferenceManager.save(keyDashboardCollapseList, true)
         }
     }
 
@@ -305,9 +305,7 @@ internal class HomeRepositoryTest {
 
         // Prefs
         private const val keyDefaultToSchedule: String = "DASHBOARD_DEFAULT_TAB_SCHEDULE"
-        private const val keyShowListFavourited: String = "BOTTOM_SHEET_FAVOURITED"
-        private const val keyShowListAll: String = "BOTTOM_SHEET_ALL"
-        private const val keyDashboardAutoscroll: String = "DASHBOARD_AUTOSCROLL"
+        private const val keyDashboardCollapseList: String = "DASHBOARD_COLLAPSE_LIST"
         private const val keyFavouriteSeasons: String = "FAVOURITE_SEASONS"
         private const val keyDefaultSeason: String = "DEFAULT_SEASON"
         private const val keyProvidedByAtTop: String = "PROVIDED_BY_AT_TOP"

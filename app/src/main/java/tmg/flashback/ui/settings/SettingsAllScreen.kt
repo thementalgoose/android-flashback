@@ -95,12 +95,11 @@ fun SettingsAllScreen(
                     onClick = prefClicked
                 )
             }
-            // Settings currently empty
-//            Header(title = R.string.settings_header_layout)
-//            Section(
-//                model = Settings.Layout.home,
-//                onClick = prefClicked
-//            )
+            Header(title = R.string.settings_header_layout)
+            Section(
+                model = Settings.Layout.home,
+                onClick = prefClicked
+            )
             if (isRSSEnabled) {
                 Header(title = R.string.settings_header_rss_feed)
                 Section(

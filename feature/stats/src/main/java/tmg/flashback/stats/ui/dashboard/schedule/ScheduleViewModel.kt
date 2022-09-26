@@ -14,6 +14,7 @@ import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.statistics.repo.EventsRepository
 import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.stats.StatsNavigationComponent
+import tmg.flashback.stats.repository.HomeRepository
 import tmg.flashback.stats.repository.NotificationRepository
 import tmg.flashback.stats.ui.weekend.WeekendInfo
 import tmg.flashback.stats.usecases.FetchSeasonUseCase
@@ -38,6 +39,7 @@ class ScheduleViewModel @Inject constructor(
     private val fetchSeasonUseCase: FetchSeasonUseCase,
     private val overviewRepository: OverviewRepository,
     private val notificationRepository: NotificationRepository,
+    private val homeRepository: HomeRepository,
     private val statsNavigationComponent: StatsNavigationComponent,
     private val eventsRepository: EventsRepository,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
@@ -48,7 +50,7 @@ class ScheduleViewModel @Inject constructor(
 
     override val isRefreshing: MutableLiveData<Boolean> = MutableLiveData(false)
 
-    private val calendar: MutableLiveData<Boolean> = MutableLiveData(false)
+    private var showCollapsablePlaceholder: MutableLiveData<Boolean> = MutableLiveData(homeRepository.collapseList)
 
     private val season: MutableStateFlow<Int?> = MutableStateFlow(null)
     override val items: LiveData<List<ScheduleModel>?> = season
@@ -60,8 +62,9 @@ class ScheduleViewModel @Inject constructor(
                 .flatMapLatest { hasMadeRequest ->
                     combine(
                         overviewRepository.getOverview(season),
-                        eventsRepository.getEvents(season)
-                    ) { overview, events ->
+                        eventsRepository.getEvents(season),
+                        showCollapsablePlaceholder.asFlow()
+                    ) { overview, events, showCollapsible ->
                         isRefreshing.postValue(false)
                         if (!hasMadeRequest) {
                             return@combine listOf(ScheduleModel.Loading)
@@ -70,8 +73,12 @@ class ScheduleViewModel @Inject constructor(
                         val upcoming = overview.overviewRaces.getLatestUpcoming()
                         val upcomingEvents = events.filter { it.date > LocalDate.now() }
 
-                        return@combine schedule(overview, upcomingEvents, upcoming)
-
+                        return@combine schedule(
+                            overview = overview,
+                            upcomingEvents = upcomingEvents,
+                            upcoming = upcoming,
+                            showCollapsible = showCollapsible
+                        )
                     }
                 }
         }
@@ -86,6 +93,7 @@ class ScheduleViewModel @Inject constructor(
 
     override fun load(season: Int) {
         this.season.value = season
+        this.showCollapsablePlaceholder.value = true
     }
 
     override fun refresh() {
@@ -114,6 +122,9 @@ class ScheduleViewModel @Inject constructor(
                 countryISO = model.model.countryISO,
                 date = model.model.date,
             ))
+            is ScheduleModel.CollapsableList -> {
+                showCollapsablePlaceholder.value = false
+            }
             is ScheduleModel.Event -> {}
             ScheduleModel.Loading -> {}
         }
@@ -122,23 +133,48 @@ class ScheduleViewModel @Inject constructor(
     private fun schedule(
         overview: Overview,
         upcomingEvents: List<Event>,
-        upcoming: OverviewRace?
+        upcoming: OverviewRace?,
+        showCollapsible: Boolean
     ): List<ScheduleModel> {
         return mutableListOf<ScheduleModel>()
             .apply {
-                addAll(overview.overviewRaces.map {
-                    ScheduleModel.List(
-                        model = it,
-                        notificationSchedule = notificationRepository.notificationSchedule,
-                        showScheduleList = it == upcoming
+                val first = overview.overviewRaces.minByOrNull { it.round }
+                if (showCollapsible &&
+                    upcoming != null &&
+                    first != null &&
+                    first.round != upcoming.round &&
+                    upcoming.round >= 3
+                ) {
+                    add(ScheduleModel.CollapsableList(
+                        first = first,
+                        last = overview.overviewRaces.firstOrNull { it.round == upcoming.round - 1 }
+                    ))
+                    addAll(overview.overviewRaces
+                        .filter { it.round >= upcoming.round }
+                        .map {
+                            ScheduleModel.List(
+                                model = it,
+                                notificationSchedule = notificationRepository.notificationSchedule,
+                                showScheduleList = it == upcoming
+                            )
+                        }
                     )
-                })
+                } else {
+                    addAll(overview.overviewRaces.map {
+                        ScheduleModel.List(
+                            model = it,
+                            notificationSchedule = notificationRepository.notificationSchedule,
+                            showScheduleList = it == upcoming
+                        )
+                    })
+                }
                 addAll(upcomingEvents.map {
                     ScheduleModel.Event(it)
                 })
             }
             .sortedBy {
                 when (it) {
+                    is ScheduleModel.CollapsableList -> it.first.date
                     is ScheduleModel.Event -> it.date
                     is ScheduleModel.List -> it.date
                     else -> null

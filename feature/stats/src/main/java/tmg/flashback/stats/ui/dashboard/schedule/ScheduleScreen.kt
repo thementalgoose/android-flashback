@@ -1,16 +1,20 @@
 package tmg.flashback.stats.ui.dashboard.schedule
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -28,19 +32,21 @@ import tmg.flashback.stats.R
 import tmg.flashback.stats.repository.models.NotificationSchedule
 import tmg.flashback.stats.ui.dashboard.DashboardQuickLinks
 import tmg.flashback.stats.ui.dashboard.schedule.schedule.Schedule
+import tmg.flashback.stats.ui.shared.Flag
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
+import tmg.flashback.style.text.TextSection
 import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.header.Header
+import tmg.flashback.ui.components.layouts.Container
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.utilities.extensions.format
 
-private val countryBadgeSize = 32.dp
 private const val listAlpha = 0.6f
-private const val pastScheduleAlpha = 0.2f
+private val expandIcon = 20.dp
 
 @Composable
 fun ScheduleScreenVM(
@@ -62,7 +68,6 @@ fun ScheduleScreenVM(
             tyreClicked = viewModel.inputs::clickTyre,
             menuClicked = menuClicked,
             itemClicked = viewModel.inputs::clickItem,
-            autoScrollToUpcoming = false, // TODO: Fix
             season = season,
             items = items.value
         )
@@ -77,19 +82,9 @@ fun ScheduleScreen(
     menuClicked: (() -> Unit)? = null,
     itemClicked: (ScheduleModel) -> Unit,
     season: Int,
-    autoScrollToUpcoming: Boolean,
     items: List<ScheduleModel>?
 ) {
-    val indexOf: Int? = items
-        ?.indexOfFirst { it is ScheduleModel.List && it.shouldShowScheduleList }
-        ?.takeIf { autoScrollToUpcoming}
-
-    val scrollState = rememberLazyListState(
-        initialFirstVisibleItemIndex = indexOf?.coerceIn(0, items.size - 1) ?: 0
-    )
-
     LazyColumn(
-        state = scrollState,
         modifier = Modifier
             .fillMaxSize()
             .background(AppTheme.colors.backgroundPrimary),
@@ -140,6 +135,14 @@ fun ScheduleScreen(
                     is ScheduleModel.Event -> {
                         Event(event = item)
                     }
+                    is ScheduleModel.CollapsableList -> {
+                        Spacer(Modifier.height(AppTheme.dimensions.paddingXSmall))
+                        CollapsableList(
+                            model = item,
+                            itemClicked = itemClicked
+                        )
+                        Spacer(Modifier.height(AppTheme.dimensions.paddingXSmall))
+                    }
                     ScheduleModel.Loading -> {
                         SkeletonViewList()
                     }
@@ -150,6 +153,93 @@ fun ScheduleScreen(
             }
         }
     )
+}
+
+@Composable
+private fun CollapsableList(
+    model: ScheduleModel.CollapsableList,
+    itemClicked: (ScheduleModel.CollapsableList) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Row(modifier = modifier
+        .clickable { itemClicked(model) }
+        .padding(
+            horizontal = AppTheme.dimensions.paddingXSmall,
+            vertical = AppTheme.dimensions.paddingXSmall
+        ),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Expand()
+
+        Row(
+            modifier = modifier
+                .weight(1f)
+                .clip(RoundedCornerShape(AppTheme.dimensions.radiusSmall))
+                .padding(
+                    horizontal = AppTheme.dimensions.paddingSmall,
+                    vertical = AppTheme.dimensions.paddingSmall
+                ),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+
+            Column(Modifier.weight(1f)) {
+                Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                    Flag(
+                        iso = model.first.countryISO,
+                        nationality = model.first.country,
+                        modifier = Modifier.size(20.dp)
+                    )
+                    TextBody1(
+                        modifier = Modifier
+                            .padding(horizontal = AppTheme.dimensions.paddingSmall)
+                            .weight(1f),
+                        text = model.first.raceName
+                    )
+                    TextSection(text = "#${model.first.round}")
+                }
+                if (model.last != null) {
+                    Spacer(Modifier.height(8.dp))
+                    Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                        Flag(
+                            iso = model.last.countryISO,
+                            nationality = model.last.country,
+                            modifier = Modifier.size(20.dp)
+                        )
+                        TextBody1(
+                            modifier = Modifier
+                                .padding(horizontal = AppTheme.dimensions.paddingSmall)
+                                .weight(1f),
+                            text = model.last.raceName
+                        )
+                        TextSection(text = "#${model.last.round}")
+                    }
+                }
+            }
+        }
+
+        Expand()
+    }
+}
+
+@Composable
+private fun Expand(
+    modifier: Modifier = Modifier
+) {
+    Column(modifier = modifier.fillMaxHeight()) {
+        Icon(
+            painter = painterResource(id = R.drawable.ic_collapsible_icon_top),
+            contentDescription = null,
+            modifier = Modifier.size(expandIcon),
+            tint = AppTheme.colors.contentTertiary
+        )
+        Spacer(Modifier.height(8.dp))
+        Icon(
+            painter = painterResource(id = R.drawable.ic_collapsible_icon_bottom),
+            contentDescription = null,
+            modifier = Modifier.size(expandIcon),
+            tint = AppTheme.colors.contentTertiary
+        )
+    }
 }
 
 @Composable

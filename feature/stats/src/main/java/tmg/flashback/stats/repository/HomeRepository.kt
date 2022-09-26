@@ -27,7 +27,7 @@ class HomeRepository @Inject constructor(
 
         // Prefs
         private const val keyDefaultToSchedule: String = "DASHBOARD_DEFAULT_TAB_SCHEDULE"
-        private const val keyDashboardAutoscroll: String = "DASHBOARD_AUTOSCROLL"
+        private const val keyDashboardCollapseList: String = "DASHBOARD_COLLAPSE_LIST"
         private const val keyFavouriteSeasons: String = "FAVOURITE_SEASONS"
         private const val keyDefaultSeason: String = "DEFAULT_SEASON"
         private const val keyProvidedByAtTop: String = "PROVIDED_BY_AT_TOP"
@@ -77,11 +77,11 @@ class HomeRepository @Inject constructor(
         set(value) = preferenceManager.save(keyDefaultToSchedule, value)
 
     /**
-     * When loading the dashboard, should the app autoscroll to the current season if it's applicable
+     * Default to which tab
      */
-    var dashboardAutoscroll: Boolean
-        get() = preferenceManager.getBoolean(keyDashboardAutoscroll, true)
-        set(value) = preferenceManager.save(keyDashboardAutoscroll, value)
+    var collapseList: Boolean
+        get() = preferenceManager.getBoolean(keyDashboardCollapseList, false)
+        set(value) = preferenceManager.save(keyDashboardCollapseList, value)
 
     /**
      * Favourited seasons in the list
