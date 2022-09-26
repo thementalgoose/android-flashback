@@ -1,6 +1,5 @@
 package tmg.flashback.debug.styleguide
 
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement.SpaceEvenly
 import androidx.compose.foundation.rememberScrollState
@@ -11,7 +10,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import tmg.flashback.debug.R
 import tmg.flashback.style.AppTheme
@@ -43,10 +41,10 @@ fun StyleGuideComposeLayout(
             modifier = modifier
                 .fillMaxWidth()
                 .padding(
-                    top = AppTheme.dimensions.paddingXLarge,
-                    start = AppTheme.dimensions.paddingMedium,
-                    end = AppTheme.dimensions.paddingMedium,
-                    bottom = AppTheme.dimensions.paddingMedium
+                    top = AppTheme.dimens.xlarge,
+                    start = AppTheme.dimens.medium,
+                    end = AppTheme.dimens.medium,
+                    bottom = AppTheme.dimens.medium
                 )
         ) {
                     TextHeadline1(text = "Headline 1")

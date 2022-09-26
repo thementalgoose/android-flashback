@@ -9,7 +9,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import tmg.flashback.style.AppTheme
@@ -22,7 +21,7 @@ fun Container(
     modifier: Modifier = Modifier,
     isSelected: Boolean = false,
     isOutlined: Boolean = false,
-    boxRadius: Dp = AppTheme.dimensions.radiusSmall,
+    boxRadius: Dp = AppTheme.dimens.radiusSmall,
     content: @Composable BoxScope.() -> Unit
 ) {
     val backgroundColor = animateColorAsState(targetValue = when (isSelected) {

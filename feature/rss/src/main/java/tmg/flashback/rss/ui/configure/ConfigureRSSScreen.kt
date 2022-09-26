@@ -152,7 +152,7 @@ fun ConfigureRSSScreen(
             text = {
                 Column(Modifier.fillMaxWidth()) {
                     TextBody2(text = stringResource(id = R.string.settings_rss_add_description))
-                    Spacer(Modifier.height(AppTheme.dimensions.paddingMedium))
+                    Spacer(Modifier.height(AppTheme.dimens.medium))
                     InputPrimary(
                         text = input,
                         placeholder = "https://www.website.com/rss"
@@ -206,8 +206,8 @@ private fun Source(
             }
         })
         .padding(
-            vertical = AppTheme.dimensions.paddingSmall,
-            horizontal = AppTheme.dimensions.paddingMedium
+            vertical = AppTheme.dimens.small,
+            horizontal = AppTheme.dimens.medium
         )
     ) {
         SourceBadge(
@@ -219,7 +219,7 @@ private fun Source(
         Column(
             modifier = Modifier
                 .weight(1f)
-                .padding(horizontal = AppTheme.dimensions.paddingMedium)
+                .padding(horizontal = AppTheme.dimens.medium)
         ) {
             TextTitle(
                 text = model.supportedArticleSource?.source ?: model.urlModel?.let { "${it.protocol}://${it.host}"} ?: model.url

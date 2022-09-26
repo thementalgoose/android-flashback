@@ -11,13 +11,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import tmg.flashback.stats.R
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
-import tmg.flashback.style.lightColours
 import tmg.flashback.style.text.TextBody2
 import kotlin.math.abs
 
@@ -83,8 +81,8 @@ private fun Delta(
             textColor = color,
             bold = true,
             modifier = Modifier.padding(
-                start = AppTheme.dimensions.paddingXXSmall,
-                end = AppTheme.dimensions.paddingXXSmall
+                start = AppTheme.dimens.xxsmall,
+                end = AppTheme.dimens.xxsmall
             )
         )
     }

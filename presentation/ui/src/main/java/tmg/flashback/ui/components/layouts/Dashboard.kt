@@ -209,7 +209,7 @@ private fun VerticalMenuBar(
         modifier = modifier
             .fillMaxHeight()
     ) {
-        Spacer(modifier = Modifier.height(AppTheme.dimensions.paddingMedium))
+        Spacer(modifier = Modifier.height(AppTheme.dimens.medium))
         MenuIcon(
             item = NavigationItem(
                 id = "menu",
@@ -220,12 +220,12 @@ private fun VerticalMenuBar(
             onClick = menuClicked,
             backgroundColor = Color.Transparent
         )
-        Spacer(modifier = Modifier.height(AppTheme.dimensions.paddingMedium))
+        Spacer(modifier = Modifier.height(AppTheme.dimens.medium))
         menuItems.forEach {
             MenuIcon(it, onClick = {
                 menuItemClicked(it)
             })
-            Spacer(modifier = Modifier.height(AppTheme.dimensions.paddingMedium))
+            Spacer(modifier = Modifier.height(AppTheme.dimens.medium))
         }
     }
 }

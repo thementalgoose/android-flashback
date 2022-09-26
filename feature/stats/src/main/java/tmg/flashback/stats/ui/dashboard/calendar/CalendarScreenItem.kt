@@ -17,7 +17,6 @@ import org.threeten.bp.Month
 import org.threeten.bp.format.TextStyle
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.providers.OverviewRaceProvider
-import tmg.flashback.stats.ui.dashboard.schedule.ScheduleModel
 import tmg.flashback.stats.ui.shared.Flag
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
@@ -86,8 +85,8 @@ private fun Month(
     TextTitle(
         text = model.getDisplayName(TextStyle.FULL, Locale.getDefault()),
         modifier = modifier.padding(
-            horizontal = AppTheme.dimensions.paddingMedium,
-            vertical = AppTheme.dimensions.paddingSmall
+            horizontal = AppTheme.dimens.medium,
+            vertical = AppTheme.dimens.small
         )
     )
 }
@@ -104,8 +103,8 @@ private fun CalendarWeek(
     Row(
         modifier.fillMaxWidth()
             .padding(
-                vertical = AppTheme.dimensions.paddingXXSmall,
-                horizontal = AppTheme.dimensions.paddingSmall
+                vertical = AppTheme.dimens.xxsmall,
+                horizontal = AppTheme.dimens.small
             )
     ) {
         for (x in 0 until 7) {

@@ -25,8 +25,8 @@ internal fun RationaleScreen(
     cancelClicked: () -> Unit,
 ) {
     Column(modifier = Modifier.padding(
-        horizontal = AppTheme.dimensions.paddingMedium,
-        vertical = AppTheme.dimensions.paddingMedium
+        horizontal = AppTheme.dimens.medium,
+        vertical = AppTheme.dimens.medium
     )) {
 
         type.raw?.let { raw ->
@@ -34,7 +34,7 @@ internal fun RationaleScreen(
             val progress by animateLottieCompositionAsState(composition, iterations = Int.MAX_VALUE)
             Box(modifier = Modifier
                 .fillMaxWidth()
-                .padding(AppTheme.dimensions.paddingMedium)
+                .padding(AppTheme.dimens.medium)
             ) {
                 LottieAnimation(
                     modifier = Modifier
@@ -50,7 +50,7 @@ internal fun RationaleScreen(
         TextBody1(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = AppTheme.dimensions.paddingMedium),
+                .padding(vertical = AppTheme.dimens.medium),
             text = stringResource(id = type.description)
         )
         Row {
@@ -60,7 +60,7 @@ internal fun RationaleScreen(
                 text = stringResource(id = R.string.permissions_rationale_cancel),
                 onClick = cancelClicked
             )
-            Spacer(Modifier.width(AppTheme.dimensions.paddingMedium))
+            Spacer(Modifier.width(AppTheme.dimens.medium))
             ButtonPrimary(
                 modifier = Modifier.weight(1f),
                 text = stringResource(id = R.string.permissions_rationale_confirm),

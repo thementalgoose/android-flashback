@@ -7,7 +7,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
@@ -27,7 +26,7 @@ fun Header(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .padding(top = AppTheme.dimensions.paddingXSmall)
+            .padding(top = AppTheme.dimens.xsmall)
     ) {
         Row {
             if (icon != null) {
@@ -44,19 +43,19 @@ fun Header(
                 overrideIcons()
 
             } else {
-                Spacer(modifier = Modifier.height(AppTheme.dimensions.paddingLarge + 16.dp))
+                Spacer(modifier = Modifier.height(AppTheme.dimens.large + 16.dp))
             }
         }
-        Spacer(Modifier.height(AppTheme.dimensions.paddingLarge))
+        Spacer(Modifier.height(AppTheme.dimens.large))
         TextHeadline1(
             text = text,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(
-                    start = AppTheme.dimensions.paddingMedium,
-                    end = AppTheme.dimensions.paddingMedium,
-                    top = AppTheme.dimensions.paddingMedium,
-                    bottom = AppTheme.dimensions.paddingMedium
+                    start = AppTheme.dimens.medium,
+                    end = AppTheme.dimens.medium,
+                    top = AppTheme.dimens.medium,
+                    bottom = AppTheme.dimens.medium
                 )
         )
     }
