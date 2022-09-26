@@ -16,7 +16,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import tmg.flashback.style.AppTheme
@@ -30,7 +29,7 @@ import tmg.flashback.ui.R
 fun ContainerCollapsing(
     title: String,
     modifier: Modifier = Modifier,
-    boxRadius: Dp = AppTheme.dimensions.radiusSmall,
+    boxRadius: Dp = AppTheme.dimens.radiusSmall,
     initiallyExpanded: Boolean = false,
     content: @Composable () -> Unit
 ) {
@@ -53,8 +52,8 @@ fun ContainerCollapsing(
                         expanded.value = !expanded.value
                     })
                     .padding(
-                        horizontal = AppTheme.dimensions.paddingMedium,
-                        vertical = AppTheme.dimensions.paddingNSmall
+                        horizontal = AppTheme.dimens.medium,
+                        vertical = AppTheme.dimens.nsmall
                     )
             ) {
                 TextTitle(

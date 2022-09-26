@@ -101,7 +101,7 @@ fun MenuScreen(
                     })
                 ) {
                     Box(modifier = Modifier
-                        .width(AppTheme.dimensions.paddingMedium)
+                        .width(AppTheme.dimens.medium)
                         .fillMaxHeight()
                     ) {
                         if (it.season == Formula1.currentSeasonYear) {
@@ -123,7 +123,7 @@ fun MenuScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(
-                                end = AppTheme.dimensions.paddingMedium
+                                end = AppTheme.dimens.medium
                             )
                     ) {
                         TextBody1(text = it.season.toString(), bold = true)
@@ -131,7 +131,7 @@ fun MenuScreen(
                 }
             }
             item {
-                Spacer(modifier = Modifier.height(AppTheme.dimensions.paddingXXLarge))
+                Spacer(modifier = Modifier.height(AppTheme.dimens.xxlarge))
             }
         }
     )
@@ -144,8 +144,8 @@ private fun Hero(
     TextHeadline2(
         text = stringResource(id = R.string.app_name),
         modifier = modifier.padding(
-            vertical = AppTheme.dimensions.paddingMedium,
-            horizontal = AppTheme.dimensions.paddingNSmall
+            vertical = AppTheme.dimens.medium,
+            horizontal = AppTheme.dimens.nsmall
         )
     )
 }
@@ -159,10 +159,10 @@ private fun SubHeader(
         text = text,
         modifier = modifier
             .padding(
-                start = AppTheme.dimensions.paddingMedium,
-                end = AppTheme.dimensions.paddingMedium,
-                top = AppTheme.dimensions.paddingNSmall,
-                bottom = AppTheme.dimensions.paddingSmall
+                start = AppTheme.dimens.medium,
+                end = AppTheme.dimens.medium,
+                top = AppTheme.dimens.nsmall,
+                bottom = AppTheme.dimens.small
             )
             .alpha(0.8f)
     )
@@ -174,7 +174,7 @@ private fun Divider(
 ) {
     Box(modifier = modifier
         .fillMaxWidth()
-        .padding(vertical = AppTheme.dimensions.paddingXSmall)
+        .padding(vertical = AppTheme.dimens.xsmall)
         .height(2.dp)
         .alpha(0.3f)
         .background(AppTheme.colors.backgroundSecondary)
@@ -192,8 +192,8 @@ private fun Button(
     Row(modifier = modifier
         .fillMaxWidth()
         .padding(
-            vertical = AppTheme.dimensions.paddingNSmall,
-            horizontal = AppTheme.dimensions.paddingMedium
+            vertical = AppTheme.dimens.nsmall,
+            horizontal = AppTheme.dimens.medium
         )
     ) {
         Icon(
@@ -202,7 +202,7 @@ private fun Button(
             tint = AppTheme.colors.contentPrimary,
             contentDescription = null
         )
-        Spacer(Modifier.width(AppTheme.dimensions.paddingMedium))
+        Spacer(Modifier.width(AppTheme.dimens.medium))
         TextBody1(
             text = stringResource(id = label),
             bold = true,
@@ -225,8 +225,8 @@ private fun Toggle(
     Row(modifier = modifier
         .fillMaxWidth()
         .padding(
-            vertical = AppTheme.dimensions.paddingNSmall,
-            horizontal = AppTheme.dimensions.paddingMedium
+            vertical = AppTheme.dimens.nsmall,
+            horizontal = AppTheme.dimens.medium
         ),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -236,7 +236,7 @@ private fun Toggle(
             tint = AppTheme.colors.contentPrimary,
             contentDescription = null
         )
-        Spacer(Modifier.width(AppTheme.dimensions.paddingMedium))
+        Spacer(Modifier.width(AppTheme.dimens.medium))
         TextBody1(
             text = stringResource(id = label),
             bold = true,
@@ -261,8 +261,8 @@ private fun Feature(
         .fillMaxWidth()
         .background(AppTheme.colors.backgroundSecondary)
         .padding(
-            vertical = AppTheme.dimensions.paddingNSmall,
-            horizontal = AppTheme.dimensions.paddingMedium
+            vertical = AppTheme.dimens.nsmall,
+            horizontal = AppTheme.dimens.medium
         )
     ) {
         TextBody1(text = stringResource(id = label))

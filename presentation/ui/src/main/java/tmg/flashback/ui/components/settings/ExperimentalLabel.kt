@@ -7,7 +7,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
@@ -22,11 +21,11 @@ fun ExperimentalLabel(
     TextCaption(
         text = stringResource(id = R.string.settings_experimental),
         modifier = modifier
-            .clip(RoundedCornerShape(AppTheme.dimensions.radiusLarge))
+            .clip(RoundedCornerShape(AppTheme.dimens.radiusLarge))
             .background(AppTheme.colors.backgroundSecondary)
             .padding(
-                start = AppTheme.dimensions.paddingSmall,
-                end = AppTheme.dimensions.paddingSmall,
+                start = AppTheme.dimens.small,
+                end = AppTheme.dimens.small,
                 top = 2.dp,
                 bottom = 2.dp
             )

@@ -40,10 +40,10 @@ fun PrivacyPolicyScreenVM(
         )
         AndroidView(
             modifier = Modifier.padding(
-                top = AppTheme.dimensions.paddingSmall,
-                start = AppTheme.dimensions.paddingMedium,
-                end = AppTheme.dimensions.paddingMedium,
-                bottom = AppTheme.dimensions.paddingMedium
+                top = AppTheme.dimens.small,
+                start = AppTheme.dimens.medium,
+                end = AppTheme.dimens.medium,
+                bottom = AppTheme.dimens.medium
             ),
             factory = {
                 TextView(it).apply {

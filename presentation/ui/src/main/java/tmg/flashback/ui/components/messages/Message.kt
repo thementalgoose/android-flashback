@@ -19,8 +19,8 @@ fun Message(
         modifier = modifier
             .fillMaxWidth()
             .padding(
-                horizontal = AppTheme.dimensions.paddingMedium,
-                vertical = AppTheme.dimensions.paddingSmall
+                horizontal = AppTheme.dimens.medium,
+                vertical = AppTheme.dimens.small
             ),
         text = title,
         bold = true

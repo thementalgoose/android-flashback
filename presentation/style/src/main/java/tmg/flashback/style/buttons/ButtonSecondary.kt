@@ -8,7 +8,6 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
@@ -35,10 +34,10 @@ fun ButtonSecondary(
             text,
             modifier = Modifier
                 .padding(
-                    start = AppTheme.dimensions.paddingSmall,
-                    top = AppTheme.dimensions.paddingXSmall,
-                    end = AppTheme.dimensions.paddingSmall,
-                    bottom = AppTheme.dimensions.paddingXSmall
+                    start = AppTheme.dimens.small,
+                    top = AppTheme.dimens.xsmall,
+                    end = AppTheme.dimens.small,
+                    bottom = AppTheme.dimens.xsmall
                 )
         )
     }

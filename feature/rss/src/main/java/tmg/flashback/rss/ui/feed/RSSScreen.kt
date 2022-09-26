@@ -17,17 +17,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.graphics.toColorInt
-import androidx.core.text.htmlEncode
-import androidx.core.text.parseAsHtml
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -40,7 +36,6 @@ import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody1
-import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextCaption
 import tmg.flashback.ui.components.analytics.ScreenView
 import tmg.flashback.ui.components.errors.NetworkError
@@ -135,8 +130,8 @@ private fun Item(
             clickItem(model)
         })
         .padding(
-            vertical = AppTheme.dimensions.paddingNSmall,
-            horizontal = AppTheme.dimensions.paddingMedium
+            vertical = AppTheme.dimens.nsmall,
+            horizontal = AppTheme.dimens.medium
         )
     ) {
         SourceBadge(
@@ -145,7 +140,7 @@ private fun Item(
             textColour = Color(model.item.source.textColor.toColorInt()),
             colour = Color(model.item.source.colour.toColorInt())
         )
-        Spacer(Modifier.width(AppTheme.dimensions.paddingMedium))
+        Spacer(Modifier.width(AppTheme.dimens.medium))
         Column(modifier = Modifier.weight(1f)) {
             TextBody1(
                 text = model.item.title,
@@ -211,8 +206,8 @@ private fun SourcesDisabled(
     Row(modifier = modifier
         .clickable(onClick = sourceClicked)
         .padding(
-            vertical = AppTheme.dimensions.paddingMedium,
-            horizontal = AppTheme.dimensions.paddingMedium
+            vertical = AppTheme.dimens.medium,
+            horizontal = AppTheme.dimens.medium
         )
     ) {
         Icon(

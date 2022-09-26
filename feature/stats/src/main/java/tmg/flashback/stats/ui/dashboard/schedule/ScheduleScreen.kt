@@ -5,7 +5,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -41,7 +40,6 @@ import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextSection
 import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.header.Header
-import tmg.flashback.ui.components.layouts.Container
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.utilities.extensions.format
 
@@ -136,12 +134,12 @@ fun ScheduleScreen(
                         Event(event = item)
                     }
                     is ScheduleModel.CollapsableList -> {
-                        Spacer(Modifier.height(AppTheme.dimensions.paddingXSmall))
+                        Spacer(Modifier.height(AppTheme.dimens.xsmall))
                         CollapsableList(
                             model = item,
                             itemClicked = itemClicked
                         )
-                        Spacer(Modifier.height(AppTheme.dimensions.paddingXSmall))
+                        Spacer(Modifier.height(AppTheme.dimens.xsmall))
                     }
                     ScheduleModel.Loading -> {
                         SkeletonViewList()
@@ -164,8 +162,8 @@ private fun CollapsableList(
     Row(modifier = modifier
         .clickable { itemClicked(model) }
         .padding(
-            horizontal = AppTheme.dimensions.paddingXSmall,
-            vertical = AppTheme.dimensions.paddingXSmall
+            horizontal = AppTheme.dimens.xsmall,
+            vertical = AppTheme.dimens.xsmall
         ),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -174,10 +172,10 @@ private fun CollapsableList(
         Row(
             modifier = modifier
                 .weight(1f)
-                .clip(RoundedCornerShape(AppTheme.dimensions.radiusSmall))
+                .clip(RoundedCornerShape(AppTheme.dimens.radiusSmall))
                 .padding(
-                    horizontal = AppTheme.dimensions.paddingSmall,
-                    vertical = AppTheme.dimensions.paddingSmall
+                    horizontal = AppTheme.dimens.small,
+                    vertical = AppTheme.dimens.small
                 ),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -191,7 +189,7 @@ private fun CollapsableList(
                     )
                     TextBody1(
                         modifier = Modifier
-                            .padding(horizontal = AppTheme.dimensions.paddingSmall)
+                            .padding(horizontal = AppTheme.dimens.small)
                             .weight(1f),
                         text = model.first.raceName
                     )
@@ -207,7 +205,7 @@ private fun CollapsableList(
                         )
                         TextBody1(
                             modifier = Modifier
-                                .padding(horizontal = AppTheme.dimensions.paddingSmall)
+                                .padding(horizontal = AppTheme.dimens.small)
                                 .weight(1f),
                             text = model.last.raceName
                         )
@@ -249,8 +247,8 @@ private fun Event(
     Row(modifier = Modifier
         .alpha(listAlpha)
         .padding(
-            vertical = AppTheme.dimensions.paddingXSmall,
-            horizontal = AppTheme.dimensions.paddingMedium
+            vertical = AppTheme.dimens.xsmall,
+            horizontal = AppTheme.dimens.medium
         )
     ) {
         Icon(
@@ -262,7 +260,7 @@ private fun Event(
         TextBody1(
             text = "${stringResource(id = event.event.type.label)}: ${event.event.label}",
             modifier = Modifier
-                .padding(horizontal = AppTheme.dimensions.paddingSmall)
+                .padding(horizontal = AppTheme.dimens.small)
                 .weight(1f)
         )
         TextBody2(
