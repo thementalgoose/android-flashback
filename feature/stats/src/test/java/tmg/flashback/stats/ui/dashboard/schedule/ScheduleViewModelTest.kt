@@ -18,7 +18,6 @@ import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.stats.repository.HomeRepository
 import tmg.flashback.stats.repository.NotificationRepository
 import tmg.flashback.stats.repository.models.NotificationSchedule
-import tmg.flashback.stats.ui.dashboard.calendar.CalendarViewModel
 import tmg.flashback.stats.usecases.FetchSeasonUseCase
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.test
@@ -40,6 +39,7 @@ internal class ScheduleViewModelTest: BaseTest() {
             fetchSeasonUseCase = mockFetchSeasonUseCase,
             overviewRepository = mockOverviewRepository,
             notificationRepository = mockNotificationRepository,
+            homeRepository = mockHomeRepository,
             eventsRepository = mockEventsRepository,
             statsNavigationComponent = mockStatsNavigationComponent,
             ioDispatcher = coroutineScope.testDispatcher
@@ -57,7 +57,6 @@ internal class ScheduleViewModelTest: BaseTest() {
             ))
         }
         every { mockEventsRepository.getEvents(any()) } returns flow { emit(emptyList()) }
-        every { mockHomeRepository.dashboardAutoscroll } returns false
         every { mockNotificationRepository.notificationSchedule } returns fakeNotificationSchedule
         every { mockFetchSeasonUseCase.fetch(any()) } returns flow { emit(true) }
     }
@@ -135,6 +134,71 @@ internal class ScheduleViewModelTest: BaseTest() {
         }
     }
 
+    @Test
+    fun `expected list shows collapsible list section if pref is enabled`() {
+
+        val dayBeforeYesterday = OverviewRace.model(round = 1, date = LocalDate.now().minusDays(2L))
+        val yesterday = OverviewRace.model(round = 2, date = LocalDate.now().minusDays(1L))
+        val today = OverviewRace.model(round = 3, date = LocalDate.now())
+        val tomorrow = OverviewRace.model(round = 4, date = LocalDate.now().plusDays(1L))
+
+        every { mockHomeRepository.collapseList } returns true
+        every { mockOverviewRepository.getOverview(any()) } returns flow { emit(Overview.model(
+            overviewRaces = listOf(dayBeforeYesterday, yesterday, today, tomorrow)
+        )) }
+
+        initUnderTest()
+        underTest.load(LocalDate.now().year)
+
+        underTest.outputs.items.test {
+            assertValue(listOf(
+                ScheduleModel.CollapsableList(
+                    first = dayBeforeYesterday,
+                    last = yesterday
+                ),
+                ScheduleModel.List(
+                    model = today,
+                    notificationSchedule = fakeNotificationSchedule,
+                    showScheduleList = true
+                ),
+                ScheduleModel.List(
+                    model = tomorrow,
+                    notificationSchedule = fakeNotificationSchedule,
+                    showScheduleList = false
+                )
+            ))
+        }
+    }
+
+    @Test
+    fun `expected list doesnt show collapsible list section if no previous`() {
+
+        val today = OverviewRace.model(round = 3, date = LocalDate.now())
+        val tomorrow = OverviewRace.model(round = 4, date = LocalDate.now().plusDays(1L))
+
+        every { mockHomeRepository.collapseList } returns true
+        every { mockOverviewRepository.getOverview(any()) } returns flow { emit(Overview.model(
+            overviewRaces = listOf(today, tomorrow)
+        )) }
+
+        initUnderTest()
+        underTest.load(LocalDate.now().year)
+
+        underTest.outputs.items.test {
+            assertValue(listOf(
+                ScheduleModel.List(
+                    model = today,
+                    notificationSchedule = fakeNotificationSchedule,
+                    showScheduleList = true
+                ),
+                ScheduleModel.List(
+                    model = tomorrow,
+                    notificationSchedule = fakeNotificationSchedule,
+                    showScheduleList = false
+                )
+            ))
+        }
+    }
 
     @Test
     fun `refresh calls fetch season and updates is refreshing`() = coroutineTest {
