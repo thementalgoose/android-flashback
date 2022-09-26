@@ -8,7 +8,7 @@ import tmg.flashback.formula1.enums.raceStatusFinish
 import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.model.model
-import tmg.flashback.stats.ui.drivers.overview.PipeType
+import tmg.flashback.ui.components.navigation.PipeType
 
 fun DriverSeasonModel.Companion.headerModel(
     driver: Driver = Driver.model()

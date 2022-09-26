@@ -5,6 +5,7 @@ import androidx.annotation.StringRes
 import org.threeten.bp.LocalDate
 import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.stats.ui.drivers.stathistory.DriverStatHistoryType
+import tmg.flashback.ui.components.navigation.PipeType
 
 sealed class DriverOverviewModel(
     val key: String
@@ -65,22 +66,4 @@ sealed class DriverOverviewModel(
     )
 
     companion object
-}
-
-
-enum class PipeType {
-    SINGLE,
-    START,
-    START_END,
-    SINGLE_PIPE,
-    END;
-
-    val showTop: Boolean
-        get() = this == START_END || this == END
-
-    val showBottom: Boolean
-        get() = this == START_END || this == START
-
-    val showMiddle: Boolean
-        get() = this == START || this == START_END || this == END || this == SINGLE
 }

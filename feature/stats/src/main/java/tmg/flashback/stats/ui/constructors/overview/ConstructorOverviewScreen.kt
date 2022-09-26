@@ -37,7 +37,7 @@ import tmg.flashback.stats.analytics.AnalyticsConstants.analyticsConstructorId
 import tmg.flashback.stats.components.TimelineTop
 import tmg.flashback.stats.components.dotDiameter
 import tmg.flashback.stats.components.heightOfTopDot
-import tmg.flashback.stats.ui.drivers.overview.PipeType
+import tmg.flashback.ui.components.navigation.PipeType
 import tmg.flashback.stats.ui.shared.Flag
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview

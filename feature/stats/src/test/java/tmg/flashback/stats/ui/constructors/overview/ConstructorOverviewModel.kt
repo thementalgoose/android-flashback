@@ -7,7 +7,7 @@ import androidx.annotation.StringRes
 import org.junit.jupiter.api.Assertions.*
 import tmg.flashback.formula1.model.ConstructorHistorySeasonDriver
 import tmg.flashback.formula1.model.model
-import tmg.flashback.stats.ui.drivers.overview.PipeType
+import tmg.flashback.ui.components.navigation.PipeType
 
 
 fun ConstructorOverviewModel.Companion.headerModel(
