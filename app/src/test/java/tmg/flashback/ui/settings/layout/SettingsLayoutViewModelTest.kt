@@ -51,7 +51,7 @@ internal class SettingsLayoutViewModelTest: BaseTest() {
         underTest.inputs.prefClicked(Settings.Layout.collapseList(true))
 
         verify {
-            mockHomeRepository.dataProvidedByAtTop = true
+            mockHomeRepository.collapseList = true
         }
         observer.assertEmittedCount(2)
     }
