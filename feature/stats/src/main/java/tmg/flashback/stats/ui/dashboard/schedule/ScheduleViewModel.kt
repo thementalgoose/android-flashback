@@ -92,8 +92,10 @@ class ScheduleViewModel @Inject constructor(
     }
 
     override fun load(season: Int) {
+        if (this.season.value != season) {
+            this.showCollapsablePlaceholder.value = homeRepository.collapseList
+        }
         this.season.value = season
-        this.showCollapsablePlaceholder.value = homeRepository.collapseList
     }
 
     override fun refresh() {
