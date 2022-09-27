@@ -22,6 +22,9 @@ class ContentSyncJob @AssistedInject constructor(
     params = params
 ) {
     override suspend fun doWork(): Result {
+        if (isStopped) {
+            return Result.success()
+        }
 
         // Get latest season info
         overviewRepository.fetchOverview(defaultSeasonUseCase.defaultSeason)

@@ -17,8 +17,11 @@ class ConfigSyncJob @AssistedInject constructor(
     appContext = context,
     params = params
 ) {
-
     override suspend fun doWork(): Result {
+        if (isStopped) {
+            return Result.success()
+        }
+
         // Remote config sync
         fetchConfigUseCase.fetchAndApply()
 

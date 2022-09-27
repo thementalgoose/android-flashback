@@ -33,6 +33,9 @@ class ScheduleNotificationsJob @AssistedInject constructor(
     parameters
 ) {
     override suspend fun doWork(): ListenableWorker.Result {
+        if (isStopped) {
+            return Result.success()
+        }
 
         val force: Boolean = inputData.getBoolean("force", false)
 
