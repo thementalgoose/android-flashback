@@ -8,6 +8,8 @@ import androidx.work.ListenableWorker
 import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.threeten.bp.LocalDateTime
 import tmg.flashback.formula1.enums.RaceWeekend
 import tmg.flashback.formula1.model.Timestamp
@@ -32,9 +34,9 @@ class ScheduleNotificationsJob @AssistedInject constructor(
     context,
     parameters
 ) {
-    override suspend fun doWork(): ListenableWorker.Result {
+    override suspend fun doWork(): ListenableWorker.Result = withContext(Dispatchers.IO) {
         if (isStopped) {
-            return Result.success()
+            return@withContext Result.success()
         }
 
         val force: Boolean = inputData.getBoolean("force", false)
@@ -85,7 +87,7 @@ class ScheduleNotificationsJob @AssistedInject constructor(
             if (BuildConfig.DEBUG) {
                 Log.d("Notification", "WorkManager - Up Next items have remained unchanged since last sync - Skipping scheduling of notifications")
             }
-            return Result.success()
+            return@withContext Result.success()
         }
 
         localNotificationCancelUseCase.cancelAll()
@@ -121,7 +123,7 @@ class ScheduleNotificationsJob @AssistedInject constructor(
             Log.i("Notification", "WorkManager - Finished scheduling notifications")
         }
 
-        return Result.success()
+        return@withContext Result.success()
     }
 
     inner class NotificationModel(
