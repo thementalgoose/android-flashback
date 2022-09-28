@@ -6,6 +6,8 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import tmg.flashback.configuration.usecases.FetchConfigUseCase
 
 @HiltWorker
@@ -17,11 +19,14 @@ class ConfigSyncJob @AssistedInject constructor(
     appContext = context,
     params = params
 ) {
+    override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
+        if (isStopped) {
+            return@withContext Result.success()
+        }
 
-    override suspend fun doWork(): Result {
         // Remote config sync
         fetchConfigUseCase.fetchAndApply()
 
-        return Result.success()
+        return@withContext Result.success()
     }
 }

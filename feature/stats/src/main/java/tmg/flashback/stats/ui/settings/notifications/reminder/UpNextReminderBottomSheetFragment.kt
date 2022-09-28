@@ -44,6 +44,7 @@ class UpNextReminderBottomSheetFragment: BaseBottomSheetFragment<FragmentBottomS
         }
 
         observeEvent(viewModel.outputs.updated) {
+
             dismiss()
         }
     }

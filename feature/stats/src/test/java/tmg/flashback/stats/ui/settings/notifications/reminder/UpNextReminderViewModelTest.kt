@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.stats.repository.NotificationRepository
 import tmg.flashback.stats.repository.models.NotificationReminder
+import tmg.flashback.stats.usecases.ScheduleNotificationsUseCase
 import tmg.flashback.ui.bottomsheet.BottomSheetItem
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertEventFired
@@ -19,11 +20,15 @@ import tmg.utilities.models.StringHolder
 internal class UpNextReminderViewModelTest: BaseTest() {
 
     private val mockNotificationRepository: NotificationRepository = mockk(relaxed = true)
+    private val mockScheduleNotificationsUseCase: ScheduleNotificationsUseCase = mockk(relaxed = true)
 
     private lateinit var sut: UpNextReminderViewModel
 
     private fun initSUT() {
-        sut = UpNextReminderViewModel(mockNotificationRepository)
+        sut = UpNextReminderViewModel(
+            notificationRepository = mockNotificationRepository,
+            scheduleNotificationsUseCase = mockScheduleNotificationsUseCase
+        )
     }
 
     @BeforeEach
@@ -57,6 +62,9 @@ internal class UpNextReminderViewModelTest: BaseTest() {
     fun `selecting notification reminder updates notifies updated event`() {
         initSUT()
         sut.inputs.selectNotificationReminder(NotificationReminder.MINUTES_60)
+        verify {
+            mockScheduleNotificationsUseCase.schedule()
+        }
         sut.outputs.updated.test {
             assertEventFired()
         }
