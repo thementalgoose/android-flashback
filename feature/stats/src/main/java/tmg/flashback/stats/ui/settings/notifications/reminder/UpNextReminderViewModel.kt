@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import tmg.flashback.stats.repository.NotificationRepository
 import tmg.flashback.stats.repository.models.NotificationReminder
+import tmg.flashback.stats.usecases.ScheduleNotificationsUseCase
 import tmg.flashback.ui.bottomsheet.BottomSheetItem
 import tmg.utilities.lifecycle.Event
 import tmg.utilities.models.Selected
@@ -31,7 +32,8 @@ interface UpNextReminderViewModelOutputs {
 
 @HiltViewModel
 class UpNextReminderViewModel @Inject constructor(
-    private val notificationRepository: NotificationRepository
+    private val notificationRepository: NotificationRepository,
+    private val scheduleNotificationsUseCase: ScheduleNotificationsUseCase
 ): ViewModel(), UpNextReminderViewModelInputs, UpNextReminderViewModelOutputs {
 
     var inputs: UpNextReminderViewModelInputs = this
@@ -49,6 +51,7 @@ class UpNextReminderViewModel @Inject constructor(
     override fun selectNotificationReminder(reminder: NotificationReminder) {
         notificationRepository.notificationReminderPeriod = reminder
         updateList()
+        scheduleNotificationsUseCase.schedule()
         updated.value = Event()
     }
 

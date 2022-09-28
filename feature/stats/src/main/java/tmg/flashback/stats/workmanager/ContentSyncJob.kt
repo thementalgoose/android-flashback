@@ -6,6 +6,8 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.stats.usecases.DefaultSeasonUseCase
 import tmg.flashback.stats.usecases.ScheduleNotificationsUseCase
@@ -21,7 +23,10 @@ class ContentSyncJob @AssistedInject constructor(
     appContext = context,
     params = params
 ) {
-    override suspend fun doWork(): Result {
+    override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
+        if (isStopped) {
+            return@withContext Result.success()
+        }
 
         // Get latest season info
         overviewRepository.fetchOverview(defaultSeasonUseCase.defaultSeason)
@@ -29,6 +34,6 @@ class ContentSyncJob @AssistedInject constructor(
         // Schedule notifications
         scheduleNotificationsUseCase.schedule()
 
-        return Result.success()
+        return@withContext Result.success()
     }
 }
