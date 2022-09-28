@@ -8,7 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.stats.repository.NotificationRepository
-import tmg.flashback.stats.usecases.ResubscribeNotificationsUseCase
+import tmg.flashback.stats.usecases.ScheduleNotificationsUseCase
 import tmg.flashback.ui.managers.PermissionManager
 import tmg.flashback.ui.permissions.RationaleType
 import tmg.flashback.ui.repository.PermissionRepository
@@ -31,7 +31,7 @@ interface SettingsNotificationsUpcomingViewModelOutputs {
 @HiltViewModel
 class SettingsNotificationsUpcomingViewModel @Inject constructor(
     private val notificationRepository: NotificationRepository,
-    private val resubscribeNotificationsUseCase: ResubscribeNotificationsUseCase,
+    private val scheduleNotificationsUseCase: ScheduleNotificationsUseCase,
     private val permissionRepository: PermissionRepository,
     private val permissionManager: PermissionManager,
     private val statsNavigationComponent: StatsNavigationComponent
@@ -92,9 +92,7 @@ class SettingsNotificationsUpcomingViewModel @Inject constructor(
     }
 
     private fun resubscribe() {
-        viewModelScope.launch {
-            resubscribeNotificationsUseCase.resubscribe()
-        }
+        scheduleNotificationsUseCase.schedule()
     }
 
     fun refresh() {
