@@ -25,7 +25,10 @@ internal class UpNextReminderViewModelTest: BaseTest() {
     private lateinit var sut: UpNextReminderViewModel
 
     private fun initSUT() {
-        sut = UpNextReminderViewModel(mockNotificationRepository)
+        sut = UpNextReminderViewModel(
+            notificationRepository = mockNotificationRepository,
+            scheduleNotificationsUseCase = mockScheduleNotificationsUseCase
+        )
     }
 
     @BeforeEach
