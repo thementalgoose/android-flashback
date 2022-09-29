@@ -8,4 +8,6 @@ data class SupportedSource(
     val textColour: String,
     val title: String,
     val contactLink: String = source
-)
+) {
+    companion object
+}
