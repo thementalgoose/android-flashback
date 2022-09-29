@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import dagger.hilt.android.AndroidEntryPoint
-import tmg.flashback.crash_reporting.controllers.CrashController
+import tmg.flashback.crash_reporting.manager.CrashManager
 import tmg.flashback.notifications.BuildConfig
 import tmg.flashback.notifications.managers.SystemNotificationManager
 import javax.inject.Inject
@@ -17,7 +17,7 @@ class LocalNotificationBroadcastReceiver @Inject constructor(): BroadcastReceive
     protected lateinit var notificationManager: SystemNotificationManager
 
     @Inject
-    protected lateinit var crashController: CrashController
+    protected lateinit var crashController: CrashManager
 
     override fun onReceive(context: Context?, intent: Intent?) {
         if (BuildConfig.DEBUG) {

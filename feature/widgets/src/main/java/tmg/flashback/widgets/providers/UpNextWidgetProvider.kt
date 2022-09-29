@@ -23,7 +23,7 @@ import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.configuration.usecases.ApplyConfigUseCase
 import tmg.flashback.configuration.usecases.FetchConfigUseCase
-import tmg.flashback.crash_reporting.controllers.CrashController
+import tmg.flashback.crash_reporting.manager.CrashManager
 import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.formula1.enums.TrackLayout
 import tmg.flashback.formula1.model.OverviewRace
@@ -40,7 +40,7 @@ import javax.inject.Inject
 class UpNextWidgetProvider @Inject constructor() : AppWidgetProvider() {
 
     @Inject
-    protected lateinit var crashController: CrashController
+    protected lateinit var crashController: CrashManager
     @Inject
     protected lateinit var buildConfigManager: BuildConfigManager
     @Inject
