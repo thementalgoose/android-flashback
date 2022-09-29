@@ -9,7 +9,7 @@ import androidx.core.app.AlarmManagerCompat
 import dagger.hilt.android.qualifiers.ApplicationContext
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.ZoneOffset
-import tmg.flashback.crash_reporting.controllers.CrashController
+import tmg.flashback.crash_reporting.manager.CrashManager
 import tmg.flashback.notifications.BuildConfig
 import tmg.flashback.notifications.receiver.LocalNotificationBroadcastReceiver
 import javax.inject.Inject
@@ -19,7 +19,7 @@ import javax.inject.Singleton
 class SystemAlarmManager @Inject constructor(
     @ApplicationContext
     private val applicationContext: Context,
-    private val crashController: CrashController
+    private val crashController: CrashManager
 ) {
     private val alarmManager: AlarmManager? by lazy {
         applicationContext.getSystemService(Context.ALARM_SERVICE) as? AlarmManager

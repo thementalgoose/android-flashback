@@ -1,17 +1,14 @@
-package tmg.flashback.crash_reporting.controllers
+package tmg.flashback.crash_reporting.manager
 
 import android.util.Log
-import org.threeten.bp.LocalDate
-import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.crash_reporting.BuildConfig
 import tmg.flashback.crash_reporting.repository.CrashRepository
 import tmg.flashback.crash_reporting.services.CrashService
-import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class CrashController @Inject constructor(
+class CrashManager @Inject constructor(
     private val crashRepository: CrashRepository,
     private val crashService: CrashService
 ) {

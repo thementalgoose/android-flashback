@@ -7,12 +7,12 @@ import kotlinx.serialization.Serializable
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import tmg.flashback.configuration.services.RemoteConfigService
-import tmg.flashback.crash_reporting.controllers.CrashController
+import tmg.flashback.crash_reporting.manager.CrashManager
 
 internal class ConfigManagerTest {
 
     private val mockConfigService: RemoteConfigService = mockk(relaxed = true)
-    private val mockCrashController: CrashController = mockk(relaxed = true)
+    private val mockCrashController: CrashManager = mockk(relaxed = true)
 
     private lateinit var underTest: ConfigManager
 

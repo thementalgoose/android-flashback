@@ -1,24 +1,21 @@
-package tmg.flashback.crash_reporting.controllers
+package tmg.flashback.crash_reporting.manager
 
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import org.threeten.bp.LocalDate
-import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.crash_reporting.repository.CrashRepository
 import tmg.flashback.crash_reporting.services.CrashService
 
-internal class CrashControllerTest {
+internal class CrashManagerTest {
 
     private var mockCrashRepository: CrashRepository = mockk(relaxed = true)
     private var mockCrashService: CrashService = mockk(relaxed = true)
 
-    private lateinit var underTest: CrashController
+    private lateinit var underTest: CrashManager
 
     private fun initUnderTest() {
-        underTest = CrashController(mockCrashRepository, mockCrashService)
+        underTest = CrashManager(mockCrashRepository, mockCrashService)
     }
 
     //region Logging
