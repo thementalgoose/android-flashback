@@ -2,7 +2,7 @@ package tmg.flashback.statistics.repo
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import tmg.flashback.crash_reporting.controllers.CrashController
+import tmg.flashback.crash_reporting.manager.CrashManager
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.formula1.model.Circuit
 import tmg.flashback.formula1.model.CircuitHistory
@@ -18,7 +18,7 @@ import javax.inject.Singleton
 class CircuitRepository @Inject constructor(
     private val api: FlashbackApi,
     private val persistence: FlashbackDatabase,
-    crashController: CrashController,
+    crashController: CrashManager,
     networkConnectivityManager: NetworkConnectivityManager,
     private val networkCircuitMapper: NetworkCircuitMapper,
     private val networkDriverDataMapper: NetworkDriverDataMapper,
