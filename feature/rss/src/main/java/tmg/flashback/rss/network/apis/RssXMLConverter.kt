@@ -8,13 +8,14 @@ import tmg.flashback.rss.network.apis.model.RssXMLModel
 import tmg.flashback.rss.network.apis.model.RssXMLModelItem
 import tmg.flashback.rss.repo.model.Article
 import tmg.flashback.rss.repo.model.ArticleSource
+import tmg.flashback.rss.usecases.GetSupportedSourceUseCase
 import tmg.utilities.extensions.md5
 import java.net.URL
 import java.util.*
 
 private const val dateFormat = "EEE, d MMM yyyy HH:mm:ss Z"
 
-internal fun RssXMLModel.convert(rssFeedController: RSSController, fromSource: String, showDescription: Boolean): List<Article> {
+internal fun RssXMLModel.convert(getSupportedSourceUseCase: GetSupportedSourceUseCase, fromSource: String, showDescription: Boolean): List<Article> {
 
     if (this.channel == null) {
         Log.e("RSS", "Failed to parse RSS model from channel $fromSource")
@@ -35,7 +36,7 @@ internal fun RssXMLModel.convert(rssFeedController: RSSController, fromSource: S
         }
     }
 
-    val source = rssFeedController.getSupportedSourceByLink(url)?.article ?: ArticleSource(
+    val source = getSupportedSourceUseCase.getByLink(url)?.article ?: ArticleSource(
         title = channel!!.title!!,
         colour = "#4A34B6",
         textColor = "#FFFFFF",

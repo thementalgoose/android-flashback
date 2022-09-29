@@ -13,11 +13,12 @@ import tmg.flashback.rss.network.apis.model.RssXMLModelChannel
 import tmg.flashback.rss.network.apis.model.RssXMLModelItem
 import tmg.flashback.rss.repo.model.Article
 import tmg.flashback.rss.repo.model.ArticleSource
+import tmg.flashback.rss.usecases.GetSupportedSourceUseCase
 import tmg.testutils.BaseTest
 
 internal class RssXMLConverterTest: BaseTest() {
 
-    private val mockRssFeedController: RSSController = mockk(relaxed = true)
+    private val mockGetSupportedSourceUseCase: GetSupportedSourceUseCase = mockk(relaxed = true)
     private val source = "https://www.test.com"
 
     @Test
@@ -25,7 +26,7 @@ internal class RssXMLConverterTest: BaseTest() {
         val model = RssXMLModel().apply {
             channel = null
         }
-        assertEquals(emptyList<Article>(), model.convert(mockRssFeedController, source, false))
+        assertEquals(emptyList<Article>(), model.convert(mockGetSupportedSourceUseCase, source, false))
     }
 
     @Test
@@ -35,7 +36,7 @@ internal class RssXMLConverterTest: BaseTest() {
                 title = null
             }
         }
-        assertEquals(emptyList<Article>(), model.convert(mockRssFeedController, source, false))
+        assertEquals(emptyList<Article>(), model.convert(mockGetSupportedSourceUseCase, source, false))
     }
 
     @Test
@@ -46,7 +47,7 @@ internal class RssXMLConverterTest: BaseTest() {
                 item = emptyList()
             }
         }
-        assertEquals(emptyList<Article>(), model.convert(mockRssFeedController, source, false))
+        assertEquals(emptyList<Article>(), model.convert(mockGetSupportedSourceUseCase, source, false))
     }
 
     @Test
@@ -56,7 +57,7 @@ internal class RssXMLConverterTest: BaseTest() {
                 link = "protocol://www.testing.com"
             }
         ))
-        assertEquals(emptyList<Article>(), model.convert(mockRssFeedController, source, false))
+        assertEquals(emptyList<Article>(), model.convert(mockGetSupportedSourceUseCase, source, false))
     }
 
     @Test
@@ -69,7 +70,7 @@ internal class RssXMLConverterTest: BaseTest() {
                 link = "link"
             }
         ))
-        assertEquals(emptyList<Article>(), model.convert(mockRssFeedController, source, false))
+        assertEquals(emptyList<Article>(), model.convert(mockGetSupportedSourceUseCase, source, false))
     }
 
     @Test
@@ -82,7 +83,7 @@ internal class RssXMLConverterTest: BaseTest() {
                 link = null
             }
         ))
-        assertEquals(emptyList<Article>(), model.convert(mockRssFeedController, source, false))
+        assertEquals(emptyList<Article>(), model.convert(mockGetSupportedSourceUseCase, source, false))
     }
 
     @Test
@@ -95,7 +96,7 @@ internal class RssXMLConverterTest: BaseTest() {
                 link = "link"
             }
         ))
-        assertEquals(emptyList<Article>(), model.convert(mockRssFeedController, source, false))
+        assertEquals(emptyList<Article>(), model.convert(mockGetSupportedSourceUseCase, source, false))
     }
 
     @Test
@@ -109,13 +110,13 @@ internal class RssXMLConverterTest: BaseTest() {
             }
         ))
         assertThrows(DateTimeParseException::class.java) {
-            model.convert(mockRssFeedController, source, false)
+            model.convert(mockGetSupportedSourceUseCase, source, false)
         }
     }
 
     @Test
     fun `convert returns successful conversion model if normal data is returned`() {
-        every { mockRssFeedController.getSupportedSourceByLink(any()) } returns null
+        every { mockGetSupportedSourceUseCase.getByLink(any()) } returns null
         val model = feed(listOf(
             RssXMLModelItem().apply {
                 title = "sup &#039;"
@@ -142,12 +143,12 @@ internal class RssXMLConverterTest: BaseTest() {
             )
         )
 
-        assertEquals(listOf(expected), model.convert(mockRssFeedController, source, false))
+        assertEquals(listOf(expected), model.convert(mockGetSupportedSourceUseCase, source, false))
     }
 
     @Test
     fun `convert returns successful conversion model if normal data is returned with description being null if show is false`() {
-        every { mockRssFeedController.getSupportedSourceByLink(any()) } returns null
+        every { mockGetSupportedSourceUseCase.getByLink(any()) } returns null
         val model = feed(listOf(
             RssXMLModelItem().apply {
                 title = "sup"
@@ -174,7 +175,7 @@ internal class RssXMLConverterTest: BaseTest() {
             )
         )
 
-        assertEquals(listOf(expected), model.convert(mockRssFeedController, source, false))
+        assertEquals(listOf(expected), model.convert(mockGetSupportedSourceUseCase, source, false))
     }
 
     //region Test Data

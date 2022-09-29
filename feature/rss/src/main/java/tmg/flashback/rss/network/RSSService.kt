@@ -11,6 +11,7 @@ import tmg.flashback.rss.repo.RSSRepository
 import tmg.flashback.rss.repo.RssAPI
 import tmg.flashback.rss.repo.model.Article
 import tmg.flashback.rss.repo.model.Response
+import tmg.flashback.rss.usecases.GetSupportedSourceUseCase
 import java.net.ConnectException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
@@ -20,7 +21,7 @@ import javax.xml.stream.XMLStreamException
 
 internal class RSSService @Inject constructor(
     private val repository: RSSRepository,
-    private val rssFeedController: RSSController
+    private val getSupportedSourceUseCase: GetSupportedSourceUseCase
 ) : RssAPI {
 
     private val xmlRetrofit: RssXMLRetrofit = buildRetrofit(true)
@@ -31,7 +32,7 @@ internal class RSSService @Inject constructor(
     private fun get(url: String): Flow<Response<List<Article>>> = flow {
         val result: Response<List<Article>> = try {
             val response = xmlRetrofit.getRssXML(headers, url)
-                .convert(rssFeedController, url, repository.rssShowDescription)
+                .convert(getSupportedSourceUseCase, url, repository.rssShowDescription)
             Response(response)
         } catch (e: XMLStreamException) {
             if (BuildConfig.DEBUG) {
