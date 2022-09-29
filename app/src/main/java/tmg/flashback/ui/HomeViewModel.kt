@@ -11,6 +11,7 @@ import tmg.flashback.configuration.usecases.ApplyConfigUseCase
 import tmg.flashback.crash_reporting.controllers.CrashController
 import tmg.flashback.forceupgrade.repository.ForceUpgradeRepository
 import tmg.flashback.rss.controllers.RSSController
+import tmg.flashback.rss.usecases.RssShortcutUseCase
 import tmg.flashback.statistics.repo.repository.CacheRepository
 import tmg.flashback.stats.usecases.ScheduleNotificationsUseCase
 import tmg.flashback.stats.usecases.SearchAppShortcutUseCase
@@ -39,7 +40,7 @@ interface HomeViewModelOutputs {
 class HomeViewModel @Inject constructor(
     private val configRepository: ConfigRepository,
     private val applyConfigUseCase: ApplyConfigUseCase,
-    private val rssController: RSSController,
+    private val rssShortcutUseCase: RssShortcutUseCase,
     private val crashController: CrashController,
     private val forceUpgradeRepository: ForceUpgradeRepository,
     private val cacheRepository: CacheRepository,
@@ -81,10 +82,7 @@ class HomeViewModel @Inject constructor(
     private fun performConfigUpdates() {
 
         // Shortcuts for RSS
-        when (rssController.enabled) {
-            true -> rssController.addAppShortcut()
-            false -> rssController.removeAppShortcut()
-        }
+        rssShortcutUseCase.setup()
 
         // Shortcuts for Search
         searchAppShortcutUseCase.setup()
