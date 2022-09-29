@@ -4,9 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.rss.repo.RSSRepository
 import tmg.flashback.rss.repo.model.SupportedArticleSource
+import tmg.flashback.rss.usecases.AllSupportedSourcesUseCase
+import tmg.flashback.rss.usecases.GetSupportedSourceUseCase
 import tmg.flashback.web.WebNavigationComponent
 import javax.inject.Inject
 
@@ -25,7 +26,8 @@ interface ConfigureRSSViewModelOutputs {
 @HiltViewModel
 class ConfigureRSSViewModel @Inject constructor(
     private val repository: RSSRepository,
-    private val rssFeedController: RSSController,
+    private val allSupportedSourcesUseCase: AllSupportedSourcesUseCase,
+    private val getSupportedSourcesUseCase: GetSupportedSourceUseCase,
     private val webNavigationComponent: WebNavigationComponent,
 ): ViewModel(), ConfigureRSSViewModelInputs, ConfigureRSSViewModelOutputs {
 
@@ -65,17 +67,18 @@ class ConfigureRSSViewModel @Inject constructor(
         rssSources.value = mutableListOf<RSSSource>().apply {
             addAll(rssUrls
                 .filter { rssLink ->
-                    rssFeedController.sources.all { it.rssLink != rssLink }
+                    allSupportedSourcesUseCase.getSources().all { it.rssLink != rssLink }
                 }
                 .map {
                     RSSSource(
                         url = it,
-                        supportedArticleSource = rssFeedController.getSupportedSourceByRssUrl(it),
+                        supportedArticleSource = getSupportedSourcesUseCase.getByRssLink(it),
                         isChecked = true
                     )
                 }
             )
-            addAll(rssFeedController.sources
+            addAll(allSupportedSourcesUseCase
+                .getSources()
                 .sortedBy {
                     it.rssLink.replace("https://www.", "")
                         .replace("http://www.", "")
