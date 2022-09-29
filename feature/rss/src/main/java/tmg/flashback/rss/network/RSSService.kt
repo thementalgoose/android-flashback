@@ -3,7 +3,6 @@ package tmg.flashback.rss.network
 import kotlinx.coroutines.flow.*
 import retrofit2.HttpException
 import tmg.flashback.rss.BuildConfig
-import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.rss.network.apis.convert
 import tmg.flashback.rss.network.shared.RssXMLRetrofit
 import tmg.flashback.rss.network.shared.buildRetrofit

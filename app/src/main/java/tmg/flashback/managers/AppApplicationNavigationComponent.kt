@@ -8,7 +8,6 @@ import tmg.flashback.constants.AboutThisAppConfig
 import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.device.repository.DeviceRepository
 import tmg.flashback.notifications.navigation.NotificationNavigationProvider
-import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.rss.usecases.AllSupportedSourcesUseCase
 import tmg.flashback.ui.All
 import tmg.flashback.ui.Home
