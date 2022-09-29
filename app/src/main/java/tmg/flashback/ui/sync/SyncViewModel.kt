@@ -13,6 +13,8 @@ import tmg.flashback.configuration.usecases.FetchConfigUseCase
 import tmg.flashback.configuration.usecases.ResetConfigUseCase
 import tmg.flashback.forceupgrade.repository.ForceUpgradeRepository
 import tmg.flashback.rss.controllers.RSSController
+import tmg.flashback.rss.repo.RSSRepository
+import tmg.flashback.rss.usecases.RssShortcutUseCase
 import tmg.flashback.statistics.repo.CircuitRepository
 import tmg.flashback.statistics.repo.ConstructorRepository
 import tmg.flashback.statistics.repo.DriverRepository
@@ -46,7 +48,7 @@ interface SyncViewModelOutputs {
 
 @HiltViewModel
 class SyncViewModel @Inject constructor(
-    private val rssController: RSSController,
+    private val rssShortcutUseCase: RssShortcutUseCase,
     private val circuitRepository: CircuitRepository,
     private val constructorRepository: ConstructorRepository,
     private val driverRepository: DriverRepository,
@@ -190,10 +192,7 @@ class SyncViewModel @Inject constructor(
     private suspend fun performConfigUpdates() {
 
         // Shortcuts for RSS
-        when (rssController.enabled) {
-            true -> rssController.addAppShortcut()
-            false -> rssController.removeAppShortcut()
-        }
+        rssShortcutUseCase.setup()
 
         // Shortcuts for Search
         searchAppShortcutUseCase.setup()
