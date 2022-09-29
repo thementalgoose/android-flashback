@@ -3,12 +3,11 @@ package tmg.flashback.rss.ui.configure
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import kotlinx.coroutines.test.advanceUntilIdle
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
-import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.rss.repo.RSSRepository
 import tmg.flashback.rss.repo.model.SupportedArticleSource
+import tmg.flashback.rss.usecases.AllSupportedSourcesUseCase
+import tmg.flashback.rss.usecases.GetSupportedSourceUseCase
 import tmg.flashback.web.WebNavigationComponent
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertListDoesNotMatchItem
@@ -19,7 +18,8 @@ import tmg.testutils.livedata.testObserve
 internal class ConfigureRSSViewModelTest: BaseTest() {
 
     private val mockRssRepository: RSSRepository = mockk(relaxed = true)
-    private val mockRssController: RSSController = mockk(relaxed = true)
+    private val mockAllSupportedSourcesUseCase: AllSupportedSourcesUseCase = mockk(relaxed = true)
+    private val mockGetSupportedSourceUseCase: GetSupportedSourceUseCase = mockk(relaxed = true)
     private val mockWebNavigationComponent: WebNavigationComponent = mockk(relaxed = true)
 
     private lateinit var underTest: ConfigureRSSViewModel
@@ -27,7 +27,8 @@ internal class ConfigureRSSViewModelTest: BaseTest() {
     private fun initUnderTest() {
         underTest = ConfigureRSSViewModel(
             repository = mockRssRepository,
-            rssFeedController = mockRssController,
+            allSupportedSourcesUseCase = mockAllSupportedSourcesUseCase,
+            getSupportedSourcesUseCase = mockGetSupportedSourceUseCase,
             webNavigationComponent = mockWebNavigationComponent
         )
     }
@@ -92,7 +93,7 @@ internal class ConfigureRSSViewModelTest: BaseTest() {
             fakeSupportedArticleSource.rssLink,
             "https://www.custom_rss.com/rss"
         )
-        every { mockRssController.sources } returns listOf(fakeSupportedArticleSource)
+        every { mockAllSupportedSourcesUseCase.getSources() } returns listOf(fakeSupportedArticleSource)
 
         initUnderTest()
         underTest.outputs.rssSources.test {
@@ -106,7 +107,7 @@ internal class ConfigureRSSViewModelTest: BaseTest() {
         every { mockRssRepository.rssUrls } returns setOf(
             fakeSupportedArticleSource.rssLink
         )
-        every { mockRssController.sources } returns listOf(fakeSupportedArticleSource)
+        every { mockAllSupportedSourcesUseCase.getSources() } returns listOf(fakeSupportedArticleSource)
 
         initUnderTest()
 
@@ -128,7 +129,7 @@ internal class ConfigureRSSViewModelTest: BaseTest() {
             fakeSupportedArticleSource.rssLink,
             "https://www.custom_rss.com/rss"
         )
-        every { mockRssController.sources } returns listOf(fakeSupportedArticleSource)
+        every { mockAllSupportedSourcesUseCase.getSources() } returns listOf(fakeSupportedArticleSource)
 
         initUnderTest()
 
@@ -148,7 +149,7 @@ internal class ConfigureRSSViewModelTest: BaseTest() {
         every { mockRssRepository.rssUrls } returns setOf(
             "https://www.custom_rss.com/rss"
         )
-        every { mockRssController.sources } returns listOf(fakeSupportedArticleSource)
+        every { mockAllSupportedSourcesUseCase.getSources() } returns listOf(fakeSupportedArticleSource)
 
         initUnderTest()
         underTest.outputs.rssSources.test {
@@ -174,7 +175,7 @@ internal class ConfigureRSSViewModelTest: BaseTest() {
             "https://www.custom_rss.com/rss",
             fakeSupportedArticleSource.rssLink
         )
-        every { mockRssController.sources } returns listOf(fakeSupportedArticleSource)
+        every { mockAllSupportedSourcesUseCase.getSources() } returns listOf(fakeSupportedArticleSource)
 
         initUnderTest()
         underTest.outputs.rssSources.test {
