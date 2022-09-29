@@ -8,7 +8,7 @@ import kotlinx.coroutines.launch
 import tmg.flashback.BuildConfig
 import tmg.flashback.configuration.repository.ConfigRepository
 import tmg.flashback.configuration.usecases.ApplyConfigUseCase
-import tmg.flashback.crash_reporting.controllers.CrashController
+import tmg.flashback.crash_reporting.manager.CrashManager
 import tmg.flashback.forceupgrade.repository.ForceUpgradeRepository
 import tmg.flashback.rss.usecases.RssShortcutUseCase
 import tmg.flashback.statistics.repo.repository.CacheRepository
@@ -40,7 +40,7 @@ class HomeViewModel @Inject constructor(
     private val configRepository: ConfigRepository,
     private val applyConfigUseCase: ApplyConfigUseCase,
     private val rssShortcutUseCase: RssShortcutUseCase,
-    private val crashController: CrashController,
+    private val crashManager: CrashManager,
     private val forceUpgradeRepository: ForceUpgradeRepository,
     private val cacheRepository: CacheRepository,
     private val searchAppShortcutUseCase: SearchAppShortcutUseCase,
@@ -70,7 +70,7 @@ class HomeViewModel @Inject constructor(
                         }
                         performConfigUpdates()
                     } catch (e: Exception) {
-                        crashController.logException(e)
+                        crashManager.logException(e)
                     }
                     appliedChanges = false
                 }

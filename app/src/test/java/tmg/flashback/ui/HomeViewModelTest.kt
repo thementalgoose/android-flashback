@@ -7,7 +7,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.configuration.repository.ConfigRepository
 import tmg.flashback.configuration.usecases.ApplyConfigUseCase
-import tmg.flashback.crash_reporting.controllers.CrashController
+import tmg.flashback.crash_reporting.manager.CrashManager
 import tmg.flashback.forceupgrade.repository.ForceUpgradeRepository
 import tmg.flashback.rss.usecases.RssShortcutUseCase
 import tmg.flashback.statistics.repo.repository.CacheRepository
@@ -20,7 +20,7 @@ internal class HomeViewModelTest: BaseTest() {
     private var mockRssShortcutUseCase: RssShortcutUseCase = mockk(relaxed = true)
     private var mockConfigRepository: ConfigRepository = mockk(relaxed = true)
     private var mockApplyConfigUseCase: ApplyConfigUseCase = mockk(relaxed = true)
-    private var mockCrashController: CrashController = mockk(relaxed = true)
+    private var mockCrashController: CrashManager = mockk(relaxed = true)
     private var mockForceUpgradeRepository: ForceUpgradeRepository = mockk(relaxed = true)
     private var mockCacheRepository: CacheRepository = mockk(relaxed = true)
     private var mockScheduleNotificationsUseCase: ScheduleNotificationsUseCase = mockk(relaxed = true)
