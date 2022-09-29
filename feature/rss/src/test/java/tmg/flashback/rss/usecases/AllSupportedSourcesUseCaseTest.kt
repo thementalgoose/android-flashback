@@ -22,10 +22,20 @@ internal class AllSupportedSourcesUseCaseTest {
     }
 
     @Test
-    fun `sources are mapped into supported sources`() {
+    fun `sources are mapped into supported sources with toggle on`() {
         every { mockRssRepository.supportedSources } returns listOf(SupportedSource.model())
+        every { mockRssRepository.enabled } returns true
 
         initUnderTest()
         assertEquals(listOf(SupportedArticleSource.model()), underTest.getSources())
+    }
+
+    @Test
+    fun `sources are mapped into empty with toggle off`() {
+        every { mockRssRepository.supportedSources } returns listOf(SupportedSource.model())
+        every { mockRssRepository.enabled } returns false
+
+        initUnderTest()
+        assertEquals(emptyList<SupportedArticleSource>(), underTest.getSources())
     }
 }

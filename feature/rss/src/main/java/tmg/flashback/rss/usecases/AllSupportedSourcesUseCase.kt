@@ -10,6 +10,7 @@ class AllSupportedSourcesUseCase @Inject constructor(
     private val rssRepository: RSSRepository
 ) {
     fun getSources(): List<SupportedArticleSource> {
+        if (!rssRepository.enabled) return emptyList()
         return rssRepository
             .supportedSources
             .map { it.toArticleSource() }
