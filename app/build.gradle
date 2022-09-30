@@ -11,6 +11,7 @@ apply from: rootDir.absolutePath + "/gradle/config-hilt.gradle"
 apply plugin: 'com.google.firebase.crashlytics'
 apply plugin: 'de.mannodermaus.android-junit5'
 apply plugin: 'com.github.triplet.play'
+apply plugin: 'com.google.firebase.firebase-perf'
 
 apply from: rootDir.absolutePath + "/gradle/script-remoteconfig.gradle"
 apply from: rootDir.absolutePath + "/gradle/script-releasenotes.gradle"
@@ -190,6 +191,7 @@ dependencies {
     implementation deps.firebase.firestore
     implementation deps.firebase.firestore_ktx
     implementation deps.firebase.messaging
+    implementation deps.firebase.perf
     implementation deps.kotlin.playservices
 
     // Test Utils
