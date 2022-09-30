@@ -151,7 +151,6 @@ dependencies {
     androidTestImplementation "org.junit.jupiter:junit-jupiter-params:$junit"
     androidTestRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junit"
     androidTestImplementation "io.mockk:mockk-android:$mockk"
-    androidTestImplementation "io.insert-koin:koin-test:$koin_version"
 
     // Work Manager
     implementation deps.androidx.workmanager
@@ -159,9 +158,6 @@ dependencies {
 
     // Splash screen
     implementation deps.androidx.splashscreen
-
-    // Discord Overlapping panels
-    implementation deps.discord
 
     // TMG dependencies
     implementation deps.tmg.aboutthisapp

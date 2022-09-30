@@ -37,7 +37,7 @@ allprojects {
                         systemuicontroller                      : "com.google.accompanist:accompanist-systemuicontroller:$android_accompanist",
                         placeholder                             : "com.google.accompanist:accompanist-placeholder-material:$android_accompanist",
                 ],
-                coil                                            : "io.coil-kt:coil-compose:2.1.0",
+                coil                                            : "io.coil-kt:coil-compose:2.2.1",
                 shakey                                          : "com.linkedin.shaky:shaky:3.0.4",
                 falcon                                          : 'com.jraska:falcon:2.2.0',
                 circleimageview                                 : "de.hdodenhof:circleimageview:$circleimageview",
@@ -50,7 +50,6 @@ allprojects {
                 kotlinx : [
                         serialization                           : "org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinx_serialization"
                 ],
-                discord                                         : "com.github.discord:OverlappingPanels:0.1.5",
                 flagkit                                         : "com.jwang123.flagkit:flagkit:1.0",
                 firebase : [
                         bom                                     : "com.google.firebase:firebase-bom:$firebase_bom",
@@ -70,12 +69,6 @@ allprojects {
                         hilt_kapt_compiler                      : "androidx.hilt:hilt-compiler:1.0.0",
                         hilt_work                               : "androidx.hilt:hilt-work:1.0.0"
                 ],
-                koin : [
-                        koin                                    : "io.insert-koin:koin-android:$koin_version",
-                        koin_workmanager                        : "io.insert-koin:koin-androidx-workmanager:$koin_version",
-                        koin_navigation                         : "io.insert-koin:koin-androidx-navigation:$koin_version",
-                        koin_compose                            : "io.insert-koin:koin-androidx-compose:$koin_version",
-                ],
                 lottie                                          : "com.airbnb.android:lottie-compose:$lottie",
                 play : [
                         ads                                     : "com.google.android.gms:play-services-ads:$play_ads"
@@ -94,7 +87,6 @@ allprojects {
                         compiler                                : "androidx.room:room-compiler:$room",
                         ktx                                     : "androidx.room:room-ktx:$room"
                 ],
-                shimmer                                         : "com.facebook.shimmer:shimmer:0.5.0",
                 skeletonlayout                                  : "com.faltenreich:skeletonlayout:4.0.0",
                 threeten : [
                         threeten                                : "org.threeten:threetenbp:$threetenbp",
@@ -114,7 +106,6 @@ allprojects {
                         core_testing                            : 'androidx.arch.core:core-testing:2.1.0',
                         lifecycle                               : "androidx.lifecycle:lifecycle-compiler:$android_lifecycle"
                 ],
-                koin                                            : "io.insert-koin:koin-test-junit5:$koin_version",
                 kotlin : [
                         reflect                                 : "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version",
                         core                                    : "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines",
