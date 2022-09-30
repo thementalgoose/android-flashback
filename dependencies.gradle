@@ -60,7 +60,8 @@ allprojects {
                         crashlytics                             : "com.google.firebase:firebase-crashlytics",
                         firestore                               : "com.google.firebase:firebase-firestore",
                         firestore_ktx                           : "com.google.firebase:firebase-firestore-ktx",
-                        messaging                               : "com.google.firebase:firebase-messaging"
+                        messaging                               : "com.google.firebase:firebase-messaging",
+                        perf                                    : "com.google.firebase:firebase-perf"
                 ],
                 hilt : [
                         hilt_android                            : "com.google.dagger:hilt-android:$hilt",
