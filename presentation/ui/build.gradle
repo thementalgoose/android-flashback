@@ -29,9 +29,6 @@ dependencies {
     implementation deps.androidx.core
     implementation deps.androidx.appcompat
 
-    // Shimmer
-    implementation deps.shimmer
-
     // Lottie
     implementation deps.lottie
 
