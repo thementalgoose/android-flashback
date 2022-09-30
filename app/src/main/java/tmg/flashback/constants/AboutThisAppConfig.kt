@@ -153,6 +153,14 @@ object AboutThisAppConfig {
                 ),
                 AboutThisAppDependency(
                         order = 0,
+                        dependencyName = "Lottie",
+                        author = "AirBnB",
+                        url = "https://github.com/airbnb/lottie-android",
+                        backgroundColor = Color.TRANSPARENT,
+                        imageUrl = "https://avatars2.githubusercontent.com/u/698437"
+                ),
+                AboutThisAppDependency(
+                        order = 0,
                         dependencyName = "ThreeTen",
                         author = "Jake Wharton",
                         url = "https://github.com/JakeWharton/ThreeTenABP",
@@ -166,14 +174,6 @@ object AboutThisAppConfig {
                         url = "https://github.com/Faltenreich/SkeletonLayout",
                         backgroundColor = Color.TRANSPARENT,
                         imageUrl = "https://avatars3.githubusercontent.com/u/7239950"
-                ),
-                AboutThisAppDependency(
-                        order = 0,
-                        dependencyName = "Lottie",
-                        author = "AirBnB",
-                        url = "https://github.com/airbnb/lottie-android",
-                        backgroundColor = Color.TRANSPARENT,
-                        imageUrl = "https://avatars2.githubusercontent.com/u/698437"
                 ),
                 AboutThisAppDependency(
                         order = 0,
