@@ -37,7 +37,7 @@ allprojects {
                         systemuicontroller                      : "com.google.accompanist:accompanist-systemuicontroller:$android_accompanist",
                         placeholder                             : "com.google.accompanist:accompanist-placeholder-material:$android_accompanist",
                 ],
-                coil                                            : "io.coil-kt:coil-compose:2.1.0",
+                coil                                            : "io.coil-kt:coil-compose:2.2.1",
                 shakey                                          : "com.linkedin.shaky:shaky:3.0.4",
                 falcon                                          : 'com.jraska:falcon:2.2.0',
                 circleimageview                                 : "de.hdodenhof:circleimageview:$circleimageview",
