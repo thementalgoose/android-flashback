@@ -31,9 +31,6 @@ sealed class CircuitModel(
     ): CircuitModel(
         id = "${data.season}-${data.round}"
     ) {
-        init {
-            println("Preview size for $circuitId ${data.season} ${data.round} - ${data.preview}")
-        }
         companion object
     }
 
