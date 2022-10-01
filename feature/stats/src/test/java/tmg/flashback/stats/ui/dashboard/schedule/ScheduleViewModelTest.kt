@@ -138,14 +138,15 @@ internal class ScheduleViewModelTest: BaseTest() {
     @Test
     fun `expected list shows collapsible list section if pref is enabled`() {
 
-        val dayBeforeYesterday = OverviewRace.model(round = 1, date = LocalDate.now().minusDays(2L))
-        val yesterday = OverviewRace.model(round = 2, date = LocalDate.now().minusDays(1L))
-        val today = OverviewRace.model(round = 3, date = LocalDate.now())
-        val tomorrow = OverviewRace.model(round = 4, date = LocalDate.now().plusDays(1L))
+        val dayBeforeDayBeforeYesterday = OverviewRace.model(round = 1, date = LocalDate.now().minusDays(3L))
+        val dayBeforeYesterday = OverviewRace.model(round = 2, date = LocalDate.now().minusDays(2L))
+        val yesterday = OverviewRace.model(round = 3, date = LocalDate.now().minusDays(1L))
+        val today = OverviewRace.model(round = 4, date = LocalDate.now())
+        val tomorrow = OverviewRace.model(round = 5, date = LocalDate.now().plusDays(1L))
 
         every { mockHomeRepository.collapseList } returns true
         every { mockOverviewRepository.getOverview(any()) } returns flow { emit(Overview.model(
-            overviewRaces = listOf(dayBeforeYesterday, yesterday, today, tomorrow)
+            overviewRaces = listOf(dayBeforeDayBeforeYesterday, dayBeforeYesterday, yesterday, today, tomorrow)
         )) }
 
         initUnderTest()
@@ -154,7 +155,49 @@ internal class ScheduleViewModelTest: BaseTest() {
         underTest.outputs.items.test {
             assertValue(listOf(
                 ScheduleModel.CollapsableList(
-                    first = dayBeforeYesterday,
+                    first = dayBeforeDayBeforeYesterday,
+                    last = dayBeforeYesterday
+                ),
+                ScheduleModel.List(
+                    model = yesterday,
+                    notificationSchedule = fakeNotificationSchedule,
+                    showScheduleList = false
+                ),
+                ScheduleModel.List(
+                    model = today,
+                    notificationSchedule = fakeNotificationSchedule,
+                    showScheduleList = true
+                ),
+                ScheduleModel.List(
+                    model = tomorrow,
+                    notificationSchedule = fakeNotificationSchedule,
+                    showScheduleList = false
+                )
+            ))
+        }
+    }
+
+    @Test
+    fun `expected list shows collapsible list section if pref is enabled and days more than 5 in past`() {
+
+        val dayBeforeDayBeforeYesterday = OverviewRace.model(round = 1, date = LocalDate.now().minusDays(8L))
+        val dayBeforeYesterday = OverviewRace.model(round = 2, date = LocalDate.now().minusDays(7L))
+        val yesterday = OverviewRace.model(round = 3, date = LocalDate.now().minusDays(6L))
+        val today = OverviewRace.model(round = 4, date = LocalDate.now())
+        val tomorrow = OverviewRace.model(round = 5, date = LocalDate.now().plusDays(1L))
+
+        every { mockHomeRepository.collapseList } returns true
+        every { mockOverviewRepository.getOverview(any()) } returns flow { emit(Overview.model(
+            overviewRaces = listOf(dayBeforeDayBeforeYesterday, dayBeforeYesterday, yesterday, today, tomorrow)
+        )) }
+
+        initUnderTest()
+        underTest.load(LocalDate.now().year)
+
+        underTest.outputs.items.test {
+            assertValue(listOf(
+                ScheduleModel.CollapsableList(
+                    first = dayBeforeDayBeforeYesterday,
                     last = yesterday
                 ),
                 ScheduleModel.List(
