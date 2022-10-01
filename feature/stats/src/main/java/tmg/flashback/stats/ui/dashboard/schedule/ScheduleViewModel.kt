@@ -138,7 +138,6 @@ class ScheduleViewModel @Inject constructor(
         upcoming: OverviewRace?,
         showCollapsible: Boolean
     ): List<ScheduleModel> {
-        println("SHOW COLLAPSIBLE: $showCollapsible")
         return mutableListOf<ScheduleModel>()
             .apply {
                 val first = overview.overviewRaces.minByOrNull { it.round }
@@ -146,22 +145,41 @@ class ScheduleViewModel @Inject constructor(
                     upcoming != null &&
                     first != null &&
                     first.round != upcoming.round &&
-                    upcoming.round >= 3
+                    upcoming.round > 3
                 ) {
-                    add(ScheduleModel.CollapsableList(
-                        first = first,
-                        last = overview.overviewRaces.firstOrNull { it.round == upcoming.round - 1 }
-                    ))
-                    addAll(overview.overviewRaces
-                        .filter { it.round >= upcoming.round }
-                        .map {
-                            ScheduleModel.List(
-                                model = it,
-                                notificationSchedule = notificationRepository.notificationSchedule,
-                                showScheduleList = it == upcoming
-                            )
-                        }
-                    )
+                    val previousRace = overview.overviewRaces.firstOrNull { it.round == upcoming.round - 1 }
+                    if (previousRace != null && previousRace.date > LocalDate.now().minusDays(MOST_RECENT_RACE_FINISH_DAYS)) {
+                        // Item is within threshold, collapse second most recent
+                        add(ScheduleModel.CollapsableList(
+                            first = first,
+                            last = overview.overviewRaces.firstOrNull { it.round == upcoming.round - 2 }
+                        ))
+                        addAll(overview.overviewRaces
+                            .filter { it.round >= upcoming.round - 1 }
+                            .map {
+                                ScheduleModel.List(
+                                    model = it,
+                                    notificationSchedule = notificationRepository.notificationSchedule,
+                                    showScheduleList = it == upcoming
+                                )
+                            }
+                        )
+                    } else {
+                        add(ScheduleModel.CollapsableList(
+                            first = first,
+                            last = overview.overviewRaces.firstOrNull { it.round == upcoming.round - 1 }
+                        ))
+                        addAll(overview.overviewRaces
+                            .filter { it.round >= upcoming.round }
+                            .map {
+                                ScheduleModel.List(
+                                    model = it,
+                                    notificationSchedule = notificationRepository.notificationSchedule,
+                                    showScheduleList = it == upcoming
+                                )
+                            }
+                        )
+                    }
                 } else {
                     addAll(overview.overviewRaces.map {
                         ScheduleModel.List(
@@ -183,6 +201,10 @@ class ScheduleViewModel @Inject constructor(
                     else -> null
                 }
             }
+    }
+
+    companion object {
+        private const val MOST_RECENT_RACE_FINISH_DAYS = 5L
     }
 }
 
