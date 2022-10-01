@@ -43,7 +43,6 @@ class GetSupportedSourceUseCase @Inject constructor(
 
     private fun getSupportedSourceByFallbackDomain(url: URL): SupportedArticleSource? {
         val host = url.host.stripWWW()
-        println("HOST $host")
         val newHostToCheck = fallbackUrls
             .toList()
             .firstOrNull { (override, _) ->
