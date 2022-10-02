@@ -26,6 +26,7 @@ import tmg.flashback.stats.components.Timeline
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.text.TextBody1
+import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextHeadline2
 import tmg.flashback.style.text.TextSection
 
@@ -37,6 +38,7 @@ fun MenuScreenVM(
 
     val links = viewModel.outputs.links.observeAsState(emptyList())
     val seasons = viewModel.outputs.season.observeAsState(emptyList())
+    val appVersion = viewModel.outputs.appVersion.observeAsState("")
 
     MenuScreen(
         seasonClicked = { season ->
@@ -47,7 +49,8 @@ fun MenuScreenVM(
         toggleClicked = viewModel.inputs::clickToggle,
         featureClicked = viewModel.inputs::clickFeature,
         links = links.value,
-        season = seasons.value
+        season = seasons.value,
+        appVersion = appVersion.value
     )
 }
 
@@ -59,6 +62,7 @@ fun MenuScreen(
     toggleClicked: (MenuItems.Toggle) -> Unit,
     featureClicked: (MenuItems.Feature) -> Unit,
     season: List<MenuSeasonItem>,
+    appVersion: String
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
@@ -130,8 +134,12 @@ fun MenuScreen(
                     }
                 }
             }
+            item { Divider() }
+            item { 
+                Label(msg = stringResource(id = R.string.app_version_placeholder, appVersion))
+            }
             item {
-                Spacer(modifier = Modifier.height(AppTheme.dimens.xxlarge))
+                Spacer(modifier = Modifier.height(AppTheme.dimens.xlarge))
             }
         }
     )
@@ -165,6 +173,23 @@ private fun SubHeader(
                 bottom = AppTheme.dimens.small
             )
             .alpha(0.8f)
+    )
+}
+
+@Composable
+private fun Label(
+    msg: String,
+    modifier: Modifier = Modifier
+) {
+    TextBody2(
+        modifier = modifier
+            .padding(
+                start = AppTheme.dimens.medium,
+                end = AppTheme.dimens.medium,
+                top = AppTheme.dimens.nsmall,
+                bottom = AppTheme.dimens.small
+            ),
+        text = msg
     )
 }
 
@@ -287,7 +312,8 @@ private fun PreviewLight() {
             season = listOf(
                 MenuSeasonItem(Color.Red, 2020, true),
                 MenuSeasonItem(Color.Red, 2021, false)
-            )
+            ),
+            appVersion = "version"
         )
     }
 }
@@ -310,7 +336,8 @@ private fun PreviewDark() {
             season = listOf(
                 MenuSeasonItem(Color.Red, 2020, true),
                 MenuSeasonItem(Color.Red, 2021, false)
-            )
+            ),
+            appVersion = "version"
         )
     }
 }

@@ -130,4 +130,6 @@
 
     <string name="settings_restart_app_required">Your change will take effect when the app restarts</string>
 
+    <string name="app_version_placeholder">App Version: %s</string>
+
 </resources>
