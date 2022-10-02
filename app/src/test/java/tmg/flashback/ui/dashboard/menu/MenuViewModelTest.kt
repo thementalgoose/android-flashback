@@ -92,6 +92,16 @@ internal class MenuViewModelTest: BaseTest() {
     }
 
     @Test
+    fun `initial load reports app version name`() {
+        every { mockBuildConfigManager.versionName } returns "version-name"
+        initUnderTest()
+
+        underTest.outputs.appVersion.test {
+            assertValue("version-name")
+        }
+    }
+
+    @Test
     fun `initial load with runtime notifications, not seen and not enabled shows runtime feature`() {
         every { mockBuildConfigManager.isRuntimeNotificationsSupported } returns true
         every { mockNotificationRepository.seenRuntimeNotifications } returns false

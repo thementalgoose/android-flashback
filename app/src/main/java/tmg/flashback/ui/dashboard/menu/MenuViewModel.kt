@@ -42,6 +42,8 @@ interface MenuViewModelInputs {
 interface MenuViewModelOutputs {
     val links: LiveData<List<MenuItems>>
     val season: LiveData<List<MenuSeasonItem>>
+
+    val appVersion: LiveData<String>
 }
 
 //endregion
@@ -68,6 +70,7 @@ class MenuViewModel @Inject constructor(
     private val selectedSeason: MutableStateFlow<Int> = MutableStateFlow(defaultSeasonUseCase.defaultSeason)
 
     override val links: MutableLiveData<List<MenuItems>> = MutableLiveData(getLinks())
+    override val appVersion: MutableLiveData<String> = MutableLiveData(buildConfigManager.versionName)
 
     override val season: LiveData<List<MenuSeasonItem>> = selectedSeason
         .map { selectedSeason ->
