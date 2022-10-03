@@ -107,6 +107,7 @@ class DetailsViewModel @Inject constructor(
                             )) {
                                 RaceWeekend.FREE_PRACTICE -> notificationRepository.notificationUpcomingFreePractice
                                 RaceWeekend.QUALIFYING -> notificationRepository.notificationUpcomingQualifying
+                                RaceWeekend.SPRINT -> notificationRepository.notificationUpcomingSprint
                                 RaceWeekend.RACE -> notificationRepository.notificationUpcomingRace
                                 null -> notificationRepository.notificationUpcomingOther
                             }
