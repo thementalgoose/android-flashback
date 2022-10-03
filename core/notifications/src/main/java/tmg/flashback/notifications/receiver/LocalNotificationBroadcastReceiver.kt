@@ -49,6 +49,7 @@ class LocalNotificationBroadcastReceiver @Inject constructor(): BroadcastReceive
             priority = when (channelId) {
                 // NotificationChannel in :feature:stats module
                 "flashback_race" -> NotificationPriority.HIGH
+                "flashback_sprint" -> NotificationPriority.HIGH
                 "flashback_qualifying" -> NotificationPriority.HIGH
                 else -> NotificationPriority.DEFAULT
             }
