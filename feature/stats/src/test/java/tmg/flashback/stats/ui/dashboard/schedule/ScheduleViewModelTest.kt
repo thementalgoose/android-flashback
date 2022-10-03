@@ -295,6 +295,7 @@ internal class ScheduleViewModelTest: BaseTest() {
     private val fakeNotificationSchedule: NotificationSchedule = NotificationSchedule(
         freePractice = true,
         qualifying = true,
+        sprint = true,
         race = true,
         other = true,
     )

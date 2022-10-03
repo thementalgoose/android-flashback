@@ -57,6 +57,42 @@ internal class NotificationRepositoryTest {
 
     //endregion
 
+    //region Notification preferences - Sprint
+
+    @Test
+    fun `is notification sprint reads value from preferences repository with default to false`() {
+        every { mockPreferenceManager.getBoolean(any(), any()) } returns true
+
+        initUnderTest()
+
+        Assertions.assertTrue(underTest.notificationUpcomingSprint)
+        verify {
+            mockPreferenceManager.getBoolean(keyNotificationSprint, false)
+        }
+    }
+
+    @Test
+    fun `setting notification sprint enabled saves value from preferences repository`() {
+        initUnderTest()
+
+        underTest.notificationUpcomingSprint = true
+        verify {
+            mockPreferenceManager.save(keyNotificationSprint, true)
+        }
+    }
+
+    @Test
+    fun `setting notification sprint disabled saves value from preferences repository`() {
+        initUnderTest()
+
+        underTest.notificationUpcomingSprint = false
+        verify {
+            mockPreferenceManager.save(keyNotificationSprint, false)
+        }
+    }
+
+    //endregion
+
     //region Notification preferences - Qualifying
 
     @Test
@@ -174,6 +210,7 @@ internal class NotificationRepositoryTest {
         val expected = NotificationSchedule(
             freePractice = true,
             qualifying = true,
+            sprint = true,
             race = true,
             other = true,
         )
@@ -441,6 +478,7 @@ internal class NotificationRepositoryTest {
 
     companion object {
         private const val keyNotificationRace: String = "UP_NEXT_NOTIFICATION_RACE"
+        private const val keyNotificationSprint: String = "UP_NEXT_NOTIFICATION_SPRINT"
         private const val keyNotificationQualifying: String = "UP_NEXT_NOTIFICATION_QUALIFYING"
         private const val keyNotificationFreePractice: String = "UP_NEXT_NOTIFICATION_FREE_PRACTICE"
         private const val keyNotificationOther: String = "UP_NEXT_NOTIFICATION_OTHER"
