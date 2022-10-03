@@ -2,6 +2,7 @@
 <resources>
     <!-- Notifications -->
     <string name="notification_channel_race">Race starts</string>
+    <string name="notification_channel_sprint">Sprint starts</string>
     <string name="notification_channel_qualifying">Qualifying starts</string>
     <string name="notification_channel_free_practice">Free Practice starts</string>
     <string name="notification_channel_info">Season information</string>

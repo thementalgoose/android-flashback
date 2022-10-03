@@ -21,6 +21,7 @@ internal class NotificationOnboardingViewModelTest: BaseTest() {
     internal fun setUp() {
         every { mockNotificationRepository.seenNotificationOnboarding } returns false
         every { mockNotificationRepository.notificationUpcomingRace } returns true
+        every { mockNotificationRepository.notificationUpcomingSprint } returns true
         every { mockNotificationRepository.notificationUpcomingQualifying } returns true
         every { mockNotificationRepository.notificationUpcomingFreePractice } returns true
         every { mockNotificationRepository.notificationUpcomingOther } returns true
