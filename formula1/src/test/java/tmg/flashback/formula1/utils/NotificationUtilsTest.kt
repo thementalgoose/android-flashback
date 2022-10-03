@@ -14,13 +14,15 @@ internal class NotificationUtilsTest {
         "Grand Prix,RACE",
         "raCe,RACE",
         "race,RACE",
-        "sprinting,RACE",
-        "sprinter,RACE",
+
+        "sprinting,SPRINT",
+        "sprinter,SPRINT",
+        "sprint,SPRINT",
+        "sprint quali,SPRINT",
+        "sprint qualifying,SPRINT",
 
         "quali,QUALIFYING",
-        "sprint quali,QUALIFYING",
-        "sprint qualifying,QUALIFYING",
-        "quali,QUALIFYING",
+        "QUALIFIYING,QUALIFYING",
         "qualifying,QUALIFYING",
 
         "fp,FREE_PRACTICE",
