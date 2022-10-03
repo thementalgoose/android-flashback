@@ -306,6 +306,7 @@ private fun Preview(
 private val fakeNotificationSchedule = NotificationSchedule(
     freePractice = false,
     qualifying = true,
+    sprint = true,
     race = true,
     other = true
 )

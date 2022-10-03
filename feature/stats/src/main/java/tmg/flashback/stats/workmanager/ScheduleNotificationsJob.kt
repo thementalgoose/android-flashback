@@ -71,6 +71,7 @@ class ScheduleNotificationsJob @AssistedInject constructor(
             .filter {
                 when (it.channel) {
                     NotificationChannel.RACE -> notificationRepository.notificationUpcomingRace
+                    NotificationChannel.SPRINT -> notificationRepository.notificationUpcomingSprint
                     NotificationChannel.QUALIFYING -> notificationRepository.notificationUpcomingQualifying
                     NotificationChannel.FREE_PRACTICE -> notificationRepository.notificationUpcomingFreePractice
                     NotificationChannel.SEASON_INFO -> notificationRepository.notificationUpcomingOther
@@ -143,6 +144,7 @@ class ScheduleNotificationsJob @AssistedInject constructor(
         return when (NotificationUtils.getCategoryBasedOnLabel(this)) {
             RaceWeekend.FREE_PRACTICE -> NotificationChannel.FREE_PRACTICE
             RaceWeekend.QUALIFYING -> NotificationChannel.QUALIFYING
+            RaceWeekend.SPRINT -> NotificationChannel.SPRINT
             RaceWeekend.RACE -> NotificationChannel.RACE
             null -> NotificationChannel.SEASON_INFO
         }
