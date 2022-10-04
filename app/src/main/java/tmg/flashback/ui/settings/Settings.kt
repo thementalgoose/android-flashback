@@ -104,6 +104,14 @@ object Settings {
             isChecked = isChecked,
             isEnabled = isEnabled
         )
+        val notificationUpcomingSprintKey = "notification_upcoming_sprint"
+        fun notificationUpcomingSprint(isChecked: Boolean, isEnabled: Boolean = true) = Setting.Switch(
+            _key = notificationUpcomingSprintKey,
+            title = R.string.settings_switch_notification_upcoming_sprint_title,
+            subtitle = null,
+            isChecked = isChecked,
+            isEnabled = isEnabled
+        )
         val notificationUpcomingQualifyingKey = "notification_upcoming_qualifying"
         fun notificationUpcomingQualifying(isChecked: Boolean, isEnabled: Boolean = true) = Setting.Switch(
             _key = notificationUpcomingQualifyingKey,

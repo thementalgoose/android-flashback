@@ -118,6 +118,26 @@ internal class SettingsNotificationsUpcomingViewModelTest: BaseTest() {
     }
 
     @Test
+    fun `sprint enabled is true when sprint pref are enabled`() {
+        every { mockNotificationRepository.notificationUpcomingSprint } returns true
+
+        initUnderTest()
+        underTest.outputs.sprintEnabled.test {
+            assertValue(true)
+        }
+    }
+
+    @Test
+    fun `sprint enabled is false when sprint pref are disabled`() {
+        every { mockNotificationRepository.notificationUpcomingSprint } returns false
+
+        initUnderTest()
+        underTest.outputs.sprintEnabled.test {
+            assertValue(false)
+        }
+    }
+
+    @Test
     fun `other enabled is true when other pref are enabled`() {
         every { mockNotificationRepository.notificationUpcomingOther } returns true
 

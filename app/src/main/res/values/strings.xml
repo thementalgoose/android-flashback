@@ -93,6 +93,7 @@
     <string name="settings_pref_notification_notice_period_description">Get notified 15, 30 or 60 minutes before one of the above events starts</string>
     <string name="settings_switch_notification_upcoming_fp_title">Free Practice</string>
     <string name="settings_switch_notification_upcoming_qualifying_title">Qualifying</string>
+    <string name="settings_switch_notification_upcoming_sprint_title">Sprint</string>
     <string name="settings_switch_notification_upcoming_race_title">Race</string>
     <string name="settings_switch_notification_upcoming_other_title">Other</string>
     <string name="settings_switch_notification_results_qualifying_title">Qualifying</string>

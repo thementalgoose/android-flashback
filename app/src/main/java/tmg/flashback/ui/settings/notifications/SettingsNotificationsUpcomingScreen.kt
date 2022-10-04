@@ -33,8 +33,9 @@ fun SettingsNotificationsUpcomingScreenVM(
     val permissionEnabled = viewModel.outputs.permissionEnabled.observeAsState(false)
     val freePracticeEnabled = viewModel.outputs.freePracticeEnabled.observeAsState(false)
     val qualifyingEnabled = viewModel.outputs.qualifyingEnabled.observeAsState(false)
-    val otherEnabled = viewModel.outputs.otherEnabled.observeAsState(false)
+    val sprintEnabled = viewModel.outputs.sprintEnabled.observeAsState(false)
     val raceEnabled = viewModel.outputs.raceEnabled.observeAsState(false)
+    val otherEnabled = viewModel.outputs.otherEnabled.observeAsState(false)
 
     LaunchedEffect(Unit) {
         viewModel.refresh()
@@ -46,8 +47,9 @@ fun SettingsNotificationsUpcomingScreenVM(
         permissionEnabled = permissionEnabled.value,
         freePracticeEnabled = freePracticeEnabled.value,
         qualifyingEnabled = qualifyingEnabled.value,
+        sprintEnabled = sprintEnabled.value,
+        raceEnabled = raceEnabled.value,
         otherEnabled = otherEnabled.value,
-        raceEnabled = raceEnabled.value
     )
 }
 
@@ -58,11 +60,13 @@ fun SettingsNotificationsUpcomingScreen(
     permissionEnabled: Boolean,
     freePracticeEnabled: Boolean,
     qualifyingEnabled: Boolean,
+    sprintEnabled: Boolean,
+    raceEnabled: Boolean,
     otherEnabled: Boolean,
-    raceEnabled: Boolean
 ) {
     LazyColumn(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
             .background(AppTheme.colors.backgroundPrimary),
         content = {
             item("header") {
@@ -91,11 +95,15 @@ fun SettingsNotificationsUpcomingScreen(
                 onClick = prefClicked
             )
             Switch(
-                model = Settings.Notifications.notificationUpcomingOther(otherEnabled, isEnabled = permissionEnabled),
+                model = Settings.Notifications.notificationUpcomingSprint(sprintEnabled, isEnabled = permissionEnabled),
                 onClick = prefClicked
             )
             Switch(
                 model = Settings.Notifications.notificationUpcomingRace(raceEnabled, isEnabled = permissionEnabled),
+                onClick = prefClicked
+            )
+            Switch(
+                model = Settings.Notifications.notificationUpcomingOther(otherEnabled, isEnabled = permissionEnabled),
                 onClick = prefClicked
             )
 
@@ -118,10 +126,11 @@ private fun Preview() {
             actionUpClicked = { },
             prefClicked = { },
             permissionEnabled = false,
-            qualifyingEnabled = true,
             freePracticeEnabled = true,
+            qualifyingEnabled = true,
+            sprintEnabled = false,
+            raceEnabled = false,
             otherEnabled = true,
-            raceEnabled = false
         )
     }
 }
