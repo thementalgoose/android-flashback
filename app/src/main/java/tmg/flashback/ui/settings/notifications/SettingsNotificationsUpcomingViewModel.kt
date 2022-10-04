@@ -24,6 +24,7 @@ interface SettingsNotificationsUpcomingViewModelOutputs {
     val permissionEnabled: LiveData<Boolean>
     val freePracticeEnabled: LiveData<Boolean>
     val qualifyingEnabled: LiveData<Boolean>
+    val sprintEnabled: LiveData<Boolean>
     val raceEnabled: LiveData<Boolean>
     val otherEnabled: LiveData<Boolean>
 }
@@ -43,6 +44,7 @@ class SettingsNotificationsUpcomingViewModel @Inject constructor(
     override val permissionEnabled: MutableLiveData<Boolean> = MutableLiveData(permissionRepository.isRuntimeNotificationsEnabled)
     override val freePracticeEnabled: MutableLiveData<Boolean> = MutableLiveData(notificationRepository.notificationUpcomingFreePractice)
     override val qualifyingEnabled: MutableLiveData<Boolean> = MutableLiveData(notificationRepository.notificationUpcomingQualifying)
+    override val sprintEnabled: MutableLiveData<Boolean> = MutableLiveData(notificationRepository.notificationUpcomingSprint)
     override val raceEnabled: MutableLiveData<Boolean> = MutableLiveData(notificationRepository.notificationUpcomingRace)
     override val otherEnabled: MutableLiveData<Boolean> = MutableLiveData(notificationRepository.notificationUpcomingOther)
 
@@ -77,6 +79,11 @@ class SettingsNotificationsUpcomingViewModel @Inject constructor(
             Settings.Notifications.notificationUpcomingQualifyingKey -> {
                 notificationRepository.notificationUpcomingQualifying = !notificationRepository.notificationUpcomingQualifying
                 qualifyingEnabled.value = notificationRepository.notificationUpcomingQualifying
+                resubscribe()
+            }
+            Settings.Notifications.notificationUpcomingSprintKey -> {
+                notificationRepository.notificationUpcomingSprint = !notificationRepository.notificationUpcomingSprint
+                sprintEnabled.value = notificationRepository.notificationUpcomingSprint
                 resubscribe()
             }
             Settings.Notifications.notificationUpcomingRaceKey -> {
