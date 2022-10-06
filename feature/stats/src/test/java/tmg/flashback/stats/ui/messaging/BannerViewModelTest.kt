@@ -6,6 +6,7 @@ import io.mockk.verify
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import tmg.flashback.stats.repository.HomeRepository
+import tmg.flashback.stats.repository.models.Banner
 import tmg.flashback.web.WebNavigationComponent
 
 internal class BannerViewModelTest {
@@ -24,11 +25,10 @@ internal class BannerViewModelTest {
 
     @Test
     fun `message gets from home repository`() {
-        val banner = tmg.flashback.stats.repository.models.Banner("Hey")
-        every { mockHomeRepository.banners } returns banner
+        every { mockHomeRepository.banners } returns listOf(fakeBanner)
 
         initUnderTest()
-        assertEquals(banner, underTest.message)
+        assertEquals(fakeBanner, underTest.message[0])
 
         verify {
             mockHomeRepository.banners
@@ -44,4 +44,12 @@ internal class BannerViewModelTest {
             mockWebNavigationComponent.web("url")
         }
     }
+
+    private val fakeBanner: Banner
+        get() = Banner(
+            message = "message",
+            url = "https://www.google.com",
+            highlight = false,
+            season = null
+        )
 }

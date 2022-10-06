@@ -6,6 +6,7 @@ import tmg.flashback.stats.BuildConfig
 import tmg.flashback.stats.repository.json.BannerItemJson
 import tmg.flashback.stats.repository.json.BannerJson
 import tmg.flashback.stats.repository.models.Banner
+import java.text.ParseException
 
 fun BannerJson.convert(
     crashManager: CrashManager
@@ -25,7 +26,10 @@ fun BannerItemJson.convert(
         url = try {
             when (URLUtil.isValidUrl(this.url)) {
                 true -> this.url
-                false -> null
+                false -> {
+                    crashManager.logException(ParseException("Banner url ${this.url} is not a valid URL", 0))
+                    null
+                }
             }
         } catch (e: Exception) {
             if (BuildConfig.DEBUG) {
