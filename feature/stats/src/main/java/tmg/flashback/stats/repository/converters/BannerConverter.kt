@@ -2,6 +2,7 @@ package tmg.flashback.stats.repository.converters
 
 import android.webkit.URLUtil
 import tmg.flashback.crash_reporting.manager.CrashManager
+import tmg.flashback.stats.BuildConfig
 import tmg.flashback.stats.repository.json.BannerItemJson
 import tmg.flashback.stats.repository.json.BannerJson
 import tmg.flashback.stats.repository.models.Banner
@@ -22,14 +23,14 @@ fun BannerItemJson.convert(
     return Banner(
         message = this.msg,
         url = try {
-            if (this.url.isNullOrBlank()) {
-                return null
-            }
             when (URLUtil.isValidUrl(this.url)) {
                 true -> this.url
                 false -> null
             }
         } catch (e: Exception) {
+            if (BuildConfig.DEBUG) {
+                e.printStackTrace()
+            }
             crashManager.logException(e)
             null
         },
