@@ -27,7 +27,7 @@ fun Banner(
 
     Banners(
         modifier = modifier,
-        list = bannerList.filter { it.season == season },
+        list = bannerList.filter { it.season == null || it.season == season },
         navigateToWeb = viewModel.inputs::navigateToWeb
     )
 }
@@ -45,7 +45,7 @@ private fun Banners(
                     message = banner.message,
                     showLink = true,
                     highlight = banner.highlight,
-                    modifier = modifier.clickable(onClick = {
+                    containerModifier = Modifier.clickable(onClick = {
                         navigateToWeb(banner.url)
                     })
                 )
@@ -65,6 +65,7 @@ fun Banner(
     message: String,
     showLink: Boolean,
     modifier: Modifier = Modifier,
+    containerModifier: Modifier = Modifier,
     highlight: Boolean = false,
 ) {
     Box(modifier = modifier.padding(
@@ -72,13 +73,14 @@ fun Banner(
         vertical = AppTheme.dimens.xsmall
     )) {
         Container(
+            modifier = containerModifier,
             isOutlined = highlight
         ) {
             Row(Modifier
                 .fillMaxWidth()
                 .padding(
                     horizontal = AppTheme.dimens.small,
-                    vertical = AppTheme.dimens.xsmall
+                    vertical = if (highlight) AppTheme.dimens.small else AppTheme.dimens.xsmall
                 )
             ) {
                 TextBody2(

@@ -25,13 +25,13 @@ internal class BannerViewModelTest {
     @Test
     fun `message gets from home repository`() {
         val banner = tmg.flashback.stats.repository.models.Banner("Hey")
-        every { mockHomeRepository.banner } returns banner
+        every { mockHomeRepository.banners } returns banner
 
         initUnderTest()
         assertEquals(banner, underTest.message)
 
         verify {
-            mockHomeRepository.banner
+            mockHomeRepository.banners
         }
     }
 
