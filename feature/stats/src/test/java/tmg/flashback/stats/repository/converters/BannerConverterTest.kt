@@ -1,12 +1,17 @@
 package tmg.flashback.stats.repository.converters
 
+import io.mockk.mockk
+import io.mockk.verify
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
+import tmg.flashback.crash_reporting.manager.CrashManager
 import tmg.flashback.stats.repository.json.BannerItemJson
 import tmg.flashback.stats.repository.models.Banner
 
 internal class BannerConverterTest {
+
+    private val mockCrashManager: CrashManager = mockk(relaxed = true)
 
     @Test
     fun `null message results in null banner object`() {
@@ -17,7 +22,7 @@ internal class BannerConverterTest {
             season = null
         )
 
-        assertNull(json.convert())
+        assertNull(json.convert(mockCrashManager))
     }
 
     @Test
@@ -29,7 +34,7 @@ internal class BannerConverterTest {
             season = null
         )
 
-        assertNull(json.convert())
+        assertNull(json.convert(mockCrashManager))
     }
 
     @Test
@@ -41,7 +46,10 @@ internal class BannerConverterTest {
             season = null
         )
 
-        assertNull(json.convert()!!.url)
+        assertNull(json.convert(mockCrashManager)!!.url)
+        verify {
+            mockCrashManager.logException(any())
+        }
     }
 
     @Test
@@ -54,11 +62,11 @@ internal class BannerConverterTest {
         )
         val expected = Banner(
             message = "hey",
-            url = "https://www.google.com",
+            url = null, // URLUtil stubbed out
             highlight = true,
             season = null
         )
 
-        assertEquals(expected, json.convert())
+        assertEquals(expected, json.convert(mockCrashManager))
     }
 }
