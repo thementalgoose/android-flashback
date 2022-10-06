@@ -95,7 +95,7 @@ fun DriverStandingsScreen(
                 )
             }
             item(key = "info") {
-                DashboardQuickLinks()
+                DashboardQuickLinks(season = season)
                 val content = (items ?: emptyList())
                     .filterIsInstance<DriverStandingsModel.Standings>()
                     .firstOrNull { it.standings.inProgressContent != null }?.standings?.inProgressContent

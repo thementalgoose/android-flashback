@@ -89,7 +89,7 @@ fun ConstructorStandingsScreen(
                 )
             }
             item(key = "info") {
-                DashboardQuickLinks()
+                DashboardQuickLinks(season = season)
                 val content = (items ?: emptyList())
                     .filterIsInstance<ConstructorStandingsModel.Standings>()
                     .firstOrNull { it.standings.inProgressContent != null }?.standings?.inProgressContent
