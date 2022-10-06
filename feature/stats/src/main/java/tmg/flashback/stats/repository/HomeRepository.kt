@@ -2,6 +2,7 @@ package tmg.flashback.stats.repository
 
 import org.threeten.bp.Year
 import tmg.flashback.configuration.manager.ConfigManager
+import tmg.flashback.crash_reporting.manager.CrashManager
 import tmg.flashback.prefs.manager.PreferenceManager
 import tmg.flashback.stats.repository.converters.convert
 import tmg.flashback.stats.repository.json.AllSeasonsJson
@@ -13,14 +14,15 @@ import javax.inject.Singleton
 @Singleton
 class HomeRepository @Inject constructor(
         private val preferenceManager: PreferenceManager,
-        private val configManager: ConfigManager
+        private val configManager: ConfigManager,
+        private val crashManager: CrashManager
 ) {
 
     companion object {
 
         // Config
         private const val keyDefaultYear: String = "default_year"
-        private const val keyDefaultBanner: String = "banner"
+        private const val keyDefaultBanners: String = "banners"
         private const val keyDataProvidedBy: String = "data_provided"
         private const val keySupportedSeasons: String = "supported_seasons"
         private const val keySearch: String = "search"
@@ -43,10 +45,10 @@ class HomeRepository @Inject constructor(
     /**
      * Banner to be displayed at the top of the screen
      */
-    val banner: List<Banner>
+    val banners: List<Banner>
         get() = configManager
-            .getJson(keyDefaultBanner, BannerJson.serializer())
-            ?.convert() ?: emptyList()
+            .getJson(keyDefaultBanners, BannerJson.serializer())
+            ?.convert(crashManager = crashManager) ?: emptyList()
 
     /**
      * Banner to be displayed at the top of the screen

@@ -6,6 +6,7 @@ import io.mockk.verify
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import tmg.flashback.configuration.manager.ConfigManager
+import tmg.flashback.crash_reporting.manager.CrashManager
 import tmg.flashback.prefs.manager.PreferenceManager
 import tmg.flashback.stats.repository.json.AllSeasonsJson
 import tmg.flashback.stats.repository.json.BannerItemJson
@@ -16,11 +17,16 @@ internal class HomeRepositoryTest {
 
     private val mockPreferenceManager: PreferenceManager = mockk(relaxed = true)
     private val mockConfigManager: ConfigManager = mockk(relaxed = true)
+    private val mockCrashManager: CrashManager = mockk(relaxed = true)
 
     private lateinit var sut: HomeRepository
 
     private fun initSUT() {
-        sut = HomeRepository(mockPreferenceManager, mockConfigManager)
+        sut = HomeRepository(
+            preferenceManager = mockPreferenceManager,
+            configManager = mockConfigManager,
+            crashManager = mockCrashManager
+        )
     }
 
     //region Server default year
@@ -76,9 +82,9 @@ internal class HomeRepositoryTest {
 
     @Test
     fun `banner is returned from config repository`() {
-        every { mockConfigManager.getJson(keyDefaultBanner, BannerItemJson.serializer()) } returns BannerItemJson("hey", "sup")
+        every { mockConfigManager.getJson(keyDefaultBanner, BannerItemJson.serializer()) } returns BannerItemJson("hey", "sup", false, null)
         initSUT()
-        assertEquals(Banner("hey", "sup"), sut.banner)
+        assertEquals(Banner("hey", "sup", false, null), sut.banners)
         verify {
             mockConfigManager.getJson(keyDefaultBanner, BannerItemJson.serializer())
         }
@@ -88,7 +94,7 @@ internal class HomeRepositoryTest {
     fun `banner returned as null results null value`() {
         every { mockConfigManager.getJson(keyDefaultBanner, BannerItemJson.serializer()) } returns null
         initSUT()
-        assertNull(sut.banner)
+        assertNull(sut.banners)
         verify {
             mockConfigManager.getJson(keyDefaultBanner, BannerItemJson.serializer())
         }

@@ -12,7 +12,9 @@ internal class BannerConverterTest {
     fun `null message results in null banner object`() {
         val json = BannerItemJson(
             msg = null,
-            url = null
+            url = null,
+            highlight = false,
+            season = null
         )
 
         assertNull(json.convert())
@@ -22,19 +24,41 @@ internal class BannerConverterTest {
     fun `empty message results in null banner object`() {
         val json = BannerItemJson(
             msg = "",
-            url = "hey"
+            url = "hey",
+            highlight = false,
+            season = null
         )
 
         assertNull(json.convert())
     }
 
     @Test
+    fun `invalid url returns null url model`() {
+        val json = BannerItemJson(
+            msg = "test message",
+            url = "hey",
+            highlight = false,
+            season = null
+        )
+
+        assertNull(json.convert()!!.url)
+    }
+
+    @Test
     fun `valid banner results in banner object created`() {
         val json = BannerItemJson(
             msg = "hey",
-            url = "hey"
+            url = "https://www.google.com",
+            highlight = true,
+            season = null
+        )
+        val expected = Banner(
+            message = "hey",
+            url = "https://www.google.com",
+            highlight = true,
+            season = null
         )
 
-        assertEquals(Banner("hey", "hey"), json.convert())
+        assertEquals(expected, json.convert())
     }
 }

@@ -2,7 +2,6 @@ package tmg.flashback.stats.repository.converters
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import tmg.flashback.stats.repository.converters.convert
 import tmg.flashback.stats.repository.json.AllSeasonJson
 import tmg.flashback.stats.repository.json.AllSeasonsJson
 
