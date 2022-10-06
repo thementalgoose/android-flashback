@@ -76,12 +76,12 @@ fun Banner(
             modifier = containerModifier,
             isOutlined = highlight
         ) {
-            Row(Modifier
-                .fillMaxWidth()
+            Row(modifier = Modifier.fillMaxWidth()
                 .padding(
                     horizontal = AppTheme.dimens.small,
                     vertical = if (highlight) AppTheme.dimens.small else AppTheme.dimens.xsmall
-                )
+                ),
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 TextBody2(
                     text = message,
