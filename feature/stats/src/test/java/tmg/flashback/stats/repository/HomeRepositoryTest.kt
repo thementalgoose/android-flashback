@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 import tmg.flashback.configuration.manager.ConfigManager
 import tmg.flashback.prefs.manager.PreferenceManager
 import tmg.flashback.stats.repository.json.AllSeasonsJson
-import tmg.flashback.stats.repository.json.BannerJson
+import tmg.flashback.stats.repository.json.BannerItemJson
 import tmg.flashback.stats.repository.models.Banner
 import java.time.Year
 
@@ -76,21 +76,21 @@ internal class HomeRepositoryTest {
 
     @Test
     fun `banner is returned from config repository`() {
-        every { mockConfigManager.getJson(keyDefaultBanner, BannerJson.serializer()) } returns BannerJson("hey", "sup")
+        every { mockConfigManager.getJson(keyDefaultBanner, BannerItemJson.serializer()) } returns BannerItemJson("hey", "sup")
         initSUT()
         assertEquals(Banner("hey", "sup"), sut.banner)
         verify {
-            mockConfigManager.getJson(keyDefaultBanner, BannerJson.serializer())
+            mockConfigManager.getJson(keyDefaultBanner, BannerItemJson.serializer())
         }
     }
 
     @Test
     fun `banner returned as null results null value`() {
-        every { mockConfigManager.getJson(keyDefaultBanner, BannerJson.serializer()) } returns null
+        every { mockConfigManager.getJson(keyDefaultBanner, BannerItemJson.serializer()) } returns null
         initSUT()
         assertNull(sut.banner)
         verify {
-            mockConfigManager.getJson(keyDefaultBanner, BannerJson.serializer())
+            mockConfigManager.getJson(keyDefaultBanner, BannerItemJson.serializer())
         }
     }
 

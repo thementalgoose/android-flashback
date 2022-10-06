@@ -102,7 +102,7 @@ fun CalendarScreen(
                 )
             }
             item(key = "info") {
-                DashboardQuickLinks()
+                DashboardQuickLinks(season = season)
             }
 
             if (items == null) {

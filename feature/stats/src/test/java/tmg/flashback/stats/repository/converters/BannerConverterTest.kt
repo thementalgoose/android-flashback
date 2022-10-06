@@ -3,15 +3,14 @@ package tmg.flashback.stats.repository.converters
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
-import tmg.flashback.stats.repository.converters.convert
-import tmg.flashback.stats.repository.json.BannerJson
+import tmg.flashback.stats.repository.json.BannerItemJson
 import tmg.flashback.stats.repository.models.Banner
 
 internal class BannerConverterTest {
 
     @Test
     fun `null message results in null banner object`() {
-        val json = BannerJson(
+        val json = BannerItemJson(
             msg = null,
             url = null
         )
@@ -21,7 +20,7 @@ internal class BannerConverterTest {
 
     @Test
     fun `empty message results in null banner object`() {
-        val json = BannerJson(
+        val json = BannerItemJson(
             msg = "",
             url = "hey"
         )
@@ -31,7 +30,7 @@ internal class BannerConverterTest {
 
     @Test
     fun `valid banner results in banner object created`() {
-        val json = BannerJson(
+        val json = BannerItemJson(
             msg = "hey",
             url = "hey"
         )

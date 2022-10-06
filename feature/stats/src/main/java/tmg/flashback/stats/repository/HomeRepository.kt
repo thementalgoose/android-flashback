@@ -43,10 +43,10 @@ class HomeRepository @Inject constructor(
     /**
      * Banner to be displayed at the top of the screen
      */
-    val banner: Banner?
+    val banner: List<Banner>
         get() = configManager
             .getJson(keyDefaultBanner, BannerJson.serializer())
-            ?.convert()
+            ?.convert() ?: emptyList()
 
     /**
      * Banner to be displayed at the top of the screen
