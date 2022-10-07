@@ -105,7 +105,7 @@ internal class SettingsAboutViewModelTest: BaseTest() {
 
     companion object {
         private const val APPLICATION_ID: String = "applicationId"
-        private const val REVIEW_URL: String = "http://play.google.com/store/apps/details?id=$APPLICATION_ID"
+        private const val REVIEW_URL: String = "https://play.google.com/store/apps/details?id=$APPLICATION_ID"
     }
 
 }
