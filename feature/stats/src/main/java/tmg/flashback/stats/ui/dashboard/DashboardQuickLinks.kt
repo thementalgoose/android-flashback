@@ -8,8 +8,10 @@ import tmg.flashback.stats.ui.messaging.ProvidedBy
 
 @Composable
 fun LazyItemScope.DashboardQuickLinks(
-    modifier: Modifier = Modifier
+    season: Int? = null
 ) {
-    Banner()
+    Banner(
+        season = season
+    )
     ProvidedBy()
 }
