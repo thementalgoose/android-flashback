@@ -10,6 +10,7 @@ import tmg.flashback.crash_reporting.manager.CrashManager
 import tmg.flashback.prefs.manager.PreferenceManager
 import tmg.flashback.stats.repository.json.AllSeasonsJson
 import tmg.flashback.stats.repository.json.BannerItemJson
+import tmg.flashback.stats.repository.json.BannerJson
 import tmg.flashback.stats.repository.models.Banner
 import java.time.Year
 
@@ -82,21 +83,23 @@ internal class HomeRepositoryTest {
 
     @Test
     fun `banner is returned from config repository`() {
-        every { mockConfigManager.getJson(keyDefaultBanner, BannerItemJson.serializer()) } returns BannerItemJson("hey", "sup", false, null)
+        val inputBanner = BannerItemJson("hey", "sup", false, null)
+        val expected = Banner("hey", null, false, null)
+        every { mockConfigManager.getJson(keyDefaultBanners, BannerJson.serializer()) } returns BannerJson(listOf(inputBanner))
         initSUT()
-        assertEquals(Banner("hey", "sup", false, null), sut.banners)
+        assertEquals(listOf(expected), sut.banners)
         verify {
-            mockConfigManager.getJson(keyDefaultBanner, BannerItemJson.serializer())
+            mockConfigManager.getJson(keyDefaultBanners, BannerJson.serializer())
         }
     }
 
     @Test
     fun `banner returned as null results null value`() {
-        every { mockConfigManager.getJson(keyDefaultBanner, BannerItemJson.serializer()) } returns null
+        every { mockConfigManager.getJson(keyDefaultBanners, BannerJson.serializer()) } returns null
         initSUT()
-        assertNull(sut.banners)
+        assertEquals(emptyList<Banner>(), sut.banners)
         verify {
-            mockConfigManager.getJson(keyDefaultBanner, BannerItemJson.serializer())
+            mockConfigManager.getJson(keyDefaultBanners, BannerJson.serializer())
         }
     }
 
@@ -304,7 +307,7 @@ internal class HomeRepositoryTest {
 
         // Config
         private const val keyDefaultYear: String = "default_year"
-        private const val keyDefaultBanner: String = "banner"
+        private const val keyDefaultBanners: String = "banners"
         private const val keyDataProvidedBy: String = "data_provided"
         private const val keySupportedSeasons: String = "supported_seasons"
         private const val keySearch: String = "search"
