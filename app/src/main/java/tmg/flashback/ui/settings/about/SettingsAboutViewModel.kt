@@ -33,7 +33,7 @@ class SettingsAboutViewModel @Inject constructor(
     private val buildConfigManager: BuildConfigManager
 ): ViewModel(), SettingsAboutViewModelInputs, SettingsAboutViewModelOutputs {
 
-    private val reviewUrl: String get() = "http://play.google.com/store/apps/details?id=${buildConfigManager.applicationId}"
+    private val reviewUrl: String get() = "https://play.google.com/store/apps/details?id=${buildConfigManager.applicationId}"
 
     val inputs: SettingsAboutViewModelInputs = this
     val outputs: SettingsAboutViewModelOutputs = this
