@@ -12,7 +12,7 @@ interface BannerViewModelInputs {
 }
 
 interface BannerViewModelOutputs {
-    val message: Banner?
+    val message: List<Banner>
 }
 
 @HiltViewModel
@@ -24,7 +24,9 @@ class BannerViewModel @Inject constructor(
     val inputs: BannerViewModelInputs = this
     val outputs: BannerViewModelOutputs = this
 
-    override val message: Banner? get() = homeRepository.banner
+    override val message: List<Banner> get() {
+        return homeRepository.banners
+    }
 
     override fun navigateToWeb(url: String) {
         webNavigationComponent.web(url)
