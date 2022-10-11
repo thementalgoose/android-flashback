@@ -36,6 +36,12 @@ interface SyncViewModelInputs {
 
 interface SyncViewModelOutputs {
 
+    val circuitsState: LiveData<SyncState>
+    val constructorsState: LiveData<SyncState>
+    val driversState: LiveData<SyncState>
+    val racesState: LiveData<SyncState>
+    val configState: LiveData<SyncState>
+
     val loadingState: LiveData<SyncState>
     val showRetry: LiveData<Boolean>
 
@@ -64,11 +70,11 @@ class SyncViewModel @Inject constructor(
     var inputs: SyncViewModelInputs = this
     var outputs: SyncViewModelOutputs = this
 
-    private val circuitsState: MutableLiveData<SyncState> = MutableLiveData(LOADING)
-    private val constructorsState: MutableLiveData<SyncState> = MutableLiveData(LOADING)
-    private val driversState: MutableLiveData<SyncState> = MutableLiveData(LOADING)
-    private val racesState: MutableLiveData<SyncState> = MutableLiveData(LOADING)
-    private val configState: MutableLiveData<SyncState> = MutableLiveData(LOADING)
+    override val circuitsState: MutableLiveData<SyncState> = MutableLiveData(LOADING)
+    override val constructorsState: MutableLiveData<SyncState> = MutableLiveData(LOADING)
+    override val driversState: MutableLiveData<SyncState> = MutableLiveData(LOADING)
+    override val racesState: MutableLiveData<SyncState> = MutableLiveData(LOADING)
+    override val configState: MutableLiveData<SyncState> = MutableLiveData(LOADING)
 
     override val showRetry: MutableLiveData<Boolean> = MutableLiveData(false)
 
