@@ -102,12 +102,12 @@ jobs:
       # Version tag
       - name: Version Name
         id: get_version_name
-        run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
+        run: echo "VERSION=$(echo $GITHUB_REF | cut -d / -f 3)" >> $GITHUB_OUTPUT
 
       # Version code
       - name: Version Code
         id: get_version_code
-        run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d . -f 3)
+        run: echo "VERSION=$(echo $GITHUB_REF | cut -d . -f 3)" >> $GITHUB_OUTPUT
 
       # Release
       - name: Release to internal test track
@@ -138,14 +138,14 @@ jobs:
       # Version tag
       - name: Version Name
         id: get_version_name
-        run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
+        run: echo "VERSION=$(echo $GITHUB_REF | cut -d / -f 3)" >> $GITHUB_OUTPUT
       - name: Output version name
         run: echo ${{ steps.get_version_name.outputs.VERSION }} > version-name.txt
 
       # Version code
       - name: Version Code
         id: get_version_code
-        run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d . -f 3)
+        run: echo "VERSION=$(echo $GITHUB_REF | cut -d . -f 3)" >> $GITHUB_OUTPUT
       - name: Output version code
         run: echo ${{ steps.get_version_code.outputs.VERSION }} > version-code.txt
 
@@ -175,12 +175,12 @@ jobs:
       # Version tag
       - name: Version Name
         id: get_version_name
-        run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
+        run: echo "VERSION=$(echo $GITHUB_REF | cut -d / -f 3)" >> $GITHUB_OUTPUT
 
       # Version code
       - name: Version Code
         id: get_version_code
-        run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d . -f 3)
+        run: echo "VERSION=$(echo $GITHUB_REF | cut -d . -f 3)" >> $GITHUB_OUTPUT
 
       - name: Notify discord of failure
         uses: sarisia/actions-status-discord@v1
