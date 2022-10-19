@@ -148,8 +148,7 @@ class ScheduleViewModel @Inject constructor(
                     upcoming.round > 3
                 ) {
                     val previousRace = overview.overviewRaces.firstOrNull { it.round == upcoming.round - 1 }
-                    if (previousRace != null && previousRace.date > LocalDate.now().minusDays(MOST_RECENT_RACE_FINISH_DAYS)) {
-                        // Item is within threshold, collapse second most recent
+                    if (previousRace != null) {
                         add(ScheduleModel.CollapsableList(
                             first = first,
                             last = overview.overviewRaces.firstOrNull { it.round == upcoming.round - 2 }
@@ -201,10 +200,6 @@ class ScheduleViewModel @Inject constructor(
                     else -> null
                 }
             }
-    }
-
-    companion object {
-        private const val MOST_RECENT_RACE_FINISH_DAYS = 5L
     }
 }
 
