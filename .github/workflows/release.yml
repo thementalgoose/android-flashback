@@ -8,7 +8,7 @@ jobs:
   json_checker:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
@@ -22,7 +22,7 @@ jobs:
     timeout-minutes: 7
     steps:
       # Checkout
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       # Caching gradle
       - uses: actions/cache@v2
@@ -47,7 +47,7 @@ jobs:
     timeout-minutes: 15
     steps:
       # Checkout
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
@@ -78,7 +78,7 @@ jobs:
     needs: [unit_test,json_checker]
     steps:
       # Checkout
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
@@ -126,7 +126,7 @@ jobs:
     steps:
 
       # Checkout
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
@@ -168,7 +168,7 @@ jobs:
     steps:
 
       # Checkout
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
