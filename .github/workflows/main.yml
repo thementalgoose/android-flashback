@@ -12,11 +12,11 @@ jobs:
   json_checker:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - name: json-syntax-check
-        uses: limitusus/json-syntax-check@v1
+        uses: limitusus/json-syntax-check@v1.0.3
         with:
           pattern: "\\.json$"
 
@@ -25,7 +25,7 @@ jobs:
     timeout-minutes: 15
     steps:
       # Checkout
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       # Caching gradle
       - uses: actions/cache@v2
