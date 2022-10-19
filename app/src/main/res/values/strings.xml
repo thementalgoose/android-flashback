@@ -68,7 +68,7 @@
     <string name="settings_section_home_description">Customise the menu and dashboard layouts</string>
     <string name="settings_header_home">Home</string>
     <string name="settings_pref_collapsed_list_title">Collapse races</string>
-    <string name="settings_pref_collapsed_list_description">Hide the previously completed races for the current season, showing the upcoming events higher in the feed</string>
+    <string name="settings_pref_collapsed_list_description">Hide all but one of the completed races for the current season, showing the upcoming events higher in the feed</string>
 
     <string name="settings_section_rss_configure_title">Configure</string>
     <string name="settings_section_rss_configure_description">Setup RSS sources or customise appearance</string>

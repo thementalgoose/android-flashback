@@ -34,7 +34,7 @@ object Settings {
             _key = collapseListKey,
             title = R.string.settings_pref_collapsed_list_title,
             subtitle = R.string.settings_pref_collapsed_list_description,
-            isBeta = true,
+            isBeta = false,
             isChecked = isChecked,
             isEnabled = isEnabled
         )
