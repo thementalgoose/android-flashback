@@ -29,7 +29,7 @@ allprojects {
                         viewbinding                             : "androidx.compose.ui:ui-viewbinding:$android_compose",
                         runtime                                 : "androidx.compose.runtime:runtime-livedata:$android_compose",
                         viewmodel                               : "androidx.lifecycle:lifecycle-viewmodel-compose:$android_lifecycle",
-                        theme_adapter                           : "com.google.android.material:compose-theme-adapter:1.1.15"
+                        theme_adapter                           : "com.google.android.material:compose-theme-adapter:1.1.20"
                 ],
                 accompanist: [
                         swiperefresh                            : "com.google.accompanist:accompanist-swiperefresh:$android_accompanist",
@@ -37,7 +37,7 @@ allprojects {
                         systemuicontroller                      : "com.google.accompanist:accompanist-systemuicontroller:$android_accompanist",
                         placeholder                             : "com.google.accompanist:accompanist-placeholder-material:$android_accompanist",
                 ],
-                coil                                            : "io.coil-kt:coil-compose:2.2.1",
+                coil                                            : "io.coil-kt:coil-compose:2.2.2",
                 shakey                                          : "com.linkedin.shaky:shaky:3.0.4",
                 falcon                                          : 'com.jraska:falcon:2.2.0',
                 circleimageview                                 : "de.hdodenhof:circleimageview:$circleimageview",
