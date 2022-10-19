@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 2
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - name: json-syntax-check
@@ -25,7 +25,7 @@ jobs:
     timeout-minutes: 15
     steps:
       # Checkout
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
@@ -56,7 +56,7 @@ jobs:
     steps:
       # Checkout
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
@@ -82,7 +82,7 @@ jobs:
     if: ${{ needs.release_check.outputs.gradle == 'true' }}
     steps:
       # Checkout
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       # Caching gradle
       - uses: actions/cache@v2
@@ -109,7 +109,7 @@ jobs:
     if: ${{ needs.release_check.outputs.gradle == 'true' }}
     steps:
       # Checkout
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
