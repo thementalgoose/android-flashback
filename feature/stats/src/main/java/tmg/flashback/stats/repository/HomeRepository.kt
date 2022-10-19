@@ -82,7 +82,7 @@ class HomeRepository @Inject constructor(
      * Default to which tab
      */
     var collapseList: Boolean
-        get() = preferenceManager.getBoolean(keyDashboardCollapseList, false)
+        get() = preferenceManager.getBoolean(keyDashboardCollapseList, true)
         set(value) = preferenceManager.save(keyDashboardCollapseList, value)
 
     /**
