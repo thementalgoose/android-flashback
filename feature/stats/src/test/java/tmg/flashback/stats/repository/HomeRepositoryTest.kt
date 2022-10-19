@@ -187,21 +187,21 @@ internal class HomeRepositoryTest {
 
     //endregion
 
-    //region Dashboard Autoscroll
+    //region Dashboard Collapse List
 
     @Test
-    fun `dashboard autoscroll reads value from preferences repository`() {
-        every { mockPreferenceManager.getBoolean(keyDashboardCollapseList, false) } returns true
+    fun `dashboard collapse list reads value from preferences repository`() {
+        every { mockPreferenceManager.getBoolean(keyDashboardCollapseList, true) } returns true
         initSUT()
 
         assertTrue(sut.collapseList)
         verify {
-            mockPreferenceManager.getBoolean(keyDashboardCollapseList, false)
+            mockPreferenceManager.getBoolean(keyDashboardCollapseList, true)
         }
     }
 
     @Test
-    fun `dashboard autoscroll saves value to shared prefs repository`() {
+    fun `dashboard collapse list saves value to shared prefs repository`() {
         initSUT()
 
         sut.collapseList = true
