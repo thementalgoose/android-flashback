@@ -59,7 +59,7 @@ class DriverStatHistoryViewModel @Inject constructor(
     private fun buildChampionshipList(driverHistory: DriverHistory): List<DriverStatHistoryModel> {
         return driverHistory.standings
             .filter { !it.isInProgress }
-            .sortedBy { it.season }
+            .sortedByDescending { it.season }
             .filter { it.championshipStanding == 1 }
             .map {
                 DriverStatHistoryModel.Year(it.season)
@@ -69,7 +69,7 @@ class DriverStatHistoryViewModel @Inject constructor(
     private fun buildWinsList(driverHistory: DriverHistory): List<DriverStatHistoryModel> {
         return driverHistory.standings
             .filter { it.wins >= 1 }
-            .sortedBy { it.season }
+            .sortedByDescending { it.season }
             .map { it.raceOverview.filter { it.finished == 1 } }
             .flatten()
             .groupBy { it.raceInfo.season }
@@ -83,7 +83,7 @@ class DriverStatHistoryViewModel @Inject constructor(
                             constructor = it.constructor
                         )
                     }
-                    .sortedBy { it.raceInfo.round }
+                    .sortedByDescending { it.raceInfo.round }
                 )
                 return@map list
             }
@@ -93,7 +93,7 @@ class DriverStatHistoryViewModel @Inject constructor(
     private fun buildPodiumList(driverHistory: DriverHistory): List<DriverStatHistoryModel> {
         return driverHistory.standings
             .filter { it.podiums >= 1 }
-            .sortedBy { it.season }
+            .sortedByDescending { it.season }
             .map { it.raceOverview.filter { it.finished == 1 || it.finished == 2 || it.finished == 3 } }
             .flatten()
             .groupBy { it.raceInfo.season }
@@ -108,7 +108,7 @@ class DriverStatHistoryViewModel @Inject constructor(
                             position = it.finished
                         )
                     }
-                    .sortedBy { it.raceInfo.round }
+                    .sortedByDescending { it.raceInfo.round }
                 )
                 return@map list
             }
@@ -117,7 +117,7 @@ class DriverStatHistoryViewModel @Inject constructor(
 
     private fun buildPoleList(driverHistory: DriverHistory): List<DriverStatHistoryModel> {
         return driverHistory.standings
-            .sortedBy { it.season }
+            .sortedByDescending { it.season }
             .map { it.raceOverview.filter { it.qualified == 1 } }
             .flatten()
             .groupBy { it.raceInfo.season }
@@ -131,7 +131,7 @@ class DriverStatHistoryViewModel @Inject constructor(
                             constructor = it.constructor
                         )
                     }
-                    .sortedBy { it.raceInfo.round }
+                    .sortedByDescending { it.raceInfo.round }
                 )
                 return@map list
             }
