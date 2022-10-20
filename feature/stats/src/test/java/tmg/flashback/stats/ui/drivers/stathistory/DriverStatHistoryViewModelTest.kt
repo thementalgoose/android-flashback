@@ -43,8 +43,8 @@ internal class DriverStatHistoryViewModelTest: BaseTest() {
 
         underTest.outputs.results.test {
             assertValue(listOf(
+                DriverStatHistoryModel.modelYear(season = 2021),
                 DriverStatHistoryModel.modelYear(season = 2019),
-                DriverStatHistoryModel.modelYear(season = 2021)
             ))
         }
     }
@@ -61,7 +61,7 @@ internal class DriverStatHistoryViewModelTest: BaseTest() {
                         raceOverview = listOf(
                             DriverHistorySeasonRace.model(
                                 finished = 1,
-                                raceInfo = RaceInfo.model(season = 2021, round = 1)
+                                raceInfo = RaceInfo.model(season = 2021, round = 3)
                             ),
                             DriverHistorySeasonRace.model(
                                 finished = 2,
@@ -69,7 +69,7 @@ internal class DriverStatHistoryViewModelTest: BaseTest() {
                             ),
                             DriverHistorySeasonRace.model(
                                 finished = 1,
-                                raceInfo = RaceInfo.model(season = 2021, round = 3)
+                                raceInfo = RaceInfo.model(season = 2021, round = 1)
                             )
                         )
                     ),
@@ -80,7 +80,7 @@ internal class DriverStatHistoryViewModelTest: BaseTest() {
                         raceOverview = listOf(
                             DriverHistorySeasonRace.model(
                                 finished = 3,
-                                raceInfo = RaceInfo.model(season = 2020, round = 1)
+                                raceInfo = RaceInfo.model(season = 2020, round = 3)
                             ),
                             DriverHistorySeasonRace.model(
                                 finished = 1,
@@ -88,8 +88,8 @@ internal class DriverStatHistoryViewModelTest: BaseTest() {
                             ),
                             DriverHistorySeasonRace.model(
                                 finished = 3,
-                                raceInfo = RaceInfo.model(season = 2020, round = 3)
-                            )
+                                raceInfo = RaceInfo.model(season = 2020, round = 1)
+                            ),
                         )
                     )
                 )
@@ -101,17 +101,17 @@ internal class DriverStatHistoryViewModelTest: BaseTest() {
 
         underTest.outputs.results.test {
             assertValue(listOf(
+                DriverStatHistoryModel.modelLabel("2021"),
+                DriverStatHistoryModel.modelRace(
+                    raceInfo = RaceInfo.model(season = 2021, round = 3),
+                ),
+                DriverStatHistoryModel.modelRace(
+                    raceInfo = RaceInfo.model(season = 2021, round = 1),
+                ),
                 DriverStatHistoryModel.modelLabel("2020"),
                 DriverStatHistoryModel.modelRace(
                     raceInfo = RaceInfo.model(season = 2020, round = 2),
                 ),
-                DriverStatHistoryModel.modelLabel("2021"),
-                DriverStatHistoryModel.modelRace(
-                    raceInfo = RaceInfo.model(season = 2021, round = 1),
-                ),
-                DriverStatHistoryModel.modelRace(
-                    raceInfo = RaceInfo.model(season = 2021, round = 3),
-                )
             ))
         }
     }
@@ -170,23 +170,10 @@ internal class DriverStatHistoryViewModelTest: BaseTest() {
 
         underTest.outputs.results.test {
             assertValue(listOf(
-                DriverStatHistoryModel.modelLabel("2020"),
-                DriverStatHistoryModel.modelRacePosition(
-                    position = 3,
-                    raceInfo = RaceInfo.model(season = 2020, round = 1),
-                ),
-                DriverStatHistoryModel.modelRacePosition(
-                    position = 1,
-                    raceInfo = RaceInfo.model(season = 2020, round = 2),
-                ),
-                DriverStatHistoryModel.modelRacePosition(
-                    position = 3,
-                    raceInfo = RaceInfo.model(season = 2020, round = 3),
-                ),
                 DriverStatHistoryModel.modelLabel("2021"),
                 DriverStatHistoryModel.modelRacePosition(
                     position = 1,
-                    raceInfo = RaceInfo.model(season = 2021, round = 1),
+                    raceInfo = RaceInfo.model(season = 2021, round = 3),
                 ),
                 DriverStatHistoryModel.modelRacePosition(
                     position = 2,
@@ -194,8 +181,21 @@ internal class DriverStatHistoryViewModelTest: BaseTest() {
                 ),
                 DriverStatHistoryModel.modelRacePosition(
                     position = 1,
-                    raceInfo = RaceInfo.model(season = 2021, round = 3),
-                )
+                    raceInfo = RaceInfo.model(season = 2021, round = 1),
+                ),
+                DriverStatHistoryModel.modelLabel("2020"),
+                DriverStatHistoryModel.modelRacePosition(
+                    position = 3,
+                    raceInfo = RaceInfo.model(season = 2020, round = 3),
+                ),
+                DriverStatHistoryModel.modelRacePosition(
+                    position = 1,
+                    raceInfo = RaceInfo.model(season = 2020, round = 2),
+                ),
+                DriverStatHistoryModel.modelRacePosition(
+                    position = 3,
+                    raceInfo = RaceInfo.model(season = 2020, round = 1),
+                ),
             ))
         }
     }
@@ -252,17 +252,17 @@ internal class DriverStatHistoryViewModelTest: BaseTest() {
 
         underTest.outputs.results.test {
             assertValue(listOf(
+                DriverStatHistoryModel.modelLabel("2021"),
+                DriverStatHistoryModel.modelRace(
+                    raceInfo = RaceInfo.model(season = 2021, round = 3),
+                ),
+                DriverStatHistoryModel.modelRace(
+                    raceInfo = RaceInfo.model(season = 2021, round = 1),
+                ),
                 DriverStatHistoryModel.modelLabel("2020"),
                 DriverStatHistoryModel.modelRace(
                     raceInfo = RaceInfo.model(season = 2020, round = 2),
                 ),
-                DriverStatHistoryModel.modelLabel("2021"),
-                DriverStatHistoryModel.modelRace(
-                    raceInfo = RaceInfo.model(season = 2021, round = 1),
-                ),
-                DriverStatHistoryModel.modelRace(
-                    raceInfo = RaceInfo.model(season = 2021, round = 3),
-                )
             ))
         }
     }
