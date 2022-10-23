@@ -54,7 +54,7 @@ ext {
     circleimageview = "3.1.0"
     glide = "4.13.2"
     tmg_utils = "2.4.4"
-    tmg_labelled_progressbar = "1.0.8"
+    tmg_labelled_progressbar = "1.0.9"
     tmg_about_this_app = "5.3.2"
     tmg_test_utils = "1.1.0"
     lottie = "5.2.0"
