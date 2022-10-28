@@ -24,6 +24,9 @@ fun BannerItemJson.convert(
     return Banner(
         message = this.msg,
         url = try {
+            if (this.url == null) {
+                return null
+            }
             when (URLUtil.isValidUrl(this.url)) {
                 true -> this.url
                 false -> {
