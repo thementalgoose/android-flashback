@@ -42,18 +42,6 @@ allprojects {
     repositories {
         google()
         mavenCentral()
-        jcenter() {
-            content {
-                // https://github.com/wangjiejacques/flagkit
-                includeModule("com.jwang123.flagkit", "flagkit")
-
-                // Marked read only by owner, not around forever
-                includeModule("com.github.stkent", "bugshaker")
-
-                // Required
-                includeModule("com.reddit", "indicator-fast-scroll")
-            }
-        }
         maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
         maven { url 'https://jitpack.io' }
     }
