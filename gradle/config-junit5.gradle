@@ -52,16 +52,16 @@ tasks.withType(Test) {
 }
 
 dependencies {
-    testImplementation depsTest.junit5.api
-    testImplementation depsTest.junit5.engine
-    testImplementation depsTest.junit5.params
-    testRuntimeOnly depsTest.junit5.engine
+    testImplementation libs.junit5.api
+    testImplementation libs.junit5.engine
+    testImplementation libs.junit5.params
+    testRuntimeOnly libs.junit5.engine
 
-    testImplementation depsTest.mockk
+    testImplementation libs.mockk
 
-    testImplementation depsTest.tmg.testutils
+    testImplementation libs.tmg.testutils
 
-    testImplementation depsTest.androidx.core
-    testImplementation depsTest.androidx.core_testing
-    kaptTest depsTest.androidx.lifecycle
+    testImplementation libs.test.androidx.core
+    testImplementation libs.test.androidx.arch
+    kaptTest libs.test.androidx.lifecycle
 }

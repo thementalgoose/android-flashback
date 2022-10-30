@@ -35,7 +35,7 @@ jobs:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/*.toml*') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
 
@@ -70,7 +70,7 @@ jobs:
       - name: Calculate change
         id: change
         run: |
-          echo "gradle=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                | grep -E '**/*.gradle' -c)" >> $GITHUB_OUTPUT
+          echo "gradle=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }} | grep -E '**/*.[gradle|toml]' -c)" >> $GITHUB_OUTPUT
 
     outputs:
       gradle: ${{ steps.change.outputs.gradle != 0 }}

@@ -33,11 +33,9 @@ dependencies {
 
     implementation project(path: ':feature:releasenotes')
 
-    // About This App
-    implementation deps.tmg.aboutthisapp
+    implementation libs.tmg.aboutthisapp
+    implementation libs.circleimageview
 
-    // CircleImageView
-    implementation deps.circleimageview
     testImplementation project(path: ':test:models')
 
 

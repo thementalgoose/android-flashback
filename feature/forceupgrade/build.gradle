@@ -29,10 +29,8 @@ dependencies {
     implementation project(path: ':presentation:style')
     implementation project(path: ':presentation:ui')
 
-    // About This App
-    implementation deps.tmg.aboutthisapp
+    implementation libs.circleimageview
+    implementation libs.tmg.aboutthisapp
 
-    // CircleImageView
-    implementation deps.circleimageview
     testImplementation project(path: ':test:models')
 }

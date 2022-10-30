@@ -184,17 +184,6 @@ fun Dashboard(
     }
 }
 
-private object DrawerShape: Shape {
-    override fun createOutline(
-        size: Size,
-        layoutDirection: LayoutDirection,
-        density: Density
-    ): Outline {
-        val leftSpaceWidth = size.width * 1 / 3
-        return Outline.Rectangle(Rect(left = 0f, top = 0f, right = size.width * 2 / 3, bottom = size.height))
-    }
-}
-
 private val menuItemClickWidth = 48.dp
 private val menuItemIconWidth = 24.dp
 
