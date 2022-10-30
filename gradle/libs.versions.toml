@@ -67,7 +67,7 @@ firebase_crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
 firebase_messaging = { module = "com.google.firebase:firebase-messaging" }
 firebase_perf = { module = "com.google.firebase:firebase-perf" }
 
-flagkit = "com.jwang123.flagkit:flagkit:1.0"
+flagkit = "com.github.murgupluoglu:flagkit-android:1.0.2"
 
 hilt_android = { module = "com.google.dagger:hilt-android", version.ref = "dagger" }
 hilt_compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "dagger" }
