@@ -17,8 +17,6 @@ android {
 }
 
 dependencies {
-
-    // Core modules
     implementation project(path: ':core:analytics')
     implementation project(path: ':core:configuration')
     implementation project(path: ':core:crash-reporting')
@@ -28,8 +26,5 @@ dependencies {
     implementation project(path: ':presentation:style')
     implementation project(path: ':presentation:ui')
 
-    // TMG dependencies
-    implementation deps.tmg.labelledprogressbar
-
-
+    implementation libs.tmg.labelledprogressbar
 }

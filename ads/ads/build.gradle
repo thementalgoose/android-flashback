@@ -24,11 +24,11 @@ dependencies {
     implementation project(path: ':presentation:style')
     implementation project(path: ':presentation:ui')
 
-    implementation deps.play.ads
-    implementation deps.androidx.workmanager
+    implementation libs.playservicesads
+    implementation libs.bundles.androidx.workmanager
 
     // Skeleton Layout
-    implementation deps.skeletonlayout
+    implementation libs.skeletonlayout
 
     testImplementation project(path: ':test:models')
 }

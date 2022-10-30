@@ -1,7 +1,7 @@
 dependencies {
-    implementation deps.room.runtime
-    implementation deps.room.ktx
-    kapt deps.room.compiler
+    implementation libs.room.runtime
+    implementation libs.room.ktx
+    kapt libs.room.compiler
 
-    testImplementation depsTest.room
+    testImplementation libs.room.testing
 }
