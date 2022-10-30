@@ -8,10 +8,10 @@ buildscript {
     apply from: rootDir.absolutePath + "/versions.gradle"
 
     ext.kotlinCompilerArgs = [
-            "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi",
-            "-Xuse-experimental=kotlinx.coroutines.ObsoleteCoroutinesApi",
-            "-Xuse-experimental=kotlinx.coroutines.FlowPreview",
-            "-Xuse-experimental=kotlinx.serialization.ExperimentalSerializationApi"
+            "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
+            "-Xopt-in=kotlinx.coroutines.ObsoleteCoroutinesApi",
+            "-Xopt-in=kotlinx.coroutines.FlowPreview",
+            "-Xopt-in=kotlinx.serialization.ExperimentalSerializationApi"
     ]
 
     repositories {
@@ -33,8 +33,9 @@ buildscript {
         classpath "com.google.firebase:firebase-crashlytics-gradle:2.9.2"
         classpath "de.mannodermaus.gradle.plugins:android-junit5:1.8.2.1"
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt"
-        classpath "com.github.ben-manes:gradle-versions-plugin:0.42.0"
         classpath 'com.google.firebase:perf-plugin:1.4.2'
+        //noinspection GradleDependency
+        classpath "com.github.ben-manes:gradle-versions-plugin:0.42.0"
     }
 }
 
