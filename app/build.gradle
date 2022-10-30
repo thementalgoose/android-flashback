@@ -154,45 +154,32 @@ dependencies {
     androidTestImplementation "io.mockk:mockk-android:$mockk"
 
     // Work Manager
-    implementation deps.androidx.workmanager
-    implementation deps.androidx.workmanager_ktx
+    implementation libs.bundles.androidx.workmanager
 
     // Splash screen
-    implementation deps.androidx.splashscreen
+    implementation libs.androidx.splashscreen
 
-    // TMG dependencies
-    implementation deps.tmg.aboutthisapp
-    implementation deps.tmg.utilities
-    implementation deps.tmg.labelledprogressbar
+    implementation libs.tmg.aboutthisapp
+    implementation libs.tmg.utils
+    implementation libs.tmg.labelledprogressbar
 
-    // Preferences
-    implementation deps.androidx.preference
-
-    // BugShaker
-    implementation deps.falcon
-    implementation deps.shakey
-
-    // Lottie
-    implementation deps.lottie
-
-    // Skeleton Layout
-    implementation deps.skeletonlayout
-
-    // Circle Image View
-    implementation deps.circleimageview
+    implementation libs.falcon
+    implementation libs.shakey
+    implementation libs.lottie
+    implementation libs.skeletonlayout
+    implementation libs.circleimageview
 
     // Notifications + Config
-    implementation platform(deps.firebase.bom)
-    implementation deps.firebase.auth
-    implementation deps.firebase.analytics
-    implementation deps.firebase.common
-    implementation deps.firebase.config
-    implementation deps.firebase.crashlytics
-    implementation deps.firebase.firestore
-    implementation deps.firebase.firestore_ktx
-    implementation deps.firebase.messaging
-    implementation deps.firebase.perf
-    implementation deps.kotlin.playservices
+    implementation platform(libs.firebase.bom)
+    implementation libs.firebase.auth
+    implementation libs.firebase.analytics
+    implementation libs.firebase.common
+    implementation libs.firebase.config
+    implementation libs.firebase.crashlytics
+    implementation libs.firebase.messaging
+    implementation libs.firebase.perf
+
+    implementation libs.playservicesads
 
     // Test Utils
     testImplementation project(':test:models')

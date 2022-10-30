@@ -19,24 +19,6 @@ allprojects {
                         workmanager                             : "androidx.work:work-runtime:$android_workmanager",
                         workmanager_ktx                         : "androidx.work:work-runtime-ktx:$android_workmanager"
                 ],
-                compose: [
-                        activity                                : "androidx.activity:activity-compose:1.5.1",
-                        material                                : "androidx.compose.material:material:$android_compose",
-                        material3                               : "androidx.compose.material3:material3:1.0.0-alpha15",
-                        navigation                              : "androidx.navigation:navigation-compose:$navigation",
-                        animation                               : "androidx.compose.animation:animation:$android_compose",
-                        tooling                                 : "androidx.compose.ui:ui-tooling:$android_compose",
-                        viewbinding                             : "androidx.compose.ui:ui-viewbinding:$android_compose",
-                        runtime                                 : "androidx.compose.runtime:runtime-livedata:$android_compose",
-                        viewmodel                               : "androidx.lifecycle:lifecycle-viewmodel-compose:$android_lifecycle",
-                        theme_adapter                           : "com.google.android.material:compose-theme-adapter:1.1.20"
-                ],
-                accompanist: [
-                        swiperefresh                            : "com.google.accompanist:accompanist-swiperefresh:$android_accompanist",
-                        horizontalpager                         : "com.google.accompanist:accompanist-pager:$android_accompanist",
-                        systemuicontroller                      : "com.google.accompanist:accompanist-systemuicontroller:$android_accompanist",
-                        placeholder                             : "com.google.accompanist:accompanist-placeholder-material:$android_accompanist",
-                ],
                 coil                                            : "io.coil-kt:coil-compose:2.2.2",
                 shakey                                          : "com.linkedin.shaky:shaky:3.0.4",
                 falcon                                          : 'com.jraska:falcon:2.2.0',
@@ -51,42 +33,9 @@ allprojects {
                         serialization                           : "org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinx_serialization"
                 ],
                 flagkit                                         : "com.jwang123.flagkit:flagkit:1.0",
-                firebase : [
-                        bom                                     : "com.google.firebase:firebase-bom:$firebase_bom",
-                        auth                                    : "com.google.firebase:firebase-auth",
-                        analytics                               : "com.google.firebase:firebase-analytics",
-                        common                                  : "com.google.firebase:firebase-common-ktx",
-                        config                                  : "com.google.firebase:firebase-config",
-                        crashlytics                             : "com.google.firebase:firebase-crashlytics",
-                        firestore                               : "com.google.firebase:firebase-firestore",
-                        firestore_ktx                           : "com.google.firebase:firebase-firestore-ktx",
-                        messaging                               : "com.google.firebase:firebase-messaging",
-                        perf                                    : "com.google.firebase:firebase-perf"
-                ],
-                hilt : [
-                        hilt_android                            : "com.google.dagger:hilt-android:$hilt",
-                        hilt_compiler                           : "com.google.dagger:hilt-compiler:$hilt",
-                        hilt_compose                            : "androidx.hilt:hilt-navigation-compose:1.0.0",
-                        hilt_kapt_compiler                      : "androidx.hilt:hilt-compiler:1.0.0",
-                        hilt_work                               : "androidx.hilt:hilt-work:1.0.0"
-                ],
                 lottie                                          : "com.airbnb.android:lottie-compose:$lottie",
                 play : [
                         ads                                     : "com.google.android.gms:play-services-ads:$play_ads"
-                ],
-                retrofit : [
-                        retrofit                                : "com.squareup.retrofit2:retrofit:$retrofit",
-                        retrofit_simplexml                      : "com.squareup.retrofit2:converter-simplexml:$retrofit",
-                        retrofit_jaxb                           : "com.squareup.retrofit2:converter-jaxb:$retrofit",
-                        retrofit_gson                           : "com.squareup.retrofit2:converter-gson:$retrofit",
-                        okhttp                                  : "com.squareup.okhttp3:okhttp:$okhttp3",
-                        okhttp_logging                          : "com.squareup.okhttp3:logging-interceptor:$okhttp3",
-                        kotlinx_serialization                   : "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0"
-                ],
-                room : [
-                        runtime                                 : "androidx.room:room-runtime:$room",
-                        compiler                                : "androidx.room:room-compiler:$room",
-                        ktx                                     : "androidx.room:room-ktx:$room"
                 ],
                 skeletonlayout                                  : "com.faltenreich:skeletonlayout:4.0.0",
                 threeten : [
@@ -118,7 +67,6 @@ allprojects {
                         params                                  : "org.junit.jupiter:junit-jupiter-params:$junit"
                 ],
                 mockk                                           : "io.mockk:mockk:$mockk",
-                room                                            : "androidx.room:room-testing:$room",
                 tmg : [
                         testutils                               : "com.github.thementalgoose:android-test-utilities:$tmg_test_utils"
                 ]

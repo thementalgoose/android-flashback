@@ -17,11 +17,9 @@ android {
 
 dependencies {
 
-    // Flagkit
-    api deps.flagkit
-    testImplementation project(path: ':test:models')
-
     implementation project(path: ':presentation:style')
 
-    // Test
+    api libs.flagkit
+
+    testImplementation project(path: ':test:models')
 }

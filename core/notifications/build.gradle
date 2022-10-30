@@ -24,6 +24,6 @@ dependencies {
     implementation project(path: ':core:crash-reporting')
 
     // Cloud messaging support
-    implementation platform(deps.firebase.bom)
-    implementation deps.firebase.messaging
+    implementation platform(libs.firebase.bom)
+    implementation libs.firebase.messaging
 }
