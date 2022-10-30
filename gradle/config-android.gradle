@@ -1,3 +1,4 @@
+apply from: rootDir.absolutePath + "/versions.gradle"
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-parcelize'
