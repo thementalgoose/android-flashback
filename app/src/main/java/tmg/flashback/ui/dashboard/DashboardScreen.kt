@@ -20,6 +20,7 @@ import kotlinx.coroutines.launch
 import tmg.flashback.stats.ui.dashboard.schedule.ScheduleScreenVM
 import tmg.flashback.stats.ui.dashboard.constructors.ConstructorStandingsScreenVM
 import tmg.flashback.stats.ui.dashboard.drivers.DriverStandingsScreenVM
+import tmg.flashback.stats.usecases.DefaultSeasonUseCase
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.utils.WindowSize
 import tmg.flashback.ui.components.layouts.OverlappingPanels
@@ -38,12 +39,22 @@ data class DashboardScreenState(
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun DashboardScreen(
-    windowSize: WindowSize
-) {
+fun DashboardScreenVM() {
     val viewModel = hiltViewModel<DashboardViewModel>()
 
-    val tabState = viewModel.outputs.currentTab.observeAsState()
+    DashboardScreen(
+        tabState = viewModel.outputs.currentTab.observeAsState(viewModel.outputs.initialTab).value,
+        clickTab = viewModel.inputs::clickTab,
+        clickSeason = viewModel.inputs::clickSeason)
+}
+
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
+@Composable
+fun DashboardScreen(
+    tabState: DashboardScreenState,
+    clickTab: (DashboardNavItem) -> Unit,
+    clickSeason: (Int) -> Unit,
+) {
     val panelsState = rememberOverlappingPanelsState(OverlappingPanelsValue.Closed)
 
     Scaffold(
@@ -51,10 +62,10 @@ fun DashboardScreen(
             val position = animateDpAsState(targetValue = if (panelsState.isStartPanelOpen) appBarHeight else 0.dp)
             NavigationBar(
                 modifier = Modifier.offset(y = position.value),
-                list = tabState.value?.tab?.toNavigationItems() ?: emptyList(),
+                list = tabState.tab.toNavigationItems(),
                 itemClicked = {
                     val tab = it.id.toEnum() ?: DashboardNavItem.CALENDAR
-                    viewModel.inputs.clickTab(tab)
+                    clickTab(tab)
                 }
             )
         },
@@ -71,7 +82,7 @@ fun DashboardScreen(
                     )
 
                     MenuScreenVM(seasonClicked = {
-                        viewModel.inputs.clickSeason(it)
+                        clickSeason(it)
                         coroutineScope.launch {
                             panelsState.closePanels()
                         }
@@ -79,7 +90,7 @@ fun DashboardScreen(
                 },
                 panelCenter = {
                     val coroutineScope = rememberCoroutineScope()
-                    val value = tabState.value
+                    val value = tabState
 
                     // Background box
                     Box(modifier = Modifier
@@ -89,13 +100,13 @@ fun DashboardScreen(
 
                     // Tabbed content
                     AnimatedVisibility(
-                        visible = value?.tab == DashboardNavItem.CALENDAR,
+                        visible = value.tab == DashboardNavItem.CALENDAR,
                         enter = fadeIn(),
                         exit = fadeOut()
                     ) {
                         ScheduleScreenVM(
                             showMenu = true,
-                            season = value!!.season,
+                            season = value.season,
                             menuClicked = {
                                 coroutineScope.launch {
                                     panelsState.openStartPanel()
@@ -104,13 +115,13 @@ fun DashboardScreen(
                         )
                     }
                     AnimatedVisibility(
-                        visible = value?.tab == DashboardNavItem.DRIVERS,
+                        visible = value.tab == DashboardNavItem.DRIVERS,
                         enter = fadeIn(),
                         exit = fadeOut()
                     ) {
                         DriverStandingsScreenVM(
                             showMenu = true,
-                            season = value!!.season,
+                            season = value.season,
                             menuClicked = {
                                 coroutineScope.launch {
                                     panelsState.openStartPanel()
@@ -119,13 +130,13 @@ fun DashboardScreen(
                         )
                     }
                     AnimatedVisibility(
-                        visible = value?.tab == DashboardNavItem.CONSTRUCTORS,
+                        visible = value.tab == DashboardNavItem.CONSTRUCTORS,
                         enter = fadeIn(),
                         exit = fadeOut()
                     ) {
                         ConstructorStandingsScreenVM(
                             showMenu = true,
-                            season = value!!.season,
+                            season = value.season,
                             menuClicked = {
                                 coroutineScope.launch {
                                     panelsState.openStartPanel()

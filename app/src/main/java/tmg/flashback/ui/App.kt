@@ -17,6 +17,7 @@ import tmg.flashback.settings.misc
 import tmg.flashback.stats.stats
 import tmg.flashback.style.utils.WindowSize
 import tmg.flashback.ui.dashboard.DashboardScreen
+import tmg.flashback.ui.dashboard.DashboardScreenVM
 import tmg.flashback.ui.navigation.Navigator
 import tmg.flashback.ui.navigation.Screen
 import tmg.flashback.ui.navigation.asNavigationDestination
@@ -65,7 +66,7 @@ fun HomeScreen(
             .navigationBarsPadding()
     ) {
         composable(Screen.Home.route) {
-            DashboardScreen(windowSize = windowSize)
+            DashboardScreenVM()
         }
 
         releaseNotes(navController)
