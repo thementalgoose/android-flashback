@@ -2,7 +2,7 @@ package tmg.flashback.stats.ui.constructors.overview
 
 import androidx.annotation.*
 import tmg.flashback.formula1.model.ConstructorHistorySeasonDriver
-import tmg.flashback.stats.ui.drivers.overview.PipeType
+import tmg.flashback.ui.components.navigation.PipeType
 
 sealed class ConstructorOverviewModel(
     val key: String

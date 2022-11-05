@@ -14,7 +14,7 @@ import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.ConstructorHistory
 import tmg.flashback.statistics.repo.ConstructorRepository
 import tmg.flashback.stats.R
-import tmg.flashback.stats.ui.drivers.overview.PipeType
+import tmg.flashback.ui.components.navigation.PipeType
 import tmg.flashback.ui.navigation.ApplicationNavigationComponent
 import tmg.flashback.web.WebNavigationComponent
 import tmg.utilities.extensions.ordinalAbbreviation
