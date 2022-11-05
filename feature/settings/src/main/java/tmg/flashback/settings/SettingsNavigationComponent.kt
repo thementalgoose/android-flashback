@@ -15,14 +15,6 @@ import tmg.flashback.ui.navigation.Navigator
 import tmg.flashback.ui.navigation.Screen
 import javax.inject.Inject
 
-fun NavGraphBuilder.misc(navController: NavController) {
-    composable(Screen.Settings.PrivacyPolicy.route) {
-        PrivacyPolicyScreenVM(
-            actionUpClicked = { navController.popBackStack() }
-        )
-    }
-}
-
 val Screen.Settings.PrivacyPolicy: NavigationDestination
     get() = object : NavigationDestination {
         override val route: String = "privacy_policy"
