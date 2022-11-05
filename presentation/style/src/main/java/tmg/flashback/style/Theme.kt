@@ -26,10 +26,10 @@ object AppTheme {
 
     val typography: AppTypography = AppTypography()
 
-    val dimensions: AppDimensions = AppDimensions()
+    val dimens: AppDimensions = AppDimensions()
 }
 
-val Dimensions = AppTheme.dimensions
+val Dimens = AppTheme.dimens
 
 @Composable
 fun AppTheme(

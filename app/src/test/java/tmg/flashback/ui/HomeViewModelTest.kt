@@ -7,9 +7,9 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.configuration.repository.ConfigRepository
 import tmg.flashback.configuration.usecases.ApplyConfigUseCase
-import tmg.flashback.crash_reporting.controllers.CrashController
+import tmg.flashback.crash_reporting.manager.CrashManager
 import tmg.flashback.forceupgrade.repository.ForceUpgradeRepository
-import tmg.flashback.rss.controllers.RSSController
+import tmg.flashback.rss.usecases.RssShortcutUseCase
 import tmg.flashback.statistics.repo.repository.CacheRepository
 import tmg.flashback.stats.usecases.ScheduleNotificationsUseCase
 import tmg.flashback.stats.usecases.SearchAppShortcutUseCase
@@ -17,10 +17,10 @@ import tmg.testutils.BaseTest
 
 internal class HomeViewModelTest: BaseTest() {
 
-    private var mockRssController: RSSController = mockk(relaxed = true)
+    private var mockRssShortcutUseCase: RssShortcutUseCase = mockk(relaxed = true)
     private var mockConfigRepository: ConfigRepository = mockk(relaxed = true)
     private var mockApplyConfigUseCase: ApplyConfigUseCase = mockk(relaxed = true)
-    private var mockCrashController: CrashController = mockk(relaxed = true)
+    private var mockCrashController: CrashManager = mockk(relaxed = true)
     private var mockForceUpgradeRepository: ForceUpgradeRepository = mockk(relaxed = true)
     private var mockCacheRepository: CacheRepository = mockk(relaxed = true)
     private var mockScheduleNotificationsUseCase: ScheduleNotificationsUseCase = mockk(relaxed = true)
@@ -34,14 +34,13 @@ internal class HomeViewModelTest: BaseTest() {
         every { mockConfigRepository.requireSynchronisation } returns false
         every { mockForceUpgradeRepository.shouldForceUpgrade } returns false
         every { mockCacheRepository.initialSync } returns true
-        every { mockRssController.enabled } returns false
     }
 
     private fun initSUT() {
         sut = HomeViewModel(
             mockConfigRepository,
             mockApplyConfigUseCase,
-            mockRssController,
+            mockRssShortcutUseCase,
             mockCrashController,
             mockForceUpgradeRepository,
             mockCacheRepository,
@@ -87,31 +86,13 @@ internal class HomeViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `initialise with no force upgrade or sync with rss disabled and search disabled notifies applied changes`() = coroutineTest {
-        every { mockRssController.enabled } returns false
+    fun `initialise with no force upgrade or sync and search disabled notifies applied changes`() = coroutineTest {
 
         initSUT()
         sut.initialise()
 
         coVerify { mockApplyConfigUseCase.apply() }
-        verify { mockRssController.removeAppShortcut() }
-        verify { mockAppShortcutUseCase.setup() }
-        coVerify { mockScheduleNotificationsUseCase.schedule() }
-
-        assertFalse(sut.requiresSync)
-        assertFalse(sut.forceUpgrade)
-        assertFalse(sut.appliedChanges)
-    }
-
-    @Test
-    fun `initialise with no force upgrade or sync with rss enabled and search enabled notifies applied changes`() = coroutineTest {
-        every { mockRssController.enabled } returns true
-
-        initSUT()
-        sut.initialise()
-
-        coVerify { mockApplyConfigUseCase.apply() }
-        verify { mockRssController.addAppShortcut() }
+        verify { mockRssShortcutUseCase.setup() }
         verify { mockAppShortcutUseCase.setup() }
         coVerify { mockScheduleNotificationsUseCase.schedule() }
 

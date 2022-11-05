@@ -26,6 +26,7 @@ import tmg.flashback.stats.components.Timeline
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.text.TextBody1
+import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextHeadline2
 import tmg.flashback.style.text.TextSection
 
@@ -37,6 +38,7 @@ fun MenuScreenVM(
 
     val links = viewModel.outputs.links.observeAsState(emptyList())
     val seasons = viewModel.outputs.season.observeAsState(emptyList())
+    val appVersion = viewModel.outputs.appVersion.observeAsState("")
 
     MenuScreen(
         seasonClicked = { season ->
@@ -47,7 +49,8 @@ fun MenuScreenVM(
         toggleClicked = viewModel.inputs::clickToggle,
         featureClicked = viewModel.inputs::clickFeature,
         links = links.value,
-        season = seasons.value
+        season = seasons.value,
+        appVersion = appVersion.value
     )
 }
 
@@ -59,6 +62,7 @@ fun MenuScreen(
     toggleClicked: (MenuItems.Toggle) -> Unit,
     featureClicked: (MenuItems.Feature) -> Unit,
     season: List<MenuSeasonItem>,
+    appVersion: String
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
@@ -101,7 +105,7 @@ fun MenuScreen(
                     })
                 ) {
                     Box(modifier = Modifier
-                        .width(AppTheme.dimensions.paddingMedium)
+                        .width(AppTheme.dimens.medium)
                         .fillMaxHeight()
                     ) {
                         if (it.season == Formula1.currentSeasonYear) {
@@ -123,15 +127,19 @@ fun MenuScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(
-                                end = AppTheme.dimensions.paddingMedium
+                                end = AppTheme.dimens.medium
                             )
                     ) {
                         TextBody1(text = it.season.toString(), bold = true)
                     }
                 }
             }
+            item { Divider() }
+            item { 
+                Label(msg = stringResource(id = R.string.app_version_placeholder, appVersion))
+            }
             item {
-                Spacer(modifier = Modifier.height(AppTheme.dimensions.paddingXXLarge))
+                Spacer(modifier = Modifier.height(AppTheme.dimens.xlarge))
             }
         }
     )
@@ -144,8 +152,8 @@ private fun Hero(
     TextHeadline2(
         text = stringResource(id = R.string.app_name),
         modifier = modifier.padding(
-            vertical = AppTheme.dimensions.paddingMedium,
-            horizontal = AppTheme.dimensions.paddingNSmall
+            vertical = AppTheme.dimens.medium,
+            horizontal = AppTheme.dimens.nsmall
         )
     )
 }
@@ -159,12 +167,29 @@ private fun SubHeader(
         text = text,
         modifier = modifier
             .padding(
-                start = AppTheme.dimensions.paddingMedium,
-                end = AppTheme.dimensions.paddingMedium,
-                top = AppTheme.dimensions.paddingNSmall,
-                bottom = AppTheme.dimensions.paddingSmall
+                start = AppTheme.dimens.medium,
+                end = AppTheme.dimens.medium,
+                top = AppTheme.dimens.nsmall,
+                bottom = AppTheme.dimens.small
             )
             .alpha(0.8f)
+    )
+}
+
+@Composable
+private fun Label(
+    msg: String,
+    modifier: Modifier = Modifier
+) {
+    TextBody2(
+        modifier = modifier
+            .padding(
+                start = AppTheme.dimens.medium,
+                end = AppTheme.dimens.medium,
+                top = AppTheme.dimens.nsmall,
+                bottom = AppTheme.dimens.small
+            ),
+        text = msg
     )
 }
 
@@ -174,7 +199,7 @@ private fun Divider(
 ) {
     Box(modifier = modifier
         .fillMaxWidth()
-        .padding(vertical = AppTheme.dimensions.paddingXSmall)
+        .padding(vertical = AppTheme.dimens.xsmall)
         .height(2.dp)
         .alpha(0.3f)
         .background(AppTheme.colors.backgroundSecondary)
@@ -192,8 +217,8 @@ private fun Button(
     Row(modifier = modifier
         .fillMaxWidth()
         .padding(
-            vertical = AppTheme.dimensions.paddingNSmall,
-            horizontal = AppTheme.dimensions.paddingMedium
+            vertical = AppTheme.dimens.nsmall,
+            horizontal = AppTheme.dimens.medium
         )
     ) {
         Icon(
@@ -202,7 +227,7 @@ private fun Button(
             tint = AppTheme.colors.contentPrimary,
             contentDescription = null
         )
-        Spacer(Modifier.width(AppTheme.dimensions.paddingMedium))
+        Spacer(Modifier.width(AppTheme.dimens.medium))
         TextBody1(
             text = stringResource(id = label),
             bold = true,
@@ -225,8 +250,8 @@ private fun Toggle(
     Row(modifier = modifier
         .fillMaxWidth()
         .padding(
-            vertical = AppTheme.dimensions.paddingNSmall,
-            horizontal = AppTheme.dimensions.paddingMedium
+            vertical = AppTheme.dimens.nsmall,
+            horizontal = AppTheme.dimens.medium
         ),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -236,7 +261,7 @@ private fun Toggle(
             tint = AppTheme.colors.contentPrimary,
             contentDescription = null
         )
-        Spacer(Modifier.width(AppTheme.dimensions.paddingMedium))
+        Spacer(Modifier.width(AppTheme.dimens.medium))
         TextBody1(
             text = stringResource(id = label),
             bold = true,
@@ -261,8 +286,8 @@ private fun Feature(
         .fillMaxWidth()
         .background(AppTheme.colors.backgroundSecondary)
         .padding(
-            vertical = AppTheme.dimensions.paddingNSmall,
-            horizontal = AppTheme.dimensions.paddingMedium
+            vertical = AppTheme.dimens.nsmall,
+            horizontal = AppTheme.dimens.medium
         )
     ) {
         TextBody1(text = stringResource(id = label))
@@ -287,7 +312,8 @@ private fun PreviewLight() {
             season = listOf(
                 MenuSeasonItem(Color.Red, 2020, true),
                 MenuSeasonItem(Color.Red, 2021, false)
-            )
+            ),
+            appVersion = "version"
         )
     }
 }
@@ -310,7 +336,8 @@ private fun PreviewDark() {
             season = listOf(
                 MenuSeasonItem(Color.Red, 2020, true),
                 MenuSeasonItem(Color.Red, 2021, false)
-            )
+            ),
+            appVersion = "version"
         )
     }
 }

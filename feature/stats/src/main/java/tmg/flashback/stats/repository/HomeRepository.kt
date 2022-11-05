@@ -2,6 +2,7 @@ package tmg.flashback.stats.repository
 
 import org.threeten.bp.Year
 import tmg.flashback.configuration.manager.ConfigManager
+import tmg.flashback.crash_reporting.manager.CrashManager
 import tmg.flashback.prefs.manager.PreferenceManager
 import tmg.flashback.stats.repository.converters.convert
 import tmg.flashback.stats.repository.json.AllSeasonsJson
@@ -13,21 +14,22 @@ import javax.inject.Singleton
 @Singleton
 class HomeRepository @Inject constructor(
         private val preferenceManager: PreferenceManager,
-        private val configManager: ConfigManager
+        private val configManager: ConfigManager,
+        private val crashManager: CrashManager
 ) {
 
     companion object {
 
         // Config
         private const val keyDefaultYear: String = "default_year"
-        private const val keyDefaultBanner: String = "banner"
+        private const val keyDefaultBanners: String = "banners"
         private const val keyDataProvidedBy: String = "data_provided"
         private const val keySupportedSeasons: String = "supported_seasons"
         private const val keySearch: String = "search"
 
         // Prefs
         private const val keyDefaultToSchedule: String = "DASHBOARD_DEFAULT_TAB_SCHEDULE"
-        private const val keyDashboardAutoscroll: String = "DASHBOARD_AUTOSCROLL"
+        private const val keyDashboardCollapseList: String = "DASHBOARD_COLLAPSE_LIST"
         private const val keyFavouriteSeasons: String = "FAVOURITE_SEASONS"
         private const val keyDefaultSeason: String = "DEFAULT_SEASON"
         private const val keyProvidedByAtTop: String = "PROVIDED_BY_AT_TOP"
@@ -43,10 +45,10 @@ class HomeRepository @Inject constructor(
     /**
      * Banner to be displayed at the top of the screen
      */
-    val banner: Banner?
+    val banners: List<Banner>
         get() = configManager
-            .getJson(keyDefaultBanner, BannerJson.serializer())
-            ?.convert()
+            .getJson(keyDefaultBanners, BannerJson.serializer())
+            ?.convert(crashManager = crashManager) ?: emptyList()
 
     /**
      * Banner to be displayed at the top of the screen
@@ -77,11 +79,11 @@ class HomeRepository @Inject constructor(
         set(value) = preferenceManager.save(keyDefaultToSchedule, value)
 
     /**
-     * When loading the dashboard, should the app autoscroll to the current season if it's applicable
+     * Default to which tab
      */
-    var dashboardAutoscroll: Boolean
-        get() = preferenceManager.getBoolean(keyDashboardAutoscroll, true)
-        set(value) = preferenceManager.save(keyDashboardAutoscroll, value)
+    var collapseList: Boolean
+        get() = preferenceManager.getBoolean(keyDashboardCollapseList, true)
+        set(value) = preferenceManager.save(keyDashboardCollapseList, value)
 
     /**
      * Favourited seasons in the list

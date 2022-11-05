@@ -12,7 +12,7 @@ import androidx.core.view.WindowCompat
 import dagger.hilt.android.AndroidEntryPoint
 import tmg.flashback.BuildConfig
 import tmg.flashback.configuration.usecases.ConfigSyncUseCase
-import tmg.flashback.crash_reporting.controllers.CrashController
+import tmg.flashback.crash_reporting.manager.CrashManager
 import tmg.flashback.forceupgrade.ForceUpgradeNavigationComponent
 import tmg.flashback.rss.RSS
 import tmg.flashback.stats.Search
@@ -35,7 +35,7 @@ class HomeActivity: BaseActivity(), SplashScreen.KeepOnScreenCondition {
     @Inject
     lateinit var configSyncUseCase: ConfigSyncUseCase
     @Inject
-    lateinit var crashController: CrashController
+    lateinit var crashController: CrashManager
     @Inject
     lateinit var navigator: Navigator
     @Inject

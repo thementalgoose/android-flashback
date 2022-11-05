@@ -15,6 +15,7 @@ class NotificationRepository @Inject constructor(
 
     companion object {
         private const val keyNotificationRace: String = "UP_NEXT_NOTIFICATION_RACE"
+        private const val keyNotificationSprint: String = "UP_NEXT_NOTIFICATION_SPRINT"
         private const val keyNotificationQualifying: String = "UP_NEXT_NOTIFICATION_QUALIFYING"
         private const val keyNotificationFreePractice: String = "UP_NEXT_NOTIFICATION_FREE_PRACTICE"
         private const val keyNotificationOther: String = "UP_NEXT_NOTIFICATION_OTHER"
@@ -34,6 +35,10 @@ class NotificationRepository @Inject constructor(
         get() = preferenceManager.getBoolean(keyNotificationRace, false)
         set(value) = preferenceManager.save(keyNotificationRace, value)
 
+    var notificationUpcomingSprint: Boolean
+        get() = preferenceManager.getBoolean(keyNotificationSprint, false)
+        set(value) = preferenceManager.save(keyNotificationSprint, value)
+
     var notificationUpcomingQualifying: Boolean
         get() = preferenceManager.getBoolean(keyNotificationQualifying, false)
         set(value) = preferenceManager.save(keyNotificationQualifying, value)
@@ -50,6 +55,7 @@ class NotificationRepository @Inject constructor(
         get() = NotificationSchedule(
             freePractice = notificationUpcomingFreePractice,
             qualifying = notificationUpcomingQualifying,
+            sprint = notificationUpcomingSprint,
             race = notificationUpcomingRace,
             other = notificationUpcomingOther
         )

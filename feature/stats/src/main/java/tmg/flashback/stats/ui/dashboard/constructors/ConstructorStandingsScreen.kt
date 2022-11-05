@@ -12,7 +12,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.swiperefresh.SwipeRefresh
@@ -29,7 +28,6 @@ import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextTitle
-import tmg.flashback.ui.components.loading.SkeletonView
 import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.loading.SkeletonViewList
@@ -91,7 +89,7 @@ fun ConstructorStandingsScreen(
                 )
             }
             item(key = "info") {
-                DashboardQuickLinks()
+                DashboardQuickLinks(season = season)
                 val content = (items ?: emptyList())
                     .filterIsInstance<ConstructorStandingsModel.Standings>()
                     .firstOrNull { it.standings.inProgressContent != null }?.standings?.inProgressContent
@@ -155,10 +153,10 @@ private fun ConstructorStandings(
             modifier = Modifier.width(36.dp)
         )
         Row(modifier = Modifier.padding(
-            top = AppTheme.dimensions.paddingSmall,
-            start = AppTheme.dimensions.paddingSmall,
-            end = AppTheme.dimensions.paddingMedium,
-            bottom = AppTheme.dimensions.paddingSmall
+            top = AppTheme.dimens.small,
+            start = AppTheme.dimens.small,
+            end = AppTheme.dimens.medium,
+            bottom = AppTheme.dimens.small
         )) {
             Column(modifier = Modifier.weight(3f)) {
                 TextTitle(
@@ -174,7 +172,7 @@ private fun ConstructorStandings(
                     )
                 }
             }
-            Spacer(Modifier.width(AppTheme.dimensions.paddingSmall))
+            Spacer(Modifier.width(AppTheme.dimens.small))
             val progress = (model.standings.points / maxPoints).toFloat().coerceIn(0f, 1f)
             ProgressBar(
                 modifier = Modifier

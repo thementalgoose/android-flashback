@@ -22,17 +22,17 @@ class AdvertsActivity: AppCompatActivity() {
                 Column {
                     TextTitle(
                         text = "Native Banner",
-                        modifier = Modifier.padding(vertical = AppTheme.dimensions.paddingMedium)
+                        modifier = Modifier.padding(vertical = AppTheme.dimens.medium)
                     )
                     NativeBanner()
                     TextTitle(
                         text = "Native Banner (offset)",
-                        modifier = Modifier.padding(vertical = AppTheme.dimensions.paddingMedium)
+                        modifier = Modifier.padding(vertical = AppTheme.dimens.medium)
                     )
                     NativeBanner(badgeOffset = true)
                     TextTitle(
                         text = "Config",
-                        modifier = Modifier.padding(vertical = AppTheme.dimensions.paddingMedium)
+                        modifier = Modifier.padding(vertical = AppTheme.dimens.medium)
                     )
                 }
             }

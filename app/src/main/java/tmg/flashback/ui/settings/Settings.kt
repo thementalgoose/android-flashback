@@ -29,11 +29,12 @@ object Settings {
             icon = R.drawable.ic_settings_home
         )
 
-        val providedByAtTopKey = "provided_by_at_top"
-        fun providedByAtTop(isChecked: Boolean, isEnabled: Boolean = true) = Setting.Switch(
-            _key = providedByAtTopKey,
-            title = R.string.settings_pref_provided_by_at_top_title,
-            subtitle = R.string.settings_pref_provided_by_at_top_description,
+        val collapseListKey = "collapse_list"
+        fun collapseList(isChecked: Boolean, isEnabled: Boolean = true) = Setting.Switch(
+            _key = collapseListKey,
+            title = R.string.settings_pref_collapsed_list_title,
+            subtitle = R.string.settings_pref_collapsed_list_description,
+            isBeta = false,
             isChecked = isChecked,
             isEnabled = isEnabled
         )
@@ -99,6 +100,14 @@ object Settings {
         fun notificationUpcomingFreePractice(isChecked: Boolean, isEnabled: Boolean = true) = Setting.Switch(
             _key = notificationUpcomingFreePracticeKey,
             title = R.string.settings_switch_notification_upcoming_fp_title,
+            subtitle = null,
+            isChecked = isChecked,
+            isEnabled = isEnabled
+        )
+        val notificationUpcomingSprintKey = "notification_upcoming_sprint"
+        fun notificationUpcomingSprint(isChecked: Boolean, isEnabled: Boolean = true) = Setting.Switch(
+            _key = notificationUpcomingSprintKey,
+            title = R.string.settings_switch_notification_upcoming_sprint_title,
             subtitle = null,
             isChecked = isChecked,
             isEnabled = isEnabled

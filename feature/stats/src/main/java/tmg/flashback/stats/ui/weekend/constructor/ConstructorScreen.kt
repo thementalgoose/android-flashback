@@ -16,7 +16,6 @@ import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.DriverConstructor
 import tmg.flashback.providers.DriverConstructorProvider
 import tmg.flashback.stats.components.DriverPoints
-import tmg.flashback.stats.ui.dashboard.constructors.ConstructorStandingsModel
 import tmg.flashback.stats.ui.weekend.WeekendInfo
 import tmg.flashback.stats.ui.weekend.fakeWeekendInfo
 import tmg.flashback.stats.ui.weekend.info.RaceInfoHeader
@@ -25,9 +24,7 @@ import tmg.flashback.stats.ui.weekend.shared.NotAvailableYet
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
-import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextTitle
-import tmg.flashback.ui.components.loading.SkeletonView
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.progressbar.ProgressBar
 import kotlin.math.roundToInt
@@ -113,10 +110,10 @@ private fun ConstructorResult(
             modifier = Modifier.width(36.dp)
         )
         Row(modifier = Modifier.padding(
-            top = AppTheme.dimensions.paddingSmall,
-            start = AppTheme.dimensions.paddingSmall,
-            end = AppTheme.dimensions.paddingMedium,
-            bottom = AppTheme.dimensions.paddingSmall
+            top = AppTheme.dimens.small,
+            start = AppTheme.dimens.small,
+            end = AppTheme.dimens.medium,
+            bottom = AppTheme.dimens.small
         )) {
             Column(modifier = Modifier.weight(3f)) {
                 TextTitle(
@@ -132,7 +129,7 @@ private fun ConstructorResult(
                     )
                 }
             }
-            Spacer(Modifier.width(AppTheme.dimensions.paddingSmall))
+            Spacer(Modifier.width(AppTheme.dimens.small))
             val progress = (model.points / model.maxTeamPoints).toFloat().coerceIn(0f, 1f)
             ProgressBar(
                 modifier = Modifier

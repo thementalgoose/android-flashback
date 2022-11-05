@@ -13,14 +13,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.faltenreich.skeletonlayout.Skeleton
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -29,8 +27,6 @@ import tmg.flashback.formula1.enums.TrackLayout
 import tmg.flashback.formula1.extensions.positionIcon
 import tmg.flashback.formula1.model.CircuitHistoryRace
 import tmg.flashback.formula1.model.CircuitHistoryRaceResult
-import tmg.flashback.formula1.model.Location
-import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.providers.CircuitHistoryRaceProvider
 import tmg.flashback.stats.R
 import tmg.flashback.stats.analytics.AnalyticsConstants.analyticsCircuitId
@@ -45,9 +41,7 @@ import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.ui.components.analytics.ScreenView
 import tmg.flashback.ui.components.header.Header
-import tmg.flashback.ui.components.loading.SkeletonView
 import tmg.flashback.ui.components.loading.SkeletonViewList
-import tmg.flashback.ui.utils.isInPreview
 import tmg.utilities.extensions.ordinalAbbreviation
 
 private val trackImageSize: Dp = 180.dp
@@ -139,8 +133,8 @@ private fun Item(
         modifier = modifier
             .clickable(onClick = { itemClicked(model) })
             .padding(
-                horizontal = AppTheme.dimensions.paddingMedium,
-                vertical = AppTheme.dimensions.paddingSmall
+                horizontal = AppTheme.dimens.medium,
+                vertical = AppTheme.dimens.small
             )
     ) {
         Column(
@@ -175,7 +169,7 @@ private fun Stats(
 ) {
     Column(modifier = modifier) {
         val trackIcon = TrackLayout.getTrack(circuitId = model.circuitId)?.icon ?: R.drawable.circuit_unknown
-        Row(modifier = Modifier.padding(horizontal = AppTheme.dimensions.paddingMedium)) {
+        Row(modifier = Modifier.padding(horizontal = AppTheme.dimens.medium)) {
             Icon(
                 painter = painterResource(id = trackIcon),
                 contentDescription = null,
@@ -184,14 +178,14 @@ private fun Stats(
                     .size(trackImageSize)
             )
         }
-        Spacer(Modifier.height(AppTheme.dimensions.paddingMedium))
+        Spacer(Modifier.height(AppTheme.dimens.medium))
         Row {
             Box(
                 modifier = Modifier
                     .padding(
-                        top = AppTheme.dimensions.paddingMedium,
-                        end = AppTheme.dimensions.paddingNSmall,
-                        start = AppTheme.dimensions.paddingNSmall
+                        top = AppTheme.dimens.medium,
+                        end = AppTheme.dimens.nsmall,
+                        start = AppTheme.dimens.nsmall
                     )
             ) {
                 Flag(
@@ -204,9 +198,9 @@ private fun Stats(
                 modifier = Modifier
                     .weight(1f)
                     .padding(
-                        top = AppTheme.dimensions.paddingSmall,
-                        bottom = AppTheme.dimensions.paddingSmall,
-                        end = AppTheme.dimensions.paddingMedium
+                        top = AppTheme.dimens.small,
+                        bottom = AppTheme.dimens.small,
+                        end = AppTheme.dimens.medium
                     )
             ) {
                 TextBody1(
@@ -232,7 +226,7 @@ private fun Stats(
 
         Row(modifier = Modifier
             .horizontalScroll(rememberScrollState())
-            .padding(horizontal = AppTheme.dimensions.paddingMedium)
+            .padding(horizontal = AppTheme.dimens.medium)
         ) {
             model.wikipedia?.let { wiki ->
                 ButtonTertiary(
@@ -240,7 +234,7 @@ private fun Stats(
                     onClick = { linkClicked(wiki) },
                     icon = R.drawable.ic_details_wikipedia
                 )
-                Spacer(Modifier.width(AppTheme.dimensions.paddingMedium))
+                Spacer(Modifier.width(AppTheme.dimens.medium))
             }
             model.location?.let { location ->
                 ButtonTertiary(
@@ -248,7 +242,7 @@ private fun Stats(
                     onClick = { linkClicked("geo:0,0?q=${location.lat},${location.lng} (${model.name})") },
                     icon = R.drawable.ic_details_maps
                 )
-                Spacer(Modifier.width(AppTheme.dimensions.paddingMedium))
+                Spacer(Modifier.width(AppTheme.dimens.medium))
             }
         }
 
@@ -273,8 +267,8 @@ private fun Link(
                 onClick = { linkClicked(url) }
             )
             .padding(
-                vertical = AppTheme.dimensions.paddingSmall,
-                horizontal = AppTheme.dimensions.paddingMedium
+                vertical = AppTheme.dimens.small,
+                horizontal = AppTheme.dimens.medium
             )
     ) {
         Icon(
@@ -283,13 +277,13 @@ private fun Link(
             modifier = Modifier.size(24.dp),
             tint = AppTheme.colors.contentSecondary
         )
-        Spacer(Modifier.width(AppTheme.dimensions.paddingSmall))
+        Spacer(Modifier.width(AppTheme.dimens.small))
         TextBody1(
             bold = true,
             modifier = Modifier.weight(1f),
             text = stringResource(id = label)
         )
-        Spacer(Modifier.width(AppTheme.dimensions.paddingSmall))
+        Spacer(Modifier.width(AppTheme.dimens.small))
         Icon(
             painter = painterResource(id = R.drawable.arrow_more),
             contentDescription = null,
@@ -388,12 +382,12 @@ private fun StandingResult(
             contentDescription = null,
             tint = if (model.position == 1) AppTheme.colors.f1Championship else AppTheme.colors.contentSecondary
         )
-        Spacer(Modifier.width(AppTheme.dimensions.paddingXSmall))
+        Spacer(Modifier.width(AppTheme.dimens.xsmall))
         Box(modifier = Modifier
             .fillMaxHeight()
             .width(6.dp)
             .background(model.constructor.colour))
-        Spacer(Modifier.width(AppTheme.dimensions.paddingXSmall))
+        Spacer(Modifier.width(AppTheme.dimens.xsmall))
         DriverNumber(
             modifier = Modifier.width(resultIconSize * 3),
             small = true,

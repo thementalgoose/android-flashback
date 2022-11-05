@@ -68,7 +68,7 @@ fun WebScreen(
             Column(modifier = Modifier
                 .weight(1f)
                 .padding(
-                    horizontal = AppTheme.dimensions.paddingMedium
+                    horizontal = AppTheme.dimens.medium
                 )
             ) {
                 TextBody1(

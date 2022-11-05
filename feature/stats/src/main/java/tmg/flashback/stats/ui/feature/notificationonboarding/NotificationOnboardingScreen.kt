@@ -69,8 +69,8 @@ private fun Item(
             itemClicked(model.value)
         })
         .padding(
-            horizontal = AppTheme.dimensions.paddingMedium,
-            vertical = AppTheme.dimensions.paddingSmall
+            horizontal = AppTheme.dimens.medium,
+            vertical = AppTheme.dimens.small
         )
     ) {
         Icon(
@@ -86,7 +86,7 @@ private fun Item(
                 .weight(1f)
                 .align(Alignment.CenterVertically)
                 .padding(
-                    horizontal = AppTheme.dimensions.paddingSmall
+                    horizontal = AppTheme.dimens.small
                 ),
             text = stringResource(id = model.value.name)
         )

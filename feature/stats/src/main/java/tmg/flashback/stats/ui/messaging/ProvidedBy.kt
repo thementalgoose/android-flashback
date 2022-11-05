@@ -36,8 +36,8 @@ private fun ProvidedBy(
             .fillMaxWidth()
             .clickable(onClick = clicked)
             .padding(
-                horizontal = AppTheme.dimensions.paddingMedium,
-                vertical = AppTheme.dimensions.paddingSmall
+                horizontal = AppTheme.dimens.medium,
+                vertical = AppTheme.dimens.small
             ),
         text = title,
         bold = true

@@ -1,7 +1,5 @@
 package tmg.flashback.stats.ui.constructors.overview
 
-import android.view.RoundedCorner
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -15,7 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -30,7 +27,6 @@ import tmg.flashback.formula1.constants.Formula1
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.ConstructorHistorySeasonDriver
 import tmg.flashback.formula1.model.DriverConstructor
-import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.providers.DriverConstructorProvider
 import tmg.flashback.stats.R
 import tmg.flashback.stats.analytics.AnalyticsConstants.analyticsConstructorId
@@ -50,7 +46,6 @@ import tmg.flashback.ui.components.analytics.ScreenView
 import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.loading.SkeletonViewList
-import tmg.flashback.ui.utils.isInPreview
 import tmg.utilities.extensions.ordinalAbbreviation
 
 
@@ -149,7 +144,7 @@ private fun HeaderTop(
 ) {
     Column(modifier = modifier
         .fillMaxWidth()
-        .padding(horizontal = AppTheme.dimensions.paddingMedium)
+        .padding(horizontal = AppTheme.dimens.medium)
     ) {
         if (model.constructorPhotoUrl == null) {
             Flag(
@@ -160,7 +155,7 @@ private fun HeaderTop(
         } else {
             Box(modifier = Modifier
                 .size(108.dp)
-                .clip(RoundedCornerShape(AppTheme.dimensions.radiusSmall))
+                .clip(RoundedCornerShape(AppTheme.dimens.radiusSmall))
                 .background(AppTheme.colors.backgroundSecondary)
             ) {
                 AsyncImage(
@@ -204,8 +199,8 @@ private fun Stat(
         modifier = modifier
             .fillMaxWidth()
             .padding(
-                vertical = AppTheme.dimensions.paddingXSmall,
-                horizontal = AppTheme.dimensions.paddingMedium
+                vertical = AppTheme.dimens.xsmall,
+                horizontal = AppTheme.dimens.medium
             )
     ) {
         Icon(
@@ -234,7 +229,7 @@ private fun HistoryHeader(
     modifier: Modifier = Modifier
 ) {
     Row(modifier = modifier
-        .padding(top = AppTheme.dimensions.paddingSmall)
+        .padding(top = AppTheme.dimens.small)
     ) {
         Box(Modifier.weight(1f))
         Box(modifier = Modifier.width(pointsWidth)) {
@@ -265,7 +260,7 @@ private fun History(
         .height(IntrinsicSize.Min)
     ) {
         Box(modifier = Modifier
-            .width(AppTheme.dimensions.paddingMedium)
+            .width(AppTheme.dimens.medium)
             .height(dotDiameter)
             .offset(y = heightOfTopDot)
         ) {
@@ -283,7 +278,7 @@ private fun History(
         TimelineTop(
             modifier = modifier
                 .fillMaxWidth()
-                .padding(start = AppTheme.dimensions.paddingMedium),
+                .padding(start = AppTheme.dimens.medium),
             timelineColor = AppTheme.colors.contentTertiary,
             overrideDotColor = when {
                 !model.isInProgress && model.championshipPosition == 1 -> AppTheme.colors.f1Championship

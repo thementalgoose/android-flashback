@@ -6,14 +6,14 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import tmg.flashback.crash_reporting.controllers.CrashController
+import tmg.flashback.crash_reporting.manager.CrashManager
 import java.lang.ref.WeakReference
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class ActivityProvider @Inject constructor(
-    private val crashController: CrashController
+    private val crashController: CrashManager
 ): Application.ActivityLifecycleCallbacks {
 
     private var _activity: WeakReference<Activity>? = null

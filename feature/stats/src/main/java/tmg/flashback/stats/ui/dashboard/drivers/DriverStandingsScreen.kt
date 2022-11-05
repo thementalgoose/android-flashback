@@ -1,6 +1,5 @@
 package tmg.flashback.stats.ui.dashboard.drivers
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -13,11 +12,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -26,7 +23,6 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.SeasonDriverStandingSeason
-import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.providers.SeasonDriverStandingSeasonProvider
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.text.TextBody2
@@ -37,13 +33,11 @@ import tmg.flashback.stats.ui.messaging.Banner
 import tmg.flashback.stats.ui.shared.Flag
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
-import tmg.flashback.ui.components.loading.SkeletonView
 import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.layouts.Container
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.progressbar.ProgressBar
-import tmg.flashback.ui.utils.isInPreview
 import kotlin.math.roundToInt
 
 @Composable
@@ -101,7 +95,7 @@ fun DriverStandingsScreen(
                 )
             }
             item(key = "info") {
-                DashboardQuickLinks()
+                DashboardQuickLinks(season = season)
                 val content = (items ?: emptyList())
                     .filterIsInstance<DriverStandingsModel.Standings>()
                     .firstOrNull { it.standings.inProgressContent != null }?.standings?.inProgressContent
@@ -153,8 +147,8 @@ fun DriverStandingsCard(
 ) {
     Container(
         modifier = modifier.padding(
-            horizontal = AppTheme.dimensions.paddingMedium,
-            vertical = AppTheme.dimensions.paddingXXSmall
+            horizontal = AppTheme.dimens.medium,
+            vertical = AppTheme.dimens.xxsmall
         ),
         isSelected = model.isSelected
     ) {
@@ -188,7 +182,7 @@ fun DriverStandings(
         )
         Box(modifier = Modifier
             .size(36.dp)
-            .clip(RoundedCornerShape(AppTheme.dimensions.radiusSmall))
+            .clip(RoundedCornerShape(AppTheme.dimens.radiusSmall))
             .background(AppTheme.colors.backgroundSecondary)
         ) {
             AsyncImage(
@@ -201,10 +195,10 @@ fun DriverStandings(
         }
         Row(modifier = Modifier
             .padding(
-                top = AppTheme.dimensions.paddingSmall,
-                start = AppTheme.dimensions.paddingSmall,
-                end = AppTheme.dimensions.paddingMedium,
-                bottom = AppTheme.dimensions.paddingSmall
+                top = AppTheme.dimens.small,
+                start = AppTheme.dimens.small,
+                end = AppTheme.dimens.medium,
+                bottom = AppTheme.dimens.small
             )
             .wrapContentHeight()
         ) {
@@ -218,7 +212,7 @@ fun DriverStandings(
                 Row(modifier = Modifier
                     .fillMaxHeight()
                     .padding(
-                        vertical = AppTheme.dimensions.paddingXXSmall,
+                        vertical = AppTheme.dimens.xxsmall,
                     )
                 ) {
                     Flag(
@@ -233,7 +227,7 @@ fun DriverStandings(
                     )
                 }
             }
-            Spacer(Modifier.width(AppTheme.dimensions.paddingSmall))
+            Spacer(Modifier.width(AppTheme.dimens.small))
             val progress = (model.standings.points / maxPoints).toFloat().coerceIn(0f, 1f)
             ProgressBar(
                 modifier = Modifier

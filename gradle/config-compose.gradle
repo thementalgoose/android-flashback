@@ -5,28 +5,16 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion "$android_compose_compiler"
+        // TODO: Make this reference a proper version
+        kotlinCompilerExtensionVersion "1.3.2"
     }
 }
 
 dependencies {
-    // Compose
-    implementation deps.compose.activity
-    implementation deps.compose.material
-    implementation deps.compose.material3
-    implementation deps.compose.navigation
-    implementation deps.compose.animation
-    implementation deps.compose.tooling
-    implementation deps.compose.runtime
-    implementation deps.compose.viewmodel
-    implementation deps.compose.theme_adapter
-    implementation deps.compose.viewbinding
+    implementation libs.bundles.compose
 
-    implementation deps.androidx.windowmanager
-    implementation deps.coil
+    implementation libs.androidx.window
+    implementation libs.coil
 
-    implementation deps.accompanist.swiperefresh
-    implementation deps.accompanist.horizontalpager
-    implementation deps.accompanist.systemuicontroller
-    implementation deps.accompanist.placeholder
+    implementation libs.bundles.accompanist
 }

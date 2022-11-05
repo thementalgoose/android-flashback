@@ -36,10 +36,10 @@ fun SyncScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(
-                    start = AppTheme.dimensions.paddingMedium,
-                    end = AppTheme.dimensions.paddingMedium,
-                    top = AppTheme.dimensions.paddingLarge,
-                    bottom = AppTheme.dimensions.paddingMedium
+                    start = AppTheme.dimens.medium,
+                    end = AppTheme.dimens.medium,
+                    top = AppTheme.dimens.large,
+                    bottom = AppTheme.dimens.medium
                 )
         )
         Spacer(modifier = Modifier.weight(1f))
@@ -55,10 +55,10 @@ fun SyncScreen(
 
                 text = stringResource(id = R.string.splash_sync_required_failed),
                 modifier = Modifier.padding(
-                    start = AppTheme.dimensions.paddingMedium,
-                    end = AppTheme.dimensions.paddingMedium,
-                    top = AppTheme.dimensions.paddingMedium,
-                    bottom = AppTheme.dimensions.paddingMedium
+                    start = AppTheme.dimens.medium,
+                    end = AppTheme.dimens.medium,
+                    top = AppTheme.dimens.medium,
+                    bottom = AppTheme.dimens.medium
                 )
             )
             ButtonSecondary(
@@ -67,7 +67,7 @@ fun SyncScreen(
                 modifier = Modifier.align(Alignment.CenterHorizontally)
             )
         }
-        Spacer(modifier = Modifier.height(AppTheme.dimensions.paddingMedium))
+        Spacer(modifier = Modifier.height(AppTheme.dimens.medium))
     }
 }
 

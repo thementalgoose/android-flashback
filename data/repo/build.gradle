@@ -18,22 +18,16 @@ android {
 
 dependencies {
 
-    // Modules
     implementation project(path: ':data:room')
     implementation project(path: ':data:network')
     implementation project(path: ':formula1')
-
-    // Explicit crash reporting link
     implementation project(path: ':core:crash-reporting')
-
-    // Retrofit
-    implementation deps.retrofit.retrofit
     implementation project(path: ':core:preferences')
     implementation project(path: ':core:device')
 
+    implementation libs.bundles.retrofit
+    implementation libs.bundles.androidx.workmanager
+
     testImplementation project(':test:models')
 
-    // WorkManager
-    implementation deps.androidx.workmanager
-    implementation deps.androidx.workmanager_ktx
 }

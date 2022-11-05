@@ -17,31 +17,14 @@ android {
 }
 
 dependencies {
-
     implementation project(path: ':core:preferences')
     implementation project(path: ':core:analytics')
     implementation project(path: ':core:configuration')
     implementation project(path: ':core:crash-reporting')
     api project(path: ':presentation:style')
 
-    // Android stuff
-    implementation deps.kotlin.stdlib
-    implementation deps.androidx.core
-    implementation deps.androidx.appcompat
+    implementation libs.bundles.androidx
+    implementation libs.material
 
-    // Shimmer
-    implementation deps.shimmer
-
-    // Lottie
-    implementation deps.lottie
-
-    // Navigation
-    implementation deps.androidx.navigation_fragment
-    implementation deps.androidx.navigation_ui
-
-    // Material components
-    implementation deps.androidx.material
-
-    // ConstraintLayout
-    implementation deps.androidx.constraintlayout
+    implementation libs.lottie
 }

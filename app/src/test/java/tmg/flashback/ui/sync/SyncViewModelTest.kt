@@ -7,7 +7,7 @@ import tmg.flashback.configuration.repository.ConfigRepository
 import tmg.flashback.configuration.usecases.FetchConfigUseCase
 import tmg.flashback.configuration.usecases.ResetConfigUseCase
 import tmg.flashback.forceupgrade.repository.ForceUpgradeRepository
-import tmg.flashback.rss.controllers.RSSController
+import tmg.flashback.rss.usecases.RssShortcutUseCase
 import tmg.flashback.statistics.repo.CircuitRepository
 import tmg.flashback.statistics.repo.ConstructorRepository
 import tmg.flashback.statistics.repo.DriverRepository
@@ -24,7 +24,7 @@ import tmg.testutils.livedata.test
 
 internal class SyncViewModelTest: BaseTest() {
 
-    private var mockRssController: RSSController = mockk(relaxed = true)
+    private var mockRssShortcutUseCase: RssShortcutUseCase = mockk(relaxed = true)
     private var mockCircuitRepository: CircuitRepository = mockk(relaxed = true)
     private var mockConstructorRepository: ConstructorRepository = mockk(relaxed = true)
     private var mockDriverRepository: DriverRepository = mockk(relaxed = true)
@@ -42,7 +42,6 @@ internal class SyncViewModelTest: BaseTest() {
     @BeforeEach
     internal fun setUp() {
         every { mockForceUpgradeRepository.shouldForceUpgrade } returns false
-        every { mockRssController.enabled } returns false
         coEvery { mockFetchConfigUseCase.fetchAndApply() } returns true
 
         coEvery { mockCircuitRepository.fetchCircuits() } returns true
@@ -53,7 +52,7 @@ internal class SyncViewModelTest: BaseTest() {
 
     private fun initSUT() {
         sut = SyncViewModel(
-            mockRssController,
+            mockRssShortcutUseCase,
             mockCircuitRepository,
             mockConstructorRepository,
             mockDriverRepository,
@@ -80,6 +79,11 @@ internal class SyncViewModelTest: BaseTest() {
             mockResetConfigUseCase.ensureReset()
             mockFetchConfigUseCase.fetchAndApply()
         }
+        sut.outputs.circuitsState.test { assertValue(SyncState.DONE) }
+        sut.outputs.constructorsState.test { assertValue(SyncState.DONE) }
+        sut.outputs.driversState.test { assertValue(SyncState.DONE) }
+        sut.outputs.racesState.test { assertValue(SyncState.DONE) }
+        sut.outputs.configState.test { assertValue(SyncState.DONE) }
         sut.outputs.loadingState.test {
             assertValue(SyncState.DONE)
         }
@@ -92,6 +96,7 @@ internal class SyncViewModelTest: BaseTest() {
         verify {
             mockCacheRepository.initialSync = true
             mockSearchAppShortcutUseCase.setup()
+            mockRssShortcutUseCase.setup()
             mockScheduleNotificationsUseCase.schedule()
         }
     }
@@ -108,6 +113,11 @@ internal class SyncViewModelTest: BaseTest() {
             mockResetConfigUseCase.ensureReset()
             mockFetchConfigUseCase.fetchAndApply()
         }
+        sut.outputs.circuitsState.test { assertValue(SyncState.DONE) }
+        sut.outputs.constructorsState.test { assertValue(SyncState.DONE) }
+        sut.outputs.driversState.test { assertValue(SyncState.DONE) }
+        sut.outputs.racesState.test { assertValue(SyncState.DONE) }
+        sut.outputs.configState.test { assertValue(SyncState.DONE) }
         sut.outputs.loadingState.test {
             assertValue(SyncState.DONE)
         }
@@ -120,6 +130,7 @@ internal class SyncViewModelTest: BaseTest() {
         verify {
             mockCacheRepository.initialSync = true
             mockSearchAppShortcutUseCase.setup()
+            mockRssShortcutUseCase.setup()
             mockScheduleNotificationsUseCase.schedule()
         }
     }
@@ -135,6 +146,11 @@ internal class SyncViewModelTest: BaseTest() {
             mockResetConfigUseCase.ensureReset()
             mockFetchConfigUseCase.fetchAndApply()
         }
+        sut.outputs.circuitsState.test { assertValue(SyncState.DONE) }
+        sut.outputs.constructorsState.test { assertValue(SyncState.DONE) }
+        sut.outputs.driversState.test { assertValue(SyncState.DONE) }
+        sut.outputs.racesState.test { assertValue(SyncState.DONE) }
+        sut.outputs.configState.test { assertValue(SyncState.DONE) }
         sut.outputs.loadingState.test {
             assertValue(SyncState.DONE)
         }
@@ -171,7 +187,13 @@ internal class SyncViewModelTest: BaseTest() {
         }
         verify {
             mockSearchAppShortcutUseCase.setup()
+            mockRssShortcutUseCase.setup()
         }
+        sut.outputs.circuitsState.test { assertValue(SyncState.DONE) }
+        sut.outputs.constructorsState.test { assertValue(SyncState.DONE) }
+        sut.outputs.driversState.test { assertValue(SyncState.DONE) }
+        sut.outputs.racesState.test { assertValue(SyncState.DONE) }
+        sut.outputs.configState.test { assertValue(SyncState.FAILED) }
         sut.outputs.loadingState.test {
             assertValue(SyncState.FAILED)
         }
@@ -198,6 +220,11 @@ internal class SyncViewModelTest: BaseTest() {
             mockResetConfigUseCase.ensureReset()
             mockFetchConfigUseCase.fetchAndApply()
         }
+        sut.outputs.circuitsState.test { assertValue(SyncState.FAILED) }
+        sut.outputs.constructorsState.test { assertValue(SyncState.DONE) }
+        sut.outputs.driversState.test { assertValue(SyncState.DONE) }
+        sut.outputs.racesState.test { assertValue(SyncState.DONE) }
+        sut.outputs.configState.test { assertValue(SyncState.DONE) }
         sut.outputs.loadingState.test {
             assertValue(SyncState.FAILED)
         }
@@ -224,6 +251,11 @@ internal class SyncViewModelTest: BaseTest() {
             mockResetConfigUseCase.ensureReset()
             mockFetchConfigUseCase.fetchAndApply()
         }
+        sut.outputs.circuitsState.test { assertValue(SyncState.DONE) }
+        sut.outputs.constructorsState.test { assertValue(SyncState.DONE) }
+        sut.outputs.driversState.test { assertValue(SyncState.DONE) }
+        sut.outputs.racesState.test { assertValue(SyncState.FAILED) }
+        sut.outputs.configState.test { assertValue(SyncState.DONE) }
         sut.outputs.loadingState.test {
             assertValue(SyncState.FAILED)
         }
@@ -250,6 +282,11 @@ internal class SyncViewModelTest: BaseTest() {
             mockResetConfigUseCase.ensureReset()
             mockFetchConfigUseCase.fetchAndApply()
         }
+        sut.outputs.circuitsState.test { assertValue(SyncState.DONE) }
+        sut.outputs.constructorsState.test { assertValue(SyncState.FAILED) }
+        sut.outputs.driversState.test { assertValue(SyncState.DONE) }
+        sut.outputs.racesState.test { assertValue(SyncState.DONE) }
+        sut.outputs.configState.test { assertValue(SyncState.DONE) }
         sut.outputs.loadingState.test {
             assertValue(SyncState.FAILED)
         }
@@ -276,6 +313,11 @@ internal class SyncViewModelTest: BaseTest() {
             mockResetConfigUseCase.ensureReset()
             mockFetchConfigUseCase.fetchAndApply()
         }
+        sut.outputs.circuitsState.test { assertValue(SyncState.DONE) }
+        sut.outputs.constructorsState.test { assertValue(SyncState.DONE) }
+        sut.outputs.driversState.test { assertValue(SyncState.FAILED) }
+        sut.outputs.racesState.test { assertValue(SyncState.DONE) }
+        sut.outputs.configState.test { assertValue(SyncState.DONE) }
         sut.outputs.loadingState.test {
             assertValue(SyncState.FAILED)
         }

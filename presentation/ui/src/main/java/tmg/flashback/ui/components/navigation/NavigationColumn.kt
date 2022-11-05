@@ -60,7 +60,7 @@ fun NavigationColumn(
         .fillMaxHeight()
         .background(AppTheme.colors.backgroundNav)
         .padding(
-            vertical = AppTheme.dimensions.paddingSmall
+            vertical = AppTheme.dimens.small
         )
     ) {
         NavigationItem(
@@ -77,19 +77,19 @@ fun NavigationColumn(
             .fillMaxWidth()
             .verticalScroll(rememberScrollState())
         ) {
-            Spacer(modifier = Modifier.height(AppTheme.dimensions.paddingMedium))
+            Spacer(modifier = Modifier.height(AppTheme.dimens.medium))
             list.forEach { item ->
                 NavigationItem(
                     item = item,
                     isExpanded = expanded.value,
                     onClick = itemClicked,
                 )
-                Spacer(Modifier.height(AppTheme.dimensions.paddingSmall))
+                Spacer(Modifier.height(AppTheme.dimens.small))
             }
-            Spacer(modifier = Modifier.height(AppTheme.dimensions.paddingMedium))
+            Spacer(modifier = Modifier.height(AppTheme.dimens.medium))
             if (timelineList.isNotEmpty()) {
                 Divider(
-                    modifier = Modifier.padding(horizontal = AppTheme.dimensions.paddingMedium),
+                    modifier = Modifier.padding(horizontal = AppTheme.dimens.medium),
                     color = AppTheme.colors.backgroundTertiary
                 )
                 timelineList.forEach { item ->
@@ -99,7 +99,7 @@ fun NavigationColumn(
                         onClick = timelineItemClicked
                     )
                 }
-                Spacer(modifier = Modifier.height(AppTheme.dimensions.paddingMedium))
+                Spacer(modifier = Modifier.height(AppTheme.dimens.medium))
             }
 
         }
@@ -129,7 +129,7 @@ private fun NavigationItem(
         else -> AppTheme.colors.backgroundNav
     })
     val iconPadding = animateDpAsState(targetValue = when (isExpanded) {
-        true -> AppTheme.dimensions.paddingMedium
+        true -> AppTheme.dimens.medium
         false -> (itemSize - iconSize) / 2
     })
 
@@ -139,7 +139,7 @@ private fun NavigationItem(
         )
         .fillMaxWidth()
         .height(itemSize)
-        .clip(RoundedCornerShape(AppTheme.dimensions.radiusMedium))
+        .clip(RoundedCornerShape(AppTheme.dimens.radiusMedium))
         .background(backgroundColor.value)
         .clickable(
             enabled = onClick != null,
@@ -162,7 +162,7 @@ private fun NavigationItem(
         if (isExpanded) {
             TextBody1(
                 modifier = Modifier
-                    .padding(start = AppTheme.dimensions.paddingSmall)
+                    .padding(start = AppTheme.dimens.small)
                     .align(Alignment.CenterVertically)
                     .fillMaxWidth(),
                 text = item.label?.let { stringResource(id = it) } ?: ""
@@ -183,7 +183,7 @@ private fun NavigationTimelineItem(
         else -> AppTheme.colors.backgroundNav
     })
     val iconPadding = animateDpAsState(targetValue = when (isExpanded) {
-        true -> AppTheme.dimensions.paddingMedium
+        true -> AppTheme.dimens.medium
         false -> (itemSize - iconSize) / 2
     })
 
@@ -193,7 +193,7 @@ private fun NavigationTimelineItem(
         )
         .fillMaxWidth()
         .height(itemSize)
-        .clip(RoundedCornerShape(AppTheme.dimensions.radiusMedium))
+        .clip(RoundedCornerShape(AppTheme.dimens.radiusMedium))
         .background(backgroundColor.value)
         .clickable(
             enabled = onClick != null,
@@ -235,7 +235,7 @@ private fun NavigationTimelineItem(
         if (isExpanded) {
             TextBody1(
                 modifier = Modifier
-                    .padding(start = AppTheme.dimensions.paddingSmall)
+                    .padding(start = AppTheme.dimens.small)
                     .align(Alignment.CenterVertically)
                     .fillMaxWidth(),
                 text = item.label

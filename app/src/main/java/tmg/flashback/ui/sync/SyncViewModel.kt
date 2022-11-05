@@ -12,7 +12,7 @@ import tmg.flashback.configuration.repository.ConfigRepository
 import tmg.flashback.configuration.usecases.FetchConfigUseCase
 import tmg.flashback.configuration.usecases.ResetConfigUseCase
 import tmg.flashback.forceupgrade.repository.ForceUpgradeRepository
-import tmg.flashback.rss.controllers.RSSController
+import tmg.flashback.rss.usecases.RssShortcutUseCase
 import tmg.flashback.statistics.repo.CircuitRepository
 import tmg.flashback.statistics.repo.ConstructorRepository
 import tmg.flashback.statistics.repo.DriverRepository
@@ -36,6 +36,12 @@ interface SyncViewModelInputs {
 
 interface SyncViewModelOutputs {
 
+    val circuitsState: LiveData<SyncState>
+    val constructorsState: LiveData<SyncState>
+    val driversState: LiveData<SyncState>
+    val racesState: LiveData<SyncState>
+    val configState: LiveData<SyncState>
+
     val loadingState: LiveData<SyncState>
     val showRetry: LiveData<Boolean>
 
@@ -46,7 +52,7 @@ interface SyncViewModelOutputs {
 
 @HiltViewModel
 class SyncViewModel @Inject constructor(
-    private val rssController: RSSController,
+    private val rssShortcutUseCase: RssShortcutUseCase,
     private val circuitRepository: CircuitRepository,
     private val constructorRepository: ConstructorRepository,
     private val driverRepository: DriverRepository,
@@ -64,11 +70,11 @@ class SyncViewModel @Inject constructor(
     var inputs: SyncViewModelInputs = this
     var outputs: SyncViewModelOutputs = this
 
-    private val circuitsState: MutableLiveData<SyncState> = MutableLiveData(LOADING)
-    private val constructorsState: MutableLiveData<SyncState> = MutableLiveData(LOADING)
-    private val driversState: MutableLiveData<SyncState> = MutableLiveData(LOADING)
-    private val racesState: MutableLiveData<SyncState> = MutableLiveData(LOADING)
-    private val configState: MutableLiveData<SyncState> = MutableLiveData(LOADING)
+    override val circuitsState: MutableLiveData<SyncState> = MutableLiveData(LOADING)
+    override val constructorsState: MutableLiveData<SyncState> = MutableLiveData(LOADING)
+    override val driversState: MutableLiveData<SyncState> = MutableLiveData(LOADING)
+    override val racesState: MutableLiveData<SyncState> = MutableLiveData(LOADING)
+    override val configState: MutableLiveData<SyncState> = MutableLiveData(LOADING)
 
     override val showRetry: MutableLiveData<Boolean> = MutableLiveData(false)
 
@@ -190,10 +196,7 @@ class SyncViewModel @Inject constructor(
     private suspend fun performConfigUpdates() {
 
         // Shortcuts for RSS
-        when (rssController.enabled) {
-            true -> rssController.addAppShortcut()
-            false -> rssController.removeAppShortcut()
-        }
+        rssShortcutUseCase.setup()
 
         // Shortcuts for Search
         searchAppShortcutUseCase.setup()

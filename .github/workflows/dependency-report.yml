@@ -8,7 +8,7 @@ jobs:
     timeout-minutes: 7
     steps:
       # Checkout
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       # Caching gradle
       - uses: actions/cache@v2
@@ -16,7 +16,7 @@ jobs:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/*.toml*') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
 

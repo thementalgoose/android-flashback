@@ -29,7 +29,7 @@ fun ProgressBar(
     modifier: Modifier = Modifier,
     initialValue: Float = 0f,
     animationDuration: Int = 400,
-    textPadding: Dp = AppTheme.dimensions.paddingSmall,
+    textPadding: Dp = AppTheme.dimens.small,
     barColor: Color = AppTheme.colors.primary,
     barOnColor: Color = Color.White,
     backgroundColor: Color = AppTheme.colors.backgroundPrimary,
@@ -39,7 +39,7 @@ fun ProgressBar(
         modifier = modifier
             .defaultMinSize(minHeight = 48.dp)
             .fillMaxWidth()
-            .clip(RoundedCornerShape(AppTheme.dimensions.radiusSmall))
+            .clip(RoundedCornerShape(AppTheme.dimens.radiusSmall))
     ) {
         val progressState = remember { mutableStateOf(initialValue) }
         val progress = animateFloatAsState(
@@ -67,7 +67,7 @@ fun ProgressBar(
                     width = maxWidth * progress,
                     height = maxHeight
                 )
-                .clip(RoundedCornerShape(AppTheme.dimensions.radiusSmall))
+                .clip(RoundedCornerShape(AppTheme.dimens.radiusSmall))
                 .background(barColor)
         )
 

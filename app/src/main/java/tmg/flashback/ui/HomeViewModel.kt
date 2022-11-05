@@ -8,9 +8,9 @@ import kotlinx.coroutines.launch
 import tmg.flashback.BuildConfig
 import tmg.flashback.configuration.repository.ConfigRepository
 import tmg.flashback.configuration.usecases.ApplyConfigUseCase
-import tmg.flashback.crash_reporting.controllers.CrashController
+import tmg.flashback.crash_reporting.manager.CrashManager
 import tmg.flashback.forceupgrade.repository.ForceUpgradeRepository
-import tmg.flashback.rss.controllers.RSSController
+import tmg.flashback.rss.usecases.RssShortcutUseCase
 import tmg.flashback.statistics.repo.repository.CacheRepository
 import tmg.flashback.stats.usecases.ScheduleNotificationsUseCase
 import tmg.flashback.stats.usecases.SearchAppShortcutUseCase
@@ -39,8 +39,8 @@ interface HomeViewModelOutputs {
 class HomeViewModel @Inject constructor(
     private val configRepository: ConfigRepository,
     private val applyConfigUseCase: ApplyConfigUseCase,
-    private val rssController: RSSController,
-    private val crashController: CrashController,
+    private val rssShortcutUseCase: RssShortcutUseCase,
+    private val crashManager: CrashManager,
     private val forceUpgradeRepository: ForceUpgradeRepository,
     private val cacheRepository: CacheRepository,
     private val searchAppShortcutUseCase: SearchAppShortcutUseCase,
@@ -70,7 +70,7 @@ class HomeViewModel @Inject constructor(
                         }
                         performConfigUpdates()
                     } catch (e: Exception) {
-                        crashController.logException(e)
+                        crashManager.logException(e)
                     }
                     appliedChanges = false
                 }
@@ -81,10 +81,7 @@ class HomeViewModel @Inject constructor(
     private fun performConfigUpdates() {
 
         // Shortcuts for RSS
-        when (rssController.enabled) {
-            true -> rssController.addAppShortcut()
-            false -> rssController.removeAppShortcut()
-        }
+        rssShortcutUseCase.setup()
 
         // Shortcuts for Search
         searchAppShortcutUseCase.setup()

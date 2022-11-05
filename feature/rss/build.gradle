@@ -17,8 +17,6 @@ android {
 }
 
 dependencies {
-
-
     // Core modules
     implementation project(path: ":ads:ads-config")
     implementation project(path: ':core:analytics')
@@ -31,20 +29,10 @@ dependencies {
     implementation project(path: ':core:webbrowser')
     implementation project(path: ':presentation:ui')
 
-    // Retrofit
-    implementation deps.retrofit.retrofit
-    implementation deps.retrofit.retrofit_simplexml
-    implementation deps.retrofit.retrofit_jaxb
-    implementation deps.retrofit.retrofit_gson
-    implementation deps.retrofit.okhttp
-    implementation deps.retrofit.okhttp_logging
+    implementation libs.bundles.retrofit
+    implementation libs.bundles.okhttp
+    implementation libs.tmg.labelledprogressbar
+    implementation libs.lottie
 
-    // TMG dependencies
-    implementation deps.tmg.labelledprogressbar
-
-    // Lottie
-    implementation deps.lottie
     testImplementation project(path: ':test:models')
-
-    // Test models and methods
 }
