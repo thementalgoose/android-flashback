@@ -86,12 +86,13 @@ fun NavigationColumn(
                 )
                 Spacer(Modifier.height(AppTheme.dimens.small))
             }
-            Spacer(modifier = Modifier.height(AppTheme.dimens.medium))
+            Spacer(modifier = Modifier.height(AppTheme.dimens.small))
             if (timelineList.isNotEmpty()) {
                 Divider(
                     modifier = Modifier.padding(horizontal = AppTheme.dimens.medium),
                     color = AppTheme.colors.backgroundTertiary
                 )
+                Spacer(modifier = Modifier.height(AppTheme.dimens.small))
                 timelineList.forEach { item ->
                     NavigationTimelineItem(
                         item = item,
@@ -101,19 +102,24 @@ fun NavigationColumn(
                 }
                 Spacer(modifier = Modifier.height(AppTheme.dimens.medium))
             }
-
         }
-        NavigationItem(
-            item = NavigationItem(
-                id = "expand",
-                label = null,
-                icon = R.drawable.ic_menu_expanded
-            ),
-            onClick = {
-                expanded.value = !expanded.value
-            },
-            isExpanded = expanded.value
-        )
+        Box(Modifier
+            .fillMaxWidth()
+            .background(AppTheme.colors.backgroundNav)
+            .padding(vertical = AppTheme.dimens.small)
+        ) {
+            NavigationItem(
+                item = NavigationItem(
+                    id = "expand",
+                    label = null,
+                    icon = R.drawable.ic_menu_expanded
+                ),
+                onClick = {
+                    expanded.value = !expanded.value
+                },
+                isExpanded = expanded.value
+            )
+        }
     }
 }
 
@@ -206,12 +212,36 @@ private fun NavigationTimelineItem(
         )
     ) {
         Box(Modifier.fillMaxHeight()) {
-            Box(Modifier
-                .width(8.dp)
+            Column(Modifier
                 .fillMaxHeight()
+                .width(8.dp)
                 .align(Alignment.Center)
-                .background(item.color)
-            )
+            ) {
+                Box(Modifier
+                    .fillMaxWidth()
+                    .weight(1f)
+                    .padding(bottom = (iconSize / 2f) - 2.dp)
+                    .background(when (item.pipeType) {
+                        PipeType.SINGLE -> Color.Transparent
+                        PipeType.START -> Color.Transparent
+                        PipeType.START_END -> item.color
+                        PipeType.SINGLE_PIPE -> Color.Transparent
+                        PipeType.END -> item.color
+                    })
+                )
+                Box(Modifier
+                    .fillMaxWidth()
+                    .weight(1f)
+                    .padding(top = (iconSize / 2f) - 2.dp)
+                    .background(when (item.pipeType) {
+                        PipeType.SINGLE -> Color.Transparent
+                        PipeType.START -> item.color
+                        PipeType.START_END -> item.color
+                        PipeType.SINGLE_PIPE -> Color.Transparent
+                        PipeType.END -> Color.Transparent
+                    })
+                )
+            }
             Donut(
                 color = item.color,
                 modifier = Modifier
@@ -219,19 +249,6 @@ private fun NavigationTimelineItem(
                     .align(Alignment.Center)
             )
         }
-//        Box(modifier = Modifier
-//            .size(iconSize)
-//            .align(Alignment.CenterVertically)
-//            .clip(CircleShape)
-//            .background(item.color)
-//        ) {
-//            Box(modifier = Modifier
-//                .size(iconSize / 2)
-//                .align(Alignment.Center)
-//                .clip(CircleShape)
-//                .background(backgroundColor.value)
-//            )
-//        }
         if (isExpanded) {
             TextBody1(
                 modifier = Modifier
