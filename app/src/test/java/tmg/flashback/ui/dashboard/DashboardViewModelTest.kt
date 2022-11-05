@@ -3,6 +3,7 @@ package tmg.flashback.ui.dashboard
 import android.content.Context
 import io.mockk.*
 import kotlinx.coroutines.test.advanceUntilIdle
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.analytics.manager.AnalyticsManager
@@ -64,6 +65,7 @@ internal class DashboardViewModelTest: BaseTest() {
             mockRaceRepository.fetchRaces(2020)
             mockOverviewRepository.fetchOverview(2020)
         }
+        assertEquals(DashboardScreenState(DashboardNavItem.CALENDAR, 2020), underTest.initialTab)
     }
 
     //region Tabs
