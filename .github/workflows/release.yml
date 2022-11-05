@@ -8,12 +8,12 @@ jobs:
   json_checker:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
       - name: json-syntax-check
-        uses: limitusus/json-syntax-check@v1
+        uses: limitusus/json-syntax-check@v1.0.3
         with:
           pattern: "\\.json$"
 
@@ -22,7 +22,7 @@ jobs:
     timeout-minutes: 7
     steps:
       # Checkout
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       # Caching gradle
       - uses: actions/cache@v2
@@ -30,7 +30,7 @@ jobs:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/*.toml*') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
 
@@ -47,7 +47,7 @@ jobs:
     timeout-minutes: 15
     steps:
       # Checkout
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
@@ -57,7 +57,7 @@ jobs:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/*.toml*') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
 
@@ -78,7 +78,7 @@ jobs:
     needs: [unit_test,json_checker]
     steps:
       # Checkout
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
@@ -88,7 +88,7 @@ jobs:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/*.toml*') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
 
@@ -102,12 +102,12 @@ jobs:
       # Version tag
       - name: Version Name
         id: get_version_name
-        run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
+        run: echo "VERSION=$(echo $GITHUB_REF | cut -d / -f 3)" >> $GITHUB_OUTPUT
 
       # Version code
       - name: Version Code
         id: get_version_code
-        run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d . -f 3)
+        run: echo "VERSION=$(echo $GITHUB_REF | cut -d . -f 3)" >> $GITHUB_OUTPUT
 
       # Release
       - name: Release to internal test track
@@ -126,7 +126,7 @@ jobs:
     steps:
 
       # Checkout
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
@@ -138,14 +138,14 @@ jobs:
       # Version tag
       - name: Version Name
         id: get_version_name
-        run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
+        run: echo "VERSION=$(echo $GITHUB_REF | cut -d / -f 3)" >> $GITHUB_OUTPUT
       - name: Output version name
         run: echo ${{ steps.get_version_name.outputs.VERSION }} > version-name.txt
 
       # Version code
       - name: Version Code
         id: get_version_code
-        run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d . -f 3)
+        run: echo "VERSION=$(echo $GITHUB_REF | cut -d . -f 3)" >> $GITHUB_OUTPUT
       - name: Output version code
         run: echo ${{ steps.get_version_code.outputs.VERSION }} > version-code.txt
 
@@ -168,19 +168,19 @@ jobs:
     steps:
 
       # Checkout
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
       # Version tag
       - name: Version Name
         id: get_version_name
-        run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
+        run: echo "VERSION=$(echo $GITHUB_REF | cut -d / -f 3)" >> $GITHUB_OUTPUT
 
       # Version code
       - name: Version Code
         id: get_version_code
-        run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d . -f 3)
+        run: echo "VERSION=$(echo $GITHUB_REF | cut -d . -f 3)" >> $GITHUB_OUTPUT
 
       - name: Notify discord of failure
         uses: sarisia/actions-status-discord@v1

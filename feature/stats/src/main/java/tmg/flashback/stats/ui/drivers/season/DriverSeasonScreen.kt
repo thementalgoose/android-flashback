@@ -159,8 +159,8 @@ private fun Stat(
         modifier = modifier
             .fillMaxWidth()
             .padding(
-                vertical = AppTheme.dimensions.paddingXSmall,
-                horizontal = AppTheme.dimensions.paddingMedium
+                vertical = AppTheme.dimens.xsmall,
+                horizontal = AppTheme.dimens.medium
             )
     ) {
         Icon(
@@ -190,7 +190,7 @@ private fun History(
     modifier: Modifier = Modifier
 ) {
     Row(modifier = modifier
-        .padding(horizontal = AppTheme.dimensions.paddingMedium)
+        .padding(horizontal = AppTheme.dimens.medium)
     ) {
         Timeline(
             timelineColor = AppTheme.colors.contentSecondary,
@@ -218,7 +218,7 @@ private fun History(
                         bold = true,
                         modifier = Modifier
                             .padding(
-                                end = AppTheme.dimensions.paddingSmall,
+                                end = AppTheme.dimens.small,
                                 top = 2.dp,
                                 bottom = 2.dp
                             )
@@ -239,13 +239,13 @@ private fun ResultHeader(
     modifier: Modifier = Modifier
 ) {
     Row(modifier = modifier
-        .padding(end = AppTheme.dimensions.paddingMedium)
+        .padding(end = AppTheme.dimens.medium)
     ) {
         Box(Modifier.weight(1f))
         Box(
             Modifier
                 .width(resultColumnWidth)
-                .padding(vertical = AppTheme.dimensions.paddingXSmall)
+                .padding(vertical = AppTheme.dimens.xsmall)
         ) {
             Icon(
                 modifier = Modifier.align(Alignment.Center),
@@ -257,7 +257,7 @@ private fun ResultHeader(
         Box(
             Modifier
                 .width(resultColumnWidth)
-                .padding(vertical = AppTheme.dimensions.paddingXSmall)
+                .padding(vertical = AppTheme.dimens.xsmall)
         ) {
             Icon(
                 modifier = Modifier.align(Alignment.Center),
@@ -269,7 +269,7 @@ private fun ResultHeader(
         Box(
             Modifier
                 .width(resultColumnWidth)
-                .padding(vertical = AppTheme.dimensions.paddingXSmall)
+                .padding(vertical = AppTheme.dimens.xsmall)
         ) {
             Icon(
                 modifier = Modifier.align(Alignment.Center),
@@ -302,9 +302,9 @@ private fun Result(
             }
         )
         .padding(
-            top = AppTheme.dimensions.paddingXSmall,
-            bottom = AppTheme.dimensions.paddingXSmall,
-            end = AppTheme.dimensions.paddingMedium
+            top = AppTheme.dimens.xsmall,
+            bottom = AppTheme.dimens.xsmall,
+            end = AppTheme.dimens.medium
         )
     ) {
         Column(
@@ -322,7 +322,7 @@ private fun Result(
                     modifier = Modifier
                         .padding(
                             start = 48.dp,
-                            bottom = AppTheme.dimensions.paddingXSmall
+                            bottom = AppTheme.dimens.xsmall
                         )
                         .fillMaxWidth(),
                     text = model.constructor.name
@@ -332,13 +332,13 @@ private fun Result(
         Box(
             Modifier
                 .width(resultColumnWidth)
-                .padding(vertical = AppTheme.dimensions.paddingXSmall)
+                .padding(vertical = AppTheme.dimens.xsmall)
         ) {
             Column(
                 verticalArrangement = Arrangement.Center,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = AppTheme.dimensions.paddingXSmall)
+                    .padding(top = AppTheme.dimens.xsmall)
             ) {
                 TextBody1(
                     textAlign = TextAlign.Center,
@@ -358,13 +358,13 @@ private fun Result(
         Box(
             Modifier
                 .width(resultColumnWidth)
-                .padding(vertical = AppTheme.dimensions.paddingXSmall)
+                .padding(vertical = AppTheme.dimens.xsmall)
         ) {
             Column(
                 verticalArrangement = Arrangement.Center,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = AppTheme.dimensions.paddingXSmall)
+                    .padding(top = AppTheme.dimens.xsmall)
             ) {
                 TextBody1(
                     textAlign = TextAlign.Center,
@@ -384,7 +384,7 @@ private fun Result(
         Box(
             Modifier
                 .width(resultColumnWidth)
-                .padding(vertical = AppTheme.dimensions.paddingXSmall)
+                .padding(vertical = AppTheme.dimens.xsmall)
         ) {
             val progress = (model.points / model.maxPoints).toFloat().coerceIn(0f, 1f)
             ProgressBar(
@@ -413,7 +413,7 @@ private fun Header(
     modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier.padding(
-        horizontal = AppTheme.dimensions.paddingMedium
+        horizontal = AppTheme.dimens.medium
     )) {
         DriverImage(
             photoUrl = model.driver.photoUrl,
@@ -434,14 +434,14 @@ private fun Header(
                     .size(16.dp)
                     .align(Alignment.CenterVertically),
             )
-            Spacer(Modifier.width(AppTheme.dimensions.paddingSmall))
+            Spacer(Modifier.width(AppTheme.dimens.small))
 
             val birthday = model.driver.dateOfBirth
                 .format("dd MMMM yyyy")
                 ?.let { birthday -> stringResource(id = R.string.driver_overview_stat_birthday, birthday) } ?: ""
             TextBody1(
                 modifier = Modifier
-                    .padding(vertical = AppTheme.dimensions.paddingXSmall)
+                    .padding(vertical = AppTheme.dimens.xsmall)
                     .fillMaxWidth(),
                 text = "${model.driver.nationality} - $birthday"
             )

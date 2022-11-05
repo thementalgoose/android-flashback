@@ -37,6 +37,7 @@ class NotificationOnboardingViewModel @Inject constructor(
     override fun selectNotificationChannel(notificationChannel: NotificationChannel) {
         when (notificationChannel) {
             NotificationChannel.RACE -> notificationRepository.notificationUpcomingRace = !notificationRepository.notificationUpcomingRace
+            NotificationChannel.SPRINT -> notificationRepository.notificationUpcomingSprint = !notificationRepository.notificationUpcomingSprint
             NotificationChannel.QUALIFYING -> notificationRepository.notificationUpcomingQualifying = !notificationRepository.notificationUpcomingQualifying
             NotificationChannel.FREE_PRACTICE -> notificationRepository.notificationUpcomingFreePractice = !notificationRepository.notificationUpcomingFreePractice
             NotificationChannel.SEASON_INFO -> notificationRepository.notificationUpcomingOther = !notificationRepository.notificationUpcomingOther
@@ -53,6 +54,7 @@ class NotificationOnboardingViewModel @Inject constructor(
                     NotificationOnboardingModel(id = it.name, channel = it, name = it.label, icon = it.icon),
                     when (it) {
                         NotificationChannel.RACE -> notificationRepository.notificationUpcomingRace
+                        NotificationChannel.SPRINT -> notificationRepository.notificationUpcomingSprint
                         NotificationChannel.QUALIFYING -> notificationRepository.notificationUpcomingQualifying
                         NotificationChannel.FREE_PRACTICE -> notificationRepository.notificationUpcomingFreePractice
                         NotificationChannel.SEASON_INFO -> notificationRepository.notificationUpcomingOther

@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
@@ -22,16 +21,16 @@ fun BottomSheet(
 ){
     Column(modifier = modifier
         .background(AppTheme.colors.backgroundPrimary)
-        .padding(bottom = AppTheme.dimensions.paddingMedLarge)
+        .padding(bottom = AppTheme.dimens.medlarge)
     ) {
         TextHeadline2(
             text = title,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(
-                    start = AppTheme.dimensions.paddingMedium,
-                    end = AppTheme.dimensions.paddingMedium,
-                    top = AppTheme.dimensions.paddingNSmall
+                    start = AppTheme.dimens.medium,
+                    end = AppTheme.dimens.medium,
+                    top = AppTheme.dimens.nsmall
                 )
         )
         TextBody2(
@@ -39,8 +38,8 @@ fun BottomSheet(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(
-                    vertical = AppTheme.dimensions.paddingSmall,
-                    horizontal = AppTheme.dimensions.paddingMedium
+                    vertical = AppTheme.dimens.small,
+                    horizontal = AppTheme.dimens.medium
                 )
         )
         content()

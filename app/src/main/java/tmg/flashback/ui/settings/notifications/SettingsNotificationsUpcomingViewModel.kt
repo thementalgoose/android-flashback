@@ -8,7 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.stats.repository.NotificationRepository
-import tmg.flashback.stats.usecases.ResubscribeNotificationsUseCase
+import tmg.flashback.stats.usecases.ScheduleNotificationsUseCase
 import tmg.flashback.ui.managers.PermissionManager
 import tmg.flashback.ui.permissions.RationaleType
 import tmg.flashback.ui.repository.PermissionRepository
@@ -24,6 +24,7 @@ interface SettingsNotificationsUpcomingViewModelOutputs {
     val permissionEnabled: LiveData<Boolean>
     val freePracticeEnabled: LiveData<Boolean>
     val qualifyingEnabled: LiveData<Boolean>
+    val sprintEnabled: LiveData<Boolean>
     val raceEnabled: LiveData<Boolean>
     val otherEnabled: LiveData<Boolean>
 }
@@ -31,7 +32,7 @@ interface SettingsNotificationsUpcomingViewModelOutputs {
 @HiltViewModel
 class SettingsNotificationsUpcomingViewModel @Inject constructor(
     private val notificationRepository: NotificationRepository,
-    private val resubscribeNotificationsUseCase: ResubscribeNotificationsUseCase,
+    private val scheduleNotificationsUseCase: ScheduleNotificationsUseCase,
     private val permissionRepository: PermissionRepository,
     private val permissionManager: PermissionManager,
     private val statsNavigationComponent: StatsNavigationComponent
@@ -43,6 +44,7 @@ class SettingsNotificationsUpcomingViewModel @Inject constructor(
     override val permissionEnabled: MutableLiveData<Boolean> = MutableLiveData(permissionRepository.isRuntimeNotificationsEnabled)
     override val freePracticeEnabled: MutableLiveData<Boolean> = MutableLiveData(notificationRepository.notificationUpcomingFreePractice)
     override val qualifyingEnabled: MutableLiveData<Boolean> = MutableLiveData(notificationRepository.notificationUpcomingQualifying)
+    override val sprintEnabled: MutableLiveData<Boolean> = MutableLiveData(notificationRepository.notificationUpcomingSprint)
     override val raceEnabled: MutableLiveData<Boolean> = MutableLiveData(notificationRepository.notificationUpcomingRace)
     override val otherEnabled: MutableLiveData<Boolean> = MutableLiveData(notificationRepository.notificationUpcomingOther)
 
@@ -79,6 +81,11 @@ class SettingsNotificationsUpcomingViewModel @Inject constructor(
                 qualifyingEnabled.value = notificationRepository.notificationUpcomingQualifying
                 resubscribe()
             }
+            Settings.Notifications.notificationUpcomingSprintKey -> {
+                notificationRepository.notificationUpcomingSprint = !notificationRepository.notificationUpcomingSprint
+                sprintEnabled.value = notificationRepository.notificationUpcomingSprint
+                resubscribe()
+            }
             Settings.Notifications.notificationUpcomingRaceKey -> {
                 notificationRepository.notificationUpcomingRace = !notificationRepository.notificationUpcomingRace
                 raceEnabled.value = notificationRepository.notificationUpcomingRace
@@ -92,9 +99,7 @@ class SettingsNotificationsUpcomingViewModel @Inject constructor(
     }
 
     private fun resubscribe() {
-        viewModelScope.launch {
-            resubscribeNotificationsUseCase.resubscribe()
-        }
+        scheduleNotificationsUseCase.schedule()
     }
 
     fun refresh() {

@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import dagger.hilt.android.AndroidEntryPoint
 import tmg.flashback.analytics.manager.AnalyticsManager
-import tmg.flashback.crash_reporting.controllers.CrashController
+import tmg.flashback.crash_reporting.manager.CrashManager
 import tmg.flashback.web.R
 import tmg.flashback.web.databinding.FragmentWebBinding
 import tmg.flashback.web.client.FlashbackWebChromeClient
@@ -32,7 +32,7 @@ internal class WebFragment : Fragment() {
     @Inject
     protected lateinit var analyticsManager: AnalyticsManager
     @Inject
-    protected lateinit var crashController: CrashController
+    protected lateinit var crashController: CrashManager
 
     @Inject
     protected lateinit var webBrowserRepository: WebBrowserRepository

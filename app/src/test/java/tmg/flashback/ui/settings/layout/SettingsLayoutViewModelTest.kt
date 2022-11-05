@@ -23,35 +23,35 @@ internal class SettingsLayoutViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `provided by at top is true when pref is true`() {
-        every { mockHomeRepository.dataProvidedByAtTop } returns true
+    fun `collapse list is true when pref is true`() {
+        every { mockHomeRepository.collapseList } returns true
 
         initUnderTest()
-        underTest.outputs.providedByAtTopEnabled.test {
+        underTest.outputs.collapsedListEnabled.test {
             assertValue(true)
         }
     }
 
     @Test
-    fun `provided by at top is false when pref is false`() {
-        every { mockHomeRepository.dataProvidedByAtTop } returns false
+    fun `collapse list is false when pref is false`() {
+        every { mockHomeRepository.collapseList } returns false
 
         initUnderTest()
-        underTest.outputs.providedByAtTopEnabled.test {
+        underTest.outputs.collapsedListEnabled.test {
             assertValue(false)
         }
     }
 
     @Test
-    fun `click show provided by at top updates pref and updates value`() {
-        every { mockHomeRepository.dataProvidedByAtTop } returns false
+    fun `click show collapse list updates pref and updates value`() {
+        every { mockHomeRepository.collapseList } returns false
 
         initUnderTest()
-        val observer = underTest.outputs.providedByAtTopEnabled.testObserve()
-        underTest.inputs.prefClicked(Settings.Layout.providedByAtTop(true))
+        val observer = underTest.outputs.collapsedListEnabled.testObserve()
+        underTest.inputs.prefClicked(Settings.Layout.collapseList(true))
 
         verify {
-            mockHomeRepository.dataProvidedByAtTop = true
+            mockHomeRepository.collapseList = true
         }
         observer.assertEmittedCount(2)
     }

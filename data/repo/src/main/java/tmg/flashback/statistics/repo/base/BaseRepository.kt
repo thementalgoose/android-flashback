@@ -3,9 +3,8 @@ package tmg.flashback.statistics.repo.base
 import android.util.Log
 import retrofit2.HttpException
 import retrofit2.Response
-import tmg.flashback.crash_reporting.controllers.CrashController
+import tmg.flashback.crash_reporting.manager.CrashManager
 import tmg.flashback.device.managers.NetworkConnectivityManager
-import tmg.flashback.statistics.network.NetworkConfigManager
 import tmg.flashback.statistics.network.models.MetadataWrapper
 import tmg.flashback.statistics.network.utils.data
 import tmg.flashback.statistics.network.utils.hasData
@@ -14,7 +13,7 @@ import java.io.IOException
 import java.net.UnknownHostException
 
 abstract class BaseRepository(
-    protected val crashController: CrashController,
+    protected val crashController: CrashManager,
     private val networkConnectivityManager: NetworkConnectivityManager
 ) {
     suspend fun <T> attempt(

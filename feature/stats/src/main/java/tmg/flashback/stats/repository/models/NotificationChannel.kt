@@ -14,6 +14,7 @@ enum class NotificationChannel(
 ) {
     FREE_PRACTICE("flashback_free_practice", R.string.notification_channel_free_practice, R.drawable.ic_notification_practice),
     QUALIFYING("flashback_qualifying", R.string.notification_channel_qualifying, R.drawable.ic_notification_qualifying),
+    SPRINT("flashback_sprint", R.string.notification_channel_sprint, R.drawable.ic_notification_sprint),
     RACE("flashback_race", R.string.notification_channel_race, R.drawable.ic_notification_race),
     SEASON_INFO("flashback_info", R.string.notification_channel_info, R.drawable.ic_notification_season_info)
 }

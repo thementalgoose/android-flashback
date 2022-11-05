@@ -8,12 +8,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
@@ -57,10 +55,10 @@ fun ButtonTertiary(
             bold = true,
             modifier = Modifier
                 .padding(
-                    start = AppTheme.dimensions.paddingNSmall,
-                    top = if (narrow) AppTheme.dimensions.paddingSmall else AppTheme.dimensions.paddingMedium,
-                    end = AppTheme.dimensions.paddingNSmall,
-                    bottom = if (narrow) AppTheme.dimensions.paddingSmall else AppTheme.dimensions.paddingMedium
+                    start = AppTheme.dimens.nsmall,
+                    top = if (narrow) AppTheme.dimens.small else AppTheme.dimens.medium,
+                    end = AppTheme.dimens.nsmall,
+                    bottom = if (narrow) AppTheme.dimens.small else AppTheme.dimens.medium
                 )
         )
         if (icon != null) {
@@ -70,7 +68,7 @@ fun ButtonTertiary(
                 contentDescription = null,
                 tint = AppTheme.colors.contentSecondary
             )
-            Spacer(Modifier.width(AppTheme.dimensions.paddingNSmall))
+            Spacer(Modifier.width(AppTheme.dimens.nsmall))
         }
     }
 }

@@ -1,6 +1,5 @@
 package tmg.flashback.stats.ui.drivers.stathistory
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -15,8 +14,6 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.rememberNestedScrollInteropConnection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -24,11 +21,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import tmg.flashback.formula1.extensions.positionIcon
 import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.Race
 import tmg.flashback.formula1.model.RaceInfo
-import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.providers.RaceProvider
 import tmg.flashback.stats.R
 import tmg.flashback.stats.analytics.AnalyticsConstants.analyticsDriverId
@@ -39,9 +34,6 @@ import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.*
 import tmg.flashback.ui.components.analytics.ScreenView
 import tmg.flashback.ui.components.header.Header
-import tmg.flashback.ui.utils.isInPreview
-import tmg.utilities.extensions.format
-import tmg.utilities.extensions.ordinalAbbreviation
 
 @Composable
 fun DriverStatHistoryScreenVM(
@@ -104,7 +96,7 @@ private fun DriverStatHistoryScreen(
                 }
             }
             item(key = "footer") {
-                Spacer(Modifier.height(AppTheme.dimensions.paddingXLarge))
+                Spacer(Modifier.height(AppTheme.dimens.xlarge))
             }
         }
     )
@@ -115,9 +107,9 @@ private fun Empty() {
     Column(modifier = Modifier
         .fillMaxWidth()
         .padding(
-            start = AppTheme.dimensions.paddingMedium,
-            end = AppTheme.dimensions.paddingMedium,
-            bottom = AppTheme.dimensions.paddingXLarge
+            start = AppTheme.dimens.medium,
+            end = AppTheme.dimens.medium,
+            bottom = AppTheme.dimens.xlarge
         )
     ) {
         TextBody1(text = stringResource(id = R.string.stat_history_empty))
@@ -129,11 +121,11 @@ private fun Label(
     model: DriverStatHistoryModel.Label
 ) {
     TextSection(
-        modifier = Modifier.padding(horizontal = AppTheme.dimensions.paddingMedium),
+        modifier = Modifier.padding(horizontal = AppTheme.dimens.medium),
         text = model.text
     )
     Divider(
-        modifier = Modifier.padding(horizontal = AppTheme.dimensions.paddingMedium),
+        modifier = Modifier.padding(horizontal = AppTheme.dimens.medium),
         color = AppTheme.colors.backgroundTertiary
     )
 }
@@ -167,8 +159,8 @@ private fun Race(
 ) {
     Row(modifier = Modifier
         .padding(
-            vertical = AppTheme.dimensions.paddingSmall,
-            horizontal = AppTheme.dimensions.paddingMedium
+            vertical = AppTheme.dimens.small,
+            horizontal = AppTheme.dimens.medium
         )
     ) {
         if (position != null) {
@@ -180,7 +172,7 @@ private fun Race(
                     bold = true,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = AppTheme.dimensions.paddingXSmall),
+                        .padding(horizontal = AppTheme.dimens.xsmall),
                     textAlign = TextAlign.Center,
                     text = "P$position"
                 )
@@ -203,7 +195,7 @@ private fun Race(
 //                    }
 //                )
             }
-            Spacer(Modifier.width(AppTheme.dimensions.paddingSmall))
+            Spacer(Modifier.width(AppTheme.dimens.small))
         }
         Flag(
             iso = raceInfo.circuit.countryISO,
@@ -213,7 +205,7 @@ private fun Race(
         Column(
             modifier = Modifier
                 .weight(1f)
-                .padding(horizontal = AppTheme.dimensions.paddingSmall)
+                .padding(horizontal = AppTheme.dimens.small)
         ) {
             TextBody1(
                 text = raceInfo.name,
@@ -236,7 +228,7 @@ private fun Race(
                 Spacer(Modifier.height(2.dp))
                 Row(Modifier.height(IntrinsicSize.Min)) {
                     TextBody2(
-                        modifier = Modifier.padding(horizontal = AppTheme.dimensions.paddingXSmall),
+                        modifier = Modifier.padding(horizontal = AppTheme.dimens.xsmall),
                         text = constructor.name
                     )
                     Box(
@@ -259,8 +251,8 @@ private fun Year(
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.padding(
-            horizontal = AppTheme.dimensions.paddingMedium,
-            vertical = AppTheme.dimensions.paddingSmall
+            horizontal = AppTheme.dimens.medium,
+            vertical = AppTheme.dimens.small
         )
     ) {
         Icon(
@@ -271,7 +263,7 @@ private fun Year(
         )
         TextHeadline2(
             modifier = Modifier
-                .padding(horizontal = AppTheme.dimensions.paddingMedium)
+                .padding(horizontal = AppTheme.dimens.medium)
                 .weight(1f),
             text = model.season.toString()
         )

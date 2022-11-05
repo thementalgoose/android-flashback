@@ -1,31 +1,23 @@
 package tmg.flashback.stats.ui.weekend.shared
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import tmg.flashback.formula1.model.DriverConstructor
-import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.providers.DriverConstructorProvider
-import tmg.flashback.stats.R
 import tmg.flashback.stats.ui.shared.Flag
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
-import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextTitle
-import tmg.flashback.ui.utils.isInPreview
 
 private val colorIndicator: Dp = 6.dp
 
@@ -51,14 +43,14 @@ fun DriverInfo(
             TextTitle(
                 modifier = Modifier
                     .width(42.dp)
-                    .padding(horizontal = AppTheme.dimensions.paddingXSmall)
+                    .padding(horizontal = AppTheme.dimens.xsmall)
                     .align(Alignment.CenterVertically),
                 bold = true,
                 textAlign = TextAlign.Center,
                 text = position.toString()
             )
         } else {
-            Spacer(Modifier.width(AppTheme.dimensions.paddingMedium - colorIndicator))
+            Spacer(Modifier.width(AppTheme.dimens.medium - colorIndicator))
         }
         Column(modifier = Modifier
             .weight(1f)
@@ -80,10 +72,10 @@ fun DriverInfo(
                         .size(16.dp)
                         .align(Alignment.CenterVertically),
                 )
-                Spacer(Modifier.width(AppTheme.dimensions.paddingSmall))
+                Spacer(Modifier.width(AppTheme.dimens.small))
                 extraContent?.let { content ->
                     content()
-                    Spacer(Modifier.width(AppTheme.dimensions.paddingXSmall))
+                    Spacer(Modifier.width(AppTheme.dimens.xsmall))
                 }
                 TextBody2(text = constructorName)
             }

@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test
 import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.stats.repository.NotificationRepository
 import tmg.flashback.stats.usecases.ResubscribeNotificationsUseCase
+import tmg.flashback.stats.usecases.ScheduleNotificationsUseCase
 import tmg.flashback.ui.managers.PermissionManager
 import tmg.flashback.ui.repository.PermissionRepository
 import tmg.flashback.ui.settings.Settings
@@ -19,7 +20,7 @@ import tmg.testutils.livedata.testObserve
 internal class SettingsNotificationsUpcomingViewModelTest: BaseTest() {
 
     private val mockNotificationRepository: NotificationRepository = mockk(relaxed = true)
-    private val mockResubscribeNotificationsUseCase: ResubscribeNotificationsUseCase = mockk(relaxed = true)
+    private val mockScheduleNotificationsUseCase: ScheduleNotificationsUseCase = mockk(relaxed = true)
     private val mockPermissionRepository: PermissionRepository = mockk(relaxed = true)
     private val mockPermissionManager: PermissionManager = mockk(relaxed = true)
     private val mockStatsNavigationComponent: StatsNavigationComponent = mockk(relaxed = true)
@@ -29,7 +30,7 @@ internal class SettingsNotificationsUpcomingViewModelTest: BaseTest() {
     private fun initUnderTest() {
         underTest = SettingsNotificationsUpcomingViewModel(
             notificationRepository = mockNotificationRepository,
-            resubscribeNotificationsUseCase = mockResubscribeNotificationsUseCase,
+            scheduleNotificationsUseCase = mockScheduleNotificationsUseCase,
             permissionRepository = mockPermissionRepository,
             permissionManager = mockPermissionManager,
             statsNavigationComponent = mockStatsNavigationComponent,
@@ -117,6 +118,26 @@ internal class SettingsNotificationsUpcomingViewModelTest: BaseTest() {
     }
 
     @Test
+    fun `sprint enabled is true when sprint pref are enabled`() {
+        every { mockNotificationRepository.notificationUpcomingSprint } returns true
+
+        initUnderTest()
+        underTest.outputs.sprintEnabled.test {
+            assertValue(true)
+        }
+    }
+
+    @Test
+    fun `sprint enabled is false when sprint pref are disabled`() {
+        every { mockNotificationRepository.notificationUpcomingSprint } returns false
+
+        initUnderTest()
+        underTest.outputs.sprintEnabled.test {
+            assertValue(false)
+        }
+    }
+
+    @Test
     fun `other enabled is true when other pref are enabled`() {
         every { mockNotificationRepository.notificationUpcomingOther } returns true
 
@@ -181,9 +202,7 @@ internal class SettingsNotificationsUpcomingViewModelTest: BaseTest() {
 
         verify {
             mockNotificationRepository.notificationUpcomingFreePractice = true
-        }
-        coVerify {
-            mockResubscribeNotificationsUseCase.resubscribe()
+            mockScheduleNotificationsUseCase.schedule()
         }
         observer.assertEmittedCount(2)
     }
@@ -198,9 +217,7 @@ internal class SettingsNotificationsUpcomingViewModelTest: BaseTest() {
 
         verify {
             mockNotificationRepository.notificationUpcomingQualifying = true
-        }
-        coVerify {
-            mockResubscribeNotificationsUseCase.resubscribe()
+            mockScheduleNotificationsUseCase.schedule()
         }
         observer.assertEmittedCount(2)
     }
@@ -215,9 +232,7 @@ internal class SettingsNotificationsUpcomingViewModelTest: BaseTest() {
 
         verify {
             mockNotificationRepository.notificationUpcomingRace = true
-        }
-        coVerify {
-            mockResubscribeNotificationsUseCase.resubscribe()
+            mockScheduleNotificationsUseCase.schedule()
         }
         observer.assertEmittedCount(2)
     }
@@ -232,9 +247,7 @@ internal class SettingsNotificationsUpcomingViewModelTest: BaseTest() {
 
         verify {
             mockNotificationRepository.notificationUpcomingOther = true
-        }
-        coVerify {
-            mockResubscribeNotificationsUseCase.resubscribe()
+            mockScheduleNotificationsUseCase.schedule()
         }
         observer.assertEmittedCount(2)
     }

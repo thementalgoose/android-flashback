@@ -17,7 +17,6 @@ import tmg.flashback.formula1.model.Driver
 import tmg.flashback.stats.R
 import tmg.flashback.stats.components.DriverNumber
 import tmg.flashback.style.AppTheme
-import tmg.flashback.style.text.TextBody1
 
 @Composable
 fun DriverImage(
@@ -45,7 +44,7 @@ fun DriverImage(
     Box(
         modifier = modifier
             .size(size)
-            .clip(RoundedCornerShape(AppTheme.dimensions.radiusSmall)),
+            .clip(RoundedCornerShape(AppTheme.dimens.radiusSmall)),
     ) {
         AsyncImage(
             modifier = Modifier.fillMaxSize(),
@@ -59,8 +58,8 @@ fun DriverImage(
                 .fillMaxWidth()
                 .background(AppTheme.colors.backgroundSecondary.copy(alpha = 0.8f))
                 .padding(
-                    horizontal = AppTheme.dimensions.paddingSmall,
-                    vertical = AppTheme.dimensions.paddingXSmall
+                    horizontal = AppTheme.dimens.small,
+                    vertical = AppTheme.dimens.xsmall
                 )
                 .align(Alignment.BottomCenter)
             ) {

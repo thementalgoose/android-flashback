@@ -9,14 +9,14 @@ import io.mockk.verify
 import org.junit.Ignore
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.flashback.crash_reporting.controllers.CrashController
+import tmg.flashback.crash_reporting.manager.CrashManager
 import tmg.flashback.notifications.navigation.NotificationNavigationProvider
 import tmg.testutils.BaseTest
 
 internal class SystemNotificationManagerTest: BaseTest() {
 
     private val mockApplicationContext: Context = mockk(relaxed = true)
-    private val mockCrashController: CrashController = mockk(relaxed = true)
+    private val mockCrashController: CrashManager = mockk(relaxed = true)
     private val mockNavigationProvider: NotificationNavigationProvider = mockk(relaxed = true)
 
     private val mockNotificationManager: NotificationManager = mockk(relaxed = true)

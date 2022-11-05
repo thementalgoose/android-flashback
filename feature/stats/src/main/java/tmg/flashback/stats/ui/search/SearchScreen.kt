@@ -14,7 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
@@ -24,7 +23,6 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import tmg.flashback.formula1.enums.TrackLayout
-import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.stats.R
 import tmg.flashback.stats.ui.shared.DriverImage
 import tmg.flashback.stats.ui.shared.Flag
@@ -35,7 +33,6 @@ import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.ui.components.analytics.ScreenView
 import tmg.flashback.ui.components.header.Header
-import tmg.flashback.ui.utils.isInPreview
 
 @Composable
 fun SearchScreenVM(
@@ -134,10 +131,10 @@ fun SearchScreen(
                 .imePadding()
         ) {
             Row(modifier = Modifier
-                .padding(vertical = AppTheme.dimensions.paddingSmall)
+                .padding(vertical = AppTheme.dimens.small)
                 .horizontalScroll(rememberScrollState())
             ) {
-                Spacer(Modifier.width(AppTheme.dimensions.paddingMedium))
+                Spacer(Modifier.width(AppTheme.dimens.medium))
                 SearchCategory.values().forEach {
                     ButtonTertiary(
                         text = stringResource(it.label),
@@ -146,16 +143,16 @@ fun SearchScreen(
                         },
                         enabled = it == searchCategory
                     )
-                    Spacer(Modifier.width(AppTheme.dimensions.paddingMedium))
+                    Spacer(Modifier.width(AppTheme.dimens.medium))
                 }
-                Spacer(Modifier.width(AppTheme.dimensions.paddingMedium))
+                Spacer(Modifier.width(AppTheme.dimens.medium))
             }
             val text = remember { mutableStateOf(TextFieldValue("")) }
             InputPrimary(
                 modifier = Modifier.padding(
-                    start = AppTheme.dimensions.paddingMedium,
-                    end = AppTheme.dimensions.paddingMedium,
-                    bottom = AppTheme.dimensions.paddingMedium
+                    start = AppTheme.dimens.medium,
+                    end = AppTheme.dimens.medium,
+                    bottom = AppTheme.dimens.medium
                 ),
                 text = text,
                 onValueChange = {
@@ -177,14 +174,14 @@ private fun ResultCircuit(
     Row(modifier = modifier
         .clickable(onClick = { clicked(model) })
         .padding(
-            vertical = AppTheme.dimensions.paddingSmall,
-            horizontal = AppTheme.dimensions.paddingMedium
+            vertical = AppTheme.dimens.small,
+            horizontal = AppTheme.dimens.medium
         )
     ) {
         Box(
             Modifier
                 .size(64.dp)
-                .clip(RoundedCornerShape(AppTheme.dimensions.radiusSmall))
+                .clip(RoundedCornerShape(AppTheme.dimens.radiusSmall))
         ) {
             val track = TrackLayout.getTrack(model.circuitId)
             Icon(
@@ -194,20 +191,20 @@ private fun ResultCircuit(
                 contentDescription = null
             )
         }
-        Spacer(Modifier.width(AppTheme.dimensions.paddingNSmall))
+        Spacer(Modifier.width(AppTheme.dimens.nsmall))
         Column(modifier = Modifier.weight(1f)) {
             TextBody1(
                 bold = true,
                 text = model.name,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = AppTheme.dimensions.paddingXSmall)
+                    .padding(bottom = AppTheme.dimens.xsmall)
             )
             TextBody2(
                 text = model.nationality,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = AppTheme.dimensions.paddingXSmall)
+                    .padding(bottom = AppTheme.dimens.xsmall)
             )
             Flag(
                 iso = model.nationalityISO,
@@ -227,14 +224,14 @@ private fun ResultRace(
     Row(modifier = modifier
         .clickable(onClick = { clicked(model) })
         .padding(
-            vertical = AppTheme.dimensions.paddingSmall,
-            horizontal = AppTheme.dimensions.paddingMedium
+            vertical = AppTheme.dimens.small,
+            horizontal = AppTheme.dimens.medium
         )
     ) {
         Box(
             Modifier
                 .size(42.dp)
-                .clip(RoundedCornerShape(AppTheme.dimensions.radiusSmall))
+                .clip(RoundedCornerShape(AppTheme.dimens.radiusSmall))
         ) {
             Flag(
                 iso = model.countryISO,
@@ -243,20 +240,20 @@ private fun ResultRace(
                     .size(42.dp),
             )
         }
-        Spacer(Modifier.width(AppTheme.dimensions.paddingNSmall))
+        Spacer(Modifier.width(AppTheme.dimens.nsmall))
         Column(modifier = Modifier.weight(1f)) {
             TextBody1(
                 bold = true,
                 text = "${model.season} ${model.raceName}",
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = AppTheme.dimensions.paddingXSmall)
+                    .padding(bottom = AppTheme.dimens.xsmall)
             )
             TextBody2(
                 text = model.circuitName,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = AppTheme.dimensions.paddingXSmall)
+                    .padding(bottom = AppTheme.dimens.xsmall)
             )
             TextBody2(
                 text = "${model.country}, ${stringResource(id = R.string.weekend_race_round, model.round)}",
@@ -275,14 +272,14 @@ private fun ResultDriver(
     Row(modifier = modifier
         .clickable(onClick = { clicked(model) })
         .padding(
-            vertical = AppTheme.dimensions.paddingSmall,
-            horizontal = AppTheme.dimensions.paddingMedium
+            vertical = AppTheme.dimens.small,
+            horizontal = AppTheme.dimens.medium
         )
     ) {
         Box(
             Modifier
                 .size(42.dp)
-                .clip(RoundedCornerShape(AppTheme.dimensions.radiusSmall))
+                .clip(RoundedCornerShape(AppTheme.dimens.radiusSmall))
                 .background(AppTheme.colors.backgroundTertiary)
         ) {
             DriverImage(
@@ -290,14 +287,14 @@ private fun ResultDriver(
                 photoUrl = model.imageUrl
             )
         }
-        Spacer(Modifier.width(AppTheme.dimensions.paddingNSmall))
+        Spacer(Modifier.width(AppTheme.dimens.nsmall))
         Column(modifier = Modifier.weight(1f)) {
             TextBody1(
                 bold = true,
                 text = model.name,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = AppTheme.dimensions.paddingXSmall)
+                    .padding(bottom = AppTheme.dimens.xsmall)
             )
             TextBody2(
                 text = model.nationality,
@@ -316,14 +313,14 @@ private fun ResultConstructor(
     Row(modifier = modifier
         .clickable(onClick = { clicked(model) })
         .padding(
-            vertical = AppTheme.dimensions.paddingSmall,
-            horizontal = AppTheme.dimensions.paddingMedium
+            vertical = AppTheme.dimens.small,
+            horizontal = AppTheme.dimens.medium
         )
     ) {
         Box(
             Modifier
                 .size(42.dp)
-                .clip(RoundedCornerShape(AppTheme.dimensions.radiusSmall))
+                .clip(RoundedCornerShape(AppTheme.dimens.radiusSmall))
                 .background(Color(model.colour))
         ) {
             if (model.photoUrl != null) {
@@ -335,14 +332,14 @@ private fun ResultConstructor(
                 )
             }
         }
-        Spacer(Modifier.width(AppTheme.dimensions.paddingNSmall))
+        Spacer(Modifier.width(AppTheme.dimens.nsmall))
         Column(modifier = Modifier.weight(1f)) {
             TextBody1(
                 bold = true,
                 text = model.name,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = AppTheme.dimensions.paddingXSmall)
+                    .padding(bottom = AppTheme.dimens.xsmall)
             )
             TextBody2(
                 text = model.nationality,
@@ -357,8 +354,8 @@ private fun NotFound(
     modifier: Modifier = Modifier
 ) {
     Row(modifier = modifier.padding(
-        vertical = AppTheme.dimensions.paddingNSmall,
-        horizontal = AppTheme.dimensions.paddingMedium
+        vertical = AppTheme.dimens.nsmall,
+        horizontal = AppTheme.dimens.medium
     )) {
         Icon(
             painter = painterResource(id = R.drawable.ic_error_not_available),
@@ -378,8 +375,8 @@ private fun Placeholder(
     modifier: Modifier = Modifier
 ) {
     Row(modifier = modifier.padding(
-        vertical = AppTheme.dimensions.paddingNSmall,
-        horizontal = AppTheme.dimensions.paddingMedium
+        vertical = AppTheme.dimens.nsmall,
+        horizontal = AppTheme.dimens.medium
     )) {
         Icon(
             painter = painterResource(id = R.drawable.ic_search_placeholder),

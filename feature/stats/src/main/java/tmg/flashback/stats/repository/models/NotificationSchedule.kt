@@ -6,6 +6,7 @@ import tmg.flashback.formula1.utils.NotificationUtils
 data class NotificationSchedule(
     val freePractice: Boolean,
     val qualifying: Boolean,
+    val sprint: Boolean,
     val race: Boolean,
     val other: Boolean
 ) {
@@ -13,6 +14,7 @@ data class NotificationSchedule(
         return when (NotificationUtils.getCategoryBasedOnLabel(label)) {
             RaceWeekend.FREE_PRACTICE -> freePractice
             RaceWeekend.QUALIFYING -> qualifying
+            RaceWeekend.SPRINT -> sprint
             RaceWeekend.RACE -> race
             null -> other
         }

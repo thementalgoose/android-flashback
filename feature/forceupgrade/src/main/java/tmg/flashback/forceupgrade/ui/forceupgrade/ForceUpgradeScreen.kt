@@ -2,9 +2,7 @@ package tmg.flashback.forceupgrade.ui.forceupgrade
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
@@ -33,10 +31,10 @@ internal fun ForceUpgradeScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(
-                        start = AppTheme.dimensions.paddingMedium,
-                        end = AppTheme.dimensions.paddingMedium,
-                        top = AppTheme.dimensions.paddingMedium,
-                        bottom = AppTheme.dimensions.paddingSmall,
+                        start = AppTheme.dimens.medium,
+                        end = AppTheme.dimens.medium,
+                        top = AppTheme.dimens.medium,
+                        bottom = AppTheme.dimens.small,
                     )
             )
             TextBody1(
@@ -44,10 +42,10 @@ internal fun ForceUpgradeScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(
-                        start = AppTheme.dimensions.paddingMedium,
-                        end = AppTheme.dimensions.paddingMedium,
-                        top = AppTheme.dimensions.paddingSmall,
-                        bottom = AppTheme.dimensions.paddingMedium,
+                        start = AppTheme.dimens.medium,
+                        end = AppTheme.dimens.medium,
+                        top = AppTheme.dimens.small,
+                        bottom = AppTheme.dimens.medium,
                     )
             )
         }
@@ -56,10 +54,10 @@ internal fun ForceUpgradeScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(
-                        start = AppTheme.dimensions.paddingMedium,
-                        end = AppTheme.dimensions.paddingMedium,
-                        bottom = AppTheme.dimensions.paddingNSmall,
-                        top = AppTheme.dimensions.paddingNSmall
+                        start = AppTheme.dimens.medium,
+                        end = AppTheme.dimens.medium,
+                        bottom = AppTheme.dimens.nsmall,
+                        top = AppTheme.dimens.nsmall
                     )
             ) {
                 ButtonPrimary(

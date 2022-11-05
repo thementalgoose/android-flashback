@@ -8,6 +8,7 @@ import org.threeten.bp.LocalDate
 import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.model
 import tmg.flashback.stats.R
+import tmg.flashback.ui.components.navigation.PipeType
 
 fun DriverOverviewModel.Companion.headerModel(
     driverId: String = "driverId",

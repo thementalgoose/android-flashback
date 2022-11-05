@@ -67,8 +67,8 @@
     <string name="settings_section_home_title">Layout</string>
     <string name="settings_section_home_description">Customise the menu and dashboard layouts</string>
     <string name="settings_header_home">Home</string>
-    <string name="settings_pref_provided_by_at_top_title">Show provided by at top</string>
-    <string name="settings_pref_provided_by_at_top_description">Show the provided by section at the top of the screen. Disable to move it to the bottom</string>
+    <string name="settings_pref_collapsed_list_title">Collapse races</string>
+    <string name="settings_pref_collapsed_list_description">Hide all but one of the completed races for the current season, showing the upcoming events higher in the feed</string>
 
     <string name="settings_section_rss_configure_title">Configure</string>
     <string name="settings_section_rss_configure_description">Setup RSS sources or customise appearance</string>
@@ -93,6 +93,7 @@
     <string name="settings_pref_notification_notice_period_description">Get notified 15, 30 or 60 minutes before one of the above events starts</string>
     <string name="settings_switch_notification_upcoming_fp_title">Free Practice</string>
     <string name="settings_switch_notification_upcoming_qualifying_title">Qualifying</string>
+    <string name="settings_switch_notification_upcoming_sprint_title">Sprint</string>
     <string name="settings_switch_notification_upcoming_race_title">Race</string>
     <string name="settings_switch_notification_upcoming_other_title">Other</string>
     <string name="settings_switch_notification_results_qualifying_title">Qualifying</string>
@@ -129,5 +130,7 @@
     <string name="settings_pref_shake_to_report_description">Shake the screen to provide feedback or bug reports to the developer</string>
 
     <string name="settings_restart_app_required">Your change will take effect when the app restarts</string>
+
+    <string name="app_version_placeholder">App Version: %s</string>
 
 </resources>

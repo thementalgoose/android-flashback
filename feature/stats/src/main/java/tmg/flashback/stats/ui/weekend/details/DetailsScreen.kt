@@ -1,6 +1,5 @@
 package tmg.flashback.stats.ui.weekend.details
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -9,10 +8,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.rememberCompositionContext
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -101,7 +98,7 @@ private fun Link(
 ) {
     Row(modifier = Modifier
         .horizontalScroll(rememberScrollState())
-        .padding(horizontal = AppTheme.dimensions.paddingMedium)
+        .padding(horizontal = AppTheme.dimens.medium)
     ) {
         model.links.forEach { link ->
             ButtonTertiary(
@@ -109,7 +106,7 @@ private fun Link(
                 onClick = { linkClicked(link) },
                 icon = link.icon
             )
-            Spacer(Modifier.width(AppTheme.dimensions.paddingMedium))
+            Spacer(Modifier.width(AppTheme.dimens.medium))
         }
     }
 }
@@ -124,8 +121,8 @@ private fun Label(
         modifier = modifier
             .fillMaxWidth()
             .padding(
-                vertical = AppTheme.dimensions.paddingSmall,
-                horizontal = AppTheme.dimensions.paddingMedium
+                vertical = AppTheme.dimens.small,
+                horizontal = AppTheme.dimens.medium
             )
     ) {
         Icon(
@@ -134,7 +131,7 @@ private fun Label(
             modifier = Modifier.size(24.dp),
             tint = AppTheme.colors.contentSecondary
         )
-        Spacer(Modifier.width(AppTheme.dimensions.paddingSmall))
+        Spacer(Modifier.width(AppTheme.dimens.small))
         TextBody1(
             bold = true,
             modifier = Modifier.weight(1f),
@@ -151,9 +148,9 @@ private fun Day(
     Column(modifier = modifier
         .fillMaxWidth()
         .padding(
-            top = AppTheme.dimensions.paddingXSmall,
-            start = AppTheme.dimensions.paddingMedium,
-            end = AppTheme.dimensions.paddingMedium
+            top = AppTheme.dimens.xsmall,
+            start = AppTheme.dimens.medium,
+            end = AppTheme.dimens.medium
         )
     ) {
         Title(model.date)
@@ -173,7 +170,7 @@ private fun Title(
         bold = true,
         modifier = modifier
             .fillMaxWidth()
-            .padding(vertical = AppTheme.dimensions.paddingXSmall)
+            .padding(vertical = AppTheme.dimens.xsmall)
     )
 }
 
@@ -186,7 +183,7 @@ private fun EventItem(
     val timestamp = item.timestamp.deviceLocalDateTime
     Row(modifier = modifier
         .fillMaxWidth()
-        .padding(vertical = AppTheme.dimensions.paddingXSmall)
+        .padding(vertical = AppTheme.dimens.xsmall)
     ) {
         TextBody2(
             text = item.label,
@@ -208,7 +205,7 @@ private fun EventItem(
             text = timestamp.format("HH:mm"),
             modifier = Modifier
                 .padding(
-                    start = AppTheme.dimensions.paddingSmall
+                    start = AppTheme.dimens.small
                 )
         )
     }

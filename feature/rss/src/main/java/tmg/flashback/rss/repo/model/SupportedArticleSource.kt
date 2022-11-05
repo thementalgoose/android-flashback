@@ -21,4 +21,6 @@ data class SupportedArticleSource(
                     contactLink = this.contactLink
             )
         }
+
+    companion object
 }

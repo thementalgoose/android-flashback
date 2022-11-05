@@ -7,7 +7,6 @@ import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Badge
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -15,7 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
@@ -36,12 +34,12 @@ fun BadgesView(
     modifier: Modifier = Modifier
 ) {
     Row(modifier = modifier
-        .padding(start = AppTheme.dimensions.paddingMedium)
+        .padding(start = AppTheme.dimens.medium)
         .horizontalScroll(rememberScrollState())
     ) {
         list.forEach {
             BadgeView(model = it)
-            Spacer(Modifier.width(AppTheme.dimensions.paddingMedium))
+            Spacer(Modifier.width(AppTheme.dimens.medium))
         }
     }
 }
@@ -52,11 +50,11 @@ fun BadgeView(
     modifier: Modifier = Modifier
 ) {
     Row(modifier = modifier
-        .clip(RoundedCornerShape(AppTheme.dimensions.radiusSmall))
+        .clip(RoundedCornerShape(AppTheme.dimens.radiusSmall))
         .background(AppTheme.colors.backgroundSecondary)
         .padding(
-            horizontal = AppTheme.dimensions.paddingSmall,
-            vertical = AppTheme.dimensions.paddingXSmall
+            horizontal = AppTheme.dimens.small,
+            vertical = AppTheme.dimens.xsmall
         ),
         verticalAlignment = Alignment.CenterVertically
     ) {

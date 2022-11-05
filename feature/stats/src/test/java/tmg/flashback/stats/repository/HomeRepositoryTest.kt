@@ -6,8 +6,10 @@ import io.mockk.verify
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import tmg.flashback.configuration.manager.ConfigManager
+import tmg.flashback.crash_reporting.manager.CrashManager
 import tmg.flashback.prefs.manager.PreferenceManager
 import tmg.flashback.stats.repository.json.AllSeasonsJson
+import tmg.flashback.stats.repository.json.BannerItemJson
 import tmg.flashback.stats.repository.json.BannerJson
 import tmg.flashback.stats.repository.models.Banner
 import java.time.Year
@@ -16,11 +18,16 @@ internal class HomeRepositoryTest {
 
     private val mockPreferenceManager: PreferenceManager = mockk(relaxed = true)
     private val mockConfigManager: ConfigManager = mockk(relaxed = true)
+    private val mockCrashManager: CrashManager = mockk(relaxed = true)
 
     private lateinit var sut: HomeRepository
 
     private fun initSUT() {
-        sut = HomeRepository(mockPreferenceManager, mockConfigManager)
+        sut = HomeRepository(
+            preferenceManager = mockPreferenceManager,
+            configManager = mockConfigManager,
+            crashManager = mockCrashManager
+        )
     }
 
     //region Server default year
@@ -76,21 +83,23 @@ internal class HomeRepositoryTest {
 
     @Test
     fun `banner is returned from config repository`() {
-        every { mockConfigManager.getJson(keyDefaultBanner, BannerJson.serializer()) } returns BannerJson("hey", "sup")
+        val inputBanner = BannerItemJson("hey", "sup", false, null)
+        val expected = Banner("hey", null, false, null)
+        every { mockConfigManager.getJson(keyDefaultBanners, BannerJson.serializer()) } returns BannerJson(listOf(inputBanner))
         initSUT()
-        assertEquals(Banner("hey", "sup"), sut.banner)
+        assertEquals(listOf(expected), sut.banners)
         verify {
-            mockConfigManager.getJson(keyDefaultBanner, BannerJson.serializer())
+            mockConfigManager.getJson(keyDefaultBanners, BannerJson.serializer())
         }
     }
 
     @Test
     fun `banner returned as null results null value`() {
-        every { mockConfigManager.getJson(keyDefaultBanner, BannerJson.serializer()) } returns null
+        every { mockConfigManager.getJson(keyDefaultBanners, BannerJson.serializer()) } returns null
         initSUT()
-        assertNull(sut.banner)
+        assertEquals(emptyList<Banner>(), sut.banners)
         verify {
-            mockConfigManager.getJson(keyDefaultBanner, BannerJson.serializer())
+            mockConfigManager.getJson(keyDefaultBanners, BannerJson.serializer())
         }
     }
 
@@ -178,26 +187,26 @@ internal class HomeRepositoryTest {
 
     //endregion
 
-    //region Dashboard Autoscroll
+    //region Dashboard Collapse List
 
     @Test
-    fun `dashboard autoscroll reads value from preferences repository`() {
-        every { mockPreferenceManager.getBoolean(keyDashboardAutoscroll, true) } returns true
+    fun `dashboard collapse list reads value from preferences repository`() {
+        every { mockPreferenceManager.getBoolean(keyDashboardCollapseList, true) } returns true
         initSUT()
 
-        assertTrue(sut.dashboardAutoscroll)
+        assertTrue(sut.collapseList)
         verify {
-            mockPreferenceManager.getBoolean(keyDashboardAutoscroll, true)
+            mockPreferenceManager.getBoolean(keyDashboardCollapseList, true)
         }
     }
 
     @Test
-    fun `dashboard autoscroll saves value to shared prefs repository`() {
+    fun `dashboard collapse list saves value to shared prefs repository`() {
         initSUT()
 
-        sut.dashboardAutoscroll = true
+        sut.collapseList = true
         verify {
-            mockPreferenceManager.save(keyDashboardAutoscroll, true)
+            mockPreferenceManager.save(keyDashboardCollapseList, true)
         }
     }
 
@@ -298,16 +307,14 @@ internal class HomeRepositoryTest {
 
         // Config
         private const val keyDefaultYear: String = "default_year"
-        private const val keyDefaultBanner: String = "banner"
+        private const val keyDefaultBanners: String = "banners"
         private const val keyDataProvidedBy: String = "data_provided"
         private const val keySupportedSeasons: String = "supported_seasons"
         private const val keySearch: String = "search"
 
         // Prefs
         private const val keyDefaultToSchedule: String = "DASHBOARD_DEFAULT_TAB_SCHEDULE"
-        private const val keyShowListFavourited: String = "BOTTOM_SHEET_FAVOURITED"
-        private const val keyShowListAll: String = "BOTTOM_SHEET_ALL"
-        private const val keyDashboardAutoscroll: String = "DASHBOARD_AUTOSCROLL"
+        private const val keyDashboardCollapseList: String = "DASHBOARD_COLLAPSE_LIST"
         private const val keyFavouriteSeasons: String = "FAVOURITE_SEASONS"
         private const val keyDefaultSeason: String = "DEFAULT_SEASON"
         private const val keyProvidedByAtTop: String = "PROVIDED_BY_AT_TOP"
