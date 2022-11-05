@@ -35,6 +35,7 @@ interface DashboardViewModelInputs {
 //region Outputs
 
 interface DashboardViewModelOutputs {
+    val initialTab: DashboardScreenState
     val currentTab: LiveData<DashboardScreenState>
 
     val openReleaseNotes: LiveData<Event>
@@ -67,10 +68,12 @@ class DashboardViewModel @Inject constructor(
     override val openReleaseNotes: MutableLiveData<Event> = MutableLiveData()
     override val appConfigSynced: MutableLiveData<Event> = MutableLiveData()
 
-    private val _currentTab: MutableStateFlow<DashboardScreenState> = MutableStateFlow(DashboardScreenState(
+    override val initialTab: DashboardScreenState = DashboardScreenState(
         tab = defaultTab,
         season = defaultSeasonUseCase.defaultSeason
-    ))
+    )
+
+    private val _currentTab: MutableStateFlow<DashboardScreenState> = MutableStateFlow(initialTab)
     override val currentTab: LiveData<DashboardScreenState> = _currentTab
         .then {
             analyticsManager.viewScreen("Dashboard", mapOf(
