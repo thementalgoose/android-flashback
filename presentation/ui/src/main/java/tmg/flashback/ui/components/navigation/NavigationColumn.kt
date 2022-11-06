@@ -42,9 +42,9 @@ private val widthExpanded: Dp = 180.dp
 @Composable
 fun NavigationColumn(
     list: List<NavigationItem>,
-    menuClicked: () -> Unit,
     itemClicked: (NavigationItem) -> Unit,
     modifier: Modifier = Modifier,
+    menuClicked: () -> Unit = {},
     timelineItemClicked: (NavigationTimelineItem) -> Unit = {},
     timelineList: List<NavigationTimelineItem> = emptyList(),
     defaultExpanded: Boolean = false,

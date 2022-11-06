@@ -1,4 +1,4 @@
-package tmg.flashback.ui.dashboard
+package tmg.flashback.ui.dashboard.compact
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
@@ -27,6 +27,18 @@ enum class DashboardNavItem(
         icon = R.drawable.nav_constructor,
         analyticsName = "Constructor"
     );
+
+    fun toNavigationItems(): List<NavigationItem> {
+        return DashboardNavItem.values()
+            .map {
+                NavigationItem(
+                    id = it.name,
+                    label = it.label,
+                    icon = it.icon,
+                    isSelected = it == this
+                )
+            }
+    }
 
     companion object
 }

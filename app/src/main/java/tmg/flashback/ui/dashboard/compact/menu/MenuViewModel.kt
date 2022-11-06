@@ -1,4 +1,4 @@
-package tmg.flashback.ui.dashboard.menu
+package tmg.flashback.ui.dashboard.compact.menu
 
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.*
@@ -15,6 +15,7 @@ import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.stats.repository.HomeRepository
 import tmg.flashback.stats.repository.NotificationRepository
 import tmg.flashback.stats.usecases.DefaultSeasonUseCase
+import tmg.flashback.ui.dashboard.MenuSeasonItem
 import tmg.flashback.ui.managers.PermissionManager
 import tmg.flashback.ui.managers.StyleManager
 import tmg.flashback.ui.model.NightMode
@@ -166,9 +167,11 @@ class MenuViewModel @Inject constructor(
             }
         }
         list.add(MenuItems.Divider("a"))
-        list.add(MenuItems.Toggle.DarkMode(
-            _isEnabled = !styleManager.isDayMode
-        ))
+        list.add(
+            MenuItems.Toggle.DarkMode(
+                _isEnabled = !styleManager.isDayMode
+            )
+        )
         list.add(MenuItems.Divider("b"))
         if (buildConfigManager.isRuntimeNotificationsSupported &&
             !notificationRepository.seenRuntimeNotifications &&

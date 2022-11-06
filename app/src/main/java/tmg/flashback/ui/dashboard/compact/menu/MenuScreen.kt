@@ -1,4 +1,4 @@
-package tmg.flashback.ui.dashboard.menu
+package tmg.flashback.ui.dashboard.compact.menu
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
@@ -29,6 +29,7 @@ import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextHeadline2
 import tmg.flashback.style.text.TextSection
+import tmg.flashback.ui.dashboard.MenuSeasonItem
 
 @Composable
 fun MenuScreenVM(
@@ -69,7 +70,7 @@ fun MenuScreen(
         content = {
             item { Hero() }
             item { Divider() }
-            item { SubHeader(text = stringResource(id = R.string.dashboard_links_title))}
+            item { SubHeader(text = stringResource(id = R.string.dashboard_links_title)) }
             items(links, key = { it.id }) {
                 when (it) {
                     is MenuItems.Button -> Button(
@@ -96,7 +97,7 @@ fun MenuScreen(
                     )
                 }
             }
-            item { SubHeader(text = stringResource(id = R.string.dashboard_all_title))}
+            item { SubHeader(text = stringResource(id = R.string.dashboard_all_title)) }
             items(season, key = { it.season }) {
                 Row(modifier = Modifier
                     .height(IntrinsicSize.Min)

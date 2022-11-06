@@ -1,4 +1,4 @@
-package tmg.flashback.ui.dashboard
+package tmg.flashback.ui.dashboard.compact
 
 import android.content.Context
 import android.util.Log
@@ -18,6 +18,7 @@ import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.statistics.repo.RaceRepository
 import tmg.flashback.stats.usecases.DefaultSeasonUseCase
 import tmg.flashback.stats.usecases.ScheduleNotificationsUseCase
+import tmg.flashback.usecases.DashboardSyncUseCase
 import tmg.flashback.widgets.updateAllWidgets
 import tmg.utilities.extensions.then
 import tmg.utilities.lifecycle.Event
@@ -47,16 +48,12 @@ interface DashboardViewModelOutputs {
 
 @HiltViewModel
 class DashboardViewModel @Inject constructor(
-    @ApplicationContext
-    applicationContext: Context,
-    private val scheduleNotificationsUseCase: ScheduleNotificationsUseCase,
     private val defaultSeasonUseCase: DefaultSeasonUseCase,
-    private val fetchConfigUseCase: FetchConfigUseCase,
-    private val applyConfigUseCase: ApplyConfigUseCase,
     private val raceRepository: RaceRepository,
     private val overviewRepository: OverviewRepository,
     private val releaseNotesUseCase: NewReleaseNotesUseCase,
     private val analyticsManager: AnalyticsManager,
+    private val dashboardSyncUseCase: DashboardSyncUseCase,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), DashboardViewModelInputs, DashboardViewModelOutputs {
 
@@ -85,23 +82,10 @@ class DashboardViewModel @Inject constructor(
 
     init {
         viewModelScope.launch(ioDispatcher) {
-            fetchConfigUseCase.fetch()
-            val activate = applyConfigUseCase.apply()
-            if (BuildConfig.DEBUG) {
-                Log.i("Dashboard", "Remote config change detected $activate")
+            val result = dashboardSyncUseCase.sync()
+            if (result) {
+                appConfigSynced.value = Event()
             }
-            if (activate) {
-                appConfigSynced.postValue(Event())
-                scheduleNotificationsUseCase.schedule()
-                applicationContext.updateAllWidgets()
-            }
-        }
-
-        viewModelScope.launch(ioDispatcher) {
-            raceRepository.fetchRaces(defaultSeasonUseCase.defaultSeason)
-        }
-        viewModelScope.launch(ioDispatcher) {
-            overviewRepository.fetchOverview(defaultSeasonUseCase.defaultSeason)
         }
 
         if (releaseNotesUseCase.getNotes().isNotEmpty()) {
