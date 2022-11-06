@@ -22,7 +22,8 @@ import tmg.flashback.ui.settings.Setting
 
 @Composable
 fun SettingsLayoutScreenVM(
-    actionUpClicked: () -> Unit
+    showBack: Boolean = true,
+    actionUpClicked: () -> Unit = { }
 ) {
     val viewModel = hiltViewModel<SettingsLayoutViewModel>()
 
@@ -30,6 +31,7 @@ fun SettingsLayoutScreenVM(
 
     val providedByAtTopEnabled = viewModel.outputs.collapsedListEnabled.observeAsState(true)
     SettingsLayoutScreen(
+        showBack = showBack,
         actionUpClicked = actionUpClicked,
         prefClicked = viewModel.inputs::prefClicked,
         collapsedListEnabled = providedByAtTopEnabled.value
@@ -38,6 +40,7 @@ fun SettingsLayoutScreenVM(
 
 @Composable
 fun SettingsLayoutScreen(
+    showBack: Boolean,
     actionUpClicked: () -> Unit,
     prefClicked: (Setting) -> Unit,
     collapsedListEnabled: Boolean
@@ -49,7 +52,10 @@ fun SettingsLayoutScreen(
             item("header") {
                 tmg.flashback.ui.components.header.Header(
                     text = stringResource(id = R.string.settings_section_home_title),
-                    icon = painterResource(id = R.drawable.ic_back),
+                    icon = when (showBack) {
+                        true -> painterResource(id = R.drawable.ic_back)
+                        false -> null
+                    },
                     iconContentDescription = stringResource(id = R.string.ab_back),
                     actionUpClicked = actionUpClicked
                 )
@@ -71,6 +77,7 @@ fun SettingsLayoutScreen(
 private fun Preview() {
     AppThemePreview {
         SettingsLayoutScreen(
+            showBack = true,
             actionUpClicked = {},
             prefClicked = {},
             collapsedListEnabled = true

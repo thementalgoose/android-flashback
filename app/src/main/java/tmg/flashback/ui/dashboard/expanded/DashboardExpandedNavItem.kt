@@ -13,7 +13,6 @@ enum class DashboardExpandedNavItem(
     val icon: Int,
     val analyticsName: String
 ) {
-
     CALENDAR(
         label = R.string.nav_calendar,
         icon = R.drawable.nav_calendar,
@@ -29,7 +28,6 @@ enum class DashboardExpandedNavItem(
         icon = R.drawable.nav_constructor,
         analyticsName = "Constructor"
     ),
-
     SEARCH(
         label = R.string.nav_search,
         icon = R.drawable.nav_search,
@@ -45,7 +43,6 @@ enum class DashboardExpandedNavItem(
         icon = R.drawable.nav_settings,
         analyticsName = "Settings"
     );
-
 
     fun toNavigationItems(): List<NavigationItem> {
         return DashboardExpandedNavItem.values()

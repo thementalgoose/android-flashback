@@ -106,15 +106,7 @@ fun HomeScreen(
             .navigationBarsPadding()
     ) {
         composable(Screen.Home.route) {
-            when (windowSize) {
-                WindowSize.Compact,
-                WindowSize.Medium -> {
-                    DashboardScreenVM()
-                }
-                WindowSize.Expanded -> {
-                    DashboardExpandedScreenVM()
-                }
-            }
+            DashboardScreenVM()
         }
 
         // Release Notes
@@ -133,49 +125,14 @@ fun HomeScreen(
 
         // Settings
         composable(Screen.Settings.All.route) {
-            when (windowSize) {
-                WindowSize.Compact,
-                WindowSize.Medium -> {
-                    SettingsAllScreenVM(
-                        actionUpClicked = { navController.popBackStack() }
-                    )
-                }
-                WindowSize.Expanded -> {
-                    DashboardExpandedScreenVM(
-                        screenState = DashboardExpandedScreenState(DashboardExpandedNavItem.SETTINGS, 0),
-                        mainContent = {
-                            SettingsAllScreenVM(
-                                actionUpClicked = { navController.popBackStack() }
-                            )
-                        }
-                    )
-                }
-            }
+            SettingsAllScreenVM(
+                actionUpClicked = { navController.popBackStack() }
+            )
         }
         composable(Screen.Settings.Home.route) {
-            when (windowSize) {
-                WindowSize.Compact,
-                WindowSize.Medium -> {
-                    SettingsLayoutScreenVM(
-                        actionUpClicked = { navController.popBackStack() }
-                    )
-                }
-                WindowSize.Expanded -> {
-                    DashboardExpandedScreenVM(
-                        screenState = DashboardExpandedScreenState(DashboardExpandedNavItem.SETTINGS, 0),
-                        mainContent = {
-                            SettingsAllScreenVM(
-                                actionUpClicked = { }
-                            )
-                        },
-                        subContent = {
-                            SettingsLayoutScreenVM(
-                                actionUpClicked = { }
-                            )
-                        }
-                    )
-                }
-            }
+            SettingsLayoutScreenVM(
+                actionUpClicked = { navController.popBackStack() }
+            )
         }
         composable(Screen.Settings.Web.route) {
             SettingsWebScreenVM(
