@@ -35,6 +35,7 @@ import tmg.flashback.stats.ui.search.SearchScreenVM
 import tmg.flashback.stats.ui.weekend.WeekendInfo
 import tmg.flashback.stats.ui.weekend.WeekendScreenVM
 import tmg.flashback.style.utils.WindowSize
+import tmg.flashback.ui.dashboard.DashboardScreenTabletVM
 import tmg.flashback.ui.dashboard.DashboardScreenVM
 import tmg.flashback.ui.navigation.Navigator
 import tmg.flashback.ui.navigation.Screen
@@ -102,7 +103,15 @@ fun HomeScreen(
             .navigationBarsPadding()
     ) {
         composable(Screen.Home.route) {
-            DashboardScreenVM()
+            when (windowSize) {
+                WindowSize.Compact,
+                WindowSize.Medium -> {
+                    DashboardScreenVM()
+                }
+                WindowSize.Expanded -> {
+                    DashboardScreenTabletVM()
+                }
+            }
         }
 
         // Release Notes
