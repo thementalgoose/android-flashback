@@ -15,54 +15,6 @@ import tmg.flashback.ui.settings.notifications.SettingsNotificationsUpcomingScre
 import tmg.flashback.ui.settings.web.SettingsWebScreen
 import tmg.flashback.ui.settings.web.SettingsWebScreenVM
 
-fun NavGraphBuilder.settings(navController: NavController) {
-
-    composable(Screen.Settings.All.route) {
-        SettingsAllScreenVM(
-            actionUpClicked = { navController.popBackStack() }
-        )
-    }
-
-    composable(Screen.Settings.Home.route) {
-        SettingsLayoutScreenVM(
-            actionUpClicked = { navController.popBackStack() }
-        )
-    }
-
-    composable(Screen.Settings.Web.route) {
-        SettingsWebScreenVM(
-            actionUpClicked = { navController.popBackStack() }
-        )
-    }
-
-    composable(Screen.Settings.NotificationsUpcoming.route) {
-        SettingsNotificationsUpcomingScreenVM(
-            actionUpClicked = { navController.popBackStack() }
-        )
-    }
-    composable(Screen.Settings.NotificationsResults.route) {
-        SettingsNotificationsResultsScreenVM(
-            actionUpClicked = { navController.popBackStack() }
-        )
-    }
-
-    composable(Screen.Settings.Ads.route) {
-        SettingsAdsScreenVM(
-            actionUpClicked = { navController.popBackStack() }
-        )
-    }
-    composable(Screen.Settings.Privacy.route) {
-        SettingsPrivacyScreenVM(
-            actionUpClicked = { navController.popBackStack() }
-        )
-    }
-    composable(Screen.Settings.About.route) {
-        SettingsAboutScreenVM(
-            actionUpClicked = { navController.popBackStack() }
-        )
-    }
-}
-
 internal val Screen.Settings.All: NavigationDestination
     get() = object : NavigationDestination {
         override val route: String = "settings"
@@ -77,11 +29,6 @@ internal val Screen.Settings.Home: NavigationDestination
     get() = object : NavigationDestination {
         override val route: String = "settings/home"
     }
-
-//internal val Screen.Settings.RSS: NavigationDestination
-//    get() = object : NavigationDestination {
-//        override val route: String = "settings/adverts"
-//    }
 
 
 internal val Screen.Settings.Web: NavigationDestination
