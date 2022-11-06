@@ -1,4 +1,4 @@
-package tmg.flashback.ui.dashboard.menu
+package tmg.flashback.ui.dashboard
 
 import androidx.compose.ui.graphics.Color
 

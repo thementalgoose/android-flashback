@@ -11,6 +11,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.window.layout.WindowMetricsCalculator
+import tmg.flashback.style.BuildConfig
 
 /**
  * Opinionated set of viewport breakpoints
@@ -63,5 +64,6 @@ fun getWindowSizeClass(windowDpSize: DpSize): WindowSize = when {
     windowDpSize.width < 0.dp -> throw IllegalArgumentException("Dp value cannot be negative")
     windowDpSize.width < 600.dp -> WindowSize.Compact
     windowDpSize.width < 840.dp -> WindowSize.Medium
-    else -> WindowSize.Expanded
+    BuildConfig.TABLET_UI -> WindowSize.Expanded
+    else -> WindowSize.Compact
 }

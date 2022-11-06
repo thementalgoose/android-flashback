@@ -14,6 +14,10 @@ import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.statistics.repo.RaceRepository
 import tmg.flashback.stats.usecases.DefaultSeasonUseCase
 import tmg.flashback.stats.usecases.ScheduleNotificationsUseCase
+import tmg.flashback.ui.dashboard.compact.DashboardNavItem
+import tmg.flashback.ui.dashboard.compact.DashboardScreenState
+import tmg.flashback.ui.dashboard.compact.DashboardViewModel
+import tmg.flashback.usecases.DashboardSyncUseCase
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertEventFired
 import tmg.testutils.livedata.assertEventNotFired
@@ -23,34 +27,27 @@ internal class DashboardViewModelTest: BaseTest() {
 
     lateinit var underTest: DashboardViewModel
 
-    private val mockContext: Context = mockk(relaxed = true)
-    private val mockScheduleNotificationsUseCase: ScheduleNotificationsUseCase = mockk(relaxed = true)
+    private val mockDashboardSyncUseCase: DashboardSyncUseCase = mockk(relaxed = true)
     private val mockDefaultSeasonUseCase: DefaultSeasonUseCase = mockk(relaxed = true)
     private val mockRaceRepository: RaceRepository = mockk(relaxed = true)
     private val mockOverviewRepository: OverviewRepository = mockk(relaxed = true)
-    private val mockApplyConfigUseCase: ApplyConfigUseCase = mockk(relaxed = true)
-    private val mockFetchConfigUseCase: FetchConfigUseCase = mockk(relaxed = true)
     private val mockAnalyticsManager: AnalyticsManager = mockk(relaxed = true)
     private val mockNewReleaseNotesUseCase: NewReleaseNotesUseCase = mockk(relaxed = true)
 
     @BeforeEach
     internal fun setUp() {
-        coEvery { mockApplyConfigUseCase.apply() } returns false
         every { mockNewReleaseNotesUseCase.getNotes() } returns emptyList()
         every { mockDefaultSeasonUseCase.defaultSeason } returns 2019
     }
 
     private fun initUnderTest() {
         underTest = DashboardViewModel(
-            mockContext,
-            mockScheduleNotificationsUseCase,
             mockDefaultSeasonUseCase,
-            mockFetchConfigUseCase,
-            mockApplyConfigUseCase,
             mockRaceRepository,
             mockOverviewRepository,
             mockNewReleaseNotesUseCase,
             mockAnalyticsManager,
+            mockDashboardSyncUseCase,
             ioDispatcher = coroutineScope.testDispatcher
         )
     }
@@ -62,8 +59,7 @@ internal class DashboardViewModelTest: BaseTest() {
         initUnderTest()
 
         coVerify {
-            mockRaceRepository.fetchRaces(2020)
-            mockOverviewRepository.fetchOverview(2020)
+            mockDashboardSyncUseCase.sync()
         }
         assertEquals(DashboardScreenState(DashboardNavItem.CALENDAR, 2020), underTest.initialTab)
     }
@@ -75,7 +71,8 @@ internal class DashboardViewModelTest: BaseTest() {
         initUnderTest()
 
         underTest.outputs.currentTab.test {
-            assertValue(DashboardScreenState(
+            assertValue(
+                DashboardScreenState(
                 tab = DashboardNavItem.CALENDAR,
                 season = 2019
             ))
@@ -90,7 +87,7 @@ internal class DashboardViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `clicking season updates season in current tab`() {
+    fun `clicking tab updates tab in current tab`() {
         initUnderTest()
 
         underTest.inputs.clickTab(DashboardNavItem.DRIVERS)
@@ -107,9 +104,9 @@ internal class DashboardViewModelTest: BaseTest() {
     fun `clicking season launches fetch race request if season is default`() {
         initUnderTest()
 
-        underTest.inputs.clickTab(DashboardNavItem.DRIVERS)
+        underTest.inputs.clickSeason(2019)
         underTest.outputs.currentTab.test {
-            assertValue(DashboardScreenState(DashboardNavItem.DRIVERS, 2019))
+            assertValue(DashboardScreenState(DashboardNavItem.CALENDAR, 2019))
         }
         coVerify {
             mockOverviewRepository.fetchOverview(2019)
@@ -118,7 +115,7 @@ internal class DashboardViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `clicking tab updates tab in current tab`() {
+    fun `clicking season updates season in current tab`() {
         initUnderTest()
 
         underTest.inputs.clickSeason(2018)
@@ -140,7 +137,7 @@ internal class DashboardViewModelTest: BaseTest() {
     @Test
     fun `init if update returns changes and activate fails nothing happens`() = coroutineTest {
 
-        coEvery { mockApplyConfigUseCase.apply() } returns false
+        coEvery { mockDashboardSyncUseCase.sync() } returns false
 
         initUnderTest()
         advanceUntilIdle()
@@ -153,16 +150,13 @@ internal class DashboardViewModelTest: BaseTest() {
     @Test
     fun `init if update returns changes and activate successfully then notify app config synced event`() = coroutineTest {
 
-        coEvery { mockApplyConfigUseCase.apply() } returns true
+        coEvery { mockDashboardSyncUseCase.sync() } returns true
 
         initUnderTest()
         advanceUntilIdle()
 
         underTest.outputs.appConfigSynced.test {
             assertEventFired()
-        }
-        coVerify {
-            mockScheduleNotificationsUseCase.schedule()
         }
     }
 

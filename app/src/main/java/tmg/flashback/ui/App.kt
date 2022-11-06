@@ -35,8 +35,8 @@ import tmg.flashback.stats.ui.search.SearchScreenVM
 import tmg.flashback.stats.ui.weekend.WeekendInfo
 import tmg.flashback.stats.ui.weekend.WeekendScreenVM
 import tmg.flashback.style.utils.WindowSize
-import tmg.flashback.ui.dashboard.DashboardScreenTabletVM
-import tmg.flashback.ui.dashboard.DashboardScreenVM
+import tmg.flashback.ui.dashboard.compact.DashboardScreenVM
+import tmg.flashback.ui.dashboard.expanded.DashboardExpandedScreenVM
 import tmg.flashback.ui.navigation.Navigator
 import tmg.flashback.ui.navigation.Screen
 import tmg.flashback.ui.navigation.asNavigationDestination
@@ -109,7 +109,7 @@ fun HomeScreen(
                     DashboardScreenVM()
                 }
                 WindowSize.Expanded -> {
-                    DashboardScreenTabletVM()
+                    DashboardExpandedScreenVM()
                 }
             }
         }
