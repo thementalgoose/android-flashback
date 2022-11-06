@@ -67,9 +67,12 @@ fun NavigationColumn(
             item = NavigationItem(
                 id = "menu",
                 label = null,
-                icon = R.drawable.ic_menu
+                icon = R.drawable.ic_menu_expanded
             ),
-            onClick = { menuClicked() },
+            onClick = {
+                expanded.value = !expanded.value
+//                menuClicked()
+            },
             isExpanded = expanded.value
         )
         Column(modifier = Modifier
@@ -86,7 +89,6 @@ fun NavigationColumn(
                 )
                 Spacer(Modifier.height(AppTheme.dimens.small))
             }
-            Spacer(modifier = Modifier.height(AppTheme.dimens.small))
             if (timelineList.isNotEmpty()) {
                 Divider(
                     modifier = Modifier.padding(horizontal = AppTheme.dimens.medium),
@@ -102,23 +104,7 @@ fun NavigationColumn(
                 }
                 Spacer(modifier = Modifier.height(AppTheme.dimens.medium))
             }
-        }
-        Box(Modifier
-            .fillMaxWidth()
-            .background(AppTheme.colors.backgroundNav)
-            .padding(vertical = AppTheme.dimens.small)
-        ) {
-            NavigationItem(
-                item = NavigationItem(
-                    id = "expand",
-                    label = null,
-                    icon = R.drawable.ic_menu_expanded
-                ),
-                onClick = {
-                    expanded.value = !expanded.value
-                },
-                isExpanded = expanded.value
-            )
+            Spacer(modifier = Modifier.height(AppTheme.dimens.small))
         }
     }
 }
