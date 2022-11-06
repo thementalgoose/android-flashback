@@ -22,7 +22,8 @@ import tmg.flashback.ui.settings.Setting
 
 @Composable
 fun SettingsAdsScreenVM(
-    actionUpClicked: () -> Unit
+    showBack: Boolean = true,
+    actionUpClicked: () -> Unit = { }
 ) {
     val viewModel = hiltViewModel<SettingsAdsViewModel>()
 
@@ -30,6 +31,7 @@ fun SettingsAdsScreenVM(
 
     val adsEnabled = viewModel.outputs.adsEnabled.observeAsState(false)
     SettingsAdsScreen(
+        showBack = showBack,
         actionUpClicked = actionUpClicked,
         prefClicked = viewModel.inputs::prefClicked,
         adsEnabled = adsEnabled.value
@@ -38,6 +40,7 @@ fun SettingsAdsScreenVM(
 
 @Composable
 fun SettingsAdsScreen(
+    showBack: Boolean,
     actionUpClicked: () -> Unit,
     prefClicked: (Setting) -> Unit,
     adsEnabled: Boolean
@@ -49,7 +52,10 @@ fun SettingsAdsScreen(
             item("header") {
                 tmg.flashback.ui.components.header.Header(
                     text = stringResource(id = R.string.settings_section_ads_title),
-                    icon = painterResource(id = R.drawable.ic_back),
+                    icon = when (showBack) {
+                        true -> painterResource(id = R.drawable.ic_back)
+                        false -> null
+                    },
                     iconContentDescription = stringResource(id = R.string.ab_back),
                     actionUpClicked = actionUpClicked
                 )
@@ -71,6 +77,7 @@ fun SettingsAdsScreen(
 private fun Preview() {
     AppThemePreview {
         SettingsAdsScreen(
+            showBack = true,
             actionUpClicked = {},
             prefClicked = {},
             adsEnabled = false

@@ -86,6 +86,7 @@ fun DashboardExpandedScreen(
 ) {
     Row(Modifier.fillMaxSize()) {
         NavigationColumn(
+            lockExpanded = true,
             list = tabState.tab.toNavigationItems(),
             itemClicked = {
                 val tab = it.id.toEnum() ?: DashboardExpandedNavItem.CALENDAR

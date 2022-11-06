@@ -23,7 +23,8 @@ import tmg.flashback.ui.settings.Setting
 
 @Composable
 fun SettingsPrivacyScreenVM(
-    actionUpClicked: () -> Unit
+    showBack: Boolean = true,
+    actionUpClicked: () -> Unit = { }
 ) {
     val viewModel = hiltViewModel<SettingsPrivacyViewModel>()
 
@@ -33,6 +34,7 @@ fun SettingsPrivacyScreenVM(
     val analyticsEnabled = viewModel.outputs.analyticsEnabled.observeAsState(false)
 
     SettingsPrivacyScreen(
+        showBack = showBack,
         actionUpClicked = actionUpClicked,
         prefClicked = viewModel.inputs::prefClicked,
         crashReportingEnabled = crashReportingEnabled.value,
@@ -42,6 +44,7 @@ fun SettingsPrivacyScreenVM(
 
 @Composable
 fun SettingsPrivacyScreen(
+    showBack: Boolean,
     actionUpClicked: () -> Unit,
     prefClicked: (Setting) -> Unit,
     crashReportingEnabled: Boolean,
@@ -54,7 +57,10 @@ fun SettingsPrivacyScreen(
             item("header") {
                 tmg.flashback.ui.components.header.Header(
                     text = stringResource(id = R.string.settings_section_privacy_title),
-                    icon = painterResource(id = R.drawable.ic_back),
+                    icon = when (showBack) {
+                        true -> painterResource(id = R.drawable.ic_back)
+                        false -> null
+                    },
                     iconContentDescription = stringResource(id = R.string.ab_back),
                     actionUpClicked = actionUpClicked
                 )
@@ -85,6 +91,7 @@ fun SettingsPrivacyScreen(
 private fun Preview() {
     AppThemePreview {
         SettingsPrivacyScreen(
+            showBack = true,
             actionUpClicked = {},
             prefClicked = {},
             crashReportingEnabled = true,

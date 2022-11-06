@@ -24,7 +24,8 @@ import tmg.flashback.ui.settings.Setting
 
 @Composable
 fun SettingsAboutScreenVM(
-    actionUpClicked: () -> Unit
+    showBack: Boolean = true,
+    actionUpClicked: () -> Unit = { }
 ) {
     val viewModel = hiltViewModel<SettingsAboutViewModel>()
 
@@ -33,6 +34,7 @@ fun SettingsAboutScreenVM(
     val shakeToReportEnabled = viewModel.outputs.shakeToReportEnabled.observeAsState(false)
 
     SettingsAboutScreen(
+        showBack = showBack,
         actionUpClicked = actionUpClicked,
         prefClicked = viewModel.inputs::prefClicked,
         shakeToReportEnabled = shakeToReportEnabled.value
@@ -41,6 +43,7 @@ fun SettingsAboutScreenVM(
 
 @Composable
 fun SettingsAboutScreen(
+    showBack: Boolean,
     actionUpClicked: () -> Unit,
     prefClicked: (Setting) -> Unit,
     shakeToReportEnabled: Boolean
@@ -52,7 +55,10 @@ fun SettingsAboutScreen(
             item("header") {
                 Header(
                     text = stringResource(id = R.string.settings_section_about_title),
-                    icon = painterResource(id = R.drawable.ic_back),
+                    icon = when (showBack) {
+                        true -> painterResource(id = R.drawable.ic_back)
+                        false -> null
+                    },
                     iconContentDescription = stringResource(id = R.string.ab_back),
                     actionUpClicked = actionUpClicked
                 )
@@ -86,6 +92,7 @@ fun SettingsAboutScreen(
 private fun Preview() {
     AppThemePreview {
         SettingsAboutScreen(
+            showBack = true,
             actionUpClicked = {},
             prefClicked = {},
             shakeToReportEnabled = true
