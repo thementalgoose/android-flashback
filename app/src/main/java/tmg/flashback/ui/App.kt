@@ -36,6 +36,8 @@ import tmg.flashback.stats.ui.weekend.WeekendInfo
 import tmg.flashback.stats.ui.weekend.WeekendScreenVM
 import tmg.flashback.style.utils.WindowSize
 import tmg.flashback.ui.dashboard.compact.DashboardScreenVM
+import tmg.flashback.ui.dashboard.expanded.DashboardExpandedNavItem
+import tmg.flashback.ui.dashboard.expanded.DashboardExpandedScreenState
 import tmg.flashback.ui.dashboard.expanded.DashboardExpandedScreenVM
 import tmg.flashback.ui.navigation.Navigator
 import tmg.flashback.ui.navigation.Screen
@@ -55,6 +57,7 @@ import tmg.flashback.ui.settings.Web
 import tmg.flashback.ui.settings.about.SettingsAboutScreenVM
 import tmg.flashback.ui.settings.about.SettingsPrivacyScreenVM
 import tmg.flashback.ui.settings.ads.SettingsAdsScreenVM
+import tmg.flashback.ui.settings.layout.SettingsLayoutScreen
 import tmg.flashback.ui.settings.layout.SettingsLayoutScreenVM
 import tmg.flashback.ui.settings.notifications.SettingsNotificationsResultsScreenVM
 import tmg.flashback.ui.settings.notifications.SettingsNotificationsUpcomingScreenVM
@@ -130,14 +133,49 @@ fun HomeScreen(
 
         // Settings
         composable(Screen.Settings.All.route) {
-            SettingsAllScreenVM(
-                actionUpClicked = { navController.popBackStack() }
-            )
+            when (windowSize) {
+                WindowSize.Compact,
+                WindowSize.Medium -> {
+                    SettingsAllScreenVM(
+                        actionUpClicked = { navController.popBackStack() }
+                    )
+                }
+                WindowSize.Expanded -> {
+                    DashboardExpandedScreenVM(
+                        screenState = DashboardExpandedScreenState(DashboardExpandedNavItem.SETTINGS, 0),
+                        mainContent = {
+                            SettingsAllScreenVM(
+                                actionUpClicked = { navController.popBackStack() }
+                            )
+                        }
+                    )
+                }
+            }
         }
         composable(Screen.Settings.Home.route) {
-            SettingsLayoutScreenVM(
-                actionUpClicked = { navController.popBackStack() }
-            )
+            when (windowSize) {
+                WindowSize.Compact,
+                WindowSize.Medium -> {
+                    SettingsLayoutScreenVM(
+                        actionUpClicked = { navController.popBackStack() }
+                    )
+                }
+                WindowSize.Expanded -> {
+                    DashboardExpandedScreenVM(
+                        screenState = DashboardExpandedScreenState(DashboardExpandedNavItem.SETTINGS, 0),
+                        mainContent = {
+                            SettingsAllScreenVM(
+                                actionUpClicked = { }
+                            )
+                        },
+                        subContent = {
+                            SettingsLayoutScreenVM(
+                                actionUpClicked = { }
+                            )
+                        }
+                    )
+                }
+            }
         }
         composable(Screen.Settings.Web.route) {
             SettingsWebScreenVM(

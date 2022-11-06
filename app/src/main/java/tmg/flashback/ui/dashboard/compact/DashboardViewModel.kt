@@ -69,7 +69,6 @@ class DashboardViewModel @Inject constructor(
         tab = defaultTab,
         season = defaultSeasonUseCase.defaultSeason
     )
-
     private val _currentTab: MutableStateFlow<DashboardScreenState> = MutableStateFlow(initialTab)
     override val currentTab: LiveData<DashboardScreenState> = _currentTab
         .then {
