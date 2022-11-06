@@ -26,23 +26,6 @@ val Screen.RSS: NavigationDestination
         override val route: String = "rss"
     }
 
-fun NavGraphBuilder.rss(navController: NavController) {
-    composable(
-        Screen.RSS.route,
-        deepLinks = listOf(navDeepLink { uriPattern = "flashback://rss" })
-    ) {
-        RSSScreenVM(
-            actionUpClicked = { navController.popBackStack() }
-        )
-    }
-
-    composable(Screen.Settings.RSSConfigure.route) {
-        ConfigureRSSScreenVM(
-            actionUpClicked = { navController.popBackStack() }
-        )
-    }
-}
-
 class RssNavigationComponent @Inject constructor(
     private val navigator: Navigator
 ) {
