@@ -8,4 +8,7 @@ data class MenuSeasonItem(
     val isSelected: Boolean,
     val isLast: Boolean = false,
     val isFirst: Boolean = false
-)
+) {
+
+    companion object
+}

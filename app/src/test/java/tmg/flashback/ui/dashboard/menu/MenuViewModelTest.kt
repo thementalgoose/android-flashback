@@ -18,12 +18,14 @@ import tmg.flashback.stats.usecases.DefaultSeasonUseCase
 import tmg.flashback.ui.dashboard.compact.menu.MenuItems
 import tmg.flashback.ui.dashboard.MenuSeasonItem
 import tmg.flashback.ui.dashboard.compact.menu.MenuViewModel
+import tmg.flashback.ui.dashboard.expectedMenuItems
 import tmg.flashback.ui.managers.PermissionManager
 import tmg.flashback.ui.managers.StyleManager
 import tmg.flashback.ui.model.NightMode
 import tmg.flashback.ui.navigation.ApplicationNavigationComponent
 import tmg.flashback.ui.repository.PermissionRepository
 import tmg.flashback.ui.usecases.ChangeNightModeUseCase
+import tmg.flashback.usecases.GetSeasonsUseCase
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertListDoesNotMatchItem
 import tmg.testutils.livedata.assertListMatchesItem
@@ -31,7 +33,7 @@ import tmg.testutils.livedata.test
 
 internal class MenuViewModelTest: BaseTest() {
 
-    private val mockHomeRepository: HomeRepository = mockk(relaxed = true)
+    private val mockGetSeasonsUseCase: GetSeasonsUseCase = mockk(relaxed = true)
     private val mockBuildConfigManager: BuildConfigManager = mockk(relaxed = true)
     private val mockPermissionManager: PermissionManager = mockk(relaxed = true)
     private val mockPermissionRepository: PermissionRepository = mockk(relaxed = true)
@@ -48,7 +50,7 @@ internal class MenuViewModelTest: BaseTest() {
 
     private fun initUnderTest() {
         underTest = MenuViewModel(
-            mockHomeRepository,
+            mockGetSeasonsUseCase,
             mockBuildConfigManager,
             mockPermissionManager,
             mockPermissionRepository,
@@ -66,9 +68,9 @@ internal class MenuViewModelTest: BaseTest() {
     @BeforeEach
     internal fun setUp() {
         every { mockStyleManager.isDayMode } returns true
-        every { mockHomeRepository.supportedSeasons } returns fakeSupportedSeasons
         every { mockDefaultSeasonUseCase.defaultSeason } returns 2022
         every { mockNotificationRepository.seenNotificationOnboarding } returns false
+        every { mockGetSeasonsUseCase.get(2022) } returns expectedMenuItems
     }
 
     @Test
@@ -318,45 +320,4 @@ internal class MenuViewModelTest: BaseTest() {
             mockStatsNavigationComponent.featureNotificationOnboarding()
         }
     }
-
-    private val fakeSupportedSeasons: Set<Int> = setOf(
-        2017, 2019, 2020, 2021, 2022
-    )
-    private val expectedMenuItems = listOf(
-        MenuSeasonItem(
-            colour = decadeColours["2020"]!!,
-            season = 2022,
-            isSelected = true,
-            isFirst = true,
-            isLast = false
-        ),
-        MenuSeasonItem(
-            colour = decadeColours["2020"]!!,
-            season = 2021,
-            isSelected = false,
-            isFirst = false,
-            isLast = false
-        ),
-        MenuSeasonItem(
-            colour = decadeColours["2020"]!!,
-            season = 2020,
-            isSelected = false,
-            isFirst = false,
-            isLast = false
-        ),
-        MenuSeasonItem(
-            colour = decadeColours["2010"]!!,
-            season = 2019,
-            isSelected = false,
-            isFirst = false,
-            isLast = true
-        ),
-        MenuSeasonItem(
-            colour = decadeColours["2010"]!!,
-            season = 2017,
-            isSelected = false,
-            isFirst = true,
-            isLast = true
-        )
-    )
 }
