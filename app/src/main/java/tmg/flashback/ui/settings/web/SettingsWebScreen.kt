@@ -22,7 +22,8 @@ import tmg.flashback.ui.settings.Setting
 
 @Composable
 fun SettingsWebScreenVM(
-    actionUpClicked: () -> Unit
+    showBack: Boolean = true,
+    actionUpClicked: () -> Unit = { }
 ) {
     val viewModel = hiltViewModel<SettingsWebViewModel>()
 
@@ -32,6 +33,7 @@ fun SettingsWebScreenVM(
     val javascriptEnabled = viewModel.outputs.enableJavascript.observeAsState(false)
 
     SettingsWebScreen(
+        showBack = showBack,
         actionUpClicked = actionUpClicked,
         prefClicked = viewModel.inputs::prefClicked,
         webBrowserEnabled = webBrowserEnabled.value,
@@ -41,6 +43,7 @@ fun SettingsWebScreenVM(
 
 @Composable
 fun SettingsWebScreen(
+    showBack: Boolean,
     actionUpClicked: () -> Unit,
     prefClicked: (Setting) -> Unit,
     webBrowserEnabled: Boolean,
@@ -54,7 +57,10 @@ fun SettingsWebScreen(
             item("header") {
                 tmg.flashback.ui.components.header.Header(
                     text = stringResource(id = R.string.settings_section_web_browser_title),
-                    icon = painterResource(id = R.drawable.ic_back),
+                    icon = when (showBack) {
+                        true -> painterResource(id = R.drawable.ic_back)
+                        false -> null
+                    },
                     iconContentDescription = stringResource(id = R.string.ab_back),
                     actionUpClicked = actionUpClicked
                 )
@@ -79,6 +85,7 @@ fun SettingsWebScreen(
 private fun Preview() {
     AppThemePreview {
         SettingsWebScreen(
+            showBack = true,
             actionUpClicked = {},
             prefClicked = {},
             webBrowserEnabled = false,

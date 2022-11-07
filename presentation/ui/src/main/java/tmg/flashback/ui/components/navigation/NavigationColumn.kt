@@ -23,7 +23,6 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
@@ -42,14 +41,14 @@ private val widthExpanded: Dp = 180.dp
 @Composable
 fun NavigationColumn(
     list: List<NavigationItem>,
-    menuClicked: () -> Unit,
     itemClicked: (NavigationItem) -> Unit,
     modifier: Modifier = Modifier,
     timelineItemClicked: (NavigationTimelineItem) -> Unit = {},
     timelineList: List<NavigationTimelineItem> = emptyList(),
-    defaultExpanded: Boolean = false,
+    lockExpanded: Boolean = false,
+    contentHeader: @Composable ColumnScope.() -> Unit = {}
 ) {
-    val expanded = remember { mutableStateOf(defaultExpanded) }
+    val expanded = remember { mutableStateOf(lockExpanded) }
     val width = animateDpAsState(targetValue = when (expanded.value) {
         true -> widthExpanded
         false -> widthCollapsed
@@ -63,21 +62,14 @@ fun NavigationColumn(
             vertical = AppTheme.dimens.small
         )
     ) {
-        NavigationItem(
-            item = NavigationItem(
-                id = "menu",
-                label = null,
-                icon = R.drawable.ic_menu
-            ),
-            onClick = { menuClicked() },
-            isExpanded = expanded.value
-        )
         Column(modifier = Modifier
             .weight(1f)
             .fillMaxWidth()
             .verticalScroll(rememberScrollState())
         ) {
-            Spacer(modifier = Modifier.height(AppTheme.dimens.medium))
+            Spacer(modifier = Modifier.height(AppTheme.dimens.small))
+            contentHeader()
+            Spacer(modifier = Modifier.height(AppTheme.dimens.small))
             list.forEach { item ->
                 NavigationItem(
                     item = item,
@@ -86,7 +78,6 @@ fun NavigationColumn(
                 )
                 Spacer(Modifier.height(AppTheme.dimens.small))
             }
-            Spacer(modifier = Modifier.height(AppTheme.dimens.small))
             if (timelineList.isNotEmpty()) {
                 Divider(
                     modifier = Modifier.padding(horizontal = AppTheme.dimens.medium),
@@ -102,15 +93,12 @@ fun NavigationColumn(
                 }
                 Spacer(modifier = Modifier.height(AppTheme.dimens.medium))
             }
+            Spacer(modifier = Modifier.height(AppTheme.dimens.small))
         }
-        Box(Modifier
-            .fillMaxWidth()
-            .background(AppTheme.colors.backgroundNav)
-            .padding(vertical = AppTheme.dimens.small)
-        ) {
+        if (!lockExpanded) {
             NavigationItem(
                 item = NavigationItem(
-                    id = "expand",
+                    id = "menu",
                     label = null,
                     icon = R.drawable.ic_menu_expanded
                 ),
@@ -242,12 +230,21 @@ private fun NavigationTimelineItem(
                     })
                 )
             }
-            Donut(
-                color = item.color,
-                modifier = Modifier
+            if (item.isSelected) {
+                Box(Modifier
                     .size(iconSize)
                     .align(Alignment.Center)
-            )
+                    .clip(CircleShape)
+                    .background(item.color)
+                )
+            } else {
+                Donut(
+                    color = item.color,
+                    modifier = Modifier
+                        .size(iconSize)
+                        .align(Alignment.Center)
+                )
+            }
         }
         if (isExpanded) {
             TextBody1(
@@ -297,9 +294,8 @@ fun Donut(
 private fun PreviewCompact() {
     AppThemePreview {
         NavigationColumn(
-            defaultExpanded = false,
+            lockExpanded = false,
             itemClicked = { },
-            menuClicked = { },
             list = fakeNavigationItems
         )
     }
@@ -310,9 +306,8 @@ private fun PreviewCompact() {
 private fun PreviewCompactTimeline() {
     AppThemePreview {
         NavigationColumn(
-            defaultExpanded = false,
+            lockExpanded = false,
             itemClicked = { },
-            menuClicked = { },
             timelineList = fakeNavigationTimelineItems,
             list = fakeNavigationItems
         )
@@ -324,9 +319,8 @@ private fun PreviewCompactTimeline() {
 private fun PreviewExpanded() {
     AppThemePreview {
         NavigationColumn(
-            defaultExpanded = true,
+            lockExpanded = true,
             itemClicked = { },
-            menuClicked = { },
             list = fakeNavigationItems
         )
     }
@@ -337,9 +331,8 @@ private fun PreviewExpanded() {
 private fun PreviewExpandedTimeline() {
     AppThemePreview {
         NavigationColumn(
-            defaultExpanded = true,
+            lockExpanded = true,
             itemClicked = { },
-            menuClicked = { },
             timelineList = fakeNavigationTimelineItems,
             list = fakeNavigationItems
         )

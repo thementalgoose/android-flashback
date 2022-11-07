@@ -24,7 +24,8 @@ import tmg.flashback.ui.settings.Setting
 
 @Composable
 fun SettingsNotificationsResultsScreenVM(
-    actionUpClicked: () -> Unit
+    showBack: Boolean = true,
+    actionUpClicked: () -> Unit = { }
 ) {
     val viewModel = hiltViewModel<SettingsNotificationsResultsViewModel>()
 
@@ -40,6 +41,7 @@ fun SettingsNotificationsResultsScreenVM(
     }
 
     SettingsNotificationsResultsScreen(
+        showBack = showBack,
         actionUpClicked = actionUpClicked,
         prefClicked = viewModel.inputs::prefClicked,
         permissionEnabled = permissionEnabled.value,
@@ -51,6 +53,7 @@ fun SettingsNotificationsResultsScreenVM(
 
 @Composable
 fun SettingsNotificationsResultsScreen(
+    showBack: Boolean,
     actionUpClicked: () -> Unit,
     prefClicked: (Setting) -> Unit,
     permissionEnabled: Boolean,
@@ -65,7 +68,10 @@ fun SettingsNotificationsResultsScreen(
             item("header") {
                 tmg.flashback.ui.components.header.Header(
                     text = stringResource(id = R.string.settings_section_notifications_results_title),
-                    icon = painterResource(id = R.drawable.ic_back),
+                    icon = when (showBack) {
+                        true -> painterResource(id = R.drawable.ic_back)
+                        false -> null
+                    },
                     iconContentDescription = stringResource(id = R.string.ab_back),
                     actionUpClicked = actionUpClicked
                 )
@@ -102,6 +108,7 @@ fun SettingsNotificationsResultsScreen(
 private fun Preview() {
     AppThemePreview {
         SettingsNotificationsResultsScreen(
+            showBack = true,
             actionUpClicked = { },
             prefClicked = { },
             permissionEnabled = false,
