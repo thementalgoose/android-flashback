@@ -14,4 +14,14 @@ android {
         versionCode project.ext.versionCode
         versionName project.ext.versionName
     }
+
+
+    buildTypes {
+        debug {
+            buildConfigField "boolean", "TABLET_UI", "true"
+        }
+        release {
+            buildConfigField "boolean", "TABLET_UI", "false"
+        }
+    }
 }

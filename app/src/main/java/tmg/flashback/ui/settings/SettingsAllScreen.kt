@@ -26,7 +26,8 @@ import tmg.flashback.ui.components.settings.Section
 
 @Composable
 fun SettingsAllScreenVM(
-    actionUpClicked: () -> Unit
+    showBack: Boolean = true,
+    actionUpClicked: () -> Unit = { }
 ) {
     val viewModel = hiltViewModel<SettingsAllViewModel>()
 
@@ -41,6 +42,7 @@ fun SettingsAllScreenVM(
     }
 
     SettingsAllScreen(
+        showBack = showBack,
         actionUpClicked = actionUpClicked,
         prefClicked = viewModel.inputs::itemClicked,
         isThemeEnabled = isThemeEnabled.value,
@@ -51,6 +53,7 @@ fun SettingsAllScreenVM(
 
 @Composable
 fun SettingsAllScreen(
+    showBack: Boolean,
     actionUpClicked: () -> Unit,
     prefClicked: (Setting) -> Unit,
     isThemeEnabled: Boolean,
@@ -65,24 +68,14 @@ fun SettingsAllScreen(
             item("header") {
                 Header(
                     text = stringResource(id = R.string.settings_title),
-                    icon = painterResource(id = R.drawable.ic_back),
+                    icon = when (showBack) {
+                        true -> painterResource(id = R.drawable.ic_back)
+                        false -> null
+                    },
                     iconContentDescription = stringResource(id = R.string.ab_back),
                     actionUpClicked = actionUpClicked
                 )
             }
-
-//            val input = mutableStateOf(TextFieldValue(""))
-//            item("search") {
-//                InputPrimary(
-//                    modifier = Modifier.padding(
-//                        vertical = AppTheme.dimensions.paddingSmall,
-//                        horizontal = AppTheme.dimensions.paddingMedium
-//                    ),
-//                    icon = R.drawable.ic_settings_search,
-//                    text = input,
-//                    placeholder = stringResource(id = R.string.settings_search)
-//                )
-//            }
 
             Header(title = R.string.settings_header_appearance)
             Section(
@@ -147,6 +140,7 @@ fun SettingsAllScreen(
 private fun Preview() {
     AppThemePreview {
         SettingsAllScreen(
+            showBack = true,
             actionUpClicked = {},
             prefClicked = {},
             isThemeEnabled = true,
@@ -161,6 +155,7 @@ private fun Preview() {
 private fun PreviewNoTheme() {
     AppThemePreview {
         SettingsAllScreen(
+            showBack = true,
             actionUpClicked = {},
             prefClicked = {},
             isThemeEnabled = false,

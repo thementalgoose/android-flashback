@@ -1,4 +1,4 @@
-package tmg.flashback.ui.dashboard.menu
+package tmg.flashback.ui.dashboard.compact.menu
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes

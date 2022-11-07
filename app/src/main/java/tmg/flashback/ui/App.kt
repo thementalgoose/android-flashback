@@ -35,7 +35,11 @@ import tmg.flashback.stats.ui.search.SearchScreenVM
 import tmg.flashback.stats.ui.weekend.WeekendInfo
 import tmg.flashback.stats.ui.weekend.WeekendScreenVM
 import tmg.flashback.style.utils.WindowSize
-import tmg.flashback.ui.dashboard.DashboardScreenVM
+import tmg.flashback.ui.dashboard.compact.DashboardScreenVM
+import tmg.flashback.ui.dashboard.expanded.DashboardExpandedNavItem
+import tmg.flashback.ui.dashboard.expanded.DashboardExpandedScreen
+import tmg.flashback.ui.dashboard.expanded.DashboardExpandedScreenState
+import tmg.flashback.ui.dashboard.expanded.DashboardExpandedScreenVM
 import tmg.flashback.ui.navigation.Navigator
 import tmg.flashback.ui.navigation.Screen
 import tmg.flashback.ui.navigation.asNavigationDestination
@@ -54,6 +58,7 @@ import tmg.flashback.ui.settings.Web
 import tmg.flashback.ui.settings.about.SettingsAboutScreenVM
 import tmg.flashback.ui.settings.about.SettingsPrivacyScreenVM
 import tmg.flashback.ui.settings.ads.SettingsAdsScreenVM
+import tmg.flashback.ui.settings.layout.SettingsLayoutScreen
 import tmg.flashback.ui.settings.layout.SettingsLayoutScreenVM
 import tmg.flashback.ui.settings.notifications.SettingsNotificationsResultsScreenVM
 import tmg.flashback.ui.settings.notifications.SettingsNotificationsUpcomingScreenVM
@@ -168,17 +173,18 @@ fun HomeScreen(
         )) {
             val season = it.arguments?.getInt("season")!!
             val round = it.arguments?.getInt("round")!!
+            val weekendInfo = WeekendInfo(
+                season = season,
+                round = round,
+                raceName = it.arguments?.getString("raceName") ?: "",
+                circuitId = it.arguments?.getString("circuitId") ?: "",
+                circuitName = it.arguments?.getString("circuitName") ?: "",
+                country = it.arguments?.getString("country") ?: "",
+                countryISO = it.arguments?.getString("countryISO") ?: "",
+                date = it.arguments?.getString("date")?.toLocalDate("yyyy-MM-dd") ?: LocalDate.now(),
+            )
             WeekendScreenVM(
-                weekendInfo = WeekendInfo(
-                    season = season,
-                    round = round,
-                    raceName = it.arguments?.getString("raceName") ?: "",
-                    circuitId = it.arguments?.getString("circuitId") ?: "",
-                    circuitName = it.arguments?.getString("circuitName") ?: "",
-                    country = it.arguments?.getString("country") ?: "",
-                    countryISO = it.arguments?.getString("countryISO") ?: "",
-                    date = it.arguments?.getString("date")?.toLocalDate("yyyy-MM-dd") ?: LocalDate.now(),
-                ),
+                weekendInfo = weekendInfo,
                 actionUpClicked = { navController.popBackStack() }
             )
         }

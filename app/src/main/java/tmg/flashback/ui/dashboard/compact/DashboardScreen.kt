@@ -1,4 +1,4 @@
-package tmg.flashback.ui.dashboard
+package tmg.flashback.ui.dashboard.compact
 
 import android.annotation.SuppressLint
 import androidx.compose.animation.AnimatedVisibility
@@ -17,25 +17,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.launch
-import tmg.flashback.stats.ui.dashboard.schedule.ScheduleScreenVM
 import tmg.flashback.stats.ui.dashboard.constructors.ConstructorStandingsScreenVM
 import tmg.flashback.stats.ui.dashboard.drivers.DriverStandingsScreenVM
-import tmg.flashback.stats.usecases.DefaultSeasonUseCase
+import tmg.flashback.stats.ui.dashboard.schedule.ScheduleScreenVM
 import tmg.flashback.style.AppTheme
-import tmg.flashback.style.utils.WindowSize
 import tmg.flashback.ui.components.layouts.OverlappingPanels
 import tmg.flashback.ui.components.layouts.OverlappingPanelsValue
 import tmg.flashback.ui.components.layouts.rememberOverlappingPanelsState
 import tmg.flashback.ui.components.navigation.NavigationBar
-import tmg.flashback.ui.components.navigation.NavigationItem
 import tmg.flashback.ui.components.navigation.appBarHeight
-import tmg.flashback.ui.dashboard.menu.MenuScreenVM
+import tmg.flashback.ui.dashboard.compact.menu.MenuScreenVM
 import tmg.utilities.extensions.toEnum
-
-data class DashboardScreenState(
-    val tab: DashboardNavItem,
-    val season: Int
-)
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -45,7 +37,8 @@ fun DashboardScreenVM() {
     DashboardScreen(
         tabState = viewModel.outputs.currentTab.observeAsState(viewModel.outputs.initialTab).value,
         clickTab = viewModel.inputs::clickTab,
-        clickSeason = viewModel.inputs::clickSeason)
+        clickSeason = viewModel.inputs::clickSeason
+    )
 }
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -148,16 +141,4 @@ fun DashboardScreen(
             )
         }
     )
-}
-
-private fun DashboardNavItem.toNavigationItems(): List<NavigationItem> {
-    return DashboardNavItem.values()
-        .map {
-            NavigationItem(
-                id = it.name,
-                label = it.label,
-                icon = it.icon,
-                isSelected = it == this
-            )
-        }
 }

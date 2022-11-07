@@ -1,4 +1,4 @@
-package tmg.flashback.ui.dashboard.menu
+package tmg.flashback.ui.dashboard.compact.menu
 
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.*
@@ -15,6 +15,7 @@ import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.stats.repository.HomeRepository
 import tmg.flashback.stats.repository.NotificationRepository
 import tmg.flashback.stats.usecases.DefaultSeasonUseCase
+import tmg.flashback.ui.dashboard.MenuSeasonItem
 import tmg.flashback.ui.managers.PermissionManager
 import tmg.flashback.ui.managers.StyleManager
 import tmg.flashback.ui.model.NightMode
@@ -22,6 +23,7 @@ import tmg.flashback.ui.navigation.ApplicationNavigationComponent
 import tmg.flashback.ui.permissions.RationaleType
 import tmg.flashback.ui.repository.PermissionRepository
 import tmg.flashback.ui.usecases.ChangeNightModeUseCase
+import tmg.flashback.usecases.GetSeasonsUseCase
 import javax.inject.Inject
 import kotlin.math.abs
 
@@ -50,7 +52,7 @@ interface MenuViewModelOutputs {
 
 @HiltViewModel
 class MenuViewModel @Inject constructor(
-    private val homeRepository: HomeRepository,
+    private val getSeasonsUseCase: GetSeasonsUseCase,
     private val buildConfigManager: BuildConfigManager,
     private val permissionManager: PermissionManager,
     private val permissionRepository: PermissionRepository,
@@ -74,20 +76,7 @@ class MenuViewModel @Inject constructor(
 
     override val season: LiveData<List<MenuSeasonItem>> = selectedSeason
         .map { selectedSeason ->
-            val seasons = homeRepository
-                .supportedSeasons
-                .sortedDescending()
-
-            return@map seasons
-                .mapIndexed { index, it ->
-                    MenuSeasonItem(
-                        colour = decadeColours["${it.toString().substring(0, 3)}0"] ?: Color.Gray,
-                        season = it,
-                        isSelected = selectedSeason == it,
-                        isFirst = index == 0 || isGap(it, seasons.getOrNull(index - 1)),
-                        isLast = index == (homeRepository.supportedSeasons.size - 1)  || isGap(it, seasons.getOrNull(index + 1))
-                    )
-                }
+            getSeasonsUseCase.get(selectedSeason)
         }
         .asLiveData(viewModelScope.coroutineContext)
 
@@ -166,9 +155,11 @@ class MenuViewModel @Inject constructor(
             }
         }
         list.add(MenuItems.Divider("a"))
-        list.add(MenuItems.Toggle.DarkMode(
-            _isEnabled = !styleManager.isDayMode
-        ))
+        list.add(
+            MenuItems.Toggle.DarkMode(
+                _isEnabled = !styleManager.isDayMode
+            )
+        )
         list.add(MenuItems.Divider("b"))
         if (buildConfigManager.isRuntimeNotificationsSupported &&
             !notificationRepository.seenRuntimeNotifications &&
@@ -183,12 +174,5 @@ class MenuViewModel @Inject constructor(
             list.add(MenuItems.Divider("c"))
         }
         return list
-    }
-
-    private fun isGap(ref: Int, targetSeason: Int?): Boolean {
-        if (targetSeason == null) {
-            return true
-        }
-        return abs(targetSeason - ref) > 1
     }
 }
