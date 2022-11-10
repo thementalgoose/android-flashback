@@ -6,12 +6,23 @@ android {
 
     composeOptions {
         // TODO: Make this reference a proper version
-        kotlinCompilerExtensionVersion "1.3.2"
+        kotlinCompilerExtensionVersion libs.versions.composecompiler.get()
     }
 }
 
 dependencies {
-    implementation libs.bundles.compose
+    implementation platform(libs.compose.bom)
+    implementation libs.compose.material
+    implementation libs.compose.material3
+    implementation libs.compose.animation
+    implementation libs.compose.ui.tooling
+    implementation libs.compose.ui.viewbinding
+    implementation libs.compose.livedata
+
+    implementation libs.compose.activity
+    implementation libs.compose.theme.adapter
+    implementation libs.compose.navigation
+    implementation libs.compose.viewmodel
 
     implementation libs.androidx.window
     implementation libs.coil
