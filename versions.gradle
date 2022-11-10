@@ -30,7 +30,4 @@ ext {
     versionCode = getVersionCode()
 
     baseUrl = "https://flashback.pages.dev"
-
-    kotlin_version = "1.7.20"
-    hilt = "2.44"
 }
