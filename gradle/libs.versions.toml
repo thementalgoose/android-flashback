@@ -103,7 +103,7 @@ skeletonlayout = "com.faltenreich:skeletonlayout:4.0.0"
 threeten = "org.threeten:threetenbp:1.6.4"
 threetenabp = "com.jakewharton.threetenabp:threetenabp:1.4.2"
 
-tmg_utils = "com.github.thementalgoose:android-utilities:2.4.4"
+tmg_utils = "com.github.thementalgoose:android-utilities:2.4.5"
 tmg_labelledprogressbar = "com.github.thementalgoose:android-labelled-progress-bar:1.0.9"
 tmg_aboutthisapp = "com.github.thementalgoose:android-about-this-app:5.3.2"
 
@@ -130,7 +130,7 @@ junit5_params = { module = "org.junit.jupiter:junit-jupiter-params", version.ref
 
 mockk = "io.mockk:mockk:1.13.2"
 
-tmg_testutils = "com.github.thementalgoose:android-test-utilities:1.1.0"
+tmg_testutils = "com.github.thementalgoose:android-test-utilities:dependency-update-SNAPSHOT"
 
 [bundles] # ===========================================================================
 androidx = [
@@ -161,18 +161,6 @@ accompanist = [
     "accompanist_horizontalpager",
     "accompanist_systemuicontroller",
     "accompanist_placeholder"
-]
-compose = [
-    "compose_activity",
-    "compose_material",
-    "compose_material3",
-    "compose_navigation",
-    "compose_animation",
-    "compose_ui_tooling",
-    "compose_ui_viewbinding",
-    "compose_livedata",
-    "compose_viewmodel",
-    "compose_theme_adapter"
 ]
 retrofit = [
     "retrofit_core",
