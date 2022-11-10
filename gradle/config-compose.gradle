@@ -5,7 +5,6 @@ android {
     }
 
     composeOptions {
-        // TODO: Make this reference a proper version
         kotlinCompilerExtensionVersion libs.versions.composecompiler.get()
     }
 }

@@ -1,5 +1,6 @@
 [versions]  # ===========================================================================
-kotlin = "1.7.20"
+kotlin = "1.7.21"
+hilt = "2.44"
 androidx_navigation = "2.5.1"
 androidx_lifecycle = "2.5.1"
 dagger = "2.44"
