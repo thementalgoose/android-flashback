@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.core.splashscreen.SplashScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
@@ -18,13 +20,13 @@ import tmg.flashback.rss.RSS
 import tmg.flashback.stats.Search
 import tmg.flashback.stats.usecases.ContentSyncUseCase
 import tmg.flashback.style.AppTheme
-import tmg.flashback.style.utils.rememberWindowSizeClass
 import tmg.flashback.ui.base.BaseActivity
 import tmg.flashback.ui.navigation.Navigator
 import tmg.flashback.ui.navigation.Screen
 import tmg.flashback.ui.sync.SyncActivity
 import javax.inject.Inject
 
+@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @AndroidEntryPoint
 class HomeActivity: BaseActivity(), SplashScreen.KeepOnScreenCondition {
 
@@ -58,7 +60,7 @@ class HomeActivity: BaseActivity(), SplashScreen.KeepOnScreenCondition {
         setContent {
             AppTheme {
                 HomeScreen(
-                    windowSize = rememberWindowSizeClass(),
+                    windowSize = calculateWindowSizeClass(activity = this),
                     navigator = navigator,
                     closeApp = {
                         finish()
