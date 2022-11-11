@@ -1,9 +1,12 @@
 package tmg.flashback.stats.ui.drivers.overview
 
-import io.mockk.*
+import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.test.runBlockingTest
-import org.junit.jupiter.api.Assertions.*
+import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.device.managers.NetworkConnectivityManager
@@ -14,10 +17,8 @@ import tmg.flashback.statistics.repo.DriverRepository
 import tmg.flashback.stats.R
 import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.stats.ui.drivers.stathistory.DriverStatHistoryType
-import tmg.flashback.ui.navigation.ApplicationNavigationComponent
 import tmg.flashback.web.WebNavigationComponent
 import tmg.testutils.BaseTest
-import tmg.testutils.livedata.assertDataEventValue
 import tmg.testutils.livedata.assertListMatchesItem
 import tmg.testutils.livedata.test
 
@@ -164,7 +165,7 @@ internal class DriverOverviewViewModelTest: BaseTest() {
 
         initSUT()
 
-        runBlockingTest {
+        runBlocking {
             sut.inputs.setup("driverId", "firstName lastName")
         }
 
@@ -228,7 +229,7 @@ internal class DriverOverviewViewModelTest: BaseTest() {
         initSUT()
         sut.inputs.setup("driverId", "firstName lastName")
 
-        runBlockingTest {
+        runBlocking {
             sut.inputs.refresh()
         }
 
