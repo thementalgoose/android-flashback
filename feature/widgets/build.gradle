@@ -3,6 +3,7 @@ apply from: rootDir.absolutePath + "/gradle/config-android.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-util.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-junit5.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-hilt.gradle"
+apply from: rootDir.absolutePath + "/gradle/config-compose.gradle"
 
 android {
     compileSdkVersion project.ext.compileSdkVersion
@@ -19,6 +20,8 @@ dependencies {
 
     implementation project(path: ':formula1')
     implementation project(path: ':data:repo')
+
+    implementation project(path: ':presentation:style')
 
     // Core modules
     implementation project(path: ':core:analytics')

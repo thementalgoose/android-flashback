@@ -1,8 +1,12 @@
 package tmg.flashback.stats.ui.circuits
 
-import io.mockk.*
+import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.device.managers.NetworkConnectivityManager
@@ -11,7 +15,6 @@ import tmg.flashback.formula1.model.CircuitHistoryRace
 import tmg.flashback.formula1.model.model
 import tmg.flashback.statistics.repo.CircuitRepository
 import tmg.flashback.stats.StatsNavigationComponent
-import tmg.flashback.ui.navigation.ApplicationNavigationComponent
 import tmg.flashback.web.WebNavigationComponent
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.test
@@ -84,7 +87,7 @@ internal class CircuitViewModelTest: BaseTest() {
         every { mockConnectivityManager.isConnected } returns true
 
         initSUT()
-        runBlockingTest {
+        runBlocking {
             sut.inputs.load("circuitId")
         }
 
@@ -120,7 +123,7 @@ internal class CircuitViewModelTest: BaseTest() {
         every { mockCircuitRepository.getCircuitHistory(any()) } returns flow { emit(input) }
 
         initSUT()
-        runBlockingTest {
+        runBlocking {
             sut.inputs.load("circuitId")
         }
 
@@ -146,7 +149,7 @@ internal class CircuitViewModelTest: BaseTest() {
         coEvery { mockCircuitRepository.getCircuitRounds(any()) } returns 1
 
         initSUT()
-        runBlockingTest {
+        runBlocking {
             sut.inputs.load("circuitId")
         }
 
@@ -161,7 +164,7 @@ internal class CircuitViewModelTest: BaseTest() {
 
         initSUT()
 
-        runBlockingTest {
+        runBlocking {
             sut.inputs.load("circuitId")
         }
 
@@ -206,7 +209,7 @@ internal class CircuitViewModelTest: BaseTest() {
         initSUT()
         sut.inputs.load("circuitId")
 
-        runBlockingTest {
+        runBlocking {
             sut.inputs.refresh()
         }
 

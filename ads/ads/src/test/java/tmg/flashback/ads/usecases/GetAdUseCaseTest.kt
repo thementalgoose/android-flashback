@@ -3,7 +3,8 @@ package tmg.flashback.ads.usecases
 import android.content.Context
 import com.google.android.gms.ads.nativead.NativeAd
 import io.mockk.*
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -42,7 +43,7 @@ internal class GetAdUseCaseTest: BaseTest() {
         every { mockAdsRepository.isEnabled } returns false
 
         initUnderTest()
-        runBlockingTest {
+        runBlocking {
             assertNull(underTest.getAd(mockContext))
         }
         coVerify(exactly = 0) {
@@ -55,7 +56,7 @@ internal class GetAdUseCaseTest: BaseTest() {
         every { mockAdsCacheRepository.listOfAds } returns mockNativeAds
 
         initUnderTest()
-        runBlockingTest {
+        runBlocking {
             assertEquals(mockNativeAd0, underTest.getAd(mockContext, 0))
         }
         coVerify(exactly = 0) {
@@ -68,7 +69,7 @@ internal class GetAdUseCaseTest: BaseTest() {
         every { mockAdsCacheRepository.listOfAds } returns mockNativeAds
 
         initUnderTest()
-        runBlockingTest {
+        runBlocking {
             assertEquals(mockNativeAd1, underTest.getAd(mockContext, 1))
         }
         coVerify(exactly = 0) {
@@ -82,7 +83,7 @@ internal class GetAdUseCaseTest: BaseTest() {
         coEvery { mockAdsManager.getNativeAd(any()) } throws RuntimeException("Its fucked")
 
         initUnderTest()
-        runBlockingTest {
+        runBlocking {
             assertNull(underTest.getAd(mockContext, 0))
         }
         coVerify {
@@ -94,7 +95,7 @@ internal class GetAdUseCaseTest: BaseTest() {
     fun `get ad returns add at index 0 when ads request returns`() = coroutineTest {
 
         initUnderTest()
-        runBlockingTest {
+        runBlocking {
             assertEquals(mockNativeAd0, underTest.getAd(mockContext, 0))
         }
         coVerify {
@@ -105,7 +106,7 @@ internal class GetAdUseCaseTest: BaseTest() {
     @Test
     fun `get ad returns add at index 1 when ads request returns`() = coroutineTest {
         initUnderTest()
-        runBlockingTest {
+        runBlocking {
             assertEquals(mockNativeAd1, underTest.getAd(mockContext, 1))
         }
         coVerify {

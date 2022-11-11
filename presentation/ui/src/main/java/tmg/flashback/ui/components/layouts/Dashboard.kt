@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
+
 package tmg.flashback.ui.components.layouts
 
 import androidx.compose.animation.core.animateDpAsState
@@ -7,27 +9,24 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.geometry.Rect
-import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Outline
-import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Density
-import androidx.compose.ui.unit.LayoutDirection
+import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.text.TextBody1
-import tmg.flashback.style.utils.WindowSize
 import tmg.flashback.ui.R
 import tmg.flashback.ui.components.navigation.NavigationItem
 
@@ -37,7 +36,7 @@ private val expandedSlideInMenuWidth = 400.dp
 
 @Composable
 fun Dashboard(
-    windowSize: WindowSize,
+    windowSize: WindowSizeClass,
     menuItems: List<NavigationItem>,
     clickMenuItem: (NavigationItem) -> Unit,
     menuContent: @Composable () -> Unit,
@@ -48,7 +47,7 @@ fun Dashboard(
     AppTheme {
         Scaffold(
             bottomBar = {
-                if (windowSize == WindowSize.Compact) {
+                if (windowSize.widthSizeClass == WindowWidthSizeClass.Compact) {
                     BottomAppBar(backgroundColor = AppTheme.colors.backgroundNav) {
                         menuItems.forEach {
                             BottomNavigationItem(
@@ -70,8 +69,8 @@ fun Dashboard(
                 }
             },
             content = {
-                when (windowSize) {
-                    WindowSize.Compact -> {
+                when (windowSize.widthSizeClass) {
+                    WindowWidthSizeClass.Compact -> {
                         OverlappingPanels(
                             panelsState = panelsState,
                             panelStart = { menuContent() },
@@ -87,7 +86,7 @@ fun Dashboard(
                             }
                         )
                     }
-                    WindowSize.Medium -> {
+                    WindowWidthSizeClass.Medium -> {
                         val showMenu = remember { mutableStateOf(false) }
                         Row(modifier = Modifier
                             .fillMaxSize()
@@ -139,7 +138,7 @@ fun Dashboard(
                             }
                         }
                     }
-                    WindowSize.Expanded -> {
+                    else -> {
                         val showMenu = remember { mutableStateOf(false) }
                         Row(modifier = Modifier.fillMaxSize()) {
                             Box(
@@ -246,7 +245,7 @@ private fun MenuIcon(
 @Composable
 private fun PreviewCompact() {
     Dashboard(
-        windowSize = WindowSize.Compact,
+        windowSize = WindowSizeClass.calculateFromSize(DpSize(400.dp, 500.dp)),
         menuItems = listOf(
             NavigationItem("",0, R.drawable.ic_nightmode_auto),
             NavigationItem("", 0, R.drawable.ic_nightmode_light),
@@ -269,7 +268,7 @@ private fun PreviewCompact() {
 @Composable
 private fun PreviewMedium() {
     Dashboard(
-        windowSize = WindowSize.Medium,
+        windowSize = WindowSizeClass.calculateFromSize(DpSize(640.dp, 500.dp)),
         menuItems = listOf(
             NavigationItem("",0, R.drawable.ic_nightmode_auto),
             NavigationItem("", 0, R.drawable.ic_nightmode_light),
@@ -292,7 +291,7 @@ private fun PreviewMedium() {
 @Composable
 private fun PreviewExpanded() {
     Dashboard(
-        windowSize = WindowSize.Expanded,
+        windowSize = WindowSizeClass.calculateFromSize(DpSize(900.dp, 500.dp)),
         menuItems = listOf(
             NavigationItem("",0, R.drawable.ic_nightmode_auto),
             NavigationItem("", 0, R.drawable.ic_nightmode_light),
