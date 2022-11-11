@@ -68,7 +68,7 @@ internal class SearchViewModelTest: BaseTest() {
     //region Content
 
     @Test
-    fun `search hides adverts if toggle is off`() {
+    fun `search hides adverts if toggle is off`() = coroutineTest {
         every { mockAdsRepository.advertConfig } returns AdvertConfig(onSearch = false)
         initSUT()
         sut.outputs.results.test {
@@ -77,7 +77,7 @@ internal class SearchViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `search defaults to placeholder`() {
+    fun `search defaults to placeholder`() = coroutineTest {
         initSUT()
         sut.outputs.results.test {
             assertValue(listOf(
@@ -88,9 +88,11 @@ internal class SearchViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `search category drivers returns driver models`() {
+    fun `search category drivers returns driver models`() = coroutineTest {
         initSUT()
-        sut.inputs.inputCategory(SearchCategory.DRIVER)
+        runBlocking {
+            sut.inputs.inputCategory(SearchCategory.DRIVER)
+        }
         sut.outputs.results.test {
             assertValue(listOf(
                 SearchItem.Advert,
@@ -100,9 +102,11 @@ internal class SearchViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `search category constructors returns constructors models`() {
+    fun `search category constructors returns constructors models`() = coroutineTest {
         initSUT()
-        sut.inputs.inputCategory(SearchCategory.CONSTRUCTOR)
+        runBlocking {
+            sut.inputs.inputCategory(SearchCategory.CONSTRUCTOR)
+        }
         sut.outputs.results.test {
             assertValue(listOf(
                 SearchItem.Advert,
@@ -126,9 +130,11 @@ internal class SearchViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `search category races returns races models`() {
+    fun `search category races returns races models`() = coroutineTest {
         initSUT()
-        sut.inputs.inputCategory(SearchCategory.RACE)
+        runBlocking {
+            sut.inputs.inputCategory(SearchCategory.RACE)
+        }
         sut.outputs.results.test {
             assertValue(listOf(
                 SearchItem.Advert,
@@ -138,10 +144,15 @@ internal class SearchViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `search shows no results when search term not met`() {
+    fun `search shows no results when search term not met`() = coroutineTest {
         initSUT()
-        sut.inputs.inputCategory(SearchCategory.DRIVER)
-        sut.inputs.inputSearch("zzzzzz")
+        runBlocking {
+            sut.inputs.inputCategory(SearchCategory.DRIVER)
+            sut.inputs.inputSearch("zzzzzz")
+        }
+        sut.outputs.isLoading.test {
+            assertValue(false)
+        }
         sut.outputs.results.test {
             assertValue(listOf(
                 SearchItem.ErrorItem
@@ -160,8 +171,10 @@ internal class SearchViewModelTest: BaseTest() {
         val model2 = SearchItem.Driver.model(name = "z fish", driverId = "driverId2")
 
         initSUT()
-        sut.inputs.inputCategory(SearchCategory.DRIVER)
-        sut.inputs.inputSearch("")
+        runBlocking {
+            sut.inputs.inputCategory(SearchCategory.DRIVER)
+            sut.inputs.inputSearch("")
+        }
         advanceUntilIdle()
 
         sut.outputs.results.test {
@@ -172,7 +185,9 @@ internal class SearchViewModelTest: BaseTest() {
             ))
         }
 
-        sut.inputs.inputSearch("z")
+        runBlocking {
+            sut.inputs.inputSearch("z")
+        }
         advanceUntilIdle()
         sut.outputs.results.test {
             assertValue(listOf(
@@ -181,7 +196,9 @@ internal class SearchViewModelTest: BaseTest() {
             ))
         }
 
-        sut.inputs.inputSearch("zz")
+        runBlocking {
+            sut.inputs.inputSearch("zz")
+        }
         advanceUntilIdle()
         sut.outputs.results.test {
             assertValue(listOf(
@@ -189,7 +206,9 @@ internal class SearchViewModelTest: BaseTest() {
             ))
         }
 
-        sut.inputs.inputSearch("last")
+        runBlocking {
+            sut.inputs.inputSearch("last")
+        }
         advanceUntilIdle()
         sut.outputs.results.test {
             assertValue(listOf(
@@ -222,8 +241,10 @@ internal class SearchViewModelTest: BaseTest() {
     @Test
     fun `refresh when category is constructors fetches constructors`() = coroutineTest {
         initSUT()
-        sut.inputs.inputCategory(SearchCategory.CONSTRUCTOR)
-        sut.inputs.refresh()
+        runBlocking {
+            sut.inputs.inputCategory(SearchCategory.CONSTRUCTOR)
+            sut.inputs.refresh()
+        }
 
         coVerify {
             mockConstructorsRepository.fetchConstructors()
@@ -236,8 +257,10 @@ internal class SearchViewModelTest: BaseTest() {
     @Test
     fun `refresh when category is circuits fetches circuits`() = coroutineTest {
         initSUT()
-        sut.inputs.inputCategory(SearchCategory.CIRCUIT)
-        sut.inputs.refresh()
+        runBlocking {
+            sut.inputs.inputCategory(SearchCategory.CIRCUIT)
+            sut.inputs.refresh()
+        }
 
         coVerify {
             mockCircuitRepository.fetchCircuits()
@@ -266,11 +289,13 @@ internal class SearchViewModelTest: BaseTest() {
     //endregion
 
     @Test
-    fun `click item for constructor fires click event`() {
+    fun `click item for constructor fires click event`() = coroutineTest {
         val model = SearchItem.Constructor.model()
 
         initSUT()
-        sut.inputs.clickItem(model)
+        runBlocking {
+            sut.inputs.clickItem(model)
+        }
 
         verify {
             mockStatisticsNavigationComponent.constructorOverview(any(), any())
@@ -278,11 +303,13 @@ internal class SearchViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `click item for driver fires click event`() {
+    fun `click item for driver fires click event`() = coroutineTest {
         val model = SearchItem.Driver.model()
 
         initSUT()
-        sut.inputs.clickItem(model)
+        runBlocking {
+            sut.inputs.clickItem(model)
+        }
 
         verify {
             mockStatisticsNavigationComponent.driverOverview(any(), any())
@@ -290,11 +317,13 @@ internal class SearchViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `click item for race fires click event`() {
+    fun `click item for race fires click event`() = coroutineTest {
         val model = SearchItem.Race.model()
 
         initSUT()
-        sut.inputs.clickItem(model)
+        runBlocking {
+            sut.inputs.clickItem(model)
+        }
 
         verify {
             mockStatisticsNavigationComponent.weekend(any())
@@ -302,11 +331,13 @@ internal class SearchViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `click item for circuit fires click event`() {
+    fun `click item for circuit fires click event`() = coroutineTest {
         val model = SearchItem.Circuit.model()
 
         initSUT()
-        sut.inputs.clickItem(model)
+        runBlocking {
+            sut.inputs.clickItem(model)
+        }
 
         verify {
             mockStatisticsNavigationComponent.circuit(any(), any())
