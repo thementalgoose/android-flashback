@@ -5,7 +5,7 @@ import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.device.managers.NetworkConnectivityManager
@@ -145,7 +145,7 @@ internal class DriverSeasonViewModelTest: BaseTest() {
 
         initSUT()
 
-        runBlockingTest {
+        runBlocking {
             sut.inputs.setup("driverId", 2020)
         }
 
@@ -175,7 +175,7 @@ internal class DriverSeasonViewModelTest: BaseTest() {
         initSUT()
         sut.inputs.setup("driverId", 2020)
 
-        runBlockingTest {
+        runBlocking {
             sut.inputs.refresh()
         }
 
