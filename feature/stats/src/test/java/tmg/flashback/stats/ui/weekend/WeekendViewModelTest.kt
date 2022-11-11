@@ -4,7 +4,7 @@ import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
@@ -12,7 +12,6 @@ import tmg.flashback.formula1.model.Race
 import tmg.flashback.formula1.model.RaceInfo
 import tmg.flashback.formula1.model.model
 import tmg.flashback.statistics.repo.RaceRepository
-import tmg.flashback.stats.usecases.DefaultSeasonUseCase
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertListDoesNotMatchItem
 import tmg.testutils.livedata.assertListMatchesItem
@@ -165,7 +164,7 @@ internal class WeekendViewModelTest: BaseTest() {
         underTest()
         underTest.inputs.load(season = 2020, round = 1)
 
-        runBlockingTest {
+        runBlocking {
             underTest.inputs.refresh()
         }
 

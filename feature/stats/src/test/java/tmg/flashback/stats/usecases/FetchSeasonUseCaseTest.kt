@@ -4,8 +4,9 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.flow.FlowCollector
-import kotlinx.coroutines.test.runBlockingTest
-import org.junit.jupiter.api.Assertions.*
+import kotlinx.coroutines.runBlocking
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import tmg.flashback.statistics.repo.EventsRepository
 import tmg.flashback.statistics.repo.OverviewRepository
@@ -41,7 +42,7 @@ internal class FetchSeasonUseCaseTest: BaseTest() {
 
         val flowCollector = TestFlowCollector()
         initUnderTest()
-        runBlockingTest {
+        runBlocking {
             underTest.fetch(2020).collect(flowCollector)
         }
 
@@ -62,7 +63,7 @@ internal class FetchSeasonUseCaseTest: BaseTest() {
 
         val flowCollector = TestFlowCollector()
         initUnderTest()
-        runBlockingTest {
+        runBlocking {
             underTest.fetch(2020).collect(flowCollector)
         }
 
@@ -78,7 +79,7 @@ internal class FetchSeasonUseCaseTest: BaseTest() {
     @Test
     fun `fetch season calls repositories to fetch race and events data`() = coroutineTest {
         initUnderTest()
-        runBlockingTest {
+        runBlocking {
             assertTrue(underTest.fetchSeason(2020))
         }
 

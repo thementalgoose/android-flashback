@@ -5,13 +5,17 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.advanceUntilIdle
-import kotlinx.coroutines.test.runBlockingTest
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.ads.config.repository.AdsRepository
 import tmg.flashback.ads.config.repository.model.AdvertConfig
-import tmg.flashback.formula1.model.*
+import tmg.flashback.formula1.model.Circuit
+import tmg.flashback.formula1.model.Constructor
+import tmg.flashback.formula1.model.Driver
+import tmg.flashback.formula1.model.OverviewRace
+import tmg.flashback.formula1.model.model
 import tmg.flashback.statistics.repo.CircuitRepository
 import tmg.flashback.statistics.repo.ConstructorRepository
 import tmg.flashback.statistics.repo.DriverRepository
@@ -110,7 +114,7 @@ internal class SearchViewModelTest: BaseTest() {
     @Test
     fun `search category circuits returns circuits models`() = coroutineTest {
         initSUT()
-        runBlockingTest {
+        runBlocking {
             sut.inputs.inputCategory(SearchCategory.CIRCUIT)
         }
         sut.outputs.results.test {
@@ -202,7 +206,7 @@ internal class SearchViewModelTest: BaseTest() {
     @Test
     fun `refresh when category is drivers fetches drivers`() = coroutineTest {
         initSUT()
-        runBlockingTest {
+        runBlocking {
             sut.inputs.inputCategory(SearchCategory.DRIVER)
             sut.inputs.refresh()
         }
@@ -246,7 +250,7 @@ internal class SearchViewModelTest: BaseTest() {
     @Test
     fun `refresh when category is overview fetches overview`() = coroutineTest {
         initSUT()
-        runBlockingTest {
+        runBlocking {
             sut.inputs.inputCategory(SearchCategory.RACE)
             sut.inputs.refresh()
         }

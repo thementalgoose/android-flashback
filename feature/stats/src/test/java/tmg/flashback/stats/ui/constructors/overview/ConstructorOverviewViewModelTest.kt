@@ -1,9 +1,12 @@
 package tmg.flashback.stats.ui.constructors.overview
 
-import io.mockk.*
+import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.test.runBlockingTest
-import org.junit.jupiter.api.Assertions.*
+import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.device.managers.NetworkConnectivityManager
@@ -12,10 +15,8 @@ import tmg.flashback.formula1.model.ConstructorHistorySeason
 import tmg.flashback.formula1.model.model
 import tmg.flashback.statistics.repo.ConstructorRepository
 import tmg.flashback.stats.R
-import tmg.flashback.ui.navigation.ApplicationNavigationComponent
 import tmg.flashback.web.WebNavigationComponent
 import tmg.testutils.BaseTest
-import tmg.testutils.livedata.assertDataEventValue
 import tmg.testutils.livedata.assertListMatchesItem
 import tmg.testutils.livedata.test
 
@@ -144,7 +145,7 @@ internal class ConstructorOverviewViewModelTest: BaseTest() {
 
         initSUT()
 
-        runBlockingTest {
+        runBlocking {
             sut.inputs.setup("constructorId")
         }
 
@@ -201,7 +202,7 @@ internal class ConstructorOverviewViewModelTest: BaseTest() {
         initSUT()
         sut.inputs.setup("constructorId")
 
-        runBlockingTest {
+        runBlocking {
             sut.inputs.refresh()
         }
 
