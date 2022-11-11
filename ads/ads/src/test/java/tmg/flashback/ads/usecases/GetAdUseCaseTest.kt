@@ -83,7 +83,7 @@ internal class GetAdUseCaseTest: BaseTest() {
         coEvery { mockAdsManager.getNativeAd(any()) } throws RuntimeException("Its fucked")
 
         initUnderTest()
-        runTest {
+        runBlocking {
             assertNull(underTest.getAd(mockContext, 0))
         }
         coVerify {
