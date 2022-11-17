@@ -74,7 +74,7 @@ fun SettingsNotificationsUpcomingScreen(
         content = {
             item("header") {
                 tmg.flashback.ui.components.header.Header(
-                    text = stringResource(id = R.string.settings_section_notifications_results_title),
+                    text = stringResource(id = R.string.settings_section_notifications_upcoming_title),
                     icon = when (showBack) {
                         true -> painterResource(id = R.drawable.ic_back)
                         false -> null
