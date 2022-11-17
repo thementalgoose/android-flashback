@@ -34,7 +34,7 @@ sealed class ScheduleModel(
     data class Event(
         val event: tmg.flashback.formula1.model.Event
     ): ScheduleModel(
-        key = "event-${event.label}"
+        key = "event-${event.label}-${event.date}"
     ) {
         val date: LocalDate
             get() = event.date
