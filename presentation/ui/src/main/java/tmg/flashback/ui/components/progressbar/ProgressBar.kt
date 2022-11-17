@@ -35,6 +35,8 @@ fun ProgressBar(
     backgroundColor: Color = AppTheme.colors.backgroundPrimary,
     backgroundOnColor: Color = AppTheme.colors.contentPrimary,
 ) {
+    val endProgress = if (endProgress.isNaN()) { 0f } else { endProgress }
+
     BoxWithConstraints(
         modifier = modifier
             .defaultMinSize(minHeight = 48.dp)
@@ -44,7 +46,7 @@ fun ProgressBar(
         val progressState = remember { mutableStateOf(initialValue) }
         val progress = animateFloatAsState(
             visibilityThreshold = 0.0f,
-            targetValue = progressState.value,
+            targetValue = progressState.value.coerceIn(0f, 1f),
             animationSpec = tween(
                 durationMillis = animationDuration,
                 easing = FastOutSlowInEasing,
@@ -72,7 +74,7 @@ fun ProgressBar(
         )
 
         MeasureTextWidth(
-            text = label(endProgress),
+            text = label(endProgress.coerceIn(0f, 1f)),
             modifier = Modifier
                 .align(Alignment.CenterStart)
         ) { textWidth ->
@@ -101,7 +103,7 @@ fun ProgressBar(
             )
         }
 
-        LaunchedEffect(endProgress) {
+        LaunchedEffect(endProgress.coerceIn(0f, 1f)) {
             progressState.value = endProgress
         }
     }
