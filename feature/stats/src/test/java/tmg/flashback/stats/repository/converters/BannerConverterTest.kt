@@ -26,6 +26,24 @@ internal class BannerConverterTest {
     }
 
     @Test
+    fun `null url but message populated results in banner object`() {
+        val json = BannerItemJson(
+            msg = "hey",
+            url = null,
+            highlight = true,
+            season = null
+        )
+        val expected = Banner(
+            message = "hey",
+            url = null, // URLUtil stubbed out
+            highlight = true,
+            season = null
+        )
+
+        assertEquals(expected, json.convert(mockCrashManager))
+    }
+
+    @Test
     fun `empty message results in null banner object`() {
         val json = BannerItemJson(
             msg = "",

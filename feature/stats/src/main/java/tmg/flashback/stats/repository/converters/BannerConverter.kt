@@ -24,12 +24,10 @@ fun BannerItemJson.convert(
     return Banner(
         message = this.msg,
         url = try {
-            if (this.url == null) {
-                return null
-            }
-            when (URLUtil.isValidUrl(this.url)) {
-                true -> this.url
-                false -> {
+            when {
+                this.url == null -> null
+                URLUtil.isValidUrl(this.url) -> this.url
+                else -> {
                     crashManager.logException(ParseException("Banner url ${this.url} is not a valid URL", 0))
                     null
                 }
