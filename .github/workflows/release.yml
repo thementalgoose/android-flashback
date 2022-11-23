@@ -118,7 +118,7 @@ jobs:
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
           VERSION_CODE: ${{ steps.get_version_code.outputs.VERSION }}
           VERSION_NAME: ${{ steps.get_version_name.outputs.VERSION }}
-        run: ./gradlew publishLiveReleaseBundle
+        run: ./gradlew publishLiveReleaseBundle uploadCrashlyticsMappingFileLiveRelease
 
   update_versions:
     runs-on: ubuntu-latest
