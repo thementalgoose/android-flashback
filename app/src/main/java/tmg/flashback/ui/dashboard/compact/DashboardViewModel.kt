@@ -83,12 +83,12 @@ class DashboardViewModel @Inject constructor(
         viewModelScope.launch(ioDispatcher) {
             val result = dashboardSyncUseCase.sync()
             if (result) {
-                appConfigSynced.value = Event()
+                appConfigSynced.postValue(Event())
             }
         }
 
         if (releaseNotesUseCase.getNotes().isNotEmpty()) {
-            openReleaseNotes.value = Event()
+            openReleaseNotes.postValue(Event())
         }
     }
 
