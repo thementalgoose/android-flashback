@@ -7,6 +7,8 @@ import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
 import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.stats.usecases.DefaultSeasonUseCase
@@ -23,6 +25,7 @@ class ContentSyncJob @AssistedInject constructor(
     appContext = context,
     params = params
 ) {
+
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         if (isStopped) {
             return@withContext Result.success()
