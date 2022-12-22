@@ -8,12 +8,8 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class AppDeviceConfigManager @Inject constructor(
-    private val topActivityProvider: ActivityProvider
-): DeviceConfigManager {
+class AppDeviceConfigManager @Inject constructor(): DeviceConfigManager {
     override fun getDeviceStatus(): DeviceStatus? {
-        return topActivityProvider.activity?.let {
-            DeviceStatus(it, requestDeviceIMEI = false)
-        }
+        return null
     }
 }

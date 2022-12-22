@@ -11,6 +11,7 @@ import tmg.flashback.device.repository.DeviceRepository
 import tmg.utilities.enums.ScreenDensityState
 import tmg.utilities.extensions.format
 import tmg.utilities.models.DeviceStatus
+import java.util.Locale
 
 internal class GetDeviceInfoUseCaseTest {
 
@@ -52,8 +53,8 @@ internal class GetDeviceInfoUseCaseTest {
         every { screenHeight } returns this@GetDeviceInfoUseCaseTest.screenHeight
     }
 
-    private fun mockDevice() {
-        every { mockDeviceConfigManager.getDeviceStatus() } returns deviceStatus
+    private fun mockDevice(status: DeviceStatus? = deviceStatus) {
+        every { mockDeviceConfigManager.getDeviceStatus() } returns status
         every { mockBuildConfigManager.versionName } returns versionName
         every { mockBuildConfigManager.versionCode } returns versionCode
         every { mockDeviceRepository.deviceUdid } returns deviceUdid
@@ -75,6 +76,24 @@ internal class GetDeviceInfoUseCaseTest {
             Language: $language
             Screen density: $screenDensity
             Screen resolution: ${screenWidth}x${screenHeight}
+            Version name: $versionName ($versionCode)
+            Device ID: $deviceUdid
+            Installation ID: $installationId
+            Installed on: ${installedOn.format("dd MMM yyyy")}
+        """.trimIndent()
+
+        assertEquals(expected, underTest.run())
+    }
+
+    @Test
+    fun `prints out expected device info with device status null`() {
+        mockDevice(status = null)
+        initUnderTest()
+
+        val expected = """
+            -------- DEVICE INFORMATION --------
+            SDK Version: 0
+            Language: ${Locale.getDefault().language}
             Version name: $versionName ($versionCode)
             Device ID: $deviceUdid
             Installation ID: $installationId
