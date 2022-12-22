@@ -5,6 +5,7 @@ import android.graphics.Color
 import androidx.core.graphics.toColorInt
 import tmg.aboutthisapp.AboutThisAppConfiguration
 import tmg.aboutthisapp.AboutThisAppDependency
+import tmg.flashback.BuildConfig
 import tmg.flashback.R
 import tmg.flashback.rss.repo.model.SupportedArticleSource
 
@@ -18,6 +19,7 @@ object AboutThisAppConfig {
         context: Context,
         appVersion: String,
         deviceUdid: String,
+        contactEmail: String,
         rssSources: List<SupportedArticleSource>
     ): AboutThisAppConfiguration {
         val dependenciesList = getDependencies()
@@ -54,14 +56,14 @@ object AboutThisAppConfig {
                 name = context.getString(R.string.app_name),
                 nameDesc = context.getString(R.string.about_desc),
                 imageRes = R.mipmap.ic_launcher,
-                subtitle = context.getString(R.string.dependency_thank_you),
+                subtitle = context.getString(R.string.dependency_thank_you, contactEmail),
                 footnote = context.getString(R.string.about_additional),
                 guid = deviceUdid,
                 guidLongClickCopy = true,
                 appVersion = appVersion,
                 appName = context.getString(R.string.app_name),
-                appPackageName = "tmg.flashback",
-                email = "thementalgoose@gmail.com",
+                appPackageName = BuildConfig.APPLICATION_ID,
+                email = contactEmail,
                 play = "https://play.google.com/store/apps/details?id=tmg.flashback",
                 dependencies = (list + assets).mapIndexed { index, item ->
                         item.copy(order = index)
