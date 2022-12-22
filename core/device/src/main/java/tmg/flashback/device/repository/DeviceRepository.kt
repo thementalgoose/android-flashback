@@ -16,6 +16,7 @@ class DeviceRepository @Inject constructor(
         private const val keyAppOpenedCount: String = "APP_STARTUP_OPEN_COUNT"
         private const val keyAppFirstBoot: String = "APP_STARTUP_FIRST_BOOT"
         private const val keyDeviceUDID: String = "UDID"
+        private const val keyInstallationId: String = "INSTALLATION_ID"
         private const val keyAppVersion: String = "RELEASE_NOTES" // Used to be release notes
     }
 
@@ -70,4 +71,10 @@ class DeviceRepository @Inject constructor(
             }
             return key
         }
+
+    var installationId: String
+        internal set(value) {
+            preferenceManager.save(keyInstallationId, value)
+        }
+        get() = preferenceManager.getString(keyInstallationId, "") ?: ""
 }
