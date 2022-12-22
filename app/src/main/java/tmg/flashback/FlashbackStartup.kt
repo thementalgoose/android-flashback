@@ -21,6 +21,7 @@ import tmg.flashback.managers.widgets.WidgetManager
 import tmg.flashback.notifications.managers.SystemNotificationManager
 import tmg.flashback.notifications.usecases.RemoteNotificationSubscribeUseCase
 import tmg.flashback.notifications.usecases.RemoteNotificationUnsubscribeUseCase
+import tmg.flashback.repositories.ContactRepository
 import tmg.flashback.stats.repository.NotificationRepository
 import tmg.flashback.stats.repository.models.NotificationChannel
 import tmg.flashback.style.AppTheme
@@ -42,6 +43,7 @@ import javax.inject.Singleton
 class FlashbackStartup @Inject constructor(
     private val deviceRepository: DeviceRepository,
     private val crashRepository: CrashRepository,
+    private val contactRepository: ContactRepository,
     private val initialiseCrashReportingUseCase: InitialiseCrashReportingUseCase,
     private val widgetManager: WidgetManager,
     private val notificationRepository: NotificationRepository,
@@ -78,10 +80,7 @@ class FlashbackStartup @Inject constructor(
         if (crashRepository.shakeToReport) {
             Log.i("Startup", "Enabling shake to report")
 
-            Shaky.with(application, object : EmailShakeDelegate("thementalgoose@gmail.com") {
-                override fun getTheme() = super.getTheme()
-                override fun getPopupTheme() = super.getPopupTheme()
-            })
+            Shaky.with(application, EmailShakeDelegate(contactRepository.contactEmail))
         }
 
         // App startup

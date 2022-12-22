@@ -8,6 +8,7 @@ import tmg.flashback.constants.AboutThisAppConfig
 import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.device.repository.DeviceRepository
 import tmg.flashback.notifications.navigation.NotificationNavigationProvider
+import tmg.flashback.repositories.ContactRepository
 import tmg.flashback.rss.usecases.AllSupportedSourcesUseCase
 import tmg.flashback.ui.All
 import tmg.flashback.ui.Home
@@ -22,6 +23,7 @@ import javax.inject.Inject
 class AppApplicationNavigationComponent @Inject constructor(
     private val buildConfigManager: BuildConfigManager,
     private val deviceRepository: DeviceRepository,
+    private val contactRepository: ContactRepository,
     private val analyticsManager: AnalyticsManager,
     private val allSupportedSourcesUseCase: AllSupportedSourcesUseCase,
     private val activityProvider: ActivityProvider,
@@ -50,6 +52,7 @@ class AppApplicationNavigationComponent @Inject constructor(
         return AboutThisAppActivity.intent(context, AboutThisAppConfig.configuration(context,
             appVersion = buildConfigManager.versionName,
             deviceUdid = deviceRepository.deviceUdid,
+            contactEmail = contactRepository.contactEmail,
             rssSources = allSupportedSourcesUseCase.getSources()
         ))
     }
