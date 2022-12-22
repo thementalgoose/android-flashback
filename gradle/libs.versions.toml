@@ -68,6 +68,7 @@ firebase_analytics = { module = "com.google.firebase:firebase-analytics" }
 firebase_common = { module = "com.google.firebase:firebase-common-ktx" }
 firebase_config = { module = "com.google.firebase:firebase-config" }
 firebase_crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
+firebase_installations = { module = "com.google.firebase:firebase-installations" }
 firebase_messaging = { module = "com.google.firebase:firebase-messaging" }
 firebase_perf = { module = "com.google.firebase:firebase-perf" }
 
