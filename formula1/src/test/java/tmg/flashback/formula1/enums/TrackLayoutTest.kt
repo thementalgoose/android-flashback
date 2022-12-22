@@ -87,6 +87,28 @@ internal class TrackLayoutTest {
         assertEquals(trackLayout, layout)
     }
 
+    @ParameterizedTest(name = "singapore track layout for {0} returns {1} layout")
+    @CsvSource(
+        "2008,MARINA_BAY_2008_2022",
+        "2009,MARINA_BAY_2008_2022",
+        "2010,MARINA_BAY_2008_2022",
+        "2011,MARINA_BAY_2008_2022",
+        "2012,MARINA_BAY_2008_2022",
+        "2013,MARINA_BAY_2008_2022",
+        "2014,MARINA_BAY_2008_2022",
+        "2015,MARINA_BAY_2008_2022",
+        "2016,MARINA_BAY_2008_2022",
+        "2017,MARINA_BAY_2008_2022",
+        "2018,MARINA_BAY_2008_2022",
+        "2019,MARINA_BAY_2008_2022",
+        "2022,MARINA_BAY_2008_2022",
+        "2023,MARINA_BAY",
+    )
+    fun `singapore track layout`(year: Int?, trackLayout: TrackLayout) {
+        val layout = TrackLayout.getTrack("marina_bay", year ?: Year.now().value, "Singapore Grand Prix")
+        assertEquals(trackLayout, layout)
+    }
+
     @Test
     fun `sakhir track layout`() {
         val layout = TrackLayout.getTrack("bahrain", 2020, "Sakhir Grand Prix")
