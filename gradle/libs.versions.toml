@@ -105,7 +105,7 @@ skeletonlayout = "com.faltenreich:skeletonlayout:4.0.0"
 threeten = "org.threeten:threetenbp:1.6.5"
 threetenabp = "com.jakewharton.threetenabp:threetenabp:1.4.4"
 
-tmg_utils = "com.github.thementalgoose:android-utilities:2.4.6"
+tmg_utils = "com.github.thementalgoose:android-utilities:2.4.5"
 tmg_labelledprogressbar = "com.github.thementalgoose:android-labelled-progress-bar:1.0.9"
 tmg_aboutthisapp = "com.github.thementalgoose:android-about-this-app:5.3.2"
 
