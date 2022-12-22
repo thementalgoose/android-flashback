@@ -5,7 +5,6 @@ import io.mockk.mockk
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import tmg.flashback.configuration.manager.ConfigManager
-import tmg.flashback.settings.repository.SettingsRepository
 
 internal class ContactRepositoryTest {
 
@@ -21,7 +20,10 @@ internal class ContactRepositoryTest {
 
     @Test
     fun `getting contact email returns default if config is null`() {
+        every { mockConfigManager.getString(keyEmail) } returns null
+
         initUnderTest()
+
         assertEquals(fallbackEmail, underTest.contactEmail)
     }
 
