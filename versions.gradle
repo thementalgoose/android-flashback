@@ -30,4 +30,5 @@ ext {
     versionCode = getVersionCode()
 
     baseUrl = "https://flashback.pages.dev"
+    contactEmail = "thementalgoose@gmail.com"
 }
