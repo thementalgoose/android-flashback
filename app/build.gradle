@@ -80,6 +80,7 @@ android {
 
             buildConfigField "int", "ENVIRONMENT", '0'
             buildConfigField "String", "BASE_URL", '"' + project.ext.baseUrl + '"'
+            buildConfigField "String", "CONTACT_EMAIL", '"' + project.ext.contactEmail + '"'
 
             firebaseCrashlytics {
                 mappingFileUploadEnabled true
