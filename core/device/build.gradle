@@ -20,4 +20,7 @@ dependencies {
     // Preferences library
     implementation project(path: ':core:preferences')
 
+    implementation platform(libs.firebase.bom)
+    implementation libs.firebase.common
+    implementation libs.firebase.installations
 }

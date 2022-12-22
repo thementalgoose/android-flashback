@@ -24,6 +24,7 @@ import tmg.flashback.ui.base.BaseActivity
 import tmg.flashback.ui.navigation.Navigator
 import tmg.flashback.ui.navigation.Screen
 import tmg.flashback.ui.sync.SyncActivity
+import tmg.utilities.extensions.deviceStatus
 import javax.inject.Inject
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)

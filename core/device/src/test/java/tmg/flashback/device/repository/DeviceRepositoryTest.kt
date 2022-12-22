@@ -1,5 +1,6 @@
 package tmg.flashback.device.repository
 
+import androidx.compose.runtime.key
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -162,10 +163,28 @@ internal class DeviceRepositoryTest {
 
     //endregion
 
+    //region Installation ID
+
+    @Test
+    fun `installation id gets installation id from shared prefs repository`() {
+        val value = "installation-id"
+        every { mockPreferenceManager.getString(keyInstallationId, "") } returns value
+
+        initUnderTest()
+
+        assertEquals(value, underTest.installationId)
+        verify {
+            mockPreferenceManager.getString(keyInstallationId, "")
+        }
+    }
+
+    //endregion
+
     companion object {
         private const val keyAppOpenedCount: String = "APP_STARTUP_OPEN_COUNT"
         private const val keyAppFirstBoot: String = "APP_STARTUP_FIRST_BOOT"
         private const val keyDeviceUdid: String = "UDID"
         private const val keyAppVersion: String = "RELEASE_NOTES"
+        private const val keyInstallationId: String = "INSTALLATION_ID"
     }
 }

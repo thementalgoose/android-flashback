@@ -1,10 +1,13 @@
 package tmg.flashback
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Build
 import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import com.jakewharton.threetenabp.AndroidThreeTen
 import com.linkedin.android.shaky.EmailShakeDelegate
+import com.linkedin.android.shaky.Result
 import com.linkedin.android.shaky.Shaky
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -17,6 +20,7 @@ import tmg.flashback.crash_reporting.repository.CrashRepository
 import tmg.flashback.crash_reporting.usecases.InitialiseCrashReportingUseCase
 import tmg.flashback.device.repository.DeviceRepository
 import tmg.flashback.device.usecases.AppOpenedUseCase
+import tmg.flashback.device.usecases.GetDeviceInfoUseCase
 import tmg.flashback.managers.widgets.WidgetManager
 import tmg.flashback.notifications.managers.SystemNotificationManager
 import tmg.flashback.notifications.usecases.RemoteNotificationSubscribeUseCase
@@ -30,6 +34,7 @@ import tmg.flashback.ui.model.NightMode
 import tmg.flashback.ui.model.Theme
 import tmg.flashback.ui.repository.ThemeRepository
 import tmg.flashback.widgets.updateAllWidgets
+import tmg.utilities.extensions.deviceStatus
 import tmg.utilities.extensions.isInDayMode
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -53,11 +58,14 @@ class FlashbackStartup @Inject constructor(
     private val systemNotificationManager: SystemNotificationManager,
     private val remoteNotificationSubscribeUseCase: RemoteNotificationSubscribeUseCase,
     private val remoteNotificationUnsubscribeUseCase: RemoteNotificationUnsubscribeUseCase,
-    private val appOpenedUseCase: AppOpenedUseCase
+    private val appOpenedUseCase: AppOpenedUseCase,
+    private val getDeviceInfoUseCase: GetDeviceInfoUseCase,
     // Adverts
 //    private val initialiseAdsUseCase: InitialiseAdsUseCase
 ) {
     fun startup(application: FlashbackApplication) {
+
+        val applicationScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
         // ThreeTen
         AndroidThreeTen.init(application)
@@ -79,12 +87,21 @@ class FlashbackStartup @Inject constructor(
         // Shake to report a bug
         if (crashRepository.shakeToReport) {
             Log.i("Startup", "Enabling shake to report")
-
-            Shaky.with(application, EmailShakeDelegate(contactRepository.contactEmail))
+            Shaky.with(application, object : EmailShakeDelegate(contactRepository.contactEmail) {
+                override fun onSubmit(result: Result): Intent {
+                    val intent = super.onSubmit(result)
+                    val text = intent.extras?.getString(Intent.EXTRA_TEXT)
+                    intent.putExtra(Intent.EXTRA_TEXT, "${text}\n\n${getDeviceInfoUseCase.run()}")
+                    return intent
+                }
+            })
         }
 
         // App startup
         appOpenedUseCase.run()
+        applicationScope.launch(Dispatchers.IO) {
+            appOpenedUseCase.preload()
+        }
 
         // Crash Reporting
         initialiseCrashReportingUseCase.initialise(
@@ -118,7 +135,6 @@ class FlashbackStartup @Inject constructor(
             "notify_sprint",
             R.string.notification_channel_sprint_notify
         )
-        val applicationScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
         applicationScope.launch(Dispatchers.IO) {
             when (notificationRepository.notificationNotifyQualifying) {
                 true -> remoteNotificationSubscribeUseCase.subscribe("notify_qualifying")
