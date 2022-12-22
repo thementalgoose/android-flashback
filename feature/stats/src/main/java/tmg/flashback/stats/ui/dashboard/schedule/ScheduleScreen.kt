@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import org.threeten.bp.LocalDate
 import tmg.flashback.formula1.enums.SeasonTyres
 import tmg.flashback.formula1.enums.getBySeason
 import tmg.flashback.formula1.extensions.icon
@@ -245,7 +246,7 @@ private fun Event(
     event: ScheduleModel.Event
 ) {
     Row(modifier = Modifier
-        .alpha(listAlpha)
+        .alpha(if (event.date == LocalDate.now()) 1f else listAlpha)
         .padding(
             vertical = AppTheme.dimens.xsmall,
             horizontal = AppTheme.dimens.medium
