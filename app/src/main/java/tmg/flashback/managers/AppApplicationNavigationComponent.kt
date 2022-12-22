@@ -49,10 +49,11 @@ class AppApplicationNavigationComponent @Inject constructor(
         analyticsManager.viewScreen("About This App", mapOf(
             "version" to buildConfigManager.versionName
         ), AboutThisAppActivity::class.java)
+
         return AboutThisAppActivity.intent(context, AboutThisAppConfig.configuration(context,
             appVersion = buildConfigManager.versionName,
-            deviceUdid = deviceRepository.deviceUdid,
             contactEmail = contactRepository.contactEmail,
+            deviceUdid = "${deviceRepository.deviceUdid}\n${deviceRepository.installationId}",
             rssSources = allSupportedSourcesUseCase.getSources()
         ))
     }
