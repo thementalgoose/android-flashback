@@ -65,6 +65,10 @@ enum class TrackLayout(
     JEREZ("jerez", R.drawable.circuit_jerez),
     KYALAMI("kyalami", R.drawable.circuit_kyalami),
     LAS_VEGAS("las_vegas", R.drawable.circuit_las_vegas),
+    LAS_VEGAS_1981_1982("las_vegas", R.drawable.circuit_las_vegas_1981_1982, listOf(
+        "1981 Caesars Palace Grand Prix",
+        "1982 Caesars Palace Grand Prix"
+    )),
     LEMANS("lemans", R.drawable.circuit_lemans),
     LONG_BEACH("long_beach", R.drawable.circuit_long_beach),
     LOSAIL("losail", R.drawable.circuit_losail),

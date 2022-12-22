@@ -153,4 +153,16 @@ internal class TrackLayoutTest {
         val layout = TrackLayout.getTrack("galvez", year ?: Year.now().value, "Argentine Grand Prix")
         assertEquals(trackLayout, layout)
     }
+
+
+    @ParameterizedTest(name = "las vegas track layout for {0} returns {1} layout")
+    @CsvSource(
+        "1981,LAS_VEGAS_1981_1982",
+        "1982,LAS_VEGAS_1981_1982",
+        ",LAS_VEGAS"
+    )
+    fun `las vegas track layout`(year: Int?, trackLayout: TrackLayout) {
+        val layout = TrackLayout.getTrack("las_vegas", year ?: Year.now().value, "Caesars Palace Grand Prix")
+        assertEquals(trackLayout, layout)
+    }
 }
