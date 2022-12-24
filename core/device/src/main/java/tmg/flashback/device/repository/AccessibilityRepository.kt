@@ -10,7 +10,7 @@ class AccessibilityRepository @Inject constructor(
     private val applicationContext: Context
 ) {
     val isAnimationsEnabled: Boolean
-        get() = animatorValue == 0f
+        get() = animatorValue != 0f
 
     private val animatorValue: Float
         get() = Settings.Global.getFloat(

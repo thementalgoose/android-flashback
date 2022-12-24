@@ -33,8 +33,7 @@ private const val angleSeed = 25.0f
 private val angleSeedRange = -angleSeed..angleSeed
 private const val angleRange = 0.1f
 private const val angleDivisor = 10000.0f
-private const val baseFrameDurationMillis = 1000 / 60
-private const val baseSpeedPxAt60Fps = 3
+private const val baseSpeedPxAt60Fps = 2
 
 fun Modifier.snow(isEnabled: Boolean): Modifier {
     if (isEnabled) {
@@ -142,7 +141,7 @@ internal class Snowflake(
     private var angle by mutableStateOf(angle)
 
     fun update(elapsedMillis: Long) {
-        val increment = incrementFactor * (elapsedMillis / baseFrameDurationMillis) * baseSpeedPxAt60Fps
+        val increment = incrementFactor * baseSpeedPxAt60Fps
         val xDelta = (increment * cos(angle)).toFloat()
         val yDelta = (increment * sin(angle)).toFloat()
         position = Offset(position.x + xDelta, position.y + yDelta)
