@@ -19,6 +19,8 @@ include ':data:network'
 
 include ':formula1'
 
+include ':eastereggs'
+
 include ':core:analytics'
 include ':core:appshortcuts'
 include ':core:configuration'

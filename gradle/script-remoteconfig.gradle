@@ -53,6 +53,10 @@ task generateRemoteConfigDefaults {
                 value(project.ext.contactEmail)
             }
             entry {
+                key('easteregg_snow')
+                value('false')
+            }
+            entry {
                 key('force_upgrade')
                 value()
             }
