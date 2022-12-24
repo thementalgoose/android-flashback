@@ -28,6 +28,7 @@
             <option value="$PROJECT_DIR$/data/network" />
             <option value="$PROJECT_DIR$/data/repo" />
             <option value="$PROJECT_DIR$/data/room" />
+            <option value="$PROJECT_DIR$/eastereggs" />
             <option value="$PROJECT_DIR$/feature" />
             <option value="$PROJECT_DIR$/feature/debug" />
             <option value="$PROJECT_DIR$/feature/debug-noop" />
@@ -39,6 +40,7 @@
             <option value="$PROJECT_DIR$/feature/widgets" />
             <option value="$PROJECT_DIR$/formula1" />
             <option value="$PROJECT_DIR$/presentation" />
+            <option value="$PROJECT_DIR$/presentation/snow" />
             <option value="$PROJECT_DIR$/presentation/style" />
             <option value="$PROJECT_DIR$/presentation/ui" />
             <option value="$PROJECT_DIR$/test" />
