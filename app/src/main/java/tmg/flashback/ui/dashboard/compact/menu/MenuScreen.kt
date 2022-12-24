@@ -14,6 +14,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -22,12 +23,14 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.R
 import tmg.flashback.formula1.constants.Formula1
+import tmg.flashback.snow.snow
 import tmg.flashback.stats.components.Timeline
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextHeadline2
+import tmg.flashback.style.text.TextHeadline2WithIcon
 import tmg.flashback.style.text.TextSection
 import tmg.flashback.ui.dashboard.MenuSeasonItem
 
@@ -51,7 +54,9 @@ fun MenuScreenVM(
         featureClicked = viewModel.inputs::clickFeature,
         links = links.value,
         season = seasons.value,
-        appVersion = appVersion.value
+        appVersion = appVersion.value,
+        isSnowEnabled = viewModel.outputs.isSnowEasterEggEnabled,
+        isValentinesDayEnabled = viewModel.outputs.isValentinesDayEasterEggEnabled
     )
 }
 
@@ -63,12 +68,16 @@ fun MenuScreen(
     toggleClicked: (MenuItems.Toggle) -> Unit,
     featureClicked: (MenuItems.Feature) -> Unit,
     season: List<MenuSeasonItem>,
-    appVersion: String
+    appVersion: String,
+    isSnowEnabled: Boolean = false,
+    isValentinesDayEnabled: Boolean = false
 ) {
     LazyColumn(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .snow(isSnowEnabled),
         content = {
-            item { Hero() }
+            item { Hero(isValentinesDayEnabled) }
             item { Divider() }
             item { SubHeader(text = stringResource(id = R.string.dashboard_links_title)) }
             items(links, key = { it.id }) {
@@ -148,15 +157,33 @@ fun MenuScreen(
 
 @Composable
 private fun Hero(
+    isValentinesDayEnabled: Boolean,
     modifier: Modifier = Modifier
 ) {
-    TextHeadline2(
-        text = stringResource(id = R.string.app_name),
-        modifier = modifier.padding(
+    if (isValentinesDayEnabled) {
+        Box(Modifier.padding(
             vertical = AppTheme.dimens.medium,
             horizontal = AppTheme.dimens.nsmall
+        )) {
+            TextHeadline2WithIcon(
+                text = stringResource(id = R.string.app_name),
+                icon = painterResource(id = R.drawable.ic_easteregg_love),
+                iconTint = Color.Red,
+                iconModifier = Modifier
+                    .rotate(30f)
+                    .size(20.dp)
+            )
+        }
+    } else {
+        TextHeadline2(
+            text = stringResource(id = R.string.app_name),
+            modifier = modifier.padding(
+                vertical = AppTheme.dimens.medium,
+                horizontal = AppTheme.dimens.nsmall
+            )
         )
-    )
+
+    }
 }
 
 @Composable
