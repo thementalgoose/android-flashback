@@ -23,7 +23,7 @@ internal class AccessibilityRepositoryTest {
     @Test
     fun `is animations enabled false when multiplier is 0`() {
         mockkStatic(Settings.Global::class)
-        every { Settings.Global.getFloat(any(), any()) } returns 0f
+        every { Settings.Global.getFloat(any(), any(), any()) } returns 0f
 
         initUnderTest()
         assertFalse(underTest.isAnimationsEnabled)
@@ -32,7 +32,7 @@ internal class AccessibilityRepositoryTest {
     @Test
     fun `is animations enabled true when multiplier is greater than 0`() {
         mockkStatic(Settings.Global::class)
-        every { Settings.Global.getFloat(any(), any()) } returns 0.25f
+        every { Settings.Global.getFloat(any(), any(), any()) } returns 0.25f
 
         initUnderTest()
         assertTrue(underTest.isAnimationsEnabled)
