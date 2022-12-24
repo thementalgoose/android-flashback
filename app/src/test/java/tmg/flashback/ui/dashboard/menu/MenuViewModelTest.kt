@@ -4,19 +4,19 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.CompletableDeferred
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.debug.DebugNavigationComponent
 import tmg.flashback.debug.R
 import tmg.flashback.device.managers.BuildConfigManager
+import tmg.flashback.eastereggs.usecases.IsSnowEnabledUseCase
+import tmg.flashback.eastereggs.usecases.IsValentinesDayEnabledUseCase
 import tmg.flashback.rss.RssNavigationComponent
-import tmg.flashback.formula1.constants.Formula1.decadeColours
 import tmg.flashback.stats.StatsNavigationComponent
-import tmg.flashback.stats.repository.HomeRepository
 import tmg.flashback.stats.repository.NotificationRepository
 import tmg.flashback.stats.usecases.DefaultSeasonUseCase
 import tmg.flashback.ui.dashboard.compact.menu.MenuItems
-import tmg.flashback.ui.dashboard.MenuSeasonItem
 import tmg.flashback.ui.dashboard.compact.menu.MenuViewModel
 import tmg.flashback.ui.dashboard.expectedMenuItems
 import tmg.flashback.ui.managers.PermissionManager
@@ -45,6 +45,8 @@ internal class MenuViewModelTest: BaseTest() {
     private val mockNavigationComponent: ApplicationNavigationComponent = mockk(relaxed = true)
     private val mockStatsNavigationComponent: StatsNavigationComponent = mockk(relaxed = true)
     private val mockDebugNavigationComponent: DebugNavigationComponent = mockk(relaxed = true)
+    private val mockIsSnowEnabledUseCase: IsSnowEnabledUseCase = mockk(relaxed = true)
+    private val mockIsValentinesDayEnabledUseCase: IsValentinesDayEnabledUseCase = mockk(relaxed = true)
 
     private lateinit var underTest: MenuViewModel
 
@@ -61,7 +63,9 @@ internal class MenuViewModelTest: BaseTest() {
             mockRssNavigationComponent,
             mockNavigationComponent,
             mockStatsNavigationComponent,
-            mockDebugNavigationComponent
+            mockDebugNavigationComponent,
+            mockIsSnowEnabledUseCase,
+            mockIsValentinesDayEnabledUseCase
         )
     }
 
@@ -71,6 +75,21 @@ internal class MenuViewModelTest: BaseTest() {
         every { mockDefaultSeasonUseCase.defaultSeason } returns 2022
         every { mockNotificationRepository.seenNotificationOnboarding } returns false
         every { mockGetSeasonsUseCase.get(2022) } returns expectedMenuItems
+    }
+
+    @Test
+    fun `valentines day easter egg is true when easter egg is active`() {
+        every { mockIsValentinesDayEnabledUseCase.invoke() } returns true
+        initUnderTest()
+        assertTrue(underTest.outputs.isValentinesDayEasterEggEnabled)
+    }
+
+
+    @Test
+    fun `snow easter egg is true when easter egg is active`() {
+        every { mockIsSnowEnabledUseCase.invoke() } returns true
+        initUnderTest()
+        assertTrue(underTest.outputs.isSnowEasterEggEnabled)
     }
 
     @Test
