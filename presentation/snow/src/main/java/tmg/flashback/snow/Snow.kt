@@ -1,5 +1,6 @@
 package tmg.flashback.snow
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -63,11 +64,13 @@ internal fun Modifier.snowfall() = composed {
         }
     }
 
+    val darkTheme = isSystemInDarkTheme()
+
     onSizeChanged { newSize -> snowflakesState = snowflakesState.resize(newSize) }
         .clipToBounds()
         .drawWithContent {
             drawContent()
-            snowflakesState.draw(drawContext.canvas)
+            snowflakesState.draw(drawContext.canvas, darkTheme)
         }
 }
 
@@ -90,8 +93,8 @@ internal data class SnowflakesState(
 
     constructor(tick: Long, canvasSize: IntSize) : this(tick, createSnowflakes(canvasSize))
 
-    fun draw(canvas: Canvas) {
-        snowflakes.forEach { it.draw(canvas) }
+    fun draw(canvas: Canvas, isDarkMode: Boolean) {
+        snowflakes.forEach { it.draw(canvas, isDarkMode) }
     }
 
     fun resize(newSize: IntSize) = copy(snowflakes = createSnowflakes(newSize))
@@ -116,9 +119,14 @@ internal data class SnowflakesState(
     }
 }
 
-private val snowflakePaint = Paint().apply {
+private val snowflakePaintDark = Paint().apply {
     isAntiAlias = true
     color = Color.White.copy(alpha = 0.4f)
+    style = PaintingStyle.Fill
+}
+private val snowflakePaintLight = Paint().apply {
+    isAntiAlias = true
+    color = Color.LightGray.copy(alpha = 0.4f)
     style = PaintingStyle.Fill
 }
 
@@ -145,7 +153,11 @@ internal class Snowflake(
         }
     }
 
-    fun draw(canvas: Canvas) {
-        canvas.drawCircle(position, size, snowflakePaint)
+    fun draw(canvas: Canvas, isDarkMode: Boolean) {
+        if (isDarkMode) {
+            canvas.drawCircle(position, size, snowflakePaintDark)
+        } else {
+            canvas.drawCircle(position, size, snowflakePaintLight)
+        }
     }
 }
