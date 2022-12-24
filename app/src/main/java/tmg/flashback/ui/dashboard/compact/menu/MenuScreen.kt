@@ -66,7 +66,7 @@ fun MenuScreen(
     featureClicked: (MenuItems.Feature) -> Unit,
     season: List<MenuSeasonItem>,
     appVersion: String,
-    isSnowEnabled: Boolean
+    isSnowEnabled: Boolean = false
 ) {
     LazyColumn(
         modifier = Modifier
