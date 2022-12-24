@@ -49,7 +49,7 @@ internal fun Modifier.snowfall() = composed {
     }
 
     LaunchedEffect(Unit) {
-        while (isActive) {
+        while (this.isActive) {
             withFrameNanos { newTick ->
                 val elapsedMillis =
                     (newTick - snowflakesState.tickNanos).nanoseconds.inWholeMilliseconds
