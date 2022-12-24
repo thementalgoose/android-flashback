@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.R
 import tmg.flashback.formula1.constants.Formula1
+import tmg.flashback.snow.snow
 import tmg.flashback.stats.components.Timeline
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
@@ -51,7 +52,8 @@ fun MenuScreenVM(
         featureClicked = viewModel.inputs::clickFeature,
         links = links.value,
         season = seasons.value,
-        appVersion = appVersion.value
+        appVersion = appVersion.value,
+        isSnowEnabled = viewModel.outputs.isSnowEasterEggEnabled
     )
 }
 
@@ -63,10 +65,13 @@ fun MenuScreen(
     toggleClicked: (MenuItems.Toggle) -> Unit,
     featureClicked: (MenuItems.Feature) -> Unit,
     season: List<MenuSeasonItem>,
-    appVersion: String
+    appVersion: String,
+    isSnowEnabled: Boolean
 ) {
     LazyColumn(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .snow(isSnowEnabled),
         content = {
             item { Hero() }
             item { Divider() }
