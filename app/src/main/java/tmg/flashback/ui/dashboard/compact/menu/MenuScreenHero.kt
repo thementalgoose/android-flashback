@@ -18,7 +18,7 @@ import tmg.flashback.style.text.TextHeadline2WithIcon
 
 private val MenuKeys.drawable: Int get() = when (this) {
     MenuKeys.VALENTINES_DAY -> R.drawable.ic_easteregg_valentines
-    MenuKeys.EASTER -> R.drawable.ic_easteregg_valentines
+    MenuKeys.EASTER -> R.drawable.ic_easteregg_easter
     MenuKeys.HALLOWEEN -> R.drawable.ic_easteregg_halloween
     MenuKeys.CHRISTMAS -> R.drawable.ic_easteregg_christmas
 }
