@@ -35,41 +35,7 @@ internal class EasterEggsRepositoryTest {
         }
     }
 
-    private val MenuKeys.expectedKey: String
-        get() = when (this) {
-            MenuKeys.VALENTINES_DAY -> "valentines"
-            MenuKeys.EASTER -> "easter"
-            MenuKeys.HALLOWEEN -> "halloween"
-            MenuKeys.CHRISTMAS -> "christmas"
-        }
-    @ParameterizedTest
-    @EnumSource(MenuKeys::class)
-    fun `menu keys return expected`(menuKeys: MenuKeys) {
-        every { mockConfigManager.getString(keyMenuIcon) } returns menuKeys.expectedKey
-
-        initUnderTest()
-        assertEquals(menuKeys, underTest.menuIcon)
-    }
-
-    @Test
-    fun `menu keys returns null when value is null`() {
-        every { mockConfigManager.getString(keyMenuIcon) } returns null
-
-        initUnderTest()
-        assertNull(underTest.menuIcon)
-    }
-
-    @Test
-    fun `menu keys returns null when value is empty`() {
-        every { mockConfigManager.getString(keyMenuIcon) } returns "unknown"
-
-        initUnderTest()
-        assertNull(underTest.menuIcon)
-    }
-
-
     companion object {
         private const val keySnow = "easteregg_snow"
-        private const val keyMenuIcon = "easteregg_menuicon"
     }
 }

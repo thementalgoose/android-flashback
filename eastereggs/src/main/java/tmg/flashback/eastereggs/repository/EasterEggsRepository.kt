@@ -10,15 +10,8 @@ class EasterEggsRepository @Inject constructor(
 
     companion object {
         private const val keySnow = "easteregg_snow"
-        private const val keyMenuIcon = "easteregg_menuicon"
     }
 
     internal val isSnowEnabled: Boolean
         get() = configManager.getBoolean(keySnow)
-
-    internal val menuIcon: MenuKeys?
-        get() {
-            val configKey = configManager.getString(keyMenuIcon)
-            return MenuKeys.values().firstOrNull { it.key == configKey }
-        }
 }
