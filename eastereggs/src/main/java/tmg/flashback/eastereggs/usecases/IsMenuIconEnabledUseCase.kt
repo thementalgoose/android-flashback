@@ -1,6 +1,5 @@
 package tmg.flashback.eastereggs.usecases
 
-import org.threeten.bp.LocalDate
 import tmg.flashback.device.managers.TimeManager
 import tmg.flashback.eastereggs.model.MenuKeys
 import javax.inject.Inject
