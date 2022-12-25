@@ -1,6 +1,5 @@
 package tmg.flashback.ui.dashboard.compact.menu
 
-import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -9,12 +8,11 @@ import kotlinx.coroutines.launch
 import tmg.flashback.debug.DebugNavigationComponent
 import tmg.flashback.debug.debugMenuItemList
 import tmg.flashback.device.managers.BuildConfigManager
+import tmg.flashback.eastereggs.model.MenuKeys
 import tmg.flashback.eastereggs.usecases.IsSnowEnabledUseCase
-import tmg.flashback.eastereggs.usecases.IsValentinesDayEnabledUseCase
-import tmg.flashback.formula1.constants.Formula1.decadeColours
+import tmg.flashback.eastereggs.usecases.IsMenuIconEnabledUseCase
 import tmg.flashback.rss.RssNavigationComponent
 import tmg.flashback.stats.StatsNavigationComponent
-import tmg.flashback.stats.repository.HomeRepository
 import tmg.flashback.stats.repository.NotificationRepository
 import tmg.flashback.stats.usecases.DefaultSeasonUseCase
 import tmg.flashback.ui.dashboard.MenuSeasonItem
@@ -27,7 +25,6 @@ import tmg.flashback.ui.repository.PermissionRepository
 import tmg.flashback.ui.usecases.ChangeNightModeUseCase
 import tmg.flashback.usecases.GetSeasonsUseCase
 import javax.inject.Inject
-import kotlin.math.abs
 
 //region Inputs
 
@@ -50,7 +47,7 @@ interface MenuViewModelOutputs {
     val appVersion: LiveData<String>
 
     val isSnowEasterEggEnabled: Boolean
-    val isValentinesDayEasterEggEnabled: Boolean
+    val overrideMenuKey: MenuKeys?
 }
 
 //endregion
@@ -70,7 +67,7 @@ class MenuViewModel @Inject constructor(
     private val statsNavigationComponent: StatsNavigationComponent,
     private val debugNavigationComponent: DebugNavigationComponent,
     private val isSnowEnabledUseCase: IsSnowEnabledUseCase,
-    private val isValentinesDayEnabledUseCase: IsValentinesDayEnabledUseCase
+    private val isMenuIconEnabledUseCase: IsMenuIconEnabledUseCase
 ) : ViewModel(), MenuViewModelInputs, MenuViewModelOutputs {
 
     val inputs: MenuViewModelInputs = this
@@ -79,7 +76,7 @@ class MenuViewModel @Inject constructor(
     private val selectedSeason: MutableStateFlow<Int> = MutableStateFlow(defaultSeasonUseCase.defaultSeason)
 
     override val isSnowEasterEggEnabled: Boolean by lazy { isSnowEnabledUseCase() }
-    override val isValentinesDayEasterEggEnabled: Boolean by lazy { isValentinesDayEnabledUseCase()}
+    override val overrideMenuKey: MenuKeys? by lazy { isMenuIconEnabledUseCase() }
 
     override val links: MutableLiveData<List<MenuItems>> = MutableLiveData(getLinks())
     override val appVersion: MutableLiveData<String> = MutableLiveData(buildConfigManager.versionName)
