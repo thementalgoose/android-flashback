@@ -57,6 +57,10 @@ task generateRemoteConfigDefaults {
                 value('false')
             }
             entry {
+                key('easteregg_menuicon')
+                value('false')
+            }
+            entry {
                 key('force_upgrade')
                 value()
             }
