@@ -3,18 +3,13 @@ package tmg.flashback.eastereggs.usecases
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
-import org.junit.jupiter.params.provider.EnumSource
 import org.junit.jupiter.params.provider.ValueSource
-import org.junit.runners.Parameterized.Parameter
-import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.Year
 import tmg.flashback.device.managers.TimeManager
-import tmg.flashback.eastereggs.model.MenuKeys
-import tmg.flashback.eastereggs.repository.EasterEggsRepository
+import tmg.flashback.eastereggs.model.MenuIcons
 
 internal class IsMenuIconEnabledUseCaseTest {
 
@@ -55,17 +50,17 @@ internal class IsMenuIconEnabledUseCaseTest {
         every { mockTimeManager.now } returns LocalDateTime.of(Year.now().value, 2, dayOfMonth, 12, 0)
 
         initUnderTest()
-        assertEquals(MenuKeys.VALENTINES_DAY, underTest.invoke())
+        assertEquals(MenuIcons.VALENTINES_DAY, underTest.invoke())
     }
 
     @ParameterizedTest
     @ValueSource(ints = [4, 5, 6, 7, 8, 9])
     fun `easter is returned when now is within range`(dayOfMonth: Int) {
-        val year = MenuKeys.EASTER.start.year
+        val year = MenuIcons.EASTER.start.year
         every { mockTimeManager.now } returns LocalDateTime.of(year, 4, dayOfMonth, 12, 0)
 
         initUnderTest()
-        assertEquals(MenuKeys.EASTER, underTest.invoke())
+        assertEquals(MenuIcons.EASTER, underTest.invoke())
     }
 
     @ParameterizedTest
@@ -74,7 +69,16 @@ internal class IsMenuIconEnabledUseCaseTest {
         every { mockTimeManager.now } returns LocalDateTime.of(Year.now().value, 10, dayOfMonth, 12, 0)
 
         initUnderTest()
-        assertEquals(MenuKeys.HALLOWEEN, underTest.invoke())
+        assertEquals(MenuIcons.HALLOWEEN, underTest.invoke())
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = [4, 5])
+    fun `bonfire is returned when now is within range`(dayOfMonth: Int) {
+        every { mockTimeManager.now } returns LocalDateTime.of(Year.now().value, 11, dayOfMonth, 12, 0)
+
+        initUnderTest()
+        assertEquals(MenuIcons.BONFIRE, underTest.invoke())
     }
 
     @ParameterizedTest
@@ -83,6 +87,6 @@ internal class IsMenuIconEnabledUseCaseTest {
         every { mockTimeManager.now } returns LocalDateTime.of(Year.now().value, 12, dayOfMonth, 12, 0)
 
         initUnderTest()
-        assertEquals(MenuKeys.CHRISTMAS, underTest.invoke())
+        assertEquals(MenuIcons.CHRISTMAS, underTest.invoke())
     }
 }

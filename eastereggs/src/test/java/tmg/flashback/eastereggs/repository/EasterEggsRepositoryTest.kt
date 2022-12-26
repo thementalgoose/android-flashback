@@ -5,11 +5,7 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.CsvSource
-import org.junit.jupiter.params.provider.EnumSource
 import tmg.flashback.configuration.manager.ConfigManager
-import tmg.flashback.eastereggs.model.MenuKeys
 
 internal class EasterEggsRepositoryTest {
 

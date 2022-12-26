@@ -21,7 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.R
-import tmg.flashback.eastereggs.model.MenuKeys
+import tmg.flashback.eastereggs.model.MenuIcons
 import tmg.flashback.formula1.constants.Formula1
 import tmg.flashback.snow.snow
 import tmg.flashback.stats.components.Timeline
@@ -68,7 +68,7 @@ fun MenuScreen(
     season: List<MenuSeasonItem>,
     appVersion: String,
     isSnowEnabled: Boolean = false,
-    menuKey: MenuKeys? = null
+    menuKey: MenuIcons? = null
 ) {
     LazyColumn(
         modifier = Modifier
