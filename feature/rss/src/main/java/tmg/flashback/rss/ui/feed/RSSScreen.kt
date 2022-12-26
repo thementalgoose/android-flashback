@@ -24,8 +24,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.graphics.toColorInt
-import com.google.accompanist.swiperefresh.SwipeRefresh
-import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import androidx.hilt.navigation.compose.hiltViewModel
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
@@ -41,6 +39,7 @@ import tmg.flashback.ui.components.analytics.ScreenView
 import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.messages.Message
+import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
 import tmg.utilities.extensions.fromHtml
 
 private val badgeSize: Dp = 40.dp
@@ -56,7 +55,7 @@ fun RSSScreenVM(
     val list = viewModel.outputs.list.observeAsState(emptyList())
     val isLoading = viewModel.outputs.isRefreshing.observeAsState(false)
     SwipeRefresh(
-        state = rememberSwipeRefreshState(isRefreshing = isLoading.value),
+        isLoading = isLoading.value,
         onRefresh = viewModel.inputs::refresh
     ) {
         RSSScreen(

@@ -19,8 +19,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.google.accompanist.swiperefresh.SwipeRefresh
-import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import org.threeten.bp.LocalDate
 import tmg.flashback.formula1.enums.SeasonTyres
 import tmg.flashback.formula1.enums.getBySeason
@@ -42,6 +40,7 @@ import tmg.flashback.style.text.TextSection
 import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.loading.SkeletonViewList
+import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
 import tmg.utilities.extensions.format
 
 private const val listAlpha = 0.6f
@@ -59,7 +58,7 @@ fun ScheduleScreenVM(
     val isRefreshing = viewModel.outputs.isRefreshing.observeAsState(false)
     val items = viewModel.outputs.items.observeAsState(listOf(ScheduleModel.Loading))
     SwipeRefresh(
-        state = rememberSwipeRefreshState(isRefreshing = isRefreshing.value),
+        isLoading = isRefreshing.value,
         onRefresh = viewModel.inputs::refresh
     ) {
         ScheduleScreen(

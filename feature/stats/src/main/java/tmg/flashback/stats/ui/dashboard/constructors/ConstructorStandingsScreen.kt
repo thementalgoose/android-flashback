@@ -14,8 +14,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.swiperefresh.SwipeRefresh
-import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.SeasonConstructorStandingSeason
@@ -32,6 +30,7 @@ import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.progressbar.ProgressBar
+import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
 import kotlin.math.roundToInt
 
 @Composable
@@ -46,7 +45,7 @@ fun ConstructorStandingsScreenVM(
     val isRefreshing = viewModel.outputs.isRefreshing.observeAsState(false)
     val items = viewModel.outputs.items.observeAsState(listOf(ConstructorStandingsModel.Loading))
     SwipeRefresh(
-        state = rememberSwipeRefreshState(isRefreshing = isRefreshing.value),
+        isLoading = isRefreshing.value,
         onRefresh = viewModel.inputs::refresh
     ) {
         ConstructorStandingsScreen(

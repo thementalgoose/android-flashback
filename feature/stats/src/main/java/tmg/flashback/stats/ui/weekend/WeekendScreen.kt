@@ -8,8 +8,6 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
-import com.google.accompanist.swiperefresh.SwipeRefresh
-import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.stats.analytics.AnalyticsConstants
 import tmg.flashback.stats.analytics.AnalyticsConstants.analyticsRound
@@ -24,6 +22,7 @@ import tmg.flashback.ui.components.analytics.ScreenView
 import tmg.flashback.ui.components.loading.Fade
 import tmg.flashback.ui.components.navigation.NavigationBar
 import tmg.flashback.ui.components.navigation.NavigationItem
+import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
 import tmg.utilities.extensions.toEnum
 
 data class WeekendScreenState(
@@ -81,7 +80,7 @@ fun WeekendScreenVM(
             val isRefreshing = viewModel.outputs.isRefreshing.observeAsState(false)
 
             SwipeRefresh(
-                state = rememberSwipeRefreshState(isRefreshing = isRefreshing.value),
+                isLoading = isRefreshing.value,
                 onRefresh = viewModel.inputs::refresh
             ) {
                 for (x in tabState.value) {

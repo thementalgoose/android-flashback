@@ -19,8 +19,6 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.google.accompanist.swiperefresh.SwipeRefresh
-import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import org.threeten.bp.LocalDate
 import tmg.flashback.formula1.enums.isStatusFinished
 import tmg.flashback.formula1.extensions.pointsDisplay
@@ -45,6 +43,7 @@ import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.messages.Message
 import tmg.flashback.ui.components.progressbar.ProgressBar
+import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
 import tmg.utilities.extensions.format
 import tmg.utilities.extensions.ordinalAbbreviation
 import kotlin.math.roundToInt
@@ -74,7 +73,7 @@ fun DriverSeasonScreenVM(
     val list = viewModel.outputs.list.observeAsState(emptyList())
     val isLoading = viewModel.outputs.isLoading.observeAsState(false)
     SwipeRefresh(
-        state = rememberSwipeRefreshState(isRefreshing = isLoading.value),
+        isLoading = isLoading.value,
         onRefresh = viewModel.inputs::refresh
     ) {
         DriverSeasonScreen(
