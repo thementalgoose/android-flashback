@@ -34,7 +34,7 @@ buildscript {
         classpath "com.google.dagger:hilt-android-gradle-plugin:${libs.versions.hilt.get()}"
         classpath 'com.google.firebase:perf-plugin:1.4.2'
         //noinspection GradleDependency
-        classpath "com.github.ben-manes:gradle-versions-plugin:0.42.0"
+        classpath "com.github.ben-manes:gradle-versions-plugin:0.44.0"
     }
 }
 
