@@ -40,7 +40,6 @@ kotlinx_coroutines_android = { module = "org.jetbrains.kotlinx:kotlinx-coroutine
 kotlinx_coroutines_play_services = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services", version.ref = "coroutines" }
 kotlinx_serialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1"
 
-accompanist_swiperefresh = { module = "com.google.accompanist:accompanist-swiperefresh", version.ref = "compose_accompanist" }
 accompanist_horizontalpager = { module = "com.google.accompanist:accompanist-pager", version.ref = "compose_accompanist" }
 accompanist_systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "compose_accompanist" }
 accompanist_placeholder = { module = "com.google.accompanist:accompanist-placeholder-material", version.ref = "compose_accompanist" }
@@ -159,7 +158,6 @@ kotlin = [
     "kotlinx_serialization"
 ]
 accompanist = [
-    "accompanist_swiperefresh",
     "accompanist_horizontalpager",
     "accompanist_systemuicontroller",
     "accompanist_placeholder"

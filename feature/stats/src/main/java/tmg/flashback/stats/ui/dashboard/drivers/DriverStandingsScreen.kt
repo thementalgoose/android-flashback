@@ -18,8 +18,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.google.accompanist.swiperefresh.SwipeRefresh
-import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.SeasonDriverStandingSeason
@@ -38,6 +36,7 @@ import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.layouts.Container
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.progressbar.ProgressBar
+import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
 import kotlin.math.roundToInt
 
 @Composable
@@ -52,7 +51,7 @@ fun DriverStandingsScreenVM(
     val isRefreshing = viewModel.outputs.isRefreshing.observeAsState(false)
     val items = viewModel.outputs.items.observeAsState(listOf())
     SwipeRefresh(
-        state = rememberSwipeRefreshState(isRefreshing = isRefreshing.value),
+        isLoading = isRefreshing.value,
         onRefresh = viewModel.inputs::refresh
     ) {
         DriverStandingsScreen(
