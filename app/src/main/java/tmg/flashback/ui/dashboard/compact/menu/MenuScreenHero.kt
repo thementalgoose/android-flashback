@@ -9,10 +9,14 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import tmg.flashback.R
 import tmg.flashback.eastereggs.model.MenuKeys
+import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.style.AppTheme
+import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextHeadline2
 import tmg.flashback.style.text.TextHeadline2WithIcon
 
@@ -50,4 +54,25 @@ internal fun MenuScreenHero(
             )
         )
     }
+}
+
+@Composable
+@PreviewTheme
+private fun Preview(
+    @PreviewParameter(MenuKeyProvider::class) menuKey: MenuKeys
+) {
+    MenuScreenHero(menuKeys = menuKey)
+}
+
+@Composable
+@PreviewTheme
+private fun PreviewTheme() {
+    MenuScreenHero(null)
+}
+
+
+
+
+class MenuKeyProvider: PreviewParameterProvider<MenuKeys> {
+    override val values: Sequence<MenuKeys> = MenuKeys.values().asSequence()
 }
