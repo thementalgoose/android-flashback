@@ -1,5 +1,6 @@
 package tmg.flashback.style.text
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -51,7 +52,6 @@ fun TextHeadline2WithIcon(
     icon: Painter,
     modifier: Modifier = Modifier,
     iconModifier: Modifier = Modifier,
-    iconTint: Color = AppTheme.colors.contentSecondary,
     maxLines: Int = 1,
     brand: Boolean = false
 ) {
@@ -68,14 +68,13 @@ fun TextHeadline2WithIcon(
                     }
                 )
             )
-            Spacer(Modifier.width(8.dp))
+            Spacer(Modifier.width(10.dp))
         }
-        Icon(
+        Image(
+            painter = icon,
+            contentDescription = null,
             modifier = iconModifier
                 .align(Alignment.TopEnd),
-            tint = iconTint,
-            painter = icon,
-            contentDescription = null
         )
     }
 }
@@ -97,7 +96,6 @@ private fun PreviewIcon() {
         TextHeadline2WithIcon(
             text = "Headline 2",
             icon = painterResource(id = R.drawable.lb_ic_loop),
-            iconTint = Color.Red,
             iconModifier = Modifier.rotate(40f)
         )
     }

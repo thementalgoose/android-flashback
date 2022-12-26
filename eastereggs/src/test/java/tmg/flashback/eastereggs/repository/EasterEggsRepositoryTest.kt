@@ -31,7 +31,6 @@ internal class EasterEggsRepositoryTest {
         }
     }
 
-
     companion object {
         private const val keySnow = "easteregg_snow"
     }

@@ -4,14 +4,16 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.CompletableDeferred
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.debug.DebugNavigationComponent
 import tmg.flashback.debug.R
 import tmg.flashback.device.managers.BuildConfigManager
+import tmg.flashback.eastereggs.model.MenuIcons
 import tmg.flashback.eastereggs.usecases.IsSnowEnabledUseCase
-import tmg.flashback.eastereggs.usecases.IsValentinesDayEnabledUseCase
+import tmg.flashback.eastereggs.usecases.IsMenuIconEnabledUseCase
 import tmg.flashback.rss.RssNavigationComponent
 import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.stats.repository.NotificationRepository
@@ -46,7 +48,7 @@ internal class MenuViewModelTest: BaseTest() {
     private val mockStatsNavigationComponent: StatsNavigationComponent = mockk(relaxed = true)
     private val mockDebugNavigationComponent: DebugNavigationComponent = mockk(relaxed = true)
     private val mockIsSnowEnabledUseCase: IsSnowEnabledUseCase = mockk(relaxed = true)
-    private val mockIsValentinesDayEnabledUseCase: IsValentinesDayEnabledUseCase = mockk(relaxed = true)
+    private val mockIsMenuIconEnabledUseCase: IsMenuIconEnabledUseCase = mockk(relaxed = true)
 
     private lateinit var underTest: MenuViewModel
 
@@ -65,7 +67,7 @@ internal class MenuViewModelTest: BaseTest() {
             mockStatsNavigationComponent,
             mockDebugNavigationComponent,
             mockIsSnowEnabledUseCase,
-            mockIsValentinesDayEnabledUseCase
+            mockIsMenuIconEnabledUseCase
         )
     }
 
@@ -79,9 +81,9 @@ internal class MenuViewModelTest: BaseTest() {
 
     @Test
     fun `valentines day easter egg is true when easter egg is active`() {
-        every { mockIsValentinesDayEnabledUseCase.invoke() } returns true
+        every { mockIsMenuIconEnabledUseCase.invoke() } returns MenuIcons.EASTER
         initUnderTest()
-        assertTrue(underTest.outputs.isValentinesDayEasterEggEnabled)
+        assertEquals(MenuIcons.EASTER, underTest.outputs.overrideMenuKey)
     }
 
 
