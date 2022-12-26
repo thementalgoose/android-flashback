@@ -30,11 +30,6 @@ dependencyUpdates {
                         }
                     }
                 }
-                if (dependency.version != max) {
-                    dependency.available.integration = max
-                } else {
-                    dependency.available.integration = ''
-                }
                 if (list.find { dep -> dep.name == dependency.name && dep.group == dependency.group } == null) {
                     println("Adding new dependency ${dependency.name} ${dependency.group} ${dependency.version}")
                     list.push(dependency)
