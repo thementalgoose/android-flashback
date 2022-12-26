@@ -19,8 +19,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.swiperefresh.SwipeRefresh
-import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import androidx.hilt.navigation.compose.hiltViewModel
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.formula1.enums.TrackLayout
@@ -42,6 +40,7 @@ import tmg.flashback.style.text.TextBody2
 import tmg.flashback.ui.components.analytics.ScreenView
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.loading.SkeletonViewList
+import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
 import tmg.utilities.extensions.ordinalAbbreviation
 
 private val trackImageSize: Dp = 180.dp
@@ -68,7 +67,7 @@ fun CircuitScreenVM(
     val list = viewModel.outputs.list.observeAsState(listOf(CircuitModel.Loading))
     val isLoading = viewModel.outputs.showLoading.observeAsState(false)
     SwipeRefresh(
-        state = rememberSwipeRefreshState(isRefreshing = isLoading.value),
+        isLoading = isLoading.value,
         onRefresh = viewModel.inputs::refresh
     ) {
         CircuitScreen(

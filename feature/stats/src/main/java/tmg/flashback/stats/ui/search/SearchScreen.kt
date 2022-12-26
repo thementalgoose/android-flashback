@@ -18,8 +18,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.swiperefresh.SwipeRefresh
-import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import tmg.flashback.formula1.enums.TrackLayout
@@ -33,6 +31,7 @@ import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.ui.components.analytics.ScreenView
 import tmg.flashback.ui.components.header.Header
+import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
 
 @Composable
 fun SearchScreenVM(
@@ -47,7 +46,7 @@ fun SearchScreenVM(
 
     val isLoading = viewModel.outputs.isLoading.observeAsState(false)
     SwipeRefresh(
-        state = rememberSwipeRefreshState(isRefreshing = isLoading.value),
+        isLoading = isLoading.value,
         onRefresh = viewModel.inputs::refresh
     ) {
         SearchScreen(
