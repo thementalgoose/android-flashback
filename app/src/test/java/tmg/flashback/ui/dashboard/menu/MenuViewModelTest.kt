@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test
 import tmg.flashback.debug.DebugNavigationComponent
 import tmg.flashback.debug.R
 import tmg.flashback.device.managers.BuildConfigManager
-import tmg.flashback.eastereggs.model.MenuKeys
+import tmg.flashback.eastereggs.model.MenuIcons
 import tmg.flashback.eastereggs.usecases.IsSnowEnabledUseCase
 import tmg.flashback.eastereggs.usecases.IsMenuIconEnabledUseCase
 import tmg.flashback.rss.RssNavigationComponent
@@ -81,9 +81,9 @@ internal class MenuViewModelTest: BaseTest() {
 
     @Test
     fun `valentines day easter egg is true when easter egg is active`() {
-        every { mockIsMenuIconEnabledUseCase.invoke() } returns MenuKeys.EASTER
+        every { mockIsMenuIconEnabledUseCase.invoke() } returns MenuIcons.EASTER
         initUnderTest()
-        assertEquals(MenuKeys.EASTER, underTest.outputs.overrideMenuKey)
+        assertEquals(MenuIcons.EASTER, underTest.outputs.overrideMenuKey)
     }
 
 

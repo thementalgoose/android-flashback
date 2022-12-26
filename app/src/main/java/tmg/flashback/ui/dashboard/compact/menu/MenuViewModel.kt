@@ -8,7 +8,7 @@ import kotlinx.coroutines.launch
 import tmg.flashback.debug.DebugNavigationComponent
 import tmg.flashback.debug.debugMenuItemList
 import tmg.flashback.device.managers.BuildConfigManager
-import tmg.flashback.eastereggs.model.MenuKeys
+import tmg.flashback.eastereggs.model.MenuIcons
 import tmg.flashback.eastereggs.usecases.IsSnowEnabledUseCase
 import tmg.flashback.eastereggs.usecases.IsMenuIconEnabledUseCase
 import tmg.flashback.rss.RssNavigationComponent
@@ -47,7 +47,7 @@ interface MenuViewModelOutputs {
     val appVersion: LiveData<String>
 
     val isSnowEasterEggEnabled: Boolean
-    val overrideMenuKey: MenuKeys?
+    val overrideMenuKey: MenuIcons?
 }
 
 //endregion
@@ -76,7 +76,7 @@ class MenuViewModel @Inject constructor(
     private val selectedSeason: MutableStateFlow<Int> = MutableStateFlow(defaultSeasonUseCase.defaultSeason)
 
     override val isSnowEasterEggEnabled: Boolean by lazy { isSnowEnabledUseCase() }
-    override val overrideMenuKey: MenuKeys? by lazy { isMenuIconEnabledUseCase() }
+    override val overrideMenuKey: MenuIcons? by lazy { isMenuIconEnabledUseCase() }
 
     override val links: MutableLiveData<List<MenuItems>> = MutableLiveData(getLinks())
     override val appVersion: MutableLiveData<String> = MutableLiveData(buildConfigManager.versionName)

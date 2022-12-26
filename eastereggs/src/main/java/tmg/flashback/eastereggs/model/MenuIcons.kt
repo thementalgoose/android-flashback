@@ -4,7 +4,7 @@ import org.threeten.bp.LocalDate
 import org.threeten.bp.Year
 
 private val year: Int by lazy { Year.now().value }
-enum class MenuKeys(
+enum class MenuIcons(
     val key: String,
     val start: LocalDate,
     val end: LocalDate
@@ -23,6 +23,11 @@ enum class MenuKeys(
         key = "halloween",
         start = LocalDate.of(year, 10, 17),
         end = LocalDate.of(year, 10, 31)
+    ),
+    BONFIRE(
+        key = "bonfire",
+        start = LocalDate.of(year, 11, 4),
+        end = LocalDate.of(year, 11, 5)
     ),
     CHRISTMAS(
         key = "christmas",

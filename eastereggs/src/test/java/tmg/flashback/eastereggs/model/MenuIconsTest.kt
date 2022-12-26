@@ -5,12 +5,12 @@ import org.junit.jupiter.api.Test
 import java.time.Year
 import kotlin.math.min
 
-internal class MenuKeysTest {
+internal class MenuIconsTest {
 
     @Test
     fun `update required for easter eggs`() {
         val currentYear = Year.now().value
-        val minYear = MenuKeys.values()
+        val minYear = MenuIcons.values()
             .map { min(it.start.year, it.end.year) }
             .minBy { it }
 

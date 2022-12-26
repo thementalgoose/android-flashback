@@ -1,7 +1,6 @@
 package tmg.flashback.eastereggs.repository
 
 import tmg.flashback.configuration.manager.ConfigManager
-import tmg.flashback.eastereggs.model.MenuKeys
 import javax.inject.Inject
 
 class EasterEggsRepository @Inject constructor(
