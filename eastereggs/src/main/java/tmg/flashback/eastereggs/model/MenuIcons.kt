@@ -9,6 +9,16 @@ enum class MenuIcons(
     val start: LocalDate,
     val end: LocalDate
 ) {
+    NEW_YEARS(
+        key = "new_year",
+        start = LocalDate.of(year, 1, 1),
+        end = LocalDate.of(year, 1, 1)
+    ),
+    CHINESE_NEW_YEAR(
+        key = "new_year",
+        start = LocalDate.of(2023, 1, 21),
+        end = LocalDate.of(2023, 1, 22)
+    ),
     VALENTINES_DAY(
         key = "valentines",
         start = LocalDate.of(year, 2, 11),
@@ -33,6 +43,11 @@ enum class MenuIcons(
         key = "christmas",
         start = LocalDate.of(year, 12, 19),
         end = LocalDate.of(year, 12, 25)
+    ),
+    NEW_YEARS_EVE(
+        key = "new_year_eve",
+        start = LocalDate.of(year, 12, 31),
+        end = LocalDate.of(year, 12, 31)
     );
 
     fun isNow(now: LocalDate = LocalDate.now()): Boolean{
