@@ -322,7 +322,7 @@ private fun History(
 
                 Spacer(Modifier.height(8.dp))
                 model.drivers.forEach {
-                    DriverPerSeason(model = it)
+                    DriverPerSeason(model = it, isInProgress = model.isInProgress)
                 }
             }
         }
@@ -332,6 +332,7 @@ private fun History(
 @Composable
 private fun DriverPerSeason(
     model: ConstructorHistorySeasonDriver,
+    isInProgress: Boolean,
     modifier: Modifier = Modifier
 ) {
     Row(modifier = modifier) {
@@ -343,10 +344,16 @@ private fun DriverPerSeason(
                     .size(16.dp)
                     .align(Alignment.CenterVertically),
             )
+            val textColor = if (!isInProgress && model.championshipStanding == 1) {
+                AppTheme.colors.f1Championship
+            } else {
+                null
+            }
             TextBody2(
                 modifier = Modifier
                     .weight(1f)
                     .padding(start = 4.dp),
+                textColor = textColor,
                 text = model.driver.driver.name
             )
         }

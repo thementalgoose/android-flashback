@@ -10,6 +10,12 @@ data class ConstructorHistory(
             .count { it.championshipStanding == 1 }
     }
 
+    val driversChampionships: Int by lazy {
+        return@lazy standings
+            .filter { !it.isInProgress }
+            .sumOf { it.drivers.count { (_, driver) -> driver.championshipStanding == 1 } }
+    }
+
     val bestChampionship: Int? by lazy {
         return@lazy standings
             .filter { it.championshipStanding != null }
