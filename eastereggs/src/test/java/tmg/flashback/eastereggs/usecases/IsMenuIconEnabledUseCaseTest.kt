@@ -3,6 +3,7 @@ package tmg.flashback.eastereggs.usecases
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.ValueSource
@@ -25,7 +26,6 @@ internal class IsMenuIconEnabledUseCaseTest {
 
     @ParameterizedTest
     @CsvSource(
-        "1,1",
         "2,2",
         "3,3",
         "5,5",
@@ -34,7 +34,7 @@ internal class IsMenuIconEnabledUseCaseTest {
         "8,8",
         "9,9",
         "11,11",
-        "31,12",
+        "12,12"
     )
     fun `random dates return null menu icon`(dayOfMonth: Int, month: Int) {
         val date = LocalDateTime.of(Year.now().value, month, dayOfMonth, 12, 0)
@@ -51,6 +51,32 @@ internal class IsMenuIconEnabledUseCaseTest {
 
         initUnderTest()
         assertEquals(MenuIcons.VALENTINES_DAY, underTest.invoke())
+    }
+
+    @Test
+    fun `new years is returned when now is within range`() {
+        every { mockTimeManager.now } returns LocalDateTime.of(Year.now().value, 1, 1, 12, 0)
+
+        initUnderTest()
+        assertEquals(MenuIcons.NEW_YEARS, underTest.invoke())
+    }
+
+    @Test
+    fun `new years eve is returned when now is within range`() {
+        every { mockTimeManager.now } returns LocalDateTime.of(Year.now().value, 12, 31, 12, 0)
+
+        initUnderTest()
+        assertEquals(MenuIcons.NEW_YEARS_EVE, underTest.invoke())
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = [21, 22])
+    fun `chinese new year is returned when now is within range`(dayOfMonth: Int) {
+        val year = MenuIcons.CHINESE_NEW_YEAR.start.year
+        every { mockTimeManager.now } returns LocalDateTime.of(year, 1, dayOfMonth, 12, 0)
+
+        initUnderTest()
+        assertEquals(MenuIcons.CHINESE_NEW_YEAR, underTest.invoke())
     }
 
     @ParameterizedTest

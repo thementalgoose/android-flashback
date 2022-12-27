@@ -24,6 +24,9 @@ private val MenuIcons.drawable: Int get() = when (this) {
     MenuIcons.HALLOWEEN -> R.drawable.ic_easteregg_halloween
     MenuIcons.BONFIRE -> R.drawable.ic_easteregg_bonfire
     MenuIcons.CHRISTMAS -> R.drawable.ic_easteregg_christmas
+    MenuIcons.NEW_YEARS -> R.drawable.ic_easteregg_newyears
+    MenuIcons.CHINESE_NEW_YEAR -> R.drawable.ic_easteregg_newyears
+    MenuIcons.NEW_YEARS_EVE -> R.drawable.ic_easteregg_newyears
 }
 
 @Composable
