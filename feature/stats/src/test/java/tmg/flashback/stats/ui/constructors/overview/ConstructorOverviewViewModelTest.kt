@@ -113,6 +113,7 @@ internal class ConstructorOverviewViewModelTest: BaseTest() {
             assertListMatchesItem { it is ConstructorOverviewModel.History && it.season == 2019 }
             assertListMatchesItem { it is ConstructorOverviewModel.History && it.season == 2020 }
 
+            assertListMatchesItem { it is ConstructorOverviewModel.Stat && it.icon == R.drawable.ic_menu_drivers }
             assertListMatchesItem { it is ConstructorOverviewModel.Stat && it.icon == R.drawable.ic_menu_constructors }
             assertListMatchesItem { it is ConstructorOverviewModel.Stat && it.icon == R.drawable.ic_race_grid }
             assertListMatchesItem { it is ConstructorOverviewModel.Stat && it.icon == R.drawable.ic_standings }
