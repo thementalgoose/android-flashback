@@ -1,6 +1,7 @@
 package tmg.flashback.stats.ui.constructors.overview
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -63,7 +64,7 @@ fun ConstructorOverviewScreenVM(
     ))
 
     val viewModel = hiltViewModel<ConstructorOverviewViewModel>()
-    viewModel.inputs.setup(constructorId)
+    viewModel.inputs.setup(constructorId, constructorName)
 
     val list = viewModel.outputs.list.observeAsState(emptyList())
     val isLoading = viewModel.outputs.showLoading.observeAsState(false)
@@ -74,6 +75,7 @@ fun ConstructorOverviewScreenVM(
         ConstructorOverviewScreen(
             list = list.value,
             constructorName = constructorName,
+            seasonClicked = viewModel.inputs::openSeason,
             actionUpClicked = actionUpClicked,
             linkClicked = viewModel.inputs::openUrl
         )
@@ -84,6 +86,7 @@ fun ConstructorOverviewScreenVM(
 fun ConstructorOverviewScreen(
     list: List<ConstructorOverviewModel>,
     constructorName: String,
+    seasonClicked: (Int) -> Unit,
     linkClicked: (String) -> Unit,
     actionUpClicked: () -> Unit
 ) {
@@ -109,7 +112,7 @@ fun ConstructorOverviewScreen(
                         )
                     }
                     is ConstructorOverviewModel.History -> {
-                        History(model = it)
+                        History(model = it, seasonClicked = seasonClicked)
                     }
                     is ConstructorOverviewModel.Message -> {
                         tmg.flashback.ui.components.messages.Message(title = stringResource(id = it.label, *it.args.toTypedArray()))
@@ -253,10 +256,14 @@ private fun HistoryHeader(
 @Composable
 private fun History(
     model: ConstructorOverviewModel.History,
+    seasonClicked: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Box(modifier = modifier
         .height(IntrinsicSize.Min)
+        .clickable(
+            onClick = { seasonClicked.invoke(model.season) }
+        )
     ) {
         Box(modifier = Modifier
             .width(AppTheme.dimens.medium)
@@ -380,6 +387,7 @@ private fun Preview(
             actionUpClicked = { },
             constructorName = "name",
             linkClicked = { },
+            seasonClicked = { },
             list = listOf(
                 fakeStat,
                 fakeStatWinning,

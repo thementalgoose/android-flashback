@@ -15,6 +15,7 @@ import tmg.flashback.formula1.model.ConstructorHistorySeason
 import tmg.flashback.formula1.model.model
 import tmg.flashback.statistics.repo.ConstructorRepository
 import tmg.flashback.stats.R
+import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.web.WebNavigationComponent
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertListMatchesItem
@@ -26,6 +27,7 @@ internal class ConstructorOverviewViewModelTest: BaseTest() {
     private val mockConstructorRepository: ConstructorRepository = mockk(relaxed = true)
     private val mockNetworkConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
     private val mockWebNavigationComponent: WebNavigationComponent = mockk(relaxed = true)
+    private val mockStatsNavigationComponent: StatsNavigationComponent = mockk(relaxed = true)
 
     private lateinit var sut: ConstructorOverviewViewModel
 
@@ -34,6 +36,7 @@ internal class ConstructorOverviewViewModelTest: BaseTest() {
             mockConstructorRepository,
             mockNetworkConnectivityManager,
             mockWebNavigationComponent,
+            mockStatsNavigationComponent,
             ioDispatcher = coroutineScope.testDispatcher
         )
     }
@@ -191,7 +194,10 @@ internal class ConstructorOverviewViewModelTest: BaseTest() {
         sut.inputs.setup("constructorId")
 
         sut.inputs.openSeason(2020)
-        // TODO
+
+        verify {
+            mockStatsNavigationComponent.constructorSeason("constructorId", "", 2020)
+        }
     }
 
     //endregion
