@@ -31,7 +31,8 @@ internal class SeasonTyresTest {
         "2019",
         "2020",
         "2021",
-        "2022"
+        "2022",
+        "2023"
     )
     fun `season tyres have value for current year`(season: Int) {
         assertNotNull(SeasonTyres.getBySeason(season))
