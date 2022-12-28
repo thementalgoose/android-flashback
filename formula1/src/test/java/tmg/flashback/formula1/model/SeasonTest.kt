@@ -95,4 +95,31 @@ internal class SeasonTest {
 
         assertEquals(4, input.lastRace!!.raceInfo.round)
     }
+
+    @Test
+    fun `getting constructor list based on driver`() {
+        val driver = Driver.model(id = "driver")
+
+        val constructor1 = Constructor.model(id = "1")
+        val constructor2 = Constructor.model(id = "2")
+        val input = Season.model(races = listOf(
+            Race.model(
+                raceInfo = RaceInfo.model(round = 1),
+                race = listOf(
+                    RaceRaceResult.model(driver = DriverConstructor.model(driver = driver, constructor = constructor1))
+                ),
+                qualifying = emptyList()
+            ),
+            Race.model(
+                raceInfo = RaceInfo.model(round = 2),
+                race = listOf(
+                    RaceRaceResult.model(driver = DriverConstructor.model(driver = driver, constructor = constructor2)),
+                    RaceRaceResult.model(driver = DriverConstructor.model(driver = driver, constructor = constructor1))
+                ),
+                qualifying = emptyList()
+            )
+        ))
+
+        assertEquals(listOf(constructor1, constructor2), input.getConstructors(driver))
+    }
 }

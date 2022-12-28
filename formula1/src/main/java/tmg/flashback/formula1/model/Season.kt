@@ -19,5 +19,15 @@ data class Season(
     val lastRace: Race?
         get() = races.maxByOrNull { it.raceInfo.round }
 
+    fun getConstructors(driver: Driver): List<Constructor> {
+        return races
+            .map { race -> race.race
+                .filter { it.driver.driver.id == driver.id }
+                .map { it.driver.constructor }
+            }
+            .flatten()
+            .distinct()
+    }
+
     companion object
 }
