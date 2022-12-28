@@ -24,12 +24,14 @@ import tmg.flashback.settings.PrivacyPolicy
 import tmg.flashback.settings.ui.privacypolicy.PrivacyPolicyScreenVM
 import tmg.flashback.stats.Circuit
 import tmg.flashback.stats.Constructor
+import tmg.flashback.stats.ConstructorSeason
 import tmg.flashback.stats.Driver
 import tmg.flashback.stats.DriverSeason
 import tmg.flashback.stats.Search
 import tmg.flashback.stats.Weekend
 import tmg.flashback.stats.ui.circuits.CircuitScreenVM
 import tmg.flashback.stats.ui.constructors.overview.ConstructorOverviewScreenVM
+import tmg.flashback.stats.ui.constructors.season.ConstructorSeasonScreenVM
 import tmg.flashback.stats.ui.drivers.overview.DriverOverviewScreenVM
 import tmg.flashback.stats.ui.drivers.season.DriverSeasonScreenVM
 import tmg.flashback.stats.ui.search.SearchScreenVM
@@ -226,6 +228,21 @@ fun HomeScreen(
                 actionUpClicked = { navController.popBackStack() }
             )
         }
+
+        composable(Screen.ConstructorSeason.route, arguments = listOf(
+            navStringRequired("constructorId"),
+            navIntRequired("season")
+        )) {
+            val constructorId = it.arguments?.getString("constructorId")!!
+            val season = it.arguments?.getInt("season")!!
+            ConstructorSeasonScreenVM(
+                constructorId = constructorId,
+                constructorName = it.arguments?.getString("constructorName") ?: "",
+                season = season,
+                actionUpClicked = { navController.popBackStack() }
+            )
+        }
+
         composable(
             Screen.Search.route,
             deepLinks = listOf(navDeepLink { uriPattern = "flashback://search" })

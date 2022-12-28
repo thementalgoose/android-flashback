@@ -136,6 +136,8 @@
     <!-- Constructor Overview -->
     <string name="constructor_overview_stat_titles">Constructors championships</string>
     <string name="constructor_overview_stat_drivers_titles">Drivers championships</string>
+    <string name="constructor_overview_stat_championship_standing">Championship standing</string>
+    <string name="constructor_overview_stat_championship_standing_so_far">Current championship standing</string>
     <string name="constructor_overview_stat_races">Races</string>
     <string name="constructor_overview_stat_race_wins">Wins</string>
     <string name="constructor_overview_stat_race_podiums">Podiums</string>
