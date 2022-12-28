@@ -176,12 +176,21 @@ class ConstructorOverviewViewModel @Inject constructor(
         )
 
         history.bestChampionship?.let {
-            list.addStat(
-                icon = R.drawable.ic_championship_order,
-                label = R.string.constructor_overview_stat_best_championship_position,
-                value = it.ordinalAbbreviation
-            )
+            if (it != 1) {
+                list.addStat(
+                    icon = R.drawable.ic_championship_order,
+                    label = R.string.constructor_overview_stat_best_championship_position,
+                    value = it.ordinalAbbreviation
+                )
+            }
         }
+
+        list.addStat(
+            isWinning = history.driversChampionships > 0,
+            icon = R.drawable.ic_menu_drivers,
+            label = R.string.constructor_overview_stat_drivers_titles,
+            value = history.driversChampionships.toString()
+        )
 
         list.addStat(
             icon = R.drawable.ic_race_grid,

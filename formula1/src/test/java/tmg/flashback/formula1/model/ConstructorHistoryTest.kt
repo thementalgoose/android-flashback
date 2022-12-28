@@ -42,6 +42,26 @@ internal class ConstructorHistoryTest {
     }
 
     @Test
+    fun `drivers championships wins counts finished standings only`() {
+        val model = ConstructorHistory.model(standings = listOf(
+            ConstructorHistorySeason.model(season = 2019, isInProgress = false, drivers = mapOf(
+                "driver1" to ConstructorHistorySeasonDriver.model(championshipStanding = 2)
+            )),
+            ConstructorHistorySeason.model(season = 2020, isInProgress = false, drivers = mapOf(
+                "driver1" to ConstructorHistorySeasonDriver.model(championshipStanding = 1)
+            )),
+            ConstructorHistorySeason.model(season = 2021, isInProgress = false, drivers = mapOf(
+                "driver1" to ConstructorHistorySeasonDriver.model(championshipStanding = 1)
+            )),
+            // Ignored for in progress
+            ConstructorHistorySeason.model(season = 2022, isInProgress = true, drivers = mapOf(
+                "driver1" to ConstructorHistorySeasonDriver.model(championshipStanding = 1)
+            ))
+        ))
+        assertEquals(2, model.driversChampionships)
+    }
+
+    @Test
     fun `has championship currently in progress returns true for in progress`() {
         val model = ConstructorHistory.model(standings = listOf(
             ConstructorHistorySeason.model(season = 2019, isInProgress = true),
