@@ -148,6 +148,17 @@
 
     <string name="results_accurate_for_round" formatted="false">Results as of the %d, round %s</string>
     <string name="results_accurate_for_year" formatted="false">Results as of the %d %s (round %d)</string>
+    
+    <!-- Comparison --> 
+    <string name="driver_comparison_race_finish_ahead">Races</string>
+    <string name="driver_comparison_qualifying_ahead">Qualifying</string>
+    <string name="driver_comparison_points">Points</string>
+    <string name="driver_comparison_wins">Wins</string>
+    <string name="driver_comparison_podiums">Podiums</string>
+    <string name="driver_comparison_pole">Poles</string>
+    <string name="driver_comparison_best_finish_position">Best finish position</string>
+    <string name="driver_comparison_best_qualifying_position">Best qualifying position</string>
+    <string name="driver_comparison_dnfs">DNFs</string>
 
     <!-- Tyres -->
     <string name="tyres_label">Tyre compounds</string>
