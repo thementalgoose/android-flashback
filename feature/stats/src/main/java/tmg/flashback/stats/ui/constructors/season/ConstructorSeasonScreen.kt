@@ -246,7 +246,7 @@ private fun DriverSummary(
         Column(
             modifier = Modifier.padding(start = AppTheme.dimens.small)
         ) {
-            Row {
+            Row(verticalAlignment = Alignment.CenterVertically) {
                 TextTitle(
                     text = model.data.driver.driver.name,
                     bold = true
