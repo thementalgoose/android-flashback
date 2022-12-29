@@ -7,7 +7,6 @@ import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.device.managers.NetworkConnectivityManager
@@ -17,7 +16,6 @@ import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.model.model
 import tmg.flashback.statistics.repo.ConstructorRepository
 import tmg.flashback.stats.R
-import tmg.flashback.stats.ui.constructors.overview.headerModel
 import tmg.flashback.web.WebNavigationComponent
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertListMatchesItem
@@ -130,7 +128,7 @@ internal class ConstructorSeasonViewModelTest: BaseTest() {
             sut.inputs.setup("constructorId", 2020)
 
             sut.outputs.list.test {
-                assertListMatchesItem { it is ConstructorSeasonModel.Driver && it.driver.driver.driver.id == Driver.model().id }
+                assertListMatchesItem { it is ConstructorSeasonModel.Driver && it.data.driver.driver.id == Driver.model().id }
 
                 assertListMatchesItem { it is ConstructorSeasonModel.Stat && it.icon == R.drawable.ic_menu_constructors }
                 assertListMatchesItem { it is ConstructorSeasonModel.Stat && it.icon == R.drawable.ic_race_grid }
@@ -171,7 +169,7 @@ internal class ConstructorSeasonViewModelTest: BaseTest() {
         sut.outputs.list.test {
             assertListMatchesItem(atIndex = 0) { it is ConstructorSeasonModel.Loading }
 
-            assertListMatchesItem(atIndex = 1) { it is ConstructorSeasonModel.Driver && it.driver.driver.driver.id == Driver.model().id }
+            assertListMatchesItem(atIndex = 1) { it is ConstructorSeasonModel.Driver && it.data.driver.driver.id == Driver.model().id }
 
             assertListMatchesItem(atIndex = 1) { it is ConstructorSeasonModel.Stat && it.icon == R.drawable.ic_menu_constructors }
             assertListMatchesItem(atIndex = 1) { it is ConstructorSeasonModel.Stat && it.icon == R.drawable.ic_race_grid }
