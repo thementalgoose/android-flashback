@@ -59,7 +59,7 @@ internal class ConstructorOverviewViewModelTest: BaseTest() {
         every { mockNetworkConnectivityManager.isConnected } returns false
 
         initSUT()
-        sut.inputs.setup("constructorId")
+        sut.inputs.setup("constructorId", "name")
 
         sut.outputs.list.test {
             assertValue(listOf(
@@ -75,7 +75,7 @@ internal class ConstructorOverviewViewModelTest: BaseTest() {
         every { mockNetworkConnectivityManager.isConnected } returns false
 
         initSUT()
-        sut.inputs.setup("constructorId")
+        sut.inputs.setup("constructorId", "name")
 
         sut.outputs.list.test {
             assertValue(listOf(
@@ -91,7 +91,7 @@ internal class ConstructorOverviewViewModelTest: BaseTest() {
         every { mockNetworkConnectivityManager.isConnected } returns true
 
         initSUT()
-        sut.inputs.setup("constructorId")
+        sut.inputs.setup("constructorId", "name")
 
         sut.outputs.list.test {
             assertValue(mutableListOf(
@@ -110,7 +110,7 @@ internal class ConstructorOverviewViewModelTest: BaseTest() {
         every { mockConstructorRepository.getConstructorOverview(any()) } returns flow { emit(input) }
 
         initSUT()
-        sut.inputs.setup("constructorId")
+        sut.inputs.setup("constructorId", "name")
 
         sut.outputs.list.test {
             assertListMatchesItem { it is ConstructorOverviewModel.History && it.season == 2019 }
@@ -136,7 +136,7 @@ internal class ConstructorOverviewViewModelTest: BaseTest() {
         coEvery { mockConstructorRepository.getConstructorSeasonCount(any()) } returns 1
 
         initSUT()
-        sut.inputs.setup("constructorId")
+        sut.inputs.setup("constructorId", "name")
 
         coVerify(exactly = 0) {
             mockConstructorRepository.fetchConstructor(any())
@@ -150,7 +150,7 @@ internal class ConstructorOverviewViewModelTest: BaseTest() {
         initSUT()
 
         runBlocking {
-            sut.inputs.setup("constructorId")
+            sut.inputs.setup("constructorId", "name")
         }
 
         sut.outputs.list.test {
@@ -191,7 +191,7 @@ internal class ConstructorOverviewViewModelTest: BaseTest() {
     @Test
     fun `open season opens season event`() {
         initSUT()
-        sut.inputs.setup("constructorId")
+        sut.inputs.setup("constructorId", "name")
 
         sut.inputs.openSeason(2020)
 
@@ -207,7 +207,7 @@ internal class ConstructorOverviewViewModelTest: BaseTest() {
     @Test
     fun `refresh calls constructor repository`() = coroutineTest {
         initSUT()
-        sut.inputs.setup("constructorId")
+        sut.inputs.setup("constructorId", "name")
 
         runBlocking {
             sut.inputs.refresh()
