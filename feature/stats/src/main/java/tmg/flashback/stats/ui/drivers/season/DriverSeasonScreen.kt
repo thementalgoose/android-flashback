@@ -110,7 +110,7 @@ fun DriverSeasonScreen(
             items(list, key = { it.key }) {
                 when (it) {
                     is DriverSeasonModel.Header -> {
-                        tmg.flashback.stats.ui.drivers.season.Header(
+                        Header(
                             model = it,
                             linkClicked = { }
                         )

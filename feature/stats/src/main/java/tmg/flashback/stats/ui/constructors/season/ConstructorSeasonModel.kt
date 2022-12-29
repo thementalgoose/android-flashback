@@ -38,9 +38,9 @@ sealed class ConstructorSeasonModel(
     )
 
     data class Driver(
-        val driver: ConstructorHistorySeasonDriver
+        val data: ConstructorHistorySeasonDriver
     ): ConstructorSeasonModel(
-        key = "driver-${driver.driver.driver.id}"
+        key = "driver-${data.driver.driver.id}"
     )
 
     object NetworkError: ConstructorSeasonModel(

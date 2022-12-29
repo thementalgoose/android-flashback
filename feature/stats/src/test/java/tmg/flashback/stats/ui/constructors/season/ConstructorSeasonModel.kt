@@ -38,5 +38,5 @@ fun ConstructorSeasonModel.Companion.statModel(
 fun ConstructorSeasonModel.Companion.driverModel(
     driver: ConstructorHistorySeasonDriver = ConstructorHistorySeasonDriver.model()
 ): ConstructorSeasonModel.Driver = ConstructorSeasonModel.Driver(
-    driver = driver
+    data = driver
 )

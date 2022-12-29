@@ -1,6 +1,8 @@
 package tmg.flashback.stats.ui.constructors.season
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -28,24 +30,29 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
+import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.ConstructorHistorySeasonDriver
 import tmg.flashback.formula1.model.DriverConstructor
 import tmg.flashback.providers.DriverConstructorProvider
 import tmg.flashback.stats.R
 import tmg.flashback.stats.analytics.AnalyticsConstants.analyticsConstructorId
 import tmg.flashback.stats.analytics.AnalyticsConstants.analyticsSeason
+import tmg.flashback.stats.ui.shared.DriverImage
 import tmg.flashback.stats.ui.shared.Flag
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.buttons.ButtonTertiary
 import tmg.flashback.style.text.TextBody1
+import tmg.flashback.style.text.TextBody2
+import tmg.flashback.style.text.TextTitle
 import tmg.flashback.ui.components.analytics.ScreenView
 import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.messages.Message
 import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
+import tmg.utilities.extensions.ordinalAbbreviation
 
 @Composable
 fun ConstructorSeasonScreenVM(
@@ -176,7 +183,8 @@ private fun HeaderTop(
                 Flag(
                     iso = model.constructorNationalityISO,
                     nationality = model.constructorNationality,
-                    modifier = Modifier.size(32.dp)
+                    modifier = Modifier
+                        .size(32.dp)
                         .align(Alignment.CenterVertically)
                 )
             }
@@ -222,9 +230,73 @@ private fun Stat(
 
 @Composable
 private fun DriverSummary(
-    model: ConstructorSeasonModel.Driver
+    model: ConstructorSeasonModel.Driver,
+    modifier: Modifier = Modifier
 ) {
-    TextBody1("Driver ${model.driver.driver.driver.name}")
+    Row(modifier = modifier.padding(
+        top = AppTheme.dimens.large,
+        bottom = AppTheme.dimens.small,
+        start = AppTheme.dimens.medium,
+        end = AppTheme.dimens.medium
+    )) {
+        DriverImage(
+            driver = model.data.driver.driver,
+            size = 96.dp
+        )
+        Column(
+            modifier = Modifier.padding(start = AppTheme.dimens.small)
+        ) {
+            Row {
+                TextTitle(
+                    text = model.data.driver.driver.name,
+                    bold = true
+                )
+                Spacer(Modifier.width(4.dp))
+                Flag(iso = model.data.driver.driver.nationalityISO)
+            }
+            Spacer(Modifier.height(8.dp))
+            SummaryCell(
+                label = R.string.constructor_overview_stat_championship_standing,
+                value = model.data.championshipStanding?.ordinalAbbreviation ?: ""
+            )
+            SummaryCell(
+                label = R.string.constructor_overview_stat_race_wins,
+                value = model.data.wins.toString()
+            )
+            SummaryCell(
+                label = R.string.constructor_overview_stat_race_podiums,
+                value = model.data.podiums.toString()
+            )
+            SummaryCell(
+                label = R.string.constructor_overview_stat_qualifying_poles,
+                value = model.data.polePosition.toString()
+            )
+            SummaryCell(
+                label = R.string.constructor_overview_stat_points,
+                value = model.data.points.pointsDisplay()
+            )
+            SummaryCell(
+                label = R.string.constructor_overview_stat_points_finishes,
+                value = model.data.finishesInPoints.toString()
+            )
+        }
+    }
+}
+
+@Composable
+private fun SummaryCell(
+    @StringRes label: Int,
+    value: String,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier.padding(vertical = AppTheme.dimens.xxsmall),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        TextBody2(text = stringResource(id = label))
+        Spacer(Modifier.weight(1f))
+        TextBody1(text = value, bold = true)
+    }
 }
 
 @PreviewTheme
