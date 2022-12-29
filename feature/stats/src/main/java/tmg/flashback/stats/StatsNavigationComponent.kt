@@ -49,6 +49,20 @@ fun ScreenConstructor.with(
         .replace("{constructorName}", constructorName)
 }
 
+@JvmInline
+value class ScreenConstructorSeason(val route: String)
+val Screen.ConstructorSeason get() = ScreenConstructorSeason("constructors/{constructorId}/{season}?constructorName={constructorName}")
+fun ScreenConstructorSeason.with(
+    constructorId: String,
+    constructorName: String,
+    season: Int
+) = object : NavigationDestination {
+    override val route: String = this@with.route
+        .replace("{constructorId}", constructorId)
+        .replace("{constructorName}", constructorName)
+        .replace("{season}", season.toString())
+}
+
 
 @JvmInline
 value class ScreenWeekend(val route: String)
@@ -116,9 +130,12 @@ class StatsNavigationComponent @Inject constructor(
         ))
     }
 
-    @Deprecated("Not yet implemented!")
     fun constructorSeason(id: String, name: String, season: Int) {
-        TODO()
+        navigator.navigate(Screen.ConstructorSeason.with(
+            constructorId = id,
+            constructorName = name,
+            season = season
+        ))
     }
 
     fun weekend(weekendInfo: WeekendInfo) {

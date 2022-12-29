@@ -9,7 +9,6 @@ import tmg.flashback.formula1.model.ConstructorHistorySeasonDriver
 import tmg.flashback.formula1.model.model
 import tmg.flashback.ui.components.navigation.PipeType
 
-
 fun ConstructorOverviewModel.Companion.headerModel(
     constructorName: String = "name",
     constructorPhotoUrl: String? = "photoUrl",
