@@ -196,7 +196,7 @@ internal class ConstructorOverviewViewModelTest: BaseTest() {
         sut.inputs.openSeason(2020)
 
         verify {
-            mockStatsNavigationComponent.constructorSeason("constructorId", "", 2020)
+            mockStatsNavigationComponent.constructorSeason("constructorId", "name", 2020)
         }
     }
 
