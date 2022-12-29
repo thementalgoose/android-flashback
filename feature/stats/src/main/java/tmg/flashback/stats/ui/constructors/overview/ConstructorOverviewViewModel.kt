@@ -14,6 +14,7 @@ import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.ConstructorHistory
 import tmg.flashback.statistics.repo.ConstructorRepository
 import tmg.flashback.stats.R
+import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.ui.components.navigation.PipeType
 import tmg.flashback.ui.navigation.ApplicationNavigationComponent
 import tmg.flashback.web.WebNavigationComponent
@@ -25,7 +26,7 @@ import javax.inject.Inject
 //region Inputs
 
 interface ConstructorOverviewViewModelInputs {
-    fun setup(constructorId: String)
+    fun setup(constructorId: String, constructorName: String)
     fun openUrl(url: String)
     fun openSeason(season: Int)
 
@@ -50,28 +51,29 @@ class ConstructorOverviewViewModel @Inject constructor(
     private val constructorRepository: ConstructorRepository,
     private val networkConnectivityManager: NetworkConnectivityManager,
     private val webNavigationComponent: WebNavigationComponent,
+    private val statsNavigationComponent: StatsNavigationComponent,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), ConstructorOverviewViewModelInputs, ConstructorOverviewViewModelOutputs {
 
     var inputs: ConstructorOverviewViewModelInputs = this
     var outputs: ConstructorOverviewViewModelOutputs = this
 
-    private val constructorId: MutableStateFlow<String?> = MutableStateFlow(null)
-    private val constructorIdWithRequest: Flow<String?> = constructorId
+    private val constructorIdAndName: MutableStateFlow<Pair<String, String>?> = MutableStateFlow(null)
+    private val constructorIdWithRequest: Flow<Pair<String, String>?> = constructorIdAndName
         .filterNotNull()
         .flatMapLatest { id ->
             return@flatMapLatest flow {
-                if (constructorRepository.getConstructorSeasonCount(id) == 0) {
+                if (constructorRepository.getConstructorSeasonCount(id.first) == 0) {
                     showLoading.postValue(true)
                     emit(null)
-                    constructorRepository.fetchConstructor(id)
+                    constructorRepository.fetchConstructor(id.first)
                     showLoading.postValue(false)
                     emit(id)
                 }
                 else {
                     emit(id)
                     showLoading.postValue(true)
-                    constructorRepository.fetchConstructor(id)
+                    constructorRepository.fetchConstructor(id.first)
                     showLoading.postValue(false)
                 }
             }
@@ -82,14 +84,15 @@ class ConstructorOverviewViewModel @Inject constructor(
         get() = networkConnectivityManager.isConnected
 
     override val list: LiveData<List<ConstructorOverviewModel>> = constructorIdWithRequest
-        .flatMapLatest { id ->
+        .flatMapLatest { idAndName ->
 
-            if (id == null) {
+            if (idAndName == null) {
                 return@flatMapLatest flow {
                     emit(mutableListOf<ConstructorOverviewModel>(ConstructorOverviewModel.Loading))
                 }
             }
 
+            val (id, name) = idAndName
             return@flatMapLatest constructorRepository.getConstructorOverview(id)
                 .map {
                     val list: MutableList<ConstructorOverviewModel> = mutableListOf()
@@ -130,8 +133,8 @@ class ConstructorOverviewViewModel @Inject constructor(
 
     //region Inputs
 
-    override fun setup(constructorId: String) {
-        this.constructorId.value = constructorId
+    override fun setup(constructorId: String, constructorName: String) {
+        this.constructorIdAndName.value = Pair(constructorId, constructorName)
     }
 
     override fun openUrl(url: String) {
@@ -139,18 +142,18 @@ class ConstructorOverviewViewModel @Inject constructor(
     }
 
     override fun openSeason(season: Int) {
-//        constructorId.value?.let {
-//            openSeason.postValue(DataEvent(Pair(it, season)))
-//        }
+        constructorIdAndName.value?.let { (id, name) ->
+            statsNavigationComponent.constructorSeason(id, name, season)
+        }
     }
 
     override fun refresh() {
-        this.refresh(constructorId.value)
+        this.refresh(constructorIdAndName.value)
     }
-    private fun refresh(constructorId: String? = this.constructorId.value) {
+    private fun refresh(constructorId: Pair<String, String>? = this.constructorIdAndName.value) {
         viewModelScope.launch(context = ioDispatcher) {
             constructorId?.let {
-                constructorRepository.fetchConstructor(it)
+                constructorRepository.fetchConstructor(it.first)
                 showLoading.postValue(false)
             }
         }

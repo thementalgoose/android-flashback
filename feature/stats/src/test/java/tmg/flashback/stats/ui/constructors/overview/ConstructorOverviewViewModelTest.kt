@@ -15,6 +15,7 @@ import tmg.flashback.formula1.model.ConstructorHistorySeason
 import tmg.flashback.formula1.model.model
 import tmg.flashback.statistics.repo.ConstructorRepository
 import tmg.flashback.stats.R
+import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.web.WebNavigationComponent
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertListMatchesItem
@@ -26,6 +27,7 @@ internal class ConstructorOverviewViewModelTest: BaseTest() {
     private val mockConstructorRepository: ConstructorRepository = mockk(relaxed = true)
     private val mockNetworkConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
     private val mockWebNavigationComponent: WebNavigationComponent = mockk(relaxed = true)
+    private val mockStatsNavigationComponent: StatsNavigationComponent = mockk(relaxed = true)
 
     private lateinit var sut: ConstructorOverviewViewModel
 
@@ -34,6 +36,7 @@ internal class ConstructorOverviewViewModelTest: BaseTest() {
             mockConstructorRepository,
             mockNetworkConnectivityManager,
             mockWebNavigationComponent,
+            mockStatsNavigationComponent,
             ioDispatcher = coroutineScope.testDispatcher
         )
     }
@@ -56,7 +59,7 @@ internal class ConstructorOverviewViewModelTest: BaseTest() {
         every { mockNetworkConnectivityManager.isConnected } returns false
 
         initSUT()
-        sut.inputs.setup("constructorId")
+        sut.inputs.setup("constructorId", "name")
 
         sut.outputs.list.test {
             assertValue(listOf(
@@ -72,7 +75,7 @@ internal class ConstructorOverviewViewModelTest: BaseTest() {
         every { mockNetworkConnectivityManager.isConnected } returns false
 
         initSUT()
-        sut.inputs.setup("constructorId")
+        sut.inputs.setup("constructorId", "name")
 
         sut.outputs.list.test {
             assertValue(listOf(
@@ -88,7 +91,7 @@ internal class ConstructorOverviewViewModelTest: BaseTest() {
         every { mockNetworkConnectivityManager.isConnected } returns true
 
         initSUT()
-        sut.inputs.setup("constructorId")
+        sut.inputs.setup("constructorId", "name")
 
         sut.outputs.list.test {
             assertValue(mutableListOf(
@@ -107,7 +110,7 @@ internal class ConstructorOverviewViewModelTest: BaseTest() {
         every { mockConstructorRepository.getConstructorOverview(any()) } returns flow { emit(input) }
 
         initSUT()
-        sut.inputs.setup("constructorId")
+        sut.inputs.setup("constructorId", "name")
 
         sut.outputs.list.test {
             assertListMatchesItem { it is ConstructorOverviewModel.History && it.season == 2019 }
@@ -133,7 +136,7 @@ internal class ConstructorOverviewViewModelTest: BaseTest() {
         coEvery { mockConstructorRepository.getConstructorSeasonCount(any()) } returns 1
 
         initSUT()
-        sut.inputs.setup("constructorId")
+        sut.inputs.setup("constructorId", "name")
 
         coVerify(exactly = 0) {
             mockConstructorRepository.fetchConstructor(any())
@@ -147,7 +150,7 @@ internal class ConstructorOverviewViewModelTest: BaseTest() {
         initSUT()
 
         runBlocking {
-            sut.inputs.setup("constructorId")
+            sut.inputs.setup("constructorId", "name")
         }
 
         sut.outputs.list.test {
@@ -188,10 +191,13 @@ internal class ConstructorOverviewViewModelTest: BaseTest() {
     @Test
     fun `open season opens season event`() {
         initSUT()
-        sut.inputs.setup("constructorId")
+        sut.inputs.setup("constructorId", "name")
 
         sut.inputs.openSeason(2020)
-        // TODO
+
+        verify {
+            mockStatsNavigationComponent.constructorSeason("constructorId", "name", 2020)
+        }
     }
 
     //endregion
@@ -201,7 +207,7 @@ internal class ConstructorOverviewViewModelTest: BaseTest() {
     @Test
     fun `refresh calls constructor repository`() = coroutineTest {
         initSUT()
-        sut.inputs.setup("constructorId")
+        sut.inputs.setup("constructorId", "name")
 
         runBlocking {
             sut.inputs.refresh()
