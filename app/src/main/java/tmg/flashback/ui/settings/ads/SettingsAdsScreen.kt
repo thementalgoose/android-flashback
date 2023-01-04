@@ -23,10 +23,9 @@ import tmg.flashback.ui.settings.Setting
 @Composable
 fun SettingsAdsScreenVM(
     showBack: Boolean = true,
-    actionUpClicked: () -> Unit = { }
+    actionUpClicked: () -> Unit = { },
+    viewModel: SettingsAdsViewModel = hiltViewModel()
 ) {
-    val viewModel = hiltViewModel<SettingsAdsViewModel>()
-
     ScreenView(screenName = "Settings - Ads")
 
     val adsEnabled = viewModel.outputs.adsEnabled.observeAsState(false)
@@ -46,7 +45,8 @@ fun SettingsAdsScreen(
     adsEnabled: Boolean
 ) {
     LazyColumn(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
             .background(AppTheme.colors.backgroundPrimary),
         content = {
             item("header") {

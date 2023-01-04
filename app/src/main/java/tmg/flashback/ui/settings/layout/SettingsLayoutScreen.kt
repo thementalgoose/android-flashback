@@ -23,10 +23,9 @@ import tmg.flashback.ui.settings.Setting
 @Composable
 fun SettingsLayoutScreenVM(
     showBack: Boolean = true,
-    actionUpClicked: () -> Unit = { }
+    actionUpClicked: () -> Unit = { },
+    viewModel: SettingsLayoutViewModel = hiltViewModel()
 ) {
-    val viewModel = hiltViewModel<SettingsLayoutViewModel>()
-
     ScreenView(screenName = "Settings - Layout")
 
     val providedByAtTopEnabled = viewModel.outputs.collapsedListEnabled.observeAsState(true)
@@ -46,7 +45,8 @@ fun SettingsLayoutScreen(
     collapsedListEnabled: Boolean
 ) {
     LazyColumn(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
             .background(AppTheme.colors.backgroundPrimary),
         content = {
             item("header") {

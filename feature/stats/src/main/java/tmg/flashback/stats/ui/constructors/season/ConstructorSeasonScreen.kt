@@ -60,13 +60,13 @@ fun ConstructorSeasonScreenVM(
     constructorName: String,
     season: Int,
     actionUpClicked: () -> Unit,
+    viewModel: ConstructorSeasonViewModel = hiltViewModel()
 ) {
     ScreenView(screenName = "Constructor Season", args = mapOf(
         analyticsConstructorId to constructorId,
         analyticsSeason to season.toString()
     ))
 
-    val viewModel = hiltViewModel<ConstructorSeasonViewModel>()
     viewModel.inputs.setup(constructorId, season)
 
     val list = viewModel.outputs.list.observeAsState(emptyList())

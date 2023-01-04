@@ -25,10 +25,9 @@ import tmg.flashback.ui.settings.Setting
 @Composable
 fun SettingsNotificationsResultsScreenVM(
     showBack: Boolean = true,
-    actionUpClicked: () -> Unit = { }
+    actionUpClicked: () -> Unit = { },
+    viewModel: SettingsNotificationsResultsViewModel = hiltViewModel()
 ) {
-    val viewModel = hiltViewModel<SettingsNotificationsResultsViewModel>()
-
     ScreenView(screenName = "Settings - Notification Results")
 
     val permissionEnabled = viewModel.outputs.permissionEnabled.observeAsState(false)
@@ -62,7 +61,8 @@ fun SettingsNotificationsResultsScreen(
     raceEnabled: Boolean
 ) {
     LazyColumn(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
             .background(AppTheme.colors.backgroundPrimary),
         content = {
             item("header") {

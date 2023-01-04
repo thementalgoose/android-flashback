@@ -25,9 +25,9 @@ import tmg.flashback.ui.components.layouts.BottomSheet
 import tmg.utilities.models.Selected
 
 @Composable
-fun NotificationOnboardingScreenVM() {
-    val viewModel = hiltViewModel<NotificationOnboardingViewModel>()
-    
+fun NotificationOnboardingScreenVM(
+    viewModel: NotificationOnboardingViewModel = hiltViewModel()
+) {
     ScreenView(screenName = "Onboarding Notifications")
 
     val list = viewModel.outputs.notificationPreferences.observeAsState(emptyList())

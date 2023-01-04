@@ -23,10 +23,9 @@ import tmg.flashback.ui.settings.Setting
 @Composable
 fun SettingsWebScreenVM(
     showBack: Boolean = true,
-    actionUpClicked: () -> Unit = { }
+    actionUpClicked: () -> Unit = { },
+    viewModel: SettingsWebViewModel = hiltViewModel()
 ) {
-    val viewModel = hiltViewModel<SettingsWebViewModel>()
-
     ScreenView(screenName = "Settings - Web")
 
     val webBrowserEnabled = viewModel.outputs.enable.observeAsState(false)

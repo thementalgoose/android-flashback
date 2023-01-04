@@ -31,9 +31,9 @@ import tmg.utilities.extensions.toEnum
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun DashboardScreenVM() {
-    val viewModel = hiltViewModel<DashboardViewModel>()
-
+fun DashboardScreenVM(
+    viewModel: DashboardViewModel = hiltViewModel()
+) {
     DashboardScreen(
         tabState = viewModel.outputs.currentTab.observeAsState(viewModel.outputs.initialTab).value,
         clickTab = viewModel.inputs::clickTab,

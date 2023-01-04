@@ -46,12 +46,11 @@ private val badgeSize: Dp = 42.dp
 
 @Composable
 fun ConfigureRSSScreenVM(
-    actionUpClicked: () -> Unit
+    actionUpClicked: () -> Unit,
+    viewModel: ConfigureRSSViewModel = hiltViewModel()
 ) {
     ScreenView(screenName = "RSS Configure")
     
-    val viewModel = hiltViewModel<ConfigureRSSViewModel>()
-
     val showDescriptionEnabled = viewModel.outputs.showDescriptionEnabled.observeAsState(true)
     val showCustomAdd = viewModel.outputs.showAddCustom.observeAsState(false)
     val sources = viewModel.outputs.rssSources.observeAsState(emptyList())
