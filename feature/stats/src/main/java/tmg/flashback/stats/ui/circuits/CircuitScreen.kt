@@ -55,13 +55,13 @@ private val driverPodiumHeightP3 = 6.dp
 fun CircuitScreenVM(
     circuitId: String,
     circuitName: String,
-    actionUpClicked: () -> Unit
+    actionUpClicked: () -> Unit,
+    viewModel: CircuitViewModel = hiltViewModel()
 ) {
     ScreenView(screenName = "Circuit Overview", args = mapOf(
         analyticsCircuitId to circuitId
     ))
 
-    val viewModel = hiltViewModel<CircuitViewModel>()
     viewModel.inputs.load(circuitId)
 
     val list = viewModel.outputs.list.observeAsState(listOf(CircuitModel.Loading))
@@ -345,9 +345,10 @@ private fun DriverCode(
     code: String,
     colour: Color
 ) {
-    Row(Modifier
-        .height(IntrinsicSize.Min)
-        .padding(2.dp)
+    Row(
+        Modifier
+            .height(IntrinsicSize.Min)
+            .padding(2.dp)
     ) {
         Box(modifier = Modifier
             .fillMaxHeight()

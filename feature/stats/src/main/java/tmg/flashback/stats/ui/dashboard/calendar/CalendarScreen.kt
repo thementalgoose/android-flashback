@@ -38,9 +38,9 @@ private const val pastScheduleAlpha = 0.2f
 fun CalendarScreenVM(
     showMenu: Boolean,
     menuClicked: (() -> Unit)? = null,
-    season: Int
+    season: Int,
+    viewModel: CalendarViewModel = hiltViewModel()
 ) {
-    val viewModel: CalendarViewModel = hiltViewModel()
     viewModel.inputs.load(season)
 
     val isRefreshing = viewModel.outputs.isRefreshing.observeAsState(false)

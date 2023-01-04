@@ -50,9 +50,9 @@ private val expandIcon = 20.dp
 fun ScheduleScreenVM(
     showMenu: Boolean,
     menuClicked: (() -> Unit)? = null,
-    season: Int
+    season: Int,
+    viewModel: ScheduleViewModel = hiltViewModel()
 ) {
-    val viewModel: ScheduleViewModel = hiltViewModel()
     viewModel.inputs.load(season)
 
     val isRefreshing = viewModel.outputs.isRefreshing.observeAsState(false)
