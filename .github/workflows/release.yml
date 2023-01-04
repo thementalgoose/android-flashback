@@ -156,7 +156,7 @@ jobs:
 
       # Commits changes to README
       - name: Commit and push changes
-        uses: actions-js/push@master
+        uses: actions-js/push@v1.4
         with:
           message: Updates version to ${{ steps.get_version_name.outputs.VERSION }} (${{ steps.get_version_code.outputs.VERSION }})
           github_token: ${{ secrets.GITHUB_TOKEN }}
