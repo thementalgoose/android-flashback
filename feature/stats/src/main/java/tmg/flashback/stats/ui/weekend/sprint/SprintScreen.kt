@@ -35,9 +35,9 @@ private val pointsWidth = 80.dp
 @Composable
 fun SprintScreenVM(
     info: WeekendInfo,
-    actionUpClicked: () -> Unit
+    actionUpClicked: () -> Unit,
+    viewModel: SprintViewModel = hiltViewModel()
 ) {
-    val viewModel = hiltViewModel<SprintViewModel>()
     viewModel.inputs.load(
         season = info.season,
         round = info.round

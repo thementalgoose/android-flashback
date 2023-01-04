@@ -35,9 +35,9 @@ private val lapTimeWidth: Dp = 64.dp
 @Composable
 fun QualifyingScreenVM(
     info: WeekendInfo,
-    actionUpClicked: () -> Unit
+    actionUpClicked: () -> Unit,
+    viewModel: QualifyingViewModel = hiltViewModel()
 ) {
-    val viewModel = hiltViewModel<QualifyingViewModel>()
     viewModel.inputs.load(
         season = info.season,
         round = info.round

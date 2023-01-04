@@ -30,10 +30,9 @@ import tmg.flashback.ui.components.settings.Section
 @Composable
 fun SettingsAllScreenVM(
     showBack: Boolean = true,
-    actionUpClicked: () -> Unit = { }
+    actionUpClicked: () -> Unit = { },
+    viewModel: SettingsAllViewModel = hiltViewModel()
 ) {
-    val viewModel = hiltViewModel<SettingsAllViewModel>()
-
     ScreenView(screenName = "Settings")
 
     val isThemeEnabled = viewModel.outputs.isThemeEnabled.observeAsState(false)

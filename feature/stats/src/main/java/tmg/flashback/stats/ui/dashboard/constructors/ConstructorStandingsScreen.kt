@@ -37,9 +37,9 @@ import kotlin.math.roundToInt
 fun ConstructorStandingsScreenVM(
     showMenu: Boolean,
     menuClicked: (() -> Unit)? = null,
-    season: Int
+    season: Int,
+    viewModel: ConstructorsStandingViewModel = hiltViewModel()
 ) {
-    val viewModel: ConstructorsStandingViewModel = hiltViewModel()
     viewModel.inputs.load(season)
 
     val isRefreshing = viewModel.outputs.isRefreshing.observeAsState(false)

@@ -25,10 +25,9 @@ import tmg.flashback.ui.settings.Setting
 @Composable
 fun SettingsNotificationsUpcomingScreenVM(
     showBack: Boolean = true,
-    actionUpClicked: () -> Unit = { }
+    actionUpClicked: () -> Unit = { },
+    viewModel: SettingsNotificationsUpcomingViewModel = hiltViewModel()
 ) {
-    val viewModel = hiltViewModel<SettingsNotificationsUpcomingViewModel>()
-
     ScreenView(screenName = "Settings - Notification Upcoming")
 
     val permissionEnabled = viewModel.outputs.permissionEnabled.observeAsState(false)

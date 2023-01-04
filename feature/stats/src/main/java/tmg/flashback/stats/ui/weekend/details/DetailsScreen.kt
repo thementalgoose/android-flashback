@@ -37,9 +37,9 @@ import tmg.utilities.extensions.ordinalAbbreviation
 @Composable
 fun DetailsScreenVM(
     info: WeekendInfo,
-    actionUpClicked: () -> Unit
+    actionUpClicked: () -> Unit,
+    viewModel: DetailsViewModel = hiltViewModel()
 ) {
-    val viewModel = hiltViewModel<DetailsViewModel>()
     viewModel.inputs.load(
         season = info.season,
         round = info.round

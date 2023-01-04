@@ -60,14 +60,14 @@ fun DriverSeasonScreenVM(
     driverId: String,
     driverName: String,
     season: Int,
-    actionUpClicked: () -> Unit
+    actionUpClicked: () -> Unit,
+    viewModel: DriverSeasonViewModel = hiltViewModel()
 ) {
     ScreenView(screenName = "Driver Season", args = mapOf(
         analyticsDriverId to driverId,
         analyticsSeason to season.toString()
     ))
 
-    val viewModel = hiltViewModel<DriverSeasonViewModel>()
     viewModel.inputs.setup(driverId, season)
 
     val list = viewModel.outputs.list.observeAsState(emptyList())

@@ -32,9 +32,9 @@ import kotlin.math.roundToInt
 @Composable
 fun ConstructorScreenVM(
     info: WeekendInfo,
-    actionUpClicked: () -> Unit
+    actionUpClicked: () -> Unit,
+    viewModel: ConstructorViewModel = hiltViewModel()
 ) {
-    val viewModel = hiltViewModel<ConstructorViewModel>()
     viewModel.inputs.load(
         season = info.season,
         round = info.round
