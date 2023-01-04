@@ -20,6 +20,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.Race
@@ -41,8 +42,8 @@ fun DriverStatHistoryScreenVM(
     driverName: String,
     driverStatHistoryType: DriverStatHistoryType,
     actionUpClicked: () -> Unit,
+    viewModel: DriverStatHistoryViewModel = hiltViewModel()
 ) {
-    val viewModel = viewModel<DriverStatHistoryViewModel>()
     viewModel.inputs.load(driverId, driverStatHistoryType)
 
     ScreenView(screenName = "Driver Stat History", mapOf(

@@ -44,12 +44,12 @@ fun DriverOverviewScreenVM(
     driverId: String,
     driverName: String,
     actionUpClicked: () -> Unit,
+    viewModel: DriverOverviewViewModel = hiltViewModel()
 ) {
     ScreenView(screenName = "Driver Overview", args = mapOf(
         analyticsDriverId to driverId
     ))
 
-    val viewModel = hiltViewModel<DriverOverviewViewModel>()
     viewModel.inputs.setup(driverId, driverName)
 
     val list = viewModel.outputs.list.observeAsState(emptyList())

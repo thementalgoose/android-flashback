@@ -24,10 +24,9 @@ import tmg.flashback.ui.settings.Setting
 @Composable
 fun SettingsPrivacyScreenVM(
     showBack: Boolean = true,
-    actionUpClicked: () -> Unit = { }
+    actionUpClicked: () -> Unit = { },
+    viewModel: SettingsPrivacyViewModel = hiltViewModel()
 ) {
-    val viewModel = hiltViewModel<SettingsPrivacyViewModel>()
-
     ScreenView(screenName = "Settings - Privacy")
 
     val crashReportingEnabled = viewModel.outputs.crashReportingEnabled.observeAsState(false)
@@ -51,7 +50,8 @@ fun SettingsPrivacyScreen(
     analyticsEnabled: Boolean
 ) {
     LazyColumn(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
             .background(AppTheme.colors.backgroundPrimary),
         content = {
             item("header") {

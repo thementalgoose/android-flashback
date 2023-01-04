@@ -58,12 +58,12 @@ fun ConstructorOverviewScreenVM(
     constructorId: String,
     constructorName: String,
     actionUpClicked: () -> Unit,
+    viewModel: ConstructorOverviewViewModel = hiltViewModel()
 ) {
     ScreenView(screenName = "Constructor Overview", args = mapOf(
         analyticsConstructorId to constructorId
     ))
 
-    val viewModel = hiltViewModel<ConstructorOverviewViewModel>()
     viewModel.inputs.setup(constructorId, constructorName)
 
     val list = viewModel.outputs.list.observeAsState(emptyList())
@@ -182,7 +182,8 @@ private fun HeaderTop(
                 Flag(
                     iso = model.constructorNationalityISO,
                     nationality = model.constructorNationality,
-                    modifier = Modifier.size(32.dp)
+                    modifier = Modifier
+                        .size(32.dp)
                         .align(Alignment.CenterVertically)
                 )
             }

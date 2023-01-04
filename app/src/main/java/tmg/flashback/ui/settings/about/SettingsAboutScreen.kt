@@ -25,10 +25,9 @@ import tmg.flashback.ui.settings.Setting
 @Composable
 fun SettingsAboutScreenVM(
     showBack: Boolean = true,
-    actionUpClicked: () -> Unit = { }
+    actionUpClicked: () -> Unit = { },
+    viewModel: SettingsAboutViewModel = hiltViewModel()
 ) {
-    val viewModel = hiltViewModel<SettingsAboutViewModel>()
-
     ScreenView(screenName = "Settings - About")
 
     val shakeToReportEnabled = viewModel.outputs.shakeToReportEnabled.observeAsState(false)
@@ -49,7 +48,8 @@ fun SettingsAboutScreen(
     shakeToReportEnabled: Boolean
 ) {
     LazyColumn(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
             .background(AppTheme.colors.backgroundPrimary),
         content = {
             item("header") {

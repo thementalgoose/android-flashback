@@ -37,7 +37,7 @@ interface RSSViewModelOutputs {
 
 @Suppress("EXPERIMENTAL_API_USAGE")
 @HiltViewModel
-internal class RSSViewModel @Inject constructor(
+class RSSViewModel @Inject constructor(
     private val RSSDB: RssAPI,
     private val rssRepository: RSSRepository,
     private val adsRepository: AdsRepository,

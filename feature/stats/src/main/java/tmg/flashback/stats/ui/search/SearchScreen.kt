@@ -35,10 +35,9 @@ import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
 
 @Composable
 fun SearchScreenVM(
-    actionUpClicked: () -> Unit
+    actionUpClicked: () -> Unit,
+    viewModel: SearchViewModel = hiltViewModel()
 ) {
-    val viewModel = hiltViewModel<SearchViewModel>()
-
     ScreenView(screenName = "Search")
 
     val category = viewModel.outputs.selectedCategory.observeAsState()

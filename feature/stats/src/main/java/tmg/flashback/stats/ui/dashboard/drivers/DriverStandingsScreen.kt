@@ -43,9 +43,9 @@ import kotlin.math.roundToInt
 fun DriverStandingsScreenVM(
     showMenu: Boolean,
     menuClicked: (() -> Unit)? = null,
-    season: Int
+    season: Int,
+    viewModel: DriversStandingViewModel = hiltViewModel()
 ) {
-    val viewModel: DriversStandingViewModel = hiltViewModel()
     viewModel.inputs.load(season)
 
     val isRefreshing = viewModel.outputs.isRefreshing.observeAsState(false)

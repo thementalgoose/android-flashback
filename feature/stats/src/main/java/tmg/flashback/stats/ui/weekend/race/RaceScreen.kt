@@ -61,9 +61,9 @@ private val p3Height = 90.dp
 @Composable
 fun RaceScreenVM(
     info: WeekendInfo,
-    actionUpClicked: () -> Unit
+    actionUpClicked: () -> Unit,
+    viewModel: RaceViewModel = hiltViewModel()
 ) {
-    val viewModel = hiltViewModel<RaceViewModel>()
     viewModel.inputs.load(
         season = info.season,
         round = info.round
@@ -343,15 +343,20 @@ private fun Result(
     modifier: Modifier = Modifier
 ) {
     Row(
-        modifier = modifier.height(IntrinsicSize.Min)
-            .alpha(when (model.status.isStatusFinished()) {
-                true -> 1.0f
-                false -> 0.7f
-            })
-            .background(when (model.status.isStatusFinished()) {
-                true -> AppTheme.colors.backgroundPrimary
-                false -> AppTheme.colors.backgroundSecondary
-            }),
+        modifier = modifier
+            .height(IntrinsicSize.Min)
+            .alpha(
+                when (model.status.isStatusFinished()) {
+                    true -> 1.0f
+                    false -> 0.7f
+                }
+            )
+            .background(
+                when (model.status.isStatusFinished()) {
+                    true -> AppTheme.colors.backgroundPrimary
+                    false -> AppTheme.colors.backgroundSecondary
+                }
+            ),
         horizontalArrangement = Arrangement.Center
     ) {
         DriverInfo(

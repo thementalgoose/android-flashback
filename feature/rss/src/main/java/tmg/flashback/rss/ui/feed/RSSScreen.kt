@@ -46,11 +46,10 @@ private val badgeSize: Dp = 40.dp
 
 @Composable
 fun RSSScreenVM(
-    actionUpClicked: () -> Unit
+    actionUpClicked: () -> Unit,
+    viewModel: RSSViewModel = hiltViewModel()
 ) {
     ScreenView(screenName = "RSS")
-
-    val viewModel = hiltViewModel<RSSViewModel>()
 
     val list = viewModel.outputs.list.observeAsState(emptyList())
     val isLoading = viewModel.outputs.isRefreshing.observeAsState(false)
