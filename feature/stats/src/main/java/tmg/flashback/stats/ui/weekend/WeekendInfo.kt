@@ -27,7 +27,7 @@ data class WeekendInfo(
 ): Parcelable {
 
     val date: LocalDate
-        get() = dateString.toLocalDate("yyyy/MM/dd")!!
+        get() = dateString.toLocalDate("yyyy-MM-dd")!!
 
     constructor(
         season: Int,
@@ -47,7 +47,7 @@ data class WeekendInfo(
         country = country,
         countryISO = countryISO,
         dateString = DateTimeFormatter
-            .ofPattern("yyyy/MM/dd")
+            .ofPattern("yyyy-MM-dd")
             .format(date)
     )
 
