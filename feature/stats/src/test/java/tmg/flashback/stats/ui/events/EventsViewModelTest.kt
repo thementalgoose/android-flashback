@@ -9,9 +9,10 @@ import org.threeten.bp.LocalDate
 import tmg.flashback.formula1.model.Event
 import tmg.flashback.formula1.model.model
 import tmg.flashback.statistics.repo.EventsRepository
+import tmg.testutils.BaseTest
 import tmg.testutils.livedata.test
 
-internal class EventsViewModelTest {
+internal class EventsViewModelTest: BaseTest() {
 
     private val mockEventsRepository: EventsRepository = mockk(relaxed = true)
 
@@ -19,7 +20,8 @@ internal class EventsViewModelTest {
 
     private fun initUnderTest() {
         underTest = EventsViewModel(
-            eventsRepository = mockEventsRepository
+            eventsRepository = mockEventsRepository,
+            ioDispatcher = coroutineScope.testDispatcher
         )
     }
 
@@ -32,7 +34,7 @@ internal class EventsViewModelTest {
         initUnderTest()
         underTest.inputs.setup(2020)
 
-        underTest.events.test {
+        underTest.outputs.events.test {
             assertValue(listOf(event1, event2))
         }
     }
