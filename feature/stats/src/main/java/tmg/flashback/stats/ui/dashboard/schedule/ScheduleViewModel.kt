@@ -71,7 +71,11 @@ class ScheduleViewModel @Inject constructor(
                         }
 
                         val upcoming = overview.overviewRaces.getLatestUpcoming()
-                        val upcomingEvents = events.filter { it.date >= LocalDate.now() }
+                        val upcomingEvents = if (upcoming?.round == 1 && upcoming.date >= LocalDate.now().plusDays(3)) {
+                            events
+                        } else {
+                            events.filter { it.date >= LocalDate.now() }
+                        }
 
                         return@combine schedule(
                             overview = overview,
