@@ -245,7 +245,7 @@ private fun Event(
     event: ScheduleModel.Event
 ) {
     Row(modifier = Modifier
-        .alpha(if (event.date == LocalDate.now()) 1f else listAlpha)
+        .alpha(if (event.date <= LocalDate.now()) 1f else listAlpha)
         .padding(
             vertical = AppTheme.dimens.xsmall,
             horizontal = AppTheme.dimens.medium
