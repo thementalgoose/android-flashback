@@ -6,5 +6,6 @@ enum class EventType(
 ) {
     TESTING("testing"),
     CAR_LAUNCH("car_launches"),
+    NETFLIX("netflix"),
     OTHER("other")
 }

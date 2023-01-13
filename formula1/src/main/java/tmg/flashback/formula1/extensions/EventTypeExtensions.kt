@@ -10,6 +10,7 @@ val EventType.icon: Int
     get() = when (this) {
         EventType.TESTING -> R.drawable.ic_event_type_testing
         EventType.CAR_LAUNCH -> R.drawable.ic_event_type_car_launch
+        EventType.NETFLIX -> R.drawable.ic_event_type_netflix
         EventType.OTHER -> R.drawable.ic_event_type_other
     }
 
@@ -18,5 +19,6 @@ val EventType.label: Int
     get() = when (this) {
         EventType.TESTING -> R.string.event_type_testing
         EventType.CAR_LAUNCH -> R.string.event_type_car_launch
+        EventType.NETFLIX -> R.string.event_type_netflix
         EventType.OTHER -> R.string.event_type_other
     }
