@@ -58,3 +58,7 @@ class RaceRaceResultProvider: PreviewParameterProvider<RaceRaceResult> {
 class CircuitHistoryRaceProvider: PreviewParameterProvider<CircuitHistoryRace> {
     override val values: Sequence<CircuitHistoryRace> = sequenceOf()
 }
+
+class EventProvider: PreviewParameterProvider<Event> {
+    override val values: Sequence<Event> = sequenceOf()
+}
