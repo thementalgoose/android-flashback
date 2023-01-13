@@ -26,12 +26,14 @@ interface ScheduleViewModelInputs {
     fun load(season: Int)
 
     fun clickTyre(season: Int)
+    fun clickPreseason(season: Int)
     fun clickItem(model: ScheduleModel)
 }
 
 interface ScheduleViewModelOutputs {
     val items: LiveData<List<ScheduleModel>?>
     val isRefreshing: LiveData<Boolean>
+    val showEvents: LiveData<Boolean>
 }
 
 @HiltViewModel
@@ -51,6 +53,7 @@ class ScheduleViewModel @Inject constructor(
     override val isRefreshing: MutableLiveData<Boolean> = MutableLiveData(false)
 
     private var showCollapsablePlaceholder: MutableStateFlow<Boolean> = MutableStateFlow(homeRepository.collapseList)
+    override val showEvents: MutableLiveData<Boolean> = MutableLiveData(false)
 
     private val season: MutableStateFlow<Int?> = MutableStateFlow(null)
     override val items: LiveData<List<ScheduleModel>?> = season
@@ -76,6 +79,8 @@ class ScheduleViewModel @Inject constructor(
                         } else {
                             events.filter { it.date >= LocalDate.now() }
                         }
+
+                        showEvents.postValue(events.any())
 
                         return@combine schedule(
                             overview = overview,
@@ -105,6 +110,7 @@ class ScheduleViewModel @Inject constructor(
     override fun refresh() {
         val season = season.value ?: return
 
+        showEvents.postValue(false)
         isRefreshing.postValue(true)
         viewModelScope.launch(ioDispatcher) {
             fetchSeasonUseCase.fetchSeason(season)
@@ -114,6 +120,10 @@ class ScheduleViewModel @Inject constructor(
 
     override fun clickTyre(season: Int) {
         statsNavigationComponent.tyres(season)
+    }
+
+    override fun clickPreseason(season: Int) {
+        statsNavigationComponent.preseason(season)
     }
 
     override fun clickItem(model: ScheduleModel) {
