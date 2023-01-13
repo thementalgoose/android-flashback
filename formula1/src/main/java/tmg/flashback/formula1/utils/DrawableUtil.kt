@@ -2,7 +2,9 @@ package tmg.flashback.formula1.utils
 
 import android.content.Context
 import androidx.annotation.DrawableRes
+import com.murgupluoglu.flagkit.FlagKit
 import tmg.flashback.formula1.R
+import java.lang.RuntimeException
 import java.util.*
 
 @DrawableRes
@@ -15,5 +17,9 @@ fun Context.getFlagResource(flag: String?): Int {
     if (flag == null) {
         return R.drawable.nationality_not_found
     }
-    return resources.getIdentifier(flag.toLowerCase(Locale.UK), "drawable", packageName)
+    return try {
+        FlagKit.getResId(this, flag.lowercase(Locale.ENGLISH))
+    } catch (e: RuntimeException) {
+        R.drawable.nationality_not_found
+    }
 }
