@@ -106,6 +106,24 @@ internal class ScheduleViewModelTest: BaseTest() {
         }
     }
 
+
+    @Test
+    fun `show events returns true when events are contained`() {
+        every { mockEventsRepository.getEvents(2020) } returns flow { emit(listOf(
+            tmg.flashback.formula1.model.Event.model(date = LocalDate.of(2020, 1, 2)),
+            tmg.flashback.formula1.model.Event.model(date = LocalDate.now().plusDays(1))
+        )) }
+
+        initUnderTest()
+        underTest.load(2020)
+
+        val loadInfo = underTest.outputs.items.testObserve()
+        underTest.outputs.showEvents.test {
+            assertValue(true)
+        }
+    }
+
+
     @Test
     fun `expected list shows upcoming events intertwined with calendar models`() {
         every { mockEventsRepository.getEvents(2020) } returns flow { emit(listOf(
@@ -252,6 +270,18 @@ internal class ScheduleViewModelTest: BaseTest() {
 
         verify {
             mockStatsNavigationComponent.tyres(2020)
+        }
+    }
+
+    @Test
+    fun `clicking preseason with season launches preseason sheet`() {
+        initUnderTest()
+        underTest.load(2020)
+
+        underTest.inputs.clickPreseason(2020)
+
+        verify {
+            mockStatsNavigationComponent.preseason(2020)
         }
     }
 

@@ -57,6 +57,7 @@ fun ScheduleScreenVM(
 
     val isRefreshing = viewModel.outputs.isRefreshing.observeAsState(false)
     val items = viewModel.outputs.items.observeAsState(listOf(ScheduleModel.Loading))
+    val showPreseason = viewModel.outputs.showEvents.observeAsState(false)
     SwipeRefresh(
         isLoading = isRefreshing.value,
         onRefresh = viewModel.inputs::refresh
@@ -64,9 +65,11 @@ fun ScheduleScreenVM(
         ScheduleScreen(
             showMenu = showMenu,
             tyreClicked = viewModel.inputs::clickTyre,
+            preseasonClicked = viewModel.inputs::clickPreseason,
             menuClicked = menuClicked,
             itemClicked = viewModel.inputs::clickItem,
             season = season,
+            showPreseason = showPreseason.value,
             items = items.value
         )
     }
@@ -77,9 +80,11 @@ fun ScheduleScreenVM(
 fun ScheduleScreen(
     showMenu: Boolean,
     tyreClicked: (season: Int) -> Unit,
+    preseasonClicked: (season: Int) -> Unit,
     menuClicked: (() -> Unit)? = null,
     itemClicked: (ScheduleModel) -> Unit,
     season: Int,
+    showPreseason: Boolean,
     items: List<ScheduleModel>?
 ) {
     LazyColumn(
@@ -100,6 +105,15 @@ fun ScheduleScreen(
                     },
                     actionUpClicked = { menuClicked?.invoke() },
                     overrideIcons = {
+                        if (showPreseason) {
+                            IconButton(onClick = { preseasonClicked(season) }) {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.ic_preseason_events),
+                                    contentDescription = stringResource(id = R.string.ab_preseason_events),
+                                    tint = AppTheme.colors.contentSecondary
+                                )
+                            }
+                        }
                         SeasonTyres.getBySeason(season)?.let { _ ->
                             IconButton(onClick = { tyreClicked(season) }) {
                                 Icon(
