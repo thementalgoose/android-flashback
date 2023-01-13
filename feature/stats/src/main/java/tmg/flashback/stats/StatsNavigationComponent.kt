@@ -3,6 +3,7 @@ package tmg.flashback.stats
 import androidx.appcompat.app.AppCompatActivity
 import tmg.flashback.stats.ui.drivers.stathistory.DriverStatHistoryBottomSheetFragment
 import tmg.flashback.stats.ui.drivers.stathistory.DriverStatHistoryType
+import tmg.flashback.stats.ui.events.EventsBottomSheetFragment
 import tmg.flashback.stats.ui.feature.notificationonboarding.NotificationOnboardingBottomSheetFragment
 import tmg.flashback.stats.ui.settings.notifications.reminder.UpNextReminderBottomSheetFragment
 import tmg.flashback.stats.ui.tyres.TyreBottomSheetFragment
@@ -161,6 +162,11 @@ class StatsNavigationComponent @Inject constructor(
     internal fun tyres(season: Int) = activityProvider.launch {
         val activity = it as? AppCompatActivity ?: return@launch
         TyreBottomSheetFragment.instance(season).show(activity.supportFragmentManager, "TYRES")
+    }
+
+    internal fun preseason(season: Int) = activityProvider.launch {
+        val activity = it as? AppCompatActivity ?: return@launch
+        EventsBottomSheetFragment.instance(season).show(activity.supportFragmentManager, "PRESEASON")
     }
 
     fun featureNotificationOnboarding() = activityProvider.launch {
