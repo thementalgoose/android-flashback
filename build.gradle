@@ -25,7 +25,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:7.4.0'
         classpath "com.github.triplet.gradle:play-publisher:3.7.0"
-        classpath "com.google.gms:google-services:4.3.14"
+        classpath "com.google.gms:google-services:4.3.15"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${libs.versions.kotlin.get()}"
         classpath "io.fabric.tools:gradle:1.31.2"
         classpath "org.jetbrains.kotlin:kotlin-serialization:${libs.versions.kotlin.get()}"
