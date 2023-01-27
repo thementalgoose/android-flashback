@@ -20,6 +20,7 @@ android {
     compileSdkVersion project.ext.compileSdkVersion
 
     defaultConfig {
+        testInstrumentationRunnerArguments runnerBuilder: 'de.mannodermaus.junit5.AndroidJUnit5Builder'
         applicationId "tmg.flashback"
         minSdkVersion project.ext.minSdkVersion
         targetSdkVersion project.ext.targetSdkVersion
@@ -27,7 +28,6 @@ android {
         versionName project.ext.versionName // generatedVersionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        testInstrumentationRunnerArgument "runnerBuilder", "de.mannodermaus.junit5.AndroidJUnit5Builder"
     }
 
     signingConfigs {
@@ -49,15 +49,15 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
     packagingOptions {
-        exclude "win32-x86-64/attach_hotspot_windows.dll"
-        exclude "win32-x86/attach_hotspot_windows.dll"
-        exclude "META-INF/LGPL2.1"
-        exclude "META-INF/AL2.0"
-        exclude "META-INF/licenses/ASM"
-        exclude "META-INF/*"
+        jniLibs {
+            excludes += ['META-INF/*']
+        }
+        resources {
+            excludes += ['win32-x86-64/attach_hotspot_windows.dll', 'win32-x86/attach_hotspot_windows.dll', 'META-INF/LGPL2.1', 'META-INF/AL2.0', 'META-INF/licenses/ASM', 'META-INF/*']
+        }
     }
+
 
     flavorDimensions 'version'
     productFlavors {
@@ -88,6 +88,7 @@ android {
             }
         }
     }
+    namespace 'tmg.flashback'
 }
 
 play {
