@@ -11,8 +11,6 @@ android {
     defaultConfig {
         minSdkVersion project.ext.minSdkVersion
         targetSdkVersion project.ext.targetSdkVersion
-        versionCode project.ext.versionCode
-        versionName project.ext.versionName
     }
 
 
@@ -24,4 +22,5 @@ android {
             buildConfigField "boolean", "TABLET_UI", "false"
         }
     }
+    namespace 'tmg.flashback.style'
 }
