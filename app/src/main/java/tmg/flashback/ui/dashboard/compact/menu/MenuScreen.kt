@@ -22,8 +22,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.R
 import tmg.flashback.eastereggs.model.MenuIcons
+import tmg.flashback.eastereggs.ui.snow
 import tmg.flashback.formula1.constants.Formula1
-import tmg.flashback.snow.snow
 import tmg.flashback.stats.components.Timeline
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
