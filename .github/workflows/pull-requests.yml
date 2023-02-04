@@ -43,6 +43,7 @@ jobs:
 
       # Caching gradle
       - uses: actions/cache@v3
+        if: steps.change.outputs.gradle != 0
         with:
           path: |
             ~/.gradle/caches
@@ -53,6 +54,7 @@ jobs:
 
       # Unit Tests
       - name: :app
+        if: steps.change.outputs.gradle != 0
         run: ./gradlew testDebugUnitTest :app:testSandDebugUnitTest
 
       # Publish test report
