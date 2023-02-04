@@ -1,7 +1,6 @@
 apply plugin:  'com.android.library'
 apply from: rootDir.absolutePath + "/gradle/config-android.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-util.gradle"
-apply from: rootDir.absolutePath + "/gradle/config-junit5.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-hilt.gradle"
 
 android {
@@ -11,15 +10,9 @@ android {
         minSdkVersion project.ext.minSdkVersion
         targetSdkVersion project.ext.targetSdkVersion
     }
-    namespace 'tmg.flashback.statistics.network'
+    namespace 'tmg.flashback.debug'
 }
 
 dependencies {
 
-    implementation project(path: ':core:crash-reporting')
-    implementation project(path: ':feature:debug:contract')
-
-    // Retrofit
-    api libs.bundles.retrofit
-    api libs.bundles.okhttp
 }
