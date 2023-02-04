@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.flashback.debug.core.DebugNavigationComponentImpl
+import tmg.flashback.debug.DebugNavigationComponent
 import tmg.flashback.debug.R
 import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.eastereggs.model.MenuIcons
@@ -46,7 +46,7 @@ internal class MenuViewModelTest: BaseTest() {
     private val mockRssNavigationComponent: RssNavigationComponent = mockk(relaxed = true)
     private val mockNavigationComponent: ApplicationNavigationComponent = mockk(relaxed = true)
     private val mockStatsNavigationComponent: StatsNavigationComponent = mockk(relaxed = true)
-    private val mockDebugNavigationComponent: DebugNavigationComponentImpl = mockk(relaxed = true)
+    private val mockDebugNavigationComponent: DebugNavigationComponent = mockk(relaxed = true)
     private val mockIsSnowEnabledUseCase: IsSnowEnabledUseCase = mockk(relaxed = true)
     private val mockIsMenuIconEnabledUseCase: IsMenuIconEnabledUseCase = mockk(relaxed = true)
 
