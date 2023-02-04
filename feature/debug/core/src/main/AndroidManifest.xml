@@ -1,0 +1,16 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application>
+
+        <activity android:name=".core.DebugActivity"
+            android:exported="false" />
+
+        <activity android:name=".core.styleguide.StyleGuideComposeActivity"
+            android:exported="false" />
+
+        <activity android:name=".core.adverts.AdvertsActivity"
+            android:exported="false" />
+
+    </application>
+
+</manifest>
