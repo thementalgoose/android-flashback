@@ -14,7 +14,7 @@ object Formula1 {
     /**
      * What season should the API have all the data up too
      */
-    const val allDataUpToo: Int = 2021
+    const val allDataUpToo: Int = 2022
 
     /**
      * When did F1 start
@@ -37,6 +37,7 @@ object Formula1 {
      */
     fun maxPointsBySeason(season: Int): Int {
         return when {
+            season >= 2022 -> 33
             season >= 2021 -> 28
             season >= 2010 -> 25
             season >= 1991 -> 10
