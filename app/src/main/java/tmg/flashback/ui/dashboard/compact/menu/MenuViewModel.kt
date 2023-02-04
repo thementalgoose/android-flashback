@@ -6,7 +6,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import tmg.flashback.debug.DebugNavigationComponent
-import tmg.flashback.debug.debugMenuItemList
 import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.eastereggs.model.MenuIcons
 import tmg.flashback.eastereggs.usecases.IsSnowEnabledUseCase
@@ -67,7 +66,7 @@ class MenuViewModel @Inject constructor(
     private val statsNavigationComponent: StatsNavigationComponent,
     private val debugNavigationComponent: DebugNavigationComponent,
     private val isSnowEnabledUseCase: IsSnowEnabledUseCase,
-    private val isMenuIconEnabledUseCase: IsMenuIconEnabledUseCase
+    private val isMenuIconEnabledUseCase: IsMenuIconEnabledUseCase,
 ) : ViewModel(), MenuViewModelInputs, MenuViewModelOutputs {
 
     val inputs: MenuViewModelInputs = this
@@ -155,6 +154,7 @@ class MenuViewModel @Inject constructor(
         list.add(MenuItems.Button.Rss)
         list.add(MenuItems.Button.Settings)
         list.add(MenuItems.Button.Contact)
+        val debugMenuItemList = debugNavigationComponent.getDebugMenuItems()
         if (debugMenuItemList.isNotEmpty()) {
             list.add(MenuItems.Divider("z"))
             debugMenuItemList.forEach {

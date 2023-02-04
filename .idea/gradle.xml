@@ -31,7 +31,9 @@
             <option value="$PROJECT_DIR$/eastereggs" />
             <option value="$PROJECT_DIR$/feature" />
             <option value="$PROJECT_DIR$/feature/debug" />
-            <option value="$PROJECT_DIR$/feature/debug-noop" />
+            <option value="$PROJECT_DIR$/feature/debug/contract" />
+            <option value="$PROJECT_DIR$/feature/debug/core" />
+            <option value="$PROJECT_DIR$/feature/debug/noop" />
             <option value="$PROJECT_DIR$/feature/forceupgrade" />
             <option value="$PROJECT_DIR$/feature/releasenotes" />
             <option value="$PROJECT_DIR$/feature/rss" />
@@ -40,7 +42,6 @@
             <option value="$PROJECT_DIR$/feature/widgets" />
             <option value="$PROJECT_DIR$/formula1" />
             <option value="$PROJECT_DIR$/presentation" />
-            <option value="$PROJECT_DIR$/presentation/snow" />
             <option value="$PROJECT_DIR$/presentation/style" />
             <option value="$PROJECT_DIR$/presentation/ui" />
             <option value="$PROJECT_DIR$/test" />

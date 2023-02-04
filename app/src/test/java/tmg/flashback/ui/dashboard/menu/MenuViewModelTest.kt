@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.debug.DebugNavigationComponent
-import tmg.flashback.debug.R
 import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.eastereggs.model.MenuIcons
 import tmg.flashback.eastereggs.usecases.IsSnowEnabledUseCase
@@ -77,6 +76,7 @@ internal class MenuViewModelTest: BaseTest() {
         every { mockDefaultSeasonUseCase.defaultSeason } returns 2022
         every { mockNotificationRepository.seenNotificationOnboarding } returns false
         every { mockGetSeasonsUseCase.get(2022) } returns expectedMenuItems
+        every { mockDebugNavigationComponent.getDebugMenuItems() } returns emptyList()
     }
 
     @Test
@@ -104,10 +104,6 @@ internal class MenuViewModelTest: BaseTest() {
                 MenuItems.Button.Rss,
                 MenuItems.Button.Settings,
                 MenuItems.Button.Contact,
-                MenuItems.Divider("z"),
-                MenuItems.Button.Custom(R.string.debug_menu_debug, R.drawable.debug_list_debug, "debug"),
-                MenuItems.Button.Custom(R.string.debug_menu_styleguide, R.drawable.debug_list_styleguide, "styleguide"),
-                MenuItems.Button.Custom(R.string.debug_menu_ads_config, R.drawable.debug_list_adverts, "adverts"),
                 MenuItems.Divider("a"),
                 MenuItems.Toggle.DarkMode(_isEnabled = false),
                 MenuItems.Divider("b"),
@@ -217,10 +213,6 @@ internal class MenuViewModelTest: BaseTest() {
                 MenuItems.Button.Rss,
                 MenuItems.Button.Settings,
                 MenuItems.Button.Contact,
-                MenuItems.Divider("z"),
-                MenuItems.Button.Custom(R.string.debug_menu_debug, R.drawable.debug_list_debug, "debug"),
-                MenuItems.Button.Custom(R.string.debug_menu_styleguide, R.drawable.debug_list_styleguide, "styleguide"),
-                MenuItems.Button.Custom(R.string.debug_menu_ads_config, R.drawable.debug_list_adverts, "adverts"),
                 MenuItems.Divider("a"),
                 MenuItems.Toggle.DarkMode(_isEnabled = true),
                 MenuItems.Divider("b"),

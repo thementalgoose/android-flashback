@@ -117,9 +117,9 @@ dependencies {
     implementation project(path: ':feature:forceupgrade')
     implementation project(path: ':feature:releasenotes')
     implementation project(path: ":feature:widgets")
-    debugImplementation project(path: ":feature:debug")
-    debugImplementation project(path: ":core:ads:ads")
-    releaseImplementation project(path: ":feature:debug-noop")
+    implementation project(path: ":feature:debug:contract")
+    debugImplementation project(path: ":feature:debug:core")
+    releaseImplementation project(path: ":feature:debug:noop")
 
     // Data
     implementation project(path: ':data:repo')
@@ -129,6 +129,7 @@ dependencies {
 
     // Core modules
     implementation project(path: ":core:ads:ads-config")
+    debugImplementation project(path: ":core:ads:ads")
     implementation project(path: ":core:analytics")
     implementation project(path: ":core:appshortcuts")
     implementation project(path: ":core:configuration")
@@ -169,6 +170,7 @@ dependencies {
 
     // Test Utils
     testImplementation project(':test:models')
+    testImplementation project(path: ":feature:debug:core")
 
     // Android Test
     androidTestImplementation libs.bundles.androidxtest
