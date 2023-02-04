@@ -16,8 +16,8 @@ android {
 
 dependencies {
 
-    // Explicit crash reporting link
     implementation project(path: ':core:crash-reporting')
+    implementation project(path: ':feature:debug:contract')
 
     // Retrofit
     api libs.bundles.retrofit
