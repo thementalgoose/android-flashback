@@ -1,4 +1,5 @@
-package tmg.flashback.snow
+package tmg.flashback.eastereggs.ui
+
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.LaunchedEffect

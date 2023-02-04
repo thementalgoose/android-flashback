@@ -20,6 +20,4 @@ dependencies {
     implementation project(":core:configuration")
     implementation project(":core:preferences")
     implementation project(":core:device")
-
-    api project(":presentation:snow")
 }
