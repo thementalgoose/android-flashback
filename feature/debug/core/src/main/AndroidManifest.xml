@@ -2,13 +2,13 @@
 
     <application>
 
-        <activity android:name=".core.DebugActivity"
+        <activity android:name=".DebugActivity"
             android:exported="false" />
 
-        <activity android:name=".core.styleguide.StyleGuideComposeActivity"
+        <activity android:name=".styleguide.StyleGuideComposeActivity"
             android:exported="false" />
 
-        <activity android:name=".core.adverts.AdvertsActivity"
+        <activity android:name=".adverts.AdvertsActivity"
             android:exported="false" />
 
     </application>
