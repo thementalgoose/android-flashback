@@ -29,6 +29,18 @@ jobs:
         with:
           fetch-depth: 0
 
+      # Checkout branch in head vs. base so diff can be checked
+      - name: Checkout - branches
+        run: git checkout ${{ github.base_ref }}
+      - name: Checkout - head
+        run: git checkout ${{ github.head_ref }}
+
+      # Check to see if .kt or .xml has been updated
+      - name: Calculate change
+        id: change
+        run: |
+         echo "gradle=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }} | grep '.kt\|.gradle\|.toml\|.xml' -c)" >> $GITHUB_OUTPUT
+
       # Caching gradle
       - uses: actions/cache@v3
         with:
@@ -50,7 +62,7 @@ jobs:
         with:
           report_paths: '**/build/test-results/**/TEST-*.xml'
 
-  release_build:
+  release_compile:
     runs-on: ubuntu-latest
     timeout-minutes: 18
     steps:
@@ -65,7 +77,7 @@ jobs:
       - name: Checkout - head
         run: git checkout ${{ github.head_ref }}
 
-      # Generate output list of modules
+      # Check to see if .gradle or .toml is updated
       - name: Calculate change
         id: change
         run: |
