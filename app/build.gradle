@@ -170,6 +170,7 @@ dependencies {
 
     // Test Utils
     testImplementation project(':test:models')
+    testImplementation project(path: ":feature:debug:core")
 
     // Android Test
     androidTestImplementation libs.bundles.androidxtest
