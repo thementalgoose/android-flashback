@@ -11,7 +11,7 @@ import tmg.flashback.debug.core.manager.DebugBaseUrlOverrideManager
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class DebugModule {
+internal abstract class DebugModule {
 
     @Binds
     abstract fun bindsBaseUrlLocalOverrideManager(impl: DebugBaseUrlOverrideManager): BaseUrlLocalOverrideManager

@@ -9,7 +9,7 @@ import tmg.flashback.debug.core.styleguide.StyleGuideComposeActivity
 import tmg.flashback.ui.navigation.ActivityProvider
 import javax.inject.Inject
 
-class DebugNavigationComponentImpl @Inject constructor(
+internal class DebugNavigationComponentImpl @Inject constructor(
     private val activityProvider: ActivityProvider
 ): DebugNavigationComponent {
     override fun navigateTo(id: String) {
