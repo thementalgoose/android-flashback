@@ -50,13 +50,12 @@ jobs:
         with:
           report_paths: '**/build/test-results/**/TEST-*.xml'
 
-  release_check:
+  release_build:
     runs-on: ubuntu-latest
-    timeout-minutes: 2
+    timeout-minutes: 18
     steps:
       # Checkout
-      - name: Checkout
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
@@ -72,49 +71,9 @@ jobs:
         run: |
           echo "gradle=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }} | grep '.gradle\|.toml' -c)" >> $GITHUB_OUTPUT
 
-    outputs:
-      gradle: ${{ steps.change.outputs.gradle != 0 }}
-
-  dependency_report:
-    runs-on: ubuntu-latest
-    needs: [release_check]
-    timeout-minutes: 7
-    if: ${{ needs.release_check.outputs.gradle == 'true' }}
-    steps:
-      # Checkout
-      - uses: actions/checkout@v3
-
       # Caching gradle
       - uses: actions/cache@v3
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/*.toml*') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
-
-      # Dependency report
-      - name: Generating Dependency Report
-        run: ./gradlew dependencyUpdates
-
-      # Print Dependency summary
-      - name: Dumping summary in job
-        run: cat reports/android-flashback-dependencies-result.html >> $GITHUB_STEP_SUMMARY
-
-  release_build:
-    runs-on: ubuntu-latest
-    needs: [release_check]
-    timeout-minutes: 18
-    if: ${{ needs.release_check.outputs.gradle == 'true' }}
-    steps:
-      # Checkout
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      # Caching gradle
-      - uses: actions/cache@v3
+        if: steps.change.outputs.gradle != 0
         with:
           path: |
             ~/.gradle/caches
@@ -125,6 +84,7 @@ jobs:
 
       # Environment
       - name: Environment variables
+        if: steps.change.outputs.gradle != 0
         run: |
           echo ${{ secrets.ENCODED_GOOGLE_SERVICES_LIVE }} | base64 --decode >> app/src/live/google-services.json
           echo ${{ secrets.ENCODED_KEYSTORE }} | base64 --decode >> flashback.keystore
@@ -132,6 +92,7 @@ jobs:
 
       # Assemble release build
       - name: Assemble release build
+        if: steps.change.outputs.gradle != 0
         env:
           KEYSTORE: ${{ github.workspace }}/flashback.keystore
           PRIVATE_KEY: ${{ github.workspace }}/deployment_private_key.json
