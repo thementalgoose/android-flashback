@@ -16,7 +16,7 @@ android {
 }
 
 dependencies {
-    api project(':ads:ads-config')
+    api project(':core:ads:ads-config')
 
     implementation project(path: ':core:configuration')
     implementation project(path: ':core:preferences')
