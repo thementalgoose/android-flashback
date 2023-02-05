@@ -9,7 +9,7 @@ import tmg.flashback.BuildConfig
 import tmg.flashback.configuration.repository.ConfigRepository
 import tmg.flashback.configuration.usecases.ApplyConfigUseCase
 import tmg.flashback.crash_reporting.manager.CrashManager
-import tmg.flashback.forceupgrade.repository.ForceUpgradeRepository
+import tmg.flashback.maintenance.repository.MaintenanceRepository
 import tmg.flashback.rss.usecases.RssShortcutUseCase
 import tmg.flashback.statistics.repo.repository.CacheRepository
 import tmg.flashback.stats.usecases.ScheduleNotificationsUseCase
@@ -41,7 +41,7 @@ class HomeViewModel @Inject constructor(
     private val applyConfigUseCase: ApplyConfigUseCase,
     private val rssShortcutUseCase: RssShortcutUseCase,
     private val crashManager: CrashManager,
-    private val forceUpgradeRepository: ForceUpgradeRepository,
+    private val maintenanceRepository: MaintenanceRepository,
     private val cacheRepository: CacheRepository,
     private val searchAppShortcutUseCase: SearchAppShortcutUseCase,
     private val scheduleNotificationsUseCase: ScheduleNotificationsUseCase
@@ -58,7 +58,7 @@ class HomeViewModel @Inject constructor(
             configRepository.requireSynchronisation || !cacheRepository.initialSync -> {
                 requiresSync = true
             }
-            forceUpgradeRepository.shouldForceUpgrade -> {
+            maintenanceRepository.shouldForceUpgrade -> {
                 forceUpgrade = true
             }
             else -> {
