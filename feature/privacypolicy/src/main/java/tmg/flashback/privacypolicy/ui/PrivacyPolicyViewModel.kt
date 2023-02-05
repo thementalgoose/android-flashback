@@ -1,9 +1,10 @@
-package tmg.flashback.settings.ui.privacypolicy
+package tmg.flashback.privacypolicy.ui
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import tmg.utilities.lifecycle.Event
+import tmg.utilities.lifecycle.SingleLiveEvent
+
 
 //region Inputs
 
@@ -16,7 +17,7 @@ internal interface PrivacyPolicyViewModelInputs {
 //region Outputs
 
 internal interface PrivacyPolicyViewModelOutputs {
-    val goBack: LiveData<Event>
+    val goBack: LiveData<Unit>
 }
 
 //endregion
@@ -28,12 +29,12 @@ internal class PrivacyPolicyViewModel: ViewModel(), PrivacyPolicyViewModelInputs
     var inputs: PrivacyPolicyViewModelInputs = this
     var outputs: PrivacyPolicyViewModelOutputs = this
 
-    override val goBack: MutableLiveData<Event> = MutableLiveData()
+    override val goBack: MutableLiveData<Unit> = SingleLiveEvent()
 
     //region Inputs
 
     override fun clickBack() {
-        goBack.value = Event()
+        goBack.postValue(Unit)
     }
 
     //endregion

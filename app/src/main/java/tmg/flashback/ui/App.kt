@@ -14,14 +14,14 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navDeepLink
 import org.threeten.bp.LocalDate
+import tmg.flashback.privacypolicy.PrivacyPolicy
+import tmg.flashback.privacypolicy.ui.PrivacyPolicyScreenVM
 import tmg.flashback.releasenotes.ReleaseNotes
 import tmg.flashback.releasenotes.ui.releasenotes.ReleaseScreenVM
 import tmg.flashback.rss.RSS
 import tmg.flashback.rss.RSSConfigure
 import tmg.flashback.rss.ui.configure.ConfigureRSSScreenVM
 import tmg.flashback.rss.ui.feed.RSSScreenVM
-import tmg.flashback.settings.PrivacyPolicy
-import tmg.flashback.settings.ui.privacypolicy.PrivacyPolicyScreenVM
 import tmg.flashback.stats.Circuit
 import tmg.flashback.stats.Constructor
 import tmg.flashback.stats.ConstructorSeason
