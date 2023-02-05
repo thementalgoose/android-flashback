@@ -1,4 +1,4 @@
-package tmg.flashback.settings.ui.privacypolicy
+package tmg.flashback.privacypolicy.ui
 
 import android.text.method.LinkMovementMethod
 import android.widget.TextView
@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.viewinterop.AndroidView
-import tmg.flashback.settings.R
+import tmg.flashback.privacypolicy.R
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
@@ -26,7 +26,7 @@ fun PrivacyPolicyScreenVM(
     actionUpClicked: () -> Unit
 ) {
     ScreenView(screenName = "Privacy Policy")
-    
+
     Column(
         modifier = Modifier
             .background(AppTheme.colors.backgroundPrimary)

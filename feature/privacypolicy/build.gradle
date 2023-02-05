@@ -13,23 +13,13 @@ android {
         minSdkVersion project.ext.minSdkVersion
         targetSdkVersion project.ext.targetSdkVersion
     }
-    namespace 'tmg.flashback.releasenotes'
+    namespace 'tmg.flashback.privacypolicy'
 }
 
 dependencies {
 
     // Core modules
-    implementation project(path: ':core:analytics')
-    implementation project(path: ':core:configuration')
-    implementation project(path: ':core:crash-reporting')
-    implementation project(path: ':core:device')
-    implementation project(path: ':core:notifications')
-    implementation project(path: ':core:preferences')
     implementation project(path: ':presentation:style')
     implementation project(path: ':presentation:ui')
-
-    implementation libs.circleimageview
-
-    testImplementation project(path: ':test:models')
 
 }
