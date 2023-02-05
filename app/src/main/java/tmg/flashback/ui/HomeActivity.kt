@@ -15,7 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import tmg.flashback.BuildConfig
 import tmg.flashback.configuration.usecases.ConfigSyncUseCase
 import tmg.flashback.crash_reporting.manager.CrashManager
-import tmg.flashback.forceupgrade.ForceUpgradeNavigationComponent
+import tmg.flashback.maintenance.MaintenanceNavigationComponent
 import tmg.flashback.rss.RSS
 import tmg.flashback.stats.Search
 import tmg.flashback.stats.usecases.ContentSyncUseCase
@@ -24,7 +24,6 @@ import tmg.flashback.ui.base.BaseActivity
 import tmg.flashback.ui.navigation.Navigator
 import tmg.flashback.ui.navigation.Screen
 import tmg.flashback.ui.sync.SyncActivity
-import tmg.utilities.extensions.deviceStatus
 import javax.inject.Inject
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
@@ -42,7 +41,7 @@ class HomeActivity: BaseActivity(), SplashScreen.KeepOnScreenCondition {
     @Inject
     lateinit var navigator: Navigator
     @Inject
-    lateinit var forceUpgradeNavigationComponent: ForceUpgradeNavigationComponent
+    lateinit var maintenanceNavigationComponent: MaintenanceNavigationComponent
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,7 +79,7 @@ class HomeActivity: BaseActivity(), SplashScreen.KeepOnScreenCondition {
                 finish()
             }
             viewModel.forceUpgrade -> {
-                forceUpgradeNavigationComponent.forceUpgrade()
+                maintenanceNavigationComponent.forceUpgrade()
                 finish()
             }
         }
