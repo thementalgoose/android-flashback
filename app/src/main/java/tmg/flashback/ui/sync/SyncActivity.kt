@@ -9,7 +9,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.core.content.ContextCompat
 import dagger.hilt.android.AndroidEntryPoint
 import tmg.flashback.R
-import tmg.flashback.forceupgrade.ForceUpgradeNavigationComponent
+import tmg.flashback.maintenance.MaintenanceNavigationComponent
 import tmg.flashback.style.AppTheme
 import tmg.flashback.ui.HomeActivity
 import tmg.flashback.ui.base.BaseActivity
@@ -23,7 +23,7 @@ class SyncActivity: BaseActivity() {
     private val viewModel: SyncViewModel by viewModels()
 
     @Inject
-    protected lateinit var forceUpgradeNavigationComponent: ForceUpgradeNavigationComponent
+    protected lateinit var maintenanceNavigationComponent: MaintenanceNavigationComponent
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +52,7 @@ class SyncActivity: BaseActivity() {
                     finish()
                 }
                 SyncNavTarget.FORCE_UPGRADE -> {
-                    forceUpgradeNavigationComponent.forceUpgrade()
+                    maintenanceNavigationComponent.forceUpgrade()
                     finish()
                 }
             }

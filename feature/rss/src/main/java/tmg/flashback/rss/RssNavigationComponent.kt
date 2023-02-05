@@ -1,11 +1,5 @@
 package tmg.flashback.rss
 
-import androidx.navigation.NavController
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.composable
-import androidx.navigation.navDeepLink
-import tmg.flashback.rss.ui.configure.ConfigureRSSScreenVM
-import tmg.flashback.rss.ui.feed.RSSScreenVM
 import tmg.flashback.ui.navigation.NavigationDestination
 import tmg.flashback.ui.navigation.Navigator
 import tmg.flashback.ui.navigation.Screen
