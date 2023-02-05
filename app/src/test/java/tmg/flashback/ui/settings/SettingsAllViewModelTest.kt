@@ -36,7 +36,7 @@ internal class SettingsAllViewModelTest: BaseTest() {
             adsRepository = mockAdsRepository,
             rssRepository = mockRSSRepository,
             navigator = mockNavigator,
-            settingsNavigationComponent = mockSettingsNavigationComponent,
+            appearanceNavigationComponent = mockSettingsNavigationComponent,
         )
     }
 
