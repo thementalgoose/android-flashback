@@ -7,10 +7,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import tmg.flashback.stats.repository.NotificationRepository
 import tmg.flashback.stats.repository.models.NotificationReminder
 import tmg.flashback.stats.usecases.ScheduleNotificationsUseCase
-import tmg.flashback.ui.bottomsheet.BottomSheetItem
-import tmg.utilities.lifecycle.Event
-import tmg.utilities.models.Selected
-import tmg.utilities.models.StringHolder
 import javax.inject.Inject
 
 //region Inputs
