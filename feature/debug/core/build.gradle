@@ -36,4 +36,5 @@ dependencies {
 
     // Stats
     implementation project(path: ':feature:stats')
+    implementation project(path: ':feature:releasenotes')
 }
