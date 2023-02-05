@@ -39,13 +39,8 @@ internal class UpNextReminderViewModelTest: BaseTest() {
     @Test
     fun `init loads notification list`() {
         initSUT()
-        sut.outputs.notificationPrefs.test {
-            assertValue(NotificationReminder.values().map {
-                Selected(
-                    BottomSheetItem(it.ordinal, it.icon, StringHolder(it.label)),
-                    it == NotificationReminder.MINUTES_30
-                )
-            })
+        sut.outputs.currentlySelected.test {
+            assertValue(NotificationReminder.MINUTES_30)
         }
     }
 
@@ -55,18 +50,7 @@ internal class UpNextReminderViewModelTest: BaseTest() {
         sut.inputs.selectNotificationReminder(NotificationReminder.MINUTES_60)
         verify {
             mockNotificationRepository.notificationReminderPeriod = NotificationReminder.MINUTES_60
-        }
-    }
-
-    @Test
-    fun `selecting notification reminder updates notifies updated event`() {
-        initSUT()
-        sut.inputs.selectNotificationReminder(NotificationReminder.MINUTES_60)
-        verify {
             mockScheduleNotificationsUseCase.schedule()
-        }
-        sut.outputs.updated.test {
-            assertEventFired()
         }
     }
 }
