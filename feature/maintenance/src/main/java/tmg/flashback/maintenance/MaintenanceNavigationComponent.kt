@@ -10,7 +10,7 @@ class MaintenanceNavigationComponent @Inject constructor(
     private val activityProvider: ActivityProvider
 ) {
 
-    internal fun forceUpgradeIntent(context: Context): Intent {
+    private fun forceUpgradeIntent(context: Context): Intent {
         return ForceUpgradeActivity.intent(context)
     }
 
