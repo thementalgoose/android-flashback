@@ -161,40 +161,6 @@ class DebugActivity: BaseActivity() {
                         }
 
                         Button(
-                            label = "Driver Stats History",
-                            value = "Wins",
-                            buttonClicked = {
-                                statsNavigationComponent.driverStatHistory(
-                                    "vettel",
-                                    "Sebastian Vettel",
-                                    DriverStatHistoryType.PODIUMS
-                                )
-                            }
-                        )
-                        Button(
-                            label = null,
-                            value = "Poles",
-                            buttonClicked = {
-                                statsNavigationComponent.driverStatHistory(
-                                    "vettel",
-                                    "Sebastian Vettel",
-                                    DriverStatHistoryType.POLES
-                                )
-                            }
-                        )
-                        Button(
-                            label = null,
-                            value = "Championships",
-                            buttonClicked = {
-                                statsNavigationComponent.driverStatHistory(
-                                    "vettel",
-                                    "Sebastian Vettel",
-                                    DriverStatHistoryType.CHAMPIONSHIPS
-                                )
-                            }
-                        )
-
-                        Button(
                             label = "Release Notes",
                             value = "Release Notes",
                             buttonClicked = {
@@ -203,6 +169,15 @@ class DebugActivity: BaseActivity() {
 
                                 // Open
                                 releaseNotesNavigationComponent.releaseNotesNext()
+                            }
+                        )
+
+                        Button(
+                            label = "Up Next",
+                            value = "Up Next",
+                            buttonClicked = {
+                                statsNavigationComponent.upNext()
+                                // Open
                             }
                         )
 
