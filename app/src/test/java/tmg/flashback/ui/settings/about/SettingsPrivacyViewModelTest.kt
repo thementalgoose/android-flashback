@@ -3,15 +3,12 @@ package tmg.flashback.ui.settings.about
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import tmg.flashback.R
 import tmg.flashback.analytics.manager.AnalyticsManager
 import tmg.flashback.crash_reporting.repository.CrashRepository
-import tmg.flashback.settings.PrivacyPolicy
-import tmg.flashback.settings.SettingsNavigationComponent
+import tmg.flashback.privacypolicy.PrivacyPolicyNavigationComponent
 import tmg.flashback.ui.managers.ToastManager
-import tmg.flashback.ui.navigation.Screen
 import tmg.flashback.ui.settings.Settings
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.test
@@ -22,7 +19,7 @@ internal class SettingsPrivacyViewModelTest: BaseTest() {
     private val mockCrashRepository: CrashRepository = mockk(relaxed = true)
     private val mockAnalyticsManager: AnalyticsManager = mockk(relaxed = true)
     private val mockToastManager: ToastManager = mockk(relaxed = true)
-    private val mockSettingsNavigationComponent: SettingsNavigationComponent = mockk(relaxed = true)
+    private val mockPrivacyPolicyNavigationComponent: PrivacyPolicyNavigationComponent = mockk(relaxed = true)
 
     private lateinit var underTest: SettingsPrivacyViewModel
 
@@ -31,7 +28,7 @@ internal class SettingsPrivacyViewModelTest: BaseTest() {
             crashRepository = mockCrashRepository,
             analyticsManager = mockAnalyticsManager,
             toastManager = mockToastManager,
-            settingsNavigationComponent = mockSettingsNavigationComponent
+            privacyPolicyNavigationComponent = mockPrivacyPolicyNavigationComponent
         )
     }
 
@@ -81,7 +78,7 @@ internal class SettingsPrivacyViewModelTest: BaseTest() {
         underTest.inputs.prefClicked(Settings.Other.privacyPolicy)
 
         verify {
-            mockSettingsNavigationComponent.privacyPolicy()
+            mockPrivacyPolicyNavigationComponent.privacyPolicy()
         }
     }
 

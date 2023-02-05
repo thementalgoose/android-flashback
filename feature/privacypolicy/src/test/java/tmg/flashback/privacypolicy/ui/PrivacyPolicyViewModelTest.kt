@@ -1,8 +1,8 @@
-package tmg.flashback.settings.ui.privacypolicy
+package tmg.flashback.privacypolicy.ui
 
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import tmg.testutils.BaseTest
-import tmg.testutils.livedata.assertEventFired
 import tmg.testutils.livedata.test
 
 internal class PrivacyPolicyViewModelTest: BaseTest() {
@@ -21,7 +21,7 @@ internal class PrivacyPolicyViewModelTest: BaseTest() {
         sut.inputs.clickBack()
 
         sut.outputs.goBack.test {
-            assertEventFired()
+            assertEmittedCount(1)
         }
     }
 }

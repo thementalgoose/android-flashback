@@ -35,6 +35,7 @@
             <option value="$PROJECT_DIR$/feature/debug/core" />
             <option value="$PROJECT_DIR$/feature/debug/noop" />
             <option value="$PROJECT_DIR$/feature/maintenance" />
+            <option value="$PROJECT_DIR$/feature/privacypolicy" />
             <option value="$PROJECT_DIR$/feature/releasenotes" />
             <option value="$PROJECT_DIR$/feature/rss" />
             <option value="$PROJECT_DIR$/feature/settings" />
