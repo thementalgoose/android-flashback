@@ -3,7 +3,7 @@
 
     <application>
 
-        <activity android:name="tmg.flashback.maintenance.ui.forceupgrade.ForceUpgradeActivity"
+        <activity android:name=".ui.forceupgrade.ForceUpgradeActivity"
             android:exported="false" />
 
     </application>
