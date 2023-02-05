@@ -114,7 +114,7 @@ dependencies {
     implementation project(path: ":feature:stats")
     implementation project(path: ":feature:rss")
     implementation project(path: ':feature:settings')
-    implementation project(path: ':feature:forceupgrade')
+    implementation project(path: ':feature:maintenance')
     implementation project(path: ':feature:releasenotes')
     implementation project(path: ":feature:widgets")
     implementation project(path: ":feature:debug:contract")

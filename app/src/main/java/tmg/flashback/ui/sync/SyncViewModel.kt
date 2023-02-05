@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 import tmg.flashback.configuration.repository.ConfigRepository
 import tmg.flashback.configuration.usecases.FetchConfigUseCase
 import tmg.flashback.configuration.usecases.ResetConfigUseCase
-import tmg.flashback.forceupgrade.repository.ForceUpgradeRepository
+import tmg.flashback.maintenance.repository.MaintenanceRepository
 import tmg.flashback.rss.usecases.RssShortcutUseCase
 import tmg.flashback.statistics.repo.CircuitRepository
 import tmg.flashback.statistics.repo.ConstructorRepository
@@ -60,7 +60,7 @@ class SyncViewModel @Inject constructor(
     private val configRepository: ConfigRepository,
     private val resetConfigUseCase: ResetConfigUseCase,
     private val fetchConfigUseCase: FetchConfigUseCase,
-    private val forceUpgradeRepository: ForceUpgradeRepository,
+    private val maintenanceRepository: MaintenanceRepository,
     private val cacheRepository: CacheRepository,
     private val scheduleNotificationsUseCase: ScheduleNotificationsUseCase,
     private val searchAppShortcutUseCase: SearchAppShortcutUseCase,
@@ -109,7 +109,7 @@ class SyncViewModel @Inject constructor(
         .filter { it == DONE }
         .map {
             cacheRepository.initialSync = true
-            if (forceUpgradeRepository.shouldForceUpgrade) {
+            if (maintenanceRepository.shouldForceUpgrade) {
                 SyncNavTarget.FORCE_UPGRADE
             } else {
                 SyncNavTarget.DASHBOARD
