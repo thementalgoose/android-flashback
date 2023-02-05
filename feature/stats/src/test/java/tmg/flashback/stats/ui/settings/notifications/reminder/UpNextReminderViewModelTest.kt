@@ -3,18 +3,13 @@ package tmg.flashback.stats.ui.settings.notifications.reminder
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.stats.repository.NotificationRepository
 import tmg.flashback.stats.repository.models.NotificationReminder
 import tmg.flashback.stats.usecases.ScheduleNotificationsUseCase
-import tmg.flashback.ui.bottomsheet.BottomSheetItem
 import tmg.testutils.BaseTest
-import tmg.testutils.livedata.assertEventFired
 import tmg.testutils.livedata.test
-import tmg.utilities.models.Selected
-import tmg.utilities.models.StringHolder
 
 
 internal class UpNextReminderViewModelTest: BaseTest() {
