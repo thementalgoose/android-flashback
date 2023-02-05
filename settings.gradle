@@ -4,7 +4,6 @@ include ':app'
 
 include ':feature:stats'
 include ':feature:rss'
-include ':feature:settings'
 include ':feature:maintenance'
 include ':feature:releasenotes'
 include ':feature:privacypolicy'
