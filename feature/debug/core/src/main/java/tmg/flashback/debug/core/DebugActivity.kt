@@ -20,11 +20,13 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import tmg.flashback.ads.manager.AdsManager
-import tmg.flashback.debug.core.R
 import tmg.flashback.debug.manager.BaseUrlLocalOverrideManager
 import tmg.flashback.device.repository.DeviceRepository
 import tmg.flashback.notifications.receiver.LocalNotificationBroadcastReceiver
 import tmg.flashback.notifications.repository.NotificationRepository
+import tmg.flashback.prefs.manager.PreferenceManager
+import tmg.flashback.releasenotes.ReleaseNotesNavigationComponent
+import tmg.flashback.releasenotes.constants.ReleaseNotes
 import tmg.flashback.statistics.repo.CircuitRepository
 import tmg.flashback.statistics.repo.ConstructorRepository
 import tmg.flashback.statistics.repo.DriverRepository
@@ -65,10 +67,19 @@ class DebugActivity: BaseActivity() {
     protected lateinit var notificationRepository: NotificationRepository
 
     @Inject
+    protected lateinit var releaseNotesNavigationComponent: ReleaseNotesNavigationComponent
+    @Inject
+    protected lateinit var preferenceManager: PreferenceManager
+
+    @Inject
     protected lateinit var applicationNavigationComponent: ApplicationNavigationComponent
 
     @Inject
     protected lateinit var statsNavigationComponent: StatsNavigationComponent
+
+    companion object {
+        private const val keyReleaseNotesSeenVersion: String = "RELEASE_NOTES_SEEN_VERSION"
+    }
 
     @Suppress("EXPERIMENTAL_API_USAGE")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -180,6 +191,18 @@ class DebugActivity: BaseActivity() {
                                     "Sebastian Vettel",
                                     DriverStatHistoryType.CHAMPIONSHIPS
                                 )
+                            }
+                        )
+
+                        Button(
+                            label = "Release Notes",
+                            value = "Release Notes",
+                            buttonClicked = {
+                                // Last release notes
+                                preferenceManager.save(keyReleaseNotesSeenVersion, 1)
+
+                                // Open
+                                releaseNotesNavigationComponent.releaseNotesNext()
                             }
                         )
 
