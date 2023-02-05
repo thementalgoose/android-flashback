@@ -10,11 +10,11 @@ import tmg.flashback.ads.config.repository.AdsRepository
 import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.rss.RSSConfigure
 import tmg.flashback.rss.repo.RSSRepository
-import tmg.flashback.settings.SettingsNavigationComponent
 import tmg.flashback.ui.navigation.NavigationDestination
 import tmg.flashback.ui.navigation.Navigator
 import tmg.flashback.ui.navigation.Screen
 import tmg.flashback.ui.repository.ThemeRepository
+import tmg.flashback.ui.settings.appearance.AppearanceNavigationComponent
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.test
 
@@ -25,7 +25,7 @@ internal class SettingsAllViewModelTest: BaseTest() {
     private val mockAdsRepository: AdsRepository = mockk(relaxed = true)
     private val mockRSSRepository: RSSRepository = mockk(relaxed = true)
     private val mockNavigator: Navigator = mockk(relaxed = true)
-    private val mockSettingsNavigationComponent: SettingsNavigationComponent = mockk(relaxed = true)
+    private val mockAppearanceNavigationComponent: AppearanceNavigationComponent = mockk(relaxed = true)
 
     private lateinit var underTest: SettingsAllViewModel
 
@@ -36,7 +36,7 @@ internal class SettingsAllViewModelTest: BaseTest() {
             adsRepository = mockAdsRepository,
             rssRepository = mockRSSRepository,
             navigator = mockNavigator,
-            appearanceNavigationComponent = mockSettingsNavigationComponent,
+            appearanceNavigationComponent = mockAppearanceNavigationComponent,
         )
     }
 
@@ -119,7 +119,7 @@ internal class SettingsAllViewModelTest: BaseTest() {
         underTest.inputs.itemClicked(Settings.Theme.darkMode)
 
         verify {
-            mockSettingsNavigationComponent.nightModeDialog()
+            mockAppearanceNavigationComponent.nightModeDialog()
         }
     }
 
@@ -129,7 +129,7 @@ internal class SettingsAllViewModelTest: BaseTest() {
         underTest.inputs.itemClicked(Settings.Theme.theme)
 
         verify {
-            mockSettingsNavigationComponent.themeDialog()
+            mockAppearanceNavigationComponent.themeDialog()
         }
     }
 

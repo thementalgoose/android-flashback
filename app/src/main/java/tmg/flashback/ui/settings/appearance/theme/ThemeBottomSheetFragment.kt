@@ -10,6 +10,8 @@ class ThemeBottomSheetFragment: BaseBottomSheetComposeFragment() {
     override val content: @Composable () -> Unit = {
         ScreenView(screenName = "Settings Appearance Color Theme Picker")
 
-        ThemeScreenVM()
+        ThemeScreenVM(
+            dismiss = ::dismiss
+        )
     }
 }

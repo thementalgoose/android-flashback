@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import tmg.flashback.R
+import tmg.flashback.ui.managers.ToastManager
 import tmg.flashback.ui.model.Theme
 import tmg.flashback.ui.repository.ThemeRepository
 import javax.inject.Inject
@@ -26,7 +28,8 @@ interface ThemeViewModelOutputs {
 
 @HiltViewModel
 class ThemeViewModel @Inject constructor(
-    private val themeRepository: ThemeRepository
+    private val themeRepository: ThemeRepository,
+    private val toastManager: ToastManager
 ): ViewModel(), ThemeViewModelInputs, ThemeViewModelOutputs {
 
     var inputs: ThemeViewModelInputs = this
@@ -41,6 +44,10 @@ class ThemeViewModel @Inject constructor(
     //region Inputs
 
     override fun selectTheme(theme: Theme) {
+        val existing = theme == themeRepository.theme
+        if (!existing) {
+            toastManager.displayToast(R.string.settings_restart_app_required)
+        }
         themeRepository.theme = theme
     }
 

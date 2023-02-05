@@ -5,19 +5,25 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import tmg.flashback.ui.managers.ToastManager
 import tmg.flashback.ui.model.Theme
 import tmg.flashback.ui.repository.ThemeRepository
+import tmg.flashback.R
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.test
 
 internal class ThemeViewModelTest: BaseTest() {
 
     private val mockThemeRepository: ThemeRepository = mockk(relaxed = true)
+    private val mockToastManager: ToastManager = mockk(relaxed = true)
 
     private lateinit var underTest: ThemeViewModel
 
     private fun initUnderTest() {
-        underTest = ThemeViewModel(mockThemeRepository)
+        underTest = ThemeViewModel(
+            themeRepository = mockThemeRepository,
+            toastManager = mockToastManager
+        )
     }
 
     @BeforeEach
@@ -42,6 +48,7 @@ internal class ThemeViewModelTest: BaseTest() {
         initUnderTest()
         underTest.inputs.selectTheme(Theme.MATERIAL_YOU)
         verify {
+            mockToastManager.displayToast(R.string.settings_restart_app_required)
             mockThemeRepository.theme = Theme.MATERIAL_YOU
         }
     }

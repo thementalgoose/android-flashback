@@ -10,6 +10,8 @@ class NightModeBottomSheetFragment: BaseBottomSheetComposeFragment() {
     override val content: @Composable () -> Unit = {
         ScreenView(screenName = "Settings Appearance Night Mode Picker")
 
-        NightModeScreenVM()
+        NightModeScreenVM(
+            dismiss = ::dismiss
+        )
     }
 }
