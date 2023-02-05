@@ -1,4 +1,4 @@
-package tmg.flashback.stats.ui.settings.notifications.reminder
+package tmg.flashback.ui.settings.appearance.theme
 
 import androidx.compose.runtime.Composable
 import dagger.hilt.android.AndroidEntryPoint
@@ -6,12 +6,11 @@ import tmg.flashback.ui.base.BaseBottomSheetComposeFragment
 import tmg.flashback.ui.components.analytics.ScreenView
 
 @AndroidEntryPoint
-class UpNextReminderBottomSheetFragment: BaseBottomSheetComposeFragment() {
-
+class ThemeBottomSheetFragment: BaseBottomSheetComposeFragment() {
     override val content: @Composable () -> Unit = {
-        ScreenView(screenName = "Up Next Reminders")
+        ScreenView(screenName = "Settings Appearance Color Theme Picker")
 
-        UpNextReminderScreenVM(
+        ThemeScreenVM(
             dismiss = ::dismiss
         )
     }

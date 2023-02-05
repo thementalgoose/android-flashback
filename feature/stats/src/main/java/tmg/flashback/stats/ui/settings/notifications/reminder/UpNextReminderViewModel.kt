@@ -7,10 +7,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import tmg.flashback.stats.repository.NotificationRepository
 import tmg.flashback.stats.repository.models.NotificationReminder
 import tmg.flashback.stats.usecases.ScheduleNotificationsUseCase
-import tmg.flashback.ui.bottomsheet.BottomSheetItem
-import tmg.utilities.lifecycle.Event
-import tmg.utilities.models.Selected
-import tmg.utilities.models.StringHolder
 import javax.inject.Inject
 
 //region Inputs
@@ -24,8 +20,7 @@ interface UpNextReminderViewModelInputs {
 //region Outputs
 
 interface UpNextReminderViewModelOutputs {
-    val notificationPrefs: LiveData<List<Selected<BottomSheetItem>>>
-    val updated: LiveData<Event>
+    val currentlySelected: LiveData<NotificationReminder>
 }
 
 //endregion
@@ -39,28 +34,14 @@ class UpNextReminderViewModel @Inject constructor(
     var inputs: UpNextReminderViewModelInputs = this
     var outputs: UpNextReminderViewModelOutputs = this
 
-    override val notificationPrefs: MutableLiveData<List<Selected<BottomSheetItem>>> = MutableLiveData()
-    override val updated: MutableLiveData<Event> = MutableLiveData()
+    override val currentlySelected: MutableLiveData<NotificationReminder> = MutableLiveData()
 
     init {
-        updateList()
+        currentlySelected.value = notificationRepository.notificationReminderPeriod
     }
-
-    //region Inputs
 
     override fun selectNotificationReminder(reminder: NotificationReminder) {
         notificationRepository.notificationReminderPeriod = reminder
-        updateList()
         scheduleNotificationsUseCase.schedule()
-        updated.value = Event()
-    }
-
-    //endregion
-
-    private fun updateList() {
-        notificationPrefs.value = NotificationReminder.values()
-            .map {
-                Selected(BottomSheetItem(it.ordinal, it.icon, StringHolder(it.label)), notificationRepository.notificationReminderPeriod == it)
-            }
     }
 }

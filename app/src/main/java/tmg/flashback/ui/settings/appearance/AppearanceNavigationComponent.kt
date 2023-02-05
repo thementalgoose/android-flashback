@@ -1,12 +1,12 @@
-package tmg.flashback.settings
+package tmg.flashback.ui.settings.appearance
 
 import androidx.appcompat.app.AppCompatActivity
-import tmg.flashback.settings.ui.settings.appearance.nightmode.NightModeBottomSheetFragment
-import tmg.flashback.settings.ui.settings.appearance.theme.ThemeBottomSheetFragment
 import tmg.flashback.ui.navigation.ActivityProvider
+import tmg.flashback.ui.settings.appearance.nightmode.NightModeBottomSheetFragment
+import tmg.flashback.ui.settings.appearance.theme.ThemeBottomSheetFragment
 import javax.inject.Inject
 
-class SettingsNavigationComponent @Inject constructor(
+class AppearanceNavigationComponent @Inject constructor(
     private val activityProvider: ActivityProvider
 ) {
     fun nightModeDialog() = activityProvider.launch {
