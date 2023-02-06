@@ -17,9 +17,9 @@ import tmg.flashback.rss.RssNavigationComponent
 import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.stats.repository.NotificationRepository
 import tmg.flashback.stats.usecases.DefaultSeasonUseCase
-import tmg.flashback.ui.dashboard.compact.menu.MenuItems
-import tmg.flashback.ui.dashboard.compact.menu.MenuViewModel
 import tmg.flashback.ui.dashboard.expectedMenuItems
+import tmg.flashback.ui.dashboard2.compact.menu.MenuItems
+import tmg.flashback.ui.dashboard2.compact.menu.MenuViewModel
 import tmg.flashback.ui.managers.PermissionManager
 import tmg.flashback.ui.managers.StyleManager
 import tmg.flashback.ui.model.NightMode

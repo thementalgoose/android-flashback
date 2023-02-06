@@ -14,9 +14,9 @@ import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.statistics.repo.RaceRepository
 import tmg.flashback.stats.usecases.DefaultSeasonUseCase
 import tmg.flashback.stats.usecases.ScheduleNotificationsUseCase
-import tmg.flashback.ui.dashboard.compact.DashboardNavItem
-import tmg.flashback.ui.dashboard.compact.DashboardScreenState
-import tmg.flashback.ui.dashboard.compact.DashboardViewModel
+import tmg.flashback.ui.dashboard2.compact.DashboardNavItem
+import tmg.flashback.ui.dashboard2.compact.DashboardScreenState
+import tmg.flashback.ui.dashboard2.compact.DashboardViewModel
 import tmg.flashback.usecases.DashboardSyncUseCase
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertEventFired
@@ -75,7 +75,8 @@ internal class DashboardViewModelTest: BaseTest() {
                 DashboardScreenState(
                 tab = DashboardNavItem.CALENDAR,
                 season = 2019
-            ))
+            )
+            )
         }
         verify {
             mockAnalyticsManager.viewScreen("Dashboard", mapOf(

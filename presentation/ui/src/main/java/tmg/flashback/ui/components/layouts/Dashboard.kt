@@ -37,16 +37,18 @@ private val expandedSlideInMenuWidth = 400.dp
 @Composable
 fun Dashboard(
     windowSize: WindowSizeClass,
-    menuItems: List<NavigationItem>,
+    drawerMenuItems: List<NavigationItem>,
+    bottombarMenuItems: List<NavigationItem>,
+    bottombarSuppress: Boolean,
+    expandedMenuItems: List<NavigationItem> = bottombarMenuItems + drawerMenuItems,
     clickMenuItem: (NavigationItem) -> Unit,
-    menuContent: @Composable () -> Unit,
-    content: @Composable (menuClicked: (() -> Unit)?) -> Unit,
-    subContent: @Composable () -> Unit,
+    content: @Composable () -> Unit,
 ) {
     val panelsState = rememberOverlappingPanelsState(OverlappingPanelsValue.Closed)
     AppTheme {
         Scaffold(
             bottomBar = {
+
                 if (windowSize.widthSizeClass == WindowWidthSizeClass.Compact) {
                     BottomAppBar(backgroundColor = AppTheme.colors.backgroundNav) {
                         menuItems.forEach {

@@ -7,11 +7,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.style.AppTheme
-import tmg.flashback.ui.components.navigation.NavigationColumn
-import tmg.flashback.ui.components.navigation.NavigationTimelineItem
-import tmg.flashback.ui.components.navigation.PipeType
 import tmg.flashback.ui.dashboard.MenuSeasonItem
-import tmg.flashback.ui.dashboard.compact.menu.MenuViewModel
+import tmg.flashback.ui.dashboard2.compact.menu.MenuViewModel
 
 @Composable
 fun ExpandedContainerVM(

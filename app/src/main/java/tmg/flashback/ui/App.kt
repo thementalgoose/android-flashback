@@ -37,7 +37,7 @@ import tmg.flashback.stats.ui.drivers.season.DriverSeasonScreenVM
 import tmg.flashback.stats.ui.search.SearchScreenVM
 import tmg.flashback.stats.ui.weekend.WeekendInfo
 import tmg.flashback.stats.ui.weekend.WeekendScreenVM
-import tmg.flashback.ui.dashboard.compact.DashboardScreenVM
+import tmg.flashback.ui.dashboard2.compact.DashboardScreenVM
 import tmg.flashback.ui.navigation.Navigator
 import tmg.flashback.ui.navigation.Screen
 import tmg.flashback.ui.navigation.asNavigationDestination

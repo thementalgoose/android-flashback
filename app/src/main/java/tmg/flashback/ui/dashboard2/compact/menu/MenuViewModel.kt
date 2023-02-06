@@ -1,4 +1,4 @@
-package tmg.flashback.ui.dashboard.compact.menu
+package tmg.flashback.ui.dashboard2.compact.menu
 
 import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
