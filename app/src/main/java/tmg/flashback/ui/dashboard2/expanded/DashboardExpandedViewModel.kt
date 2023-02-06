@@ -1,4 +1,4 @@
-package tmg.flashback.ui.dashboard.expanded
+package tmg.flashback.ui.dashboard2.expanded
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -19,8 +19,6 @@ import tmg.flashback.statistics.repo.RaceRepository
 import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.stats.usecases.DefaultSeasonUseCase
 import tmg.flashback.ui.dashboard.MenuSeasonItem
-import tmg.flashback.ui.dashboard.compact.DashboardNavItem
-import tmg.flashback.ui.dashboard.compact.DashboardScreenState
 import tmg.flashback.ui.navigation.ApplicationNavigationComponent
 import tmg.flashback.usecases.DashboardSyncUseCase
 import tmg.flashback.usecases.GetSeasonsUseCase

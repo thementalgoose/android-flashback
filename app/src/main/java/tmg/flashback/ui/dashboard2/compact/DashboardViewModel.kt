@@ -1,4 +1,4 @@
-package tmg.flashback.ui.dashboard.compact
+package tmg.flashback.ui.dashboard2.compact
 
 import android.content.Context
 import android.util.Log

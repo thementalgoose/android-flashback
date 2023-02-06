@@ -1,4 +1,4 @@
-package tmg.flashback.ui.dashboard.compact
+package tmg.flashback.ui.dashboard2.compact
 
 import android.annotation.SuppressLint
 import androidx.compose.animation.AnimatedVisibility
@@ -26,7 +26,7 @@ import tmg.flashback.ui.components.layouts.OverlappingPanelsValue
 import tmg.flashback.ui.components.layouts.rememberOverlappingPanelsState
 import tmg.flashback.ui.components.navigation.NavigationBar
 import tmg.flashback.ui.components.navigation.appBarHeight
-import tmg.flashback.ui.dashboard.compact.menu.MenuScreenVM
+import tmg.flashback.ui.dashboard2.compact.menu.MenuScreenVM
 import tmg.utilities.extensions.toEnum
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")

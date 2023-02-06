@@ -1,4 +1,4 @@
-package tmg.flashback.ui.dashboard.expanded
+package tmg.flashback.ui.dashboard2.expanded
 
 data class DashboardExpandedScreenState(
     val tab: DashboardExpandedNavItem,

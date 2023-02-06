@@ -1,4 +1,4 @@
-package tmg.flashback.ui.dashboard.expanded
+package tmg.flashback.ui.dashboard2.expanded
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
@@ -9,19 +9,15 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import kotlinx.coroutines.launch
 import tmg.flashback.stats.ui.dashboard.constructors.ConstructorStandingsScreenVM
 import tmg.flashback.stats.ui.dashboard.drivers.DriverStandingsScreenVM
 import tmg.flashback.stats.ui.dashboard.schedule.ScheduleScreenVM
-import tmg.flashback.style.text.TextHeadline1
 import tmg.flashback.ui.components.navigation.NavigationColumn
 import tmg.flashback.ui.components.navigation.NavigationTimelineItem
 import tmg.flashback.ui.components.navigation.PipeType
 import tmg.flashback.ui.dashboard.MenuSeasonItem
-import tmg.flashback.ui.dashboard.compact.DashboardNavItem
 import tmg.utilities.extensions.toEnum
 
 private val contentWidth = 420.dp

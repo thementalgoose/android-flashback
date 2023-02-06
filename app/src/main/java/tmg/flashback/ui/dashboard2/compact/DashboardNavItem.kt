@@ -1,12 +1,11 @@
-package tmg.flashback.ui.dashboard.expanded
+package tmg.flashback.ui.dashboard2.compact
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import tmg.flashback.R
 import tmg.flashback.ui.components.navigation.NavigationItem
-import tmg.flashback.ui.dashboard.compact.DashboardNavItem
 
-enum class DashboardExpandedNavItem(
+enum class DashboardNavItem(
     @StringRes
     val label: Int,
     @DrawableRes
@@ -27,25 +26,10 @@ enum class DashboardExpandedNavItem(
         label = R.string.nav_constructors,
         icon = R.drawable.nav_constructor,
         analyticsName = "Constructor"
-    ),
-    SEARCH(
-        label = R.string.nav_search,
-        icon = R.drawable.nav_search,
-        analyticsName = "Search"
-    ),
-    RSS(
-        label = R.string.nav_rss,
-        icon = R.drawable.nav_rss,
-        analyticsName = "RSS"
-    ),
-    SETTINGS(
-        label = R.string.nav_settings,
-        icon = R.drawable.nav_settings,
-        analyticsName = "Settings"
     );
 
     fun toNavigationItems(): List<NavigationItem> {
-        return DashboardExpandedNavItem.values()
+        return DashboardNavItem.values()
             .map {
                 NavigationItem(
                     id = it.name,
@@ -55,4 +39,20 @@ enum class DashboardExpandedNavItem(
                 )
             }
     }
+
+    companion object
 }
+
+fun DashboardNavItem.Companion.toList(selected: DashboardNavItem?): List<NavigationItem> {
+    return DashboardNavItem
+        .values()
+        .map {
+            NavigationItem(
+                id = it.name,
+                label = it.label,
+                icon = it.icon,
+                isSelected = it == selected
+            )
+        }
+}
+

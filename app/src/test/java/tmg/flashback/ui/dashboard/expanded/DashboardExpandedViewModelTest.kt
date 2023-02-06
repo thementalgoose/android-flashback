@@ -18,6 +18,9 @@ import tmg.flashback.statistics.repo.RaceRepository
 import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.stats.usecases.DefaultSeasonUseCase
 import tmg.flashback.ui.dashboard.expectedMenuItems
+import tmg.flashback.ui.dashboard2.expanded.DashboardExpandedNavItem
+import tmg.flashback.ui.dashboard2.expanded.DashboardExpandedScreenState
+import tmg.flashback.ui.dashboard2.expanded.DashboardExpandedViewModel
 import tmg.flashback.ui.navigation.ApplicationNavigationComponent
 import tmg.flashback.usecases.DashboardSyncUseCase
 import tmg.flashback.usecases.GetSeasonsUseCase
