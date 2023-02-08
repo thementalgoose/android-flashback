@@ -5,8 +5,7 @@ import io.mockk.mockk
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import tmg.flashback.stats.repository.HomeRepository
-import tmg.flashback.ui.dashboard.MenuSeasonItem
-import tmg.flashback.ui.dashboard.model
+
 
 internal class GetSeasonsUseCaseTest {
 
@@ -25,10 +24,10 @@ internal class GetSeasonsUseCaseTest {
         every { mockHomeRepository.supportedSeasons } returns setOf(2020)
 
         initUnderTest()
-        val result = underTest.get(2019)
+        val result = underTest.get()
 
         val expected = listOf(
-            MenuSeasonItem.model(season = 2020, isSelected = false, isLast = true, isFirst = true)
+            2020 to model(isLast = true, isFirst = true)
         )
         assertEquals(expected, result)
     }
@@ -38,15 +37,15 @@ internal class GetSeasonsUseCaseTest {
         every { mockHomeRepository.supportedSeasons } returns setOf(2020, 2019, 2017, 2016, 2015, 2013)
 
         initUnderTest()
-        val result = underTest.get(2019)
+        val result = underTest.get()
 
         val expected = listOf(
-            MenuSeasonItem.model(season = 2020, isSelected = false, isLast = false, isFirst = true),
-            MenuSeasonItem.model(season = 2019, isSelected = true, isLast = true, isFirst = false),
-            MenuSeasonItem.model(season = 2017, isSelected = false, isLast = false, isFirst = true),
-            MenuSeasonItem.model(season = 2016, isSelected = false, isLast = false, isFirst = false),
-            MenuSeasonItem.model(season = 2015, isSelected = false, isLast = true, isFirst = false),
-            MenuSeasonItem.model(season = 2013, isSelected = false, isLast = true, isFirst = true)
+            2020 to model(isLast = false, isFirst = true),
+            2019 to model(isLast = true, isFirst = false),
+            2017 to model(isLast = false, isFirst = true),
+            2016 to model(isLast = false, isFirst = false),
+            2015 to model(isLast = true, isFirst = false),
+            2013 to model(isLast = true, isFirst = true)
         )
         assertEquals(expected, result)
     }
@@ -59,14 +58,16 @@ internal class GetSeasonsUseCaseTest {
         val result = underTest.get()
 
         val expected = listOf(
-            MenuSeasonItem.model(season = 2021, isSelected = false, isLast = false, isFirst = true),
-            MenuSeasonItem.model(season = 2020, isSelected = false, isLast = false, isFirst = false),
-            MenuSeasonItem.model(season = 2019, isSelected = false, isLast = false, isFirst = false),
-            MenuSeasonItem.model(season = 2018, isSelected = false, isLast = false, isFirst = false),
-            MenuSeasonItem.model(season = 2017, isSelected = false, isLast = false, isFirst = false),
-            MenuSeasonItem.model(season = 2016, isSelected = false, isLast = false, isFirst = false),
-            MenuSeasonItem.model(season = 2015, isSelected = false, isLast = true, isFirst = false)
+            2021 to model(isLast = false, isFirst = true),
+            2020 to model(isLast = false, isFirst = false),
+            2019 to model(isLast = false, isFirst = false),
+            2018 to model(isLast = false, isFirst = false),
+            2017 to model(isLast = false, isFirst = false),
+            2016 to model(isLast = false, isFirst = false),
+            2015 to model(isLast = true, isFirst = false)
         )
         assertEquals(expected, result)
     }
+
+    fun model(isFirst: Boolean, isLast: Boolean) = Pair(IsFirst(isFirst), IsLast(isLast))
 }

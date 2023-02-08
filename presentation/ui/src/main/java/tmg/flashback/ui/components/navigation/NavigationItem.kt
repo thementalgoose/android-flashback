@@ -8,7 +8,7 @@ import tmg.flashback.ui.R
 data class NavigationItem(
     val id: String,
     @StringRes
-    val label: Int?,
+    val label: Int,
     @DrawableRes
     val icon: Int,
     val isSelected: Boolean? = false,
@@ -20,7 +20,14 @@ data class NavigationTimelineItem(
     val label: String,
     val color: Color,
     val isSelected: Boolean = false
-)
+) {
+    val isFirst: Boolean
+        get() = pipeType.showTop
+
+    val isLast: Boolean
+        get() = pipeType.showBottom
+
+}
 
 internal val fakeNavigationTimelineItems: List<NavigationTimelineItem> = listOf(
     NavigationTimelineItem(

@@ -23,7 +23,6 @@ import tmg.flashback.ui.dashboard2.expanded.DashboardExpandedScreenState
 import tmg.flashback.ui.dashboard2.expanded.DashboardExpandedViewModel
 import tmg.flashback.ui.navigation.ApplicationNavigationComponent
 import tmg.flashback.usecases.DashboardSyncUseCase
-import tmg.flashback.usecases.GetSeasonsUseCase
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertEventFired
 import tmg.testutils.livedata.assertEventNotFired
