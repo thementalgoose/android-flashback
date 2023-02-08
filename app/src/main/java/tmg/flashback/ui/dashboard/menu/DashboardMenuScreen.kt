@@ -1,4 +1,4 @@
-package tmg.flashback.ui.dashboard
+package tmg.flashback.ui.dashboard.menu
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
@@ -35,10 +35,14 @@ import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextSection
 import tmg.flashback.ui.components.navigation.NavigationItem
 import tmg.flashback.ui.components.navigation.NavigationTimelineItem
+import tmg.flashback.ui.dashboard.DashboardFeaturePrompt
+import tmg.flashback.ui.dashboard.DashboardHero
+import tmg.flashback.ui.dashboard.MenuItem
 
 @Composable
 fun DashboardMenuScreen(
     modifier: Modifier = Modifier,
+    currentlySelectedItem: MenuItem,
     appFeatureItemsList: List<MenuItem>,
     menuItemClicked: (MenuItem) -> Unit,
     darkMode: Boolean,
@@ -56,7 +60,7 @@ fun DashboardMenuScreen(
         content = {
             item(key = "hero") { DashboardHero(menuIcons = null) }
             item(key = "div1") { Divider() }
-            item(key = "label1") { SubHeader(text = stringResource(id = R.string.dashboard_all_title))}
+            item(key = "label1") { SubHeader(text = stringResource(id = R.string.dashboard_all_title)) }
             items(appFeatureItemsList, key = { "button-${it.id}" }) {
                 Button(
                     label = it.label,
@@ -91,7 +95,7 @@ fun DashboardMenuScreen(
                     Divider()
                 }
             }
-            item(key = "label2") { SubHeader(text = stringResource(id = R.string.dashboard_all_title))}
+            item(key = "label2") { SubHeader(text = stringResource(id = R.string.dashboard_all_title)) }
             items(seasonItemsList, key = { "season-$it" }) {
                 TimelineItem(
                     model = it,

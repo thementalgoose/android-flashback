@@ -1,16 +1,24 @@
-package tmg.flashback.ui.components.navigation
+package tmg.flashback.ui.dashboard.menu
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
@@ -22,7 +30,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.*
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Outline
+import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.PathOperation
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Density
@@ -34,6 +46,11 @@ import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.ui.R
+import tmg.flashback.ui.components.navigation.NavigationItem
+import tmg.flashback.ui.components.navigation.NavigationTimelineItem
+import tmg.flashback.ui.components.navigation.PipeType
+import tmg.flashback.ui.dashboard.DashboardFeaturePrompt
+import tmg.flashback.ui.dashboard.MenuItem
 
 val columnWidthCollapsed: Dp = 56.dp
 private val itemSize: Dp = 38.dp
@@ -41,14 +58,20 @@ private val iconSize: Dp = 20.dp
 val columnWidthExpanded: Dp = 240.dp
 
 @Composable
-fun NavigationColumn(
-    list: List<NavigationItem>,
-    itemClicked: (NavigationItem) -> Unit,
+fun DashboardMenuExpandedScreen(
     modifier: Modifier = Modifier,
-    timelineItemClicked: (NavigationTimelineItem) -> Unit = {},
-    timelineList: List<NavigationTimelineItem> = emptyList(),
-    lockExpanded: Boolean = false,
-    contentHeader: @Composable ColumnScope.() -> Unit = {}
+    currentlySelectedItem: MenuItem,
+    appFeatureItemsList: List<MenuItem>,
+    seasonScreenItemsList: List<MenuItem>,
+    menuItemClicked: (MenuItem) -> Unit,
+    darkMode: Boolean,
+    darkModeClicked: (Boolean) -> Unit,
+    featurePromptList: List<DashboardFeaturePrompt>,
+    featurePromptClicked: (DashboardFeaturePrompt) -> Unit,
+    seasonItemsList: List<NavigationTimelineItem>,
+    seasonClicked: (Int) -> Unit,
+    appVersion: String,
+    lockExpanded: Boolean
 ) {
     val expanded = remember { mutableStateOf(lockExpanded) }
     val width = animateDpAsState(targetValue = when (expanded.value) {
@@ -76,27 +99,39 @@ fun NavigationColumn(
 //                        Spacer(modifier = Modifier.height(AppTheme.dimens.small))
                     }
                 }
-                items(list) {
+                items(seasonScreenItemsList, key = { "menuseason-${it.id}" }) { menuItem ->
                     NavigationItem(
-                        item = it,
+                        item = menuItem.toNavigationItem(currentlySelectedItem == menuItem),
                         isExpanded = expanded.value,
-                        onClick = itemClicked,
+                        onClick = { item ->
+                            menuItemClicked(seasonScreenItemsList.first { item.id == menuItem.id })
+                        },
                     )
-                    Spacer(Modifier.height(AppTheme.dimens.small))
+                    Spacer(Modifier.height(AppTheme.dimens.xsmall))
                 }
-                if (timelineList.isNotEmpty()) {
+                item { Div() }
+                items(appFeatureItemsList, key = { "menuappfeature-${it.id}"}) { menuItem ->
+                    NavigationItem(
+                        item = menuItem.toNavigationItem(currentlySelectedItem == menuItem),
+                        isExpanded = expanded.value,
+                        onClick = { item ->
+                            menuItemClicked(seasonScreenItemsList.first { item.id == menuItem.id })
+                        },
+                    )
+                    Spacer(Modifier.height(AppTheme.dimens.xsmall))
+                }
+                item { Div() }
+                if (seasonItemsList.isNotEmpty()) {
                     item {
-                        Divider(
-                            modifier = Modifier.padding(horizontal = AppTheme.dimens.medium),
-                            color = AppTheme.colors.backgroundTertiary
-                        )
                         Spacer(modifier = Modifier.height(AppTheme.dimens.small))
                     }
-                    items(timelineList) {
+                    items(seasonItemsList) {
                         NavigationTimelineItem(
                             item = it,
                             isExpanded = expanded.value,
-                            onClick = timelineItemClicked
+                            onClick = {
+                                seasonClicked(it.label.toInt())
+                            }
                         )
                     }
                     item {
@@ -297,10 +332,12 @@ fun Donut(
                     addOval(Rect(0f, 0f, size.width - 1, size.height - 1))
                 }
                 val p2 = Path().apply {
-                    addOval(Rect(thickness,
+                    addOval(
+                        Rect(thickness,
                         thickness,
                         size.width - 1 - thickness,
-                        size.height - 1 - thickness))
+                        size.height - 1 - thickness)
+                    )
                 }
                 val p3 = Path()
                 p3.op(p1, p2, PathOperation.Difference)
@@ -310,39 +347,34 @@ fun Donut(
     ) {}
 }
 
-@PreviewTheme
 @Composable
-private fun PreviewCompact() {
-    AppThemePreview {
-        NavigationColumn(
-            lockExpanded = false,
-            itemClicked = { },
-            list = fakeNavigationItems
-        )
-    }
+private fun Div() {
+    Divider(
+        modifier = Modifier.padding(
+            horizontal = AppTheme.dimens.medium,
+            vertical = AppTheme.dimens.xsmall
+        ),
+        color = AppTheme.colors.backgroundTertiary
+    )
 }
 
 @PreviewTheme
 @Composable
 private fun PreviewCompactTimeline() {
     AppThemePreview {
-        NavigationColumn(
-            lockExpanded = false,
-            itemClicked = { },
-            timelineList = fakeNavigationTimelineItems,
-            list = fakeNavigationItems
-        )
-    }
-}
-
-@PreviewTheme
-@Composable
-private fun PreviewExpanded() {
-    AppThemePreview {
-        NavigationColumn(
-            lockExpanded = true,
-            itemClicked = { },
-            list = fakeNavigationItems
+        DashboardMenuExpandedScreen(
+            currentlySelectedItem = MenuItem.Calendar,
+            appFeatureItemsList = listOf(MenuItem.Settings, MenuItem.RSS),
+            seasonScreenItemsList = listOf(MenuItem.Calendar, MenuItem.Drivers),
+            menuItemClicked = { },
+            darkMode = false,
+            darkModeClicked = { },
+            featurePromptList = listOf(DashboardFeaturePrompt.Notifications),
+            featurePromptClicked = { },
+            seasonItemsList = fakeNavigationTimelineItems,
+            seasonClicked = { },
+            appVersion = "version",
+            lockExpanded = false
         )
     }
 }
@@ -351,11 +383,73 @@ private fun PreviewExpanded() {
 @Composable
 private fun PreviewExpandedTimeline() {
     AppThemePreview {
-        NavigationColumn(
-            lockExpanded = true,
-            itemClicked = { },
-            timelineList = fakeNavigationTimelineItems,
-            list = fakeNavigationItems
+        DashboardMenuExpandedScreen(
+            currentlySelectedItem = MenuItem.Calendar,
+            appFeatureItemsList = listOf(MenuItem.Settings, MenuItem.RSS),
+            seasonScreenItemsList = listOf(MenuItem.Calendar, MenuItem.Drivers),
+            menuItemClicked = { },
+            darkMode = true,
+            darkModeClicked = { },
+            featurePromptList = listOf(DashboardFeaturePrompt.Notifications),
+            featurePromptClicked = { },
+            seasonItemsList = fakeNavigationTimelineItems,
+            seasonClicked = { },
+            appVersion = "version",
+            lockExpanded = true
         )
     }
 }
+
+
+internal val fakeNavigationTimelineItems: List<NavigationTimelineItem> = listOf(
+    NavigationTimelineItem(
+        id = "2022",
+        pipeType = PipeType.START,
+        label = "2022",
+        color = Color.Magenta,
+        isSelected = false
+    ),
+    NavigationTimelineItem(
+        id = "2021",
+        pipeType = PipeType.START_END,
+        label = "2021",
+        color = Color.Magenta,
+        isSelected = true
+    ),
+    NavigationTimelineItem(
+        id = "2020",
+        pipeType = PipeType.END,
+        label = "2020",
+        color = Color.Magenta,
+        isSelected = false
+    )
+)
+
+internal val fakeNavigationItems: List<NavigationItem> = listOf(
+    NavigationItem(
+        id = "menu",
+        label = R.string.ab_menu,
+        icon = R.drawable.ic_nightmode_dark,
+        isSelected = true
+    ),
+    NavigationItem(
+        id = "back",
+        label = R.string.ab_back,
+        icon = R.drawable.ic_theme_material_you
+    ),
+    NavigationItem(
+        id = "settings",
+        label = R.string.settings_theme_title,
+        icon = R.drawable.ic_nightmode_auto
+    ),
+    NavigationItem(
+        id = "light",
+        label = R.string.settings_theme_nightmode_light,
+        icon = R.drawable.ic_nightmode_light
+    ),
+    NavigationItem(
+        id = "experiment",
+        label = R.string.settings_experimental,
+        icon = R.drawable.ic_theme_default
+    )
+)
