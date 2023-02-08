@@ -21,6 +21,7 @@ import tmg.flashback.stats.Search
 import tmg.flashback.stats.usecases.ContentSyncUseCase
 import tmg.flashback.style.AppTheme
 import tmg.flashback.ui.base.BaseActivity
+import tmg.flashback.ui.dashboard.DashboardScreen
 import tmg.flashback.ui.navigation.Navigator
 import tmg.flashback.ui.navigation.Screen
 import tmg.flashback.ui.sync.SyncActivity
@@ -59,13 +60,16 @@ class HomeActivity: BaseActivity(), SplashScreen.KeepOnScreenCondition {
 
         setContent {
             AppTheme {
-                HomeScreen(
-                    windowSize = calculateWindowSizeClass(activity = this),
-                    navigator = navigator,
-                    closeApp = {
-                        finish()
-                    }
+                DashboardScreen(
+                    windowSize = calculateWindowSizeClass(activity = this)
                 )
+//                HomeScreen(
+//                    windowSize = calculateWindowSizeClass(activity = this),
+//                    navigator = navigator,
+//                    closeApp = {
+//                        finish()
+//                    }
+//                )
             }
         }
 

@@ -5,6 +5,8 @@ import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -33,10 +35,10 @@ import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.ui.R
 
-private val widthCollapsed: Dp = 64.dp
-private val itemSize: Dp = 48.dp
-private val iconSize: Dp = 24.dp
-private val widthExpanded: Dp = 180.dp
+val columnWidthCollapsed: Dp = 64.dp
+private val itemSize: Dp = 44.dp
+private val iconSize: Dp = 22.dp
+val columnWidthExpanded: Dp = 240.dp
 
 @Composable
 fun NavigationColumn(
@@ -50,8 +52,8 @@ fun NavigationColumn(
 ) {
     val expanded = remember { mutableStateOf(lockExpanded) }
     val width = animateDpAsState(targetValue = when (expanded.value) {
-        true -> widthExpanded
-        false -> widthCollapsed
+        true -> columnWidthExpanded
+        false -> columnWidthCollapsed
     })
 
     Column(modifier = modifier
@@ -62,44 +64,55 @@ fun NavigationColumn(
             vertical = AppTheme.dimens.small
         )
     ) {
-        Column(modifier = Modifier
-            .weight(1f)
-            .fillMaxWidth()
-            .verticalScroll(rememberScrollState())
-        ) {
-            Spacer(modifier = Modifier.height(AppTheme.dimens.small))
-            contentHeader()
-            Spacer(modifier = Modifier.height(AppTheme.dimens.small))
-            list.forEach { item ->
-                NavigationItem(
-                    item = item,
-                    isExpanded = expanded.value,
-                    onClick = itemClicked,
-                )
-                Spacer(Modifier.height(AppTheme.dimens.small))
-            }
-            if (timelineList.isNotEmpty()) {
-                Divider(
-                    modifier = Modifier.padding(horizontal = AppTheme.dimens.medium),
-                    color = AppTheme.colors.backgroundTertiary
-                )
-                Spacer(modifier = Modifier.height(AppTheme.dimens.small))
-                timelineList.forEach { item ->
-                    NavigationTimelineItem(
-                        item = item,
-                        isExpanded = expanded.value,
-                        onClick = timelineItemClicked
-                    )
+        LazyColumn(
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxWidth(),
+            content = {
+                item {
+                    Column(Modifier.fillMaxWidth()) {
+                        Spacer(modifier = Modifier.height(AppTheme.dimens.small))
+//                        contentHeader()
+//                        Spacer(modifier = Modifier.height(AppTheme.dimens.small))
+                    }
                 }
-                Spacer(modifier = Modifier.height(AppTheme.dimens.medium))
+                items(list) {
+                    NavigationItem(
+                        item = it,
+                        isExpanded = expanded.value,
+                        onClick = itemClicked,
+                    )
+                    Spacer(Modifier.height(AppTheme.dimens.small))
+                }
+                if (timelineList.isNotEmpty()) {
+                    item {
+                        Divider(
+                            modifier = Modifier.padding(horizontal = AppTheme.dimens.medium),
+                            color = AppTheme.colors.backgroundTertiary
+                        )
+                        Spacer(modifier = Modifier.height(AppTheme.dimens.small))
+                    }
+                    items(timelineList) {
+                        NavigationTimelineItem(
+                            item = it,
+                            isExpanded = expanded.value,
+                            onClick = timelineItemClicked
+                        )
+                    }
+                    item {
+                        Spacer(modifier = Modifier.height(AppTheme.dimens.medium))
+                    }
+                }
+                item {
+                    Spacer(modifier = Modifier.height(AppTheme.dimens.small))
+                }
             }
-            Spacer(modifier = Modifier.height(AppTheme.dimens.small))
-        }
+        )
         if (!lockExpanded) {
             NavigationItem(
                 item = NavigationItem(
                     id = "menu",
-                    label = null,
+                    label = R.string.empty,
                     icon = R.drawable.ic_menu_expanded
                 ),
                 onClick = {
@@ -129,7 +142,7 @@ private fun NavigationItem(
 
     Row(modifier = modifier
         .padding(
-            horizontal = (widthCollapsed - itemSize) / 2
+            horizontal = (columnWidthCollapsed - itemSize) / 2
         )
         .fillMaxWidth()
         .height(itemSize)
@@ -183,7 +196,7 @@ private fun NavigationTimelineItem(
 
     Row(modifier = modifier
         .padding(
-            horizontal = (widthCollapsed - itemSize) / 2
+            horizontal = (columnWidthCollapsed - itemSize) / 2
         )
         .fillMaxWidth()
         .height(itemSize)
@@ -200,42 +213,50 @@ private fun NavigationTimelineItem(
         )
     ) {
         Box(Modifier.fillMaxHeight()) {
-            Column(Modifier
-                .fillMaxHeight()
-                .width(8.dp)
-                .align(Alignment.Center)
+            Column(
+                Modifier
+                    .fillMaxHeight()
+                    .width(8.dp)
+                    .align(Alignment.Center)
             ) {
-                Box(Modifier
-                    .fillMaxWidth()
-                    .weight(1f)
-                    .padding(bottom = (iconSize / 2f) - 2.dp)
-                    .background(when (item.pipeType) {
-                        PipeType.SINGLE -> Color.Transparent
-                        PipeType.START -> Color.Transparent
-                        PipeType.START_END -> item.color
-                        PipeType.SINGLE_PIPE -> Color.Transparent
-                        PipeType.END -> item.color
-                    })
+                Box(
+                    Modifier
+                        .fillMaxWidth()
+                        .weight(1f)
+                        .padding(bottom = (iconSize / 2f) - 2.dp)
+                        .background(
+                            when (item.pipeType) {
+                                PipeType.SINGLE -> Color.Transparent
+                                PipeType.START -> Color.Transparent
+                                PipeType.START_END -> item.color
+                                PipeType.SINGLE_PIPE -> Color.Transparent
+                                PipeType.END -> item.color
+                            }
+                        )
                 )
-                Box(Modifier
-                    .fillMaxWidth()
-                    .weight(1f)
-                    .padding(top = (iconSize / 2f) - 2.dp)
-                    .background(when (item.pipeType) {
-                        PipeType.SINGLE -> Color.Transparent
-                        PipeType.START -> item.color
-                        PipeType.START_END -> item.color
-                        PipeType.SINGLE_PIPE -> Color.Transparent
-                        PipeType.END -> Color.Transparent
-                    })
+                Box(
+                    Modifier
+                        .fillMaxWidth()
+                        .weight(1f)
+                        .padding(top = (iconSize / 2f) - 2.dp)
+                        .background(
+                            when (item.pipeType) {
+                                PipeType.SINGLE -> Color.Transparent
+                                PipeType.START -> item.color
+                                PipeType.START_END -> item.color
+                                PipeType.SINGLE_PIPE -> Color.Transparent
+                                PipeType.END -> Color.Transparent
+                            }
+                        )
                 )
             }
             if (item.isSelected) {
-                Box(Modifier
-                    .size(iconSize)
-                    .align(Alignment.Center)
-                    .clip(CircleShape)
-                    .background(item.color)
+                Box(
+                    Modifier
+                        .size(iconSize)
+                        .align(Alignment.Center)
+                        .clip(CircleShape)
+                        .background(item.color)
                 )
             } else {
                 Donut(
