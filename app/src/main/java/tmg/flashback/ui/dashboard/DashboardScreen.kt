@@ -32,6 +32,8 @@ import tmg.flashback.ui.components.navigation.NavigationBar
 import tmg.flashback.ui.components.navigation.NavigationColumn
 import tmg.flashback.ui.components.navigation.NavigationTimelineItem
 import tmg.flashback.ui.components.navigation.appBarHeight
+import tmg.flashback.ui.dashboard.menu.DashboardMenuExpandedScreen
+import tmg.flashback.ui.dashboard.menu.DashboardMenuScreen
 
 @Composable
 fun DashboardScreen(
@@ -109,13 +111,12 @@ fun DashboardScreen(
             }
         },
         content = {
-            val list = (seasonScreenItemsList + appFeatureItemsList).map { it.toNavigationItem(currentlySelectedItem == it) }
-
             OverlappingPanels(
                 panelsState = panelsState,
                 gesturesEnabled = windowSize.widthSizeClass == WindowWidthSizeClass.Compact,
                 panelStart = {
                     DashboardMenuScreen(
+                        currentlySelectedItem = currentlySelectedItem,
                         appFeatureItemsList = appFeatureItemsList,
                         menuItemClicked = menuItemClicked,
                         darkMode = darkMode,
@@ -130,24 +131,35 @@ fun DashboardScreen(
                 panelCenter = {
                     Row(Modifier.fillMaxSize()) {
                         if (windowSize.widthSizeClass == WindowWidthSizeClass.Medium) {
-                            NavigationColumn(
-                                list = list,
-                                timelineList = seasonItemsList,
-                                itemClicked = { },
-//                                contentHeader = {
-//                                    DashboardHero(menuIcons = null)
-//                                }
+                            DashboardMenuExpandedScreen(
+                                currentlySelectedItem = currentlySelectedItem,
+                                appFeatureItemsList = appFeatureItemsList,
+                                menuItemClicked = menuItemClicked,
+                                darkMode = darkMode,
+                                darkModeClicked = darkModeClicked,
+                                featurePromptList = featurePromptList,
+                                featurePromptClicked = featurePromptClicked,
+                                seasonItemsList = seasonItemsList,
+                                seasonClicked = seasonClicked,
+                                appVersion = appVersion,
+                                seasonScreenItemsList = seasonScreenItemsList,
+                                lockExpanded = false
                             )
                         }
                         if (windowSize.widthSizeClass == WindowWidthSizeClass.Expanded) {
-                            NavigationColumn(
-                                list = list,
-                                itemClicked = { },
-                                timelineList = seasonItemsList,
-                                lockExpanded = true,
-//                                contentHeader = {
-//                                    DashboardHero(menuIcons = null)
-//                                }
+                            DashboardMenuExpandedScreen(
+                                currentlySelectedItem = currentlySelectedItem,
+                                appFeatureItemsList = appFeatureItemsList,
+                                menuItemClicked = menuItemClicked,
+                                darkMode = darkMode,
+                                darkModeClicked = darkModeClicked,
+                                featurePromptList = featurePromptList,
+                                featurePromptClicked = featurePromptClicked,
+                                seasonItemsList = seasonItemsList,
+                                seasonClicked = seasonClicked,
+                                appVersion = appVersion,
+                                seasonScreenItemsList = seasonScreenItemsList,
+                                lockExpanded = true
                             )
                         }
                         Box(modifier = Modifier.weight(1f)) {

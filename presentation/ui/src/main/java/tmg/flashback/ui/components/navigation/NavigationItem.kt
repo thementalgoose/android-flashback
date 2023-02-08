@@ -4,6 +4,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.ui.graphics.Color
 import tmg.flashback.ui.R
+import java.util.UUID
 
 data class NavigationItem(
     val id: String,
