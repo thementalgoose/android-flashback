@@ -45,7 +45,8 @@ import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody1
-import tmg.flashback.ui.R
+import tmg.flashback.style.text.TextTitle
+import tmg.flashback.R
 import tmg.flashback.ui.components.navigation.NavigationItem
 import tmg.flashback.ui.components.navigation.NavigationTimelineItem
 import tmg.flashback.ui.components.navigation.PipeType
@@ -56,6 +57,8 @@ val columnWidthCollapsed: Dp = 56.dp
 private val itemSize: Dp = 38.dp
 private val iconSize: Dp = 20.dp
 val columnWidthExpanded: Dp = 240.dp
+
+val headerHeight: Dp = 72.dp
 
 @Composable
 fun DashboardMenuExpandedScreen(
@@ -87,18 +90,25 @@ fun DashboardMenuExpandedScreen(
             vertical = AppTheme.dimens.small
         )
     ) {
+        NavigationItem(
+            item = NavigationItem(
+                id = "menu",
+                label = R.string.app_name,
+                icon = R.drawable.ic_menu_expanded
+            ),
+            isTitle = true,
+            onClick = when (lockExpanded) {
+                false -> { { expanded.value = !expanded.value } }
+                true -> null
+            },
+            isExpanded = expanded.value
+        )
+        Div()
         LazyColumn(
             modifier = Modifier
                 .weight(1f)
                 .fillMaxWidth(),
             content = {
-                item {
-                    Column(Modifier.fillMaxWidth()) {
-                        Spacer(modifier = Modifier.height(AppTheme.dimens.small))
-//                        contentHeader()
-//                        Spacer(modifier = Modifier.height(AppTheme.dimens.small))
-                    }
-                }
                 items(seasonScreenItemsList, key = { "menuseason-${it.id}" }) { menuItem ->
                     NavigationItem(
                         item = menuItem.toNavigationItem(currentlySelectedItem == menuItem),
@@ -143,19 +153,6 @@ fun DashboardMenuExpandedScreen(
                 }
             }
         )
-        if (!lockExpanded) {
-            NavigationItem(
-                item = NavigationItem(
-                    id = "menu",
-                    label = R.string.empty,
-                    icon = R.drawable.ic_menu_expanded
-                ),
-                onClick = {
-                    expanded.value = !expanded.value
-                },
-                isExpanded = expanded.value
-            )
-        }
     }
 }
 
@@ -163,8 +160,9 @@ fun DashboardMenuExpandedScreen(
 private fun NavigationItem(
     item: NavigationItem,
     isExpanded: Boolean,
-    onClick: ((NavigationItem) -> Unit)?,
     modifier: Modifier = Modifier,
+    isTitle: Boolean = false,
+    onClick: ((NavigationItem) -> Unit)?,
 ) {
     val backgroundColor = animateColorAsState(targetValue = when (item.isSelected) {
         true -> AppTheme.colors.primary.copy(alpha = 0.2f)
@@ -202,13 +200,23 @@ private fun NavigationItem(
             contentDescription = stringResource(id = item.label)
         )
         if (isExpanded) {
-            TextBody1(
-                modifier = Modifier
-                    .padding(start = AppTheme.dimens.small)
-                    .align(Alignment.CenterVertically)
-                    .fillMaxWidth(),
-                text = item.label.let { stringResource(id = it) }
-            )
+            if (isTitle) {
+                TextTitle(
+                    modifier = Modifier
+                        .padding(start = AppTheme.dimens.small)
+                        .align(Alignment.CenterVertically)
+                        .fillMaxWidth(),
+                    text = item.label.let { stringResource(id = it) }
+                )
+            } else {
+                TextBody1(
+                    modifier = Modifier
+                        .padding(start = AppTheme.dimens.small)
+                        .align(Alignment.CenterVertically)
+                        .fillMaxWidth(),
+                    text = item.label.let { stringResource(id = it) }
+                )
+            }
         }
     }
 }
