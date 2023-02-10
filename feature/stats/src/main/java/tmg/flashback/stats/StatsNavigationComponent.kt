@@ -13,6 +13,39 @@ import tmg.flashback.ui.navigation.Navigator
 import javax.inject.Inject
 
 @JvmInline
+value class ScreenCalendar(val route: String)
+val Screen.Calendar get() = ScreenCalendar("calendar/{season}")
+fun ScreenCalendar.with(
+    season: Int
+) = object : NavigationDestination {
+    override val route: String = this@with.route
+        .replace("{season}", season.toString())
+}
+
+
+@JvmInline
+value class ScreenDrivers(val route: String)
+val Screen.Drivers get() = ScreenDrivers("drivers/{season}")
+fun ScreenDrivers.with(
+    season: Int
+) = object : NavigationDestination {
+    override val route: String = this@with.route
+        .replace("{season}", season.toString())
+}
+
+
+@JvmInline
+value class ScreenConstructors(val route: String)
+val Screen.Constructors get() = ScreenCalendar("constructors/{season}")
+fun ScreenConstructors.with(
+    season: Int
+) = object : NavigationDestination {
+    override val route: String = this@with.route
+        .replace("{season}", season.toString())
+}
+
+
+@JvmInline
 value class ScreenDriver(val route: String)
 val Screen.Driver get() = ScreenDriver("drivers/{driverId}?driverName={driverName}")
 fun ScreenDriver.with(

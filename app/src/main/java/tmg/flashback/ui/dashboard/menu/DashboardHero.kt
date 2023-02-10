@@ -1,4 +1,4 @@
-package tmg.flashback.ui.dashboard
+package tmg.flashback.ui.dashboard.menu
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
@@ -37,7 +37,7 @@ internal fun DashboardHero(
     if (menuIcons != null) {
         Box(
             Modifier.padding(
-            vertical = AppTheme.dimens.medium,
+            vertical = AppTheme.dimens.xsmall,
             horizontal = AppTheme.dimens.nsmall
         )) {
             TextHeadline2WithIcon(

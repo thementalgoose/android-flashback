@@ -7,10 +7,12 @@ import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
@@ -20,24 +22,30 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.window.layout.WindowInfoTracker
+import androidx.window.layout.WindowLayoutInfo
 import kotlinx.coroutines.launch
+import tmg.flashback.eastereggs.model.MenuIcons
 import tmg.flashback.style.AppTheme
+import tmg.flashback.ui.AppGraph
 import tmg.flashback.ui.components.layouts.OverlappingPanels
 import tmg.flashback.ui.components.layouts.OverlappingPanelsValue
 import tmg.flashback.ui.components.layouts.rememberOverlappingPanelsState
 import tmg.flashback.ui.components.navigation.NavigationBar
-import tmg.flashback.ui.components.navigation.NavigationColumn
 import tmg.flashback.ui.components.navigation.NavigationTimelineItem
 import tmg.flashback.ui.components.navigation.appBarHeight
 import tmg.flashback.ui.dashboard.menu.DashboardMenuExpandedScreen
 import tmg.flashback.ui.dashboard.menu.DashboardMenuScreen
+import tmg.flashback.ui.navigation.Navigator
 
 @Composable
 fun DashboardScreen(
     windowSize: WindowSizeClass,
+    windowLayoutInfo: WindowLayoutInfo,
+    navigator: Navigator,
+    closeApp: () -> Unit,
     viewModel: DashboardViewModel = hiltViewModel()
 ) {
     val currentlySelectedItem = viewModel.outputs.currentlySelectedItem.observeAsState(MenuItem.Calendar)
@@ -53,8 +61,14 @@ fun DashboardScreen(
 
     val appVersion = viewModel.outputs.appVersion.observeAsState("")
 
+    val snow = viewModel.outputs.snow.observeAsState(false)
+    val titleIcon = viewModel.outputs.titleIcon.observeAsState(null)
+
     DashboardScreen(
         windowSize = windowSize,
+        windowLayoutInfo = windowLayoutInfo,
+        navigator = navigator,
+        closeApp = closeApp,
         currentlySelectedItem = currentlySelectedItem.value,
         appFeatureItemsList = appFeatureItemsList.value,
         seasonScreenItemsList = seasonScreenItemsList.value,
@@ -65,7 +79,9 @@ fun DashboardScreen(
         featurePromptClicked = viewModel.inputs::clickFeaturePrompt,
         seasonItemsList = seasonItemsList.value,
         seasonClicked = viewModel.inputs::clickSeason,
-        appVersion = appVersion.value
+        appVersion = appVersion.value,
+        easterEggSnow = snow.value,
+        easterEggTitleIcon = titleIcon.value
     )
 }
 
@@ -73,17 +89,22 @@ fun DashboardScreen(
 @Composable
 fun DashboardScreen(
     windowSize: WindowSizeClass,
+    windowLayoutInfo: WindowLayoutInfo,
+    navigator: Navigator,
+    closeApp: () -> Unit,
     currentlySelectedItem: MenuItem,
     appFeatureItemsList: List<MenuItem>,
     seasonScreenItemsList: List<MenuItem>,
     menuItemClicked: (MenuItem) -> Unit,
     darkMode: Boolean,
     darkModeClicked: (Boolean) -> Unit,
-    featurePromptList: List<DashboardFeaturePrompt>,
-    featurePromptClicked: (DashboardFeaturePrompt) -> Unit,
+    featurePromptList: List<FeaturePrompt>,
+    featurePromptClicked: (FeaturePrompt) -> Unit,
     seasonItemsList: List<NavigationTimelineItem>,
     seasonClicked: (Int) -> Unit,
-    appVersion: String
+    appVersion: String,
+    easterEggSnow: Boolean,
+    easterEggTitleIcon: MenuIcons?
 ) {
     val panelsState = rememberOverlappingPanelsState(OverlappingPanelsValue.Closed)
 
@@ -92,6 +113,12 @@ fun DashboardScreen(
         coroutineScope.launch { panelsState.closePanels() }
         return@DisposableEffect this.onDispose {  }
     })
+
+    val openMenu: () -> Unit = {
+        coroutineScope.launch {
+            panelsState.openStartPanel()
+        }
+    }
 
     Scaffold(
         modifier = Modifier
@@ -112,6 +139,7 @@ fun DashboardScreen(
         },
         content = {
             OverlappingPanels(
+                modifier = Modifier.background(AppTheme.colors.backgroundContainer),
                 panelsState = panelsState,
                 gesturesEnabled = windowSize.widthSizeClass == WindowWidthSizeClass.Compact,
                 panelStart = {
@@ -125,7 +153,9 @@ fun DashboardScreen(
                         featurePromptClicked = featurePromptClicked,
                         seasonItemsList = seasonItemsList,
                         seasonClicked = seasonClicked,
-                        appVersion = appVersion
+                        appVersion = appVersion,
+                        easterEggSnow = easterEggSnow,
+                        easterEggTitleIcon = easterEggTitleIcon
                     )
                 },
                 panelCenter = {
@@ -134,6 +164,7 @@ fun DashboardScreen(
                             DashboardMenuExpandedScreen(
                                 currentlySelectedItem = currentlySelectedItem,
                                 appFeatureItemsList = appFeatureItemsList,
+                                seasonScreenItemsList = seasonScreenItemsList,
                                 menuItemClicked = menuItemClicked,
                                 darkMode = darkMode,
                                 darkModeClicked = darkModeClicked,
@@ -142,7 +173,8 @@ fun DashboardScreen(
                                 seasonItemsList = seasonItemsList,
                                 seasonClicked = seasonClicked,
                                 appVersion = appVersion,
-                                seasonScreenItemsList = seasonScreenItemsList,
+                                easterEggSnow = easterEggSnow,
+                                easterEggTitleIcon = easterEggTitleIcon,
                                 lockExpanded = false
                             )
                         }
@@ -150,6 +182,7 @@ fun DashboardScreen(
                             DashboardMenuExpandedScreen(
                                 currentlySelectedItem = currentlySelectedItem,
                                 appFeatureItemsList = appFeatureItemsList,
+                                seasonScreenItemsList = seasonScreenItemsList,
                                 menuItemClicked = menuItemClicked,
                                 darkMode = darkMode,
                                 darkModeClicked = darkModeClicked,
@@ -158,15 +191,24 @@ fun DashboardScreen(
                                 seasonItemsList = seasonItemsList,
                                 seasonClicked = seasonClicked,
                                 appVersion = appVersion,
-                                seasonScreenItemsList = seasonScreenItemsList,
+                                easterEggSnow = easterEggSnow,
+                                easterEggTitleIcon = easterEggTitleIcon,
                                 lockExpanded = true
                             )
                         }
-                        Box(modifier = Modifier.weight(1f)) {
-                            Box(
-                                Modifier
-                                    .fillMaxSize()
-                                    .background(Color.Cyan))
+                        Row(modifier = Modifier.weight(1f)) {
+                            Box(Modifier
+                                .width(1.dp)
+                                .fillMaxHeight()
+                                .background(AppTheme.colors.backgroundSecondary))
+                            AppGraph(
+                                modifier = Modifier.weight(1f),
+                                openMenu = openMenu,
+                                windowSize = windowSize,
+                                windowInfo = windowLayoutInfo,
+                                navigator = navigator,
+                                closeApp = closeApp
+                            )
                         }
                     }
                 }
