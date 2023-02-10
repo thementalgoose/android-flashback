@@ -81,16 +81,12 @@ fun AppGraph(
     val isCompact = windowSize.widthSizeClass == WindowWidthSizeClass.Compact
 
     LaunchedEffect(destination) {
-//        if (navController.currentDestination?.route != destination.route) {
-//            if (destination == Screen.Home) {
-//                navController.navigate(destination) {
-//                    this.launchSingleTop = true
-//                }
-//            } else {
-//                navController.navigate(destination)
-//            }
-//        }
+        if (navController.currentDestination?.route != destination?.route) {
+            val route = destination?.route ?: return@LaunchedEffect
+            navController.navigate(route)
+        }
     }
+
     LaunchedEffect(Unit) {
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             destination.route?.asNavigationDestination()?.let {

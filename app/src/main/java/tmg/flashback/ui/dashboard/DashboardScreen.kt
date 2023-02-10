@@ -196,7 +196,10 @@ fun DashboardScreen(
                                 lockExpanded = true
                             )
                         }
-                        Row(modifier = Modifier.weight(1f)) {
+                        Row(modifier = Modifier
+                            .weight(1f)
+                            .background(AppTheme.colors.backgroundContainer)
+                        ) {
                             Box(Modifier
                                 .width(1.dp)
                                 .fillMaxHeight()

@@ -1,188 +1,56 @@
 package tmg.flashback.ui.dashboard
 
-import android.content.Context
-import io.mockk.*
-import kotlinx.coroutines.test.advanceUntilIdle
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.BeforeEach
+import io.mockk.mockk
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
-import tmg.flashback.analytics.manager.AnalyticsManager
-import tmg.flashback.configuration.usecases.ApplyConfigUseCase
-import tmg.flashback.configuration.usecases.FetchConfigUseCase
-import tmg.flashback.releasenotes.usecases.NewReleaseNotesUseCase
-import tmg.flashback.statistics.repo.OverviewRepository
-import tmg.flashback.statistics.repo.RaceRepository
+import tmg.flashback.device.managers.BuildConfigManager
+import tmg.flashback.eastereggs.usecases.IsMenuIconEnabledUseCase
+import tmg.flashback.eastereggs.usecases.IsSnowEnabledUseCase
+import tmg.flashback.rss.repo.RSSRepository
+import tmg.flashback.stats.StatsNavigationComponent
+import tmg.flashback.stats.repository.NotificationRepository
 import tmg.flashback.stats.usecases.DefaultSeasonUseCase
-import tmg.flashback.stats.usecases.ScheduleNotificationsUseCase
-import tmg.flashback.ui.dashboard2.compact.DashboardNavItem
-import tmg.flashback.ui.dashboard2.compact.DashboardScreenState
-import tmg.flashback.ui.dashboard2.compact.DashboardViewModel
-import tmg.flashback.usecases.DashboardSyncUseCase
+import tmg.flashback.ui.managers.PermissionManager
+import tmg.flashback.ui.managers.StyleManager
+import tmg.flashback.ui.navigation.ApplicationNavigationComponent
+import tmg.flashback.ui.repository.PermissionRepository
+import tmg.flashback.ui.usecases.ChangeNightModeUseCase
+import tmg.flashback.usecases.GetSeasonsUseCase
 import tmg.testutils.BaseTest
-import tmg.testutils.livedata.assertEventFired
-import tmg.testutils.livedata.assertEventNotFired
-import tmg.testutils.livedata.test
 
 internal class DashboardViewModelTest: BaseTest() {
 
-    lateinit var underTest: DashboardViewModel
-
-    private val mockDashboardSyncUseCase: DashboardSyncUseCase = mockk(relaxed = true)
+    private val mockRssRepository: RSSRepository = mockk(relaxed = true)
     private val mockDefaultSeasonUseCase: DefaultSeasonUseCase = mockk(relaxed = true)
-    private val mockRaceRepository: RaceRepository = mockk(relaxed = true)
-    private val mockOverviewRepository: OverviewRepository = mockk(relaxed = true)
-    private val mockAnalyticsManager: AnalyticsManager = mockk(relaxed = true)
-    private val mockNewReleaseNotesUseCase: NewReleaseNotesUseCase = mockk(relaxed = true)
+    private val mockStyleManager: StyleManager = mockk(relaxed = true)
+    private val mockChangeNightModeUseCase: ChangeNightModeUseCase = mockk(relaxed = true)
+    private val mockBuildConfigManager: BuildConfigManager = mockk(relaxed = true)
+    private val mockNotificationRepository: NotificationRepository = mockk(relaxed = true)
+    private val mockPermissionRepository: PermissionRepository = mockk(relaxed = true)
+    private val mockStatsNavigationComponent: StatsNavigationComponent = mockk(relaxed = true)
+    private val mockPermissionManager: PermissionManager = mockk(relaxed = true)
+    private val mockGetSeasonUseCase: GetSeasonsUseCase = mockk(relaxed = true)
+    private val mockApplicationNavigationComponent: ApplicationNavigationComponent = mockk(relaxed = true)
+    private val mockIsSnowEnabledUseCase: IsSnowEnabledUseCase = mockk(relaxed = true)
+    private val mockIsMenuIconEnabledUseCase: IsMenuIconEnabledUseCase = mockk(relaxed = true)
 
-    @BeforeEach
-    internal fun setUp() {
-        every { mockNewReleaseNotesUseCase.getNotes() } returns emptyList()
-        every { mockDefaultSeasonUseCase.defaultSeason } returns 2019
-    }
+    private lateinit var underTest: DashboardViewModel
 
     private fun initUnderTest() {
         underTest = DashboardViewModel(
-            mockDefaultSeasonUseCase,
-            mockRaceRepository,
-            mockOverviewRepository,
-            mockNewReleaseNotesUseCase,
-            mockAnalyticsManager,
-            mockDashboardSyncUseCase,
-            ioDispatcher = coroutineScope.testDispatcher
+            rssRepository = mockRssRepository,
+            defaultSeasonUseCase = mockDefaultSeasonUseCase,
+            styleManager = mockStyleManager,
+            changeNightModeUseCase = mockChangeNightModeUseCase,
+            buildConfigManager = mockBuildConfigManager,
+            notificationRepository = mockNotificationRepository,
+            permissionRepository = mockPermissionRepository,
+            statsNavigationComponent = mockStatsNavigationComponent,
+            permissionManager = mockPermissionManager,
+            getSeasonUseCase = mockGetSeasonUseCase,
+            applicationNavigationComponent = mockApplicationNavigationComponent,
+            isSnowEnabledUseCase = mockIsSnowEnabledUseCase,
+            isMenuIconEnabledUseCase = mockIsMenuIconEnabledUseCase,
         )
     }
-
-    @Test
-    fun `default season data is fetched on initial load`() {
-        every { mockDefaultSeasonUseCase.defaultSeason } returns 2020
-
-        initUnderTest()
-
-        coVerify {
-            mockDashboardSyncUseCase.sync()
-        }
-        assertEquals(DashboardScreenState(DashboardNavItem.CALENDAR, 2020), underTest.initialTab)
-    }
-
-    //region Tabs
-
-    @Test
-    fun `current tab defaults to expected default tab`() {
-        initUnderTest()
-
-        underTest.outputs.currentTab.test {
-            assertValue(
-                DashboardScreenState(
-                tab = DashboardNavItem.CALENDAR,
-                season = 2019
-            )
-            )
-        }
-        verify {
-            mockAnalyticsManager.viewScreen("Dashboard", mapOf(
-                "season" to "2019",
-                "tab" to "Calendar"
-            ))
-            mockDefaultSeasonUseCase.defaultSeason
-        }
-    }
-
-    @Test
-    fun `clicking tab updates tab in current tab`() {
-        initUnderTest()
-
-        underTest.inputs.clickTab(DashboardNavItem.DRIVERS)
-        underTest.outputs.currentTab.test {
-            assertValue(DashboardScreenState(DashboardNavItem.DRIVERS, 2019))
-        }
-        mockAnalyticsManager.viewScreen("Dashboard", mapOf(
-            "season" to "2019",
-            "tab" to "Drivers"
-        ))
-    }
-
-    @Test
-    fun `clicking season launches fetch race request if season is default`() {
-        initUnderTest()
-
-        underTest.inputs.clickSeason(2019)
-        underTest.outputs.currentTab.test {
-            assertValue(DashboardScreenState(DashboardNavItem.CALENDAR, 2019))
-        }
-        coVerify {
-            mockOverviewRepository.fetchOverview(2019)
-            mockRaceRepository.fetchRaces(2019)
-        }
-    }
-
-    @Test
-    fun `clicking season updates season in current tab`() {
-        initUnderTest()
-
-        underTest.inputs.clickSeason(2018)
-        underTest.outputs.currentTab.test {
-            assertValue(DashboardScreenState(DashboardNavItem.CALENDAR, 2018))
-        }
-        verify {
-            mockAnalyticsManager.viewScreen("Dashboard", mapOf(
-                "season" to "2018",
-                "tab" to "Calendar"
-            ))
-        }
-    }
-
-    //endregion
-
-    //region Remote config fetch and sync
-
-    @Test
-    fun `init if update returns changes and activate fails nothing happens`() = coroutineTest {
-
-        coEvery { mockDashboardSyncUseCase.sync() } returns false
-
-        initUnderTest()
-        advanceUntilIdle()
-
-        underTest.outputs.appConfigSynced.test {
-            assertEventNotFired()
-        }
-    }
-
-    @Test
-    fun `init if update returns changes and activate successfully then notify app config synced event`() = coroutineTest {
-
-        coEvery { mockDashboardSyncUseCase.sync() } returns true
-
-        initUnderTest()
-        advanceUntilIdle()
-
-        underTest.outputs.appConfigSynced.test {
-            assertEventFired()
-        }
-    }
-
-    //endregion
-
-    //region Release notes
-
-    @Test
-    fun `init if release notes are pending then open release notes is fired`() {
-        // Because notification onboarding takes priority over release notes
-        every { mockNewReleaseNotesUseCase.getNotes() } returns listOf(mockk())
-        initUnderTest()
-        underTest.outputs.openReleaseNotes.test {
-            assertEventFired()
-        }
-    }
-
-    @Test
-    fun `init if release notes are not pending then open release notes not fired`() {
-        every { mockNewReleaseNotesUseCase.getNotes() } returns emptyList()
-        initUnderTest()
-        underTest.outputs.openReleaseNotes.test {
-            assertEventNotFired()
-        }
-    }
-
-    //endregion
 }
