@@ -11,7 +11,6 @@ import tmg.flashback.notifications.navigation.NotificationNavigationProvider
 import tmg.flashback.repositories.ContactRepository
 import tmg.flashback.rss.usecases.AllSupportedSourcesUseCase
 import tmg.flashback.ui.All
-import tmg.flashback.ui.Home
 import tmg.flashback.ui.navigation.ApplicationNavigationComponent
 import tmg.flashback.ui.HomeActivity
 import tmg.flashback.ui.navigation.ActivityProvider
@@ -77,6 +76,6 @@ class AppApplicationNavigationComponent @Inject constructor(
     override fun homeClass(): Class<*> = HomeActivity::class.java
 
     override fun home() {
-        navigator.navigate(Screen.Home)
+//        navigator.navigate(Screen.Home)
     }
 }

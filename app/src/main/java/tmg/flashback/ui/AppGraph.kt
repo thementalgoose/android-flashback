@@ -4,6 +4,7 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -13,6 +14,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navDeepLink
+import androidx.window.layout.WindowLayoutInfo
 import org.threeten.bp.LocalDate
 import tmg.flashback.privacypolicy.PrivacyPolicy
 import tmg.flashback.privacypolicy.ui.PrivacyPolicyScreenVM
@@ -22,6 +24,7 @@ import tmg.flashback.rss.RSS
 import tmg.flashback.rss.RSSConfigure
 import tmg.flashback.rss.ui.configure.ConfigureRSSScreenVM
 import tmg.flashback.rss.ui.feed.RSSScreenVM
+import tmg.flashback.stats.Calendar
 import tmg.flashback.stats.Circuit
 import tmg.flashback.stats.Constructor
 import tmg.flashback.stats.ConstructorSeason
@@ -32,18 +35,19 @@ import tmg.flashback.stats.Weekend
 import tmg.flashback.stats.ui.circuits.CircuitScreenVM
 import tmg.flashback.stats.ui.constructors.overview.ConstructorOverviewScreenVM
 import tmg.flashback.stats.ui.constructors.season.ConstructorSeasonScreenVM
+import tmg.flashback.stats.ui.dashboard.constructors.ConstructorStandingsScreenVM
+import tmg.flashback.stats.ui.dashboard.drivers.DriverStandingsScreenVM
+import tmg.flashback.stats.ui.dashboard.schedule.ScheduleScreenVM
 import tmg.flashback.stats.ui.drivers.overview.DriverOverviewScreenVM
 import tmg.flashback.stats.ui.drivers.season.DriverSeasonScreenVM
 import tmg.flashback.stats.ui.search.SearchScreenVM
 import tmg.flashback.stats.ui.weekend.WeekendInfo
 import tmg.flashback.stats.ui.weekend.WeekendScreenVM
-import tmg.flashback.ui.dashboard2.compact.DashboardScreenVM
 import tmg.flashback.ui.navigation.Navigator
 import tmg.flashback.ui.navigation.Screen
 import tmg.flashback.ui.navigation.asNavigationDestination
 import tmg.flashback.ui.navigation.navIntRequired
 import tmg.flashback.ui.navigation.navStringRequired
-import tmg.flashback.ui.navigation.navigate
 import tmg.flashback.ui.settings.About
 import tmg.flashback.ui.settings.Ads
 import tmg.flashback.ui.settings.All
@@ -63,24 +67,29 @@ import tmg.flashback.ui.settings.web.SettingsWebScreenVM
 import tmg.utilities.extensions.toLocalDate
 
 @Composable
-fun HomeScreen(
+fun AppGraph(
+    openMenu: () -> Unit,
     windowSize: WindowSizeClass,
+    windowInfo: WindowLayoutInfo,
     navigator: Navigator,
     closeApp: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val navController = rememberNavController()
     val destination by navigator.destination.collectAsState()
 
+    val isCompact = windowSize.widthSizeClass == WindowWidthSizeClass.Compact
+
     LaunchedEffect(destination) {
-        if (navController.currentDestination?.route != destination.route) {
-            if (destination == Screen.Home) {
-                navController.navigate(destination) {
-                    this.launchSingleTop = true
-                }
-            } else {
-                navController.navigate(destination)
-            }
-        }
+//        if (navController.currentDestination?.route != destination.route) {
+//            if (destination == Screen.Home) {
+//                navController.navigate(destination) {
+//                    this.launchSingleTop = true
+//                }
+//            } else {
+//                navController.navigate(destination)
+//            }
+//        }
     }
     LaunchedEffect(Unit) {
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
@@ -98,13 +107,43 @@ fun HomeScreen(
 
     NavHost(
         navController = navController,
-        startDestination = Screen.Home.route,
+        startDestination = Screen.Calendar.route,
         modifier = Modifier
             .statusBarsPadding()
             .navigationBarsPadding()
     ) {
-        composable(Screen.Home.route) {
-            DashboardScreenVM()
+
+        composable(Screen.Calendar.route, arguments = listOf(
+            navIntRequired("season")
+        )) {
+            val season = it.arguments?.getInt("season") ?: 2023
+            ScheduleScreenVM(
+                menuClicked = openMenu,
+                showMenu = isCompact,
+                season = 2023 // season TODO
+            )
+        }
+
+        composable(Screen.Constructor.route, arguments = listOf(
+            navIntRequired("season")
+        )) {
+            val season = it.arguments?.getInt("season")!!
+            ConstructorStandingsScreenVM(
+                menuClicked = openMenu,
+                showMenu = isCompact,
+                season = season
+            )
+        }
+
+        composable(Screen.Driver.route, arguments = listOf(
+            navIntRequired("season")
+        )) {
+            val season = it.arguments?.getInt("season")!!
+            DriverStandingsScreenVM(
+                menuClicked = openMenu,
+                showMenu = isCompact,
+                season = season
+            )
         }
 
         // Release Notes

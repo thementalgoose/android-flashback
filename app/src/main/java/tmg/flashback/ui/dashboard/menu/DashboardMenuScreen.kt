@@ -26,6 +26,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import tmg.flashback.R
+import tmg.flashback.eastereggs.model.MenuIcons
+import tmg.flashback.eastereggs.ui.snow
 import tmg.flashback.formula1.constants.Formula1
 import tmg.flashback.stats.components.Timeline
 import tmg.flashback.style.AppTheme
@@ -33,10 +35,8 @@ import tmg.flashback.style.input.InputSwitch
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextSection
-import tmg.flashback.ui.components.navigation.NavigationItem
 import tmg.flashback.ui.components.navigation.NavigationTimelineItem
-import tmg.flashback.ui.dashboard.DashboardFeaturePrompt
-import tmg.flashback.ui.dashboard.DashboardHero
+import tmg.flashback.ui.dashboard.FeaturePrompt
 import tmg.flashback.ui.dashboard.MenuItem
 
 @Composable
@@ -47,18 +47,22 @@ fun DashboardMenuScreen(
     menuItemClicked: (MenuItem) -> Unit,
     darkMode: Boolean,
     darkModeClicked: (Boolean) -> Unit,
-    featurePromptList: List<DashboardFeaturePrompt>,
-    featurePromptClicked: (DashboardFeaturePrompt) -> Unit,
+    featurePromptList: List<FeaturePrompt>,
+    featurePromptClicked: (FeaturePrompt) -> Unit,
     seasonItemsList: List<NavigationTimelineItem>,
     seasonClicked: (Int) -> Unit,
-    appVersion: String
+    appVersion: String,
+    easterEggSnow: Boolean,
+    easterEggTitleIcon: MenuIcons?
 ) {
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
-            .background(AppTheme.colors.backgroundPrimary),
+            .background(AppTheme.colors.backgroundPrimary)
+            .snow(easterEggSnow),
         content = {
-            item(key = "hero") { DashboardHero(menuIcons = null) }
+            item(key = "space1") { Spacer(Modifier.height(AppTheme.dimens.small)) }
+            item(key = "hero") { DashboardHero(menuIcons = easterEggTitleIcon) }
             item(key = "div1") { Divider() }
             item(key = "label1") { SubHeader(text = stringResource(id = R.string.dashboard_all_title)) }
             items(appFeatureItemsList, key = { "button-${it.id}" }) {

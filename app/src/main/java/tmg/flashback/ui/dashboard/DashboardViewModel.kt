@@ -11,6 +11,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import tmg.flashback.R
 import tmg.flashback.device.managers.BuildConfigManager
+import tmg.flashback.eastereggs.model.MenuIcons
+import tmg.flashback.eastereggs.usecases.IsMenuIconEnabledUseCase
+import tmg.flashback.eastereggs.usecases.IsSnowEnabledUseCase
 import tmg.flashback.formula1.constants.Formula1
 import tmg.flashback.rss.repo.RSSRepository
 import tmg.flashback.stats.StatsNavigationComponent
@@ -21,6 +24,7 @@ import tmg.flashback.ui.components.navigation.PipeType
 import tmg.flashback.ui.managers.PermissionManager
 import tmg.flashback.ui.managers.StyleManager
 import tmg.flashback.ui.model.NightMode
+import tmg.flashback.ui.navigation.ApplicationNavigationComponent
 import tmg.flashback.ui.permissions.RationaleType
 import tmg.flashback.ui.repository.PermissionRepository
 import tmg.flashback.ui.usecases.ChangeNightModeUseCase
@@ -31,7 +35,7 @@ interface DashboardViewModelInputs {
     fun clickItem(navigationItem: MenuItem)
     fun clickDarkMode(toState: Boolean)
     fun clickSeason(season: Int)
-    fun clickFeaturePrompt(prompt: DashboardFeaturePrompt)
+    fun clickFeaturePrompt(prompt: FeaturePrompt)
 }
 
 interface DashboardViewModelOutputs {
@@ -42,12 +46,16 @@ interface DashboardViewModelOutputs {
 
     val isDarkMode: LiveData<Boolean>
 
-    val featurePromptsList: LiveData<List<DashboardFeaturePrompt>>
+    val featurePromptsList: LiveData<List<FeaturePrompt>>
 
     val seasonsItemsList: LiveData<List<NavigationTimelineItem>>
     val currentlySelectedSeason: LiveData<Int>
 
     val appVersion: LiveData<String>
+
+    // Easter eggs
+    val snow: LiveData<Boolean>
+    val titleIcon: LiveData<MenuIcons?>
 }
 
 @HiltViewModel
@@ -61,7 +69,10 @@ class DashboardViewModel @Inject constructor(
     private val permissionRepository: PermissionRepository,
     private val statsNavigationComponent: StatsNavigationComponent,
     private val permissionManager: PermissionManager,
-    private val getSeasonUseCase: GetSeasonsUseCase
+    private val getSeasonUseCase: GetSeasonsUseCase,
+    private val applicationNavigationComponent: ApplicationNavigationComponent,
+    isSnowEnabledUseCase: IsSnowEnabledUseCase,
+    isMenuIconEnabledUseCase: IsMenuIconEnabledUseCase
 ): ViewModel(), DashboardViewModelInputs, DashboardViewModelOutputs {
 
     val inputs: DashboardViewModelInputs = this
@@ -86,10 +97,13 @@ class DashboardViewModel @Inject constructor(
     override val isDarkMode: MutableLiveData<Boolean> = MutableLiveData()
     override val appVersion: MutableLiveData<String> = MutableLiveData(buildConfigManager.versionName)
 
-    override val featurePromptsList: MutableLiveData<List<DashboardFeaturePrompt>> = MutableLiveData()
+    override val featurePromptsList: MutableLiveData<List<FeaturePrompt>> = MutableLiveData()
 
     override val seasonsItemsList: LiveData<List<NavigationTimelineItem>> = currentlySelectedSeason
         .map { season -> getSeasons(season) }
+
+    override val snow: MutableLiveData<Boolean> = MutableLiveData(isSnowEnabledUseCase())
+    override val titleIcon: LiveData<MenuIcons?> = MutableLiveData(isMenuIconEnabledUseCase())
 
     init {
         initialiseItems()
@@ -112,15 +126,15 @@ class DashboardViewModel @Inject constructor(
     }
 
     private fun initialiseFeatureList() {
-        val list = mutableListOf<DashboardFeaturePrompt>().apply {
+        val list = mutableListOf<FeaturePrompt>().apply {
             if (buildConfigManager.isRuntimeNotificationsSupported &&
                 !notificationRepository.seenRuntimeNotifications &&
                 !permissionRepository.isRuntimeNotificationsEnabled
             ) {
-                add(DashboardFeaturePrompt.RuntimeNotifications)
+                add(FeaturePrompt.RuntimeNotifications)
             }
             if (!buildConfigManager.isRuntimeNotificationsSupported && !notificationRepository.seenNotificationOnboarding) {
-                add(DashboardFeaturePrompt.Notifications)
+                add(FeaturePrompt.Notifications)
             }
         }
         featurePromptsList.postValue(list)
@@ -142,14 +156,14 @@ class DashboardViewModel @Inject constructor(
         currentlySelectedSeason.value = season
     }
 
-    override fun clickFeaturePrompt(prompt: DashboardFeaturePrompt) {
+    override fun clickFeaturePrompt(prompt: FeaturePrompt) {
         when (prompt) {
-            DashboardFeaturePrompt.Notifications -> {
+            FeaturePrompt.Notifications -> {
                 statsNavigationComponent.featureNotificationOnboarding()
                 notificationRepository.seenNotificationOnboarding = true
                 initialiseFeatureList()
             }
-            DashboardFeaturePrompt.RuntimeNotifications -> {
+            FeaturePrompt.RuntimeNotifications -> {
                 viewModelScope.launch {
                     permissionManager
                         .requestPermission(RationaleType.RuntimeNotifications)
@@ -167,6 +181,17 @@ class DashboardViewModel @Inject constructor(
 
     override fun clickItem(navigationItem: MenuItem) {
         currentlySelectedItem.postValue(navigationItem)
+
+        when (navigationItem) {
+//            MenuItem.Calendar -> TODO()
+//            MenuItem.Constructors -> TODO()
+            MenuItem.Contact -> applicationNavigationComponent.aboutApp()
+//            MenuItem.Drivers -> TODO()
+//            MenuItem.RSS -> TODO()
+//            MenuItem.Search -> TODO()
+//            MenuItem.Settings -> TODO()
+            else -> {}
+        }
     }
 
     private fun getSeasons(selectedSeason: Int? = null): List<NavigationTimelineItem> {
@@ -192,19 +217,4 @@ class DashboardViewModel @Inject constructor(
                 )
             }
     }
-}
-
-sealed class DashboardFeaturePrompt(
-    val id: String,
-    @StringRes
-    val label: Int
-) {
-    object RuntimeNotifications: DashboardFeaturePrompt(
-        id = "feature-runtime",
-        label = R.string.feature_banner_runtime_notifications
-    )
-    object Notifications: DashboardFeaturePrompt(
-        id = "feature-notifications",
-        label = R.string.feature_banner_notifications
-    )
 }

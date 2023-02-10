@@ -6,7 +6,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -28,6 +27,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
@@ -45,18 +45,21 @@ import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody1
-import tmg.flashback.style.text.TextTitle
 import tmg.flashback.R
+import tmg.flashback.eastereggs.model.MenuIcons
+import tmg.flashback.eastereggs.ui.snow
 import tmg.flashback.ui.components.navigation.NavigationItem
 import tmg.flashback.ui.components.navigation.NavigationTimelineItem
 import tmg.flashback.ui.components.navigation.PipeType
-import tmg.flashback.ui.dashboard.DashboardFeaturePrompt
+import tmg.flashback.ui.dashboard.FeaturePrompt
 import tmg.flashback.ui.dashboard.MenuItem
 
 val columnWidthCollapsed: Dp = 56.dp
+private val heroSize: Dp = 48.dp
 private val itemSize: Dp = 38.dp
 private val iconSize: Dp = 20.dp
 val columnWidthExpanded: Dp = 240.dp
+val columnWidthExpandedLocked: Dp = 300.dp
 
 val headerHeight: Dp = 72.dp
 
@@ -69,34 +72,34 @@ fun DashboardMenuExpandedScreen(
     menuItemClicked: (MenuItem) -> Unit,
     darkMode: Boolean,
     darkModeClicked: (Boolean) -> Unit,
-    featurePromptList: List<DashboardFeaturePrompt>,
-    featurePromptClicked: (DashboardFeaturePrompt) -> Unit,
+    featurePromptList: List<FeaturePrompt>,
+    featurePromptClicked: (FeaturePrompt) -> Unit,
     seasonItemsList: List<NavigationTimelineItem>,
     seasonClicked: (Int) -> Unit,
     appVersion: String,
+    easterEggSnow: Boolean,
+    easterEggTitleIcon: MenuIcons?,
     lockExpanded: Boolean
 ) {
     val expanded = remember { mutableStateOf(lockExpanded) }
-    val width = animateDpAsState(targetValue = when (expanded.value) {
-        true -> columnWidthExpanded
-        false -> columnWidthCollapsed
+    val width = animateDpAsState(targetValue = when {
+        lockExpanded -> columnWidthExpandedLocked
+        expanded.value -> columnWidthExpanded
+        else -> columnWidthCollapsed
     })
 
     Column(modifier = modifier
         .width(width.value)
         .fillMaxHeight()
+        .shadow(8.dp)
         .background(AppTheme.colors.backgroundNav)
         .padding(
             vertical = AppTheme.dimens.small
         )
+        .snow(easterEggSnow)
     ) {
-        NavigationItem(
-            item = NavigationItem(
-                id = "menu",
-                label = R.string.app_name,
-                icon = R.drawable.ic_menu_expanded
-            ),
-            isTitle = true,
+        HeroItem(
+            menuIcons = easterEggTitleIcon,
             onClick = when (lockExpanded) {
                 false -> { { expanded.value = !expanded.value } }
                 true -> null
@@ -114,7 +117,7 @@ fun DashboardMenuExpandedScreen(
                         item = menuItem.toNavigationItem(currentlySelectedItem == menuItem),
                         isExpanded = expanded.value,
                         onClick = { item ->
-                            menuItemClicked(seasonScreenItemsList.first { item.id == menuItem.id })
+                            menuItemClicked(menuItem)
                         },
                     )
                     Spacer(Modifier.height(AppTheme.dimens.xsmall))
@@ -125,7 +128,7 @@ fun DashboardMenuExpandedScreen(
                         item = menuItem.toNavigationItem(currentlySelectedItem == menuItem),
                         isExpanded = expanded.value,
                         onClick = { item ->
-                            menuItemClicked(seasonScreenItemsList.first { item.id == menuItem.id })
+                            menuItemClicked(menuItem)
                         },
                     )
                     Spacer(Modifier.height(AppTheme.dimens.xsmall))
@@ -161,7 +164,6 @@ private fun NavigationItem(
     item: NavigationItem,
     isExpanded: Boolean,
     modifier: Modifier = Modifier,
-    isTitle: Boolean = false,
     onClick: ((NavigationItem) -> Unit)?,
 ) {
     val backgroundColor = animateColorAsState(targetValue = when (item.isSelected) {
@@ -200,23 +202,59 @@ private fun NavigationItem(
             contentDescription = stringResource(id = item.label)
         )
         if (isExpanded) {
-            if (isTitle) {
-                TextTitle(
-                    modifier = Modifier
-                        .padding(start = AppTheme.dimens.small)
-                        .align(Alignment.CenterVertically)
-                        .fillMaxWidth(),
-                    text = item.label.let { stringResource(id = it) }
-                )
-            } else {
-                TextBody1(
-                    modifier = Modifier
-                        .padding(start = AppTheme.dimens.small)
-                        .align(Alignment.CenterVertically)
-                        .fillMaxWidth(),
-                    text = item.label.let { stringResource(id = it) }
-                )
-            }
+            TextBody1(
+                modifier = Modifier
+                    .padding(start = AppTheme.dimens.small)
+                    .align(Alignment.CenterVertically)
+                    .fillMaxWidth(),
+                text = item.label.let { stringResource(id = it) }
+            )
+        }
+    }
+}
+
+@Composable
+private fun HeroItem(
+    isExpanded: Boolean,
+    menuIcons: MenuIcons?,
+    modifier: Modifier = Modifier,
+    onClick: (() -> Unit)?,
+) {
+    val iconPadding = animateDpAsState(targetValue = when (isExpanded) {
+        true -> AppTheme.dimens.medium
+        false -> (itemSize - iconSize) / 2
+    })
+
+    Row(
+        modifier = modifier
+            .padding(horizontal = (columnWidthCollapsed - itemSize) / 2)
+            .height(heroSize)
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(AppTheme.dimens.radiusMedium))
+            .background(AppTheme.colors.backgroundNav)
+            .clickable(
+                enabled = onClick != null,
+                onClick = {
+                    onClick?.invoke()
+                }
+            )
+            .padding(horizontal = iconPadding.value,),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Icon(
+            modifier = Modifier
+                .size(iconSize)
+                .align(Alignment.CenterVertically),
+            painter = painterResource(id = R.drawable.ic_menu_expanded),
+            tint = AppTheme.colors.contentPrimary,
+            contentDescription = stringResource(id = R.string.app_name)
+        )
+        if (isExpanded) {
+            DashboardHero(
+                menuIcons = menuIcons,
+                modifier = Modifier
+                    .padding(start = AppTheme.dimens.xsmall)
+            )
         }
     }
 }
@@ -377,11 +415,13 @@ private fun PreviewCompactTimeline() {
             menuItemClicked = { },
             darkMode = false,
             darkModeClicked = { },
-            featurePromptList = listOf(DashboardFeaturePrompt.Notifications),
+            featurePromptList = listOf(FeaturePrompt.Notifications),
             featurePromptClicked = { },
             seasonItemsList = fakeNavigationTimelineItems,
             seasonClicked = { },
             appVersion = "version",
+            easterEggSnow = false,
+            easterEggTitleIcon = null,
             lockExpanded = false
         )
     }
@@ -398,11 +438,13 @@ private fun PreviewExpandedTimeline() {
             menuItemClicked = { },
             darkMode = true,
             darkModeClicked = { },
-            featurePromptList = listOf(DashboardFeaturePrompt.Notifications),
+            featurePromptList = listOf(FeaturePrompt.Notifications),
             featurePromptClicked = { },
             seasonItemsList = fakeNavigationTimelineItems,
             seasonClicked = { },
             appVersion = "version",
+            easterEggSnow = false,
+            easterEggTitleIcon = null,
             lockExpanded = true
         )
     }
