@@ -7,9 +7,7 @@ import javax.inject.Singleton
 @Singleton
 class Navigator @Inject constructor() {
 
-    var destination: MutableStateFlow<NavigationDestination> = MutableStateFlow(object : NavigationDestination {
-        override val route: String = "home"
-    })
+    var destination: MutableStateFlow<NavigationDestination?> = MutableStateFlow(null)
 
     fun navigate(destination: NavigationDestination) {
         this.destination.value = destination

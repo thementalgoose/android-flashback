@@ -109,6 +109,8 @@ class DashboardViewModel @Inject constructor(
         initialiseItems()
         initialiseFeatureList()
         initialiseDarkMode()
+
+        // TODO: Make network request for season selection + season change here!
     }
 
     private fun initialiseItems() {
