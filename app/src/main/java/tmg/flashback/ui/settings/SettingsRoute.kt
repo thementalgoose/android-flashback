@@ -16,49 +16,31 @@ import tmg.flashback.ui.settings.web.SettingsWebScreen
 import tmg.flashback.ui.settings.web.SettingsWebScreenVM
 
 internal val Screen.Settings.All: NavigationDestination
-    get() = object : NavigationDestination {
-        override val route: String = "settings"
-    }
+    get() = NavigationDestination("settings")
 
 internal val Screen.Settings.Adverts: NavigationDestination
-    get() = object : NavigationDestination {
-        override val route: String = "settings/adverts"
-    }
+    get() = NavigationDestination("settings/adverts")
 
 internal val Screen.Settings.Home: NavigationDestination
-    get() = object : NavigationDestination {
-        override val route: String = "settings/home"
-    }
+    get() = NavigationDestination("settings/home")
 
 
 internal val Screen.Settings.Web: NavigationDestination
-    get() = object : NavigationDestination {
-        override val route: String = "settings/web"
-    }
+    get() = NavigationDestination("settings/web")
 
 
 internal val Screen.Settings.NotificationsUpcoming: NavigationDestination
-    get() = object : NavigationDestination {
-        override val route: String = "settings/notifications/upcoming"
-    }
+    get() = NavigationDestination("settings/notifications/upcoming")
 
 internal val Screen.Settings.NotificationsResults: NavigationDestination
-    get() = object : NavigationDestination {
-        override val route: String = "settings/notifications/results"
-    }
+    get() = NavigationDestination("settings/notifications/results")
 
 
 internal val Screen.Settings.Ads: NavigationDestination
-    get() = object : NavigationDestination {
-        override val route: String = "settings/ads"
-    }
+    get() = NavigationDestination("settings/ads")
 
 internal val Screen.Settings.Privacy: NavigationDestination
-    get() = object : NavigationDestination {
-        override val route: String = "settings/privacy"
-    }
+    get() = NavigationDestination("settings/privacy")
 
 internal val Screen.Settings.About: NavigationDestination
-    get() = object : NavigationDestination {
-        override val route: String = "settings/about"
-    }
+    get() = NavigationDestination("settings/about")

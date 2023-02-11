@@ -17,10 +17,9 @@ value class ScreenCalendar(val route: String)
 val Screen.Calendar get() = ScreenCalendar("calendar/{season}")
 fun ScreenCalendar.with(
     season: Int
-) = object : NavigationDestination {
-    override val route: String = this@with.route
+) = NavigationDestination(this@with.route
         .replace("{season}", season.toString())
-}
+)
 
 
 @JvmInline
@@ -28,10 +27,10 @@ value class ScreenDrivers(val route: String)
 val Screen.Drivers get() = ScreenDrivers("drivers/{season}")
 fun ScreenDrivers.with(
     season: Int
-) = object : NavigationDestination {
-    override val route: String = this@with.route
+) = NavigationDestination(
+    this@with.route
         .replace("{season}", season.toString())
-}
+)
 
 
 @JvmInline
@@ -39,10 +38,10 @@ value class ScreenConstructors(val route: String)
 val Screen.Constructors get() = ScreenCalendar("constructors/{season}")
 fun ScreenConstructors.with(
     season: Int
-) = object : NavigationDestination {
-    override val route: String = this@with.route
+) = NavigationDestination(
+    this@with.route
         .replace("{season}", season.toString())
-}
+)
 
 
 @JvmInline
@@ -51,11 +50,11 @@ val Screen.Driver get() = ScreenDriver("drivers/{driverId}?driverName={driverNam
 fun ScreenDriver.with(
     driverId: String,
     driverName: String
-) = object : NavigationDestination {
-    override val route: String = this@with.route
+) = NavigationDestination(
+    this@with.route
         .replace("{driverId}", driverId)
         .replace("{driverName}", driverName)
-}
+)
 
 @JvmInline
 value class ScreenDriverSeason(val route: String)
@@ -64,12 +63,12 @@ fun ScreenDriverSeason.with(
     driverId: String,
     driverName: String,
     season: Int
-) = object : NavigationDestination {
-    override val route: String = this@with.route
+) = NavigationDestination(
+    this@with.route
         .replace("{driverId}", driverId)
         .replace("{driverName}", driverName)
         .replace("{season}", season.toString())
-}
+)
 
 @JvmInline
 value class ScreenConstructor(val route: String)
@@ -77,11 +76,11 @@ val Screen.Constructor get() = ScreenConstructor("constructors/{constructorId}?c
 fun ScreenConstructor.with(
     constructorId: String,
     constructorName: String
-) = object : NavigationDestination {
-    override val route: String = this@with.route
+) = NavigationDestination(
+    this@with.route
         .replace("{constructorId}", constructorId)
         .replace("{constructorName}", constructorName)
-}
+)
 
 @JvmInline
 value class ScreenConstructorSeason(val route: String)
@@ -90,12 +89,12 @@ fun ScreenConstructorSeason.with(
     constructorId: String,
     constructorName: String,
     season: Int
-) = object : NavigationDestination {
-    override val route: String = this@with.route
+) = NavigationDestination(
+    this@with.route
         .replace("{constructorId}", constructorId)
         .replace("{constructorName}", constructorName)
         .replace("{season}", season.toString())
-}
+)
 
 
 @JvmInline
@@ -108,8 +107,8 @@ val Screen.Weekend get() = ScreenWeekend("weekend/{season}/{round}?" +
         "countryISO={countryISO}" + "&" +
         "date={date}"
 )
-fun ScreenWeekend.with(weekendInfo: WeekendInfo) = object : NavigationDestination {
-    override val route: String = this@with.route
+fun ScreenWeekend.with(weekendInfo: WeekendInfo) = NavigationDestination(
+    this@with.route
         .replace("{season}", weekendInfo.season.toString())
         .replace("{round}", weekendInfo.round.toString())
         .replace("{raceName}", weekendInfo.raceName)
@@ -118,7 +117,7 @@ fun ScreenWeekend.with(weekendInfo: WeekendInfo) = object : NavigationDestinatio
         .replace("{country}", weekendInfo.country)
         .replace("{countryISO}", weekendInfo.countryISO)
         .replace("{date}", weekendInfo.dateString)
-}
+)
 
 @JvmInline
 value class ScreenCircuit(val route: String)
@@ -126,17 +125,14 @@ val Screen.Circuit get() = ScreenCircuit("circuit/{circuitId}?circuitName={circu
 fun ScreenCircuit.with(
     circuitId: String,
     circuitName: String
-) = object : NavigationDestination {
-    override val route: String = this@with.route
+) = NavigationDestination(
+    this@with.route
         .replace("{circuitId}", circuitId)
         .replace("{circuitName}", circuitName)
-
-}
+)
 
 val Screen.Search: NavigationDestination
-    get() = object : NavigationDestination {
-        override val route: String = "search"
-    }
+    get() = NavigationDestination("search")
 
 class StatsNavigationComponent @Inject constructor(
     private val navigator: Navigator,
