@@ -2,25 +2,18 @@ package tmg.flashback.ui.settings
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.Saver
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.R
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
-import tmg.flashback.style.input.InputPrimary
 import tmg.flashback.ui.components.analytics.ScreenView
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.settings.Footer
@@ -29,7 +22,7 @@ import tmg.flashback.ui.components.settings.Section
 
 @Composable
 fun SettingsAllScreenVM(
-    showBack: Boolean = true,
+    showMenu: Boolean = true,
     actionUpClicked: () -> Unit = { },
     viewModel: SettingsAllViewModel = hiltViewModel()
 ) {
@@ -44,7 +37,7 @@ fun SettingsAllScreenVM(
     }
 
     SettingsAllScreen(
-        showBack = showBack,
+        showMenu = showMenu,
         actionUpClicked = actionUpClicked,
         prefClicked = viewModel.inputs::itemClicked,
         isThemeEnabled = isThemeEnabled.value,
@@ -55,7 +48,7 @@ fun SettingsAllScreenVM(
 
 @Composable
 fun SettingsAllScreen(
-    showBack: Boolean,
+    showMenu: Boolean,
     actionUpClicked: () -> Unit,
     prefClicked: (Setting) -> Unit,
     isThemeEnabled: Boolean,
@@ -70,11 +63,11 @@ fun SettingsAllScreen(
             item("header") {
                 Header(
                     text = stringResource(id = R.string.settings_title),
-                    icon = when (showBack) {
-                        true -> painterResource(id = R.drawable.ic_back)
+                    icon = when (showMenu) {
+                        true -> painterResource(id = R.drawable.ic_menu)
                         false -> null
                     },
-                    iconContentDescription = stringResource(id = R.string.ab_back),
+                    iconContentDescription = stringResource(id = R.string.ab_menu),
                     actionUpClicked = actionUpClicked
                 )
             }
@@ -142,7 +135,7 @@ fun SettingsAllScreen(
 private fun Preview() {
     AppThemePreview {
         SettingsAllScreen(
-            showBack = true,
+            showMenu = true,
             actionUpClicked = {},
             prefClicked = {},
             isThemeEnabled = true,
@@ -157,7 +150,7 @@ private fun Preview() {
 private fun PreviewNoTheme() {
     AppThemePreview {
         SettingsAllScreen(
-            showBack = true,
+            showMenu = true,
             actionUpClicked = {},
             prefClicked = {},
             isThemeEnabled = false,

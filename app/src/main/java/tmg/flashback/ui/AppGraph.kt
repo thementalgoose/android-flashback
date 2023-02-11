@@ -1,8 +1,6 @@
 package tmg.flashback.ui
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
@@ -47,12 +45,10 @@ import tmg.flashback.stats.ui.drivers.season.DriverSeasonScreenVM
 import tmg.flashback.stats.ui.search.SearchScreenVM
 import tmg.flashback.stats.ui.weekend.WeekendInfo
 import tmg.flashback.stats.ui.weekend.WeekendScreenVM
-import tmg.flashback.stats.with
 import tmg.flashback.ui.components.layouts.SplitPane
 import tmg.flashback.ui.navigation.Navigator
 import tmg.flashback.ui.navigation.Screen
 import tmg.flashback.ui.navigation.asNavigationDestination
-import tmg.flashback.ui.navigation.navInt
 import tmg.flashback.ui.navigation.navIntRequired
 import tmg.flashback.ui.navigation.navString
 import tmg.flashback.ui.navigation.navStringRequired
@@ -176,8 +172,8 @@ fun AppGraph(
                 windowLayoutInfo = windowInfo,
                 master = {
                     SettingsAllScreenVM(
-                        showBack = false,
-                        actionUpClicked = { navController.popBackStack() }
+                        showMenu = windowSize.widthSizeClass == WindowWidthSizeClass.Compact,
+                        actionUpClicked = openMenu
                     )
                 }
             )
@@ -218,8 +214,8 @@ fun AppGraph(
                 windowLayoutInfo = windowInfo,
                 master = {
                     SettingsAllScreenVM(
-                        showBack = false,
-                        actionUpClicked = { navController.popBackStack() }
+                        showMenu = windowSize.widthSizeClass == WindowWidthSizeClass.Compact,
+                        actionUpClicked = openMenu
                     )
                 },
                 content = {
@@ -316,7 +312,8 @@ fun AppGraph(
             deepLinks = listOf(navDeepLink { uriPattern = "flashback://search" })
         ) {
             SearchScreenVM(
-                actionUpClicked = { navController.popBackStack() }
+                showMenu = windowSize.widthSizeClass == WindowWidthSizeClass.Compact,
+                actionUpClicked = openMenu
             )
         }
 
@@ -326,7 +323,8 @@ fun AppGraph(
             deepLinks = listOf(navDeepLink { uriPattern = "flashback://rss" })
         ) {
             RSSScreenVM(
-                actionUpClicked = { navController.popBackStack() }
+                showMenu = windowSize.widthSizeClass == WindowWidthSizeClass.Compact,
+                actionUpClicked = openMenu
             )
         }
         composable(Screen.Settings.RSSConfigure.route) {

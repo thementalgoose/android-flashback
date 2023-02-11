@@ -17,8 +17,9 @@ value class ScreenCalendar(val route: String)
 val Screen.Calendar get() = ScreenCalendar("results/calendar/{season}")
 fun ScreenCalendar.with(
     season: Int
-) = NavigationDestination(this@with.route
-        .replace("{season}", season.toString())
+) = NavigationDestination(
+    route = this@with.route.replace("{season}", season.toString()),
+    launchSingleTop = true
 )
 
 
@@ -28,8 +29,8 @@ val Screen.Drivers get() = ScreenDrivers("results/drivers/{season}")
 fun ScreenDrivers.with(
     season: Int
 ) = NavigationDestination(
-    this@with.route
-        .replace("{season}", season.toString())
+    route = this@with.route.replace("{season}", season.toString()),
+    launchSingleTop = true
 )
 
 
@@ -39,8 +40,8 @@ val Screen.Constructors get() = ScreenCalendar("results/constructors/{season}")
 fun ScreenConstructors.with(
     season: Int
 ) = NavigationDestination(
-    this@with.route
-        .replace("{season}", season.toString())
+    route = this@with.route.replace("{season}", season.toString()),
+    launchSingleTop = true
 )
 
 
@@ -132,7 +133,7 @@ fun ScreenCircuit.with(
 )
 
 val Screen.Search: NavigationDestination
-    get() = NavigationDestination("search")
+    get() = NavigationDestination("search", launchSingleTop = true)
 
 class StatsNavigationComponent @Inject constructor(
     private val navigator: Navigator,
