@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 @JvmInline
 value class ScreenCalendar(val route: String)
-val Screen.Calendar get() = ScreenCalendar("calendar/{season}")
+val Screen.Calendar get() = ScreenCalendar("results/calendar/{season}")
 fun ScreenCalendar.with(
     season: Int
 ) = NavigationDestination(this@with.route
@@ -24,7 +24,7 @@ fun ScreenCalendar.with(
 
 @JvmInline
 value class ScreenDrivers(val route: String)
-val Screen.Drivers get() = ScreenDrivers("drivers/{season}")
+val Screen.Drivers get() = ScreenDrivers("results/drivers/{season}")
 fun ScreenDrivers.with(
     season: Int
 ) = NavigationDestination(
@@ -35,7 +35,7 @@ fun ScreenDrivers.with(
 
 @JvmInline
 value class ScreenConstructors(val route: String)
-val Screen.Constructors get() = ScreenCalendar("constructors/{season}")
+val Screen.Constructors get() = ScreenCalendar("results/constructors/{season}")
 fun ScreenConstructors.with(
     season: Int
 ) = NavigationDestination(

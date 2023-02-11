@@ -24,6 +24,7 @@ import tmg.flashback.maintenance.MaintenanceNavigationComponent
 import tmg.flashback.rss.RSS
 import tmg.flashback.stats.Search
 import tmg.flashback.stats.usecases.ContentSyncUseCase
+import tmg.flashback.stats.usecases.DefaultSeasonUseCase
 import tmg.flashback.style.AppTheme
 import tmg.flashback.ui.base.BaseActivity
 import tmg.flashback.ui.dashboard.DashboardScreen

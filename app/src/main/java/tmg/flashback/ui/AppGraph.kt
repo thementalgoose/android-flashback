@@ -1,6 +1,8 @@
 package tmg.flashback.ui
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
@@ -28,8 +30,10 @@ import tmg.flashback.stats.Calendar
 import tmg.flashback.stats.Circuit
 import tmg.flashback.stats.Constructor
 import tmg.flashback.stats.ConstructorSeason
+import tmg.flashback.stats.Constructors
 import tmg.flashback.stats.Driver
 import tmg.flashback.stats.DriverSeason
+import tmg.flashback.stats.Drivers
 import tmg.flashback.stats.Search
 import tmg.flashback.stats.Weekend
 import tmg.flashback.stats.ui.circuits.CircuitScreenVM
@@ -43,10 +47,14 @@ import tmg.flashback.stats.ui.drivers.season.DriverSeasonScreenVM
 import tmg.flashback.stats.ui.search.SearchScreenVM
 import tmg.flashback.stats.ui.weekend.WeekendInfo
 import tmg.flashback.stats.ui.weekend.WeekendScreenVM
+import tmg.flashback.stats.with
+import tmg.flashback.ui.components.layouts.SplitPane
 import tmg.flashback.ui.navigation.Navigator
 import tmg.flashback.ui.navigation.Screen
 import tmg.flashback.ui.navigation.asNavigationDestination
+import tmg.flashback.ui.navigation.navInt
 import tmg.flashback.ui.navigation.navIntRequired
+import tmg.flashback.ui.navigation.navString
 import tmg.flashback.ui.navigation.navStringRequired
 import tmg.flashback.ui.settings.About
 import tmg.flashback.ui.settings.Ads
@@ -65,6 +73,10 @@ import tmg.flashback.ui.settings.notifications.SettingsNotificationsResultsScree
 import tmg.flashback.ui.settings.notifications.SettingsNotificationsUpcomingScreenVM
 import tmg.flashback.ui.settings.web.SettingsWebScreenVM
 import tmg.utilities.extensions.toLocalDate
+
+data class AppGraphInitialLoadValues(
+    val season: Int
+)
 
 @Composable
 fun AppGraph(
@@ -108,19 +120,20 @@ fun AppGraph(
             .statusBarsPadding()
             .navigationBarsPadding()
     ) {
-
         composable(Screen.Calendar.route, arguments = listOf(
-            navIntRequired("season")
+            navString("season")
         )) {
-            val season = it.arguments?.getInt("season") ?: 2023
+            // Has to be nullable because initial navigation graph
+            //  value cannot contain placeholder values
+            val season = it.arguments?.getString("season")?.toInt() ?: 2023
             ScheduleScreenVM(
                 menuClicked = openMenu,
                 showMenu = isCompact,
-                season = 2023 // season TODO
+                season = season
             )
         }
 
-        composable(Screen.Constructor.route, arguments = listOf(
+        composable(Screen.Constructors.route, arguments = listOf(
             navIntRequired("season")
         )) {
             val season = it.arguments?.getInt("season")!!
@@ -131,7 +144,7 @@ fun AppGraph(
             )
         }
 
-        composable(Screen.Driver.route, arguments = listOf(
+        composable(Screen.Drivers.route, arguments = listOf(
             navIntRequired("season")
         )) {
             val season = it.arguments?.getInt("season")!!
@@ -158,8 +171,15 @@ fun AppGraph(
 
         // Settings
         composable(Screen.Settings.All.route) {
-            SettingsAllScreenVM(
-                actionUpClicked = { navController.popBackStack() }
+            SplitPane(
+                windowSizeClass = windowSize,
+                windowLayoutInfo = windowInfo,
+                master = {
+                    SettingsAllScreenVM(
+                        showBack = false,
+                        actionUpClicked = { navController.popBackStack() }
+                    )
+                }
             )
         }
         composable(Screen.Settings.Home.route) {
@@ -193,8 +213,21 @@ fun AppGraph(
             )
         }
         composable(Screen.Settings.About.route) {
-            SettingsAboutScreenVM(
-                actionUpClicked = { navController.popBackStack() }
+            SplitPane(
+                windowSizeClass = windowSize,
+                windowLayoutInfo = windowInfo,
+                master = {
+                    SettingsAllScreenVM(
+                        showBack = false,
+                        actionUpClicked = { navController.popBackStack() }
+                    )
+                },
+                content = {
+                    SettingsAboutScreenVM(
+                        showBack = windowSize.widthSizeClass != WindowWidthSizeClass.Expanded,
+                        actionUpClicked = { navController.popBackStack() }
+                    )
+                }
             )
         }
 

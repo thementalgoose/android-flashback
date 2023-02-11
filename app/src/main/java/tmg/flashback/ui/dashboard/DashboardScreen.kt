@@ -24,7 +24,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.window.layout.WindowInfoTracker
 import androidx.window.layout.WindowLayoutInfo
 import kotlinx.coroutines.launch
 import tmg.flashback.eastereggs.model.MenuIcons
@@ -54,6 +53,7 @@ fun DashboardScreen(
 
     val seasonItemsList = viewModel.outputs.seasonsItemsList.observeAsState(emptyList())
     val currentlySelectedSeason = viewModel.outputs.currentlySelectedSeason.observeAsState(0)
+    val showBottomBar = viewModel.outputs.showBottomBar.observeAsState(true)
 
     val darkMode = viewModel.outputs.isDarkMode.observeAsState(false)
 
@@ -73,6 +73,7 @@ fun DashboardScreen(
         appFeatureItemsList = appFeatureItemsList.value,
         seasonScreenItemsList = seasonScreenItemsList.value,
         menuItemClicked = viewModel.inputs::clickItem,
+        showBottomBar = showBottomBar.value,
         darkMode = darkMode.value,
         darkModeClicked = viewModel.inputs::clickDarkMode,
         featurePromptList = featurePromptList.value,
@@ -96,6 +97,7 @@ fun DashboardScreen(
     appFeatureItemsList: List<MenuItem>,
     seasonScreenItemsList: List<MenuItem>,
     menuItemClicked: (MenuItem) -> Unit,
+    showBottomBar: Boolean,
     darkMode: Boolean,
     darkModeClicked: (Boolean) -> Unit,
     featurePromptList: List<FeaturePrompt>,
@@ -127,12 +129,12 @@ fun DashboardScreen(
             .statusBarsPadding(),
         bottomBar = {
             if (windowSize.widthSizeClass == WindowWidthSizeClass.Compact) {
-                val position = animateDpAsState(targetValue = if (panelsState.isStartPanelOpen) appBarHeight else 0.dp)
+                val position = animateDpAsState(targetValue = if (panelsState.isStartPanelOpen || !showBottomBar) appBarHeight else 0.dp)
                 NavigationBar(
                     modifier = Modifier.offset(y = position.value),
                     list = seasonScreenItemsList.map { it.toNavigationItem(currentlySelectedItem == it) },
-                    itemClicked = {
-
+                    itemClicked = { item ->
+                        menuItemClicked(seasonScreenItemsList.first { it.id == item.id })
                     }
                 )
             }
@@ -144,6 +146,9 @@ fun DashboardScreen(
                 gesturesEnabled = windowSize.widthSizeClass == WindowWidthSizeClass.Compact,
                 panelStart = {
                     DashboardMenuScreen(
+                        closeMenu = {
+                            coroutineScope.launch { panelsState.closePanels() }
+                        },
                         currentlySelectedItem = currentlySelectedItem,
                         appFeatureItemsList = appFeatureItemsList,
                         menuItemClicked = menuItemClicked,
@@ -200,10 +205,11 @@ fun DashboardScreen(
                             .weight(1f)
                             .background(AppTheme.colors.backgroundContainer)
                         ) {
-                            Box(Modifier
-                                .width(1.dp)
-                                .fillMaxHeight()
-                                .background(AppTheme.colors.backgroundSecondary))
+                            Box(
+                                Modifier
+                                    .width(1.dp)
+                                    .fillMaxHeight()
+                                    .background(AppTheme.colors.backgroundSecondary))
                             AppGraph(
                                 modifier = Modifier.weight(1f),
                                 openMenu = openMenu,

@@ -1,35 +1,43 @@
 package tmg.flashback.ui.dashboard
 
-import androidx.annotation.StringRes
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import tmg.flashback.R
 import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.eastereggs.model.MenuIcons
 import tmg.flashback.eastereggs.usecases.IsMenuIconEnabledUseCase
 import tmg.flashback.eastereggs.usecases.IsSnowEnabledUseCase
 import tmg.flashback.formula1.constants.Formula1
+import tmg.flashback.rss.RSS
 import tmg.flashback.rss.repo.RSSRepository
-import tmg.flashback.stats.Circuit
-import tmg.flashback.stats.ConstructorSeason
+import tmg.flashback.stats.Calendar
+import tmg.flashback.stats.Constructors
+import tmg.flashback.stats.Drivers
+import tmg.flashback.stats.Search
 import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.stats.repository.NotificationRepository
 import tmg.flashback.stats.usecases.DefaultSeasonUseCase
+import tmg.flashback.stats.with
 import tmg.flashback.ui.components.navigation.NavigationTimelineItem
 import tmg.flashback.ui.components.navigation.PipeType
 import tmg.flashback.ui.managers.PermissionManager
 import tmg.flashback.ui.managers.StyleManager
 import tmg.flashback.ui.model.NightMode
 import tmg.flashback.ui.navigation.ApplicationNavigationComponent
+import tmg.flashback.ui.navigation.Navigator
 import tmg.flashback.ui.navigation.Screen
 import tmg.flashback.ui.permissions.RationaleType
 import tmg.flashback.ui.repository.PermissionRepository
+import tmg.flashback.ui.settings.All
 import tmg.flashback.ui.usecases.ChangeNightModeUseCase
 import tmg.flashback.usecases.GetSeasonsUseCase
 import javax.inject.Inject
@@ -39,14 +47,13 @@ interface DashboardViewModelInputs {
     fun clickDarkMode(toState: Boolean)
     fun clickSeason(season: Int)
     fun clickFeaturePrompt(prompt: FeaturePrompt)
-    fun routeUpdated(route: String)
 }
 
 interface DashboardViewModelOutputs {
     val currentlySelectedItem: LiveData<MenuItem>
     val appFeatureItemsList: LiveData<List<MenuItem>>
     val seasonScreenItemsList: LiveData<List<MenuItem>>
-    val hideBottomBar: LiveData<Boolean>
+    val showBottomBar: LiveData<Boolean>
 
     val isDarkMode: LiveData<Boolean>
 
@@ -71,6 +78,7 @@ class DashboardViewModel @Inject constructor(
     private val buildConfigManager: BuildConfigManager,
     private val notificationRepository: NotificationRepository,
     private val permissionRepository: PermissionRepository,
+    private val navigator: Navigator,
     private val statsNavigationComponent: StatsNavigationComponent,
     private val permissionManager: PermissionManager,
     private val getSeasonUseCase: GetSeasonsUseCase,
@@ -82,19 +90,37 @@ class DashboardViewModel @Inject constructor(
     val inputs: DashboardViewModelInputs = this
     val outputs: DashboardViewModelOutputs = this
 
-    override val currentlySelectedItem: MutableLiveData<MenuItem> = MutableLiveData(MenuItem.Calendar)
+    private val currentDestination = navigator
+        .destination
+        .asSharedFlow()
+
+
+    override val currentlySelectedItem: LiveData<MenuItem> = currentDestination
+        .map { destination ->
+            if (destination == null) return@map null
+
+            val item: MenuItem? = when {
+                destination.route.startsWith("results/calendar/") -> MenuItem.Calendar
+                destination.route.startsWith("results/drivers/") -> MenuItem.Drivers
+                destination.route.startsWith("results/constructors/") -> MenuItem.Constructors
+                destination.route.startsWith("settings") -> MenuItem.Settings
+                destination.route.startsWith("rss") -> MenuItem.RSS
+                destination.route.startsWith("search") -> MenuItem.Search
+                else -> null
+            }
+            return@map item
+        }
+        .filterNotNull()
+        .asLiveData(viewModelScope.coroutineContext)
 
     override val appFeatureItemsList: MutableLiveData<List<MenuItem>> = MutableLiveData()
     override val seasonScreenItemsList: MutableLiveData<List<MenuItem>> = MutableLiveData()
-    override val hideBottomBar: LiveData<Boolean> = currentlySelectedItem
+    override val showBottomBar: LiveData<Boolean> = currentDestination
         .map {
-            when (it) {
-                MenuItem.Calendar,
-                MenuItem.Constructors,
-                MenuItem.Drivers -> true
-                else -> false
-            }
+            if (it == null) return@map false
+            return@map it.route.startsWith("results/")
         }
+        .asLiveData(viewModelScope.coroutineContext)
 
     override val currentlySelectedSeason: MutableLiveData<Int> = MutableLiveData(defaultSeasonUseCase.defaultSeason)
 
@@ -160,6 +186,14 @@ class DashboardViewModel @Inject constructor(
 
     override fun clickSeason(season: Int) {
         currentlySelectedSeason.value = season
+        val current = currentlySelectedItem.value ?: return
+        when (current) {
+            MenuItem.Calendar -> navigator.navigate(Screen.Calendar.with(season))
+            MenuItem.Constructors -> navigator.navigate(Screen.Constructors.with(season))
+            MenuItem.Drivers -> navigator.navigate(Screen.Drivers.with(season))
+            else -> { /* Do nothing */ }
+        }
+
     }
 
     override fun clickFeaturePrompt(prompt: FeaturePrompt) {
@@ -185,25 +219,17 @@ class DashboardViewModel @Inject constructor(
         }
     }
 
-    override fun routeUpdated(route: String) {
-        when (route) {
-            Screen.Circuit.route -> {
-                currentlySelectedItem.value = MenuItem.Drivers
-            }
-        }
-    }
-
     override fun clickItem(navigationItem: MenuItem) {
-        currentlySelectedItem.postValue(navigationItem)
+        val currentSeason = currentlySelectedSeason.value
 
         when (navigationItem) {
-//            MenuItem.Calendar -> statsNavigationComponent.schedule
-//            MenuItem.Drivers -> TODO()
-//            MenuItem.Constructors -> TODO()
+            MenuItem.Calendar -> navigator.navigate(Screen.Calendar.with(currentSeason ?: defaultSeasonUseCase.defaultSeason))
+            MenuItem.Drivers -> navigator.navigate(Screen.Drivers.with(currentSeason ?: defaultSeasonUseCase.defaultSeason))
+            MenuItem.Constructors -> navigator.navigate(Screen.Constructors.with(currentSeason ?: defaultSeasonUseCase.defaultSeason))
             MenuItem.Contact -> applicationNavigationComponent.aboutApp()
-//            MenuItem.RSS -> rssNavigationComponent.
-            MenuItem.Search -> statsNavigationComponent.search()
-            MenuItem.Settings -> applicationNavigationComponent.settings()
+            MenuItem.RSS -> navigator.navigate(Screen.RSS)
+            MenuItem.Search -> navigator.navigate(Screen.Search)
+            MenuItem.Settings -> navigator.navigate(Screen.Settings.All)
             else -> {}
         }
     }
