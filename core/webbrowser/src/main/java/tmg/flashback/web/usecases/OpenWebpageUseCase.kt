@@ -11,16 +11,24 @@ import android.os.Build
 import android.webkit.URLUtil
 import android.widget.Toast
 import tmg.flashback.analytics.manager.AnalyticsManager
+import tmg.flashback.ui.navigation.ActivityProvider
 import tmg.flashback.web.R
 import tmg.flashback.web.repository.WebBrowserRepository
 import tmg.flashback.web.ui.browser.WebActivity
 import tmg.utilities.extensions.managerClipboard
 import javax.inject.Inject
 
-class PickBrowserUseCase @Inject constructor(
+class OpenWebpageUseCase @Inject constructor(
     private val webBrowserRepository: WebBrowserRepository,
-    private val analyticsManager: AnalyticsManager
+    private val analyticsManager: AnalyticsManager,
+    private val activityProvider: ActivityProvider,
 ) {
+    fun open(url: String, title: String) {
+        activityProvider.launch {
+            open(activity = it, url = url, title = title)
+        }
+    }
+
     fun open(activity: Activity, url: String, title: String) {
         analyticsManager.logEvent("Opening URL", mapOf(
             "url" to url,
