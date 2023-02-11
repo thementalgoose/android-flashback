@@ -16,6 +16,8 @@ import tmg.flashback.eastereggs.usecases.IsMenuIconEnabledUseCase
 import tmg.flashback.eastereggs.usecases.IsSnowEnabledUseCase
 import tmg.flashback.formula1.constants.Formula1
 import tmg.flashback.rss.repo.RSSRepository
+import tmg.flashback.stats.Circuit
+import tmg.flashback.stats.ConstructorSeason
 import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.stats.repository.NotificationRepository
 import tmg.flashback.stats.usecases.DefaultSeasonUseCase
@@ -25,6 +27,7 @@ import tmg.flashback.ui.managers.PermissionManager
 import tmg.flashback.ui.managers.StyleManager
 import tmg.flashback.ui.model.NightMode
 import tmg.flashback.ui.navigation.ApplicationNavigationComponent
+import tmg.flashback.ui.navigation.Screen
 import tmg.flashback.ui.permissions.RationaleType
 import tmg.flashback.ui.repository.PermissionRepository
 import tmg.flashback.ui.usecases.ChangeNightModeUseCase
@@ -36,6 +39,7 @@ interface DashboardViewModelInputs {
     fun clickDarkMode(toState: Boolean)
     fun clickSeason(season: Int)
     fun clickFeaturePrompt(prompt: FeaturePrompt)
+    fun routeUpdated(route: String)
 }
 
 interface DashboardViewModelOutputs {
@@ -181,17 +185,25 @@ class DashboardViewModel @Inject constructor(
         }
     }
 
+    override fun routeUpdated(route: String) {
+        when (route) {
+            Screen.Circuit.route -> {
+                currentlySelectedItem.value = MenuItem.Drivers
+            }
+        }
+    }
+
     override fun clickItem(navigationItem: MenuItem) {
         currentlySelectedItem.postValue(navigationItem)
 
         when (navigationItem) {
-//            MenuItem.Calendar -> TODO()
+//            MenuItem.Calendar -> statsNavigationComponent.schedule
+//            MenuItem.Drivers -> TODO()
 //            MenuItem.Constructors -> TODO()
             MenuItem.Contact -> applicationNavigationComponent.aboutApp()
-//            MenuItem.Drivers -> TODO()
-//            MenuItem.RSS -> TODO()
-//            MenuItem.Search -> TODO()
-//            MenuItem.Settings -> TODO()
+//            MenuItem.RSS -> rssNavigationComponent.
+            MenuItem.Search -> statsNavigationComponent.search()
+            MenuItem.Settings -> applicationNavigationComponent.settings()
             else -> {}
         }
     }

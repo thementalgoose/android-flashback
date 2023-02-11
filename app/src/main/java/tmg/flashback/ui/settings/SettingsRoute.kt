@@ -20,7 +20,7 @@ internal val Screen.Settings.All: NavigationDestination
         override val route: String = "settings"
     }
 
-internal val Screen.Settings.Appearance: NavigationDestination
+internal val Screen.Settings.Adverts: NavigationDestination
     get() = object : NavigationDestination {
         override val route: String = "settings/adverts"
     }
