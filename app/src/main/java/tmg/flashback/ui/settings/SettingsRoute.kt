@@ -1,19 +1,7 @@
 package tmg.flashback.ui.settings
 
-import androidx.navigation.NavController
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.composable
 import tmg.flashback.ui.navigation.NavigationDestination
 import tmg.flashback.ui.navigation.Screen
-import tmg.flashback.ui.settings.about.SettingsAboutScreenVM
-import tmg.flashback.ui.settings.about.SettingsPrivacyScreenVM
-import tmg.flashback.ui.settings.ads.SettingsAdsScreenVM
-import tmg.flashback.ui.settings.layout.SettingsLayoutScreenVM
-import tmg.flashback.ui.settings.notifications.SettingsNotificationsResultsScreenVM
-import tmg.flashback.ui.settings.notifications.SettingsNotificationsUpcomingScreen
-import tmg.flashback.ui.settings.notifications.SettingsNotificationsUpcomingScreenVM
-import tmg.flashback.ui.settings.web.SettingsWebScreen
-import tmg.flashback.ui.settings.web.SettingsWebScreenVM
 
 internal val Screen.Settings.All: NavigationDestination
     get() = NavigationDestination("settings")

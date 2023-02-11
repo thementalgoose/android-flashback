@@ -27,6 +27,8 @@ sealed class MenuItem(
         label = R.string.dashboard_tab_constructors,
         icon = R.drawable.dashboard_nav_constructor
     )
+
+
     object Search: MenuItem(
         id = "search",
         label = R.string.dashboard_links_search,

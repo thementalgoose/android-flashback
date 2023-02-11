@@ -17,11 +17,14 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -42,6 +45,7 @@ import tmg.flashback.ui.dashboard.MenuItem
 @Composable
 fun DashboardMenuScreen(
     modifier: Modifier = Modifier,
+    closeMenu: () -> Unit,
     currentlySelectedItem: MenuItem,
     appFeatureItemsList: List<MenuItem>,
     menuItemClicked: (MenuItem) -> Unit,
@@ -62,15 +66,39 @@ fun DashboardMenuScreen(
             .snow(easterEggSnow),
         content = {
             item(key = "space1") { Spacer(Modifier.height(AppTheme.dimens.small)) }
-            item(key = "hero") { DashboardHero(menuIcons = easterEggTitleIcon) }
+            item(key = "hero") { Row {
+                Spacer(Modifier.width(AppTheme.dimens.nsmall))
+                DashboardHero(menuIcons = easterEggTitleIcon)
+            } }
             item(key = "div1") { Divider() }
             item(key = "label1") { SubHeader(text = stringResource(id = R.string.dashboard_all_title)) }
+            item(key = "button-results") {
+                // Add "results" button for phone layout only to signify that we're on the results tab
+                //  Actual menu options are on bottom navigation bar and not in this composable
+                //  Not needed usually as menu items are exposed on tablet
+                val isSelected = currentlySelectedItem in listOf(MenuItem.Constructors, MenuItem.Drivers, MenuItem.Calendar)
+                Button(
+                    label = R.string.dashboard_tab_results,
+                    icon = R.drawable.dashboard_nav_results,
+                    isSelected = isSelected,
+                    onClick = {
+                        if (isSelected) {
+                            closeMenu()
+                        } else {
+                            menuItemClicked(MenuItem.Calendar)
+                            closeMenu()
+                        }
+                    }
+                )
+            }
             items(appFeatureItemsList, key = { "button-${it.id}" }) {
                 Button(
                     label = it.label,
                     icon = it.icon,
-                    modifier = Modifier.clickable {
+                    isSelected = it == currentlySelectedItem,
+                    onClick = {
                         menuItemClicked(it)
+                        closeMenu()
                     }
                 )
             }
@@ -103,7 +131,10 @@ fun DashboardMenuScreen(
             items(seasonItemsList, key = { "season-$it" }) {
                 TimelineItem(
                     model = it,
-                    seasonClicked = seasonClicked
+                    seasonClicked = { season ->
+                        seasonClicked(season)
+                        closeMenu()
+                    }
                 )
             }
             item(key = "appversion") {
@@ -211,13 +242,25 @@ private fun Button(
     label: Int,
     @DrawableRes
     icon: Int,
+    isSelected: Boolean,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(modifier = modifier
         .fillMaxWidth()
         .padding(
-            vertical = AppTheme.dimens.nsmall,
-            horizontal = AppTheme.dimens.medium
+            end = AppTheme.dimens.medium / 2
+        )
+        .clip(RoundedCornerShape(topEnd = AppTheme.dimens.radiusLarge, bottomEnd = AppTheme.dimens.radiusLarge))
+        .background(
+            if (isSelected) AppTheme.colors.primary.copy(alpha = 0.2f) else Color.Transparent
+        )
+        .clickable(onClick = onClick)
+        .padding(
+            top = AppTheme.dimens.nsmall,
+            bottom = AppTheme.dimens.nsmall,
+            start = AppTheme.dimens.medium,
+            end = AppTheme.dimens.medium / 2
         )
     ) {
         Icon(

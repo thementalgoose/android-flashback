@@ -37,6 +37,7 @@
     <string name="dashboard_all_title">All</string>
 
 
+    <string name="dashboard_tab_results">Results</string>
     <string name="dashboard_tab_calendar">Calendar</string>
     <string name="dashboard_tab_drivers">Drivers</string>
     <string name="dashboard_tab_constructors">Constructors</string>

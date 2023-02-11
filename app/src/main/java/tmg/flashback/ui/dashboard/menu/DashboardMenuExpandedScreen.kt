@@ -241,19 +241,21 @@ private fun HeroItem(
             .padding(horizontal = iconPadding.value,),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Icon(
-            modifier = Modifier
-                .size(iconSize)
-                .align(Alignment.CenterVertically),
-            painter = painterResource(id = R.drawable.ic_menu_expanded),
-            tint = AppTheme.colors.contentPrimary,
-            contentDescription = stringResource(id = R.string.app_name)
-        )
+        if (onClick != null) {
+            Icon(
+                modifier = Modifier
+                    .size(iconSize)
+                    .align(Alignment.CenterVertically),
+                painter = painterResource(id = R.drawable.ic_menu_expanded),
+                tint = AppTheme.colors.contentPrimary,
+                contentDescription = stringResource(id = R.string.app_name)
+            )
+            Spacer(Modifier.width(AppTheme.dimens.small))
+        }
         if (isExpanded) {
             DashboardHero(
                 menuIcons = menuIcons,
                 modifier = Modifier
-                    .padding(start = AppTheme.dimens.xsmall)
             )
         }
     }

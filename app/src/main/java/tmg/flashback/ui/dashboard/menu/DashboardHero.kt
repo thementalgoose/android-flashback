@@ -35,10 +35,10 @@ internal fun DashboardHero(
     modifier: Modifier = Modifier
 ) {
     if (menuIcons != null) {
-        Box(
-            Modifier.padding(
-            vertical = AppTheme.dimens.xsmall,
-            horizontal = AppTheme.dimens.nsmall
+        Box(Modifier.padding(
+            top = AppTheme.dimens.xsmall,
+            bottom = AppTheme.dimens.xsmall,
+            end = AppTheme.dimens.nsmall
         )) {
             TextHeadline2WithIcon(
                 text = stringResource(id = R.string.app_name),
