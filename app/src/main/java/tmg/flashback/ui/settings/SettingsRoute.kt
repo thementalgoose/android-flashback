@@ -4,7 +4,7 @@ import tmg.flashback.ui.navigation.NavigationDestination
 import tmg.flashback.ui.navigation.Screen
 
 internal val Screen.Settings.All: NavigationDestination
-    get() = NavigationDestination("settings")
+    get() = NavigationDestination("settings", launchSingleTop = true)
 
 internal val Screen.Settings.Adverts: NavigationDestination
     get() = NavigationDestination("settings/adverts")

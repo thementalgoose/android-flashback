@@ -46,6 +46,7 @@ private val badgeSize: Dp = 40.dp
 
 @Composable
 fun RSSScreenVM(
+    showMenu: Boolean = true,
     actionUpClicked: () -> Unit,
     viewModel: RSSViewModel = hiltViewModel()
 ) {
@@ -58,6 +59,7 @@ fun RSSScreenVM(
         onRefresh = viewModel.inputs::refresh
     ) {
         RSSScreen(
+            showMenu = showMenu,
             list = list.value,
             itemClicked = viewModel.inputs::clickModel,
             configureSources = viewModel.inputs::configure,
@@ -68,6 +70,7 @@ fun RSSScreenVM(
 
 @Composable
 fun RSSScreen(
+    showMenu: Boolean,
     list: List<RSSModel>,
     itemClicked: (RSSModel.RSS) -> Unit,
     configureSources: () -> Unit,
@@ -81,8 +84,8 @@ fun RSSScreen(
             item("header") {
                 Header(
                     text = stringResource(id = R.string.title_rss),
-                    icon = painterResource(id = R.drawable.ic_back),
-                    iconContentDescription = stringResource(id = R.string.ab_back),
+                    icon = if (showMenu) painterResource(id = R.drawable.ic_menu) else null,
+                    iconContentDescription = stringResource(id = R.string.ab_menu),
                     overrideIcons = {
                         IconButton(onClick = configureSources) {
                             Icon(
@@ -226,6 +229,7 @@ private fun SourcesDisabled(
 private fun Preview() {
     AppThemePreview {
         RSSScreen(
+            showMenu = true,
             list = listOf(RSSModel.RSS(item = fakeArticle)),
             itemClicked = {},
             configureSources = {},
