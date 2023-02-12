@@ -28,6 +28,7 @@ import androidx.window.layout.WindowLayoutInfo
 import kotlinx.coroutines.launch
 import tmg.flashback.eastereggs.model.MenuIcons
 import tmg.flashback.style.AppTheme
+import tmg.flashback.style.text.TextBody2
 import tmg.flashback.ui.AppGraph
 import tmg.flashback.ui.components.layouts.OverlappingPanels
 import tmg.flashback.ui.components.layouts.OverlappingPanelsValue
@@ -53,7 +54,9 @@ fun DashboardScreen(
 
     val seasonItemsList = viewModel.outputs.seasonsItemsList.observeAsState(emptyList())
     val currentlySelectedSeason = viewModel.outputs.currentlySelectedSeason.observeAsState(0)
+
     val showBottomBar = viewModel.outputs.showBottomBar.observeAsState(true)
+    var showMenu = viewModel.outputs.showMenu.observeAsState(false)
 
     val darkMode = viewModel.outputs.isDarkMode.observeAsState(false)
 
@@ -74,6 +77,7 @@ fun DashboardScreen(
         seasonScreenItemsList = seasonScreenItemsList.value,
         menuItemClicked = viewModel.inputs::clickItem,
         showBottomBar = showBottomBar.value,
+        showMenu = showMenu.value,
         darkMode = darkMode.value,
         darkModeClicked = viewModel.inputs::clickDarkMode,
         featurePromptList = featurePromptList.value,
@@ -98,6 +102,7 @@ fun DashboardScreen(
     seasonScreenItemsList: List<MenuItem>,
     menuItemClicked: (MenuItem) -> Unit,
     showBottomBar: Boolean,
+    showMenu: Boolean,
     darkMode: Boolean,
     darkModeClicked: (Boolean) -> Unit,
     featurePromptList: List<FeaturePrompt>,
@@ -113,6 +118,12 @@ fun DashboardScreen(
     val coroutineScope = rememberCoroutineScope()
     DisposableEffect(windowSize, effect = {
         coroutineScope.launch { panelsState.closePanels() }
+        return@DisposableEffect this.onDispose {  }
+    })
+    DisposableEffect(showMenu, effect = {
+        if (!showMenu) {
+            coroutineScope.launch { panelsState.closePanels() }
+        }
         return@DisposableEffect this.onDispose {  }
     })
 
@@ -143,7 +154,7 @@ fun DashboardScreen(
             OverlappingPanels(
                 modifier = Modifier.background(AppTheme.colors.backgroundContainer),
                 panelsState = panelsState,
-                gesturesEnabled = windowSize.widthSizeClass == WindowWidthSizeClass.Compact,
+                gesturesEnabled = windowSize.widthSizeClass == WindowWidthSizeClass.Compact && showMenu,
                 panelStart = {
                     DashboardMenuScreen(
                         closeMenu = {
@@ -205,11 +216,13 @@ fun DashboardScreen(
                             .weight(1f)
                             .background(AppTheme.colors.backgroundContainer)
                         ) {
-                            Box(
-                                Modifier
-                                    .width(1.dp)
-                                    .fillMaxHeight()
-                                    .background(AppTheme.colors.backgroundSecondary))
+                            if (windowSize.widthSizeClass != WindowWidthSizeClass.Compact) {
+                                Box(
+                                    Modifier
+                                        .width(1.dp)
+                                        .fillMaxHeight()
+                                        .background(AppTheme.colors.backgroundSecondary))
+                            }
                             AppGraph(
                                 modifier = Modifier.weight(1f),
                                 openMenu = openMenu,

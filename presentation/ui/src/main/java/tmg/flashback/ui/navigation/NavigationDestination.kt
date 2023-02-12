@@ -1,6 +1,7 @@
 package tmg.flashback.ui.navigation
 
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavOptionsBuilder
 
 data class NavigationDestination(
@@ -9,7 +10,13 @@ data class NavigationDestination(
 )
 
 fun NavController.navigate(destination: NavigationDestination, builder: NavOptionsBuilder.() -> Unit = {
-    this.launchSingleTop = launchSingleTop
+    this.restoreState = destination.launchSingleTop
+    this.launchSingleTop = destination.launchSingleTop
+    if (destination.launchSingleTop) {
+        popUpTo(this@navigate.graph.startDestinationId) {
+            saveState = true
+        }
+    }
 }) {
     this.navigate(route = destination.route, builder = builder)
 }
