@@ -6,13 +6,13 @@ import tmg.flashback.ui.navigation.Screen
 import javax.inject.Inject
 
 val Screen.Settings.RSS: NavigationDestination
-    get() = NavigationDestination("settings/rss", launchSingleTop = true)
+    get() = NavigationDestination("settings/rss")
 
 val Screen.Settings.RSSConfigure: NavigationDestination
     get() = NavigationDestination("settings/rss/configure")
 
 val Screen.RSS: NavigationDestination
-    get() = NavigationDestination("rss")
+    get() = NavigationDestination("rss", launchSingleTop = true)
 
 class RssNavigationComponent @Inject constructor(
     private val navigator: Navigator

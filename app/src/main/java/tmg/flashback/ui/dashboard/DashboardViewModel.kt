@@ -53,7 +53,9 @@ interface DashboardViewModelOutputs {
     val currentlySelectedItem: LiveData<MenuItem>
     val appFeatureItemsList: LiveData<List<MenuItem>>
     val seasonScreenItemsList: LiveData<List<MenuItem>>
+
     val showBottomBar: LiveData<Boolean>
+    val showMenu: LiveData<Boolean>
 
     val isDarkMode: LiveData<Boolean>
 
@@ -113,14 +115,30 @@ class DashboardViewModel @Inject constructor(
         .filterNotNull()
         .asLiveData(viewModelScope.coroutineContext)
 
-    override val appFeatureItemsList: MutableLiveData<List<MenuItem>> = MutableLiveData()
-    override val seasonScreenItemsList: MutableLiveData<List<MenuItem>> = MutableLiveData()
+    override val showMenu: LiveData<Boolean> = currentDestination
+        .map { destination ->
+            if (destination == null) return@map null
+
+            return@map when {
+                destination.route.startsWith("results/") -> true
+                destination.route == "settings" -> true
+                destination.route == "rss" -> true
+                destination.route == "search" -> true
+                else -> false
+            }
+        }
+        .filterNotNull()
+        .asLiveData(viewModelScope.coroutineContext)
+
     override val showBottomBar: LiveData<Boolean> = currentDestination
         .map {
             if (it == null) return@map false
             return@map it.route.startsWith("results/")
         }
         .asLiveData(viewModelScope.coroutineContext)
+
+    override val appFeatureItemsList: MutableLiveData<List<MenuItem>> = MutableLiveData()
+    override val seasonScreenItemsList: MutableLiveData<List<MenuItem>> = MutableLiveData()
 
     override val currentlySelectedSeason: MutableLiveData<Int> = MutableLiveData(defaultSeasonUseCase.defaultSeason)
 

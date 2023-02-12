@@ -52,6 +52,7 @@ import tmg.flashback.ui.navigation.asNavigationDestination
 import tmg.flashback.ui.navigation.navIntRequired
 import tmg.flashback.ui.navigation.navString
 import tmg.flashback.ui.navigation.navStringRequired
+import tmg.flashback.ui.navigation.navigate
 import tmg.flashback.ui.settings.About
 import tmg.flashback.ui.settings.Ads
 import tmg.flashback.ui.settings.All
@@ -90,8 +91,8 @@ fun AppGraph(
 
     LaunchedEffect(destination) {
         if (navController.currentDestination?.route != destination?.route) {
-            val route = destination?.route ?: return@LaunchedEffect
-            navController.navigate(route)
+            val dest = destination ?: return@LaunchedEffect
+            navController.navigate(dest)
         }
     }
 
@@ -103,11 +104,11 @@ fun AppGraph(
         }
     }
 
-    BackHandler {
-        if (!navController.popBackStack()) {
-            closeApp()
-        }
-    }
+//    BackHandler {
+//        if (!navController.popBackStack()) {
+//            closeApp()
+//        }
+//    }
 
     NavHost(
         navController = navController,
