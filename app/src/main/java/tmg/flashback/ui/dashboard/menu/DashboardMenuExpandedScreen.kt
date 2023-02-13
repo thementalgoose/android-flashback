@@ -268,10 +268,6 @@ private fun NavigationTimelineItem(
     onClick: ((NavigationTimelineItem) -> Unit)?,
     modifier: Modifier = Modifier
 ) {
-    val backgroundColor = animateColorAsState(targetValue = when (item.isSelected) {
-        true -> AppTheme.colors.primary.copy(alpha = 0.2f)
-        else -> AppTheme.colors.backgroundNav
-    })
     val iconPadding = animateDpAsState(targetValue = when (isExpanded) {
         true -> AppTheme.dimens.medium
         false -> (itemSize - iconSize) / 2
@@ -284,7 +280,7 @@ private fun NavigationTimelineItem(
         .fillMaxWidth()
         .height(itemSize)
         .clip(RoundedCornerShape(AppTheme.dimens.radiusMedium))
-        .background(backgroundColor.value)
+        .background(AppTheme.colors.backgroundNav)
         .clickable(
             enabled = onClick != null,
             onClick = {
