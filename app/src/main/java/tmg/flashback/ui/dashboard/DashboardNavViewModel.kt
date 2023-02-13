@@ -11,6 +11,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
+import tmg.flashback.crash_reporting.manager.CrashManager
 import tmg.flashback.formula1.constants.Formula1
 import tmg.flashback.rss.RSS
 import tmg.flashback.rss.repo.RSSRepository
@@ -26,6 +28,7 @@ import tmg.flashback.ui.navigation.ApplicationNavigationComponent
 import tmg.flashback.ui.navigation.Navigator
 import tmg.flashback.ui.navigation.Screen
 import tmg.flashback.ui.settings.All
+import tmg.flashback.usecases.DashboardSyncUseCase
 import tmg.flashback.usecases.GetSeasonsUseCase
 import javax.inject.Inject
 
@@ -52,7 +55,9 @@ class DashboardNavViewModel @Inject constructor(
     private val defaultSeasonUseCase: DefaultSeasonUseCase,
     private val navigator: Navigator,
     private val getSeasonUseCase: GetSeasonsUseCase,
-    private val applicationNavigationComponent: ApplicationNavigationComponent
+    private val applicationNavigationComponent: ApplicationNavigationComponent,
+    private val crashManager: CrashManager,
+    private val dashboardSyncUseCase: DashboardSyncUseCase
 ): ViewModel(), DashboardNavViewModelInputs, DashboardNavViewModelOutputs {
 
     val inputs: DashboardNavViewModelInputs = this
@@ -112,7 +117,10 @@ class DashboardNavViewModel @Inject constructor(
     init {
         initialiseItems()
 
-        // TODO: Make network request for season selection + season change here!
+        viewModelScope.launch {
+            val result = dashboardSyncUseCase.sync()
+            crashManager.log("Dashboard synchronisation complete $result")
+        }
     }
 
     private fun initialiseItems() {
