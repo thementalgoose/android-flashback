@@ -59,7 +59,7 @@ private val heroSize: Dp = 48.dp
 private val itemSize: Dp = 38.dp
 private val iconSize: Dp = 20.dp
 val columnWidthExpanded: Dp = 240.dp
-val columnWidthExpandedLocked: Dp = 300.dp
+val columnWidthExpandedLocked: Dp = 260.dp
 
 val headerHeight: Dp = 72.dp
 
