@@ -70,10 +70,10 @@ internal class IsMenuIconEnabledUseCaseTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = [21, 22])
+    @ValueSource(ints = [9, 10])
     fun `chinese new year is returned when now is within range`(dayOfMonth: Int) {
         val year = MenuIcons.CHINESE_NEW_YEAR.start.year
-        every { mockTimeManager.now } returns LocalDateTime.of(year, 1, dayOfMonth, 12, 0)
+        every { mockTimeManager.now } returns LocalDateTime.of(year, 2, dayOfMonth, 12, 0)
 
         initUnderTest()
         assertEquals(MenuIcons.CHINESE_NEW_YEAR, underTest.invoke())

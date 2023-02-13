@@ -16,8 +16,8 @@ enum class MenuIcons(
     ),
     CHINESE_NEW_YEAR(
         key = "new_year",
-        start = LocalDate.of(2023, 1, 21),
-        end = LocalDate.of(2023, 1, 22)
+        start = LocalDate.of(2024, 2, 9),
+        end = LocalDate.of(2024, 2, 10)
     ),
     VALENTINES_DAY(
         key = "valentines",
