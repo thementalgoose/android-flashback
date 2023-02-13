@@ -3,6 +3,7 @@
 package tmg.flashback.ui.dashboard
 
 import android.annotation.SuppressLint
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -28,7 +29,6 @@ import androidx.window.layout.WindowLayoutInfo
 import kotlinx.coroutines.launch
 import tmg.flashback.eastereggs.model.MenuIcons
 import tmg.flashback.style.AppTheme
-import tmg.flashback.style.text.TextBody2
 import tmg.flashback.ui.AppGraph
 import tmg.flashback.ui.components.layouts.OverlappingPanels
 import tmg.flashback.ui.components.layouts.OverlappingPanelsValue
@@ -46,22 +46,21 @@ fun DashboardScreen(
     windowLayoutInfo: WindowLayoutInfo,
     navigator: Navigator,
     closeApp: () -> Unit,
+    navViewModel: DashboardNavViewModel = hiltViewModel(),
     viewModel: DashboardViewModel = hiltViewModel()
 ) {
-    val currentlySelectedItem = viewModel.outputs.currentlySelectedItem.observeAsState(MenuItem.Calendar)
-    val seasonScreenItemsList = viewModel.outputs.seasonScreenItemsList.observeAsState(emptyList())
-    val appFeatureItemsList = viewModel.outputs.appFeatureItemsList.observeAsState(emptyList())
+    val currentlySelectedItem = navViewModel.outputs.currentlySelectedItem.observeAsState(MenuItem.Calendar)
+    val seasonScreenItemsList = navViewModel.outputs.seasonScreenItemsList.observeAsState(emptyList())
+    val appFeatureItemsList = navViewModel.outputs.appFeatureItemsList.observeAsState(emptyList())
 
-    val seasonItemsList = viewModel.outputs.seasonsItemsList.observeAsState(emptyList())
-    val currentlySelectedSeason = viewModel.outputs.currentlySelectedSeason.observeAsState(0)
+    val seasonItemsList = navViewModel.outputs.seasonsItemsList.observeAsState(emptyList())
+    val currentlySelectedSeason = navViewModel.outputs.currentlySelectedSeason.observeAsState(0)
 
-    val showBottomBar = viewModel.outputs.showBottomBar.observeAsState(true)
-    var showMenu = viewModel.outputs.showMenu.observeAsState(false)
+    val showBottomBar = navViewModel.outputs.showBottomBar.observeAsState(true)
+    val showMenu = navViewModel.outputs.showMenu.observeAsState(false)
 
     val darkMode = viewModel.outputs.isDarkMode.observeAsState(false)
-
     val featurePromptList = viewModel.outputs.featurePromptsList.observeAsState(emptyList())
-
     val appVersion = viewModel.outputs.appVersion.observeAsState("")
 
     val snow = viewModel.outputs.snow.observeAsState(false)
@@ -75,7 +74,7 @@ fun DashboardScreen(
         currentlySelectedItem = currentlySelectedItem.value,
         appFeatureItemsList = appFeatureItemsList.value,
         seasonScreenItemsList = seasonScreenItemsList.value,
-        menuItemClicked = viewModel.inputs::clickItem,
+        menuItemClicked = navViewModel.inputs::clickItem,
         showBottomBar = showBottomBar.value,
         showMenu = showMenu.value,
         darkMode = darkMode.value,
@@ -83,7 +82,7 @@ fun DashboardScreen(
         featurePromptList = featurePromptList.value,
         featurePromptClicked = viewModel.inputs::clickFeaturePrompt,
         seasonItemsList = seasonItemsList.value,
-        seasonClicked = viewModel.inputs::clickSeason,
+        seasonClicked = navViewModel.inputs::clickSeason,
         appVersion = appVersion.value,
         easterEggSnow = snow.value,
         easterEggTitleIcon = titleIcon.value
@@ -114,12 +113,15 @@ fun DashboardScreen(
     easterEggTitleIcon: MenuIcons?
 ) {
     val panelsState = rememberOverlappingPanelsState(OverlappingPanelsValue.Closed)
-
     val coroutineScope = rememberCoroutineScope()
+
+    // Close panel if window size is changes via. configuration change
     DisposableEffect(windowSize, effect = {
         coroutineScope.launch { panelsState.closePanels() }
         return@DisposableEffect this.onDispose {  }
     })
+
+    // Close the menu if we shouldn't be showing it
     DisposableEffect(showMenu, effect = {
         if (!showMenu) {
             coroutineScope.launch { panelsState.closePanels() }
@@ -128,8 +130,13 @@ fun DashboardScreen(
     })
 
     val openMenu: () -> Unit = {
+        coroutineScope.launch { panelsState.openStartPanel() }
+    }
+
+    // Close the menu if bck is pressed on the menu
+    BackHandler(panelsState.isStartPanelOpen) {
         coroutineScope.launch {
-            panelsState.openStartPanel()
+            panelsState.closePanels()
         }
     }
 

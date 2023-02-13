@@ -10,7 +10,7 @@ data class NavigationDestination(
 )
 
 fun NavController.navigate(destination: NavigationDestination, builder: NavOptionsBuilder.() -> Unit = {
-    this.restoreState = destination.launchSingleTop
+//    this.restoreState = destination.launchSingleTop
     this.launchSingleTop = destination.launchSingleTop
     if (destination.launchSingleTop) {
         popUpTo(this@navigate.graph.startDestinationId) {
