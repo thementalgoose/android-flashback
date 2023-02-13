@@ -174,15 +174,9 @@ fun AppGraph(
 
         // Settings
         composable(Screen.Settings.All.route) {
-            SplitPane(
-                windowSizeClass = windowSize,
-                windowLayoutInfo = windowInfo,
-                master = {
-                    SettingsAllScreenVM(
-                        showMenu = windowSize.widthSizeClass == WindowWidthSizeClass.Compact,
-                        actionUpClicked = openMenu
-                    )
-                }
+            SettingsAllScreenVM(
+                showMenu = windowSize.widthSizeClass == WindowWidthSizeClass.Compact,
+                actionUpClicked = openMenu
             )
         }
         composable(Screen.Settings.Home.route) {
