@@ -11,9 +11,6 @@ class IsMenuIconEnabledUseCase @Inject constructor(
     private val timeManager: TimeManager
 ) {
     operator fun invoke(): MenuIcons? {
-        if (BuildConfig.DEBUG) {
-            return MenuIcons.CHRISTMAS
-        }
         val now = timeManager.now
         return MenuIcons.values()
             .firstOrNull { it.isNow(now.toLocalDate()) }
