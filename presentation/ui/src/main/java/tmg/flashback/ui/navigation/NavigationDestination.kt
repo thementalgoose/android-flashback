@@ -7,14 +7,20 @@ import androidx.navigation.NavOptionsBuilder
 data class NavigationDestination(
     val route: String,
     val launchSingleTop: Boolean = false,
+    val popUpTo: String? = null,
 )
 
 fun NavController.navigate(destination: NavigationDestination, builder: NavOptionsBuilder.() -> Unit = {
-//    this.restoreState = destination.launchSingleTop
     this.launchSingleTop = destination.launchSingleTop
-    if (destination.launchSingleTop) {
-        popUpTo(this@navigate.graph.startDestinationId) {
-            saveState = true
+    if (destination.launchSingleTop || destination.popUpTo != null) {
+        if (destination.popUpTo != null) {
+            popUpTo(destination.popUpTo) {
+                saveState = true
+            }
+        } else {
+            popUpTo(this@navigate.graph.startDestinationId) {
+                saveState = true
+            }
         }
     }
 }) {

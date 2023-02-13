@@ -7,28 +7,28 @@ internal val Screen.Settings.All: NavigationDestination
     get() = NavigationDestination("settings", launchSingleTop = true)
 
 internal val Screen.Settings.Adverts: NavigationDestination
-    get() = NavigationDestination("settings/adverts")
+    get() = NavigationDestination("settings/adverts", popUpTo = "settings")
 
 internal val Screen.Settings.Home: NavigationDestination
-    get() = NavigationDestination("settings/home")
+    get() = NavigationDestination("settings/home", popUpTo = "settings")
 
 
 internal val Screen.Settings.Web: NavigationDestination
-    get() = NavigationDestination("settings/web")
+    get() = NavigationDestination("settings/web", popUpTo = "settings")
 
 
 internal val Screen.Settings.NotificationsUpcoming: NavigationDestination
-    get() = NavigationDestination("settings/notifications/upcoming")
+    get() = NavigationDestination("settings/notifications/upcoming", popUpTo = "settings")
 
 internal val Screen.Settings.NotificationsResults: NavigationDestination
-    get() = NavigationDestination("settings/notifications/results")
+    get() = NavigationDestination("settings/notifications/results", popUpTo = "settings")
 
 
 internal val Screen.Settings.Ads: NavigationDestination
-    get() = NavigationDestination("settings/ads")
+    get() = NavigationDestination("settings/ads", popUpTo = "settings")
 
 internal val Screen.Settings.Privacy: NavigationDestination
-    get() = NavigationDestination("settings/privacy")
+    get() = NavigationDestination("settings/privacy", popUpTo = "settings")
 
 internal val Screen.Settings.About: NavigationDestination
-    get() = NavigationDestination("settings/about")
+    get() = NavigationDestination("settings/about", popUpTo = "settings")
