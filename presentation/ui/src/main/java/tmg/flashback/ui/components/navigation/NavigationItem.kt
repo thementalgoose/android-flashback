@@ -4,11 +4,12 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.ui.graphics.Color
 import tmg.flashback.ui.R
+import java.util.UUID
 
 data class NavigationItem(
     val id: String,
     @StringRes
-    val label: Int?,
+    val label: Int,
     @DrawableRes
     val icon: Int,
     val isSelected: Boolean? = false,
@@ -20,7 +21,14 @@ data class NavigationTimelineItem(
     val label: String,
     val color: Color,
     val isSelected: Boolean = false
-)
+) {
+    val isFirst: Boolean
+        get() = pipeType.showTop
+
+    val isLast: Boolean
+        get() = pipeType.showBottom
+
+}
 
 internal val fakeNavigationTimelineItems: List<NavigationTimelineItem> = listOf(
     NavigationTimelineItem(

@@ -16,7 +16,7 @@ class PermissionManager @Inject constructor(
 ) {
     private var completableDeferred: CompletableDeferred<Boolean>? = null
 
-    internal val baseActivity: BaseActivity?
+    private val baseActivity: BaseActivity?
         get() = topActivityProvider.activity as? BaseActivity
 
     internal val activityContract = ActivityResultCallback<Boolean> { isGranted ->

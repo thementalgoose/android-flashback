@@ -8,10 +8,15 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
+import androidx.compose.runtime.collectAsState
 import androidx.core.splashscreen.SplashScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
+import androidx.window.layout.WindowInfoTracker
+import androidx.window.layout.WindowLayoutInfo
+import androidx.window.layout.WindowMetricsCalculator
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 import tmg.flashback.BuildConfig
 import tmg.flashback.configuration.usecases.ConfigSyncUseCase
 import tmg.flashback.crash_reporting.manager.CrashManager
@@ -19,8 +24,10 @@ import tmg.flashback.maintenance.MaintenanceNavigationComponent
 import tmg.flashback.rss.RSS
 import tmg.flashback.stats.Search
 import tmg.flashback.stats.usecases.ContentSyncUseCase
+import tmg.flashback.stats.usecases.DefaultSeasonUseCase
 import tmg.flashback.style.AppTheme
 import tmg.flashback.ui.base.BaseActivity
+import tmg.flashback.ui.dashboard.DashboardScreen
 import tmg.flashback.ui.navigation.Navigator
 import tmg.flashback.ui.navigation.Screen
 import tmg.flashback.ui.sync.SyncActivity
@@ -57,14 +64,16 @@ class HomeActivity: BaseActivity(), SplashScreen.KeepOnScreenCondition {
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
+        val windowInfoTracker = WindowInfoTracker.getOrCreate(this)
+            .windowLayoutInfo(this@HomeActivity)
+
         setContent {
             AppTheme {
-                HomeScreen(
+                DashboardScreen(
                     windowSize = calculateWindowSizeClass(activity = this),
+                    windowLayoutInfo = windowInfoTracker.collectAsState(WindowLayoutInfo(emptyList())).value,
                     navigator = navigator,
-                    closeApp = {
-                        finish()
-                    }
+                    closeApp = { finish() }
                 )
             }
         }

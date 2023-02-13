@@ -1,4 +1,4 @@
-package tmg.flashback.ui.dashboard.compact.menu
+package tmg.flashback.ui.dashboard.menu
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
@@ -30,14 +30,15 @@ private val MenuIcons.drawable: Int get() = when (this) {
 }
 
 @Composable
-internal fun MenuScreenHero(
+internal fun DashboardHero(
     menuIcons: MenuIcons?,
     modifier: Modifier = Modifier
 ) {
     if (menuIcons != null) {
         Box(Modifier.padding(
-            vertical = AppTheme.dimens.medium,
-            horizontal = AppTheme.dimens.nsmall
+            top = AppTheme.dimens.xsmall,
+            bottom = AppTheme.dimens.xsmall,
+            end = AppTheme.dimens.nsmall
         )) {
             TextHeadline2WithIcon(
                 text = stringResource(id = R.string.app_name),
@@ -63,17 +64,14 @@ internal fun MenuScreenHero(
 private fun Preview(
     @PreviewParameter(MenuIconsProvider::class) menuKey: MenuIcons
 ) {
-    MenuScreenHero(menuIcons = menuKey)
+    DashboardHero(menuIcons = menuKey)
 }
 
 @Composable
 @PreviewTheme
 private fun PreviewTheme() {
-    MenuScreenHero(null)
+    DashboardHero(null)
 }
-
-
-
 
 class MenuIconsProvider: PreviewParameterProvider<MenuIcons> {
     override val values: Sequence<MenuIcons> = MenuIcons.values().asSequence()

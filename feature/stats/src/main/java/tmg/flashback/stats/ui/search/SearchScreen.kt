@@ -35,6 +35,7 @@ import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
 
 @Composable
 fun SearchScreenVM(
+    showMenu: Boolean = true,
     actionUpClicked: () -> Unit,
     viewModel: SearchViewModel = hiltViewModel()
 ) {
@@ -49,6 +50,7 @@ fun SearchScreenVM(
         onRefresh = viewModel.inputs::refresh
     ) {
         SearchScreen(
+            showMenu = showMenu,
             actionUpClicked = actionUpClicked,
             searchInputUpdated = viewModel.inputs::inputSearch,
             searchCategory = category.value,
@@ -61,6 +63,7 @@ fun SearchScreenVM(
 
 @Composable
 fun SearchScreen(
+    showMenu: Boolean,
     actionUpClicked: () -> Unit,
     searchCategory: SearchCategory?,
     searchCategoryUpdated: (SearchCategory) -> Unit,
@@ -86,7 +89,7 @@ fun SearchScreen(
                             SearchCategory.RACE -> stringResource(id = R.string.search_category_races)
                             null -> stringResource(id = R.string.search_title)
                         },
-                        icon = painterResource(id = R.drawable.ic_back),
+                        icon = if (showMenu) painterResource(id = R.drawable.ic_menu) else null,
                         iconContentDescription = stringResource(id = R.string.ab_back),
                         actionUpClicked = actionUpClicked
                     )

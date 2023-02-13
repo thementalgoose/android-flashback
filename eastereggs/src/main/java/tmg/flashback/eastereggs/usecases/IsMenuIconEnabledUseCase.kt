@@ -1,6 +1,7 @@
 package tmg.flashback.eastereggs.usecases
 
 import tmg.flashback.device.managers.TimeManager
+import tmg.flashback.eastereggs.BuildConfig
 import tmg.flashback.eastereggs.model.MenuIcons
 import javax.inject.Inject
 import javax.inject.Singleton
