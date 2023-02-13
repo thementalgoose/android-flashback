@@ -1,9 +1,8 @@
 package tmg.flashback.stats
 
-import org.junit.Ignore
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
+import tmg.flashback.stats.ui.weekend.WeekendInfo
 import tmg.flashback.ui.navigation.Screen
 
 internal class StatsNavigationComponentTest {
@@ -62,8 +61,29 @@ internal class StatsNavigationComponentTest {
     }
 
     @Test
-    @Disabled(value = "Pending refactoring of weekend model")
     fun weekend() {
-        TODO()
+        assertEquals("weekend/{season}/{round}?" +
+                "raceName={raceName}" + "&" +
+                "circuitId={circuitId}" + "&" +
+                "circuitName={circuitName}" + "&" +
+                "country={country}" + "&" +
+                "countryISO={countryISO}" + "&" +
+                "date={date}", Screen.Weekend.route)
+        assertEquals("weekend/2020/1?" +
+                "raceName=raceName" + "&" +
+                "circuitId=circuitId" + "&" +
+                "circuitName=circuitName" + "&" +
+                "country=country" + "&" +
+                "countryISO=countryISO" + "&" +
+                "date=date", Screen.Weekend.with(WeekendInfo(
+                    season = 2020,
+                    round = 1,
+                    raceName = "raceName",
+                    circuitId = "circuitId",
+                    circuitName = "circuitName",
+                    country = "country",
+                    countryISO = "countryISO",
+                    dateString = "date",
+                )).route)
     }
 }
