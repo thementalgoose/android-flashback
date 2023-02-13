@@ -2,6 +2,7 @@ package tmg.flashback.stats.ui.events
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
@@ -12,6 +13,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import org.threeten.bp.LocalDate
@@ -57,7 +59,12 @@ private fun EventsScreen(
     ))
 
     BottomSheet(
-        modifier = modifier.background(AppTheme.colors.backgroundPrimary),
+        modifier = modifier
+            .background(AppTheme.colors.backgroundPrimary)
+            .defaultMinSize(
+                minWidth = Dp.Unspecified,
+                minHeight = 200.dp
+            ),
         title = stringResource(id = R.string.events_list_title, season.toString()),
         subtitle = stringResource(id = R.string.events_list_subtitle)
     ) {
