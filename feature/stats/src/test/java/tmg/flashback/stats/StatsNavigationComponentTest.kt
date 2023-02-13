@@ -1,6 +1,8 @@
 package tmg.flashback.stats
 
+import org.junit.Ignore
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import tmg.flashback.ui.navigation.Screen
 
@@ -32,7 +34,7 @@ internal class StatsNavigationComponentTest {
 
     @Test
     fun `driver season`() {
-        assertEquals("drivers/{driverId}/{season}?driverName={driverName}", Screen.Driver.route)
+        assertEquals("drivers/{driverId}/{season}?driverName={driverName}", Screen.DriverSeason.route)
         assertEquals("drivers/id/2022?driverName=name", Screen.DriverSeason.with("id", "name", 2022).route)
     }
 
@@ -44,7 +46,7 @@ internal class StatsNavigationComponentTest {
 
     @Test
     fun `constructor season`() {
-        assertEquals("constructors/{constructorId}/{season}?driverName={constructorName}", Screen.ConstructorSeason.route)
+        assertEquals("constructors/{constructorId}/{season}?constructorName={constructorName}", Screen.ConstructorSeason.route)
         assertEquals("constructors/id/2022?constructorName=name", Screen.ConstructorSeason.with("id", "name", 2022).route)
     }
 
@@ -60,6 +62,7 @@ internal class StatsNavigationComponentTest {
     }
 
     @Test
+    @Disabled(value = "Pending refactoring of weekend model")
     fun weekend() {
         TODO()
     }
