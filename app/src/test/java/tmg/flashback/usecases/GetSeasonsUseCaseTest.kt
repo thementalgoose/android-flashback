@@ -69,5 +69,5 @@ internal class GetSeasonsUseCaseTest {
         assertEquals(expected.toMap(), result)
     }
 
-    fun model(isFirst: Boolean, isLast: Boolean) = Pair(IsFirst(isFirst), IsLast(isLast))
+    private fun model(isFirst: Boolean, isLast: Boolean) = Pair(IsFirst(isFirst), IsLast(isLast))
 }
