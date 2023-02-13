@@ -29,7 +29,7 @@ internal class GetSeasonsUseCaseTest {
         val expected = listOf(
             2020 to model(isLast = true, isFirst = true)
         )
-        assertEquals(expected, result)
+        assertEquals(expected.toMap(), result)
     }
 
     @Test
@@ -47,7 +47,7 @@ internal class GetSeasonsUseCaseTest {
             2015 to model(isLast = true, isFirst = false),
             2013 to model(isLast = true, isFirst = true)
         )
-        assertEquals(expected, result)
+        assertEquals(expected.toMap(), result)
     }
 
     @Test
@@ -66,7 +66,7 @@ internal class GetSeasonsUseCaseTest {
             2016 to model(isLast = false, isFirst = false),
             2015 to model(isLast = true, isFirst = false)
         )
-        assertEquals(expected, result)
+        assertEquals(expected.toMap(), result)
     }
 
     fun model(isFirst: Boolean, isLast: Boolean) = Pair(IsFirst(isFirst), IsLast(isLast))
