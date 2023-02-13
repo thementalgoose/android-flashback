@@ -1,5 +1,6 @@
 package tmg.flashback.ui.sync
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
@@ -25,6 +26,7 @@ class SyncActivity: BaseActivity() {
     @Inject
     protected lateinit var maintenanceNavigationComponent: MaintenanceNavigationComponent
 
+    @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

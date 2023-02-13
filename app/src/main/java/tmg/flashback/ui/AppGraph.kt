@@ -4,6 +4,7 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -13,6 +14,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navDeepLink
+import androidx.window.layout.WindowLayoutInfo
 import org.threeten.bp.LocalDate
 import tmg.flashback.privacypolicy.PrivacyPolicy
 import tmg.flashback.privacypolicy.ui.PrivacyPolicyScreenVM
@@ -22,26 +24,33 @@ import tmg.flashback.rss.RSS
 import tmg.flashback.rss.RSSConfigure
 import tmg.flashback.rss.ui.configure.ConfigureRSSScreenVM
 import tmg.flashback.rss.ui.feed.RSSScreenVM
+import tmg.flashback.stats.Calendar
 import tmg.flashback.stats.Circuit
 import tmg.flashback.stats.Constructor
 import tmg.flashback.stats.ConstructorSeason
+import tmg.flashback.stats.Constructors
 import tmg.flashback.stats.Driver
 import tmg.flashback.stats.DriverSeason
+import tmg.flashback.stats.Drivers
 import tmg.flashback.stats.Search
 import tmg.flashback.stats.Weekend
 import tmg.flashback.stats.ui.circuits.CircuitScreenVM
 import tmg.flashback.stats.ui.constructors.overview.ConstructorOverviewScreenVM
 import tmg.flashback.stats.ui.constructors.season.ConstructorSeasonScreenVM
+import tmg.flashback.stats.ui.dashboard.constructors.ConstructorStandingsScreenVM
+import tmg.flashback.stats.ui.dashboard.drivers.DriverStandingsScreenVM
+import tmg.flashback.stats.ui.dashboard.schedule.ScheduleScreenVM
 import tmg.flashback.stats.ui.drivers.overview.DriverOverviewScreenVM
 import tmg.flashback.stats.ui.drivers.season.DriverSeasonScreenVM
 import tmg.flashback.stats.ui.search.SearchScreenVM
 import tmg.flashback.stats.ui.weekend.WeekendInfo
 import tmg.flashback.stats.ui.weekend.WeekendScreenVM
-import tmg.flashback.ui.dashboard.compact.DashboardScreenVM
+import tmg.flashback.ui.components.layouts.SplitPane
 import tmg.flashback.ui.navigation.Navigator
 import tmg.flashback.ui.navigation.Screen
 import tmg.flashback.ui.navigation.asNavigationDestination
 import tmg.flashback.ui.navigation.navIntRequired
+import tmg.flashback.ui.navigation.navString
 import tmg.flashback.ui.navigation.navStringRequired
 import tmg.flashback.ui.navigation.navigate
 import tmg.flashback.ui.settings.About
@@ -62,26 +71,31 @@ import tmg.flashback.ui.settings.notifications.SettingsNotificationsUpcomingScre
 import tmg.flashback.ui.settings.web.SettingsWebScreenVM
 import tmg.utilities.extensions.toLocalDate
 
+data class AppGraphInitialLoadValues(
+    val season: Int
+)
+
 @Composable
-fun HomeScreen(
+fun AppGraph(
+    openMenu: () -> Unit,
     windowSize: WindowSizeClass,
+    windowInfo: WindowLayoutInfo,
     navigator: Navigator,
     closeApp: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val navController = rememberNavController()
     val destination by navigator.destination.collectAsState()
 
+    val isCompact = windowSize.widthSizeClass == WindowWidthSizeClass.Compact
+
     LaunchedEffect(destination) {
-        if (navController.currentDestination?.route != destination.route) {
-            if (destination == Screen.Home) {
-                navController.navigate(destination) {
-                    this.launchSingleTop = true
-                }
-            } else {
-                navController.navigate(destination)
-            }
+        if (navController.currentDestination?.route != destination?.route) {
+            val dest = destination ?: return@LaunchedEffect
+            navController.navigate(dest)
         }
     }
+
     LaunchedEffect(Unit) {
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             destination.route?.asNavigationDestination()?.let {
@@ -90,21 +104,52 @@ fun HomeScreen(
         }
     }
 
-    BackHandler {
-        if (!navController.popBackStack()) {
-            closeApp()
-        }
-    }
+//    BackHandler {
+//        if (!navController.popBackStack()) {
+//            closeApp()
+//        }
+//    }
 
     NavHost(
         navController = navController,
-        startDestination = Screen.Home.route,
+        startDestination = Screen.Calendar.route,
         modifier = Modifier
             .statusBarsPadding()
             .navigationBarsPadding()
     ) {
-        composable(Screen.Home.route) {
-            DashboardScreenVM()
+        composable(Screen.Calendar.route, arguments = listOf(
+            navString("season")
+        )) {
+            // Has to be nullable because initial navigation graph
+            //  value cannot contain placeholder values
+            val season = it.arguments?.getString("season")?.toInt() ?: 2023
+            ScheduleScreenVM(
+                menuClicked = openMenu,
+                showMenu = isCompact,
+                season = season
+            )
+        }
+
+        composable(Screen.Constructors.route, arguments = listOf(
+            navIntRequired("season")
+        )) {
+            val season = it.arguments?.getInt("season")!!
+            ConstructorStandingsScreenVM(
+                menuClicked = openMenu,
+                showMenu = isCompact,
+                season = season
+            )
+        }
+
+        composable(Screen.Drivers.route, arguments = listOf(
+            navIntRequired("season")
+        )) {
+            val season = it.arguments?.getInt("season")!!
+            DriverStandingsScreenVM(
+                menuClicked = openMenu,
+                showMenu = isCompact,
+                season = season
+            )
         }
 
         // Release Notes
@@ -123,8 +168,15 @@ fun HomeScreen(
 
         // Settings
         composable(Screen.Settings.All.route) {
-            SettingsAllScreenVM(
-                actionUpClicked = { navController.popBackStack() }
+            SplitPane(
+                windowSizeClass = windowSize,
+                windowLayoutInfo = windowInfo,
+                master = {
+                    SettingsAllScreenVM(
+                        showMenu = windowSize.widthSizeClass == WindowWidthSizeClass.Compact,
+                        actionUpClicked = openMenu
+                    )
+                }
             )
         }
         composable(Screen.Settings.Home.route) {
@@ -158,8 +210,21 @@ fun HomeScreen(
             )
         }
         composable(Screen.Settings.About.route) {
-            SettingsAboutScreenVM(
-                actionUpClicked = { navController.popBackStack() }
+            SplitPane(
+                windowSizeClass = windowSize,
+                windowLayoutInfo = windowInfo,
+                master = {
+                    SettingsAllScreenVM(
+                        showMenu = windowSize.widthSizeClass == WindowWidthSizeClass.Compact,
+                        actionUpClicked = openMenu
+                    )
+                },
+                content = {
+                    SettingsAboutScreenVM(
+                        showBack = windowSize.widthSizeClass != WindowWidthSizeClass.Expanded,
+                        actionUpClicked = { navController.popBackStack() }
+                    )
+                }
             )
         }
 
@@ -248,7 +313,8 @@ fun HomeScreen(
             deepLinks = listOf(navDeepLink { uriPattern = "flashback://search" })
         ) {
             SearchScreenVM(
-                actionUpClicked = { navController.popBackStack() }
+                showMenu = windowSize.widthSizeClass == WindowWidthSizeClass.Compact,
+                actionUpClicked = openMenu
             )
         }
 
@@ -258,7 +324,8 @@ fun HomeScreen(
             deepLinks = listOf(navDeepLink { uriPattern = "flashback://rss" })
         ) {
             RSSScreenVM(
-                actionUpClicked = { navController.popBackStack() }
+                showMenu = windowSize.widthSizeClass == WindowWidthSizeClass.Compact,
+                actionUpClicked = openMenu
             )
         }
         composable(Screen.Settings.RSSConfigure.route) {

@@ -39,12 +39,9 @@ fun Header(
                         tint = AppTheme.colors.contentPrimary
                     )
                 }
-                Spacer(Modifier.weight(1f))
-                overrideIcons()
-
-            } else {
-                Spacer(modifier = Modifier.height(AppTheme.dimens.large + 16.dp))
             }
+            Spacer(Modifier.weight(1f))
+            overrideIcons()
         }
         Spacer(Modifier.height(AppTheme.dimens.large))
         TextHeadline1(

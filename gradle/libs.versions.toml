@@ -130,7 +130,7 @@ junit5_params = { module = "org.junit.jupiter:junit-jupiter-params", version.ref
 
 mockk = "io.mockk:mockk:1.13.3"
 
-tmg_testutils = "com.github.thementalgoose:android-test-utilities:1.2.1"
+tmg_testutils = "com.github.thementalgoose:android-test-utilities:1.2.2"
 
 [bundles] # ===========================================================================
 androidx = [

@@ -1,187 +1,215 @@
 package tmg.flashback.ui.dashboard
 
-import android.content.Context
-import io.mockk.*
-import kotlinx.coroutines.test.advanceUntilIdle
-import org.junit.jupiter.api.Assertions.assertEquals
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
+import kotlinx.coroutines.CompletableDeferred
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
-import tmg.flashback.analytics.manager.AnalyticsManager
-import tmg.flashback.configuration.usecases.ApplyConfigUseCase
-import tmg.flashback.configuration.usecases.FetchConfigUseCase
-import tmg.flashback.releasenotes.usecases.NewReleaseNotesUseCase
-import tmg.flashback.statistics.repo.OverviewRepository
-import tmg.flashback.statistics.repo.RaceRepository
-import tmg.flashback.stats.usecases.DefaultSeasonUseCase
-import tmg.flashback.stats.usecases.ScheduleNotificationsUseCase
-import tmg.flashback.ui.dashboard.compact.DashboardNavItem
-import tmg.flashback.ui.dashboard.compact.DashboardScreenState
-import tmg.flashback.ui.dashboard.compact.DashboardViewModel
-import tmg.flashback.usecases.DashboardSyncUseCase
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
+import tmg.flashback.device.managers.BuildConfigManager
+import tmg.flashback.eastereggs.model.MenuIcons
+import tmg.flashback.eastereggs.usecases.IsMenuIconEnabledUseCase
+import tmg.flashback.eastereggs.usecases.IsSnowEnabledUseCase
+import tmg.flashback.stats.StatsNavigationComponent
+import tmg.flashback.stats.repository.NotificationRepository
+import tmg.flashback.ui.managers.PermissionManager
+import tmg.flashback.ui.managers.StyleManager
+import tmg.flashback.ui.model.NightMode
+import tmg.flashback.ui.permissions.RationaleType
+import tmg.flashback.ui.repository.PermissionRepository
+import tmg.flashback.ui.usecases.ChangeNightModeUseCase
 import tmg.testutils.BaseTest
-import tmg.testutils.livedata.assertEventFired
-import tmg.testutils.livedata.assertEventNotFired
+import tmg.testutils.livedata.assertListDoesNotMatchItem
+import tmg.testutils.livedata.assertListMatchesItem
 import tmg.testutils.livedata.test
+import tmg.testutils.livedata.testObserve
 
 internal class DashboardViewModelTest: BaseTest() {
 
-    lateinit var underTest: DashboardViewModel
+    private val mockStyleManager: StyleManager = mockk(relaxed = true)
+    private val mockChangeNightModeUseCase: ChangeNightModeUseCase = mockk(relaxed = true)
+    private val mockBuildConfigManager: BuildConfigManager = mockk(relaxed = true)
+    private val mockNotificationRepository: NotificationRepository = mockk(relaxed = true)
+    private val mockPermissionRepository: PermissionRepository = mockk(relaxed = true)
+    private val mockStatsNavigationComponent: StatsNavigationComponent = mockk(relaxed = true)
+    private val mockPermissionManager: PermissionManager = mockk(relaxed = true)
+    private val mockIsSnowEnabledUseCase: IsSnowEnabledUseCase = mockk(relaxed = true)
+    private val mockIsMenuIconEnabledUseCase: IsMenuIconEnabledUseCase = mockk(relaxed = true)
 
-    private val mockDashboardSyncUseCase: DashboardSyncUseCase = mockk(relaxed = true)
-    private val mockDefaultSeasonUseCase: DefaultSeasonUseCase = mockk(relaxed = true)
-    private val mockRaceRepository: RaceRepository = mockk(relaxed = true)
-    private val mockOverviewRepository: OverviewRepository = mockk(relaxed = true)
-    private val mockAnalyticsManager: AnalyticsManager = mockk(relaxed = true)
-    private val mockNewReleaseNotesUseCase: NewReleaseNotesUseCase = mockk(relaxed = true)
-
-    @BeforeEach
-    internal fun setUp() {
-        every { mockNewReleaseNotesUseCase.getNotes() } returns emptyList()
-        every { mockDefaultSeasonUseCase.defaultSeason } returns 2019
-    }
+    private lateinit var underTest: DashboardViewModel
 
     private fun initUnderTest() {
         underTest = DashboardViewModel(
-            mockDefaultSeasonUseCase,
-            mockRaceRepository,
-            mockOverviewRepository,
-            mockNewReleaseNotesUseCase,
-            mockAnalyticsManager,
-            mockDashboardSyncUseCase,
-            ioDispatcher = coroutineScope.testDispatcher
+            styleManager = mockStyleManager,
+            changeNightModeUseCase = mockChangeNightModeUseCase,
+            buildConfigManager = mockBuildConfigManager,
+            notificationRepository = mockNotificationRepository,
+            permissionRepository = mockPermissionRepository,
+            statsNavigationComponent = mockStatsNavigationComponent,
+            permissionManager = mockPermissionManager,
+            isSnowEnabledUseCase = mockIsSnowEnabledUseCase,
+            isMenuIconEnabledUseCase = mockIsMenuIconEnabledUseCase,
         )
     }
 
-    @Test
-    fun `default season data is fetched on initial load`() {
-        every { mockDefaultSeasonUseCase.defaultSeason } returns 2020
-
-        initUnderTest()
-
-        coVerify {
-            mockDashboardSyncUseCase.sync()
-        }
-        assertEquals(DashboardScreenState(DashboardNavItem.CALENDAR, 2020), underTest.initialTab)
+    @BeforeEach
+    internal fun setUp() {
+        every { mockBuildConfigManager.isRuntimeNotificationsSupported } returns false
+        every { mockNotificationRepository.seenNotificationOnboarding } returns false
+        every { mockNotificationRepository.seenRuntimeNotifications } returns false
+        every { mockPermissionRepository.isRuntimeNotificationsEnabled } returns false
+        every { mockStyleManager.isDayMode } returns false
     }
 
-    //region Tabs
-
     @Test
-    fun `current tab defaults to expected default tab`() {
+    fun `dark mode result is read`() {
+        every { mockStyleManager.isDayMode } returns true
+
+        initUnderTest()
+        underTest.outputs.isDarkMode.test { assertValue(false) }
+    }
+
+    @ParameterizedTest(name = "Clicking dark mode to state {0} sets dark mode {1}")
+    @CsvSource(
+        "true,NIGHT",
+        "false,DAY"
+    )
+    fun `clicking dark mode calls use case`(state: Boolean, nightMode: NightMode) {
+        every { mockStyleManager.isDayMode } returns !state
         initUnderTest()
 
-        underTest.outputs.currentTab.test {
-            assertValue(
-                DashboardScreenState(
-                tab = DashboardNavItem.CALENDAR,
-                season = 2019
-            ))
+        underTest.inputs.clickDarkMode(state)
+        underTest.outputs.isDarkMode.test {
+            assertValue(state)
         }
         verify {
-            mockAnalyticsManager.viewScreen("Dashboard", mapOf(
-                "season" to "2019",
-                "tab" to "Calendar"
-            ))
-            mockDefaultSeasonUseCase.defaultSeason
+            mockChangeNightModeUseCase.setNightMode(nightMode)
         }
     }
 
     @Test
-    fun `clicking tab updates tab in current tab`() {
+    fun `app version is read from build config manager`() {
+        every { mockBuildConfigManager.versionName } returns "version-name"
+
         initUnderTest()
-
-        underTest.inputs.clickTab(DashboardNavItem.DRIVERS)
-        underTest.outputs.currentTab.test {
-            assertValue(DashboardScreenState(DashboardNavItem.DRIVERS, 2019))
-        }
-        mockAnalyticsManager.viewScreen("Dashboard", mapOf(
-            "season" to "2019",
-            "tab" to "Drivers"
-        ))
-    }
-
-    @Test
-    fun `clicking season launches fetch race request if season is default`() {
-        initUnderTest()
-
-        underTest.inputs.clickSeason(2019)
-        underTest.outputs.currentTab.test {
-            assertValue(DashboardScreenState(DashboardNavItem.CALENDAR, 2019))
-        }
-        coVerify {
-            mockOverviewRepository.fetchOverview(2019)
-            mockRaceRepository.fetchRaces(2019)
+        underTest.outputs.appVersion.test {
+            assertValue("version-name")
         }
     }
 
     @Test
-    fun `clicking season updates season in current tab`() {
-        initUnderTest()
-
-        underTest.inputs.clickSeason(2018)
-        underTest.outputs.currentTab.test {
-            assertValue(DashboardScreenState(DashboardNavItem.CALENDAR, 2018))
-        }
-        verify {
-            mockAnalyticsManager.viewScreen("Dashboard", mapOf(
-                "season" to "2018",
-                "tab" to "Calendar"
-            ))
-        }
-    }
-
-    //endregion
-
-    //region Remote config fetch and sync
-
-    @Test
-    fun `init if update returns changes and activate fails nothing happens`() = coroutineTest {
-
-        coEvery { mockDashboardSyncUseCase.sync() } returns false
+    fun `snow easter egg is emitted from use case`() {
+        every { mockIsSnowEnabledUseCase.invoke() } returns true
 
         initUnderTest()
-        advanceUntilIdle()
-
-        underTest.outputs.appConfigSynced.test {
-            assertEventNotFired()
+        underTest.outputs.snow.test {
+            assertValue(true)
         }
     }
 
     @Test
-    fun `init if update returns changes and activate successfully then notify app config synced event`() = coroutineTest {
-
-        coEvery { mockDashboardSyncUseCase.sync() } returns true
+    fun `menu title is emitted from use case`() {
+        every { mockIsMenuIconEnabledUseCase.invoke() } returns MenuIcons.CHRISTMAS
 
         initUnderTest()
-        advanceUntilIdle()
-
-        underTest.outputs.appConfigSynced.test {
-            assertEventFired()
+        underTest.outputs.titleIcon.test {
+            assertValue(MenuIcons.CHRISTMAS)
         }
     }
 
-    //endregion
+    @Nested
+    inner class FeatureList {
 
-    //region Release notes
+        @ParameterizedTest(name = "isRuntimeNotificationSupported = {0}, seenRuntimeNotifications = {1}, isRuntimeNotificationsEnabled = {2}, result = {3}")
+        @CsvSource(
+            "true ,true ,true ,false",
+            "false,false,false,false",
+            "false,true ,true ,false",
+            "true ,false,true ,false",
+            "true ,true ,false,false",
+            "false,false,true ,false",
+            "true ,false,false,true ",
+            "false,true ,false,false"
+        )
+        fun `runtime notifications`(
+            isRuntimeNotificationsSupported: Boolean,
+            seenRuntimeNotifications: Boolean,
+            isRuntimeNotificationsEnabled: Boolean,
+            isFeatureIncluded: Boolean
+        ) {
+            every { mockBuildConfigManager.isRuntimeNotificationsSupported } returns isRuntimeNotificationsSupported
+            every { mockNotificationRepository.seenRuntimeNotifications } returns seenRuntimeNotifications
+            every { mockPermissionRepository.isRuntimeNotificationsEnabled } returns isRuntimeNotificationsEnabled
 
-    @Test
-    fun `init if release notes are pending then open release notes is fired`() {
-        // Because notification onboarding takes priority over release notes
-        every { mockNewReleaseNotesUseCase.getNotes() } returns listOf(mockk())
-        initUnderTest()
-        underTest.outputs.openReleaseNotes.test {
-            assertEventFired()
+            initUnderTest()
+            underTest.featurePromptsList.test {
+                if (isFeatureIncluded) {
+                    assertListMatchesItem { it is FeaturePrompt.RuntimeNotifications }
+                } else {
+                    assertListDoesNotMatchItem { it is FeaturePrompt.RuntimeNotifications }
+                }
+            }
+        }
+
+        @ParameterizedTest(name = "isRuntimeNotificationSupported = {0}, seenNotificationOnboarding = {1}, result = {2}")
+        @CsvSource(
+            "true ,true ,false",
+            "false,false,true ",
+            "false,true ,false",
+            "true ,false,false"
+        )
+        fun notifications(
+            isRuntimeNotificationsSupported: Boolean,
+            seenNotificationOnboarding: Boolean,
+            isFeatureIncluded: Boolean
+        ) {
+            every { mockBuildConfigManager.isRuntimeNotificationsSupported } returns isRuntimeNotificationsSupported
+            every { mockNotificationRepository.seenNotificationOnboarding } returns seenNotificationOnboarding
+
+            initUnderTest()
+            underTest.featurePromptsList.test {
+                if (isFeatureIncluded) {
+                    assertListMatchesItem { it is FeaturePrompt.Notifications }
+                } else {
+                    assertListDoesNotMatchItem { it is FeaturePrompt.Notifications }
+                }
+            }
+        }
+
+        @Test
+        fun `clicking notifications`() {
+            initUnderTest()
+            val featureList = underTest.outputs.featurePromptsList.testObserve()
+
+            underTest.inputs.clickFeaturePrompt(FeaturePrompt.Notifications)
+
+            verify {
+                mockStatsNavigationComponent.featureNotificationOnboarding()
+                mockNotificationRepository.seenNotificationOnboarding = true
+            }
+            featureList.assertEmittedCount(2)
+        }
+
+        @Test
+        fun `clicking runtime notifications`() {
+            val permissions: CompletableDeferred<Boolean> = CompletableDeferred()
+            every { mockPermissionManager.requestPermission(RationaleType.RuntimeNotifications) } returns permissions
+            every { mockPermissionRepository.isRuntimeNotificationsEnabled } returns true
+
+            initUnderTest()
+            val featureList = underTest.outputs.featurePromptsList.testObserve()
+
+            underTest.inputs.clickFeaturePrompt(FeaturePrompt.RuntimeNotifications)
+            permissions.complete(true)
+
+            verify {
+                mockNotificationRepository.seenRuntimeNotifications = true
+                mockStatsNavigationComponent.featureNotificationOnboarding()
+            }
+            featureList.assertEmittedCount(2)
         }
     }
-
-    @Test
-    fun `init if release notes are not pending then open release notes not fired`() {
-        every { mockNewReleaseNotesUseCase.getNotes() } returns emptyList()
-        initUnderTest()
-        underTest.outputs.openReleaseNotes.test {
-            assertEventNotFired()
-        }
-    }
-
-    //endregion
 }

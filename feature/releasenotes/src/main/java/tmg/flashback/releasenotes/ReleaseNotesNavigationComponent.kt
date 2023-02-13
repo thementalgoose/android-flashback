@@ -9,9 +9,7 @@ import tmg.flashback.ui.navigation.Screen
 import javax.inject.Inject
 
 val Screen.ReleaseNotes: NavigationDestination
-    get() = object : NavigationDestination {
-        override val route: String = "release_notes"
-    }
+    get() = NavigationDestination("release_notes")
 
 class ReleaseNotesNavigationComponent @Inject constructor(
     private val navigator: Navigator,

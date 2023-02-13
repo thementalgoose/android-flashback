@@ -1,19 +1,24 @@
 package tmg.flashback.ui.navigation
 
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavOptionsBuilder
 
-interface NavigationDestination {
-    val route: String
-}
+data class NavigationDestination(
+    val route: String,
+    val launchSingleTop: Boolean = false,
+)
 
-fun NavController.navigate(destination: NavigationDestination, builder: NavOptionsBuilder.() -> Unit = { }) {
+fun NavController.navigate(destination: NavigationDestination, builder: NavOptionsBuilder.() -> Unit = {
+//    this.restoreState = destination.launchSingleTop
+    this.launchSingleTop = destination.launchSingleTop
+    if (destination.launchSingleTop) {
+        popUpTo(this@navigate.graph.startDestinationId) {
+            saveState = true
+        }
+    }
+}) {
     this.navigate(route = destination.route, builder = builder)
 }
 
-fun String.asNavigationDestination(): NavigationDestination {
-    val route = this
-    return object : NavigationDestination {
-        override val route get() = route
-    }
-}
+fun String.asNavigationDestination() = NavigationDestination(this)

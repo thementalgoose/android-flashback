@@ -13,16 +13,49 @@ import tmg.flashback.ui.navigation.Navigator
 import javax.inject.Inject
 
 @JvmInline
+value class ScreenCalendar(val route: String)
+val Screen.Calendar get() = ScreenCalendar("results/calendar/{season}")
+fun ScreenCalendar.with(
+    season: Int
+) = NavigationDestination(
+    route = this@with.route.replace("{season}", season.toString()),
+    launchSingleTop = true
+)
+
+
+@JvmInline
+value class ScreenDrivers(val route: String)
+val Screen.Drivers get() = ScreenDrivers("results/drivers/{season}")
+fun ScreenDrivers.with(
+    season: Int
+) = NavigationDestination(
+    route = this@with.route.replace("{season}", season.toString()),
+    launchSingleTop = true
+)
+
+
+@JvmInline
+value class ScreenConstructors(val route: String)
+val Screen.Constructors get() = ScreenCalendar("results/constructors/{season}")
+fun ScreenConstructors.with(
+    season: Int
+) = NavigationDestination(
+    route = this@with.route.replace("{season}", season.toString()),
+    launchSingleTop = true
+)
+
+
+@JvmInline
 value class ScreenDriver(val route: String)
 val Screen.Driver get() = ScreenDriver("drivers/{driverId}?driverName={driverName}")
 fun ScreenDriver.with(
     driverId: String,
     driverName: String
-) = object : NavigationDestination {
-    override val route: String = this@with.route
+) = NavigationDestination(
+    this@with.route
         .replace("{driverId}", driverId)
         .replace("{driverName}", driverName)
-}
+)
 
 @JvmInline
 value class ScreenDriverSeason(val route: String)
@@ -31,12 +64,12 @@ fun ScreenDriverSeason.with(
     driverId: String,
     driverName: String,
     season: Int
-) = object : NavigationDestination {
-    override val route: String = this@with.route
+) = NavigationDestination(
+    this@with.route
         .replace("{driverId}", driverId)
         .replace("{driverName}", driverName)
         .replace("{season}", season.toString())
-}
+)
 
 @JvmInline
 value class ScreenConstructor(val route: String)
@@ -44,11 +77,11 @@ val Screen.Constructor get() = ScreenConstructor("constructors/{constructorId}?c
 fun ScreenConstructor.with(
     constructorId: String,
     constructorName: String
-) = object : NavigationDestination {
-    override val route: String = this@with.route
+) = NavigationDestination(
+    this@with.route
         .replace("{constructorId}", constructorId)
         .replace("{constructorName}", constructorName)
-}
+)
 
 @JvmInline
 value class ScreenConstructorSeason(val route: String)
@@ -57,12 +90,12 @@ fun ScreenConstructorSeason.with(
     constructorId: String,
     constructorName: String,
     season: Int
-) = object : NavigationDestination {
-    override val route: String = this@with.route
+) = NavigationDestination(
+    this@with.route
         .replace("{constructorId}", constructorId)
         .replace("{constructorName}", constructorName)
         .replace("{season}", season.toString())
-}
+)
 
 
 @JvmInline
@@ -75,8 +108,8 @@ val Screen.Weekend get() = ScreenWeekend("weekend/{season}/{round}?" +
         "countryISO={countryISO}" + "&" +
         "date={date}"
 )
-fun ScreenWeekend.with(weekendInfo: WeekendInfo) = object : NavigationDestination {
-    override val route: String = this@with.route
+fun ScreenWeekend.with(weekendInfo: WeekendInfo) = NavigationDestination(
+    this@with.route
         .replace("{season}", weekendInfo.season.toString())
         .replace("{round}", weekendInfo.round.toString())
         .replace("{raceName}", weekendInfo.raceName)
@@ -85,7 +118,7 @@ fun ScreenWeekend.with(weekendInfo: WeekendInfo) = object : NavigationDestinatio
         .replace("{country}", weekendInfo.country)
         .replace("{countryISO}", weekendInfo.countryISO)
         .replace("{date}", weekendInfo.dateString)
-}
+)
 
 @JvmInline
 value class ScreenCircuit(val route: String)
@@ -93,22 +126,20 @@ val Screen.Circuit get() = ScreenCircuit("circuit/{circuitId}?circuitName={circu
 fun ScreenCircuit.with(
     circuitId: String,
     circuitName: String
-) = object : NavigationDestination {
-    override val route: String = this@with.route
+) = NavigationDestination(
+    this@with.route
         .replace("{circuitId}", circuitId)
         .replace("{circuitName}", circuitName)
-
-}
+)
 
 val Screen.Search: NavigationDestination
-    get() = object : NavigationDestination {
-        override val route: String = "search"
-    }
+    get() = NavigationDestination("search", launchSingleTop = true)
 
 class StatsNavigationComponent @Inject constructor(
     private val navigator: Navigator,
     private val activityProvider: ActivityProvider
 ) {
+    @Deprecated("This should be removed for a direct call to navigator", replaceWith = ReplaceWith("Navigator"))
     fun driverOverview(id: String, name: String) {
         navigator.navigate(Screen.Driver.with(
             driverId = id,
@@ -116,6 +147,7 @@ class StatsNavigationComponent @Inject constructor(
         ))
     }
 
+    @Deprecated("This should be removed for a direct call to navigator", replaceWith = ReplaceWith("Navigator"))
     fun driverSeason(id: String, name: String, season: Int) {
         navigator.navigate(Screen.DriverSeason.with(
             driverId = id,
@@ -124,6 +156,7 @@ class StatsNavigationComponent @Inject constructor(
         ))
     }
 
+    @Deprecated("This should be removed for a direct call to navigator", replaceWith = ReplaceWith("Navigator"))
     fun constructorOverview(id: String, name: String) {
         navigator.navigate(Screen.Constructor.with(
             constructorId = id,
@@ -131,6 +164,7 @@ class StatsNavigationComponent @Inject constructor(
         ))
     }
 
+    @Deprecated("This should be removed for a direct call to navigator", replaceWith = ReplaceWith("Navigator"))
     fun constructorSeason(id: String, name: String, season: Int) {
         navigator.navigate(Screen.ConstructorSeason.with(
             constructorId = id,
@@ -139,14 +173,17 @@ class StatsNavigationComponent @Inject constructor(
         ))
     }
 
+    @Deprecated("This should be removed for a direct call to navigator", replaceWith = ReplaceWith("Navigator"))
     fun weekend(weekendInfo: WeekendInfo) {
         navigator.navigate(Screen.Weekend.with(weekendInfo = weekendInfo))
     }
 
+    @Deprecated("This should be removed for a direct call to navigator", replaceWith = ReplaceWith("Navigator"))
     fun search() {
         navigator.navigate(Screen.Search)
     }
 
+    @Deprecated("This should be removed for a direct call to navigator", replaceWith = ReplaceWith("Navigator"))
     fun circuit(circuitId: String, circuitName: String) {
         navigator.navigate(Screen.Circuit.with(
             circuitId = circuitId,
