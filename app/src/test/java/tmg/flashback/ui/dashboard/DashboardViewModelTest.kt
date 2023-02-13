@@ -2,7 +2,6 @@ package tmg.flashback.ui.dashboard
 
 import io.mockk.mockk
 import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.Test
 import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.eastereggs.usecases.IsMenuIconEnabledUseCase
 import tmg.flashback.eastereggs.usecases.IsSnowEnabledUseCase
@@ -13,6 +12,7 @@ import tmg.flashback.stats.usecases.DefaultSeasonUseCase
 import tmg.flashback.ui.managers.PermissionManager
 import tmg.flashback.ui.managers.StyleManager
 import tmg.flashback.ui.navigation.ApplicationNavigationComponent
+import tmg.flashback.ui.navigation.Navigator
 import tmg.flashback.ui.repository.PermissionRepository
 import tmg.flashback.ui.usecases.ChangeNightModeUseCase
 import tmg.flashback.usecases.GetSeasonsUseCase
@@ -20,8 +20,6 @@ import tmg.testutils.BaseTest
 
 internal class DashboardViewModelTest: BaseTest() {
 
-    private val mockRssRepository: RSSRepository = mockk(relaxed = true)
-    private val mockDefaultSeasonUseCase: DefaultSeasonUseCase = mockk(relaxed = true)
     private val mockStyleManager: StyleManager = mockk(relaxed = true)
     private val mockChangeNightModeUseCase: ChangeNightModeUseCase = mockk(relaxed = true)
     private val mockBuildConfigManager: BuildConfigManager = mockk(relaxed = true)
@@ -29,8 +27,6 @@ internal class DashboardViewModelTest: BaseTest() {
     private val mockPermissionRepository: PermissionRepository = mockk(relaxed = true)
     private val mockStatsNavigationComponent: StatsNavigationComponent = mockk(relaxed = true)
     private val mockPermissionManager: PermissionManager = mockk(relaxed = true)
-    private val mockGetSeasonUseCase: GetSeasonsUseCase = mockk(relaxed = true)
-    private val mockApplicationNavigationComponent: ApplicationNavigationComponent = mockk(relaxed = true)
     private val mockIsSnowEnabledUseCase: IsSnowEnabledUseCase = mockk(relaxed = true)
     private val mockIsMenuIconEnabledUseCase: IsMenuIconEnabledUseCase = mockk(relaxed = true)
 
@@ -38,8 +34,6 @@ internal class DashboardViewModelTest: BaseTest() {
 
     private fun initUnderTest() {
         underTest = DashboardViewModel(
-            rssRepository = mockRssRepository,
-            defaultSeasonUseCase = mockDefaultSeasonUseCase,
             styleManager = mockStyleManager,
             changeNightModeUseCase = mockChangeNightModeUseCase,
             buildConfigManager = mockBuildConfigManager,
@@ -47,8 +41,6 @@ internal class DashboardViewModelTest: BaseTest() {
             permissionRepository = mockPermissionRepository,
             statsNavigationComponent = mockStatsNavigationComponent,
             permissionManager = mockPermissionManager,
-            getSeasonUseCase = mockGetSeasonUseCase,
-            applicationNavigationComponent = mockApplicationNavigationComponent,
             isSnowEnabledUseCase = mockIsSnowEnabledUseCase,
             isMenuIconEnabledUseCase = mockIsMenuIconEnabledUseCase,
         )
