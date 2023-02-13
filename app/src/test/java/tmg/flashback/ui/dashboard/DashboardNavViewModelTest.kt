@@ -1,5 +1,6 @@
 package tmg.flashback.ui.dashboard
 
+import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
@@ -11,6 +12,7 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
+import tmg.flashback.crash_reporting.manager.CrashManager
 import tmg.flashback.rss.repo.RSSRepository
 import tmg.flashback.stats.Calendar
 import tmg.flashback.stats.Constructors
@@ -22,6 +24,7 @@ import tmg.flashback.ui.navigation.NavigationDestination
 import tmg.flashback.ui.navigation.Navigator
 import tmg.flashback.ui.navigation.Screen
 import tmg.flashback.ui.settings.All
+import tmg.flashback.usecases.DashboardSyncUseCase
 import tmg.flashback.usecases.GetSeasonsUseCase
 import tmg.flashback.usecases.IsFirst
 import tmg.flashback.usecases.IsLast
@@ -38,6 +41,8 @@ internal class DashboardNavViewModelTest: BaseTest() {
     private val mockNavigator: Navigator = mockk(relaxed = true)
     private val mockGetSeasonUseCase: GetSeasonsUseCase = mockk(relaxed = true)
     private val mockApplicationNavigationComponent: ApplicationNavigationComponent = mockk(relaxed = true)
+    private val mockCrashManager: CrashManager = mockk(relaxed = true)
+    private val mockDashboardSyncUseCase: DashboardSyncUseCase = mockk(relaxed = true)
 
     private lateinit var underTest: DashboardNavViewModel
 
@@ -48,12 +53,26 @@ internal class DashboardNavViewModelTest: BaseTest() {
             navigator = mockNavigator,
             getSeasonUseCase = mockGetSeasonUseCase,
             applicationNavigationComponent = mockApplicationNavigationComponent,
+            crashManager = mockCrashManager,
+            dashboardSyncUseCase = mockDashboardSyncUseCase
         )
     }
 
     @BeforeEach
     internal fun setUp() {
         every { mockDefaultSeasonUseCase.defaultSeason } returns 2019
+    }
+
+    @Test
+    fun `initial load of vm runs dashboard use case`() {
+        initUnderTest()
+
+        coVerify {
+            mockDashboardSyncUseCase.sync()
+        }
+        verify {
+            mockCrashManager.log(any())
+        }
     }
 
     @ParameterizedTest(name = "Route {0} means currently selected menu item is updated to {1}")
