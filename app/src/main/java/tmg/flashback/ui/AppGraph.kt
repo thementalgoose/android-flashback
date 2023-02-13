@@ -1,8 +1,12 @@
 package tmg.flashback.ui
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
@@ -110,6 +114,8 @@ fun AppGraph(
 //        }
 //    }
 
+    val settingsScroll = rememberLazyListState()
+
     NavHost(
         navController = navController,
         startDestination = Screen.Calendar.route,
@@ -180,52 +186,60 @@ fun AppGraph(
             )
         }
         composable(Screen.Settings.Home.route) {
-            SettingsLayoutScreenVM(
-                actionUpClicked = { navController.popBackStack() }
-            )
+            SplitPaneSettings(windowSize, windowInfo, openMenu) {
+                SettingsLayoutScreenVM(
+//                    showBack = windowSize.widthSizeClass != WindowWidthSizeClass.Expanded,
+                    actionUpClicked = { navController.popBackStack() }
+                )
+            }
         }
         composable(Screen.Settings.Web.route) {
-            SettingsWebScreenVM(
-                actionUpClicked = { navController.popBackStack() }
-            )
+            SplitPaneSettings(windowSize, windowInfo, openMenu) {
+                SettingsWebScreenVM(
+//                    showBack = windowSize.widthSizeClass != WindowWidthSizeClass.Expanded,
+                    actionUpClicked = { navController.popBackStack() }
+                )
+            }
         }
         composable(Screen.Settings.NotificationsUpcoming.route) {
-            SettingsNotificationsUpcomingScreenVM(
-                actionUpClicked = { navController.popBackStack() }
-            )
+            SplitPaneSettings(windowSize, windowInfo, openMenu) {
+                SettingsNotificationsUpcomingScreenVM(
+//                    showBack = windowSize.widthSizeClass != WindowWidthSizeClass.Expanded,
+                    actionUpClicked = { navController.popBackStack() }
+                )
+            }
         }
         composable(Screen.Settings.NotificationsResults.route) {
-            SettingsNotificationsResultsScreenVM(
-                actionUpClicked = { navController.popBackStack() }
-            )
+            SplitPaneSettings(windowSize, windowInfo, openMenu) {
+                SettingsNotificationsResultsScreenVM(
+//                    showBack = windowSize.widthSizeClass != WindowWidthSizeClass.Expanded,
+                    actionUpClicked = { navController.popBackStack() }
+                )
+            }
         }
         composable(Screen.Settings.Ads.route) {
-            SettingsAdsScreenVM(
-                actionUpClicked = { navController.popBackStack() }
-            )
+            SplitPaneSettings(windowSize, windowInfo, openMenu) {
+                SettingsAdsScreenVM(
+//                    showBack = windowSize.widthSizeClass != WindowWidthSizeClass.Expanded,
+                    actionUpClicked = { navController.popBackStack() }
+                )
+            }
         }
         composable(Screen.Settings.Privacy.route) {
-            SettingsPrivacyScreenVM(
-                actionUpClicked = { navController.popBackStack() }
-            )
+            SplitPaneSettings(windowSize, windowInfo, openMenu) {
+                SettingsPrivacyScreenVM(
+//                    showBack = windowSize.widthSizeClass != WindowWidthSizeClass.Expanded,
+                    actionUpClicked = { navController.popBackStack() }
+                )
+            }
         }
         composable(Screen.Settings.About.route) {
-            SplitPane(
-                windowSizeClass = windowSize,
-                windowLayoutInfo = windowInfo,
-                master = {
-                    SettingsAllScreenVM(
-                        showMenu = windowSize.widthSizeClass == WindowWidthSizeClass.Compact,
-                        actionUpClicked = openMenu
-                    )
-                },
-                content = {
-                    SettingsAboutScreenVM(
-                        showBack = windowSize.widthSizeClass != WindowWidthSizeClass.Expanded,
-                        actionUpClicked = { navController.popBackStack() }
-                    )
-                }
-            )
+            SplitPaneSettings(windowSize, windowInfo, openMenu) {
+                SettingsAboutScreenVM(
+//                    showBack = windowSize.widthSizeClass != WindowWidthSizeClass.Expanded,
+                    actionUpClicked = { navController.popBackStack() }
+                )
+            }
         }
 
         // Stats
@@ -334,4 +348,26 @@ fun AppGraph(
             )
         }
     }
+}
+
+@Composable
+private fun SplitPaneSettings(
+    windowSize: WindowSizeClass,
+    windowInfo: WindowLayoutInfo,
+    openMenu: () -> Unit,
+    content: @Composable () -> Unit
+) {
+    // TODO: Support split pane
+    content()
+//    SplitPane(
+//        windowSizeClass = windowSize,
+//        windowLayoutInfo = windowInfo,
+//        master = {
+//            SettingsAllScreenVM(
+//                showMenu = windowSize.widthSizeClass == WindowWidthSizeClass.Compact,
+//                actionUpClicked = openMenu
+//            )
+//        },
+//        content = content
+//    )
 }
