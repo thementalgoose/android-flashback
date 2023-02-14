@@ -15,6 +15,8 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import tmg.flashback.crash_reporting.manager.CrashManager
+import tmg.flashback.debug.DebugNavigationComponent
+import tmg.flashback.debug.model.DebugMenuItem
 import tmg.flashback.formula1.constants.Formula1
 import tmg.flashback.rss.RSS
 import tmg.flashback.rss.repo.RSSRepository
@@ -37,10 +39,12 @@ import javax.inject.Inject
 interface DashboardNavViewModelInputs {
     fun clickItem(navigationItem: MenuItem)
     fun clickSeason(season: Int)
+    fun clickDebug(debugMenuItem: DebugMenuItem)
 }
 
 interface DashboardNavViewModelOutputs {
     val currentlySelectedItem: LiveData<MenuItem>
+    val debugMenuItems: LiveData<List<DebugMenuItem>>
     val appFeatureItemsList: LiveData<List<MenuItem>>
     val seasonScreenItemsList: LiveData<List<MenuItem>>
 
@@ -60,6 +64,7 @@ class DashboardNavViewModel @Inject constructor(
     private val applicationNavigationComponent: ApplicationNavigationComponent,
     private val crashManager: CrashManager,
     private val dashboardSyncUseCase: DashboardSyncUseCase,
+    private val debugNavigationComponent: DebugNavigationComponent,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), DashboardNavViewModelInputs, DashboardNavViewModelOutputs {
 
@@ -111,6 +116,7 @@ class DashboardNavViewModel @Inject constructor(
 
     override val appFeatureItemsList: MutableLiveData<List<MenuItem>> = MutableLiveData()
     override val seasonScreenItemsList: MutableLiveData<List<MenuItem>> = MutableLiveData()
+    override val debugMenuItems: LiveData<List<DebugMenuItem>> = MutableLiveData(debugNavigationComponent.getDebugMenuItems())
 
     override val currentlySelectedSeason: MutableLiveData<Int> = MutableLiveData(defaultSeasonUseCase.defaultSeason)
 
@@ -188,5 +194,9 @@ class DashboardNavViewModel @Inject constructor(
                     }
                 )
             }
+    }
+
+    override fun clickDebug(debugMenuItem: DebugMenuItem) {
+        debugNavigationComponent.navigateTo(debugMenuItem.id)
     }
 }

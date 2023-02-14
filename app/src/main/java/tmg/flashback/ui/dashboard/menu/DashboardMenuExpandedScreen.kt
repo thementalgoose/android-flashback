@@ -47,6 +47,7 @@ import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.R
+import tmg.flashback.debug.model.DebugMenuItem
 import tmg.flashback.eastereggs.model.MenuIcons
 import tmg.flashback.eastereggs.ui.snow
 import tmg.flashback.formula1.constants.Formula1
@@ -71,7 +72,9 @@ fun DashboardMenuExpandedScreen(
     currentlySelectedItem: MenuItem,
     appFeatureItemsList: List<MenuItem>,
     seasonScreenItemsList: List<MenuItem>,
+    debugMenuItems: List<DebugMenuItem>,
     menuItemClicked: (MenuItem) -> Unit,
+    debugMenuItemClicked: (DebugMenuItem) -> Unit,
     darkMode: Boolean,
     darkModeClicked: (Boolean) -> Unit,
     featurePromptList: List<FeaturePrompt>,
@@ -136,6 +139,21 @@ fun DashboardMenuExpandedScreen(
                     Spacer(Modifier.height(AppTheme.dimens.xsmall))
                 }
                 item { Div() }
+                if (debugMenuItems.isNotEmpty()) {
+                    items(debugMenuItems, key = { "menudebug-$it" }) { menuItem ->
+                        NavigationItem(
+                            item = NavigationItem(
+                                id = menuItem.id,
+                                label = menuItem.label,
+                                icon = menuItem.icon,
+                                isSelected = false
+                            ),
+                            isExpanded = expanded.value,
+                            onClick = { debugMenuItemClicked(menuItem) }
+                        )
+                    }
+                    item { Div() }
+                }
                 if (seasonItemsList.isNotEmpty()) {
                     item {
                         Spacer(modifier = Modifier.height(AppTheme.dimens.small))
@@ -425,6 +443,8 @@ private fun PreviewCompactTimeline() {
             currentlySelectedItem = MenuItem.Calendar,
             appFeatureItemsList = listOf(MenuItem.Settings, MenuItem.RSS),
             seasonScreenItemsList = listOf(MenuItem.Calendar, MenuItem.Drivers),
+            debugMenuItems = emptyList(),
+            debugMenuItemClicked = { },
             menuItemClicked = { },
             darkMode = false,
             darkModeClicked = { },
@@ -448,6 +468,8 @@ private fun PreviewExpandedTimeline() {
             currentlySelectedItem = MenuItem.Calendar,
             appFeatureItemsList = listOf(MenuItem.Settings, MenuItem.RSS),
             seasonScreenItemsList = listOf(MenuItem.Calendar, MenuItem.Drivers),
+            debugMenuItems = emptyList(),
+            debugMenuItemClicked = { },
             menuItemClicked = { },
             darkMode = true,
             darkModeClicked = { },
