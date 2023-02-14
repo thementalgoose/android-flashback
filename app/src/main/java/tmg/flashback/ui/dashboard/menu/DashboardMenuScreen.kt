@@ -35,11 +35,14 @@ import tmg.flashback.eastereggs.ui.snow
 import tmg.flashback.formula1.constants.Formula1
 import tmg.flashback.stats.components.Timeline
 import tmg.flashback.style.AppTheme
+import tmg.flashback.style.AppThemePreview
+import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.input.InputSwitch
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextSection
 import tmg.flashback.ui.components.navigation.NavigationTimelineItem
+import tmg.flashback.ui.components.navigation.PipeType
 import tmg.flashback.ui.dashboard.FeaturePrompt
 import tmg.flashback.ui.dashboard.MenuItem
 
@@ -269,7 +272,12 @@ private fun Button(
         .padding(
             end = AppTheme.dimens.medium / 2
         )
-        .clip(RoundedCornerShape(topEnd = AppTheme.dimens.radiusLarge, bottomEnd = AppTheme.dimens.radiusLarge))
+        .clip(
+            RoundedCornerShape(
+                topEnd = AppTheme.dimens.radiusLarge,
+                bottomEnd = AppTheme.dimens.radiusLarge
+            )
+        )
         .background(
             if (isSelected) AppTheme.colors.primary.copy(alpha = 0.2f) else Color.Transparent
         )
@@ -352,3 +360,51 @@ private fun Feature(
         TextBody1(text = stringResource(id = label))
     }
 }
+
+@PreviewTheme
+@Composable
+private fun Preview() {
+    AppThemePreview {
+        DashboardMenuScreen(
+            closeMenu = { },
+            currentlySelectedItem = MenuItem.Calendar,
+            appFeatureItemsList = listOf(MenuItem.Search, MenuItem.Settings, MenuItem.Contact),
+            debugMenuItems = emptyList(),
+            menuItemClicked = { },
+            debugMenuItemClicked = { },
+            darkMode = false,
+            darkModeClicked = { },
+            featurePromptList = listOf(FeaturePrompt.Notifications),
+            featurePromptClicked = { },
+            seasonItemsList = fakeNavigationTimelineItems,
+            seasonClicked = { },
+            appVersion = "version",
+            easterEggSnow = false,
+            easterEggTitleIcon = null
+        )
+    }
+}
+
+private val fakeNavigationTimelineItems: List<NavigationTimelineItem> = listOf(
+    NavigationTimelineItem(
+        id = "2022",
+        pipeType = PipeType.START,
+        label = "2022",
+        color = Color.Magenta,
+        isSelected = false
+    ),
+    NavigationTimelineItem(
+        id = "2021",
+        pipeType = PipeType.START_END,
+        label = "2021",
+        color = Color.Magenta,
+        isSelected = true
+    ),
+    NavigationTimelineItem(
+        id = "2020",
+        pipeType = PipeType.END,
+        label = "2020",
+        color = Color.Magenta,
+        isSelected = false
+    )
+)
