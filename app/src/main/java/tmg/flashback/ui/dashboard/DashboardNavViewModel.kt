@@ -8,6 +8,8 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
@@ -63,6 +65,7 @@ class DashboardNavViewModel @Inject constructor(
     private val crashManager: CrashManager,
     private val dashboardSyncUseCase: DashboardSyncUseCase,
     private val debugNavigationComponent: DebugNavigationComponent,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), DashboardNavViewModelInputs, DashboardNavViewModelOutputs {
 
     val inputs: DashboardNavViewModelInputs = this
@@ -123,7 +126,7 @@ class DashboardNavViewModel @Inject constructor(
     init {
         initialiseItems()
 
-        viewModelScope.launch {
+        viewModelScope.launch(ioDispatcher) {
             val result = dashboardSyncUseCase.sync()
             crashManager.log("Dashboard synchronisation complete $result")
         }

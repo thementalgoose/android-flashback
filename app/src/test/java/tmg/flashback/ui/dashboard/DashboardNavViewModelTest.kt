@@ -5,6 +5,7 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
 import io.mockk.verify
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
@@ -58,7 +59,8 @@ internal class DashboardNavViewModelTest: BaseTest() {
             applicationNavigationComponent = mockApplicationNavigationComponent,
             crashManager = mockCrashManager,
             dashboardSyncUseCase = mockDashboardSyncUseCase,
-            debugNavigationComponent = mockDebugNavigationComponent
+            debugNavigationComponent = mockDebugNavigationComponent,
+            ioDispatcher = Dispatchers.Unconfined
         )
     }
 

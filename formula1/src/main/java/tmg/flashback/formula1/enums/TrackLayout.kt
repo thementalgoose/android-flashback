@@ -64,11 +64,7 @@ enum class TrackLayout(
     JEDDAH("jeddah", R.drawable.circuit_jeddah),
     JEREZ("jerez", R.drawable.circuit_jerez),
     KYALAMI("kyalami", R.drawable.circuit_kyalami),
-    LAS_VEGAS("las_vegas", R.drawable.circuit_las_vegas),
-    LAS_VEGAS_1981_1982("las_vegas", R.drawable.circuit_las_vegas_1981_1982, listOf(
-        "1981 Caesars Palace Grand Prix",
-        "1982 Caesars Palace Grand Prix"
-    )),
+    LAS_VEGAS("las_vegas", R.drawable.circuit_las_vegas_1981_1982),
     LEMANS("lemans", R.drawable.circuit_lemans),
     LONG_BEACH("long_beach", R.drawable.circuit_long_beach),
     LOSAIL("losail", R.drawable.circuit_losail),
@@ -194,6 +190,7 @@ enum class TrackLayout(
     SUZUKA("suzuka", R.drawable.circuit_suzuka),
     TREMBLANT("tremblant", R.drawable.circuit_tremblant),
     VALENCIA("valencia", R.drawable.circuit_valencia),
+    VEGAS("vegas", R.drawable.circuit_vegas),
     VILLENEUVE("villeneuve", R.drawable.circuit_villeneuve),
     WATKINS_GLEN("watkins_glen", R.drawable.circuit_watkins_glen),
     YAS_MARINA("yas_marina", R.drawable.circuit_yas_marina),
