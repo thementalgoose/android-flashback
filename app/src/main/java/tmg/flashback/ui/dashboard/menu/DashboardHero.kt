@@ -34,27 +34,17 @@ internal fun DashboardHero(
     menuIcons: MenuIcons?,
     modifier: Modifier = Modifier
 ) {
-    if (menuIcons != null) {
-        Box(Modifier.padding(
-            top = AppTheme.dimens.xsmall,
-            bottom = AppTheme.dimens.xsmall,
-            end = AppTheme.dimens.nsmall
-        )) {
-            TextHeadline2WithIcon(
-                text = stringResource(id = R.string.app_name),
-                icon = painterResource(id = menuIcons.drawable),
-                iconModifier = Modifier
-                    .rotate(20f)
-                    .size(18.dp)
-            )
-        }
-    } else {
-        TextHeadline2(
+    Box(Modifier.padding(
+        top = AppTheme.dimens.xsmall,
+        bottom = AppTheme.dimens.xsmall,
+        end = AppTheme.dimens.nsmall
+    )) {
+        TextHeadline2WithIcon(
             text = stringResource(id = R.string.app_name),
-            modifier = modifier.padding(
-                vertical = AppTheme.dimens.medium,
-                horizontal = AppTheme.dimens.nsmall
-            )
+            icon = menuIcons?.let { painterResource(id = it.drawable) },
+            iconModifier = Modifier
+                .rotate(20f)
+                .size(18.dp)
         )
     }
 }
