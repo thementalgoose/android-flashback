@@ -29,6 +29,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import tmg.flashback.R
+import tmg.flashback.debug.model.DebugMenuItem
 import tmg.flashback.eastereggs.model.MenuIcons
 import tmg.flashback.eastereggs.ui.snow
 import tmg.flashback.formula1.constants.Formula1
@@ -48,7 +49,9 @@ fun DashboardMenuScreen(
     closeMenu: () -> Unit,
     currentlySelectedItem: MenuItem,
     appFeatureItemsList: List<MenuItem>,
+    debugMenuItems: List<DebugMenuItem>,
     menuItemClicked: (MenuItem) -> Unit,
+    debugMenuItemClicked: (DebugMenuItem) -> Unit,
     darkMode: Boolean,
     darkModeClicked: (Boolean) -> Unit,
     featurePromptList: List<FeaturePrompt>,
@@ -125,6 +128,21 @@ fun DashboardMenuScreen(
                         )
                     }
                     Divider()
+                }
+            }
+            if (debugMenuItems.isNotEmpty()) {
+                item(key = "debug") {
+                    debugMenuItems.forEach { debugItem ->
+                        Button(
+                            label = debugItem.label,
+                            icon = debugItem.icon,
+                            isSelected = false,
+                            onClick = {
+                                debugMenuItemClicked(debugItem)
+                                closeMenu()
+                            }
+                        )
+                    }
                 }
             }
             item(key = "label2") { SubHeader(text = stringResource(id = R.string.dashboard_all_title)) }

@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.window.layout.WindowLayoutInfo
 import kotlinx.coroutines.launch
+import tmg.flashback.debug.model.DebugMenuItem
 import tmg.flashback.eastereggs.model.MenuIcons
 import tmg.flashback.style.AppTheme
 import tmg.flashback.ui.AppGraph
@@ -52,6 +53,7 @@ fun DashboardScreen(
     val currentlySelectedItem = navViewModel.outputs.currentlySelectedItem.observeAsState(MenuItem.Calendar)
     val seasonScreenItemsList = navViewModel.outputs.seasonScreenItemsList.observeAsState(emptyList())
     val appFeatureItemsList = navViewModel.outputs.appFeatureItemsList.observeAsState(emptyList())
+    val debugMenuItems = navViewModel.outputs.debugMenuItems.observeAsState(emptyList())
 
     val seasonItemsList = navViewModel.outputs.seasonsItemsList.observeAsState(emptyList())
     val currentlySelectedSeason = navViewModel.outputs.currentlySelectedSeason.observeAsState(0)
@@ -74,6 +76,8 @@ fun DashboardScreen(
         currentlySelectedItem = currentlySelectedItem.value,
         appFeatureItemsList = appFeatureItemsList.value,
         seasonScreenItemsList = seasonScreenItemsList.value,
+        debugMenuItems = debugMenuItems.value,
+        debugMenuItemClicked = navViewModel.inputs::clickDebug,
         menuItemClicked = navViewModel.inputs::clickItem,
         showBottomBar = showBottomBar.value,
         showMenu = showMenu.value,
@@ -99,6 +103,8 @@ fun DashboardScreen(
     currentlySelectedItem: MenuItem,
     appFeatureItemsList: List<MenuItem>,
     seasonScreenItemsList: List<MenuItem>,
+    debugMenuItems: List<DebugMenuItem>,
+    debugMenuItemClicked: (DebugMenuItem) -> Unit,
     menuItemClicked: (MenuItem) -> Unit,
     showBottomBar: Boolean,
     showMenu: Boolean,
@@ -169,6 +175,8 @@ fun DashboardScreen(
                         },
                         currentlySelectedItem = currentlySelectedItem,
                         appFeatureItemsList = appFeatureItemsList,
+                        debugMenuItems = debugMenuItems,
+                        debugMenuItemClicked = debugMenuItemClicked,
                         menuItemClicked = menuItemClicked,
                         darkMode = darkMode,
                         darkModeClicked = darkModeClicked,
@@ -188,6 +196,8 @@ fun DashboardScreen(
                                 currentlySelectedItem = currentlySelectedItem,
                                 appFeatureItemsList = appFeatureItemsList,
                                 seasonScreenItemsList = seasonScreenItemsList,
+                                debugMenuItems = debugMenuItems,
+                                debugMenuItemClicked = debugMenuItemClicked,
                                 menuItemClicked = menuItemClicked,
                                 darkMode = darkMode,
                                 darkModeClicked = darkModeClicked,
@@ -206,6 +216,8 @@ fun DashboardScreen(
                                 currentlySelectedItem = currentlySelectedItem,
                                 appFeatureItemsList = appFeatureItemsList,
                                 seasonScreenItemsList = seasonScreenItemsList,
+                                debugMenuItems = debugMenuItems,
+                                debugMenuItemClicked = debugMenuItemClicked,
                                 menuItemClicked = menuItemClicked,
                                 darkMode = darkMode,
                                 darkModeClicked = darkModeClicked,
