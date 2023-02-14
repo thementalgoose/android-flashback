@@ -3,6 +3,7 @@ package tmg.flashback.stats.ui.weekend.details
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.Icon
@@ -70,24 +71,34 @@ fun DetailsScreen(
                     actionUpClicked = actionUpClicked
                 )
             }
-            items(items, key = { it.id }) {
-                when (it) {
-                    is DetailsModel.Links -> {
-                        Link(it, linkClicked)
-                    }
-                    is DetailsModel.Label -> {
-                        Label(it)
-                    }
-                    is DetailsModel.ScheduleDay -> {
-                        Day(it)
-                    }
-                }
-            }
-            item(key = "footer") {
-                Spacer(Modifier.height(72.dp))
-            }
+            this.details(
+                linkClicked = linkClicked,
+                items = items
+            )
         }
     )
+}
+
+internal fun LazyListScope.details(
+    linkClicked: (DetailsModel.Link) -> Unit,
+    items: List<DetailsModel>,
+) {
+    items(items, key = { it.id }) {
+        when (it) {
+            is DetailsModel.Links -> {
+                Link(it, linkClicked)
+            }
+            is DetailsModel.Label -> {
+                Label(it)
+            }
+            is DetailsModel.ScheduleDay -> {
+                Day(it)
+            }
+        }
+    }
+    item(key = "footer") {
+        Spacer(Modifier.height(72.dp))
+    }
 }
 
 @Composable

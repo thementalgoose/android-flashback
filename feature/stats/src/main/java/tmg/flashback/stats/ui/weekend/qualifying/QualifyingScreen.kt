@@ -3,6 +3,7 @@ package tmg.flashback.stats.ui.weekend.qualifying
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
@@ -77,46 +78,58 @@ fun QualifyingScreen(
                     actionUpClicked = actionUpClicked
                 )
             }
-            if (list.any { it.isResult }) {
-                item("qheader") {
-                    Spacer(Modifier.height(AppTheme.dimens.medium))
-                    Header(
-                        showQ1 = header.first,
-                        showQ2 = header.second,
-                        showQ3 = header.third,
-                    )
-                }
-            }
-            items(list, key = { it.id }) {
-                when (it) {
-                    is QualifyingModel.Q1 -> Qualifying(
-                        model = it,
-                        driverClicked = driverClicked
-                    )
-                    is QualifyingModel.Q1Q2 -> Qualifying(
-                        model = it,
-                        driverClicked = driverClicked
-                    )
-                    is QualifyingModel.Q1Q2Q3 -> Qualifying(
-                        model = it,
-                        driverClicked = driverClicked
-                    )
-                    QualifyingModel.Loading -> {
-                        SkeletonViewList()
-                    }
-                    QualifyingModel.NotAvailable -> {
-                        NotAvailable()
-                    }
-                    QualifyingModel.NotAvailableYet -> {
-                        NotAvailableYet()
-                    }
-                }
-            }
-            item(key = "footer") {
-                Spacer(Modifier.height(72.dp))
-            }
+            this.qualifying(
+                driverClicked = driverClicked,
+                list = list,
+                header = header,
+            )
         }
     )
+}
+
+internal fun LazyListScope.qualifying(
+    driverClicked: (Driver) -> Unit,
+    list: List<QualifyingModel>,
+    header: QualifyingHeader
+) {
+    if (list.any { it.isResult }) {
+        item("qheader") {
+            Spacer(Modifier.height(AppTheme.dimens.medium))
+            Header(
+                showQ1 = header.first,
+                showQ2 = header.second,
+                showQ3 = header.third,
+            )
+        }
+    }
+    items(list, key = { it.id }) {
+        when (it) {
+            is QualifyingModel.Q1 -> Qualifying(
+                model = it,
+                driverClicked = driverClicked
+            )
+            is QualifyingModel.Q1Q2 -> Qualifying(
+                model = it,
+                driverClicked = driverClicked
+            )
+            is QualifyingModel.Q1Q2Q3 -> Qualifying(
+                model = it,
+                driverClicked = driverClicked
+            )
+            QualifyingModel.Loading -> {
+                SkeletonViewList()
+            }
+            QualifyingModel.NotAvailable -> {
+                NotAvailable()
+            }
+            QualifyingModel.NotAvailableYet -> {
+                NotAvailableYet()
+            }
+        }
+    }
+    item(key = "footer") {
+        Spacer(Modifier.height(72.dp))
+    }
 }
 
 @Composable

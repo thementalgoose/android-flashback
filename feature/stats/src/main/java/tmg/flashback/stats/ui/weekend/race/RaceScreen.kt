@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
@@ -95,36 +96,47 @@ fun RaceScreen(
                     actionUpClicked = actionUpClicked
                 )
             }
-            items(list, key = { it.id }) {
-                when (it) {
-                    is RaceModel.Podium -> {
-                        Podium(
-                            model = it,
-                            driverClicked = driverClicked
-                        )
-                    }
-                    is RaceModel.Result -> {
-                        Result(
-                            model = it.result,
-                            driverClicked = driverClicked
-                        )
-                    }
-                    RaceModel.Loading -> {
-                        SkeletonViewList()
-                    }
-                    RaceModel.NotAvailable -> {
-                        NotAvailable()
-                    }
-                    RaceModel.NotAvailableYet -> {
-                        NotAvailableYet()
-                    }
-                }
-            }
-            item(key = "footer") {
-                Spacer(Modifier.height(72.dp))
-            }
+
+            this.race(
+                list = list,
+                driverClicked = driverClicked
+            )
         }
     )
+}
+
+internal fun LazyListScope.race(
+    list: List<RaceModel>,
+    driverClicked: (RaceRaceResult) -> Unit,
+) {
+    items(list, key = { it.id }) {
+        when (it) {
+            is RaceModel.Podium -> {
+                Podium(
+                    model = it,
+                    driverClicked = driverClicked
+                )
+            }
+            is RaceModel.Result -> {
+                Result(
+                    model = it.result,
+                    driverClicked = driverClicked
+                )
+            }
+            RaceModel.Loading -> {
+                SkeletonViewList()
+            }
+            RaceModel.NotAvailable -> {
+                NotAvailable()
+            }
+            RaceModel.NotAvailableYet -> {
+                NotAvailableYet()
+            }
+        }
+    }
+    item(key = "footer") {
+        Spacer(Modifier.height(72.dp))
+    }
 }
 
 @Composable

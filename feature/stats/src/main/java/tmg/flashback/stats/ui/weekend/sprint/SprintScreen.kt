@@ -3,6 +3,7 @@ package tmg.flashback.stats.ui.weekend.sprint
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
@@ -68,30 +69,41 @@ fun SprintScreen(
                     actionUpClicked = actionUpClicked
                 )
             }
-            items(list, key = { it.id }) {
-                when (it) {
-                    is SprintModel.Result -> {
-                        Result(
-                            model = it.result,
-                            driverClicked = driverClicked
-                        )
-                    }
-                    SprintModel.Loading -> {
-                        SkeletonViewList()
-                    }
-                    SprintModel.NotAvailable -> {
-                        NotAvailable()
-                    }
-                    SprintModel.NotAvailableYet -> {
-                        NotAvailableYet()
-                    }
-                }
-            }
-            item(key = "footer") {
-                Spacer(Modifier.height(72.dp))
-            }
+
+            this.sprint(
+                list = list,
+                driverClicked = driverClicked
+            )
         }
     )
+}
+
+internal fun LazyListScope.sprint(
+    list: List<SprintModel>,
+    driverClicked: (RaceSprintResult) -> Unit,
+) {
+    items(list, key = { it.id }) {
+        when (it) {
+            is SprintModel.Result -> {
+                Result(
+                    model = it.result,
+                    driverClicked = driverClicked
+                )
+            }
+            SprintModel.Loading -> {
+                SkeletonViewList()
+            }
+            SprintModel.NotAvailable -> {
+                NotAvailable()
+            }
+            SprintModel.NotAvailableYet -> {
+                NotAvailableYet()
+            }
+        }
+    }
+    item(key = "footer") {
+        Spacer(Modifier.height(72.dp))
+    }
 }
 
 @Composable
