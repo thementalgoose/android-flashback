@@ -42,6 +42,7 @@ import tmg.flashback.ui.components.navigation.NavigationTimelineItem
 import tmg.flashback.ui.components.navigation.appBarHeight
 import tmg.flashback.ui.dashboard.menu.DashboardMenuExpandedScreen
 import tmg.flashback.ui.dashboard.menu.DashboardMenuScreen
+import tmg.flashback.ui.foldables.getFoldingConfig
 import tmg.flashback.ui.navigation.Navigator
 
 @Composable
@@ -124,7 +125,7 @@ fun DashboardScreen(
     val panelsState = rememberOverlappingPanelsState(OverlappingPanelsValue.Closed)
     val coroutineScope = rememberCoroutineScope()
 
-    val foldingStartScreenWidth = windowLayoutInfo.getLandscapeFoldingMidpoint()
+    val foldingConfig = windowLayoutInfo.getFoldingConfig()
 
     // Close panel if window size is changes via. configuration change
     DisposableEffect(windowSize, effect = {
@@ -198,7 +199,7 @@ fun DashboardScreen(
                     Row(Modifier.fillMaxSize()) {
                         if (windowSize.widthSizeClass == WindowWidthSizeClass.Medium) {
                             DashboardMenuExpandedScreen(
-                                overrideColumnWidth = foldingStartScreenWidth,
+                                foldingConfig = foldingConfig,
                                 currentlySelectedItem = currentlySelectedItem,
                                 appFeatureItemsList = appFeatureItemsList,
                                 seasonScreenItemsList = seasonScreenItemsList,
@@ -219,7 +220,7 @@ fun DashboardScreen(
                         }
                         if (windowSize.widthSizeClass == WindowWidthSizeClass.Expanded) {
                             DashboardMenuExpandedScreen(
-                                overrideColumnWidth = foldingStartScreenWidth,
+                                foldingConfig = foldingConfig,
                                 currentlySelectedItem = currentlySelectedItem,
                                 appFeatureItemsList = appFeatureItemsList,
                                 seasonScreenItemsList = seasonScreenItemsList,
@@ -265,21 +266,3 @@ fun DashboardScreen(
     )
 }
 
-@Composable
-private fun WindowLayoutInfo.getLandscapeFoldingMidpoint(): Dp? {
-    // Is folding
-    val foldingFeature = this.displayFeatures
-        .firstNotNullOfOrNull { it as? FoldingFeature } ?: return null
-
-    // Is landscape
-    if (foldingFeature.orientation == FoldingFeature.Orientation.HORIZONTAL) {
-        return null
-    }
-
-    // Set width of menu
-    val width = with(LocalDensity.current) { foldingFeature.bounds.left.toDp() }
-    if (width > 420.dp) {
-        return null
-    }
-    return width
-}
