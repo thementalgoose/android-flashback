@@ -5,11 +5,14 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import kotlinx.coroutines.launch
 import tmg.flashback.stats.analytics.AnalyticsConstants
 import tmg.flashback.stats.analytics.AnalyticsConstants.analyticsRound
 import tmg.flashback.stats.analytics.AnalyticsConstants.analyticsSeason
@@ -67,6 +70,15 @@ fun WeekendScreenVM(
         WeekendScreenState(tab = WeekendNavItem.RACE, isSelected = false),
         WeekendScreenState(tab = WeekendNavItem.CONSTRUCTOR, isSelected = false)
     ))
+
+    val listState = rememberLazyListState()
+    val coroutineScope = rememberCoroutineScope()
+    val scrollToTop: () -> Unit = {
+        coroutineScope.launch {
+            listState.animateScrollToItem(0, 0)
+        }
+    }
+
     Scaffold(
         bottomBar = {
             NavigationBar(
@@ -74,6 +86,7 @@ fun WeekendScreenVM(
                 itemClicked = {
                     val tab = it.id.toEnum() ?: WeekendNavItem.SCHEDULE
                     viewModel.inputs.clickTab(tab)
+                    scrollToTop()
                 }
             )
         },
@@ -103,6 +116,7 @@ fun WeekendScreenVM(
                 onRefresh = viewModel.inputs::refresh
             ) {
                 LazyColumn(
+                    state = listState,
                     content = {
                         item("header") {
                             RaceInfoHeader(
@@ -152,39 +166,6 @@ fun WeekendScreenVM(
                         }
                     }
                 )
-
-//                when (tabState.value.first { it.isSelected }.tab) {
-//                    WeekendNavItem.SCHEDULE -> {
-//                        DetailsScreenVM(
-//                            info = dbWeekendInfo.value,
-//                            actionUpClicked = { }
-//                        )
-//                    }
-//                    WeekendNavItem.QUALIFYING -> {
-//                        QualifyingScreenVM(
-//                            info = dbWeekendInfo.value,
-//                            actionUpClicked = { }
-//                        )
-//                    }
-//                    WeekendNavItem.SPRINT -> {
-//                        SprintScreenVM(
-//                            info = dbWeekendInfo.value,
-//                            actionUpClicked = { }
-//                        )
-//                    }
-//                    WeekendNavItem.RACE -> {
-//                        RaceScreenVM(
-//                            info = dbWeekendInfo.value,
-//                            actionUpClicked = { }
-//                        )
-//                    }
-//                    WeekendNavItem.CONSTRUCTOR -> {
-//                        ConstructorScreenVM(
-//                            info = dbWeekendInfo.value,
-//                            actionUpClicked = { }
-//                        )
-//                    }
-//                }
             }
         }
     )
