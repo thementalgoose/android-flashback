@@ -9,11 +9,11 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import tmg.flashback.R
 import tmg.flashback.eastereggs.model.MenuIcons
 import tmg.flashback.style.AppTheme
+import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextHeadline2
 import tmg.flashback.style.text.TextHeadline2WithIcon
@@ -62,17 +62,17 @@ internal fun DashboardHero(
 @Composable
 @PreviewTheme
 private fun Preview(
-    @PreviewParameter(MenuIconsProvider::class) menuKey: MenuIcons
+    @PreviewParameter(DashboardHeroMenuIconsProvider::class) menuKey: MenuIcons
 ) {
-    DashboardHero(menuIcons = menuKey)
+    AppThemePreview {
+        DashboardHero(menuIcons = menuKey)
+    }
 }
 
 @Composable
 @PreviewTheme
 private fun PreviewTheme() {
-    DashboardHero(null)
-}
-
-class MenuIconsProvider: PreviewParameterProvider<MenuIcons> {
-    override val values: Sequence<MenuIcons> = MenuIcons.values().asSequence()
+    AppThemePreview {
+        DashboardHero(null)
+    }
 }
