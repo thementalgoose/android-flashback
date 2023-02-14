@@ -26,6 +26,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Rect
@@ -48,6 +49,7 @@ import tmg.flashback.style.text.TextBody1
 import tmg.flashback.R
 import tmg.flashback.eastereggs.model.MenuIcons
 import tmg.flashback.eastereggs.ui.snow
+import tmg.flashback.formula1.constants.Formula1
 import tmg.flashback.ui.components.navigation.NavigationItem
 import tmg.flashback.ui.components.navigation.NavigationTimelineItem
 import tmg.flashback.ui.components.navigation.PipeType
@@ -92,7 +94,7 @@ fun DashboardMenuExpandedScreen(
         .width(width.value)
         .fillMaxHeight()
         .shadow(8.dp)
-        .background(AppTheme.colors.backgroundNav)
+        .background(AppTheme.colors.backgroundPrimary)
         .padding(
             vertical = AppTheme.dimens.small
         )
@@ -168,7 +170,7 @@ private fun NavigationItem(
 ) {
     val backgroundColor = animateColorAsState(targetValue = when (item.isSelected) {
         true -> AppTheme.colors.primary.copy(alpha = 0.2f)
-        else -> AppTheme.colors.backgroundNav
+        else -> AppTheme.colors.backgroundPrimary
     })
     val iconPadding = animateDpAsState(targetValue = when (isExpanded) {
         true -> AppTheme.dimens.medium
@@ -231,7 +233,7 @@ private fun HeroItem(
             .height(heroSize)
             .fillMaxWidth()
             .clip(RoundedCornerShape(AppTheme.dimens.radiusMedium))
-            .background(AppTheme.colors.backgroundNav)
+            .background(AppTheme.colors.backgroundPrimary)
             .clickable(
                 enabled = onClick != null,
                 onClick = {
@@ -273,86 +275,99 @@ private fun NavigationTimelineItem(
         false -> (itemSize - iconSize) / 2
     })
 
-    Row(modifier = modifier
-        .padding(
-            horizontal = (columnWidthCollapsed - itemSize) / 2
-        )
-        .fillMaxWidth()
-        .height(itemSize)
-        .clip(RoundedCornerShape(AppTheme.dimens.radiusMedium))
-        .background(AppTheme.colors.backgroundNav)
-        .clickable(
-            enabled = onClick != null,
-            onClick = {
-                onClick?.invoke(item)
-            }
-        )
-        .padding(
-            horizontal = iconPadding.value,
-        )
-    ) {
-        Box(Modifier.fillMaxHeight()) {
-            Column(
-                Modifier
-                    .fillMaxHeight()
-                    .width(8.dp)
-                    .align(Alignment.Center)
-            ) {
-                Box(
+    Box {
+        Row(modifier = modifier
+            .padding(
+                horizontal = (columnWidthCollapsed - itemSize) / 2
+            )
+            .fillMaxWidth()
+            .height(itemSize)
+            .clip(RoundedCornerShape(AppTheme.dimens.radiusMedium))
+            .background(AppTheme.colors.backgroundPrimary)
+            .clickable(
+                enabled = onClick != null,
+                onClick = {
+                    onClick?.invoke(item)
+                }
+            )
+            .padding(
+                horizontal = iconPadding.value,
+            )
+        ) {
+            Box(Modifier.fillMaxHeight()) {
+                Column(
                     Modifier
-                        .fillMaxWidth()
-                        .weight(1f)
-                        .padding(bottom = (iconSize / 2f) - 2.dp)
-                        .background(
-                            when (item.pipeType) {
-                                PipeType.SINGLE -> Color.Transparent
-                                PipeType.START -> Color.Transparent
-                                PipeType.START_END -> item.color
-                                PipeType.SINGLE_PIPE -> Color.Transparent
-                                PipeType.END -> item.color
-                            }
-                        )
-                )
-                Box(
-                    Modifier
-                        .fillMaxWidth()
-                        .weight(1f)
-                        .padding(top = (iconSize / 2f) - 2.dp)
-                        .background(
-                            when (item.pipeType) {
-                                PipeType.SINGLE -> Color.Transparent
-                                PipeType.START -> item.color
-                                PipeType.START_END -> item.color
-                                PipeType.SINGLE_PIPE -> Color.Transparent
-                                PipeType.END -> Color.Transparent
-                            }
-                        )
-                )
-            }
-            if (item.isSelected) {
-                Box(
-                    Modifier
-                        .size(iconSize)
+                        .fillMaxHeight()
+                        .width(8.dp)
                         .align(Alignment.Center)
-                        .clip(CircleShape)
-                        .background(item.color)
-                )
-            } else {
-                Donut(
-                    color = item.color,
+                ) {
+                    Box(
+                        Modifier
+                            .fillMaxWidth()
+                            .weight(1f)
+                            .padding(bottom = (iconSize / 2f) - 2.dp)
+                            .background(
+                                when (item.pipeType) {
+                                    PipeType.SINGLE -> Color.Transparent
+                                    PipeType.START -> Color.Transparent
+                                    PipeType.START_END -> item.color
+                                    PipeType.SINGLE_PIPE -> Color.Transparent
+                                    PipeType.END -> item.color
+                                }
+                            )
+                    )
+                    Box(
+                        Modifier
+                            .fillMaxWidth()
+                            .weight(1f)
+                            .padding(top = (iconSize / 2f) - 2.dp)
+                            .background(
+                                when (item.pipeType) {
+                                    PipeType.SINGLE -> Color.Transparent
+                                    PipeType.START -> item.color
+                                    PipeType.START_END -> item.color
+                                    PipeType.SINGLE_PIPE -> Color.Transparent
+                                    PipeType.END -> Color.Transparent
+                                }
+                            )
+                    )
+                }
+                if (item.isSelected) {
+                    Box(
+                        Modifier
+                            .size(iconSize)
+                            .align(Alignment.Center)
+                            .clip(CircleShape)
+                            .background(item.color)
+                    )
+                } else {
+                    Donut(
+                        color = item.color,
+                        modifier = Modifier
+                            .size(iconSize)
+                            .align(Alignment.Center)
+                    )
+                }
+            }
+            if (isExpanded) {
+                TextBody1(
                     modifier = Modifier
-                        .size(iconSize)
-                        .align(Alignment.Center)
+                        .padding(start = AppTheme.dimens.small)
+                        .align(Alignment.CenterVertically)
+                        .fillMaxWidth(),
+                    text = item.label
                 )
             }
         }
-        if (isExpanded) {
-            TextBody1(
+        if (item.label.toIntOrNull() == Formula1.currentSeasonYear) {
+            Icon(
                 modifier = Modifier
-                    .padding(start = AppTheme.dimens.small)
-                    .align(Alignment.CenterVertically)
-                    .fillMaxWidth(),
-                text = item.label
+                    .width(AppTheme.dimens.medium)
+                    .align(Alignment.CenterStart)
+                    .alpha(0.4f),
+                painter = painterResource(id = tmg.flashback.stats.R.drawable.ic_current_indicator),
+                contentDescription = null,
+                tint = AppTheme.colors.contentPrimary
             )
         }
     }
