@@ -25,10 +25,10 @@ Flashback provides race results and statistics from every race in the history of
 
 #### Tablet
 
-|                                                                   |                                                                   |                                                                   |                                                                   |
-|-------------------------------------------------------------------|-------------------------------------------------------------------|-------------------------------------------------------------------|-------------------------------------------------------------------|
-| <img src="res/screenshots/tablet/screenshot1.webp" width="160" /> | <img src="res/screenshots/tablet/screenshot2.webp" width="160" /> | <img src="res/screenshots/tablet/screenshot3.webp" width="160" /> | <img src="res/screenshots/tablet/screenshot4.webp" width="160" /> |
-| <img src="res/screenshots/tablet/screenshot5.webp" width="160" /> | <img src="res/screenshots/tablet/screenshot6.webp" width="160" /> | <img src="res/screenshots/tablet/screenshot7.webp" width="160" /> | <img src="res/screenshots/tablet/screenshot8.webp" width="160" /> |
+|                                                                  |                                                                  |                                                                  |                                                                  |
+|------------------------------------------------------------------|------------------------------------------------------------------|------------------------------------------------------------------|------------------------------------------------------------------|
+| <img src="res/screenshots/tablet/screenshot1.png" width="160" /> | <img src="res/screenshots/tablet/screenshot2.png" width="160" /> | <img src="res/screenshots/tablet/screenshot3.png" width="160" /> | <img src="res/screenshots/tablet/screenshot4.png" width="160" /> |
+| <img src="res/screenshots/tablet/screenshot5.png" width="160" /> | <img src="res/screenshots/tablet/screenshot6.png" width="160" /> | <img src="res/screenshots/tablet/screenshot7.png" width="160" /> | <img src="res/screenshots/tablet/screenshot8.png" width="160" /> |
 
 ---
 
