@@ -42,6 +42,9 @@ import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import androidx.window.layout.FoldingFeature
+import androidx.window.layout.FoldingFeature.State.Companion.FLAT
+import androidx.window.layout.FoldingFeature.State.Companion.HALF_OPENED
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
@@ -58,6 +61,7 @@ import tmg.flashback.ui.components.navigation.NavigationTimelineItem
 import tmg.flashback.ui.components.navigation.PipeType
 import tmg.flashback.ui.dashboard.FeaturePrompt
 import tmg.flashback.ui.dashboard.MenuItem
+import tmg.flashback.ui.foldables.FoldingConfig
 
 val columnWidthCollapsed: Dp = 56.dp
 private val heroSize: Dp = 48.dp
@@ -71,7 +75,7 @@ val headerHeight: Dp = 72.dp
 @Composable
 fun DashboardMenuExpandedScreen(
     modifier: Modifier = Modifier,
-    overrideColumnWidth: Dp?,
+    foldingConfig: FoldingConfig?,
     currentlySelectedItem: MenuItem,
     appFeatureItemsList: List<MenuItem>,
     seasonScreenItemsList: List<MenuItem>,
@@ -91,8 +95,13 @@ fun DashboardMenuExpandedScreen(
 ) {
     val expanded = remember { mutableStateOf(lockExpanded) }
     val width = animateDpAsState(targetValue = when {
-        lockExpanded -> overrideColumnWidth ?: columnWidthExpandedLocked
-        expanded.value -> overrideColumnWidth ?: columnWidthExpanded
+        lockExpanded -> columnWidthExpandedLocked
+        expanded.value -> {
+            when (foldingConfig?.state) {
+                HALF_OPENED -> foldingConfig.overrideWidth ?: columnWidthExpanded
+                else -> columnWidthExpanded
+            }
+        }
         else -> columnWidthCollapsed
     })
 
@@ -458,7 +467,7 @@ private fun Div() {
 private fun PreviewCompactTimeline() {
     AppThemePreview {
         DashboardMenuExpandedScreen(
-            overrideColumnWidth = null,
+            foldingConfig = null,
             currentlySelectedItem = MenuItem.Calendar,
             appFeatureItemsList = listOf(MenuItem.Settings, MenuItem.RSS),
             seasonScreenItemsList = listOf(MenuItem.Calendar, MenuItem.Drivers),
@@ -484,7 +493,7 @@ private fun PreviewCompactTimeline() {
 private fun PreviewExpandedTimeline() {
     AppThemePreview {
         DashboardMenuExpandedScreen(
-            overrideColumnWidth = null,
+            foldingConfig = null,
             currentlySelectedItem = MenuItem.Calendar,
             appFeatureItemsList = listOf(MenuItem.Settings, MenuItem.RSS),
             seasonScreenItemsList = listOf(MenuItem.Calendar, MenuItem.Drivers),
