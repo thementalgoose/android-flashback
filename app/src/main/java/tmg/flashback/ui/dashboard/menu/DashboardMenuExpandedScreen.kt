@@ -51,6 +51,8 @@ import tmg.flashback.debug.model.DebugMenuItem
 import tmg.flashback.eastereggs.model.MenuIcons
 import tmg.flashback.eastereggs.ui.snow
 import tmg.flashback.formula1.constants.Formula1
+import tmg.flashback.style.text.TextBody2
+import tmg.flashback.ui.components.loading.Fade
 import tmg.flashback.ui.components.navigation.NavigationItem
 import tmg.flashback.ui.components.navigation.NavigationTimelineItem
 import tmg.flashback.ui.components.navigation.PipeType
@@ -172,7 +174,22 @@ fun DashboardMenuExpandedScreen(
                     }
                 }
                 item {
-                    Spacer(modifier = Modifier.height(AppTheme.dimens.small))
+                    if (expanded.value) {
+                        Fade(visible = expanded.value) {
+                            TextBody2(
+                                text = stringResource(id = R.string.app_version_placeholder, appVersion),
+                                modifier = Modifier.padding(
+                                    horizontal = AppTheme.dimens.medium,
+                                    vertical = AppTheme.dimens.xsmall
+                                )
+                            )
+                        }
+                    } else {
+                        TextBody2(text = "")
+                    }
+                }
+                item {
+                    Spacer(modifier = Modifier.height(AppTheme.dimens.large))
                 }
             }
         )
@@ -486,7 +503,7 @@ private fun PreviewExpandedTimeline() {
 }
 
 
-internal val fakeNavigationTimelineItems: List<NavigationTimelineItem> = listOf(
+private val fakeNavigationTimelineItems: List<NavigationTimelineItem> = listOf(
     NavigationTimelineItem(
         id = "2022",
         pipeType = PipeType.START,
@@ -507,34 +524,5 @@ internal val fakeNavigationTimelineItems: List<NavigationTimelineItem> = listOf(
         label = "2020",
         color = Color.Magenta,
         isSelected = false
-    )
-)
-
-internal val fakeNavigationItems: List<NavigationItem> = listOf(
-    NavigationItem(
-        id = "menu",
-        label = R.string.ab_menu,
-        icon = R.drawable.ic_nightmode_dark,
-        isSelected = true
-    ),
-    NavigationItem(
-        id = "back",
-        label = R.string.ab_back,
-        icon = R.drawable.ic_theme_material_you
-    ),
-    NavigationItem(
-        id = "settings",
-        label = R.string.settings_theme_title,
-        icon = R.drawable.ic_nightmode_auto
-    ),
-    NavigationItem(
-        id = "light",
-        label = R.string.settings_theme_nightmode_light,
-        icon = R.drawable.ic_nightmode_light
-    ),
-    NavigationItem(
-        id = "experiment",
-        label = R.string.settings_experimental,
-        icon = R.drawable.ic_theme_default
     )
 )
