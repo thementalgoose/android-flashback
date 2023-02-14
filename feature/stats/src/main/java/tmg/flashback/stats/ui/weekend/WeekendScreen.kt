@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
@@ -13,10 +14,22 @@ import tmg.flashback.stats.analytics.AnalyticsConstants
 import tmg.flashback.stats.analytics.AnalyticsConstants.analyticsRound
 import tmg.flashback.stats.analytics.AnalyticsConstants.analyticsSeason
 import tmg.flashback.stats.ui.weekend.constructor.ConstructorScreenVM
+import tmg.flashback.stats.ui.weekend.constructor.ConstructorViewModel
+import tmg.flashback.stats.ui.weekend.constructor.constructor
 import tmg.flashback.stats.ui.weekend.qualifying.QualifyingScreenVM
 import tmg.flashback.stats.ui.weekend.race.RaceScreenVM
 import tmg.flashback.stats.ui.weekend.details.DetailsScreenVM
+import tmg.flashback.stats.ui.weekend.details.DetailsViewModel
+import tmg.flashback.stats.ui.weekend.details.details
+import tmg.flashback.stats.ui.weekend.info.RaceInfoHeader
+import tmg.flashback.stats.ui.weekend.qualifying.QualifyingHeader
+import tmg.flashback.stats.ui.weekend.qualifying.QualifyingViewModel
+import tmg.flashback.stats.ui.weekend.qualifying.qualifying
+import tmg.flashback.stats.ui.weekend.race.RaceViewModel
+import tmg.flashback.stats.ui.weekend.race.race
 import tmg.flashback.stats.ui.weekend.sprint.SprintScreenVM
+import tmg.flashback.stats.ui.weekend.sprint.SprintViewModel
+import tmg.flashback.stats.ui.weekend.sprint.sprint
 import tmg.flashback.style.AppTheme
 import tmg.flashback.ui.components.analytics.ScreenView
 import tmg.flashback.ui.components.loading.Fade
@@ -29,13 +42,6 @@ data class WeekendScreenState(
     val tab: WeekendNavItem,
     val isSelected: Boolean
 )
-
-@Composable
-fun WeekendScreenEmbedded(
-    weekendInfo: WeekendInfo
-) {
-
-}
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -79,54 +85,106 @@ fun WeekendScreenVM(
             )
             val isRefreshing = viewModel.outputs.isRefreshing.observeAsState(false)
 
+            val detailsVM: DetailsViewModel = hiltViewModel()
+            val detailsList = detailsVM.outputs.list.observeAsState(emptyList())
+            val qualifyingVM: QualifyingViewModel = hiltViewModel()
+            val qualifyingList = qualifyingVM.outputs.list.observeAsState(emptyList())
+            val qualifyingHeader = qualifyingVM.outputs.headersToShow.observeAsState(QualifyingHeader(true, true, true))
+            val sprintVM: SprintViewModel = hiltViewModel()
+            val sprintList = sprintVM.outputs.list.observeAsState(emptyList())
+            val raceVM: RaceViewModel = hiltViewModel()
+            val raceList = raceVM.outputs.list.observeAsState(emptyList())
+            val constructorVM: ConstructorViewModel = hiltViewModel()
+            val constructorList = constructorVM.outputs.list.observeAsState(emptyList())
+
+
             SwipeRefresh(
                 isLoading = isRefreshing.value,
                 onRefresh = viewModel.inputs::refresh
             ) {
-                for (x in tabState.value) {
-                    when (x.tab) {
-                        WeekendNavItem.SCHEDULE -> {
-                            Fade(visible = x.isSelected) {
-                                DetailsScreenVM(
-                                    info = dbWeekendInfo.value,
-                                    actionUpClicked = actionUpClicked
+                LazyColumn(
+                    content = {
+                        item("header") {
+                            RaceInfoHeader(
+                                model = dbWeekendInfo.value,
+                                actionUpClicked = actionUpClicked
+                            )
+                        }
+
+                        detailsVM.inputs.load(weekendInfo.season, weekendInfo.round)
+                        qualifyingVM.inputs.load(weekendInfo.season, weekendInfo.round)
+                        sprintVM.inputs.load(weekendInfo.season, weekendInfo.round)
+                        raceVM.inputs.load(weekendInfo.season, weekendInfo.round)
+                        constructorVM.inputs.load(weekendInfo.season, weekendInfo.round)
+
+                        when (tabState.value.first { it.isSelected }.tab) {
+                            WeekendNavItem.SCHEDULE -> {
+                                details(
+                                    linkClicked = detailsVM.inputs::linkClicked,
+                                    items = detailsList.value
                                 )
                             }
-                        }
-                        WeekendNavItem.QUALIFYING -> {
-                            Fade(visible = x.isSelected) {
-                                QualifyingScreenVM(
-                                    info = dbWeekendInfo.value,
-                                    actionUpClicked = actionUpClicked
+                            WeekendNavItem.QUALIFYING -> {
+                                qualifying(
+                                    driverClicked = qualifyingVM.inputs::clickDriver,
+                                    list = qualifyingList.value,
+                                    header = qualifyingHeader.value
                                 )
                             }
-                        }
-                        WeekendNavItem.SPRINT -> {
-                            Fade(visible = x.isSelected) {
-                                SprintScreenVM(
-                                    info = dbWeekendInfo.value,
-                                    actionUpClicked = actionUpClicked
+                            WeekendNavItem.SPRINT -> {
+                                sprint(
+                                    list = sprintList.value,
+                                    driverClicked = sprintVM.inputs::clickDriver
                                 )
                             }
-                        }
-                        WeekendNavItem.RACE -> {
-                            Fade(visible = x.isSelected) {
-                                RaceScreenVM(
-                                    info = dbWeekendInfo.value,
-                                    actionUpClicked = actionUpClicked
+                            WeekendNavItem.RACE -> {
+                                race(
+                                    list = raceList.value,
+                                    driverClicked = raceVM.inputs::clickDriver
                                 )
                             }
-                        }
-                        WeekendNavItem.CONSTRUCTOR -> {
-                            Fade(visible = x.isSelected) {
-                                ConstructorScreenVM(
-                                    info = dbWeekendInfo.value,
-                                    actionUpClicked = actionUpClicked
+                            WeekendNavItem.CONSTRUCTOR -> {
+                                constructor(
+                                    list = constructorList.value,
+                                    itemClicked = constructorVM.inputs::clickItem
                                 )
                             }
                         }
                     }
-                }
+                )
+
+//                when (tabState.value.first { it.isSelected }.tab) {
+//                    WeekendNavItem.SCHEDULE -> {
+//                        DetailsScreenVM(
+//                            info = dbWeekendInfo.value,
+//                            actionUpClicked = { }
+//                        )
+//                    }
+//                    WeekendNavItem.QUALIFYING -> {
+//                        QualifyingScreenVM(
+//                            info = dbWeekendInfo.value,
+//                            actionUpClicked = { }
+//                        )
+//                    }
+//                    WeekendNavItem.SPRINT -> {
+//                        SprintScreenVM(
+//                            info = dbWeekendInfo.value,
+//                            actionUpClicked = { }
+//                        )
+//                    }
+//                    WeekendNavItem.RACE -> {
+//                        RaceScreenVM(
+//                            info = dbWeekendInfo.value,
+//                            actionUpClicked = { }
+//                        )
+//                    }
+//                    WeekendNavItem.CONSTRUCTOR -> {
+//                        ConstructorScreenVM(
+//                            info = dbWeekendInfo.value,
+//                            actionUpClicked = { }
+//                        )
+//                    }
+//                }
             }
         }
     )

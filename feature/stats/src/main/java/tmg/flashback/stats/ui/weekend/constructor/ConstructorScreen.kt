@@ -3,6 +3,7 @@ package tmg.flashback.stats.ui.weekend.constructor
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
@@ -65,30 +66,41 @@ fun ConstructorScreen(
                     actionUpClicked = actionUpClicked
                 )
             }
-            items(list) {
-                when (it) {
-                    is ConstructorModel.Constructor -> {
-                        ConstructorResult(
-                            model = it,
-                            itemClicked = itemClicked
-                        )
-                    }
-                    ConstructorModel.Loading -> {
-                        SkeletonViewList()
-                    }
-                    ConstructorModel.NotAvailable -> {
-                        NotAvailable()
-                    }
-                    ConstructorModel.NotAvailableYet -> {
-                        NotAvailableYet()
-                    }
-                }
-            }
-            item(key = "footer") {
-                Spacer(Modifier.height(72.dp))
-            }
+
+            this.constructor(
+                list = list,
+                itemClicked = itemClicked
+            )
         }
     )
+}
+
+internal fun LazyListScope.constructor(
+    list: List<ConstructorModel>,
+    itemClicked: (ConstructorModel.Constructor) -> Unit,
+) {
+    items(list) {
+        when (it) {
+            is ConstructorModel.Constructor -> {
+                ConstructorResult(
+                    model = it,
+                    itemClicked = itemClicked
+                )
+            }
+            ConstructorModel.Loading -> {
+                SkeletonViewList()
+            }
+            ConstructorModel.NotAvailable -> {
+                NotAvailable()
+            }
+            ConstructorModel.NotAvailableYet -> {
+                NotAvailableYet()
+            }
+        }
+    }
+    item(key = "footer") {
+        Spacer(Modifier.height(72.dp))
+    }
 }
 
 @Composable
