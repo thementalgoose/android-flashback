@@ -12,12 +12,23 @@
 
 Flashback provides race results and statistics from every race in the history of Formula 1 and the latest Formula 1 news from around the web!
 
+---
+
 ### Screenshots
 
-|   |   |   |   |
-|---|---|---|---|
-| <img src="res/screenshots/screenshot1.webp" width="160" /> | <img src="res/screenshots/screenshot2.webp" width="160" /> | <img src="res/screenshots/screenshot3.webp" width="160" /> | <img src="res/screenshots/screenshot4.webp" width="160" /> |
-| <img src="res/screenshots/screenshot5.webp" width="160" /> | <img src="res/screenshots/screenshot6.webp" width="160" /> | <img src="res/screenshots/screenshot7.webp" width="160" /> | <img src="res/screenshots/screenshot8.webp" width="160" /> |
+#### Phone
+
+|                                                                   |                                                                   |                                                                   |                                                                   |
+|-------------------------------------------------------------------|-------------------------------------------------------------------|-------------------------------------------------------------------|-------------------------------------------------------------------|
+| <img src="res/screenshots/phone/screenshot1.webp" width="160" />  | <img src="res/screenshots/phone/screenshot2.webp" width="160" />  | <img src="res/screenshots/phone/screenshot3.webp" width="160" />  | <img src="res/screenshots/phone/screenshot4.webp" width="160" />  |
+| <img src="res/screenshots/phone/screenshot5.webp" width="160" />  | <img src="res/screenshots/phone/screenshot6.webp" width="160" />  | <img src="res/screenshots/phone/screenshot7.webp" width="160" />  | <img src="res/screenshots/phone/screenshot8.webp" width="160" />  |
+
+#### Tablet
+
+|                                                                   |                                                                   |                                                                   |                                                                   |
+|-------------------------------------------------------------------|-------------------------------------------------------------------|-------------------------------------------------------------------|-------------------------------------------------------------------|
+| <img src="res/screenshots/tablet/screenshot1.webp" width="160" /> | <img src="res/screenshots/tablet/screenshot2.webp" width="160" /> | <img src="res/screenshots/tablet/screenshot3.webp" width="160" /> | <img src="res/screenshots/tablet/screenshot4.webp" width="160" /> |
+| <img src="res/screenshots/tablet/screenshot5.webp" width="160" /> | <img src="res/screenshots/tablet/screenshot6.webp" width="160" /> | <img src="res/screenshots/tablet/screenshot7.webp" width="160" /> | <img src="res/screenshots/tablet/screenshot8.webp" width="160" /> |
 
 ---
 

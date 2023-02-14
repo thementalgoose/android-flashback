@@ -49,7 +49,7 @@ fun TextHeadline2(
 @Composable
 fun TextHeadline2WithIcon(
     text: String,
-    icon: Painter,
+    icon: Painter?,
     modifier: Modifier = Modifier,
     iconModifier: Modifier = Modifier,
     maxLines: Int = 1,
@@ -70,12 +70,14 @@ fun TextHeadline2WithIcon(
             )
             Spacer(Modifier.width(10.dp))
         }
-        Image(
-            painter = icon,
-            contentDescription = null,
-            modifier = iconModifier
-                .align(Alignment.TopEnd),
-        )
+        icon?.let {
+            Image(
+                painter = it,
+                contentDescription = null,
+                modifier = iconModifier
+                    .align(Alignment.TopEnd),
+            )
+        }
     }
 }
 
