@@ -23,8 +23,11 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.window.layout.FoldingFeature
 import androidx.window.layout.WindowLayoutInfo
 import kotlinx.coroutines.launch
 import tmg.flashback.debug.model.DebugMenuItem
@@ -121,6 +124,8 @@ fun DashboardScreen(
     val panelsState = rememberOverlappingPanelsState(OverlappingPanelsValue.Closed)
     val coroutineScope = rememberCoroutineScope()
 
+    val foldingStartScreenWidth = windowLayoutInfo.getLandscapeFoldingMidpoint()
+
     // Close panel if window size is changes via. configuration change
     DisposableEffect(windowSize, effect = {
         coroutineScope.launch { panelsState.closePanels() }
@@ -193,6 +198,7 @@ fun DashboardScreen(
                     Row(Modifier.fillMaxSize()) {
                         if (windowSize.widthSizeClass == WindowWidthSizeClass.Medium) {
                             DashboardMenuExpandedScreen(
+                                overrideColumnWidth = foldingStartScreenWidth,
                                 currentlySelectedItem = currentlySelectedItem,
                                 appFeatureItemsList = appFeatureItemsList,
                                 seasonScreenItemsList = seasonScreenItemsList,
@@ -213,6 +219,7 @@ fun DashboardScreen(
                         }
                         if (windowSize.widthSizeClass == WindowWidthSizeClass.Expanded) {
                             DashboardMenuExpandedScreen(
+                                overrideColumnWidth = foldingStartScreenWidth,
                                 currentlySelectedItem = currentlySelectedItem,
                                 appFeatureItemsList = appFeatureItemsList,
                                 seasonScreenItemsList = seasonScreenItemsList,
@@ -256,4 +263,23 @@ fun DashboardScreen(
             )
         }
     )
+}
+
+@Composable
+private fun WindowLayoutInfo.getLandscapeFoldingMidpoint(): Dp? {
+    // Is folding
+    val foldingFeature = this.displayFeatures
+        .firstNotNullOfOrNull { it as? FoldingFeature } ?: return null
+
+    // Is landscape
+    if (foldingFeature.orientation == FoldingFeature.Orientation.HORIZONTAL) {
+        return null
+    }
+
+    // Set width of menu
+    val width = with(LocalDensity.current) { foldingFeature.bounds.left.toDp() }
+    if (width > 420.dp) {
+        return null
+    }
+    return width
 }

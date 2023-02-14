@@ -1,12 +1,7 @@
 package tmg.flashback.ui
 
-import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
@@ -18,6 +13,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navDeepLink
+import androidx.window.layout.FoldingFeature
 import androidx.window.layout.WindowLayoutInfo
 import org.threeten.bp.LocalDate
 import tmg.flashback.privacypolicy.PrivacyPolicy
@@ -49,7 +45,6 @@ import tmg.flashback.stats.ui.drivers.season.DriverSeasonScreenVM
 import tmg.flashback.stats.ui.search.SearchScreenVM
 import tmg.flashback.stats.ui.weekend.WeekendInfo
 import tmg.flashback.stats.ui.weekend.WeekendScreenVM
-import tmg.flashback.ui.components.layouts.SplitPane
 import tmg.flashback.ui.navigation.Navigator
 import tmg.flashback.ui.navigation.Screen
 import tmg.flashback.ui.navigation.asNavigationDestination
@@ -74,10 +69,6 @@ import tmg.flashback.ui.settings.notifications.SettingsNotificationsResultsScree
 import tmg.flashback.ui.settings.notifications.SettingsNotificationsUpcomingScreenVM
 import tmg.flashback.ui.settings.web.SettingsWebScreenVM
 import tmg.utilities.extensions.toLocalDate
-
-data class AppGraphInitialLoadValues(
-    val season: Int
-)
 
 @Composable
 fun AppGraph(
@@ -107,14 +98,6 @@ fun AppGraph(
             }
         }
     }
-
-//    BackHandler {
-//        if (!navController.popBackStack()) {
-//            closeApp()
-//        }
-//    }
-
-    val settingsScroll = rememberLazyListState()
 
     NavHost(
         navController = navController,

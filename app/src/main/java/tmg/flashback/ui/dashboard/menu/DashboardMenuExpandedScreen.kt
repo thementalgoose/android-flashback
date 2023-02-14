@@ -71,6 +71,7 @@ val headerHeight: Dp = 72.dp
 @Composable
 fun DashboardMenuExpandedScreen(
     modifier: Modifier = Modifier,
+    overrideColumnWidth: Dp?,
     currentlySelectedItem: MenuItem,
     appFeatureItemsList: List<MenuItem>,
     seasonScreenItemsList: List<MenuItem>,
@@ -90,8 +91,8 @@ fun DashboardMenuExpandedScreen(
 ) {
     val expanded = remember { mutableStateOf(lockExpanded) }
     val width = animateDpAsState(targetValue = when {
-        lockExpanded -> columnWidthExpandedLocked
-        expanded.value -> columnWidthExpanded
+        lockExpanded -> overrideColumnWidth ?: columnWidthExpandedLocked
+        expanded.value -> overrideColumnWidth ?: columnWidthExpanded
         else -> columnWidthCollapsed
     })
 
@@ -457,6 +458,7 @@ private fun Div() {
 private fun PreviewCompactTimeline() {
     AppThemePreview {
         DashboardMenuExpandedScreen(
+            overrideColumnWidth = null,
             currentlySelectedItem = MenuItem.Calendar,
             appFeatureItemsList = listOf(MenuItem.Settings, MenuItem.RSS),
             seasonScreenItemsList = listOf(MenuItem.Calendar, MenuItem.Drivers),
@@ -482,6 +484,7 @@ private fun PreviewCompactTimeline() {
 private fun PreviewExpandedTimeline() {
     AppThemePreview {
         DashboardMenuExpandedScreen(
+            overrideColumnWidth = null,
             currentlySelectedItem = MenuItem.Calendar,
             appFeatureItemsList = listOf(MenuItem.Settings, MenuItem.RSS),
             seasonScreenItemsList = listOf(MenuItem.Calendar, MenuItem.Drivers),
