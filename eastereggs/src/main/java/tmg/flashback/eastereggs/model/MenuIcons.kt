@@ -2,53 +2,57 @@ package tmg.flashback.eastereggs.model
 
 import org.threeten.bp.LocalDate
 import org.threeten.bp.Year
+import org.threeten.bp.format.DateTimeFormatter
 
 private val year: Int by lazy { Year.now().value }
 enum class MenuIcons(
     val key: String,
-    val start: LocalDate,
-    val end: LocalDate
+    val startResolver: () -> LocalDate,
+    val endResolver: () -> LocalDate
 ) {
     NEW_YEARS(
         key = "new_year",
-        start = LocalDate.of(year, 1, 1),
-        end = LocalDate.of(year, 1, 1)
+        startResolver = { LocalDate.of(year, 1, 1) },
+        endResolver = { LocalDate.of(year, 1, 1) }
     ),
     CHINESE_NEW_YEAR(
         key = "new_year",
-        start = LocalDate.of(2024, 2, 9),
-        end = LocalDate.of(2024, 2, 10)
+        startResolver = { LocalDate.of(2024, 2, 9) },
+        endResolver = { LocalDate.of(2024, 2, 10) }
     ),
     VALENTINES_DAY(
         key = "valentines",
-        start = LocalDate.of(year, 2, 11),
-        end = LocalDate.of(year, 2, 14)
+        startResolver = { LocalDate.of(year, 2, 11) },
+        endResolver = { LocalDate.of(year, 2, 14) }
     ),
     EASTER(
         key = "easter",
-        start = LocalDate.of(2023, 4, 4),
-        end = LocalDate.of(2023, 4, 9)
+        startResolver = { LocalDate.of(2023, 4, 4) },
+        endResolver = { LocalDate.of(2023, 4, 9) }
     ),
     HALLOWEEN(
         key = "halloween",
-        start = LocalDate.of(year, 10, 17),
-        end = LocalDate.of(year, 10, 31)
+        startResolver = { LocalDate.of(year, 10, 17) },
+        endResolver = { LocalDate.of(year, 10, 31) }
     ),
     BONFIRE(
         key = "bonfire",
-        start = LocalDate.of(year, 11, 4),
-        end = LocalDate.of(year, 11, 5)
+        startResolver = { LocalDate.of(year, 11, 4) },
+        endResolver = { LocalDate.of(year, 11, 5) }
     ),
     CHRISTMAS(
         key = "christmas",
-        start = LocalDate.of(year, 12, 19),
-        end = LocalDate.of(year, 12, 25)
+        startResolver = { LocalDate.of(year, 12, 19) },
+        endResolver = { LocalDate.of(year, 12, 25) }
     ),
     NEW_YEARS_EVE(
         key = "new_year_eve",
-        start = LocalDate.of(year, 12, 31),
-        end = LocalDate.of(year, 12, 31)
+        startResolver = { LocalDate.of(year, 12, 31) },
+        endResolver = { LocalDate.of(year, 12, 31) }
     );
+
+    val start: LocalDate by lazy { startResolver() }
+    val end: LocalDate by lazy { endResolver() }
 
     fun isNow(now: LocalDate = LocalDate.now()): Boolean{
         return now in start..end
