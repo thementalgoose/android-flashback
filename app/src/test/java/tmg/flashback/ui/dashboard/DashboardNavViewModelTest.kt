@@ -14,6 +14,8 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import tmg.flashback.crash_reporting.manager.CrashManager
+import tmg.flashback.debug.DebugNavigationComponent
+import tmg.flashback.debug.model.DebugMenuItem
 import tmg.flashback.rss.repo.RSSRepository
 import tmg.flashback.stats.Calendar
 import tmg.flashback.stats.Constructors
@@ -44,6 +46,7 @@ internal class DashboardNavViewModelTest: BaseTest() {
     private val mockApplicationNavigationComponent: ApplicationNavigationComponent = mockk(relaxed = true)
     private val mockCrashManager: CrashManager = mockk(relaxed = true)
     private val mockDashboardSyncUseCase: DashboardSyncUseCase = mockk(relaxed = true)
+    private val mockDebugNavigationComponent: DebugNavigationComponent = mockk(relaxed = true)
 
     private lateinit var underTest: DashboardNavViewModel
 
@@ -56,6 +59,7 @@ internal class DashboardNavViewModelTest: BaseTest() {
             applicationNavigationComponent = mockApplicationNavigationComponent,
             crashManager = mockCrashManager,
             dashboardSyncUseCase = mockDashboardSyncUseCase,
+            debugNavigationComponent = mockDebugNavigationComponent,
             ioDispatcher = Dispatchers.Unconfined
         )
     }
@@ -291,5 +295,27 @@ internal class DashboardNavViewModelTest: BaseTest() {
         list.assertListMatchesItem(atIndex = 1) { it.id == "2019" && !it.isSelected }
         list.assertListMatchesItem(atIndex = 1) { it.id == "2020" && it.isSelected }
         list.assertListMatchesItem(atIndex = 1) { it.id == "2021" && !it.isSelected }
+    }
+
+    @Test
+    fun `debug items come from debug nav component`() {
+        val list: List<DebugMenuItem> = listOf(mockk())
+        every { mockDebugNavigationComponent.getDebugMenuItems() } returns list
+
+        initUnderTest()
+        underTest.outputs.debugMenuItems.test {
+            assertValue(list)
+        }
+    }
+
+    @Test
+    fun `debug item click forwards call to debug nav component`() {
+        val item = DebugMenuItem(0, 0, "id")
+
+        initUnderTest()
+        underTest.inputs.clickDebug(item)
+        verify {
+            mockDebugNavigationComponent.navigateTo("id")
+        }
     }
 }
