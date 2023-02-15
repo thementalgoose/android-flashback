@@ -23,8 +23,11 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.window.layout.FoldingFeature
 import androidx.window.layout.WindowLayoutInfo
 import kotlinx.coroutines.launch
 import tmg.flashback.debug.model.DebugMenuItem
@@ -39,6 +42,7 @@ import tmg.flashback.ui.components.navigation.NavigationTimelineItem
 import tmg.flashback.ui.components.navigation.appBarHeight
 import tmg.flashback.ui.dashboard.menu.DashboardMenuExpandedScreen
 import tmg.flashback.ui.dashboard.menu.DashboardMenuScreen
+import tmg.flashback.ui.foldables.getFoldingConfig
 import tmg.flashback.ui.navigation.Navigator
 
 @Composable
@@ -121,6 +125,8 @@ fun DashboardScreen(
     val panelsState = rememberOverlappingPanelsState(OverlappingPanelsValue.Closed)
     val coroutineScope = rememberCoroutineScope()
 
+    val foldingConfig = windowLayoutInfo.getFoldingConfig()
+
     // Close panel if window size is changes via. configuration change
     DisposableEffect(windowSize, effect = {
         coroutineScope.launch { panelsState.closePanels() }
@@ -193,6 +199,7 @@ fun DashboardScreen(
                     Row(Modifier.fillMaxSize()) {
                         if (windowSize.widthSizeClass == WindowWidthSizeClass.Medium) {
                             DashboardMenuExpandedScreen(
+                                foldingConfig = foldingConfig,
                                 currentlySelectedItem = currentlySelectedItem,
                                 appFeatureItemsList = appFeatureItemsList,
                                 seasonScreenItemsList = seasonScreenItemsList,
@@ -213,6 +220,7 @@ fun DashboardScreen(
                         }
                         if (windowSize.widthSizeClass == WindowWidthSizeClass.Expanded) {
                             DashboardMenuExpandedScreen(
+                                foldingConfig = foldingConfig,
                                 currentlySelectedItem = currentlySelectedItem,
                                 appFeatureItemsList = appFeatureItemsList,
                                 seasonScreenItemsList = seasonScreenItemsList,
@@ -257,3 +265,4 @@ fun DashboardScreen(
         }
     )
 }
+
