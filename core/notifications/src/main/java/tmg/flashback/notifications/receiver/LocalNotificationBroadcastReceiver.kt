@@ -38,7 +38,7 @@ class LocalNotificationBroadcastReceiver @Inject constructor(): BroadcastReceive
             return
         }
         if (BuildConfig.DEBUG) {
-            Log.d("Notification", "Scheduling notification for Title $title Description $description")
+            Log.d("Notification", "Scheduling notification for Title '$title' Description '$description'")
         }
 
         val notification = notificationManager.buildNotification(
@@ -55,7 +55,7 @@ class LocalNotificationBroadcastReceiver @Inject constructor(): BroadcastReceive
             }
         )
 
-        Log.i("Notification", "Displaying notification for $title")
+        Log.i("Notification", "Displaying notification for '$title'")
 
         notificationManager.notify("flashback", 1001, notification)
     }

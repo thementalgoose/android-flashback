@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalFoundationApi::class)
+
 package tmg.flashback.debug.core
 
 import android.annotation.SuppressLint
@@ -5,9 +7,15 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -32,15 +40,21 @@ import tmg.flashback.statistics.repo.ConstructorRepository
 import tmg.flashback.statistics.repo.DriverRepository
 import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.stats.StatsNavigationComponent
+import tmg.flashback.stats.repository.models.NotificationChannel
 import tmg.flashback.stats.ui.drivers.stathistory.DriverStatHistoryType
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.buttons.ButtonPrimary
+import tmg.flashback.style.buttons.ButtonTertiary
 import tmg.flashback.style.input.InputPrimary
 import tmg.flashback.style.text.TextBody1
+import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextSection
+import tmg.flashback.style.text.TextTitle
 import tmg.flashback.ui.base.BaseActivity
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.navigation.ApplicationNavigationComponent
+import tmg.flashback.ui.repository.PermissionRepository
+import tmg.utilities.extensions.copyToClipboard
 import javax.inject.Inject
 
 @SuppressLint("SetTextI18n")
@@ -48,34 +62,37 @@ import javax.inject.Inject
 class DebugActivity: BaseActivity() {
 
     @Inject
-    protected lateinit var overviewRepository: OverviewRepository
+    lateinit var overviewRepository: OverviewRepository
     @Inject
-    protected lateinit var circuitRepository: CircuitRepository
+    lateinit var circuitRepository: CircuitRepository
     @Inject
-    protected lateinit var driverRepository: DriverRepository
+    lateinit var driverRepository: DriverRepository
     @Inject
-    protected lateinit var constructorRepository: ConstructorRepository
+    lateinit var constructorRepository: ConstructorRepository
 
     @Inject
-    protected lateinit var baseUrlLocalOverrideManager: BaseUrlLocalOverrideManager
+    lateinit var baseUrlLocalOverrideManager: BaseUrlLocalOverrideManager
 
     @Inject
-    protected lateinit var deviceRepository: DeviceRepository
+    lateinit var deviceRepository: DeviceRepository
     @Inject
-    protected lateinit var adsManager: AdsManager
+    lateinit var adsManager: AdsManager
     @Inject
-    protected lateinit var notificationRepository: NotificationRepository
+    lateinit var notificationRepository: NotificationRepository
 
     @Inject
-    protected lateinit var releaseNotesNavigationComponent: ReleaseNotesNavigationComponent
+    lateinit var releaseNotesNavigationComponent: ReleaseNotesNavigationComponent
     @Inject
-    protected lateinit var preferenceManager: PreferenceManager
+    lateinit var preferenceManager: PreferenceManager
 
     @Inject
-    protected lateinit var applicationNavigationComponent: ApplicationNavigationComponent
+    lateinit var applicationNavigationComponent: ApplicationNavigationComponent
 
     @Inject
-    protected lateinit var statsNavigationComponent: StatsNavigationComponent
+    lateinit var statsNavigationComponent: StatsNavigationComponent
+
+    @Inject
+    lateinit var permissionRepository: PermissionRepository
 
     companion object {
         private const val keyReleaseNotesSeenVersion: String = "RELEASE_NOTES_SEEN_VERSION"
@@ -86,189 +103,190 @@ class DebugActivity: BaseActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             AppTheme {
-                val configUrl = remember { mutableStateOf(TextFieldValue(baseUrlLocalOverrideManager.localBaseUrl ?: "")) }
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .verticalScroll(rememberScrollState())
-                ) {
-                    Header(
-                        text = "Debug",
-                        icon = painterResource(id = R.drawable.ic_back),
-                        iconContentDescription = null,
-                        actionUpClicked = { finish() }
-                    )
-                    Column(
-                        modifier = Modifier
-                            .padding(
-                                top = AppTheme.dimens.small,
-                                start = AppTheme.dimens.medium,
-                                end = AppTheme.dimens.medium,
-                                bottom = AppTheme.dimens.medium
-                            )
-                    ) {
-                        Text(
-                            label = "ADs ID",
-                            value = adsManager.getCurrentDeviceId(applicationContext) ?: ""
-                        )
-                        Text(
-                            label = "FCM ID",
-                            value = notificationRepository.remoteNotificationToken ?: ""
-                        )
-                        Text(
-                            label = "Device UDID",
-                            value = deviceRepository.deviceUdid
-                        )
+                DebugScreen(actionUpClicked = { finish() }) {
 
-                        TextSection(
-                            text = "Config URL",
-                            modifier = Modifier.padding(top = 16.dp)
-                        )
-                        InputPrimary(text = configUrl, placeholder = "https://flashback.pages.dev")
-                        Spacer(modifier = Modifier.height(4.dp))
-                        Row(
-                            horizontalArrangement = Arrangement.SpaceEvenly,
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            ButtonPrimary(
-                                text = "Save",
-                                modifier = Modifier.weight(1f),
-                                onClick = {
-                                    val url = configUrl.value.text
-                                    baseUrlLocalOverrideManager.localBaseUrl = url
-                                    Toast.makeText(
-                                        this@DebugActivity,
-                                        "Set '${url}' to local override url",
-                                        Toast.LENGTH_LONG
-                                    ).show()
-                                }
-                            )
+                    Div()
+                    this.DeviceInfo()
 
-                            Spacer(modifier = Modifier.width(16.dp))
-                            ButtonPrimary(
-                                text = "Clear",
-                                modifier = Modifier.weight(1f),
-                                onClick = {
-                                    baseUrlLocalOverrideManager.localBaseUrl = null
-                                    configUrl.value = TextFieldValue("")
-                                    Toast.makeText(
-                                        this@DebugActivity,
-                                        "Cleared local override url",
-                                        Toast.LENGTH_LONG
-                                    ).show()
-                                }
-                            )
-                        }
+                    Div()
+                    this.ConfigUrl()
 
-                        Button(
-                            label = "Release Notes",
-                            value = "Release Notes",
-                            buttonClicked = {
-                                // Last release notes
-                                preferenceManager.save(keyReleaseNotesSeenVersion, 1)
+                    Div()
+                    this.Notifications()
 
-                                // Open
-                                releaseNotesNavigationComponent.releaseNotesNext()
-                            }
-                        )
+                    Div()
+                    TextSection(text = "Release Notes")
+                    ButtonPrimary(text = "Release Notes", onClick = {
+                        preferenceManager.save(keyReleaseNotesSeenVersion, 1)
+                        releaseNotesNavigationComponent.releaseNotesNext()
+                    })
 
-                        Button(
-                            label = "Up Next",
-                            value = "Up Next",
-                            buttonClicked = {
-                                statsNavigationComponent.upNext()
-                                // Open
-                            }
-                        )
+                    Div()
+                    TextSection(text = "Sync")
+                    ButtonPrimary(text = "App startup activity", onClick = {
+                        startActivity(applicationNavigationComponent.syncActivityIntent(this@DebugActivity))
+                    })
 
-                        Button(
-                            label = "Sync",
-                            value = "Sync Activity",
-                            buttonClicked = {
-                                startActivity(applicationNavigationComponent.syncActivityIntent(this@DebugActivity))
-                            }
-                        )
-                        Button(
-                            label = "Notifications",
-                            value = "Test Notification",
-                            buttonClicked = {
-                                val intent = LocalNotificationBroadcastReceiver.intent(
-                                    context = applicationContext,
-                                    channelId = "race",
-                                    title = "This is a debug notification!",
-                                    description = "This is a long description inside the notification"
-                                )
-                                sendBroadcast(intent)
-                            }
-                        )
-                        Button(
-                            label = "Network Request",
-                            value = "overview.json",
-                            buttonClicked = { syncOverview() }
-                        )
-                        Button(
-                            label = null,
-                            value = "drivers.json",
-                            buttonClicked = { syncDrivers() }
-                        )
-                        Button(
-                            label = null,
-                            value = "constructors.json",
-                            buttonClicked = { syncConstructors() }
-                        )
-                        Button(
-                            label = null,
-                            value = "circuits.json",
-                            buttonClicked = { syncCircuits() }
-                        )
-                    }
+                    Div()
+                    this.NetworkRequests()
+
+                    Div()
                 }
             }
         }
     }
 
     @Composable
-    private fun ColumnScope.Text(
-        label: String,
-        value: String
+    private fun DebugScreen(
+        actionUpClicked: () -> Unit,
+        content: @Composable ColumnScope.() -> Unit,
     ) {
-        TextSection(
-            textAlign = TextAlign.Start,
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 16.dp)
-                .padding(vertical = 4.dp),
-            text = label
-        )
-        TextBody1(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 4.dp),
-            text = value
+                .verticalScroll(rememberScrollState())
+        ) {
+            Header(
+                text = "Debug",
+                icon = painterResource(id = R.drawable.ic_back),
+                iconContentDescription = null,
+                actionUpClicked = actionUpClicked
+            )
+            Column(
+                modifier = Modifier.padding(
+                    horizontal = AppTheme.dimens.medium
+                ),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                this.content()
+            }
+        }
+    }
+
+    @Composable
+    private fun ColumnScope.DeviceInfo() {
+
+        TextSection(text = "Information")
+        TextBody2(text = "Useful IDs used for various services in use with the app. Long click to copy the value to clipboard")
+        Row(modifier = Modifier
+            .fillMaxWidth()
+            .background(AppTheme.colors.backgroundSecondary)
+            .longClick { copyToClipboard(adsManager.getCurrentDeviceId(applicationContext) ?: "") }
+            .padding(horizontal = 4.dp, vertical = 4.dp)
+        ) {
+            TextBody1(text = "AD ID:", modifier = Modifier.weight(1f))
+            TextBody2(text = adsManager.getCurrentDeviceId(applicationContext) ?: "", modifier = Modifier.weight(1f))
+        }
+        Row(modifier = Modifier
+            .fillMaxWidth()
+            .background(AppTheme.colors.backgroundSecondary)
+            .longClick { copyToClipboard(notificationRepository.remoteNotificationToken ?: "") }
+            .padding(horizontal = 4.dp, vertical = 4.dp)
+        ) {
+            TextBody1(text = "FCM ID:", modifier = Modifier.weight(1f))
+            TextBody2(text = notificationRepository.remoteNotificationToken ?: "", modifier = Modifier.weight(1f))
+        }
+        Row(modifier = Modifier
+            .fillMaxWidth()
+            .background(AppTheme.colors.backgroundSecondary)
+            .longClick { copyToClipboard(deviceRepository.deviceUdid) }
+            .padding(horizontal = 4.dp, vertical = 4.dp)
+        ) {
+            TextBody1(text = "Device ID:", modifier = Modifier.weight(1f))
+            TextBody2(text = deviceRepository.deviceUdid, modifier = Modifier.weight(1f))
+        }
+        Row(modifier = Modifier
+            .fillMaxWidth()
+            .background(AppTheme.colors.backgroundSecondary)
+            .longClick { copyToClipboard(deviceRepository.installationId) }
+            .padding(horizontal = 4.dp, vertical = 4.dp)
+        ) {
+            TextBody1(text = "Install ID:", modifier = Modifier.weight(1f))
+            TextBody2(text = deviceRepository.installationId, modifier = Modifier.weight(1f))
+        }
+    }
+
+    @Composable
+    private fun ColumnScope.ConfigUrl() {
+        val configUrl = remember { mutableStateOf(TextFieldValue(baseUrlLocalOverrideManager.localBaseUrl ?: "")) }
+        TextSection(text = "Config URL")
+        InputPrimary(text = configUrl, placeholder = "https://flashback.pages.dev")
+        Row(
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            ButtonPrimary(
+                text = "Save",
+                modifier = Modifier.weight(1f),
+                onClick = {
+                    val url = configUrl.value.text
+                    baseUrlLocalOverrideManager.localBaseUrl = url
+                    toast("Set '${url}' to override")
+                }
+            )
+            Spacer(modifier = Modifier.width(16.dp))
+            ButtonPrimary(
+                text = "Clear",
+                modifier = Modifier.weight(1f),
+                onClick = {
+                    baseUrlLocalOverrideManager.localBaseUrl = null
+                    configUrl.value = TextFieldValue("")
+                    toast("Cleared URL")
+                }
+            )
+        }
+    }
+
+    @Composable
+    private fun ColumnScope.Notifications() {
+        TextSection(text = "Notifications")
+        if (!permissionRepository.isRuntimeNotificationsEnabled) {
+            TextBody2(text = "Runtime notifications disabled. Notification will not be delivered")
+        } else {
+            TextBody2(text = "Runtime notifications enabled")
+        }
+        ButtonPrimary(
+            text = "Send test notification",
+            enabled = permissionRepository.isRuntimeNotificationsEnabled,
+            onClick = {
+                val intent = LocalNotificationBroadcastReceiver.intent(
+                    context = applicationContext,
+                    channelId = NotificationChannel.RACE.channelId,
+                    title = "This is a debug notification!",
+                    description = "This is a long description inside the notification"
+                )
+                sendBroadcast(intent)
+            }
         )
     }
 
     @Composable
-    private fun ColumnScope.Button(
-        label: String?,
-        value: String,
-        buttonClicked: () -> Unit,
-    ) {
-        label?.let {
-            TextSection(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 16.dp)
-                    .padding(vertical = 4.dp),
-                text = label
-            )
-        }
-        ButtonPrimary(
+    private fun ColumnScope.NetworkRequests() {
+        TextSection(text = "Requests")
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 4.dp),
-            text = value,
-            onClick = buttonClicked
+                .horizontalScroll(rememberScrollState()),
+            horizontalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            ButtonTertiary(text = "overview.json", onClick = { syncOverview() })
+            ButtonTertiary(text = "drivers.json", onClick = { syncDrivers() })
+            ButtonTertiary(text = "constructors.json", onClick = { syncConstructors() })
+            ButtonTertiary(text = "circuits.json", onClick = { syncCircuits() })
+        }
+    }
+
+    @Composable
+    private fun ColumnScope.Div() {
+        Spacer(modifier = Modifier.height(12.dp))
+        Divider()
+        Spacer(modifier = Modifier.height(12.dp))
+    }
+
+    private fun Modifier.longClick(longClick: () -> Unit): Modifier {
+        return this.combinedClickable(
+            onClick = {},
+            onLongClick = longClick
         )
     }
 
@@ -318,5 +336,9 @@ class DebugActivity: BaseActivity() {
 
     private fun log(msg: String) {
         Log.d("Debug", msg)
+    }
+
+    private fun toast(msg: String) {
+        Toast.makeText(this@DebugActivity, msg, Toast.LENGTH_LONG).show()
     }
 }
