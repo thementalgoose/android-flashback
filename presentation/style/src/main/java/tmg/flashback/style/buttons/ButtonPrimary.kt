@@ -1,6 +1,7 @@
 package tmg.flashback.style.buttons
 
 import androidx.compose.foundation.focusable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -20,15 +21,20 @@ fun ButtonPrimary(
     text: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    enabled: Boolean = true,
 ) {
     return Button(
         modifier = modifier
             .focusable(true)
             .fillMaxWidth(),
         colors = ButtonDefaults.textButtonColors(
-            backgroundColor = FlashbackTheme.colors.primary,
+            backgroundColor = when (enabled) {
+                true -> FlashbackTheme.colors.primary
+                false -> FlashbackTheme.colors.primary.copy(alpha = 0.4f)
+            },
             contentColor = FlashbackTheme.colors.contentPrimaryInverse
         ),
+        enabled = enabled,
         shape = RoundedCornerShape(6.dp),
         onClick = onClick
     ) {
@@ -49,9 +55,25 @@ fun ButtonPrimary(
 @Composable
 private fun Preview() {
     AppThemePreview {
-        ButtonPrimary(
-            text = "Primary Button",
-            onClick = { }
-        )
+        Box(Modifier.padding(16.dp)) {
+            ButtonPrimary(
+                text = "Primary Button",
+                onClick = { }
+            )
+        }
+    }
+}
+
+@PreviewTheme
+@Composable
+private fun PreviewDisabled() {
+    AppThemePreview {
+        Box(Modifier.padding(16.dp)) {
+            ButtonPrimary(
+                enabled = false,
+                text = "Primary Button",
+                onClick = { }
+            )
+        }
     }
 }
