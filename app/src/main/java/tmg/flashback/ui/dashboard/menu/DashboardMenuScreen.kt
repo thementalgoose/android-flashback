@@ -135,6 +135,7 @@ fun DashboardMenuScreen(
             }
             if (debugMenuItems.isNotEmpty()) {
                 item(key = "debug") {
+                    SubHeader(text = "Debug")
                     debugMenuItems.forEach { debugItem ->
                         Button(
                             label = debugItem.label,
@@ -146,6 +147,7 @@ fun DashboardMenuScreen(
                             }
                         )
                     }
+                    Divider()
                 }
             }
             item(key = "label2") { SubHeader(text = stringResource(id = R.string.dashboard_all_title)) }
