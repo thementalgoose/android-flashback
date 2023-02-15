@@ -18,10 +18,10 @@ Flashback provides race results and statistics from every race in the history of
 
 #### Phone
 
-|                                                                   |                                                                   |                                                                   |                                                                   |
-|-------------------------------------------------------------------|-------------------------------------------------------------------|-------------------------------------------------------------------|-------------------------------------------------------------------|
-| <img src="res/screenshots/phone/screenshot1.webp" width="160" />  | <img src="res/screenshots/phone/screenshot2.webp" width="160" />  | <img src="res/screenshots/phone/screenshot3.webp" width="160" />  | <img src="res/screenshots/phone/screenshot4.webp" width="160" />  |
-| <img src="res/screenshots/phone/screenshot5.webp" width="160" />  | <img src="res/screenshots/phone/screenshot6.webp" width="160" />  | <img src="res/screenshots/phone/screenshot7.webp" width="160" />  | <img src="res/screenshots/phone/screenshot8.webp" width="160" />  |
+|                                                                 |                                                                 |                                                                 |                                                                 |
+|-----------------------------------------------------------------|-----------------------------------------------------------------|-----------------------------------------------------------------|-----------------------------------------------------------------|
+| <img src="res/screenshots/phone/screenshot1.png" width="160" /> | <img src="res/screenshots/phone/screenshot2.png" width="160" /> | <img src="res/screenshots/phone/screenshot3.png" width="160" /> | <img src="res/screenshots/phone/screenshot4.png" width="160" /> |
+| <img src="res/screenshots/phone/screenshot5.png" width="160" /> | <img src="res/screenshots/phone/screenshot6.png" width="160" /> | <img src="res/screenshots/phone/screenshot7.png" width="160" /> | <img src="res/screenshots/phone/screenshot8.png" width="160" /> |
 
 #### Tablet
 
