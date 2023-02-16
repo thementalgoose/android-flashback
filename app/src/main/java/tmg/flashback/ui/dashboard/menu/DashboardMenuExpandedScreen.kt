@@ -163,6 +163,7 @@ fun DashboardMenuExpandedScreen(
                             isExpanded = expanded.value,
                             onClick = { debugMenuItemClicked(menuItem) }
                         )
+                        Spacer(Modifier.height(AppTheme.dimens.xsmall))
                     }
                     item { Div() }
                 }

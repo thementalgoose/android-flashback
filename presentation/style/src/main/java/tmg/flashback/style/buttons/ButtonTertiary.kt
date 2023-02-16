@@ -27,7 +27,7 @@ fun ButtonTertiary(
     narrow: Boolean = true,
     @DrawableRes
     icon: Int? = null,
-    enabled: Boolean = false,
+    highlighted: Boolean = false,
 ) {
     Button(
         modifier = modifier
@@ -35,12 +35,12 @@ fun ButtonTertiary(
             .wrapContentHeight(Alignment.CenterVertically)
             .padding(0.dp)
             .defaultMinSize(1.dp, 1.dp),
-        border = BorderStroke(0.dp, when (enabled) {
+        border = BorderStroke(0.dp, when (highlighted) {
             true -> AppTheme.colors.primaryLight
             false -> AppTheme.colors.backgroundTertiary
         }),
         colors = ButtonDefaults.outlinedButtonColors(
-            backgroundColor = when (enabled) {
+            backgroundColor = when (highlighted) {
                 true -> AppTheme.colors.primaryLight
                 false -> AppTheme.colors.backgroundTertiary
             },
@@ -89,7 +89,7 @@ private fun Preview() {
 private fun PreviewEnabled() {
     AppThemePreview {
         ButtonTertiary(
-            enabled = true,
+            highlighted = true,
             text = "Tertiary Button",
             onClick = { }
         )
@@ -101,7 +101,7 @@ private fun PreviewEnabled() {
 private fun PreviewWithIcon() {
     AppThemePreview {
         ButtonTertiary(
-            enabled = true,
+            highlighted = true,
             icon = R.drawable.lb_ic_fast_forward,
             text = "Tertiary Button",
             onClick = { }

@@ -142,7 +142,7 @@ fun SearchScreen(
                         onClick = {
                             searchCategoryUpdated(it)
                         },
-                        enabled = it == searchCategory
+                        highlighted = it == searchCategory
                     )
                     Spacer(Modifier.width(AppTheme.dimens.medium))
                 }
