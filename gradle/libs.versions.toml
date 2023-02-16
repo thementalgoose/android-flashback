@@ -96,7 +96,7 @@ room_testing = { module = "androidx.room:room-testing", version.ref = "androidx_
 shakey = "com.linkedin.shaky:shaky:3.0.4"
 falcon = "com.jraska:falcon:2.2.0"
 
-playservicesads = "com.google.android.gms:play-services-ads:21.4.0"
+playservicesads = "com.google.android.gms:play-services-ads:21.5.0"
 
 skeletonlayout = "com.faltenreich:skeletonlayout:4.0.0"
 
