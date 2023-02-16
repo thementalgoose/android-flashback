@@ -1,5 +1,5 @@
 [versions]  # ===========================================================================
-kotlin = "1.8.0"
+kotlin = "1.8.10"
 hilt = "2.45"
 androidx_navigation = "2.5.3"
 androidx_lifecycle = "2.5.1"
