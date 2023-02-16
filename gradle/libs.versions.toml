@@ -1,16 +1,16 @@
 [versions]  # ===========================================================================
-kotlin = "1.8.0"
-hilt = "2.44.2"
+kotlin = "1.8.10"
+hilt = "2.45"
 androidx_navigation = "2.5.3"
 androidx_lifecycle = "2.5.1"
 androidx_hilt = "1.0.0"
 androidx_room = "2.5.0"
-androidx_workmanager = "2.7.1"
+androidx_workmanager = "2.8.0"
 compose = "2023.01.00"
-composecompiler = "1.4.0"
+composecompiler = "1.4.2"
 compose_accompanist = "0.28.0"
 coroutines = "1.6.4"
-firebase = "31.2.0"
+firebase = "31.2.1"
 junit = "5.9.2"
 okhttp = "4.9.3"
 retrofit = "2.9.0"
@@ -78,7 +78,7 @@ hilt_compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref =
 hilt_kapt_compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "androidx_hilt" }
 hilt_workmanager = { module = "androidx.hilt:hilt-work", version.ref = "androidx_hilt" }
 
-lottie = "com.airbnb.android:lottie-compose:5.2.0"
+lottie = "com.airbnb.android:lottie-compose:6.0.0"
 
 retrofit_core = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit_converter_simplexml = { module = "com.squareup.retrofit2:converter-simplexml", version.ref = "retrofit" }
@@ -96,7 +96,7 @@ room_testing = { module = "androidx.room:room-testing", version.ref = "androidx_
 shakey = "com.linkedin.shaky:shaky:3.0.4"
 falcon = "com.jraska:falcon:2.2.0"
 
-playservicesads = "com.google.android.gms:play-services-ads:21.4.0"
+playservicesads = "com.google.android.gms:play-services-ads:21.5.0"
 
 skeletonlayout = "com.faltenreich:skeletonlayout:4.0.0"
 
@@ -128,7 +128,7 @@ junit5_api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "ju
 junit5_engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit" }
 junit5_params = { module = "org.junit.jupiter:junit-jupiter-params", version.ref = "junit" }
 
-mockk = "io.mockk:mockk:1.13.3"
+mockk = "io.mockk:mockk:1.13.4"
 
 tmg_testutils = "com.github.thementalgoose:android-test-utilities:1.2.2"
 
