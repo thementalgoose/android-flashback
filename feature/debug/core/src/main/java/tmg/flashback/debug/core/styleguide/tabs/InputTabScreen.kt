@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
@@ -40,7 +41,7 @@ internal fun InputTabScreen() {
         modifier = Modifier
             .fillMaxSize()
             .padding(horizontal = AppTheme.dimens.medium)
-            .scrollable(rememberScrollState(), orientation = Orientation.Vertical),
+            .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(AppTheme.dimens.nsmall)
     ) {
