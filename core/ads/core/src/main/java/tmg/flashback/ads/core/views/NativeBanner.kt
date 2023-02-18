@@ -13,6 +13,7 @@ import tmg.flashback.ads.core.R
 import tmg.flashback.ads.contract.repository.AdsRepository
 import tmg.flashback.ads.core.databinding.AdmobNativeBannerBinding
 import tmg.flashback.ads.core.usecases.GetAdUseCase
+import tmg.utilities.extensions.dpToPx
 import tmg.utilities.extensions.views.gone
 import javax.inject.Inject
 
@@ -63,8 +64,6 @@ internal class NativeBanner: FrameLayout {
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT,
                 ))
-//                binding.skeleton.alpha = 0.1f
-//                binding.skeleton.showSkeleton()
                 binding.adView.mediaView = binding.adMedia
                 binding.adView.headlineView = binding.adHeadline
 
@@ -79,6 +78,12 @@ internal class NativeBanner: FrameLayout {
         }
     }
 
+    fun setPadding(horizontalDp: Int) {
+        val px = horizontalDp.dpToPx(context.resources)
+        val verticalPx = 4.dpToPx(context.resources)
+        binding?.adView?.setPadding(px.toInt(), verticalPx.toInt(), px.toInt(), verticalPx.toInt())
+    }
+
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
 
@@ -88,8 +93,6 @@ internal class NativeBanner: FrameLayout {
                 val ad = getAdUseCase.getAd(context, adIndex)
                 if (ad != null) {
                     binding?.let { binding ->
-//                        binding.skeleton.alpha = 1.0f
-//                        binding.skeleton.showOriginal()
                         binding.adView.setNativeAd(ad)
                         binding.adHeadline.text = ad.headline
                         binding.adBody.text = ad.body

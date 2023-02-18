@@ -26,7 +26,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import tmg.flashback.ads.contract.repository.AdsRepository
-import tmg.flashback.ads.core.manager.AdsManager
 import tmg.flashback.debug.manager.BaseUrlLocalOverrideManager
 import tmg.flashback.device.repository.DeviceRepository
 import tmg.flashback.notifications.receiver.LocalNotificationBroadcastReceiver

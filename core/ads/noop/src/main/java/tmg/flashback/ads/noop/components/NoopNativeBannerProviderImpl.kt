@@ -1,18 +1,21 @@
 package tmg.flashback.ads.noop.components
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import tmg.flashback.ads.contract.components.NativeBannerProvider
+import androidx.compose.ui.unit.dp
+import tmg.flashback.ads.contract.components.AdvertProvider
 import javax.inject.Inject
 
-class NoopNativeBannerProviderImpl @Inject constructor(): NativeBannerProvider {
+class NoopNativeBannerProviderImpl @Inject constructor(): AdvertProvider {
 
     @Composable
     override fun NativeBannerImpl(
-        modifier: Modifier,
+        horizontalPadding: Boolean,
         badgeOffset: Boolean,
         adIndex: Int
     ) {
-        /* No-op */
+        Box(Modifier.size(0.dp))
     }
 }

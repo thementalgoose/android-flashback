@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.window.layout.WindowLayoutInfo
 import kotlinx.coroutines.launch
+import tmg.flashback.ads.contract.components.AdvertProvider
 import tmg.flashback.debug.model.DebugMenuItem
 import tmg.flashback.eastereggs.model.MenuIcons
 import tmg.flashback.style.AppTheme
@@ -46,6 +47,7 @@ import tmg.flashback.ui.navigation.Navigator
 fun DashboardScreen(
     windowSize: WindowSizeClass,
     windowLayoutInfo: WindowLayoutInfo,
+    advertProvider: AdvertProvider,
     navigator: Navigator,
     closeApp: () -> Unit,
     navViewModel: DashboardNavViewModel = hiltViewModel(),
@@ -72,6 +74,7 @@ fun DashboardScreen(
     DashboardScreen(
         windowSize = windowSize,
         windowLayoutInfo = windowLayoutInfo,
+        advertProvider = advertProvider,
         navigator = navigator,
         closeApp = closeApp,
         currentlySelectedItem = currentlySelectedItem.value,
@@ -99,6 +102,7 @@ fun DashboardScreen(
 fun DashboardScreen(
     windowSize: WindowSizeClass,
     windowLayoutInfo: WindowLayoutInfo,
+    advertProvider: AdvertProvider,
     navigator: Navigator,
     closeApp: () -> Unit,
     currentlySelectedItem: MenuItem,
@@ -249,6 +253,7 @@ fun DashboardScreen(
                             }
                             AppGraph(
                                 modifier = Modifier.weight(1f),
+                                advertProvider = advertProvider,
                                 openMenu = openMenu,
                                 windowSize = windowSize,
                                 windowInfo = windowLayoutInfo,

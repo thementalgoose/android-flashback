@@ -9,16 +9,16 @@ import tmg.flashback.ads.contract.repository.AdsRepository
 import tmg.flashback.ads.core.manager.AdsManager
 import tmg.flashback.ads.core.usecases.InitialiseAdsUseCase
 
-internal class InitialiseAdsUseCaseTest {
+internal class InitialiseAdsUseCasImpleTest {
 
     private val mockAdsManager: AdsManager = mockk(relaxed = true)
     private val mockAdsRepository: AdsRepository = mockk(relaxed = true)
     private val mockApplicationContext: Context = mockk(relaxed = true)
 
-    private lateinit var underTest: InitialiseAdsUseCase
+    private lateinit var underTest: InitialiseAdsUseCaseImpl
 
     private fun initUnderTest() {
-        underTest = InitialiseAdsUseCase(
+        underTest = InitialiseAdsUseCaseImpl(
             mockApplicationContext,
             mockAdsManager,
             mockAdsRepository
