@@ -1,6 +1,5 @@
 package tmg.flashback.maintenance.ui.forceupgrade
 
-import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent

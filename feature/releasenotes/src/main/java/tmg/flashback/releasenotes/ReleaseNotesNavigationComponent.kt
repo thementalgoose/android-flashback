@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity
 import tmg.flashback.releasenotes.ui.releasenotes.NewReleaseBottomSheetFragment
 import tmg.flashback.ui.navigation.ActivityProvider
 import tmg.flashback.ui.navigation.NavigationDestination
-import tmg.flashback.ui.navigation.Navigator
 import tmg.flashback.ui.navigation.Screen
 import javax.inject.Inject
 

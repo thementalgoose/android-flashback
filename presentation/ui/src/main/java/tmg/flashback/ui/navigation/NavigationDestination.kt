@@ -1,7 +1,6 @@
 package tmg.flashback.ui.navigation
 
 import androidx.navigation.NavController
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavOptionsBuilder
 
 data class NavigationDestination(

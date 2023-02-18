@@ -1,6 +1,5 @@
 package tmg.flashback.style.input
 
-import android.view.RoundedCorner
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -27,7 +26,6 @@ import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.R
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody1
-import tmg.flashback.style.text.TextBody2
 
 @Composable
 fun InputSelection(

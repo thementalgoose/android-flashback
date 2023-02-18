@@ -1,6 +1,5 @@
 package tmg.flashback.rss.repo.converters
 
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import tmg.flashback.rss.repo.model.SupportedArticleSource

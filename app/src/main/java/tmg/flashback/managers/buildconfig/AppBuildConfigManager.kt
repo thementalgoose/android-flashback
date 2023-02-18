@@ -1,10 +1,6 @@
 package tmg.flashback.managers.buildconfig
 
-import android.Manifest
-import android.Manifest.permission.POST_NOTIFICATIONS
-import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.os.Build
-import androidx.core.content.ContextCompat
 import tmg.flashback.BuildConfig
 import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.ui.navigation.ActivityProvider

@@ -1,7 +1,6 @@
 package tmg.flashback.formula1.utils
 
-import androidx.compose.runtime.Composable
-import java.util.*
+import java.util.Locale
 
 fun String.toAlpha2ISO(): String? {
     return Locale.getISOCountries()

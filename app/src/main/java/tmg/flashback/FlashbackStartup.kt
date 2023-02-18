@@ -1,6 +1,5 @@
 package tmg.flashback
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Build
 import android.util.Log
@@ -13,7 +12,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
-import tmg.flashback.analytics.UserProperty.*
+import tmg.flashback.analytics.UserProperty.APP_VERSION
+import tmg.flashback.analytics.UserProperty.DEVICE_MODEL
+import tmg.flashback.analytics.UserProperty.DEVICE_THEME
+import tmg.flashback.analytics.UserProperty.OS_VERSION
+import tmg.flashback.analytics.UserProperty.WIDGET_USAGE
 import tmg.flashback.analytics.manager.AnalyticsManager
 import tmg.flashback.configuration.usecases.InitialiseConfigUseCase
 import tmg.flashback.crash_reporting.repository.CrashRepository
@@ -34,7 +37,6 @@ import tmg.flashback.ui.model.NightMode
 import tmg.flashback.ui.model.Theme
 import tmg.flashback.ui.repository.ThemeRepository
 import tmg.flashback.widgets.updateAllWidgets
-import tmg.utilities.extensions.deviceStatus
 import tmg.utilities.extensions.isInDayMode
 import javax.inject.Inject
 import javax.inject.Singleton

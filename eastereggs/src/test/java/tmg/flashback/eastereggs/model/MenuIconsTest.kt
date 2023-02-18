@@ -1,6 +1,6 @@
 package tmg.flashback.eastereggs.model
 
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import java.time.Year
 import kotlin.math.min

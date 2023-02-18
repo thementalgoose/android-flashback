@@ -2,11 +2,9 @@ package tmg.flashback.widgets.usecases
 
 import android.appwidget.AppWidgetManager
 import android.content.Context
-import io.mockk.MockK
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 

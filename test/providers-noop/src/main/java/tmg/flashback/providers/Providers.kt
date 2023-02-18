@@ -1,7 +1,19 @@
 package tmg.flashback.providers
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import tmg.flashback.formula1.model.*
+import tmg.flashback.formula1.model.CircuitHistoryRace
+import tmg.flashback.formula1.model.Constructor
+import tmg.flashback.formula1.model.Driver
+import tmg.flashback.formula1.model.DriverConstructor
+import tmg.flashback.formula1.model.Event
+import tmg.flashback.formula1.model.Overview
+import tmg.flashback.formula1.model.Race
+import tmg.flashback.formula1.model.RaceRaceResult
+import tmg.flashback.formula1.model.Schedule
+import tmg.flashback.formula1.model.SeasonConstructorStandingSeason
+import tmg.flashback.formula1.model.SeasonConstructorStandings
+import tmg.flashback.formula1.model.SeasonDriverStandingSeason
+import tmg.flashback.formula1.model.SeasonDriverStandings
 
 class DriverProvider: PreviewParameterProvider<Driver> {
     override val values: Sequence<Driver> = sequenceOf()

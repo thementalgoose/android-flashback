@@ -7,11 +7,9 @@ import org.junit.jupiter.api.Test
 import tmg.flashback.NetworkQualifyingResult
 import tmg.flashback.NetworkRaceResult
 import tmg.flashback.NetworkSprintResult
-import tmg.flashback.statistics.network.models.races.SprintResult
 import tmg.flashback.statistics.network.models.races.model
 import tmg.flashback.statistics.room.models.race.QualifyingResult
 import tmg.flashback.statistics.room.models.race.RaceResult
-import tmg.flashback.statistics.room.models.overview.model
 import tmg.flashback.statistics.room.models.race.model
 
 internal class NetworkRaceMapperTest {

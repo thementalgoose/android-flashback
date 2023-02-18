@@ -3,17 +3,15 @@ package tmg.flashback.ui.settings.notifications
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.stats.repository.NotificationRepository
 import tmg.flashback.stats.usecases.ScheduleNotificationsUseCase
 import tmg.flashback.ui.managers.PermissionManager
 import tmg.flashback.ui.permissions.RationaleType
 import tmg.flashback.ui.repository.PermissionRepository
-import tmg.flashback.ui.settings.Settings
 import tmg.flashback.ui.settings.Setting
+import tmg.flashback.ui.settings.Settings
 import javax.inject.Inject
 
 interface SettingsNotificationsUpcomingViewModelInputs {

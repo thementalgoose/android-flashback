@@ -8,7 +8,14 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import tmg.flashback.ads.config.repository.AdsRepository
 import tmg.flashback.formula1.model.Circuit
@@ -22,7 +29,6 @@ import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.stats.Circuit
 import tmg.flashback.stats.Constructor
 import tmg.flashback.stats.Driver
-import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.stats.Weekend
 import tmg.flashback.stats.ui.weekend.WeekendInfo
 import tmg.flashback.stats.with

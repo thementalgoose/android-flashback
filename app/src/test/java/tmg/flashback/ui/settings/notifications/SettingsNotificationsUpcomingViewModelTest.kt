@@ -1,6 +1,5 @@
 package tmg.flashback.ui.settings.notifications
 
-import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -8,7 +7,6 @@ import kotlinx.coroutines.CompletableDeferred
 import org.junit.jupiter.api.Test
 import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.stats.repository.NotificationRepository
-import tmg.flashback.stats.usecases.ResubscribeNotificationsUseCase
 import tmg.flashback.stats.usecases.ScheduleNotificationsUseCase
 import tmg.flashback.ui.managers.PermissionManager
 import tmg.flashback.ui.repository.PermissionRepository

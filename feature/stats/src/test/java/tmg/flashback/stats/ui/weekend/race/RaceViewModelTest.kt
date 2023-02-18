@@ -10,7 +10,6 @@ import tmg.flashback.formula1.model.RaceRaceResult
 import tmg.flashback.formula1.model.model
 import tmg.flashback.statistics.repo.RaceRepository
 import tmg.flashback.stats.DriverSeason
-import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.stats.with
 import tmg.flashback.ui.navigation.Navigator
 import tmg.flashback.ui.navigation.Screen

@@ -21,7 +21,6 @@ import tmg.flashback.stats.ui.drivers.stathistory.DriverStatHistoryType
 import tmg.flashback.stats.with
 import tmg.flashback.ui.navigation.Navigator
 import tmg.flashback.ui.navigation.Screen
-import tmg.flashback.web.WebNavigationComponent
 import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertListMatchesItem

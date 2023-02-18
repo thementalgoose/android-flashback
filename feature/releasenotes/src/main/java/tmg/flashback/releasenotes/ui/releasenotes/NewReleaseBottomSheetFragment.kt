@@ -1,7 +1,6 @@
 package tmg.flashback.releasenotes.ui.releasenotes
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import dagger.hilt.android.AndroidEntryPoint
 import tmg.flashback.releasenotes.repository.ReleaseNotesRepository
 import tmg.flashback.releasenotes.usecases.NewReleaseNotesUseCase

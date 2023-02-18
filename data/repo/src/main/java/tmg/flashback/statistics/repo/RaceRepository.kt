@@ -13,7 +13,13 @@ import tmg.flashback.statistics.network.models.races.DriverStandings
 import tmg.flashback.statistics.repo.base.BaseRepository
 import tmg.flashback.statistics.repo.extensions.valueList
 import tmg.flashback.statistics.repo.mappers.app.RaceMapper
-import tmg.flashback.statistics.repo.mappers.network.*
+import tmg.flashback.statistics.repo.mappers.network.NetworkConstructorDataMapper
+import tmg.flashback.statistics.repo.mappers.network.NetworkConstructorStandingMapper
+import tmg.flashback.statistics.repo.mappers.network.NetworkDriverDataMapper
+import tmg.flashback.statistics.repo.mappers.network.NetworkDriverStandingMapper
+import tmg.flashback.statistics.repo.mappers.network.NetworkRaceDataMapper
+import tmg.flashback.statistics.repo.mappers.network.NetworkRaceMapper
+import tmg.flashback.statistics.repo.mappers.network.NetworkScheduleMapper
 import tmg.flashback.statistics.repo.repository.CacheRepository
 import tmg.flashback.statistics.room.FlashbackDatabase
 import javax.inject.Inject

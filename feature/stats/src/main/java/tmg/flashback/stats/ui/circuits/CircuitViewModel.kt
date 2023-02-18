@@ -1,23 +1,29 @@
 package tmg.flashback.stats.ui.circuits
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import org.threeten.bp.LocalDate
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.formula1.model.CircuitHistory
 import tmg.flashback.statistics.repo.CircuitRepository
-import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.stats.Weekend
 import tmg.flashback.stats.ui.weekend.WeekendInfo
 import tmg.flashback.stats.with
-import tmg.flashback.ui.navigation.ApplicationNavigationComponent
 import tmg.flashback.ui.navigation.Navigator
 import tmg.flashback.ui.navigation.Screen
-import tmg.flashback.web.WebNavigationComponent
 import tmg.flashback.web.usecases.OpenWebpageUseCase
 import javax.inject.Inject
 

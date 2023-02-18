@@ -5,10 +5,14 @@ import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.flow.flow
 import org.junit.jupiter.api.Test
-import tmg.flashback.formula1.model.*
+import tmg.flashback.formula1.model.LapTime
+import tmg.flashback.formula1.model.Race
+import tmg.flashback.formula1.model.RaceQualifyingResult
+import tmg.flashback.formula1.model.RaceQualifyingRound
+import tmg.flashback.formula1.model.RaceQualifyingType
+import tmg.flashback.formula1.model.model
 import tmg.flashback.statistics.repo.RaceRepository
 import tmg.flashback.stats.DriverSeason
-import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.stats.with
 import tmg.flashback.ui.navigation.Navigator
 import tmg.flashback.ui.navigation.Screen

@@ -1,6 +1,5 @@
 package tmg.flashback.privacypolicy.ui
 
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.test

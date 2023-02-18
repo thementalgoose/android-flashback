@@ -2,7 +2,6 @@ package tmg.flashback.ui.components.analytics
 
 import io.mockk.mockk
 import io.mockk.verify
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import tmg.flashback.analytics.manager.AnalyticsManager
 

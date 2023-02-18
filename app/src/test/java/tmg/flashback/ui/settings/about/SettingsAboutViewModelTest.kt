@@ -8,13 +8,11 @@ import tmg.flashback.R
 import tmg.flashback.crash_reporting.repository.CrashRepository
 import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.releasenotes.ReleaseNotes
-import tmg.flashback.releasenotes.ReleaseNotesNavigationComponent
 import tmg.flashback.ui.managers.ToastManager
 import tmg.flashback.ui.navigation.ApplicationNavigationComponent
 import tmg.flashback.ui.navigation.Navigator
 import tmg.flashback.ui.navigation.Screen
 import tmg.flashback.ui.settings.Settings
-import tmg.flashback.web.WebNavigationComponent
 import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.test

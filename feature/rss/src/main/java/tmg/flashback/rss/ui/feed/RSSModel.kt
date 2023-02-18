@@ -1,7 +1,5 @@
 package tmg.flashback.rss.ui.feed
 
-import androidx.annotation.LayoutRes
-import tmg.flashback.rss.R
 import tmg.flashback.rss.repo.model.Article
 
 sealed class RSSModel(
