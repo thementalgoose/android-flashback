@@ -35,8 +35,8 @@ import androidx.core.graphics.toColorInt
 import androidx.hilt.navigation.compose.hiltViewModel
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
-import tmg.flashback.ads.contract.components.AdvertProvider
-import tmg.flashback.ads.contract.components.fakeAdvertProvider
+import tmg.flashback.ads.ads.components.AdvertProvider
+import tmg.flashback.ads.ads.components.fakeAdvertProvider
 import tmg.flashback.rss.R
 import tmg.flashback.rss.repo.model.Article
 import tmg.flashback.rss.repo.model.ArticleSource

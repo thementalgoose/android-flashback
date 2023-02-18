@@ -16,7 +16,7 @@ import androidx.window.layout.WindowInfoTracker
 import androidx.window.layout.WindowLayoutInfo
 import dagger.hilt.android.AndroidEntryPoint
 import tmg.flashback.BuildConfig
-import tmg.flashback.ads.contract.components.AdvertProvider
+import tmg.flashback.ads.ads.components.AdvertProvider
 import tmg.flashback.configuration.usecases.ConfigSyncUseCase
 import tmg.flashback.crash_reporting.manager.CrashManager
 import tmg.flashback.maintenance.MaintenanceNavigationComponent

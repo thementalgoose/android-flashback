@@ -34,7 +34,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
-import tmg.flashback.ads.contract.components.AdvertProvider
+import tmg.flashback.ads.ads.components.AdvertProvider
 import tmg.flashback.formula1.enums.TrackLayout
 import tmg.flashback.stats.R
 import tmg.flashback.stats.ui.shared.DriverImage
