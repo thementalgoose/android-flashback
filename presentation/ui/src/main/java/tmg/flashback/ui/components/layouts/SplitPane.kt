@@ -17,7 +17,6 @@ import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.window.layout.WindowLayoutInfo
 import tmg.flashback.style.AppThemePreview
-import tmg.flashback.style.annotations.PreviewTheme
 
 @Composable
 fun SplitPane(

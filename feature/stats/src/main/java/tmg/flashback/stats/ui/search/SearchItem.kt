@@ -1,6 +1,5 @@
 package tmg.flashback.stats.ui.search
 
-import androidx.annotation.LayoutRes
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 

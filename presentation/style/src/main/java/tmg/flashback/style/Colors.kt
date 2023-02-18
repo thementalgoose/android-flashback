@@ -6,7 +6,6 @@ import androidx.compose.material.Colors
 import androidx.compose.material3.ColorScheme
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
-import androidx.core.content.ContextCompat
 
 internal val LocalColors = staticCompositionLocalOf { lightColours }
 

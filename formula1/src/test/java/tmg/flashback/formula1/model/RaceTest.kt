@@ -5,7 +5,9 @@ import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
-import tmg.flashback.formula1.model.RaceQualifyingType.*
+import tmg.flashback.formula1.model.RaceQualifyingType.Q1
+import tmg.flashback.formula1.model.RaceQualifyingType.Q2
+import tmg.flashback.formula1.model.RaceQualifyingType.Q3
 import tmg.utilities.extensions.toEnum
 
 internal class RaceTest {

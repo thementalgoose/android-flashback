@@ -1,8 +1,8 @@
 package tmg.flashback.ads.usecases
 
 import android.content.Context
-import tmg.flashback.ads.manager.AdsManager
 import tmg.flashback.ads.config.repository.AdsRepository
+import tmg.flashback.ads.manager.AdsManager
 import javax.inject.Inject
 
 class InitialiseAdsUseCase @Inject constructor(

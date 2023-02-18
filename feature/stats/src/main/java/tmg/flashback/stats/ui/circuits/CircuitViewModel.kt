@@ -1,19 +1,30 @@
 package tmg.flashback.stats.ui.circuits
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import org.threeten.bp.LocalDate
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.formula1.model.CircuitHistory
 import tmg.flashback.statistics.repo.CircuitRepository
-import tmg.flashback.stats.StatsNavigationComponent
+import tmg.flashback.stats.Weekend
 import tmg.flashback.stats.ui.weekend.WeekendInfo
-import tmg.flashback.ui.navigation.ApplicationNavigationComponent
-import tmg.flashback.web.WebNavigationComponent
+import tmg.flashback.stats.with
+import tmg.flashback.ui.navigation.Navigator
+import tmg.flashback.ui.navigation.Screen
+import tmg.flashback.web.usecases.OpenWebpageUseCase
 import javax.inject.Inject
 
 interface CircuitViewModelInputs {
@@ -32,8 +43,8 @@ interface CircuitViewModelOutputs {
 class CircuitViewModel @Inject constructor(
     private val circuitRepository: CircuitRepository,
     private val networkConnectivityManager: NetworkConnectivityManager,
-    private val webNavigationComponent: WebNavigationComponent,
-    private val statsNavigationComponent: StatsNavigationComponent,
+    private val openWebpageUseCase: OpenWebpageUseCase,
+    private val navigator: Navigator,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), CircuitViewModelInputs, CircuitViewModelOutputs {
 
@@ -105,11 +116,11 @@ class CircuitViewModel @Inject constructor(
     }
 
     override fun linkClicked(link: String) {
-        this.webNavigationComponent.web(link)
+        openWebpageUseCase.open(url = link, title = "")
     }
 
     override fun itemClicked(model: CircuitModel.Item) {
-        this.statsNavigationComponent.weekend(WeekendInfo(
+        val weekend = WeekendInfo(
             season = model.data.season,
             round = model.data.round,
             raceName = model.data.name,
@@ -118,7 +129,8 @@ class CircuitViewModel @Inject constructor(
             country = model.country,
             countryISO = model.countryISO,
             date = model.data.date
-        ))
+        )
+        navigator.navigate(Screen.Weekend.with(weekend))
     }
 
     override fun refresh() {

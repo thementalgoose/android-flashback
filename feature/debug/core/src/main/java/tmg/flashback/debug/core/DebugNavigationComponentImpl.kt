@@ -2,10 +2,9 @@ package tmg.flashback.debug.core
 
 import android.content.Intent
 import tmg.flashback.debug.DebugNavigationComponent
-import tmg.flashback.debug.core.R
 import tmg.flashback.debug.core.adverts.AdvertsActivity
-import tmg.flashback.debug.model.DebugMenuItem
 import tmg.flashback.debug.core.styleguide.StyleGuideComposeActivity
+import tmg.flashback.debug.model.DebugMenuItem
 import tmg.flashback.ui.navigation.ActivityProvider
 import javax.inject.Inject
 

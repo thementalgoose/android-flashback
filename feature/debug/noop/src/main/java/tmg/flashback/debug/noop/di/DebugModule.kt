@@ -5,8 +5,8 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import tmg.flashback.debug.DebugNavigationComponent
-import tmg.flashback.debug.noop.NoopDebugNavigationComponent
 import tmg.flashback.debug.manager.BaseUrlLocalOverrideManager
+import tmg.flashback.debug.noop.NoopDebugNavigationComponent
 import tmg.flashback.debug.noop.manager.NoopBaseUrlLocalOverrideManager
 
 @Module

@@ -2,17 +2,19 @@ package tmg.flashback.ads.usecases
 
 import android.content.Context
 import com.google.android.gms.ads.nativead.NativeAd
-import io.mockk.*
+import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.every
+import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.runTest
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import tmg.flashback.ads.config.repository.AdsRepository
 import tmg.flashback.ads.manager.AdsManager
 import tmg.flashback.ads.repository.AdsCacheRepository
-import tmg.flashback.ads.config.repository.AdsRepository
 import tmg.testutils.BaseTest
-import java.lang.RuntimeException
 
 internal class GetAdUseCaseTest: BaseTest() {
 

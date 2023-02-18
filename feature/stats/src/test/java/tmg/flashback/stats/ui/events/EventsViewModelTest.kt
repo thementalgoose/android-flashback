@@ -3,7 +3,6 @@ package tmg.flashback.stats.ui.events
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flow
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import tmg.flashback.formula1.model.Event

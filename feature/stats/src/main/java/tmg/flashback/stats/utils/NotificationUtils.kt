@@ -8,7 +8,7 @@ import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.formula1.model.Timestamp
 import tmg.flashback.stats.R
 import tmg.flashback.stats.repository.models.NotificationReminder
-import java.util.*
+import java.util.Locale
 
 object NotificationUtils {
 

@@ -1,25 +1,44 @@
 package tmg.flashback.stats.ui.dashboard.schedule
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import org.threeten.bp.LocalDate
-import org.threeten.bp.Month
 import tmg.flashback.formula1.model.Event
 import tmg.flashback.formula1.model.Overview
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.statistics.repo.EventsRepository
 import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.stats.StatsNavigationComponent
+import tmg.flashback.stats.Weekend
 import tmg.flashback.stats.repository.HomeRepository
 import tmg.flashback.stats.repository.NotificationRepository
 import tmg.flashback.stats.ui.weekend.WeekendInfo
 import tmg.flashback.stats.usecases.FetchSeasonUseCase
-import tmg.utilities.extensions.startOfWeek
+import tmg.flashback.stats.with
+import tmg.flashback.ui.navigation.Navigator
+import tmg.flashback.ui.navigation.Screen
 import javax.inject.Inject
+import kotlin.collections.List
+import kotlin.collections.any
+import kotlin.collections.filter
+import kotlin.collections.firstOrNull
+import kotlin.collections.listOf
+import kotlin.collections.map
+import kotlin.collections.minByOrNull
+import kotlin.collections.mutableListOf
+import kotlin.collections.sortedBy
 
 interface ScheduleViewModelInputs {
     fun refresh()
@@ -42,6 +61,7 @@ class ScheduleViewModel @Inject constructor(
     private val overviewRepository: OverviewRepository,
     private val notificationRepository: NotificationRepository,
     private val homeRepository: HomeRepository,
+    private val navigator: Navigator,
     private val statsNavigationComponent: StatsNavigationComponent,
     private val eventsRepository: EventsRepository,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
@@ -128,15 +148,17 @@ class ScheduleViewModel @Inject constructor(
 
     override fun clickItem(model: ScheduleModel) {
         when (model) {
-            is ScheduleModel.List -> statsNavigationComponent.weekend(WeekendInfo(
-                season = model.model.season,
-                round = model.model.round,
-                raceName = model.model.raceName,
-                circuitId = model.model.circuitId,
-                circuitName = model.model.circuitName,
-                country = model.model.country,
-                countryISO = model.model.countryISO,
-                date = model.model.date,
+            is ScheduleModel.List -> navigator.navigate(Screen.Weekend.with(
+                WeekendInfo(
+                    season = model.model.season,
+                    round = model.model.round,
+                    raceName = model.model.raceName,
+                    circuitId = model.model.circuitId,
+                    circuitName = model.model.circuitName,
+                    country = model.model.country,
+                    countryISO = model.model.countryISO,
+                    date = model.model.date,
+                )
             ))
             is ScheduleModel.CollapsableList -> {
                 showCollapsablePlaceholder.value = false

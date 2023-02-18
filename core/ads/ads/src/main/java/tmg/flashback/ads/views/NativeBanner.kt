@@ -10,8 +10,8 @@ import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import tmg.flashback.ads.R
-import tmg.flashback.ads.databinding.AdmobNativeBannerBinding
 import tmg.flashback.ads.config.repository.AdsRepository
+import tmg.flashback.ads.databinding.AdmobNativeBannerBinding
 import tmg.flashback.ads.usecases.GetAdUseCase
 import tmg.utilities.extensions.views.gone
 import javax.inject.Inject

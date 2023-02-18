@@ -32,7 +32,6 @@ import tmg.flashback.stats.analytics.AnalyticsConstants.analyticsConstructorId
 import tmg.flashback.stats.components.TimelineTop
 import tmg.flashback.stats.components.dotDiameter
 import tmg.flashback.stats.components.heightOfTopDot
-import tmg.flashback.ui.components.navigation.PipeType
 import tmg.flashback.stats.ui.shared.Flag
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
@@ -45,6 +44,7 @@ import tmg.flashback.ui.components.analytics.ScreenView
 import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.loading.SkeletonViewList
+import tmg.flashback.ui.components.navigation.PipeType
 import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
 import tmg.utilities.extensions.ordinalAbbreviation
 

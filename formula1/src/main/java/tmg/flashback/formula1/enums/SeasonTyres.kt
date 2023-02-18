@@ -1,7 +1,22 @@
 package tmg.flashback.formula1.enums
 
 import tmg.flashback.formula1.R
-import tmg.flashback.formula1.enums.Tyre.*
+import tmg.flashback.formula1.enums.Tyre.BLUE_DRY_13
+import tmg.flashback.formula1.enums.Tyre.BLUE_WET_13
+import tmg.flashback.formula1.enums.Tyre.BLUE_WET_18
+import tmg.flashback.formula1.enums.Tyre.GRAY_DRY_13
+import tmg.flashback.formula1.enums.Tyre.GREEN_WET_13
+import tmg.flashback.formula1.enums.Tyre.GREEN_WET_18
+import tmg.flashback.formula1.enums.Tyre.ORANGE_DRY_13
+import tmg.flashback.formula1.enums.Tyre.ORANGE_WET_13
+import tmg.flashback.formula1.enums.Tyre.PINK_DRY_13
+import tmg.flashback.formula1.enums.Tyre.PURPLE_DRY_13
+import tmg.flashback.formula1.enums.Tyre.RED_DRY_13
+import tmg.flashback.formula1.enums.Tyre.RED_DRY_18
+import tmg.flashback.formula1.enums.Tyre.WHITE_DRY_13
+import tmg.flashback.formula1.enums.Tyre.WHITE_DRY_18
+import tmg.flashback.formula1.enums.Tyre.YELLOW_DRY_13
+import tmg.flashback.formula1.enums.Tyre.YELLOW_DRY_18
 
 fun SeasonTyres.Companion.getBySeason(season: Int): SeasonTyres? {
     return SeasonTyres.values().firstOrNull { model -> model.season == season }

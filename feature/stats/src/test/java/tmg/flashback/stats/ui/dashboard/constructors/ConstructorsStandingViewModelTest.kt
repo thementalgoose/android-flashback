@@ -8,10 +8,16 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.flashback.formula1.model.*
+import tmg.flashback.formula1.model.Constructor
+import tmg.flashback.formula1.model.SeasonConstructorStandingSeason
+import tmg.flashback.formula1.model.SeasonConstructorStandings
+import tmg.flashback.formula1.model.model
 import tmg.flashback.statistics.repo.SeasonRepository
-import tmg.flashback.stats.StatsNavigationComponent
+import tmg.flashback.stats.Constructor
 import tmg.flashback.stats.usecases.FetchSeasonUseCase
+import tmg.flashback.stats.with
+import tmg.flashback.ui.navigation.Navigator
+import tmg.flashback.ui.navigation.Screen
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.test
 import tmg.testutils.livedata.testObserve
@@ -20,7 +26,7 @@ internal class ConstructorsStandingViewModelTest: BaseTest() {
 
     private val mockSeasonRepository: SeasonRepository = mockk(relaxed = true)
     private val mockFetchSeasonUseCase: FetchSeasonUseCase = mockk(relaxed = true)
-    private val mockStatsNavigationComponent: StatsNavigationComponent = mockk(relaxed = true)
+    private val mockNavigator: Navigator = mockk(relaxed = true)
 
     private lateinit var underTest: ConstructorsStandingViewModel
 
@@ -28,7 +34,7 @@ internal class ConstructorsStandingViewModelTest: BaseTest() {
         underTest = ConstructorsStandingViewModel(
             seasonRepository = mockSeasonRepository,
             fetchSeasonUseCase = mockFetchSeasonUseCase,
-            statsNavigationComponent = mockStatsNavigationComponent,
+            navigator = mockNavigator,
             ioDispatcher = coroutineScope.testDispatcher
         )
     }
@@ -128,10 +134,10 @@ internal class ConstructorsStandingViewModelTest: BaseTest() {
         underTest.clickItem(model)
 
         verify {
-            mockStatsNavigationComponent.constructorOverview(
-                model.standings.constructor.id,
-                model.standings.constructor.name
-            )
+            mockNavigator.navigate(Screen.Constructor.with(
+                constructorId = model.standings.constructor.id,
+                constructorName = model.standings.constructor.name
+            ))
         }
     }
 }

@@ -1,7 +1,13 @@
 package tmg.flashback.stats.ui.weekend.sprint
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
@@ -27,7 +33,6 @@ import tmg.flashback.stats.ui.weekend.shared.NotAvailable
 import tmg.flashback.stats.ui.weekend.shared.NotAvailableYet
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
-import tmg.flashback.ui.components.loading.SkeletonView
 import tmg.flashback.ui.components.loading.SkeletonViewList
 
 private val timeWidth = 80.dp

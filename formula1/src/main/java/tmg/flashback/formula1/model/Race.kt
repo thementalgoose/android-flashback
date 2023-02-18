@@ -1,6 +1,8 @@
 package tmg.flashback.formula1.model
 
-import tmg.flashback.formula1.model.RaceQualifyingType.*
+import tmg.flashback.formula1.model.RaceQualifyingType.Q1
+import tmg.flashback.formula1.model.RaceQualifyingType.Q2
+import tmg.flashback.formula1.model.RaceQualifyingType.Q3
 
 data class Race(
     val raceInfo: RaceInfo,

@@ -1,7 +1,16 @@
 package tmg.flashback.statistics.repo.mappers.app
 
-import tmg.flashback.formula1.model.*
-import tmg.flashback.formula1.model.RaceQualifyingType.*
+import tmg.flashback.formula1.model.DriverConstructor
+import tmg.flashback.formula1.model.FastestLap
+import tmg.flashback.formula1.model.Race
+import tmg.flashback.formula1.model.RaceInfo
+import tmg.flashback.formula1.model.RaceQualifyingResult
+import tmg.flashback.formula1.model.RaceQualifyingRound
+import tmg.flashback.formula1.model.RaceQualifyingType.Q1
+import tmg.flashback.formula1.model.RaceQualifyingType.Q2
+import tmg.flashback.formula1.model.RaceQualifyingType.Q3
+import tmg.flashback.formula1.model.RaceRaceResult
+import tmg.flashback.formula1.model.RaceSprintResult
 import tmg.flashback.formula1.utils.toLapTime
 import tmg.flashback.statistics.room.models.race.QualifyingDriverResult
 import tmg.flashback.statistics.room.models.race.RaceDriverResult

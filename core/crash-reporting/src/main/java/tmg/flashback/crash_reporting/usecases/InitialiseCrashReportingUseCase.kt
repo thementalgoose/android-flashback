@@ -4,7 +4,7 @@ import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.crash_reporting.repository.CrashRepository
 import tmg.flashback.crash_reporting.services.CrashService
-import java.util.*
+import java.util.Locale
 import javax.inject.Inject
 
 class InitialiseCrashReportingUseCase @Inject constructor(

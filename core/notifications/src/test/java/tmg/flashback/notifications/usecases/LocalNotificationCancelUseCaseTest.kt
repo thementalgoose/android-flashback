@@ -3,7 +3,6 @@ package tmg.flashback.notifications.usecases
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import tmg.flashback.notifications.managers.SystemAlarmManager
 import tmg.flashback.notifications.repository.NotificationRepository
