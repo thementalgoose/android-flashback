@@ -7,8 +7,11 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import tmg.flashback.R
 import tmg.flashback.analytics.manager.AnalyticsManager
 import tmg.flashback.crash_reporting.repository.CrashRepository
+import tmg.flashback.privacypolicy.PrivacyPolicy
 import tmg.flashback.privacypolicy.PrivacyPolicyNavigationComponent
 import tmg.flashback.ui.managers.ToastManager
+import tmg.flashback.ui.navigation.Navigator
+import tmg.flashback.ui.navigation.Screen
 import tmg.flashback.ui.settings.Settings
 import tmg.flashback.ui.settings.Setting
 import javax.inject.Inject
@@ -27,7 +30,7 @@ class SettingsPrivacyViewModel @Inject constructor(
     private val crashRepository: CrashRepository,
     private val analyticsManager: AnalyticsManager,
     private val toastManager: ToastManager,
-    private val privacyPolicyNavigationComponent: PrivacyPolicyNavigationComponent
+    private val navigator: Navigator,
 ): ViewModel(), SettingsPrivacyViewModelInputs, SettingsPrivacyViewModelOutputs {
 
     val inputs: SettingsPrivacyViewModelInputs = this
@@ -39,7 +42,7 @@ class SettingsPrivacyViewModel @Inject constructor(
     override fun prefClicked(pref: Setting) {
         when (pref.key) {
             Settings.Other.privacyPolicy.key -> {
-                privacyPolicyNavigationComponent.privacyPolicy()
+                navigator.navigate(Screen.Settings.PrivacyPolicy)
             }
             Settings.Other.crashReportingKey -> {
                 crashRepository.isEnabled = !crashRepository.isEnabled

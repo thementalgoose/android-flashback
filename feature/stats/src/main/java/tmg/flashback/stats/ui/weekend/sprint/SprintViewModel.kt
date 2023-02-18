@@ -11,8 +11,12 @@ import kotlinx.coroutines.flow.map
 import tmg.flashback.formula1.constants.Formula1
 import tmg.flashback.formula1.model.RaceSprintResult
 import tmg.flashback.statistics.repo.RaceRepository
+import tmg.flashback.stats.DriverSeason
 import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.stats.ui.weekend.race.RaceModel
+import tmg.flashback.stats.with
+import tmg.flashback.ui.navigation.Navigator
+import tmg.flashback.ui.navigation.Screen
 import javax.inject.Inject
 
 interface SprintViewModelInputs {
@@ -27,7 +31,7 @@ interface SprintViewModelOutputs {
 @HiltViewModel
 class SprintViewModel @Inject constructor(
     private val raceRepository: RaceRepository,
-    private val statsNavigationComponent: StatsNavigationComponent,
+    private val navigator: Navigator,
     private val ioDispatcher: CoroutineDispatcher
 ): ViewModel(), SprintViewModelInputs, SprintViewModelOutputs {
 
@@ -66,10 +70,10 @@ class SprintViewModel @Inject constructor(
 
     override fun clickDriver(result: RaceSprintResult) {
         val season = seasonRound.value?.first ?: return
-        statsNavigationComponent.driverSeason(
-            id = result.driver.driver.id,
-            name = result.driver.driver.name,
+        navigator.navigate(Screen.DriverSeason.with(
+            driverId = result.driver.driver.id,
+            driverName = result.driver.driver.name,
             season = season
-        )
+        ))
     }
 }

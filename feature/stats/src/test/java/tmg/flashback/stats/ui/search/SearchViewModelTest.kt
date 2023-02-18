@@ -20,7 +20,15 @@ import tmg.flashback.statistics.repo.CircuitRepository
 import tmg.flashback.statistics.repo.ConstructorRepository
 import tmg.flashback.statistics.repo.DriverRepository
 import tmg.flashback.statistics.repo.OverviewRepository
+import tmg.flashback.stats.Circuit
+import tmg.flashback.stats.Constructor
+import tmg.flashback.stats.Driver
 import tmg.flashback.stats.StatsNavigationComponent
+import tmg.flashback.stats.Weekend
+import tmg.flashback.stats.ui.weekend.WeekendInfo
+import tmg.flashback.stats.with
+import tmg.flashback.ui.navigation.Navigator
+import tmg.flashback.ui.navigation.Screen
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertListDoesNotMatchItem
 import tmg.testutils.livedata.test
@@ -31,7 +39,7 @@ internal class SearchViewModelTest: BaseTest() {
     private val mockConstructorsRepository: ConstructorRepository = mockk(relaxed = true)
     private val mockDriversRepository: DriverRepository = mockk(relaxed = true)
     private val mockOverviewRepository: OverviewRepository = mockk(relaxed = true)
-    private val mockStatisticsNavigationComponent: StatsNavigationComponent = mockk(relaxed = true)
+    private val mockNavigator: Navigator = mockk(relaxed = true)
     private val mockAdsRepository: AdsRepository = mockk(relaxed = true)
 
     private lateinit var sut: SearchViewModel
@@ -43,7 +51,7 @@ internal class SearchViewModelTest: BaseTest() {
             mockCircuitRepository,
             mockOverviewRepository,
             mockAdsRepository,
-            mockStatisticsNavigationComponent,
+            mockNavigator,
             ioDispatcher = coroutineScope.testDispatcher
         )
     }
@@ -298,7 +306,9 @@ internal class SearchViewModelTest: BaseTest() {
         }
 
         verify {
-            mockStatisticsNavigationComponent.constructorOverview(any(), any())
+            mockNavigator.navigate(Screen.Constructor.with(
+                model.constructorId, model.name
+            ))
         }
     }
 
@@ -312,7 +322,9 @@ internal class SearchViewModelTest: BaseTest() {
         }
 
         verify {
-            mockStatisticsNavigationComponent.driverOverview(any(), any())
+            mockNavigator.navigate(Screen.Driver.with(
+                model.driverId, model.name
+            ))
         }
     }
 
@@ -326,7 +338,18 @@ internal class SearchViewModelTest: BaseTest() {
         }
 
         verify {
-            mockStatisticsNavigationComponent.weekend(any())
+            mockNavigator.navigate(Screen.Weekend.with(
+                WeekendInfo(
+                    season = model.season,
+                    round = model.round,
+                    raceName = model.raceName,
+                    circuitId = model.circuitId,
+                    circuitName = model.circuitName,
+                    country = model.country,
+                    countryISO = model.countryISO,
+                    date = model.date
+                )
+            ))
         }
     }
 
@@ -340,7 +363,10 @@ internal class SearchViewModelTest: BaseTest() {
         }
 
         verify {
-            mockStatisticsNavigationComponent.circuit(any(), any())
+            mockNavigator.navigate(Screen.Circuit.with(
+                model.circuitId,
+                model.name
+            ))
         }
     }
 }

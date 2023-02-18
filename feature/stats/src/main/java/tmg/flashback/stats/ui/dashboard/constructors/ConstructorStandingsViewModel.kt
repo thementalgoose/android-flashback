@@ -7,8 +7,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import tmg.flashback.statistics.repo.SeasonRepository
+import tmg.flashback.stats.Constructor
 import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.stats.usecases.FetchSeasonUseCase
+import tmg.flashback.stats.with
+import tmg.flashback.ui.navigation.Navigator
+import tmg.flashback.ui.navigation.Screen
 import javax.inject.Inject
 
 interface ConstructorsStandingViewModelInputs {
@@ -27,7 +31,7 @@ interface ConstructorsStandingViewModelOutputs {
 class ConstructorsStandingViewModel @Inject constructor(
     private val seasonRepository: SeasonRepository,
     private val fetchSeasonUseCase: FetchSeasonUseCase,
-    private val statsNavigationComponent: StatsNavigationComponent,
+    private val navigator: Navigator,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), ConstructorsStandingViewModelInputs, ConstructorsStandingViewModelOutputs {
 
@@ -79,9 +83,9 @@ class ConstructorsStandingViewModel @Inject constructor(
     }
 
     override fun clickItem(model: ConstructorStandingsModel.Standings) {
-        statsNavigationComponent.constructorOverview(
-            id = model.standings.constructor.id,
-            name = model.standings.constructor.name
-        )
+        navigator.navigate(Screen.Constructor.with(
+            constructorId = model.standings.constructor.id,
+            constructorName = model.standings.constructor.name
+        ))
     }
 }

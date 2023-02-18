@@ -9,7 +9,11 @@ import org.junit.jupiter.api.Test
 import tmg.flashback.formula1.model.Race
 import tmg.flashback.formula1.model.model
 import tmg.flashback.statistics.repo.RaceRepository
+import tmg.flashback.stats.Constructor
 import tmg.flashback.stats.StatsNavigationComponent
+import tmg.flashback.stats.with
+import tmg.flashback.ui.navigation.Navigator
+import tmg.flashback.ui.navigation.Screen
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.test
 import java.time.Year
@@ -17,14 +21,14 @@ import java.time.Year
 internal class ConstructorOverviewViewModelTest: BaseTest() {
 
     private val mockRaceRepository: RaceRepository = mockk(relaxed = true)
-    private val mockStatsNavigationComponent: StatsNavigationComponent = mockk(relaxed = true)
+    private val mockNavigator: Navigator = mockk(relaxed = true)
 
     private lateinit var underTest: ConstructorViewModel
 
     private fun initUnderTest() {
         underTest = ConstructorViewModel(
             raceRepository = mockRaceRepository,
-            statsNavigationComponent = mockStatsNavigationComponent,
+            navigator = mockNavigator,
             ioDispatcher = coroutineScope.testDispatcher
         )
     }
@@ -80,10 +84,10 @@ internal class ConstructorOverviewViewModelTest: BaseTest() {
         underTest.inputs.clickItem(ConstructorModel.Constructor.model())
 
         verify {
-            mockStatsNavigationComponent.constructorOverview(
-                id = ConstructorModel.Constructor.model().constructor.id,
-                name = ConstructorModel.Constructor.model().constructor.name
-            )
+            mockNavigator.navigate(Screen.Constructor.with(
+                constructorId = ConstructorModel.Constructor.model().constructor.id,
+                constructorName = ConstructorModel.Constructor.model().constructor.name
+            ))
         }
     }
 }

@@ -19,8 +19,15 @@ import tmg.flashback.statistics.repo.CircuitRepository
 import tmg.flashback.statistics.repo.ConstructorRepository
 import tmg.flashback.statistics.repo.DriverRepository
 import tmg.flashback.statistics.repo.OverviewRepository
+import tmg.flashback.stats.Circuit
+import tmg.flashback.stats.Constructor
+import tmg.flashback.stats.Driver
 import tmg.flashback.stats.StatsNavigationComponent
+import tmg.flashback.stats.Weekend
 import tmg.flashback.stats.ui.weekend.WeekendInfo
+import tmg.flashback.stats.with
+import tmg.flashback.ui.navigation.Navigator
+import tmg.flashback.ui.navigation.Screen
 import tmg.utilities.extensions.extend
 import javax.inject.Inject
 
@@ -44,7 +51,7 @@ class SearchViewModel @Inject constructor(
     private val circuitRepository: CircuitRepository,
     private val overviewRepository: OverviewRepository,
     private val adsRepository: AdsRepository,
-    private val statsNavigationComponent: StatsNavigationComponent,
+    private val navigator: Navigator,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), SearchViewModelInputs, SearchViewModelOutputs {
 
@@ -123,26 +130,26 @@ class SearchViewModel @Inject constructor(
     override fun clickItem(item: SearchItem) {
         when (item) {
             is SearchItem.Circuit -> {
-                statsNavigationComponent.circuit(
+                navigator.navigate(Screen.Circuit.with(
                     circuitId = item.circuitId,
                     circuitName = item.name
-                )
+                ))
             }
             is SearchItem.Constructor -> {
-                statsNavigationComponent.constructorOverview(
-                    id = item.constructorId,
-                    name = item.name
-                )
+                navigator.navigate(Screen.Constructor.with(
+                    constructorId = item.constructorId,
+                    constructorName = item.name
+                ))
             }
             is SearchItem.Driver -> {
-                statsNavigationComponent.driverOverview(
-                    id = item.driverId,
-                    name = item.name
-                )
+                navigator.navigate(Screen.Driver.with(
+                    driverId = item.driverId,
+                    driverName = item.name
+                ))
             }
             is SearchItem.Race -> {
-                statsNavigationComponent.weekend(
-                    weekendInfo = WeekendInfo(
+                navigator.navigate(Screen.Weekend.with(
+                    WeekendInfo(
                         season = item.season,
                         round = item.round,
                         raceName = item.raceName,
@@ -152,7 +159,7 @@ class SearchViewModel @Inject constructor(
                         countryISO = item.countryISO,
                         date = item.date
                     )
-                )
+                ))
             }
             SearchItem.Advert -> {}
             SearchItem.ErrorItem -> {}

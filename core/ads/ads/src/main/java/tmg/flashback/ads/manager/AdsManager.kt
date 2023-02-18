@@ -32,7 +32,6 @@ class AdsManager @Inject constructor() {
     suspend fun getNativeAd(context: Context): List<NativeAd> {
         val list = mutableListOf<NativeAd>()
         return suspendCoroutine { continuation ->
-            @Suppress("ObjectLiteralToLambda")
             log("getNativeAd builder")
 
             var builder: AdLoader? = null

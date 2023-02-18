@@ -14,10 +14,14 @@ import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.statistics.repo.EventsRepository
 import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.stats.StatsNavigationComponent
+import tmg.flashback.stats.Weekend
 import tmg.flashback.stats.repository.HomeRepository
 import tmg.flashback.stats.repository.NotificationRepository
 import tmg.flashback.stats.ui.weekend.WeekendInfo
 import tmg.flashback.stats.usecases.FetchSeasonUseCase
+import tmg.flashback.stats.with
+import tmg.flashback.ui.navigation.Navigator
+import tmg.flashback.ui.navigation.Screen
 import tmg.utilities.extensions.startOfWeek
 import javax.inject.Inject
 
@@ -42,6 +46,7 @@ class ScheduleViewModel @Inject constructor(
     private val overviewRepository: OverviewRepository,
     private val notificationRepository: NotificationRepository,
     private val homeRepository: HomeRepository,
+    private val navigator: Navigator,
     private val statsNavigationComponent: StatsNavigationComponent,
     private val eventsRepository: EventsRepository,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
@@ -128,15 +133,17 @@ class ScheduleViewModel @Inject constructor(
 
     override fun clickItem(model: ScheduleModel) {
         when (model) {
-            is ScheduleModel.List -> statsNavigationComponent.weekend(WeekendInfo(
-                season = model.model.season,
-                round = model.model.round,
-                raceName = model.model.raceName,
-                circuitId = model.model.circuitId,
-                circuitName = model.model.circuitName,
-                country = model.model.country,
-                countryISO = model.model.countryISO,
-                date = model.model.date,
+            is ScheduleModel.List -> navigator.navigate(Screen.Weekend.with(
+                WeekendInfo(
+                    season = model.model.season,
+                    round = model.model.round,
+                    raceName = model.model.raceName,
+                    circuitId = model.model.circuitId,
+                    circuitName = model.model.circuitName,
+                    country = model.model.country,
+                    countryISO = model.model.countryISO,
+                    date = model.model.date,
+                )
             ))
             is ScheduleModel.CollapsableList -> {
                 showCollapsablePlaceholder.value = false

@@ -12,13 +12,17 @@ import tmg.flashback.rss.RssNavigationComponent
 import tmg.flashback.ads.config.repository.AdsRepository
 import tmg.flashback.ads.config.repository.model.AdvertConfig
 import tmg.flashback.device.managers.NetworkConnectivityManager
+import tmg.flashback.rss.RSSConfigure
 import tmg.flashback.rss.repo.RSSRepository
 import tmg.flashback.rss.repo.RssAPI
 import tmg.flashback.rss.repo.model.Article
 import tmg.flashback.rss.repo.model.ArticleSource
 import tmg.flashback.rss.repo.model.Response
 import tmg.flashback.ui.navigation.ApplicationNavigationComponent
+import tmg.flashback.ui.navigation.Navigator
+import tmg.flashback.ui.navigation.Screen
 import tmg.flashback.web.WebNavigationComponent
+import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.*
 
@@ -29,9 +33,8 @@ internal class RSSViewModelTest: BaseTest() {
     private val mockRSSDB: RssAPI = mockk(relaxed = true)
     private val mockRssRepository: RSSRepository = mockk(relaxed = true)
     private val mockAdsRepository: AdsRepository = mockk(relaxed = true)
-    private val mockRssNavigationComponent: RssNavigationComponent = mockk(relaxed = true)
-    private val mockApplicationNavigationComponent: ApplicationNavigationComponent = mockk(relaxed = true)
-    private val mockWebNavigationComponent: WebNavigationComponent = mockk(relaxed = true)
+    private val mockNavigator: Navigator = mockk(relaxed = true)
+    private val mockOpenWebpageUseCase: OpenWebpageUseCase = mockk(relaxed = true)
     private val mockConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
 
     private val mockLocalDate: LocalDateTime = LocalDateTime.of(2020, 1, 1, 1, 2, 3, 0)
@@ -71,13 +74,12 @@ internal class RSSViewModelTest: BaseTest() {
     private fun initUnderTest() {
 
         underTest = RSSViewModel(
-            mockRSSDB,
-            mockRssRepository,
-            mockAdsRepository,
-            mockRssNavigationComponent,
-            mockApplicationNavigationComponent,
-            mockWebNavigationComponent,
-            mockConnectivityManager
+            RSSDB = mockRSSDB,
+            rssRepository = mockRssRepository,
+            adsRepository = mockAdsRepository,
+            navigator = mockNavigator,
+            openWebpageUseCase = mockOpenWebpageUseCase,
+            connectivityManager = mockConnectivityManager
         )
         underTest.refresh()
     }
@@ -210,20 +212,7 @@ internal class RSSViewModelTest: BaseTest() {
         underTest.inputs.configure()
 
         verify {
-            mockRssNavigationComponent.configureRSS()
-        }
-    }
-
-    @Test
-    fun `click settings opens rss settings`() = coroutineTest {
-
-        initUnderTest()
-        advanceUntilIdle()
-
-        underTest.inputs.configure()
-
-        verify {
-            mockRssNavigationComponent.configureRSS()
+            mockNavigator.navigate(Screen.Settings.RSSConfigure)
         }
     }
 
@@ -237,7 +226,7 @@ internal class RSSViewModelTest: BaseTest() {
         underTest.inputs.clickModel(model)
 
         verify {
-            mockWebNavigationComponent.web(any(), any())
+            mockOpenWebpageUseCase.open(any(), any())
         }
     }
 }

@@ -7,11 +7,15 @@ import org.junit.jupiter.api.Test
 import tmg.flashback.R
 import tmg.flashback.crash_reporting.repository.CrashRepository
 import tmg.flashback.device.managers.BuildConfigManager
+import tmg.flashback.releasenotes.ReleaseNotes
 import tmg.flashback.releasenotes.ReleaseNotesNavigationComponent
 import tmg.flashback.ui.managers.ToastManager
 import tmg.flashback.ui.navigation.ApplicationNavigationComponent
+import tmg.flashback.ui.navigation.Navigator
+import tmg.flashback.ui.navigation.Screen
 import tmg.flashback.ui.settings.Settings
 import tmg.flashback.web.WebNavigationComponent
+import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.test
 import tmg.testutils.livedata.testObserve
@@ -19,9 +23,9 @@ import tmg.testutils.livedata.testObserve
 internal class SettingsAboutViewModelTest: BaseTest() {
 
     private val mockCrashRepository: CrashRepository = mockk(relaxed = true)
-    private val mockReleaseNotesNavigationComponent: ReleaseNotesNavigationComponent = mockk(relaxed = true)
+    private val mockNavigator: Navigator = mockk(relaxed = true)
     private val mockApplicationNavigationComponent: ApplicationNavigationComponent = mockk(relaxed = true)
-    private val mockWebNavigationComponent: WebNavigationComponent = mockk(relaxed = true)
+    private val mockOpenWebpageUseCase: OpenWebpageUseCase = mockk(relaxed = true)
     private val mockToastManager: ToastManager = mockk(relaxed = true)
     private val mockBuildConfigManager: BuildConfigManager = mockk(relaxed = true)
 
@@ -30,9 +34,9 @@ internal class SettingsAboutViewModelTest: BaseTest() {
     private fun initUnderTest() {
         underTest = SettingsAboutViewModel(
             crashRepository = mockCrashRepository,
-            releaseNotesNavigationComponent = mockReleaseNotesNavigationComponent,
+            navigator = mockNavigator,
             applicationNavigationComponent = mockApplicationNavigationComponent,
-            webNavigationComponent = mockWebNavigationComponent,
+            openWebpageUseCase = mockOpenWebpageUseCase,
             toastManager = mockToastManager,
             buildConfigManager = mockBuildConfigManager,
         )
@@ -75,7 +79,7 @@ internal class SettingsAboutViewModelTest: BaseTest() {
         underTest.inputs.prefClicked(Settings.Other.review)
 
         verify {
-            mockWebNavigationComponent.web(REVIEW_URL)
+            mockOpenWebpageUseCase.open(url = REVIEW_URL, title = "")
         }
     }
 
@@ -85,7 +89,7 @@ internal class SettingsAboutViewModelTest: BaseTest() {
         underTest.inputs.prefClicked(Settings.Other.releaseNotes)
 
         verify {
-            mockReleaseNotesNavigationComponent.releaseNotes()
+            mockNavigator.navigate(Screen.ReleaseNotes)
         }
     }
 
