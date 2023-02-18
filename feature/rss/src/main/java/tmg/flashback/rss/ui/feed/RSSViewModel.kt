@@ -5,7 +5,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
-import tmg.flashback.ads.config.repository.AdsRepository
+import tmg.flashback.ads.contract.repository.AdsRepository
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.rss.RSSConfigure
 import tmg.flashback.rss.repo.RSSRepository

@@ -8,8 +8,8 @@ import kotlinx.coroutines.test.advanceUntilIdle
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDateTime
-import tmg.flashback.ads.config.repository.AdsRepository
-import tmg.flashback.ads.config.repository.model.AdvertConfig
+import tmg.flashback.ads.core.repository.AdsRepository
+import tmg.flashback.ads.core.repository.model.AdvertConfig
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.rss.RSSConfigure
 import tmg.flashback.rss.repo.RSSRepository
@@ -33,7 +33,7 @@ internal class RSSViewModelTest: BaseTest() {
 
     private val mockRSSDB: RssAPI = mockk(relaxed = true)
     private val mockRssRepository: RSSRepository = mockk(relaxed = true)
-    private val mockAdsRepository: AdsRepository = mockk(relaxed = true)
+    private val mockAdsRepository: tmg.flashback.ads.core.repository.AdsRepository = mockk(relaxed = true)
     private val mockNavigator: Navigator = mockk(relaxed = true)
     private val mockOpenWebpageUseCase: OpenWebpageUseCase = mockk(relaxed = true)
     private val mockConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
@@ -67,7 +67,7 @@ internal class RSSViewModelTest: BaseTest() {
         every { mockRssRepository.rssUrls } returns setOf("https://www.mock.rss.url.com")
         every { mockRssRepository.rssShowDescription } returns true
         every { mockRSSDB.getNews() } returns mockResponse200
-        every { mockAdsRepository.advertConfig } returns AdvertConfig(
+        every { mockAdsRepository.advertConfig } returns tmg.flashback.ads.core.repository.model.AdvertConfig(
             onRss = true
         )
     }
@@ -110,7 +110,9 @@ internal class RSSViewModelTest: BaseTest() {
 
     @Test
     fun `init with ads disabled doesnt show advert item`() = coroutineTest {
-        every { mockAdsRepository.advertConfig } returns AdvertConfig(onRss = false)
+        every { mockAdsRepository.advertConfig } returns tmg.flashback.ads.core.repository.model.AdvertConfig(
+            onRss = false
+        )
 
         initUnderTest()
 
