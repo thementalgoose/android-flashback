@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.window.layout.WindowLayoutInfo
 import kotlinx.coroutines.launch
-import tmg.flashback.ads.contract.components.AdvertProvider
+import tmg.flashback.ads.ads.components.AdvertProvider
 import tmg.flashback.debug.model.DebugMenuItem
 import tmg.flashback.eastereggs.model.MenuIcons
 import tmg.flashback.style.AppTheme

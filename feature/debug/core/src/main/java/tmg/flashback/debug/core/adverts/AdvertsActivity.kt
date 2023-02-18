@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import dagger.hilt.android.AndroidEntryPoint
-import tmg.flashback.ads.contract.components.AdvertProvider
+import tmg.flashback.ads.ads.components.AdvertProvider
 import tmg.flashback.debug.core.R
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.text.TextTitle

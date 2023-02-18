@@ -15,7 +15,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navDeepLink
 import androidx.window.layout.WindowLayoutInfo
 import org.threeten.bp.LocalDate
-import tmg.flashback.ads.contract.components.AdvertProvider
+import tmg.flashback.ads.ads.components.AdvertProvider
 import tmg.flashback.privacypolicy.PrivacyPolicy
 import tmg.flashback.privacypolicy.ui.PrivacyPolicyScreenVM
 import tmg.flashback.releasenotes.ReleaseNotes

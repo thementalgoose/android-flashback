@@ -12,7 +12,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
-import tmg.flashback.ads.contract.usecases.InitialiseAdsUseCase
+import tmg.flashback.ads.ads.usecases.InitialiseAdsUseCase
 import tmg.flashback.analytics.UserProperty.APP_VERSION
 import tmg.flashback.analytics.UserProperty.DEVICE_MODEL
 import tmg.flashback.analytics.UserProperty.DEVICE_THEME
