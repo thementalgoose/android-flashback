@@ -1,8 +1,8 @@
 package tmg.flashback.releasenotes.usecases
 
+import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.releasenotes.constants.ReleaseNotes
 import tmg.flashback.releasenotes.repository.ReleaseNotesRepository
-import tmg.flashback.device.managers.BuildConfigManager
 import javax.inject.Inject
 
 class NewReleaseNotesUseCase @Inject constructor(

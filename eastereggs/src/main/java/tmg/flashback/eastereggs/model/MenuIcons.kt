@@ -2,7 +2,6 @@ package tmg.flashback.eastereggs.model
 
 import org.threeten.bp.LocalDate
 import org.threeten.bp.Year
-import org.threeten.bp.format.DateTimeFormatter
 
 private val year: Int by lazy { Year.now().value }
 enum class MenuIcons(

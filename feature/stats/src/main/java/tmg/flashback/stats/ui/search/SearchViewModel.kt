@@ -8,7 +8,14 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import tmg.flashback.ads.config.repository.AdsRepository
 import tmg.flashback.formula1.model.Circuit
@@ -19,8 +26,14 @@ import tmg.flashback.statistics.repo.CircuitRepository
 import tmg.flashback.statistics.repo.ConstructorRepository
 import tmg.flashback.statistics.repo.DriverRepository
 import tmg.flashback.statistics.repo.OverviewRepository
-import tmg.flashback.stats.StatsNavigationComponent
+import tmg.flashback.stats.Circuit
+import tmg.flashback.stats.Constructor
+import tmg.flashback.stats.Driver
+import tmg.flashback.stats.Weekend
 import tmg.flashback.stats.ui.weekend.WeekendInfo
+import tmg.flashback.stats.with
+import tmg.flashback.ui.navigation.Navigator
+import tmg.flashback.ui.navigation.Screen
 import tmg.utilities.extensions.extend
 import javax.inject.Inject
 
@@ -44,7 +57,7 @@ class SearchViewModel @Inject constructor(
     private val circuitRepository: CircuitRepository,
     private val overviewRepository: OverviewRepository,
     private val adsRepository: AdsRepository,
-    private val statsNavigationComponent: StatsNavigationComponent,
+    private val navigator: Navigator,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), SearchViewModelInputs, SearchViewModelOutputs {
 
@@ -123,26 +136,26 @@ class SearchViewModel @Inject constructor(
     override fun clickItem(item: SearchItem) {
         when (item) {
             is SearchItem.Circuit -> {
-                statsNavigationComponent.circuit(
+                navigator.navigate(Screen.Circuit.with(
                     circuitId = item.circuitId,
                     circuitName = item.name
-                )
+                ))
             }
             is SearchItem.Constructor -> {
-                statsNavigationComponent.constructorOverview(
-                    id = item.constructorId,
-                    name = item.name
-                )
+                navigator.navigate(Screen.Constructor.with(
+                    constructorId = item.constructorId,
+                    constructorName = item.name
+                ))
             }
             is SearchItem.Driver -> {
-                statsNavigationComponent.driverOverview(
-                    id = item.driverId,
-                    name = item.name
-                )
+                navigator.navigate(Screen.Driver.with(
+                    driverId = item.driverId,
+                    driverName = item.name
+                ))
             }
             is SearchItem.Race -> {
-                statsNavigationComponent.weekend(
-                    weekendInfo = WeekendInfo(
+                navigator.navigate(Screen.Weekend.with(
+                    WeekendInfo(
                         season = item.season,
                         round = item.round,
                         raceName = item.raceName,
@@ -152,7 +165,7 @@ class SearchViewModel @Inject constructor(
                         countryISO = item.countryISO,
                         date = item.date
                     )
-                )
+                ))
             }
             SearchItem.Advert -> {}
             SearchItem.ErrorItem -> {}

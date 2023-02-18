@@ -2,7 +2,6 @@ package tmg.flashback.appshortcuts.manager
 
 import android.content.Context
 import android.os.Build
-import android.os.PersistableBundle
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat

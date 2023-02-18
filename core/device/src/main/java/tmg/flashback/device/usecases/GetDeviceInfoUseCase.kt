@@ -5,7 +5,6 @@ import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.device.managers.DeviceConfigManager
 import tmg.flashback.device.repository.DeviceRepository
 import tmg.utilities.extensions.format
-import tmg.utilities.models.DeviceStatus
 import java.util.Locale
 import javax.inject.Inject
 import javax.inject.Singleton

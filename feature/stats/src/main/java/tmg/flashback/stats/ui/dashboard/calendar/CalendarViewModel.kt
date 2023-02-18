@@ -1,10 +1,18 @@
 package tmg.flashback.stats.ui.dashboard.calendar
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import org.threeten.bp.LocalDate
 import tmg.flashback.formula1.model.Event
@@ -13,9 +21,12 @@ import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.statistics.repo.EventsRepository
 import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.stats.StatsNavigationComponent
-import tmg.flashback.stats.repository.NotificationRepository
+import tmg.flashback.stats.Weekend
 import tmg.flashback.stats.ui.weekend.WeekendInfo
 import tmg.flashback.stats.usecases.FetchSeasonUseCase
+import tmg.flashback.stats.with
+import tmg.flashback.ui.navigation.Navigator
+import tmg.flashback.ui.navigation.Screen
 import tmg.utilities.extensions.startOfWeek
 import javax.inject.Inject
 
@@ -36,6 +47,7 @@ interface CalendarViewModelOutputs {
 class CalendarViewModel @Inject constructor(
     private val fetchSeasonUseCase: FetchSeasonUseCase,
     private val overviewRepository: OverviewRepository,
+    private val navigator: Navigator,
     private val statsNavigationComponent: StatsNavigationComponent,
     private val eventsRepository: EventsRepository,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
@@ -103,18 +115,17 @@ class CalendarViewModel @Inject constructor(
         when (model) {
             is CalendarModel.Week -> {
                 val race = model.race ?: return
-                statsNavigationComponent.weekend(
-                    WeekendInfo(
-                        season = race.season,
-                        round = race.round,
-                        raceName = race.raceName,
-                        circuitId = race.circuitId,
-                        circuitName = race.circuitName,
-                        country = race.country,
-                        countryISO = race.countryISO,
-                        date = race.date,
-                    )
+                val weekend = WeekendInfo(
+                    season = race.season,
+                    round = race.round,
+                    raceName = race.raceName,
+                    circuitId = race.circuitId,
+                    circuitName = race.circuitName,
+                    country = race.country,
+                    countryISO = race.countryISO,
+                    date = race.date,
                 )
+                navigator.navigate(Screen.Weekend.with(weekend))
             }
             CalendarModel.Loading -> {}
         }

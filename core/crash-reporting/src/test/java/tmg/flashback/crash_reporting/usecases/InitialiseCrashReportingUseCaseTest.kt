@@ -3,7 +3,6 @@ package tmg.flashback.crash_reporting.usecases
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import tmg.flashback.crash_reporting.repository.CrashRepository

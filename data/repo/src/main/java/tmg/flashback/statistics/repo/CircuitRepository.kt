@@ -9,7 +9,10 @@ import tmg.flashback.formula1.model.CircuitHistory
 import tmg.flashback.statistics.network.api.FlashbackApi
 import tmg.flashback.statistics.repo.base.BaseRepository
 import tmg.flashback.statistics.repo.mappers.app.CircuitMapper
-import tmg.flashback.statistics.repo.mappers.network.*
+import tmg.flashback.statistics.repo.mappers.network.NetworkCircuitDataMapper
+import tmg.flashback.statistics.repo.mappers.network.NetworkCircuitMapper
+import tmg.flashback.statistics.repo.mappers.network.NetworkConstructorDataMapper
+import tmg.flashback.statistics.repo.mappers.network.NetworkDriverDataMapper
 import tmg.flashback.statistics.room.FlashbackDatabase
 import javax.inject.Inject
 import javax.inject.Singleton

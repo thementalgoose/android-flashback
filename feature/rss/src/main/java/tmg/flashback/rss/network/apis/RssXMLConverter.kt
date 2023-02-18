@@ -10,7 +10,7 @@ import tmg.flashback.rss.repo.model.ArticleSource
 import tmg.flashback.rss.usecases.GetSupportedSourceUseCase
 import tmg.utilities.extensions.md5
 import java.net.URL
-import java.util.*
+import java.util.Locale
 
 private const val dateFormat = "EEE, d MMM yyyy HH:mm:ss Z"
 

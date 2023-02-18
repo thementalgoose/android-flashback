@@ -12,12 +12,15 @@ import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.DriverHistory
 import tmg.flashback.statistics.repo.DriverRepository
+import tmg.flashback.stats.DriverSeason
 import tmg.flashback.stats.R
 import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.stats.ui.drivers.stathistory.DriverStatHistoryType
+import tmg.flashback.stats.with
 import tmg.flashback.ui.components.navigation.PipeType
-import tmg.flashback.ui.navigation.ApplicationNavigationComponent
-import tmg.flashback.web.WebNavigationComponent
+import tmg.flashback.ui.navigation.Navigator
+import tmg.flashback.ui.navigation.Screen
+import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.utilities.extensions.ordinalAbbreviation
 import javax.inject.Inject
 
@@ -50,8 +53,9 @@ interface DriverOverviewViewModelOutputs {
 class DriverOverviewViewModel @Inject constructor(
     private val driverRepository: DriverRepository,
     private val networkConnectivityManager: NetworkConnectivityManager,
+    private val navigator: Navigator,
     private val statsNavigationComponent: StatsNavigationComponent,
-    private val webNavigationComponent: WebNavigationComponent,
+    private val openWebpageUseCase: OpenWebpageUseCase,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), DriverOverviewViewModelInputs, DriverOverviewViewModelOutputs {
 
@@ -153,13 +157,17 @@ class DriverOverviewViewModel @Inject constructor(
     }
 
     override fun openUrl(url: String) {
-        webNavigationComponent.web(url)
+        openWebpageUseCase.open(url = url, title = "")
     }
 
     override fun openSeason(season: Int) {
         driverIdAndName.value?.let {
             val (id, name) = it
-            statsNavigationComponent.driverSeason(id, name, season)
+            navigator.navigate(Screen.DriverSeason.with(
+                driverId = id,
+                driverName = name,
+                season = season
+            ))
         }
     }
 

@@ -4,8 +4,7 @@ import android.content.Context
 import androidx.annotation.DrawableRes
 import com.murgupluoglu.flagkit.FlagKit
 import tmg.flashback.formula1.R
-import java.lang.RuntimeException
-import java.util.*
+import java.util.Locale
 
 @DrawableRes
 fun Context.getFlagResourceAlpha3(flag: String): Int {

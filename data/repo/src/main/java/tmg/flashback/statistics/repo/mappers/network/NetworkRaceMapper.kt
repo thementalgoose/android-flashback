@@ -1,9 +1,9 @@
 package tmg.flashback.statistics.repo.mappers.network
 
-import tmg.flashback.statistics.room.models.race.SprintResult
 import tmg.flashback.statistics.room.models.race.FastestLap
 import tmg.flashback.statistics.room.models.race.QualifyingResult
 import tmg.flashback.statistics.room.models.race.RaceResult
+import tmg.flashback.statistics.room.models.race.SprintResult
 import javax.inject.Inject
 
 class NetworkRaceMapper @Inject constructor() {

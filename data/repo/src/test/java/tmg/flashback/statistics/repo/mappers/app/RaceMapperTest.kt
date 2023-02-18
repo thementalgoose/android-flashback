@@ -2,15 +2,22 @@ package tmg.flashback.statistics.repo.mappers.app
 
 import io.mockk.every
 import io.mockk.mockk
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNull
+import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.format.DateTimeParseException
 import tmg.flashback.RoomRace
 import tmg.flashback.RoomRaceInfo
 import tmg.flashback.RoomRaceInfoWithCircuit
-import tmg.flashback.formula1.model.*
-import tmg.flashback.statistics.room.models.overview.model
+import tmg.flashback.formula1.model.Circuit
+import tmg.flashback.formula1.model.Constructor
+import tmg.flashback.formula1.model.Driver
+import tmg.flashback.formula1.model.Race
+import tmg.flashback.formula1.model.RaceInfo
+import tmg.flashback.formula1.model.Schedule
+import tmg.flashback.formula1.model.model
 import tmg.flashback.statistics.room.models.race.model
 
 internal class RaceMapperTest {

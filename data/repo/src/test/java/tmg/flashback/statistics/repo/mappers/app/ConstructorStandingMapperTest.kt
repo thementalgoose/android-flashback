@@ -6,7 +6,11 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.flashback.formula1.model.*
+import tmg.flashback.formula1.model.Constructor
+import tmg.flashback.formula1.model.Driver
+import tmg.flashback.formula1.model.SeasonConstructorStandingSeason
+import tmg.flashback.formula1.model.SeasonConstructorStandings
+import tmg.flashback.formula1.model.model
 import tmg.flashback.statistics.room.models.standings.ConstructorStandingWithDrivers
 import tmg.flashback.statistics.room.models.standings.model
 

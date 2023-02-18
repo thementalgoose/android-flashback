@@ -1,10 +1,7 @@
 package tmg.flashback.stats.ui.constructors.overview
 
-import androidx.annotation.AttrRes
-import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import org.junit.jupiter.api.Assertions.*
 import tmg.flashback.formula1.model.ConstructorHistorySeasonDriver
 import tmg.flashback.formula1.model.model
 import tmg.flashback.ui.components.navigation.PipeType

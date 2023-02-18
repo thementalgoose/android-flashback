@@ -1,6 +1,9 @@
 package tmg.flashback.rss.network
 
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import retrofit2.HttpException
 import tmg.flashback.rss.BuildConfig
 import tmg.flashback.rss.network.apis.convert
@@ -102,13 +105,11 @@ internal class RSSService @Inject constructor(
                 // All failed
                 if (errors.isNotEmpty()) {
                     if (errors.any { it.isNoNetwork }) {
-                        @Suppress("RemoveExplicitTypeArguments")
                         return@map Response<List<Article>>(null, -1)
                     } else {
                         return@map errors.first()
                     }
                 } else {
-                    @Suppress("RemoveExplicitTypeArguments")
                     return@map Response<List<Article>>(emptyList())
                 }
             }

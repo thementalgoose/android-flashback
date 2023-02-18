@@ -19,8 +19,8 @@ import tmg.flashback.ui.components.settings.Footer
 import tmg.flashback.ui.components.settings.Header
 import tmg.flashback.ui.components.settings.Pref
 import tmg.flashback.ui.components.settings.Switch
-import tmg.flashback.ui.settings.Settings
 import tmg.flashback.ui.settings.Setting
+import tmg.flashback.ui.settings.Settings
 
 @Composable
 fun SettingsNotificationsUpcomingScreenVM(

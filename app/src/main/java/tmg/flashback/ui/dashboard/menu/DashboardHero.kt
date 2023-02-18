@@ -15,7 +15,6 @@ import tmg.flashback.eastereggs.model.MenuIcons
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
-import tmg.flashback.style.text.TextHeadline2
 import tmg.flashback.style.text.TextHeadline2WithIcon
 
 private val MenuIcons.drawable: Int get() = when (this) {

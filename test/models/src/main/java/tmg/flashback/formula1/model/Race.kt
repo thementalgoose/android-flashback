@@ -1,6 +1,8 @@
 package tmg.flashback.formula1.model
 
-import tmg.flashback.formula1.model.RaceQualifyingType.*
+import tmg.flashback.formula1.model.RaceQualifyingType.Q1
+import tmg.flashback.formula1.model.RaceQualifyingType.Q2
+import tmg.flashback.formula1.model.RaceQualifyingType.Q3
 
 fun Race.Companion.model(
     raceInfo: RaceInfo = RaceInfo.model(),

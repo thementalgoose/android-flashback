@@ -1,14 +1,25 @@
 package tmg.flashback.stats.ui.dashboard.drivers
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import tmg.flashback.statistics.repo.SeasonRepository
-import tmg.flashback.stats.StatsNavigationComponent
+import tmg.flashback.stats.Driver
 import tmg.flashback.stats.usecases.FetchSeasonUseCase
+import tmg.flashback.stats.with
+import tmg.flashback.ui.navigation.Navigator
+import tmg.flashback.ui.navigation.Screen
 import javax.inject.Inject
 
 interface DriversStandingViewModelInputs {
@@ -27,7 +38,7 @@ interface DriversStandingViewModelOutputs {
 class DriversStandingViewModel @Inject constructor(
     private val seasonRepository: SeasonRepository,
     private val fetchSeasonUseCase: FetchSeasonUseCase,
-    private val statsNavigator: StatsNavigationComponent,
+    private val navigator: Navigator,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), DriversStandingViewModelInputs, DriversStandingViewModelOutputs {
 
@@ -79,9 +90,9 @@ class DriversStandingViewModel @Inject constructor(
     }
 
     override fun clickItem(model: DriverStandingsModel.Standings) {
-        statsNavigator.driverOverview(
-            id = model.standings.driver.id,
-            name = model.standings.driver.name
-        )
+        navigator.navigate(Screen.Driver.with(
+            driverId = model.standings.driver.id,
+            driverName = model.standings.driver.name
+        ))
     }
 }

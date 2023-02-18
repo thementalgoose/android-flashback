@@ -6,11 +6,13 @@ import io.mockk.verify
 import kotlinx.coroutines.flow.flow
 import org.junit.jupiter.api.Test
 import tmg.flashback.formula1.model.Race
-import tmg.flashback.formula1.model.RaceQualifyingResult
 import tmg.flashback.formula1.model.RaceSprintResult
 import tmg.flashback.formula1.model.model
 import tmg.flashback.statistics.repo.RaceRepository
-import tmg.flashback.stats.StatsNavigationComponent
+import tmg.flashback.stats.DriverSeason
+import tmg.flashback.stats.with
+import tmg.flashback.ui.navigation.Navigator
+import tmg.flashback.ui.navigation.Screen
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.test
 import tmg.testutils.livedata.testObserve
@@ -19,14 +21,14 @@ import java.time.Year
 internal class SprintViewModelTest: BaseTest() {
 
     private val mockRaceRepository: RaceRepository = mockk(relaxed = true)
-    private val mockStatsNavigationComponent: StatsNavigationComponent = mockk(relaxed = true)
+    private val mockNavigator: Navigator = mockk(relaxed = true)
 
     private lateinit var underTest: SprintViewModel
 
     private fun initUnderTest() {
         underTest = SprintViewModel(
             raceRepository = mockRaceRepository,
-            statsNavigationComponent = mockStatsNavigationComponent,
+            navigator = mockNavigator,
             ioDispatcher = coroutineScope.testDispatcher
         )
     }
@@ -88,11 +90,11 @@ internal class SprintViewModelTest: BaseTest() {
         underTest.outputs.list.testObserve()
 
         verify {
-            mockStatsNavigationComponent.driverSeason(
-                id = input.driver.driver.id,
-                name = input.driver.driver.name,
+            mockNavigator.navigate(Screen.DriverSeason.with(
+                driverId = input.driver.driver.id,
+                driverName = input.driver.driver.name,
                 season = 2020
-            )
+            ))
         }
     }
 }

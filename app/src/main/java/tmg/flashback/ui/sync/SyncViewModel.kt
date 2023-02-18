@@ -1,6 +1,11 @@
 package tmg.flashback.ui.sync
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asFlow
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -20,7 +25,9 @@ import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.statistics.repo.repository.CacheRepository
 import tmg.flashback.stats.usecases.ScheduleNotificationsUseCase
 import tmg.flashback.stats.usecases.SearchAppShortcutUseCase
-import tmg.flashback.ui.sync.SyncState.*
+import tmg.flashback.ui.sync.SyncState.DONE
+import tmg.flashback.ui.sync.SyncState.FAILED
+import tmg.flashback.ui.sync.SyncState.LOADING
 import tmg.utilities.lifecycle.DataEvent
 import javax.inject.Inject
 

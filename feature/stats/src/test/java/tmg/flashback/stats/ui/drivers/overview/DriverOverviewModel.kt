@@ -1,9 +1,7 @@
 package tmg.flashback.stats.ui.drivers.overview
 
-import androidx.annotation.AttrRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import org.junit.jupiter.api.Assertions.*
 import org.threeten.bp.LocalDate
 import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.model

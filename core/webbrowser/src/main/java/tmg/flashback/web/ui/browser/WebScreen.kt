@@ -15,11 +15,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidViewBinding
-import tmg.flashback.web.R
-import tmg.flashback.web.databinding.ActivityWebBinding
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
+import tmg.flashback.web.R
+import tmg.flashback.web.databinding.ActivityWebBinding
 
 @Composable
 fun WebScreenVM(

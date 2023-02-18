@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import tmg.flashback.ui.settings.Settings
 import tmg.flashback.ui.settings.Setting
+import tmg.flashback.ui.settings.Settings
 import tmg.flashback.web.repository.WebBrowserRepository
 import javax.inject.Inject
 

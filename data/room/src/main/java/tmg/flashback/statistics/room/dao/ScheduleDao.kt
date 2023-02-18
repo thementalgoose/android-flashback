@@ -1,7 +1,6 @@
 package tmg.flashback.statistics.room.dao
 
 import androidx.room.*
-import kotlinx.coroutines.flow.Flow
 import org.threeten.bp.LocalDate
 import tmg.flashback.statistics.room.models.overview.OverviewWithCircuit
 import tmg.flashback.statistics.room.models.overview.Schedule

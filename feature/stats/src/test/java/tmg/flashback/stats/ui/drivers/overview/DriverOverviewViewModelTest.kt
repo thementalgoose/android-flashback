@@ -14,10 +14,14 @@ import tmg.flashback.formula1.model.DriverHistory
 import tmg.flashback.formula1.model.DriverHistorySeason
 import tmg.flashback.formula1.model.model
 import tmg.flashback.statistics.repo.DriverRepository
+import tmg.flashback.stats.DriverSeason
 import tmg.flashback.stats.R
 import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.stats.ui.drivers.stathistory.DriverStatHistoryType
-import tmg.flashback.web.WebNavigationComponent
+import tmg.flashback.stats.with
+import tmg.flashback.ui.navigation.Navigator
+import tmg.flashback.ui.navigation.Screen
+import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertListMatchesItem
 import tmg.testutils.livedata.test
@@ -26,8 +30,9 @@ internal class DriverOverviewViewModelTest: BaseTest() {
 
     private val mockDriverRepository: DriverRepository = mockk(relaxed = true)
     private val mockNetworkConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
+    private val mockNavigator: Navigator = mockk(relaxed = true)
     private val mockStatsNavigationComponent: StatsNavigationComponent = mockk(relaxed = true)
-    private val mockWebNavigationComponent: WebNavigationComponent = mockk(relaxed = true)
+    private val mockOpenWebpageUseCase: OpenWebpageUseCase = mockk(relaxed = true)
 
     private lateinit var sut: DriverOverviewViewModel
 
@@ -35,8 +40,9 @@ internal class DriverOverviewViewModelTest: BaseTest() {
         sut = DriverOverviewViewModel(
             mockDriverRepository,
             mockNetworkConnectivityManager,
+            mockNavigator,
             mockStatsNavigationComponent,
-            mockWebNavigationComponent,
+            mockOpenWebpageUseCase,
             ioDispatcher = coroutineScope.testDispatcher
         )
     }
@@ -201,7 +207,7 @@ internal class DriverOverviewViewModelTest: BaseTest() {
         initSUT()
         sut.inputs.openUrl("url")
         verify {
-            mockWebNavigationComponent.web("url")
+            mockOpenWebpageUseCase.open(url = "url", title = "")
         }
     }
 
@@ -216,7 +222,11 @@ internal class DriverOverviewViewModelTest: BaseTest() {
 
         sut.inputs.openSeason(2020)
         verify {
-            mockStatsNavigationComponent.driverSeason("driverId", "firstName lastName", 2020)
+            mockNavigator.navigate(Screen.DriverSeason.with(
+                driverId = "driverId",
+                driverName = "firstName lastName",
+                season = 2020
+            ))
         }
     }
 

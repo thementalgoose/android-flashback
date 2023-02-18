@@ -28,7 +28,6 @@ import tmg.flashback.stats.R
 import tmg.flashback.stats.analytics.AnalyticsConstants.analyticsDriverId
 import tmg.flashback.stats.analytics.AnalyticsConstants.analyticsSeason
 import tmg.flashback.stats.components.Timeline
-import tmg.flashback.ui.components.navigation.PipeType
 import tmg.flashback.stats.ui.shared.DriverImage
 import tmg.flashback.stats.ui.shared.Flag
 import tmg.flashback.stats.ui.weekend.shared.DriverInfo
@@ -42,6 +41,7 @@ import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.messages.Message
+import tmg.flashback.ui.components.navigation.PipeType
 import tmg.flashback.ui.components.progressbar.ProgressBar
 import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
 import tmg.utilities.extensions.format

@@ -2,12 +2,13 @@ package tmg.flashback.stats.ui.drivers.stathistory
 
 import io.mockk.every
 import io.mockk.mockk
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
-import tmg.flashback.formula1.model.*
+import tmg.flashback.formula1.model.DriverHistory
+import tmg.flashback.formula1.model.DriverHistorySeason
+import tmg.flashback.formula1.model.DriverHistorySeasonRace
+import tmg.flashback.formula1.model.RaceInfo
+import tmg.flashback.formula1.model.model
 import tmg.flashback.statistics.repo.DriverRepository
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.test
