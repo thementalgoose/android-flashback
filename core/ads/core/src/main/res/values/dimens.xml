@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="admobIconImageSize">42dp</dimen>
-    <dimen name="admobAdvertisementLabelOffset">58dp</dimen> <!-- admobIconImageSize + paddingMedium -->
+    <dimen name="admobIconImageSize">36dp</dimen>
+    <dimen name="admobAdvertisementLabelOffset">52dp</dimen> <!-- admobIconImageSize + paddingMedium -->
     <dimen name="admobBannerHeight">72dp</dimen>
 </resources>

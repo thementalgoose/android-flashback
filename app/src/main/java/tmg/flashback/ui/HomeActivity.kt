@@ -16,6 +16,7 @@ import androidx.window.layout.WindowInfoTracker
 import androidx.window.layout.WindowLayoutInfo
 import dagger.hilt.android.AndroidEntryPoint
 import tmg.flashback.BuildConfig
+import tmg.flashback.ads.contract.components.AdvertProvider
 import tmg.flashback.configuration.usecases.ConfigSyncUseCase
 import tmg.flashback.crash_reporting.manager.CrashManager
 import tmg.flashback.maintenance.MaintenanceNavigationComponent
@@ -47,6 +48,9 @@ class HomeActivity: BaseActivity(), SplashScreen.KeepOnScreenCondition {
     @Inject
     lateinit var maintenanceNavigationComponent: MaintenanceNavigationComponent
 
+    @Inject
+    lateinit var advertProvider: AdvertProvider
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -70,6 +74,7 @@ class HomeActivity: BaseActivity(), SplashScreen.KeepOnScreenCondition {
                     windowSize = calculateWindowSizeClass(activity = this),
                     windowLayoutInfo = windowInfoTracker.collectAsState(WindowLayoutInfo(emptyList())).value,
                     navigator = navigator,
+                    advertProvider = advertProvider,
                     closeApp = { finish() }
                 )
             }
