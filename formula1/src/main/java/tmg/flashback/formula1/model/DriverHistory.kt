@@ -112,7 +112,6 @@ data class DriverHistory(
                 .map { it.raceOverview }
                 .flatten()
                 .count {
-                    @Suppress("ConvertTwoComparisonsToRangeCheck")
                     it.qualified != null && it.qualified >= 1 && it.qualified <= position
                 }
     }

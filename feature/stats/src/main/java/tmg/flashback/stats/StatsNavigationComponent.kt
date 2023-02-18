@@ -136,61 +136,8 @@ val Screen.Search: NavigationDestination
     get() = NavigationDestination("search", launchSingleTop = true)
 
 class StatsNavigationComponent @Inject constructor(
-    private val navigator: Navigator,
     private val activityProvider: ActivityProvider
 ) {
-    @Deprecated("This should be removed for a direct call to navigator", replaceWith = ReplaceWith("Navigator"))
-    fun driverOverview(id: String, name: String) {
-        navigator.navigate(Screen.Driver.with(
-            driverId = id,
-            driverName = name
-        ))
-    }
-
-    @Deprecated("This should be removed for a direct call to navigator", replaceWith = ReplaceWith("Navigator"))
-    fun driverSeason(id: String, name: String, season: Int) {
-        navigator.navigate(Screen.DriverSeason.with(
-            driverId = id,
-            driverName = name,
-            season = season
-        ))
-    }
-
-    @Deprecated("This should be removed for a direct call to navigator", replaceWith = ReplaceWith("Navigator"))
-    fun constructorOverview(id: String, name: String) {
-        navigator.navigate(Screen.Constructor.with(
-            constructorId = id,
-            constructorName = name
-        ))
-    }
-
-    @Deprecated("This should be removed for a direct call to navigator", replaceWith = ReplaceWith("Navigator"))
-    fun constructorSeason(id: String, name: String, season: Int) {
-        navigator.navigate(Screen.ConstructorSeason.with(
-            constructorId = id,
-            constructorName = name,
-            season = season
-        ))
-    }
-
-    @Deprecated("This should be removed for a direct call to navigator", replaceWith = ReplaceWith("Navigator"))
-    fun weekend(weekendInfo: WeekendInfo) {
-        navigator.navigate(Screen.Weekend.with(weekendInfo = weekendInfo))
-    }
-
-    @Deprecated("This should be removed for a direct call to navigator", replaceWith = ReplaceWith("Navigator"))
-    fun search() {
-        navigator.navigate(Screen.Search)
-    }
-
-    @Deprecated("This should be removed for a direct call to navigator", replaceWith = ReplaceWith("Navigator"))
-    fun circuit(circuitId: String, circuitName: String) {
-        navigator.navigate(Screen.Circuit.with(
-            circuitId = circuitId,
-            circuitName = circuitName
-        ))
-    }
-
     fun upNext() = activityProvider.launch {
         val activity = it as? AppCompatActivity ?: return@launch
         UpNextReminderBottomSheetFragment().show(activity.supportFragmentManager, "UP_NEXT")

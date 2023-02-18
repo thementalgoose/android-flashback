@@ -13,11 +13,17 @@ import tmg.flashback.formula1.model.model
 import tmg.flashback.statistics.repo.EventsRepository
 import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.stats.StatsNavigationComponent
+import tmg.flashback.stats.Weekend
 import tmg.flashback.stats.repository.HomeRepository
 import tmg.flashback.stats.repository.NotificationRepository
 import tmg.flashback.stats.repository.models.NotificationSchedule
 import tmg.flashback.stats.ui.dashboard.schedule.ScheduleModel
+import tmg.flashback.stats.ui.weekend.WeekendInfo
+import tmg.flashback.stats.ui.weekend.toWeekendInfo
 import tmg.flashback.stats.usecases.FetchSeasonUseCase
+import tmg.flashback.stats.with
+import tmg.flashback.ui.navigation.Navigator
+import tmg.flashback.ui.navigation.Screen
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertListMatchesItem
 import tmg.testutils.livedata.test
@@ -29,8 +35,8 @@ internal class CalendarViewModelTest: BaseTest() {
     private val mockEventsRepository: EventsRepository = mockk(relaxed = true)
     private val mockFetchSeasonUseCase: FetchSeasonUseCase = mockk(relaxed = true)
     private val mockNotificationRepository: NotificationRepository = mockk(relaxed = true)
+    private val mockNavigator: Navigator = mockk(relaxed = true)
     private val mockStatsNavigationComponent: StatsNavigationComponent = mockk(relaxed = true)
-    private val mockHomeRepository: HomeRepository = mockk(relaxed = true)
 
     private lateinit var underTest: CalendarViewModel
 
@@ -42,6 +48,7 @@ internal class CalendarViewModelTest: BaseTest() {
             fetchSeasonUseCase = mockFetchSeasonUseCase,
             overviewRepository = mockOverviewRepository,
             eventsRepository = mockEventsRepository,
+            navigator = mockNavigator,
             statsNavigationComponent = mockStatsNavigationComponent,
             ioDispatcher = coroutineScope.testDispatcher
         )
@@ -123,7 +130,9 @@ internal class CalendarViewModelTest: BaseTest() {
         underTest.clickItem(model)
 
         verify {
-            mockStatsNavigationComponent.weekend(any())
+            mockNavigator.navigate(Screen.Weekend.with(
+                OverviewRace.model(round = 1).toRaceInfo().toWeekendInfo()
+            ))
         }
     }
 

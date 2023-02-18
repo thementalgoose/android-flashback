@@ -4,9 +4,11 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.slot
 import io.mockk.verify
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.device.managers.NetworkConnectivityManager
@@ -15,7 +17,11 @@ import tmg.flashback.formula1.model.CircuitHistoryRace
 import tmg.flashback.formula1.model.model
 import tmg.flashback.statistics.repo.CircuitRepository
 import tmg.flashback.stats.StatsNavigationComponent
+import tmg.flashback.stats.ui.weekend.WeekendInfo
+import tmg.flashback.ui.navigation.NavigationDestination
+import tmg.flashback.ui.navigation.Navigator
 import tmg.flashback.web.WebNavigationComponent
+import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.test
 
@@ -25,8 +31,8 @@ internal class CircuitViewModelTest: BaseTest() {
 
     private val mockCircuitRepository: CircuitRepository = mockk(relaxed = true)
     private val mockConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
-    private val mockWebNavigationComponent: WebNavigationComponent = mockk(relaxed = true)
-    private val mockStatsNavigationComponent: StatsNavigationComponent = mockk(relaxed = true)
+    private val mockOpenWebpageUseCase: OpenWebpageUseCase = mockk(relaxed = true)
+    private val mockNavigator: Navigator = mockk(relaxed = true)
 
     @BeforeEach
     internal fun setUp() {
@@ -40,8 +46,8 @@ internal class CircuitViewModelTest: BaseTest() {
         sut = CircuitViewModel(
             mockCircuitRepository,
             mockConnectivityManager,
-            mockWebNavigationComponent,
-            mockStatsNavigationComponent,
+            mockOpenWebpageUseCase,
+            mockNavigator,
             ioDispatcher = coroutineScope.testDispatcher
         )
     }
@@ -196,7 +202,7 @@ internal class CircuitViewModelTest: BaseTest() {
         sut.inputs.linkClicked("link")
 
         verify {
-            mockWebNavigationComponent.web("link")
+            mockOpenWebpageUseCase.open(url = "link", title = "")
         }
     }
 
@@ -230,8 +236,10 @@ internal class CircuitViewModelTest: BaseTest() {
         initSUT()
         sut.inputs.itemClicked(item)
 
+        val slot = slot<NavigationDestination>()
         verify {
-            mockStatsNavigationComponent.weekend(any())
+            mockNavigator.navigate(capture(slot))
         }
+        assertTrue(slot.captured.route.startsWith("weekend"))
     }
 }

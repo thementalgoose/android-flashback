@@ -13,15 +13,3 @@ val Screen.Settings.RSSConfigure: NavigationDestination
 
 val Screen.RSS: NavigationDestination
     get() = NavigationDestination("rss", launchSingleTop = true)
-
-class RssNavigationComponent @Inject constructor(
-    private val navigator: Navigator
-) {
-    fun rss() {
-        navigator.navigate(Screen.RSS)
-    }
-
-    fun configureRSS() {
-        navigator.navigate(Screen.Settings.RSSConfigure)
-    }
-}

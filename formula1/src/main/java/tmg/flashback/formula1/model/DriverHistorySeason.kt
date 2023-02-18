@@ -59,7 +59,6 @@ data class DriverHistorySeason(
     fun totalQualifyingAbove(position: Int): Int {
         return raceOverview
             .count {
-                @Suppress("ConvertTwoComparisonsToRangeCheck")
                 it.qualified != null && it.qualified >= 1 && it.qualified <= position
             }
     }

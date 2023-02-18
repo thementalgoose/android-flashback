@@ -102,13 +102,11 @@ internal class RSSService @Inject constructor(
                 // All failed
                 if (errors.isNotEmpty()) {
                     if (errors.any { it.isNoNetwork }) {
-                        @Suppress("RemoveExplicitTypeArguments")
                         return@map Response<List<Article>>(null, -1)
                     } else {
                         return@map errors.first()
                     }
                 } else {
-                    @Suppress("RemoveExplicitTypeArguments")
                     return@map Response<List<Article>>(emptyList())
                 }
             }

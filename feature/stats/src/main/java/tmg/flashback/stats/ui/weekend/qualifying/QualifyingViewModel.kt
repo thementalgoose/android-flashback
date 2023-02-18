@@ -15,7 +15,11 @@ import tmg.flashback.formula1.model.Race
 import tmg.flashback.formula1.model.RaceQualifyingResult
 import tmg.flashback.formula1.model.RaceQualifyingType
 import tmg.flashback.statistics.repo.RaceRepository
+import tmg.flashback.stats.DriverSeason
 import tmg.flashback.stats.StatsNavigationComponent
+import tmg.flashback.stats.with
+import tmg.flashback.ui.navigation.Navigator
+import tmg.flashback.ui.navigation.Screen
 import javax.inject.Inject
 
 interface QualifyingViewModelInputs {
@@ -33,7 +37,7 @@ typealias QualifyingHeader = Triple<Boolean, Boolean, Boolean>
 @HiltViewModel
 class QualifyingViewModel @Inject constructor(
     private val raceRepository: RaceRepository,
-    private val statsNavigationComponent: StatsNavigationComponent,
+    private val navigator: Navigator,
     private val ioDispatcher: CoroutineDispatcher
 ): ViewModel(), QualifyingViewModelInputs, QualifyingViewModelOutputs {
 
@@ -141,11 +145,11 @@ class QualifyingViewModel @Inject constructor(
 
     override fun clickDriver(result: Driver) {
         val season = seasonRound.value?.first ?: return
-        statsNavigationComponent.driverSeason(
-            id = result.id,
-            name = result.name,
+        navigator.navigate(Screen.DriverSeason.with(
+            driverId = result.id,
+            driverName = result.name,
             season = season
-        )
+        ))
     }
 
 }

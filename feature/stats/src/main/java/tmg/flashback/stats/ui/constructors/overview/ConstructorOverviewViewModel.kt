@@ -1,6 +1,5 @@
 package tmg.flashback.stats.ui.constructors.overview
 
-import androidx.annotation.AttrRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.lifecycle.*
@@ -13,13 +12,14 @@ import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.ConstructorHistory
 import tmg.flashback.statistics.repo.ConstructorRepository
+import tmg.flashback.stats.ConstructorSeason
 import tmg.flashback.stats.R
-import tmg.flashback.stats.StatsNavigationComponent
+import tmg.flashback.stats.with
 import tmg.flashback.ui.components.navigation.PipeType
-import tmg.flashback.ui.navigation.ApplicationNavigationComponent
-import tmg.flashback.web.WebNavigationComponent
+import tmg.flashback.ui.navigation.Navigator
+import tmg.flashback.ui.navigation.Screen
+import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.utilities.extensions.ordinalAbbreviation
-import tmg.utilities.lifecycle.DataEvent
 import javax.inject.Inject
 
 
@@ -50,8 +50,8 @@ interface ConstructorOverviewViewModelOutputs {
 class ConstructorOverviewViewModel @Inject constructor(
     private val constructorRepository: ConstructorRepository,
     private val networkConnectivityManager: NetworkConnectivityManager,
-    private val webNavigationComponent: WebNavigationComponent,
-    private val statsNavigationComponent: StatsNavigationComponent,
+    private val openWebpageUseCase: OpenWebpageUseCase,
+    private val navigator: Navigator,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), ConstructorOverviewViewModelInputs, ConstructorOverviewViewModelOutputs {
 
@@ -138,12 +138,16 @@ class ConstructorOverviewViewModel @Inject constructor(
     }
 
     override fun openUrl(url: String) {
-        webNavigationComponent.web(url)
+        openWebpageUseCase.open(url = url, title = "")
     }
 
     override fun openSeason(season: Int) {
         constructorIdAndName.value?.let { (id, name) ->
-            statsNavigationComponent.constructorSeason(id, name, season)
+            navigator.navigate(Screen.ConstructorSeason.with(
+                constructorId = id,
+                constructorName = name,
+                season = season
+            ))
         }
     }
 
