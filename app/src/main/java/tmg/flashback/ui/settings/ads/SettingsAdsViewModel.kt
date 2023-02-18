@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import tmg.flashback.ads.config.repository.AdsRepository
+import tmg.flashback.ads.contract.repository.AdsRepository
 import tmg.flashback.ui.settings.Setting
 import tmg.flashback.ui.settings.Settings
 import javax.inject.Inject

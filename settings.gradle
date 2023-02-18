@@ -20,8 +20,9 @@ include ':formula1'
 
 include ':eastereggs'
 
-include ':core:ads:ads'
-include ':core:ads:ads-config'
+include ':core:ads:core'
+include ':core:ads:contract'
+include ':core:ads:noop'
 include ':core:analytics'
 include ':core:appshortcuts'
 include ':core:configuration'

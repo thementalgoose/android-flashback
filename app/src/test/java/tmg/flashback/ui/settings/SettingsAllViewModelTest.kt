@@ -6,7 +6,7 @@ import io.mockk.slot
 import io.mockk.verify
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import tmg.flashback.ads.config.repository.AdsRepository
+import tmg.flashback.ads.contract.repository.AdsRepository
 import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.rss.RSSConfigure
 import tmg.flashback.rss.repo.RSSRepository
