@@ -12,9 +12,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import tmg.flashback.analytics.manager.AnalyticsManager
 import tmg.flashback.crash_reporting.manager.CrashManager
 import tmg.flashback.web.R
-import tmg.flashback.web.databinding.FragmentWebBinding
 import tmg.flashback.web.client.FlashbackWebChromeClient
 import tmg.flashback.web.client.FlashbackWebViewClient
+import tmg.flashback.web.databinding.FragmentWebBinding
 import tmg.flashback.web.repository.WebBrowserRepository
 import tmg.utilities.extensions.getColor
 import tmg.utilities.extensions.views.show

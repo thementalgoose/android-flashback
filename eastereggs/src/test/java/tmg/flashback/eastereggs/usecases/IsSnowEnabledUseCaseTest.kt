@@ -2,7 +2,8 @@ package tmg.flashback.eastereggs.usecases
 
 import io.mockk.every
 import io.mockk.mockk
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import tmg.flashback.device.repository.AccessibilityRepository
 import tmg.flashback.eastereggs.repository.EasterEggsRepository

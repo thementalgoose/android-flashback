@@ -10,9 +10,9 @@ import androidx.compose.ui.unit.dp
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.Driver
 import tmg.flashback.providers.DriverProvider
-import tmg.flashback.style.AppTheme
 import tmg.flashback.stats.R
 import tmg.flashback.stats.ui.shared.Flag
+import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.ui.utils.pluralResource

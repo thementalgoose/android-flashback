@@ -18,10 +18,8 @@ import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.stats.ui.drivers.stathistory.DriverStatHistoryType
 import tmg.flashback.stats.with
 import tmg.flashback.ui.components.navigation.PipeType
-import tmg.flashback.ui.navigation.ApplicationNavigationComponent
 import tmg.flashback.ui.navigation.Navigator
 import tmg.flashback.ui.navigation.Screen
-import tmg.flashback.web.WebNavigationComponent
 import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.utilities.extensions.ordinalAbbreviation
 import javax.inject.Inject

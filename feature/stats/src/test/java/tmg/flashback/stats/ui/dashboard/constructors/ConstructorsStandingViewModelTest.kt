@@ -8,10 +8,12 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.flashback.formula1.model.*
+import tmg.flashback.formula1.model.Constructor
+import tmg.flashback.formula1.model.SeasonConstructorStandingSeason
+import tmg.flashback.formula1.model.SeasonConstructorStandings
+import tmg.flashback.formula1.model.model
 import tmg.flashback.statistics.repo.SeasonRepository
 import tmg.flashback.stats.Constructor
-import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.stats.usecases.FetchSeasonUseCase
 import tmg.flashback.stats.with
 import tmg.flashback.ui.navigation.Navigator

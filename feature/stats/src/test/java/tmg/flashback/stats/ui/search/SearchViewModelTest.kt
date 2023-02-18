@@ -23,7 +23,6 @@ import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.stats.Circuit
 import tmg.flashback.stats.Constructor
 import tmg.flashback.stats.Driver
-import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.stats.Weekend
 import tmg.flashback.stats.ui.weekend.WeekendInfo
 import tmg.flashback.stats.with

@@ -8,7 +8,6 @@ import kotlinx.coroutines.test.advanceUntilIdle
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDateTime
-import tmg.flashback.rss.RssNavigationComponent
 import tmg.flashback.ads.config.repository.AdsRepository
 import tmg.flashback.ads.config.repository.model.AdvertConfig
 import tmg.flashback.device.managers.NetworkConnectivityManager
@@ -18,13 +17,15 @@ import tmg.flashback.rss.repo.RssAPI
 import tmg.flashback.rss.repo.model.Article
 import tmg.flashback.rss.repo.model.ArticleSource
 import tmg.flashback.rss.repo.model.Response
-import tmg.flashback.ui.navigation.ApplicationNavigationComponent
 import tmg.flashback.ui.navigation.Navigator
 import tmg.flashback.ui.navigation.Screen
-import tmg.flashback.web.WebNavigationComponent
 import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.testutils.BaseTest
-import tmg.testutils.livedata.*
+import tmg.testutils.livedata.assertListContainsItem
+import tmg.testutils.livedata.assertListDoesNotMatchItem
+import tmg.testutils.livedata.assertListMatchesItem
+import tmg.testutils.livedata.test
+import tmg.testutils.livedata.testObserve
 
 internal class RSSViewModelTest: BaseTest() {
 

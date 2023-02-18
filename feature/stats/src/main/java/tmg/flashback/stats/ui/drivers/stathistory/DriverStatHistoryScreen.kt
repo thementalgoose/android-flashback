@@ -21,7 +21,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.Race
 import tmg.flashback.formula1.model.RaceInfo

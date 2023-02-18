@@ -5,7 +5,6 @@ import androidx.activity.compose.setContent
 import dagger.hilt.android.AndroidEntryPoint
 import tmg.flashback.style.AppTheme
 import tmg.flashback.ui.base.BaseActivity
-import tmg.flashback.ui.managers.StyleManager
 import tmg.flashback.ui.model.NightMode
 import tmg.flashback.ui.usecases.ChangeNightModeUseCase
 import javax.inject.Inject

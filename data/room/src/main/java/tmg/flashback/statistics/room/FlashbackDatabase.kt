@@ -2,7 +2,14 @@ package tmg.flashback.statistics.room
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import tmg.flashback.statistics.room.dao.*
+import tmg.flashback.statistics.room.dao.CircuitDao
+import tmg.flashback.statistics.room.dao.ConstructorDao
+import tmg.flashback.statistics.room.dao.DriverDao
+import tmg.flashback.statistics.room.dao.EventsDao
+import tmg.flashback.statistics.room.dao.OverviewDao
+import tmg.flashback.statistics.room.dao.ScheduleDao
+import tmg.flashback.statistics.room.dao.SeasonDao
+import tmg.flashback.statistics.room.dao.SeasonStandingsDao
 import tmg.flashback.statistics.room.models.circuit.Circuit
 import tmg.flashback.statistics.room.models.circuit.CircuitRound
 import tmg.flashback.statistics.room.models.circuit.CircuitRoundResult

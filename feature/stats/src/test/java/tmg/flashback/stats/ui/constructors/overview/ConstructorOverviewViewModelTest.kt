@@ -16,11 +16,9 @@ import tmg.flashback.formula1.model.model
 import tmg.flashback.statistics.repo.ConstructorRepository
 import tmg.flashback.stats.ConstructorSeason
 import tmg.flashback.stats.R
-import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.stats.with
 import tmg.flashback.ui.navigation.Navigator
 import tmg.flashback.ui.navigation.Screen
-import tmg.flashback.web.WebNavigationComponent
 import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertListMatchesItem

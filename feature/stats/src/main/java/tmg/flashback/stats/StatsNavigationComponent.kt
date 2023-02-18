@@ -8,8 +8,9 @@ import tmg.flashback.stats.ui.feature.notificationonboarding.NotificationOnboard
 import tmg.flashback.stats.ui.settings.notifications.reminder.UpNextReminderBottomSheetFragment
 import tmg.flashback.stats.ui.tyres.TyreBottomSheetFragment
 import tmg.flashback.stats.ui.weekend.WeekendInfo
-import tmg.flashback.ui.navigation.*
-import tmg.flashback.ui.navigation.Navigator
+import tmg.flashback.ui.navigation.ActivityProvider
+import tmg.flashback.ui.navigation.NavigationDestination
+import tmg.flashback.ui.navigation.Screen
 import javax.inject.Inject
 
 @JvmInline

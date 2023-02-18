@@ -3,11 +3,11 @@ package tmg.flashback.releasenotes.usecases
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.releasenotes.constants.ReleaseNotes
 import tmg.flashback.releasenotes.repository.ReleaseNotesRepository
-import tmg.flashback.device.managers.BuildConfigManager
 
 internal class NewReleaseNotesUseCaseTest {
 

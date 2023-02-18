@@ -5,10 +5,10 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import tmg.flashback.R
 import tmg.flashback.ui.managers.ToastManager
 import tmg.flashback.ui.model.Theme
 import tmg.flashback.ui.repository.ThemeRepository
-import tmg.flashback.R
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.test
 

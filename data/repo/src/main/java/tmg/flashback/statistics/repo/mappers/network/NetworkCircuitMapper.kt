@@ -2,7 +2,6 @@ package tmg.flashback.statistics.repo.mappers.network
 
 import tmg.flashback.statistics.network.models.circuits.CircuitPreviewPosition
 import tmg.flashback.statistics.network.models.circuits.CircuitResult
-import tmg.flashback.statistics.network.models.circuits.CircuitResultRace
 import tmg.flashback.statistics.room.models.circuit.*
 import javax.inject.Inject
 

@@ -8,12 +8,11 @@ import tmg.flashback.R
 import tmg.flashback.analytics.manager.AnalyticsManager
 import tmg.flashback.crash_reporting.repository.CrashRepository
 import tmg.flashback.privacypolicy.PrivacyPolicy
-import tmg.flashback.privacypolicy.PrivacyPolicyNavigationComponent
 import tmg.flashback.ui.managers.ToastManager
 import tmg.flashback.ui.navigation.Navigator
 import tmg.flashback.ui.navigation.Screen
-import tmg.flashback.ui.settings.Settings
 import tmg.flashback.ui.settings.Setting
+import tmg.flashback.ui.settings.Settings
 import javax.inject.Inject
 
 interface SettingsPrivacyViewModelInputs {

@@ -12,7 +12,6 @@ import tmg.flashback.style.input.InputSelection
 import tmg.flashback.ui.components.layouts.BottomSheet
 import tmg.flashback.ui.extensions.icon
 import tmg.flashback.ui.extensions.label
-import tmg.flashback.ui.model.NightMode
 import tmg.flashback.ui.model.Theme
 
 @Composable
