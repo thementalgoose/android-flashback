@@ -9,8 +9,8 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.advanceUntilIdle
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.flashback.ads.core.repository.AdsRepository
-import tmg.flashback.ads.core.repository.model.AdvertConfig
+import tmg.flashback.ads.ads.repository.AdsRepository
+import tmg.flashback.ads.ads.repository.model.AdvertConfig
 import tmg.flashback.formula1.model.Circuit
 import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.Driver
@@ -39,7 +39,7 @@ internal class SearchViewModelTest: BaseTest() {
     private val mockDriversRepository: DriverRepository = mockk(relaxed = true)
     private val mockOverviewRepository: OverviewRepository = mockk(relaxed = true)
     private val mockNavigator: Navigator = mockk(relaxed = true)
-    private val mockAdsRepository: tmg.flashback.ads.core.repository.AdsRepository = mockk(relaxed = true)
+    private val mockAdsRepository: AdsRepository = mockk(relaxed = true)
 
     private lateinit var sut: SearchViewModel
 
@@ -57,7 +57,7 @@ internal class SearchViewModelTest: BaseTest() {
 
     @BeforeEach
     internal fun setUp() {
-        every { mockAdsRepository.advertConfig } returns tmg.flashback.ads.core.repository.model.AdvertConfig(
+        every { mockAdsRepository.advertConfig } returns AdvertConfig(
             onSearch = true
         )
         every { mockCircuitRepository.getCircuits() } returns flow {
@@ -78,7 +78,7 @@ internal class SearchViewModelTest: BaseTest() {
 
     @Test
     fun `search hides adverts if toggle is off`() = coroutineTest {
-        every { mockAdsRepository.advertConfig } returns tmg.flashback.ads.core.repository.model.AdvertConfig(
+        every { mockAdsRepository.advertConfig } returns AdvertConfig(
             onSearch = false
         )
         initSUT()
