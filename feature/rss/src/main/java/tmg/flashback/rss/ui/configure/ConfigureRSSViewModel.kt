@@ -8,7 +8,7 @@ import tmg.flashback.rss.repo.RSSRepository
 import tmg.flashback.rss.repo.model.SupportedArticleSource
 import tmg.flashback.rss.usecases.AllSupportedSourcesUseCase
 import tmg.flashback.rss.usecases.GetSupportedSourceUseCase
-import tmg.flashback.web.WebNavigationComponent
+import tmg.flashback.web.usecases.OpenWebpageUseCase
 import javax.inject.Inject
 
 interface ConfigureRSSViewModelInputs {
@@ -28,7 +28,7 @@ class ConfigureRSSViewModel @Inject constructor(
     private val repository: RSSRepository,
     private val allSupportedSourcesUseCase: AllSupportedSourcesUseCase,
     private val getSupportedSourcesUseCase: GetSupportedSourceUseCase,
-    private val webNavigationComponent: WebNavigationComponent,
+    private val openWebpageUseCase: OpenWebpageUseCase,
 ): ViewModel(), ConfigureRSSViewModelInputs, ConfigureRSSViewModelOutputs {
 
     val inputs: ConfigureRSSViewModelInputs = this
@@ -51,7 +51,7 @@ class ConfigureRSSViewModel @Inject constructor(
     }
 
     override fun visitWebsite(article: SupportedArticleSource) {
-        webNavigationComponent.web(article.contactLink)
+        openWebpageUseCase.open(article.contactLink, title = "")
     }
 
     override fun addItem(rssLink: String, isChecked: Boolean) {

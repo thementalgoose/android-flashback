@@ -16,7 +16,7 @@ import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.model.model
 import tmg.flashback.statistics.repo.ConstructorRepository
 import tmg.flashback.stats.R
-import tmg.flashback.web.WebNavigationComponent
+import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertListMatchesItem
 import tmg.testutils.livedata.test
@@ -25,7 +25,7 @@ internal class ConstructorSeasonViewModelTest: BaseTest() {
 
     private val mockConstructorRepository: ConstructorRepository = mockk(relaxed = true)
     private val mockNetworkConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
-    private val mockWebNavigationComponent: WebNavigationComponent = mockk(relaxed = true)
+    private val mockOpenWebpageUseCase: OpenWebpageUseCase = mockk(relaxed = true)
 
     private lateinit var sut: ConstructorSeasonViewModel
 
@@ -33,7 +33,7 @@ internal class ConstructorSeasonViewModelTest: BaseTest() {
         sut = ConstructorSeasonViewModel(
             mockConstructorRepository,
             mockNetworkConnectivityManager,
-            mockWebNavigationComponent,
+            mockOpenWebpageUseCase,
             ioDispatcher = coroutineScope.testDispatcher
         )
     }
@@ -191,7 +191,7 @@ internal class ConstructorSeasonViewModelTest: BaseTest() {
         initSUT()
         sut.inputs.openUrl("url")
         verify {
-            mockWebNavigationComponent.web("url")
+            mockOpenWebpageUseCase.open("url", title = "")
         }
     }
 
