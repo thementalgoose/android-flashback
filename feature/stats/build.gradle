@@ -31,7 +31,7 @@ dependencies {
     implementation project(path: ':core:notifications')
     implementation project(path: ':core:preferences')
     implementation project(path: ':core:webbrowser')
-    implementation project(path: ":core:ads:ads-config")
+    implementation project(path: ':core:ads:ads')
     implementation project(path: ':presentation:ui')
 
     implementation project(path: ':feature:debug:contract')

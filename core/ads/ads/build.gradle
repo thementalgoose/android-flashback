@@ -12,22 +12,14 @@ android {
         minSdkVersion project.ext.minSdkVersion
         targetSdkVersion project.ext.targetSdkVersion
     }
-    namespace 'tmg.flashback.ads'
+    namespace 'tmg.flashback.ads.ads'
 }
 
 dependencies {
-    api project(':core:ads:ads-config')
-
     implementation project(path: ':core:configuration')
     implementation project(path: ':core:preferences')
     implementation project(path: ':presentation:style')
     implementation project(path: ':presentation:ui')
-
-    implementation libs.playservicesads
-    implementation libs.bundles.androidx.workmanager
-
-    // Skeleton Layout
-    implementation libs.skeletonlayout
 
     testImplementation project(path: ':test:models')
 }

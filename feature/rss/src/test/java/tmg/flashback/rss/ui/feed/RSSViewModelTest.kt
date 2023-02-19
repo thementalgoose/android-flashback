@@ -8,8 +8,8 @@ import kotlinx.coroutines.test.advanceUntilIdle
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDateTime
-import tmg.flashback.ads.config.repository.AdsRepository
-import tmg.flashback.ads.config.repository.model.AdvertConfig
+import tmg.flashback.ads.ads.repository.AdsRepository
+import tmg.flashback.ads.ads.repository.model.AdvertConfig
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.rss.RSSConfigure
 import tmg.flashback.rss.repo.RSSRepository
@@ -110,7 +110,9 @@ internal class RSSViewModelTest: BaseTest() {
 
     @Test
     fun `init with ads disabled doesnt show advert item`() = coroutineTest {
-        every { mockAdsRepository.advertConfig } returns AdvertConfig(onRss = false)
+        every { mockAdsRepository.advertConfig } returns AdvertConfig(
+            onRss = false
+        )
 
         initUnderTest()
 

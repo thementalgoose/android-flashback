@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import tmg.flashback.ads.manager.AdsManager
+import tmg.flashback.ads.ads.repository.AdsRepository
 import tmg.flashback.debug.manager.BaseUrlLocalOverrideManager
 import tmg.flashback.device.repository.DeviceRepository
 import tmg.flashback.notifications.receiver.LocalNotificationBroadcastReceiver
@@ -71,7 +71,7 @@ class DebugActivity: BaseActivity() {
     @Inject
     lateinit var deviceRepository: DeviceRepository
     @Inject
-    lateinit var adsManager: AdsManager
+    lateinit var adsRepository: AdsRepository
     @Inject
     lateinit var notificationRepository: NotificationRepository
 
@@ -166,11 +166,11 @@ class DebugActivity: BaseActivity() {
         Row(modifier = Modifier
             .fillMaxWidth()
             .background(AppTheme.colors.backgroundSecondary)
-            .longClick { copyToClipboard(adsManager.getCurrentDeviceId(applicationContext) ?: "") }
+            .longClick { copyToClipboard(adsRepository.getCurrentDeviceId(applicationContext) ?: "") }
             .padding(horizontal = 4.dp, vertical = 4.dp)
         ) {
             TextBody1(text = "AD ID:", modifier = Modifier.weight(1f))
-            TextBody2(text = adsManager.getCurrentDeviceId(applicationContext) ?: "", modifier = Modifier.weight(1f))
+            TextBody2(text = adsRepository.getCurrentDeviceId(applicationContext) ?: "", modifier = Modifier.weight(1f))
         }
         Row(modifier = Modifier
             .fillMaxWidth()
