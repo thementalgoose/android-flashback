@@ -85,21 +85,6 @@ fun AppGraph(
 
     val isCompact = windowSize.widthSizeClass == WindowWidthSizeClass.Compact
 
-    LaunchedEffect(destination) {
-        if (navController.currentDestination?.route != destination?.route) {
-            val dest = destination ?: return@LaunchedEffect
-            navController.navigate(dest)
-        }
-    }
-
-    LaunchedEffect(Unit) {
-        navController.addOnDestinationChangedListener { controller, destination, arguments ->
-            destination.route?.asNavigationDestination()?.let {
-                navigator.navigate(it)
-            }
-        }
-    }
-
     NavHost(
         navController = navController,
         startDestination = Screen.Calendar.route,
@@ -305,6 +290,24 @@ fun AppGraph(
             ConfigureRSSScreenVM(
                 actionUpClicked = { navController.popBackStack() }
             )
+        }
+    }
+
+    // Updates current destination if graph is updated
+    LaunchedEffect(destination) {
+        if (navController.currentDestination?.route != destination?.route) {
+            val dest = destination ?: return@LaunchedEffect
+            navController.navigate(dest)
+        }
+    }
+
+    // Updates navigation destination in navigator if
+    //  nav controller updates outside of Navigator
+    LaunchedEffect(Unit) {
+        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+            destination.route?.asNavigationDestination()?.let {
+                navigator.navigate(it)
+            }
         }
     }
 }
