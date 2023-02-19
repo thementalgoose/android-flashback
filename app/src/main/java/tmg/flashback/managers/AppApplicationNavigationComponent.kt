@@ -67,15 +67,7 @@ class AppApplicationNavigationComponent @Inject constructor(
         return Intent(context, SyncActivity::class.java)
     }
 
-
-
     override fun settings() {
         navigator.navigate(Screen.Settings.All)
-    }
-
-    override fun homeClass(): Class<*> = HomeActivity::class.java
-
-    override fun home() {
-//        navigator.navigate(Screen.Home)
     }
 }

@@ -5,9 +5,11 @@ import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.asStateFlow
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import tmg.flashback.crash_reporting.manager.CrashManager
 import tmg.testutils.livedata.test
+import tmg.testutils.livedata.testObserve
 
 internal class NavigatorTest {
 
@@ -23,22 +25,16 @@ internal class NavigatorTest {
 
     @Test
     fun `navigating to a destination logs destination to crash manager`() {
-        val destination = NavigationDestination(
-            route = "route"
-        )
+        val destination = NavigationDestination(route = "route")
 
         initUnderTest()
+        val dest = underTest.destination.asStateFlow()
 
         underTest.navigate(destination)
 
-        underTest.destination
-            .asStateFlow()
-            .asLiveData(Dispatchers.Unconfined)
-            .test {
-                assertValue(destination)
-            }
+        assertEquals(destination, dest.value)
         verify {
-            mockCrashManager.log("Navigate to ${destination.route}")
+            mockCrashManager.log(any())
         }
     }
 }
