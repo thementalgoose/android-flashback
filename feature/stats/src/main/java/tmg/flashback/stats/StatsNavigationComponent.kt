@@ -1,6 +1,7 @@
 package tmg.flashback.stats
 
 import androidx.appcompat.app.AppCompatActivity
+import tmg.flashback.crash_reporting.manager.CrashManager
 import tmg.flashback.stats.ui.drivers.stathistory.DriverStatHistoryBottomSheetFragment
 import tmg.flashback.stats.ui.drivers.stathistory.DriverStatHistoryType
 import tmg.flashback.stats.ui.events.EventsBottomSheetFragment
@@ -137,24 +138,29 @@ val Screen.Search: NavigationDestination
     get() = NavigationDestination("search", launchSingleTop = true)
 
 class StatsNavigationComponent @Inject constructor(
+    private val crashManager: CrashManager,
     private val activityProvider: ActivityProvider
 ) {
     fun upNext() = activityProvider.launch {
+        crashManager.log("Navigating to up next")
         val activity = it as? AppCompatActivity ?: return@launch
         UpNextReminderBottomSheetFragment().show(activity.supportFragmentManager, "UP_NEXT")
     }
 
     internal fun tyres(season: Int) = activityProvider.launch {
+        crashManager.log("Navigating to tyres £$season")
         val activity = it as? AppCompatActivity ?: return@launch
         TyreBottomSheetFragment.instance(season).show(activity.supportFragmentManager, "TYRES")
     }
 
     internal fun preseason(season: Int) = activityProvider.launch {
+        crashManager.log("Navigating to preseason £$season")
         val activity = it as? AppCompatActivity ?: return@launch
         EventsBottomSheetFragment.instance(season).show(activity.supportFragmentManager, "PRESEASON")
     }
 
     fun featureNotificationOnboarding() = activityProvider.launch {
+        crashManager.log("Navigating to notification onboarding")
         val activity = it as? AppCompatActivity ?: return@launch
         NotificationOnboardingBottomSheetFragment.instance().show(activity.supportFragmentManager, "FEATURE_NOTIFICATIONS")
     }
@@ -164,6 +170,7 @@ class StatsNavigationComponent @Inject constructor(
         driverName: String,
         driverStatHistoryType: DriverStatHistoryType
     ) = activityProvider.launch {
+        crashManager.log("Navigating to driver stat history $driverId ${driverStatHistoryType.analyticsKey}")
         val activity = it as? AppCompatActivity ?: return@launch
         DriverStatHistoryBottomSheetFragment.instance(driverId, driverName, driverStatHistoryType).show(activity.supportFragmentManager, "DRIVER_STAT_HISTORY")
     }

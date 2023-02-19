@@ -15,7 +15,4 @@ interface ApplicationNavigationComponent {
     fun syncActivityIntent(context: Context): Intent
 
     fun settings()
-
-    fun homeClass(): Class<*>
-    fun home()
 }
