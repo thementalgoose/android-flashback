@@ -35,6 +35,8 @@ import androidx.core.graphics.toColorInt
 import androidx.hilt.navigation.compose.hiltViewModel
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
+import tmg.flashback.ads.ads.components.AdvertProvider
+import tmg.flashback.ads.ads.components.fakeAdvertProvider
 import tmg.flashback.rss.R
 import tmg.flashback.rss.repo.model.Article
 import tmg.flashback.rss.repo.model.ArticleSource
@@ -55,6 +57,7 @@ private val badgeSize: Dp = 40.dp
 @Composable
 fun RSSScreenVM(
     showMenu: Boolean = true,
+    advertProvider: AdvertProvider,
     actionUpClicked: () -> Unit,
     viewModel: RSSViewModel = hiltViewModel()
 ) {
@@ -68,6 +71,7 @@ fun RSSScreenVM(
     ) {
         RSSScreen(
             showMenu = showMenu,
+            advertProvider = advertProvider,
             list = list.value,
             itemClicked = viewModel.inputs::clickModel,
             configureSources = viewModel.inputs::configure,
@@ -79,6 +83,7 @@ fun RSSScreenVM(
 @Composable
 fun RSSScreen(
     showMenu: Boolean,
+    advertProvider: AdvertProvider,
     list: List<RSSModel>,
     itemClicked: (RSSModel.RSS) -> Unit,
     configureSources: () -> Unit,
@@ -114,7 +119,10 @@ fun RSSScreen(
                         NetworkError(error = NetworkError.NETWORK_ERROR)
                     }
                     RSSModel.Advert -> {
-                        Box(Modifier.size(0.dp)) // Adverts
+                        advertProvider.NativeBanner(
+                            horizontalPadding = true,
+                            badgeOffset = true
+                        )
                     }
                     RSSModel.InternalError -> {
                         NetworkError(error = NetworkError.INTERNAL_ERROR)
@@ -238,7 +246,8 @@ private fun Preview() {
     AppThemePreview {
         RSSScreen(
             showMenu = true,
-            list = listOf(RSSModel.RSS(item = fakeArticle)),
+            advertProvider = fakeAdvertProvider,
+            list = listOf(RSSModel.Advert, RSSModel.SourcesDisabled, RSSModel.RSS(item = fakeArticle)),
             itemClicked = {},
             configureSources = {},
             actionUpClicked = {}

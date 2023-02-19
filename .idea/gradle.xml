@@ -14,7 +14,8 @@
             <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/core/ads" />
             <option value="$PROJECT_DIR$/core/ads/ads" />
-            <option value="$PROJECT_DIR$/core/ads/ads-config" />
+            <option value="$PROJECT_DIR$/core/ads/ads-admob" />
+            <option value="$PROJECT_DIR$/core/ads/ads-noop" />
             <option value="$PROJECT_DIR$/core/analytics" />
             <option value="$PROJECT_DIR$/core/appshortcuts" />
             <option value="$PROJECT_DIR$/core/configuration" />

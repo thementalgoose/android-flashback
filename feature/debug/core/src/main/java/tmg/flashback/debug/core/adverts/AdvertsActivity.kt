@@ -15,14 +15,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import dagger.hilt.android.AndroidEntryPoint
-import tmg.flashback.ads.components.NativeBanner
+import tmg.flashback.ads.ads.components.AdvertProvider
 import tmg.flashback.debug.core.R
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.text.TextTitle
 import tmg.flashback.ui.components.header.Header
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class AdvertsActivity: AppCompatActivity() {
+
+    @Inject
+    lateinit var advertProvider: AdvertProvider
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,12 +38,12 @@ class AdvertsActivity: AppCompatActivity() {
                         text = "Native Banner",
                         modifier = Modifier.padding(vertical = AppTheme.dimens.medium)
                     )
-                    NativeBanner()
+                    advertProvider.NativeBanner()
                     TextTitle(
                         text = "Native Banner (offset)",
                         modifier = Modifier.padding(vertical = AppTheme.dimens.medium)
                     )
-                    NativeBanner(badgeOffset = true)
+                    advertProvider.NativeBanner(badgeOffset = true)
                 }
             }
         }

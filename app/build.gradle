@@ -128,8 +128,9 @@ dependencies {
     implementation project(path: ":formula1")
 
     // Core modules
-    implementation project(path: ":core:ads:ads-config")
-    debugImplementation project(path: ":core:ads:ads")
+    implementation project(path: ':core:ads:ads')
+    debugImplementation project(path: ":core:ads:ads-admob")
+    releaseImplementation project(path: ":core:ads:ads-noop")
     implementation project(path: ":core:analytics")
     implementation project(path: ":core:appshortcuts")
     implementation project(path: ":core:configuration")

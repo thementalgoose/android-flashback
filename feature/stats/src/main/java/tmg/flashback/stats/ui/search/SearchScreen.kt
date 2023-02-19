@@ -34,6 +34,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
+import tmg.flashback.ads.ads.components.AdvertProvider
 import tmg.flashback.formula1.enums.TrackLayout
 import tmg.flashback.stats.R
 import tmg.flashback.stats.ui.shared.DriverImage
@@ -51,6 +52,7 @@ import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
 fun SearchScreenVM(
     showMenu: Boolean = true,
     actionUpClicked: () -> Unit,
+    advertProvider: AdvertProvider,
     viewModel: SearchViewModel = hiltViewModel()
 ) {
     ScreenView(screenName = "Search")
@@ -65,6 +67,7 @@ fun SearchScreenVM(
     ) {
         SearchScreen(
             showMenu = showMenu,
+            advertProvider = advertProvider,
             actionUpClicked = actionUpClicked,
             searchInputUpdated = viewModel.inputs::inputSearch,
             searchCategory = category.value,
@@ -78,6 +81,7 @@ fun SearchScreenVM(
 @Composable
 fun SearchScreen(
     showMenu: Boolean,
+    advertProvider: AdvertProvider,
     actionUpClicked: () -> Unit,
     searchCategory: SearchCategory?,
     searchCategoryUpdated: (SearchCategory) -> Unit,
@@ -127,7 +131,10 @@ fun SearchScreen(
                             clicked = itemClicked
                         )
                         SearchItem.Advert -> {
-//                            TextBody1(text = "Advert")
+                            advertProvider.NativeBanner(
+                                horizontalPadding = true,
+                                badgeOffset = true
+                            )
                         }
                         SearchItem.ErrorItem -> {
                             NotFound()
