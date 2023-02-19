@@ -17,7 +17,7 @@ import tmg.flashback.formula1.utils.NotificationUtils
 import tmg.flashback.statistics.repo.RaceRepository
 import tmg.flashback.stats.R
 import tmg.flashback.stats.repository.NotificationRepository
-import tmg.flashback.web.WebNavigationComponent
+import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.utilities.models.StringHolder
 import javax.inject.Inject
 
@@ -34,7 +34,7 @@ interface DetailsViewModelOutputs {
 class DetailsViewModel @Inject constructor(
     private val raceRepository: RaceRepository,
     private val notificationRepository: NotificationRepository,
-    private val webNavigationComponent: WebNavigationComponent
+    private val openWebpageUseCase: OpenWebpageUseCase
 ): ViewModel(), DetailsViewModelInputs, DetailsViewModelOutputs {
 
     val inputs: DetailsViewModelInputs = this
@@ -90,7 +90,7 @@ class DetailsViewModel @Inject constructor(
     }
 
     override fun linkClicked(model: DetailsModel.Link) {
-        webNavigationComponent.web(model.url)
+        openWebpageUseCase.open(model.url, title = "")
     }
 
     private fun initialSchedule(models: List<Schedule>): List<DetailsModel> {
