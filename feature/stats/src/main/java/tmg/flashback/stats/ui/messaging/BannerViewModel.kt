@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import tmg.flashback.stats.repository.HomeRepository
 import tmg.flashback.stats.repository.models.Banner
-import tmg.flashback.web.WebNavigationComponent
+import tmg.flashback.web.usecases.OpenWebpageUseCase
 import javax.inject.Inject
 
 interface BannerViewModelInputs {
@@ -18,7 +18,7 @@ interface BannerViewModelOutputs {
 @HiltViewModel
 class BannerViewModel @Inject constructor(
     private val homeRepository: HomeRepository,
-    private val webNavigationComponent: WebNavigationComponent
+    private val openWebpageUseCase: OpenWebpageUseCase
 ): ViewModel(), BannerViewModelInputs, BannerViewModelOutputs {
 
     val inputs: BannerViewModelInputs = this
@@ -29,6 +29,6 @@ class BannerViewModel @Inject constructor(
     }
 
     override fun navigateToWeb(url: String) {
-        webNavigationComponent.web(url)
+        openWebpageUseCase.open(url, title = "")
     }
 }

@@ -17,7 +17,7 @@ import tmg.flashback.stats.R
 import tmg.flashback.stats.repository.NotificationRepository
 import tmg.flashback.stats.ui.weekend.details.DetailsModel
 import tmg.flashback.stats.ui.weekend.details.DetailsViewModel
-import tmg.flashback.web.WebNavigationComponent
+import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.test
 
@@ -25,7 +25,7 @@ internal class DetailsViewModelTest: BaseTest() {
 
     private val mockRaceRepository: RaceRepository = mockk(relaxed = true)
     private val mockNotificationRepository: NotificationRepository = mockk(relaxed = true)
-    private val mockWebNavigationComponent: WebNavigationComponent = mockk(relaxed = true)
+    private val mockOpenWebpageUseCase: OpenWebpageUseCase = mockk(relaxed = true)
 
     private lateinit var underTest: DetailsViewModel
 
@@ -33,7 +33,7 @@ internal class DetailsViewModelTest: BaseTest() {
         underTest = DetailsViewModel(
             raceRepository = mockRaceRepository,
             notificationRepository = mockNotificationRepository,
-            webNavigationComponent = mockWebNavigationComponent
+            openWebpageUseCase = mockOpenWebpageUseCase
         )
     }
 
@@ -82,7 +82,7 @@ internal class DetailsViewModelTest: BaseTest() {
         underTest.inputs.linkClicked(link)
 
         verify {
-            mockWebNavigationComponent.web("https://url.com")
+            mockOpenWebpageUseCase.open("https://url.com", title = "")
         }
     }
 

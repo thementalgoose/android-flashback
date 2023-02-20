@@ -23,7 +23,7 @@ import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.ConstructorHistorySeason
 import tmg.flashback.statistics.repo.ConstructorRepository
 import tmg.flashback.stats.R
-import tmg.flashback.web.WebNavigationComponent
+import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.utilities.extensions.ordinalAbbreviation
 import javax.inject.Inject
 
@@ -42,7 +42,7 @@ interface ConstructorSeasonViewModelOutputs {
 class ConstructorSeasonViewModel @Inject constructor(
     private val constructorRepository: ConstructorRepository,
     private val networkConnectivityManager: NetworkConnectivityManager,
-    private val webNavigationComponent: WebNavigationComponent,
+    private val openWebpageUseCase: OpenWebpageUseCase,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), ConstructorSeasonViewModelInputs, ConstructorSeasonViewModelOutputs {
 
@@ -125,7 +125,7 @@ class ConstructorSeasonViewModel @Inject constructor(
     }
 
     override fun openUrl(url: String) {
-        webNavigationComponent.web(url)
+        openWebpageUseCase.open(url = url, title = "")
     }
 
     override fun refresh() {
