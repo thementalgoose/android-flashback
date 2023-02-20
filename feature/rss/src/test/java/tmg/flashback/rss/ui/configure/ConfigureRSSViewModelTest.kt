@@ -8,7 +8,7 @@ import tmg.flashback.rss.repo.RSSRepository
 import tmg.flashback.rss.repo.model.SupportedArticleSource
 import tmg.flashback.rss.usecases.AllSupportedSourcesUseCase
 import tmg.flashback.rss.usecases.GetSupportedSourceUseCase
-import tmg.flashback.web.WebNavigationComponent
+import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertListDoesNotMatchItem
 import tmg.testutils.livedata.assertListMatchesItem
@@ -20,7 +20,7 @@ internal class ConfigureRSSViewModelTest: BaseTest() {
     private val mockRssRepository: RSSRepository = mockk(relaxed = true)
     private val mockAllSupportedSourcesUseCase: AllSupportedSourcesUseCase = mockk(relaxed = true)
     private val mockGetSupportedSourceUseCase: GetSupportedSourceUseCase = mockk(relaxed = true)
-    private val mockWebNavigationComponent: WebNavigationComponent = mockk(relaxed = true)
+    private val mockOpenWebpageUseCase: OpenWebpageUseCase = mockk(relaxed = true)
 
     private lateinit var underTest: ConfigureRSSViewModel
 
@@ -29,7 +29,7 @@ internal class ConfigureRSSViewModelTest: BaseTest() {
             repository = mockRssRepository,
             allSupportedSourcesUseCase = mockAllSupportedSourcesUseCase,
             getSupportedSourcesUseCase = mockGetSupportedSourceUseCase,
-            webNavigationComponent = mockWebNavigationComponent
+            openWebpageUseCase = mockOpenWebpageUseCase
         )
     }
 
@@ -201,7 +201,7 @@ internal class ConfigureRSSViewModelTest: BaseTest() {
         underTest.inputs.visitWebsite(fakeSupportedArticleSource)
 
         verify {
-            mockWebNavigationComponent.web(fakeSupportedArticleSource.contactLink)
+            mockOpenWebpageUseCase.open(fakeSupportedArticleSource.contactLink, title = "")
         }
     }
 }

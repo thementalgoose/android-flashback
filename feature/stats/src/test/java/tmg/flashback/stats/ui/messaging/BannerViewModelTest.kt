@@ -7,19 +7,19 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import tmg.flashback.stats.repository.HomeRepository
 import tmg.flashback.stats.repository.models.Banner
-import tmg.flashback.web.WebNavigationComponent
+import tmg.flashback.web.usecases.OpenWebpageUseCase
 
 internal class BannerViewModelTest {
 
     private val mockHomeRepository: HomeRepository = mockk(relaxed = true)
-    private val mockWebNavigationComponent: WebNavigationComponent = mockk(relaxed = true)
+    private val mockOpenWebpageUseCase: OpenWebpageUseCase = mockk(relaxed = true)
 
     private lateinit var underTest: BannerViewModel
 
     private fun initUnderTest() {
         underTest = BannerViewModel(
             homeRepository = mockHomeRepository,
-            webNavigationComponent = mockWebNavigationComponent
+            openWebpageUseCase = mockOpenWebpageUseCase
         )
     }
 
@@ -41,7 +41,7 @@ internal class BannerViewModelTest {
         underTest.navigateToWeb("url")
 
         verify {
-            mockWebNavigationComponent.web("url")
+            mockOpenWebpageUseCase.open("url", title = "")
         }
     }
 
