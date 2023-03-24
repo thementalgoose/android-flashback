@@ -38,7 +38,7 @@ import tmg.flashback.ads.ads.components.AdvertProvider
 import tmg.flashback.formula1.enums.TrackLayout
 import tmg.flashback.stats.R
 import tmg.flashback.stats.ui.shared.DriverImage
-import tmg.flashback.stats.ui.shared.Flag
+import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.buttons.ButtonTertiary
 import tmg.flashback.style.input.InputPrimary

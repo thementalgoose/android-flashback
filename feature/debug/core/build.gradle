@@ -28,7 +28,9 @@ dependencies {
     implementation project(path: ':core:device')
     implementation project(path: ':core:notifications')
     implementation project(path: ':core:preferences')
+
     implementation project(path: ':presentation:ui')
+    implementation project(path: ":presentation:strings")
 
     // Feature
     implementation project(path: ':data:network')

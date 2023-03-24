@@ -33,14 +33,14 @@ import tmg.flashback.formula1.model.LapTime
 import tmg.flashback.formula1.model.RaceRaceResult
 import tmg.flashback.providers.RaceRaceResultProvider
 import tmg.flashback.stats.R
-import tmg.flashback.stats.ui.shared.Flag
+import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.stats.ui.weekend.WeekendInfo
 import tmg.flashback.stats.ui.weekend.fakeWeekendInfo
 import tmg.flashback.stats.ui.weekend.info.RaceInfoHeader
 import tmg.flashback.stats.ui.weekend.shared.Delta
 import tmg.flashback.stats.ui.weekend.shared.DriverInfo
-import tmg.flashback.stats.ui.weekend.shared.NotAvailable
-import tmg.flashback.stats.ui.weekend.shared.NotAvailableYet
+import tmg.flashback.ui.components.errors.NotAvailable
+import tmg.flashback.ui.components.errors.NotAvailableYet
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme

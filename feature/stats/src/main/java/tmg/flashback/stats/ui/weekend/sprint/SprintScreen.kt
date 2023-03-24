@@ -29,8 +29,8 @@ import tmg.flashback.stats.ui.weekend.WeekendInfo
 import tmg.flashback.stats.ui.weekend.info.RaceInfoHeader
 import tmg.flashback.stats.ui.weekend.shared.Delta
 import tmg.flashback.stats.ui.weekend.shared.DriverInfo
-import tmg.flashback.stats.ui.weekend.shared.NotAvailable
-import tmg.flashback.stats.ui.weekend.shared.NotAvailableYet
+import tmg.flashback.ui.components.errors.NotAvailable
+import tmg.flashback.ui.components.errors.NotAvailableYet
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.ui.components.loading.SkeletonViewList

@@ -20,8 +20,8 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import tmg.flashback.formula1.model.Driver
 import tmg.flashback.stats.R
-import tmg.flashback.stats.components.DriverNumber
 import tmg.flashback.style.AppTheme
+import tmg.flashback.ui.components.drivers.DriverNumber
 
 @Composable
 fun DriverImage(

@@ -14,7 +14,7 @@ import tmg.flashback.formula1.enums.TrackLayout
 import tmg.flashback.formula1.model.Race
 import tmg.flashback.providers.RaceProvider
 import tmg.flashback.stats.R
-import tmg.flashback.stats.ui.shared.Flag
+import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.stats.ui.weekend.WeekendInfo
 import tmg.flashback.stats.ui.weekend.from
 import tmg.flashback.style.AppTheme

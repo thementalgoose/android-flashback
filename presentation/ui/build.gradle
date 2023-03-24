@@ -26,4 +26,6 @@ dependencies {
     implementation libs.material
 
     implementation libs.lottie
+
+    api libs.flagkit
 }

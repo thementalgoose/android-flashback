@@ -19,7 +19,8 @@ android {
 dependencies {
 
     // Core modules
-    implementation project(path: ':presentation:style')
     implementation project(path: ':presentation:ui')
+    implementation project(path: ':presentation:style')
+    implementation project(path: ":presentation:strings")
 
 }

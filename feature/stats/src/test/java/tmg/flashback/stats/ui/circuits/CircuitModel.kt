@@ -4,7 +4,7 @@ import tmg.flashback.formula1.model.CircuitHistoryRace
 import tmg.flashback.formula1.model.Location
 import tmg.flashback.formula1.model.model
 
-fun CircuitModel.Stats.Companion.model(
+fun tmg.flashback.circuits.ui.CircuitModel.Stats.Companion.model(
     circuitId: String = "circuitId",
     name: String = "circuitName",
     country: String = "country",
@@ -14,7 +14,7 @@ fun CircuitModel.Stats.Companion.model(
     endYear: Int? = null,
     wikipedia: String? = "wikiUrl",
     location: Location? = Location.model()
-): CircuitModel.Stats = CircuitModel.Stats(
+): tmg.flashback.circuits.ui.CircuitModel.Stats = tmg.flashback.circuits.ui.CircuitModel.Stats(
     circuitId = circuitId,
     name = name,
     country = country,
@@ -26,13 +26,13 @@ fun CircuitModel.Stats.Companion.model(
     location = location,
 )
 
-fun CircuitModel.Item.Companion.model(
+fun tmg.flashback.circuits.ui.CircuitModel.Item.Companion.model(
     circuitId: String = "circuitId",
     circuitName: String = "circuitName",
     country: String = "country",
     countryISO: String = "countryISO",
     data: CircuitHistoryRace = CircuitHistoryRace.model()
-): CircuitModel.Item = CircuitModel.Item(
+): tmg.flashback.circuits.ui.CircuitModel.Item = tmg.flashback.circuits.ui.CircuitModel.Item(
     circuitId = circuitId,
     circuitName = circuitName,
     country = country,

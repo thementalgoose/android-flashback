@@ -29,7 +29,7 @@ import tmg.flashback.stats.analytics.AnalyticsConstants.analyticsDriverId
 import tmg.flashback.stats.analytics.AnalyticsConstants.analyticsSeason
 import tmg.flashback.stats.components.Timeline
 import tmg.flashback.stats.ui.shared.DriverImage
-import tmg.flashback.stats.ui.shared.Flag
+import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.stats.ui.weekend.shared.DriverInfo
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
