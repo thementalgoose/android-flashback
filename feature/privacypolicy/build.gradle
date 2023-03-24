@@ -17,6 +17,7 @@ android {
 }
 
 dependencies {
+    implementation project(path: ":presentation:navigation")
 
     // Core modules
     implementation project(path: ':presentation:ui')

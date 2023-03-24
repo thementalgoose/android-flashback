@@ -9,8 +9,8 @@ import tmg.flashback.analytics.manager.AnalyticsManager
 import tmg.flashback.crash_reporting.repository.CrashRepository
 import tmg.flashback.privacypolicy.PrivacyPolicy
 import tmg.flashback.ui.managers.ToastManager
-import tmg.flashback.ui.navigation.Navigator
-import tmg.flashback.ui.navigation.Screen
+import tmg.flashback.navigation.Navigator
+import tmg.flashback.navigation.Screen
 import tmg.flashback.ui.settings.Setting
 import tmg.flashback.ui.settings.Settings
 import javax.inject.Inject
@@ -29,7 +29,7 @@ class SettingsPrivacyViewModel @Inject constructor(
     private val crashRepository: CrashRepository,
     private val analyticsManager: AnalyticsManager,
     private val toastManager: ToastManager,
-    private val navigator: Navigator,
+    private val navigator: tmg.flashback.navigation.Navigator,
 ): ViewModel(), SettingsPrivacyViewModelInputs, SettingsPrivacyViewModelOutputs {
 
     val inputs: SettingsPrivacyViewModelInputs = this
@@ -41,7 +41,7 @@ class SettingsPrivacyViewModel @Inject constructor(
     override fun prefClicked(pref: Setting) {
         when (pref.key) {
             Settings.Other.privacyPolicy.key -> {
-                navigator.navigate(Screen.Settings.PrivacyPolicy)
+                navigator.navigate(tmg.flashback.navigation.Screen.Settings.PrivacyPolicy)
             }
             Settings.Other.crashReportingKey -> {
                 crashRepository.isEnabled = !crashRepository.isEnabled

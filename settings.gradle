@@ -46,6 +46,7 @@ include ':core:webbrowser'
 include ':presentation:ui'
 include ':presentation:style'
 include ':presentation:strings'
+include ':presentation:navigation'
 
 include ':test:models'
 include ':test:providers'

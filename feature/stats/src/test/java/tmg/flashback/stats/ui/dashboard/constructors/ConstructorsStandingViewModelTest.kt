@@ -16,8 +16,8 @@ import tmg.flashback.statistics.repo.SeasonRepository
 import tmg.flashback.stats.Constructor
 import tmg.flashback.stats.usecases.FetchSeasonUseCase
 import tmg.flashback.stats.with
-import tmg.flashback.ui.navigation.Navigator
-import tmg.flashback.ui.navigation.Screen
+import tmg.flashback.navigation.Navigator
+import tmg.flashback.navigation.Screen
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.test
 import tmg.testutils.livedata.testObserve
@@ -26,7 +26,7 @@ internal class ConstructorsStandingViewModelTest: BaseTest() {
 
     private val mockSeasonRepository: SeasonRepository = mockk(relaxed = true)
     private val mockFetchSeasonUseCase: FetchSeasonUseCase = mockk(relaxed = true)
-    private val mockNavigator: Navigator = mockk(relaxed = true)
+    private val mockNavigator: tmg.flashback.navigation.Navigator = mockk(relaxed = true)
 
     private lateinit var underTest: ConstructorsStandingViewModel
 
@@ -134,7 +134,8 @@ internal class ConstructorsStandingViewModelTest: BaseTest() {
         underTest.clickItem(model)
 
         verify {
-            mockNavigator.navigate(Screen.Constructor.with(
+            mockNavigator.navigate(
+                tmg.flashback.navigation.Screen.Constructor.with(
                 constructorId = model.standings.constructor.id,
                 constructorName = model.standings.constructor.name
             ))

@@ -18,8 +18,10 @@ android {
 dependencies {
     implementation project(path: ':core:configuration')
     implementation project(path: ':core:preferences')
+
     implementation project(path: ':presentation:style')
     implementation project(path: ':presentation:ui')
+    implementation project(path: ':presentation:navigation')
 
     testImplementation project(path: ':test:models')
 }

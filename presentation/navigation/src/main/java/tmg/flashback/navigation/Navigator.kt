@@ -1,4 +1,4 @@
-package tmg.flashback.ui.navigation
+package tmg.flashback.navigation
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import tmg.flashback.crash_reporting.manager.CrashManager

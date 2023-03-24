@@ -17,8 +17,8 @@ import tmg.flashback.statistics.repo.ConstructorRepository
 import tmg.flashback.stats.ConstructorSeason
 import tmg.flashback.stats.R
 import tmg.flashback.stats.with
-import tmg.flashback.ui.navigation.Navigator
-import tmg.flashback.ui.navigation.Screen
+import tmg.flashback.navigation.Navigator
+import tmg.flashback.navigation.Screen
 import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertListMatchesItem
@@ -30,7 +30,7 @@ internal class ConstructorOverviewViewModelTest: BaseTest() {
     private val mockConstructorRepository: ConstructorRepository = mockk(relaxed = true)
     private val mockNetworkConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
     private val mockOpenWebpageUseCase: OpenWebpageUseCase = mockk(relaxed = true)
-    private val mockNavigator: Navigator = mockk(relaxed = true)
+    private val mockNavigator: tmg.flashback.navigation.Navigator = mockk(relaxed = true)
 
     private lateinit var sut: ConstructorOverviewViewModel
 
@@ -199,7 +199,8 @@ internal class ConstructorOverviewViewModelTest: BaseTest() {
         sut.inputs.openSeason(2020)
 
         verify {
-            mockNavigator.navigate(Screen.ConstructorSeason.with(
+            mockNavigator.navigate(
+                tmg.flashback.navigation.Screen.ConstructorSeason.with(
                 constructorId = "constructorId",
                 constructorName = "name",
                 season = 2020

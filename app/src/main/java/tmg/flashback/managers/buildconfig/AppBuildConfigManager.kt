@@ -3,13 +3,13 @@ package tmg.flashback.managers.buildconfig
 import android.os.Build
 import tmg.flashback.BuildConfig
 import tmg.flashback.device.managers.BuildConfigManager
-import tmg.flashback.ui.navigation.ActivityProvider
+import tmg.flashback.navigation.ActivityProvider
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class AppBuildConfigManager @Inject constructor(
-    private val topActivityProvider: ActivityProvider
+    private val topActivityProvider: tmg.flashback.navigation.ActivityProvider
 ) : BuildConfigManager {
 
     override val versionCode: Int

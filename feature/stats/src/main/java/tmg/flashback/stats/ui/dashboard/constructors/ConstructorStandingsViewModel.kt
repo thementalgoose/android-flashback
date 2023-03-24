@@ -18,8 +18,8 @@ import tmg.flashback.statistics.repo.SeasonRepository
 import tmg.flashback.stats.Constructor
 import tmg.flashback.stats.usecases.FetchSeasonUseCase
 import tmg.flashback.stats.with
-import tmg.flashback.ui.navigation.Navigator
-import tmg.flashback.ui.navigation.Screen
+import tmg.flashback.navigation.Navigator
+import tmg.flashback.navigation.Screen
 import javax.inject.Inject
 
 interface ConstructorsStandingViewModelInputs {
@@ -38,7 +38,7 @@ interface ConstructorsStandingViewModelOutputs {
 class ConstructorsStandingViewModel @Inject constructor(
     private val seasonRepository: SeasonRepository,
     private val fetchSeasonUseCase: FetchSeasonUseCase,
-    private val navigator: Navigator,
+    private val navigator: tmg.flashback.navigation.Navigator,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), ConstructorsStandingViewModelInputs, ConstructorsStandingViewModelOutputs {
 
@@ -90,7 +90,8 @@ class ConstructorsStandingViewModel @Inject constructor(
     }
 
     override fun clickItem(model: ConstructorStandingsModel.Standings) {
-        navigator.navigate(Screen.Constructor.with(
+        navigator.navigate(
+            tmg.flashback.navigation.Screen.Constructor.with(
             constructorId = model.standings.constructor.id,
             constructorName = model.standings.constructor.name
         ))

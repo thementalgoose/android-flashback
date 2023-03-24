@@ -9,9 +9,9 @@ import tmg.flashback.crash_reporting.repository.CrashRepository
 import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.releasenotes.ReleaseNotes
 import tmg.flashback.ui.managers.ToastManager
-import tmg.flashback.ui.navigation.ApplicationNavigationComponent
-import tmg.flashback.ui.navigation.Navigator
-import tmg.flashback.ui.navigation.Screen
+import tmg.flashback.navigation.ApplicationNavigationComponent
+import tmg.flashback.navigation.Navigator
+import tmg.flashback.navigation.Screen
 import tmg.flashback.ui.settings.Setting
 import tmg.flashback.ui.settings.Settings
 import tmg.flashback.web.usecases.OpenWebpageUseCase
@@ -28,8 +28,8 @@ interface SettingsAboutViewModelOutputs {
 @HiltViewModel
 class SettingsAboutViewModel @Inject constructor(
     private val crashRepository: CrashRepository,
-    private val navigator: Navigator,
-    private val applicationNavigationComponent: ApplicationNavigationComponent,
+    private val navigator: tmg.flashback.navigation.Navigator,
+    private val applicationNavigationComponent: tmg.flashback.navigation.ApplicationNavigationComponent,
     private val openWebpageUseCase: OpenWebpageUseCase,
     private val toastManager: ToastManager,
     private val buildConfigManager: BuildConfigManager
@@ -51,7 +51,7 @@ class SettingsAboutViewModel @Inject constructor(
                 openWebpageUseCase.open(url = reviewUrl, title = "")
             }
             Settings.Other.releaseNotes.key -> {
-                navigator.navigate(Screen.ReleaseNotes)
+                navigator.navigate(tmg.flashback.navigation.Screen.ReleaseNotes)
             }
             Settings.Other.shakeToReportKey -> {
                 crashRepository.shakeToReport = !crashRepository.shakeToReport

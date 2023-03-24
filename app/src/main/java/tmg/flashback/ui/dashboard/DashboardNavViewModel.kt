@@ -28,9 +28,9 @@ import tmg.flashback.stats.usecases.DefaultSeasonUseCase
 import tmg.flashback.stats.with
 import tmg.flashback.ui.components.navigation.NavigationTimelineItem
 import tmg.flashback.ui.components.navigation.PipeType
-import tmg.flashback.ui.navigation.ApplicationNavigationComponent
-import tmg.flashback.ui.navigation.Navigator
-import tmg.flashback.ui.navigation.Screen
+import tmg.flashback.navigation.ApplicationNavigationComponent
+import tmg.flashback.navigation.Navigator
+import tmg.flashback.navigation.Screen
 import tmg.flashback.ui.settings.All
 import tmg.flashback.usecases.DashboardSyncUseCase
 import tmg.flashback.usecases.GetSeasonsUseCase
@@ -59,9 +59,9 @@ interface DashboardNavViewModelOutputs {
 class DashboardNavViewModel @Inject constructor(
     private val rssRepository: RSSRepository,
     private val defaultSeasonUseCase: DefaultSeasonUseCase,
-    private val navigator: Navigator,
+    private val navigator: tmg.flashback.navigation.Navigator,
     private val getSeasonUseCase: GetSeasonsUseCase,
-    private val applicationNavigationComponent: ApplicationNavigationComponent,
+    private val applicationNavigationComponent: tmg.flashback.navigation.ApplicationNavigationComponent,
     private val crashManager: CrashManager,
     private val dashboardSyncUseCase: DashboardSyncUseCase,
     private val debugNavigationComponent: DebugNavigationComponent,
@@ -150,9 +150,9 @@ class DashboardNavViewModel @Inject constructor(
         currentlySelectedSeason.value = season
         val current = currentlySelectedItem.value ?: return
         when (current) {
-            MenuItem.Calendar -> navigator.navigate(Screen.Calendar.with(season))
-            MenuItem.Constructors -> navigator.navigate(Screen.Constructors.with(season))
-            MenuItem.Drivers -> navigator.navigate(Screen.Drivers.with(season))
+            MenuItem.Calendar -> navigator.navigate(tmg.flashback.navigation.Screen.Calendar.with(season))
+            MenuItem.Constructors -> navigator.navigate(tmg.flashback.navigation.Screen.Constructors.with(season))
+            MenuItem.Drivers -> navigator.navigate(tmg.flashback.navigation.Screen.Drivers.with(season))
             else -> { /* Do nothing */ }
         }
 
@@ -162,13 +162,13 @@ class DashboardNavViewModel @Inject constructor(
         val currentSeason = currentlySelectedSeason.value
 
         when (navigationItem) {
-            MenuItem.Calendar -> navigator.navigate(Screen.Calendar.with(currentSeason ?: defaultSeasonUseCase.defaultSeason))
-            MenuItem.Drivers -> navigator.navigate(Screen.Drivers.with(currentSeason ?: defaultSeasonUseCase.defaultSeason))
-            MenuItem.Constructors -> navigator.navigate(Screen.Constructors.with(currentSeason ?: defaultSeasonUseCase.defaultSeason))
+            MenuItem.Calendar -> navigator.navigate(tmg.flashback.navigation.Screen.Calendar.with(currentSeason ?: defaultSeasonUseCase.defaultSeason))
+            MenuItem.Drivers -> navigator.navigate(tmg.flashback.navigation.Screen.Drivers.with(currentSeason ?: defaultSeasonUseCase.defaultSeason))
+            MenuItem.Constructors -> navigator.navigate(tmg.flashback.navigation.Screen.Constructors.with(currentSeason ?: defaultSeasonUseCase.defaultSeason))
             MenuItem.Contact -> applicationNavigationComponent.aboutApp()
-            MenuItem.RSS -> navigator.navigate(Screen.RSS)
-            MenuItem.Search -> navigator.navigate(Screen.Search)
-            MenuItem.Settings -> navigator.navigate(Screen.Settings.All)
+            MenuItem.RSS -> navigator.navigate(tmg.flashback.navigation.Screen.RSS)
+            MenuItem.Search -> navigator.navigate(tmg.flashback.navigation.Screen.Search)
+            MenuItem.Settings -> navigator.navigate(tmg.flashback.navigation.Screen.Settings.All)
         }
     }
 

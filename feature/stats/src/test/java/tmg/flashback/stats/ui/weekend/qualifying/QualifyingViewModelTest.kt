@@ -14,8 +14,8 @@ import tmg.flashback.formula1.model.model
 import tmg.flashback.statistics.repo.RaceRepository
 import tmg.flashback.stats.DriverSeason
 import tmg.flashback.stats.with
-import tmg.flashback.ui.navigation.Navigator
-import tmg.flashback.ui.navigation.Screen
+import tmg.flashback.navigation.Navigator
+import tmg.flashback.navigation.Screen
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.test
 import tmg.testutils.livedata.testObserve
@@ -24,7 +24,7 @@ import java.time.Year
 internal class QualifyingViewModelTest: BaseTest() {
 
     private val mockRaceRepository: RaceRepository = mockk(relaxed = true)
-    private val mockNavigator: Navigator = mockk(relaxed = true)
+    private val mockNavigator: tmg.flashback.navigation.Navigator = mockk(relaxed = true)
 
     private lateinit var underTest: QualifyingViewModel
 
@@ -139,7 +139,8 @@ internal class QualifyingViewModelTest: BaseTest() {
         underTest.outputs.list.testObserve()
 
         verify {
-            mockNavigator.navigate(Screen.DriverSeason.with(
+            mockNavigator.navigate(
+                tmg.flashback.navigation.Screen.DriverSeason.with(
                 driverId = input.driver.driver.id,
                 driverName = input.driver.driver.name,
                 season = 2020

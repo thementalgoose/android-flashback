@@ -9,17 +9,17 @@ import tmg.flashback.stats.ui.feature.notificationonboarding.NotificationOnboard
 import tmg.flashback.stats.ui.settings.notifications.reminder.UpNextReminderBottomSheetFragment
 import tmg.flashback.stats.ui.tyres.TyreBottomSheetFragment
 import tmg.flashback.stats.ui.weekend.WeekendInfo
-import tmg.flashback.ui.navigation.ActivityProvider
-import tmg.flashback.ui.navigation.NavigationDestination
-import tmg.flashback.ui.navigation.Screen
+import tmg.flashback.navigation.ActivityProvider
+import tmg.flashback.navigation.NavigationDestination
+import tmg.flashback.navigation.Screen
 import javax.inject.Inject
 
 @JvmInline
 value class ScreenCalendar(val route: String)
-val Screen.Calendar get() = ScreenCalendar("results/calendar/{season}")
+val tmg.flashback.navigation.Screen.Calendar get() = ScreenCalendar("results/calendar/{season}")
 fun ScreenCalendar.with(
     season: Int
-) = NavigationDestination(
+) = tmg.flashback.navigation.NavigationDestination(
     route = this@with.route.replace("{season}", season.toString()),
     launchSingleTop = true
 )
@@ -27,10 +27,10 @@ fun ScreenCalendar.with(
 
 @JvmInline
 value class ScreenDrivers(val route: String)
-val Screen.Drivers get() = ScreenDrivers("results/drivers/{season}")
+val tmg.flashback.navigation.Screen.Drivers get() = ScreenDrivers("results/drivers/{season}")
 fun ScreenDrivers.with(
     season: Int
-) = NavigationDestination(
+) = tmg.flashback.navigation.NavigationDestination(
     route = this@with.route.replace("{season}", season.toString()),
     launchSingleTop = true
 )
@@ -38,10 +38,10 @@ fun ScreenDrivers.with(
 
 @JvmInline
 value class ScreenConstructors(val route: String)
-val Screen.Constructors get() = ScreenCalendar("results/constructors/{season}")
+val tmg.flashback.navigation.Screen.Constructors get() = ScreenCalendar("results/constructors/{season}")
 fun ScreenConstructors.with(
     season: Int
-) = NavigationDestination(
+) = tmg.flashback.navigation.NavigationDestination(
     route = this@with.route.replace("{season}", season.toString()),
     launchSingleTop = true
 )
@@ -49,11 +49,11 @@ fun ScreenConstructors.with(
 
 @JvmInline
 value class ScreenDriver(val route: String)
-val Screen.Driver get() = ScreenDriver("drivers/{driverId}?driverName={driverName}")
+val tmg.flashback.navigation.Screen.Driver get() = ScreenDriver("drivers/{driverId}?driverName={driverName}")
 fun ScreenDriver.with(
     driverId: String,
     driverName: String
-) = NavigationDestination(
+) = tmg.flashback.navigation.NavigationDestination(
     this@with.route
         .replace("{driverId}", driverId)
         .replace("{driverName}", driverName)
@@ -61,12 +61,12 @@ fun ScreenDriver.with(
 
 @JvmInline
 value class ScreenDriverSeason(val route: String)
-val Screen.DriverSeason get() = ScreenDriverSeason("drivers/{driverId}/{season}?driverName={driverName}")
+val tmg.flashback.navigation.Screen.DriverSeason get() = ScreenDriverSeason("drivers/{driverId}/{season}?driverName={driverName}")
 fun ScreenDriverSeason.with(
     driverId: String,
     driverName: String,
     season: Int
-) = NavigationDestination(
+) = tmg.flashback.navigation.NavigationDestination(
     this@with.route
         .replace("{driverId}", driverId)
         .replace("{driverName}", driverName)
@@ -75,11 +75,11 @@ fun ScreenDriverSeason.with(
 
 @JvmInline
 value class ScreenConstructor(val route: String)
-val Screen.Constructor get() = ScreenConstructor("constructors/{constructorId}?constructorName={constructorName}")
+val tmg.flashback.navigation.Screen.Constructor get() = ScreenConstructor("constructors/{constructorId}?constructorName={constructorName}")
 fun ScreenConstructor.with(
     constructorId: String,
     constructorName: String
-) = NavigationDestination(
+) = tmg.flashback.navigation.NavigationDestination(
     this@with.route
         .replace("{constructorId}", constructorId)
         .replace("{constructorName}", constructorName)
@@ -87,12 +87,12 @@ fun ScreenConstructor.with(
 
 @JvmInline
 value class ScreenConstructorSeason(val route: String)
-val Screen.ConstructorSeason get() = ScreenConstructorSeason("constructors/{constructorId}/{season}?constructorName={constructorName}")
+val tmg.flashback.navigation.Screen.ConstructorSeason get() = ScreenConstructorSeason("constructors/{constructorId}/{season}?constructorName={constructorName}")
 fun ScreenConstructorSeason.with(
     constructorId: String,
     constructorName: String,
     season: Int
-) = NavigationDestination(
+) = tmg.flashback.navigation.NavigationDestination(
     this@with.route
         .replace("{constructorId}", constructorId)
         .replace("{constructorName}", constructorName)
@@ -102,7 +102,7 @@ fun ScreenConstructorSeason.with(
 
 @JvmInline
 value class ScreenWeekend(val route: String)
-val Screen.Weekend get() = ScreenWeekend("weekend/{season}/{round}?" +
+val tmg.flashback.navigation.Screen.Weekend get() = ScreenWeekend("weekend/{season}/{round}?" +
         "raceName={raceName}" + "&" +
         "circuitId={circuitId}" + "&" +
         "circuitName={circuitName}" + "&" +
@@ -110,7 +110,7 @@ val Screen.Weekend get() = ScreenWeekend("weekend/{season}/{round}?" +
         "countryISO={countryISO}" + "&" +
         "date={date}"
 )
-fun ScreenWeekend.with(weekendInfo: WeekendInfo) = NavigationDestination(
+fun ScreenWeekend.with(weekendInfo: WeekendInfo) = tmg.flashback.navigation.NavigationDestination(
     this@with.route
         .replace("{season}", weekendInfo.season.toString())
         .replace("{round}", weekendInfo.round.toString())
@@ -122,24 +122,12 @@ fun ScreenWeekend.with(weekendInfo: WeekendInfo) = NavigationDestination(
         .replace("{date}", weekendInfo.dateString)
 )
 
-@JvmInline
-value class ScreenCircuit(val route: String)
-val Screen.Circuit get() = ScreenCircuit("circuit/{circuitId}?circuitName={circuitName}")
-fun ScreenCircuit.with(
-    circuitId: String,
-    circuitName: String
-) = NavigationDestination(
-    this@with.route
-        .replace("{circuitId}", circuitId)
-        .replace("{circuitName}", circuitName)
-)
-
-val Screen.Search: NavigationDestination
-    get() = NavigationDestination("search", launchSingleTop = true)
+val tmg.flashback.navigation.Screen.Search: tmg.flashback.navigation.NavigationDestination
+    get() = tmg.flashback.navigation.NavigationDestination("search", launchSingleTop = true)
 
 class StatsNavigationComponent @Inject constructor(
     private val crashManager: CrashManager,
-    private val activityProvider: ActivityProvider
+    private val activityProvider: tmg.flashback.navigation.ActivityProvider
 ) {
     fun upNext() = activityProvider.launch {
         crashManager.log("Navigating to up next")

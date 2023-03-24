@@ -1,7 +1,7 @@
 package tmg.flashback.privacypolicy
 
-import tmg.flashback.ui.navigation.NavigationDestination
-import tmg.flashback.ui.navigation.Screen
+import tmg.flashback.navigation.NavigationDestination
+import tmg.flashback.navigation.Screen
 
-val Screen.Settings.PrivacyPolicy: NavigationDestination
-    get() = NavigationDestination("privacy_policy")
+val tmg.flashback.navigation.Screen.Settings.PrivacyPolicy: tmg.flashback.navigation.NavigationDestination
+    get() = tmg.flashback.navigation.NavigationDestination("privacy_policy")

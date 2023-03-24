@@ -10,8 +10,8 @@ import tmg.flashback.formula1.model.model
 import tmg.flashback.statistics.repo.RaceRepository
 import tmg.flashback.stats.Constructor
 import tmg.flashback.stats.with
-import tmg.flashback.ui.navigation.Navigator
-import tmg.flashback.ui.navigation.Screen
+import tmg.flashback.navigation.Navigator
+import tmg.flashback.navigation.Screen
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.test
 import java.time.Year
@@ -19,7 +19,7 @@ import java.time.Year
 internal class ConstructorOverviewViewModelTest: BaseTest() {
 
     private val mockRaceRepository: RaceRepository = mockk(relaxed = true)
-    private val mockNavigator: Navigator = mockk(relaxed = true)
+    private val mockNavigator: tmg.flashback.navigation.Navigator = mockk(relaxed = true)
 
     private lateinit var underTest: ConstructorViewModel
 
@@ -82,7 +82,8 @@ internal class ConstructorOverviewViewModelTest: BaseTest() {
         underTest.inputs.clickItem(ConstructorModel.Constructor.model())
 
         verify {
-            mockNavigator.navigate(Screen.Constructor.with(
+            mockNavigator.navigate(
+                tmg.flashback.navigation.Screen.Constructor.with(
                 constructorId = ConstructorModel.Constructor.model().constructor.id,
                 constructorName = ConstructorModel.Constructor.model().constructor.name
             ))

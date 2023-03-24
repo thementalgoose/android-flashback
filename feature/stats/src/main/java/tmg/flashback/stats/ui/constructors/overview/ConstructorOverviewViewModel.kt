@@ -16,8 +16,8 @@ import tmg.flashback.stats.ConstructorSeason
 import tmg.flashback.stats.R
 import tmg.flashback.stats.with
 import tmg.flashback.ui.components.navigation.PipeType
-import tmg.flashback.ui.navigation.Navigator
-import tmg.flashback.ui.navigation.Screen
+import tmg.flashback.navigation.Navigator
+import tmg.flashback.navigation.Screen
 import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.utilities.extensions.ordinalAbbreviation
 import javax.inject.Inject
@@ -51,7 +51,7 @@ class ConstructorOverviewViewModel @Inject constructor(
     private val constructorRepository: ConstructorRepository,
     private val networkConnectivityManager: NetworkConnectivityManager,
     private val openWebpageUseCase: OpenWebpageUseCase,
-    private val navigator: Navigator,
+    private val navigator: tmg.flashback.navigation.Navigator,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), ConstructorOverviewViewModelInputs, ConstructorOverviewViewModelOutputs {
 
@@ -143,7 +143,8 @@ class ConstructorOverviewViewModel @Inject constructor(
 
     override fun openSeason(season: Int) {
         constructorIdAndName.value?.let { (id, name) ->
-            navigator.navigate(Screen.ConstructorSeason.with(
+            navigator.navigate(
+                tmg.flashback.navigation.Screen.ConstructorSeason.with(
                 constructorId = id,
                 constructorName = name,
                 season = season

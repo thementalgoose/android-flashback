@@ -8,7 +8,7 @@ import tmg.flashback.appshortcuts.provider.HomeClassProvider
 import tmg.flashback.di.navigation.AppHomeClassProvider
 import tmg.flashback.managers.AppApplicationNavigationComponent
 import tmg.flashback.notifications.navigation.NotificationNavigationProvider
-import tmg.flashback.ui.navigation.ApplicationNavigationComponent
+import tmg.flashback.navigation.ApplicationNavigationComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
