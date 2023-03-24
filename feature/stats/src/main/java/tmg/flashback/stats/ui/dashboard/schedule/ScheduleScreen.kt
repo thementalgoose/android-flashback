@@ -30,7 +30,7 @@ import tmg.flashback.stats.R
 import tmg.flashback.stats.repository.models.NotificationSchedule
 import tmg.flashback.stats.ui.dashboard.DashboardQuickLinks
 import tmg.flashback.stats.ui.dashboard.schedule.schedule.Schedule
-import tmg.flashback.stats.ui.shared.Flag
+import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme

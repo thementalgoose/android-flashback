@@ -1,4 +1,4 @@
-package tmg.flashback.stats.ui.weekend.shared
+package tmg.flashback.ui.components.errors
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -11,11 +11,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import tmg.flashback.stats.R
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody1
+import tmg.flashback.ui.R
 
 @Composable
 fun TryAgain(

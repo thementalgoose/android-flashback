@@ -21,6 +21,8 @@ dependencies {
     implementation project(path: ':data:repo')
 
     implementation project(path: ':presentation:style')
+    implementation project(path: ':presentation:ui')
+    implementation project(path: ":presentation:strings")
 
     // Core modules
     implementation project(path: ':core:analytics')

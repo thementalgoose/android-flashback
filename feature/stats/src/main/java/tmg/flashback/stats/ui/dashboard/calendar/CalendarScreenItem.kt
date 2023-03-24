@@ -17,7 +17,7 @@ import org.threeten.bp.Month
 import org.threeten.bp.format.TextStyle
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.providers.OverviewRaceProvider
-import tmg.flashback.stats.ui.shared.Flag
+import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme

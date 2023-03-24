@@ -1,4 +1,4 @@
-package tmg.flashback.stats.ui.circuits
+package tmg.flashback.circuits.ui
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
@@ -21,16 +21,15 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import org.threeten.bp.format.DateTimeFormatter
+import tmg.flashback.circuits.analytics.AnalyticsConstants.analyticsCircuitId
 import tmg.flashback.formula1.enums.TrackLayout
 import tmg.flashback.formula1.extensions.positionIcon
 import tmg.flashback.formula1.model.CircuitHistoryRace
 import tmg.flashback.formula1.model.CircuitHistoryRaceResult
 import tmg.flashback.providers.CircuitHistoryRaceProvider
-import tmg.flashback.stats.R
-import tmg.flashback.stats.analytics.AnalyticsConstants.analyticsCircuitId
-import tmg.flashback.stats.components.DriverNumber
-import tmg.flashback.stats.ui.shared.Flag
-import tmg.flashback.stats.ui.weekend.shared.NotAvailable
+import tmg.flashback.circuits.R
+import tmg.flashback.ui.components.flag.Flag
+import tmg.flashback.ui.components.errors.NotAvailable
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
@@ -38,6 +37,7 @@ import tmg.flashback.style.buttons.ButtonTertiary
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.ui.components.analytics.ScreenView
+import tmg.flashback.ui.components.drivers.DriverNumber
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.swiperefresh.SwipeRefresh

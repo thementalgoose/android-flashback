@@ -34,7 +34,7 @@ import tmg.flashback.stats.DriverSeason
 import tmg.flashback.stats.Drivers
 import tmg.flashback.stats.Search
 import tmg.flashback.stats.Weekend
-import tmg.flashback.stats.ui.circuits.CircuitScreenVM
+import tmg.flashback.circuits.ui.CircuitScreenVM
 import tmg.flashback.stats.ui.constructors.overview.ConstructorOverviewScreenVM
 import tmg.flashback.stats.ui.constructors.season.ConstructorSeasonScreenVM
 import tmg.flashback.stats.ui.dashboard.constructors.ConstructorStandingsScreenVM

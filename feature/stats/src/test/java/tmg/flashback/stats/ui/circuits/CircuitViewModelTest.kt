@@ -24,7 +24,7 @@ import tmg.testutils.livedata.test
 
 internal class CircuitViewModelTest: BaseTest() {
 
-    lateinit var sut: CircuitViewModel
+    lateinit var sut: tmg.flashback.circuits.ui.CircuitViewModel
 
     private val mockCircuitRepository: CircuitRepository = mockk(relaxed = true)
     private val mockConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
@@ -40,7 +40,7 @@ internal class CircuitViewModelTest: BaseTest() {
     }
 
     private fun initSUT() {
-        sut = CircuitViewModel(
+        sut = tmg.flashback.circuits.ui.CircuitViewModel(
             mockCircuitRepository,
             mockConnectivityManager,
             mockOpenWebpageUseCase,
@@ -62,8 +62,8 @@ internal class CircuitViewModelTest: BaseTest() {
 
         sut.outputs.list.test {
             assertValue(listOf(
-                CircuitModel.Stats.model(),
-                CircuitModel.Error
+                tmg.flashback.circuits.ui.CircuitModel.Stats.model(),
+                tmg.flashback.circuits.ui.CircuitModel.Error
             ))
         }
     }
@@ -78,7 +78,7 @@ internal class CircuitViewModelTest: BaseTest() {
 
         sut.outputs.list.test {
             assertValue(listOf(
-                CircuitModel.Error
+                tmg.flashback.circuits.ui.CircuitModel.Error
             ))
         }
     }
@@ -96,8 +96,8 @@ internal class CircuitViewModelTest: BaseTest() {
 
         sut.outputs.list.test {
             assertValue(listOf(
-                CircuitModel.Stats.model(),
-                CircuitModel.Error
+                tmg.flashback.circuits.ui.CircuitModel.Stats.model(),
+                tmg.flashback.circuits.ui.CircuitModel.Error
             ))
         }
     }
@@ -112,7 +112,7 @@ internal class CircuitViewModelTest: BaseTest() {
 
         sut.outputs.list.test {
             assertValue(listOf(
-                CircuitModel.Error
+                tmg.flashback.circuits.ui.CircuitModel.Error
             ))
         }
     }
@@ -132,13 +132,13 @@ internal class CircuitViewModelTest: BaseTest() {
 
         sut.outputs.list.test {
             assertValue(listOf(
-                CircuitModel.Stats.model(
+                tmg.flashback.circuits.ui.CircuitModel.Stats.model(
                     numberOfGrandPrix = 2,
                     startYear = 2020,
                     endYear = 2020
                 ),
-                CircuitModel.Item.model(data = CircuitHistoryRace.model(round = 2)),
-                CircuitModel.Item.model(data = CircuitHistoryRace.model(round = 1)),
+                tmg.flashback.circuits.ui.CircuitModel.Item.model(data = CircuitHistoryRace.model(round = 2)),
+                tmg.flashback.circuits.ui.CircuitModel.Item.model(data = CircuitHistoryRace.model(round = 1)),
             ))
         }
     }
@@ -173,15 +173,15 @@ internal class CircuitViewModelTest: BaseTest() {
 
         sut.outputs.list.test {
             assertValueAt(listOf(
-                CircuitModel.Loading
+                tmg.flashback.circuits.ui.CircuitModel.Loading
             ), 0)
             assertValueAt(listOf(
-                CircuitModel.Stats.model(
+                tmg.flashback.circuits.ui.CircuitModel.Stats.model(
                     numberOfGrandPrix = 1,
                     startYear = 2020,
                     endYear = 2020
                 ),
-                CircuitModel.Item.model(),
+                tmg.flashback.circuits.ui.CircuitModel.Item.model(),
             ), 1)
         }
         coVerify {
@@ -228,7 +228,7 @@ internal class CircuitViewModelTest: BaseTest() {
 
     @Test
     fun `clicking item navigats to stats`() {
-        val item: CircuitModel.Item = mockk(relaxed = true)
+        val item: tmg.flashback.circuits.ui.CircuitModel.Item = mockk(relaxed = true)
 
         initSUT()
         sut.inputs.itemClicked(item)

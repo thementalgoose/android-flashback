@@ -33,8 +33,8 @@ import tmg.flashback.crash_reporting.manager.CrashManager
 import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.formula1.enums.TrackLayout
 import tmg.flashback.formula1.model.OverviewRace
-import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.statistics.repo.ScheduleRepository
+import tmg.flashback.ui.utils.DrawableUtils.getFlagResourceAlpha3
 import tmg.flashback.widgets.BuildConfig
 import tmg.flashback.widgets.R
 import tmg.flashback.widgets.WidgetNavigationComponent

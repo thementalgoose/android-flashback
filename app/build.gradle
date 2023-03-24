@@ -153,6 +153,7 @@ dependencies {
 
     implementation project(path: ":presentation:ui")
     implementation project(path: ":presentation:style")
+    implementation project(path: ":presentation:strings")
 
     implementation project(path: ":eastereggs")
 

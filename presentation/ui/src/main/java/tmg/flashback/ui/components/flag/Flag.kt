@@ -1,17 +1,15 @@
-package tmg.flashback.stats.ui.shared
+package tmg.flashback.ui.components.flag
 
-import android.content.res.Resources.NotFoundException
 import androidx.compose.foundation.Image
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import tmg.flashback.formula1.utils.getFlagResourceAlpha3
-import tmg.flashback.stats.R
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
+import tmg.flashback.ui.R
+import tmg.flashback.ui.utils.DrawableUtils.getFlagResourceAlpha3
 import tmg.flashback.ui.utils.isInPreview
 
 @Composable

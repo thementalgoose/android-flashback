@@ -1,4 +1,4 @@
-package tmg.flashback.stats.components
+package tmg.flashback.ui.components.drivers
 
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
