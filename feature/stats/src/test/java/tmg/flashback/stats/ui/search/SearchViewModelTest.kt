@@ -26,8 +26,8 @@ import tmg.flashback.stats.Driver
 import tmg.flashback.stats.Weekend
 import tmg.flashback.stats.ui.weekend.WeekendInfo
 import tmg.flashback.stats.with
-import tmg.flashback.ui.navigation.Navigator
-import tmg.flashback.ui.navigation.Screen
+import tmg.flashback.navigation.Navigator
+import tmg.flashback.navigation.Screen
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertListDoesNotMatchItem
 import tmg.testutils.livedata.test
@@ -38,7 +38,7 @@ internal class SearchViewModelTest: BaseTest() {
     private val mockConstructorsRepository: ConstructorRepository = mockk(relaxed = true)
     private val mockDriversRepository: DriverRepository = mockk(relaxed = true)
     private val mockOverviewRepository: OverviewRepository = mockk(relaxed = true)
-    private val mockNavigator: Navigator = mockk(relaxed = true)
+    private val mockNavigator: tmg.flashback.navigation.Navigator = mockk(relaxed = true)
     private val mockAdsRepository: AdsRepository = mockk(relaxed = true)
 
     private lateinit var sut: SearchViewModel
@@ -309,7 +309,8 @@ internal class SearchViewModelTest: BaseTest() {
         }
 
         verify {
-            mockNavigator.navigate(Screen.Constructor.with(
+            mockNavigator.navigate(
+                tmg.flashback.navigation.Screen.Constructor.with(
                 model.constructorId, model.name
             ))
         }
@@ -325,7 +326,8 @@ internal class SearchViewModelTest: BaseTest() {
         }
 
         verify {
-            mockNavigator.navigate(Screen.Driver.with(
+            mockNavigator.navigate(
+                tmg.flashback.navigation.Screen.Driver.with(
                 model.driverId, model.name
             ))
         }
@@ -341,7 +343,8 @@ internal class SearchViewModelTest: BaseTest() {
         }
 
         verify {
-            mockNavigator.navigate(Screen.Weekend.with(
+            mockNavigator.navigate(
+                tmg.flashback.navigation.Screen.Weekend.with(
                 WeekendInfo(
                     season = model.season,
                     round = model.round,
@@ -366,7 +369,8 @@ internal class SearchViewModelTest: BaseTest() {
         }
 
         verify {
-            mockNavigator.navigate(Screen.Circuit.with(
+            mockNavigator.navigate(
+                tmg.flashback.navigation.Screen.Circuit.with(
                 model.circuitId,
                 model.name
             ))

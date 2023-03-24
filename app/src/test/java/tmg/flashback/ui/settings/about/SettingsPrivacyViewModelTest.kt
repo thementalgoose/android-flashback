@@ -9,8 +9,8 @@ import tmg.flashback.analytics.manager.AnalyticsManager
 import tmg.flashback.crash_reporting.repository.CrashRepository
 import tmg.flashback.privacypolicy.PrivacyPolicy
 import tmg.flashback.ui.managers.ToastManager
-import tmg.flashback.ui.navigation.Navigator
-import tmg.flashback.ui.navigation.Screen
+import tmg.flashback.navigation.Navigator
+import tmg.flashback.navigation.Screen
 import tmg.flashback.ui.settings.Settings
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.test
@@ -21,7 +21,7 @@ internal class SettingsPrivacyViewModelTest: BaseTest() {
     private val mockCrashRepository: CrashRepository = mockk(relaxed = true)
     private val mockAnalyticsManager: AnalyticsManager = mockk(relaxed = true)
     private val mockToastManager: ToastManager = mockk(relaxed = true)
-    private val mockNavigator: Navigator = mockk(relaxed = true)
+    private val mockNavigator: tmg.flashback.navigation.Navigator = mockk(relaxed = true)
 
     private lateinit var underTest: SettingsPrivacyViewModel
 
@@ -80,7 +80,7 @@ internal class SettingsPrivacyViewModelTest: BaseTest() {
         underTest.inputs.prefClicked(Settings.Other.privacyPolicy)
 
         verify {
-            mockNavigator.navigate(Screen.Settings.PrivacyPolicy)
+            mockNavigator.navigate(tmg.flashback.navigation.Screen.Settings.PrivacyPolicy)
         }
     }
 

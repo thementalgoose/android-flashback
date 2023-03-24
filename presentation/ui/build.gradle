@@ -20,7 +20,9 @@ dependencies {
     implementation project(path: ':core:analytics')
     implementation project(path: ':core:configuration')
     implementation project(path: ':core:crash-reporting')
+
     api project(path: ':presentation:style')
+    implementation project(path: ':presentation:navigation')
 
     implementation libs.bundles.androidx
     implementation libs.material

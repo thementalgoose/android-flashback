@@ -16,8 +16,8 @@ import tmg.flashback.formula1.model.CircuitHistory
 import tmg.flashback.formula1.model.CircuitHistoryRace
 import tmg.flashback.formula1.model.model
 import tmg.flashback.statistics.repo.CircuitRepository
-import tmg.flashback.ui.navigation.NavigationDestination
-import tmg.flashback.ui.navigation.Navigator
+import tmg.flashback.navigation.NavigationDestination
+import tmg.flashback.navigation.Navigator
 import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.test
@@ -29,7 +29,7 @@ internal class CircuitViewModelTest: BaseTest() {
     private val mockCircuitRepository: CircuitRepository = mockk(relaxed = true)
     private val mockConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
     private val mockOpenWebpageUseCase: OpenWebpageUseCase = mockk(relaxed = true)
-    private val mockNavigator: Navigator = mockk(relaxed = true)
+    private val mockNavigator: tmg.flashback.navigation.Navigator = mockk(relaxed = true)
 
     @BeforeEach
     internal fun setUp() {
@@ -233,7 +233,7 @@ internal class CircuitViewModelTest: BaseTest() {
         initSUT()
         sut.inputs.itemClicked(item)
 
-        val slot = slot<NavigationDestination>()
+        val slot = slot<tmg.flashback.navigation.NavigationDestination>()
         verify {
             mockNavigator.navigate(capture(slot))
         }

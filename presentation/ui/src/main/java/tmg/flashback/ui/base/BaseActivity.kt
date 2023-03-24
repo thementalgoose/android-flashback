@@ -11,7 +11,7 @@ import tmg.flashback.analytics.manager.AnalyticsManager
 import tmg.flashback.ui.managers.PermissionManager
 import tmg.flashback.ui.managers.StyleManager
 import tmg.flashback.ui.model.DisplayType
-import tmg.flashback.ui.navigation.ActivityProvider
+import tmg.flashback.navigation.ActivityProvider
 import tmg.flashback.ui.permissions.RationaleBottomSheetFragment
 import tmg.flashback.ui.permissions.RationaleBottomSheetFragmentCallback
 import tmg.flashback.ui.permissions.RationaleType

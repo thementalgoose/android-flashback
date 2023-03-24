@@ -19,8 +19,8 @@ import tmg.flashback.stats.R
 import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.stats.ui.drivers.stathistory.DriverStatHistoryType
 import tmg.flashback.stats.with
-import tmg.flashback.ui.navigation.Navigator
-import tmg.flashback.ui.navigation.Screen
+import tmg.flashback.navigation.Navigator
+import tmg.flashback.navigation.Screen
 import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertListMatchesItem
@@ -30,7 +30,7 @@ internal class DriverOverviewViewModelTest: BaseTest() {
 
     private val mockDriverRepository: DriverRepository = mockk(relaxed = true)
     private val mockNetworkConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
-    private val mockNavigator: Navigator = mockk(relaxed = true)
+    private val mockNavigator: tmg.flashback.navigation.Navigator = mockk(relaxed = true)
     private val mockStatsNavigationComponent: StatsNavigationComponent = mockk(relaxed = true)
     private val mockOpenWebpageUseCase: OpenWebpageUseCase = mockk(relaxed = true)
 
@@ -222,7 +222,8 @@ internal class DriverOverviewViewModelTest: BaseTest() {
 
         sut.inputs.openSeason(2020)
         verify {
-            mockNavigator.navigate(Screen.DriverSeason.with(
+            mockNavigator.navigate(
+                tmg.flashback.navigation.Screen.DriverSeason.with(
                 driverId = "driverId",
                 driverName = "firstName lastName",
                 season = 2020

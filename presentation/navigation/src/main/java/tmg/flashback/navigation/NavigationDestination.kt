@@ -1,4 +1,4 @@
-package tmg.flashback.ui.navigation
+package tmg.flashback.navigation
 
 import androidx.navigation.NavController
 import androidx.navigation.NavOptionsBuilder

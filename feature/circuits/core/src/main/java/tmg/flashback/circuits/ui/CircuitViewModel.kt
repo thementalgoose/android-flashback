@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.formula1.model.CircuitHistory
 import tmg.flashback.statistics.repo.CircuitRepository
-import tmg.flashback.ui.navigation.Navigator
+import tmg.flashback.navigation.Navigator
 import tmg.flashback.web.usecases.OpenWebpageUseCase
 import javax.inject.Inject
 
@@ -144,7 +144,7 @@ class CircuitViewModel @Inject constructor(
     }
 
     private fun CircuitHistory.toStatModel(): CircuitModel.Stats {
-        return tmg.flashback.circuits.ui.CircuitModel.Stats(
+        return CircuitModel.Stats(
             circuitId = this.data.id,
             name = this.data.name,
             country = this.data.country,

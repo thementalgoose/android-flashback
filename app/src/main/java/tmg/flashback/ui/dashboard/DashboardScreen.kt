@@ -41,14 +41,14 @@ import tmg.flashback.ui.components.navigation.appBarHeight
 import tmg.flashback.ui.dashboard.menu.DashboardMenuExpandedScreen
 import tmg.flashback.ui.dashboard.menu.DashboardMenuScreen
 import tmg.flashback.ui.foldables.getFoldingConfig
-import tmg.flashback.ui.navigation.Navigator
+import tmg.flashback.navigation.Navigator
 
 @Composable
 fun DashboardScreen(
     windowSize: WindowSizeClass,
     windowLayoutInfo: WindowLayoutInfo,
     advertProvider: AdvertProvider,
-    navigator: Navigator,
+    navigator: tmg.flashback.navigation.Navigator,
     closeApp: () -> Unit,
     navViewModel: DashboardNavViewModel = hiltViewModel(),
     viewModel: DashboardViewModel = hiltViewModel()
@@ -103,7 +103,7 @@ fun DashboardScreen(
     windowSize: WindowSizeClass,
     windowLayoutInfo: WindowLayoutInfo,
     advertProvider: AdvertProvider,
-    navigator: Navigator,
+    navigator: tmg.flashback.navigation.Navigator,
     closeApp: () -> Unit,
     currentlySelectedItem: MenuItem,
     appFeatureItemsList: List<MenuItem>,

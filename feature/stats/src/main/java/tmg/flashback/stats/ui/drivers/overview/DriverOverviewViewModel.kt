@@ -18,8 +18,8 @@ import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.stats.ui.drivers.stathistory.DriverStatHistoryType
 import tmg.flashback.stats.with
 import tmg.flashback.ui.components.navigation.PipeType
-import tmg.flashback.ui.navigation.Navigator
-import tmg.flashback.ui.navigation.Screen
+import tmg.flashback.navigation.Navigator
+import tmg.flashback.navigation.Screen
 import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.utilities.extensions.ordinalAbbreviation
 import javax.inject.Inject
@@ -53,7 +53,7 @@ interface DriverOverviewViewModelOutputs {
 class DriverOverviewViewModel @Inject constructor(
     private val driverRepository: DriverRepository,
     private val networkConnectivityManager: NetworkConnectivityManager,
-    private val navigator: Navigator,
+    private val navigator: tmg.flashback.navigation.Navigator,
     private val statsNavigationComponent: StatsNavigationComponent,
     private val openWebpageUseCase: OpenWebpageUseCase,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
@@ -163,7 +163,8 @@ class DriverOverviewViewModel @Inject constructor(
     override fun openSeason(season: Int) {
         driverIdAndName.value?.let {
             val (id, name) = it
-            navigator.navigate(Screen.DriverSeason.with(
+            navigator.navigate(
+                tmg.flashback.navigation.Screen.DriverSeason.with(
                 driverId = id,
                 driverName = name,
                 season = season

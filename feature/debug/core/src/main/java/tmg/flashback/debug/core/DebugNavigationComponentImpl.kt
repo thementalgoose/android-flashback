@@ -5,11 +5,11 @@ import tmg.flashback.debug.DebugNavigationComponent
 import tmg.flashback.debug.core.adverts.AdvertsActivity
 import tmg.flashback.debug.core.styleguide.StyleGuideComposeActivity
 import tmg.flashback.debug.model.DebugMenuItem
-import tmg.flashback.ui.navigation.ActivityProvider
+import tmg.flashback.navigation.ActivityProvider
 import javax.inject.Inject
 
 internal class DebugNavigationComponentImpl @Inject constructor(
-    private val activityProvider: ActivityProvider
+    private val activityProvider: tmg.flashback.navigation.ActivityProvider
 ): DebugNavigationComponent {
     override fun navigateTo(id: String) {
         when (id) {

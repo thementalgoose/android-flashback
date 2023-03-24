@@ -17,8 +17,8 @@ import tmg.flashback.formula1.model.Race
 import tmg.flashback.statistics.repo.RaceRepository
 import tmg.flashback.stats.Constructor
 import tmg.flashback.stats.with
-import tmg.flashback.ui.navigation.Navigator
-import tmg.flashback.ui.navigation.Screen
+import tmg.flashback.navigation.Navigator
+import tmg.flashback.navigation.Screen
 import javax.inject.Inject
 
 interface ConstructorViewModelInputs {
@@ -33,7 +33,7 @@ interface ConstructorViewModelOutputs {
 @HiltViewModel
 class ConstructorViewModel @Inject constructor(
     private val raceRepository: RaceRepository,
-    private val navigator: Navigator,
+    private val navigator: tmg.flashback.navigation.Navigator,
     private val ioDispatcher: CoroutineDispatcher
 ): ViewModel(), ConstructorViewModelInputs, ConstructorViewModelOutputs {
 
@@ -76,7 +76,8 @@ class ConstructorViewModel @Inject constructor(
     }
 
     override fun clickItem(model: ConstructorModel.Constructor) {
-        navigator.navigate(Screen.Constructor.with(
+        navigator.navigate(
+            tmg.flashback.navigation.Screen.Constructor.with(
             constructorId = model.constructor.id,
             constructorName = model.constructor.name
         ))

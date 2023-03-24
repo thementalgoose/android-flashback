@@ -21,8 +21,8 @@ import tmg.flashback.stats.repository.models.NotificationSchedule
 import tmg.flashback.stats.ui.weekend.toWeekendInfo
 import tmg.flashback.stats.usecases.FetchSeasonUseCase
 import tmg.flashback.stats.with
-import tmg.flashback.ui.navigation.Navigator
-import tmg.flashback.ui.navigation.Screen
+import tmg.flashback.navigation.Navigator
+import tmg.flashback.navigation.Screen
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertListMatchesItem
 import tmg.testutils.livedata.test
@@ -34,7 +34,7 @@ internal class CalendarViewModelTest: BaseTest() {
     private val mockEventsRepository: EventsRepository = mockk(relaxed = true)
     private val mockFetchSeasonUseCase: FetchSeasonUseCase = mockk(relaxed = true)
     private val mockNotificationRepository: NotificationRepository = mockk(relaxed = true)
-    private val mockNavigator: Navigator = mockk(relaxed = true)
+    private val mockNavigator: tmg.flashback.navigation.Navigator = mockk(relaxed = true)
     private val mockStatsNavigationComponent: StatsNavigationComponent = mockk(relaxed = true)
 
     private lateinit var underTest: CalendarViewModel
@@ -129,7 +129,8 @@ internal class CalendarViewModelTest: BaseTest() {
         underTest.clickItem(model)
 
         verify {
-            mockNavigator.navigate(Screen.Weekend.with(
+            mockNavigator.navigate(
+                tmg.flashback.navigation.Screen.Weekend.with(
                 OverviewRace.model(round = 1).toRaceInfo().toWeekendInfo()
             ))
         }

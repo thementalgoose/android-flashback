@@ -22,10 +22,10 @@ import tmg.flashback.stats.Constructors
 import tmg.flashback.stats.Drivers
 import tmg.flashback.stats.usecases.DefaultSeasonUseCase
 import tmg.flashback.stats.with
-import tmg.flashback.ui.navigation.ApplicationNavigationComponent
-import tmg.flashback.ui.navigation.NavigationDestination
-import tmg.flashback.ui.navigation.Navigator
-import tmg.flashback.ui.navigation.Screen
+import tmg.flashback.navigation.ApplicationNavigationComponent
+import tmg.flashback.navigation.NavigationDestination
+import tmg.flashback.navigation.Navigator
+import tmg.flashback.navigation.Screen
 import tmg.flashback.ui.settings.All
 import tmg.flashback.usecases.DashboardSyncUseCase
 import tmg.flashback.usecases.GetSeasonsUseCase
@@ -41,9 +41,9 @@ internal class DashboardNavViewModelTest: BaseTest() {
 
     private val mockRssRepository: RSSRepository = mockk(relaxed = true)
     private val mockDefaultSeasonUseCase: DefaultSeasonUseCase = mockk(relaxed = true)
-    private val mockNavigator: Navigator = mockk(relaxed = true)
+    private val mockNavigator: tmg.flashback.navigation.Navigator = mockk(relaxed = true)
     private val mockGetSeasonUseCase: GetSeasonsUseCase = mockk(relaxed = true)
-    private val mockApplicationNavigationComponent: ApplicationNavigationComponent = mockk(relaxed = true)
+    private val mockApplicationNavigationComponent: tmg.flashback.navigation.ApplicationNavigationComponent = mockk(relaxed = true)
     private val mockCrashManager: CrashManager = mockk(relaxed = true)
     private val mockDashboardSyncUseCase: DashboardSyncUseCase = mockk(relaxed = true)
     private val mockDebugNavigationComponent: DebugNavigationComponent = mockk(relaxed = true)
@@ -96,7 +96,11 @@ internal class DashboardNavViewModelTest: BaseTest() {
     )
     fun `menu item gets updated when route is updated`(route: String, menuItemName: String?) {
         val menuItem = menuItemName?.toSealedClass(MenuItem::class)
-        every { mockNavigator.destination } returns MutableStateFlow(NavigationDestination(route))
+        every { mockNavigator.destination } returns MutableStateFlow(
+            tmg.flashback.navigation.NavigationDestination(
+                route
+            )
+        )
 
         initUnderTest()
         underTest.currentlySelectedItem.test {
@@ -122,7 +126,11 @@ internal class DashboardNavViewModelTest: BaseTest() {
         "circuits/,false"
     )
     fun `menu is shown when route is updated`(route: String, showMenu: Boolean) {
-        every { mockNavigator.destination } returns MutableStateFlow(NavigationDestination(route))
+        every { mockNavigator.destination } returns MutableStateFlow(
+            tmg.flashback.navigation.NavigationDestination(
+                route
+            )
+        )
 
         initUnderTest()
         underTest.showMenu.test {
@@ -144,7 +152,11 @@ internal class DashboardNavViewModelTest: BaseTest() {
         "circuits/,false"
     )
     fun `menu bottom bar when route is updated`(route: String, showBottomBar: Boolean) {
-        every { mockNavigator.destination } returns MutableStateFlow(NavigationDestination(route))
+        every { mockNavigator.destination } returns MutableStateFlow(
+            tmg.flashback.navigation.NavigationDestination(
+                route
+            )
+        )
 
         initUnderTest()
         underTest.showBottomBar.test {
@@ -168,7 +180,7 @@ internal class DashboardNavViewModelTest: BaseTest() {
         initUnderTest()
         underTest.inputs.clickItem(menuItem)
 
-        val destination = slot<NavigationDestination>()
+        val destination = slot<tmg.flashback.navigation.NavigationDestination>()
         verify {
             mockNavigator.navigate(capture(destination))
         }
@@ -218,52 +230,52 @@ internal class DashboardNavViewModelTest: BaseTest() {
 
         @Test
         fun `clicking a season updates season if currently selected is menu for calendar`() {
-            every { mockNavigator.destination } returns MutableStateFlow(Screen.Calendar.with(2019))
+            every { mockNavigator.destination } returns MutableStateFlow(tmg.flashback.navigation.Screen.Calendar.with(2019))
 
             initUnderTest()
             underTest.currentlySelectedItem.testObserve()
             underTest.clickSeason(2020)
 
-            val destination = slot<NavigationDestination>()
+            val destination = slot<tmg.flashback.navigation.NavigationDestination>()
             verify {
                 mockNavigator.navigate(capture(destination))
             }
-            assertEquals(Screen.Calendar.with(2020).route, destination.captured.route)
+            assertEquals(tmg.flashback.navigation.Screen.Calendar.with(2020).route, destination.captured.route)
         }
 
         @Test
         fun `clicking a season updates season if currently selected is menu for constructors`() {
-            every { mockNavigator.destination } returns MutableStateFlow(Screen.Constructors.with(2019))
+            every { mockNavigator.destination } returns MutableStateFlow(tmg.flashback.navigation.Screen.Constructors.with(2019))
 
             initUnderTest()
             underTest.currentlySelectedItem.testObserve()
             underTest.clickSeason(2020)
 
-            val destination = slot<NavigationDestination>()
+            val destination = slot<tmg.flashback.navigation.NavigationDestination>()
             verify {
                 mockNavigator.navigate(capture(destination))
             }
-            assertEquals(Screen.Constructors.with(2020).route, destination.captured.route)
+            assertEquals(tmg.flashback.navigation.Screen.Constructors.with(2020).route, destination.captured.route)
         }
 
         @Test
         fun `clicking a season updates season if currently selected is menu for drivers`() {
-            every { mockNavigator.destination } returns MutableStateFlow(Screen.Drivers.with(2019))
+            every { mockNavigator.destination } returns MutableStateFlow(tmg.flashback.navigation.Screen.Drivers.with(2019))
 
             initUnderTest()
             underTest.currentlySelectedItem.testObserve()
             underTest.clickSeason(2020)
 
-            val destination = slot<NavigationDestination>()
+            val destination = slot<tmg.flashback.navigation.NavigationDestination>()
             verify {
                 mockNavigator.navigate(capture(destination))
             }
-            assertEquals(Screen.Drivers.with(2020).route, destination.captured.route)
+            assertEquals(tmg.flashback.navigation.Screen.Drivers.with(2020).route, destination.captured.route)
         }
 
         @Test
         fun `clicking a season does nothing if settings is already selected`() {
-            every { mockNavigator.destination } returns MutableStateFlow(Screen.Settings.All)
+            every { mockNavigator.destination } returns MutableStateFlow(tmg.flashback.navigation.Screen.Settings.All)
 
             initUnderTest()
             underTest.currentlySelectedItem.testObserve()
@@ -277,7 +289,7 @@ internal class DashboardNavViewModelTest: BaseTest() {
 
     @Test
     fun `get all seasons returns season list`() {
-        every { mockNavigator.destination } returns MutableStateFlow(Screen.Settings.All)
+        every { mockNavigator.destination } returns MutableStateFlow(tmg.flashback.navigation.Screen.Settings.All)
         every { mockGetSeasonUseCase.get() } returns mapOf(
             2019 to Pair(IsFirst(true), IsLast(false)),
             2020 to Pair(IsFirst(true), IsLast(false)),

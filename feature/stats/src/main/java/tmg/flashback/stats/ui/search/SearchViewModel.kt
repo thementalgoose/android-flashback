@@ -18,6 +18,8 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import tmg.flashback.ads.ads.repository.AdsRepository
+import tmg.flashback.circuits.contract.Circuit
+import tmg.flashback.circuits.contract.with
 import tmg.flashback.formula1.model.Circuit
 import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.Driver
@@ -26,14 +28,13 @@ import tmg.flashback.statistics.repo.CircuitRepository
 import tmg.flashback.statistics.repo.ConstructorRepository
 import tmg.flashback.statistics.repo.DriverRepository
 import tmg.flashback.statistics.repo.OverviewRepository
-import tmg.flashback.stats.Circuit
 import tmg.flashback.stats.Constructor
 import tmg.flashback.stats.Driver
 import tmg.flashback.stats.Weekend
 import tmg.flashback.stats.ui.weekend.WeekendInfo
 import tmg.flashback.stats.with
-import tmg.flashback.ui.navigation.Navigator
-import tmg.flashback.ui.navigation.Screen
+import tmg.flashback.navigation.Navigator
+import tmg.flashback.navigation.Screen
 import tmg.utilities.extensions.extend
 import javax.inject.Inject
 
@@ -57,7 +58,7 @@ class SearchViewModel @Inject constructor(
     private val circuitRepository: CircuitRepository,
     private val overviewRepository: OverviewRepository,
     private val adsRepository: AdsRepository,
-    private val navigator: Navigator,
+    private val navigator: tmg.flashback.navigation.Navigator,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), SearchViewModelInputs, SearchViewModelOutputs {
 
@@ -136,25 +137,29 @@ class SearchViewModel @Inject constructor(
     override fun clickItem(item: SearchItem) {
         when (item) {
             is SearchItem.Circuit -> {
-                navigator.navigate(Screen.Circuit.with(
+                navigator.navigate(
+                    Screen.Circuit.with(
                     circuitId = item.circuitId,
                     circuitName = item.name
                 ))
             }
             is SearchItem.Constructor -> {
-                navigator.navigate(Screen.Constructor.with(
+                navigator.navigate(
+                    Screen.Constructor.with(
                     constructorId = item.constructorId,
                     constructorName = item.name
                 ))
             }
             is SearchItem.Driver -> {
-                navigator.navigate(Screen.Driver.with(
+                navigator.navigate(
+                    Screen.Driver.with(
                     driverId = item.driverId,
                     driverName = item.name
                 ))
             }
             is SearchItem.Race -> {
-                navigator.navigate(Screen.Weekend.with(
+                navigator.navigate(
+                    Screen.Weekend.with(
                     WeekendInfo(
                         season = item.season,
                         round = item.round,

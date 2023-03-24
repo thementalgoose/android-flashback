@@ -3,7 +3,7 @@ package tmg.flashback.stats.ui.messaging
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import tmg.flashback.stats.repository.HomeRepository
-import tmg.flashback.ui.navigation.ApplicationNavigationComponent
+import tmg.flashback.navigation.ApplicationNavigationComponent
 import javax.inject.Inject
 
 interface ProvidedByViewModelInputs {
@@ -17,7 +17,7 @@ interface ProvidedByViewModelOutputs {
 @HiltViewModel
 class ProvidedByViewModel @Inject constructor(
     private val homeRepository: HomeRepository,
-    private val navigationComponent: ApplicationNavigationComponent
+    private val navigationComponent: tmg.flashback.navigation.ApplicationNavigationComponent
 ): ViewModel(), ProvidedByViewModelInputs, ProvidedByViewModelOutputs {
 
     val inputs: ProvidedByViewModelInputs = this

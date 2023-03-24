@@ -5,14 +5,14 @@ import androidx.activity.result.ActivityResultCallback
 import kotlinx.coroutines.CompletableDeferred
 import tmg.flashback.ui.R
 import tmg.flashback.ui.base.BaseActivity
-import tmg.flashback.ui.navigation.ActivityProvider
+import tmg.flashback.navigation.ActivityProvider
 import tmg.flashback.ui.permissions.RationaleType
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class PermissionManager @Inject constructor(
-    private val topActivityProvider: ActivityProvider
+    private val topActivityProvider: tmg.flashback.navigation.ActivityProvider
 ) {
     private var completableDeferred: CompletableDeferred<Boolean>? = null
 

@@ -1,4 +1,4 @@
-package tmg.flashback.ui.navigation
+package tmg.flashback.navigation
 
 // Extend this in feature modules
 object Screen {

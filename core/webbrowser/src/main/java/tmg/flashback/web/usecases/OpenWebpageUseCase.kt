@@ -11,7 +11,7 @@ import android.os.Build
 import android.webkit.URLUtil
 import android.widget.Toast
 import tmg.flashback.analytics.manager.AnalyticsManager
-import tmg.flashback.ui.navigation.ActivityProvider
+import tmg.flashback.navigation.ActivityProvider
 import tmg.flashback.web.R
 import tmg.flashback.web.repository.WebBrowserRepository
 import tmg.flashback.web.ui.browser.WebActivity

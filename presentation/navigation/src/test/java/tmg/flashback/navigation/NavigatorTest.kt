@@ -1,15 +1,11 @@
-package tmg.flashback.ui.navigation
+package tmg.flashback.navigation
 
-import androidx.lifecycle.asLiveData
 import io.mockk.mockk
 import io.mockk.verify
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.asStateFlow
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import tmg.flashback.crash_reporting.manager.CrashManager
-import tmg.testutils.livedata.test
-import tmg.testutils.livedata.testObserve
 
 internal class NavigatorTest {
 

@@ -16,6 +16,7 @@ import androidx.navigation.navDeepLink
 import androidx.window.layout.WindowLayoutInfo
 import org.threeten.bp.LocalDate
 import tmg.flashback.ads.ads.components.AdvertProvider
+import tmg.flashback.circuits.contract.Circuit
 import tmg.flashback.privacypolicy.PrivacyPolicy
 import tmg.flashback.privacypolicy.ui.PrivacyPolicyScreenVM
 import tmg.flashback.releasenotes.ReleaseNotes
@@ -25,7 +26,6 @@ import tmg.flashback.rss.RSSConfigure
 import tmg.flashback.rss.ui.configure.ConfigureRSSScreenVM
 import tmg.flashback.rss.ui.feed.RSSScreenVM
 import tmg.flashback.stats.Calendar
-import tmg.flashback.stats.Circuit
 import tmg.flashback.stats.Constructor
 import tmg.flashback.stats.ConstructorSeason
 import tmg.flashback.stats.Constructors
@@ -45,13 +45,13 @@ import tmg.flashback.stats.ui.drivers.season.DriverSeasonScreenVM
 import tmg.flashback.stats.ui.search.SearchScreenVM
 import tmg.flashback.stats.ui.weekend.WeekendInfo
 import tmg.flashback.stats.ui.weekend.WeekendScreenVM
-import tmg.flashback.ui.navigation.Navigator
-import tmg.flashback.ui.navigation.Screen
-import tmg.flashback.ui.navigation.asNavigationDestination
-import tmg.flashback.ui.navigation.navIntRequired
-import tmg.flashback.ui.navigation.navString
-import tmg.flashback.ui.navigation.navStringRequired
-import tmg.flashback.ui.navigation.navigate
+import tmg.flashback.navigation.Navigator
+import tmg.flashback.navigation.Screen
+import tmg.flashback.navigation.asNavigationDestination
+import tmg.flashback.navigation.navIntRequired
+import tmg.flashback.navigation.navString
+import tmg.flashback.navigation.navStringRequired
+import tmg.flashback.navigation.navigate
 import tmg.flashback.ui.settings.About
 import tmg.flashback.ui.settings.Ads
 import tmg.flashback.ui.settings.All
@@ -75,7 +75,7 @@ fun AppGraph(
     openMenu: () -> Unit,
     windowSize: WindowSizeClass,
     windowInfo: WindowLayoutInfo,
-    navigator: Navigator,
+    navigator: tmg.flashback.navigation.Navigator,
     closeApp: () -> Unit,
     advertProvider: AdvertProvider,
     modifier: Modifier = Modifier
@@ -92,8 +92,9 @@ fun AppGraph(
             .statusBarsPadding()
             .navigationBarsPadding()
     ) {
-        composable(Screen.Calendar.route, arguments = listOf(
-            navString("season")
+        composable(
+            Screen.Calendar.route, arguments = listOf(
+                navString("season")
         )) {
             // Has to be nullable because initial navigation graph
             //  value cannot contain placeholder values
@@ -105,8 +106,9 @@ fun AppGraph(
             )
         }
 
-        composable(Screen.Constructors.route, arguments = listOf(
-            navIntRequired("season")
+        composable(
+            Screen.Constructors.route, arguments = listOf(
+                navIntRequired("season")
         )) {
             val season = it.arguments?.getInt("season")!!
             ConstructorStandingsScreenVM(
@@ -116,8 +118,9 @@ fun AppGraph(
             )
         }
 
-        composable(Screen.Drivers.route, arguments = listOf(
-            navIntRequired("season")
+        composable(
+            Screen.Drivers.route, arguments = listOf(
+                navIntRequired("season")
         )) {
             val season = it.arguments?.getInt("season")!!
             DriverStandingsScreenVM(
@@ -185,9 +188,10 @@ fun AppGraph(
         }
 
         // Stats
-        composable(Screen.Weekend.route, arguments = listOf(
-            navIntRequired("season"),
-            navIntRequired("round")
+        composable(
+            Screen.Weekend.route, arguments = listOf(
+                navIntRequired("season"),
+                navIntRequired("round")
         )) {
             val season = it.arguments?.getInt("season")!!
             val round = it.arguments?.getInt("round")!!
@@ -206,8 +210,9 @@ fun AppGraph(
                 actionUpClicked = { navController.popBackStack() }
             )
         }
-        composable(Screen.Circuit.route, arguments = listOf(
-            navStringRequired("circuitId")
+        composable(
+            Screen.Circuit.route, arguments = listOf(
+                navStringRequired("circuitId")
         )) {
             val circuitId = it.arguments?.getString("circuitId")!!
             CircuitScreenVM(
@@ -216,8 +221,9 @@ fun AppGraph(
                 actionUpClicked = { navController.popBackStack() }
             )
         }
-        composable(Screen.Driver.route, arguments = listOf(
-            navStringRequired("driverId")
+        composable(
+            Screen.Driver.route, arguments = listOf(
+                navStringRequired("driverId")
         )) {
             val driverId = it.arguments?.getString("driverId")!!
             DriverOverviewScreenVM(
@@ -226,9 +232,10 @@ fun AppGraph(
                 actionUpClicked = { navController.popBackStack() }
             )
         }
-        composable(Screen.DriverSeason.route, arguments = listOf(
-            navStringRequired("driverId"),
-            navIntRequired("season")
+        composable(
+            Screen.DriverSeason.route, arguments = listOf(
+                navStringRequired("driverId"),
+                navIntRequired("season")
         )) {
             val driverId = it.arguments?.getString("driverId")!!
             val season = it.arguments?.getInt("season")!!
@@ -239,8 +246,9 @@ fun AppGraph(
                 actionUpClicked = { navController.popBackStack() }
             )
         }
-        composable(Screen.Constructor.route, arguments = listOf(
-            navStringRequired("constructorId")
+        composable(
+            Screen.Constructor.route, arguments = listOf(
+                navStringRequired("constructorId")
         )) {
             val constructorId = it.arguments?.getString("constructorId")!!
             ConstructorOverviewScreenVM(
@@ -250,9 +258,10 @@ fun AppGraph(
             )
         }
 
-        composable(Screen.ConstructorSeason.route, arguments = listOf(
-            navStringRequired("constructorId"),
-            navIntRequired("season")
+        composable(
+            Screen.ConstructorSeason.route, arguments = listOf(
+                navStringRequired("constructorId"),
+                navIntRequired("season")
         )) {
             val constructorId = it.arguments?.getString("constructorId")!!
             val season = it.arguments?.getInt("season")!!

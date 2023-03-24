@@ -6,12 +6,12 @@ import io.mockk.verify
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import tmg.flashback.stats.repository.HomeRepository
-import tmg.flashback.ui.navigation.ApplicationNavigationComponent
+import tmg.flashback.navigation.ApplicationNavigationComponent
 
 internal class ProvidedByViewModelTest {
 
     private val mockHomeRepository: HomeRepository = mockk(relaxed = true)
-    private val mockNavigationComponent: ApplicationNavigationComponent = mockk(relaxed = true)
+    private val mockNavigationComponent: tmg.flashback.navigation.ApplicationNavigationComponent = mockk(relaxed = true)
 
     private lateinit var underTest: ProvidedByViewModel
 
