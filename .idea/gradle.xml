@@ -47,6 +47,8 @@
             <option value="$PROJECT_DIR$/feature/privacypolicy" />
             <option value="$PROJECT_DIR$/feature/releasenotes" />
             <option value="$PROJECT_DIR$/feature/rss" />
+            <option value="$PROJECT_DIR$/feature/rss/contract" />
+            <option value="$PROJECT_DIR$/feature/rss/core" />
             <option value="$PROJECT_DIR$/feature/search" />
             <option value="$PROJECT_DIR$/feature/search/contract" />
             <option value="$PROJECT_DIR$/feature/search/core" />
