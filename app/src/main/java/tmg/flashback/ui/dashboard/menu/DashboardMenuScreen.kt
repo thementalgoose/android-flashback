@@ -33,7 +33,7 @@ import tmg.flashback.debug.model.DebugMenuItem
 import tmg.flashback.eastereggs.model.MenuIcons
 import tmg.flashback.eastereggs.ui.snow
 import tmg.flashback.formula1.constants.Formula1
-import tmg.flashback.stats.components.Timeline
+import tmg.flashback.ui.components.timeline.Timeline
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme

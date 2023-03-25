@@ -12,15 +12,15 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import tmg.flashback.drivers.contract.DriverSeason
+import tmg.flashback.drivers.contract.with
 import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
 import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.model.Race
 import tmg.flashback.formula1.model.RaceQualifyingType
-import tmg.flashback.statistics.repo.RaceRepository
-import tmg.flashback.stats.DriverSeason
-import tmg.flashback.stats.with
-import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
+import tmg.flashback.statistics.repo.RaceRepository
+import tmg.flashback.stats.with
 import javax.inject.Inject
 
 interface QualifyingViewModelInputs {
@@ -147,7 +147,7 @@ class QualifyingViewModel @Inject constructor(
     override fun clickDriver(result: Driver) {
         val season = seasonRound.value?.first ?: return
         navigator.navigate(
-            tmg.flashback.navigation.Screen.DriverSeason.with(
+            Screen.DriverSeason.with(
             driverId = result.id,
             driverName = result.name,
             season = season

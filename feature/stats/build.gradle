@@ -38,6 +38,8 @@ dependencies {
     implementation project(path: ":presentation:strings")
 
     implementation project(path: ':feature:circuits:contract')
+    implementation project(path: ':feature:drivers:contract')
+    implementation project(path: ':feature:constructors:contract')
 
     implementation project(path: ':feature:debug:contract')
 

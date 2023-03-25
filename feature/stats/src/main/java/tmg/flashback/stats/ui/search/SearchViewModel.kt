@@ -20,6 +20,8 @@ import kotlinx.coroutines.launch
 import tmg.flashback.ads.ads.repository.AdsRepository
 import tmg.flashback.circuits.contract.Circuit
 import tmg.flashback.circuits.contract.with
+import tmg.flashback.drivers.contract.Driver
+import tmg.flashback.drivers.contract.with
 import tmg.flashback.formula1.model.Circuit
 import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.Driver
@@ -29,7 +31,6 @@ import tmg.flashback.statistics.repo.ConstructorRepository
 import tmg.flashback.statistics.repo.DriverRepository
 import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.stats.Constructor
-import tmg.flashback.stats.Driver
 import tmg.flashback.stats.Weekend
 import tmg.flashback.stats.ui.weekend.WeekendInfo
 import tmg.flashback.stats.with
@@ -58,7 +59,7 @@ class SearchViewModel @Inject constructor(
     private val circuitRepository: CircuitRepository,
     private val overviewRepository: OverviewRepository,
     private val adsRepository: AdsRepository,
-    private val navigator: tmg.flashback.navigation.Navigator,
+    private val navigator: Navigator,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), SearchViewModelInputs, SearchViewModelOutputs {
 

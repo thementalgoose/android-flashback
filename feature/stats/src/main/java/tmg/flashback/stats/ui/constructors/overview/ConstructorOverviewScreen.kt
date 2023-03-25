@@ -29,9 +29,9 @@ import tmg.flashback.formula1.model.DriverConstructor
 import tmg.flashback.providers.DriverConstructorProvider
 import tmg.flashback.stats.R
 import tmg.flashback.stats.analytics.AnalyticsConstants.analyticsConstructorId
-import tmg.flashback.stats.components.TimelineTop
-import tmg.flashback.stats.components.dotDiameter
-import tmg.flashback.stats.components.heightOfTopDot
+import tmg.flashback.ui.components.timeline.TimelineTop
+import tmg.flashback.ui.components.timeline.dotDiameter
+import tmg.flashback.ui.components.timeline.heightOfTopDot
 import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview

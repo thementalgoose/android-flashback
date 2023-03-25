@@ -304,7 +304,7 @@ private fun ResultDriver(
                 .clip(RoundedCornerShape(AppTheme.dimens.radiusSmall))
                 .background(AppTheme.colors.backgroundTertiary)
         ) {
-            DriverImage(
+            tmg.flashback.ui.components.drivers.DriverImage(
                 size = 42.dp,
                 photoUrl = model.imageUrl
             )
