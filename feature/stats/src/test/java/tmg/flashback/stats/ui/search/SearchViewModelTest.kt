@@ -11,23 +11,24 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.ads.ads.repository.AdsRepository
 import tmg.flashback.ads.ads.repository.model.AdvertConfig
+import tmg.flashback.circuits.contract.Circuit
+import tmg.flashback.circuits.contract.with
+import tmg.flashback.drivers.contract.Driver
+import tmg.flashback.drivers.contract.with
 import tmg.flashback.formula1.model.Circuit
 import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.model.model
+import tmg.flashback.navigation.Screen
 import tmg.flashback.statistics.repo.CircuitRepository
 import tmg.flashback.statistics.repo.ConstructorRepository
 import tmg.flashback.statistics.repo.DriverRepository
 import tmg.flashback.statistics.repo.OverviewRepository
-import tmg.flashback.stats.Circuit
 import tmg.flashback.stats.Constructor
-import tmg.flashback.stats.Driver
 import tmg.flashback.stats.Weekend
 import tmg.flashback.stats.ui.weekend.WeekendInfo
 import tmg.flashback.stats.with
-import tmg.flashback.navigation.Navigator
-import tmg.flashback.navigation.Screen
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertListDoesNotMatchItem
 import tmg.testutils.livedata.test
@@ -310,7 +311,7 @@ internal class SearchViewModelTest: BaseTest() {
 
         verify {
             mockNavigator.navigate(
-                tmg.flashback.navigation.Screen.Constructor.with(
+                Screen.Constructor.with(
                 model.constructorId, model.name
             ))
         }
@@ -327,7 +328,7 @@ internal class SearchViewModelTest: BaseTest() {
 
         verify {
             mockNavigator.navigate(
-                tmg.flashback.navigation.Screen.Driver.with(
+                Screen.Driver.with(
                 model.driverId, model.name
             ))
         }
@@ -344,7 +345,7 @@ internal class SearchViewModelTest: BaseTest() {
 
         verify {
             mockNavigator.navigate(
-                tmg.flashback.navigation.Screen.Weekend.with(
+                Screen.Weekend.with(
                 WeekendInfo(
                     season = model.season,
                     round = model.round,
@@ -370,7 +371,7 @@ internal class SearchViewModelTest: BaseTest() {
 
         verify {
             mockNavigator.navigate(
-                tmg.flashback.navigation.Screen.Circuit.with(
+                Screen.Circuit.with(
                 model.circuitId,
                 model.name
             ))

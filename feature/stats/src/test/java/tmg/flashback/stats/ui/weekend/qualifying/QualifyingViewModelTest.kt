@@ -5,6 +5,8 @@ import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.flow.flow
 import org.junit.jupiter.api.Test
+import tmg.flashback.drivers.contract.DriverSeason
+import tmg.flashback.drivers.contract.with
 import tmg.flashback.formula1.model.LapTime
 import tmg.flashback.formula1.model.Race
 import tmg.flashback.formula1.model.RaceQualifyingResult
@@ -12,7 +14,6 @@ import tmg.flashback.formula1.model.RaceQualifyingRound
 import tmg.flashback.formula1.model.RaceQualifyingType
 import tmg.flashback.formula1.model.model
 import tmg.flashback.statistics.repo.RaceRepository
-import tmg.flashback.stats.DriverSeason
 import tmg.flashback.stats.with
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
@@ -24,7 +25,7 @@ import java.time.Year
 internal class QualifyingViewModelTest: BaseTest() {
 
     private val mockRaceRepository: RaceRepository = mockk(relaxed = true)
-    private val mockNavigator: tmg.flashback.navigation.Navigator = mockk(relaxed = true)
+    private val mockNavigator: Navigator = mockk(relaxed = true)
 
     private lateinit var underTest: QualifyingViewModel
 
@@ -140,7 +141,7 @@ internal class QualifyingViewModelTest: BaseTest() {
 
         verify {
             mockNavigator.navigate(
-                tmg.flashback.navigation.Screen.DriverSeason.with(
+                Screen.DriverSeason.with(
                 driverId = input.driver.driver.id,
                 driverName = input.driver.driver.name,
                 season = 2020
