@@ -1,4 +1,4 @@
-package tmg.flashback.stats.ui.circuits
+package tmg.flashback.circuits.ui
 
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -15,16 +15,15 @@ import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.formula1.model.CircuitHistory
 import tmg.flashback.formula1.model.CircuitHistoryRace
 import tmg.flashback.formula1.model.model
-import tmg.flashback.statistics.repo.CircuitRepository
 import tmg.flashback.navigation.NavigationDestination
-import tmg.flashback.navigation.Navigator
+import tmg.flashback.statistics.repo.CircuitRepository
 import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.test
 
 internal class CircuitViewModelTest: BaseTest() {
 
-    lateinit var sut: tmg.flashback.circuits.ui.CircuitViewModel
+    lateinit var sut: CircuitViewModel
 
     private val mockCircuitRepository: CircuitRepository = mockk(relaxed = true)
     private val mockConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
@@ -40,7 +39,7 @@ internal class CircuitViewModelTest: BaseTest() {
     }
 
     private fun initSUT() {
-        sut = tmg.flashback.circuits.ui.CircuitViewModel(
+        sut = CircuitViewModel(
             mockCircuitRepository,
             mockConnectivityManager,
             mockOpenWebpageUseCase,
@@ -62,8 +61,8 @@ internal class CircuitViewModelTest: BaseTest() {
 
         sut.outputs.list.test {
             assertValue(listOf(
-                tmg.flashback.circuits.ui.CircuitModel.Stats.model(),
-                tmg.flashback.circuits.ui.CircuitModel.Error
+                CircuitModel.Stats.model(),
+                CircuitModel.Error
             ))
         }
     }
@@ -78,7 +77,7 @@ internal class CircuitViewModelTest: BaseTest() {
 
         sut.outputs.list.test {
             assertValue(listOf(
-                tmg.flashback.circuits.ui.CircuitModel.Error
+                CircuitModel.Error
             ))
         }
     }
@@ -96,8 +95,8 @@ internal class CircuitViewModelTest: BaseTest() {
 
         sut.outputs.list.test {
             assertValue(listOf(
-                tmg.flashback.circuits.ui.CircuitModel.Stats.model(),
-                tmg.flashback.circuits.ui.CircuitModel.Error
+                CircuitModel.Stats.model(),
+                CircuitModel.Error
             ))
         }
     }
@@ -112,7 +111,7 @@ internal class CircuitViewModelTest: BaseTest() {
 
         sut.outputs.list.test {
             assertValue(listOf(
-                tmg.flashback.circuits.ui.CircuitModel.Error
+                CircuitModel.Error
             ))
         }
     }
@@ -132,13 +131,13 @@ internal class CircuitViewModelTest: BaseTest() {
 
         sut.outputs.list.test {
             assertValue(listOf(
-                tmg.flashback.circuits.ui.CircuitModel.Stats.model(
+                CircuitModel.Stats.model(
                     numberOfGrandPrix = 2,
                     startYear = 2020,
                     endYear = 2020
                 ),
-                tmg.flashback.circuits.ui.CircuitModel.Item.model(data = CircuitHistoryRace.model(round = 2)),
-                tmg.flashback.circuits.ui.CircuitModel.Item.model(data = CircuitHistoryRace.model(round = 1)),
+                CircuitModel.Item.model(data = CircuitHistoryRace.model(round = 2)),
+                CircuitModel.Item.model(data = CircuitHistoryRace.model(round = 1)),
             ))
         }
     }
@@ -173,15 +172,15 @@ internal class CircuitViewModelTest: BaseTest() {
 
         sut.outputs.list.test {
             assertValueAt(listOf(
-                tmg.flashback.circuits.ui.CircuitModel.Loading
+                CircuitModel.Loading
             ), 0)
             assertValueAt(listOf(
-                tmg.flashback.circuits.ui.CircuitModel.Stats.model(
+                CircuitModel.Stats.model(
                     numberOfGrandPrix = 1,
                     startYear = 2020,
                     endYear = 2020
                 ),
-                tmg.flashback.circuits.ui.CircuitModel.Item.model(),
+                CircuitModel.Item.model(),
             ), 1)
         }
         coVerify {
@@ -228,12 +227,12 @@ internal class CircuitViewModelTest: BaseTest() {
 
     @Test
     fun `clicking item navigats to stats`() {
-        val item: tmg.flashback.circuits.ui.CircuitModel.Item = mockk(relaxed = true)
+        val item: CircuitModel.Item = mockk(relaxed = true)
 
         initSUT()
         sut.inputs.itemClicked(item)
 
-        val slot = slot<tmg.flashback.navigation.NavigationDestination>()
+        val slot = slot<NavigationDestination>()
         verify {
             mockNavigator.navigate(capture(slot))
         }

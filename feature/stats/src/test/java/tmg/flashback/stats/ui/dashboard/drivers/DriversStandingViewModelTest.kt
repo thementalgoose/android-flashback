@@ -8,16 +8,17 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import tmg.flashback.drivers.contract.Driver
+import tmg.flashback.drivers.contract.with
 import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.model.SeasonDriverStandingSeason
 import tmg.flashback.formula1.model.SeasonDriverStandings
 import tmg.flashback.formula1.model.model
-import tmg.flashback.statistics.repo.SeasonRepository
-import tmg.flashback.stats.Driver
-import tmg.flashback.stats.usecases.FetchSeasonUseCase
-import tmg.flashback.stats.with
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
+import tmg.flashback.statistics.repo.SeasonRepository
+import tmg.flashback.stats.usecases.FetchSeasonUseCase
+import tmg.flashback.stats.with
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.test
 import tmg.testutils.livedata.testObserve
@@ -26,7 +27,7 @@ internal class DriversStandingViewModelTest: BaseTest() {
 
     private val mockSeasonRepository: SeasonRepository = mockk(relaxed = true)
     private val mockFetchSeasonUseCase: FetchSeasonUseCase = mockk(relaxed = true)
-    private val mockNavigator: tmg.flashback.navigation.Navigator = mockk(relaxed = true)
+    private val mockNavigator: Navigator = mockk(relaxed = true)
 
     private lateinit var underTest: DriversStandingViewModel
 
@@ -135,7 +136,7 @@ internal class DriversStandingViewModelTest: BaseTest() {
 
         verify {
             mockNavigator.navigate(
-                tmg.flashback.navigation.Screen.Driver.with(
+                Screen.Driver.with(
                 driverId = model.standings.driver.id,
                 driverName = model.standings.driver.name
             ))

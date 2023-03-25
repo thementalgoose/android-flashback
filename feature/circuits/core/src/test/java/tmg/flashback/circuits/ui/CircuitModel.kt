@@ -1,10 +1,10 @@
-package tmg.flashback.stats.ui.circuits
+package tmg.flashback.circuits.ui
 
 import tmg.flashback.formula1.model.CircuitHistoryRace
 import tmg.flashback.formula1.model.Location
 import tmg.flashback.formula1.model.model
 
-fun tmg.flashback.circuits.ui.CircuitModel.Stats.Companion.model(
+fun CircuitModel.Stats.Companion.model(
     circuitId: String = "circuitId",
     name: String = "circuitName",
     country: String = "country",
@@ -14,7 +14,7 @@ fun tmg.flashback.circuits.ui.CircuitModel.Stats.Companion.model(
     endYear: Int? = null,
     wikipedia: String? = "wikiUrl",
     location: Location? = Location.model()
-): tmg.flashback.circuits.ui.CircuitModel.Stats = tmg.flashback.circuits.ui.CircuitModel.Stats(
+): CircuitModel.Stats = CircuitModel.Stats(
     circuitId = circuitId,
     name = name,
     country = country,
@@ -26,13 +26,13 @@ fun tmg.flashback.circuits.ui.CircuitModel.Stats.Companion.model(
     location = location,
 )
 
-fun tmg.flashback.circuits.ui.CircuitModel.Item.Companion.model(
+fun CircuitModel.Item.Companion.model(
     circuitId: String = "circuitId",
     circuitName: String = "circuitName",
     country: String = "country",
     countryISO: String = "countryISO",
     data: CircuitHistoryRace = CircuitHistoryRace.model()
-): tmg.flashback.circuits.ui.CircuitModel.Item = tmg.flashback.circuits.ui.CircuitModel.Item(
+): CircuitModel.Item = CircuitModel.Item(
     circuitId = circuitId,
     circuitName = circuitName,
     country = country,

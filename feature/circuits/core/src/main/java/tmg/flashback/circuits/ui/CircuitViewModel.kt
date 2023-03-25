@@ -20,6 +20,7 @@ import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.formula1.model.CircuitHistory
 import tmg.flashback.statistics.repo.CircuitRepository
 import tmg.flashback.navigation.Navigator
+import tmg.flashback.navigation.Screen
 import tmg.flashback.web.usecases.OpenWebpageUseCase
 import javax.inject.Inject
 
@@ -118,17 +119,17 @@ class CircuitViewModel @Inject constructor(
     }
 
     override fun itemClicked(model: CircuitModel.Item) {
-//        val weekend = WeekendInfo(
-//            season = model.data.season,
-//            round = model.data.round,
-//            raceName = model.data.name,
-//            circuitId = model.circuitId,
-//            circuitName = model.circuitName,
-//            country = model.country,
-//            countryISO = model.countryISO,
-//            date = model.data.date
-//        )
-//        navigator.navigate(Screen.Weekend.with(weekend))
+        val weekend = WeekendInfo(
+            season = model.data.season,
+            round = model.data.round,
+            raceName = model.data.name,
+            circuitId = model.circuitId,
+            circuitName = model.circuitName,
+            country = model.country,
+            countryISO = model.countryISO,
+            date = model.data.date
+        )
+        navigator.navigate(Screen.Weekend.with(weekend))
     }
 
     override fun refresh() {
