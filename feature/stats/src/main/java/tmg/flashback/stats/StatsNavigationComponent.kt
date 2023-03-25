@@ -2,24 +2,21 @@ package tmg.flashback.stats
 
 import androidx.appcompat.app.AppCompatActivity
 import tmg.flashback.crash_reporting.manager.CrashManager
-import tmg.flashback.stats.ui.drivers.stathistory.DriverStatHistoryBottomSheetFragment
-import tmg.flashback.stats.ui.drivers.stathistory.DriverStatHistoryType
+import tmg.flashback.navigation.NavigationDestination
+import tmg.flashback.navigation.Screen
 import tmg.flashback.stats.ui.events.EventsBottomSheetFragment
 import tmg.flashback.stats.ui.feature.notificationonboarding.NotificationOnboardingBottomSheetFragment
 import tmg.flashback.stats.ui.settings.notifications.reminder.UpNextReminderBottomSheetFragment
 import tmg.flashback.stats.ui.tyres.TyreBottomSheetFragment
 import tmg.flashback.stats.ui.weekend.WeekendInfo
-import tmg.flashback.navigation.ActivityProvider
-import tmg.flashback.navigation.NavigationDestination
-import tmg.flashback.navigation.Screen
 import javax.inject.Inject
 
 @JvmInline
 value class ScreenCalendar(val route: String)
-val tmg.flashback.navigation.Screen.Calendar get() = ScreenCalendar("results/calendar/{season}")
+val Screen.Calendar get() = ScreenCalendar("results/calendar/{season}")
 fun ScreenCalendar.with(
     season: Int
-) = tmg.flashback.navigation.NavigationDestination(
+) = NavigationDestination(
     route = this@with.route.replace("{season}", season.toString()),
     launchSingleTop = true
 )
@@ -27,10 +24,10 @@ fun ScreenCalendar.with(
 
 @JvmInline
 value class ScreenDrivers(val route: String)
-val tmg.flashback.navigation.Screen.Drivers get() = ScreenDrivers("results/drivers/{season}")
+val Screen.Drivers get() = ScreenDrivers("results/drivers/{season}")
 fun ScreenDrivers.with(
     season: Int
-) = tmg.flashback.navigation.NavigationDestination(
+) = NavigationDestination(
     route = this@with.route.replace("{season}", season.toString()),
     launchSingleTop = true
 )
@@ -38,48 +35,21 @@ fun ScreenDrivers.with(
 
 @JvmInline
 value class ScreenConstructors(val route: String)
-val tmg.flashback.navigation.Screen.Constructors get() = ScreenCalendar("results/constructors/{season}")
+val Screen.Constructors get() = ScreenCalendar("results/constructors/{season}")
 fun ScreenConstructors.with(
     season: Int
-) = tmg.flashback.navigation.NavigationDestination(
+) = NavigationDestination(
     route = this@with.route.replace("{season}", season.toString()),
     launchSingleTop = true
 )
 
-
-@JvmInline
-value class ScreenDriver(val route: String)
-val tmg.flashback.navigation.Screen.Driver get() = ScreenDriver("drivers/{driverId}?driverName={driverName}")
-fun ScreenDriver.with(
-    driverId: String,
-    driverName: String
-) = tmg.flashback.navigation.NavigationDestination(
-    this@with.route
-        .replace("{driverId}", driverId)
-        .replace("{driverName}", driverName)
-)
-
-@JvmInline
-value class ScreenDriverSeason(val route: String)
-val tmg.flashback.navigation.Screen.DriverSeason get() = ScreenDriverSeason("drivers/{driverId}/{season}?driverName={driverName}")
-fun ScreenDriverSeason.with(
-    driverId: String,
-    driverName: String,
-    season: Int
-) = tmg.flashback.navigation.NavigationDestination(
-    this@with.route
-        .replace("{driverId}", driverId)
-        .replace("{driverName}", driverName)
-        .replace("{season}", season.toString())
-)
-
 @JvmInline
 value class ScreenConstructor(val route: String)
-val tmg.flashback.navigation.Screen.Constructor get() = ScreenConstructor("constructors/{constructorId}?constructorName={constructorName}")
+val Screen.Constructor get() = ScreenConstructor("constructors/{constructorId}?constructorName={constructorName}")
 fun ScreenConstructor.with(
     constructorId: String,
     constructorName: String
-) = tmg.flashback.navigation.NavigationDestination(
+) = NavigationDestination(
     this@with.route
         .replace("{constructorId}", constructorId)
         .replace("{constructorName}", constructorName)
@@ -87,12 +57,12 @@ fun ScreenConstructor.with(
 
 @JvmInline
 value class ScreenConstructorSeason(val route: String)
-val tmg.flashback.navigation.Screen.ConstructorSeason get() = ScreenConstructorSeason("constructors/{constructorId}/{season}?constructorName={constructorName}")
+val Screen.ConstructorSeason get() = ScreenConstructorSeason("constructors/{constructorId}/{season}?constructorName={constructorName}")
 fun ScreenConstructorSeason.with(
     constructorId: String,
     constructorName: String,
     season: Int
-) = tmg.flashback.navigation.NavigationDestination(
+) = NavigationDestination(
     this@with.route
         .replace("{constructorId}", constructorId)
         .replace("{constructorName}", constructorName)
@@ -102,7 +72,7 @@ fun ScreenConstructorSeason.with(
 
 @JvmInline
 value class ScreenWeekend(val route: String)
-val tmg.flashback.navigation.Screen.Weekend get() = ScreenWeekend("weekend/{season}/{round}?" +
+val Screen.Weekend get() = ScreenWeekend("weekend/{season}/{round}?" +
         "raceName={raceName}" + "&" +
         "circuitId={circuitId}" + "&" +
         "circuitName={circuitName}" + "&" +
@@ -110,7 +80,7 @@ val tmg.flashback.navigation.Screen.Weekend get() = ScreenWeekend("weekend/{seas
         "countryISO={countryISO}" + "&" +
         "date={date}"
 )
-fun ScreenWeekend.with(weekendInfo: WeekendInfo) = tmg.flashback.navigation.NavigationDestination(
+fun ScreenWeekend.with(weekendInfo: WeekendInfo) = NavigationDestination(
     this@with.route
         .replace("{season}", weekendInfo.season.toString())
         .replace("{round}", weekendInfo.round.toString())
@@ -122,8 +92,8 @@ fun ScreenWeekend.with(weekendInfo: WeekendInfo) = tmg.flashback.navigation.Navi
         .replace("{date}", weekendInfo.dateString)
 )
 
-val tmg.flashback.navigation.Screen.Search: tmg.flashback.navigation.NavigationDestination
-    get() = tmg.flashback.navigation.NavigationDestination("search", launchSingleTop = true)
+val Screen.Search: NavigationDestination
+    get() = NavigationDestination("search", launchSingleTop = true)
 
 class StatsNavigationComponent @Inject constructor(
     private val crashManager: CrashManager,
@@ -151,15 +121,5 @@ class StatsNavigationComponent @Inject constructor(
         crashManager.log("Navigating to notification onboarding")
         val activity = it as? AppCompatActivity ?: return@launch
         NotificationOnboardingBottomSheetFragment.instance().show(activity.supportFragmentManager, "FEATURE_NOTIFICATIONS")
-    }
-
-    fun driverStatHistory(
-        driverId: String,
-        driverName: String,
-        driverStatHistoryType: DriverStatHistoryType
-    ) = activityProvider.launch {
-        crashManager.log("Navigating to driver stat history $driverId ${driverStatHistoryType.analyticsKey}")
-        val activity = it as? AppCompatActivity ?: return@launch
-        DriverStatHistoryBottomSheetFragment.instance(driverId, driverName, driverStatHistoryType).show(activity.supportFragmentManager, "DRIVER_STAT_HISTORY")
     }
 }

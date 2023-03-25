@@ -1,6 +1,7 @@
-package tmg.flashback.stats.analytics
+package tmg.flashback.analytics.constants
 
-internal object AnalyticsConstants {
+object AnalyticsConstants {
+    const val analyticsDriverId: String = "driver_id"
     const val analyticsSeason: String = "season"
     const val analyticsConstructorId: String = "constructor_id"
     const val analyticsRound: String = "round"

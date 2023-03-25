@@ -14,12 +14,12 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import tmg.flashback.drivers.contract.Driver
+import tmg.flashback.drivers.contract.with
+import tmg.flashback.navigation.Screen
 import tmg.flashback.statistics.repo.SeasonRepository
-import tmg.flashback.stats.Driver
 import tmg.flashback.stats.usecases.FetchSeasonUseCase
 import tmg.flashback.stats.with
-import tmg.flashback.navigation.Navigator
-import tmg.flashback.navigation.Screen
 import javax.inject.Inject
 
 interface DriversStandingViewModelInputs {
@@ -91,7 +91,7 @@ class DriversStandingViewModel @Inject constructor(
 
     override fun clickItem(model: DriverStandingsModel.Standings) {
         navigator.navigate(
-            tmg.flashback.navigation.Screen.Driver.with(
+            Screen.Driver.with(
             driverId = model.standings.driver.id,
             driverName = model.standings.driver.name
         ))
