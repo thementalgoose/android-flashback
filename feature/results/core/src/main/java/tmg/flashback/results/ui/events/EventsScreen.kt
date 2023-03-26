@@ -15,12 +15,12 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import tmg.flashback.analytics.constants.AnalyticsConstants.analyticsSeason
 import tmg.flashback.formula1.extensions.icon
 import tmg.flashback.formula1.extensions.label
 import tmg.flashback.formula1.model.Event
 import tmg.flashback.providers.EventProvider
 import tmg.flashback.results.R
-import tmg.flashback.results.analytics.AnalyticsConstants
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
@@ -53,7 +53,7 @@ private fun EventsScreen(
     modifier: Modifier = Modifier
 ) {
     ScreenView(screenName = "Events", args = mapOf(
-        AnalyticsConstants.analyticsSeason to season.toString()
+        analyticsSeason to season.toString()
     ))
 
     BottomSheet(

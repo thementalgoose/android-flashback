@@ -48,7 +48,7 @@ internal class DashboardViewModelTest: BaseTest() {
             buildConfigManager = mockBuildConfigManager,
             notificationRepository = mockNotificationRepository,
             permissionRepository = mockPermissionRepository,
-            statsNavigationComponent = mockStatsNavigationComponent,
+            resultsNavigationComponent = mockStatsNavigationComponent,
             permissionManager = mockPermissionManager,
             isSnowEnabledUseCase = mockIsSnowEnabledUseCase,
             isMenuIconEnabledUseCase = mockIsMenuIconEnabledUseCase,

@@ -31,7 +31,7 @@ internal class SettingsNotificationsUpcomingViewModelTest: BaseTest() {
             scheduleNotificationsUseCase = mockScheduleNotificationsUseCase,
             permissionRepository = mockPermissionRepository,
             permissionManager = mockPermissionManager,
-            statsNavigationComponent = mockStatsNavigationComponent,
+            resultsNavigationComponent = mockStatsNavigationComponent,
         )
     }
 

@@ -20,12 +20,12 @@ import tmg.flashback.formula1.model.Overview
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.statistics.repo.EventsRepository
 import tmg.flashback.statistics.repo.OverviewRepository
-import tmg.flashback.results.ResultsNavigationComponentImpl
 import tmg.flashback.results.repository.HomeRepository
 import tmg.flashback.results.repository.NotificationsRepositoryImpl
 import tmg.flashback.results.usecases.FetchSeasonUseCase
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
+import tmg.flashback.results.contract.ResultsNavigationComponent
 import tmg.flashback.weekend.contract.Weekend
 import tmg.flashback.weekend.contract.model.WeekendInfo
 import tmg.flashback.weekend.contract.with
@@ -62,7 +62,7 @@ class ScheduleViewModel @Inject constructor(
     private val notificationRepository: NotificationsRepositoryImpl,
     private val homeRepository: HomeRepository,
     private val navigator: Navigator,
-    private val statsNavigationComponent: ResultsNavigationComponentImpl,
+    private val resultsNavigationComponent: ResultsNavigationComponent,
     private val eventsRepository: EventsRepository,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), ScheduleViewModelInputs, ScheduleViewModelOutputs {
@@ -139,11 +139,11 @@ class ScheduleViewModel @Inject constructor(
     }
 
     override fun clickTyre(season: Int) {
-        statsNavigationComponent.tyres(season)
+        resultsNavigationComponent.tyres(season)
     }
 
     override fun clickPreseason(season: Int) {
-        statsNavigationComponent.preseason(season)
+        resultsNavigationComponent.preseasonEvents(season)
     }
 
     override fun clickItem(model: ScheduleModel) {
