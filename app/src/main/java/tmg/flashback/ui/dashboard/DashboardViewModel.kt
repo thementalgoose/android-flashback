@@ -10,7 +10,7 @@ import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.eastereggs.model.MenuIcons
 import tmg.flashback.eastereggs.usecases.IsMenuIconEnabledUseCase
 import tmg.flashback.eastereggs.usecases.IsSnowEnabledUseCase
-import tmg.flashback.results.ResultsNavigationComponentImpl
+import tmg.flashback.results.contract.ResultsNavigationComponent
 import tmg.flashback.results.repository.NotificationsRepositoryImpl
 import tmg.flashback.ui.managers.PermissionManager
 import tmg.flashback.ui.managers.StyleManager
@@ -41,7 +41,7 @@ class DashboardViewModel @Inject constructor(
     private val styleManager: StyleManager,
     private val changeNightModeUseCase: ChangeNightModeUseCase,
     private val buildConfigManager: BuildConfigManager,
-    private val statsNavigationComponent: ResultsNavigationComponentImpl,
+    private val resultsNavigationComponent: ResultsNavigationComponent,
     private val permissionManager: PermissionManager,
     private val notificationRepository: NotificationsRepositoryImpl,
     private val permissionRepository: PermissionRepository,
@@ -95,7 +95,7 @@ class DashboardViewModel @Inject constructor(
     override fun clickFeaturePrompt(prompt: FeaturePrompt) {
         when (prompt) {
             FeaturePrompt.Notifications -> {
-                statsNavigationComponent.featureNotificationOnboarding()
+                resultsNavigationComponent.featureNotificationOnboarding()
                 notificationRepository.seenNotificationOnboarding = true
                 initialiseFeatureList()
             }
@@ -106,7 +106,7 @@ class DashboardViewModel @Inject constructor(
                         .invokeOnCompletion {
                             notificationRepository.seenRuntimeNotifications = true
                             if (permissionRepository.isRuntimeNotificationsEnabled) {
-                                statsNavigationComponent.featureNotificationOnboarding()
+                                resultsNavigationComponent.featureNotificationOnboarding()
                             }
                             initialiseFeatureList()
                         }

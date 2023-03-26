@@ -21,6 +21,7 @@ import tmg.flashback.weekend.ui.toWeekendInfo
 import tmg.flashback.results.usecases.FetchSeasonUseCase
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
+import tmg.flashback.results.contract.ResultsNavigationComponent
 import tmg.flashback.weekend.contract.Weekend
 import tmg.flashback.weekend.contract.with
 import tmg.testutils.BaseTest
@@ -35,7 +36,7 @@ internal class CalendarViewModelTest: BaseTest() {
     private val mockFetchSeasonUseCase: FetchSeasonUseCase = mockk(relaxed = true)
     private val mockNotificationRepository: NotificationsRepositoryImpl = mockk(relaxed = true)
     private val mockNavigator: Navigator = mockk(relaxed = true)
-    private val mockStatsNavigationComponent: ResultsNavigationComponentImpl = mockk(relaxed = true)
+    private val mockResultsNavigationComponent: ResultsNavigationComponent = mockk(relaxed = true)
 
     private lateinit var underTest: CalendarViewModel
 
@@ -48,7 +49,7 @@ internal class CalendarViewModelTest: BaseTest() {
             overviewRepository = mockOverviewRepository,
             eventsRepository = mockEventsRepository,
             navigator = mockNavigator,
-            statsNavigationComponent = mockStatsNavigationComponent,
+            resultsNavigationComponent = mockResultsNavigationComponent,
             ioDispatcher = coroutineScope.testDispatcher
         )
     }
@@ -144,7 +145,7 @@ internal class CalendarViewModelTest: BaseTest() {
         underTest.inputs.clickTyre(2020)
 
         verify {
-            mockStatsNavigationComponent.tyres(2020)
+            mockResultsNavigationComponent.tyres(2020)
         }
     }
 

@@ -9,20 +9,22 @@ import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
+import tmg.flashback.formula1.model.Event
 import tmg.flashback.formula1.model.Overview
 import tmg.flashback.formula1.model.OverviewRace
+import tmg.flashback.formula1.model.RaceInfo
 import tmg.flashback.formula1.model.model
 import tmg.flashback.statistics.repo.EventsRepository
 import tmg.flashback.statistics.repo.OverviewRepository
-import tmg.flashback.results.ResultsNavigationComponentImpl
 import tmg.flashback.results.repository.HomeRepository
 import tmg.flashback.results.repository.NotificationsRepositoryImpl
 import tmg.flashback.results.repository.models.NotificationSchedule
-import tmg.flashback.weekend.ui.toWeekendInfo
 import tmg.flashback.results.usecases.FetchSeasonUseCase
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
+import tmg.flashback.results.contract.ResultsNavigationComponent
 import tmg.flashback.weekend.contract.Weekend
+import tmg.flashback.weekend.contract.model.WeekendInfo
 import tmg.flashback.weekend.contract.with
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.test
@@ -35,7 +37,7 @@ internal class ScheduleViewModelTest: BaseTest() {
     private val mockFetchSeasonUseCase: FetchSeasonUseCase = mockk(relaxed = true)
     private val mockNotificationRepository: NotificationsRepositoryImpl = mockk(relaxed = true)
     private val mockNavigator: Navigator = mockk(relaxed = true)
-    private val mockStatsNavigationComponent: ResultsNavigationComponentImpl = mockk(relaxed = true)
+    private val mockResultsNavigationComponent: ResultsNavigationComponent = mockk(relaxed = true)
     private val mockHomeRepository: HomeRepository = mockk(relaxed = true)
 
     private lateinit var underTest: ScheduleViewModel
@@ -48,7 +50,7 @@ internal class ScheduleViewModelTest: BaseTest() {
             homeRepository = mockHomeRepository,
             eventsRepository = mockEventsRepository,
             navigator = mockNavigator,
-            statsNavigationComponent = mockStatsNavigationComponent,
+            resultsNavigationComponent = mockResultsNavigationComponent,
             ioDispatcher = coroutineScope.testDispatcher
         )
     }
@@ -154,7 +156,7 @@ internal class ScheduleViewModelTest: BaseTest() {
                     showScheduleList = false
                 ),
                 ScheduleModel.Event(
-                    tmg.flashback.formula1.model.Event.model(date = LocalDate.now().plusDays(1))
+                    Event.model(date = LocalDate.now().plusDays(1))
                 )
             ))
         }
@@ -266,7 +268,7 @@ internal class ScheduleViewModelTest: BaseTest() {
         verify {
             mockNavigator.navigate(
                 Screen.Weekend.with(
-                model.model.toRaceInfo().toWeekendInfo()
+                WeekendInfo.from(model.model.toRaceInfo())
             ))
         }
     }
@@ -279,7 +281,7 @@ internal class ScheduleViewModelTest: BaseTest() {
         underTest.inputs.clickTyre(2020)
 
         verify {
-            mockStatsNavigationComponent.tyres(2020)
+            mockResultsNavigationComponent.tyres(2020)
         }
     }
 
@@ -291,7 +293,7 @@ internal class ScheduleViewModelTest: BaseTest() {
         underTest.inputs.clickPreseason(2020)
 
         verify {
-            mockStatsNavigationComponent.preseason(2020)
+            mockResultsNavigationComponent.preseasonEvents(2020)
         }
     }
 
@@ -302,4 +304,17 @@ internal class ScheduleViewModelTest: BaseTest() {
         race = true,
         other = true,
     )
+
+    fun WeekendInfo.Companion.from(raceInfo: RaceInfo): WeekendInfo {
+        return WeekendInfo(
+            season = raceInfo.season,
+            round = raceInfo.round,
+            raceName = raceInfo.name,
+            circuitId = raceInfo.circuit.id,
+            circuitName = raceInfo.circuit.name,
+            country = raceInfo.circuit.country,
+            countryISO = raceInfo.circuit.countryISO,
+            date = raceInfo.date,
+        )
+    }
 }

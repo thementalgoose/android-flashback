@@ -36,7 +36,7 @@ import tmg.flashback.statistics.repo.CircuitRepository
 import tmg.flashback.statistics.repo.ConstructorRepository
 import tmg.flashback.statistics.repo.DriverRepository
 import tmg.flashback.statistics.repo.OverviewRepository
-import tmg.flashback.results.ResultsNavigationComponentImpl
+import tmg.flashback.results.contract.ResultsNavigationComponent
 import tmg.flashback.results.repository.models.NotificationChannel
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.buttons.ButtonPrimary
@@ -83,7 +83,7 @@ class DebugActivity: BaseActivity() {
     lateinit var applicationNavigationComponent: tmg.flashback.navigation.ApplicationNavigationComponent
 
     @Inject
-    lateinit var statsNavigationComponent: ResultsNavigationComponentImpl
+    lateinit var resultsNavigationComponent: ResultsNavigationComponent
 
     @Inject
     lateinit var permissionRepository: PermissionRepository

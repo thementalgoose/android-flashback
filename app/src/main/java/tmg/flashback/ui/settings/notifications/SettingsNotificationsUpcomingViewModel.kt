@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import tmg.flashback.results.ResultsNavigationComponentImpl
+import tmg.flashback.results.contract.ResultsNavigationComponent
 import tmg.flashback.results.repository.NotificationsRepositoryImpl
 import tmg.flashback.results.usecases.ScheduleNotificationsUseCase
 import tmg.flashback.ui.managers.PermissionManager
@@ -33,7 +33,7 @@ class SettingsNotificationsUpcomingViewModel @Inject constructor(
     private val scheduleNotificationsUseCase: ScheduleNotificationsUseCase,
     private val permissionRepository: PermissionRepository,
     private val permissionManager: PermissionManager,
-    private val statsNavigationComponent: ResultsNavigationComponentImpl
+    private val resultsNavigationComponent: ResultsNavigationComponent
 ): ViewModel(), SettingsNotificationsUpcomingViewModelInputs, SettingsNotificationsUpcomingViewModelOutputs {
 
     val inputs: SettingsNotificationsUpcomingViewModelInputs = this
@@ -91,7 +91,7 @@ class SettingsNotificationsUpcomingViewModel @Inject constructor(
             }
 
             Settings.Notifications.notificationNoticePeriodKey -> {
-                statsNavigationComponent.upNext()
+                resultsNavigationComponent.upNext()
             }
         }
     }

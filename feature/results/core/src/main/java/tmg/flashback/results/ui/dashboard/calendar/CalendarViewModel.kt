@@ -20,10 +20,10 @@ import tmg.flashback.formula1.model.Overview
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.statistics.repo.EventsRepository
 import tmg.flashback.statistics.repo.OverviewRepository
-import tmg.flashback.results.ResultsNavigationComponentImpl
 import tmg.flashback.results.usecases.FetchSeasonUseCase
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
+import tmg.flashback.results.contract.ResultsNavigationComponent
 import tmg.flashback.weekend.contract.Weekend
 import tmg.flashback.weekend.contract.model.WeekendInfo
 import tmg.flashback.weekend.contract.with
@@ -48,7 +48,7 @@ class CalendarViewModel @Inject constructor(
     private val fetchSeasonUseCase: FetchSeasonUseCase,
     private val overviewRepository: OverviewRepository,
     private val navigator: Navigator,
-    private val statsNavigationComponent: ResultsNavigationComponentImpl,
+    private val resultsNavigationComponent: ResultsNavigationComponent,
     private val eventsRepository: EventsRepository,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), CalendarViewModelInputs, CalendarViewModelOutputs {
@@ -108,7 +108,7 @@ class CalendarViewModel @Inject constructor(
     }
 
     override fun clickTyre(season: Int) {
-        statsNavigationComponent.tyres(season)
+        resultsNavigationComponent.tyres(season)
     }
 
     override fun clickItem(model: CalendarModel) {

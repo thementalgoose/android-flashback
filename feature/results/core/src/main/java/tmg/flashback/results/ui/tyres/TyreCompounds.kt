@@ -12,11 +12,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import tmg.flashback.analytics.constants.AnalyticsConstants.analyticsSeason
 import tmg.flashback.formula1.enums.SeasonTyres
 import tmg.flashback.formula1.enums.TyreLabel
 import tmg.flashback.formula1.enums.getBySeason
 import tmg.flashback.results.R
-import tmg.flashback.results.analytics.AnalyticsConstants.analyticsSeason
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
