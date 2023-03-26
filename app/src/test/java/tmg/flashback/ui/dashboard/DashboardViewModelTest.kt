@@ -13,7 +13,7 @@ import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.eastereggs.model.MenuIcons
 import tmg.flashback.eastereggs.usecases.IsMenuIconEnabledUseCase
 import tmg.flashback.eastereggs.usecases.IsSnowEnabledUseCase
-import tmg.flashback.results.ResultsNavigationComponentImpl
+import tmg.flashback.results.contract.ResultsNavigationComponent
 import tmg.flashback.results.repository.NotificationsRepositoryImpl
 import tmg.flashback.ui.managers.PermissionManager
 import tmg.flashback.ui.managers.StyleManager
@@ -34,7 +34,7 @@ internal class DashboardViewModelTest: BaseTest() {
     private val mockBuildConfigManager: BuildConfigManager = mockk(relaxed = true)
     private val mockNotificationRepository: NotificationsRepositoryImpl = mockk(relaxed = true)
     private val mockPermissionRepository: PermissionRepository = mockk(relaxed = true)
-    private val mockStatsNavigationComponent: ResultsNavigationComponentImpl = mockk(relaxed = true)
+    private val mockResultsNavigationComponent: ResultsNavigationComponent = mockk(relaxed = true)
     private val mockPermissionManager: PermissionManager = mockk(relaxed = true)
     private val mockIsSnowEnabledUseCase: IsSnowEnabledUseCase = mockk(relaxed = true)
     private val mockIsMenuIconEnabledUseCase: IsMenuIconEnabledUseCase = mockk(relaxed = true)
@@ -48,7 +48,7 @@ internal class DashboardViewModelTest: BaseTest() {
             buildConfigManager = mockBuildConfigManager,
             notificationRepository = mockNotificationRepository,
             permissionRepository = mockPermissionRepository,
-            resultsNavigationComponent = mockStatsNavigationComponent,
+            resultsNavigationComponent = mockResultsNavigationComponent,
             permissionManager = mockPermissionManager,
             isSnowEnabledUseCase = mockIsSnowEnabledUseCase,
             isMenuIconEnabledUseCase = mockIsMenuIconEnabledUseCase,
@@ -187,7 +187,7 @@ internal class DashboardViewModelTest: BaseTest() {
             underTest.inputs.clickFeaturePrompt(FeaturePrompt.Notifications)
 
             verify {
-                mockStatsNavigationComponent.featureNotificationOnboarding()
+                mockResultsNavigationComponent.featureNotificationOnboarding()
                 mockNotificationRepository.seenNotificationOnboarding = true
             }
             featureList.assertEmittedCount(2)
@@ -207,7 +207,7 @@ internal class DashboardViewModelTest: BaseTest() {
 
             verify {
                 mockNotificationRepository.seenRuntimeNotifications = true
-                mockStatsNavigationComponent.featureNotificationOnboarding()
+                mockResultsNavigationComponent.featureNotificationOnboarding()
             }
             featureList.assertEmittedCount(2)
         }

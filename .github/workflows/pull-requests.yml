@@ -55,7 +55,7 @@ jobs:
       # Unit Tests
       - name: :app
         if: steps.change.outputs.gradle != 0
-        run: ./gradlew testDebugUnitTest :app:testSandDebugUnitTest
+        run: ./gradlew cleanTestDebugUnitTest testDebugUnitTest :app:testSandDebugUnitTest
 
       # Publish test report
       - name: Publish Test Report

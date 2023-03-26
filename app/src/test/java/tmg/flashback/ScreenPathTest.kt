@@ -1,48 +1,53 @@
 package tmg.flashback
 
 import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import tmg.flashback.circuits.contract.Circuit
 import tmg.flashback.circuits.contract.with
+import tmg.flashback.constructors.contract.Constructor
+import tmg.flashback.constructors.contract.ConstructorSeason
+import tmg.flashback.constructors.contract.with
 import tmg.flashback.drivers.contract.Driver
 import tmg.flashback.drivers.contract.DriverSeason
 import tmg.flashback.drivers.contract.with
 import tmg.flashback.navigation.Screen
 import tmg.flashback.results.Calendar
-import tmg.flashback.results.Constructor
-import tmg.flashback.results.ConstructorSeason
 import tmg.flashback.results.Constructors
 import tmg.flashback.results.Drivers
-import tmg.flashback.results.Search
-import tmg.flashback.results.Weekend
-import tmg.flashback.results.ui.weekend.WeekendInfo
 import tmg.flashback.results.with
+import tmg.flashback.rss.contract.RSS
+import tmg.flashback.rss.contract.RSSConfigure
+import tmg.flashback.search.contract.Search
+import tmg.flashback.weekend.contract.Weekend
+import tmg.flashback.weekend.contract.model.WeekendInfo
+import tmg.flashback.weekend.contract.with
 
 class ScreenPathTest {
 
 
     @Test
     fun `screen calendar`() {
-        Assertions.assertEquals("results/calendar/{season}", Screen.Calendar.route)
-        Assertions.assertEquals("results/calendar/2022", Screen.Calendar.with(2022).route)
+        assertEquals("results/calendar/{season}", Screen.Calendar.route)
+        assertEquals("results/calendar/2022", Screen.Calendar.with(2022).route)
     }
 
     @Test
     fun `screen constructors`() {
-        Assertions.assertEquals("results/constructors/{season}", Screen.Constructors.route)
-        Assertions.assertEquals("results/constructors/2022", Screen.Constructors.with(2022).route)
+        assertEquals("results/constructors/{season}", Screen.Constructors.route)
+        assertEquals("results/constructors/2022", Screen.Constructors.with(2022).route)
     }
 
     @Test
     fun `screen drivers`() {
-        Assertions.assertEquals("results/drivers/{season}", Screen.Drivers.route)
-        Assertions.assertEquals("results/drivers/2022", Screen.Drivers.with(2022).route)
+        assertEquals("results/drivers/{season}", Screen.Drivers.route)
+        assertEquals("results/drivers/2022", Screen.Drivers.with(2022).route)
     }
 
     @Test
     fun driver() {
-        Assertions.assertEquals("drivers/{driverId}?driverName={driverName}", Screen.Driver.route)
-        Assertions.assertEquals(
+        assertEquals("drivers/{driverId}?driverName={driverName}", Screen.Driver.route)
+        assertEquals(
             "drivers/id?driverName=name",
             Screen.Driver.with("id", "name").route
         )
@@ -50,11 +55,11 @@ class ScreenPathTest {
 
     @Test
     fun `driver season`() {
-        Assertions.assertEquals(
+        assertEquals(
             "drivers/{driverId}/{season}?driverName={driverName}",
             Screen.DriverSeason.route
         )
-        Assertions.assertEquals(
+        assertEquals(
             "drivers/id/2022?driverName=name",
             Screen.DriverSeason.with("id", "name", 2022).route
         )
@@ -62,11 +67,11 @@ class ScreenPathTest {
 
     @Test
     fun constructor() {
-        Assertions.assertEquals(
+        assertEquals(
             "constructors/{constructorId}?constructorName={constructorName}",
             Screen.Constructor.route
         )
-        Assertions.assertEquals(
+        assertEquals(
             "constructors/id?constructorName=name",
             Screen.Constructor.with("id", "name").route
         )
@@ -74,11 +79,11 @@ class ScreenPathTest {
 
     @Test
     fun `constructor season`() {
-        Assertions.assertEquals(
+        assertEquals(
             "constructors/{constructorId}/{season}?constructorName={constructorName}",
             Screen.ConstructorSeason.route
         )
-        Assertions.assertEquals(
+        assertEquals(
             "constructors/id/2022?constructorName=name",
             Screen.ConstructorSeason.with("id", "name", 2022).route
         )
@@ -86,11 +91,11 @@ class ScreenPathTest {
 
     @Test
     fun circuit() {
-        Assertions.assertEquals(
+        assertEquals(
             "circuit/{circuitId}?circuitName={circuitName}",
             Screen.Circuit.route
         )
-        Assertions.assertEquals(
+        assertEquals(
             "circuit/id?circuitName=name",
             Screen.Circuit.with("id", "name").route
         )
@@ -98,12 +103,12 @@ class ScreenPathTest {
 
     @Test
     fun search() {
-        Assertions.assertEquals("search", Screen.Search.route)
+        assertEquals("search", Screen.Search.route)
     }
 
     @Test
     fun weekend() {
-        Assertions.assertEquals(
+        assertEquals(
             "weekend/{season}/{round}?" +
                     "raceName={raceName}" + "&" +
                     "circuitId={circuitId}" + "&" +
@@ -112,7 +117,7 @@ class ScreenPathTest {
                     "countryISO={countryISO}" + "&" +
                     "date={date}", Screen.Weekend.route
         )
-        Assertions.assertEquals(
+        assertEquals(
             "weekend/2020/1?" +
                     "raceName=raceName" + "&" +
                     "circuitId=circuitId" + "&" +
@@ -132,5 +137,21 @@ class ScreenPathTest {
                 )
             ).route
         )
+    }
+
+
+    @Test
+    fun `settings rss`() {
+        assertEquals("settings/rss", Screen.Settings.RSS.route)
+    }
+
+    @Test
+    fun `settings rss configure`() {
+        assertEquals("settings/rss/configure", Screen.Settings.RSSConfigure.route)
+    }
+
+    @Test
+    fun rss() {
+        assertEquals("rss", Screen.RSS.route)
     }
 }
