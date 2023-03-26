@@ -22,6 +22,9 @@ import tmg.flashback.statistics.repo.CircuitRepository
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.flashback.web.usecases.OpenWebpageUseCase
+import tmg.flashback.weekend.contract.Weekend
+import tmg.flashback.weekend.contract.model.WeekendInfo
+import tmg.flashback.weekend.contract.with
 import javax.inject.Inject
 
 interface CircuitViewModelInputs {

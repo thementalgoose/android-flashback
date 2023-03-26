@@ -40,6 +40,9 @@ dependencies {
     implementation project(path: ':feature:circuits:contract')
     implementation project(path: ':feature:drivers:contract')
     implementation project(path: ':feature:constructors:contract')
+    implementation project(path: ':feature:weekend:contract')
+    implementation project(path: ':feature:upnext:contract')
+    implementation project(path: ':feature:results:contract')
 
     implementation project(path: ':feature:debug:contract')
 

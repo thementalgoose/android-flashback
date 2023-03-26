@@ -18,7 +18,6 @@ import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.flashback.statistics.repo.SeasonRepository
 import tmg.flashback.stats.usecases.FetchSeasonUseCase
-import tmg.flashback.stats.with
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.test
 import tmg.testutils.livedata.testObserve

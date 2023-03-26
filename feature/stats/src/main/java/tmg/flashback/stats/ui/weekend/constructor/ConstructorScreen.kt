@@ -17,7 +17,6 @@ import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.DriverConstructor
 import tmg.flashback.providers.DriverConstructorProvider
 import tmg.flashback.stats.components.DriverPoints
-import tmg.flashback.stats.ui.weekend.WeekendInfo
 import tmg.flashback.stats.ui.weekend.fakeWeekendInfo
 import tmg.flashback.stats.ui.weekend.info.RaceInfoHeader
 import tmg.flashback.ui.components.errors.NotAvailable
@@ -28,6 +27,7 @@ import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextTitle
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.progressbar.ProgressBar
+import tmg.flashback.weekend.contract.model.WeekendInfo
 import kotlin.math.roundToInt
 
 @Composable

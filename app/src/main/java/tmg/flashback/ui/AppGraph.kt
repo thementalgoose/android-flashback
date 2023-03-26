@@ -26,24 +26,21 @@ import tmg.flashback.rss.RSSConfigure
 import tmg.flashback.rss.ui.configure.ConfigureRSSScreenVM
 import tmg.flashback.rss.ui.feed.RSSScreenVM
 import tmg.flashback.stats.Calendar
-import tmg.flashback.stats.Constructor
-import tmg.flashback.stats.ConstructorSeason
 import tmg.flashback.stats.Constructors
 import tmg.flashback.stats.Drivers
-import tmg.flashback.stats.Search
-import tmg.flashback.stats.Weekend
 import tmg.flashback.circuits.ui.CircuitScreenVM
+import tmg.flashback.constructors.contract.Constructor
+import tmg.flashback.constructors.contract.ConstructorSeason
 import tmg.flashback.drivers.contract.Driver
 import tmg.flashback.drivers.contract.DriverSeason
-import tmg.flashback.stats.ui.constructors.overview.ConstructorOverviewScreenVM
-import tmg.flashback.stats.ui.constructors.season.ConstructorSeasonScreenVM
+import tmg.flashback.constructors.ui.overview.ConstructorOverviewScreenVM
+import tmg.flashback.constructors.ui.season.ConstructorSeasonScreenVM
 import tmg.flashback.stats.ui.dashboard.constructors.ConstructorStandingsScreenVM
 import tmg.flashback.stats.ui.dashboard.drivers.DriverStandingsScreenVM
 import tmg.flashback.stats.ui.dashboard.schedule.ScheduleScreenVM
 import tmg.flashback.drivers.ui.overview.DriverOverviewScreenVM
 import tmg.flashback.drivers.ui.season.DriverSeasonScreenVM
-import tmg.flashback.stats.ui.search.SearchScreenVM
-import tmg.flashback.stats.ui.weekend.WeekendInfo
+import tmg.flashback.search.ui.SearchScreenVM
 import tmg.flashback.stats.ui.weekend.WeekendScreenVM
 import tmg.flashback.navigation.Screen
 import tmg.flashback.navigation.asNavigationDestination
@@ -51,6 +48,7 @@ import tmg.flashback.navigation.navIntRequired
 import tmg.flashback.navigation.navString
 import tmg.flashback.navigation.navStringRequired
 import tmg.flashback.navigation.navigate
+import tmg.flashback.search.contract.Search
 import tmg.flashback.ui.settings.About
 import tmg.flashback.ui.settings.Ads
 import tmg.flashback.ui.settings.All
@@ -67,6 +65,8 @@ import tmg.flashback.ui.settings.layout.SettingsLayoutScreenVM
 import tmg.flashback.ui.settings.notifications.SettingsNotificationsResultsScreenVM
 import tmg.flashback.ui.settings.notifications.SettingsNotificationsUpcomingScreenVM
 import tmg.flashback.ui.settings.web.SettingsWebScreenVM
+import tmg.flashback.weekend.contract.Weekend
+import tmg.flashback.weekend.contract.model.WeekendInfo
 import tmg.utilities.extensions.toLocalDate
 
 @Composable

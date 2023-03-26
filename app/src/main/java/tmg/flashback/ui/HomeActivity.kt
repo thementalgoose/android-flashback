@@ -21,13 +21,13 @@ import tmg.flashback.configuration.usecases.ConfigSyncUseCase
 import tmg.flashback.crash_reporting.manager.CrashManager
 import tmg.flashback.maintenance.MaintenanceNavigationComponent
 import tmg.flashback.rss.RSS
-import tmg.flashback.stats.Search
 import tmg.flashback.stats.usecases.ContentSyncUseCase
 import tmg.flashback.style.AppTheme
 import tmg.flashback.ui.base.BaseActivity
 import tmg.flashback.ui.dashboard.DashboardScreen
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
+import tmg.flashback.search.contract.Search
 import tmg.flashback.ui.sync.SyncActivity
 import javax.inject.Inject
 
@@ -44,7 +44,7 @@ class HomeActivity: BaseActivity(), SplashScreen.KeepOnScreenCondition {
     @Inject
     lateinit var crashController: CrashManager
     @Inject
-    lateinit var navigator: tmg.flashback.navigation.Navigator
+    lateinit var navigator: Navigator
     @Inject
     lateinit var maintenanceNavigationComponent: MaintenanceNavigationComponent
 
@@ -97,8 +97,8 @@ class HomeActivity: BaseActivity(), SplashScreen.KeepOnScreenCondition {
 
         // Deep links
         when (intent.extras?.getString("screen")) {
-            "search" -> { navigator.navigate(tmg.flashback.navigation.Screen.Search) }
-            "rss" -> { navigator.navigate(tmg.flashback.navigation.Screen.RSS) }
+            "search" -> { navigator.navigate(Screen.Search) }
+            "rss" -> { navigator.navigate(Screen.RSS) }
             else -> {}
         }
 

@@ -34,7 +34,6 @@ import tmg.flashback.formula1.model.RaceRaceResult
 import tmg.flashback.providers.RaceRaceResultProvider
 import tmg.flashback.stats.R
 import tmg.flashback.ui.components.flag.Flag
-import tmg.flashback.stats.ui.weekend.WeekendInfo
 import tmg.flashback.stats.ui.weekend.fakeWeekendInfo
 import tmg.flashback.stats.ui.weekend.info.RaceInfoHeader
 import tmg.flashback.stats.ui.weekend.shared.Delta
@@ -50,6 +49,7 @@ import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextTitle
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.utils.pluralResource
+import tmg.flashback.weekend.contract.model.WeekendInfo
 import tmg.utilities.extensions.ordinalAbbreviation
 
 private val timeWidth = 80.dp

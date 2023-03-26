@@ -32,6 +32,7 @@ import tmg.flashback.ui.components.analytics.ScreenView
 import tmg.flashback.ui.components.navigation.NavigationBar
 import tmg.flashback.ui.components.navigation.NavigationItem
 import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
+import tmg.flashback.weekend.contract.model.WeekendInfo
 import tmg.utilities.extensions.toEnum
 
 data class WeekendScreenState(

@@ -8,12 +8,13 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import tmg.flashback.constructors.contract.Constructor
+import tmg.flashback.constructors.contract.with
 import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.SeasonConstructorStandingSeason
 import tmg.flashback.formula1.model.SeasonConstructorStandings
 import tmg.flashback.formula1.model.model
 import tmg.flashback.statistics.repo.SeasonRepository
-import tmg.flashback.stats.Constructor
 import tmg.flashback.stats.usecases.FetchSeasonUseCase
 import tmg.flashback.stats.with
 import tmg.flashback.navigation.Navigator
@@ -26,7 +27,7 @@ internal class ConstructorsStandingViewModelTest: BaseTest() {
 
     private val mockSeasonRepository: SeasonRepository = mockk(relaxed = true)
     private val mockFetchSeasonUseCase: FetchSeasonUseCase = mockk(relaxed = true)
-    private val mockNavigator: tmg.flashback.navigation.Navigator = mockk(relaxed = true)
+    private val mockNavigator: Navigator = mockk(relaxed = true)
 
     private lateinit var underTest: ConstructorsStandingViewModel
 
@@ -135,7 +136,7 @@ internal class ConstructorsStandingViewModelTest: BaseTest() {
 
         verify {
             mockNavigator.navigate(
-                tmg.flashback.navigation.Screen.Constructor.with(
+                Screen.Constructor.with(
                 constructorId = model.standings.constructor.id,
                 constructorName = model.standings.constructor.name
             ))

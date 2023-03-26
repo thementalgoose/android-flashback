@@ -13,6 +13,15 @@
     <string name="splash_sync_circuits">Circuits…</string>
 
 
+    <!-- Search -->
+    <string name="search_title">Search</string>
+    <string name="search_category_driver">Drivers</string>
+    <string name="search_category_constructors">Constructors</string>
+    <string name="search_category_races">Races</string>
+    <string name="search_category_circuits">Circuits</string>
+    <string name="search_placeholder">Find any driver, constructor, circuit or race from the history of Formula 1</string>
+
+
     <!-- Navigation -->
     <string name="nav_drivers">Drivers</string>
     <string name="nav_constructors">Constructors</string>
@@ -32,6 +41,11 @@
         <item quantity="one">%s point</item>
         <item quantity="other">%s points</item>
     </plurals>
+
+
+    <!-- Results -->
+    <string name="weekend_race_round">Round %d</string>
+    <string name="weekend_race_round_season" formatted="false">Round %d, %d</string>
 
 
     <!-- Driver overview -->

@@ -18,7 +18,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.formula1.model.*
 import tmg.flashback.providers.DriverConstructorProvider
 import tmg.flashback.stats.R
-import tmg.flashback.stats.ui.weekend.WeekendInfo
 import tmg.flashback.stats.ui.weekend.fakeWeekendInfo
 import tmg.flashback.stats.ui.weekend.info.RaceInfoHeader
 import tmg.flashback.stats.ui.weekend.shared.DriverInfo
@@ -30,6 +29,7 @@ import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextSection
 import tmg.flashback.ui.components.loading.SkeletonViewList
+import tmg.flashback.weekend.contract.model.WeekendInfo
 
 private val lapTimeWidth: Dp = 64.dp
 
