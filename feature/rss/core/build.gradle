@@ -32,6 +32,8 @@ dependencies {
     implementation project(path: ":presentation:strings")
     implementation project(path: ":presentation:navigation")
 
+    implementation project(path: ":feature:rss:contract")
+
     implementation libs.bundles.retrofit
     implementation libs.bundles.okhttp
     implementation libs.tmg.labelledprogressbar
