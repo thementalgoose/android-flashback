@@ -7,10 +7,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import tmg.flashback.BuildConfig
 import tmg.flashback.ads.ads.repository.AdsRepository
 import tmg.flashback.device.managers.BuildConfigManager
-import tmg.flashback.rss.RSSConfigure
 import tmg.flashback.rss.repo.RSSRepository
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
+import tmg.flashback.rss.contract.RSSConfigure
 import tmg.flashback.ui.repository.ThemeRepository
 import tmg.flashback.ui.settings.appearance.AppearanceNavigationComponent
 import javax.inject.Inject
@@ -31,7 +31,7 @@ class SettingsAllViewModel @Inject constructor(
     private val buildConfig: BuildConfigManager,
     private val adsRepository: AdsRepository,
     private val rssRepository: RSSRepository,
-    private val navigator: tmg.flashback.navigation.Navigator,
+    private val navigator: Navigator,
     private val appearanceNavigationComponent: AppearanceNavigationComponent
 ): ViewModel(), SettingsAllViewModelInputs, SettingsAllViewModelOutputs {
 
@@ -55,28 +55,28 @@ class SettingsAllViewModel @Inject constructor(
                 appearanceNavigationComponent.themeDialog()
             }
             Settings.Layout.home.key -> {
-                navigator.navigate(tmg.flashback.navigation.Screen.Settings.Home)
+                navigator.navigate(Screen.Settings.Home)
             }
             Settings.RSS.rss.key -> {
-                navigator.navigate(tmg.flashback.navigation.Screen.Settings.RSSConfigure)
+                navigator.navigate(Screen.Settings.RSSConfigure)
             }
             Settings.Web.inAppBrowser.key -> {
-                navigator.navigate(tmg.flashback.navigation.Screen.Settings.Web)
+                navigator.navigate(Screen.Settings.Web)
             }
             Settings.Notifications.notificationResults.key -> {
-                navigator.navigate(tmg.flashback.navigation.Screen.Settings.NotificationsResults)
+                navigator.navigate(Screen.Settings.NotificationsResults)
             }
             Settings.Notifications.notificationUpcoming.key -> {
-                navigator.navigate(tmg.flashback.navigation.Screen.Settings.NotificationsUpcoming)
+                navigator.navigate(Screen.Settings.NotificationsUpcoming)
             }
             Settings.Ads.ads.key -> {
-                navigator.navigate(tmg.flashback.navigation.Screen.Settings.Ads)
+                navigator.navigate(Screen.Settings.Ads)
             }
             Settings.Other.privacy.key -> {
-                navigator.navigate(tmg.flashback.navigation.Screen.Settings.Privacy)
+                navigator.navigate(Screen.Settings.Privacy)
             }
             Settings.Other.about.key -> {
-                navigator.navigate(tmg.flashback.navigation.Screen.Settings.About)
+                navigator.navigate(Screen.Settings.About)
             }
             else -> if (BuildConfig.DEBUG) {
                 throw UnsupportedOperationException("Preference with key ${pref.key} is not handled")

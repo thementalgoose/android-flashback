@@ -21,8 +21,6 @@ import tmg.flashback.privacypolicy.PrivacyPolicy
 import tmg.flashback.privacypolicy.ui.PrivacyPolicyScreenVM
 import tmg.flashback.releasenotes.ReleaseNotes
 import tmg.flashback.releasenotes.ui.releasenotes.ReleaseScreenVM
-import tmg.flashback.rss.RSS
-import tmg.flashback.rss.RSSConfigure
 import tmg.flashback.rss.ui.configure.ConfigureRSSScreenVM
 import tmg.flashback.rss.ui.feed.RSSScreenVM
 import tmg.flashback.stats.Calendar
@@ -48,6 +46,8 @@ import tmg.flashback.navigation.navIntRequired
 import tmg.flashback.navigation.navString
 import tmg.flashback.navigation.navStringRequired
 import tmg.flashback.navigation.navigate
+import tmg.flashback.rss.contract.RSS
+import tmg.flashback.rss.contract.RSSConfigure
 import tmg.flashback.search.contract.Search
 import tmg.flashback.ui.settings.About
 import tmg.flashback.ui.settings.Ads

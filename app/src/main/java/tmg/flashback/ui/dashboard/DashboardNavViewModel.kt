@@ -18,7 +18,6 @@ import tmg.flashback.crash_reporting.manager.CrashManager
 import tmg.flashback.debug.DebugNavigationComponent
 import tmg.flashback.debug.model.DebugMenuItem
 import tmg.flashback.formula1.constants.Formula1
-import tmg.flashback.rss.RSS
 import tmg.flashback.rss.repo.RSSRepository
 import tmg.flashback.stats.Calendar
 import tmg.flashback.stats.Constructors
@@ -28,6 +27,7 @@ import tmg.flashback.stats.with
 import tmg.flashback.ui.components.navigation.NavigationTimelineItem
 import tmg.flashback.ui.components.navigation.PipeType
 import tmg.flashback.navigation.Screen
+import tmg.flashback.rss.contract.RSS
 import tmg.flashback.search.contract.Search
 import tmg.flashback.ui.settings.All
 import tmg.flashback.usecases.DashboardSyncUseCase

@@ -20,13 +20,13 @@ import tmg.flashback.ads.ads.components.AdvertProvider
 import tmg.flashback.configuration.usecases.ConfigSyncUseCase
 import tmg.flashback.crash_reporting.manager.CrashManager
 import tmg.flashback.maintenance.MaintenanceNavigationComponent
-import tmg.flashback.rss.RSS
 import tmg.flashback.stats.usecases.ContentSyncUseCase
 import tmg.flashback.style.AppTheme
 import tmg.flashback.ui.base.BaseActivity
 import tmg.flashback.ui.dashboard.DashboardScreen
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
+import tmg.flashback.rss.contract.RSS
 import tmg.flashback.search.contract.Search
 import tmg.flashback.ui.sync.SyncActivity
 import javax.inject.Inject
