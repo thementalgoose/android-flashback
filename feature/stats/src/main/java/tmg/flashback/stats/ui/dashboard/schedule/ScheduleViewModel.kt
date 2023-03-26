@@ -21,14 +21,14 @@ import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.statistics.repo.EventsRepository
 import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.stats.StatsNavigationComponent
-import tmg.flashback.stats.Weekend
 import tmg.flashback.stats.repository.HomeRepository
 import tmg.flashback.stats.repository.NotificationRepository
-import tmg.flashback.stats.ui.weekend.WeekendInfo
 import tmg.flashback.stats.usecases.FetchSeasonUseCase
-import tmg.flashback.stats.with
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
+import tmg.flashback.weekend.contract.Weekend
+import tmg.flashback.weekend.contract.model.WeekendInfo
+import tmg.flashback.weekend.contract.with
 import javax.inject.Inject
 import kotlin.collections.List
 import kotlin.collections.any
@@ -61,7 +61,7 @@ class ScheduleViewModel @Inject constructor(
     private val overviewRepository: OverviewRepository,
     private val notificationRepository: NotificationRepository,
     private val homeRepository: HomeRepository,
-    private val navigator: tmg.flashback.navigation.Navigator,
+    private val navigator: Navigator,
     private val statsNavigationComponent: StatsNavigationComponent,
     private val eventsRepository: EventsRepository,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
@@ -149,7 +149,7 @@ class ScheduleViewModel @Inject constructor(
     override fun clickItem(model: ScheduleModel) {
         when (model) {
             is ScheduleModel.List -> navigator.navigate(
-                tmg.flashback.navigation.Screen.Weekend.with(
+                Screen.Weekend.with(
                 WeekendInfo(
                     season = model.model.season,
                     round = model.model.round,

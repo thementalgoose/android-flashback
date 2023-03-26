@@ -20,7 +20,6 @@ dependencies {
     implementation project(path: ':core:ads:ads')
     // Core modules
     implementation project(path: ':core:analytics')
-    implementation project(path: ':core:appshortcuts')
     implementation project(path: ':core:configuration')
     implementation project(path: ':core:crash-reporting')
     implementation project(path: ':core:device')
@@ -31,6 +30,15 @@ dependencies {
     implementation project(path: ':presentation:ui')
     implementation project(path: ":presentation:strings")
     implementation project(path: ":presentation:navigation")
+
+    implementation project(path: ":feature:search:contract")
+    implementation project(path: ":formula1")
+    implementation project(path: ":data:repo")
+
+    implementation project(path: ":feature:drivers:contract")
+    implementation project(path: ":feature:constructors:contract")
+    implementation project(path: ":feature:circuits:contract")
+    implementation project(path: ":feature:weekend:contract")
 
     implementation libs.bundles.retrofit
     implementation libs.bundles.okhttp

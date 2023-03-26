@@ -12,6 +12,7 @@ import tmg.flashback.formula1.model.Race
 import tmg.flashback.formula1.model.RaceInfo
 import tmg.flashback.formula1.model.model
 import tmg.flashback.statistics.repo.RaceRepository
+import tmg.flashback.weekend.contract.model.WeekendInfo
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertListDoesNotMatchItem
 import tmg.testutils.livedata.assertListMatchesItem

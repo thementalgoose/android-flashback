@@ -11,11 +11,12 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import tmg.flashback.constructors.contract.Constructor
+import tmg.flashback.constructors.contract.with
 import tmg.flashback.formula1.constants.Formula1
 import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.model.Race
 import tmg.flashback.statistics.repo.RaceRepository
-import tmg.flashback.stats.Constructor
 import tmg.flashback.stats.with
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
@@ -33,7 +34,7 @@ interface ConstructorViewModelOutputs {
 @HiltViewModel
 class ConstructorViewModel @Inject constructor(
     private val raceRepository: RaceRepository,
-    private val navigator: tmg.flashback.navigation.Navigator,
+    private val navigator: Navigator,
     private val ioDispatcher: CoroutineDispatcher
 ): ViewModel(), ConstructorViewModelInputs, ConstructorViewModelOutputs {
 
@@ -77,7 +78,7 @@ class ConstructorViewModel @Inject constructor(
 
     override fun clickItem(model: ConstructorModel.Constructor) {
         navigator.navigate(
-            tmg.flashback.navigation.Screen.Constructor.with(
+            Screen.Constructor.with(
             constructorId = model.constructor.id,
             constructorName = model.constructor.name
         ))

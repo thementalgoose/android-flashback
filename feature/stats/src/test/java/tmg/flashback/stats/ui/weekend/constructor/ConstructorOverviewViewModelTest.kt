@@ -5,11 +5,11 @@ import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.flow.flow
 import org.junit.jupiter.api.Test
+import tmg.flashback.constructors.contract.Constructor
+import tmg.flashback.constructors.contract.with
 import tmg.flashback.formula1.model.Race
 import tmg.flashback.formula1.model.model
 import tmg.flashback.statistics.repo.RaceRepository
-import tmg.flashback.stats.Constructor
-import tmg.flashback.stats.with
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.testutils.BaseTest
@@ -19,7 +19,7 @@ import java.time.Year
 internal class ConstructorOverviewViewModelTest: BaseTest() {
 
     private val mockRaceRepository: RaceRepository = mockk(relaxed = true)
-    private val mockNavigator: tmg.flashback.navigation.Navigator = mockk(relaxed = true)
+    private val mockNavigator: Navigator = mockk(relaxed = true)
 
     private lateinit var underTest: ConstructorViewModel
 
@@ -83,7 +83,7 @@ internal class ConstructorOverviewViewModelTest: BaseTest() {
 
         verify {
             mockNavigator.navigate(
-                tmg.flashback.navigation.Screen.Constructor.with(
+                Screen.Constructor.with(
                 constructorId = ConstructorModel.Constructor.model().constructor.id,
                 constructorName = ConstructorModel.Constructor.model().constructor.name
             ))

@@ -25,7 +25,6 @@ import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.LapTime
 import tmg.flashback.formula1.model.RaceSprintResult
 import tmg.flashback.stats.R
-import tmg.flashback.stats.ui.weekend.WeekendInfo
 import tmg.flashback.stats.ui.weekend.info.RaceInfoHeader
 import tmg.flashback.stats.ui.weekend.shared.Delta
 import tmg.flashback.stats.ui.weekend.shared.DriverInfo
@@ -34,6 +33,7 @@ import tmg.flashback.ui.components.errors.NotAvailableYet
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.ui.components.loading.SkeletonViewList
+import tmg.flashback.weekend.contract.model.WeekendInfo
 
 private val timeWidth = 80.dp
 private val pointsWidth = 80.dp

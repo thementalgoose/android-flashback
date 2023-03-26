@@ -14,8 +14,9 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import tmg.flashback.constructors.contract.Constructor
+import tmg.flashback.constructors.contract.with
 import tmg.flashback.statistics.repo.SeasonRepository
-import tmg.flashback.stats.Constructor
 import tmg.flashback.stats.usecases.FetchSeasonUseCase
 import tmg.flashback.stats.with
 import tmg.flashback.navigation.Navigator
@@ -38,7 +39,7 @@ interface ConstructorsStandingViewModelOutputs {
 class ConstructorsStandingViewModel @Inject constructor(
     private val seasonRepository: SeasonRepository,
     private val fetchSeasonUseCase: FetchSeasonUseCase,
-    private val navigator: tmg.flashback.navigation.Navigator,
+    private val navigator: Navigator,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), ConstructorsStandingViewModelInputs, ConstructorsStandingViewModelOutputs {
 
@@ -91,7 +92,7 @@ class ConstructorsStandingViewModel @Inject constructor(
 
     override fun clickItem(model: ConstructorStandingsModel.Standings) {
         navigator.navigate(
-            tmg.flashback.navigation.Screen.Constructor.with(
+            Screen.Constructor.with(
             constructorId = model.standings.constructor.id,
             constructorName = model.standings.constructor.name
         ))

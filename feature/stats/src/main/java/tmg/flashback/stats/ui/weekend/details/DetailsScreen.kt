@@ -23,7 +23,6 @@ import tmg.flashback.formula1.model.Race
 import tmg.flashback.formula1.model.Schedule
 import tmg.flashback.providers.RaceProvider
 import tmg.flashback.stats.R
-import tmg.flashback.stats.ui.weekend.WeekendInfo
 import tmg.flashback.stats.ui.weekend.from
 import tmg.flashback.stats.ui.weekend.info.RaceInfoHeader
 import tmg.flashback.style.AppTheme
@@ -32,6 +31,7 @@ import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.buttons.ButtonTertiary
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
+import tmg.flashback.weekend.contract.model.WeekendInfo
 import tmg.utilities.extensions.format
 import tmg.utilities.extensions.ordinalAbbreviation
 

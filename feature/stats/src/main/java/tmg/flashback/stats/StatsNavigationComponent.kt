@@ -8,7 +8,7 @@ import tmg.flashback.stats.ui.events.EventsBottomSheetFragment
 import tmg.flashback.stats.ui.feature.notificationonboarding.NotificationOnboardingBottomSheetFragment
 import tmg.flashback.stats.ui.settings.notifications.reminder.UpNextReminderBottomSheetFragment
 import tmg.flashback.stats.ui.tyres.TyreBottomSheetFragment
-import tmg.flashback.stats.ui.weekend.WeekendInfo
+import tmg.flashback.weekend.contract.model.WeekendInfo
 import javax.inject.Inject
 
 @JvmInline
@@ -42,58 +42,6 @@ fun ScreenConstructors.with(
     route = this@with.route.replace("{season}", season.toString()),
     launchSingleTop = true
 )
-
-@JvmInline
-value class ScreenConstructor(val route: String)
-val Screen.Constructor get() = ScreenConstructor("constructors/{constructorId}?constructorName={constructorName}")
-fun ScreenConstructor.with(
-    constructorId: String,
-    constructorName: String
-) = NavigationDestination(
-    this@with.route
-        .replace("{constructorId}", constructorId)
-        .replace("{constructorName}", constructorName)
-)
-
-@JvmInline
-value class ScreenConstructorSeason(val route: String)
-val Screen.ConstructorSeason get() = ScreenConstructorSeason("constructors/{constructorId}/{season}?constructorName={constructorName}")
-fun ScreenConstructorSeason.with(
-    constructorId: String,
-    constructorName: String,
-    season: Int
-) = NavigationDestination(
-    this@with.route
-        .replace("{constructorId}", constructorId)
-        .replace("{constructorName}", constructorName)
-        .replace("{season}", season.toString())
-)
-
-
-@JvmInline
-value class ScreenWeekend(val route: String)
-val Screen.Weekend get() = ScreenWeekend("weekend/{season}/{round}?" +
-        "raceName={raceName}" + "&" +
-        "circuitId={circuitId}" + "&" +
-        "circuitName={circuitName}" + "&" +
-        "country={country}" + "&" +
-        "countryISO={countryISO}" + "&" +
-        "date={date}"
-)
-fun ScreenWeekend.with(weekendInfo: WeekendInfo) = NavigationDestination(
-    this@with.route
-        .replace("{season}", weekendInfo.season.toString())
-        .replace("{round}", weekendInfo.round.toString())
-        .replace("{raceName}", weekendInfo.raceName)
-        .replace("{circuitId}", weekendInfo.circuitId)
-        .replace("{circuitName}", weekendInfo.circuitName)
-        .replace("{country}", weekendInfo.country)
-        .replace("{countryISO}", weekendInfo.countryISO)
-        .replace("{date}", weekendInfo.dateString)
-)
-
-val Screen.Search: NavigationDestination
-    get() = NavigationDestination("search", launchSingleTop = true)
 
 class StatsNavigationComponent @Inject constructor(
     private val crashManager: CrashManager,

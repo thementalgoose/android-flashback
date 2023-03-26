@@ -21,12 +21,13 @@ import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.statistics.repo.EventsRepository
 import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.stats.StatsNavigationComponent
-import tmg.flashback.stats.Weekend
-import tmg.flashback.stats.ui.weekend.WeekendInfo
 import tmg.flashback.stats.usecases.FetchSeasonUseCase
 import tmg.flashback.stats.with
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
+import tmg.flashback.weekend.contract.Weekend
+import tmg.flashback.weekend.contract.model.WeekendInfo
+import tmg.flashback.weekend.contract.with
 import tmg.utilities.extensions.startOfWeek
 import javax.inject.Inject
 
@@ -47,7 +48,7 @@ interface CalendarViewModelOutputs {
 class CalendarViewModel @Inject constructor(
     private val fetchSeasonUseCase: FetchSeasonUseCase,
     private val overviewRepository: OverviewRepository,
-    private val navigator: tmg.flashback.navigation.Navigator,
+    private val navigator: Navigator,
     private val statsNavigationComponent: StatsNavigationComponent,
     private val eventsRepository: EventsRepository,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
@@ -125,7 +126,7 @@ class CalendarViewModel @Inject constructor(
                     countryISO = race.countryISO,
                     date = race.date,
                 )
-                navigator.navigate(tmg.flashback.navigation.Screen.Weekend.with(weekend))
+                navigator.navigate(Screen.Weekend.with(weekend))
             }
             CalendarModel.Loading -> {}
         }
