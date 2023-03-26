@@ -10,8 +10,8 @@ import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.eastereggs.model.MenuIcons
 import tmg.flashback.eastereggs.usecases.IsMenuIconEnabledUseCase
 import tmg.flashback.eastereggs.usecases.IsSnowEnabledUseCase
-import tmg.flashback.stats.StatsNavigationComponent
-import tmg.flashback.stats.repository.NotificationRepository
+import tmg.flashback.results.ResultsNavigationComponentImpl
+import tmg.flashback.results.repository.NotificationsRepositoryImpl
 import tmg.flashback.ui.managers.PermissionManager
 import tmg.flashback.ui.managers.StyleManager
 import tmg.flashback.ui.model.NightMode
@@ -41,9 +41,9 @@ class DashboardViewModel @Inject constructor(
     private val styleManager: StyleManager,
     private val changeNightModeUseCase: ChangeNightModeUseCase,
     private val buildConfigManager: BuildConfigManager,
-    private val statsNavigationComponent: StatsNavigationComponent,
+    private val statsNavigationComponent: ResultsNavigationComponentImpl,
     private val permissionManager: PermissionManager,
-    private val notificationRepository: NotificationRepository,
+    private val notificationRepository: NotificationsRepositoryImpl,
     private val permissionRepository: PermissionRepository,
     isSnowEnabledUseCase: IsSnowEnabledUseCase,
     isMenuIconEnabledUseCase: IsMenuIconEnabledUseCase

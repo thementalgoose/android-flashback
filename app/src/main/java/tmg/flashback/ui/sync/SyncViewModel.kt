@@ -23,8 +23,8 @@ import tmg.flashback.statistics.repo.ConstructorRepository
 import tmg.flashback.statistics.repo.DriverRepository
 import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.statistics.repo.repository.CacheRepository
-import tmg.flashback.stats.usecases.ScheduleNotificationsUseCase
-import tmg.flashback.stats.usecases.SearchAppShortcutUseCase
+import tmg.flashback.results.usecases.ScheduleNotificationsUseCase
+import tmg.flashback.results.usecases.SearchAppShortcutUseCase
 import tmg.flashback.ui.sync.SyncState.DONE
 import tmg.flashback.ui.sync.SyncState.FAILED
 import tmg.flashback.ui.sync.SyncState.LOADING

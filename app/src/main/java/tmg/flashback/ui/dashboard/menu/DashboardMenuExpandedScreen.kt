@@ -409,7 +409,7 @@ private fun NavigationTimelineItem(
                     .width(AppTheme.dimens.medium)
                     .align(Alignment.CenterStart)
                     .alpha(0.4f),
-                painter = painterResource(id = tmg.flashback.stats.R.drawable.ic_current_indicator),
+                painter = painterResource(id = tmg.flashback.results.R.drawable.ic_current_indicator),
                 contentDescription = null,
                 tint = AppTheme.colors.contentPrimary
             )

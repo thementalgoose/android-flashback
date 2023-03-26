@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import tmg.flashback.stats.StatsNavigationComponent
-import tmg.flashback.stats.repository.NotificationRepository
-import tmg.flashback.stats.usecases.ScheduleNotificationsUseCase
+import tmg.flashback.results.ResultsNavigationComponentImpl
+import tmg.flashback.results.repository.NotificationsRepositoryImpl
+import tmg.flashback.results.usecases.ScheduleNotificationsUseCase
 import tmg.flashback.ui.managers.PermissionManager
 import tmg.flashback.ui.permissions.RationaleType
 import tmg.flashback.ui.repository.PermissionRepository
@@ -29,11 +29,11 @@ interface SettingsNotificationsUpcomingViewModelOutputs {
 
 @HiltViewModel
 class SettingsNotificationsUpcomingViewModel @Inject constructor(
-    private val notificationRepository: NotificationRepository,
+    private val notificationRepository: NotificationsRepositoryImpl,
     private val scheduleNotificationsUseCase: ScheduleNotificationsUseCase,
     private val permissionRepository: PermissionRepository,
     private val permissionManager: PermissionManager,
-    private val statsNavigationComponent: StatsNavigationComponent
+    private val statsNavigationComponent: ResultsNavigationComponentImpl
 ): ViewModel(), SettingsNotificationsUpcomingViewModelInputs, SettingsNotificationsUpcomingViewModelOutputs {
 
     val inputs: SettingsNotificationsUpcomingViewModelInputs = this

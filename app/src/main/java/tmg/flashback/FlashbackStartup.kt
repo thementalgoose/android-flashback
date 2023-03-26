@@ -30,8 +30,8 @@ import tmg.flashback.notifications.managers.SystemNotificationManager
 import tmg.flashback.notifications.usecases.RemoteNotificationSubscribeUseCase
 import tmg.flashback.notifications.usecases.RemoteNotificationUnsubscribeUseCase
 import tmg.flashback.repositories.ContactRepository
-import tmg.flashback.stats.repository.NotificationRepository
-import tmg.flashback.stats.repository.models.NotificationChannel
+import tmg.flashback.results.repository.NotificationsRepositoryImpl
+import tmg.flashback.results.repository.models.NotificationChannel
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.SupportedTheme
 import tmg.flashback.ui.model.NightMode
@@ -54,7 +54,7 @@ class FlashbackStartup @Inject constructor(
     private val contactRepository: ContactRepository,
     private val initialiseCrashReportingUseCase: InitialiseCrashReportingUseCase,
     private val widgetManager: WidgetManager,
-    private val notificationRepository: NotificationRepository,
+    private val notificationRepository: NotificationsRepositoryImpl,
     private val themeRepository: ThemeRepository,
     private val analyticsManager: AnalyticsManager,
     private val initialiseConfigUseCase: InitialiseConfigUseCase,

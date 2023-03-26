@@ -1,6 +1,6 @@
 package tmg.flashback.usecases
 
-import tmg.flashback.stats.repository.HomeRepository
+import tmg.flashback.results.repository.HomeRepository
 import javax.inject.Inject
 import kotlin.math.abs
 

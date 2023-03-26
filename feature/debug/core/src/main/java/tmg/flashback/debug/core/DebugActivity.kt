@@ -36,8 +36,8 @@ import tmg.flashback.statistics.repo.CircuitRepository
 import tmg.flashback.statistics.repo.ConstructorRepository
 import tmg.flashback.statistics.repo.DriverRepository
 import tmg.flashback.statistics.repo.OverviewRepository
-import tmg.flashback.stats.StatsNavigationComponent
-import tmg.flashback.stats.repository.models.NotificationChannel
+import tmg.flashback.results.ResultsNavigationComponentImpl
+import tmg.flashback.results.repository.models.NotificationChannel
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.buttons.ButtonPrimary
 import tmg.flashback.style.buttons.ButtonTertiary
@@ -47,7 +47,6 @@ import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextSection
 import tmg.flashback.ui.base.BaseActivity
 import tmg.flashback.ui.components.header.Header
-import tmg.flashback.navigation.ApplicationNavigationComponent
 import tmg.flashback.ui.repository.PermissionRepository
 import tmg.utilities.extensions.copyToClipboard
 import javax.inject.Inject
@@ -84,7 +83,7 @@ class DebugActivity: BaseActivity() {
     lateinit var applicationNavigationComponent: tmg.flashback.navigation.ApplicationNavigationComponent
 
     @Inject
-    lateinit var statsNavigationComponent: StatsNavigationComponent
+    lateinit var statsNavigationComponent: ResultsNavigationComponentImpl
 
     @Inject
     lateinit var permissionRepository: PermissionRepository

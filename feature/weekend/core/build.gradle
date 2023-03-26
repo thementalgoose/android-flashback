@@ -36,6 +36,11 @@ dependencies {
     implementation project(path: ":formula1")
     implementation project(path: ":feature:weekend:contract")
 
+    implementation project(path: ":feature:constructors:contract")
+    implementation project(path: ":feature:drivers:contract")
+    implementation project(path: ":feature:circuits:contract")
+    implementation project(path: ":feature:results:contract")
+
     implementation libs.bundles.retrofit
     implementation libs.bundles.okhttp
     implementation libs.tmg.labelledprogressbar

@@ -15,8 +15,8 @@ import tmg.flashback.crash_reporting.manager.CrashManager
 import tmg.flashback.maintenance.repository.MaintenanceRepository
 import tmg.flashback.rss.usecases.RssShortcutUseCase
 import tmg.flashback.statistics.repo.repository.CacheRepository
-import tmg.flashback.stats.usecases.ScheduleNotificationsUseCase
-import tmg.flashback.stats.usecases.SearchAppShortcutUseCase
+import tmg.flashback.results.usecases.ScheduleNotificationsUseCase
+import tmg.flashback.results.usecases.SearchAppShortcutUseCase
 import tmg.testutils.BaseTest
 
 internal class HomeViewModelTest: BaseTest() {
