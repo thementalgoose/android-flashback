@@ -20,10 +20,8 @@ dependencies {
     implementation project(path: ':core:ads:ads')
     // Core modules
     implementation project(path: ':core:analytics')
-    implementation project(path: ':core:configuration')
     implementation project(path: ':core:crash-reporting')
     implementation project(path: ':core:device')
-    implementation project(path: ':core:notifications')
     implementation project(path: ':core:preferences')
     implementation project(path: ':core:webbrowser')
 
