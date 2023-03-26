@@ -55,10 +55,6 @@
             <option value="$PROJECT_DIR$/feature/search" />
             <option value="$PROJECT_DIR$/feature/search/contract" />
             <option value="$PROJECT_DIR$/feature/search/core" />
-            <option value="$PROJECT_DIR$/feature/stats" />
-            <option value="$PROJECT_DIR$/feature/upnext" />
-            <option value="$PROJECT_DIR$/feature/upnext/contract" />
-            <option value="$PROJECT_DIR$/feature/upnext/core" />
             <option value="$PROJECT_DIR$/feature/weekend" />
             <option value="$PROJECT_DIR$/feature/weekend/contract" />
             <option value="$PROJECT_DIR$/feature/weekend/core" />

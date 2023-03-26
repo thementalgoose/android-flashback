@@ -13,8 +13,8 @@ import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.eastereggs.model.MenuIcons
 import tmg.flashback.eastereggs.usecases.IsMenuIconEnabledUseCase
 import tmg.flashback.eastereggs.usecases.IsSnowEnabledUseCase
-import tmg.flashback.stats.StatsNavigationComponent
-import tmg.flashback.stats.repository.NotificationRepository
+import tmg.flashback.results.ResultsNavigationComponentImpl
+import tmg.flashback.results.repository.NotificationsRepositoryImpl
 import tmg.flashback.ui.managers.PermissionManager
 import tmg.flashback.ui.managers.StyleManager
 import tmg.flashback.ui.model.NightMode
@@ -32,9 +32,9 @@ internal class DashboardViewModelTest: BaseTest() {
     private val mockStyleManager: StyleManager = mockk(relaxed = true)
     private val mockChangeNightModeUseCase: ChangeNightModeUseCase = mockk(relaxed = true)
     private val mockBuildConfigManager: BuildConfigManager = mockk(relaxed = true)
-    private val mockNotificationRepository: NotificationRepository = mockk(relaxed = true)
+    private val mockNotificationRepository: NotificationsRepositoryImpl = mockk(relaxed = true)
     private val mockPermissionRepository: PermissionRepository = mockk(relaxed = true)
-    private val mockStatsNavigationComponent: StatsNavigationComponent = mockk(relaxed = true)
+    private val mockStatsNavigationComponent: ResultsNavigationComponentImpl = mockk(relaxed = true)
     private val mockPermissionManager: PermissionManager = mockk(relaxed = true)
     private val mockIsSnowEnabledUseCase: IsSnowEnabledUseCase = mockk(relaxed = true)
     private val mockIsMenuIconEnabledUseCase: IsMenuIconEnabledUseCase = mockk(relaxed = true)

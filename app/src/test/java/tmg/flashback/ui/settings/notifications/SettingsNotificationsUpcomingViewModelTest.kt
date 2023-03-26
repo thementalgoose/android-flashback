@@ -5,9 +5,9 @@ import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.CompletableDeferred
 import org.junit.jupiter.api.Test
-import tmg.flashback.stats.StatsNavigationComponent
-import tmg.flashback.stats.repository.NotificationRepository
-import tmg.flashback.stats.usecases.ScheduleNotificationsUseCase
+import tmg.flashback.results.ResultsNavigationComponentImpl
+import tmg.flashback.results.repository.NotificationsRepositoryImpl
+import tmg.flashback.results.usecases.ScheduleNotificationsUseCase
 import tmg.flashback.ui.managers.PermissionManager
 import tmg.flashback.ui.repository.PermissionRepository
 import tmg.flashback.ui.settings.Settings
@@ -17,11 +17,11 @@ import tmg.testutils.livedata.testObserve
 
 internal class SettingsNotificationsUpcomingViewModelTest: BaseTest() {
 
-    private val mockNotificationRepository: NotificationRepository = mockk(relaxed = true)
+    private val mockNotificationRepository: NotificationsRepositoryImpl = mockk(relaxed = true)
     private val mockScheduleNotificationsUseCase: ScheduleNotificationsUseCase = mockk(relaxed = true)
     private val mockPermissionRepository: PermissionRepository = mockk(relaxed = true)
     private val mockPermissionManager: PermissionManager = mockk(relaxed = true)
-    private val mockStatsNavigationComponent: StatsNavigationComponent = mockk(relaxed = true)
+    private val mockStatsNavigationComponent: ResultsNavigationComponentImpl = mockk(relaxed = true)
 
     private lateinit var underTest: SettingsNotificationsUpcomingViewModel
 

@@ -4,7 +4,7 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Test
-import tmg.flashback.stats.repository.HomeRepository
+import tmg.flashback.results.repository.HomeRepository
 import tmg.flashback.ui.settings.Settings
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.test

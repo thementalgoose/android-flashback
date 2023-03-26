@@ -19,11 +19,11 @@ import tmg.flashback.debug.DebugNavigationComponent
 import tmg.flashback.debug.model.DebugMenuItem
 import tmg.flashback.formula1.constants.Formula1
 import tmg.flashback.rss.repo.RSSRepository
-import tmg.flashback.stats.Calendar
-import tmg.flashback.stats.Constructors
-import tmg.flashback.stats.Drivers
-import tmg.flashback.stats.usecases.DefaultSeasonUseCase
-import tmg.flashback.stats.with
+import tmg.flashback.results.Calendar
+import tmg.flashback.results.Constructors
+import tmg.flashback.results.Drivers
+import tmg.flashback.results.usecases.DefaultSeasonUseCase
+import tmg.flashback.results.with
 import tmg.flashback.ui.components.navigation.NavigationTimelineItem
 import tmg.flashback.ui.components.navigation.PipeType
 import tmg.flashback.navigation.Screen

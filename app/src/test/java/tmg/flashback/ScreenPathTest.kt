@@ -8,15 +8,15 @@ import tmg.flashback.drivers.contract.Driver
 import tmg.flashback.drivers.contract.DriverSeason
 import tmg.flashback.drivers.contract.with
 import tmg.flashback.navigation.Screen
-import tmg.flashback.stats.Calendar
-import tmg.flashback.stats.Constructor
-import tmg.flashback.stats.ConstructorSeason
-import tmg.flashback.stats.Constructors
-import tmg.flashback.stats.Drivers
-import tmg.flashback.stats.Search
-import tmg.flashback.stats.Weekend
-import tmg.flashback.stats.ui.weekend.WeekendInfo
-import tmg.flashback.stats.with
+import tmg.flashback.results.Calendar
+import tmg.flashback.results.Constructor
+import tmg.flashback.results.ConstructorSeason
+import tmg.flashback.results.Constructors
+import tmg.flashback.results.Drivers
+import tmg.flashback.results.Search
+import tmg.flashback.results.Weekend
+import tmg.flashback.results.ui.weekend.WeekendInfo
+import tmg.flashback.results.with
 
 class ScreenPathTest {
 

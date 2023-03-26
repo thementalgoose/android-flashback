@@ -111,7 +111,6 @@ tasks.whenTaskAdded { task ->
 dependencies {
 
     // Feature modules
-    implementation project(path: ":feature:stats")
     implementation project(path: ":feature:rss:core")
     implementation project(path: ":feature:rss:contract")
     implementation project(path: ':feature:maintenance')
@@ -128,8 +127,6 @@ dependencies {
     implementation project(path: ":feature:results:core")
     implementation project(path: ":feature:search:contract")
     implementation project(path: ":feature:search:core")
-    implementation project(path: ":feature:upnext:contract")
-    implementation project(path: ":feature:upnext:core")
     implementation project(path: ":feature:weekend:contract")
     implementation project(path: ":feature:weekend:core")
     implementation project(path: ":feature:debug:contract")

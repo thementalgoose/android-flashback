@@ -12,8 +12,8 @@ import tmg.flashback.configuration.usecases.ApplyConfigUseCase
 import tmg.flashback.configuration.usecases.FetchConfigUseCase
 import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.statistics.repo.RaceRepository
-import tmg.flashback.stats.usecases.DefaultSeasonUseCase
-import tmg.flashback.stats.usecases.ScheduleNotificationsUseCase
+import tmg.flashback.results.usecases.DefaultSeasonUseCase
+import tmg.flashback.results.usecases.ScheduleNotificationsUseCase
 import tmg.flashback.widgets.usecases.UpdateWidgetsUseCase
 
 internal class DashboardSyncUseCaseTest {

@@ -11,17 +11,16 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.drivers.R
+import tmg.flashback.drivers.contract.DriverNavigationComponent
 import tmg.flashback.drivers.contract.DriverSeason
 import tmg.flashback.drivers.contract.model.DriverStatHistoryType
 import tmg.flashback.drivers.contract.with
-import tmg.flashback.drivers.ui.stathistory.DriverStatHistoryType
 import tmg.flashback.formula1.model.DriverHistory
 import tmg.flashback.formula1.model.DriverHistorySeason
 import tmg.flashback.formula1.model.model
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.flashback.statistics.repo.DriverRepository
-import tmg.flashback.stats.StatsNavigationComponent
 import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertListMatchesItem
@@ -32,7 +31,7 @@ internal class DriverOverviewViewModelTest: BaseTest() {
     private val mockDriverRepository: DriverRepository = mockk(relaxed = true)
     private val mockNetworkConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
     private val mockNavigator: Navigator = mockk(relaxed = true)
-    private val mockDriverNavigationComponent = mockk(relaxed = true)
+    private val mockDriverNavigationComponent: DriverNavigationComponent = mockk(relaxed = true)
     private val mockOpenWebpageUseCase: OpenWebpageUseCase = mockk(relaxed = true)
 
     private lateinit var sut: DriverOverviewViewModel
@@ -135,7 +134,7 @@ internal class DriverOverviewViewModelTest: BaseTest() {
             assertListMatchesItem { it is DriverOverviewModel.RacedFor && it.season == 2019 }
             assertListMatchesItem { it is DriverOverviewModel.RacedFor && it.season == 2020 }
 
-            assertListMatchesItem { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_menu_drivers }
+            assertListMatchesItem { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_driver }
             assertListMatchesItem { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_standings }
             assertListMatchesItem { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_podium }
             assertListMatchesItem { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_race_starts }
@@ -177,13 +176,13 @@ internal class DriverOverviewViewModelTest: BaseTest() {
         }
 
         sut.outputs.list.test {
-            assertValueAt(listOf(
+            assertValue(listOf(
                 DriverOverviewModel.Loading
-            ), 0)
+            ), atIndex = 0)
 
             assertListMatchesItem(atIndex = 1) { it is DriverOverviewModel.RacedFor && it.season == 2020 }
 
-            assertListMatchesItem(atIndex = 1) { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_menu_drivers }
+            assertListMatchesItem(atIndex = 1) { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_driver }
             assertListMatchesItem(atIndex = 1) { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_standings }
             assertListMatchesItem(atIndex = 1) { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_podium }
             assertListMatchesItem(atIndex = 1) { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_race_starts }

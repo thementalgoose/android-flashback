@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import tmg.flashback.stats.repository.NotificationRepository
-import tmg.flashback.stats.usecases.ResubscribeNotificationsUseCase
+import tmg.flashback.results.repository.NotificationsRepositoryImpl
+import tmg.flashback.results.usecases.ResubscribeNotificationsUseCase
 import tmg.flashback.ui.managers.PermissionManager
 import tmg.flashback.ui.permissions.RationaleType
 import tmg.flashback.ui.repository.PermissionRepository
@@ -28,7 +28,7 @@ interface SettingsNotificationsResultsViewModelOutputs {
 
 @HiltViewModel
 class SettingsNotificationsResultsViewModel @Inject constructor(
-    private val notificationRepository: NotificationRepository,
+    private val notificationRepository: NotificationsRepositoryImpl,
     private val resubscribeNotificationsUseCase: ResubscribeNotificationsUseCase,
     private val permissionRepository: PermissionRepository,
     private val permissionManager: PermissionManager,
