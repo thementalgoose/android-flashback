@@ -5,7 +5,7 @@ import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.CompletableDeferred
 import org.junit.jupiter.api.Test
-import tmg.flashback.results.ResultsNavigationComponentImpl
+import tmg.flashback.results.contract.ResultsNavigationComponent
 import tmg.flashback.results.repository.NotificationsRepositoryImpl
 import tmg.flashback.results.usecases.ScheduleNotificationsUseCase
 import tmg.flashback.ui.managers.PermissionManager
@@ -21,7 +21,7 @@ internal class SettingsNotificationsUpcomingViewModelTest: BaseTest() {
     private val mockScheduleNotificationsUseCase: ScheduleNotificationsUseCase = mockk(relaxed = true)
     private val mockPermissionRepository: PermissionRepository = mockk(relaxed = true)
     private val mockPermissionManager: PermissionManager = mockk(relaxed = true)
-    private val mockStatsNavigationComponent: ResultsNavigationComponentImpl = mockk(relaxed = true)
+    private val mockResultsNavigationComponent: ResultsNavigationComponent = mockk(relaxed = true)
 
     private lateinit var underTest: SettingsNotificationsUpcomingViewModel
 
@@ -31,7 +31,7 @@ internal class SettingsNotificationsUpcomingViewModelTest: BaseTest() {
             scheduleNotificationsUseCase = mockScheduleNotificationsUseCase,
             permissionRepository = mockPermissionRepository,
             permissionManager = mockPermissionManager,
-            resultsNavigationComponent = mockStatsNavigationComponent,
+            resultsNavigationComponent = mockResultsNavigationComponent,
         )
     }
 
@@ -256,7 +256,7 @@ internal class SettingsNotificationsUpcomingViewModelTest: BaseTest() {
         underTest.inputs.prefClicked(Settings.Notifications.notificationNoticePeriod())
 
         verify {
-            mockStatsNavigationComponent.upNext()
+            mockResultsNavigationComponent.upNext()
         }
     }
 }

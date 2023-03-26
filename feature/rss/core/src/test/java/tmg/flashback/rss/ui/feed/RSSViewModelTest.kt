@@ -11,7 +11,6 @@ import org.threeten.bp.LocalDateTime
 import tmg.flashback.ads.ads.repository.AdsRepository
 import tmg.flashback.ads.ads.repository.model.AdvertConfig
 import tmg.flashback.device.managers.NetworkConnectivityManager
-import tmg.flashback.rss.RSSConfigure
 import tmg.flashback.rss.repo.RSSRepository
 import tmg.flashback.rss.repo.RssAPI
 import tmg.flashback.rss.repo.model.Article
@@ -19,6 +18,7 @@ import tmg.flashback.rss.repo.model.ArticleSource
 import tmg.flashback.rss.repo.model.Response
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
+import tmg.flashback.rss.contract.RSSConfigure
 import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertListContainsItem
@@ -34,7 +34,7 @@ internal class RSSViewModelTest: BaseTest() {
     private val mockRSSDB: RssAPI = mockk(relaxed = true)
     private val mockRssRepository: RSSRepository = mockk(relaxed = true)
     private val mockAdsRepository: AdsRepository = mockk(relaxed = true)
-    private val mockNavigator: tmg.flashback.navigation.Navigator = mockk(relaxed = true)
+    private val mockNavigator: Navigator = mockk(relaxed = true)
     private val mockOpenWebpageUseCase: OpenWebpageUseCase = mockk(relaxed = true)
     private val mockConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
 
@@ -215,7 +215,7 @@ internal class RSSViewModelTest: BaseTest() {
         underTest.inputs.configure()
 
         verify {
-            mockNavigator.navigate(tmg.flashback.navigation.Screen.Settings.RSSConfigure)
+            mockNavigator.navigate(Screen.Settings.RSSConfigure)
         }
     }
 

@@ -23,6 +23,7 @@ import tmg.flashback.results.usecases.FetchSeasonUseCase
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.flashback.results.contract.ResultsNavigationComponent
+import tmg.flashback.results.model.from
 import tmg.flashback.weekend.contract.Weekend
 import tmg.flashback.weekend.contract.model.WeekendInfo
 import tmg.flashback.weekend.contract.with
@@ -304,17 +305,4 @@ internal class ScheduleViewModelTest: BaseTest() {
         race = true,
         other = true,
     )
-
-    fun WeekendInfo.Companion.from(raceInfo: RaceInfo): WeekendInfo {
-        return WeekendInfo(
-            season = raceInfo.season,
-            round = raceInfo.round,
-            raceName = raceInfo.name,
-            circuitId = raceInfo.circuit.id,
-            circuitName = raceInfo.circuit.name,
-            country = raceInfo.circuit.country,
-            countryISO = raceInfo.circuit.countryISO,
-            date = raceInfo.date,
-        )
-    }
 }

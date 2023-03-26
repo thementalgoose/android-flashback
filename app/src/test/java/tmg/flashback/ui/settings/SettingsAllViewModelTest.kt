@@ -8,11 +8,11 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import tmg.flashback.ads.ads.repository.AdsRepository
 import tmg.flashback.device.managers.BuildConfigManager
-import tmg.flashback.rss.RSSConfigure
 import tmg.flashback.rss.repo.RSSRepository
 import tmg.flashback.navigation.NavigationDestination
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
+import tmg.flashback.rss.contract.RSSConfigure
 import tmg.flashback.ui.repository.ThemeRepository
 import tmg.flashback.ui.settings.appearance.AppearanceNavigationComponent
 import tmg.testutils.BaseTest
@@ -24,7 +24,7 @@ internal class SettingsAllViewModelTest: BaseTest() {
     private val mockBuildConfigManager: BuildConfigManager = mockk(relaxed = true)
     private val mockAdsRepository: AdsRepository = mockk(relaxed = true)
     private val mockRSSRepository: RSSRepository = mockk(relaxed = true)
-    private val mockNavigator: tmg.flashback.navigation.Navigator = mockk(relaxed = true)
+    private val mockNavigator: Navigator = mockk(relaxed = true)
     private val mockAppearanceNavigationComponent: AppearanceNavigationComponent = mockk(relaxed = true)
 
     private lateinit var underTest: SettingsAllViewModel
@@ -138,11 +138,11 @@ internal class SettingsAllViewModelTest: BaseTest() {
         initUnderTest()
         underTest.inputs.itemClicked(Settings.Layout.home)
 
-        val slot = slot<tmg.flashback.navigation.NavigationDestination>()
+        val slot = slot<NavigationDestination>()
         verify {
             mockNavigator.navigate(capture(slot))
         }
-        assertEquals(tmg.flashback.navigation.Screen.Settings.Home.route, slot.captured.route)
+        assertEquals(Screen.Settings.Home.route, slot.captured.route)
     }
 
     @Test
@@ -150,11 +150,11 @@ internal class SettingsAllViewModelTest: BaseTest() {
         initUnderTest()
         underTest.inputs.itemClicked(Settings.RSS.rss)
 
-        val slot = slot<tmg.flashback.navigation.NavigationDestination>()
+        val slot = slot<NavigationDestination>()
         verify {
             mockNavigator.navigate(capture(slot))
         }
-        assertEquals(tmg.flashback.navigation.Screen.Settings.RSSConfigure.route, slot.captured.route)
+        assertEquals(Screen.Settings.RSSConfigure.route, slot.captured.route)
     }
 
     @Test
@@ -162,11 +162,11 @@ internal class SettingsAllViewModelTest: BaseTest() {
         initUnderTest()
         underTest.inputs.itemClicked(Settings.Web.inAppBrowser)
 
-        val slot = slot<tmg.flashback.navigation.NavigationDestination>()
+        val slot = slot<NavigationDestination>()
         verify {
             mockNavigator.navigate(capture(slot))
         }
-        assertEquals(tmg.flashback.navigation.Screen.Settings.Web.route, slot.captured.route)
+        assertEquals(Screen.Settings.Web.route, slot.captured.route)
     }
 
     @Test
@@ -174,11 +174,11 @@ internal class SettingsAllViewModelTest: BaseTest() {
         initUnderTest()
         underTest.inputs.itemClicked(Settings.Notifications.notificationUpcoming)
 
-        val slot = slot<tmg.flashback.navigation.NavigationDestination>()
+        val slot = slot<NavigationDestination>()
         verify {
             mockNavigator.navigate(capture(slot))
         }
-        assertEquals(tmg.flashback.navigation.Screen.Settings.NotificationsUpcoming.route, slot.captured.route)
+        assertEquals(Screen.Settings.NotificationsUpcoming.route, slot.captured.route)
     }
 
     @Test
@@ -186,11 +186,11 @@ internal class SettingsAllViewModelTest: BaseTest() {
         initUnderTest()
         underTest.inputs.itemClicked(Settings.Notifications.notificationResults)
 
-        val slot = slot<tmg.flashback.navigation.NavigationDestination>()
+        val slot = slot<NavigationDestination>()
         verify {
             mockNavigator.navigate(capture(slot))
         }
-        assertEquals(tmg.flashback.navigation.Screen.Settings.NotificationsResults.route, slot.captured.route)
+        assertEquals(Screen.Settings.NotificationsResults.route, slot.captured.route)
     }
 
     @Test
@@ -198,11 +198,11 @@ internal class SettingsAllViewModelTest: BaseTest() {
         initUnderTest()
         underTest.inputs.itemClicked(Settings.Ads.ads)
 
-        val slot = slot<tmg.flashback.navigation.NavigationDestination>()
+        val slot = slot<NavigationDestination>()
         verify {
             mockNavigator.navigate(capture(slot))
         }
-        assertEquals(tmg.flashback.navigation.Screen.Settings.Ads.route, slot.captured.route)
+        assertEquals(Screen.Settings.Ads.route, slot.captured.route)
     }
 
     @Test
@@ -210,11 +210,11 @@ internal class SettingsAllViewModelTest: BaseTest() {
         initUnderTest()
         underTest.inputs.itemClicked(Settings.Other.privacy)
 
-        val slot = slot<tmg.flashback.navigation.NavigationDestination>()
+        val slot = slot<NavigationDestination>()
         verify {
             mockNavigator.navigate(capture(slot))
         }
-        assertEquals(tmg.flashback.navigation.Screen.Settings.Privacy.route, slot.captured.route)
+        assertEquals(Screen.Settings.Privacy.route, slot.captured.route)
     }
 
     @Test
@@ -222,10 +222,10 @@ internal class SettingsAllViewModelTest: BaseTest() {
         initUnderTest()
         underTest.inputs.itemClicked(Settings.Other.about)
 
-        val slot = slot<tmg.flashback.navigation.NavigationDestination>()
+        val slot = slot<NavigationDestination>()
         verify {
             mockNavigator.navigate(capture(slot))
         }
-        assertEquals(tmg.flashback.navigation.Screen.Settings.About.route, slot.captured.route)
+        assertEquals(Screen.Settings.About.route, slot.captured.route)
     }
 }
