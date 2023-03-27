@@ -7,11 +7,11 @@ import tmg.flashback.navigation.NavigationDestination
 import tmg.flashback.navigation.Screen
 import javax.inject.Inject
 
-val tmg.flashback.navigation.Screen.ReleaseNotes: tmg.flashback.navigation.NavigationDestination
-    get() = tmg.flashback.navigation.NavigationDestination("release_notes")
+val Screen.ReleaseNotes: NavigationDestination
+    get() = NavigationDestination("release_notes")
 
 class ReleaseNotesNavigationComponent @Inject constructor(
-    private val activityProvider: tmg.flashback.navigation.ActivityProvider
+    private val activityProvider: ActivityProvider
 ) {
     fun releaseNotesNext() {
         activityProvider.launch {
