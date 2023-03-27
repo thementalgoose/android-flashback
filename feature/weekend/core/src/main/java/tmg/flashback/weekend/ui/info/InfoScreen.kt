@@ -34,19 +34,24 @@ fun RaceInfoHeader(
     model: WeekendInfo,
     modifier: Modifier = Modifier,
     actionUpClicked: () -> Unit = { },
+    icons: @Composable RowScope.() -> Unit = { },
     largeTrack: Boolean = false,
 ) {
     Column(modifier = modifier.padding(
         bottom = AppTheme.dimens.small
     )) {
-        IconButton(
-            onClick = actionUpClicked
-        ) {
-            Icon(
-                painter = painterResource(id = R.drawable.ic_back),
-                contentDescription = stringResource(id = R.string.ab_back),
-                tint = AppTheme.colors.contentPrimary
-            )
+        Row {
+            IconButton(
+                onClick = actionUpClicked
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_back),
+                    contentDescription = stringResource(id = R.string.ab_back),
+                    tint = AppTheme.colors.contentPrimary
+                )
+            }
+            Spacer(Modifier.weight(1f))
+            icons()
         }
         Column(modifier = Modifier.padding(
             horizontal = AppTheme.dimens.medium
