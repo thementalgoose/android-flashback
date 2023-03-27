@@ -10,10 +10,9 @@ import tmg.flashback.configuration.repository.ConfigRepository
 import tmg.flashback.configuration.usecases.ApplyConfigUseCase
 import tmg.flashback.crash_reporting.manager.CrashManager
 import tmg.flashback.maintenance.repository.MaintenanceRepository
-import tmg.flashback.statistics.repo.repository.CacheRepository
 import tmg.flashback.results.usecases.ScheduleNotificationsUseCase
-import tmg.flashback.rss.contract.usecases.RSSAppShortcutUseCase
-import tmg.flashback.search.contract.usecases.SearchAppShortcutUseCase
+import tmg.flashback.statistics.repo.repository.CacheRepository
+import tmg.flashback.usecases.SetupAppShortcutUseCase
 import javax.inject.Inject
 
 //region Inputs
@@ -39,11 +38,10 @@ interface HomeViewModelOutputs {
 class HomeViewModel @Inject constructor(
     private val configRepository: ConfigRepository,
     private val applyConfigUseCase: ApplyConfigUseCase,
-    private val rssShortcutUseCase: RSSAppShortcutUseCase,
     private val crashManager: CrashManager,
     private val maintenanceRepository: MaintenanceRepository,
     private val cacheRepository: CacheRepository,
-    private val searchAppShortcutUseCase: SearchAppShortcutUseCase,
+    private val setupAppShortcutUseCase: SetupAppShortcutUseCase,
     private val scheduleNotificationsUseCase: ScheduleNotificationsUseCase
 ): ViewModel(), HomeViewModelInputs, HomeViewModelOutputs {
 
@@ -79,13 +77,7 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun performConfigUpdates() {
-
-        // Shortcuts for RSS
-        rssShortcutUseCase.setup()
-
-        // Shortcuts for Search
-        searchAppShortcutUseCase.setup()
-
+        setupAppShortcutUseCase.setup()
         // Schedule notifications
         scheduleNotificationsUseCase.schedule()
     }
