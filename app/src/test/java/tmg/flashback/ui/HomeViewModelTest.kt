@@ -13,15 +13,15 @@ import tmg.flashback.configuration.repository.ConfigRepository
 import tmg.flashback.configuration.usecases.ApplyConfigUseCase
 import tmg.flashback.crash_reporting.manager.CrashManager
 import tmg.flashback.maintenance.repository.MaintenanceRepository
-import tmg.flashback.rss.usecases.RssShortcutUseCase
 import tmg.flashback.statistics.repo.repository.CacheRepository
 import tmg.flashback.results.usecases.ScheduleNotificationsUseCase
-import tmg.flashback.results.usecases.SearchAppShortcutUseCase
+import tmg.flashback.rss.contract.usecases.RSSAppShortcutUseCase
+import tmg.flashback.search.contract.usecases.SearchAppShortcutUseCase
 import tmg.testutils.BaseTest
 
 internal class HomeViewModelTest: BaseTest() {
 
-    private var mockRssShortcutUseCase: RssShortcutUseCase = mockk(relaxed = true)
+    private var mockRssShortcutUseCase: RSSAppShortcutUseCase = mockk(relaxed = true)
     private var mockConfigRepository: ConfigRepository = mockk(relaxed = true)
     private var mockApplyConfigUseCase: ApplyConfigUseCase = mockk(relaxed = true)
     private var mockCrashController: CrashManager = mockk(relaxed = true)

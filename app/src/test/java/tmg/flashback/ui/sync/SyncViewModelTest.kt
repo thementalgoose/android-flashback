@@ -11,14 +11,14 @@ import tmg.flashback.configuration.repository.ConfigRepository
 import tmg.flashback.configuration.usecases.FetchConfigUseCase
 import tmg.flashback.configuration.usecases.ResetConfigUseCase
 import tmg.flashback.maintenance.repository.MaintenanceRepository
-import tmg.flashback.rss.usecases.RssShortcutUseCase
 import tmg.flashback.statistics.repo.CircuitRepository
 import tmg.flashback.statistics.repo.ConstructorRepository
 import tmg.flashback.statistics.repo.DriverRepository
 import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.statistics.repo.repository.CacheRepository
 import tmg.flashback.results.usecases.ScheduleNotificationsUseCase
-import tmg.flashback.results.usecases.SearchAppShortcutUseCase
+import tmg.flashback.rss.contract.usecases.RSSAppShortcutUseCase
+import tmg.flashback.search.contract.usecases.SearchAppShortcutUseCase
 import tmg.flashback.ui.sync.SyncNavTarget.DASHBOARD
 import tmg.flashback.ui.sync.SyncNavTarget.FORCE_UPGRADE
 import tmg.testutils.BaseTest
@@ -28,7 +28,7 @@ import tmg.testutils.livedata.test
 
 internal class SyncViewModelTest: BaseTest() {
 
-    private var mockRssShortcutUseCase: RssShortcutUseCase = mockk(relaxed = true)
+    private var mockRssShortcutUseCase: RSSAppShortcutUseCase = mockk(relaxed = true)
     private var mockCircuitRepository: CircuitRepository = mockk(relaxed = true)
     private var mockConstructorRepository: ConstructorRepository = mockk(relaxed = true)
     private var mockDriverRepository: DriverRepository = mockk(relaxed = true)

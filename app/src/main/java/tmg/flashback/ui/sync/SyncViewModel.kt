@@ -17,14 +17,14 @@ import tmg.flashback.configuration.repository.ConfigRepository
 import tmg.flashback.configuration.usecases.FetchConfigUseCase
 import tmg.flashback.configuration.usecases.ResetConfigUseCase
 import tmg.flashback.maintenance.repository.MaintenanceRepository
-import tmg.flashback.rss.usecases.RssShortcutUseCase
 import tmg.flashback.statistics.repo.CircuitRepository
 import tmg.flashback.statistics.repo.ConstructorRepository
 import tmg.flashback.statistics.repo.DriverRepository
 import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.statistics.repo.repository.CacheRepository
 import tmg.flashback.results.usecases.ScheduleNotificationsUseCase
-import tmg.flashback.results.usecases.SearchAppShortcutUseCase
+import tmg.flashback.rss.contract.usecases.RSSAppShortcutUseCase
+import tmg.flashback.search.contract.usecases.SearchAppShortcutUseCase
 import tmg.flashback.ui.sync.SyncState.DONE
 import tmg.flashback.ui.sync.SyncState.FAILED
 import tmg.flashback.ui.sync.SyncState.LOADING
@@ -59,7 +59,7 @@ interface SyncViewModelOutputs {
 
 @HiltViewModel
 class SyncViewModel @Inject constructor(
-    private val rssShortcutUseCase: RssShortcutUseCase,
+    private val rssShortcutUseCase: RSSAppShortcutUseCase,
     private val circuitRepository: CircuitRepository,
     private val constructorRepository: ConstructorRepository,
     private val driverRepository: DriverRepository,
