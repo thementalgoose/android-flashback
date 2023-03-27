@@ -33,6 +33,7 @@ import tmg.flashback.ui.components.errors.NotAvailable
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
+import tmg.flashback.style.buttons.ButtonSecondary
 import tmg.flashback.style.buttons.ButtonTertiary
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
@@ -228,18 +229,18 @@ private fun Stats(
             .padding(horizontal = AppTheme.dimens.medium)
         ) {
             model.wikipedia?.let { wiki ->
-                ButtonTertiary(
+                ButtonSecondary(
                     text = stringResource(id = R.string.details_link_wikipedia),
                     onClick = { linkClicked(wiki) },
-                    icon = R.drawable.ic_details_wikipedia
+//                    icon = R.drawable.ic_details_wikipedia
                 )
                 Spacer(Modifier.width(AppTheme.dimens.medium))
             }
             model.location?.let { location ->
-                ButtonTertiary(
+                ButtonSecondary(
                     text = stringResource(id = R.string.details_link_map),
                     onClick = { linkClicked("geo:0,0?q=${location.lat},${location.lng} (${model.name})") },
-                    icon = R.drawable.ic_details_maps
+//                    icon = R.drawable.ic_details_maps
                 )
                 Spacer(Modifier.width(AppTheme.dimens.medium))
             }

@@ -35,6 +35,8 @@ import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextCaption
 import tmg.flashback.drivers.R
+import tmg.flashback.style.buttons.ButtonSecondary
+import tmg.flashback.style.buttons.ButtonTertiary
 import tmg.flashback.ui.components.analytics.ScreenView
 import tmg.flashback.ui.components.drivers.DriverImage
 import tmg.flashback.ui.components.errors.NetworkError
@@ -446,12 +448,12 @@ private fun Header(
             )
         }
 //        if (model.driver.wikiUrl?.isNotEmpty() == true) {
-//            ButtonTertiary(
+//            ButtonSecondary(
 //                text = stringResource(id = R.string.details_link_wikipedia),
 //                onClick = { linkClicked(model.driver.wikiUrl!!) },
-//                icon = R.drawable.ic_details_wikipedia
+////                icon = R.drawable.ic_details_wikipedia
 //            )
-//            Spacer(Modifier.height(AppTheme.dimensions.paddingXSmall))
+//            Spacer(Modifier.height(AppTheme.dimens.xsmall))
 //        }
     }
 }

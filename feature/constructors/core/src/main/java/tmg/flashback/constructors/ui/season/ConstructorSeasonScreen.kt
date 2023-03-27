@@ -40,6 +40,7 @@ import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
+import tmg.flashback.style.buttons.ButtonSecondary
 import tmg.flashback.style.buttons.ButtonTertiary
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
@@ -171,10 +172,10 @@ private fun HeaderTop(
 
         Row(modifier = Modifier.height(IntrinsicSize.Min)) {
             model.constructorWikiUrl?.let { wiki ->
-                ButtonTertiary(
+                ButtonSecondary(
                     text = stringResource(id = R.string.details_link_wikipedia),
                     onClick = { wikipediaClicked(wiki) },
-                    icon = R.drawable.ic_details_wikipedia
+//                    icon = R.drawable.ic_details_wikipedia
                 )
             }
             if (model.constructorPhotoUrl != null) {

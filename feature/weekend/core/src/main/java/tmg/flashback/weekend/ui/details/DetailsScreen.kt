@@ -1,9 +1,11 @@
 package tmg.flashback.weekend.ui.details
 
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.runtime.Composable
@@ -22,6 +24,8 @@ import tmg.flashback.providers.RaceProvider
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
+import tmg.flashback.style.buttons.ButtonSecondary
+import tmg.flashback.style.buttons.ButtonTertiary
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.weekend.R
@@ -32,11 +36,12 @@ import tmg.utilities.extensions.ordinalAbbreviation
 
 internal fun LazyListScope.details(
     items: List<DetailsModel>,
+    linkClicked: (DetailsModel.Link) -> Unit
 ) {
     items(items, key = { it.id }) {
         when (it) {
             is DetailsModel.Links -> {
-//                Link(it, linkClicked)
+                Links(it, linkClicked)
             }
             is DetailsModel.Label -> {
                 Label(it)
@@ -55,7 +60,6 @@ internal fun LazyListScope.details(
 private fun CornerLink(
     model: DetailsModel.Links,
     linkClicked: (DetailsModel.Link) -> Unit,
-    modifier: Modifier = Modifier
 ) {
     model.links.forEach { link ->
         IconButton(onClick = { linkClicked(link) }) {
@@ -66,22 +70,27 @@ private fun CornerLink(
             )
         }
     }
-//    IconButton(onClick = {  }) {
-//
-//    }
-//    Row(modifier = modifier
-//        .horizontalScroll(rememberScrollState())
-//        .padding(horizontal = AppTheme.dimens.medium)
-//    ) {
-//        model.links.forEach { link ->
-//            ButtonTertiary(
-//                text = stringResource(id = link.label),
-//                onClick = { linkClicked(link) },
+}
+
+@Composable
+private fun Links(
+    model: DetailsModel.Links,
+    linkClicked: (DetailsModel.Link) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Row(modifier = modifier
+        .horizontalScroll(rememberScrollState())
+        .padding(horizontal = AppTheme.dimens.medium)
+    ) {
+        model.links.forEach { link ->
+            ButtonSecondary(
+                text = stringResource(id = link.label),
+                onClick = { linkClicked(link) },
 //                icon = link.icon
-//            )
-//            Spacer(Modifier.width(AppTheme.dimens.medium))
-//        }
-//    }
+            )
+            Spacer(Modifier.width(AppTheme.dimens.medium))
+        }
+    }
 }
 
 @Composable
@@ -191,34 +200,37 @@ private fun Preview(
 ) {
     AppThemePreview {
         LazyColumn(content = {
-            details(listOf(
-                DetailsModel.Links(listOf(
-                    DetailsModel.Link(
-                        label = R.string.details_link_youtube,
-                        icon = R.drawable.ic_details_youtube,
-                        url = "https://www.youtube.com"
+            details(
+                items = listOf(
+                    DetailsModel.Links(listOf(
+                        DetailsModel.Link(
+                            label = R.string.details_link_youtube,
+                            icon = R.drawable.ic_details_youtube,
+                            url = "https://www.youtube.com"
+                        ),
+                        DetailsModel.Link(
+                            label = R.string.details_link_wikipedia,
+                            icon = R.drawable.ic_details_wikipedia,
+                            url = "https://www.wiki.com"
+                        )
+                    )),
+                    DetailsModel.ScheduleDay(
+                        date = LocalDate.of(2020, 1, 1),
+                        schedules = listOf(
+                            Schedule("FP1", LocalDate.now(), LocalTime.of(9, 0)) to true,
+                            Schedule("FP2", LocalDate.now(), LocalTime.of(11, 0)) to false
+                        )
                     ),
-                    DetailsModel.Link(
-                        label = R.string.details_link_wikipedia,
-                        icon = R.drawable.ic_details_wikipedia,
-                        url = "https://www.wiki.com"
-                    )
-                )),
-                DetailsModel.ScheduleDay(
-                    date = LocalDate.of(2020, 1, 1),
-                    schedules = listOf(
-                        Schedule("FP1", LocalDate.now(), LocalTime.of(9, 0)) to true,
-                        Schedule("FP2", LocalDate.now(), LocalTime.of(11, 0)) to false
+                    DetailsModel.ScheduleDay(
+                        date = LocalDate.of(2020, 1, 2),
+                        schedules = listOf(
+                            Schedule("FP3", LocalDate.now(), LocalTime.of(9, 0)) to true,
+                            Schedule("Qualifying", LocalDate.now(), LocalTime.of(12, 0)) to true
+                        )
                     )
                 ),
-                DetailsModel.ScheduleDay(
-                    date = LocalDate.of(2020, 1, 2),
-                    schedules = listOf(
-                        Schedule("FP3", LocalDate.now(), LocalTime.of(9, 0)) to true,
-                        Schedule("Qualifying", LocalDate.now(), LocalTime.of(12, 0)) to true
-                    )
-                )
-            ))
+                linkClicked = { }
+            )
         })
     }
 }

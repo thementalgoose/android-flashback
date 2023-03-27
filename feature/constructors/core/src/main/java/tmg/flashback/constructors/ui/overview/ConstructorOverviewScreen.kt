@@ -40,6 +40,7 @@ import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextCaption
 import tmg.flashback.constructors.R
+import tmg.flashback.style.buttons.ButtonSecondary
 import tmg.flashback.ui.components.analytics.ScreenView
 import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.header.Header
@@ -169,12 +170,15 @@ private fun HeaderTop(
             }
         }
 
-        Row(modifier = Modifier.height(IntrinsicSize.Min)) {
+        Row(modifier = Modifier
+            .height(IntrinsicSize.Min)
+            .padding(top = AppTheme.dimens.xsmall)
+        ) {
             model.constructorWikiUrl?.let { wiki ->
-                ButtonTertiary(
+                ButtonSecondary(
                     text = stringResource(id = R.string.details_link_wikipedia),
                     onClick = { wikipediaClicked(wiki) },
-                    icon = R.drawable.ic_details_wikipedia
+//                    icon = R.drawable.ic_details_wikipedia
                 )
             }
             if (model.constructorPhotoUrl != null) {

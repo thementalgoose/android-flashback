@@ -26,6 +26,7 @@ import tmg.flashback.drivers.contract.model.DriverStatHistoryType
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
+import tmg.flashback.style.buttons.ButtonSecondary
 import tmg.flashback.style.buttons.ButtonTertiary
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.ui.components.analytics.ScreenView
@@ -170,10 +171,10 @@ private fun Header(
             )
         }
         if (model.driverWikiUrl.isNotEmpty()) {
-            ButtonTertiary(
+            ButtonSecondary(
                 text = stringResource(id = R.string.details_link_wikipedia),
                 onClick = { linkClicked(model.driverWikiUrl) },
-                icon = R.drawable.ic_details_wikipedia
+//                icon = R.drawable.ic_details_wikipedia
             )
             Spacer(Modifier.height(AppTheme.dimens.xsmall))
         }
