@@ -49,7 +49,6 @@ internal fun ButtonTabScreen() {
         TextBody1(text = "Tertiary Button", modifier = Modifier.fillMaxWidth())
         TextBody2(text = "Tertiary button is used for little tooltips or in a sequence of sub actions related to an item", modifier = Modifier.fillMaxWidth())
         ButtonTertiary(text = "Tertiary", onClick = { }, modifier = Modifier.fillMaxWidth())
-        ButtonTertiary(text = "Highlighted", highlighted = true, onClick = { }, modifier = Modifier.fillMaxWidth())
         ButtonTertiary(text = "With icon", onClick = { }, icon = R.drawable.debug_list_debug, modifier = Modifier.fillMaxWidth())
         Row(
             modifier = Modifier
