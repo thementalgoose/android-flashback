@@ -1,14 +1,12 @@
 package tmg.flashback.weekend.ui.details
 
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -16,77 +14,29 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
-import tmg.flashback.weekend.R
 import tmg.flashback.formula1.model.Race
 import tmg.flashback.formula1.model.Schedule
 import tmg.flashback.providers.RaceProvider
-import tmg.flashback.weekend.ui.from
-import tmg.flashback.weekend.ui.info.RaceInfoHeader
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
-import tmg.flashback.style.buttons.ButtonTertiary
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
+import tmg.flashback.weekend.R
 import tmg.flashback.weekend.contract.model.WeekendInfo
+import tmg.flashback.weekend.ui.from
 import tmg.utilities.extensions.format
 import tmg.utilities.extensions.ordinalAbbreviation
 
-@Composable
-fun DetailsScreenVM(
-    info: WeekendInfo,
-    actionUpClicked: () -> Unit,
-    viewModel: DetailsViewModel = hiltViewModel()
-) {
-    viewModel.inputs.load(
-        season = info.season,
-        round = info.round
-    )
-
-    val items = viewModel.outputs.list.observeAsState(emptyList())
-    DetailsScreen(
-        info = info,
-        actionUpClicked = actionUpClicked,
-        linkClicked = viewModel.inputs::linkClicked,
-        items = items.value
-    )
-}
-
-@Composable
-fun DetailsScreen(
-    info: WeekendInfo,
-    linkClicked: (DetailsModel.Link) -> Unit,
-    items: List<DetailsModel>,
-    actionUpClicked: () -> Unit
-) {
-    LazyColumn(
-        modifier = Modifier.fillMaxWidth(),
-        content = {
-            item("header") {
-                RaceInfoHeader(
-                    model = info,
-                    actionUpClicked = actionUpClicked
-                )
-            }
-            this.details(
-                linkClicked = linkClicked,
-                items = items
-            )
-        }
-    )
-}
-
 internal fun LazyListScope.details(
-    linkClicked: (DetailsModel.Link) -> Unit,
     items: List<DetailsModel>,
 ) {
     items(items, key = { it.id }) {
         when (it) {
             is DetailsModel.Links -> {
-                Link(it, linkClicked)
+//                Link(it, linkClicked)
             }
             is DetailsModel.Label -> {
                 Label(it)
@@ -102,24 +52,36 @@ internal fun LazyListScope.details(
 }
 
 @Composable
-private fun Link(
+private fun CornerLink(
     model: DetailsModel.Links,
     linkClicked: (DetailsModel.Link) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Row(modifier = Modifier
-        .horizontalScroll(rememberScrollState())
-        .padding(horizontal = AppTheme.dimens.medium)
-    ) {
-        model.links.forEach { link ->
-            ButtonTertiary(
-                text = stringResource(id = link.label),
-                onClick = { linkClicked(link) },
-                icon = link.icon
+    model.links.forEach { link ->
+        IconButton(onClick = { linkClicked(link) }) {
+            Icon(
+                painter = painterResource(id = link.icon),
+                contentDescription = null,
+                tint = AppTheme.colors.contentSecondary
             )
-            Spacer(Modifier.width(AppTheme.dimens.medium))
         }
     }
+//    IconButton(onClick = {  }) {
+//
+//    }
+//    Row(modifier = modifier
+//        .horizontalScroll(rememberScrollState())
+//        .padding(horizontal = AppTheme.dimens.medium)
+//    ) {
+//        model.links.forEach { link ->
+//            ButtonTertiary(
+//                text = stringResource(id = link.label),
+//                onClick = { linkClicked(link) },
+//                icon = link.icon
+//            )
+//            Spacer(Modifier.width(AppTheme.dimens.medium))
+//        }
+//    }
 }
 
 @Composable
@@ -228,11 +190,8 @@ private fun Preview(
     @PreviewParameter(RaceProvider::class) race: Race
 ) {
     AppThemePreview {
-        DetailsScreen(
-            actionUpClicked = { },
-            linkClicked = { },
-            info = WeekendInfo.from(race.raceInfo),
-            items = listOf(
+        LazyColumn(content = {
+            details(listOf(
                 DetailsModel.Links(listOf(
                     DetailsModel.Link(
                         label = R.string.details_link_youtube,
@@ -259,7 +218,7 @@ private fun Preview(
                         Schedule("Qualifying", LocalDate.now(), LocalTime.of(12, 0)) to true
                     )
                 )
-            )
-        )
+            ))
+        })
     }
 }

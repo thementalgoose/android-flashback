@@ -6,11 +6,15 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.launch
 import tmg.flashback.analytics.constants.AnalyticsConstants.analyticsRound
@@ -33,6 +37,7 @@ import tmg.flashback.ui.components.navigation.NavigationBar
 import tmg.flashback.ui.components.navigation.NavigationItem
 import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
 import tmg.flashback.weekend.contract.model.WeekendInfo
+import tmg.flashback.weekend.ui.details.DetailsModel
 import tmg.utilities.extensions.toEnum
 
 data class WeekendScreenState(
@@ -117,7 +122,13 @@ fun WeekendScreenVM(
                         item("header") {
                             RaceInfoHeader(
                                 model = dbWeekendInfo.value,
-                                actionUpClicked = actionUpClicked
+                                actionUpClicked = actionUpClicked,
+                                icons = {
+                                    Links(
+                                        details = detailsList.value,
+                                        linkClicked = detailsVM.inputs::linkClicked
+                                    )
+                                }
                             )
                         }
 
@@ -130,7 +141,6 @@ fun WeekendScreenVM(
                         when (tabState.value.first { it.isSelected }.tab) {
                             WeekendNavItem.SCHEDULE -> {
                                 details(
-                                    linkClicked = detailsVM.inputs::linkClicked,
                                     items = detailsList.value
                                 )
                             }
@@ -165,6 +175,23 @@ fun WeekendScreenVM(
             }
         }
     )
+}
+
+@Composable
+private fun Links(
+    details: List<DetailsModel>,
+    linkClicked: (DetailsModel.Link) -> Unit
+) {
+    val links = details.firstNotNullOfOrNull { it as? DetailsModel.Links }
+    links?.links?.forEach { link ->
+        IconButton(onClick = { linkClicked(link) }) {
+            Icon(
+                painter = painterResource(id = link.icon),
+                contentDescription = stringResource(id = link.label),
+                tint = AppTheme.colors.contentPrimary
+            )
+        }
+    }
 }
 
 private fun List<WeekendScreenState>.toNavigationItems(): List<NavigationItem> {
