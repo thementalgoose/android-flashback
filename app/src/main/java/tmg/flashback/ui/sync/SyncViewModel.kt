@@ -17,17 +17,18 @@ import tmg.flashback.configuration.repository.ConfigRepository
 import tmg.flashback.configuration.usecases.FetchConfigUseCase
 import tmg.flashback.configuration.usecases.ResetConfigUseCase
 import tmg.flashback.maintenance.repository.MaintenanceRepository
-import tmg.flashback.rss.usecases.RssShortcutUseCase
 import tmg.flashback.statistics.repo.CircuitRepository
 import tmg.flashback.statistics.repo.ConstructorRepository
 import tmg.flashback.statistics.repo.DriverRepository
 import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.statistics.repo.repository.CacheRepository
 import tmg.flashback.results.usecases.ScheduleNotificationsUseCase
-import tmg.flashback.results.usecases.SearchAppShortcutUseCase
+import tmg.flashback.rss.contract.usecases.RSSAppShortcutUseCase
+import tmg.flashback.search.contract.usecases.SearchAppShortcutUseCase
 import tmg.flashback.ui.sync.SyncState.DONE
 import tmg.flashback.ui.sync.SyncState.FAILED
 import tmg.flashback.ui.sync.SyncState.LOADING
+import tmg.flashback.usecases.SetupAppShortcutUseCase
 import tmg.utilities.lifecycle.DataEvent
 import javax.inject.Inject
 
@@ -59,7 +60,6 @@ interface SyncViewModelOutputs {
 
 @HiltViewModel
 class SyncViewModel @Inject constructor(
-    private val rssShortcutUseCase: RssShortcutUseCase,
     private val circuitRepository: CircuitRepository,
     private val constructorRepository: ConstructorRepository,
     private val driverRepository: DriverRepository,
@@ -70,7 +70,7 @@ class SyncViewModel @Inject constructor(
     private val maintenanceRepository: MaintenanceRepository,
     private val cacheRepository: CacheRepository,
     private val scheduleNotificationsUseCase: ScheduleNotificationsUseCase,
-    private val searchAppShortcutUseCase: SearchAppShortcutUseCase,
+    private val setupAppShortcutUseCase: SetupAppShortcutUseCase,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), SyncViewModelInputs, SyncViewModelOutputs {
 
@@ -200,14 +200,9 @@ class SyncViewModel @Inject constructor(
         configState.postValue(DONE)
     }
 
-    private suspend fun performConfigUpdates() {
-
-        // Shortcuts for RSS
-        rssShortcutUseCase.setup()
-
-        // Shortcuts for Search
-        searchAppShortcutUseCase.setup()
-
+    private fun performConfigUpdates() {
+        // App Shortcuts
+        setupAppShortcutUseCase.setup()
         // Schedule notifications
         scheduleNotificationsUseCase.schedule()
     }

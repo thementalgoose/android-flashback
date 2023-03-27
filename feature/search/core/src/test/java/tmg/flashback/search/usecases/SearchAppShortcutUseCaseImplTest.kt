@@ -1,23 +1,23 @@
-package tmg.flashback.results.usecases
+package tmg.flashback.search.usecases
 
 import io.mockk.mockk
 import io.mockk.slot
 import io.mockk.verify
-import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import tmg.flashback.appshortcuts.manager.AppShortcutManager
 import tmg.flashback.appshortcuts.models.ShortcutInfo
 
-internal class SearchAppShortcutUseCaseTest {
+internal class SearchAppShortcutUseCaseImplTest {
 
     private val mockAppShortcutManager: AppShortcutManager = mockk(relaxed = true)
 
-    private lateinit var underTest: SearchAppShortcutUseCase
+    private lateinit var underTest: SearchAppShortcutUseCaseImpl
 
     private val searchId: String = "search"
 
     private fun initUnderTest() {
-        underTest = SearchAppShortcutUseCase(
+        underTest = SearchAppShortcutUseCaseImpl(
             mockAppShortcutManager
         )
     }

@@ -1,17 +1,17 @@
-package tmg.flashback.results.usecases
+package tmg.flashback.search.usecases
 
 import android.content.Intent
 import android.net.Uri
 import tmg.flashback.appshortcuts.manager.AppShortcutManager
 import tmg.flashback.appshortcuts.models.ShortcutInfo
-import tmg.flashback.results.R
+import tmg.flashback.search.R
+import tmg.flashback.search.contract.usecases.SearchAppShortcutUseCase
 import javax.inject.Inject
 
-class SearchAppShortcutUseCase @Inject constructor(
+internal class SearchAppShortcutUseCaseImpl @Inject constructor(
     private val appShortcutManager: AppShortcutManager
-) {
-
-    fun setup() {
+): SearchAppShortcutUseCase {
+    override fun setup() {
         appShortcutManager.addDynamicShortcut(searchShortcutInfo)
     }
 

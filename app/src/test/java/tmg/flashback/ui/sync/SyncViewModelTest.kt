@@ -11,16 +11,16 @@ import tmg.flashback.configuration.repository.ConfigRepository
 import tmg.flashback.configuration.usecases.FetchConfigUseCase
 import tmg.flashback.configuration.usecases.ResetConfigUseCase
 import tmg.flashback.maintenance.repository.MaintenanceRepository
-import tmg.flashback.rss.usecases.RssShortcutUseCase
 import tmg.flashback.statistics.repo.CircuitRepository
 import tmg.flashback.statistics.repo.ConstructorRepository
 import tmg.flashback.statistics.repo.DriverRepository
 import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.statistics.repo.repository.CacheRepository
 import tmg.flashback.results.usecases.ScheduleNotificationsUseCase
-import tmg.flashback.results.usecases.SearchAppShortcutUseCase
+import tmg.flashback.rss.contract.usecases.RSSAppShortcutUseCase
 import tmg.flashback.ui.sync.SyncNavTarget.DASHBOARD
 import tmg.flashback.ui.sync.SyncNavTarget.FORCE_UPGRADE
+import tmg.flashback.usecases.SetupAppShortcutUseCase
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertDataEventValue
 import tmg.testutils.livedata.assertEventNotFired
@@ -28,7 +28,6 @@ import tmg.testutils.livedata.test
 
 internal class SyncViewModelTest: BaseTest() {
 
-    private var mockRssShortcutUseCase: RssShortcutUseCase = mockk(relaxed = true)
     private var mockCircuitRepository: CircuitRepository = mockk(relaxed = true)
     private var mockConstructorRepository: ConstructorRepository = mockk(relaxed = true)
     private var mockDriverRepository: DriverRepository = mockk(relaxed = true)
@@ -39,7 +38,7 @@ internal class SyncViewModelTest: BaseTest() {
     private var mockCacheRepository: CacheRepository = mockk(relaxed = true)
     private var mockMaintenanceRepository: MaintenanceRepository = mockk(relaxed = true)
     private var mockScheduleNotificationsUseCase: ScheduleNotificationsUseCase = mockk(relaxed = true)
-    private var mockSearchAppShortcutUseCase: SearchAppShortcutUseCase = mockk(relaxed = true)
+    private var mockSetupAppShortcutUseCase: SetupAppShortcutUseCase = mockk(relaxed = true)
 
     private lateinit var sut: SyncViewModel
 
@@ -56,7 +55,6 @@ internal class SyncViewModelTest: BaseTest() {
 
     private fun initSUT() {
         sut = SyncViewModel(
-            mockRssShortcutUseCase,
             mockCircuitRepository,
             mockConstructorRepository,
             mockDriverRepository,
@@ -67,7 +65,7 @@ internal class SyncViewModelTest: BaseTest() {
             mockMaintenanceRepository,
             mockCacheRepository,
             mockScheduleNotificationsUseCase,
-            mockSearchAppShortcutUseCase,
+            mockSetupAppShortcutUseCase,
             ioDispatcher = coroutineScope.testDispatcher
         )
     }
@@ -99,8 +97,7 @@ internal class SyncViewModelTest: BaseTest() {
         }
         verify {
             mockCacheRepository.initialSync = true
-            mockSearchAppShortcutUseCase.setup()
-            mockRssShortcutUseCase.setup()
+            mockSetupAppShortcutUseCase.setup()
             mockScheduleNotificationsUseCase.schedule()
         }
     }
@@ -133,8 +130,7 @@ internal class SyncViewModelTest: BaseTest() {
         }
         verify {
             mockCacheRepository.initialSync = true
-            mockSearchAppShortcutUseCase.setup()
-            mockRssShortcutUseCase.setup()
+            mockSetupAppShortcutUseCase.setup()
             mockScheduleNotificationsUseCase.schedule()
         }
     }
@@ -190,8 +186,7 @@ internal class SyncViewModelTest: BaseTest() {
             mockFetchConfigUseCase.fetchAndApply()
         }
         verify {
-            mockSearchAppShortcutUseCase.setup()
-            mockRssShortcutUseCase.setup()
+            mockSetupAppShortcutUseCase.setup()
         }
         sut.outputs.circuitsState.test { assertValue(SyncState.DONE) }
         sut.outputs.constructorsState.test { assertValue(SyncState.DONE) }
