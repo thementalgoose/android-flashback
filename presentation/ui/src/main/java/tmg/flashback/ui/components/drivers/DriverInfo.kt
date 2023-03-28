@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -13,8 +14,11 @@ import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
+import tmg.flashback.style.label.Label
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextTitle
+import tmg.flashback.ui.R
+import tmg.utilities.extensions.ordinalAbbreviation
 
 private val colorIndicator: Dp = 6.dp
 
@@ -25,6 +29,7 @@ fun DriverInfo(
     constructorName: String,
     constructorColor: Color,
     position: Int?,
+    grid: Int? = null,
     modifier: Modifier = Modifier,
     extraContent: (@Composable RowScope.() -> Unit)? = null
 ) {
@@ -75,6 +80,11 @@ fun DriverInfo(
                     Spacer(Modifier.width(AppTheme.dimens.xsmall))
                 }
                 TextBody2(text = constructorName)
+            }
+            if (position != null && grid != null && grid > position) {
+                Box(Modifier.padding(vertical = AppTheme.dimens.xsmall)) {
+                    Label(stringResource(id = R.string.qualifying_penalty, grid.ordinalAbbreviation))
+                }
             }
         }
     }

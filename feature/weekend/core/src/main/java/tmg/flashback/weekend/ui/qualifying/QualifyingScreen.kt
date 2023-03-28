@@ -26,6 +26,7 @@ import tmg.flashback.ui.components.errors.NotAvailableYet
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
+import tmg.flashback.style.label.Label
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextSection
 import tmg.flashback.ui.components.loading.SkeletonViewList
@@ -175,29 +176,32 @@ private fun Qualifying(
     driverClicked: (Driver) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Row(modifier = modifier
-        .height(IntrinsicSize.Min)
-    ) {
-        DriverInfo(
-            modifier = Modifier
-                .weight(1f)
-                .clickable(onClick = { driverClicked(model.driver.driver) }),
-            driver = model.driver,
-            position = model.qualified
-        )
-        Time(
-            modifier = Modifier.fillMaxHeight(),
-            laptime = model.q1?.lapTime
-        )
-        Time(
-            modifier = Modifier.fillMaxHeight(),
-            laptime = model.q2?.lapTime
-        )
-        Time(
-            modifier = Modifier.fillMaxHeight(),
-            laptime = model.q3?.lapTime
-        )
-        Spacer(Modifier.width(AppTheme.dimens.medium))
+    Column(Modifier.fillMaxWidth()) {
+        Row(modifier = modifier
+            .height(IntrinsicSize.Min)
+        ) {
+            DriverInfo(
+                modifier = Modifier
+                    .weight(1f)
+                    .clickable(onClick = { driverClicked(model.driver.driver) }),
+                driver = model.driver,
+                position = model.qualified,
+                grid = model.grid
+            )
+            Time(
+                modifier = Modifier.fillMaxHeight(),
+                laptime = model.q1?.lapTime
+            )
+            Time(
+                modifier = Modifier.fillMaxHeight(),
+                laptime = model.q2?.lapTime
+            )
+            Time(
+                modifier = Modifier.fillMaxHeight(),
+                laptime = model.q3?.lapTime
+            )
+            Spacer(Modifier.width(AppTheme.dimens.medium))
+        }
     }
 }
 
@@ -262,7 +266,9 @@ private fun Time(
         .width(lapTimeWidth)
     ) {
         TextBody2(
-            modifier = Modifier.align(Alignment.Center),
+            modifier = Modifier
+                .align(Alignment.TopCenter)
+                .padding(vertical = AppTheme.dimens.nsmall),
             text = laptime?.time ?: ""
         )
     }
@@ -291,5 +297,6 @@ private fun fakeQualifyingModel(driverConstructor: DriverConstructor) = Qualifyi
     finalQualifyingPosition = 1,
     q1 = RaceQualifyingResult(driverConstructor, lapTime = LapTime(92382), position = 1),
     q2 = RaceQualifyingResult(driverConstructor, lapTime = LapTime(92293), position = 1),
-    q3 = RaceQualifyingResult(driverConstructor, lapTime = LapTime(91934), position = 1)
+    q3 = RaceQualifyingResult(driverConstructor, lapTime = LapTime(91934), position = 1),
+    grid = 1
 )
