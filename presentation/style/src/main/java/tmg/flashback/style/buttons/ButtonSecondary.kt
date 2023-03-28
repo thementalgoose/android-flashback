@@ -24,12 +24,17 @@ import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 
+private val colour: Color
+    @Composable
+    get() = AppTheme.colors.contentPrimary
+
 @Composable
 fun ButtonSecondary(
     text: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
+    selected: Boolean = false
 ) {
     return Button(
         modifier = modifier
@@ -38,12 +43,15 @@ fun ButtonSecondary(
             .padding(0.dp)
             .defaultMinSize(1.dp, 1.dp),
         border = BorderStroke(1.dp, when (enabled) {
-            true -> AppTheme.colors.primary
-            false -> AppTheme.colors.primary.copy(alpha = 0.4f)
+            true -> colour
+            false -> colour.copy(alpha = 0.4f)
         }),
         colors = ButtonDefaults.textButtonColors(
-            backgroundColor = AppTheme.colors.backgroundPrimary,
-            contentColor = FlashbackTheme.colors.contentPrimary
+            backgroundColor = when (selected) {
+                true -> AppTheme.colors.backgroundTertiary
+                false -> AppTheme.colors.backgroundPrimary
+            },
+            contentColor = colour
         ),
         contentPadding = PaddingValues(),
         enabled = enabled,
@@ -54,8 +62,8 @@ fun ButtonSecondary(
             text,
             bold = true,
             textColor = when (enabled) {
-                true -> AppTheme.colors.primary
-                false -> AppTheme.colors.primary.copy(alpha = 0.4f)
+                true -> colour
+                false -> colour.copy(alpha = 0.4f)
             },
             modifier = Modifier
                 .padding(
@@ -72,10 +80,24 @@ fun ButtonSecondary(
 @Composable
 private fun Preview() {
     AppThemePreview {
-        Box(Modifier.padding(16.dp)) { 
+        Box(Modifier.padding(16.dp)) {
             ButtonSecondary(
                 text = "Secondary Button",
                 onClick = { }
+            )
+        }
+    }
+}
+
+@PreviewTheme
+@Composable
+private fun PreviewSelected() {
+    AppThemePreview {
+        Box(Modifier.padding(16.dp)) {
+            ButtonSecondary(
+                text = "Secondary Button",
+                onClick = { },
+                selected = true
             )
         }
     }
