@@ -29,7 +29,8 @@ sealed class QualifyingModel(
         val q1: RaceQualifyingResult?,
         val q2: RaceQualifyingResult?,
         val q3: RaceQualifyingResult?,
-        val qualified: Int? = finalQualifyingPosition ?: q3?.position ?: q2?.position ?: q1?.position
+        val qualified: Int? = finalQualifyingPosition ?: q3?.position ?: q2?.position ?: q1?.position,
+        val grid: Int?
     ) : QualifyingModel(driver.driver.id, true) {
         companion object
     }
