@@ -1,6 +1,7 @@
 package tmg.flashback.weekend.ui.schedule
 
 import org.threeten.bp.LocalDate
+import tmg.flashback.formula1.model.Circuit
 import tmg.flashback.formula1.model.RaceInfo
 import tmg.flashback.formula1.model.Schedule
 import tmg.flashback.formula1.model.model
@@ -26,6 +27,18 @@ fun DetailsModel.Link.Companion.model(
     label = label,
     icon = icon,
     url = url
+)
+
+fun DetailsModel.Track.Companion.model(
+    circuit: Circuit = Circuit.model(),
+    raceName: String = RaceInfo.model().name,
+    season: Int = RaceInfo.model().season,
+    laps: String? = RaceInfo.model().laps
+): DetailsModel.Track = DetailsModel.Track(
+    circuit = circuit,
+    raceName = raceName,
+    season = season,
+    laps = laps
 )
 
 fun DetailsModel.Label.Companion.model(

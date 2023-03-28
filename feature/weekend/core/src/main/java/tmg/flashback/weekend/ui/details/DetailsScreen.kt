@@ -18,6 +18,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
+import tmg.flashback.formula1.enums.TrackLayout
 import tmg.flashback.formula1.model.Race
 import tmg.flashback.formula1.model.Schedule
 import tmg.flashback.providers.RaceProvider
@@ -25,16 +26,17 @@ import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.buttons.ButtonSecondary
-import tmg.flashback.style.buttons.ButtonTertiary
+import tmg.flashback.style.label.Label
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.weekend.R
 import tmg.flashback.weekend.contract.model.WeekendInfo
-import tmg.flashback.weekend.ui.from
+import tmg.flashback.weekend.ui.toWeekendInfo
 import tmg.utilities.extensions.format
 import tmg.utilities.extensions.ordinalAbbreviation
 
 internal fun LazyListScope.details(
+    weekendInfo: WeekendInfo,
     items: List<DetailsModel>,
     linkClicked: (DetailsModel.Link) -> Unit
 ) {
@@ -44,10 +46,13 @@ internal fun LazyListScope.details(
                 Links(it, linkClicked)
             }
             is DetailsModel.Label -> {
-                Label(it)
+                DetailsLabel(it)
             }
             is DetailsModel.ScheduleDay -> {
                 Day(it)
+            }
+            is DetailsModel.Track -> {
+                Track(it)
             }
         }
     }
@@ -67,6 +72,30 @@ private fun CornerLink(
                 painter = painterResource(id = link.icon),
                 contentDescription = null,
                 tint = AppTheme.colors.contentSecondary
+            )
+        }
+    }
+}
+
+@Composable
+private fun Track(
+    model: DetailsModel.Track
+) {
+    val track = TrackLayout.getTrack(model.circuit.id, model.season, model.raceName)
+    Column(Modifier.padding(
+        start = AppTheme.dimens.medium,
+        end = AppTheme.dimens.medium,
+        bottom = AppTheme.dimens.xsmall,
+    )) {
+        Icon(
+            tint = AppTheme.colors.contentPrimary,
+            modifier = Modifier.size(160.dp),
+            painter = painterResource(id = track?.icon ?: R.drawable.circuit_unknown),
+            contentDescription = null
+        )
+        model.laps?.toIntOrNull()?.let { laps ->
+            Label(
+                label = stringResource(id = R.string.weekend_info_laps, laps)
             )
         }
     }
@@ -94,7 +123,7 @@ private fun Links(
 }
 
 @Composable
-private fun Label(
+private fun DetailsLabel(
     model: DetailsModel.Label,
     modifier: Modifier = Modifier
 ) {
@@ -201,6 +230,7 @@ private fun Preview(
     AppThemePreview {
         LazyColumn(content = {
             details(
+                weekendInfo = race.raceInfo.toWeekendInfo(),
                 items = listOf(
                     DetailsModel.Links(listOf(
                         DetailsModel.Link(
@@ -214,6 +244,12 @@ private fun Preview(
                             url = "https://www.wiki.com"
                         )
                     )),
+                    DetailsModel.Track(
+                        circuit = race.raceInfo.circuit,
+                        raceName = race.raceInfo.name,
+                        season = race.raceInfo.season,
+                        laps = race.raceInfo.laps
+                    ),
                     DetailsModel.ScheduleDay(
                         date = LocalDate.of(2020, 1, 1),
                         schedules = listOf(

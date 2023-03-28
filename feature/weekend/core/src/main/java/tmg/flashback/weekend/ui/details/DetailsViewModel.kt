@@ -48,15 +48,6 @@ class DetailsViewModel @Inject constructor(
             if (it == null) return@map emptyList()
 
             val list = mutableListOf<DetailsModel>()
-            if (it.raceInfo.laps != null) {
-                list.add(
-                    DetailsModel.Label(
-                        label = StringHolder(R.string.details_link_laps, it.raceInfo.laps ?: ""),
-                        icon = R.drawable.ic_details_laps,
-                    )
-                )
-            }
-
             val links = mutableListOf<DetailsModel.Link>()
             if (it.raceInfo.youtube != null && URLUtil.isValidUrl(it.raceInfo.youtube)) {
                 links.add(
@@ -86,6 +77,13 @@ class DetailsViewModel @Inject constructor(
                 )
             }
             list.add(DetailsModel.Links(links))
+
+            list.add(DetailsModel.Track(
+                circuit = it.raceInfo.circuit,
+                raceName = it.raceInfo.name,
+                season = it.raceInfo.season,
+                laps = it.raceInfo.laps
+            ))
 
             list.addAll(initialSchedule(it.schedule))
 
