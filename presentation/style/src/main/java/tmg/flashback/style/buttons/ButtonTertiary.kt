@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
@@ -17,6 +18,7 @@ import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import tmg.flashback.style.AppTheme
@@ -32,8 +34,7 @@ fun ButtonTertiary(
     modifier: Modifier = Modifier,
     narrow: Boolean = true,
     @DrawableRes
-    icon: Int? = null,
-    highlighted: Boolean = false,
+    icon: Int? = null
 ) {
     Button(
         modifier = modifier
@@ -41,24 +42,19 @@ fun ButtonTertiary(
             .wrapContentHeight(Alignment.CenterVertically)
             .padding(0.dp)
             .defaultMinSize(1.dp, 1.dp),
-        border = BorderStroke(0.dp, when (highlighted) {
-            true -> AppTheme.colors.primaryLight
-            false -> AppTheme.colors.backgroundTertiary
-        }),
+        border = BorderStroke(1.dp, AppTheme.colors.backgroundSecondary),
         colors = ButtonDefaults.outlinedButtonColors(
-            backgroundColor = when (highlighted) {
-                true -> AppTheme.colors.primaryLight
-                false -> AppTheme.colors.backgroundTertiary
-            },
+            backgroundColor = AppTheme.colors.backgroundTertiary,
             contentColor = AppTheme.colors.contentSecondary
         ),
         contentPadding = PaddingValues(),
-        shape = RoundedCornerShape(6.dp),
+        shape = CircleShape,
         onClick = onClick
     ) {
         TextBody2(
             text,
             bold = true,
+            textColor = AppTheme.colors.contentTertiary,
             modifier = Modifier
                 .padding(
                     start = AppTheme.dimens.nsmall,
@@ -92,22 +88,9 @@ private fun Preview() {
 
 @PreviewTheme
 @Composable
-private fun PreviewEnabled() {
-    AppThemePreview {
-        ButtonTertiary(
-            highlighted = true,
-            text = "Tertiary Button",
-            onClick = { }
-        )
-    }
-}
-
-@PreviewTheme
-@Composable
 private fun PreviewWithIcon() {
     AppThemePreview {
         ButtonTertiary(
-            highlighted = true,
             icon = R.drawable.lb_ic_fast_forward,
             text = "Tertiary Button",
             onClick = { }

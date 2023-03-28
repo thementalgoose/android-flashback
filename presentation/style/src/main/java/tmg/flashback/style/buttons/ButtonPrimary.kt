@@ -4,6 +4,7 @@ import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
@@ -35,7 +36,7 @@ fun ButtonPrimary(
             contentColor = FlashbackTheme.colors.contentPrimaryInverse
         ),
         enabled = enabled,
-        shape = RoundedCornerShape(6.dp),
+        shape = CircleShape,
         onClick = onClick
     ) {
         Text(

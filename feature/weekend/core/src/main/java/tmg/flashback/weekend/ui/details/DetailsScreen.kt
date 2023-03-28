@@ -7,8 +7,8 @@ import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -16,77 +16,32 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
-import tmg.flashback.weekend.R
 import tmg.flashback.formula1.model.Race
 import tmg.flashback.formula1.model.Schedule
 import tmg.flashback.providers.RaceProvider
-import tmg.flashback.weekend.ui.from
-import tmg.flashback.weekend.ui.info.RaceInfoHeader
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
+import tmg.flashback.style.buttons.ButtonSecondary
 import tmg.flashback.style.buttons.ButtonTertiary
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
+import tmg.flashback.weekend.R
 import tmg.flashback.weekend.contract.model.WeekendInfo
+import tmg.flashback.weekend.ui.from
 import tmg.utilities.extensions.format
 import tmg.utilities.extensions.ordinalAbbreviation
 
-@Composable
-fun DetailsScreenVM(
-    info: WeekendInfo,
-    actionUpClicked: () -> Unit,
-    viewModel: DetailsViewModel = hiltViewModel()
-) {
-    viewModel.inputs.load(
-        season = info.season,
-        round = info.round
-    )
-
-    val items = viewModel.outputs.list.observeAsState(emptyList())
-    DetailsScreen(
-        info = info,
-        actionUpClicked = actionUpClicked,
-        linkClicked = viewModel.inputs::linkClicked,
-        items = items.value
-    )
-}
-
-@Composable
-fun DetailsScreen(
-    info: WeekendInfo,
-    linkClicked: (DetailsModel.Link) -> Unit,
-    items: List<DetailsModel>,
-    actionUpClicked: () -> Unit
-) {
-    LazyColumn(
-        modifier = Modifier.fillMaxWidth(),
-        content = {
-            item("header") {
-                RaceInfoHeader(
-                    model = info,
-                    actionUpClicked = actionUpClicked
-                )
-            }
-            this.details(
-                linkClicked = linkClicked,
-                items = items
-            )
-        }
-    )
-}
-
 internal fun LazyListScope.details(
-    linkClicked: (DetailsModel.Link) -> Unit,
     items: List<DetailsModel>,
+    linkClicked: (DetailsModel.Link) -> Unit
 ) {
     items(items, key = { it.id }) {
         when (it) {
             is DetailsModel.Links -> {
-                Link(it, linkClicked)
+                Links(it, linkClicked)
             }
             is DetailsModel.Label -> {
                 Label(it)
@@ -102,20 +57,36 @@ internal fun LazyListScope.details(
 }
 
 @Composable
-private fun Link(
+private fun CornerLink(
+    model: DetailsModel.Links,
+    linkClicked: (DetailsModel.Link) -> Unit,
+) {
+    model.links.forEach { link ->
+        IconButton(onClick = { linkClicked(link) }) {
+            Icon(
+                painter = painterResource(id = link.icon),
+                contentDescription = null,
+                tint = AppTheme.colors.contentSecondary
+            )
+        }
+    }
+}
+
+@Composable
+private fun Links(
     model: DetailsModel.Links,
     linkClicked: (DetailsModel.Link) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Row(modifier = Modifier
+    Row(modifier = modifier
         .horizontalScroll(rememberScrollState())
         .padding(horizontal = AppTheme.dimens.medium)
     ) {
         model.links.forEach { link ->
-            ButtonTertiary(
+            ButtonSecondary(
                 text = stringResource(id = link.label),
                 onClick = { linkClicked(link) },
-                icon = link.icon
+//                icon = link.icon
             )
             Spacer(Modifier.width(AppTheme.dimens.medium))
         }
@@ -228,38 +199,38 @@ private fun Preview(
     @PreviewParameter(RaceProvider::class) race: Race
 ) {
     AppThemePreview {
-        DetailsScreen(
-            actionUpClicked = { },
-            linkClicked = { },
-            info = WeekendInfo.from(race.raceInfo),
-            items = listOf(
-                DetailsModel.Links(listOf(
-                    DetailsModel.Link(
-                        label = R.string.details_link_youtube,
-                        icon = R.drawable.ic_details_youtube,
-                        url = "https://www.youtube.com"
+        LazyColumn(content = {
+            details(
+                items = listOf(
+                    DetailsModel.Links(listOf(
+                        DetailsModel.Link(
+                            label = R.string.details_link_youtube,
+                            icon = R.drawable.ic_details_youtube,
+                            url = "https://www.youtube.com"
+                        ),
+                        DetailsModel.Link(
+                            label = R.string.details_link_wikipedia,
+                            icon = R.drawable.ic_details_wikipedia,
+                            url = "https://www.wiki.com"
+                        )
+                    )),
+                    DetailsModel.ScheduleDay(
+                        date = LocalDate.of(2020, 1, 1),
+                        schedules = listOf(
+                            Schedule("FP1", LocalDate.now(), LocalTime.of(9, 0)) to true,
+                            Schedule("FP2", LocalDate.now(), LocalTime.of(11, 0)) to false
+                        )
                     ),
-                    DetailsModel.Link(
-                        label = R.string.details_link_wikipedia,
-                        icon = R.drawable.ic_details_wikipedia,
-                        url = "https://www.wiki.com"
-                    )
-                )),
-                DetailsModel.ScheduleDay(
-                    date = LocalDate.of(2020, 1, 1),
-                    schedules = listOf(
-                        Schedule("FP1", LocalDate.now(), LocalTime.of(9, 0)) to true,
-                        Schedule("FP2", LocalDate.now(), LocalTime.of(11, 0)) to false
+                    DetailsModel.ScheduleDay(
+                        date = LocalDate.of(2020, 1, 2),
+                        schedules = listOf(
+                            Schedule("FP3", LocalDate.now(), LocalTime.of(9, 0)) to true,
+                            Schedule("Qualifying", LocalDate.now(), LocalTime.of(12, 0)) to true
+                        )
                     )
                 ),
-                DetailsModel.ScheduleDay(
-                    date = LocalDate.of(2020, 1, 2),
-                    schedules = listOf(
-                        Schedule("FP3", LocalDate.now(), LocalTime.of(9, 0)) to true,
-                        Schedule("Qualifying", LocalDate.now(), LocalTime.of(12, 0)) to true
-                    )
-                )
+                linkClicked = { }
             )
-        )
+        })
     }
 }
