@@ -37,6 +37,7 @@ import tmg.flashback.rss.repo.model.SupportedArticleSource
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
+import tmg.flashback.style.buttons.ButtonSecondary
 import tmg.flashback.style.buttons.ButtonTertiary
 import tmg.flashback.style.input.InputPrimary
 import tmg.flashback.style.input.InputSwitch
@@ -236,7 +237,7 @@ private fun Source(
                 modifier = Modifier.padding(top = 4.dp)
             )
             model.supportedArticleSource?.let {
-                ButtonTertiary(
+                ButtonSecondary(
                     modifier = Modifier.padding(top = 4.dp),
                     text = stringResource(id = R.string.settings_rss_contact_link),
                     onClick = {

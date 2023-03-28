@@ -36,17 +36,17 @@ import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.ConstructorHistorySeasonDriver
 import tmg.flashback.formula1.model.DriverConstructor
 import tmg.flashback.providers.DriverConstructorProvider
-import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
-import tmg.flashback.style.buttons.ButtonTertiary
+import tmg.flashback.style.buttons.ButtonSecondary
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextTitle
 import tmg.flashback.ui.components.analytics.ScreenView
 import tmg.flashback.ui.components.drivers.DriverImage
 import tmg.flashback.ui.components.errors.NetworkError
+import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.messages.Message
@@ -171,10 +171,10 @@ private fun HeaderTop(
 
         Row(modifier = Modifier.height(IntrinsicSize.Min)) {
             model.constructorWikiUrl?.let { wiki ->
-                ButtonTertiary(
+                ButtonSecondary(
                     text = stringResource(id = R.string.details_link_wikipedia),
                     onClick = { wikipediaClicked(wiki) },
-                    icon = R.drawable.ic_details_wikipedia
+//                    icon = R.drawable.ic_details_wikipedia
                 )
             }
             if (model.constructorPhotoUrl != null) {

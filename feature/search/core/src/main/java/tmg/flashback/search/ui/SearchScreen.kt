@@ -39,6 +39,10 @@ import tmg.flashback.formula1.enums.TrackLayout
 import tmg.flashback.search.R
 import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.style.AppTheme
+import tmg.flashback.style.AppThemePreview
+import tmg.flashback.style.annotations.PreviewTheme
+import tmg.flashback.style.buttons.ButtonSecondary
+import tmg.flashback.style.buttons.ButtonSecondarySegments
 import tmg.flashback.style.buttons.ButtonTertiary
 import tmg.flashback.style.input.InputPrimary
 import tmg.flashback.style.text.TextBody1
@@ -80,7 +84,7 @@ fun SearchScreenVM(
 @Composable
 fun SearchScreen(
     showMenu: Boolean,
-    advertProvider: AdvertProvider,
+    advertProvider: AdvertProvider?,
     actionUpClicked: () -> Unit,
     searchCategory: SearchCategory?,
     searchCategoryUpdated: (SearchCategory) -> Unit,
@@ -130,7 +134,7 @@ fun SearchScreen(
                             clicked = itemClicked
                         )
                         SearchItem.Advert -> {
-                            advertProvider.NativeBanner(
+                            advertProvider?.NativeBanner(
                                 horizontalPadding = true,
                                 badgeOffset = true
                             )
@@ -152,21 +156,20 @@ fun SearchScreen(
                 .imePadding()
         ) {
             Row(modifier = Modifier
-                .padding(vertical = AppTheme.dimens.small)
-                .horizontalScroll(rememberScrollState())
+                .padding(
+                    vertical = AppTheme.dimens.small,
+                    horizontal = AppTheme.dimens.medium
+                )
             ) {
-                Spacer(Modifier.width(AppTheme.dimens.medium))
-                SearchCategory.values().forEach {
-                    ButtonTertiary(
-                        text = stringResource(it.label),
-                        onClick = {
-                            searchCategoryUpdated(it)
-                        },
-                        highlighted = it == searchCategory
-                    )
-                    Spacer(Modifier.width(AppTheme.dimens.medium))
-                }
-                Spacer(Modifier.width(AppTheme.dimens.medium))
+                val categories = SearchCategory.values().map { it.label }
+                ButtonSecondarySegments(
+                    items = categories,
+                    selected = searchCategory?.label,
+                    onClick = { label ->
+                        val category = SearchCategory.values().first { it.label == label }
+                        searchCategoryUpdated(category)
+                    }
+                )
             }
             val text = remember { mutableStateOf(TextFieldValue("")) }
             InputPrimary(
@@ -408,6 +411,23 @@ private fun Placeholder(
         Spacer(Modifier.width(16.dp))
         TextBody1(
             text = stringResource(id = R.string.search_placeholder)
+        )
+    }
+}
+
+@PreviewTheme
+@Composable
+private fun Preview() {
+    AppThemePreview {
+        SearchScreen(
+            showMenu = true,
+            advertProvider = null,
+            actionUpClicked = { },
+            searchCategory = SearchCategory.CONSTRUCTOR,
+            searchCategoryUpdated = { },
+            searchInputUpdated = { },
+            itemClicked = { } ,
+            list = listOf(SearchItem.Placeholder)
         )
     }
 }
