@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -19,6 +21,7 @@ import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.buttons.ButtonPrimary
 import tmg.flashback.style.buttons.ButtonSecondary
+import tmg.flashback.style.buttons.ButtonSecondarySegments
 import tmg.flashback.style.buttons.ButtonTertiary
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
@@ -45,6 +48,28 @@ internal fun ButtonTabScreen() {
         TextBody2(text = "Secondary button is used for a secondary action on the page or an action that is considered minor", modifier = Modifier.fillMaxWidth())
         ButtonSecondary(text = "Secondary", onClick = { }, modifier = Modifier.fillMaxWidth())
         ButtonSecondary(text = "Disabled", enabled = false, onClick = { }, modifier = Modifier.fillMaxWidth())
+
+        TextBody1(text = "Secondary Button Segmented", modifier = Modifier.fillMaxWidth())
+        TextBody2(text = "Secondary button in a segmented style in line with Material3", modifier = Modifier.fillMaxWidth())
+        val selection = remember { mutableStateOf(R.string.ab_menu) }
+        ButtonSecondarySegments(
+            items = listOf(R.string.ab_menu, R.string.ab_back, R.string.ab_close),
+            selected = selection.value,
+            onClick = { selection.value = it },
+            showTick = true
+        )
+        ButtonSecondarySegments(
+            items = listOf(R.string.ab_menu, R.string.ab_back, R.string.ab_close, R.string.ab_rss_settings),
+            selected = selection.value,
+            onClick = { selection.value = it },
+            showTick = false
+        )
+        ButtonSecondarySegments(
+            items = listOf(R.string.ab_menu, R.string.ab_back, R.string.ab_close, R.string.ab_rss_settings),
+            selected = selection.value,
+            onClick = { selection.value = it },
+            showTick = true
+        )
 
         TextBody1(text = "Tertiary Button", modifier = Modifier.fillMaxWidth())
         TextBody2(text = "Tertiary button is used for little tooltips or in a sequence of sub actions related to an item", modifier = Modifier.fillMaxWidth())
