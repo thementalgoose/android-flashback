@@ -56,8 +56,8 @@ internal class DetailsViewModelTest: BaseTest() {
 
         underTest.outputs.list.test {
             assertValue(listOf(
-                tmg.flashback.weekend.ui.details.DetailsModel.Label.model(),
                 mapsLink,
+                tmg.flashback.weekend.ui.details.DetailsModel.Track.model(),
                 tmg.flashback.weekend.ui.details.DetailsModel.ScheduleDay.model()
             ))
         }
@@ -105,8 +105,8 @@ internal class DetailsViewModelTest: BaseTest() {
 
         underTest.outputs.list.test {
             assertValue(listOf(
-                tmg.flashback.weekend.ui.details.DetailsModel.Label.model(),
                 mapsLink,
+                tmg.flashback.weekend.ui.details.DetailsModel.Track.model(),
                 tmg.flashback.weekend.ui.details.DetailsModel.ScheduleDay(
                     date = fp1.date,
                     schedules = listOf(
