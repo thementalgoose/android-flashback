@@ -14,6 +14,7 @@ fun DriverInfo(
     driver: DriverConstructor,
     position: Int?,
     modifier: Modifier = Modifier,
+    grid: Int? = null,
     extraContent: (@Composable RowScope.() -> Unit)? = null
 ) {
     tmg.flashback.ui.components.drivers.DriverInfo(
@@ -22,6 +23,7 @@ fun DriverInfo(
         constructorName = driver.constructor.name,
         constructorColor = driver.constructor.colour,
         position = position,
+        grid = grid,
         modifier = modifier,
         extraContent = extraContent
     )

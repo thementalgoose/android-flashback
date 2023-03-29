@@ -34,8 +34,7 @@ fun RaceInfoHeader(
     model: WeekendInfo,
     modifier: Modifier = Modifier,
     actionUpClicked: () -> Unit = { },
-    icons: @Composable RowScope.() -> Unit = { },
-    largeTrack: Boolean = false,
+    icons: @Composable RowScope.() -> Unit = { }
 ) {
     Column(modifier = modifier.padding(
         bottom = AppTheme.dimens.small
@@ -54,15 +53,10 @@ fun RaceInfoHeader(
             icons()
         }
         Column(modifier = Modifier.padding(
-            horizontal = AppTheme.dimens.medium
+            start = AppTheme.dimens.medium,
+            end = AppTheme.dimens.medium,
+            top = AppTheme.dimens.medium
         )) {
-            val track = TrackLayout.getTrack(model.circuitId, model.season, model.raceName)
-            Icon(
-                tint = AppTheme.colors.contentPrimary,
-                modifier = Modifier.size(if (largeTrack) trackSizeLarge else trackSizeSmall),
-                painter = painterResource(id = track?.icon ?: R.drawable.circuit_unknown),
-                contentDescription = null
-            )
             TextHeadline1(
                 modifier = Modifier.padding(vertical = 2.dp),
                 text = "${model.season} ${model.raceName}"
@@ -82,10 +76,13 @@ private fun RaceDetails(
             TextBody1(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = AppTheme.dimens.xsmall),
+                    .padding(
+                        top = AppTheme.dimens.xsmall,
+                        bottom = AppTheme.dimens.xsmall
+                    ),
                 text = model.circuitName
             )
-            TextBody2(
+            TextBody1(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = AppTheme.dimens.xsmall),
@@ -105,7 +102,7 @@ private fun RaceDetails(
             Flag(
                 iso = model.countryISO,
                 nationality = model.country,
-                modifier = Modifier.size(42.dp),
+                modifier = Modifier.size(48.dp),
             )
             TextBody2(
                 text = stringResource(id = R.string.weekend_race_round, model.round),
@@ -122,16 +119,8 @@ private fun PreviewCompact(
     @PreviewParameter(RaceProvider::class) race: Race
 ) {
     AppThemePreview {
-        RaceInfoHeader(model = WeekendInfo.from(race.raceInfo), largeTrack = true)
-    }
-}
-
-@PreviewTheme
-@Composable
-private fun PreviewExpanded(
-    @PreviewParameter(RaceProvider::class) race: Race
-) {
-    AppThemePreview {
-        RaceInfoHeader(model = WeekendInfo.from(race.raceInfo), largeTrack = false)
+        RaceInfoHeader(
+            model = WeekendInfo.from(race.raceInfo)
+        )
     }
 }

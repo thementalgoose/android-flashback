@@ -3,7 +3,9 @@ package tmg.flashback.weekend.ui.details
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import org.threeten.bp.LocalDate
+import tmg.flashback.formula1.model.Circuit
 import tmg.flashback.formula1.model.Schedule
+import tmg.flashback.weekend.contract.model.WeekendInfo
 import tmg.utilities.models.StringHolder
 
 sealed class DetailsModel(
@@ -30,6 +32,17 @@ sealed class DetailsModel(
         @DrawableRes
         val icon: Int,
         val url: String,
+    ) {
+        companion object
+    }
+
+    data class Track(
+        val circuit: Circuit,
+        val raceName: String,
+        val season: Int,
+        val laps: String?
+    ): DetailsModel(
+        id = "track"
     ) {
         companion object
     }

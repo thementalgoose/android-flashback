@@ -3,6 +3,7 @@ package tmg.flashback.weekend.ui.qualifying
 import tmg.flashback.formula1.model.DriverConstructor
 import tmg.flashback.formula1.model.LapTime
 import tmg.flashback.formula1.model.RaceQualifyingResult
+import tmg.flashback.formula1.model.RaceRaceResult
 import tmg.flashback.formula1.model.model
 
 fun QualifyingModel.Q1Q2Q3.Companion.model(
@@ -10,13 +11,15 @@ fun QualifyingModel.Q1Q2Q3.Companion.model(
     finalQualifyingPosition: Int? = 1,
     q1: RaceQualifyingResult? = RaceQualifyingResult.model(lapTime = LapTime.model(0, 1, 2, 1)),
     q2: RaceQualifyingResult? = RaceQualifyingResult.model(lapTime = LapTime.model(0, 1, 2, 2)),
-    q3: RaceQualifyingResult? = RaceQualifyingResult.model(lapTime = LapTime.model(0, 1, 2, 3))
+    q3: RaceQualifyingResult? = RaceQualifyingResult.model(lapTime = LapTime.model(0, 1, 2, 3)),
+    grid: Int? = RaceRaceResult.model().grid
 ): QualifyingModel.Q1Q2Q3 = QualifyingModel.Q1Q2Q3(
     driver = driver,
     finalQualifyingPosition = finalQualifyingPosition,
     q1 = q1,
     q2 = q2,
-    q3 = q3
+    q3 = q3,
+    grid = grid
 )
 
 fun QualifyingModel.Q1Q2.Companion.model(
