@@ -21,11 +21,29 @@ import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.R
 import tmg.flashback.style.annotations.PreviewTheme
+import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextCaption
 
 @Composable
-private fun Label(
-    @StringRes label: Int,
+fun Label(
+    @StringRes
+    label: Int,
+    modifier: Modifier = Modifier,
+    @DrawableRes
+    icon: Int? = null,
+    iconSize: Dp = 16.dp
+) {
+    Label(
+        label = stringResource(id = label),
+        modifier = modifier,
+        icon = icon,
+        iconSize = iconSize
+    )
+}
+
+@Composable
+fun Label(
+    label: String,
     modifier: Modifier = Modifier,
     @DrawableRes
     icon: Int? = null,
@@ -36,14 +54,15 @@ private fun Label(
             .clip(RoundedCornerShape(AppTheme.dimens.radiusLarge))
             .background(AppTheme.colors.backgroundSecondary)
             .padding(
-                start = AppTheme.dimens.small,
-                end = AppTheme.dimens.small,
-                top = 2.dp,
-                bottom = 2.dp
+                start = AppTheme.dimens.nsmall,
+                end = AppTheme.dimens.nsmall,
+                top = AppTheme.dimens.xsmall,
+                bottom = AppTheme.dimens.xsmall
             )
     ) {
-        TextCaption(
-            text = stringResource(id = label)
+        TextBody2(
+            text = label,
+            bold = true
         )
         if (icon != null) {
             Spacer(modifier = Modifier.width(AppTheme.dimens.xxsmall))

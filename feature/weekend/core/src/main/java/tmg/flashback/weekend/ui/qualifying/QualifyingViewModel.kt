@@ -113,7 +113,8 @@ class QualifyingViewModel @Inject constructor(
                 finalQualifyingPosition = overview?.qualified,
                 q1 = overview?.q1,
                 q2 = overview?.q2,
-                q3 = overview?.q3
+                q3 = overview?.q3,
+                grid = overview?.race?.grid
             )
         }
     }

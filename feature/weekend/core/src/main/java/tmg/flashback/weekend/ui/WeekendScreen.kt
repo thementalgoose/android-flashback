@@ -123,12 +123,6 @@ fun WeekendScreenVM(
                             RaceInfoHeader(
                                 model = dbWeekendInfo.value,
                                 actionUpClicked = actionUpClicked,
-//                                icons = {
-//                                    Links(
-//                                        details = detailsList.value,
-//                                        linkClicked = detailsVM.inputs::linkClicked
-//                                    )
-//                                }
                             )
                         }
 
@@ -141,6 +135,7 @@ fun WeekendScreenVM(
                         when (tabState.value.first { it.isSelected }.tab) {
                             WeekendNavItem.SCHEDULE -> {
                                 details(
+                                    weekendInfo = weekendInfo,
                                     items = detailsList.value,
                                     linkClicked = detailsVM.inputs::linkClicked
                                 )
