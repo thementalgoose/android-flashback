@@ -185,8 +185,7 @@ private fun Qualifying(
                     .weight(1f)
                     .clickable(onClick = { driverClicked(model.driver.driver) }),
                 driver = model.driver,
-                position = model.qualified,
-                grid = model.grid
+                position = model.qualified
             )
             Time(
                 modifier = Modifier.fillMaxHeight(),
@@ -201,6 +200,9 @@ private fun Qualifying(
                 laptime = model.q3?.lapTime
             )
             Spacer(Modifier.width(AppTheme.dimens.medium))
+        }
+        if (model.grid != null && model.qualified != null && model.grid > model.qualified) {
+            Label(label = stringResource(id = R.string.qualifying_penalty, model.grid))
         }
     }
 }

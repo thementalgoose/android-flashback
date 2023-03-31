@@ -1,24 +1,32 @@
 package tmg.flashback.ui.components.drivers
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
-import tmg.flashback.style.label.Label
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextTitle
-import tmg.flashback.ui.R
-import tmg.utilities.extensions.ordinalAbbreviation
+import tmg.flashback.ui.components.flag.Flag
+
+// TODO Move this out of the shared UI module
 
 private val colorIndicator: Dp = 6.dp
 
@@ -29,7 +37,6 @@ fun DriverInfo(
     constructorName: String,
     constructorColor: Color,
     position: Int?,
-    grid: Int? = null,
     modifier: Modifier = Modifier,
     extraContent: (@Composable RowScope.() -> Unit)? = null
 ) {
@@ -44,7 +51,7 @@ fun DriverInfo(
         if (position != null) {
             TextTitle(
                 modifier = Modifier
-                    .width(42.dp)
+                    .width(36.dp)
                     .padding(horizontal = AppTheme.dimens.xsmall)
                     .align(Alignment.CenterVertically),
                 bold = true,
@@ -80,11 +87,6 @@ fun DriverInfo(
                     Spacer(Modifier.width(AppTheme.dimens.xsmall))
                 }
                 TextBody2(text = constructorName)
-            }
-            if (position != null && grid != null && grid > position) {
-                Box(Modifier.padding(vertical = AppTheme.dimens.xsmall)) {
-                    Label(stringResource(id = R.string.qualifying_penalty, grid.ordinalAbbreviation))
-                }
             }
         }
     }

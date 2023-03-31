@@ -15,12 +15,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import tmg.flashback.style.AppTheme
+import tmg.flashback.style.AppThemePreview
+import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.ui.R
-
 
 @Composable
 fun DriverImage(
@@ -45,13 +47,13 @@ fun DriverImage(
         if (number != null || code != null) {
             Row(
                 Modifier
-                .fillMaxWidth()
-                .background(AppTheme.colors.backgroundSecondary.copy(alpha = 0.8f))
-                .padding(
-                    horizontal = AppTheme.dimens.small,
-                    vertical = AppTheme.dimens.xsmall
-                )
-                .align(Alignment.BottomCenter)
+                    .fillMaxWidth()
+                    .background(AppTheme.colors.backgroundSecondary.copy(alpha = 0.8f))
+                    .padding(
+                        horizontal = AppTheme.dimens.small,
+                        vertical = AppTheme.dimens.xsmall
+                    )
+                    .align(Alignment.BottomCenter)
             ) {
                 code?.let { code ->
                     DriverNumber(
@@ -69,5 +71,13 @@ fun DriverImage(
                 }
             }
         }
+    }
+}
+
+@PreviewTheme
+@Composable
+private fun Preview() {
+    AppThemePreview {
+        DriverImage(photoUrl = "")
     }
 }
