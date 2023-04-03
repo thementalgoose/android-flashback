@@ -26,7 +26,8 @@ import tmg.flashback.ui.components.errors.NotAvailableYet
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
-import tmg.flashback.style.label.Label
+import tmg.flashback.style.badge.Badge
+import tmg.flashback.style.badge.BadgeView
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextSection
 import tmg.flashback.ui.components.loading.SkeletonViewList
@@ -202,7 +203,7 @@ private fun Qualifying(
             Spacer(Modifier.width(AppTheme.dimens.medium))
         }
         if (model.grid != null && model.qualified != null && model.grid > model.qualified) {
-            Label(label = stringResource(id = R.string.qualifying_penalty, model.grid))
+            BadgeView(model = Badge(stringResource(id = R.string.qualifying_penalty, model.grid)))
         }
     }
 }
