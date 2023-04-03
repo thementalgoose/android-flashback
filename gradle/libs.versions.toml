@@ -2,7 +2,7 @@
 kotlin = "1.8.10"
 hilt = "2.45"
 androidx_navigation = "2.5.3"
-androidx_lifecycle = "2.5.1"
+androidx_lifecycle = "2.6.1"
 androidx_hilt = "1.0.0"
 androidx_room = "2.5.0"
 androidx_workmanager = "2.8.1"
@@ -20,6 +20,7 @@ androidx_core = "androidx.core:core-ktx:1.9.0"
 androidx_appcompat = "androidx.appcompat:appcompat:1.5.1"
 androidx_constraintlayout = "androidx.constraintlayout:constraintlayout:2.1.4"
 androidx_lifecycle_viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "androidx_lifecycle" }
+androidx_lifecycle_runtime = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidx_lifecycle" }
 androidx_lifecycle_livedata = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "androidx_lifecycle" }
 androidx_navigation_fragment = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "androidx_navigation" }
 androidx_navigation_ui = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "androidx_navigation" }
@@ -137,6 +138,7 @@ androidx = [
     "androidx_core",
     "androidx_appcompat",
     "androidx_constraintlayout",
+    "androidx_lifecycle_runtime",
     "androidx_lifecycle_viewmodel",
     "androidx_lifecycle_livedata",
     "androidx_navigation_fragment",
