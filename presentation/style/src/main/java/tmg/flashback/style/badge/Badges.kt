@@ -4,6 +4,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
@@ -17,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
@@ -33,15 +35,15 @@ data class Badge(
 @Composable
 fun BadgesView(
     list: List<Badge>,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    spacing: Dp = AppTheme.dimens.small
 ) {
-    Row(modifier = modifier
-        .padding(start = AppTheme.dimens.medium)
-        .horizontalScroll(rememberScrollState())
+    Row(
+        modifier = modifier.horizontalScroll(rememberScrollState()),
+        horizontalArrangement = Arrangement.spacedBy(spacing)
     ) {
         list.forEach {
             BadgeView(model = it)
-            Spacer(Modifier.width(AppTheme.dimens.medium))
         }
     }
 }
