@@ -32,17 +32,25 @@ import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.ui.R
 import tmg.flashback.ui.components.loading.Fade
 
+
+val driverIconImageSize: Dp = 54.dp
+val driverIconBorderSize: Dp = 6.dp
+
+val driverIconSize: Dp
+    get() = driverIconImageSize + driverIconBorderSize
+
 @Composable
 fun DriverIcon(
     photoUrl: String?,
     modifier: Modifier = Modifier,
     number: Int? = null,
     code: String? = null,
-    size: Dp = 72.dp,
-    borderSize: Dp = 6.dp,
-    constructorColor: Color? = null
+    size: Dp = driverIconImageSize,
+    borderSize: Dp = driverIconBorderSize,
+    constructorColor: Color? = null,
+    defaultShowStats: Boolean = false
 ) {
-    val showStats = remember { mutableStateOf(false) }
+    val showStats = remember { mutableStateOf(defaultShowStats) }
     Box(
         modifier = modifier
             .size(size + borderSize)
@@ -73,7 +81,7 @@ fun DriverIcon(
                 .align(Alignment.Center)
                 .size(size)
                 .clip(CircleShape)
-                .background(Color.Black.copy(alpha = 0.5f))
+                .background(Color.Black.copy(alpha = 0.7f))
         ) {
             Column(
                 modifier = Modifier,
@@ -149,17 +157,21 @@ fun DriverImage(
 @Composable
 private fun Preview() {
     AppThemePreview {
-        DriverImage(photoUrl = "")
+        DriverIcon(
+            photoUrl = "",
+            constructorColor = Color.Red
+        )
     }
 }
 
 @PreviewTheme
 @Composable
-private fun PreviewIcon() {
+private fun PreviewInfo() {
     AppThemePreview {
         DriverIcon(
             photoUrl = "",
             constructorColor = Color.Red,
+            defaultShowStats = true,
             number = 16,
             code = "LEC"
         )

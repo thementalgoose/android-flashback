@@ -16,12 +16,14 @@ fun TextTitle(
     modifier: Modifier = Modifier,
     textAlign: TextAlign = TextAlign.Start,
     textColor: Color? = null,
+    maxLines: Int? = null,
     bold: Boolean = false
 ) {
     Text(
         text,
         modifier = modifier,
         textAlign = textAlign,
+        maxLines = maxLines ?: Int.MAX_VALUE,
         style = AppTheme.typography.title.copy(
             fontWeight = when (bold) {
                 true -> FontWeight.Bold

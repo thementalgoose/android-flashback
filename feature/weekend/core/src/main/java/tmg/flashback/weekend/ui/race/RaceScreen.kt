@@ -35,13 +35,18 @@ import tmg.flashback.ui.components.errors.NotAvailableYet
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
+import tmg.flashback.style.badge.Badge
+import tmg.flashback.style.badge.BadgeView
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
+import tmg.flashback.style.text.TextTitle
+import tmg.flashback.ui.components.drivers.DriverIcon
+import tmg.flashback.ui.components.drivers.driverIconSize
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.weekend.contract.model.WeekendInfo
 
-private val timeWidth = 80.dp
-private val pointsWidth = 80.dp
+private val timeWidth = 88.dp
+private val pointsWidth = 48.dp
 
 @Composable
 fun RaceScreenVM(
@@ -102,7 +107,7 @@ internal fun LazyListScope.race(
                 )
             }
             is RaceModel.Result -> {
-                ResultOld(
+                Result(
                     model = it.result,
                     driverClicked = driverClicked
                 )
@@ -123,16 +128,72 @@ internal fun LazyListScope.race(
     }
 }
 
-//@Composable
-//private fun Result(
-//    model: RaceRaceResult,
-//    driverClicked: (RaceRaceResult) -> Unit,
-//    modifier: Modifier = Modifier
-//) {
-//    Row {
-//
-//    }
-//}
+@Composable
+private fun Result(
+    model: RaceRaceResult,
+    driverClicked: (RaceRaceResult) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Row(modifier = modifier.padding(
+        vertical = AppTheme.dimens.xsmall
+    )) {
+        Row(modifier = Modifier.weight(1f)) {
+            Box(Modifier.size(36.dp, driverIconSize)) {
+                TextTitle(
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .padding(
+                            horizontal = AppTheme.dimens.xsmall,
+                            vertical = AppTheme.dimens.medium
+                        ),
+                    bold = true,
+                    textAlign = TextAlign.Center,
+                    text = model.finish.toString()
+                )
+            }
+            DriverIcon(
+                photoUrl = model.driver.driver.photoUrl,
+                number = model.driver.driver.number,
+                code = model.driver.driver.code,
+                constructorColor = model.driver.constructor.colour
+            )
+            Column(
+                modifier = Modifier
+                    .padding(
+                        top = AppTheme.dimens.small,
+                        start = AppTheme.dimens.small,
+                        end = AppTheme.dimens.small,
+                    )
+                    .fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
+                Row {
+                    TextBody1(
+                        text = model.driver.driver.firstName,
+                        maxLines = 1
+                    )
+                    Spacer(Modifier.width(4.dp))
+                    TextBody1(
+                        text = model.driver.driver.lastName,
+                        maxLines = 1,
+                        bold = true
+                    )
+                }
+                TextBody2(text = model.driver.constructor.name)
+                if (model.fastestLap?.rank == 1) {
+                    BadgeView(model = Badge(stringResource(id = R.string.ab_fastest_lap)))
+                }
+            }
+        }
+        Points(
+            points = model.points
+        )
+        Time(
+            lapTime = model.time,
+            status = model.status
+        )
+    }
+}
 
 @Composable
 private fun ResultOld(
@@ -175,11 +236,11 @@ private fun ResultOld(
             }
         )
         Points(
-            modifier = Modifier.align(Alignment.CenterVertically),
+            modifier = Modifier.padding(vertical = AppTheme.dimens.medium),
             points = model.points
         )
         Time(
-            modifier = Modifier.align(Alignment.CenterVertically),
+            modifier = Modifier.padding(vertical = AppTheme.dimens.medium),
             lapTime = model.time,
             status = model.status
         )
@@ -192,16 +253,18 @@ private fun Time(
     status: RaceStatus,
     modifier: Modifier = Modifier
 ) {
-    TextBody2(
-        modifier = modifier
-            .width(timeWidth),
-        textAlign = TextAlign.Center,
-        text = when {
-            lapTime?.noTime == false -> "+${lapTime.time}"
-            status.isStatusFinished() -> status
-            else -> stringResource(id = R.string.race_status_retired)
-        },
-    )
+    Box(modifier = modifier.size(timeWidth, driverIconSize)) {
+        TextBody2(
+            modifier = Modifier.align(Alignment.Center),
+            textAlign = TextAlign.Center,
+            maxLines = 1,
+            text = when {
+                lapTime?.noTime == false -> "+${lapTime.time}"
+                status.isStatusFinished() -> status
+                else -> stringResource(id = R.string.race_status_retired)
+            },
+        )
+    }
 }
 
 @Composable
@@ -209,12 +272,14 @@ private fun Points(
     points: Double,
     modifier: Modifier = Modifier
 ) {
-    TextBody1(
-        modifier = modifier.width(pointsWidth),
-        bold = true,
-        textAlign = TextAlign.Center,
-        text = points.takeIf { it != 0.0 }?.pointsDisplay() ?: "",
-    )
+    Box(modifier = modifier.size(pointsWidth, driverIconSize)) {
+        TextBody1(
+            modifier = Modifier.align(Alignment.Center),
+            bold = true,
+            textAlign = TextAlign.Center,
+            text = points.takeIf { it != 0.0 }?.pointsDisplay() ?: "",
+        )
+    }
 }
 
 @Composable
