@@ -119,7 +119,7 @@ fun ModalSheet(
     val sheetState = rememberModalBottomSheetState(
         skipHalfExpanded = true,
         initialValue = ModalBottomSheetValue.Hidden,
-        confirmStateChange = {
+        confirmValueChange = {
             // Intercept and disallow hide gesture / action
             if (it == ModalBottomSheetValue.Hidden && !cancelable) {
                 return@rememberModalBottomSheetState false
@@ -131,7 +131,7 @@ fun ModalSheet(
         }
     )
 
-    if (!visible && sheetState.progress.to == sheetState.progress.from && !sheetState.isVisible) {
+    if (!visible && sheetState.targetValue == sheetState.currentValue && !sheetState.isVisible) {
         return
     }
 
