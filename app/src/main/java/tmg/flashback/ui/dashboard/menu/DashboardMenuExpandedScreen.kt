@@ -249,6 +249,7 @@ private fun NavigationItem(
         )
         if (isExpanded) {
             TextBody1(
+                maxLines = 1,
                 modifier = Modifier
                     .padding(start = AppTheme.dimens.small)
                     .align(Alignment.CenterVertically)
