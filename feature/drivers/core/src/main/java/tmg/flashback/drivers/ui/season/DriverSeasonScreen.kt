@@ -28,15 +28,14 @@ import tmg.flashback.formula1.model.DriverConstructor
 import tmg.flashback.providers.DriverConstructorProvider
 import tmg.flashback.ui.components.timeline.Timeline
 import tmg.flashback.ui.components.flag.Flag
-import tmg.flashback.ui.components.drivers.DriverInfo
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextCaption
 import tmg.flashback.drivers.R
-import tmg.flashback.style.buttons.ButtonSecondary
-import tmg.flashback.style.buttons.ButtonTertiary
+import tmg.flashback.style.text.TextBody2
+import tmg.flashback.style.text.TextTitle
 import tmg.flashback.ui.components.analytics.ScreenView
 import tmg.flashback.ui.components.drivers.DriverImage
 import tmg.flashback.ui.components.errors.NetworkError
@@ -311,12 +310,12 @@ private fun Result(
         Column(
             Modifier.weight(1f)
         ) {
-            DriverInfo(
-                driverName = model.raceName,
-                driverNationalityISO = model.raceCountryISO,
+            RaceInfo(
+                raceName = model.raceName,
+                raceCountryISO = model.raceCountryISO,
                 constructorColor = model.constructor.colour.copy(alpha = 0.2f),
-                constructorName = model.circuitName,
-                position = model.round
+                circuitName = model.circuitName,
+                round = model.round
             )
             if (model.showConstructorLabel) {
                 TextCaption(
@@ -455,6 +454,66 @@ private fun Header(
 //            )
 //            Spacer(Modifier.height(AppTheme.dimens.xsmall))
 //        }
+    }
+}
+
+private val colorIndicator: Dp = 6.dp
+
+@Composable
+private fun RaceInfo(
+    raceName: String,
+    raceCountryISO: String,
+    circuitName: String,
+    constructorColor: Color,
+    round: Int?,
+    modifier: Modifier = Modifier,
+) {
+
+    Row(modifier = modifier
+        .height(IntrinsicSize.Min)
+    ) {
+        Box(modifier = Modifier
+            .fillMaxHeight()
+            .width(colorIndicator)
+            .background(constructorColor)
+        )
+        if (round != null) {
+            TextTitle(
+                modifier = Modifier
+                    .width(36.dp)
+                    .padding(horizontal = AppTheme.dimens.xsmall)
+                    .align(Alignment.CenterVertically),
+                bold = true,
+                textAlign = TextAlign.Center,
+                text = round.toString()
+            )
+        } else {
+            Spacer(Modifier.width(AppTheme.dimens.medium - colorIndicator))
+        }
+        Column(modifier = Modifier
+            .weight(1f)
+            .padding(vertical = 3.dp)
+        ) {
+            Row(modifier = Modifier.height(IntrinsicSize.Min)) {
+                TextTitle(
+                    text = raceName,
+                    bold = true
+                )
+            }
+            Spacer(Modifier.height(4.dp))
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Flag(
+                    iso = raceCountryISO,
+                    modifier = Modifier
+                        .size(16.dp)
+                        .align(Alignment.CenterVertically),
+                )
+                Spacer(Modifier.width(AppTheme.dimens.small))
+                TextBody2(text = circuitName)
+            }
+        }
     }
 }
 
