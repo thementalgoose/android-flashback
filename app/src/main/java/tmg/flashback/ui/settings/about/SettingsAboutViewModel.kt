@@ -28,8 +28,8 @@ interface SettingsAboutViewModelOutputs {
 @HiltViewModel
 class SettingsAboutViewModel @Inject constructor(
     private val crashRepository: CrashRepository,
-    private val navigator: tmg.flashback.navigation.Navigator,
-    private val applicationNavigationComponent: tmg.flashback.navigation.ApplicationNavigationComponent,
+    private val navigator: Navigator,
+    private val applicationNavigationComponent: ApplicationNavigationComponent,
     private val openWebpageUseCase: OpenWebpageUseCase,
     private val toastManager: ToastManager,
     private val buildConfigManager: BuildConfigManager
@@ -51,7 +51,7 @@ class SettingsAboutViewModel @Inject constructor(
                 openWebpageUseCase.open(url = reviewUrl, title = "")
             }
             Settings.Other.releaseNotes.key -> {
-                navigator.navigate(tmg.flashback.navigation.Screen.ReleaseNotes)
+                navigator.navigate(Screen.ReleaseNotes)
             }
             Settings.Other.shakeToReportKey -> {
                 crashRepository.shakeToReport = !crashRepository.shakeToReport

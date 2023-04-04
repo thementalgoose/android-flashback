@@ -48,7 +48,7 @@ fun DashboardScreen(
     windowSize: WindowSizeClass,
     windowLayoutInfo: WindowLayoutInfo,
     advertProvider: AdvertProvider,
-    navigator: tmg.flashback.navigation.Navigator,
+    navigator: Navigator,
     closeApp: () -> Unit,
     navViewModel: DashboardNavViewModel = hiltViewModel(),
     viewModel: DashboardViewModel = hiltViewModel()
@@ -103,7 +103,7 @@ fun DashboardScreen(
     windowSize: WindowSizeClass,
     windowLayoutInfo: WindowLayoutInfo,
     advertProvider: AdvertProvider,
-    navigator: tmg.flashback.navigation.Navigator,
+    navigator: Navigator,
     closeApp: () -> Unit,
     currentlySelectedItem: MenuItem,
     appFeatureItemsList: List<MenuItem>,
