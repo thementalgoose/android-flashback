@@ -1,7 +1,9 @@
 package tmg.flashback.formula1.model
 
+import tmg.flashback.formula1.enums.RaceStatus
+
 fun DriverHistorySeasonRace.Companion.model(
-    status: String = "status",
+    status: RaceStatus = RaceStatus.from("status"),
     finished: Int = 1,
     points: Double = 1.0,
     qualified: Int? = 1,

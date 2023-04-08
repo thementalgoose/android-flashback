@@ -34,6 +34,7 @@ import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextCaption
 import tmg.flashback.drivers.R
+import tmg.flashback.formula1.enums.RaceStatus
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextTitle
 import tmg.flashback.ui.components.analytics.ScreenView
@@ -376,7 +377,7 @@ private fun Result(
                     TextCaption(
                         textAlign = TextAlign.Center,
                         modifier = Modifier.fillMaxWidth(),
-                        text = model.raceStatus
+                        text = model.raceStatus.label
                     )
                 }
             }
@@ -569,7 +570,7 @@ private fun DriverConstructor.result() = DriverSeasonModel.Result(
     constructor = this.constructor,
     qualified = 2,
     finished = 1,
-    raceStatus = "Retired",
+    raceStatus = RaceStatus.from("Retired"),
     points = 10.0,
     maxPoints = 25
 )

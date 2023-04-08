@@ -26,7 +26,8 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import tmg.flashback.formula1.enums.raceStatusFinish
+import tmg.flashback.formula1.enums.RaceStatus
+import tmg.flashback.formula1.enums.RaceStatus.FINISHED
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.RaceRaceResult
 import tmg.flashback.providers.RaceRaceResultProvider
@@ -249,8 +250,8 @@ private fun PodiumResult(
                 ),
             textAlign = TextAlign.Center,
             text = when (model.finish == 1) {
-                true -> model.time?.time ?: raceStatusFinish
-                false -> model.time?.time?.let { "+${it}" } ?: raceStatusFinish
+                true -> model.time?.time ?: FINISHED.label
+                false -> model.time?.time?.let { "+${it}" } ?: FINISHED.label
             }
         )
     }
