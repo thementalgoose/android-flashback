@@ -81,10 +81,10 @@ internal class IsMenuIconEnabledUseCaseTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = [4, 5, 6, 7, 8, 9])
-    fun `easter is returned when now is within range`(dayOfMonth: Int) {
+    @CsvSource("28,3", "29,3", "30,3", "31,3", "1,4", "2,4")
+    fun `easter is returned when now is within range`(dayOfMonth: Int, month: Int) {
         val year = MenuIcons.EASTER.start.year
-        every { mockTimeManager.now } returns LocalDateTime.of(year, 4, dayOfMonth, 12, 0)
+        every { mockTimeManager.now } returns LocalDateTime.of(year, month, dayOfMonth, 12, 0)
 
         initUnderTest()
         assertEquals(MenuIcons.EASTER, underTest.invoke())
