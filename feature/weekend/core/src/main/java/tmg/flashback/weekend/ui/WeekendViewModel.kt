@@ -99,11 +99,14 @@ class WeekendViewModel @Inject constructor(
     }
 
     override fun load(season: Int, round: Int) {
-        selectedTab.value = when (season) {
-            currentSeasonYear -> WeekendNavItem.SCHEDULE
-            else -> WeekendNavItem.RACE
+        val existing = seasonRound.value
+        if (existing?.first != season || existing.second != round) {
+            selectedTab.value = when (season) {
+                currentSeasonYear -> WeekendNavItem.SCHEDULE
+                else -> WeekendNavItem.RACE
+            }
+            seasonRound.value = Pair(season, round)
         }
-        seasonRound.value = Pair(season, round)
     }
 
     override fun refresh() {
