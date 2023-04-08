@@ -31,6 +31,7 @@ import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextTitle
 import tmg.flashback.ui.components.drivers.DriverIcon
+import tmg.flashback.ui.components.drivers.DriverName
 import tmg.flashback.ui.components.drivers.driverIconSize
 import tmg.flashback.ui.components.errors.NotAvailable
 import tmg.flashback.ui.components.errors.NotAvailableYet
@@ -39,6 +40,8 @@ import tmg.flashback.weekend.R
 import tmg.flashback.weekend.contract.model.WeekendInfo
 import tmg.flashback.weekend.ui.fakeWeekendInfo
 import tmg.flashback.weekend.ui.info.RaceInfoHeader
+import tmg.flashback.weekend.ui.shared.ConstructorIndicator
+import tmg.flashback.weekend.ui.shared.finishingPositionWidth
 
 private val timeWidth = 88.dp
 private val pointsWidth = 48.dp
@@ -143,11 +146,15 @@ private fun Result(
     driverClicked: (RaceRaceResult) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Row(modifier = modifier.padding(
-        vertical = AppTheme.dimens.xsmall
-    )) {
-        Row(modifier = Modifier.weight(1f)) {
-            Box(Modifier.size(36.dp, driverIconSize)) {
+    Row(modifier = modifier
+        .height(IntrinsicSize.Min)
+    ) {
+        ConstructorIndicator(constructor = model.driver.constructor)
+        Row(modifier = Modifier
+            .weight(1f)
+            .padding(vertical = AppTheme.dimens.xsmall)
+        ) {
+            Box(Modifier.size(finishingPositionWidth, driverIconSize)) {
                 TextTitle(
                     modifier = Modifier
                         .align(Alignment.Center)
@@ -176,18 +183,10 @@ private fun Result(
                     .fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
-                Row {
-                    TextBody1(
-                        text = model.driver.driver.firstName,
-                        maxLines = 1
-                    )
-                    Spacer(Modifier.width(4.dp))
-                    TextBody1(
-                        text = model.driver.driver.lastName,
-                        maxLines = 1,
-                        bold = true
-                    )
-                }
+                DriverName(
+                    firstName = model.driver.driver.firstName,
+                    lastName = model.driver.driver.lastName
+                )
                 TextBody2(text = model.driver.constructor.name)
                 if (model.fastestLap?.rank == 1) {
                     BadgeView(model = Badge(stringResource(id = R.string.ab_fastest_lap)))
