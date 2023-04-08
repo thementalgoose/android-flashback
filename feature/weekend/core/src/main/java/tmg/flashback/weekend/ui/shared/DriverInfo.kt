@@ -17,34 +17,16 @@ import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextTitle
-import tmg.flashback.ui.components.drivers.DriverImage
+import tmg.flashback.ui.components.drivers.DriverName
 import tmg.flashback.ui.components.flag.Flag
 
 private val positionWidth: Dp = 32.dp
 
 @Composable
-fun DriverInfoQualifying(
-    driver: DriverConstructor,
-    position: Int?,
-    modifier: Modifier = Modifier
-) {
-
-}
-
-@Composable
-fun DriverInfoRace(
-    driver: DriverConstructor,
-    position: Int?,
-    modifier: Modifier = Modifier
-) {
-
-}
-
-@Composable
 private fun Position(
     position: Int?
 ) {
-    Box(modifier = Modifier.size(positionWidth)) {
+    Box(modifier = Modifier.size(finishingPositionWidth)) {
         TextTitle(
             modifier = Modifier.align(Alignment.Center),
             text = position?.toString() ?: "-"
@@ -60,7 +42,8 @@ fun DriverInfo(
     extraContent: (@Composable RowScope.() -> Unit)? = null
 ) {
     DriverInfo(
-        driverName = driver.driver.name,
+        driverFirstName = driver.driver.firstName,
+        driverLastName = driver.driver.lastName,
         driverNationalityISO = driver.driver.nationalityISO,
         constructorName = driver.constructor.name,
         constructorColor = driver.constructor.colour,
@@ -74,7 +57,8 @@ private val colorIndicator: Dp = 6.dp
 
 @Composable
 private fun DriverInfo(
-    driverName: String,
+    driverFirstName: String,
+    driverLastName: String,
     driverNationalityISO: String,
     constructorName: String,
     constructorColor: Color,
@@ -109,10 +93,7 @@ private fun DriverInfo(
             .padding(vertical = 3.dp)
         ) {
             Row(modifier = Modifier.height(IntrinsicSize.Min)) {
-                TextTitle(
-                    text = driverName,
-                    bold = true
-                )
+                DriverName(firstName = driverFirstName, lastName = driverLastName)
             }
             Spacer(Modifier.height(4.dp))
             Row(

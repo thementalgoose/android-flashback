@@ -22,7 +22,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -43,25 +42,26 @@ val driverIconSize: Dp
 fun DriverIcon(
     photoUrl: String?,
     modifier: Modifier = Modifier,
+    driverClicked: (() -> Unit)? = null,
     number: Int? = null,
     code: String? = null,
     size: Dp = driverIconImageSize,
     borderSize: Dp = driverIconBorderSize,
     constructorColor: Color? = null,
-    defaultShowStats: Boolean = false
+    overlayStats: Boolean = false
 ) {
-    val showStats = remember { mutableStateOf(defaultShowStats) }
+    val showStats = remember { mutableStateOf(overlayStats) }
     Box(
         modifier = modifier
             .size(size + borderSize)
             .clip(CircleShape)
             .background(constructorColor ?: AppTheme.colors.primary)
-//            .clickable(
-//                enabled = number != null && code != null,
-//                onClick = {
-//                    showStats.value = !showStats.value
-//                }
-//            )
+            .clickable(
+                enabled = driverClicked != null,
+                onClick = {
+                    driverClicked?.invoke()
+                }
+            )
     ) {
         AsyncImage(
             model = photoUrl,
@@ -75,31 +75,31 @@ fun DriverIcon(
             contentDescription = null,
         )
 
-        Fade(
-            visible = showStats.value,
-            modifier = Modifier
-                .align(Alignment.Center)
-                .size(size)
-                .clip(CircleShape)
-                .background(Color.Black.copy(alpha = 0.7f))
-        ) {
-            Column(
-                modifier = Modifier,
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                DriverNumber(
-                    number = number!!.toString(),
-                    highlightNumber = constructorColor ?: AppTheme.colors.contentPrimary
-                )
-
-                DriverNumber(
-                    modifier = Modifier.padding(top = AppTheme.dimens.xxsmall),
-                    number = code!!.toString(),
-                    highlightNumber = Color.White
-                )
-            }
-        }
+//        Fade(
+//            visible = showStats.value,
+//            modifier = Modifier
+//                .align(Alignment.Center)
+//                .size(size)
+//                .clip(CircleShape)
+//                .background(Color.Black.copy(alpha = 0.7f))
+//        ) {
+//            Column(
+//                modifier = Modifier,
+//                horizontalAlignment = Alignment.CenterHorizontally,
+//                verticalArrangement = Arrangement.Center
+//            ) {
+//                DriverNumber(
+//                    number = number!!.toString(),
+//                    highlightNumber = constructorColor ?: AppTheme.colors.contentPrimary
+//                )
+//
+//                DriverNumber(
+//                    modifier = Modifier.padding(top = AppTheme.dimens.xxsmall),
+//                    number = code!!.toString(),
+//                    highlightNumber = Color.White
+//                )
+//            }
+//        }
     }
 }
 
@@ -160,20 +160,6 @@ private fun Preview() {
         DriverIcon(
             photoUrl = "",
             constructorColor = Color.Red
-        )
-    }
-}
-
-@PreviewTheme
-@Composable
-private fun PreviewInfo() {
-    AppThemePreview {
-        DriverIcon(
-            photoUrl = "",
-            constructorColor = Color.Red,
-            defaultShowStats = true,
-            number = 16,
-            code = "LEC"
         )
     }
 }

@@ -1,5 +1,7 @@
 package tmg.flashback.formula1.model
 
+import android.graphics.Color
+
 fun Constructor.Companion.model(
     id: String = "constructorId",
     name: String = "name",
@@ -7,7 +9,7 @@ fun Constructor.Companion.model(
     wikiUrl: String? = "wikiUrl",
     nationality: String = "nationality",
     nationalityISO: String = "nationalityISO",
-    color: Int = 0,
+    color: Int = Color.CYAN,
 ): Constructor = Constructor(
     id = id,
     name = name,
