@@ -33,7 +33,7 @@ import tmg.flashback.ui.R
 import tmg.flashback.ui.components.loading.Fade
 
 
-val driverIconImageSize: Dp = 54.dp
+val driverIconImageSize: Dp = 48.dp
 val driverIconBorderSize: Dp = 6.dp
 
 val driverIconSize: Dp
@@ -56,12 +56,12 @@ fun DriverIcon(
             .size(size + borderSize)
             .clip(CircleShape)
             .background(constructorColor ?: AppTheme.colors.primary)
-            .clickable(
-                enabled = number != null && code != null,
-                onClick = {
-                    showStats.value = !showStats.value
-                }
-            )
+//            .clickable(
+//                enabled = number != null && code != null,
+//                onClick = {
+//                    showStats.value = !showStats.value
+//                }
+//            )
     ) {
         AsyncImage(
             model = photoUrl,

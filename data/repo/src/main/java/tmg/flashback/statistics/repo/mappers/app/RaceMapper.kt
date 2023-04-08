@@ -1,5 +1,6 @@
 package tmg.flashback.statistics.repo.mappers.app
 
+import tmg.flashback.formula1.enums.RaceStatus
 import tmg.flashback.formula1.model.DriverConstructor
 import tmg.flashback.formula1.model.FastestLap
 import tmg.flashback.formula1.model.Race
@@ -145,7 +146,7 @@ class RaceMapper @Inject constructor(
                     points = result.sprintResult.points,
                     grid = result.sprintResult.gridPos ?: 0,
                     finish = result.sprintResult.finished,
-                    status = result.sprintResult.status
+                    status = RaceStatus.from(result.sprintResult.status)
                 )
             }
     }
@@ -177,7 +178,7 @@ class RaceMapper @Inject constructor(
                     grid = raceResult.gridPos ?: 0,
                     qualified = raceResult.qualified,
                     finish = raceResult.finished,
-                    status = raceResult.status,
+                    status = RaceStatus.from(raceResult.status),
                     fastestLap = raceResult.fastestLap?.let { mapFastestLap(it) }
                 )
             }

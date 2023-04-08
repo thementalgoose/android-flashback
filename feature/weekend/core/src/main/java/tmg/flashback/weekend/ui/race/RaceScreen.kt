@@ -1,7 +1,5 @@
 package tmg.flashback.weekend.ui.race
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
@@ -11,7 +9,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -25,13 +22,6 @@ import tmg.flashback.formula1.model.FastestLap
 import tmg.flashback.formula1.model.LapTime
 import tmg.flashback.formula1.model.RaceRaceResult
 import tmg.flashback.providers.RaceRaceResultProvider
-import tmg.flashback.weekend.ui.fakeWeekendInfo
-import tmg.flashback.weekend.ui.info.RaceInfoHeader
-import tmg.flashback.weekend.ui.shared.Delta
-import tmg.flashback.weekend.R
-import tmg.flashback.weekend.ui.shared.DriverInfo
-import tmg.flashback.ui.components.errors.NotAvailable
-import tmg.flashback.ui.components.errors.NotAvailableYet
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
@@ -42,8 +32,13 @@ import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextTitle
 import tmg.flashback.ui.components.drivers.DriverIcon
 import tmg.flashback.ui.components.drivers.driverIconSize
+import tmg.flashback.ui.components.errors.NotAvailable
+import tmg.flashback.ui.components.errors.NotAvailableYet
 import tmg.flashback.ui.components.loading.SkeletonViewList
+import tmg.flashback.weekend.R
 import tmg.flashback.weekend.contract.model.WeekendInfo
+import tmg.flashback.weekend.ui.fakeWeekendInfo
+import tmg.flashback.weekend.ui.info.RaceInfoHeader
 
 private val timeWidth = 88.dp
 private val pointsWidth = 48.dp
@@ -101,10 +96,24 @@ internal fun LazyListScope.race(
     items(list, key = { it.id }) {
         when (it) {
             is RaceModel.Podium -> {
-                Podium(
-                    model = it,
-                    driverClicked = driverClicked
-                )
+                Column(Modifier.fillMaxWidth()) {
+                    Result(
+                        model = it.p1,
+                        driverClicked = driverClicked
+                    )
+                    Result(
+                        model = it.p2,
+                        driverClicked = driverClicked
+                    )
+                    Result(
+                        model = it.p3,
+                        driverClicked = driverClicked
+                    )
+                }
+//                Podium(
+//                    model = it,
+//                    driverClicked = driverClicked
+//                )
             }
             is RaceModel.Result -> {
                 Result(
@@ -196,58 +205,6 @@ private fun Result(
 }
 
 @Composable
-private fun ResultOld(
-    model: RaceRaceResult,
-    driverClicked: (RaceRaceResult) -> Unit,
-    modifier: Modifier = Modifier
-) {
-    Row(
-        modifier = modifier
-            .height(IntrinsicSize.Min)
-            .alpha(
-                when (model.status.isStatusFinished()) {
-                    true -> 1.0f
-                    false -> 0.7f
-                }
-            )
-            .background(
-                when (model.status.isStatusFinished()) {
-                    true -> AppTheme.colors.backgroundPrimary
-                    false -> AppTheme.colors.backgroundSecondary
-                }
-            ),
-        horizontalArrangement = Arrangement.Center
-    ) {
-        DriverInfo(
-            modifier = Modifier
-                .weight(1f)
-                .clickable(onClick = { driverClicked(model) }),
-            driver = model.driver,
-            position = model.finish,
-            extraContent = {
-                Delta(
-                    grid = model.grid,
-                    finish = model.finish
-                )
-                if (model.fastestLap?.rank == 1) {
-                    Spacer(Modifier.width(4.dp))
-                    FastestLap(Modifier.align(Alignment.CenterVertically))
-                }
-            }
-        )
-        Points(
-            modifier = Modifier.padding(vertical = AppTheme.dimens.medium),
-            points = model.points
-        )
-        Time(
-            modifier = Modifier.padding(vertical = AppTheme.dimens.medium),
-            lapTime = model.time,
-            status = model.status
-        )
-    }
-}
-
-@Composable
 private fun Time(
     lapTime: LapTime?,
     status: RaceStatus,
@@ -260,8 +217,9 @@ private fun Time(
             maxLines = 1,
             text = when {
                 lapTime?.noTime == false -> "+${lapTime.time}"
-                status.isStatusFinished() -> status
-                else -> stringResource(id = R.string.race_status_retired)
+                status.isStatusFinished() -> status.label
+                else -> status.label
+//                else -> stringResource(id = R.string.race_status_retired)
             },
         )
     }
