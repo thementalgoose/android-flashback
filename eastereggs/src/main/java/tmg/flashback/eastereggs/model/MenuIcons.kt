@@ -26,7 +26,7 @@ enum class MenuIcons(
     ),
     EASTER(
         key = "easter",
-        startResolver = { LocalDate.of(2024, 3, 29) },
+        startResolver = { LocalDate.of(2024, 3, 28) },
         endResolver = { LocalDate.of(2024, 4, 2) }
     ),
     HALLOWEEN(
