@@ -2,7 +2,7 @@ package tmg.flashback.statistics.room.models.constructors
 
 fun Constructor.Companion.model(
     id: String = "constructorId",
-    colour: String = "#123456",
+    colour: String = "#00FFFF",
     name: String = "name",
     photoUrl: String? = "photoUrl",
     nationality: String = "nationality",

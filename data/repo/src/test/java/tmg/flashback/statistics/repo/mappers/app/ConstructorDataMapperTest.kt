@@ -20,7 +20,9 @@ internal class ConstructorDataMapperTest {
     @Test
     fun `mapConstructorData maps fields correctly`() {
         val input = RoomConstructor.model()
-        val expected = Constructor.model()
+        val expected = Constructor.model(
+            color = 0 /* .toColorInt() doesnt work from unit tests */
+        )
 
         assertEquals(expected, underTest.mapConstructorData(input))
     }
