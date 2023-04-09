@@ -43,6 +43,7 @@ internal class RaceStatusTest {
         "COLLISION,false,Collision damage",
         "POWER_LOSS,false,Power loss",
         "WITHDREW,false,Withdrew",
+        "WITHDREW,false,Retired",
         "ACCIDENT,false,Accident",
         "OIL_PRESSURE,false,Oil pressure",
         "DISQUALIFIED,false,Disqualified",

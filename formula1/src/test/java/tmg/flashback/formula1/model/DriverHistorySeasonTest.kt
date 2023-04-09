@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
-import tmg.flashback.formula1.enums.raceStatusUnknown
+import tmg.flashback.formula1.enums.RaceStatus
 
 internal class DriverHistorySeasonTest {
 
@@ -142,7 +142,7 @@ internal class DriverHistorySeasonTest {
     )
     fun `race finishes`(status: String) {
         val model = DriverHistorySeason.model(raceOverview = listOf(
-            DriverHistorySeasonRace.model(status = status),
+            DriverHistorySeasonRace.model(status = RaceStatus.from(status)),
         ))
 
         assertEquals(1, model.raceFinishes)
@@ -198,11 +198,11 @@ internal class DriverHistorySeasonTest {
         "Overheating",
         "Spark plugs",
         "Throttle",
-        raceStatusUnknown
+        "Unknown"
     )
     fun `race retirements`(status: String) {
         val model = DriverHistorySeason.model(raceOverview = listOf(
-            DriverHistorySeasonRace.model(status = status),
+            DriverHistorySeasonRace.model(status = RaceStatus.from(status)),
         ))
 
         assertEquals(0, model.raceFinishes)

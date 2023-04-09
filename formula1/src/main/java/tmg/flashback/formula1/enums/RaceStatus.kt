@@ -49,7 +49,7 @@ enum class RaceStatus(
     DEBRIS(listOf("Debris"), R.drawable.ic_status_damage),
     COLLISION(listOf("Collision", "Collision damage"), R.drawable.ic_status_collision),
     POWER_LOSS(listOf("Power loss"), R.drawable.ic_status_power_loss),
-    WITHDREW(listOf("Withdrew"), R.drawable.ic_status_retired),
+    WITHDREW(listOf("Withdrew", "Retired"), R.drawable.ic_status_retired),
     ACCIDENT(listOf("Accident"), R.drawable.ic_status_accident),
     OIL_PRESSURE(listOf("Oil pressure"), R.drawable.ic_status_oil_pressure),
     DISQUALIFIED(listOf("Disqualified"), R.drawable.ic_status_disqualified),
