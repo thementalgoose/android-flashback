@@ -171,7 +171,8 @@ private fun Result(
                 photoUrl = model.driver.driver.photoUrl,
                 number = model.driver.driver.number,
                 code = model.driver.driver.code,
-                constructorColor = model.driver.constructor.colour
+                constructorColor = model.driver.constructor.colour,
+                driverClicked = { driverClicked(model) }
             )
             Column(
                 modifier = Modifier
