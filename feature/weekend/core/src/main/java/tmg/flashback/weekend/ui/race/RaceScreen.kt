@@ -149,6 +149,7 @@ private fun Result(
     Row(modifier = modifier
         .height(IntrinsicSize.Min)
     ) {
+
         ConstructorIndicator(constructor = model.driver.constructor)
         Row(modifier = Modifier
             .weight(1f)
