@@ -41,6 +41,7 @@ import tmg.flashback.weekend.contract.model.WeekendInfo
 import tmg.flashback.weekend.ui.fakeWeekendInfo
 import tmg.flashback.weekend.ui.info.RaceInfoHeader
 import tmg.flashback.weekend.ui.shared.ConstructorIndicator
+import tmg.flashback.weekend.ui.shared.RelativePosition
 import tmg.flashback.weekend.ui.shared.finishingPositionWidth
 
 private val timeWidth = 88.dp
@@ -149,7 +150,6 @@ private fun Result(
     Row(modifier = modifier
         .height(IntrinsicSize.Min)
     ) {
-
         ConstructorIndicator(constructor = model.driver.constructor)
         Row(modifier = Modifier
             .weight(1f)
@@ -202,6 +202,10 @@ private fun Result(
             lapTime = model.time,
             status = model.status
         )
+//        RelativePosition(
+//            delta = model.finish - (model.grid ?: 0),
+//            modifier = Modifier.width(48.dp)
+//        )
     }
 }
 
