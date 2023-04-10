@@ -8,6 +8,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.text.style.TextAlign
@@ -25,7 +26,7 @@ fun RelativePosition(
     delta: Int,
     modifier: Modifier = Modifier
 ) {
-    Box(modifier = modifier) {
+    Box(modifier = modifier.clipToBounds()) {
         when {
             delta > 0 -> {
                 BackgroundDown()
@@ -98,9 +99,14 @@ private fun BackgroundNeutral() {
     Canvas(
         modifier = Modifier.fillMaxSize(),
         onDraw = {
-            this.drawPath(getNeutralPath(0f, this.size.height / 10f, this.size.width, this.size.height / 5f), colour)
-            this.drawPath(getNeutralPath(0f, (this.size.height / 10f + this.size.height / 3f), this.size.width, this.size.height / 5f), colour)
-            this.drawPath(getNeutralPath(0f, (this.size.height / 10f + this.size.height / 1.5f), this.size.width, this.size.height / 5f), colour)
+            val chevronHeight = this.size.height / 4f
+            val spacing = this.size.height / 3f
+            val list = List(4) {
+                getNeutralPath(0f, -spacing / 2f + (it * spacing), this.size.width, chevronHeight)
+            }
+            list.forEach {
+                drawPath(it, colour)
+            }
         }
     )
 }
@@ -147,7 +153,7 @@ private fun Position(
         maxLines = 1,
         textAlign = TextAlign.Center,
         style = AppTheme.typography.block.copy(
-            fontSize = 24.sp
+            fontSize = 20.sp
         )
     )
 }
