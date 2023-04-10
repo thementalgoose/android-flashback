@@ -1,4 +1,4 @@
-package tmg.flashback.results.components
+package tmg.flashback.weekend.ui.shared
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Box
