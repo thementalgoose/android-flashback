@@ -1,5 +1,6 @@
 package tmg.flashback.constructors.ui.overview
 
+import android.graphics.Color
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import tmg.flashback.formula1.model.ConstructorHistorySeasonDriver
@@ -9,7 +10,7 @@ import tmg.flashback.ui.components.navigation.PipeType
 fun ConstructorOverviewModel.Companion.headerModel(
     constructorName: String = "name",
     constructorPhotoUrl: String? = "photoUrl",
-    constructorColor: Int = 0,
+    constructorColor: Int = Color.CYAN,
     constructorNationality: String = "nationality",
     constructorNationalityISO: String = "nationalityISO",
     constructorWikiUrl: String? = "wikiUrl"

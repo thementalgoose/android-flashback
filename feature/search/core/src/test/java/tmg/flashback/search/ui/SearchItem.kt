@@ -1,5 +1,6 @@
 package tmg.flashback.search.ui
 
+import android.graphics.Color
 import org.threeten.bp.LocalDate
 
 internal fun SearchItem.Constructor.Companion.model(
@@ -8,7 +9,7 @@ internal fun SearchItem.Constructor.Companion.model(
     nationality: String = "nationality",
     nationalityISO: String = "nationalityISO",
     photoUrl: String? = "photoUrl",
-    colour: Int = 0,
+    colour: Int = Color.CYAN,
 ): SearchItem.Constructor = SearchItem.Constructor(
     constructorId = constructorId,
     name = name,

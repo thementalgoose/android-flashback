@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -13,8 +14,8 @@ import tmg.flashback.ads.adsadmob.R
 import tmg.flashback.ads.adsadmob.views.NativeBanner
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
-import tmg.flashback.ui.components.badges.Badge
-import tmg.flashback.ui.components.badges.BadgeView
+import tmg.flashback.style.badge.Badge
+import tmg.flashback.style.badge.BadgeView
 
 @Composable
 internal fun NativeBannerView(
@@ -66,7 +67,7 @@ private fun NativeBannerView(
             Row(modifier = Modifier.padding(start = startPadding)) {
                 BadgeView(
                     model = Badge(
-                        label = R.string.admob_advertisement
+                        label = stringResource(id = R.string.admob_advertisement)
                     )
                 )
             }

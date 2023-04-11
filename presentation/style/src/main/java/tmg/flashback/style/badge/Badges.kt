@@ -1,9 +1,10 @@
-package tmg.flashback.ui.components.badges
+package tmg.flashback.style.badge
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
@@ -17,17 +18,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
+import tmg.flashback.style.R
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody2
-import tmg.flashback.ui.R
 
 data class Badge(
-    @StringRes
-    val label: Int,
+    val label: String,
     @DrawableRes
     val icon: Int? = null,
 )
@@ -35,15 +35,15 @@ data class Badge(
 @Composable
 fun BadgesView(
     list: List<Badge>,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    spacing: Dp = AppTheme.dimens.small
 ) {
-    Row(modifier = modifier
-        .padding(start = AppTheme.dimens.medium)
-        .horizontalScroll(rememberScrollState())
+    Row(
+        modifier = modifier.horizontalScroll(rememberScrollState()),
+        horizontalArrangement = Arrangement.spacedBy(spacing)
     ) {
         list.forEach {
             BadgeView(model = it)
-            Spacer(Modifier.width(AppTheme.dimens.medium))
         }
     }
 }
@@ -72,7 +72,7 @@ fun BadgeView(
             Spacer(Modifier.width(6.dp))
         }
         TextBody2(
-            text = stringResource(id = model.label),
+            text = model.label,
             bold = true
         )
     }
@@ -95,16 +95,16 @@ private fun Preview() {
 }
 
 private val fakeMenuBadge = Badge(
-    label = R.string.ab_menu
+    label = "Play"
 )
 private val fakeMenuIconBadge = Badge(
-    label = R.string.ab_menu,
-    icon = R.drawable.ic_menu
+    label = "Pause",
+    icon = R.drawable.lb_ic_play
 )
 private val fakeBackBadge = Badge(
-    label = R.string.ab_back
+    label = "Play"
 )
 private val fakeBackIconBadge = Badge(
-    label = R.string.ab_back,
-    icon = R.drawable.ic_back
+    label = "Pause",
+    icon = R.drawable.lb_ic_loop
 )

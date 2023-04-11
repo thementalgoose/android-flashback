@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
+import tmg.flashback.formula1.enums.RaceStatus
 
 internal class DriverHistoryTest {
 
@@ -187,15 +188,15 @@ internal class DriverHistoryTest {
     fun `race finishes and retirements sums race finishes`() {
         val model = DriverHistory.model(standings = listOf(
             DriverHistorySeason.model(raceOverview = listOf(
-                DriverHistorySeasonRace.model(status = "Finished"),
-                DriverHistorySeasonRace.model(status = "+1 Lap"),
-                DriverHistorySeasonRace.model(status = "Retired")
+                DriverHistorySeasonRace.model(status = RaceStatus.FINISHED),
+                DriverHistorySeasonRace.model(status = RaceStatus.LAPS_1),
+                DriverHistorySeasonRace.model(status = RaceStatus.WITHDREW)
             )),
             DriverHistorySeason.model(raceOverview = listOf(
-                DriverHistorySeasonRace.model(status = "Retired"),
-                DriverHistorySeasonRace.model(status = "Finished"),
-                DriverHistorySeasonRace.model(status = "+2 Laps"),
-                DriverHistorySeasonRace.model(status = "Gearbox")
+                DriverHistorySeasonRace.model(status = RaceStatus.WITHDREW),
+                DriverHistorySeasonRace.model(status = RaceStatus.FINISHED),
+                DriverHistorySeasonRace.model(status = RaceStatus.LAPS_2),
+                DriverHistorySeasonRace.model(status = RaceStatus.GEARBOX)
             ))
         ))
 

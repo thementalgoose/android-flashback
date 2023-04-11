@@ -161,7 +161,7 @@ private fun Time(
         text = when {
             lapTime?.noTime == false && position == 1 -> lapTime.time
             lapTime?.noTime == false -> "+${lapTime.time}"
-            status.isStatusFinished() -> status
+            status.isStatusFinished() -> status.label
             else -> stringResource(id = R.string.race_status_retired)
         },
     )
