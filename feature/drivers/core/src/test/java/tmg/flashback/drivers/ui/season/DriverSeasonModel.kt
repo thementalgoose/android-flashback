@@ -4,7 +4,6 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import org.threeten.bp.LocalDate
 import tmg.flashback.formula1.enums.RaceStatus
-import tmg.flashback.formula1.enums.raceStatusFinish
 import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.model.model
@@ -63,7 +62,7 @@ fun DriverSeasonModel.Companion.resultModel(
     constructor: Constructor = Constructor.model(),
     qualified: Int? = 1,
     finished: Int? = 1,
-    raceStatus: RaceStatus = raceStatusFinish,
+    raceStatus: RaceStatus = RaceStatus.FINISHED,
     points: Double = 0.0,
     maxPoints: Int = 25
 ): DriverSeasonModel.Result = DriverSeasonModel.Result(

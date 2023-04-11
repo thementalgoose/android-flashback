@@ -25,8 +25,9 @@ import tmg.flashback.providers.RaceProvider
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
+import tmg.flashback.style.badge.Badge
+import tmg.flashback.style.badge.BadgeView
 import tmg.flashback.style.buttons.ButtonSecondary
-import tmg.flashback.style.label.Label
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.weekend.R
@@ -94,8 +95,8 @@ private fun Track(
             contentDescription = null
         )
         model.laps?.toIntOrNull()?.let { laps ->
-            Label(
-                label = stringResource(id = R.string.weekend_info_laps, laps)
+            BadgeView(
+                model = Badge(stringResource(id = R.string.weekend_info_laps, laps))
             )
         }
     }

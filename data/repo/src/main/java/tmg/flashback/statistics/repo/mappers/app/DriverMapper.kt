@@ -1,5 +1,6 @@
 package tmg.flashback.statistics.repo.mappers.app
 
+import tmg.flashback.formula1.enums.RaceStatus
 import tmg.flashback.formula1.model.DriverHistory
 import tmg.flashback.formula1.model.DriverHistorySeason
 import tmg.flashback.formula1.model.DriverHistorySeasonRace
@@ -39,7 +40,7 @@ class DriverMapper @Inject constructor(
 
     private fun mapDriverSeasonRace(data: DriverSeasonRaceWithConstructor): DriverHistorySeasonRace {
         return DriverHistorySeasonRace(
-            status = data.race.status,
+            status = RaceStatus.from(data.race.status),
             finished = data.race.finished,
             points = data.race.points,
             qualified = data.race.qualified,

@@ -1,5 +1,7 @@
 package tmg.flashback.weekend.ui.sprint
 
+import android.os.Parcel
+import android.os.Parcelable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
@@ -15,6 +17,7 @@ import tmg.flashback.drivers.contract.DriverSeason
 import tmg.flashback.drivers.contract.with
 import tmg.flashback.formula1.constants.Formula1
 import tmg.flashback.formula1.model.RaceSprintResult
+import tmg.flashback.navigation.Navigator
 import tmg.flashback.statistics.repo.RaceRepository
 import tmg.flashback.navigation.Screen
 import javax.inject.Inject
@@ -31,7 +34,7 @@ interface SprintViewModelOutputs {
 @HiltViewModel
 class SprintViewModel @Inject constructor(
     private val raceRepository: RaceRepository,
-    private val navigator: tmg.flashback.navigation.Navigator,
+    private val navigator: Navigator,
     private val ioDispatcher: CoroutineDispatcher
 ): ViewModel(), SprintViewModelInputs, SprintViewModelOutputs {
 

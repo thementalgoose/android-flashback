@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import tmg.flashback.drivers.contract.Driver
 import tmg.flashback.drivers.contract.with
+import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.flashback.statistics.repo.SeasonRepository
 import tmg.flashback.results.usecases.FetchSeasonUseCase
@@ -38,7 +39,7 @@ interface DriversStandingViewModelOutputs {
 class DriversStandingViewModel @Inject constructor(
     private val seasonRepository: SeasonRepository,
     private val fetchSeasonUseCase: FetchSeasonUseCase,
-    private val navigator: tmg.flashback.navigation.Navigator,
+    private val navigator: Navigator,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), DriversStandingViewModelInputs, DriversStandingViewModelOutputs {
 

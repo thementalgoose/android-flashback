@@ -26,11 +26,17 @@ import tmg.flashback.ui.components.errors.NotAvailableYet
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
-import tmg.flashback.style.label.Label
+import tmg.flashback.style.badge.Badge
+import tmg.flashback.style.badge.BadgeView
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextSection
+import tmg.flashback.ui.components.drivers.DriverName
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.weekend.contract.model.WeekendInfo
+import tmg.flashback.weekend.ui.shared.ConstructorIndicator
+import tmg.flashback.weekend.ui.shared.Position
+import tmg.flashback.weekend.ui.shared.constructorIndicatorWidth
+import tmg.flashback.weekend.ui.shared.finishingPositionWidth
 
 private val lapTimeWidth: Dp = 64.dp
 
@@ -180,14 +186,15 @@ private fun Qualifying(
         Row(modifier = modifier
             .height(IntrinsicSize.Min)
         ) {
-            DriverInfo(
-                modifier = Modifier
-                    .weight(1f)
-                    .clickable(onClick = { driverClicked(model.driver.driver) }),
-                driver = model.driver,
-                position = model.qualified,
-                grid = model.grid
-            )
+            Column(Modifier.weight(1f)) {
+                DriverLabel(
+                    modifier = Modifier
+                        .clickable(onClick = { driverClicked(model.driver.driver) }),
+                    driver = model.driver,
+                    qualifyingPosition = model.qualified,
+                    grid = model.grid
+                )
+            }
             Time(
                 modifier = Modifier.fillMaxHeight(),
                 laptime = model.q1?.lapTime
@@ -214,12 +221,13 @@ private fun Qualifying(
     Row(modifier = modifier
         .height(IntrinsicSize.Min)
     ) {
-        DriverInfo(
+        DriverLabel(
             modifier = Modifier
                 .weight(1f)
                 .clickable(onClick = { driverClicked(model.driver.driver) }),
             driver = model.driver,
-            position = model.qualified
+            qualifyingPosition = model.qualified,
+            grid = null,
         )
         Time(
             modifier = Modifier.fillMaxHeight(),
@@ -242,18 +250,49 @@ private fun Qualifying(
     Row(modifier = modifier
         .height(IntrinsicSize.Min)
     ) {
-        DriverInfo(
+        DriverLabel(
             modifier = Modifier
                 .weight(1f)
                 .clickable(onClick = { driverClicked(model.driver.driver) }),
             driver = model.driver,
-            position = model.qualified
+            qualifyingPosition = model.qualified,
+            grid = null,
         )
         Time(
             modifier = Modifier.fillMaxHeight(),
             laptime = model.q1?.lapTime
         )
         Spacer(Modifier.width(AppTheme.dimens.medium))
+    }
+}
+
+@Composable
+private fun DriverLabel(
+    driver: DriverConstructor,
+    qualifyingPosition: Int?,
+    grid: Int?,
+    modifier: Modifier = Modifier
+) {
+    Row(modifier = modifier.height(IntrinsicSize.Min)) {
+        ConstructorIndicator(driver.constructor)
+        Position(label = qualifyingPosition?.toString() ?: "-")
+        Column(Modifier.fillMaxWidth()) {
+            DriverName(
+                firstName = driver.driver.firstName,
+                lastName = driver.driver.lastName,
+                modifier = Modifier.padding(top = AppTheme.dimens.xsmall)
+            )
+            TextBody2(
+                text = driver.constructor.name,
+                modifier = Modifier.padding(vertical = AppTheme.dimens.xsmall)
+            )
+            if (grid != null && qualifyingPosition != null && grid > qualifyingPosition) {
+                BadgeView(
+                    modifier = Modifier.padding(bottom = AppTheme.dimens.xsmall),
+                    model = Badge(stringResource(id = R.string.qualifying_penalty, grid))
+                )
+            }
+        }
     }
 }
 

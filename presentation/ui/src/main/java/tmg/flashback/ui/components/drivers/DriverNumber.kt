@@ -23,6 +23,7 @@ fun DriverNumber(
     Text(
         modifier = modifier,
         text = number,
+        maxLines = 1,
         textAlign = textAlign,
         style = AppTheme.typography.block.copy(
             fontSize = if (small) 12.sp else 16.sp
