@@ -1,5 +1,6 @@
 package tmg.flashback.weekend.ui.race
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
@@ -154,6 +155,10 @@ private fun Result(
         Row(modifier = Modifier
             .weight(1f)
             .padding(vertical = AppTheme.dimens.xsmall)
+            .clickable(
+                enabled = true,
+                onClick = { driverClicked(model) }
+            )
         ) {
             Box(Modifier.size(finishingPositionWidth, driverIconSize)) {
                 TextTitle(
@@ -173,7 +178,7 @@ private fun Result(
                 number = model.driver.driver.number,
                 code = model.driver.driver.code,
                 constructorColor = model.driver.constructor.colour,
-                driverClicked = { driverClicked(model) }
+                driverClicked = null
             )
             Column(
                 modifier = Modifier
