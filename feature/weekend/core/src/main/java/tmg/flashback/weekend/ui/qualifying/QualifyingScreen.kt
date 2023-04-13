@@ -286,12 +286,12 @@ private fun DriverLabel(
                 text = driver.constructor.name,
                 modifier = Modifier.padding(vertical = AppTheme.dimens.xsmall)
             )
-            if (grid != null && qualifyingPosition != null && grid > qualifyingPosition) {
-                BadgeView(
-                    modifier = Modifier.padding(bottom = AppTheme.dimens.xsmall),
-                    model = Badge(stringResource(id = R.string.qualifying_penalty, grid))
-                )
-            }
+//            if (grid != null && qualifyingPosition != null && grid > qualifyingPosition) {
+//                BadgeView(
+//                    modifier = Modifier.padding(bottom = AppTheme.dimens.xsmall),
+//                    model = Badge(stringResource(id = R.string.qualifying_penalty, grid))
+//                )
+//            }
         }
     }
 }
