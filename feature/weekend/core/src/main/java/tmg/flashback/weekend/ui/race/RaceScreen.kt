@@ -46,7 +46,7 @@ import tmg.flashback.weekend.ui.shared.RelativePosition
 import tmg.flashback.weekend.ui.shared.finishingPositionWidth
 
 private val timeWidth = 88.dp
-private val pointsWidth = 48.dp
+private val pointsWidth = 56.dp
 
 @Composable
 fun RaceScreenVM(
