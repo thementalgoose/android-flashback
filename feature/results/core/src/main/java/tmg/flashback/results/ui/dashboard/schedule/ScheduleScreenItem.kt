@@ -1,4 +1,4 @@
-package tmg.flashback.results.ui.dashboard.schedule.schedule
+package tmg.flashback.results.ui.dashboard.schedule
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -14,6 +14,12 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.CollectionInfo
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.collectionInfo
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.selectableGroup
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.Dp
@@ -24,13 +30,13 @@ import tmg.flashback.formula1.model.Schedule
 import tmg.flashback.providers.OverviewRaceProvider
 import tmg.flashback.results.R
 import tmg.flashback.results.repository.models.NotificationSchedule
-import tmg.flashback.results.ui.dashboard.schedule.ScheduleModel
 import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
+import tmg.flashback.style.text.TextSection
 import tmg.flashback.style.text.TextTitle
 import tmg.flashback.ui.components.layouts.Container
 import tmg.utilities.extensions.format
@@ -78,7 +84,7 @@ internal fun Schedule(
                 ) {
                     Flag(
                         iso = model.model.countryISO,
-                        nationality = model.model.country,
+                        nationality = null,
                         modifier = Modifier.size(countryBadgeSize),
                     )
                 }
@@ -97,9 +103,8 @@ internal fun Schedule(
                             modifier = Modifier.weight(1f)
                         )
                         Spacer(Modifier.width(AppTheme.dimens.small))
-                        TextTitle(
-                            text = "#${model.model.round}",
-                            bold = true
+                        Round(
+                            round = model.model.round
                         )
                     }
                     Row {
@@ -150,8 +155,14 @@ private fun RowScope.IconRow(
             .size(iconSize)
             .align(Alignment.CenterVertically),
         painter = painterResource(id = R.drawable.ic_status_results_qualifying),
-        contentDescription = stringResource(id = R.string.ab_has_qualifying_results),
-        tint = if (showQualifying) AppTheme.colors.f1ResultsFull else AppTheme.colors.backgroundTertiary
+        contentDescription = when (showQualifying) {
+            true -> stringResource(id = R.string.ab_has_qualifying_results)
+            false -> stringResource(id = R.string.ab_no_qualifying_results)
+        },
+        tint = when (showQualifying) {
+            true -> AppTheme.colors.f1ResultsFull
+            false -> AppTheme.colors.backgroundTertiary
+        }
     )
     Spacer(Modifier.width(2.dp))
     if (showSprint) {
@@ -170,8 +181,14 @@ private fun RowScope.IconRow(
             .size(iconSize)
             .align(Alignment.CenterVertically),
         painter = painterResource(id = R.drawable.ic_status_results_race),
-        contentDescription = stringResource(id = R.string.ab_has_race_results),
-        tint = if (showRace) AppTheme.colors.f1ResultsFull else AppTheme.colors.backgroundTertiary
+        contentDescription = when (showRace) {
+            true -> stringResource(id = R.string.ab_has_race_results)
+            false -> stringResource(id = R.string.ab_no_race_results)
+        },
+        tint = when (showRace) {
+            true -> AppTheme.colors.f1ResultsFull
+            false -> AppTheme.colors.backgroundTertiary
+        }
     )
 }
 
@@ -200,7 +217,9 @@ private fun Dates(
             for ((date, list) in schedule) {
                 val alpha = if (date.isBefore(LocalDate.now()) || list.all { it.timestamp.isInPast }) pastScheduleAlpha else 1f
                 item {
-                    Column {
+                    Column(Modifier.semantics {
+                        this.collectionInfo = CollectionInfo(list.size, 1)
+                    }) {
                         TextBody2(
                             text = date.format("EEE '${date.dayOfMonth.ordinalAbbreviation}' MMMM")
                                 ?: "",
@@ -228,13 +247,34 @@ private fun Dates(
 }
 
 @Composable
+internal fun Round(
+    round: Int
+) {
+    val contentDescription = stringResource(id = R.string.weekend_race_round, round)
+    TextSection(
+        modifier = Modifier.semantics {
+            this.contentDescription = contentDescription
+        },
+        text = "#${round}"
+    )
+}
+
+@Composable
 private fun DateCard(
     schedule: Schedule,
     showNotificationBadge: Boolean,
     modifier: Modifier = Modifier
 ) {
     val alpha = if (schedule.timestamp.isInPast) pastScheduleAlpha else 1f
+
+    val time = schedule.timestamp.deviceLocalDateTime.toLocalTime().format("HH:mm")
+    val contentDescription = when (showNotificationBadge) {
+        true -> stringResource(id = R.string.ab_schedule_date_card_notifications_enabled, schedule.label, time)
+        false -> stringResource(id = R.string.ab_schedule_date_card, schedule.label, time)
+    }
     Column(modifier = modifier
+        .semantics(mergeDescendants = true) { }
+        .clearAndSetSemantics { this.contentDescription = contentDescription }
         .width(IntrinsicSize.Max)
         .clip(RoundedCornerShape(AppTheme.dimens.radiusSmall))
         .background(AppTheme.colors.backgroundTertiary)
@@ -266,7 +306,7 @@ private fun DateCard(
         TextBody2(
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Center,
-            text = schedule.timestamp.deviceLocalDateTime.toLocalTime().format("HH:mm"),
+            text = time,
             bold = true
         )
     }

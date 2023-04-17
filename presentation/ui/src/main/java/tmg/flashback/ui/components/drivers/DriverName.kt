@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.unit.dp
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
@@ -20,7 +21,8 @@ fun DriverName(
 ) {
     Row(modifier = modifier
         .semantics(mergeDescendants = true) {
-            contentDescription = "$firstName $lastName"
+            this.stateDescription = "$firstName $lastName"
+            this.contentDescription = "$firstName $lastName"
         }
     ) {
         TextBody1(
