@@ -12,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -196,6 +197,7 @@ private fun Stat(
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = initialModifier
+            .semantics(mergeDescendants = true) { }
             .fillMaxWidth()
             .padding(
                 vertical = AppTheme.dimens.xsmall,

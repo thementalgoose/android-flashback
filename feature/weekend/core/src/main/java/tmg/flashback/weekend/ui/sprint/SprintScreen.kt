@@ -20,6 +20,9 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
@@ -56,6 +59,7 @@ import tmg.flashback.weekend.ui.qualifying.QualifyingModel
 import tmg.flashback.weekend.ui.qualifying.QualifyingScreen
 import tmg.flashback.weekend.ui.shared.ConstructorIndicator
 import tmg.flashback.weekend.ui.shared.finishingPositionWidth
+import tmg.utilities.extensions.ordinalAbbreviation
 
 private val timeWidth = 88.dp
 private val pointsWidth = 56.dp
@@ -139,6 +143,12 @@ private fun Result(
     driverClicked: (RaceSprintResult) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val contentDescription = stringResource(
+        id = R.string.ab_result_overview,
+        model.finish.ordinalAbbreviation,
+        model.driver.driver.name,
+        model.driver.constructor.name
+    )
     Row(
         modifier = modifier.height(IntrinsicSize.Min),
         horizontalArrangement = Arrangement.Center
@@ -146,11 +156,13 @@ private fun Result(
         ConstructorIndicator(constructor = model.driver.constructor)
         Row(modifier = Modifier
             .weight(1f)
-            .padding(vertical = AppTheme.dimens.xsmall)
+            .semantics(mergeDescendants = true) { }
             .clickable(
                 enabled = true,
                 onClick = { driverClicked(model) }
             )
+            .clearAndSetSemantics { this.contentDescription = contentDescription }
+            .padding(vertical = AppTheme.dimens.xsmall)
         ) {
             Box(Modifier.size(finishingPositionWidth, driverIconSize)) {
                 TextTitle(
@@ -212,17 +224,31 @@ private fun Time(
     status: RaceStatus,
     modifier: Modifier = Modifier
 ) {
-    TextBody2(
-        modifier = modifier
-            .width(timeWidth),
-        textAlign = TextAlign.Center,
-        text = when {
-            lapTime?.noTime == false && position == 1 -> lapTime.time
-            lapTime?.noTime == false -> "+${lapTime.time}"
-            status.isStatusFinished() -> status.label
-            else -> stringResource(id = R.string.race_status_retired)
-        },
-    )
+    val contentDescription = when {
+        lapTime?.noTime == false && position == 1 -> stringResource(id = R.string.ab_result_finish_p1, lapTime.time)
+        lapTime?.noTime == false-> stringResource(id = R.string.ab_result_finish_time, "+${lapTime.time}")
+        status.isStatusFinished() -> status.label
+        else -> stringResource(id = R.string.ab_result_finish_dnf, status.label)
+    }
+    Box(modifier = modifier
+        .size(timeWidth, driverIconSize)
+        .semantics(mergeDescendants = true) { }
+        .clearAndSetSemantics {
+            this.contentDescription = contentDescription
+        }
+    ) {
+        TextBody2(
+            modifier = Modifier.align(Alignment.Center),
+            textAlign = TextAlign.Center,
+            maxLines = 2,
+            text = when {
+                lapTime?.noTime == false && position == 1 -> lapTime.time
+                lapTime?.noTime == false -> "+${lapTime.time}"
+                status.isStatusFinished() -> status.label
+                else -> "${stringResource(id = R.string.race_status_retired)}\n${status.label}"
+            },
+        )
+    }
 }
 
 @Composable
