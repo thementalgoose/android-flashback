@@ -23,14 +23,11 @@ import tmg.flashback.formula1.model.*
 import tmg.flashback.providers.DriverConstructorProvider
 import tmg.flashback.weekend.ui.fakeWeekendInfo
 import tmg.flashback.weekend.ui.info.RaceInfoHeader
-import tmg.flashback.weekend.ui.shared.DriverInfo
 import tmg.flashback.ui.components.errors.NotAvailable
 import tmg.flashback.ui.components.errors.NotAvailableYet
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
-import tmg.flashback.style.badge.Badge
-import tmg.flashback.style.badge.BadgeView
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextSection
 import tmg.flashback.ui.components.drivers.DriverName
@@ -38,8 +35,6 @@ import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.weekend.contract.model.WeekendInfo
 import tmg.flashback.weekend.ui.shared.ConstructorIndicator
 import tmg.flashback.weekend.ui.shared.Position
-import tmg.flashback.weekend.ui.shared.constructorIndicatorWidth
-import tmg.flashback.weekend.ui.shared.finishingPositionWidth
 import tmg.utilities.extensions.ordinalAbbreviation
 
 private val lapTimeWidth: Dp = 64.dp
@@ -284,7 +279,7 @@ private fun DriverLabel(
     modifier: Modifier = Modifier
 ) {
     val contentDescription = stringResource(
-        id = R.string.ab_qualifying_overview,
+        id = R.string.ab_result_overview,
         qualifyingPosition?.ordinalAbbreviation ?: stringResource(id = R.string.ab_did_not_qualify),
         driver.driver.name,
         driver.constructor.name

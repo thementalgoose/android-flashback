@@ -13,7 +13,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.Dp
@@ -159,6 +163,7 @@ private fun Stat(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
             .fillMaxWidth()
+            .semantics(mergeDescendants = true) { }
             .padding(
                 vertical = AppTheme.dimens.xsmall,
                 horizontal = AppTheme.dimens.medium
@@ -388,9 +393,12 @@ private fun Result(
                 .padding(vertical = AppTheme.dimens.xsmall)
         ) {
             val progress = (model.points / model.maxPoints).toFloat().coerceIn(0f, 1f)
+            val contentDescription = pluralStringResource(id = R.plurals.race_points, count = model.points.roundToInt(), model.points.pointsDisplay())
             ProgressBar(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .semantics(mergeDescendants = true) { }
+                    .clearAndSetSemantics { this.contentDescription = contentDescription }
                     .height(36.dp),
                 endProgress = progress,
                 backgroundColor = Color.Transparent,
