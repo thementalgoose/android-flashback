@@ -39,6 +39,7 @@ import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextCaption
 import tmg.flashback.drivers.R
 import tmg.flashback.formula1.enums.RaceStatus
+import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextTitle
 import tmg.flashback.ui.components.analytics.ScreenView
@@ -321,6 +322,7 @@ private fun Result(
                 raceCountryISO = model.raceCountryISO,
                 constructorColor = model.constructor.colour.copy(alpha = 0.2f),
                 circuitName = model.circuitName,
+                constructor = model.constructor,
                 round = model.round
             )
             if (model.showConstructorLabel) {
@@ -474,6 +476,7 @@ private fun RaceInfo(
     raceCountryISO: String,
     circuitName: String,
     constructorColor: Color,
+    constructor: Constructor,
     round: Int?,
     modifier: Modifier = Modifier,
 ) {
