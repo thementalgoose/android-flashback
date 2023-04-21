@@ -21,6 +21,9 @@
     <string name="ab_result_finish_p1">Finished in %s</string>
     <string name="ab_result_finish_dnf">Did not finish. %s</string>
 
+    <string name="ab_race_overview">%s, round %s at %s. Drove for %s</string>
+
+    <string name="ab_scored">%s scored %s points</string>
     <string name="ab_notifications_enabled">Notification enabled</string>
 
     <string name="ab_has_qualifying_results">Qualifying results available</string>
