@@ -13,7 +13,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.Dp
@@ -35,6 +39,7 @@ import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextCaption
 import tmg.flashback.drivers.R
 import tmg.flashback.formula1.enums.RaceStatus
+import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextTitle
 import tmg.flashback.ui.components.analytics.ScreenView
@@ -159,6 +164,7 @@ private fun Stat(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
             .fillMaxWidth()
+            .semantics(mergeDescendants = true) { }
             .padding(
                 vertical = AppTheme.dimens.xsmall,
                 horizontal = AppTheme.dimens.medium
@@ -316,6 +322,7 @@ private fun Result(
                 raceCountryISO = model.raceCountryISO,
                 constructorColor = model.constructor.colour.copy(alpha = 0.2f),
                 circuitName = model.circuitName,
+                constructor = model.constructor,
                 round = model.round
             )
             if (model.showConstructorLabel) {
@@ -388,9 +395,12 @@ private fun Result(
                 .padding(vertical = AppTheme.dimens.xsmall)
         ) {
             val progress = (model.points / model.maxPoints).toFloat().coerceIn(0f, 1f)
+            val contentDescription = pluralStringResource(id = R.plurals.race_points, count = model.points.roundToInt(), model.points.pointsDisplay())
             ProgressBar(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .semantics(mergeDescendants = true) { }
+                    .clearAndSetSemantics { this.contentDescription = contentDescription }
                     .height(36.dp),
                 endProgress = progress,
                 backgroundColor = Color.Transparent,
@@ -466,6 +476,7 @@ private fun RaceInfo(
     raceCountryISO: String,
     circuitName: String,
     constructorColor: Color,
+    constructor: Constructor,
     round: Int?,
     modifier: Modifier = Modifier,
 ) {

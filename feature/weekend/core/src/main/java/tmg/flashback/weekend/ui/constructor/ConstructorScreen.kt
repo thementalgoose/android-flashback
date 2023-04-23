@@ -9,6 +9,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
@@ -27,7 +31,9 @@ import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextTitle
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.progressbar.ProgressBar
+import tmg.flashback.weekend.R
 import tmg.flashback.weekend.contract.model.WeekendInfo
+import tmg.utilities.extensions.ordinalAbbreviation
 import kotlin.math.roundToInt
 
 @Composable
@@ -109,10 +115,22 @@ private fun ConstructorResult(
     itemClicked: (ConstructorModel.Constructor) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val contentDescription = "${model.position?.ordinalAbbreviation}. ${stringResource(id = R.string.ab_scored, model.constructor.name, model.points.pointsDisplay())}."
+    val drivers = model.drivers
+        .map {
+            stringResource(id = R.string.ab_scored, it.first.name, it.second.pointsDisplay())
+        }
+        .joinToString(separator = ",")
+
     Row(
-        modifier = modifier.clickable(onClick = {
-            itemClicked(model)
-        }),
+        modifier = modifier
+            .semantics(mergeDescendants = true) {  }
+            .clearAndSetSemantics {
+                this.contentDescription = contentDescription + drivers
+            }
+            .clickable(onClick = {
+                itemClicked(model)
+            }),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         TextTitle(

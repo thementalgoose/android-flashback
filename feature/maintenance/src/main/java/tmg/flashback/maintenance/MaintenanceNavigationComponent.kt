@@ -7,7 +7,7 @@ import tmg.flashback.navigation.ActivityProvider
 import javax.inject.Inject
 
 class MaintenanceNavigationComponent @Inject constructor(
-    private val activityProvider: tmg.flashback.navigation.ActivityProvider
+    private val activityProvider: ActivityProvider
 ) {
 
     private fun forceUpgradeIntent(context: Context): Intent {

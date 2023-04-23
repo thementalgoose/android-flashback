@@ -16,6 +16,9 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -29,14 +32,12 @@ import tmg.flashback.providers.OverviewRaceProvider
 import tmg.flashback.results.R
 import tmg.flashback.results.repository.models.NotificationSchedule
 import tmg.flashback.results.ui.dashboard.DashboardQuickLinks
-import tmg.flashback.results.ui.dashboard.schedule.schedule.Schedule
 import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
-import tmg.flashback.style.text.TextSection
 import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.loading.SkeletonViewList
@@ -173,8 +174,16 @@ private fun CollapsableList(
     itemClicked: (ScheduleModel.CollapsableList) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val contentDescription = stringResource(id = R.string.ab_collapsed_section,
+        model.first.raceName,
+        model.first.round,
+        model.last?.raceName ?: model.first.raceName,
+        model.last?.round ?: model.first.round
+    )
     Row(modifier = modifier
         .clickable { itemClicked(model) }
+        .semantics(mergeDescendants = true) {  }
+        .clearAndSetSemantics { this.stateDescription = contentDescription }
         .padding(
             horizontal = AppTheme.dimens.xsmall,
             vertical = AppTheme.dimens.xsmall
@@ -198,7 +207,7 @@ private fun CollapsableList(
                 Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                     Flag(
                         iso = model.first.countryISO,
-                        nationality = model.first.country,
+                        nationality = null,
                         modifier = Modifier.size(20.dp)
                     )
                     TextBody1(
@@ -207,14 +216,14 @@ private fun CollapsableList(
                             .weight(1f),
                         text = model.first.raceName
                     )
-                    TextSection(text = "#${model.first.round}")
+                    Round(model.first.round)
                 }
                 if (model.last != null) {
                     Spacer(Modifier.height(8.dp))
                     Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                         Flag(
                             iso = model.last.countryISO,
-                            nationality = model.last.country,
+                            nationality = null,
                             modifier = Modifier.size(20.dp)
                         )
                         TextBody1(
@@ -223,7 +232,7 @@ private fun CollapsableList(
                                 .weight(1f),
                             text = model.last.raceName
                         )
-                        TextSection(text = "#${model.last.round}")
+                        Round(model.last.round)
                     }
                 }
             }

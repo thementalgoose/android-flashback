@@ -1,5 +1,6 @@
 package tmg.flashback.weekend.ui.race
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
@@ -10,7 +11,11 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
@@ -43,9 +48,11 @@ import tmg.flashback.weekend.ui.info.RaceInfoHeader
 import tmg.flashback.weekend.ui.shared.ConstructorIndicator
 import tmg.flashback.weekend.ui.shared.RelativePosition
 import tmg.flashback.weekend.ui.shared.finishingPositionWidth
+import tmg.utilities.extensions.ordinalAbbreviation
+import kotlin.math.roundToInt
 
 private val timeWidth = 88.dp
-private val pointsWidth = 48.dp
+private val pointsWidth = 56.dp
 
 @Composable
 fun RaceScreenVM(
@@ -147,12 +154,27 @@ private fun Result(
     driverClicked: (RaceRaceResult) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val contentDescription = stringResource(
+        id = when (model.fastestLap?.rank == 1) {
+            true -> R.string.ab_result_overview_fastest_lap
+            false -> R.string.ab_result_overview
+        },
+        model.finish.ordinalAbbreviation,
+        model.driver.driver.name,
+        model.driver.constructor.name
+    )
     Row(modifier = modifier
         .height(IntrinsicSize.Min)
     ) {
         ConstructorIndicator(constructor = model.driver.constructor)
         Row(modifier = Modifier
             .weight(1f)
+            .semantics(mergeDescendants = true) { }
+            .clickable(
+                enabled = true,
+                onClick = { driverClicked(model) }
+            )
+            .clearAndSetSemantics { this.contentDescription = contentDescription }
             .padding(vertical = AppTheme.dimens.xsmall)
         ) {
             Box(Modifier.size(finishingPositionWidth, driverIconSize)) {
@@ -173,7 +195,7 @@ private fun Result(
                 number = model.driver.driver.number,
                 code = model.driver.driver.code,
                 constructorColor = model.driver.constructor.colour,
-                driverClicked = { driverClicked(model) }
+                driverClicked = null
             )
             Column(
                 modifier = Modifier
@@ -200,7 +222,8 @@ private fun Result(
         )
         Time(
             lapTime = model.time,
-            status = model.status
+            status = model.status,
+            position = model.finish
         )
 //        RelativePosition(
 //            delta = model.finish - (model.grid ?: 0),
@@ -213,18 +236,31 @@ private fun Result(
 private fun Time(
     lapTime: LapTime?,
     status: RaceStatus,
+    position: Int,
     modifier: Modifier = Modifier
 ) {
-    Box(modifier = modifier.size(timeWidth, driverIconSize)) {
+    val contentDescription = when {
+        lapTime?.noTime == false && position == 1 -> stringResource(id = R.string.ab_result_finish_p1, lapTime.time)
+        lapTime?.noTime == false-> stringResource(id = R.string.ab_result_finish_time, "+${lapTime.time}")
+        status.isStatusFinished() -> status.label
+        else -> stringResource(id = R.string.ab_result_finish_dnf, status.label)
+    }
+    Box(modifier = modifier
+        .size(timeWidth, driverIconSize)
+        .semantics(mergeDescendants = true) { }
+        .clearAndSetSemantics {
+            this.contentDescription = contentDescription
+        }
+    ) {
         TextBody2(
             modifier = Modifier.align(Alignment.Center),
             textAlign = TextAlign.Center,
-            maxLines = 1,
+            maxLines = 2,
             text = when {
+                lapTime?.noTime == false && position == 1 -> lapTime.time
                 lapTime?.noTime == false -> "+${lapTime.time}"
                 status.isStatusFinished() -> status.label
-//                else -> status.label
-                else -> stringResource(id = R.string.race_status_retired)
+                else -> "${stringResource(id = R.string.race_status_retired)}\n${status.label}"
             },
         )
     }
@@ -235,12 +271,18 @@ private fun Points(
     points: Double,
     modifier: Modifier = Modifier
 ) {
-    Box(modifier = modifier.size(pointsWidth, driverIconSize)) {
+    val pointsLabel = points.takeIf { it != 0.0 }?.pointsDisplay() ?: ""
+    val contentDescription = pluralStringResource(id = R.plurals.race_points, count = points.roundToInt(), pointsLabel)
+    Box(modifier = modifier
+        .semantics(mergeDescendants = true) { }
+        .clearAndSetSemantics { this.contentDescription = contentDescription }
+        .size(pointsWidth, driverIconSize)
+    ) {
         TextBody1(
             modifier = Modifier.align(Alignment.Center),
             bold = true,
             textAlign = TextAlign.Center,
-            text = points.takeIf { it != 0.0 }?.pointsDisplay() ?: "",
+            text = pointsLabel,
         )
     }
 }
