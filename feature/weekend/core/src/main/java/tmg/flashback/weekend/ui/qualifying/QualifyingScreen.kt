@@ -10,6 +10,9 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.Dp
@@ -20,14 +23,11 @@ import tmg.flashback.formula1.model.*
 import tmg.flashback.providers.DriverConstructorProvider
 import tmg.flashback.weekend.ui.fakeWeekendInfo
 import tmg.flashback.weekend.ui.info.RaceInfoHeader
-import tmg.flashback.weekend.ui.shared.DriverInfo
 import tmg.flashback.ui.components.errors.NotAvailable
 import tmg.flashback.ui.components.errors.NotAvailableYet
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
-import tmg.flashback.style.badge.Badge
-import tmg.flashback.style.badge.BadgeView
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextSection
 import tmg.flashback.ui.components.drivers.DriverName
@@ -35,8 +35,7 @@ import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.weekend.contract.model.WeekendInfo
 import tmg.flashback.weekend.ui.shared.ConstructorIndicator
 import tmg.flashback.weekend.ui.shared.Position
-import tmg.flashback.weekend.ui.shared.constructorIndicatorWidth
-import tmg.flashback.weekend.ui.shared.finishingPositionWidth
+import tmg.utilities.extensions.ordinalAbbreviation
 
 private val lapTimeWidth: Dp = 64.dp
 
@@ -197,15 +196,18 @@ private fun Qualifying(
             }
             Time(
                 modifier = Modifier.fillMaxHeight(),
-                laptime = model.q1?.lapTime
+                laptime = model.q1?.lapTime,
+                column = QualifyingColumn.Q1
             )
             Time(
                 modifier = Modifier.fillMaxHeight(),
-                laptime = model.q2?.lapTime
+                laptime = model.q2?.lapTime,
+                column = QualifyingColumn.Q2
             )
             Time(
                 modifier = Modifier.fillMaxHeight(),
-                laptime = model.q3?.lapTime
+                laptime = model.q3?.lapTime,
+                column = QualifyingColumn.Q3
             )
             Spacer(Modifier.width(AppTheme.dimens.medium))
         }
@@ -231,11 +233,13 @@ private fun Qualifying(
         )
         Time(
             modifier = Modifier.fillMaxHeight(),
-            laptime = model.q1?.lapTime
+            laptime = model.q1?.lapTime,
+            column = QualifyingColumn.Q2
         )
         Time(
             modifier = Modifier.fillMaxHeight(),
-            laptime = model.q2?.lapTime
+            laptime = model.q2?.lapTime,
+            column = QualifyingColumn.Q2
         )
         Spacer(Modifier.width(AppTheme.dimens.medium))
     }
@@ -260,7 +264,8 @@ private fun Qualifying(
         )
         Time(
             modifier = Modifier.fillMaxHeight(),
-            laptime = model.q1?.lapTime
+            laptime = model.q1?.lapTime,
+            column = QualifyingColumn.Q1
         )
         Spacer(Modifier.width(AppTheme.dimens.medium))
     }
@@ -273,7 +278,17 @@ private fun DriverLabel(
     grid: Int?,
     modifier: Modifier = Modifier
 ) {
-    Row(modifier = modifier.height(IntrinsicSize.Min)) {
+    val contentDescription = stringResource(
+        id = R.string.ab_result_overview,
+        qualifyingPosition?.ordinalAbbreviation ?: stringResource(id = R.string.ab_did_not_qualify),
+        driver.driver.name,
+        driver.constructor.name
+    )
+    Row(modifier = modifier
+        .height(IntrinsicSize.Min)
+        .semantics(mergeDescendants = true) { }
+        .clearAndSetSemantics { this.contentDescription = contentDescription }
+    ) {
         ConstructorIndicator(driver.constructor)
         Position(label = qualifyingPosition?.toString() ?: "-")
         Column(Modifier.fillMaxWidth()) {
@@ -286,12 +301,12 @@ private fun DriverLabel(
                 text = driver.constructor.name,
                 modifier = Modifier.padding(vertical = AppTheme.dimens.xsmall)
             )
-            if (grid != null && qualifyingPosition != null && grid > qualifyingPosition) {
-                BadgeView(
-                    modifier = Modifier.padding(bottom = AppTheme.dimens.xsmall),
-                    model = Badge(stringResource(id = R.string.qualifying_penalty, grid))
-                )
-            }
+//            if (grid != null && qualifyingPosition != null && grid > qualifyingPosition) {
+//                BadgeView(
+//                    modifier = Modifier.padding(bottom = AppTheme.dimens.xsmall),
+//                    model = Badge(stringResource(id = R.string.qualifying_penalty, grid))
+//                )
+//            }
         }
     }
 }
@@ -299,14 +314,28 @@ private fun DriverLabel(
 @Composable
 private fun Time(
     laptime: LapTime?,
+    column: QualifyingColumn,
     modifier: Modifier = Modifier
 ) {
+    val contentDescription = when (column) {
+        QualifyingColumn.Q1 -> stringResource(id = R.string.qualifying_header_q1)
+        QualifyingColumn.Q2 -> stringResource(id = R.string.qualifying_header_q2)
+        QualifyingColumn.Q3 -> stringResource(id = R.string.qualifying_header_q3)
+    }
     Box(modifier = modifier
         .width(lapTimeWidth)
+        .semantics(mergeDescendants = true) {
+            this.contentDescription = contentDescription
+        }
     ) {
         TextBody2(
             modifier = Modifier
                 .align(Alignment.TopCenter)
+                .semantics {
+                    if (laptime == null) {
+                        this.contentDescription = ""
+                    }
+                }
                 .padding(vertical = AppTheme.dimens.nsmall),
             text = laptime?.time ?: ""
         )
@@ -339,3 +368,5 @@ private fun fakeQualifyingModel(driverConstructor: DriverConstructor) = Qualifyi
     q3 = RaceQualifyingResult(driverConstructor, lapTime = LapTime(91934), position = 1),
     grid = 1
 )
+
+private enum class QualifyingColumn { Q1, Q2, Q3 }
