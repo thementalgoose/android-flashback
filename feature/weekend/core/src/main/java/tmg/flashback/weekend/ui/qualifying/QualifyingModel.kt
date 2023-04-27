@@ -1,6 +1,6 @@
 package tmg.flashback.weekend.ui.qualifying
 
-import tmg.flashback.formula1.model.DriverConstructor
+import tmg.flashback.formula1.model.DriverEntry
 import tmg.flashback.formula1.model.QualifyingResult
 
 sealed class QualifyingModel(
@@ -24,7 +24,7 @@ sealed class QualifyingModel(
     )
 
     data class Q1Q2Q3(
-        val driver: DriverConstructor,
+        val driver: DriverEntry,
         private val finalQualifyingPosition: Int?,
         val q1: QualifyingResult?,
         val q2: QualifyingResult?,
@@ -36,7 +36,7 @@ sealed class QualifyingModel(
     }
 
     data class Q1Q2(
-        val driver: DriverConstructor,
+        val driver: DriverEntry,
         private val finalQualifyingPosition: Int?,
         val q1: QualifyingResult?,
         val q2: QualifyingResult?,
@@ -46,7 +46,7 @@ sealed class QualifyingModel(
     }
 
     data class Q1(
-        val driver: DriverConstructor,
+        val driver: DriverEntry,
         private val finalQualifyingPosition: Int?,
         val q1: QualifyingResult?,
         val qualified: Int? = finalQualifyingPosition ?: q1?.position

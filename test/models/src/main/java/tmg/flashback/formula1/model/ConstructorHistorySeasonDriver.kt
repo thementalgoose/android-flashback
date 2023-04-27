@@ -1,7 +1,7 @@
 package tmg.flashback.formula1.model
 
 fun ConstructorHistorySeasonDriver.Companion.model(
-    driver: DriverConstructor = DriverConstructor.model(),
+    driver: DriverEntry = DriverEntry.model(),
     points: Double = 1.0,
     wins: Int = 1,
     races: Int = 1,

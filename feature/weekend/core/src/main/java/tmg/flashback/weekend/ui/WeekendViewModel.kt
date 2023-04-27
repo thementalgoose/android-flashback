@@ -83,7 +83,7 @@ class WeekendViewModel @Inject constructor(
             val list = mutableListOf<WeekendScreenState>()
             list.add(WeekendScreenState(WeekendNavItem.SCHEDULE, isSelected = navItem == WeekendNavItem.SCHEDULE))
             list.add(WeekendScreenState(WeekendNavItem.QUALIFYING, isSelected = navItem == WeekendNavItem.QUALIFYING))
-            if (race?.hasSprintQualifying == true) {
+            if (race?.hasSprint == true) {
                 list.add(WeekendScreenState(WeekendNavItem.SPRINT, isSelected = navItem == WeekendNavItem.SPRINT))
             }
             list.add(WeekendScreenState(WeekendNavItem.RACE, isSelected = navItem == WeekendNavItem.RACE))

@@ -11,24 +11,11 @@ internal class RaceDriverOverviewTest {
             q1 = QualifyingResult.model(position = 11),
             q2 = QualifyingResult.model(position = 12),
             q3 = QualifyingResult.model(position = 13),
-            qSprint = SprintRaceResult.model(finish = 14),
+            sprintRace = SprintRaceResult.model(finish = 14),
             race = RaceResult.model(qualified = 2)
         )
 
         assertEquals(2, model.officialQualifyingPosition)
-    }
-
-    @Test
-    fun `official qualifying position uses sprint value when race missing`() {
-        val model = RaceDriverOverview.model(
-            q1 = QualifyingResult.model(position = 11),
-            q2 = QualifyingResult.model(position = 12),
-            q3 = QualifyingResult.model(position = 13),
-            qSprint = SprintRaceResult.model(finish = 14),
-            race = RaceResult.model(qualified = null)
-        )
-
-        assertEquals(14, model.officialQualifyingPosition)
     }
 
     @Test
@@ -37,7 +24,7 @@ internal class RaceDriverOverviewTest {
             q1 = QualifyingResult.model(position = 11),
             q2 = QualifyingResult.model(position = 12),
             q3 = QualifyingResult.model(position = 13),
-            qSprint = null,
+            sprintRace = null,
             race = null
         )
 
@@ -50,7 +37,7 @@ internal class RaceDriverOverviewTest {
             q1 = QualifyingResult.model(position = 11),
             q2 = QualifyingResult.model(position = 12),
             q3 = null,
-            qSprint = null,
+            sprintRace = null,
             race = null
         )
 
@@ -63,7 +50,7 @@ internal class RaceDriverOverviewTest {
             q1 = QualifyingResult.model(position = 11),
             q2 = null,
             q3 = null,
-            qSprint = null,
+            sprintRace = null,
             race = null
         )
 

@@ -13,15 +13,15 @@ internal class SeasonTest {
             Race.model(
                 raceInfo = RaceInfo.model(round = 1),
                 race = listOf(
-                    RaceResult.model(driver = DriverConstructor.model(driver = driver1))
+                    RaceResult.model(driver = DriverEntry.model(driver = driver1))
                 ),
                 qualifying = emptyList()
             ),
             Race.model(
                 raceInfo = RaceInfo.model(round = 2),
                 race = listOf(
-                    RaceResult.model(driver = DriverConstructor.model(driver = driver2)),
-                    RaceResult.model(driver = DriverConstructor.model(driver = driver1))
+                    RaceResult.model(driver = DriverEntry.model(driver = driver2)),
+                    RaceResult.model(driver = DriverEntry.model(driver = driver1))
                 ),
                 qualifying = emptyList()
             )
@@ -38,15 +38,15 @@ internal class SeasonTest {
             Race.model(
                 raceInfo = RaceInfo.model(round = 1),
                 race = listOf(
-                    RaceResult.model(driver = DriverConstructor.model(constructor = constructor1))
+                    RaceResult.model(driver = DriverEntry.model(constructor = constructor1))
                 ),
                 qualifying = emptyList()
             ),
             Race.model(
                 raceInfo = RaceInfo.model(round = 2),
                 race = listOf(
-                    RaceResult.model(driver = DriverConstructor.model(constructor = constructor2)),
-                    RaceResult.model(driver = DriverConstructor.model(constructor = constructor1))
+                    RaceResult.model(driver = DriverEntry.model(constructor = constructor2)),
+                    RaceResult.model(driver = DriverEntry.model(constructor = constructor1))
                 ),
                 qualifying = emptyList()
             )

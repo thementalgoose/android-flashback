@@ -1,7 +1,7 @@
 package tmg.flashback.formula1.model
 
 data class QualifyingResult(
-    val driver: DriverConstructor,
+    val driver: DriverEntry,
     val lapTime: LapTime?,
     val position: Int
 ) {

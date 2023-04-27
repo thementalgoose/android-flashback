@@ -139,7 +139,7 @@ internal class ConstructorHistoryTest {
             )),
             ConstructorHistorySeason.model(season = 2019, drivers = mapOf(
                 "driver2" to ConstructorHistorySeasonDriver.model(
-                    driver = DriverConstructor.model(driver = Driver.model(id = "driver2")),
+                    driver = DriverEntry.model(driver = Driver.model(id = "driver2")),
                     polePosition = 3
                 )
             ))
@@ -156,7 +156,7 @@ internal class ConstructorHistoryTest {
             )),
             ConstructorHistorySeason.model(season = 2019, drivers = mapOf(
                 "driver2" to ConstructorHistorySeasonDriver.model(
-                    driver = DriverConstructor.model(driver = Driver.model(id = "driver2")),
+                    driver = DriverEntry.model(driver = Driver.model(id = "driver2")),
                     finishesInPoints = 5
                 )
             ))

@@ -27,7 +27,7 @@ import tmg.flashback.analytics.constants.AnalyticsConstants.analyticsConstructor
 import tmg.flashback.formula1.constants.Formula1
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.ConstructorHistorySeasonDriver
-import tmg.flashback.formula1.model.DriverConstructor
+import tmg.flashback.formula1.model.DriverEntry
 import tmg.flashback.providers.DriverConstructorProvider
 import tmg.flashback.ui.components.timeline.TimelineTop
 import tmg.flashback.ui.components.timeline.dotDiameter
@@ -36,7 +36,6 @@ import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
-import tmg.flashback.style.buttons.ButtonTertiary
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextCaption
@@ -387,7 +386,7 @@ private fun DriverPerSeason(
 @PreviewTheme
 @Composable
 private fun Preview(
-    @PreviewParameter(DriverConstructorProvider::class) driverConstructor: DriverConstructor
+    @PreviewParameter(DriverConstructorProvider::class) driverConstructor: DriverEntry
 ) {
     AppThemePreview {
         ConstructorOverviewScreen(
@@ -419,7 +418,7 @@ private val fakeStat = ConstructorOverviewModel.Stat(
     label = R.string.driver_overview_stat_career_points,
     value = "4"
 )
-private fun DriverConstructor.history1() =
+private fun DriverEntry.history1() =
     tmg.flashback.constructors.ui.overview.ConstructorOverviewModel.History(
         season = 2022,
         pipe = PipeType.START,
@@ -432,7 +431,7 @@ private fun DriverConstructor.history1() =
         )
     )
 
-private fun DriverConstructor.history2() =
+private fun DriverEntry.history2() =
     tmg.flashback.constructors.ui.overview.ConstructorOverviewModel.History(
         season = 2021,
         pipe = PipeType.START_END,
@@ -445,7 +444,7 @@ private fun DriverConstructor.history2() =
         )
     )
 
-private fun DriverConstructor.history3() =
+private fun DriverEntry.history3() =
     tmg.flashback.constructors.ui.overview.ConstructorOverviewModel.History(
         season = 2020,
         pipe = PipeType.END,
@@ -458,7 +457,7 @@ private fun DriverConstructor.history3() =
         )
     )
 
-private fun DriverConstructor.driver() = ConstructorHistorySeasonDriver(
+private fun DriverEntry.driver() = ConstructorHistorySeasonDriver(
     driver = this,
     points = 1.0,
     wins = 1,

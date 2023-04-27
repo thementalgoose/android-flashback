@@ -51,11 +51,11 @@ internal class ConstructorHistorySeasonTest {
     fun `number of podiums returns accurate value`() {
         val model = ConstructorHistorySeason.model(drivers = mapOf(
             "driver1" to ConstructorHistorySeasonDriver.model(
-                driver = DriverConstructor.model(driver = Driver.model(id = "driver1")),
+                driver = DriverEntry.model(driver = Driver.model(id = "driver1")),
                 podiums = 3
             ),
             "driver2" to ConstructorHistorySeasonDriver.model(
-                driver = DriverConstructor.model(driver = Driver.model(id = "driver2")),
+                driver = DriverEntry.model(driver = Driver.model(id = "driver2")),
                 podiums = 7
             ),
             "driver3" to ConstructorHistorySeasonDriver.model(podiums = 0)

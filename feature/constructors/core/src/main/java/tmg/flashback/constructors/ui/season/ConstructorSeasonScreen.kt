@@ -35,7 +35,7 @@ import tmg.flashback.analytics.constants.AnalyticsConstants.analyticsSeason
 import tmg.flashback.constructors.R
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.ConstructorHistorySeasonDriver
-import tmg.flashback.formula1.model.DriverConstructor
+import tmg.flashback.formula1.model.DriverEntry
 import tmg.flashback.providers.DriverConstructorProvider
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
@@ -305,7 +305,7 @@ private fun SummaryCell(
 @PreviewTheme
 @Composable
 private fun Preview(
-    @PreviewParameter(DriverConstructorProvider::class) driverConstructor: DriverConstructor
+    @PreviewParameter(DriverConstructorProvider::class) driverConstructor: DriverEntry
 ) {
     AppThemePreview {
         ConstructorSeasonScreen(
@@ -335,12 +335,12 @@ private val fakeStat = ConstructorSeasonModel.Stat(
     value = "4"
 )
 
-private fun DriverConstructor.driverSummary() =
+private fun DriverEntry.driverSummary() =
     tmg.flashback.constructors.ui.season.ConstructorSeasonModel.Driver(
         this.driver()
     )
 
-private fun DriverConstructor.driver() = ConstructorHistorySeasonDriver(
+private fun DriverEntry.driver() = ConstructorHistorySeasonDriver(
     driver = this,
     points = 1.0,
     wins = 1,

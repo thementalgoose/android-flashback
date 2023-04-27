@@ -4,7 +4,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import tmg.flashback.formula1.model.CircuitHistoryRace
 import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.Driver
-import tmg.flashback.formula1.model.DriverConstructor
+import tmg.flashback.formula1.model.DriverEntry
 import tmg.flashback.formula1.model.Event
 import tmg.flashback.formula1.model.Overview
 import tmg.flashback.formula1.model.Race
@@ -59,8 +59,8 @@ class RaceProvider: PreviewParameterProvider<Race> {
     override val values: Sequence<Race> = sequenceOf()
 }
 
-class DriverConstructorProvider: PreviewParameterProvider<DriverConstructor> {
-    override val values: Sequence<DriverConstructor> = sequenceOf()
+class DriverConstructorProvider: PreviewParameterProvider<DriverEntry> {
+    override val values: Sequence<DriverEntry> = sequenceOf()
 }
 
 class RaceRaceResultProvider: PreviewParameterProvider<RaceResult> {
