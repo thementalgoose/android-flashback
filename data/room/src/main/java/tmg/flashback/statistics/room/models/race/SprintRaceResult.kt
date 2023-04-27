@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class SprintResult(
+data class SprintRaceResult(
     @ColumnInfo(name = "driver_id")
     val driverId: String,
     @ColumnInfo(name = "season")

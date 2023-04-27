@@ -30,7 +30,7 @@ interface SeasonDao {
     fun insertRace(
         race: RaceInfo,
         qualifyingResults: List<QualifyingResult>,
-        sprintResults: List<SprintResult>,
+        sprintResults: List<SprintRaceResult>,
         raceResults: List<RaceResult>
     ) {
         insertQualifyingResults(qualifyingResults)
@@ -43,7 +43,7 @@ interface SeasonDao {
     fun insertRaces(
         races: List<RaceInfo>,
         qualifyingResults: List<QualifyingResult>,
-        sprintResults: List<SprintResult>,
+        sprintResults: List<SprintRaceResult>,
         raceResults: List<RaceResult>,
     ) {
         insertQualifyingResults(qualifyingResults)
@@ -56,7 +56,7 @@ interface SeasonDao {
     fun insertQualifyingResults(results: List<QualifyingResult>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertSprintResults(results: List<SprintResult>)
+    fun insertSprintResults(results: List<SprintRaceResult>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertRaceResult(results: List<RaceResult>)

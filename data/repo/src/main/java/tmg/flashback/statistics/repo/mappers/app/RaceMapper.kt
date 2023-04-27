@@ -16,7 +16,7 @@ import tmg.flashback.formula1.utils.toLapTime
 import tmg.flashback.statistics.room.models.race.QualifyingDriverResult
 import tmg.flashback.statistics.room.models.race.RaceDriverResult
 import tmg.flashback.statistics.room.models.race.RaceInfoWithCircuit
-import tmg.flashback.statistics.room.models.race.SprintDriverResult
+import tmg.flashback.statistics.room.models.race.SprintRaceDriverResult
 import tmg.utilities.utils.LocalDateUtils.Companion.requireFromDate
 import tmg.utilities.utils.LocalTimeUtils.Companion.fromTime
 import javax.inject.Inject
@@ -130,7 +130,7 @@ class RaceMapper @Inject constructor(
         return qualifyingData
     }
 
-    private fun mapSprint(input: List<SprintDriverResult>?): List<SprintRaceResult> {
+    private fun mapSprint(input: List<SprintRaceDriverResult>?): List<SprintRaceResult> {
         if (input == null || input.isEmpty()) return emptyList()
         val allDrivers = input.map { result ->
             DriverEntry(
