@@ -3,7 +3,7 @@ package tmg.flashback.statistics.repo.mappers.network
 import tmg.flashback.statistics.room.models.race.FastestLap
 import tmg.flashback.statistics.room.models.race.QualifyingResult
 import tmg.flashback.statistics.room.models.race.RaceResult
-import tmg.flashback.statistics.room.models.race.SprintResult
+import tmg.flashback.statistics.room.models.race.SprintRaceResult
 import javax.inject.Inject
 
 class NetworkRaceMapper @Inject constructor() {
@@ -40,8 +40,8 @@ class NetworkRaceMapper @Inject constructor() {
     }
 
     @Throws(RuntimeException::class)
-    fun mapSprintResults(season: Int, round: Int, data: tmg.flashback.statistics.network.models.races.SprintResult): SprintResult {
-        return SprintResult(
+    fun mapSprintResults(season: Int, round: Int, data: tmg.flashback.statistics.network.models.races.SprintResult): SprintRaceResult {
+        return SprintRaceResult(
             driverId = data.driverId,
             season = season,
             round = round,

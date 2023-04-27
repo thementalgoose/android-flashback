@@ -1,6 +1,6 @@
 package tmg.flashback.statistics.room.models.race
 
-fun SprintResult.Companion.model(
+fun SprintRaceResult.Companion.model(
     driverId: String = "driverId",
     season: Int = 2020,
     round: Int = 1,
@@ -10,7 +10,7 @@ fun SprintResult.Companion.model(
     finished: Int = 1,
     status: String = "status",
     time: String = "1:02.005"
-): SprintResult = SprintResult(
+): SprintRaceResult = SprintRaceResult(
     driverId = driverId,
     season = season,
     round = round,

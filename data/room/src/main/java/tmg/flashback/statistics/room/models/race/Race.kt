@@ -26,16 +26,22 @@ data class Race(
     )
     val race: List<RaceDriverResult>,
     @Relation(
-        entity = SprintResult::class,
         parentColumn = "id",
         entityColumn = "season_round_id"
     )
-    val sprint: List<SprintDriverResult>,
+    val schedule: List<Schedule>,
     @Relation(
+        entity = SprintQualifyingResult::class,
         parentColumn = "id",
         entityColumn = "season_round_id"
     )
-    val schedule: List<Schedule>
+    val sprintQualifying: List<SprintQualifyingDriverResult>,
+    @Relation(
+        entity = SprintRaceResult::class,
+        parentColumn = "id",
+        entityColumn = "season_round_id"
+    )
+    val sprintRace: List<SprintRaceDriverResult>
 ) {
     companion object
 }
