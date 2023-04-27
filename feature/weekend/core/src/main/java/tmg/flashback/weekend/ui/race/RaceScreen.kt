@@ -25,7 +25,7 @@ import tmg.flashback.formula1.enums.isStatusFinished
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.FastestLap
 import tmg.flashback.formula1.model.LapTime
-import tmg.flashback.formula1.model.RaceRaceResult
+import tmg.flashback.formula1.model.RaceResult
 import tmg.flashback.providers.RaceRaceResultProvider
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
@@ -46,7 +46,6 @@ import tmg.flashback.weekend.contract.model.WeekendInfo
 import tmg.flashback.weekend.ui.fakeWeekendInfo
 import tmg.flashback.weekend.ui.info.RaceInfoHeader
 import tmg.flashback.weekend.ui.shared.ConstructorIndicator
-import tmg.flashback.weekend.ui.shared.RelativePosition
 import tmg.flashback.weekend.ui.shared.finishingPositionWidth
 import tmg.utilities.extensions.ordinalAbbreviation
 import kotlin.math.roundToInt
@@ -79,7 +78,7 @@ fun RaceScreenVM(
 fun RaceScreen(
     info: WeekendInfo,
     list: List<RaceModel>,
-    driverClicked: (RaceRaceResult) -> Unit,
+    driverClicked: (RaceResult) -> Unit,
     actionUpClicked: () -> Unit
 ) {
     LazyColumn(
@@ -102,7 +101,7 @@ fun RaceScreen(
 
 internal fun LazyListScope.race(
     list: List<RaceModel>,
-    driverClicked: (RaceRaceResult) -> Unit,
+    driverClicked: (RaceResult) -> Unit,
 ) {
     items(list, key = { it.id }) {
         when (it) {
@@ -150,8 +149,8 @@ internal fun LazyListScope.race(
 
 @Composable
 private fun Result(
-    model: RaceRaceResult,
-    driverClicked: (RaceRaceResult) -> Unit,
+    model: RaceResult,
+    driverClicked: (RaceResult) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val contentDescription = stringResource(
@@ -304,7 +303,7 @@ internal fun FastestLap(
 @PreviewTheme
 @Composable
 private fun Preview(
-    @PreviewParameter(RaceRaceResultProvider::class) result: RaceRaceResult
+    @PreviewParameter(RaceRaceResultProvider::class) result: RaceResult
 ) {
     AppThemePreview {
         RaceScreen(

@@ -1,7 +1,5 @@
 package tmg.flashback.weekend.ui.sprint
 
-import android.os.Parcel
-import android.os.Parcelable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
@@ -16,7 +14,7 @@ import kotlinx.coroutines.flow.map
 import tmg.flashback.drivers.contract.DriverSeason
 import tmg.flashback.drivers.contract.with
 import tmg.flashback.formula1.constants.Formula1
-import tmg.flashback.formula1.model.RaceSprintResult
+import tmg.flashback.formula1.model.SprintRaceResult
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.statistics.repo.RaceRepository
 import tmg.flashback.navigation.Screen
@@ -24,7 +22,7 @@ import javax.inject.Inject
 
 interface SprintViewModelInputs {
     fun load(season: Int, round: Int)
-    fun clickDriver(result: RaceSprintResult)
+    fun clickDriver(result: SprintRaceResult)
 }
 
 interface SprintViewModelOutputs {
@@ -71,7 +69,7 @@ class SprintViewModel @Inject constructor(
         seasonRound.value = Pair(season, round)
     }
 
-    override fun clickDriver(result: RaceSprintResult) {
+    override fun clickDriver(result: SprintRaceResult) {
         val season = seasonRound.value?.first ?: return
         navigator.navigate(
             Screen.DriverSeason.with(
