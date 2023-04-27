@@ -1,14 +1,14 @@
 package tmg.flashback.formula1.model
 
-import tmg.flashback.formula1.model.RaceQualifyingType.Q1
-import tmg.flashback.formula1.model.RaceQualifyingType.Q2
-import tmg.flashback.formula1.model.RaceQualifyingType.Q3
+import tmg.flashback.formula1.model.QualifyingType.Q1
+import tmg.flashback.formula1.model.QualifyingType.Q2
+import tmg.flashback.formula1.model.QualifyingType.Q3
 
 data class Race(
     val raceInfo: RaceInfo,
-    val qualifying: List<RaceQualifyingRound>,
-    val sprint: List<RaceSprintResult>,
-    val race: List<RaceRaceResult>,
+    val qualifying: List<QualifyingRound>,
+    val sprint: List<SprintRaceResult>,
+    val race: List<RaceResult>,
     val schedule: List<Schedule>
 ) {
 
@@ -46,7 +46,7 @@ data class Race(
 
     val hasSprintQualifying: Boolean = sprint.isNotEmpty()
 
-    fun has(raceQualifyingType: RaceQualifyingType): Boolean {
+    fun has(raceQualifyingType: QualifyingType): Boolean {
         return qualifying.any { it.label == raceQualifyingType}
     }
 

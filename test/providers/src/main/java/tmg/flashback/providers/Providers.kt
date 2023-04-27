@@ -11,7 +11,7 @@ import tmg.flashback.formula1.model.Event
 import tmg.flashback.formula1.model.Overview
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.model.Race
-import tmg.flashback.formula1.model.RaceRaceResult
+import tmg.flashback.formula1.model.RaceResult
 import tmg.flashback.formula1.model.Schedule
 import tmg.flashback.formula1.model.SeasonConstructorStandingSeason
 import tmg.flashback.formula1.model.SeasonConstructorStandings
@@ -101,8 +101,8 @@ class DriverConstructorProvider: PreviewParameterProvider<DriverConstructor> {
     override val values: Sequence<DriverConstructor> = sequenceOf(DriverConstructor.model())
 }
 
-class RaceRaceResultProvider: PreviewParameterProvider<RaceRaceResult> {
-    override val values: Sequence<RaceRaceResult> = sequenceOf(RaceRaceResult.model())
+class RaceRaceResultProvider: PreviewParameterProvider<RaceResult> {
+    override val values: Sequence<RaceResult> = sequenceOf(RaceResult.model())
 }
 
 class CircuitHistoryRaceProvider: PreviewParameterProvider<CircuitHistoryRace> {
