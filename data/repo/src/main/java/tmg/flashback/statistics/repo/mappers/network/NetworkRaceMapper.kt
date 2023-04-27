@@ -40,7 +40,7 @@ class NetworkRaceMapper @Inject constructor() {
     }
 
     @Throws(RuntimeException::class)
-    fun mapSprintResults(season: Int, round: Int, data: tmg.flashback.statistics.network.models.races.SprintResult): SprintRaceResult {
+    fun mapSprintResults(season: Int, round: Int, data: tmg.flashback.statistics.network.models.races.SprintRaceResult): SprintRaceResult {
         return SprintRaceResult(
             driverId = data.driverId,
             season = season,

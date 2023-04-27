@@ -1,6 +1,6 @@
 package tmg.flashback.statistics.network.models.races
 
-fun SprintResult.Companion.model(
+fun SprintRaceResult.Companion.model(
     driverId: String = "driverId",
     driverNumber: String = "23",
     constructorId: String = "constructorId",
@@ -9,7 +9,7 @@ fun SprintResult.Companion.model(
     finished: Int = 1,
     status: String = "status",
     time: String? = "1:02.005"
-): SprintResult = SprintResult(
+): SprintRaceResult = SprintRaceResult(
     driverId = driverId,
     driverNumber = driverNumber,
     constructorId = constructorId,
