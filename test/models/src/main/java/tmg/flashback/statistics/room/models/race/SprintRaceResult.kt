@@ -9,7 +9,7 @@ fun SprintRaceResult.Companion.model(
     gridPos: Int? = 1,
     finished: Int = 1,
     status: String = "status",
-    time: String = "1:02.005"
+    time: String = "1:02:03.004"
 ): SprintRaceResult = SprintRaceResult(
     driverId = driverId,
     season = season,

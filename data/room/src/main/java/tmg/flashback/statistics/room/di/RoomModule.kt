@@ -125,6 +125,9 @@ private val MIGRATION_7_8 = object : Migration(7, 8) {
 
 private val MIGRATION_8_9 = object : Migration(8, 9) {
     override fun migrate(database: SupportSQLiteDatabase) {
+
+        // Rename SprintResult to SprintRaceResult
+        // Creates SprintQualifyingResult
         TODO()
 //        Log.i("Database", "Migrated DB from version $startVersion to $endVersion")
     }
