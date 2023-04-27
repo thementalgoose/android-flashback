@@ -30,7 +30,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.formula1.enums.RaceStatus
 import tmg.flashback.formula1.enums.isStatusFinished
 import tmg.flashback.formula1.extensions.pointsDisplay
-import tmg.flashback.formula1.model.DriverConstructor
+import tmg.flashback.formula1.model.DriverEntry
 import tmg.flashback.formula1.model.LapTime
 import tmg.flashback.formula1.model.SprintRaceResult
 import tmg.flashback.providers.DriverConstructorProvider
@@ -261,7 +261,7 @@ private fun Points(
 @PreviewTheme
 @Composable
 private fun Preview(
-    @PreviewParameter(DriverConstructorProvider::class) driverConstructor: DriverConstructor
+    @PreviewParameter(DriverConstructorProvider::class) driverConstructor: DriverEntry
 ) {
     AppThemePreview {
         SprintScreen(
@@ -275,7 +275,7 @@ private fun Preview(
     }
 }
 
-private fun fakeSprintModel(driverConstructor: DriverConstructor) = SprintModel.Result(
+private fun fakeSprintModel(driverConstructor: DriverEntry) = SprintModel.Result(
     result = SprintRaceResult(
         driver = driverConstructor,
         time = null,

@@ -17,9 +17,7 @@ fun Race.Companion.model(
             QualifyingResult.model(lapTime = LapTime.model(0, 1, 2, 3))
         ))
     ),
-    sprint: List<SprintRaceResult> = listOf(
-        SprintRaceResult.model(time = LapTime.model(0, 1, 2, 5))
-    ),
+    sprint: SprintResult = SprintResult.model(),
     race: List<RaceResult> = listOf(
         RaceResult.model()
     ),
