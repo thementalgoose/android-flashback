@@ -15,7 +15,7 @@ data class QualifyingResult(
     @ColumnInfo(name = "constructor_id")
     val constructorId: String,
     @ColumnInfo(name = "qualified")
-    val qualified: Int?,
+    val qualified: Int,
     @ColumnInfo(name = "q1")
     val q1: String?,
     @ColumnInfo(name = "q2")

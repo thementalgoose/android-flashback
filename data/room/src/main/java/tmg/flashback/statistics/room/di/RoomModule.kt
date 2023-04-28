@@ -125,10 +125,19 @@ private val MIGRATION_7_8 = object : Migration(7, 8) {
 
 private val MIGRATION_8_9 = object : Migration(8, 9) {
     override fun migrate(database: SupportSQLiteDatabase) {
-
-        // Rename SprintResult to SprintRaceResult
-        // Creates SprintQualifyingResult
-        TODO()
+        database.execSQL("ALTER TABLE SprintResult RENAME TO SprintRaceResult")
+        database.execSQL("ALTER TANLE QualifyingResult ALTER COLUMN qualified INTEGER NOT NULL")
+        database.execSQL("CREATE TABLE IF NOT EXISTS SprintQualifyingResult (" +
+                "driver_id TEXT NOT NULL, " +
+                "season INTEGER NOT NULL, " +
+                "round INTEGER NOT NULL, " +
+                "constructor_id TEXT NOT NULL, " +
+                "qualified INTEGER NOT NULL, " +
+                "sq1 TEXT, " +
+                "sq2 TEXT, " +
+                "sq3 TEXT, " +
+                "id TEXT NOT NULL PRIMARY KEY," +
+                "season_round_id TEXT NOT NULL)")
 //        Log.i("Database", "Migrated DB from version $startVersion to $endVersion")
     }
 }
