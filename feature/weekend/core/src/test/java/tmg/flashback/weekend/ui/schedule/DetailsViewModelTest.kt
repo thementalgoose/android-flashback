@@ -9,9 +9,13 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
+import tmg.flashback.circuits.contract.Circuit
+import tmg.flashback.circuits.contract.with
 import tmg.flashback.formula1.model.Race
 import tmg.flashback.formula1.model.Schedule
 import tmg.flashback.formula1.model.model
+import tmg.flashback.navigation.Navigator
+import tmg.flashback.navigation.Screen
 import tmg.flashback.results.contract.repository.NotificationsRepository
 import tmg.flashback.statistics.repo.RaceRepository
 import tmg.flashback.weekend.R
@@ -25,6 +29,7 @@ internal class DetailsViewModelTest: BaseTest() {
     private val mockRaceRepository: RaceRepository = mockk(relaxed = true)
     private val mockNotificationRepository: NotificationsRepository = mockk(relaxed = true)
     private val mockOpenWebpageUseCase: OpenWebpageUseCase = mockk(relaxed = true)
+    private val mockNavigator: Navigator = mockk(relaxed = true)
 
     private lateinit var underTest: DetailsViewModel
 
@@ -32,7 +37,8 @@ internal class DetailsViewModelTest: BaseTest() {
         underTest = DetailsViewModel(
             raceRepository = mockRaceRepository,
             notificationRepository = mockNotificationRepository,
-            openWebpageUseCase = mockOpenWebpageUseCase
+            openWebpageUseCase = mockOpenWebpageUseCase,
+            navigator = mockNavigator
         )
     }
 
@@ -56,7 +62,7 @@ internal class DetailsViewModelTest: BaseTest() {
 
         underTest.outputs.list.test {
             assertValue(listOf(
-                mapsLink,
+                links,
                 tmg.flashback.weekend.ui.details.DetailsModel.Track.model(),
                 tmg.flashback.weekend.ui.details.DetailsModel.ScheduleDay.model()
             ))
@@ -74,7 +80,7 @@ internal class DetailsViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `click link calls application component`() {
+    fun `click link opens webpage`() {
         val link = tmg.flashback.weekend.ui.details.DetailsModel.Link(0, 0, "https://url.com")
         initUnderTest()
 
@@ -82,6 +88,18 @@ internal class DetailsViewModelTest: BaseTest() {
 
         verify {
             mockOpenWebpageUseCase.open("https://url.com", title = "")
+        }
+    }
+
+    @Test
+    fun `click link with circuit history url navigates to circuit`() {
+        val link = tmg.flashback.weekend.ui.details.DetailsModel.Link(0, 0, "flashback://circuit-history/circuitId/circuitName")
+        initUnderTest()
+
+        underTest.inputs.linkClicked(link)
+
+        verify {
+            mockNavigator.navigate(Screen.Circuit.with("circuitId", "circuitName"))
         }
     }
 
@@ -105,7 +123,7 @@ internal class DetailsViewModelTest: BaseTest() {
 
         underTest.outputs.list.test {
             assertValue(listOf(
-                mapsLink,
+                links,
                 tmg.flashback.weekend.ui.details.DetailsModel.Track.model(),
                 tmg.flashback.weekend.ui.details.DetailsModel.ScheduleDay(
                     date = fp1.date,
@@ -130,12 +148,18 @@ internal class DetailsViewModelTest: BaseTest() {
         }
     }
 
-    private val mapsLink: tmg.flashback.weekend.ui.details.DetailsModel.Links get() = tmg.flashback.weekend.ui.details.DetailsModel.Links(
+    private val links: tmg.flashback.weekend.ui.details.DetailsModel.Links get() = tmg.flashback.weekend.ui.details.DetailsModel.Links(
         listOf(
             tmg.flashback.weekend.ui.details.DetailsModel.Link(
-            label = R.string.details_link_map,
-            icon = R.drawable.ic_details_maps,
-            url = "geo:51.101,-1.101?q=${Uri.encode("circuitName")}"
-        ))
+                label = R.string.details_link_circuit,
+                icon = R.drawable.ic_details_track,
+                url = "flashback://circuit-history/circuitId/circuitName"
+            ),
+            tmg.flashback.weekend.ui.details.DetailsModel.Link(
+                label = R.string.details_link_map,
+                icon = R.drawable.ic_details_maps,
+                url = "geo:51.101,-1.101?q=${Uri.encode("circuitName")}"
+            )
+        )
     )
 }
