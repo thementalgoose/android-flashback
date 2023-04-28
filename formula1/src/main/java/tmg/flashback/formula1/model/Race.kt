@@ -4,6 +4,8 @@ import tmg.flashback.formula1.model.QualifyingType.Q1
 import tmg.flashback.formula1.model.QualifyingType.Q2
 import tmg.flashback.formula1.model.QualifyingType.Q3
 import tmg.flashback.formula1.model.SprintQualifyingType.SQ1
+import tmg.flashback.formula1.model.SprintQualifyingType.SQ2
+import tmg.flashback.formula1.model.SprintQualifyingType.SQ3
 
 data class Race(
     val raceInfo: RaceInfo,
@@ -42,8 +44,8 @@ data class Race(
             q3 = qualifying.firstOrNull { it.label == Q3 }?.results?.firstOrNull { it.driver.driver.id == driverId },
             race = race.firstOrNull { it.driver.driver.id == driverId },
             sprintQ1 = sprint.qualifying.firstOrNull { it.label == SQ1 }?.results?.firstOrNull { it.driver.driver.id == driverId },
-            sprintQ2 = sprint.qualifying.firstOrNull { it.label == SQ1 }?.results?.firstOrNull { it.driver.driver.id == driverId },
-            sprintQ3 = sprint.qualifying.firstOrNull { it.label == SQ1 }?.results?.firstOrNull { it.driver.driver.id == driverId },
+            sprintQ2 = sprint.qualifying.firstOrNull { it.label == SQ2 }?.results?.firstOrNull { it.driver.driver.id == driverId },
+            sprintQ3 = sprint.qualifying.firstOrNull { it.label == SQ3 }?.results?.firstOrNull { it.driver.driver.id == driverId },
             sprintRace = sprint.race.firstOrNull { it.driver.driver.id == driverId },
         )
     }
