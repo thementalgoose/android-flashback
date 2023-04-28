@@ -1,21 +1,21 @@
 package tmg.flashback.statistics.room.models.race
 
-fun QualifyingResult.Companion.model(
+fun SprintQualifyingResult.Companion.model(
     driverId: String = "driverId",
     season: Int = 2020,
     round: Int = 1,
     constructorId: String = "constructorId",
     qualified: Int = 1,
-    q1: String? = "1:02.001",
-    q2: String? = "1:02.002",
-    q3: String? = "1:02.003"
-): QualifyingResult = QualifyingResult(
+    sq1: String? = "1:02.001",
+    sq2: String? = "1:02.002",
+    sq3: String? = "1:02.003"
+): SprintQualifyingResult = SprintQualifyingResult(
     driverId = driverId,
     season = season,
     round = round,
     constructorId = constructorId,
     qualified = qualified,
-    q1 = q1,
-    q2 = q2,
-    q3 = q3
+    sq1 = sq1,
+    sq2 = sq2,
+    sq3 = sq3
 )

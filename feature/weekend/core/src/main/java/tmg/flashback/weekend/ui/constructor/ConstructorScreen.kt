@@ -18,7 +18,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.formula1.extensions.pointsDisplay
-import tmg.flashback.formula1.model.DriverConstructor
+import tmg.flashback.formula1.model.DriverEntry
 import tmg.flashback.providers.DriverConstructorProvider
 import tmg.flashback.weekend.ui.shared.DriverPoints
 import tmg.flashback.weekend.ui.fakeWeekendInfo
@@ -183,7 +183,7 @@ private fun ConstructorResult(
 @PreviewTheme
 @Composable
 private fun Preview(
-    @PreviewParameter(DriverConstructorProvider::class) both: DriverConstructor
+    @PreviewParameter(DriverConstructorProvider::class) both: DriverEntry
 ) {
     AppThemePreview {
         ConstructorScreen(

@@ -6,12 +6,12 @@ import org.threeten.bp.LocalTime
 import tmg.flashback.formula1.model.CircuitHistoryRace
 import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.Driver
-import tmg.flashback.formula1.model.DriverConstructor
+import tmg.flashback.formula1.model.DriverEntry
 import tmg.flashback.formula1.model.Event
 import tmg.flashback.formula1.model.Overview
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.model.Race
-import tmg.flashback.formula1.model.RaceRaceResult
+import tmg.flashback.formula1.model.RaceResult
 import tmg.flashback.formula1.model.Schedule
 import tmg.flashback.formula1.model.SeasonConstructorStandingSeason
 import tmg.flashback.formula1.model.SeasonConstructorStandings
@@ -97,12 +97,12 @@ class RaceProvider: PreviewParameterProvider<Race> {
     override val values: Sequence<Race> = sequenceOf(Race.model())
 }
 
-class DriverConstructorProvider: PreviewParameterProvider<DriverConstructor> {
-    override val values: Sequence<DriverConstructor> = sequenceOf(DriverConstructor.model())
+class DriverConstructorProvider: PreviewParameterProvider<DriverEntry> {
+    override val values: Sequence<DriverEntry> = sequenceOf(DriverEntry.model())
 }
 
-class RaceRaceResultProvider: PreviewParameterProvider<RaceRaceResult> {
-    override val values: Sequence<RaceRaceResult> = sequenceOf(RaceRaceResult.model())
+class RaceRaceResultProvider: PreviewParameterProvider<RaceResult> {
+    override val values: Sequence<RaceResult> = sequenceOf(RaceResult.model())
 }
 
 class CircuitHistoryRaceProvider: PreviewParameterProvider<CircuitHistoryRace> {

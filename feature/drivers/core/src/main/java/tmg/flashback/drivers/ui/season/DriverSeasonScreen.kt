@@ -28,7 +28,7 @@ import tmg.flashback.analytics.constants.AnalyticsConstants.analyticsDriverId
 import tmg.flashback.analytics.constants.AnalyticsConstants.analyticsSeason
 import tmg.flashback.formula1.enums.isStatusFinished
 import tmg.flashback.formula1.extensions.pointsDisplay
-import tmg.flashback.formula1.model.DriverConstructor
+import tmg.flashback.formula1.model.DriverEntry
 import tmg.flashback.providers.DriverConstructorProvider
 import tmg.flashback.ui.components.timeline.Timeline
 import tmg.flashback.ui.components.flag.Flag
@@ -532,7 +532,7 @@ private fun RaceInfo(
 @PreviewTheme
 @Composable
 private fun Preview(
-    @PreviewParameter(DriverConstructorProvider::class) driverConstructor: DriverConstructor
+    @PreviewParameter(DriverConstructorProvider::class) driverConstructor: DriverEntry
 ) {
     AppThemePreview {
         DriverSeasonScreen(
@@ -562,13 +562,13 @@ private val fakeStat = DriverSeasonModel.Stat(
     label = R.string.driver_overview_stat_career_points,
     value = "4"
 )
-private fun DriverConstructor.racedFor() = DriverSeasonModel.RacedFor(
+private fun DriverEntry.racedFor() = DriverSeasonModel.RacedFor(
     season = 2022,
     type = PipeType.START,
     constructors = constructor,
     isChampionship = false
 )
-private fun DriverConstructor.result() = DriverSeasonModel.Result(
+private fun DriverEntry.result() = DriverSeasonModel.Result(
     season = 2020,
     round = 1,
     raceName = "raceName",

@@ -17,7 +17,7 @@ import tmg.flashback.drivers.contract.with
 import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
 import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.model.Race
-import tmg.flashback.formula1.model.RaceQualifyingType
+import tmg.flashback.formula1.model.QualifyingType
 import tmg.flashback.navigation.Screen
 import tmg.flashback.statistics.repo.RaceRepository
 import javax.inject.Inject
@@ -62,21 +62,21 @@ class QualifyingViewModel @Inject constructor(
             }
 
             when {
-                race.has(RaceQualifyingType.Q3) -> headersToShow.postValue(
+                race.has(QualifyingType.Q3) -> headersToShow.postValue(
                     QualifyingHeader(
                     first = true,
                     second = true,
                     third = true
                 )
                 )
-                race.has(RaceQualifyingType.Q2) -> headersToShow.postValue(
+                race.has(QualifyingType.Q2) -> headersToShow.postValue(
                     QualifyingHeader(
                     first = true,
                     second = true,
                     third = false
                 )
                 )
-                race.has(RaceQualifyingType.Q1) -> headersToShow.postValue(
+                race.has(QualifyingType.Q1) -> headersToShow.postValue(
                     QualifyingHeader(
                     first = true,
                     second = false,
@@ -86,9 +86,9 @@ class QualifyingViewModel @Inject constructor(
             }
 
             return@map when {
-                race.has(RaceQualifyingType.Q3) -> race.getQ1Q2Q3QualifyingList(RaceQualifyingType.Q3)
-                race.has(RaceQualifyingType.Q2) -> race.getQ1Q2QualifyingList()
-                race.has(RaceQualifyingType.Q1) -> race.getQ1QualifyingList()
+                race.has(QualifyingType.Q3) -> race.getQ1Q2Q3QualifyingList(QualifyingType.Q3)
+                race.has(QualifyingType.Q2) -> race.getQ1Q2QualifyingList()
+                race.has(QualifyingType.Q1) -> race.getQ1QualifyingList()
                 else -> listOf(QualifyingModel.NotAvailable)
             }
         }
@@ -100,9 +100,9 @@ class QualifyingViewModel @Inject constructor(
         seasonRound.value = Pair(season, round)
     }
 
-    private fun Race.getQ1Q2Q3QualifyingList(forType: RaceQualifyingType): List<QualifyingModel> {
+    private fun Race.getQ1Q2Q3QualifyingList(forType: QualifyingType): List<QualifyingModel> {
         val list = when (forType) {
-            RaceQualifyingType.Q1, RaceQualifyingType.Q2, RaceQualifyingType.Q3 -> this.qualifying.firstOrNull { it.label == forType } ?: return emptyList()
+            QualifyingType.Q1, QualifyingType.Q2, QualifyingType.Q3 -> this.qualifying.firstOrNull { it.label == forType } ?: return emptyList()
             else -> return emptyList()
         }
 

@@ -273,7 +273,7 @@ private fun Qualifying(
 
 @Composable
 private fun DriverLabel(
-    driver: DriverConstructor,
+    driver: DriverEntry,
     qualifyingPosition: Int?,
     grid: Int?,
     modifier: Modifier = Modifier
@@ -345,7 +345,7 @@ private fun Time(
 @PreviewTheme
 @Composable
 private fun Preview(
-    @PreviewParameter(DriverConstructorProvider::class) driverConstructor: DriverConstructor
+    @PreviewParameter(DriverConstructorProvider::class) driverConstructor: DriverEntry
 ) {
     AppThemePreview {
         QualifyingScreen(
@@ -360,12 +360,12 @@ private fun Preview(
     }
 }
 
-private fun fakeQualifyingModel(driverConstructor: DriverConstructor) = QualifyingModel.Q1Q2Q3(
+private fun fakeQualifyingModel(driverConstructor: DriverEntry) = QualifyingModel.Q1Q2Q3(
     driver = driverConstructor,
     finalQualifyingPosition = 1,
-    q1 = RaceQualifyingResult(driverConstructor, lapTime = LapTime(92382), position = 1),
-    q2 = RaceQualifyingResult(driverConstructor, lapTime = LapTime(92293), position = 1),
-    q3 = RaceQualifyingResult(driverConstructor, lapTime = LapTime(91934), position = 1),
+    q1 = QualifyingResult(driverConstructor, lapTime = LapTime(92382), position = 1),
+    q2 = QualifyingResult(driverConstructor, lapTime = LapTime(92293), position = 1),
+    q3 = QualifyingResult(driverConstructor, lapTime = LapTime(91934), position = 1),
     grid = 1
 )
 

@@ -1,6 +1,6 @@
 package tmg.flashback.weekend.ui.sprint
 
-import tmg.flashback.formula1.model.RaceSprintResult
+import tmg.flashback.formula1.model.SprintRaceResult
 
 sealed class SprintModel(
     val id: String
@@ -13,7 +13,7 @@ sealed class SprintModel(
     object Loading: SprintModel("loading")
 
     data class Result(
-        val result: RaceSprintResult
+        val result: SprintRaceResult
     ): SprintModel(
         id = result.driver.driver.id
     ) {

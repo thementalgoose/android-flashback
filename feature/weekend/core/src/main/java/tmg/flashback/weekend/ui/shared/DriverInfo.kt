@@ -10,7 +10,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import tmg.flashback.formula1.model.DriverConstructor
+import tmg.flashback.formula1.model.DriverEntry
 import tmg.flashback.providers.DriverConstructorProvider
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
@@ -36,7 +36,7 @@ private fun Position(
 
 @Composable
 fun DriverInfo(
-    driver: DriverConstructor,
+    driver: DriverEntry,
     position: Int?,
     modifier: Modifier = Modifier,
     extraContent: (@Composable RowScope.() -> Unit)? = null
@@ -119,7 +119,7 @@ private fun DriverInfo(
 @PreviewTheme
 @Composable
 private fun Preview(
-    @PreviewParameter(DriverConstructorProvider::class) driverConstructor: DriverConstructor
+    @PreviewParameter(DriverConstructorProvider::class) driverConstructor: DriverEntry
 ) {
     AppThemePreview {
         DriverInfo(driver = driverConstructor, position = 1)
@@ -129,7 +129,7 @@ private fun Preview(
 @PreviewTheme
 @Composable
 private fun PreviewShowPosition(
-    @PreviewParameter(DriverConstructorProvider::class) driverConstructor: DriverConstructor
+    @PreviewParameter(DriverConstructorProvider::class) driverConstructor: DriverEntry
 ) {
     AppThemePreview {
         DriverInfo(driver = driverConstructor, position = null)

@@ -1,23 +1,21 @@
-package tmg.flashback.statistics.room.models.race
+package tmg.flashback.statistics.network.models.races
 
-fun SprintResult.Companion.model(
+fun SprintRaceResult.Companion.model(
     driverId: String = "driverId",
-    season: Int = 2020,
-    round: Int = 1,
+    driverNumber: String = "23",
     constructorId: String = "constructorId",
     points: Double = 1.0,
     gridPos: Int? = 1,
     finished: Int = 1,
     status: String = "status",
-    time: String = "1:02.005"
-): SprintResult = SprintResult(
+    time: String? = "1:02:03.004"
+): SprintRaceResult = SprintRaceResult(
     driverId = driverId,
-    season = season,
-    round = round,
+    driverNumber = driverNumber,
     constructorId = constructorId,
     points = points,
     gridPos = gridPos,
     finished = finished,
     status = status,
-    time = time
+    time = time,
 )

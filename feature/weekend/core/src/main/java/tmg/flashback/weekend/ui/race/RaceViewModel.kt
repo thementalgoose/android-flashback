@@ -14,14 +14,14 @@ import kotlinx.coroutines.flow.map
 import tmg.flashback.drivers.contract.DriverSeason
 import tmg.flashback.drivers.contract.with
 import tmg.flashback.formula1.constants.Formula1
-import tmg.flashback.formula1.model.RaceRaceResult
+import tmg.flashback.formula1.model.RaceResult
 import tmg.flashback.statistics.repo.RaceRepository
 import tmg.flashback.navigation.Screen
 import javax.inject.Inject
 
 interface RaceViewModelInputs {
     fun load(season: Int, round: Int)
-    fun clickDriver(result: RaceRaceResult)
+    fun clickDriver(result: RaceResult)
 }
 
 interface RaceViewModelOutputs {
@@ -78,7 +78,7 @@ class RaceViewModel @Inject constructor(
         seasonRound.value = Pair(season, round)
     }
 
-    override fun clickDriver(result: RaceRaceResult) {
+    override fun clickDriver(result: RaceResult) {
         val season = seasonRound.value?.first ?: return
         navigator.navigate(
             Screen.DriverSeason.with(

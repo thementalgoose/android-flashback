@@ -1,21 +1,19 @@
 package tmg.flashback.statistics.network.models.races
 
-fun QualifyingResult.Companion.model(
+fun SprintQualifyingResult.Companion.model(
     driverId: String = "driverId",
     driverNumber: String? = "driverNumber",
     constructorId: String = "constructorId",
-    points: Double? = 1.0,
     qualified: Int = 1,
-    q1: String? = "1:02.001",
-    q2: String? = "1:02.002",
-    q3: String? = "1:02.003"
-): QualifyingResult = QualifyingResult(
+    sq1: String? = "1:02.001",
+    sq2: String? = "1:02.002",
+    sq3: String? = "1:02.003"
+): SprintQualifyingResult = SprintQualifyingResult(
     driverId = driverId,
     driverNumber = driverNumber,
     constructorId = constructorId,
-    points = points,
     qualified = qualified,
-    q1 = q1,
-    q2 = q2,
-    q3 = q3
+    sq1 = sq1,
+    sq2 = sq2,
+    sq3 = sq3
 )

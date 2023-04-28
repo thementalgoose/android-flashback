@@ -26,10 +26,9 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import tmg.flashback.formula1.enums.RaceStatus
 import tmg.flashback.formula1.enums.RaceStatus.FINISHED
 import tmg.flashback.formula1.extensions.pointsDisplay
-import tmg.flashback.formula1.model.RaceRaceResult
+import tmg.flashback.formula1.model.RaceResult
 import tmg.flashback.providers.RaceRaceResultProvider
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
@@ -51,7 +50,7 @@ private val p3Height = 90.dp
 @Composable
 internal fun Podium(
     model: RaceModel.Podium,
-    driverClicked: (RaceRaceResult) -> Unit,
+    driverClicked: (RaceResult) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(modifier = modifier
@@ -168,8 +167,8 @@ private fun PodiumBar(
 
 @Composable
 private fun PodiumResult(
-    model: RaceRaceResult,
-    driverClicked: (RaceRaceResult) -> Unit,
+    model: RaceResult,
+    driverClicked: (RaceResult) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -260,7 +259,7 @@ private fun PodiumResult(
 @PreviewTheme
 @Composable
 private fun Preview(
-    @PreviewParameter(RaceRaceResultProvider::class) result: RaceRaceResult
+    @PreviewParameter(RaceRaceResultProvider::class) result: RaceResult
 ) {
     AppThemePreview {
         Podium(

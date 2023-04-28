@@ -1,12 +1,12 @@
 package tmg.flashback.weekend.ui.sprint
 
 import tmg.flashback.formula1.model.LapTime
-import tmg.flashback.formula1.model.RaceSprintResult
+import tmg.flashback.formula1.model.SprintRaceResult
 import tmg.flashback.formula1.model.model
 
 fun SprintModel.Result.Companion.model(
-    result: RaceSprintResult = RaceSprintResult.model(
-        time = LapTime(0, 1, 2, 5)
+    result: SprintRaceResult = SprintRaceResult.model(
+        time = LapTime(1, 2, 3, 4)
     )
 ): SprintModel.Result = SprintModel.Result(
     result = result
