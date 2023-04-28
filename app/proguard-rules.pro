@@ -91,6 +91,7 @@
 -keepattributes *Annotation*
 -keepattributes Signature
 
+-keep class tmg.flashback.results.receivers.** { *; }
 
 -keepattributes *Annotation*
 -keepattributes SourceFile,LineNumberTable
