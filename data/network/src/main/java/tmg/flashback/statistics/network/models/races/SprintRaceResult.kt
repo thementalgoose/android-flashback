@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Keep
 @Serializable
-data class SprintResult(
+data class SprintRaceResult(
     val driverId: String,
     val driverNumber: String,
     val constructorId: String,

@@ -30,11 +30,13 @@ interface SeasonDao {
     fun insertRace(
         race: RaceInfo,
         qualifyingResults: List<QualifyingResult>,
-        sprintResults: List<SprintResult>,
-        raceResults: List<RaceResult>
+        raceResults: List<RaceResult>,
+        sprintQualifyingResults: List<SprintQualifyingResult>,
+        sprintRaceResults: List<SprintRaceResult>,
     ) {
         insertQualifyingResults(qualifyingResults)
-        insertSprintResults(sprintResults)
+        insertSprintQualifyingResults(sprintQualifyingResults)
+        insertSprintRaceResults(sprintRaceResults)
         insertRaceResult(raceResults)
         insertRaceData(race)
     }
@@ -43,11 +45,13 @@ interface SeasonDao {
     fun insertRaces(
         races: List<RaceInfo>,
         qualifyingResults: List<QualifyingResult>,
-        sprintResults: List<SprintResult>,
         raceResults: List<RaceResult>,
+        sprintQualifyingResults: List<SprintQualifyingResult>,
+        sprintRaceResults: List<SprintRaceResult>,
     ) {
         insertQualifyingResults(qualifyingResults)
-        insertSprintResults(sprintResults)
+        insertSprintQualifyingResults(sprintQualifyingResults)
+        insertSprintRaceResults(sprintRaceResults)
         insertRaceResult(raceResults)
         insertRaceData(races)
     }
@@ -56,7 +60,10 @@ interface SeasonDao {
     fun insertQualifyingResults(results: List<QualifyingResult>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertSprintResults(results: List<SprintResult>)
+    fun insertSprintRaceResults(results: List<SprintRaceResult>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertSprintQualifyingResults(results: List<SprintQualifyingResult>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertRaceResult(results: List<RaceResult>)

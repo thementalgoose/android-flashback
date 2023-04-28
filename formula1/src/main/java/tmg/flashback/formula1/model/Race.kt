@@ -1,22 +1,25 @@
 package tmg.flashback.formula1.model
 
-import tmg.flashback.formula1.model.RaceQualifyingType.Q1
-import tmg.flashback.formula1.model.RaceQualifyingType.Q2
-import tmg.flashback.formula1.model.RaceQualifyingType.Q3
+import tmg.flashback.formula1.model.QualifyingType.Q1
+import tmg.flashback.formula1.model.QualifyingType.Q2
+import tmg.flashback.formula1.model.QualifyingType.Q3
+import tmg.flashback.formula1.model.SprintQualifyingType.SQ1
+import tmg.flashback.formula1.model.SprintQualifyingType.SQ2
+import tmg.flashback.formula1.model.SprintQualifyingType.SQ3
 
 data class Race(
     val raceInfo: RaceInfo,
-    val qualifying: List<RaceQualifyingRound>,
-    val sprint: List<RaceSprintResult>,
-    val race: List<RaceRaceResult>,
+    val qualifying: List<QualifyingRound>,
+    val sprint: SprintResult,
+    val race: List<RaceResult>,
     val schedule: List<Schedule>
 ) {
 
-    val drivers: List<DriverConstructor>
+    val drivers: List<DriverEntry>
     val constructors: List<Constructor>
 
     init {
-        val driverSet: MutableSet<DriverConstructor> = mutableSetOf()
+        val driverSet: MutableSet<DriverEntry> = mutableSetOf()
         val constructorSet: MutableSet<Constructor> = mutableSetOf()
         qualifying.forEach {
             it.results.forEach {
@@ -39,14 +42,17 @@ data class Race(
             q1 = qualifying.firstOrNull { it.label == Q1 }?.results?.firstOrNull { it.driver.driver.id == driverId },
             q2 = qualifying.firstOrNull { it.label == Q2 }?.results?.firstOrNull { it.driver.driver.id == driverId },
             q3 = qualifying.firstOrNull { it.label == Q3 }?.results?.firstOrNull { it.driver.driver.id == driverId },
-            qSprint = sprint.firstOrNull { it.driver.driver.id == driverId },
-            race = race.firstOrNull { it.driver.driver.id == driverId }
+            race = race.firstOrNull { it.driver.driver.id == driverId },
+            sprintQ1 = sprint.qualifying.firstOrNull { it.label == SQ1 }?.results?.firstOrNull { it.driver.driver.id == driverId },
+            sprintQ2 = sprint.qualifying.firstOrNull { it.label == SQ2 }?.results?.firstOrNull { it.driver.driver.id == driverId },
+            sprintQ3 = sprint.qualifying.firstOrNull { it.label == SQ3 }?.results?.firstOrNull { it.driver.driver.id == driverId },
+            sprintRace = sprint.race.firstOrNull { it.driver.driver.id == driverId },
         )
     }
 
-    val hasSprintQualifying: Boolean = sprint.isNotEmpty()
+    val hasSprint: Boolean = sprint.qualifying.isNotEmpty() || sprint.race.isNotEmpty()
 
-    fun has(raceQualifyingType: RaceQualifyingType): Boolean {
+    fun has(raceQualifyingType: QualifyingType): Boolean {
         return qualifying.any { it.label == raceQualifyingType}
     }
 
@@ -81,8 +87,8 @@ data class Race(
                 previousPoints += raceResult.points
                 standings[raceResult.driver.constructor.id] = previousPoints
             }
-            if (hasSprintQualifying) {
-                sprint.forEach {
+            if (hasSprint) {
+                sprint.race.forEach {
                     var previousPoints = standings.getOrPut(it.driver.constructor.id) { 0.0 }
                     previousPoints += it.points
                     standings[it.driver.constructor.id] = previousPoints

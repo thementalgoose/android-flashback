@@ -12,14 +12,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.analytics.constants.AnalyticsConstants.analyticsDriverId
-import tmg.flashback.formula1.model.DriverConstructor
+import tmg.flashback.formula1.model.DriverEntry
 import tmg.flashback.providers.DriverConstructorProvider
 import tmg.flashback.ui.components.timeline.Timeline
 import tmg.flashback.ui.components.flag.Flag
@@ -29,7 +28,6 @@ import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.buttons.ButtonSecondary
-import tmg.flashback.style.buttons.ButtonTertiary
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.ui.components.analytics.ScreenView
 import tmg.flashback.ui.components.drivers.DriverImage
@@ -287,7 +285,7 @@ private fun History(
 @PreviewTheme
 @Composable
 private fun Preview(
-    @PreviewParameter(DriverConstructorProvider::class) driverConstructor: DriverConstructor
+    @PreviewParameter(DriverConstructorProvider::class) driverConstructor: DriverEntry
 ) {
     AppThemePreview {
         DriverOverviewScreen(
@@ -319,7 +317,7 @@ private val fakeStat = DriverOverviewModel.Stat(
     label = R.string.driver_overview_stat_career_points,
     value = "4"
 )
-private fun DriverConstructor.racedFor() = DriverOverviewModel.RacedFor(
+private fun DriverEntry.racedFor() = DriverOverviewModel.RacedFor(
     season = 2022,
     type = PipeType.START,
     constructors = listOf(
@@ -327,7 +325,7 @@ private fun DriverConstructor.racedFor() = DriverOverviewModel.RacedFor(
     ),
     isChampionship = false
 )
-private fun DriverConstructor.racedFor2() = DriverOverviewModel.RacedFor(
+private fun DriverEntry.racedFor2() = DriverOverviewModel.RacedFor(
     season = 2021,
     type = PipeType.END,
     constructors = listOf(
@@ -336,7 +334,7 @@ private fun DriverConstructor.racedFor2() = DriverOverviewModel.RacedFor(
     ),
     isChampionship = false
 )
-private fun DriverConstructor.toHeader(): DriverOverviewModel.Header = DriverOverviewModel.Header(
+private fun DriverEntry.toHeader(): DriverOverviewModel.Header = DriverOverviewModel.Header(
     driverId = this.driver.id,
     driverName = this.driver.name,
     driverNumber = this.driver.number,

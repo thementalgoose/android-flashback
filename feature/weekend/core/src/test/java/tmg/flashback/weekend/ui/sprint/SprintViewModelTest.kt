@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 import tmg.flashback.drivers.contract.DriverSeason
 import tmg.flashback.drivers.contract.with
 import tmg.flashback.formula1.model.Race
-import tmg.flashback.formula1.model.RaceSprintResult
+import tmg.flashback.formula1.model.SprintRaceResult
 import tmg.flashback.formula1.model.model
 import tmg.flashback.statistics.repo.RaceRepository
 import tmg.flashback.navigation.Navigator
@@ -84,7 +84,7 @@ internal class SprintViewModelTest: BaseTest() {
         initUnderTest()
         underTest.load(2020, 1)
 
-        val input = RaceSprintResult.model()
+        val input = SprintRaceResult.model()
         underTest.inputs.clickDriver(input)
 
         underTest.outputs.list.testObserve()

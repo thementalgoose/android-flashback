@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test
 import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
 import tmg.flashback.formula1.model.Race
 import tmg.flashback.formula1.model.RaceInfo
+import tmg.flashback.formula1.model.SprintResult
 import tmg.flashback.formula1.model.model
 import tmg.flashback.statistics.repo.RaceRepository
 import tmg.flashback.weekend.contract.model.WeekendInfo
@@ -76,7 +77,7 @@ internal class WeekendViewModelTest: BaseTest() {
     @Test
     fun `loading season and round with no sprint quali hides quali tab`() = coroutineTest {
         every { mockRaceRepository.getRace(season = any(), round = any()) } returns flow { emit(Race.model(
-            sprint = emptyList()
+            sprint = SprintResult.model(qualifying = emptyList(), race = emptyList())
         )) }
 
         underTest()

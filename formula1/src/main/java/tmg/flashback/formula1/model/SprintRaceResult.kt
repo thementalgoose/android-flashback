@@ -2,8 +2,8 @@ package tmg.flashback.formula1.model
 
 import tmg.flashback.formula1.enums.RaceStatus
 
-data class RaceSprintResult(
-    val driver: DriverConstructor,
+data class SprintRaceResult(
+    val driver: DriverEntry,
     val time: LapTime?,
     val points: Double,
     val grid: Int?,

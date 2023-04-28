@@ -9,9 +9,9 @@ import tmg.flashback.drivers.contract.DriverSeason
 import tmg.flashback.drivers.contract.with
 import tmg.flashback.formula1.model.LapTime
 import tmg.flashback.formula1.model.Race
-import tmg.flashback.formula1.model.RaceQualifyingResult
-import tmg.flashback.formula1.model.RaceQualifyingRound
-import tmg.flashback.formula1.model.RaceQualifyingType
+import tmg.flashback.formula1.model.QualifyingResult
+import tmg.flashback.formula1.model.QualifyingRound
+import tmg.flashback.formula1.model.QualifyingType
 import tmg.flashback.formula1.model.model
 import tmg.flashback.statistics.repo.RaceRepository
 import tmg.flashback.navigation.Navigator
@@ -87,11 +87,11 @@ internal class QualifyingViewModelTest: BaseTest() {
         val currentSeason = 2020
         every { mockRaceRepository.getRace(currentSeason, 1) } returns flow { emit(Race.model(
             qualifying = listOf(
-                RaceQualifyingRound.model(label = RaceQualifyingType.Q1, results = listOf(
-                    RaceQualifyingResult.model(lapTime = LapTime.model(0,1,2,1))
+                QualifyingRound.model(label = QualifyingType.Q1, results = listOf(
+                    QualifyingResult.model(lapTime = LapTime.model(0,1,2,1))
                 )),
-                RaceQualifyingRound.model(label = RaceQualifyingType.Q2, results = listOf(
-                    RaceQualifyingResult.model(lapTime = LapTime.model(0,1,2,2))
+                QualifyingRound.model(label = QualifyingType.Q2, results = listOf(
+                    QualifyingResult.model(lapTime = LapTime.model(0,1,2,2))
                 ))
             )
         )) }
@@ -112,8 +112,8 @@ internal class QualifyingViewModelTest: BaseTest() {
         val currentSeason = 2020
         every { mockRaceRepository.getRace(currentSeason, 1) } returns flow { emit(Race.model(
             qualifying = listOf(
-                RaceQualifyingRound.model(label = RaceQualifyingType.Q1, results = listOf(
-                    RaceQualifyingResult.model(lapTime = LapTime.model(0,1,2,1))
+                QualifyingRound.model(label = QualifyingType.Q1, results = listOf(
+                    QualifyingResult.model(lapTime = LapTime.model(0,1,2,1))
                 ))
             )
         )) }
@@ -133,7 +133,7 @@ internal class QualifyingViewModelTest: BaseTest() {
         initUnderTest()
         underTest.load(2020, 1)
 
-        val input = RaceQualifyingResult.model()
+        val input = QualifyingResult.model()
         underTest.inputs.clickDriver(input.driver.driver)
 
         underTest.outputs.list.testObserve()

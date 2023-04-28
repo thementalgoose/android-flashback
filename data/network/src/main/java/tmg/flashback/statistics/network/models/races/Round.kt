@@ -13,7 +13,7 @@ data class Round(
     val constructors: Map<String, Constructor>,
     val data: RaceData,
     val race: Map<String, RaceResult>?,
-    val sprint: Map<String, SprintResult>? = null,
+    val sprintEvent: SprintEvent? = null,
     val qualifying: Map<String, QualifyingResult>?,
     val schedule: List<Schedule>? = null
 ) {

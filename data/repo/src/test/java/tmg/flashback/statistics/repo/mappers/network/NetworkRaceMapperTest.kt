@@ -55,8 +55,8 @@ internal class NetworkRaceMapperTest {
         val inputSeason = 2020
         val inputRound = 1
         val inputData = NetworkSprintResult.model()
-        val expected = tmg.flashback.statistics.room.models.race.SprintResult.model()
+        val expected = tmg.flashback.statistics.room.models.race.SprintRaceResult.model()
 
-        assertEquals(expected, sut.mapSprintResults(inputSeason, inputRound, inputData))
+        assertEquals(expected, sut.mapSprintRaceResults(inputSeason, inputRound, inputData))
     }
 }

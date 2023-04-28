@@ -3,7 +3,8 @@ package tmg.flashback.statistics.repo.mappers.network
 import tmg.flashback.statistics.room.models.race.FastestLap
 import tmg.flashback.statistics.room.models.race.QualifyingResult
 import tmg.flashback.statistics.room.models.race.RaceResult
-import tmg.flashback.statistics.room.models.race.SprintResult
+import tmg.flashback.statistics.room.models.race.SprintQualifyingResult
+import tmg.flashback.statistics.room.models.race.SprintRaceResult
 import javax.inject.Inject
 
 class NetworkRaceMapper @Inject constructor() {
@@ -40,8 +41,22 @@ class NetworkRaceMapper @Inject constructor() {
     }
 
     @Throws(RuntimeException::class)
-    fun mapSprintResults(season: Int, round: Int, data: tmg.flashback.statistics.network.models.races.SprintResult): SprintResult {
-        return SprintResult(
+    fun mapSprintQualifyingResult(season: Int, round: Int, data: tmg.flashback.statistics.network.models.races.SprintQualifyingResult): SprintQualifyingResult {
+        return SprintQualifyingResult(
+            driverId = data.driverId,
+            season = season,
+            round = round,
+            constructorId = data.constructorId,
+            qualified = data.qualified,
+            sq1 = data.sq1,
+            sq2 = data.sq2,
+            sq3 = data.sq3
+        )
+    }
+
+    @Throws(RuntimeException::class)
+    fun mapSprintRaceResults(season: Int, round: Int, data: tmg.flashback.statistics.network.models.races.SprintRaceResult): SprintRaceResult {
+        return SprintRaceResult(
             driverId = data.driverId,
             season = season,
             round = round,

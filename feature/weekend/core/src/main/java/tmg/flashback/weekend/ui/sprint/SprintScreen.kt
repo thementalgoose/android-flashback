@@ -30,19 +30,14 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.formula1.enums.RaceStatus
 import tmg.flashback.formula1.enums.isStatusFinished
 import tmg.flashback.formula1.extensions.pointsDisplay
-import tmg.flashback.formula1.model.DriverConstructor
+import tmg.flashback.formula1.model.DriverEntry
 import tmg.flashback.formula1.model.LapTime
-import tmg.flashback.formula1.model.RaceQualifyingResult
-import tmg.flashback.formula1.model.RaceSprintResult
+import tmg.flashback.formula1.model.SprintRaceResult
 import tmg.flashback.providers.DriverConstructorProvider
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
-import tmg.flashback.style.badge.Badge
-import tmg.flashback.style.badge.BadgeView
 import tmg.flashback.weekend.ui.info.RaceInfoHeader
-import tmg.flashback.weekend.ui.shared.Delta
-import tmg.flashback.weekend.ui.shared.DriverInfo
 import tmg.flashback.ui.components.errors.NotAvailable
 import tmg.flashback.ui.components.errors.NotAvailableYet
 import tmg.flashback.style.text.TextBody1
@@ -55,8 +50,6 @@ import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.weekend.R
 import tmg.flashback.weekend.contract.model.WeekendInfo
 import tmg.flashback.weekend.ui.fakeWeekendInfo
-import tmg.flashback.weekend.ui.qualifying.QualifyingModel
-import tmg.flashback.weekend.ui.qualifying.QualifyingScreen
 import tmg.flashback.weekend.ui.shared.ConstructorIndicator
 import tmg.flashback.weekend.ui.shared.finishingPositionWidth
 import tmg.utilities.extensions.ordinalAbbreviation
@@ -88,7 +81,7 @@ fun SprintScreenVM(
 fun SprintScreen(
     info: WeekendInfo,
     list: List<SprintModel>,
-    driverClicked: (RaceSprintResult) -> Unit,
+    driverClicked: (SprintRaceResult) -> Unit,
     actionUpClicked: () -> Unit
 ) {
     LazyColumn(
@@ -111,7 +104,7 @@ fun SprintScreen(
 
 internal fun LazyListScope.sprint(
     list: List<SprintModel>,
-    driverClicked: (RaceSprintResult) -> Unit,
+    driverClicked: (SprintRaceResult) -> Unit,
 ) {
     items(list, key = { it.id }) {
         when (it) {
@@ -139,8 +132,8 @@ internal fun LazyListScope.sprint(
 
 @Composable
 private fun Result(
-    model: RaceSprintResult,
-    driverClicked: (RaceSprintResult) -> Unit,
+    model: SprintRaceResult,
+    driverClicked: (SprintRaceResult) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val contentDescription = stringResource(
@@ -268,7 +261,7 @@ private fun Points(
 @PreviewTheme
 @Composable
 private fun Preview(
-    @PreviewParameter(DriverConstructorProvider::class) driverConstructor: DriverConstructor
+    @PreviewParameter(DriverConstructorProvider::class) driverConstructor: DriverEntry
 ) {
     AppThemePreview {
         SprintScreen(
@@ -282,8 +275,8 @@ private fun Preview(
     }
 }
 
-private fun fakeSprintModel(driverConstructor: DriverConstructor) = SprintModel.Result(
-    result = RaceSprintResult(
+private fun fakeSprintModel(driverConstructor: DriverEntry) = SprintModel.Result(
+    result = SprintRaceResult(
         driver = driverConstructor,
         time = null,
         points = 2.0,

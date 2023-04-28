@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class QualifyingResult(
+data class SprintQualifyingResult(
     @ColumnInfo(name = "driver_id")
     val driverId: String,
     @ColumnInfo(name = "season")
@@ -16,12 +16,12 @@ data class QualifyingResult(
     val constructorId: String,
     @ColumnInfo(name = "qualified")
     val qualified: Int,
-    @ColumnInfo(name = "q1")
-    val q1: String?,
-    @ColumnInfo(name = "q2")
-    val q2: String?,
-    @ColumnInfo(name = "q3")
-    val q3: String?,
+    @ColumnInfo(name = "sq1")
+    val sq1: String?,
+    @ColumnInfo(name = "sq2")
+    val sq2: String?,
+    @ColumnInfo(name = "sq3")
+    val sq3: String?,
     @PrimaryKey
     @ColumnInfo(name = "id")
     val id: String = "${driverId}_${season}_${round}",
@@ -30,4 +30,3 @@ data class QualifyingResult(
 ) {
     companion object
 }
-
