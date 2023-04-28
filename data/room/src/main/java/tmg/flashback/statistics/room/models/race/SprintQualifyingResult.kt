@@ -15,7 +15,7 @@ data class SprintQualifyingResult(
     @ColumnInfo(name = "constructor_id")
     val constructorId: String,
     @ColumnInfo(name = "qualified")
-    val qualified: Int?,
+    val qualified: Int,
     @ColumnInfo(name = "sq1")
     val sq1: String?,
     @ColumnInfo(name = "sq2")

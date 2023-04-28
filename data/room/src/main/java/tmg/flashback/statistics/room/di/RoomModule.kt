@@ -126,7 +126,6 @@ private val MIGRATION_7_8 = object : Migration(7, 8) {
 private val MIGRATION_8_9 = object : Migration(8, 9) {
     override fun migrate(database: SupportSQLiteDatabase) {
         database.execSQL("ALTER TABLE SprintResult RENAME TO SprintRaceResult")
-        database.execSQL("ALTER TANLE QualifyingResult ALTER COLUMN qualified INTEGER NOT NULL")
         database.execSQL("CREATE TABLE IF NOT EXISTS SprintQualifyingResult (" +
                 "driver_id TEXT NOT NULL, " +
                 "season INTEGER NOT NULL, " +
@@ -138,6 +137,27 @@ private val MIGRATION_8_9 = object : Migration(8, 9) {
                 "sq3 TEXT, " +
                 "id TEXT NOT NULL PRIMARY KEY," +
                 "season_round_id TEXT NOT NULL)")
-//        Log.i("Database", "Migrated DB from version $startVersion to $endVersion")
+
+
+        // Change Qualified to be not null
+        database.execSQL("CREATE TABLE QualifyingResult_Temp (" +
+                "driver_id TEXT NOT NULL," +
+                "season INTEGER NOT NULL," +
+                "round INTEGER NOT NULL," +
+                "constructor_id TEXT NOT NULL," +
+                "qualified INTEGER NOT NULL," +
+                "q1 TEXT," +
+                "q2 TEXT," +
+                "q3 TEXT," +
+                "id TEXT NOT NULL PRIMARY KEY," +
+                "season_round_id TEXT NOT NULL)")
+        database.execSQL("INSERT INTO QualifyingResult_Temp " +
+                "(driver_id, season, round, constructor_id, qualified, q1, q2, q3, id, season_round_id) " +
+                "SELECT driver_id, season, round, constructor_id, qualified, q1, q2, q3, id, season_round_id " +
+                "FROM QualifyingResult")
+        database.execSQL("DROP TABLE QualifyingResult");
+        database.execSQL("ALTER TABLE QualifyingResult_Temp RENAME TO QualifyingResult")
+
+        Log.i("Database", "Migrated DB from version $startVersion to $endVersion")
     }
 }

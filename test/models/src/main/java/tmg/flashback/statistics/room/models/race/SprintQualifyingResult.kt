@@ -5,7 +5,7 @@ fun SprintQualifyingResult.Companion.model(
     season: Int = 2020,
     round: Int = 1,
     constructorId: String = "constructorId",
-    qualified: Int? = 1,
+    qualified: Int = 1,
     sq1: String? = "1:02.001",
     sq2: String? = "1:02.002",
     sq3: String? = "1:02.003"
