@@ -144,6 +144,7 @@
 
     <!-- Links -->
     <string name="details_link_youtube">Youtube</string>
+    <string name="details_link_circuit">Circuit History</string>
     <string name="details_link_map">Location</string>
     <string name="details_link_laps">%s laps</string>
     <string name="details_link_wikipedia">Wikipedia</string>
