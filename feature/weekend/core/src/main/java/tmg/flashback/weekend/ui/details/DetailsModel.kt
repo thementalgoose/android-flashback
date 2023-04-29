@@ -36,6 +36,8 @@ sealed class DetailsModel(
         companion object
     }
 
+
+
     data class Track(
         val circuit: Circuit,
         val raceName: String,
