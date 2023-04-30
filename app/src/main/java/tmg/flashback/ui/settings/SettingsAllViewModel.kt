@@ -7,7 +7,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import tmg.flashback.BuildConfig
 import tmg.flashback.ads.ads.repository.AdsRepository
 import tmg.flashback.device.managers.BuildConfigManager
-import tmg.flashback.rss.repo.RSSRepository
+import tmg.flashback.rss.repo.RssRepository
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.flashback.rss.contract.RSSConfigure
@@ -30,7 +30,7 @@ class SettingsAllViewModel @Inject constructor(
     private val themeRepository: ThemeRepository,
     private val buildConfig: BuildConfigManager,
     private val adsRepository: AdsRepository,
-    private val rssRepository: RSSRepository,
+    private val rssRepository: RssRepository,
     private val navigator: Navigator,
     private val appearanceNavigationComponent: AppearanceNavigationComponent
 ): ViewModel(), SettingsAllViewModelInputs, SettingsAllViewModelOutputs {

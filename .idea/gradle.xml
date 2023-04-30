@@ -61,6 +61,7 @@
             <option value="$PROJECT_DIR$/formula1" />
             <option value="$PROJECT_DIR$/network" />
             <option value="$PROJECT_DIR$/network/flashback" />
+            <option value="$PROJECT_DIR$/network/rss" />
             <option value="$PROJECT_DIR$/presentation" />
             <option value="$PROJECT_DIR$/presentation/navigation" />
             <option value="$PROJECT_DIR$/presentation/strings" />

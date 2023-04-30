@@ -1,4 +1,4 @@
-package tmg.flashback.rss.network.apis.model;
+package tmg.flashback.rss.network.model;
 
 import androidx.annotation.Keep;
 import androidx.annotation.Nullable;

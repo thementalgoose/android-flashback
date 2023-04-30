@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
-import tmg.flashback.rss.repo.RSSRepository
+import tmg.flashback.rss.repo.RssRepository
 import tmg.flashback.rss.repo.converters.toArticleSource
 import tmg.flashback.rss.repo.model.SupportedArticleSource
 import tmg.flashback.rss.repo.model.SupportedSource
@@ -15,7 +15,7 @@ import tmg.flashback.rss.repo.model.model
 
 internal class GetSupportedSourceUseCaseTest {
 
-    private val mockRssRepository: RSSRepository = mockk(relaxed = true)
+    private val mockRssRepository: RssRepository = mockk(relaxed = true)
 
     private lateinit var underTest: GetSupportedSourceUseCase
 

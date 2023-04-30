@@ -9,7 +9,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class RSSRepository @Inject constructor(
+class RssRepository @Inject constructor(
     private val preferenceManager: PreferenceManager,
     private val configManager: ConfigManager
 ) {

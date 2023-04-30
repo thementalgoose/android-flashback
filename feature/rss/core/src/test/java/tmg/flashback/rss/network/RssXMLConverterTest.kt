@@ -1,4 +1,4 @@
-package tmg.flashback.rss.network.apis
+package tmg.flashback.rss.network
 
 import io.mockk.every
 import io.mockk.mockk
@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeParseException
+import tmg.flashback.rss.network.apis.convert
 import tmg.flashback.rss.network.apis.model.RssXMLModel
 import tmg.flashback.rss.network.apis.model.RssXMLModelChannel
 import tmg.flashback.rss.network.apis.model.RssXMLModelItem

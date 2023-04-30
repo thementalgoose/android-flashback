@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import tmg.flashback.rss.repo.RSSRepository
+import tmg.flashback.rss.repo.RssRepository
 import tmg.flashback.rss.repo.model.SupportedArticleSource
 import tmg.flashback.rss.usecases.AllSupportedSourcesUseCase
 import tmg.flashback.rss.usecases.GetSupportedSourceUseCase
@@ -25,7 +25,7 @@ interface ConfigureRSSViewModelOutputs {
 
 @HiltViewModel
 class ConfigureRSSViewModel @Inject constructor(
-    private val repository: RSSRepository,
+    private val repository: RssRepository,
     private val allSupportedSourcesUseCase: AllSupportedSourcesUseCase,
     private val getSupportedSourcesUseCase: GetSupportedSourceUseCase,
     private val openWebpageUseCase: OpenWebpageUseCase,

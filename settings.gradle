@@ -25,6 +25,7 @@ include ':feature:debug:core'
 include ':feature:debug:noop'
 
 include ':network:flashback'
+include ':network:rss'
 
 include ':domain:repo'
 include ':domain:persistence'
