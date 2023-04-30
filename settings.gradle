@@ -24,9 +24,9 @@ include ':feature:debug:contract'
 include ':feature:debug:core'
 include ':feature:debug:noop'
 
-include ':data:repo'
-include ':data:room'
-include ':data:network'
+include ':network:flashback:repo'
+include ':network:flashback:persistence'
+include ':network:flashback:api'
 
 include ':formula1'
 

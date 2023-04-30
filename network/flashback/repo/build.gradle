@@ -17,8 +17,8 @@ android {
 
 dependencies {
 
-    implementation project(path: ':data:room')
-    implementation project(path: ':data:network')
+    implementation project(path: ':network:flashback:persistence')
+    implementation project(path: ':network:flashback:api')
     implementation project(path: ':formula1')
     implementation project(path: ':core:crash-reporting')
     implementation project(path: ':core:preferences')
