@@ -6,7 +6,7 @@ import javax.inject.Inject
 class NetworkCircuitDataMapper @Inject constructor() {
 
     @Throws(RuntimeException::class)
-    fun mapCircuitData(data: tmg.flashback.statistics.network.models.circuits.Circuit): Circuit {
+    fun mapCircuitData(data: tmg.flashback.flashbackapi.api.models.circuits.Circuit): Circuit {
         return Circuit(
             id = data.id,
             name = data.name,

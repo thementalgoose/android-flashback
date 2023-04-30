@@ -6,9 +6,9 @@ import kotlinx.coroutines.flow.map
 import tmg.flashback.formula1.model.Season
 import tmg.flashback.formula1.model.SeasonConstructorStandings
 import tmg.flashback.formula1.model.SeasonDriverStandings
-import tmg.flashback.statistics.repo.mappers.app.ConstructorStandingMapper
-import tmg.flashback.statistics.repo.mappers.app.DriverStandingMapper
-import tmg.flashback.statistics.repo.mappers.app.SeasonMapper
+import tmg.flashback.domain.repo.mappers.app.ConstructorStandingMapper
+import tmg.flashback.domain.repo.mappers.app.DriverStandingMapper
+import tmg.flashback.domain.repo.mappers.app.SeasonMapper
 import tmg.flashback.domain.persistence.FlashbackDatabase
 import javax.inject.Inject
 import javax.inject.Singleton

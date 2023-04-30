@@ -6,7 +6,7 @@ import javax.inject.Inject
 class NetworkDriverDataMapper @Inject constructor() {
 
     @Throws(RuntimeException::class)
-    fun mapDriverData(driver: tmg.flashback.statistics.network.models.drivers.Driver): Driver {
+    fun mapDriverData(driver: tmg.flashback.flashbackapi.api.models.drivers.Driver): Driver {
         return Driver(
             id = driver.id,
             firstName = driver.firstName,

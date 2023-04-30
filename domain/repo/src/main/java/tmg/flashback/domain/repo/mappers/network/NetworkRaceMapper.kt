@@ -10,7 +10,7 @@ import javax.inject.Inject
 class NetworkRaceMapper @Inject constructor() {
 
     @Throws(RuntimeException::class)
-    fun mapRaceResults(season: Int, round: Int, data: tmg.flashback.statistics.network.models.races.RaceResult): RaceResult {
+    fun mapRaceResults(season: Int, round: Int, data: tmg.flashback.flashbackapi.api.models.races.RaceResult): RaceResult {
         return RaceResult(
             driverId = data.driverId,
             season = season,
@@ -27,7 +27,7 @@ class NetworkRaceMapper @Inject constructor() {
     }
 
     @Throws(RuntimeException::class)
-    fun mapQualifyingResults(season: Int, round: Int, data: tmg.flashback.statistics.network.models.races.QualifyingResult): QualifyingResult {
+    fun mapQualifyingResults(season: Int, round: Int, data: tmg.flashback.flashbackapi.api.models.races.QualifyingResult): QualifyingResult {
         return QualifyingResult(
             driverId = data.driverId,
             season = season,
@@ -41,7 +41,7 @@ class NetworkRaceMapper @Inject constructor() {
     }
 
     @Throws(RuntimeException::class)
-    fun mapSprintQualifyingResult(season: Int, round: Int, data: tmg.flashback.statistics.network.models.races.SprintQualifyingResult): SprintQualifyingResult {
+    fun mapSprintQualifyingResult(season: Int, round: Int, data: tmg.flashback.flashbackapi.api.models.races.SprintQualifyingResult): SprintQualifyingResult {
         return SprintQualifyingResult(
             driverId = data.driverId,
             season = season,
@@ -55,7 +55,7 @@ class NetworkRaceMapper @Inject constructor() {
     }
 
     @Throws(RuntimeException::class)
-    fun mapSprintRaceResults(season: Int, round: Int, data: tmg.flashback.statistics.network.models.races.SprintRaceResult): SprintRaceResult {
+    fun mapSprintRaceResults(season: Int, round: Int, data: tmg.flashback.flashbackapi.api.models.races.SprintRaceResult): SprintRaceResult {
         return SprintRaceResult(
             driverId = data.driverId,
             season = season,
@@ -69,7 +69,7 @@ class NetworkRaceMapper @Inject constructor() {
         )
     }
 
-    private fun mapFastestLap(data: tmg.flashback.statistics.network.models.races.FastestLap?): FastestLap? {
+    private fun mapFastestLap(data: tmg.flashback.flashbackapi.api.models.races.FastestLap?): FastestLap? {
         if (data == null) return null
         return FastestLap(
             position = data.position,

@@ -16,7 +16,7 @@ import tmg.flashback.formula1.model.CircuitHistory
 import tmg.flashback.formula1.model.CircuitHistoryRace
 import tmg.flashback.formula1.model.model
 import tmg.flashback.navigation.NavigationDestination
-import tmg.flashback.statistics.repo.CircuitRepository
+import tmg.flashback.domain.repo.CircuitRepository
 import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.test

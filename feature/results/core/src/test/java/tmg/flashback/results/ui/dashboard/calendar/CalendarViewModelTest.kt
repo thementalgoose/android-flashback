@@ -19,8 +19,8 @@ import tmg.flashback.results.model.from
 import tmg.flashback.results.repository.NotificationsRepositoryImpl
 import tmg.flashback.results.repository.models.NotificationSchedule
 import tmg.flashback.results.usecases.FetchSeasonUseCase
-import tmg.flashback.statistics.repo.EventsRepository
-import tmg.flashback.statistics.repo.OverviewRepository
+import tmg.flashback.domain.repo.EventsRepository
+import tmg.flashback.domain.repo.OverviewRepository
 import tmg.flashback.weekend.contract.Weekend
 import tmg.flashback.weekend.contract.model.WeekendInfo
 import tmg.flashback.weekend.contract.with

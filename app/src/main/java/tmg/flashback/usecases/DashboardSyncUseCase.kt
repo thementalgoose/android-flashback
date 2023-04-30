@@ -7,8 +7,8 @@ import kotlinx.coroutines.coroutineScope
 import tmg.flashback.BuildConfig
 import tmg.flashback.configuration.usecases.ApplyConfigUseCase
 import tmg.flashback.configuration.usecases.FetchConfigUseCase
-import tmg.flashback.statistics.repo.OverviewRepository
-import tmg.flashback.statistics.repo.RaceRepository
+import tmg.flashback.domain.repo.OverviewRepository
+import tmg.flashback.domain.repo.RaceRepository
 import tmg.flashback.results.usecases.DefaultSeasonUseCase
 import tmg.flashback.results.usecases.ScheduleNotificationsUseCase
 import tmg.flashback.widgets.usecases.UpdateWidgetsUseCase

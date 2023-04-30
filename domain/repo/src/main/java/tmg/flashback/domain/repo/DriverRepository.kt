@@ -6,14 +6,14 @@ import tmg.flashback.crash_reporting.manager.CrashManager
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.formula1.model.DriverHistory
 import tmg.flashback.flashbackapi.api.api.FlashbackApi
-import tmg.flashback.statistics.repo.base.BaseRepository
-import tmg.flashback.statistics.repo.mappers.app.DriverDataMapper
-import tmg.flashback.statistics.repo.mappers.app.DriverMapper
-import tmg.flashback.statistics.repo.mappers.network.NetworkCircuitDataMapper
-import tmg.flashback.statistics.repo.mappers.network.NetworkConstructorDataMapper
-import tmg.flashback.statistics.repo.mappers.network.NetworkDriverDataMapper
-import tmg.flashback.statistics.repo.mappers.network.NetworkDriverMapper
-import tmg.flashback.statistics.repo.mappers.network.NetworkRaceDataMapper
+import tmg.flashback.domain.repo.base.BaseRepository
+import tmg.flashback.domain.repo.mappers.app.DriverDataMapper
+import tmg.flashback.domain.repo.mappers.app.DriverMapper
+import tmg.flashback.domain.repo.mappers.network.NetworkCircuitDataMapper
+import tmg.flashback.domain.repo.mappers.network.NetworkConstructorDataMapper
+import tmg.flashback.domain.repo.mappers.network.NetworkDriverDataMapper
+import tmg.flashback.domain.repo.mappers.network.NetworkDriverMapper
+import tmg.flashback.domain.repo.mappers.network.NetworkRaceDataMapper
 import tmg.flashback.domain.persistence.FlashbackDatabase
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -90,7 +90,7 @@ class DriverRepository @Inject constructor(
         return persistence.driverDao().getDriverSeasonCount(id)
     }
 
-    private fun saveConstructors(data: tmg.flashback.statistics.network.models.drivers.DriverHistory): Boolean {
+    private fun saveConstructors(data: tmg.flashback.flashbackapi.api.models.drivers.DriverHistory): Boolean {
         val constructors = data.standings.values
             .map { it.races.values.map { it.construct } }
             .flatten()
@@ -100,7 +100,7 @@ class DriverRepository @Inject constructor(
         return true
     }
 
-    private fun saveRaceAndCircuits(data: tmg.flashback.statistics.network.models.drivers.DriverHistory): Boolean {
+    private fun saveRaceAndCircuits(data: tmg.flashback.flashbackapi.api.models.drivers.DriverHistory): Boolean {
         val races = data.standings.values
             .map { it.races.values.map { it.race } }
             .flatten()

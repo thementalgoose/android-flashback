@@ -16,7 +16,7 @@ import tmg.flashback.drivers.contract.with
 import tmg.flashback.formula1.constants.Formula1
 import tmg.flashback.formula1.model.SprintRaceResult
 import tmg.flashback.navigation.Navigator
-import tmg.flashback.statistics.repo.RaceRepository
+import tmg.flashback.domain.repo.RaceRepository
 import tmg.flashback.navigation.Screen
 import javax.inject.Inject
 
