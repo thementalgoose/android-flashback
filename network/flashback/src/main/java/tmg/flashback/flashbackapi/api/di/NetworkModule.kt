@@ -63,4 +63,5 @@ class NetworkModule {
 }
 
 @Qualifier
+@Retention(AnnotationRetention.BINARY)
 internal annotation class FlashbackRetrofit
