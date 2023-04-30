@@ -6,7 +6,7 @@ import javax.inject.Inject
 
 class NetworkEventMapper @Inject constructor() {
 
-    fun mapEvent(season: Int, model: tmg.flashback.statistics.network.models.overview.Event): Event? {
+    fun mapEvent(season: Int, model: tmg.flashback.flashbackapi.api.models.overview.Event): Event? {
         fromDate(model.date) ?: return null
         return Event(
             season = season,

@@ -4,8 +4,8 @@ import org.threeten.bp.LocalDate
 import tmg.flashback.crash_reporting.manager.CrashManager
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.formula1.model.OverviewRace
-import tmg.flashback.statistics.repo.base.BaseRepository
-import tmg.flashback.statistics.repo.mappers.app.OverviewMapper
+import tmg.flashback.domain.repo.base.BaseRepository
+import tmg.flashback.domain.repo.mappers.app.OverviewMapper
 import tmg.flashback.domain.persistence.FlashbackDatabase
 import javax.inject.Inject
 import javax.inject.Singleton

@@ -22,7 +22,7 @@ class NetworkScheduleMapper @Inject constructor() {
     }
 
     @Throws(RuntimeException::class)
-    fun mapSchedule(season: Int, round: Int, data: tmg.flashback.statistics.network.models.overview.Schedule): Schedule {
+    fun mapSchedule(season: Int, round: Int, data: tmg.flashback.flashbackapi.api.models.overview.Schedule): Schedule {
         return Schedule(
             season = season,
             round = round,

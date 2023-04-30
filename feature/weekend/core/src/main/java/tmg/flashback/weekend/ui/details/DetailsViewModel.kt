@@ -19,7 +19,7 @@ import tmg.flashback.formula1.utils.NotificationUtils
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.flashback.results.contract.repository.NotificationsRepository
-import tmg.flashback.statistics.repo.RaceRepository
+import tmg.flashback.domain.repo.RaceRepository
 import tmg.flashback.weekend.R
 import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.utilities.models.StringHolder

@@ -6,12 +6,12 @@ import tmg.flashback.crash_reporting.manager.CrashManager
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.formula1.model.ConstructorHistory
 import tmg.flashback.flashbackapi.api.api.FlashbackApi
-import tmg.flashback.statistics.repo.base.BaseRepository
-import tmg.flashback.statistics.repo.mappers.app.ConstructorDataMapper
-import tmg.flashback.statistics.repo.mappers.app.ConstructorMapper
-import tmg.flashback.statistics.repo.mappers.network.NetworkConstructorDataMapper
-import tmg.flashback.statistics.repo.mappers.network.NetworkConstructorMapper
-import tmg.flashback.statistics.repo.mappers.network.NetworkDriverDataMapper
+import tmg.flashback.domain.repo.base.BaseRepository
+import tmg.flashback.domain.repo.mappers.app.ConstructorDataMapper
+import tmg.flashback.domain.repo.mappers.app.ConstructorMapper
+import tmg.flashback.domain.repo.mappers.network.NetworkConstructorDataMapper
+import tmg.flashback.domain.repo.mappers.network.NetworkConstructorMapper
+import tmg.flashback.domain.repo.mappers.network.NetworkDriverDataMapper
 import tmg.flashback.domain.persistence.FlashbackDatabase
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -85,7 +85,7 @@ class ConstructorRepository @Inject constructor(
         return persistence.constructorDao().getConstructorSeasonCount(id)
     }
 
-    private fun saveDrivers(data: tmg.flashback.statistics.network.models.constructors.ConstructorHistory): Boolean {
+    private fun saveDrivers(data: tmg.flashback.flashbackapi.api.models.constructors.ConstructorHistory): Boolean {
         val drivers = data.standings.values
             .map { it.drivers.values.map { it.driver } }
             .flatten()

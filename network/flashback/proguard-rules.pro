@@ -60,7 +60,7 @@
 #    static <1>$$serializer INSTANCE;
 #}
 
--keep class tmg.flashback.statistics.network.models.*
+-keep class tmg.flashback.flashbackapi.api.models.*
 
 
 -keepattributes *Annotation*

@@ -23,10 +23,10 @@ import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.model.model
 import tmg.flashback.navigation.Screen
-import tmg.flashback.statistics.repo.CircuitRepository
-import tmg.flashback.statistics.repo.ConstructorRepository
-import tmg.flashback.statistics.repo.DriverRepository
-import tmg.flashback.statistics.repo.OverviewRepository
+import tmg.flashback.domain.repo.CircuitRepository
+import tmg.flashback.domain.repo.ConstructorRepository
+import tmg.flashback.domain.repo.DriverRepository
+import tmg.flashback.domain.repo.OverviewRepository
 import tmg.flashback.weekend.contract.Weekend
 import tmg.flashback.weekend.contract.model.WeekendInfo
 import tmg.flashback.weekend.contract.with

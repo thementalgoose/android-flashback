@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import tmg.flashback.drivers.contract.model.DriverStatHistoryType
 import tmg.flashback.formula1.model.DriverHistory
-import tmg.flashback.statistics.repo.DriverRepository
+import tmg.flashback.domain.repo.DriverRepository
 import tmg.utilities.extensions.combinePair
 import javax.inject.Inject
 

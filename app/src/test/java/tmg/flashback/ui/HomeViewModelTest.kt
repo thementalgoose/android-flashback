@@ -13,7 +13,7 @@ import tmg.flashback.configuration.repository.ConfigRepository
 import tmg.flashback.configuration.usecases.ApplyConfigUseCase
 import tmg.flashback.crash_reporting.manager.CrashManager
 import tmg.flashback.maintenance.repository.MaintenanceRepository
-import tmg.flashback.statistics.repo.repository.CacheRepository
+import tmg.flashback.domain.repo.repository.CacheRepository
 import tmg.flashback.results.usecases.ScheduleNotificationsUseCase
 import tmg.flashback.usecases.SetupAppShortcutUseCase
 import tmg.testutils.BaseTest

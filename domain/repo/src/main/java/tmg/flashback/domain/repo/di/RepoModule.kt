@@ -4,8 +4,8 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import tmg.flashback.statistics.repo.repository.CacheRepository
-import tmg.flashback.statistics.repo.repository.RepoCacheRepository
+import tmg.flashback.domain.repo.repository.CacheRepository
+import tmg.flashback.domain.repo.repository.RepoCacheRepository
 
 @Module
 @InstallIn(SingletonComponent::class)

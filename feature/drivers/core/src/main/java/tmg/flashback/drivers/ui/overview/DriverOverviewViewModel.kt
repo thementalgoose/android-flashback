@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.DriverHistory
-import tmg.flashback.statistics.repo.DriverRepository
+import tmg.flashback.domain.repo.DriverRepository
 import tmg.flashback.drivers.R
 import tmg.flashback.drivers.contract.DriverNavigationComponent
 import tmg.flashback.drivers.contract.DriverSeason

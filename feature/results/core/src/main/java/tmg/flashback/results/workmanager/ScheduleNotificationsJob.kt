@@ -17,7 +17,7 @@ import tmg.flashback.formula1.utils.NotificationUtils
 import tmg.flashback.notifications.repository.NotificationRepository
 import tmg.flashback.notifications.usecases.LocalNotificationCancelUseCase
 import tmg.flashback.notifications.usecases.LocalNotificationScheduleUseCase
-import tmg.flashback.statistics.repo.ScheduleRepository
+import tmg.flashback.domain.repo.ScheduleRepository
 import tmg.flashback.results.BuildConfig
 import tmg.flashback.results.repository.models.NotificationChannel
 

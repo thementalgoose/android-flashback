@@ -32,10 +32,10 @@ import tmg.flashback.notifications.receiver.LocalNotificationBroadcastReceiver
 import tmg.flashback.notifications.repository.NotificationRepository
 import tmg.flashback.prefs.manager.PreferenceManager
 import tmg.flashback.releasenotes.ReleaseNotesNavigationComponent
-import tmg.flashback.statistics.repo.CircuitRepository
-import tmg.flashback.statistics.repo.ConstructorRepository
-import tmg.flashback.statistics.repo.DriverRepository
-import tmg.flashback.statistics.repo.OverviewRepository
+import tmg.flashback.domain.repo.CircuitRepository
+import tmg.flashback.domain.repo.ConstructorRepository
+import tmg.flashback.domain.repo.DriverRepository
+import tmg.flashback.domain.repo.OverviewRepository
 import tmg.flashback.results.contract.ResultsNavigationComponent
 import tmg.flashback.results.repository.models.NotificationChannel
 import tmg.flashback.style.AppTheme

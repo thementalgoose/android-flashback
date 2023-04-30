@@ -12,7 +12,7 @@ import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.formula1.model.DriverHistory
 import tmg.flashback.formula1.model.DriverHistorySeason
 import tmg.flashback.formula1.model.model
-import tmg.flashback.statistics.repo.DriverRepository
+import tmg.flashback.domain.repo.DriverRepository
 import tmg.flashback.drivers.R
 import tmg.flashback.ui.repository.ThemeRepository
 import tmg.testutils.BaseTest

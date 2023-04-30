@@ -16,7 +16,7 @@ import tmg.flashback.formula1.model.SeasonDriverStandings
 import tmg.flashback.formula1.model.model
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
-import tmg.flashback.statistics.repo.SeasonRepository
+import tmg.flashback.domain.repo.SeasonRepository
 import tmg.flashback.results.usecases.FetchSeasonUseCase
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.test

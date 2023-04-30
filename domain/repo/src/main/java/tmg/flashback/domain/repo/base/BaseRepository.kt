@@ -8,7 +8,7 @@ import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.flashbackapi.api.models.MetadataWrapper
 import tmg.flashback.flashbackapi.api.utils.data
 import tmg.flashback.flashbackapi.api.utils.hasData
-import tmg.flashback.statistics.repo.BuildConfig
+import tmg.flashback.domain.repo.BuildConfig
 import java.io.IOException
 import java.net.UnknownHostException
 

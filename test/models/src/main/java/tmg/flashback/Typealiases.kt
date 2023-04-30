@@ -22,24 +22,24 @@ typealias RoomSchedule = tmg.flashback.domain.persistence.models.overview.Schedu
 
 //region Network
 
-typealias NetworkCircuit = tmg.flashback.statistics.network.models.circuits.Circuit
+typealias NetworkCircuit = tmg.flashback.flashbackapi.api.models.circuits.Circuit
 
-typealias NetworkCircuitHistory = tmg.flashback.statistics.network.models.circuits.CircuitHistory
+typealias NetworkCircuitHistory = tmg.flashback.flashbackapi.api.models.circuits.CircuitHistory
 
-typealias NetworkCircuitResult = tmg.flashback.statistics.network.models.circuits.CircuitResult
+typealias NetworkCircuitResult = tmg.flashback.flashbackapi.api.models.circuits.CircuitResult
 
-typealias NetworkConstructor = tmg.flashback.statistics.network.models.constructors.Constructor
+typealias NetworkConstructor = tmg.flashback.flashbackapi.api.models.constructors.Constructor
 
-typealias NetworkDriver = tmg.flashback.statistics.network.models.drivers.Driver
+typealias NetworkDriver = tmg.flashback.flashbackapi.api.models.drivers.Driver
 
-typealias NetworkRaceData = tmg.flashback.statistics.network.models.races.RaceData
+typealias NetworkRaceData = tmg.flashback.flashbackapi.api.models.races.RaceData
 
-typealias NetworkRaceResult = tmg.flashback.statistics.network.models.races.RaceResult
+typealias NetworkRaceResult = tmg.flashback.flashbackapi.api.models.races.RaceResult
 
-typealias NetworkQualifyingResult = tmg.flashback.statistics.network.models.races.QualifyingResult
+typealias NetworkQualifyingResult = tmg.flashback.flashbackapi.api.models.races.QualifyingResult
 
-typealias NetworkSprintResult = tmg.flashback.statistics.network.models.races.SprintRaceResult
+typealias NetworkSprintResult = tmg.flashback.flashbackapi.api.models.races.SprintRaceResult
 
-typealias NetworkSchedule = tmg.flashback.statistics.network.models.overview.Schedule
+typealias NetworkSchedule = tmg.flashback.flashbackapi.api.models.overview.Schedule
 
 //endregion

@@ -14,8 +14,8 @@ import tmg.flashback.formula1.model.Overview
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.model.RaceInfo
 import tmg.flashback.formula1.model.model
-import tmg.flashback.statistics.repo.EventsRepository
-import tmg.flashback.statistics.repo.OverviewRepository
+import tmg.flashback.domain.repo.EventsRepository
+import tmg.flashback.domain.repo.OverviewRepository
 import tmg.flashback.results.repository.HomeRepository
 import tmg.flashback.results.repository.NotificationsRepositoryImpl
 import tmg.flashback.results.repository.models.NotificationSchedule

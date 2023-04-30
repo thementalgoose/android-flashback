@@ -9,7 +9,7 @@ import tmg.flashback.constructors.contract.Constructor
 import tmg.flashback.constructors.contract.with
 import tmg.flashback.formula1.model.Race
 import tmg.flashback.formula1.model.model
-import tmg.flashback.statistics.repo.RaceRepository
+import tmg.flashback.domain.repo.RaceRepository
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.testutils.BaseTest

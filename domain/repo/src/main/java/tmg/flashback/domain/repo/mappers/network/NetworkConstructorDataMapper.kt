@@ -6,7 +6,7 @@ import javax.inject.Inject
 class NetworkConstructorDataMapper @Inject constructor() {
 
     @Throws(RuntimeException::class)
-    fun mapConstructorData(constructor: tmg.flashback.statistics.network.models.constructors.Constructor): Constructor {
+    fun mapConstructorData(constructor: tmg.flashback.flashbackapi.api.models.constructors.Constructor): Constructor {
         return Constructor(
             id = constructor.id,
             colour = constructor.colour,

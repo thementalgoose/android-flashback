@@ -6,9 +6,9 @@ import tmg.flashback.crash_reporting.manager.CrashManager
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.formula1.model.Event
 import tmg.flashback.flashbackapi.api.api.FlashbackApi
-import tmg.flashback.statistics.repo.base.BaseRepository
-import tmg.flashback.statistics.repo.mappers.app.EventMapper
-import tmg.flashback.statistics.repo.mappers.network.NetworkEventMapper
+import tmg.flashback.domain.repo.base.BaseRepository
+import tmg.flashback.domain.repo.mappers.app.EventMapper
+import tmg.flashback.domain.repo.mappers.network.NetworkEventMapper
 import tmg.flashback.domain.persistence.FlashbackDatabase
 import javax.inject.Inject
 import javax.inject.Singleton
