@@ -62,7 +62,7 @@
 
 -keep class tmg.flashback.statistics.network.models.**
 
--keep class tmg.flashback.statistics.room.models.**
+-keep class tmg.flashback.domain.persistence.models.**
 
 -keep class tmg.flashback.statistics.repository.json.*
 -keep class tmg.flashback.statistics.repository.models.*

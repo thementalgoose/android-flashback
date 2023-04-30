@@ -34,8 +34,8 @@ dependencies {
     implementation project(path: ":presentation:navigation")
 
     // Feature
-    implementation project(path: ':network:flashback:api')
-    implementation project(path: ':network:flashback:repo')
+    implementation project(path: ':network:flashback')
+    implementation project(path: ':domain:repo')
 
     // Stats
     implementation project(path: ':feature:results:core')

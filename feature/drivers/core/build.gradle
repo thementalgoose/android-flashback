@@ -25,7 +25,7 @@ dependencies {
     implementation project(path: ':core:preferences')
 
     implementation project(path: ':formula1')
-    implementation project(path: ':network:flashback:repo')
+    implementation project(path: ':domain:repo')
 
     implementation project(path: ':presentation:ui')
     implementation project(path: ":presentation:strings")
