@@ -22,7 +22,7 @@ import tmg.flashback.constructors.R
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.ConstructorHistorySeason
-import tmg.flashback.statistics.repo.ConstructorRepository
+import tmg.flashback.domain.repo.ConstructorRepository
 import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.utilities.extensions.ordinalAbbreviation
 import javax.inject.Inject

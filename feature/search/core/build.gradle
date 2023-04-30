@@ -32,7 +32,7 @@ dependencies {
 
     implementation project(path: ":feature:search:contract")
     implementation project(path: ":formula1")
-    implementation project(path: ":data:repo")
+    implementation project(path: ":domain:repo")
 
     implementation project(path: ":feature:drivers:contract")
     implementation project(path: ":feature:constructors:contract")

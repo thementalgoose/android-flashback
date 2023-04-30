@@ -28,7 +28,7 @@ dependencies {
     implementation project(path: ":presentation:navigation")
 
     implementation project(path: ':formula1')
-    implementation project(path: ':data:repo')
+    implementation project(path: ':domain:repo')
     implementation project(path: ':feature:circuits:contract')
 
     implementation project(path: ':feature:weekend:contract')

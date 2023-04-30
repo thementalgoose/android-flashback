@@ -10,7 +10,7 @@ import javax.inject.Singleton
 
 @Singleton
 class PermissionRepository @Inject constructor(
-    private val topActivityProvider: tmg.flashback.navigation.ActivityProvider
+    private val topActivityProvider: ActivityProvider
 ) {
     val isRuntimeNotificationsEnabled: Boolean
         get() {

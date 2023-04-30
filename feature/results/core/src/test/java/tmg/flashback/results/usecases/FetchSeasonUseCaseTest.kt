@@ -8,9 +8,9 @@ import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
-import tmg.flashback.statistics.repo.EventsRepository
-import tmg.flashback.statistics.repo.OverviewRepository
-import tmg.flashback.statistics.repo.RaceRepository
+import tmg.flashback.domain.repo.EventsRepository
+import tmg.flashback.domain.repo.OverviewRepository
+import tmg.flashback.domain.repo.RaceRepository
 import tmg.testutils.BaseTest
 
 internal class FetchSeasonUseCaseTest: BaseTest() {

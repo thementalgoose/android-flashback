@@ -5,7 +5,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import tmg.flashback.managers.AppNetworkConfigManager
-import tmg.flashback.statistics.network.NetworkConfigManager
+import tmg.flashback.flashbackapi.api.NetworkConfigManager
 
 @Module
 @InstallIn(SingletonComponent::class)

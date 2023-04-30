@@ -11,14 +11,14 @@ import org.threeten.bp.LocalDateTime
 import tmg.flashback.ads.ads.repository.AdsRepository
 import tmg.flashback.ads.ads.repository.model.AdvertConfig
 import tmg.flashback.device.managers.NetworkConnectivityManager
-import tmg.flashback.rss.repo.RSSRepository
-import tmg.flashback.rss.repo.RssAPI
+import tmg.flashback.rss.repo.RssRepository
 import tmg.flashback.rss.repo.model.Article
 import tmg.flashback.rss.repo.model.ArticleSource
 import tmg.flashback.rss.repo.model.Response
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.flashback.rss.contract.RSSConfigure
+import tmg.flashback.rss.network.RssService
 import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertListContainsItem
@@ -31,8 +31,8 @@ internal class RSSViewModelTest: BaseTest() {
 
     private lateinit var underTest: RSSViewModel
 
-    private val mockRSSDB: RssAPI = mockk(relaxed = true)
-    private val mockRssRepository: RSSRepository = mockk(relaxed = true)
+    private val mockRssService: RssService = mockk(relaxed = true)
+    private val mockRssRepository: RssRepository = mockk(relaxed = true)
     private val mockAdsRepository: AdsRepository = mockk(relaxed = true)
     private val mockNavigator: Navigator = mockk(relaxed = true)
     private val mockOpenWebpageUseCase: OpenWebpageUseCase = mockk(relaxed = true)
@@ -66,7 +66,7 @@ internal class RSSViewModelTest: BaseTest() {
         every { mockConnectivityManager.isConnected } returns true
         every { mockRssRepository.rssUrls } returns setOf("https://www.mock.rss.url.com")
         every { mockRssRepository.rssShowDescription } returns true
-        every { mockRSSDB.getNews() } returns mockResponse200
+        every { mockRssService.getNews() } returns mockResponse200
         every { mockAdsRepository.advertConfig } returns AdvertConfig(
             onRss = true
         )
@@ -75,7 +75,7 @@ internal class RSSViewModelTest: BaseTest() {
     private fun initUnderTest() {
 
         underTest = RSSViewModel(
-            RSSDB = mockRSSDB,
+            rssService = mockRssService,
             rssRepository = mockRssRepository,
             adsRepository = mockAdsRepository,
             navigator = mockNavigator,
@@ -140,7 +140,7 @@ internal class RSSViewModelTest: BaseTest() {
     @Test
     fun `init all sources disabled if excludes list contains all news sources`() = coroutineTest {
 
-        every { mockRSSDB.getNews() } returns mockResponse500
+        every { mockRssService.getNews() } returns mockResponse500
         every { mockRssRepository.rssUrls } returns emptySet()
 
         val expected = listOf<RSSModel>(
@@ -158,7 +158,7 @@ internal class RSSViewModelTest: BaseTest() {
     @Test
     fun `init internal error is thrown if results are empty`() = coroutineTest {
 
-        every { mockRSSDB.getNews() } returns mockResponse500
+        every { mockRssService.getNews() } returns mockResponse500
 
         val expected = listOf<RSSModel>(
             RSSModel.InternalError
@@ -175,7 +175,7 @@ internal class RSSViewModelTest: BaseTest() {
     @Test
     fun `no network error shown when network response code is no network`() = coroutineTest {
 
-        every { mockRSSDB.getNews() } returns mockResponseNoNetwork
+        every { mockRssService.getNews() } returns mockResponseNoNetwork
 
         val expected = listOf<RSSModel>(
             RSSModel.NoNetwork

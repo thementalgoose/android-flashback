@@ -8,12 +8,12 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import tmg.flashback.appshortcuts.manager.AppShortcutManager
 import tmg.flashback.appshortcuts.models.ShortcutInfo
-import tmg.flashback.rss.repo.RSSRepository
+import tmg.flashback.rss.repo.RssRepository
 import tmg.testutils.BaseTest
 
 internal class RssShortcutUseCaseTest: BaseTest() {
 
-    private val mockRssRepository: RSSRepository = mockk(relaxed = true)
+    private val mockRssRepository: RssRepository = mockk(relaxed = true)
     private val mockAppShortcutManager: AppShortcutManager = mockk(relaxed = true)
 
     private lateinit var underTest: RSSAppShortcutUseCaseImpl

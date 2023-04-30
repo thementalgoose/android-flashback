@@ -10,7 +10,7 @@ import tmg.flashback.drivers.contract.with
 import tmg.flashback.formula1.model.Race
 import tmg.flashback.formula1.model.SprintRaceResult
 import tmg.flashback.formula1.model.model
-import tmg.flashback.statistics.repo.RaceRepository
+import tmg.flashback.domain.repo.RaceRepository
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.testutils.BaseTest

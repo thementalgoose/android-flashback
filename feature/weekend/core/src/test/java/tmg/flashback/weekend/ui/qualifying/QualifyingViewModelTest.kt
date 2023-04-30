@@ -13,7 +13,7 @@ import tmg.flashback.formula1.model.QualifyingResult
 import tmg.flashback.formula1.model.QualifyingRound
 import tmg.flashback.formula1.model.QualifyingType
 import tmg.flashback.formula1.model.model
-import tmg.flashback.statistics.repo.RaceRepository
+import tmg.flashback.domain.repo.RaceRepository
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.testutils.BaseTest

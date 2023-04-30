@@ -15,7 +15,7 @@ import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.formula1.model.ConstructorHistory
 import tmg.flashback.formula1.model.ConstructorHistorySeason
 import tmg.flashback.formula1.model.model
-import tmg.flashback.statistics.repo.ConstructorRepository
+import tmg.flashback.domain.repo.ConstructorRepository
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.flashback.constructors.R

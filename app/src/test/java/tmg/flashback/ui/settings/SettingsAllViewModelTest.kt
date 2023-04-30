@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import tmg.flashback.ads.ads.repository.AdsRepository
 import tmg.flashback.device.managers.BuildConfigManager
-import tmg.flashback.rss.repo.RSSRepository
+import tmg.flashback.rss.repo.RssRepository
 import tmg.flashback.navigation.NavigationDestination
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
@@ -23,7 +23,7 @@ internal class SettingsAllViewModelTest: BaseTest() {
     private val mockThemeRepository: ThemeRepository = mockk(relaxed = true)
     private val mockBuildConfigManager: BuildConfigManager = mockk(relaxed = true)
     private val mockAdsRepository: AdsRepository = mockk(relaxed = true)
-    private val mockRSSRepository: RSSRepository = mockk(relaxed = true)
+    private val mockRSSRepository: RssRepository = mockk(relaxed = true)
     private val mockNavigator: Navigator = mockk(relaxed = true)
     private val mockAppearanceNavigationComponent: AppearanceNavigationComponent = mockk(relaxed = true)
 
