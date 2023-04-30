@@ -17,7 +17,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
 import tmg.flashback.formula1.model.Race
-import tmg.flashback.statistics.repo.RaceRepository
+import tmg.flashback.domain.repo.RaceRepository
 import tmg.flashback.weekend.contract.model.WeekendInfo
 import tmg.utilities.extensions.combinePair
 import javax.inject.Inject

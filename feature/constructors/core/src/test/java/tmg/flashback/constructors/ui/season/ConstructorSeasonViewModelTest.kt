@@ -14,7 +14,7 @@ import tmg.flashback.formula1.model.ConstructorHistory
 import tmg.flashback.formula1.model.ConstructorHistorySeason
 import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.model.model
-import tmg.flashback.statistics.repo.ConstructorRepository
+import tmg.flashback.domain.repo.ConstructorRepository
 import tmg.flashback.constructors.R
 import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.testutils.BaseTest

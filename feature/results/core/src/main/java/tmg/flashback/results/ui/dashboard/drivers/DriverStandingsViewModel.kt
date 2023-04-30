@@ -18,7 +18,7 @@ import tmg.flashback.drivers.contract.Driver
 import tmg.flashback.drivers.contract.with
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
-import tmg.flashback.statistics.repo.SeasonRepository
+import tmg.flashback.domain.repo.SeasonRepository
 import tmg.flashback.results.usecases.FetchSeasonUseCase
 import tmg.flashback.results.with
 import javax.inject.Inject

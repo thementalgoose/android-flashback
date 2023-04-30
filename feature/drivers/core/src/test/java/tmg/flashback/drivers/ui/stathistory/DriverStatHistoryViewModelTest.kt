@@ -10,7 +10,7 @@ import tmg.flashback.formula1.model.DriverHistorySeason
 import tmg.flashback.formula1.model.DriverHistorySeasonRace
 import tmg.flashback.formula1.model.RaceInfo
 import tmg.flashback.formula1.model.model
-import tmg.flashback.statistics.repo.DriverRepository
+import tmg.flashback.domain.repo.DriverRepository
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.test
 

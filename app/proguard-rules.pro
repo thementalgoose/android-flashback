@@ -60,12 +60,12 @@
 #    static <1>$$serializer INSTANCE;
 #}
 
--keep class tmg.flashback.statistics.network.models.**
+-keep class tmg.flashback.flashbackapi.api.models.**
 
--keep class tmg.flashback.statistics.room.models.**
+-keep class tmg.flashback.domain.persistence.models.**
 
--keep class tmg.flashback.statistics.repository.json.*
--keep class tmg.flashback.statistics.repository.models.*
+-keep class tmg.flashback.domain.repo.json.*
+-keep class tmg.flashback.domain.repo.models.*
 
 -keep class tmg.flashback.rss.network.apis.model.*
 -keep class tmg.flashback.rss.network.apis.*

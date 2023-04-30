@@ -1,0 +1,27 @@
+package tmg.flashback.domain.repo.mappers.network
+
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import tmg.flashback.NetworkConstructor
+import tmg.flashback.flashbackapi.api.models.constructors.model
+import tmg.flashback.domain.persistence.models.constructors.Constructor
+import tmg.flashback.domain.persistence.models.constructors.model
+
+internal class NetworkConstructorDataMapperTest {
+
+    private lateinit var sut: NetworkConstructorDataMapper
+
+    @BeforeEach
+    internal fun setUp() {
+        sut = NetworkConstructorDataMapper()
+    }
+
+    @Test
+    fun `mapConstructorData maps fields correctly`() {
+        val input = NetworkConstructor.model()
+        val expected = Constructor.model()
+
+        assertEquals(expected, sut.mapConstructorData(input))
+    }
+}

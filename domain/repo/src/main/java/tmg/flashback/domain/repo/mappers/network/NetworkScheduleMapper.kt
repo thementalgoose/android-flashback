@@ -1,0 +1,34 @@
+package tmg.flashback.domain.repo.mappers.network
+
+import tmg.flashback.flashbackapi.api.models.overview.OverviewRace
+import tmg.flashback.flashbackapi.api.models.races.Race
+import tmg.flashback.domain.persistence.models.overview.Schedule
+import javax.inject.Inject
+
+class NetworkScheduleMapper @Inject constructor() {
+
+    @Throws
+    fun mapSchedules(race: OverviewRace): List<Schedule> {
+        return race.schedule?.map {
+            mapSchedule(race.season, race.round, it)
+        } ?: emptyList()
+    }
+
+    @Throws(RuntimeException::class)
+    fun mapSchedules(race: Race): List<Schedule> {
+        return race.schedule?.map {
+            mapSchedule(race.data.season, race.data.round, it)
+        } ?: emptyList()
+    }
+
+    @Throws(RuntimeException::class)
+    fun mapSchedule(season: Int, round: Int, data: tmg.flashback.flashbackapi.api.models.overview.Schedule): Schedule {
+        return Schedule(
+            season = season,
+            round = round,
+            label = data.label,
+            date = data.date,
+            time = data.time
+        )
+    }
+}

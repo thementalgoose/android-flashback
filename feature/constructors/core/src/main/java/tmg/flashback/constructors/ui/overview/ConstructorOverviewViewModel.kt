@@ -15,7 +15,7 @@ import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.ConstructorHistory
 import tmg.flashback.navigation.Screen
-import tmg.flashback.statistics.repo.ConstructorRepository
+import tmg.flashback.domain.repo.ConstructorRepository
 import tmg.flashback.ui.components.navigation.PipeType
 import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.utilities.extensions.ordinalAbbreviation

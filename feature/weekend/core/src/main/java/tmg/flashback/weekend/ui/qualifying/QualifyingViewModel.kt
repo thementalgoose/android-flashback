@@ -19,7 +19,7 @@ import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.model.Race
 import tmg.flashback.formula1.model.QualifyingType
 import tmg.flashback.navigation.Screen
-import tmg.flashback.statistics.repo.RaceRepository
+import tmg.flashback.domain.repo.RaceRepository
 import javax.inject.Inject
 
 interface QualifyingViewModelInputs {

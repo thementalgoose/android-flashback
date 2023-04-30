@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import tmg.flashback.constructors.contract.Constructor
 import tmg.flashback.constructors.contract.with
-import tmg.flashback.statistics.repo.SeasonRepository
+import tmg.flashback.domain.repo.SeasonRepository
 import tmg.flashback.results.usecases.FetchSeasonUseCase
 import tmg.flashback.results.with
 import tmg.flashback.navigation.Navigator

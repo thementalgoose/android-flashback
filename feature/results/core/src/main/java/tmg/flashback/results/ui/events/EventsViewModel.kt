@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import tmg.flashback.formula1.model.Event
-import tmg.flashback.statistics.repo.EventsRepository
+import tmg.flashback.domain.repo.EventsRepository
 import javax.inject.Inject
 
 interface EventsViewModelInputs {

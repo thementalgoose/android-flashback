@@ -2,7 +2,7 @@ package tmg.flashback.managers
 
 import tmg.flashback.BuildConfig
 import tmg.flashback.repositories.NetworkConfigRepository
-import tmg.flashback.statistics.network.NetworkConfigManager
+import tmg.flashback.flashbackapi.api.NetworkConfigManager
 import javax.inject.Inject
 import javax.inject.Singleton
 

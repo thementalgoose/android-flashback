@@ -4,7 +4,7 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Test
-import tmg.flashback.rss.repo.RSSRepository
+import tmg.flashback.rss.repo.RssRepository
 import tmg.flashback.rss.repo.model.SupportedArticleSource
 import tmg.flashback.rss.usecases.AllSupportedSourcesUseCase
 import tmg.flashback.rss.usecases.GetSupportedSourceUseCase
@@ -17,7 +17,7 @@ import tmg.testutils.livedata.testObserve
 
 internal class ConfigureRSSViewModelTest: BaseTest() {
 
-    private val mockRssRepository: RSSRepository = mockk(relaxed = true)
+    private val mockRssRepository: RssRepository = mockk(relaxed = true)
     private val mockAllSupportedSourcesUseCase: AllSupportedSourcesUseCase = mockk(relaxed = true)
     private val mockGetSupportedSourceUseCase: GetSupportedSourceUseCase = mockk(relaxed = true)
     private val mockOpenWebpageUseCase: OpenWebpageUseCase = mockk(relaxed = true)

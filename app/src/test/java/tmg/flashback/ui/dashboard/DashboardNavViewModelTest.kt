@@ -16,16 +16,12 @@ import org.junit.jupiter.params.provider.CsvSource
 import tmg.flashback.crash_reporting.manager.CrashManager
 import tmg.flashback.debug.DebugNavigationComponent
 import tmg.flashback.debug.model.DebugMenuItem
-import tmg.flashback.rss.repo.RSSRepository
+import tmg.flashback.rss.repo.RssRepository
 import tmg.flashback.results.Calendar
 import tmg.flashback.results.Constructors
 import tmg.flashback.results.Drivers
 import tmg.flashback.results.usecases.DefaultSeasonUseCase
 import tmg.flashback.results.with
-import tmg.flashback.navigation.ApplicationNavigationComponent
-import tmg.flashback.navigation.NavigationDestination
-import tmg.flashback.navigation.Navigator
-import tmg.flashback.navigation.Screen
 import tmg.flashback.ui.settings.All
 import tmg.flashback.usecases.DashboardSyncUseCase
 import tmg.flashback.usecases.GetSeasonsUseCase
@@ -39,7 +35,7 @@ import tmg.testutils.livedata.testObserve
 
 internal class DashboardNavViewModelTest: BaseTest() {
 
-    private val mockRssRepository: RSSRepository = mockk(relaxed = true)
+    private val mockRssRepository: RssRepository = mockk(relaxed = true)
     private val mockDefaultSeasonUseCase: DefaultSeasonUseCase = mockk(relaxed = true)
     private val mockNavigator: tmg.flashback.navigation.Navigator = mockk(relaxed = true)
     private val mockGetSeasonUseCase: GetSeasonsUseCase = mockk(relaxed = true)

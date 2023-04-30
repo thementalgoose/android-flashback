@@ -14,7 +14,7 @@ import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.SeasonConstructorStandingSeason
 import tmg.flashback.formula1.model.SeasonConstructorStandings
 import tmg.flashback.formula1.model.model
-import tmg.flashback.statistics.repo.SeasonRepository
+import tmg.flashback.domain.repo.SeasonRepository
 import tmg.flashback.results.usecases.FetchSeasonUseCase
 import tmg.flashback.results.with
 import tmg.flashback.navigation.Navigator

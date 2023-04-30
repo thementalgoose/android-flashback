@@ -11,11 +11,11 @@ import tmg.flashback.configuration.repository.ConfigRepository
 import tmg.flashback.configuration.usecases.FetchConfigUseCase
 import tmg.flashback.configuration.usecases.ResetConfigUseCase
 import tmg.flashback.maintenance.repository.MaintenanceRepository
-import tmg.flashback.statistics.repo.CircuitRepository
-import tmg.flashback.statistics.repo.ConstructorRepository
-import tmg.flashback.statistics.repo.DriverRepository
-import tmg.flashback.statistics.repo.OverviewRepository
-import tmg.flashback.statistics.repo.repository.CacheRepository
+import tmg.flashback.domain.repo.CircuitRepository
+import tmg.flashback.domain.repo.ConstructorRepository
+import tmg.flashback.domain.repo.DriverRepository
+import tmg.flashback.domain.repo.OverviewRepository
+import tmg.flashback.domain.repo.repository.CacheRepository
 import tmg.flashback.results.usecases.ScheduleNotificationsUseCase
 import tmg.flashback.rss.contract.usecases.RSSAppShortcutUseCase
 import tmg.flashback.ui.sync.SyncNavTarget.DASHBOARD

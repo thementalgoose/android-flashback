@@ -17,10 +17,10 @@ internal class RSSRepositoryTest {
     private val mockPreferenceManager: PreferenceManager = mockk(relaxed = true)
     private val mockConfigManager: ConfigManager = mockk(relaxed = true)
 
-    private lateinit var sut: RSSRepository
+    private lateinit var sut: RssRepository
 
     private fun initSUT() {
-        sut = RSSRepository(mockPreferenceManager, mockConfigManager)
+        sut = RssRepository(mockPreferenceManager, mockConfigManager)
     }
 
     //region enabled
