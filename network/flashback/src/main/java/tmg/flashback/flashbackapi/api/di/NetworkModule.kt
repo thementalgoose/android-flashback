@@ -14,17 +14,24 @@ import tmg.flashback.flashbackapi.api.NetworkConfigManager
 import tmg.flashback.flashbackapi.api.api.FlashbackApi
 import tmg.flashback.flashbackapi.api.interceptor.ConfigUrlInterceptor
 import java.util.concurrent.TimeUnit
+import javax.inject.Qualifier
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 class NetworkModule {
 
     @Provides
-    fun provideFlashbackApi(retrofit: Retrofit): FlashbackApi {
+    fun provideFlashbackApi(
+        @FlashbackRetrofit
+        retrofit: Retrofit
+    ): FlashbackApi {
         return retrofit.create(FlashbackApi::class.java)
     }
 
     @Provides
+    @Singleton
+    @FlashbackRetrofit
     fun providesRetrofit(
         baseUrlManager: NetworkConfigManager,
         configUrlInterceptor: ConfigUrlInterceptor
@@ -54,3 +61,6 @@ class NetworkModule {
         return builder.build()
     }
 }
+
+@Qualifier
+internal annotation class FlashbackRetrofit

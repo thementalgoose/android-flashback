@@ -18,7 +18,7 @@ import tmg.flashback.crash_reporting.manager.CrashManager
 import tmg.flashback.debug.DebugNavigationComponent
 import tmg.flashback.debug.model.DebugMenuItem
 import tmg.flashback.formula1.constants.Formula1
-import tmg.flashback.rss.repo.RSSRepository
+import tmg.flashback.rss.repo.RssRepository
 import tmg.flashback.results.Calendar
 import tmg.flashback.results.Constructors
 import tmg.flashback.results.Drivers
@@ -55,7 +55,7 @@ interface DashboardNavViewModelOutputs {
 
 @HiltViewModel
 class DashboardNavViewModel @Inject constructor(
-    private val rssRepository: RSSRepository,
+    private val rssRepository: RssRepository,
     private val defaultSeasonUseCase: DefaultSeasonUseCase,
     private val navigator: tmg.flashback.navigation.Navigator,
     private val getSeasonUseCase: GetSeasonsUseCase,

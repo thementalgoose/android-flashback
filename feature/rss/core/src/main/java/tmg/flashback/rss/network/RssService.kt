@@ -7,10 +7,7 @@ import kotlinx.coroutines.flow.map
 import retrofit2.HttpException
 import tmg.flashback.rss.BuildConfig
 import tmg.flashback.rss.network.apis.convert
-import tmg.flashback.rss.network.shared.RssXMLRetrofit
-import tmg.flashback.rss.network.shared.buildRetrofit
-import tmg.flashback.rss.repo.RSSRepository
-import tmg.flashback.rss.repo.RssAPI
+import tmg.flashback.rss.repo.RssRepository
 import tmg.flashback.rss.repo.model.Article
 import tmg.flashback.rss.repo.model.Response
 import tmg.flashback.rss.usecases.GetSupportedSourceUseCase
@@ -21,19 +18,20 @@ import javax.inject.Inject
 import javax.net.ssl.SSLHandshakeException
 import javax.xml.stream.XMLStreamException
 
-internal class RSSService @Inject constructor(
-    private val repository: RSSRepository,
+class RssService @Inject constructor(
+    private val rssAPI: RssAPI,
+    private val repository: RssRepository,
     private val getSupportedSourceUseCase: GetSupportedSourceUseCase
-) : RssAPI {
+) {
 
-    private val xmlRetrofit: RssXMLRetrofit = buildRetrofit(true)
     private val headers: Map<String, String> = mapOf(
         "Accept" to "application/rss+xml, application/xml"
     )
 
     private fun get(url: String): Flow<Response<List<Article>>> = flow {
         val result: Response<List<Article>> = try {
-            val response = xmlRetrofit.getRssXML(headers, url)
+            val response = rssAPI
+                .getRssXML(headers, url)
                 .convert(getSupportedSourceUseCase, url, repository.rssShowDescription)
             Response(response)
         } catch (e: XMLStreamException) {
@@ -90,7 +88,7 @@ internal class RSSService @Inject constructor(
         }
     }
 
-    override fun getNews(): Flow<Response<List<Article>>> = getAll()
+    fun getNews(): Flow<Response<List<Article>>> = getAll()
         .map { responses ->
             val errors = responses.filter { it.code != 200 }
             if (responses.size != errors.size) {

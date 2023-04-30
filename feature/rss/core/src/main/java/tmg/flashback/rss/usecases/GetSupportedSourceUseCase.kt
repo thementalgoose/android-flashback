@@ -1,6 +1,6 @@
 package tmg.flashback.rss.usecases
 
-import tmg.flashback.rss.repo.RSSRepository
+import tmg.flashback.rss.repo.RssRepository
 import tmg.flashback.rss.repo.converters.toArticleSource
 import tmg.flashback.rss.repo.model.SupportedArticleSource
 import tmg.flashback.rss.utils.stripHTTP
@@ -10,7 +10,7 @@ import java.net.URL
 import javax.inject.Inject
 
 class GetSupportedSourceUseCase @Inject constructor(
-    private val rssRepository: RSSRepository,
+    private val rssRepository: RssRepository,
 ) {
 
     private val fallbackUrls: Map<String, String> = mapOf(

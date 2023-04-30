@@ -6,11 +6,11 @@ import tmg.flashback.appshortcuts.manager.AppShortcutManager
 import tmg.flashback.appshortcuts.models.ShortcutInfo
 import tmg.flashback.rss.R
 import tmg.flashback.rss.contract.usecases.RSSAppShortcutUseCase
-import tmg.flashback.rss.repo.RSSRepository
+import tmg.flashback.rss.repo.RssRepository
 import javax.inject.Inject
 
 internal class RSSAppShortcutUseCaseImpl @Inject constructor(
-    private val rssRepository: RSSRepository,
+    private val rssRepository: RssRepository,
     private val appShortcutManager: AppShortcutManager
 ): RSSAppShortcutUseCase {
 

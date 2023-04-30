@@ -4,14 +4,14 @@ import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import tmg.flashback.rss.repo.RSSRepository
+import tmg.flashback.rss.repo.RssRepository
 import tmg.flashback.rss.repo.model.SupportedArticleSource
 import tmg.flashback.rss.repo.model.SupportedSource
 import tmg.flashback.rss.repo.model.model
 
 internal class AllSupportedSourcesUseCaseTest {
 
-    private val mockRssRepository: RSSRepository = mockk(relaxed = true)
+    private val mockRssRepository: RssRepository = mockk(relaxed = true)
 
     private lateinit var underTest: AllSupportedSourcesUseCase
 
