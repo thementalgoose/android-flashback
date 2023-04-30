@@ -8,9 +8,9 @@ import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeParseException
 import tmg.flashback.rss.network.apis.convert
-import tmg.flashback.rss.network.apis.model.RssXMLModel
-import tmg.flashback.rss.network.apis.model.RssXMLModelChannel
-import tmg.flashback.rss.network.apis.model.RssXMLModelItem
+import tmg.flashback.rss.network.model.RssXMLModel
+import tmg.flashback.rss.network.model.RssXMLModelChannel
+import tmg.flashback.rss.network.model.RssXMLModelItem
 import tmg.flashback.rss.repo.model.Article
 import tmg.flashback.rss.repo.model.ArticleSource
 import tmg.flashback.rss.usecases.GetSupportedSourceUseCase
