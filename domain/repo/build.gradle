@@ -1,0 +1,32 @@
+apply plugin: 'com.android.library'
+apply from: rootDir.absolutePath + "/gradle/config-android.gradle"
+apply from: rootDir.absolutePath + "/gradle/config-util.gradle"
+apply from: rootDir.absolutePath + "/gradle/config-junit5.gradle"
+apply from: rootDir.absolutePath + "/gradle/config-hilt.gradle"
+apply from: rootDir.absolutePath + "/gradle/config-room.gradle"
+
+android {
+    compileSdkVersion project.ext.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion project.ext.minSdkVersion
+        targetSdkVersion project.ext.targetSdkVersion
+    }
+    namespace 'tmg.flashback.statistics.repo'
+}
+
+dependencies {
+
+    implementation project(path: ':domain:persistence')
+    implementation project(path: ':network:flashback')
+    implementation project(path: ':formula1')
+    implementation project(path: ':core:crash-reporting')
+    implementation project(path: ':core:preferences')
+    implementation project(path: ':core:device')
+
+    implementation libs.bundles.retrofit
+    implementation libs.bundles.androidx.workmanager
+
+    testImplementation project(':test:models')
+
+}

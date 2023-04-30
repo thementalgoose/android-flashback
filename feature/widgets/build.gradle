@@ -18,7 +18,7 @@ android {
 dependencies {
 
     implementation project(path: ':formula1')
-    implementation project(path: ':network:flashback:repo')
+    implementation project(path: ':domain:repo')
 
     implementation project(path: ':presentation:style')
     implementation project(path: ':presentation:ui')
