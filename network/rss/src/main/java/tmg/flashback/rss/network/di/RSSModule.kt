@@ -7,7 +7,6 @@ import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory
 import tmg.flashback.rss.network.BuildConfig
 import tmg.flashback.rss.network.RssAPI
@@ -49,4 +48,5 @@ internal class RSSModule {
 }
 
 @Qualifier
+@Retention(AnnotationRetention.BINARY)
 internal annotation class RssRetrofit
