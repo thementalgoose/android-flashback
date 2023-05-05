@@ -31,7 +31,20 @@ internal class EasterEggsRepositoryTest {
         }
     }
 
+    @Test
+    fun `is ukraine enabled gets from config`() {
+        every { mockConfigManager.getBoolean(keyUkraine) } returns true
+
+        initUnderTest()
+        assertTrue(underTest.isUkraineEnabled)
+
+        verify {
+            mockConfigManager.getBoolean(keyUkraine)
+        }
+    }
+
     companion object {
         private const val keySnow = "easteregg_snow"
+        private const val keyUkraine = "easteregg_ukraine"
     }
 }
