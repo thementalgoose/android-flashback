@@ -58,7 +58,7 @@ task generateRemoteConfigDefaults {
             }
             entry {
                 key('easteregg_ukraine')
-                value('true')
+                value('false')
             }
             entry {
                 key('force_upgrade')

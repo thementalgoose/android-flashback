@@ -89,6 +89,7 @@ fun DashboardMenuExpandedScreen(
     appVersion: String,
     easterEggSnow: Boolean,
     easterEggTitleIcon: MenuIcons?,
+    easterEggUkraine: Boolean,
     lockExpanded: Boolean
 ) {
     val expanded = remember { mutableStateOf(lockExpanded) }
@@ -119,6 +120,7 @@ fun DashboardMenuExpandedScreen(
                 false -> { { expanded.value = !expanded.value } }
                 true -> null
             },
+            showUkraine = easterEggUkraine,
             isExpanded = expanded.value
         )
         Div()
@@ -264,6 +266,7 @@ private fun NavigationItem(
 private fun HeroItem(
     isExpanded: Boolean,
     menuIcons: MenuIcons?,
+    showUkraine: Boolean,
     modifier: Modifier = Modifier,
     onClick: (() -> Unit)?,
 ) {
@@ -302,7 +305,8 @@ private fun HeroItem(
         if (isExpanded) {
             DashboardHero(
                 menuIcons = menuIcons,
-                modifier = Modifier
+                showUkraine = showUkraine,
+                modifier = Modifier.weight(1f)
             )
         }
     }
@@ -483,6 +487,7 @@ private fun PreviewCompactTimeline() {
             appVersion = "version",
             easterEggSnow = false,
             easterEggTitleIcon = null,
+            easterEggUkraine = false,
             lockExpanded = false
         )
     }
@@ -508,7 +513,8 @@ private fun PreviewExpandedTimeline() {
             seasonClicked = { },
             appVersion = "version",
             easterEggSnow = false,
-            easterEggTitleIcon = null,
+            easterEggTitleIcon = MenuIcons.CHRISTMAS,
+            easterEggUkraine = true,
             lockExpanded = true
         )
     }
