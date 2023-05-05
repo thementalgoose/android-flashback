@@ -49,6 +49,7 @@ jobs:
         run: |
           echo "NAME: ${{ steps.get_version_name.outputs.VERSION }}" 
           echo "CODE: ${{ steps.get_version_code.outputs.VERSION }}"
+          echo "REF: '${{ github.ref }}'"
 
 #  json_checker:
 #    runs-on: ubuntu-latest
