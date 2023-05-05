@@ -4,8 +4,8 @@ env:
 'on':
   release:
     types: [published]
-#  branches:
-#    - master
+  branches:
+    - main
   workflow_dispatch:
 jobs:
   build:
