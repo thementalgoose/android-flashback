@@ -32,6 +32,7 @@ import tmg.flashback.providers.OverviewRaceProvider
 import tmg.flashback.results.R
 import tmg.flashback.results.repository.models.NotificationSchedule
 import tmg.flashback.results.ui.dashboard.DashboardQuickLinks
+import tmg.flashback.results.ui.messaging.ProvidedBy
 import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
@@ -162,6 +163,7 @@ fun ScheduleScreen(
                 }
             }
             item(key = "footer") {
+                ProvidedBy()
                 Spacer(Modifier.height(72.dp))
             }
         }

@@ -12,5 +12,4 @@ fun LazyItemScope.DashboardQuickLinks(
     Banner(
         season = season
     )
-    ProvidedBy()
 }
