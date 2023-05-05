@@ -18,13 +18,14 @@ import androidx.compose.ui.semantics.CollectionInfo
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.collectionInfo
 import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.selectableGroup
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import org.threeten.bp.LocalDate
+import tmg.flashback.formula1.constants.Formula1.qualifyingDataAvailableFrom
+import tmg.flashback.formula1.constants.Formula1.sprintsIntroducedIn
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.model.Schedule
 import tmg.flashback.providers.OverviewRaceProvider
@@ -116,9 +117,10 @@ internal fun Schedule(
                         )
                         Spacer(Modifier.width(AppTheme.dimens.small))
                         IconRow(
-                            showQualifying = model.model.hasQualifying && model.model.season > 2000,
-                            showSprint = model.model.hasSprint && model.model.season > 2020,
-                            showRace = model.model.hasResults
+                            hasQualifying = model.model.hasQualifying && model.model.season >= qualifyingDataAvailableFrom,
+                            showSprint = (model.containsSprintEvent || model.model.hasSprint) && model.model.season > sprintsIntroducedIn,
+                            hasSprint = model.model.hasSprint && model.model.season > sprintsIntroducedIn,
+                            hasRace = model.model.hasResults
                         )
                     }
 
@@ -145,9 +147,10 @@ internal fun Schedule(
 
 @Composable
 private fun RowScope.IconRow(
-    showQualifying: Boolean,
+    hasQualifying: Boolean,
     showSprint: Boolean,
-    showRace: Boolean,
+    hasSprint: Boolean,
+    hasRace: Boolean,
     iconSize: Dp = 16.dp
 ) {
     Icon(
@@ -155,11 +158,11 @@ private fun RowScope.IconRow(
             .size(iconSize)
             .align(Alignment.CenterVertically),
         painter = painterResource(id = R.drawable.ic_status_results_qualifying),
-        contentDescription = when (showQualifying) {
+        contentDescription = when (hasQualifying) {
             true -> stringResource(id = R.string.ab_has_qualifying_results)
             false -> stringResource(id = R.string.ab_no_qualifying_results)
         },
-        tint = when (showQualifying) {
+        tint = when (hasQualifying) {
             true -> AppTheme.colors.f1ResultsFull
             false -> AppTheme.colors.backgroundTertiary
         }
@@ -171,8 +174,14 @@ private fun RowScope.IconRow(
                 .size(iconSize)
                 .align(Alignment.CenterVertically),
             painter = painterResource(id = R.drawable.ic_status_results_sprint),
-            contentDescription = stringResource(id = R.string.ab_has_sprint_results),
-            tint = AppTheme.colors.f1ResultsFull
+            contentDescription = when (hasQualifying) {
+                true -> stringResource(id = R.string.ab_has_sprint_results)
+                false -> stringResource(id = R.string.ab_no_sprint_results)
+            },
+            tint = when (hasQualifying) {
+                true -> AppTheme.colors.f1ResultsFull
+                false -> AppTheme.colors.backgroundTertiary
+            }
         )
         Spacer(Modifier.width(2.dp))
     }
@@ -181,11 +190,11 @@ private fun RowScope.IconRow(
             .size(iconSize)
             .align(Alignment.CenterVertically),
         painter = painterResource(id = R.drawable.ic_status_results_race),
-        contentDescription = when (showRace) {
+        contentDescription = when (hasRace) {
             true -> stringResource(id = R.string.ab_has_race_results)
             false -> stringResource(id = R.string.ab_no_race_results)
         },
-        tint = when (showRace) {
+        tint = when (hasRace) {
             true -> AppTheme.colors.f1ResultsFull
             false -> AppTheme.colors.backgroundTertiary
         }
