@@ -1,6 +1,6 @@
 private static def getVersionName() {
     def value = System.getenv("VERSION_NAME") as String
-    if (value == null || value == "") {
+    if (value == null || value == "" || value.count(".") != 2) {
         def file = "version-name.txt"
         def localValue = new File(file).text.trim() as String
         value = localValue
