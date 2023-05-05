@@ -27,7 +27,7 @@ internal class Formula1Test {
     @Test
     fun `constructor championship starts in 1958`() {
 
-        assertEquals(1958, Formula1.constructorChampionshipStarts)
+        assertEquals(1958, Formula1.championshipConstructorStarts)
     }
 
     @Test

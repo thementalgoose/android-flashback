@@ -14,22 +14,27 @@ object Formula1 {
     /**
      * What season should the API have all the data up too
      */
-    const val allDataUpToo: Int = 2022
+    const val championshipDataCompleteUpTo: Int = 2022
 
     /**
      * When did F1 start
      */
-    const val minimumSupportedYear = 1950
+    const val championshipStarted = 1950
+
+    /**
+     * Qualifying data available from
+     */
+    const val qualifyingDataAvailableFrom: Int = 1995
 
     /**
      * When did championships start
      */
-    const val constructorChampionshipStarts = 1958
+    const val championshipConstructorStarts = 1958
 
     /**
-     * Coming soon message for race statistics that are not synchronised or an error has occurred for
+     * Sprint race began
      */
-    const val showComingSoonMessageForNextDays = 10
+    const val sprintsIntroducedIn = 2021
 
     /**
      * Maximum points awarded to a driver in a single race based on the
@@ -37,7 +42,7 @@ object Formula1 {
      */
     fun maxPointsBySeason(season: Int): Int {
         return when {
-            season >= 2022 -> 33
+            season >= 2022 -> 35
             season >= 2021 -> 28
             season >= 2010 -> 25
             season >= 1991 -> 10

@@ -20,6 +20,10 @@ sealed class ScheduleModel(
 
         val shouldShowScheduleList = showScheduleList && model.schedule.isNotEmpty()
 
+        val containsSprintEvent: Boolean by lazy {
+            model.schedule.any { it.label.contains("sprint", ignoreCase = true) }
+        }
+
         val fadeItem: Boolean
             get() = model.date.isAfter(LocalDate.now()) && !shouldShowScheduleList
     }
