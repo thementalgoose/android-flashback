@@ -70,6 +70,7 @@ fun DashboardScreen(
 
     val snow = viewModel.outputs.snow.observeAsState(false)
     val titleIcon = viewModel.outputs.titleIcon.observeAsState(null)
+    val ukraine = viewModel.outputs.ukraine.observeAsState(false)
 
     DashboardScreen(
         windowSize = windowSize,
@@ -93,7 +94,8 @@ fun DashboardScreen(
         seasonClicked = navViewModel.inputs::clickSeason,
         appVersion = appVersion.value,
         easterEggSnow = snow.value,
-        easterEggTitleIcon = titleIcon.value
+        easterEggTitleIcon = titleIcon.value,
+        easterEggUkraine = ukraine.value
     )
 }
 
@@ -121,7 +123,8 @@ fun DashboardScreen(
     seasonClicked: (Int) -> Unit,
     appVersion: String,
     easterEggSnow: Boolean,
-    easterEggTitleIcon: MenuIcons?
+    easterEggTitleIcon: MenuIcons?,
+    easterEggUkraine: Boolean,
 ) {
     val panelsState = rememberOverlappingPanelsState(OverlappingPanelsValue.Closed)
     val coroutineScope = rememberCoroutineScope()
@@ -193,7 +196,8 @@ fun DashboardScreen(
                         seasonClicked = seasonClicked,
                         appVersion = appVersion,
                         easterEggSnow = easterEggSnow,
-                        easterEggTitleIcon = easterEggTitleIcon
+                        easterEggTitleIcon = easterEggTitleIcon,
+                        easterEggUkraine = easterEggUkraine
                     )
                 },
                 panelCenter = {
@@ -216,6 +220,7 @@ fun DashboardScreen(
                                 appVersion = appVersion,
                                 easterEggSnow = easterEggSnow,
                                 easterEggTitleIcon = easterEggTitleIcon,
+                                easterEggUkraine = easterEggUkraine,
                                 lockExpanded = false
                             )
                         }
@@ -237,6 +242,7 @@ fun DashboardScreen(
                                 appVersion = appVersion,
                                 easterEggSnow = easterEggSnow,
                                 easterEggTitleIcon = easterEggTitleIcon,
+                                easterEggUkraine = easterEggUkraine,
                                 lockExpanded = true
                             )
                         }

@@ -63,7 +63,8 @@ fun DashboardMenuScreen(
     seasonClicked: (Int) -> Unit,
     appVersion: String,
     easterEggSnow: Boolean,
-    easterEggTitleIcon: MenuIcons?
+    easterEggTitleIcon: MenuIcons?,
+    easterEggUkraine: Boolean
 ) {
     LazyColumn(
         modifier = modifier
@@ -74,7 +75,10 @@ fun DashboardMenuScreen(
             item(key = "space1") { Spacer(Modifier.height(AppTheme.dimens.small)) }
             item(key = "hero") { Row {
                 Spacer(Modifier.width(AppTheme.dimens.nsmall))
-                DashboardHero(menuIcons = easterEggTitleIcon)
+                DashboardHero(
+                    menuIcons = easterEggTitleIcon,
+                    showUkraine = easterEggUkraine
+                )
             } }
             item(key = "div1") { Divider() }
             item(key = "label1") { SubHeader(text = stringResource(id = R.string.dashboard_all_title)) }
@@ -382,7 +386,8 @@ private fun Preview() {
             seasonClicked = { },
             appVersion = "version",
             easterEggSnow = false,
-            easterEggTitleIcon = null
+            easterEggTitleIcon = null,
+            easterEggUkraine = false
         )
     }
 }

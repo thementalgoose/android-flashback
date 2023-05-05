@@ -13,6 +13,7 @@ import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.eastereggs.model.MenuIcons
 import tmg.flashback.eastereggs.usecases.IsMenuIconEnabledUseCase
 import tmg.flashback.eastereggs.usecases.IsSnowEnabledUseCase
+import tmg.flashback.eastereggs.usecases.IsUkraineEnabledUseCase
 import tmg.flashback.results.contract.ResultsNavigationComponent
 import tmg.flashback.results.repository.NotificationsRepositoryImpl
 import tmg.flashback.ui.managers.PermissionManager
@@ -38,6 +39,7 @@ internal class DashboardViewModelTest: BaseTest() {
     private val mockPermissionManager: PermissionManager = mockk(relaxed = true)
     private val mockIsSnowEnabledUseCase: IsSnowEnabledUseCase = mockk(relaxed = true)
     private val mockIsMenuIconEnabledUseCase: IsMenuIconEnabledUseCase = mockk(relaxed = true)
+    private val mockIsUkraineEnabledUseCase: IsUkraineEnabledUseCase = mockk(relaxed = true)
 
     private lateinit var underTest: DashboardViewModel
 
@@ -52,6 +54,7 @@ internal class DashboardViewModelTest: BaseTest() {
             permissionManager = mockPermissionManager,
             isSnowEnabledUseCase = mockIsSnowEnabledUseCase,
             isMenuIconEnabledUseCase = mockIsMenuIconEnabledUseCase,
+            isUkraineEnabledUseCase = mockIsUkraineEnabledUseCase
         )
     }
 
@@ -106,6 +109,16 @@ internal class DashboardViewModelTest: BaseTest() {
 
         initUnderTest()
         underTest.outputs.snow.test {
+            assertValue(true)
+        }
+    }
+
+    @Test
+    fun `ukraine easter egg is emitted from use case`() {
+        every { mockIsUkraineEnabledUseCase.invoke() } returns true
+
+        initUnderTest()
+        underTest.outputs.ukraine.test {
             assertValue(true)
         }
     }
