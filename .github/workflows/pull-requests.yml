@@ -97,7 +97,7 @@ jobs:
             ${{ runner.os }}-gradle-
 
       # Environment
-      - name: Environment variables
+      - name: Environment variables.env
         if: steps.change.outputs.gradle != 0
         run: |
           echo ${{ secrets.ENCODED_GOOGLE_SERVICES_LIVE }} | base64 --decode >> app/src/live/google-services.json
