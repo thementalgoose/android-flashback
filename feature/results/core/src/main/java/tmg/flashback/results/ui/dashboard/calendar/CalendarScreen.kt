@@ -22,6 +22,7 @@ import tmg.flashback.providers.OverviewRaceProvider
 import tmg.flashback.results.R
 import tmg.flashback.results.repository.models.NotificationSchedule
 import tmg.flashback.results.ui.dashboard.DashboardQuickLinks
+import tmg.flashback.results.ui.messaging.ProvidedBy
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
@@ -124,6 +125,7 @@ fun CalendarScreen(
                 }
             }
             item(key = "footer") {
+                ProvidedBy()
                 Spacer(Modifier.height(72.dp))
             }
         }

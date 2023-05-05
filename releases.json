@@ -158,91 +158,28 @@
     },
     {
       "versionCode": 154,
-      "versionName": "8.0.154",
+      "versionName": "8.x.x",
       "isMajor": false,
-      "title": "",
+      "title": "Tablet Support",
       "notes": [
-        "2022! More content and feature preparations for the 2022 season, including provisional calendar with driver and constructor lineup",
-        "Adds race highlights from F1 youtube channel to recent races"
-      ]
-    },
-    {
-      "versionCode": 160,
-      "versionName": "8.1.160",
-      "isMajor": false,
-      "title": "",
-      "notes": [
+        "Tablet support! Adds a navigation rail and master/detail layout for tablet users",
+        "Adds sprint data viewable for 2021+ for rounds that contains a sprint event.",
+        "Adds provisional driver lineup up for pre-season periods",
+        "Adds race highlights from F1 youtube channel to recent races",
+        "Adds lap counts all upcoming races",
         "Adds all track layouts for all circuits in the history of the F1 championship",
-        "Fixes old qualifying data showing some drivers numbers as null",
-        "Fixes drivers being clickable in qualifying view to go to their overview",
-        "Fixes accessibility navigation on race view, now navigates in podium order",
-        "Fixes shake to report functionality by migrating to Shaky",
-        "Fixes RSS loading indicator appearing when no sources are selected"
-      ]
-    },
-    {
-      "versionCode": 180,
-      "versionName": "8.2.183",
-      "isMajor": false,
-      "title": "",
-      "notes": [
-        "Adds driver placeholder for when drivers images are not available",
-        "Adds dark mode quick toggle",
-        "Fixes handles for constructor standings pre 1958",
-        "Fixes ordering of driver and constructor lineup when no races have taken place",
-        "Updates some circuit icons to match layout at time of race"
-      ]
-    },
-    {
-      "versionCode": 197,
-      "versionName": "8.3.197",
-      "isMajor": false,
-      "title": "",
-      "notes": [
-        "Updates race notification information",
-        "Tweaks layouts of settings sub screens",
-        "Updates sprint handling for format change for 2022"
-      ]
-    },
-    {
-      "versionCode": 228,
-      "versionName": "8.4.228",
-      "isMajor": false,
-      "title": "Material3",
-      "notes": [
-        "Material3 updates! All screens have been subtly redesigned with Material3 in mind",
-        "Better native and API support for the Sprint format, including notification filtering and displaying",
-        "Reorganised settings again to simply the heirachy of options",
-        "Reduced latency in notification delivery. Be notified within 2 minutes of when Flashback gets race result",
-        "Adds lap counts and youtube highlight links for all upcoming races",
-        "For the devs: The app has been rewritten in Jetpack Compose and the modularised further from 8 modules to 28!"
-      ]
-    },
-    {
-      "versionCode": 239,
-      "versionName": "8.5.239",
-      "isMajor": false,
-      "title": "Android 13",
-      "notes": [
-        "Android 13 Support!",
-        "Adds race result previews to circuit search results",
-        "Adds driver code and number to driver overview screen",
-        "Adds event support in prep for upcoming 2022 news items and 2023 winter testing",
-        "For the devs: Kotlin 1.7.10, Compose 1.3 alpha, and uses Hilt instead of Koin for DI"
-      ]
-    },
-    {
-      "versionCode": 252,
-      "versionName": "8.6.252",
-      "isMajor": false,
-      "title": "",
-      "notes": [
         "Adds support for constructor icons in overviews for some teams",
         "Adds an overview for total wins, championships, podiums and pole positions for drivers",
-        "Yet another settings redesign, using Material3 switches. Removes old and rarely used settings",
-        "Adds experimental support for collapsing schedule, to better highlight upcoming F1 events",
-        "Material You theming tweaking to make it hopefully fit better with your dynamic theme",
-        "For the devs: MinSDK to 24, TargetSDK to 33, Runtime permission handling, and a load of cleanup"
+        "Adds race result previews to circuit search results",
+        "Adds driver code and number to driver overview screen",
+        "Adds dark mode quick toggle",
+        "Reorganised settings again to simply the heirachy of options",
+        "Fixes old qualifying data showing some drivers numbers as null",
+        "Fixes RSS loading indicator appearing when no sources are selected",
+        "Fixes shake to report functionality by migrating to Shaky",
+        "Fixes handles for constructor standings pre 1958",
+        "Fixes ordering of driver and constructor lineup when no races have taken place",
+        "For the devs: MinSDK to 24, TargetSDK to 33, Runtime permission handling, fully in compose, and a load of cleanup"
       ]
     }
   ]

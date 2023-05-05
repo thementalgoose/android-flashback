@@ -22,6 +22,7 @@ import tmg.flashback.results.R
 import tmg.flashback.results.components.DriverPoints
 import tmg.flashback.results.ui.dashboard.DashboardQuickLinks
 import tmg.flashback.results.ui.messaging.Banner
+import tmg.flashback.results.ui.messaging.ProvidedBy
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
@@ -125,6 +126,7 @@ fun ConstructorStandingsScreen(
                 }
             }
             item(key = "footer") {
+                ProvidedBy()
                 Spacer(Modifier.height(72.dp))
             }
         }

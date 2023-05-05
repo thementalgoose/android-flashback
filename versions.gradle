@@ -1,6 +1,6 @@
 private static def getVersionName() {
     def value = System.getenv("VERSION_NAME") as String
-    if (value == null || value == "" || value.count(".") != 2) {
+    if (!isMajorMinorPatch(value)) {
         def file = "version-name.txt"
         def localValue = new File(file).text.trim() as String
         value = localValue
@@ -8,10 +8,20 @@ private static def getVersionName() {
     return value
 }
 
+private static def isMajorMinorPatch(String code) {
+    if (code == null) {
+        return false
+    }
+    if (code == "") {
+        return false
+    }
+    return code.count('.') == 2
+}
+
 private static def getVersionCode() {
     def value = System.getenv("VERSION_CODE") as Integer
     if (value == null || value == "") {
-        value = "0"
+        value = 1
     }
     return value
 }
