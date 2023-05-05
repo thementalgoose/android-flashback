@@ -1,76 +1,83 @@
 name: Release
+inputs:
+  run_offset:
+    description: 'Run offset'
+    required: false
+    default: 58
 'on':
   release:
     types: [published]
+#  branches:
+#    - master
   workflow_dispatch:
 jobs:
 
-  json_checker:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
+#  json_checker:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v3
+#        with:
+#          fetch-depth: 0
+#
+#      - name: json-syntax-check
+#        uses: limitusus/json-syntax-check@v2.0.0
+#        with:
+#          pattern: "\\.json$"
 
-      - name: json-syntax-check
-        uses: limitusus/json-syntax-check@v2.0.0
-        with:
-          pattern: "\\.json$"
+#  dependency_report:
+#    runs-on: ubuntu-latest
+#    timeout-minutes: 7
+#    steps:
+#      # Checkout
+#      - uses: actions/checkout@v3
+#
+#      # Caching gradle
+#      - uses: actions/cache@v3
+#        with:
+#          path: |
+#            ~/.gradle/caches
+#            ~/.gradle/wrapper
+#          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/*.toml*') }}
+#          restore-keys: |
+#            ${{ runner.os }}-gradle-
+#
+#      # Dependency report
+#      - name: Generating Dependency Report
+#        run: ./gradlew dependencyUpdates
+#
+#      # Print Dependency summary
+#      - name: Dumping summary in job
+#        run: cat reports/android-flashback-dependencies-result.html >> $GITHUB_STEP_SUMMARY
 
-  dependency_report:
-    runs-on: ubuntu-latest
-    timeout-minutes: 7
-    steps:
-      # Checkout
-      - uses: actions/checkout@v3
-
-      # Caching gradle
-      - uses: actions/cache@v3
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/*.toml*') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
-
-      # Dependency report
-      - name: Generating Dependency Report
-        run: ./gradlew dependencyUpdates
-
-      # Print Dependency summary
-      - name: Dumping summary in job
-        run: cat reports/android-flashback-dependencies-result.html >> $GITHUB_STEP_SUMMARY
-
-  unit_test:
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    steps:
-      # Checkout
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      # Caching gradle
-      - uses: actions/cache@v3
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/*.toml*') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
-
-      # Environment
-      - name: Environment variables
-        run: |
-          echo ${{ secrets.ENCODED_GOOGLE_SERVICES_LIVE }} | base64 --decode >> app/src/live/google-services.json
-          echo ${{ secrets.ENCODED_KEYSTORE }} | base64 --decode >> flashback.keystore
-          echo ${{ secrets.ENCODED_DEPLOYMENT_KEY }} | base64 --decode >> deployment_private_key.json
-
-      # Running unit tests
-      - name: Unit tests
-        run: ./gradlew cleanTestDebugUnitTest testDebugUnitTest :app:testSandDebugUnitTest
+#  unit_test:
+#    runs-on: ubuntu-latest
+#    timeout-minutes: 15
+#    steps:
+#      # Checkout
+#      - uses: actions/checkout@v3
+#        with:
+#          fetch-depth: 0
+#
+#      # Caching gradle
+#      - uses: actions/cache@v3
+#        with:
+#          path: |
+#            ~/.gradle/caches
+#            ~/.gradle/wrapper
+#          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/*.toml*') }}
+#          restore-keys: |
+#            ${{ runner.os }}-gradle-
+#
+#      # Environment
+#      - name: Environment variables
+#        run: |
+#          echo ${{ secrets.ENCODED_GOOGLE_SERVICES_LIVE }} | base64 --decode >> app/src/live/google-services.json
+#          echo ${{ secrets.ENCODED_KEYSTORE }} | base64 --decode >> flashback.keystore
+#          echo ${{ secrets.ENCODED_DEPLOYMENT_KEY }} | base64 --decode >> deployment_private_key.json
+#
+#      # Running unit tests
+#      - name: Unit tests
+#        run: ./gradlew cleanTestDebugUnitTest testDebugUnitTest :app:testSandDebugUnitTest
 
   deploy:
     runs-on: ubuntu-latest
@@ -93,7 +100,7 @@ jobs:
             ${{ runner.os }}-gradle-
 
       # Environment
-      - name: Environment variables
+      - name: Environment variables.env
         run: |
           echo ${{ secrets.ENCODED_GOOGLE_SERVICES_LIVE }} | base64 --decode >> app/src/live/google-services.json
           echo ${{ secrets.ENCODED_KEYSTORE }} | base64 --decode >> flashback.keystore
@@ -107,100 +114,104 @@ jobs:
       # Version code
       - name: Version Code
         id: get_version_code
-        run: echo "VERSION=$(echo $GITHUB_REF | cut -d . -f 3)" >> $GITHUB_OUTPUT
+        run: echo "${{ github.run_number + inputs.run_offset }}" >> $GITHUB_OUTPUT
+
+      - name: Outputting codes
+        run: | 
+          echo "NAME: ${{ steps.get_version_name.outputs.VERSION }}" 
+          echo "CODE: ${{ steps.get_version_code.outputs.VERSION }}"
 
       # Release
-      - name: Release to internal test track
-        env:
-          KEYSTORE: ${{ github.workspace }}/flashback.keystore
-          PRIVATE_KEY: ${{ github.workspace }}/deployment_private_key.json
-          KEYSTORE_ALIAS: ${{ secrets.KEYSTORE_ALIAS }}
-          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
-          VERSION_CODE: ${{ steps.get_version_code.outputs.VERSION }}
-          VERSION_NAME: ${{ steps.get_version_name.outputs.VERSION }}
-        run: ./gradlew publishLiveReleaseBundle uploadCrashlyticsMappingFileLiveRelease
-
-  update_versions:
-    runs-on: ubuntu-latest
-    needs: deploy
-    steps:
-
-      # Checkout
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      # Setup Python
-      - uses: actions/setup-python@v4
-        with:
-          python-version: '3.x'
-
-      # Version tag
-      - name: Version Name
-        id: get_version_name
-        run: echo "VERSION=$(echo $GITHUB_REF | cut -d / -f 3)" >> $GITHUB_OUTPUT
-      - name: Output version name
-        run: echo ${{ steps.get_version_name.outputs.VERSION }} > version-name.txt
-
-      # Version code
-      - name: Version Code
-        id: get_version_code
-        run: echo "VERSION=$(echo $GITHUB_REF | cut -d . -f 3)" >> $GITHUB_OUTPUT
-      - name: Output version code
-        run: echo ${{ steps.get_version_code.outputs.VERSION }} > version-code.txt
-
-      # README
-      - name: README latest version
-        run: |
-          python .github/scripts/update-readme.py ${{ steps.get_version_name.outputs.VERSION }}
-
-      # Commits changes to README
-      - name: Commit and push changes
-        uses: actions-js/push@v1.4
-        with:
-          message: Updates version to ${{ steps.get_version_name.outputs.VERSION }} (${{ steps.get_version_code.outputs.VERSION }})
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-
-  discord_notify:
-    runs-on: ubuntu-latest
-    needs: update_versions
-    if: always()
-    steps:
-
-      # Checkout
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      # Version tag
-      - name: Version Name
-        id: get_version_name
-        run: echo "VERSION=$(echo $GITHUB_REF | cut -d / -f 3)" >> $GITHUB_OUTPUT
-
-      # Version code
-      - name: Version Code
-        id: get_version_code
-        run: echo "VERSION=$(echo $GITHUB_REF | cut -d . -f 3)" >> $GITHUB_OUTPUT
-
-      - name: Notify discord of failure
-        uses: sarisia/actions-status-discord@v1.10.2
-        if: failure() || needs.deploy.result == 'failure' || needs.update_versions.result == 'failure' || needs.unit_test.result == 'failure'
-        env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-        with:
-          nodetail: true
-          title: "Release ${{ steps.get_version_name.outputs.VERSION }} (${{ steps.get_version_code.outputs.VERSION }}) deployment to internal test track failed"
-          description: "Run number ${{ github.run_number }}\n[Action run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})"
-          color: 0xff91a4
-
-      - name: Notify discord of success
-        uses: sarisia/actions-status-discord@v1.10.2
-        if: success() && needs.deploy.result != 'failure' && needs.update_versions.result != 'failure' && needs.unit_test.result != 'failure'
-        env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-        with:
-          nodetail: true
-          title: "Release ${{ steps.get_version_name.outputs.VERSION }} (${{ steps.get_version_code.outputs.VERSION }}) deployment to internal test track successful"
-          description: "Run number ${{ github.run_number }}\n[Action run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})"
-          color: 0x35a55f
+#      - name: Release to internal test track
+#        env:
+#          KEYSTORE: ${{ github.workspace }}/flashback.keystore
+#          PRIVATE_KEY: ${{ github.workspace }}/deployment_private_key.json
+#          KEYSTORE_ALIAS: ${{ secrets.KEYSTORE_ALIAS }}
+#          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+#          VERSION_CODE: ${{ steps.get_version_code.outputs.VERSION }}
+#          VERSION_NAME: ${{ steps.get_version_name.outputs.VERSION }}
+#        run: ./gradlew publishLiveReleaseBundle uploadCrashlyticsMappingFileLiveRelease
+#
+#  update_versions:
+#    runs-on: ubuntu-latest
+#    needs: deploy
+#    if: ${{ github.ref != 'refs/heads/master' }}
+#    steps:
+#
+#      # Checkout
+#      - uses: actions/checkout@v3
+#        with:
+#          fetch-depth: 0
+#
+#      # Setup Python
+#      - uses: actions/setup-python@v4
+#        with:
+#          python-version: '3.x'
+#
+#      # Version name
+#      - name: Version Name
+#        id: get_version_name
+#        run: echo "VERSION=$(echo $GITHUB_REF | cut -d / -f 3)" >> $GITHUB_OUTPUT
+#      - name: Output version name
+#        run: echo ${{ steps.get_version_name.outputs.VERSION }} > version-name.txt
+#
+#      # Version code
+#      - name: Version Code
+#        id: get_version_code
+#        run: echo "${{ github.run_number + 58 }}" >> $GITHUB_OUTPUT
+#
+#      # README
+#      - name: README latest version
+#        run: |
+#          python .github/scripts/update-readme.py ${{ steps.get_version_name.outputs.VERSION }}
+#
+#      # Commits changes to README
+#      - name: Commit and push changes
+#        uses: actions-js/push@v1.4
+#        with:
+#          message: Updates version to ${{ steps.get_version_name.outputs.VERSION }} (${{ steps.get_version_code.outputs.VERSION }})
+#          github_token: ${{ secrets.GITHUB_TOKEN }}
+#
+#  discord_notify:
+#    runs-on: ubuntu-latest
+#    needs: update_versions
+#    if: always()
+#    steps:
+#
+#      # Checkout
+#      - uses: actions/checkout@v3
+#        with:
+#          fetch-depth: 0
+#
+#      # Version tag
+#      - name: Version Name
+#        id: get_version_name
+#        run: echo "VERSION=$(echo $GITHUB_REF | cut -d / -f 3)" >> $GITHUB_OUTPUT
+#
+#      # Version code
+#      - name: Version Code
+#        id: get_version_code
+#        run: echo "VERSION=$(github.run_number)" >> $GITHUB_OUTPUT
+#
+#      - name: Notify discord of failure
+#        uses: sarisia/actions-status-discord@v1.10.2
+#        if: failure() || needs.deploy.result == 'failure' || needs.update_versions.result == 'failure' || needs.unit_test.result == 'failure'
+#        env:
+#          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+#        with:
+#          nodetail: true
+#          title: "Release ${{ steps.get_version_name.outputs.VERSION }} (${{ steps.get_version_code.outputs.VERSION }}) deployment to internal test track failed"
+#          description: "Run number ${{ github.run_number }}\n[Action run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})"
+#          color: 0xff91a4
+#
+#      - name: Notify discord of success
+#        uses: sarisia/actions-status-discord@v1.10.2
+#        if: success() && needs.deploy.result != 'failure' && needs.update_versions.result != 'failure' && needs.unit_test.result != 'failure'
+#        env:
+#          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+#        with:
+#          nodetail: true
+#          title: "Release ${{ steps.get_version_name.outputs.VERSION }} (${{ steps.get_version_code.outputs.VERSION }}) deployment to internal test track successful"
+#          description: "Run number ${{ github.run_number }}\n[Action run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})"
+#          color: 0x35a55f
 

@@ -5,18 +5,14 @@ private static def getVersionName() {
         def localValue = new File(file).text.trim() as String
         value = localValue
     }
-    println("getVersionName = '$value'")
     return value
 }
 
 private static def getVersionCode() {
     def value = System.getenv("VERSION_CODE") as Integer
     if (value == null || value == "") {
-        def file = "version-code.txt"
-        def localValue = new File(file).text.trim() as Integer
-        value = localValue
+        value = "0"
     }
-    println("getVersionCode = '$value'")
     return value
 }
 
@@ -26,7 +22,7 @@ ext {
     targetSdkVersion = 33
     minSdkVersion = 24
 
-    versionName = getVersionName()
+    versionName = getVersionName() + "." + getVersionCode()
     versionCode = getVersionCode()
 
     baseUrl = "https://flashback.pages.dev"
