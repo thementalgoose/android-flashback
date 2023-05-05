@@ -29,6 +29,7 @@
     <string name="ab_has_qualifying_results">Qualifying results available</string>
     <string name="ab_no_qualifying_results">Qualifying not yet available</string>
     <string name="ab_has_sprint_results">Sprint results available</string>
+    <string name="ab_no_sprint_results">Sprint not yet available</string>
     <string name="ab_has_race_results">Race results available</string>
     <string name="ab_no_race_results">Race results not yet available</string>
 
