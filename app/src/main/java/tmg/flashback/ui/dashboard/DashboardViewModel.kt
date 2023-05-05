@@ -10,6 +10,7 @@ import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.eastereggs.model.MenuIcons
 import tmg.flashback.eastereggs.usecases.IsMenuIconEnabledUseCase
 import tmg.flashback.eastereggs.usecases.IsSnowEnabledUseCase
+import tmg.flashback.eastereggs.usecases.IsUkraineEnabledUseCase
 import tmg.flashback.results.contract.ResultsNavigationComponent
 import tmg.flashback.results.repository.NotificationsRepositoryImpl
 import tmg.flashback.ui.managers.PermissionManager
@@ -34,6 +35,7 @@ interface DashboardViewModelOutputs {
     // Easter eggs
     val snow: LiveData<Boolean>
     val titleIcon: LiveData<MenuIcons?>
+    val ukraine: LiveData<Boolean>
 }
 
 @HiltViewModel
@@ -46,7 +48,8 @@ class DashboardViewModel @Inject constructor(
     private val notificationRepository: NotificationsRepositoryImpl,
     private val permissionRepository: PermissionRepository,
     isSnowEnabledUseCase: IsSnowEnabledUseCase,
-    isMenuIconEnabledUseCase: IsMenuIconEnabledUseCase
+    isMenuIconEnabledUseCase: IsMenuIconEnabledUseCase,
+    isUkraineEnabledUseCase: IsUkraineEnabledUseCase
 ): ViewModel(), DashboardViewModelInputs, DashboardViewModelOutputs {
 
     val inputs: DashboardViewModelInputs = this
@@ -59,6 +62,7 @@ class DashboardViewModel @Inject constructor(
 
     override val snow: MutableLiveData<Boolean> = MutableLiveData(isSnowEnabledUseCase())
     override val titleIcon: LiveData<MenuIcons?> = MutableLiveData(isMenuIconEnabledUseCase())
+    override val ukraine: LiveData<Boolean> = MutableLiveData(isUkraineEnabledUseCase())
 
     init {
         initialiseFeatureList()
