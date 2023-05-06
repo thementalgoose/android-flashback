@@ -16,15 +16,13 @@ import kotlinx.coroutines.launch
 import tmg.flashback.configuration.repository.ConfigRepository
 import tmg.flashback.configuration.usecases.FetchConfigUseCase
 import tmg.flashback.configuration.usecases.ResetConfigUseCase
-import tmg.flashback.maintenance.repository.MaintenanceRepository
 import tmg.flashback.domain.repo.CircuitRepository
 import tmg.flashback.domain.repo.ConstructorRepository
 import tmg.flashback.domain.repo.DriverRepository
 import tmg.flashback.domain.repo.OverviewRepository
 import tmg.flashback.domain.repo.repository.CacheRepository
+import tmg.flashback.maintenance.contract.usecases.ShouldForceUpgradeUseCase
 import tmg.flashback.results.usecases.ScheduleNotificationsUseCase
-import tmg.flashback.rss.contract.usecases.RSSAppShortcutUseCase
-import tmg.flashback.search.contract.usecases.SearchAppShortcutUseCase
 import tmg.flashback.ui.sync.SyncState.DONE
 import tmg.flashback.ui.sync.SyncState.FAILED
 import tmg.flashback.ui.sync.SyncState.LOADING
@@ -67,7 +65,7 @@ class SyncViewModel @Inject constructor(
     private val configRepository: ConfigRepository,
     private val resetConfigUseCase: ResetConfigUseCase,
     private val fetchConfigUseCase: FetchConfigUseCase,
-    private val maintenanceRepository: MaintenanceRepository,
+    private val shouldForceUpgradeUseCase: ShouldForceUpgradeUseCase,
     private val cacheRepository: CacheRepository,
     private val scheduleNotificationsUseCase: ScheduleNotificationsUseCase,
     private val setupAppShortcutUseCase: SetupAppShortcutUseCase,
@@ -116,7 +114,7 @@ class SyncViewModel @Inject constructor(
         .filter { it == DONE }
         .map {
             cacheRepository.initialSync = true
-            if (maintenanceRepository.shouldForceUpgrade) {
+            if (shouldForceUpgradeUseCase.shouldForceUpgrade()) {
                 SyncNavTarget.FORCE_UPGRADE
             } else {
                 SyncNavTarget.DASHBOARD

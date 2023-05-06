@@ -10,14 +10,13 @@ import org.junit.jupiter.api.Test
 import tmg.flashback.configuration.repository.ConfigRepository
 import tmg.flashback.configuration.usecases.FetchConfigUseCase
 import tmg.flashback.configuration.usecases.ResetConfigUseCase
-import tmg.flashback.maintenance.repository.MaintenanceRepository
 import tmg.flashback.domain.repo.CircuitRepository
 import tmg.flashback.domain.repo.ConstructorRepository
 import tmg.flashback.domain.repo.DriverRepository
 import tmg.flashback.domain.repo.OverviewRepository
 import tmg.flashback.domain.repo.repository.CacheRepository
+import tmg.flashback.maintenance.contract.usecases.ShouldForceUpgradeUseCase
 import tmg.flashback.results.usecases.ScheduleNotificationsUseCase
-import tmg.flashback.rss.contract.usecases.RSSAppShortcutUseCase
 import tmg.flashback.ui.sync.SyncNavTarget.DASHBOARD
 import tmg.flashback.ui.sync.SyncNavTarget.FORCE_UPGRADE
 import tmg.flashback.usecases.SetupAppShortcutUseCase
@@ -36,7 +35,7 @@ internal class SyncViewModelTest: BaseTest() {
     private var mockResetConfigUseCase: ResetConfigUseCase = mockk(relaxed = true)
     private var mockFetchConfigUseCase: FetchConfigUseCase = mockk(relaxed = true)
     private var mockCacheRepository: CacheRepository = mockk(relaxed = true)
-    private var mockMaintenanceRepository: MaintenanceRepository = mockk(relaxed = true)
+    private var mockShouldForceUpgradeUseCase: ShouldForceUpgradeUseCase = mockk(relaxed = true)
     private var mockScheduleNotificationsUseCase: ScheduleNotificationsUseCase = mockk(relaxed = true)
     private var mockSetupAppShortcutUseCase: SetupAppShortcutUseCase = mockk(relaxed = true)
 
@@ -44,7 +43,7 @@ internal class SyncViewModelTest: BaseTest() {
 
     @BeforeEach
     internal fun setUp() {
-        every { mockMaintenanceRepository.shouldForceUpgrade } returns false
+        every { mockShouldForceUpgradeUseCase.shouldForceUpgrade() } returns false
         coEvery { mockFetchConfigUseCase.fetchAndApply() } returns true
 
         coEvery { mockCircuitRepository.fetchCircuits() } returns true
@@ -62,7 +61,7 @@ internal class SyncViewModelTest: BaseTest() {
             mockConfigRepository,
             mockResetConfigUseCase,
             mockFetchConfigUseCase,
-            mockMaintenanceRepository,
+            mockShouldForceUpgradeUseCase,
             mockCacheRepository,
             mockScheduleNotificationsUseCase,
             mockSetupAppShortcutUseCase,
@@ -105,7 +104,7 @@ internal class SyncViewModelTest: BaseTest() {
     @Test
     fun `start loading with config not synced sends go to force upgrade event`() = coroutineTest {
         every { mockConfigRepository.requireSynchronisation } returns true
-        every { mockMaintenanceRepository.shouldForceUpgrade } returns true
+        every { mockShouldForceUpgradeUseCase.shouldForceUpgrade() } returns true
 
         initSUT()
         sut.inputs.startLoading()
