@@ -43,6 +43,8 @@
             <option value="$PROJECT_DIR$/feature/drivers/contract" />
             <option value="$PROJECT_DIR$/feature/drivers/core" />
             <option value="$PROJECT_DIR$/feature/maintenance" />
+            <option value="$PROJECT_DIR$/feature/maintenance/contract" />
+            <option value="$PROJECT_DIR$/feature/maintenance/core" />
             <option value="$PROJECT_DIR$/feature/privacypolicy" />
             <option value="$PROJECT_DIR$/feature/releasenotes" />
             <option value="$PROJECT_DIR$/feature/results" />

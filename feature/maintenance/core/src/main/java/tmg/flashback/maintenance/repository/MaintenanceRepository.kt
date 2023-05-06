@@ -8,7 +8,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class MaintenanceRepository @Inject constructor(
+internal class MaintenanceRepository @Inject constructor(
         private val configManager: ConfigManager
 ) {
     companion object {
@@ -28,7 +28,4 @@ class MaintenanceRepository @Inject constructor(
         get() = configManager
                 .getJson(keyForceUpgrade, ForceUpgradeJson.serializer())
                 ?.convert()
-
-    val shouldForceUpgrade: Boolean
-        get() = forceUpgrade != null
 }

@@ -10,7 +10,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.core.content.ContextCompat
 import dagger.hilt.android.AndroidEntryPoint
 import tmg.flashback.R
-import tmg.flashback.maintenance.MaintenanceNavigationComponent
+import tmg.flashback.maintenance.contract.MaintenanceNavigationComponent
 import tmg.flashback.style.AppTheme
 import tmg.flashback.ui.HomeActivity
 import tmg.flashback.ui.base.BaseActivity
