@@ -9,10 +9,9 @@ import tmg.flashback.BuildConfig
 import tmg.flashback.configuration.repository.ConfigRepository
 import tmg.flashback.configuration.usecases.ApplyConfigUseCase
 import tmg.flashback.crash_reporting.manager.CrashManager
-import tmg.flashback.maintenance.repository.MaintenanceRepository
-import tmg.flashback.results.usecases.ScheduleNotificationsUseCase
 import tmg.flashback.domain.repo.repository.CacheRepository
 import tmg.flashback.maintenance.contract.usecases.ShouldForceUpgradeUseCase
+import tmg.flashback.results.usecases.ScheduleNotificationsUseCase
 import tmg.flashback.usecases.SetupAppShortcutUseCase
 import javax.inject.Inject
 
