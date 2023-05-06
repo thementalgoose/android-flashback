@@ -113,7 +113,8 @@ dependencies {
     // Feature modules
     implementation project(path: ":feature:rss:core")
     implementation project(path: ":feature:rss:contract")
-    implementation project(path: ':feature:maintenance')
+    implementation project(path: ':feature:maintenance:core')
+    implementation project(path: ':feature:maintenance:contract')
     implementation project(path: ':feature:releasenotes')
     implementation project(path: ':feature:privacypolicy')
     implementation project(path: ":feature:widgets")

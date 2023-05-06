@@ -31,8 +31,5 @@ dependencies {
     implementation project(path: ':presentation:style')
     implementation project(path: ":presentation:strings")
 
-    implementation libs.circleimageview
-    implementation libs.tmg.aboutthisapp
-
-    testImplementation project(path: ':test:models')
+    implementation project(path: ":feature:maintenance:contract")
 }
