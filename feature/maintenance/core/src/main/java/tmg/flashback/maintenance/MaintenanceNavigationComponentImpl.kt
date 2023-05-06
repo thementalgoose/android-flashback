@@ -7,7 +7,7 @@ import tmg.flashback.maintenance.ui.forceupgrade.ForceUpgradeActivity
 import tmg.flashback.navigation.ActivityProvider
 import javax.inject.Inject
 
-class MaintenanceNavigationComponentImpl @Inject constructor(
+internal class MaintenanceNavigationComponentImpl @Inject constructor(
     private val activityProvider: ActivityProvider
 ): MaintenanceNavigationComponent {
 
