@@ -7,10 +7,8 @@ import org.junit.jupiter.api.Test
 import tmg.flashback.R
 import tmg.flashback.analytics.manager.AnalyticsManager
 import tmg.flashback.crash_reporting.repository.CrashRepository
-import tmg.flashback.privacypolicy.PrivacyPolicy
+import tmg.flashback.privacypolicy.contract.PrivacyPolicy
 import tmg.flashback.ui.managers.ToastManager
-import tmg.flashback.navigation.Navigator
-import tmg.flashback.navigation.Screen
 import tmg.flashback.ui.settings.Settings
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.test
