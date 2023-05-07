@@ -1,4 +1,4 @@
-package tmg.flashback.privacypolicy
+package tmg.flashback.privacypolicy.contract
 
 import tmg.flashback.navigation.NavigationDestination
 import tmg.flashback.navigation.Screen
