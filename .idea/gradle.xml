@@ -46,6 +46,8 @@
             <option value="$PROJECT_DIR$/feature/maintenance/contract" />
             <option value="$PROJECT_DIR$/feature/maintenance/core" />
             <option value="$PROJECT_DIR$/feature/privacypolicy" />
+            <option value="$PROJECT_DIR$/feature/privacypolicy/contract" />
+            <option value="$PROJECT_DIR$/feature/privacypolicy/core" />
             <option value="$PROJECT_DIR$/feature/releasenotes" />
             <option value="$PROJECT_DIR$/feature/results" />
             <option value="$PROJECT_DIR$/feature/results/contract" />
