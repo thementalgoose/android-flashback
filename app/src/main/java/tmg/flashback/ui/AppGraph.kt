@@ -17,7 +17,7 @@ import androidx.window.layout.WindowLayoutInfo
 import org.threeten.bp.LocalDate
 import tmg.flashback.ads.ads.components.AdvertProvider
 import tmg.flashback.circuits.contract.Circuit
-import tmg.flashback.privacypolicy.PrivacyPolicy
+import tmg.flashback.privacypolicy.contract.PrivacyPolicy
 import tmg.flashback.privacypolicy.ui.PrivacyPolicyScreenVM
 import tmg.flashback.releasenotes.ReleaseNotes
 import tmg.flashback.releasenotes.ui.releasenotes.ReleaseScreenVM
