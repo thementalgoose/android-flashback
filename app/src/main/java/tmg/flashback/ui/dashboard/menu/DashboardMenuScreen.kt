@@ -69,7 +69,7 @@ fun DashboardMenuScreen(
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
-            .background(AppTheme.colors.backgroundPrimary)
+            .background(AppTheme.colors.backgroundContainer)
             .snow(easterEggSnow),
         content = {
             item(key = "space1") { Spacer(Modifier.height(AppTheme.dimens.small)) }
