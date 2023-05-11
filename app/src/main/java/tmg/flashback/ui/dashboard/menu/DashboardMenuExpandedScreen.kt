@@ -108,7 +108,7 @@ fun DashboardMenuExpandedScreen(
         .width(width.value)
         .fillMaxHeight()
         .shadow(8.dp)
-        .background(AppTheme.colors.backgroundPrimary)
+        .background(AppTheme.colors.backgroundContainer)
         .padding(
             vertical = AppTheme.dimens.small
         )
@@ -216,7 +216,7 @@ private fun NavigationItem(
 ) {
     val backgroundColor = animateColorAsState(targetValue = when (item.isSelected) {
         true -> AppTheme.colors.primary.copy(alpha = 0.2f)
-        else -> AppTheme.colors.backgroundPrimary
+        else -> AppTheme.colors.backgroundContainer
     })
     val iconPadding = animateDpAsState(targetValue = when (isExpanded) {
         true -> AppTheme.dimens.medium
@@ -281,7 +281,7 @@ private fun HeroItem(
             .height(heroSize)
             .fillMaxWidth()
             .clip(RoundedCornerShape(AppTheme.dimens.radiusMedium))
-            .background(AppTheme.colors.backgroundPrimary)
+            .background(AppTheme.colors.backgroundContainer)
             .clickable(
                 enabled = onClick != null,
                 onClick = {
@@ -332,7 +332,7 @@ private fun NavigationTimelineItem(
             .fillMaxWidth()
             .height(itemSize)
             .clip(RoundedCornerShape(AppTheme.dimens.radiusMedium))
-            .background(AppTheme.colors.backgroundPrimary)
+            .background(AppTheme.colors.backgroundContainer)
             .clickable(
                 enabled = onClick != null,
                 onClick = {
@@ -462,7 +462,7 @@ private fun Div() {
             horizontal = AppTheme.dimens.medium,
             vertical = AppTheme.dimens.xsmall
         ),
-        color = AppTheme.colors.backgroundTertiary
+        color = AppTheme.colors.backgroundSecondary
     )
 }
 

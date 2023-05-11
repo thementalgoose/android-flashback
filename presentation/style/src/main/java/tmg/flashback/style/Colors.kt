@@ -4,8 +4,10 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.material.Colors
 import androidx.compose.material3.ColorScheme
+import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 
 internal val LocalColors = staticCompositionLocalOf { lightColours }
 
@@ -170,21 +172,29 @@ fun AppColors.dynamic(colorScheme: ColorScheme, isLightMode: Boolean) = copy(
     primaryDark = colorScheme.primary,
     accent = colorScheme.surfaceTint,
 
-    backgroundContainer = colorScheme.surface,
+    backgroundContainer = when (isLightMode) {
+        true -> colorScheme.surface
+        false -> colorScheme.surface.copy(
+            alpha = colorScheme.surface.alpha,
+            red = colorScheme.surface.red * 0.8f,
+            green = colorScheme.surface.green * 0.8f,
+            blue = colorScheme.surface.blue * 0.8f
+        )
+    },
     backgroundPrimary = colorScheme.background,
     backgroundSecondary = colorScheme.surface,
     backgroundTertiary = colorScheme.primaryContainer,
     backgroundPrimaryInverse = colorScheme.inverseSurface,
     backgroundSecondaryInverse = colorScheme.inversePrimary,
     backgroundTertiaryInverse = colorScheme.inversePrimary,
-    backgroundNav = colorScheme.primaryContainer,
+    backgroundNav = colorScheme.surfaceColorAtElevation(6.dp),
     backgroundSplash = colorScheme.primary,
 
     error = colorScheme.error,
 
     systemStatusBarColor = when (isLightMode) {
-        true -> colorScheme.primaryContainer
+        true -> colorScheme.background
         false -> colorScheme.background
     },
-    systemNavigationBarColor = colorScheme.primaryContainer
+    systemNavigationBarColor = colorScheme.surfaceColorAtElevation(6.dp)
 )
