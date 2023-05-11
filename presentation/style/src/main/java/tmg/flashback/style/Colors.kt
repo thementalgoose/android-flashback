@@ -136,7 +136,7 @@ val darkColours = AppColors(
     contentTertiaryInverse = Color(0xFF484848),
     systemStatusBarColor = Color(0xFF181818),
     systemNavigationBarColor = Color(0xFF383838),
-    backgroundContainer = Color(0xFF040404),
+    backgroundContainer = Color(0xFF111111),
     backgroundPrimary = Color(0xFF181818),
     backgroundSecondary = Color(0xFF303030),
     backgroundTertiary = Color(0xFF585858),
@@ -168,21 +168,23 @@ val darkColours = AppColors(
 fun AppColors.dynamic(colorScheme: ColorScheme, isLightMode: Boolean) = copy(
     primary = colorScheme.primary,
     primaryDark = colorScheme.primary,
-    accent = colorScheme.secondary,
+    accent = colorScheme.surfaceTint,
 
-    backgroundContainer = colorScheme.background,
+    backgroundContainer = colorScheme.surface,
     backgroundPrimary = colorScheme.background,
-    backgroundSecondary = colorScheme.primaryContainer,
-    backgroundTertiary = colorScheme.secondaryContainer,
+    backgroundSecondary = colorScheme.surface,
+    backgroundTertiary = colorScheme.primaryContainer,
     backgroundPrimaryInverse = colorScheme.inverseSurface,
     backgroundSecondaryInverse = colorScheme.inversePrimary,
     backgroundTertiaryInverse = colorScheme.inversePrimary,
     backgroundNav = colorScheme.primaryContainer,
     backgroundSplash = colorScheme.primary,
 
+    error = colorScheme.error,
+
     systemStatusBarColor = when (isLightMode) {
-        true -> colorScheme.primary
-        false -> colorScheme.primaryContainer
+        true -> colorScheme.primaryContainer
+        false -> colorScheme.background
     },
     systemNavigationBarColor = colorScheme.primaryContainer
 )
