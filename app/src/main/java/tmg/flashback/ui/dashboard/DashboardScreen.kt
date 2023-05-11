@@ -255,7 +255,7 @@ fun DashboardScreen(
                                     Modifier
                                         .width(1.dp)
                                         .fillMaxHeight()
-                                        .background(AppTheme.colors.backgroundSecondary))
+                                        .background(AppTheme.colors.backgroundSecondary.copy(alpha = 0.5f)))
                             }
                             AppGraph(
                                 modifier = Modifier.weight(1f),
