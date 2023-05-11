@@ -24,6 +24,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.pager.ExperimentalPagerApi
 import tmg.flashback.debug.core.styleguide.tabs.ButtonTabScreen
+import tmg.flashback.debug.core.styleguide.tabs.ColourTabScreen
 import tmg.flashback.debug.core.styleguide.tabs.InputTabScreen
 import tmg.flashback.debug.core.styleguide.tabs.TextTabScreen
 import tmg.flashback.style.AppTheme
@@ -84,6 +85,9 @@ internal fun StyleGuideComposeLayout(
             StyleGuideTabs.BUTTON -> {
                 ButtonTabScreen()
             }
+            StyleGuideTabs.COLOURS -> {
+                ColourTabScreen()
+            }
             null -> {
                 Column(
                     modifier = Modifier
@@ -100,6 +104,7 @@ internal fun StyleGuideComposeLayout(
                     }
                 }
             }
+
         }
     }
 }

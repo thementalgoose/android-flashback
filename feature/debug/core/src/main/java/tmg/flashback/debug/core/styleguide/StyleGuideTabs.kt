@@ -5,5 +5,6 @@ internal enum class StyleGuideTabs(
 ) {
     TEXT("Text"),
     INPUT("Input"),
-    BUTTON("Button");
+    BUTTON("Button"),
+    COLOURS("Colours");
 }
