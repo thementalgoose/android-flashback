@@ -35,7 +35,7 @@ import tmg.flashback.style.text.TextBody1
 private val selectedPillWidth: Dp = 64.dp
 private val pillHeight: Dp = 28.dp
 private val iconSize: Dp = 24.dp
-val appBarHeight: Dp = 72.dp
+val appBarHeight: Dp = 78.dp
 
 @Composable
 fun NavigationBar(
