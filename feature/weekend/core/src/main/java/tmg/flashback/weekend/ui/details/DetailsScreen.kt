@@ -33,6 +33,7 @@ import tmg.flashback.style.badge.BadgeView
 import tmg.flashback.style.buttons.ButtonSecondary
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
+import tmg.flashback.ui.components.navigation.appBarHeight
 import tmg.flashback.weekend.R
 import tmg.flashback.weekend.contract.model.WeekendInfo
 import tmg.flashback.weekend.ui.toWeekendInfo
@@ -61,7 +62,7 @@ internal fun LazyListScope.details(
         }
     }
     item(key = "footer") {
-        Spacer(Modifier.height(72.dp))
+        Spacer(Modifier.height(appBarHeight))
     }
 }
 

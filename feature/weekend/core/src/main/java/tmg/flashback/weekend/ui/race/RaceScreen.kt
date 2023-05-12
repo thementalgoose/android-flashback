@@ -41,6 +41,7 @@ import tmg.flashback.ui.components.drivers.driverIconSize
 import tmg.flashback.ui.components.errors.NotAvailable
 import tmg.flashback.ui.components.errors.NotAvailableYet
 import tmg.flashback.ui.components.loading.SkeletonViewList
+import tmg.flashback.ui.components.navigation.appBarHeight
 import tmg.flashback.weekend.R
 import tmg.flashback.weekend.contract.model.WeekendInfo
 import tmg.flashback.weekend.ui.fakeWeekendInfo
@@ -143,7 +144,7 @@ internal fun LazyListScope.race(
         }
     }
     item(key = "footer") {
-        Spacer(Modifier.height(72.dp))
+        Spacer(Modifier.height(appBarHeight))
     }
 }
 

@@ -30,6 +30,7 @@ import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextTitle
 import tmg.flashback.ui.components.loading.SkeletonViewList
+import tmg.flashback.ui.components.navigation.appBarHeight
 import tmg.flashback.ui.components.progressbar.ProgressBar
 import tmg.flashback.weekend.R
 import tmg.flashback.weekend.contract.model.WeekendInfo
@@ -105,7 +106,7 @@ internal fun LazyListScope.constructor(
         }
     }
     item(key = "footer") {
-        Spacer(Modifier.height(72.dp))
+        Spacer(Modifier.height(appBarHeight))
     }
 }
 
