@@ -29,6 +29,7 @@ import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.loading.SkeletonViewList
+import tmg.flashback.ui.components.navigation.appBarHeight
 import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
 
 private val countryBadgeSize = 32.dp
@@ -126,7 +127,7 @@ fun CalendarScreen(
             }
             item(key = "footer") {
                 ProvidedBy()
-                Spacer(Modifier.height(72.dp))
+                Spacer(Modifier.height(appBarHeight))
             }
         }
     )
