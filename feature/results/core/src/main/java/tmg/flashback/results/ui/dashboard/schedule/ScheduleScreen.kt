@@ -42,6 +42,7 @@ import tmg.flashback.style.text.TextBody2
 import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.loading.SkeletonViewList
+import tmg.flashback.ui.components.navigation.appBarHeight
 import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
 import tmg.utilities.extensions.format
 
@@ -164,7 +165,7 @@ fun ScheduleScreen(
             }
             item(key = "footer") {
                 ProvidedBy()
-                Spacer(Modifier.height(72.dp))
+                Spacer(Modifier.height(appBarHeight))
             }
         }
     )
