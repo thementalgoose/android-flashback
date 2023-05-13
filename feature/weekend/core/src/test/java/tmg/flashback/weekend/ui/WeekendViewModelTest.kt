@@ -43,7 +43,7 @@ internal class WeekendViewModelTest: BaseTest() {
         underTest.inputs.load(season = 2020, round = 1)
 
         underTest.outputs.weekendInfo.test {
-            assertValue(ScreenWeekendData.from(RaceInfo.model()))
+            assertValue(RaceInfo.model().toWeekendInfo())
         }
     }
 

@@ -4,15 +4,15 @@ import tmg.flashback.formula1.model.RaceInfo
 import tmg.flashback.weekend.contract.model.ScreenWeekendData
 
 
-fun ScreenWeekendData.Companion.from(raceInfo: RaceInfo): ScreenWeekendData {
+fun RaceInfo.toScreenWeekendData(): ScreenWeekendData {
     return ScreenWeekendData(
-        season = raceInfo.season,
-        round = raceInfo.round,
-        raceName = raceInfo.name,
-        circuitId = raceInfo.circuit.id,
-        circuitName = raceInfo.circuit.name,
-        country = raceInfo.circuit.country,
-        countryISO = raceInfo.circuit.countryISO,
-        date = raceInfo.date,
+        season = this.season,
+        round = this.round,
+        raceName = this.name,
+        circuitId = this.circuit.id,
+        circuitName = this.circuit.name,
+        country = this.circuit.country,
+        countryISO = this.circuit.countryISO,
+        date = this.date,
     )
 }

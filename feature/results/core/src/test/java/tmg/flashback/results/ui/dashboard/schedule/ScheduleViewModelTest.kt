@@ -22,7 +22,7 @@ import tmg.flashback.results.usecases.FetchSeasonUseCase
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.flashback.results.contract.ResultsNavigationComponent
-import tmg.flashback.results.model.from
+import tmg.flashback.results.model.toScreenWeekendData
 import tmg.flashback.weekend.contract.Weekend
 import tmg.flashback.weekend.contract.model.ScreenWeekendData
 import tmg.flashback.weekend.contract.with
@@ -268,7 +268,7 @@ internal class ScheduleViewModelTest: BaseTest() {
         verify {
             mockNavigator.navigate(
                 Screen.Weekend.with(
-                ScreenWeekendData.from(model.model.toRaceInfo())
+                model.model.toRaceInfo().toScreenWeekendData()
             ))
         }
     }
