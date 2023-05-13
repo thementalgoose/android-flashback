@@ -25,7 +25,7 @@ import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.flashback.results.contract.ResultsNavigationComponent
 import tmg.flashback.weekend.contract.Weekend
-import tmg.flashback.weekend.contract.model.WeekendInfo
+import tmg.flashback.weekend.contract.model.ScreenWeekendData
 import tmg.flashback.weekend.contract.with
 import tmg.utilities.extensions.startOfWeek
 import javax.inject.Inject
@@ -115,7 +115,7 @@ class CalendarViewModel @Inject constructor(
         when (model) {
             is CalendarModel.Week -> {
                 val race = model.race ?: return
-                val weekend = WeekendInfo(
+                val weekend = ScreenWeekendData(
                     season = race.season,
                     round = race.round,
                     raceName = race.raceName,

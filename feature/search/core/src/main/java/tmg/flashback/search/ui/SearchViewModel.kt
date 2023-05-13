@@ -35,7 +35,7 @@ import tmg.flashback.domain.repo.OverviewRepository
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.flashback.weekend.contract.Weekend
-import tmg.flashback.weekend.contract.model.WeekendInfo
+import tmg.flashback.weekend.contract.model.ScreenWeekendData
 import tmg.flashback.weekend.contract.with
 import tmg.utilities.extensions.extend
 import javax.inject.Inject
@@ -162,7 +162,7 @@ class SearchViewModel @Inject constructor(
             is SearchItem.Race -> {
                 navigator.navigate(
                     Screen.Weekend.with(
-                    WeekendInfo(
+                    ScreenWeekendData(
                         season = item.season,
                         round = item.round,
                         raceName = item.raceName,

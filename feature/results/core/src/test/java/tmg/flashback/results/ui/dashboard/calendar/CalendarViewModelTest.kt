@@ -22,7 +22,7 @@ import tmg.flashback.results.usecases.FetchSeasonUseCase
 import tmg.flashback.domain.repo.EventsRepository
 import tmg.flashback.domain.repo.OverviewRepository
 import tmg.flashback.weekend.contract.Weekend
-import tmg.flashback.weekend.contract.model.WeekendInfo
+import tmg.flashback.weekend.contract.model.ScreenWeekendData
 import tmg.flashback.weekend.contract.with
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertListMatchesItem
@@ -132,7 +132,7 @@ internal class CalendarViewModelTest: BaseTest() {
         verify {
             mockNavigator.navigate(
                 Screen.Weekend.with(
-                    WeekendInfo.from(OverviewRace.model(round = 1).toRaceInfo())
+                    ScreenWeekendData.from(OverviewRace.model(round = 1).toRaceInfo())
             ))
         }
     }

@@ -1,11 +1,11 @@
 package tmg.flashback.results.model
 
 import tmg.flashback.formula1.model.RaceInfo
-import tmg.flashback.weekend.contract.model.WeekendInfo
+import tmg.flashback.weekend.contract.model.ScreenWeekendData
 
 
-fun WeekendInfo.Companion.from(raceInfo: RaceInfo): WeekendInfo {
-    return WeekendInfo(
+fun ScreenWeekendData.Companion.from(raceInfo: RaceInfo): ScreenWeekendData {
+    return ScreenWeekendData(
         season = raceInfo.season,
         round = raceInfo.round,
         raceName = raceInfo.name,

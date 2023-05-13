@@ -1,5 +1,6 @@
 package tmg.flashback.ui
 
+import android.os.Build
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
@@ -12,43 +13,42 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
 import androidx.window.layout.WindowLayoutInfo
-import org.threeten.bp.LocalDate
 import tmg.flashback.ads.ads.components.AdvertProvider
 import tmg.flashback.circuits.contract.Circuit
-import tmg.flashback.privacypolicy.contract.PrivacyPolicy
-import tmg.flashback.privacypolicy.ui.PrivacyPolicyScreenVM
-import tmg.flashback.releasenotes.ReleaseNotes
-import tmg.flashback.releasenotes.ui.releasenotes.ReleaseScreenVM
-import tmg.flashback.rss.ui.configure.ConfigureRSSScreenVM
-import tmg.flashback.rss.ui.feed.RSSScreenVM
-import tmg.flashback.results.Calendar
-import tmg.flashback.results.Constructors
-import tmg.flashback.results.Drivers
 import tmg.flashback.circuits.ui.CircuitScreenVM
 import tmg.flashback.constructors.contract.Constructor
 import tmg.flashback.constructors.contract.ConstructorSeason
-import tmg.flashback.drivers.contract.Driver
-import tmg.flashback.drivers.contract.DriverSeason
 import tmg.flashback.constructors.ui.overview.ConstructorOverviewScreenVM
 import tmg.flashback.constructors.ui.season.ConstructorSeasonScreenVM
-import tmg.flashback.results.ui.dashboard.constructors.ConstructorStandingsScreenVM
-import tmg.flashback.results.ui.dashboard.drivers.DriverStandingsScreenVM
-import tmg.flashback.results.ui.dashboard.schedule.ScheduleScreenVM
+import tmg.flashback.drivers.contract.Driver
+import tmg.flashback.drivers.contract.DriverSeason
 import tmg.flashback.drivers.ui.overview.DriverOverviewScreenVM
 import tmg.flashback.drivers.ui.season.DriverSeasonScreenVM
-import tmg.flashback.search.ui.SearchScreenVM
-import tmg.flashback.weekend.ui.WeekendScreenVM
 import tmg.flashback.navigation.Screen
 import tmg.flashback.navigation.asNavigationDestination
 import tmg.flashback.navigation.navIntRequired
 import tmg.flashback.navigation.navString
 import tmg.flashback.navigation.navStringRequired
 import tmg.flashback.navigation.navigate
+import tmg.flashback.privacypolicy.contract.PrivacyPolicy
+import tmg.flashback.privacypolicy.ui.PrivacyPolicyScreenVM
+import tmg.flashback.releasenotes.ReleaseNotes
+import tmg.flashback.releasenotes.ui.releasenotes.ReleaseScreenVM
+import tmg.flashback.results.Calendar
+import tmg.flashback.results.Constructors
+import tmg.flashback.results.Drivers
+import tmg.flashback.results.ui.dashboard.constructors.ConstructorStandingsScreenVM
+import tmg.flashback.results.ui.dashboard.drivers.DriverStandingsScreenVM
+import tmg.flashback.results.ui.dashboard.schedule.ScheduleScreenVM
 import tmg.flashback.rss.contract.RSS
 import tmg.flashback.rss.contract.RSSConfigure
+import tmg.flashback.rss.ui.configure.ConfigureRSSScreenVM
+import tmg.flashback.rss.ui.feed.RSSScreenVM
 import tmg.flashback.search.contract.Search
+import tmg.flashback.search.ui.SearchScreenVM
 import tmg.flashback.ui.settings.About
 import tmg.flashback.ui.settings.Ads
 import tmg.flashback.ui.settings.All
@@ -66,8 +66,8 @@ import tmg.flashback.ui.settings.notifications.SettingsNotificationsResultsScree
 import tmg.flashback.ui.settings.notifications.SettingsNotificationsUpcomingScreenVM
 import tmg.flashback.ui.settings.web.SettingsWebScreenVM
 import tmg.flashback.weekend.contract.Weekend
-import tmg.flashback.weekend.contract.model.WeekendInfo
-import tmg.utilities.extensions.toLocalDate
+import tmg.flashback.weekend.contract.model.ScreenWeekendData
+import tmg.flashback.weekend.ui.WeekendScreenVM
 
 @Composable
 fun AppGraph(
@@ -189,23 +189,15 @@ fun AppGraph(
         // Stats
         composable(
             Screen.Weekend.route, arguments = listOf(
-                navIntRequired("season"),
-                navIntRequired("round")
+                navArgument("screenWeekendData") { type = ScreenWeekendData.NavType }
         )) {
-            val season = it.arguments?.getInt("season")!!
-            val round = it.arguments?.getInt("round")!!
-            val weekendInfo = WeekendInfo(
-                season = season,
-                round = round,
-                raceName = it.arguments?.getString("raceName") ?: "",
-                circuitId = it.arguments?.getString("circuitId") ?: "",
-                circuitName = it.arguments?.getString("circuitName") ?: "",
-                country = it.arguments?.getString("country") ?: "",
-                countryISO = it.arguments?.getString("countryISO") ?: "",
-                date = it.arguments?.getString("date")?.toLocalDate("yyyy-MM-dd") ?: LocalDate.now(),
-            )
+            val screenWeekendData = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                it.arguments?.getParcelable("screenWeekendData", ScreenWeekendData::class.java)!!
+            } else {
+                it.arguments?.getParcelable("screenWeekendData")!!
+            }
             WeekendScreenVM(
-                weekendInfo = weekendInfo,
+                weekendInfo = screenWeekendData,
                 actionUpClicked = { navController.popBackStack() }
             )
         }

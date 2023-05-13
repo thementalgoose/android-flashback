@@ -12,7 +12,6 @@ import org.threeten.bp.LocalDate
 import tmg.flashback.formula1.model.Event
 import tmg.flashback.formula1.model.Overview
 import tmg.flashback.formula1.model.OverviewRace
-import tmg.flashback.formula1.model.RaceInfo
 import tmg.flashback.formula1.model.model
 import tmg.flashback.domain.repo.EventsRepository
 import tmg.flashback.domain.repo.OverviewRepository
@@ -25,7 +24,7 @@ import tmg.flashback.navigation.Screen
 import tmg.flashback.results.contract.ResultsNavigationComponent
 import tmg.flashback.results.model.from
 import tmg.flashback.weekend.contract.Weekend
-import tmg.flashback.weekend.contract.model.WeekendInfo
+import tmg.flashback.weekend.contract.model.ScreenWeekendData
 import tmg.flashback.weekend.contract.with
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.test
@@ -269,7 +268,7 @@ internal class ScheduleViewModelTest: BaseTest() {
         verify {
             mockNavigator.navigate(
                 Screen.Weekend.with(
-                WeekendInfo.from(model.model.toRaceInfo())
+                ScreenWeekendData.from(model.model.toRaceInfo())
             ))
         }
     }

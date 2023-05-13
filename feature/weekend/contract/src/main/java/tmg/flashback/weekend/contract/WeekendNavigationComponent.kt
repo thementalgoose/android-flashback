@@ -1,27 +1,19 @@
 package tmg.flashback.weekend.contract
 
+import android.os.Build
+import android.os.Bundle
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.Json
 import tmg.flashback.navigation.NavigationDestination
 import tmg.flashback.navigation.Screen
-import tmg.flashback.weekend.contract.model.WeekendInfo
+import tmg.flashback.weekend.contract.model.ScreenWeekendData
 
 @JvmInline
 value class ScreenWeekend(val route: String)
-val Screen.Weekend get() = ScreenWeekend("weekend/{season}/{round}?" +
-        "raceName={raceName}" + "&" +
-        "circuitId={circuitId}" + "&" +
-        "circuitName={circuitName}" + "&" +
-        "country={country}" + "&" +
-        "countryISO={countryISO}" + "&" +
-        "date={date}"
-)
-fun ScreenWeekend.with(weekendInfo: WeekendInfo) = NavigationDestination(
-    this@with.route
-        .replace("{season}", weekendInfo.season.toString())
-        .replace("{round}", weekendInfo.round.toString())
-        .replace("{raceName}", weekendInfo.raceName)
-        .replace("{circuitId}", weekendInfo.circuitId)
-        .replace("{circuitName}", weekendInfo.circuitName)
-        .replace("{country}", weekendInfo.country)
-        .replace("{countryISO}", weekendInfo.countryISO)
-        .replace("{date}", weekendInfo.dateString)
+val Screen.Weekend get() = ScreenWeekend("weekend/{screenWeekendData}")
+
+fun ScreenWeekend.with(weekendInfo: ScreenWeekendData) = NavigationDestination(
+    this@with.route.replace("{screenWeekendData}", Json.encodeToString(ScreenWeekendData.serializer(), weekendInfo))
 )
