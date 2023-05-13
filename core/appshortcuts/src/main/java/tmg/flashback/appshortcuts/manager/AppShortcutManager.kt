@@ -1,6 +1,7 @@
 package tmg.flashback.appshortcuts.manager
 
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
@@ -49,7 +50,9 @@ class AppShortcutManager @Inject constructor(
                     .setLongLabel(applicationContext.getString(model.longLabel))
                     .setIcon(IconCompat.createWithResource(applicationContext, model.icon))
                     .setDisabledMessage(applicationContext.getString(model.unavailableMessage))
-                    .setIntent(model.intentResolver(applicationContext.applicationContext, homeClassProvider.getHomeActivity()))
+                    .setIntent(model.intentResolver(applicationContext.applicationContext, homeClassProvider.getHomeActivity()).apply {
+                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    })
                     .build()
             } catch (e: IncompatibleClassChangeError) {
                 // If it fails to generate the icon for the app shortcut

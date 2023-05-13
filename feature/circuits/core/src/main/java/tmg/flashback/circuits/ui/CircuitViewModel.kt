@@ -23,7 +23,7 @@ import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.flashback.weekend.contract.Weekend
-import tmg.flashback.weekend.contract.model.WeekendInfo
+import tmg.flashback.weekend.contract.model.ScreenWeekendData
 import tmg.flashback.weekend.contract.with
 import javax.inject.Inject
 
@@ -122,7 +122,7 @@ class CircuitViewModel @Inject constructor(
     }
 
     override fun itemClicked(model: CircuitModel.Item) {
-        val weekend = WeekendInfo(
+        val weekend = ScreenWeekendData(
             season = model.data.season,
             round = model.data.round,
             raceName = model.data.name,

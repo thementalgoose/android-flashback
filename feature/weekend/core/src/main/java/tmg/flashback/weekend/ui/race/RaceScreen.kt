@@ -43,7 +43,7 @@ import tmg.flashback.ui.components.errors.NotAvailableYet
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.navigation.appBarHeight
 import tmg.flashback.weekend.R
-import tmg.flashback.weekend.contract.model.WeekendInfo
+import tmg.flashback.weekend.contract.model.ScreenWeekendData
 import tmg.flashback.weekend.ui.fakeWeekendInfo
 import tmg.flashback.weekend.ui.info.RaceInfoHeader
 import tmg.flashback.weekend.ui.shared.ConstructorIndicator
@@ -56,7 +56,7 @@ private val pointsWidth = 56.dp
 
 @Composable
 fun RaceScreenVM(
-    info: WeekendInfo,
+    info: ScreenWeekendData,
     actionUpClicked: () -> Unit,
     viewModel: RaceViewModel = hiltViewModel()
 ) {
@@ -77,7 +77,7 @@ fun RaceScreenVM(
 
 @Composable
 fun RaceScreen(
-    info: WeekendInfo,
+    info: ScreenWeekendData,
     list: List<RaceModel>,
     driverClicked: (RaceResult) -> Unit,
     actionUpClicked: () -> Unit

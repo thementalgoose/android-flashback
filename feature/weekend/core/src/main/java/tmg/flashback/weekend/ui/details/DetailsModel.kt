@@ -5,7 +5,6 @@ import androidx.annotation.StringRes
 import org.threeten.bp.LocalDate
 import tmg.flashback.formula1.model.Circuit
 import tmg.flashback.formula1.model.Schedule
-import tmg.flashback.weekend.contract.model.WeekendInfo
 import tmg.utilities.models.StringHolder
 
 sealed class DetailsModel(

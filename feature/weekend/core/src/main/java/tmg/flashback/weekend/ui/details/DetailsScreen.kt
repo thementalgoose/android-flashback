@@ -35,13 +35,13 @@ import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.ui.components.navigation.appBarHeight
 import tmg.flashback.weekend.R
-import tmg.flashback.weekend.contract.model.WeekendInfo
+import tmg.flashback.weekend.contract.model.ScreenWeekendData
 import tmg.flashback.weekend.ui.toWeekendInfo
 import tmg.utilities.extensions.format
 import tmg.utilities.extensions.ordinalAbbreviation
 
 internal fun LazyListScope.details(
-    weekendInfo: WeekendInfo,
+    weekendInfo: ScreenWeekendData,
     items: List<DetailsModel>,
     linkClicked: (DetailsModel.Link) -> Unit
 ) {

@@ -27,7 +27,7 @@ import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.flashback.results.contract.ResultsNavigationComponent
 import tmg.flashback.weekend.contract.Weekend
-import tmg.flashback.weekend.contract.model.WeekendInfo
+import tmg.flashback.weekend.contract.model.ScreenWeekendData
 import tmg.flashback.weekend.contract.with
 import javax.inject.Inject
 import kotlin.collections.List
@@ -150,7 +150,7 @@ class ScheduleViewModel @Inject constructor(
         when (model) {
             is ScheduleModel.List -> navigator.navigate(
                 Screen.Weekend.with(
-                WeekendInfo(
+                ScreenWeekendData(
                     season = model.model.season,
                     round = model.model.round,
                     raceName = model.model.raceName,

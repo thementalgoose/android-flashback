@@ -36,7 +36,7 @@ import tmg.flashback.ui.components.analytics.ScreenView
 import tmg.flashback.ui.components.navigation.NavigationBar
 import tmg.flashback.ui.components.navigation.NavigationItem
 import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
-import tmg.flashback.weekend.contract.model.WeekendInfo
+import tmg.flashback.weekend.contract.model.ScreenWeekendData
 import tmg.flashback.weekend.ui.details.DetailsModel
 import tmg.utilities.extensions.toEnum
 
@@ -48,7 +48,7 @@ data class WeekendScreenState(
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun WeekendScreenVM(
-    weekendInfo: WeekendInfo,
+    weekendInfo: ScreenWeekendData,
     actionUpClicked: () -> Unit,
     viewModel: WeekendViewModel = hiltViewModel()
 ) {
