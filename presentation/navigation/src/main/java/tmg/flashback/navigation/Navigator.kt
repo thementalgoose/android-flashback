@@ -13,8 +13,8 @@ class Navigator @Inject constructor(
     var destination: MutableStateFlow<NavigationDestination?> = MutableStateFlow(null)
 
     fun navigate(destination: NavigationDestination) {
-        crashManager.log("Navigating to ${destination.route}")
         if (this.destination.value != destination) {
+            crashManager.log("Navigating to ${destination.route}")
             this.destination.value = destination
         }
     }
