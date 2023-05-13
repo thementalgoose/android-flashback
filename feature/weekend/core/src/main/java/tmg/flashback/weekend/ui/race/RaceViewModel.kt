@@ -10,24 +10,22 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import tmg.flashback.constructors.contract.ConstructorSeason
 import tmg.flashback.constructors.contract.with
+import tmg.flashback.domain.repo.RaceRepository
 import tmg.flashback.drivers.contract.DriverSeason
 import tmg.flashback.drivers.contract.with
 import tmg.flashback.formula1.constants.Formula1
-import tmg.flashback.formula1.model.RaceResult
-import tmg.flashback.domain.repo.RaceRepository
 import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.model.Race
+import tmg.flashback.formula1.model.RaceResult
 import tmg.flashback.navigation.Screen
 import tmg.flashback.weekend.R
-import tmg.flashback.weekend.ui.constructor.ConstructorModel
 import tmg.utilities.extensions.combinePair
 import javax.inject.Inject
 

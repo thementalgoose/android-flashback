@@ -59,7 +59,7 @@ fun ButtonSecondarySegments(
                 }),
                 colors = ButtonDefaults.textButtonColors(
                     backgroundColor = when (selected) {
-                        true -> AppTheme.colors.backgroundTertiary
+                        true -> AppTheme.colors.backgroundSecondary
                         false -> AppTheme.colors.backgroundPrimary
                     },
                     contentColor = FlashbackTheme.colors.contentPrimary
@@ -84,7 +84,7 @@ fun ButtonSecondarySegments(
                     TextBody2(
                         stringResource(id = item),
                         maxLines = 1,
-                        bold = true,
+                        bold = enabled,
                         textColor = when (enabled) {
                             true -> colour
                             false -> colour.copy(alpha = 0.4f)
