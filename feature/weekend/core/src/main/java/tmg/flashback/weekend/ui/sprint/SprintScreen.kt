@@ -49,7 +49,7 @@ import tmg.flashback.ui.components.drivers.driverIconSize
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.navigation.appBarHeight
 import tmg.flashback.weekend.R
-import tmg.flashback.weekend.contract.model.WeekendInfo
+import tmg.flashback.weekend.contract.model.ScreenWeekendData
 import tmg.flashback.weekend.ui.fakeWeekendInfo
 import tmg.flashback.weekend.ui.shared.ConstructorIndicator
 import tmg.flashback.weekend.ui.shared.finishingPositionWidth
@@ -60,7 +60,7 @@ private val pointsWidth = 56.dp
 
 @Composable
 fun SprintScreenVM(
-    info: WeekendInfo,
+    info: ScreenWeekendData,
     actionUpClicked: () -> Unit,
     viewModel: SprintViewModel = hiltViewModel()
 ) {
@@ -80,7 +80,7 @@ fun SprintScreenVM(
 
 @Composable
 fun SprintScreen(
-    info: WeekendInfo,
+    info: ScreenWeekendData,
     list: List<SprintModel>,
     driverClicked: (SprintRaceResult) -> Unit,
     actionUpClicked: () -> Unit

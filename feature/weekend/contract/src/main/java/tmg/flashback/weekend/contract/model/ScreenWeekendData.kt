@@ -1,15 +1,18 @@
 package tmg.flashback.weekend.contract.model
 
+import android.os.Build
+import android.os.Bundle
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.Json
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.utilities.extensions.toLocalDate
 
 @Parcelize
 @Serializable
-data class WeekendInfo(
+data class ScreenWeekendData(
     val season: Int,
     val round: Int,
     val raceName: String,
@@ -45,5 +48,20 @@ data class WeekendInfo(
             .format(date)
     )
 
-    companion object
+
+    companion object NavType: androidx.navigation.NavType<ScreenWeekendData>(isNullableAllowed = false) {
+        override fun get(bundle: Bundle, key: String): ScreenWeekendData? {
+            return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                bundle.getParcelable(key, ScreenWeekendData::class.java)
+            } else {
+                bundle.getParcelable(key)
+            }
+        }
+        override fun parseValue(value: String): ScreenWeekendData {
+            return Json.decodeFromString(serializer(), value)
+        }
+        override fun put(bundle: Bundle, key: String, value: ScreenWeekendData) {
+            bundle.putParcelable(key, value)
+        }
+    }
 }

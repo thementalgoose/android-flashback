@@ -33,7 +33,7 @@ import tmg.flashback.style.text.TextSection
 import tmg.flashback.ui.components.drivers.DriverName
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.navigation.appBarHeight
-import tmg.flashback.weekend.contract.model.WeekendInfo
+import tmg.flashback.weekend.contract.model.ScreenWeekendData
 import tmg.flashback.weekend.ui.shared.ConstructorIndicator
 import tmg.flashback.weekend.ui.shared.Position
 import tmg.utilities.extensions.ordinalAbbreviation
@@ -42,7 +42,7 @@ private val lapTimeWidth: Dp = 64.dp
 
 @Composable
 fun QualifyingScreenVM(
-    info: WeekendInfo,
+    info: ScreenWeekendData,
     actionUpClicked: () -> Unit,
     viewModel: QualifyingViewModel = hiltViewModel()
 ) {
@@ -70,7 +70,7 @@ fun QualifyingScreenVM(
 
 @Composable
 fun QualifyingScreen(
-    info: WeekendInfo,
+    info: ScreenWeekendData,
     actionUpClicked: () -> Unit,
     driverClicked: (Driver) -> Unit,
     list: List<QualifyingModel>,

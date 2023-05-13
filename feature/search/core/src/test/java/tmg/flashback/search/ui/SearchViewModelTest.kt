@@ -28,7 +28,7 @@ import tmg.flashback.domain.repo.ConstructorRepository
 import tmg.flashback.domain.repo.DriverRepository
 import tmg.flashback.domain.repo.OverviewRepository
 import tmg.flashback.weekend.contract.Weekend
-import tmg.flashback.weekend.contract.model.WeekendInfo
+import tmg.flashback.weekend.contract.model.ScreenWeekendData
 import tmg.flashback.weekend.contract.with
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertListDoesNotMatchItem
@@ -347,7 +347,7 @@ internal class SearchViewModelTest: BaseTest() {
         verify {
             mockNavigator.navigate(
                 Screen.Weekend.with(
-                WeekendInfo(
+                ScreenWeekendData(
                     season = model.season,
                     round = model.round,
                     raceName = model.raceName,

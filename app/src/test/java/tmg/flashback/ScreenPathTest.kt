@@ -1,6 +1,5 @@
 package tmg.flashback
 
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import tmg.flashback.circuits.contract.Circuit
@@ -20,7 +19,7 @@ import tmg.flashback.rss.contract.RSS
 import tmg.flashback.rss.contract.RSSConfigure
 import tmg.flashback.search.contract.Search
 import tmg.flashback.weekend.contract.Weekend
-import tmg.flashback.weekend.contract.model.WeekendInfo
+import tmg.flashback.weekend.contract.model.ScreenWeekendData
 import tmg.flashback.weekend.contract.with
 
 class ScreenPathTest {
@@ -46,9 +45,9 @@ class ScreenPathTest {
 
     @Test
     fun driver() {
-        assertEquals("drivers/{driverId}?driverName={driverName}", Screen.Driver.route)
+        assertEquals("drivers/{data}", Screen.Driver.route)
         assertEquals(
-            "drivers/id?driverName=name",
+            """drivers/{"driverId":"id","driverName":"name"}""",
             Screen.Driver.with("id", "name").route
         )
     }
@@ -56,11 +55,11 @@ class ScreenPathTest {
     @Test
     fun `driver season`() {
         assertEquals(
-            "drivers/{driverId}/{season}?driverName={driverName}",
+            "drivers-season/{data}",
             Screen.DriverSeason.route
         )
         assertEquals(
-            "drivers/id/2022?driverName=name",
+            """drivers-season/{"driverId":"id","driverName":"name","season":2022}""",
             Screen.DriverSeason.with("id", "name", 2022).route
         )
     }
@@ -68,11 +67,11 @@ class ScreenPathTest {
     @Test
     fun constructor() {
         assertEquals(
-            "constructors/{constructorId}?constructorName={constructorName}",
+            "constructors/{data}",
             Screen.Constructor.route
         )
         assertEquals(
-            "constructors/id?constructorName=name",
+            """constructors/{"constructorId":"id","constructorName":"name"}""",
             Screen.Constructor.with("id", "name").route
         )
     }
@@ -80,11 +79,11 @@ class ScreenPathTest {
     @Test
     fun `constructor season`() {
         assertEquals(
-            "constructors/{constructorId}/{season}?constructorName={constructorName}",
+            "constructors-season/{data}",
             Screen.ConstructorSeason.route
         )
         assertEquals(
-            "constructors/id/2022?constructorName=name",
+            """constructors-season/{"constructorId":"id","constructorName":"name","season":2022}""",
             Screen.ConstructorSeason.with("id", "name", 2022).route
         )
     }
@@ -92,11 +91,11 @@ class ScreenPathTest {
     @Test
     fun circuit() {
         assertEquals(
-            "circuit/{circuitId}?circuitName={circuitName}",
+            "circuit/{data}",
             Screen.Circuit.route
         )
         assertEquals(
-            "circuit/id?circuitName=name",
+            """circuit/{"circuitId":"id","circuitName":"name"}""",
             Screen.Circuit.with("id", "name").route
         )
     }
@@ -109,23 +108,12 @@ class ScreenPathTest {
     @Test
     fun weekend() {
         assertEquals(
-            "weekend/{season}/{round}?" +
-                    "raceName={raceName}" + "&" +
-                    "circuitId={circuitId}" + "&" +
-                    "circuitName={circuitName}" + "&" +
-                    "country={country}" + "&" +
-                    "countryISO={countryISO}" + "&" +
-                    "date={date}", Screen.Weekend.route
+            "weekend/{data}", Screen.Weekend.route
         )
         assertEquals(
-            "weekend/2020/1?" +
-                    "raceName=raceName" + "&" +
-                    "circuitId=circuitId" + "&" +
-                    "circuitName=circuitName" + "&" +
-                    "country=country" + "&" +
-                    "countryISO=countryISO" + "&" +
-                    "date=date", Screen.Weekend.with(
-                WeekendInfo(
+            """weekend/{"season":2020,"round":1,"raceName":"raceName","circuitId":"circuitId","circuitName":"circuitName","country":"country","countryISO":"countryISO","dateString":"date"}""".trimIndent(),
+            Screen.Weekend.with(
+                ScreenWeekendData(
                     season = 2020,
                     round = 1,
                     raceName = "raceName",

@@ -30,9 +30,13 @@
             </intent-filter>
 
             <intent-filter>
-                <data android:scheme="flashback" android:host="rss" />
-                <data android:scheme="flashback" android:host="search" />
+                <data android:scheme="flashback"/>
+                <data android:host="rss"/>
+            </intent-filter>
 
+            <intent-filter>
+                <data android:scheme="flashback" />
+                <data android:host="search" />
             </intent-filter>
 
         </activity>

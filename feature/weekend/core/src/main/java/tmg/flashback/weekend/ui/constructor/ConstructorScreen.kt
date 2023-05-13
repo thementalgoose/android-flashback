@@ -33,13 +33,13 @@ import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.navigation.appBarHeight
 import tmg.flashback.ui.components.progressbar.ProgressBar
 import tmg.flashback.weekend.R
-import tmg.flashback.weekend.contract.model.WeekendInfo
+import tmg.flashback.weekend.contract.model.ScreenWeekendData
 import tmg.utilities.extensions.ordinalAbbreviation
 import kotlin.math.roundToInt
 
 @Composable
 fun ConstructorScreenVM(
-    info: WeekendInfo,
+    info: ScreenWeekendData,
     actionUpClicked: () -> Unit,
     viewModel: ConstructorViewModel = hiltViewModel()
 ) {
@@ -59,7 +59,7 @@ fun ConstructorScreenVM(
 
 @Composable
 fun ConstructorScreen(
-    info: WeekendInfo,
+    info: ScreenWeekendData,
     list: List<ConstructorModel>,
     itemClicked: (ConstructorModel.Constructor) -> Unit,
     actionUpClicked: () -> Unit

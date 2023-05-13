@@ -11,18 +11,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import tmg.flashback.weekend.R
-import tmg.flashback.formula1.enums.TrackLayout
 import tmg.flashback.formula1.model.Race
 import tmg.flashback.providers.RaceProvider
 import tmg.flashback.ui.components.flag.Flag
-import tmg.flashback.weekend.ui.from
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextHeadline1
-import tmg.flashback.weekend.contract.model.WeekendInfo
+import tmg.flashback.weekend.contract.model.ScreenWeekendData
+import tmg.flashback.weekend.ui.toWeekendInfo
 import tmg.utilities.extensions.format
 import tmg.utilities.extensions.ordinalAbbreviation
 
@@ -31,7 +30,7 @@ private val trackSizeSmall = 80.dp
 
 @Composable
 fun RaceInfoHeader(
-    model: WeekendInfo,
+    model: ScreenWeekendData,
     modifier: Modifier = Modifier,
     actionUpClicked: () -> Unit = { },
     icons: @Composable RowScope.() -> Unit = { }
@@ -68,7 +67,7 @@ fun RaceInfoHeader(
 
 @Composable
 private fun RaceDetails(
-    model: WeekendInfo,
+    model: ScreenWeekendData,
     modifier: Modifier = Modifier
 ) {
     Row(modifier = modifier) {
@@ -120,7 +119,7 @@ private fun PreviewCompact(
 ) {
     AppThemePreview {
         RaceInfoHeader(
-            model = WeekendInfo.from(race.raceInfo)
+            model = race.raceInfo.toWeekendInfo()
         )
     }
 }
