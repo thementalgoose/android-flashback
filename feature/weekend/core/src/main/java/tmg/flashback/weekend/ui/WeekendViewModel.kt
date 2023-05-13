@@ -87,7 +87,6 @@ class WeekendViewModel @Inject constructor(
                 list.add(WeekendScreenState(WeekendNavItem.SPRINT, isSelected = navItem == WeekendNavItem.SPRINT))
             }
             list.add(WeekendScreenState(WeekendNavItem.RACE, isSelected = navItem == WeekendNavItem.RACE))
-            list.add(WeekendScreenState(WeekendNavItem.CONSTRUCTOR, isSelected = navItem == WeekendNavItem.CONSTRUCTOR))
             return@map list
         }
         .asLiveData(viewModelScope.coroutineContext)
