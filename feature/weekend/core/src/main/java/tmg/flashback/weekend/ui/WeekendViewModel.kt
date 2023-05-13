@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
 import tmg.flashback.formula1.model.Race
 import tmg.flashback.domain.repo.RaceRepository
-import tmg.flashback.weekend.contract.model.WeekendInfo
+import tmg.flashback.weekend.contract.model.ScreenWeekendData
 import tmg.utilities.extensions.combinePair
 import javax.inject.Inject
 
@@ -31,7 +31,7 @@ interface WeekendViewModelInputs {
 interface WeekendViewModelOutputs {
     val tabs: LiveData<List<WeekendScreenState>>
     val isRefreshing: LiveData<Boolean>
-    val weekendInfo: LiveData<WeekendInfo>
+    val weekendInfo: LiveData<ScreenWeekendData>
 }
 
 @HiltViewModel
@@ -70,7 +70,7 @@ class WeekendViewModel @Inject constructor(
         .filterNotNull()
         .flatMapLatest { (season, round) -> raceRepository.getRace(season, round) }
 
-    override val weekendInfo: LiveData<WeekendInfo> = raceFlow
+    override val weekendInfo: LiveData<ScreenWeekendData> = raceFlow
         .filterNotNull()
         .map { it.raceInfo.toWeekendInfo() }
         .asLiveData(viewModelScope.coroutineContext)

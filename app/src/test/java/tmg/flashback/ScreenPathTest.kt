@@ -1,6 +1,5 @@
 package tmg.flashback
 
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import tmg.flashback.circuits.contract.Circuit
@@ -20,7 +19,7 @@ import tmg.flashback.rss.contract.RSS
 import tmg.flashback.rss.contract.RSSConfigure
 import tmg.flashback.search.contract.Search
 import tmg.flashback.weekend.contract.Weekend
-import tmg.flashback.weekend.contract.model.WeekendInfo
+import tmg.flashback.weekend.contract.model.ScreenWeekendData
 import tmg.flashback.weekend.contract.with
 
 class ScreenPathTest {
@@ -125,7 +124,7 @@ class ScreenPathTest {
                     "country=country" + "&" +
                     "countryISO=countryISO" + "&" +
                     "date=date", Screen.Weekend.with(
-                WeekendInfo(
+                ScreenWeekendData(
                     season = 2020,
                     round = 1,
                     raceName = "raceName",
