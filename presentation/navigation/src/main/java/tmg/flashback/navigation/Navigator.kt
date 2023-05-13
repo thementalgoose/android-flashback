@@ -14,6 +14,8 @@ class Navigator @Inject constructor(
 
     fun navigate(destination: NavigationDestination) {
         crashManager.log("Navigating to ${destination.route}")
-        this.destination.value = destination
+        if (this.destination.value != destination) {
+            this.destination.value = destination
+        }
     }
 }

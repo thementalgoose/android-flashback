@@ -54,13 +54,13 @@ internal class ResultsNavigationComponentImpl @Inject constructor(
     }
 
     override fun tyres(season: Int) = activityProvider.launch {
-        crashManager.log("Navigating to tyres £$season")
+        crashManager.log("Navigating to tyres $season")
         val activity = it as? AppCompatActivity ?: return@launch
         TyreBottomSheetFragment.instance(season).show(activity.supportFragmentManager, "TYRES")
     }
 
     override fun preseasonEvents(season: Int) = activityProvider.launch {
-        crashManager.log("Navigating to preseason £$season")
+        crashManager.log("Navigating to preseason $season")
         val activity = it as? AppCompatActivity ?: return@launch
         EventsBottomSheetFragment.instance(season).show(activity.supportFragmentManager, "PRESEASON")
     }
