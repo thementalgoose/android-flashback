@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Icon
@@ -32,12 +34,15 @@ import tmg.flashback.weekend.ui.race.race
 import tmg.flashback.weekend.ui.sprint.SprintViewModel
 import tmg.flashback.weekend.ui.sprint.sprint
 import tmg.flashback.style.AppTheme
+import tmg.flashback.style.buttons.ButtonSecondarySegments
 import tmg.flashback.ui.components.analytics.ScreenView
 import tmg.flashback.ui.components.navigation.NavigationBar
 import tmg.flashback.ui.components.navigation.NavigationItem
 import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
+import tmg.flashback.weekend.R
 import tmg.flashback.weekend.contract.model.ScreenWeekendData
 import tmg.flashback.weekend.ui.details.DetailsModel
+import tmg.flashback.weekend.ui.race.RaceResultType
 import tmg.utilities.extensions.toEnum
 
 data class WeekendScreenState(
@@ -67,7 +72,6 @@ fun WeekendScreenVM(
         WeekendScreenState(tab = WeekendNavItem.SCHEDULE, isSelected = true),
         WeekendScreenState(tab = WeekendNavItem.QUALIFYING, isSelected = false),
         WeekendScreenState(tab = WeekendNavItem.RACE, isSelected = false),
-        WeekendScreenState(tab = WeekendNavItem.CONSTRUCTOR, isSelected = false)
     ))
 
     val listState = rememberLazyListState()
@@ -108,9 +112,7 @@ fun WeekendScreenVM(
             val sprintList = sprintVM.outputs.list.observeAsState(emptyList())
             val raceVM: RaceViewModel = hiltViewModel()
             val raceList = raceVM.outputs.list.observeAsState(emptyList())
-            val constructorVM: ConstructorViewModel = hiltViewModel()
-            val constructorList = constructorVM.outputs.list.observeAsState(emptyList())
-
+            val raceResultType = raceVM.outputs.raceResultType.observeAsState(RaceResultType.DRIVERS)
 
             SwipeRefresh(
                 isLoading = isRefreshing.value,
@@ -130,7 +132,6 @@ fun WeekendScreenVM(
                         qualifyingVM.inputs.load(weekendInfo.season, weekendInfo.round)
                         sprintVM.inputs.load(weekendInfo.season, weekendInfo.round)
                         raceVM.inputs.load(weekendInfo.season, weekendInfo.round)
-                        constructorVM.inputs.load(weekendInfo.season, weekendInfo.round)
 
                         when (tabState.value.first { it.isSelected }.tab) {
                             WeekendNavItem.SCHEDULE -> {
@@ -155,14 +156,11 @@ fun WeekendScreenVM(
                             }
                             WeekendNavItem.RACE -> {
                                 race(
+                                    showRaceType = raceVM.inputs::show,
+                                    raceResultType = raceResultType.value,
                                     list = raceList.value,
-                                    driverClicked = raceVM.inputs::clickDriver
-                                )
-                            }
-                            WeekendNavItem.CONSTRUCTOR -> {
-                                constructor(
-                                    list = constructorList.value,
-                                    itemClicked = constructorVM.inputs::clickItem
+                                    driverClicked = raceVM.inputs::clickDriver,
+                                    constructorClicked = raceVM.inputs::clickConstructor
                                 )
                             }
                         }

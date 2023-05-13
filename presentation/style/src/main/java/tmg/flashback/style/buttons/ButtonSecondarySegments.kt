@@ -47,7 +47,7 @@ fun ButtonSecondarySegments(
         items.forEachIndexed { index, item ->
             val selected = item == selected
             Button(
-                modifier = modifier
+                modifier = Modifier
                     .focusable(true)
                     .wrapContentHeight(Alignment.CenterVertically)
                     .padding(0.dp)

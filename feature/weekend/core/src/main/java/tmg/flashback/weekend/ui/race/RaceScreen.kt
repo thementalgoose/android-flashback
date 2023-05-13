@@ -23,6 +23,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.formula1.enums.RaceStatus
 import tmg.flashback.formula1.enums.isStatusFinished
 import tmg.flashback.formula1.extensions.pointsDisplay
+import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.FastestLap
 import tmg.flashback.formula1.model.LapTime
 import tmg.flashback.formula1.model.RaceResult
@@ -32,6 +33,7 @@ import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.badge.Badge
 import tmg.flashback.style.badge.BadgeView
+import tmg.flashback.style.buttons.ButtonSecondarySegments
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextTitle
@@ -42,11 +44,14 @@ import tmg.flashback.ui.components.errors.NotAvailable
 import tmg.flashback.ui.components.errors.NotAvailableYet
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.navigation.appBarHeight
+import tmg.flashback.ui.components.progressbar.ProgressBar
 import tmg.flashback.weekend.R
 import tmg.flashback.weekend.contract.model.ScreenWeekendData
+import tmg.flashback.weekend.ui.constructor.ConstructorModel
 import tmg.flashback.weekend.ui.fakeWeekendInfo
 import tmg.flashback.weekend.ui.info.RaceInfoHeader
 import tmg.flashback.weekend.ui.shared.ConstructorIndicator
+import tmg.flashback.weekend.ui.shared.DriverPoints
 import tmg.flashback.weekend.ui.shared.finishingPositionWidth
 import tmg.utilities.extensions.ordinalAbbreviation
 import kotlin.math.roundToInt
@@ -54,56 +59,26 @@ import kotlin.math.roundToInt
 private val timeWidth = 88.dp
 private val pointsWidth = 56.dp
 
-@Composable
-fun RaceScreenVM(
-    info: ScreenWeekendData,
-    actionUpClicked: () -> Unit,
-    viewModel: RaceViewModel = hiltViewModel()
-) {
-    viewModel.inputs.load(
-        season = info.season,
-        round = info.round
-    )
-
-    val results = viewModel.outputs.list.observeAsState(listOf(RaceModel.Loading))
-
-    RaceScreen(
-        info = info,
-        list = results.value,
-        driverClicked = viewModel.inputs::clickDriver,
-        actionUpClicked = actionUpClicked
-    )
-}
-
-@Composable
-fun RaceScreen(
-    info: ScreenWeekendData,
-    list: List<RaceModel>,
-    driverClicked: (RaceResult) -> Unit,
-    actionUpClicked: () -> Unit
-) {
-    LazyColumn(
-        modifier = Modifier.fillMaxWidth(),
-        content = {
-            item("header") {
-                RaceInfoHeader(
-                    model = info,
-                    actionUpClicked = actionUpClicked
-                )
-            }
-
-            this.race(
-                list = list,
-                driverClicked = driverClicked
-            )
-        }
-    )
-}
-
 internal fun LazyListScope.race(
     list: List<RaceModel>,
+    raceResultType: RaceResultType,
+    showRaceType: (RaceResultType) -> Unit,
     driverClicked: (RaceResult) -> Unit,
+    constructorClicked: (Constructor) -> Unit
 ) {
+    item {
+        ButtonSecondarySegments(
+            modifier = Modifier
+                .padding(horizontal = AppTheme.dimens.medium)
+                .fillMaxWidth(),
+            items = RaceResultType.values().map { it.label },
+            selected = raceResultType.label,
+            onClick = { label ->
+                showRaceType(RaceResultType.values().first { it.label == label })
+            },
+            showTick = true
+        )
+    }
     items(list, key = { it.id }) {
         when (it) {
             is RaceModel.Podium -> {
@@ -130,6 +105,12 @@ internal fun LazyListScope.race(
                 Result(
                     model = it.result,
                     driverClicked = driverClicked
+                )
+            }
+            is RaceModel.ConstructorResult -> {
+                ConstructorResult(
+                    model = it,
+                    itemClicked = constructorClicked
                 )
             }
             RaceModel.Loading -> {
@@ -301,26 +282,129 @@ internal fun FastestLap(
     )
 }
 
+
+
+@Composable
+private fun ConstructorResult(
+    model: RaceModel.ConstructorResult,
+    itemClicked: (Constructor) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val contentDescription = "${model.position?.ordinalAbbreviation}. ${stringResource(id = R.string.ab_scored, model.constructor.name, model.points.pointsDisplay())}."
+    val drivers = model.drivers
+        .map {
+            stringResource(id = R.string.ab_scored, it.first.name, it.second.pointsDisplay())
+        }
+        .joinToString(separator = ",")
+
+    Row(
+        modifier = modifier
+            .semantics(mergeDescendants = true) { }
+            .clearAndSetSemantics {
+                this.contentDescription = contentDescription + drivers
+            }
+            .clickable(onClick = {
+                itemClicked(model.constructor)
+            }),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        TextTitle(
+            text = model.position?.toString() ?: "-",
+            bold = true,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.width(36.dp)
+        )
+        Row(modifier = Modifier.padding(
+            top = AppTheme.dimens.small,
+            start = AppTheme.dimens.small,
+            end = AppTheme.dimens.medium,
+            bottom = AppTheme.dimens.small
+        )) {
+            Column(modifier = Modifier.weight(3f)) {
+                TextTitle(
+                    text = model.constructor.name,
+                    bold = true,
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Spacer(Modifier.height(2.dp))
+                model.drivers.forEach { (driver, points) ->
+                    DriverPoints(
+                        driver = driver,
+                        points = points
+                    )
+                }
+            }
+            Spacer(Modifier.width(AppTheme.dimens.small))
+            val progress = (model.points / model.maxTeamPoints).toFloat().coerceIn(0f, 1f)
+            ProgressBar(
+                modifier = Modifier
+                    .weight(2f)
+                    .height(48.dp)
+                    .fillMaxHeight(),
+                endProgress = progress,
+                barColor = model.constructor.colour,
+                label = {
+                    when (it) {
+                        0f -> "0"
+                        progress -> model.points.pointsDisplay()
+                        else -> (it * model.maxTeamPoints).takeIf { !it.isNaN() }?.roundToInt()?.toString() ?: model.points.pointsDisplay()
+                    }
+                }
+            )
+        }
+    }
+}
+
 @PreviewTheme
 @Composable
 private fun Preview(
     @PreviewParameter(RaceRaceResultProvider::class) result: RaceResult
 ) {
     AppThemePreview {
-        RaceScreen(
-            info = fakeWeekendInfo,
-            list = listOf(
-                RaceModel.Podium(
-                    p1 = result.copy(fastestLap = FastestLap(1, LapTime(0,1,2,3))),
-                    p2 = result,
-                    p3 = result,
+        LazyColumn(content = {
+            race(
+                raceResultType = RaceResultType.DRIVERS,
+                list = listOf(
+                    RaceModel.Podium(
+                        p1 = result.copy(fastestLap = FastestLap(1, LapTime(0,1,2,3))),
+                        p2 = result,
+                        p3 = result,
+                    ),
+                    RaceModel.Result(
+                        result = result.copy(fastestLap = FastestLap(1, LapTime(0,1,2,3)))
+                    )
                 ),
-                RaceModel.Result(
-                    result = result.copy(fastestLap = FastestLap(1, LapTime(0,1,2,3)))
-                )
-            ),
-            driverClicked = { },
-            actionUpClicked = { }
-        )
+                showRaceType = { },
+                driverClicked = { },
+                constructorClicked = { }
+            )
+        })
+    }
+}
+
+@PreviewTheme
+@Composable
+private fun PreviewConstructors(
+    @PreviewParameter(RaceRaceResultProvider::class) result: RaceResult
+) {
+    AppThemePreview {
+        LazyColumn(content = {
+            race(
+                raceResultType = RaceResultType.CONSTRUCTORS,
+                list = listOf(
+                    RaceModel.Podium(
+                        p1 = result.copy(fastestLap = FastestLap(1, LapTime(0,1,2,3))),
+                        p2 = result,
+                        p3 = result,
+                    ),
+                    RaceModel.Result(
+                        result = result.copy(fastestLap = FastestLap(1, LapTime(0,1,2,3)))
+                    )
+                ),
+                showRaceType = { },
+                driverClicked = { },
+                constructorClicked = { }
+            )
+        })
     }
 }

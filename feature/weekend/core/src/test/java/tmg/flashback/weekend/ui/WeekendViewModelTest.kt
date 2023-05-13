@@ -87,7 +87,6 @@ internal class WeekendViewModelTest: BaseTest() {
             assertListMatchesItem { it.tab == WeekendNavItem.QUALIFYING }
             assertListDoesNotMatchItem { it.tab == WeekendNavItem.SPRINT }
             assertListMatchesItem { it.tab == WeekendNavItem.RACE }
-            assertListMatchesItem { it.tab == WeekendNavItem.CONSTRUCTOR }
         }
     }
 
@@ -101,7 +100,6 @@ internal class WeekendViewModelTest: BaseTest() {
             assertListMatchesItem { it.tab == WeekendNavItem.QUALIFYING }
             assertListMatchesItem { it.tab == WeekendNavItem.SPRINT }
             assertListMatchesItem { it.tab == WeekendNavItem.RACE }
-            assertListMatchesItem { it.tab == WeekendNavItem.CONSTRUCTOR }
         }
     }
 
@@ -148,18 +146,6 @@ internal class WeekendViewModelTest: BaseTest() {
             assertListMatchesItem { it.isSelected && it.tab == WeekendNavItem.RACE }
         }
     }
-
-    @Test
-    fun `loading season and round and select tab constructor outputs constructor`() = coroutineTest {
-        underTest()
-        underTest.inputs.load(season = 2020, round = 1)
-
-        underTest.inputs.clickTab(WeekendNavItem.CONSTRUCTOR)
-        underTest.outputs.tabs.test {
-            assertListMatchesItem { it.isSelected && it.tab == WeekendNavItem.CONSTRUCTOR }
-        }
-    }
-
 
     @Test
     fun `refresh calls driver repository`() = coroutineTest {
