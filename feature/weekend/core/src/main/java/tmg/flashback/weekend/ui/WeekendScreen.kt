@@ -21,8 +21,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.launch
 import tmg.flashback.analytics.constants.AnalyticsConstants.analyticsRound
 import tmg.flashback.analytics.constants.AnalyticsConstants.analyticsSeason
-import tmg.flashback.weekend.ui.constructor.ConstructorViewModel
-import tmg.flashback.weekend.ui.constructor.constructor
 import tmg.flashback.weekend.ui.details.DetailsViewModel
 import tmg.flashback.weekend.ui.details.details
 import tmg.flashback.weekend.ui.info.RaceInfoHeader
