@@ -75,7 +75,7 @@ internal fun LazyListScope.race(
     }
     items(list, key = { it.id }) {
         when (it) {
-            is RaceModel.Podium -> {
+            is RaceModel.DriverPodium -> {
                 Column(Modifier.fillMaxWidth()) {
                     Result(
                         model = it.p1,
@@ -95,7 +95,7 @@ internal fun LazyListScope.race(
 //                    driverClicked = driverClicked
 //                )
             }
-            is RaceModel.Result -> {
+            is RaceModel.DriverResult -> {
                 Result(
                     model = it.result,
                     driverClicked = driverClicked
@@ -276,8 +276,6 @@ internal fun FastestLap(
     )
 }
 
-
-
 @Composable
 private fun ConstructorResult(
     model: RaceModel.ConstructorResult,
@@ -293,6 +291,7 @@ private fun ConstructorResult(
 
     Row(
         modifier = modifier
+            .height(IntrinsicSize.Min)
             .semantics(mergeDescendants = true) { }
             .clearAndSetSemantics {
                 this.contentDescription = contentDescription + drivers
@@ -302,19 +301,28 @@ private fun ConstructorResult(
             }),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        TextTitle(
-            text = model.position?.toString() ?: "-",
-            bold = true,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.width(36.dp)
-        )
-        Row(modifier = Modifier.padding(
-            top = AppTheme.dimens.small,
-            start = AppTheme.dimens.small,
-            end = AppTheme.dimens.medium,
-            bottom = AppTheme.dimens.small
-        )) {
-            Column(modifier = Modifier.weight(3f)) {
+        ConstructorIndicator(constructor = model.constructor)
+        Box(Modifier.size(finishingPositionWidth, driverIconSize)) {
+            TextTitle(
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .padding(
+                        horizontal = AppTheme.dimens.xsmall,
+                        vertical = AppTheme.dimens.medium
+                    ),
+                bold = true,
+                textAlign = TextAlign.Center,
+                text = model.position.toString()
+            )
+        }
+        Row(modifier = Modifier
+            .padding(
+                top = AppTheme.dimens.small,
+                end = AppTheme.dimens.medium,
+                bottom = AppTheme.dimens.small
+            )
+        ) {
+            Column(modifier = Modifier.weight(1f)) {
                 TextTitle(
                     text = model.constructor.name,
                     bold = true,
@@ -332,9 +340,8 @@ private fun ConstructorResult(
             val progress = (model.points / model.maxTeamPoints).toFloat().coerceIn(0f, 1f)
             ProgressBar(
                 modifier = Modifier
-                    .weight(2f)
-                    .height(48.dp)
-                    .fillMaxHeight(),
+                    .width(80.dp)
+                    .height(48.dp),
                 endProgress = progress,
                 barColor = model.constructor.colour,
                 label = {
@@ -359,12 +366,12 @@ private fun Preview(
             race(
                 raceResultType = RaceResultType.DRIVERS,
                 list = listOf(
-                    RaceModel.Podium(
+                    RaceModel.DriverPodium(
                         p1 = result.copy(fastestLap = FastestLap(1, LapTime(0,1,2,3))),
                         p2 = result,
                         p3 = result,
                     ),
-                    RaceModel.Result(
+                    RaceModel.DriverResult(
                         result = result.copy(fastestLap = FastestLap(1, LapTime(0,1,2,3)))
                     )
                 ),
@@ -386,12 +393,12 @@ private fun PreviewConstructors(
             race(
                 raceResultType = RaceResultType.CONSTRUCTORS,
                 list = listOf(
-                    RaceModel.Podium(
+                    RaceModel.DriverPodium(
                         p1 = result.copy(fastestLap = FastestLap(1, LapTime(0,1,2,3))),
                         p2 = result,
                         p3 = result,
                     ),
-                    RaceModel.Result(
+                    RaceModel.DriverResult(
                         result = result.copy(fastestLap = FastestLap(1, LapTime(0,1,2,3)))
                     )
                 ),

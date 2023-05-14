@@ -1,5 +1,7 @@
 package tmg.flashback.weekend.ui.sprint
 
+import tmg.flashback.formula1.model.Constructor
+import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.model.SprintRaceResult
 
 sealed class SprintModel(
@@ -12,10 +14,23 @@ sealed class SprintModel(
 
     object Loading: SprintModel("loading")
 
-    data class Result(
+    data class DriverResult(
         val result: SprintRaceResult
     ): SprintModel(
-        id = result.driver.driver.id
+        id = "driver-${result.driver.driver.id}"
+    ) {
+        companion object
+    }
+
+    data class ConstructorResult(
+        val constructor: Constructor,
+        val position: Int?,
+        val points: Double,
+        val drivers: List<Pair<Driver, Double>>,
+        val maxTeamPoints: Double,
+        val highestDriverPosition: Int
+    ): SprintModel(
+        id = "constructor-${constructor.id}"
     ) {
         companion object
     }

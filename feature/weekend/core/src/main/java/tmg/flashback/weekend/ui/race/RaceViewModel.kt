@@ -75,17 +75,17 @@ class RaceViewModel @Inject constructor(
             val list: MutableList<RaceModel> = mutableListOf()
             if (raceDisplayType == RaceResultType.DRIVERS) {
                 if (raceResults.size >= 3) {
-                    val podium = RaceModel.Podium(
+                    val podium = RaceModel.DriverPodium(
                         p1 = raceResults[0],
                         p2 = raceResults[1],
                         p3 = raceResults[2]
                     )
                     list.add(podium)
                     for (x in raceResults.drop(3)) {
-                        list.add(RaceModel.Result(x))
+                        list.add(RaceModel.DriverResult(x))
                     }
                 } else {
-                    list.addAll(raceResults.map { RaceModel.Result(it) })
+                    list.addAll(raceResults.map { RaceModel.DriverResult(it) })
                 }
             } else {
                 list.addAll(
