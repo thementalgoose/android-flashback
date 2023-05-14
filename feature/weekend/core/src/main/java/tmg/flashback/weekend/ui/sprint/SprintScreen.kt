@@ -47,11 +47,15 @@ import tmg.flashback.ui.components.drivers.DriverName
 import tmg.flashback.ui.components.drivers.driverIconSize
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.navigation.appBarHeight
+import tmg.flashback.ui.components.progressbar.ProgressBar
 import tmg.flashback.weekend.R
+import tmg.flashback.weekend.ui.race.RaceModel
 import tmg.flashback.weekend.ui.race.RaceResultType
 import tmg.flashback.weekend.ui.shared.ConstructorIndicator
+import tmg.flashback.weekend.ui.shared.DriverPoints
 import tmg.flashback.weekend.ui.shared.finishingPositionWidth
 import tmg.utilities.extensions.ordinalAbbreviation
+import kotlin.math.roundToInt
 
 private val timeWidth = 88.dp
 private val pointsWidth = 56.dp
@@ -231,13 +235,86 @@ private fun Points(
     )
 }
 
+
+
 @Composable
 private fun ConstructorResult(
     model: SprintModel.ConstructorResult,
     constructorClicked: (Constructor) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
+    val contentDescription = "${model.position?.ordinalAbbreviation}. ${stringResource(id = R.string.ab_scored, model.constructor.name, model.points.pointsDisplay())}."
+    val drivers = model.drivers
+        .map {
+            stringResource(id = R.string.ab_scored, it.first.name, it.second.pointsDisplay())
+        }
+        .joinToString(separator = ",")
 
+    Row(
+        modifier = modifier
+            .height(IntrinsicSize.Min)
+            .semantics(mergeDescendants = true) { }
+            .clearAndSetSemantics {
+                this.contentDescription = contentDescription + drivers
+            }
+            .clickable(onClick = {
+                constructorClicked(model.constructor)
+            }),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        ConstructorIndicator(constructor = model.constructor)
+        Box(Modifier.size(finishingPositionWidth, driverIconSize)) {
+            TextTitle(
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .padding(
+                        horizontal = AppTheme.dimens.xsmall,
+                        vertical = AppTheme.dimens.medium
+                    ),
+                bold = true,
+                textAlign = TextAlign.Center,
+                text = model.position.toString()
+            )
+        }
+        Row(modifier = Modifier
+            .padding(
+                top = AppTheme.dimens.small,
+                end = AppTheme.dimens.medium,
+                bottom = AppTheme.dimens.small
+            )
+        ) {
+            Column(modifier = Modifier.weight(1f)) {
+                TextTitle(
+                    text = model.constructor.name,
+                    bold = true,
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Spacer(Modifier.height(2.dp))
+                model.drivers.forEach { (driver, points) ->
+                    DriverPoints(
+                        driver = driver,
+                        points = points
+                    )
+                }
+            }
+            Spacer(Modifier.width(AppTheme.dimens.small))
+            val progress = (model.points / model.maxTeamPoints).toFloat().coerceIn(0f, 1f)
+            ProgressBar(
+                modifier = Modifier
+                    .width(80.dp)
+                    .height(48.dp),
+                endProgress = progress,
+                barColor = model.constructor.colour,
+                label = {
+                    when (it) {
+                        0f -> "0"
+                        progress -> model.points.pointsDisplay()
+                        else -> (it * model.maxTeamPoints).takeIf { !it.isNaN() }?.roundToInt()?.toString() ?: model.points.pointsDisplay()
+                    }
+                }
+            )
+        }
+    }
 }
 
 @PreviewTheme

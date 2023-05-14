@@ -276,8 +276,6 @@ internal fun FastestLap(
     )
 }
 
-
-
 @Composable
 private fun ConstructorResult(
     model: RaceModel.ConstructorResult,

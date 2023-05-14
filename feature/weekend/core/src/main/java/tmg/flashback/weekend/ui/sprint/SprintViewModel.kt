@@ -83,6 +83,7 @@ class SprintViewModel @Inject constructor(
                     .sortedBy { it.result.finish })
             } else {
                 list.addAll(race
+                    .sprint
                     .race
                     .groupBy { it.driver.constructor }
                     .map { (constructor, listOfResult) ->
@@ -102,7 +103,7 @@ class SprintViewModel @Inject constructor(
                     .mapIndexed { index, constructorResult ->
                         constructorResult.copy(
                             position = index + 1,
-                            maxTeamPoints = 45.0
+                            maxTeamPoints = 15.0
                         )
                     }
                 )
