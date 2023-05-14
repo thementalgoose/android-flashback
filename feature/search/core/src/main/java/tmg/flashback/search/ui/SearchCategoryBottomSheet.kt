@@ -40,7 +40,7 @@ fun SearchCategoryBottomSheet(
                     InputSelection(
                         label = stringResource(id = it.label),
                         icon = it.icon,
-                        isChecked = it == selected,
+                        isSelected = it == selected,
                         itemClicked = {
                             categoryClicked(it)
                         }
