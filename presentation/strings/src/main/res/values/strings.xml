@@ -17,6 +17,8 @@
 
     <!-- Search -->
     <string name="search_title">Search</string>
+    <string name="search_category_option_title">Category</string>
+    <string name="search_category_option_description">Pick a category to search</string>
     <string name="search_category_driver">Drivers</string>
     <string name="search_category_constructors">Constructors</string>
     <string name="search_category_races">Races</string>

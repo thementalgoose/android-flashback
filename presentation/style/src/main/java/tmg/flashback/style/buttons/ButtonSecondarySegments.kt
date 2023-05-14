@@ -20,6 +20,9 @@ import androidx.compose.material.icons.filled.Check
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -46,6 +49,10 @@ fun ButtonSecondarySegments(
     Row(modifier = modifier) {
         items.forEachIndexed { index, item ->
             val selected = item == selected
+            val background = when (selected) {
+                true -> AppTheme.colors.backgroundSecondary
+                false -> AppTheme.colors.backgroundPrimary
+            }
             Button(
                 modifier = Modifier
                     .focusable(true)
@@ -58,10 +65,7 @@ fun ButtonSecondarySegments(
                     false -> colour.copy(alpha = 0.4f)
                 }),
                 colors = ButtonDefaults.textButtonColors(
-                    backgroundColor = when (selected) {
-                        true -> AppTheme.colors.backgroundSecondary
-                        false -> AppTheme.colors.backgroundPrimary
-                    },
+                    backgroundColor = background,
                     contentColor = FlashbackTheme.colors.contentPrimary
                 ),
                 contentPadding = PaddingValues(0.dp),

@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
@@ -20,12 +21,15 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -41,6 +45,7 @@ import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
+import tmg.flashback.style.buttons.ButtonPrimary
 import tmg.flashback.style.buttons.ButtonSecondary
 import tmg.flashback.style.buttons.ButtonSecondarySegments
 import tmg.flashback.style.buttons.ButtonTertiary
@@ -93,85 +98,92 @@ fun SearchScreen(
     itemClicked: (SearchItem) -> Unit,
     list: List<SearchItem>
 ) {
+    
+    val showCategoryPicker = remember { mutableStateOf(searchCategory == null) }
+    
     Column(
         Modifier
             .background(AppTheme.colors.backgroundPrimary)
             .statusBarsPadding()
             .navigationBarsPadding()
     ) {
-        LazyColumn(
+        Box(
             modifier = Modifier.weight(1f),
-            content = {
-                item(key = "header") {
-                    Header(
-                        text = when (searchCategory) {
-                            SearchCategory.DRIVER -> stringResource(id = R.string.search_category_driver)
-                            SearchCategory.CONSTRUCTOR -> stringResource(id = R.string.search_category_constructors)
-                            SearchCategory.CIRCUIT -> stringResource(id = R.string.search_category_circuits)
-                            SearchCategory.RACE -> stringResource(id = R.string.search_category_races)
-                            null -> stringResource(id = R.string.search_title)
-                        },
-                        icon = if (showMenu) painterResource(id = R.drawable.ic_menu) else null,
-                        iconContentDescription = stringResource(id = R.string.ab_back),
-                        actionUpClicked = actionUpClicked
-                    )
-                }
-                items(list, key = { it.id }) {
-                    when (it) {
-                        is SearchItem.Circuit -> ResultCircuit(
-                            model = it,
-                            clicked = itemClicked
+        ) {
+            LazyColumn(
+                content = {
+                    item(key = "header") {
+                        Header(
+                            text = when (searchCategory) {
+                                SearchCategory.DRIVER -> stringResource(id = R.string.search_category_driver)
+                                SearchCategory.CONSTRUCTOR -> stringResource(id = R.string.search_category_constructors)
+                                SearchCategory.CIRCUIT -> stringResource(id = R.string.search_category_circuits)
+                                SearchCategory.RACE -> stringResource(id = R.string.search_category_races)
+                                null -> stringResource(id = R.string.search_title)
+                            },
+                            icon = if (showMenu) painterResource(id = R.drawable.ic_menu) else null,
+                            iconContentDescription = stringResource(id = R.string.ab_menu),
+                            actionUpClicked = actionUpClicked,
+                            overrideIcons = @Composable {
+                                IconButton(onClick = {
+                                    showCategoryPicker.value = true
+                                }) {
+                                    Icon(
+                                        painter = painterResource(id = R.drawable.ic_search_placeholder),
+                                        contentDescription = stringResource(id = R.string.search_category_option_title)
+                                    )
+                                }
+                            }
                         )
-                        is SearchItem.Constructor -> ResultConstructor(
-                            model = it,
-                            clicked = itemClicked
-                        )
-                        is SearchItem.Driver -> ResultDriver(
-                            model = it,
-                            clicked = itemClicked
-                        )
-                        is SearchItem.Race -> ResultRace(
-                            model = it,
-                            clicked = itemClicked
-                        )
-                        SearchItem.Advert -> {
-                            advertProvider?.NativeBanner(
-                                horizontalPadding = true,
-                                badgeOffset = true
+                    }
+                    items(list, key = { it.id }) {
+                        when (it) {
+                            is SearchItem.Circuit -> ResultCircuit(
+                                model = it,
+                                clicked = itemClicked
                             )
-                        }
-                        SearchItem.ErrorItem -> {
-                            NotFound()
-                        }
-                        SearchItem.Placeholder -> {
-                            Placeholder()
+                            is SearchItem.Constructor -> ResultConstructor(
+                                model = it,
+                                clicked = itemClicked
+                            )
+                            is SearchItem.Driver -> ResultDriver(
+                                model = it,
+                                clicked = itemClicked
+                            )
+                            is SearchItem.Race -> ResultRace(
+                                model = it,
+                                clicked = itemClicked
+                            )
+                            SearchItem.Advert -> {
+                                advertProvider?.NativeBanner(
+                                    horizontalPadding = true,
+                                    badgeOffset = true
+                                )
+                            }
+                            SearchItem.ErrorItem -> {
+                                NotFound()
+                            }
+                            SearchItem.Placeholder -> {
+                                Placeholder()
+                            }
                         }
                     }
                 }
-            }
-        )
-
+            )
+            Box(modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .height(AppTheme.dimens.large)
+                .fillMaxWidth()
+                .background(Brush.verticalGradient(listOf(Color.Transparent, AppTheme.colors.backgroundPrimary)))
+            )
+        }
+        
         Column(
             Modifier
                 .fillMaxWidth()
                 .imePadding()
         ) {
-            Row(modifier = Modifier
-                .padding(
-                    vertical = AppTheme.dimens.small,
-                    horizontal = AppTheme.dimens.medium
-                )
-            ) {
-                val categories = SearchCategory.values().map { it.label }
-                ButtonSecondarySegments(
-                    items = categories,
-                    selected = searchCategory?.label,
-                    onClick = { label ->
-                        val category = SearchCategory.values().first { it.label == label }
-                        searchCategoryUpdated(category)
-                    }
-                )
-            }
+            Spacer(Modifier.height(AppTheme.dimens.small))
             val text = remember { mutableStateOf(TextFieldValue("")) }
             InputPrimary(
                 modifier = Modifier.padding(
@@ -188,6 +200,13 @@ fun SearchScreen(
             )
         }
     }
+    
+    SearchCategoryBottomSheet(
+        visible = showCategoryPicker.value,
+        dismiss = { showCategoryPicker.value = false },
+        selected = searchCategory,
+        categoryClicked = searchCategoryUpdated
+    )
 }
 
 @Composable
