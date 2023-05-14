@@ -26,8 +26,4 @@ enum class WeekendNavItem(
         label = R.string.nav_race,
         icon = R.drawable.nav_race
     ),
-    CONSTRUCTOR(
-        label = R.string.nav_constructors,
-        icon = R.drawable.nav_constructor
-    ),
 }

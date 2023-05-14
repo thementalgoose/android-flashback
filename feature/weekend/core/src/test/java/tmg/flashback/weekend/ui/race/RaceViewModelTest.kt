@@ -5,12 +5,15 @@ import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.flow.flow
 import org.junit.jupiter.api.Test
+import tmg.flashback.constructors.contract.ConstructorSeason
+import tmg.flashback.constructors.contract.with
 import tmg.flashback.drivers.contract.DriverSeason
 import tmg.flashback.drivers.contract.with
 import tmg.flashback.formula1.model.Race
 import tmg.flashback.formula1.model.RaceResult
 import tmg.flashback.formula1.model.model
 import tmg.flashback.domain.repo.RaceRepository
+import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.testutils.BaseTest
@@ -65,7 +68,7 @@ internal class RaceViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `loading view with list of results`() {
+    fun `loading view with list of results for driver`() {
         val currentSeason = 2020
         every { mockRaceRepository.getRace(currentSeason, 1) } returns flow { emit(Race.model()) }
 
@@ -77,6 +80,36 @@ internal class RaceViewModelTest: BaseTest() {
                 RaceModel.Result.model()
             ))
         }
+    }
+
+    @Test
+    fun `loading view with list of results for constructor`() {
+        val currentSeason = 2020
+        every { mockRaceRepository.getRace(currentSeason, 1) } returns flow { emit(Race.model()) }
+
+        initUnderTest()
+        underTest.show(RaceResultType.CONSTRUCTORS)
+        underTest.load(currentSeason, 1)
+
+        underTest.outputs.list.test {
+            assertValue(listOf(
+                RaceModel.ConstructorResult.model()
+            ))
+        }
+    }
+
+    @Test
+    fun `race result type updates when item is changed`() {
+        initUnderTest()
+
+        val observer = underTest.raceResultType.testObserve()
+        observer.assertValue(RaceResultType.DRIVERS)
+
+        underTest.show(RaceResultType.CONSTRUCTORS)
+        observer.assertValue(RaceResultType.CONSTRUCTORS)
+
+        underTest.show(RaceResultType.DRIVERS)
+        observer.assertValue(RaceResultType.DRIVERS)
     }
 
     @Test
@@ -92,10 +125,30 @@ internal class RaceViewModelTest: BaseTest() {
         verify {
             mockNavigator.navigate(
                 Screen.DriverSeason.with(
-                driverId = input.driver.driver.id,
-                driverName = input.driver.driver.name,
-                season = 2020
-            ))
+                    driverId = input.driver.driver.id,
+                    driverName = input.driver.driver.name,
+                    season = 2020
+                ))
+        }
+    }
+
+    @Test
+    fun `clicking driver race result launches stats navigation component`() {
+        initUnderTest()
+        underTest.load(2020, 1)
+
+        val input = Constructor.model()
+        underTest.inputs.clickConstructor(input)
+
+        underTest.outputs.list.testObserve()
+
+        verify {
+            mockNavigator.navigate(
+                Screen.ConstructorSeason.with(
+                    constructorId = input.id,
+                    constructorName = input.name,
+                    season = 2020
+                ))
         }
     }
 }
