@@ -14,7 +14,7 @@ import tmg.flashback.analytics.manager.AnalyticsManager
 import tmg.flashback.style.AppTheme
 import javax.inject.Inject
 
-
+@Deprecated("Please use ModalSheet(visible = true) instead!")
 abstract class BaseBottomSheetComposeFragment: BottomSheetDialogFragment() {
 
     @Inject

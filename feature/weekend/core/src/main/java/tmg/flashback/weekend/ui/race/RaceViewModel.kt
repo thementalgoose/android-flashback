@@ -138,8 +138,7 @@ class RaceViewModel @Inject constructor(
         return race.race
             .mapNotNull { raceResult ->
                 if (raceResult.driver.constructor.id != constructorId) return@mapNotNull null
-                val sprintQualifying = race.sprint.race.firstOrNull { it.driver.driver.id == raceResult.driver.driver.id }
-                return@mapNotNull Pair(raceResult.driver.driver, raceResult.points + (sprintQualifying?.points ?: 0.0))
+                return@mapNotNull Pair(raceResult.driver.driver, raceResult.points)
             }
             .sortedByDescending { it.second }
     }
