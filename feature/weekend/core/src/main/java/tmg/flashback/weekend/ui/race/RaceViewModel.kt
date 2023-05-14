@@ -88,17 +88,30 @@ class RaceViewModel @Inject constructor(
                     list.addAll(raceResults.map { RaceModel.Result(it) })
                 }
             } else {
-                val maxPoints = race.constructorStandings.maxByOrNull { it.points }?.points ?: 60.0
-                list.addAll(race.constructorStandings
-                    .mapIndexed { index, standing ->
-                        RaceModel.ConstructorResult(
-                            constructor = standing.constructor,
-                            points = standing.points,
-                            position = index + 1,
-                            drivers = getDriverFromConstructor(race, standing.constructor.id),
-                            maxTeamPoints = maxPoints
-                        )
-                    })
+                list.addAll(
+                    race.race
+                        .groupBy { it.driver.constructor }
+                        .map { (constructor, listOfResult) ->
+                            RaceModel.ConstructorResult(
+                                constructor = constructor,
+                                points = listOfResult.sumOf { it.points },
+                                position = 0,
+                                drivers = listOfResult.map {
+                                    it.driver.driver to it.points
+                                },
+                                maxTeamPoints = 0.0,
+                                highestDriverPosition = listOfResult.minOf { it.finish }
+                            )
+                        }
+                        .sortedBy { it.highestDriverPosition }
+                        .sortedByDescending { it.points }
+                        .mapIndexed { index, constructorResult ->
+                            constructorResult.copy(
+                                position = index + 1,
+                                maxTeamPoints = 45.0
+                            )
+                        }
+                )
             }
             return@map list
         }
