@@ -130,7 +130,8 @@ fun SearchScreen(
                                 }) {
                                     Icon(
                                         painter = painterResource(id = R.drawable.ic_search_placeholder),
-                                        contentDescription = stringResource(id = R.string.search_category_option_title)
+                                        contentDescription = stringResource(id = R.string.search_category_option_title),
+                                        tint = AppTheme.colors.contentPrimary
                                     )
                                 }
                             }
