@@ -40,7 +40,7 @@ object Formula1 {
      * Maximum points awarded to a driver in a single race based on the
      * season
      */
-    fun maxPointsBySeason(season: Int): Int {
+    fun maxDriverPointsBySeason(season: Int): Int {
         return when {
             season >= 2022 -> 35
             season >= 2021 -> 28
