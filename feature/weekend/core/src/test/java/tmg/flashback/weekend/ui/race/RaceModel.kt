@@ -14,11 +14,11 @@ fun RaceModel.Result.Companion.model(
 fun RaceModel.ConstructorResult.Companion.model(
     constructor: Constructor = Constructor.model(),
     position: Int = 1,
-    points: Double = 2.0,
+    points: Double = 1.0,
     drivers: List<Pair<Driver, Double>> = listOf(
-        Driver.model() to 2.0
+        Driver.model() to 1.0
     ),
-    maxTeamPoints: Double = 2.0,
+    maxTeamPoints: Double = 45.0,
     highestDriverPosition: Int = 1,
 ): RaceModel.ConstructorResult = RaceModel.ConstructorResult(
     constructor = constructor,
