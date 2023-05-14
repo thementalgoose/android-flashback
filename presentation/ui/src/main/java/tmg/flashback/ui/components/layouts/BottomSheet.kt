@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
@@ -26,7 +27,7 @@ fun BottomSheet(
 ){
     Column(modifier = modifier
         .background(AppTheme.colors.backgroundPrimary)
-        .padding(bottom = AppTheme.dimens.medlarge)
+        .navigationBarsPadding()
     ) {
         TextHeadline2(
             text = title,
