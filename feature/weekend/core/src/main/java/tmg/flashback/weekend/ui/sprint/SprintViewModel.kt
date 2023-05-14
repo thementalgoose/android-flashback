@@ -14,6 +14,8 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import tmg.flashback.constructors.contract.ConstructorSeason
+import tmg.flashback.constructors.contract.with
 import tmg.flashback.drivers.contract.DriverSeason
 import tmg.flashback.drivers.contract.with
 import tmg.flashback.formula1.constants.Formula1
@@ -23,12 +25,14 @@ import tmg.flashback.domain.repo.RaceRepository
 import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.navigation.Screen
 import tmg.flashback.weekend.R
+import tmg.flashback.weekend.ui.race.RaceModel
+import tmg.flashback.weekend.ui.race.RaceResultType
 import tmg.utilities.extensions.combinePair
 import javax.inject.Inject
 
 interface SprintViewModelInputs {
     fun load(season: Int, round: Int)
-
+    fun show(sprintResultType: SprintResultType)
     fun clickDriver(result: SprintRaceResult)
     fun clickConstructor(constructor: Constructor)
 }
@@ -68,27 +72,51 @@ class SprintViewModel @Inject constructor(
                 return@map list
             }
 
+            val list: MutableList<SprintModel> = mutableListOf()
             if (sprintResultType == SprintResultType.DRIVERS) {
-                return@map race
+                list.addAll(race
                     .sprint
                     .race
                     .map { model ->
                         SprintModel.DriverResult(model)
                     }
-                    .sortedBy { it.result.finish }
+                    .sortedBy { it.result.finish })
             } else {
-                return@map race
-                    .sprint
+                list.addAll(race
                     .race
-                    .map {
-                        SprintModel.ConstructorResult
+                    .groupBy { it.driver.constructor }
+                    .map { (constructor, listOfResult) ->
+                        SprintModel.ConstructorResult(
+                            constructor = constructor,
+                            points = listOfResult.sumOf { it.points },
+                            position = 0,
+                            drivers = listOfResult.map {
+                                it.driver.driver to it.points
+                            },
+                            maxTeamPoints = 0.0,
+                            highestDriverPosition = listOfResult.minOf { it.finish }
+                        )
                     }
+                    .sortedBy { it.highestDriverPosition }
+                    .sortedByDescending { it.points }
+                    .mapIndexed { index, constructorResult ->
+                        constructorResult.copy(
+                            position = index + 1,
+                            maxTeamPoints = 45.0
+                        )
+                    }
+                )
             }
+            return@map list
         }
         .asLiveData(viewModelScope.coroutineContext)
 
     override fun load(season: Int, round: Int) {
         seasonRound.value = Pair(season, round)
+    }
+
+    override fun show(sprintResultType: SprintResultType) {
+        this.sprintResultType.value = sprintResultType
     }
 
     override fun clickDriver(result: SprintRaceResult) {
@@ -99,6 +127,16 @@ class SprintViewModel @Inject constructor(
             driverName = result.driver.driver.name,
             season = season
         ))
+    }
+
+    override fun clickConstructor(constructor: Constructor) {
+        val season = seasonRound.value?.first ?: return
+        navigator.navigate(
+            Screen.ConstructorSeason.with(
+                constructorId = constructor.id,
+                constructorName = constructor.name,
+                season = season
+            ))
     }
 }
 

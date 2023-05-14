@@ -293,6 +293,7 @@ private fun ConstructorResult(
 
     Row(
         modifier = modifier
+            .height(IntrinsicSize.Min)
             .semantics(mergeDescendants = true) { }
             .clearAndSetSemantics {
                 this.contentDescription = contentDescription + drivers
@@ -302,19 +303,28 @@ private fun ConstructorResult(
             }),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        TextTitle(
-            text = model.position?.toString() ?: "-",
-            bold = true,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.width(36.dp)
-        )
-        Row(modifier = Modifier.padding(
-            top = AppTheme.dimens.small,
-            start = AppTheme.dimens.small,
-            end = AppTheme.dimens.medium,
-            bottom = AppTheme.dimens.small
-        )) {
-            Column(modifier = Modifier.weight(3f)) {
+        ConstructorIndicator(constructor = model.constructor)
+        Box(Modifier.size(finishingPositionWidth, driverIconSize)) {
+            TextTitle(
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .padding(
+                        horizontal = AppTheme.dimens.xsmall,
+                        vertical = AppTheme.dimens.medium
+                    ),
+                bold = true,
+                textAlign = TextAlign.Center,
+                text = model.position.toString()
+            )
+        }
+        Row(modifier = Modifier
+            .padding(
+                top = AppTheme.dimens.small,
+                end = AppTheme.dimens.medium,
+                bottom = AppTheme.dimens.small
+            )
+        ) {
+            Column(modifier = Modifier.weight(1f)) {
                 TextTitle(
                     text = model.constructor.name,
                     bold = true,
@@ -332,9 +342,8 @@ private fun ConstructorResult(
             val progress = (model.points / model.maxTeamPoints).toFloat().coerceIn(0f, 1f)
             ProgressBar(
                 modifier = Modifier
-                    .weight(2f)
-                    .height(48.dp)
-                    .fillMaxHeight(),
+                    .width(80.dp)
+                    .height(48.dp),
                 endProgress = progress,
                 barColor = model.constructor.colour,
                 label = {

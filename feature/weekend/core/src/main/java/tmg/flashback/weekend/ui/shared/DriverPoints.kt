@@ -30,7 +30,6 @@ fun DriverPoints(
     ) {
         TextBody2(text = driver.name)
         Column(modifier = Modifier
-            .fillMaxHeight()
             .padding(
                 vertical = AppTheme.dimens.xxsmall,
                 horizontal = AppTheme.dimens.xsmall

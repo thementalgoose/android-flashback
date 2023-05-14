@@ -41,6 +41,7 @@ import tmg.flashback.weekend.R
 import tmg.flashback.weekend.contract.model.ScreenWeekendData
 import tmg.flashback.weekend.ui.details.DetailsModel
 import tmg.flashback.weekend.ui.race.RaceResultType
+import tmg.flashback.weekend.ui.sprint.SprintResultType
 import tmg.utilities.extensions.toEnum
 
 data class WeekendScreenState(
@@ -108,6 +109,7 @@ fun WeekendScreenVM(
             )
             val sprintVM: SprintViewModel = hiltViewModel()
             val sprintList = sprintVM.outputs.list.observeAsState(emptyList())
+            val sprintResultType = sprintVM.outputs.sprintResultType.observeAsState(SprintResultType.DRIVERS)
             val raceVM: RaceViewModel = hiltViewModel()
             val raceList = raceVM.outputs.list.observeAsState(emptyList())
             val raceResultType = raceVM.outputs.raceResultType.observeAsState(RaceResultType.DRIVERS)
@@ -148,8 +150,11 @@ fun WeekendScreenVM(
                             }
                             WeekendNavItem.SPRINT -> {
                                 sprint(
+                                    showSprintType = sprintVM.inputs::show,
+                                    sprintResultType = sprintResultType.value,
                                     list = sprintList.value,
-                                    driverClicked = sprintVM.inputs::clickDriver
+                                    driverClicked = sprintVM.inputs::clickDriver,
+                                    constructorClicked = sprintVM.inputs::clickConstructor
                                 )
                             }
                             WeekendNavItem.RACE -> {
