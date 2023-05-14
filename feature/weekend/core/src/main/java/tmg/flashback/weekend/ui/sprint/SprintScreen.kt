@@ -16,7 +16,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -26,10 +25,10 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.formula1.enums.RaceStatus
 import tmg.flashback.formula1.enums.isStatusFinished
 import tmg.flashback.formula1.extensions.pointsDisplay
+import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.DriverEntry
 import tmg.flashback.formula1.model.LapTime
 import tmg.flashback.formula1.model.SprintRaceResult
@@ -37,7 +36,7 @@ import tmg.flashback.providers.DriverConstructorProvider
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
-import tmg.flashback.weekend.ui.info.RaceInfoHeader
+import tmg.flashback.style.buttons.ButtonSecondarySegments
 import tmg.flashback.ui.components.errors.NotAvailable
 import tmg.flashback.ui.components.errors.NotAvailableYet
 import tmg.flashback.style.text.TextBody1
@@ -48,71 +47,51 @@ import tmg.flashback.ui.components.drivers.DriverName
 import tmg.flashback.ui.components.drivers.driverIconSize
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.navigation.appBarHeight
+import tmg.flashback.ui.components.progressbar.ProgressBar
 import tmg.flashback.weekend.R
-import tmg.flashback.weekend.contract.model.ScreenWeekendData
-import tmg.flashback.weekend.ui.fakeWeekendInfo
+import tmg.flashback.weekend.ui.race.RaceModel
+import tmg.flashback.weekend.ui.race.RaceResultType
 import tmg.flashback.weekend.ui.shared.ConstructorIndicator
+import tmg.flashback.weekend.ui.shared.DriverPoints
 import tmg.flashback.weekend.ui.shared.finishingPositionWidth
 import tmg.utilities.extensions.ordinalAbbreviation
+import kotlin.math.roundToInt
 
 private val timeWidth = 88.dp
 private val pointsWidth = 56.dp
 
-@Composable
-fun SprintScreenVM(
-    info: ScreenWeekendData,
-    actionUpClicked: () -> Unit,
-    viewModel: SprintViewModel = hiltViewModel()
-) {
-    viewModel.inputs.load(
-        season = info.season,
-        round = info.round
-    )
-
-    val list = viewModel.outputs.list.observeAsState(listOf(SprintModel.Loading))
-    SprintScreen(
-        info = info,
-        actionUpClicked = actionUpClicked,
-        driverClicked = viewModel.inputs::clickDriver,
-        list = list.value
-    )
-}
-
-@Composable
-fun SprintScreen(
-    info: ScreenWeekendData,
-    list: List<SprintModel>,
-    driverClicked: (SprintRaceResult) -> Unit,
-    actionUpClicked: () -> Unit
-) {
-    LazyColumn(
-        modifier = Modifier.fillMaxWidth(),
-        content = {
-            item("header") {
-                RaceInfoHeader(
-                    model = info,
-                    actionUpClicked = actionUpClicked
-                )
-            }
-
-            this.sprint(
-                list = list,
-                driverClicked = driverClicked
-            )
-        }
-    )
-}
-
 internal fun LazyListScope.sprint(
     list: List<SprintModel>,
+    sprintResultType: SprintResultType,
+    showSprintType: (SprintResultType) -> Unit,
     driverClicked: (SprintRaceResult) -> Unit,
+    constructorClicked: (Constructor) -> Unit,
 ) {
+    item {
+        ButtonSecondarySegments(
+            modifier = Modifier
+                .padding(horizontal = AppTheme.dimens.medium)
+                .fillMaxWidth(),
+            items = SprintResultType.values().map { it.label },
+            selected = sprintResultType.label,
+            onClick = { label ->
+                showSprintType(SprintResultType.values().first { it.label == label })
+            },
+            showTick = true
+        )
+    }
     items(list, key = { it.id }) {
         when (it) {
-            is SprintModel.Result -> {
-                Result(
+            is SprintModel.DriverResult -> {
+                DriverResult(
                     model = it.result,
                     driverClicked = driverClicked
+                )
+            }
+            is SprintModel.ConstructorResult -> {
+                ConstructorResult(
+                    model = it,
+                    constructorClicked = constructorClicked
                 )
             }
             SprintModel.Loading -> {
@@ -124,6 +103,7 @@ internal fun LazyListScope.sprint(
             SprintModel.NotAvailableYet -> {
                 NotAvailableYet()
             }
+
         }
     }
     item(key = "footer") {
@@ -132,7 +112,7 @@ internal fun LazyListScope.sprint(
 }
 
 @Composable
-private fun Result(
+private fun DriverResult(
     model: SprintRaceResult,
     driverClicked: (SprintRaceResult) -> Unit,
     modifier: Modifier = Modifier
@@ -193,9 +173,6 @@ private fun Result(
                     lastName = model.driver.driver.lastName
                 )
                 TextBody2(text = model.driver.constructor.name)
-//                if (model.fastestLap?.rank == 1) {
-//                    BadgeView(model = Badge(stringResource(id = R.string.ab_fastest_lap)))
-//                }
             }
         }
         Points(
@@ -259,24 +236,108 @@ private fun Points(
 }
 
 
+
+@Composable
+private fun ConstructorResult(
+    model: SprintModel.ConstructorResult,
+    constructorClicked: (Constructor) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val contentDescription = "${model.position?.ordinalAbbreviation}. ${stringResource(id = R.string.ab_scored, model.constructor.name, model.points.pointsDisplay())}."
+    val drivers = model.drivers
+        .map {
+            stringResource(id = R.string.ab_scored, it.first.name, it.second.pointsDisplay())
+        }
+        .joinToString(separator = ",")
+
+    Row(
+        modifier = modifier
+            .height(IntrinsicSize.Min)
+            .semantics(mergeDescendants = true) { }
+            .clearAndSetSemantics {
+                this.contentDescription = contentDescription + drivers
+            }
+            .clickable(onClick = {
+                constructorClicked(model.constructor)
+            }),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        ConstructorIndicator(constructor = model.constructor)
+        Box(Modifier.size(finishingPositionWidth, driverIconSize)) {
+            TextTitle(
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .padding(
+                        horizontal = AppTheme.dimens.xsmall,
+                        vertical = AppTheme.dimens.medium
+                    ),
+                bold = true,
+                textAlign = TextAlign.Center,
+                text = model.position.toString()
+            )
+        }
+        Row(modifier = Modifier
+            .padding(
+                top = AppTheme.dimens.small,
+                end = AppTheme.dimens.medium,
+                bottom = AppTheme.dimens.small
+            )
+        ) {
+            Column(modifier = Modifier.weight(1f)) {
+                TextTitle(
+                    text = model.constructor.name,
+                    bold = true,
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Spacer(Modifier.height(2.dp))
+                model.drivers.forEach { (driver, points) ->
+                    DriverPoints(
+                        driver = driver,
+                        points = points
+                    )
+                }
+            }
+            Spacer(Modifier.width(AppTheme.dimens.small))
+            val progress = (model.points / model.maxTeamPoints).toFloat().coerceIn(0f, 1f)
+            ProgressBar(
+                modifier = Modifier
+                    .width(80.dp)
+                    .height(48.dp),
+                endProgress = progress,
+                barColor = model.constructor.colour,
+                label = {
+                    when (it) {
+                        0f -> "0"
+                        progress -> model.points.pointsDisplay()
+                        else -> (it * model.maxTeamPoints).takeIf { !it.isNaN() }?.roundToInt()?.toString() ?: model.points.pointsDisplay()
+                    }
+                }
+            )
+        }
+    }
+}
+
 @PreviewTheme
 @Composable
 private fun Preview(
     @PreviewParameter(DriverConstructorProvider::class) driverConstructor: DriverEntry
 ) {
     AppThemePreview {
-        SprintScreen(
-            info = fakeWeekendInfo,
-            actionUpClicked = { },
-            driverClicked = { },
-            list = listOf(
-                fakeSprintModel(driverConstructor)
+        LazyColumn(content = {
+            sprint(
+                list = listOf(
+                    fakeSprintModel(driverConstructor)
+                ),
+                sprintResultType = SprintResultType.DRIVERS,
+                showSprintType = { },
+                driverClicked = { },
+                constructorClicked = { }
             )
-        )
+        })
     }
 }
 
-private fun fakeSprintModel(driverConstructor: DriverEntry) = SprintModel.Result(
+private fun fakeSprintModel(driverConstructor: DriverEntry) = SprintModel.DriverResult(
     result = SprintRaceResult(
         driver = driverConstructor,
         time = null,

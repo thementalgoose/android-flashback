@@ -49,7 +49,7 @@ private val p3Height = 90.dp
 
 @Composable
 internal fun Podium(
-    model: RaceModel.Podium,
+    model: RaceModel.DriverPodium,
     driverClicked: (RaceResult) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -263,7 +263,7 @@ private fun Preview(
 ) {
     AppThemePreview {
         Podium(
-            RaceModel.Podium(
+            RaceModel.DriverPodium(
                 p1 = result,
                 p2 = result,
                 p3 = result

@@ -24,7 +24,7 @@ sealed class RaceModel(
         companion object
     }
 
-    data class Podium(
+    data class DriverPodium(
         val p1: RaceResult,
         val p2: RaceResult,
         val p3: RaceResult
@@ -32,7 +32,7 @@ sealed class RaceModel(
         companion object
     }
 
-    data class Result(
+    data class DriverResult(
         val result: RaceResult
     ): RaceModel(id = "driver-${result.driver.driver.id}") {
         companion object
