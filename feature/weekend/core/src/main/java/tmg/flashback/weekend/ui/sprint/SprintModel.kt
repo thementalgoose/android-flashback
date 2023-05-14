@@ -27,7 +27,8 @@ sealed class SprintModel(
         val position: Int?,
         val points: Double,
         val drivers: List<Pair<Driver, Double>>,
-        val maxTeamPoints: Double
+        val maxTeamPoints: Double,
+        val highestDriverPosition: Int
     ): SprintModel(
         id = "constructor-${constructor.id}"
     )
