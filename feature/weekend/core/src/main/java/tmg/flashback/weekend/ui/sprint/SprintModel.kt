@@ -31,5 +31,7 @@ sealed class SprintModel(
         val highestDriverPosition: Int
     ): SprintModel(
         id = "constructor-${constructor.id}"
-    )
+    ) {
+        companion object
+    }
 }
