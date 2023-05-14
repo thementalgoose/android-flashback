@@ -18,7 +18,8 @@ sealed class RaceModel(
         val position: Int?,
         val points: Double,
         val drivers: List<Pair<Driver, Double>>,
-        val maxTeamPoints: Double
+        val maxTeamPoints: Double,
+        val highestDriverPosition: Int
     ): RaceModel(id = "constructor-${constructor.id}") {
         companion object
     }

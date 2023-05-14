@@ -21,7 +21,7 @@ internal class Formula1Test {
     )
     fun `maxPoints by season returns correct amount of points`(season: Int, expectedPoints: Int) {
 
-        assertEquals(expectedPoints, Formula1.maxPointsBySeason(season))
+        assertEquals(expectedPoints, Formula1.maxDriverPointsBySeason(season))
     }
 
     @Test
@@ -33,6 +33,6 @@ internal class Formula1Test {
     @Test
     fun `maxPoints by current year returns correct amounts of points`() {
 
-        assertEquals(35, Formula1.maxPointsBySeason(Year.now().value))
+        assertEquals(35, Formula1.maxDriverPointsBySeason(Year.now().value))
     }
 }
