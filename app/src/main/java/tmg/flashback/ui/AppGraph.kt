@@ -35,6 +35,7 @@ import tmg.flashback.drivers.contract.model.ScreenDriverData
 import tmg.flashback.drivers.contract.model.ScreenDriverSeasonData
 import tmg.flashback.drivers.ui.overview.DriverOverviewScreenVM
 import tmg.flashback.drivers.ui.season.DriverSeasonScreenVM
+import tmg.flashback.formula1.constants.Formula1
 import tmg.flashback.navigation.Screen
 import tmg.flashback.navigation.asNavigationDestination
 import tmg.flashback.navigation.navIntRequired
@@ -80,6 +81,7 @@ import tmg.flashback.weekend.ui.WeekendScreenVM
 @Composable
 fun AppGraph(
     openMenu: () -> Unit,
+    defaultSeason: Int,
     windowSize: WindowSizeClass,
     windowInfo: WindowLayoutInfo,
     navigator: tmg.flashback.navigation.Navigator,
@@ -105,7 +107,7 @@ fun AppGraph(
         )) {
             // Has to be nullable because initial navigation graph
             //  value cannot contain placeholder values
-            val season = it.arguments?.getString("season")?.toIntOrNull() ?: 2023
+            val season = it.arguments?.getString("season")?.toIntOrNull() ?: defaultSeason
             ScheduleScreenVM(
                 menuClicked = openMenu,
                 showMenu = isCompact,
@@ -117,7 +119,7 @@ fun AppGraph(
             Screen.Constructors.route, arguments = listOf(
                 navStringRequired("season")
         )) {
-            val season = it.arguments?.getString("season")!!.toInt()
+            val season = it.arguments?.getString("season")?.toIntOrNull() ?: defaultSeason
             ConstructorStandingsScreenVM(
                 menuClicked = openMenu,
                 showMenu = isCompact,
@@ -129,7 +131,7 @@ fun AppGraph(
             Screen.Drivers.route, arguments = listOf(
                 navStringRequired("season")
         )) {
-            val season = it.arguments?.getString("season")!!.toInt()
+            val season = it.arguments?.getString("season")!!.toIntOrNull() ?: defaultSeason
             DriverStandingsScreenVM(
                 menuClicked = openMenu,
                 showMenu = isCompact,

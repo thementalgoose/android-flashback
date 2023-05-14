@@ -18,6 +18,8 @@ import tmg.flashback.crash_reporting.manager.CrashManager
 import tmg.flashback.debug.DebugNavigationComponent
 import tmg.flashback.debug.model.DebugMenuItem
 import tmg.flashback.formula1.constants.Formula1
+import tmg.flashback.navigation.ApplicationNavigationComponent
+import tmg.flashback.navigation.Navigator
 import tmg.flashback.rss.repo.RssRepository
 import tmg.flashback.results.Calendar
 import tmg.flashback.results.Constructors
@@ -51,15 +53,17 @@ interface DashboardNavViewModelOutputs {
 
     val seasonsItemsList: LiveData<List<NavigationTimelineItem>>
     val currentlySelectedSeason: LiveData<Int>
+
+    val defaultSeason: Int
 }
 
 @HiltViewModel
 class DashboardNavViewModel @Inject constructor(
     private val rssRepository: RssRepository,
     private val defaultSeasonUseCase: DefaultSeasonUseCase,
-    private val navigator: tmg.flashback.navigation.Navigator,
+    private val navigator: Navigator,
     private val getSeasonUseCase: GetSeasonsUseCase,
-    private val applicationNavigationComponent: tmg.flashback.navigation.ApplicationNavigationComponent,
+    private val applicationNavigationComponent: ApplicationNavigationComponent,
     private val crashManager: CrashManager,
     private val dashboardSyncUseCase: DashboardSyncUseCase,
     private val debugNavigationComponent: DebugNavigationComponent,
@@ -68,6 +72,8 @@ class DashboardNavViewModel @Inject constructor(
 
     val inputs: DashboardNavViewModelInputs = this
     val outputs: DashboardNavViewModelOutputs = this
+
+    override val defaultSeason: Int = defaultSeasonUseCase.defaultSeason
 
     private val currentDestination = navigator
         .destination

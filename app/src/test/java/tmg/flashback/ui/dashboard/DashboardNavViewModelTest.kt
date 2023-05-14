@@ -184,6 +184,14 @@ internal class DashboardNavViewModelTest: BaseTest() {
     }
 
     @Test
+    fun `default season is read from default season use case`() {
+        initUnderTest()
+        every { mockDefaultSeasonUseCase.defaultSeason } returns 2023
+
+        assertEquals(2023, underTest.outputs.defaultSeason)
+    }
+
+    @Test
     fun `app feature list list is populated`() {
         initUnderTest()
 
