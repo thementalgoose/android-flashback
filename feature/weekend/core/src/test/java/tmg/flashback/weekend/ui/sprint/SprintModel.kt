@@ -4,10 +4,10 @@ import tmg.flashback.formula1.model.LapTime
 import tmg.flashback.formula1.model.SprintRaceResult
 import tmg.flashback.formula1.model.model
 
-fun SprintModel.Result.Companion.model(
+fun SprintModel.DriverResult.Companion.model(
     result: SprintRaceResult = SprintRaceResult.model(
         time = LapTime(1, 2, 3, 4)
     )
-): SprintModel.Result = SprintModel.Result(
+): SprintModel.DriverResult = SprintModel.DriverResult(
     result = result
 )

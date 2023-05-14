@@ -77,7 +77,7 @@ internal class RaceViewModelTest: BaseTest() {
 
         underTest.outputs.list.test {
             assertValue(listOf(
-                RaceModel.Result.model()
+                RaceModel.DriverResult.model()
             ))
         }
     }

@@ -74,7 +74,7 @@ internal class SprintViewModelTest: BaseTest() {
 
         underTest.outputs.list.test {
             assertValue(listOf(
-                SprintModel.Result.model()
+                SprintModel.DriverResult.model()
             ))
         }
     }

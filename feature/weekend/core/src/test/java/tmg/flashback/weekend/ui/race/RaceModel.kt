@@ -5,9 +5,9 @@ import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.model.RaceResult
 import tmg.flashback.formula1.model.model
 
-fun RaceModel.Result.Companion.model(
+fun RaceModel.DriverResult.Companion.model(
     result: RaceResult = RaceResult.model()
-): RaceModel.Result = RaceModel.Result(
+): RaceModel.DriverResult = RaceModel.DriverResult(
     result = result
 )
 

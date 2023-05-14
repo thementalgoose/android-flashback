@@ -75,7 +75,7 @@ internal fun LazyListScope.race(
     }
     items(list, key = { it.id }) {
         when (it) {
-            is RaceModel.Podium -> {
+            is RaceModel.DriverPodium -> {
                 Column(Modifier.fillMaxWidth()) {
                     Result(
                         model = it.p1,
@@ -95,7 +95,7 @@ internal fun LazyListScope.race(
 //                    driverClicked = driverClicked
 //                )
             }
-            is RaceModel.Result -> {
+            is RaceModel.DriverResult -> {
                 Result(
                     model = it.result,
                     driverClicked = driverClicked
@@ -359,12 +359,12 @@ private fun Preview(
             race(
                 raceResultType = RaceResultType.DRIVERS,
                 list = listOf(
-                    RaceModel.Podium(
+                    RaceModel.DriverPodium(
                         p1 = result.copy(fastestLap = FastestLap(1, LapTime(0,1,2,3))),
                         p2 = result,
                         p3 = result,
                     ),
-                    RaceModel.Result(
+                    RaceModel.DriverResult(
                         result = result.copy(fastestLap = FastestLap(1, LapTime(0,1,2,3)))
                     )
                 ),
@@ -386,12 +386,12 @@ private fun PreviewConstructors(
             race(
                 raceResultType = RaceResultType.CONSTRUCTORS,
                 list = listOf(
-                    RaceModel.Podium(
+                    RaceModel.DriverPodium(
                         p1 = result.copy(fastestLap = FastestLap(1, LapTime(0,1,2,3))),
                         p2 = result,
                         p3 = result,
                     ),
-                    RaceModel.Result(
+                    RaceModel.DriverResult(
                         result = result.copy(fastestLap = FastestLap(1, LapTime(0,1,2,3)))
                     )
                 ),

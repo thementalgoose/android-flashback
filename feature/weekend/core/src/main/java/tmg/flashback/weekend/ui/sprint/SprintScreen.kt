@@ -109,7 +109,7 @@ internal fun LazyListScope.sprint(
 ) {
     items(list, key = { it.id }) {
         when (it) {
-            is SprintModel.Result -> {
+            is SprintModel.DriverResult -> {
                 Result(
                     model = it.result,
                     driverClicked = driverClicked
@@ -276,7 +276,7 @@ private fun Preview(
     }
 }
 
-private fun fakeSprintModel(driverConstructor: DriverEntry) = SprintModel.Result(
+private fun fakeSprintModel(driverConstructor: DriverEntry) = SprintModel.DriverResult(
     result = SprintRaceResult(
         driver = driverConstructor,
         time = null,
