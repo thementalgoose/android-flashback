@@ -18,11 +18,13 @@ fun RaceModel.ConstructorResult.Companion.model(
     drivers: List<Pair<Driver, Double>> = listOf(
         Driver.model() to 2.0
     ),
-    maxTeamPoints: Double = 2.0
+    maxTeamPoints: Double = 2.0,
+    highestDriverPosition: Int = 1,
 ): RaceModel.ConstructorResult = RaceModel.ConstructorResult(
     constructor = constructor,
     position = position,
     points = points,
     drivers = drivers,
-    maxTeamPoints = maxTeamPoints
+    maxTeamPoints = maxTeamPoints,
+    highestDriverPosition = highestDriverPosition,
 )
