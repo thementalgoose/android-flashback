@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
-
 package tmg.flashback.ui.dashboard
 
 import android.annotation.SuppressLint
@@ -31,6 +29,7 @@ import kotlinx.coroutines.launch
 import tmg.flashback.ads.ads.components.AdvertProvider
 import tmg.flashback.debug.model.DebugMenuItem
 import tmg.flashback.eastereggs.model.MenuIcons
+import tmg.flashback.navigation.NavigationDestination
 import tmg.flashback.style.AppTheme
 import tmg.flashback.ui.AppGraph
 import tmg.flashback.ui.components.layouts.OverlappingPanels
@@ -43,6 +42,10 @@ import tmg.flashback.ui.dashboard.menu.DashboardMenuExpandedScreen
 import tmg.flashback.ui.dashboard.menu.DashboardMenuScreen
 import tmg.flashback.ui.foldables.getFoldingConfig
 import tmg.flashback.navigation.Navigator
+import tmg.flashback.navigation.Screen
+import tmg.flashback.navigation.navigate
+import tmg.flashback.rss.contract.RSS
+import tmg.flashback.search.contract.Search
 
 @Composable
 fun DashboardScreen(
@@ -52,7 +55,8 @@ fun DashboardScreen(
     navigator: Navigator,
     closeApp: () -> Unit,
     navViewModel: DashboardNavViewModel = hiltViewModel(),
-    viewModel: DashboardViewModel = hiltViewModel()
+    viewModel: DashboardViewModel = hiltViewModel(),
+    deeplink: String?
 ) {
     val currentlySelectedItem = navViewModel.outputs.currentlySelectedItem.observeAsState(MenuItem.Calendar)
     val seasonScreenItemsList = navViewModel.outputs.seasonScreenItemsList.observeAsState(emptyList())
@@ -83,6 +87,7 @@ fun DashboardScreen(
         windowLayoutInfo = windowLayoutInfo,
         advertProvider = advertProvider,
         navigator = navigator,
+        deeplink = deeplink,
         closeApp = closeApp,
         defaultSeason = defaultSeason,
         currentlySelectedItem = currentlySelectedItem.value,
@@ -113,6 +118,7 @@ fun DashboardScreen(
     windowLayoutInfo: WindowLayoutInfo,
     advertProvider: AdvertProvider,
     navigator: Navigator,
+    deeplink: String?,
     closeApp: () -> Unit,
     defaultSeason: Int,
     currentlySelectedItem: MenuItem,
@@ -269,6 +275,7 @@ fun DashboardScreen(
                             AppGraph(
                                 modifier = Modifier.weight(1f),
                                 advertProvider = advertProvider,
+                                deeplink = deeplink,
                                 navController = navigator.navController,
                                 openMenu = openMenu,
                                 windowSize = windowSize,
