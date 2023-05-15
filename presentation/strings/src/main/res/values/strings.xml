@@ -35,12 +35,11 @@
     <string name="nav_settings">Seasons</string>
     <string name="nav_search">Search</string>
     <string name="nav_rss">RSS</string>
-    <string name="nav_race">Race</string>
-    <string name="nav_qualifying">Qualifying</string>
-    <string name="nav_sprint_qualifying">Sprint</string>
     <string name="nav_details">Details</string>
+    <string name="nav_qualifying">Qualifying</string>
+    <string name="nav_race">Race</string>
+    <string name="nav_sprint_qualifying">Sprint Shootout</string>
     <string name="nav_sprint">Sprint</string>
-    <string name="nav_sprint_shootout">Sprint Shootout</string>
 
 
     <!-- Race -->
