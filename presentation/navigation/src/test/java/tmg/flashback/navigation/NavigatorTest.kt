@@ -1,6 +1,9 @@
 package tmg.flashback.navigation
 
+import androidx.navigation.NavHostController
+import androidx.navigation.NavOptionsBuilder
 import io.mockk.mockk
+import io.mockk.slot
 import io.mockk.verify
 import kotlinx.coroutines.flow.asStateFlow
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -11,12 +14,15 @@ internal class NavigatorTest {
 
     private val mockCrashManager: CrashManager = mockk(relaxed = true)
 
+    private val mockNavController: NavHostController = mockk(relaxed = true)
+
     private lateinit var underTest: Navigator
 
     private fun initUnderTest() {
         underTest = Navigator(
             crashManager = mockCrashManager
         )
+        underTest.navController = mockNavController
     }
 
     @Test
@@ -24,13 +30,13 @@ internal class NavigatorTest {
         val destination = NavigationDestination(route = "route")
 
         initUnderTest()
-        val dest = underTest.destination.asStateFlow()
-
         underTest.navigate(destination)
 
-        assertEquals(destination, dest.value)
+        val dest = slot<String>()
         verify {
+            mockNavController.navigate(capture(dest), any<NavOptionsBuilder.() -> Unit>())
             mockCrashManager.log(any())
         }
+        assertEquals(destination.route, dest.captured)
     }
 }

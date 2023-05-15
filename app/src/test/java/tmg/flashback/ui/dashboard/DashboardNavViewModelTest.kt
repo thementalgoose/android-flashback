@@ -19,6 +19,7 @@ import org.junit.jupiter.params.provider.CsvSource
 import tmg.flashback.crash_reporting.manager.CrashManager
 import tmg.flashback.debug.DebugNavigationComponent
 import tmg.flashback.debug.model.DebugMenuItem
+import tmg.flashback.navigation.ApplicationNavigationComponent
 import tmg.flashback.navigation.NavigationDestination
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
@@ -44,7 +45,7 @@ internal class DashboardNavViewModelTest: BaseTest() {
     private val mockRssRepository: RssRepository = mockk(relaxed = true)
     private val mockDefaultSeasonUseCase: DefaultSeasonUseCase = mockk(relaxed = true)
     private val mockGetSeasonUseCase: GetSeasonsUseCase = mockk(relaxed = true)
-    private val mockApplicationNavigationComponent: tmg.flashback.navigation.ApplicationNavigationComponent = mockk(relaxed = true)
+    private val mockApplicationNavigationComponent: ApplicationNavigationComponent = mockk(relaxed = true)
     private val mockCrashManager: CrashManager = mockk(relaxed = true)
     private val mockDashboardSyncUseCase: DashboardSyncUseCase = mockk(relaxed = true)
     private val mockDebugNavigationComponent: DebugNavigationComponent = mockk(relaxed = true)
@@ -154,9 +155,9 @@ internal class DashboardNavViewModelTest: BaseTest() {
         "circuits/,false"
     )
     fun `menu bottom bar when route is updated`(route: String, showBottomBar: Boolean) {
-        underTest.onDestinationChanged(mockNavController, NavDestination(route), null)
 
         initUnderTest()
+        underTest.onDestinationChanged(mockNavController, NavDestination(route), null)
         underTest.showBottomBar.test {
             assertValue(showBottomBar)
         }
@@ -187,8 +188,8 @@ internal class DashboardNavViewModelTest: BaseTest() {
 
     @Test
     fun `default season is read from default season use case`() {
-        initUnderTest()
         every { mockDefaultSeasonUseCase.defaultSeason } returns 2023
+        initUnderTest()
 
         assertEquals(2023, underTest.outputs.defaultSeason)
     }
@@ -267,7 +268,6 @@ internal class DashboardNavViewModelTest: BaseTest() {
         @Test
         fun `clicking a season updates season if currently selected is menu for drivers`() {
             initUnderTest()
-            underTest.onDestinationChanged(mockNavController, NavDestination(Screen.Drivers.with(2019).route), null)
             underTest.currentlySelectedItem.testObserve()
             underTest.clickSeason(2020)
 
