@@ -25,6 +25,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.compose.rememberNavController
 import androidx.window.layout.WindowLayoutInfo
 import kotlinx.coroutines.launch
 import tmg.flashback.ads.ads.components.AdvertProvider
@@ -72,6 +73,10 @@ fun DashboardScreen(
     val snow = viewModel.outputs.snow.observeAsState(false)
     val titleIcon = viewModel.outputs.titleIcon.observeAsState(null)
     val ukraine = viewModel.outputs.ukraine.observeAsState(false)
+
+    val navController = rememberNavController()
+    navigator.navController = navController
+    navController.addOnDestinationChangedListener(navViewModel)
 
     DashboardScreen(
         windowSize = windowSize,
@@ -129,6 +134,7 @@ fun DashboardScreen(
     easterEggTitleIcon: MenuIcons?,
     easterEggUkraine: Boolean,
 ) {
+
     val panelsState = rememberOverlappingPanelsState(OverlappingPanelsValue.Closed)
     val coroutineScope = rememberCoroutineScope()
 
@@ -263,6 +269,7 @@ fun DashboardScreen(
                             AppGraph(
                                 modifier = Modifier.weight(1f),
                                 advertProvider = advertProvider,
+                                navController = navigator.navController,
                                 openMenu = openMenu,
                                 windowSize = windowSize,
                                 windowInfo = windowLayoutInfo,
