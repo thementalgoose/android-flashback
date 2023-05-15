@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalTime::class)
+
 package tmg.flashback.ui.sync
 
 import androidx.lifecycle.LiveData
@@ -9,9 +11,13 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.delayEach
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.timeout
 import kotlinx.coroutines.launch
 import tmg.flashback.configuration.repository.ConfigRepository
 import tmg.flashback.configuration.usecases.FetchConfigUseCase
@@ -29,6 +35,10 @@ import tmg.flashback.ui.sync.SyncState.LOADING
 import tmg.flashback.usecases.SetupAppShortcutUseCase
 import tmg.utilities.lifecycle.DataEvent
 import javax.inject.Inject
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.seconds
+import kotlin.time.ExperimentalTime
 
 //region Inputs
 
@@ -120,6 +130,7 @@ class SyncViewModel @Inject constructor(
                 SyncNavTarget.DASHBOARD
             }
         }
+        .onEach { delay(500) }
         .map { DataEvent(it) }
         .asLiveData(viewModelScope.coroutineContext)
 
@@ -155,41 +166,49 @@ class SyncViewModel @Inject constructor(
     }
 
     private fun startSyncDrivers() {
-        driversState.value = LOADING
-        viewModelScope.launch(ioDispatcher) {
-            when (driverRepository.fetchDrivers()) {
-                true -> driversState.postValue(DONE)
-                false -> driversState.postValue(FAILED)
+        if (driversState.value != DONE) {
+            driversState.value = LOADING
+            viewModelScope.launch(ioDispatcher) {
+                when (driverRepository.fetchDrivers()) {
+                    true -> driversState.postValue(DONE)
+                    false -> driversState.postValue(FAILED)
+                }
             }
         }
     }
 
     private fun startSyncConstructors() {
-        constructorsState.value = LOADING
-        viewModelScope.launch(ioDispatcher) {
-            when (constructorRepository.fetchConstructors()) {
-                true -> constructorsState.postValue(DONE)
-                false -> constructorsState.postValue(FAILED)
+        if (constructorsState.value != DONE) {
+            constructorsState.value = LOADING
+            viewModelScope.launch(ioDispatcher) {
+                when (constructorRepository.fetchConstructors()) {
+                    true -> constructorsState.postValue(DONE)
+                    false -> constructorsState.postValue(FAILED)
+                }
             }
         }
     }
 
     private fun startSyncCircuits() {
-        circuitsState.value = LOADING
-        viewModelScope.launch(ioDispatcher) {
-            when (circuitRepository.fetchCircuits()) {
-                true -> circuitsState.postValue(DONE)
-                false -> circuitsState.postValue(FAILED)
+        if (circuitsState.value != DONE) {
+            circuitsState.value = LOADING
+            viewModelScope.launch(ioDispatcher) {
+                when (circuitRepository.fetchCircuits()) {
+                    true -> circuitsState.postValue(DONE)
+                    false -> circuitsState.postValue(FAILED)
+                }
             }
         }
     }
 
     private fun startSyncRaces() {
-        racesState.value = LOADING
-        viewModelScope.launch(ioDispatcher) {
-            when (overviewRepository.fetchOverview()) {
-                true -> racesState.postValue(DONE)
-                false -> racesState.postValue(FAILED)
+        if (racesState.value != DONE) {
+            racesState.value = LOADING
+            viewModelScope.launch(ioDispatcher) {
+                when (overviewRepository.fetchOverview()) {
+                    true -> racesState.postValue(DONE)
+                    false -> racesState.postValue(FAILED)
+                }
             }
         }
     }

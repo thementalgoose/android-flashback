@@ -1,87 +1,181 @@
 package tmg.flashback.ui.sync
 
+import androidx.annotation.StringRes
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import tmg.flashback.R
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.buttons.ButtonSecondary
+import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
+import tmg.flashback.style.text.TextHeadline1
+
+private val progressHeight: Dp = 8.dp
+private val headerHeight: Dp = 150.dp
 
 @Composable
 fun SyncScreen(
-    showLoading: Boolean,
+    drivers: SyncState,
+    circuits: SyncState,
+    config: SyncState,
+    constructors: SyncState,
+    races: SyncState,
+    showTryAgain: Boolean,
     tryAgainClicked: () -> Unit
 ) {
     Column(modifier = Modifier
         .fillMaxSize()
         .background(AppTheme.colors.backgroundSplash)
     ) {
-        Text(
-            style = AppTheme.typography.h1.copy(
-                color = White
-            ),
-            textAlign = TextAlign.Center,
-            text = stringResource(id = R.string.splash_sync_info),
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(
-                    start = AppTheme.dimens.medium,
-                    end = AppTheme.dimens.medium,
-                    top = AppTheme.dimens.large,
-                    bottom = AppTheme.dimens.medium
-                )
-        )
-        Spacer(modifier = Modifier.weight(1f))
+        Box(Modifier.height(headerHeight))
 
-        if (showLoading) {
-            LinearProgressIndicator(
-                color = White,
-                modifier = Modifier.fillMaxWidth()
+        Column(modifier = Modifier
+            .fillMaxHeight()
+            .fillMaxWidth()
+            .clip(
+                RoundedCornerShape(
+                    topStart = AppTheme.dimens.radiusLarge,
+                    topEnd = AppTheme.dimens.radiusLarge
+                )
             )
-        } else {
+            .background(AppTheme.colors.backgroundPrimary)
+            .padding(
+                vertical = AppTheme.dimens.medium,
+                horizontal = AppTheme.dimens.medium
+            )
+        ) {
+            TextHeadline1(text = stringResource(id = R.string.app_name))
             TextBody2(
-                textColor = White,
-
-                text = stringResource(id = R.string.splash_sync_required_failed),
-                modifier = Modifier.padding(
-                    start = AppTheme.dimens.medium,
-                    end = AppTheme.dimens.medium,
-                    top = AppTheme.dimens.medium,
-                    bottom = AppTheme.dimens.medium
-                )
+                modifier = Modifier.padding(top = AppTheme.dimens.nsmall),
+                text = stringResource(id = R.string.splash_sync_info)
             )
-            ButtonSecondary(
-                text = stringResource(id = R.string.splash_sync_try_again),
-                onClick = tryAgainClicked,
-                modifier = Modifier.align(Alignment.CenterHorizontally)
+            Box(Modifier.weight(1f))
+            Breakdown(
+                label = R.string.splash_sync_drivers,
+                syncState = drivers
             )
+            Breakdown(
+                label = R.string.splash_sync_constructors,
+                syncState = constructors
+            )
+            Breakdown(
+                label = R.string.splash_sync_circuits,
+                syncState = circuits
+            )
+            Breakdown(
+                label = R.string.splash_sync_races,
+                syncState = races
+            )
+            Breakdown(
+                label = R.string.splash_sync_config,
+                syncState = config
+            )
+            Box(Modifier.height(60.dp)) {
+                if (showTryAgain) {
+                    ButtonSecondary(
+                        text = stringResource(id = R.string.splash_sync_try_again),
+                        onClick = tryAgainClicked
+                    )
+                }
+            }
         }
-        Spacer(modifier = Modifier.height(AppTheme.dimens.medium))
     }
 }
 
-@Preview
+@Composable
+private fun Breakdown(
+    @StringRes
+    label: Int,
+    syncState: SyncState
+) {
+
+    val colour = animateColorAsState(
+        targetValue = when (syncState) {
+            SyncState.LOADING -> AppTheme.colors.primary
+            SyncState.DONE -> AppTheme.colors.f1DeltaNegative
+            SyncState.FAILED -> AppTheme.colors.f1DeltaPositive
+        },
+        animationSpec = tween(durationMillis = 400)
+    )
+    val progress = animateFloatAsState(
+        targetValue = when (syncState) {
+            SyncState.LOADING -> 0f
+            SyncState.DONE -> 1f
+            SyncState.FAILED -> 1f
+        },
+        animationSpec = tween(durationMillis = 400)
+    )
+
+    Column(modifier = Modifier
+        .fillMaxWidth()
+        .padding(vertical = AppTheme.dimens.xsmall)
+    ) {
+        TextBody1(
+            modifier = Modifier.fillMaxWidth(),
+            text = stringResource(id = label)
+        )
+        Spacer(Modifier.height(AppTheme.dimens.xsmall))
+        Box(Modifier.fillMaxWidth()) {
+            LinearProgressIndicator(
+                color = colour.value,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(progressHeight)
+                    .clip(RoundedCornerShape(AppTheme.dimens.radiusLarge))
+                    .alpha(0.5f)
+            )
+            LinearProgressIndicator(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(progressHeight)
+                    .clip(RoundedCornerShape(AppTheme.dimens.radiusLarge)),
+                color = colour.value,
+                progress = progress.value
+            )
+        }
+    }
+}
+
+@PreviewTheme
 @Composable
 private fun PreviewLoading() {
     AppThemePreview {
         SyncScreen(
-            showLoading = true,
+            drivers = SyncState.LOADING,
+            circuits = SyncState.LOADING,
+            config = SyncState.DONE,
+            constructors = SyncState.DONE,
+            races = SyncState.LOADING,
+            showTryAgain = false,
             tryAgainClicked = { }
         )
     }
@@ -92,7 +186,12 @@ private fun PreviewLoading() {
 private fun PreviewFailed() {
     AppThemePreview {
         SyncScreen(
-            showLoading = false,
+            drivers = SyncState.DONE,
+            circuits = SyncState.LOADING,
+            config = SyncState.FAILED,
+            constructors = SyncState.LOADING,
+            races = SyncState.LOADING,
+            showTryAgain = true,
             tryAgainClicked = { }
         )
     }

@@ -5,6 +5,7 @@ import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
+import kotlinx.coroutines.test.advanceUntilIdle
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.configuration.repository.ConfigRepository
@@ -24,6 +25,7 @@ import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertDataEventValue
 import tmg.testutils.livedata.assertEventNotFired
 import tmg.testutils.livedata.test
+import tmg.testutils.livedata.testObserve
 
 internal class SyncViewModelTest: BaseTest() {
 
@@ -91,9 +93,11 @@ internal class SyncViewModelTest: BaseTest() {
         sut.outputs.showRetry.test {
             assertValue(false)
         }
-        sut.outputs.navigate.test {
-            assertDataEventValue(DASHBOARD)
-        }
+
+        val navigateObserver = sut.outputs.navigate.testObserve()
+        advanceUntilIdle()
+        navigateObserver.assertDataEventValue(DASHBOARD)
+
         verify {
             mockCacheRepository.initialSync = true
             mockSetupAppShortcutUseCase.setup()
@@ -124,9 +128,11 @@ internal class SyncViewModelTest: BaseTest() {
         sut.outputs.showRetry.test {
             assertValue(false)
         }
-        sut.outputs.navigate.test {
-            assertDataEventValue(FORCE_UPGRADE)
-        }
+
+        val navigateObserver = sut.outputs.navigate.testObserve()
+        advanceUntilIdle()
+        navigateObserver.assertDataEventValue(FORCE_UPGRADE)
+
         verify {
             mockCacheRepository.initialSync = true
             mockSetupAppShortcutUseCase.setup()
@@ -156,9 +162,12 @@ internal class SyncViewModelTest: BaseTest() {
         sut.outputs.showRetry.test {
             assertValue(false)
         }
-        sut.outputs.navigate.test {
-            assertDataEventValue(DASHBOARD)
-        }
+
+
+        val navigateObserver = sut.outputs.navigate.testObserve()
+        advanceUntilIdle()
+        navigateObserver.assertDataEventValue(DASHBOARD)
+
         verify {
             mockCacheRepository.initialSync = true
         }
@@ -198,9 +207,11 @@ internal class SyncViewModelTest: BaseTest() {
         sut.outputs.showRetry.test {
             assertValue(true)
         }
-        sut.outputs.navigate.test {
-            assertEventNotFired()
-        }
+
+        val navigateObserver = sut.outputs.navigate.testObserve()
+        advanceUntilIdle()
+        navigateObserver.assertEventNotFired()
+
         verify(exactly = 0) {
             mockCacheRepository.initialSync = true
         }
@@ -229,9 +240,11 @@ internal class SyncViewModelTest: BaseTest() {
         sut.outputs.showRetry.test {
             assertValue(true)
         }
-        sut.outputs.navigate.test {
-            assertEventNotFired()
-        }
+
+        val navigateObserver = sut.outputs.navigate.testObserve()
+        advanceUntilIdle()
+        navigateObserver.assertEventNotFired()
+
         verify(exactly = 0) {
             mockCacheRepository.initialSync = true
         }
@@ -260,9 +273,11 @@ internal class SyncViewModelTest: BaseTest() {
         sut.outputs.showRetry.test {
             assertValue(true)
         }
-        sut.outputs.navigate.test {
-            assertEventNotFired()
-        }
+
+        val navigateObserver = sut.outputs.navigate.testObserve()
+        advanceUntilIdle()
+        navigateObserver.assertEventNotFired()
+
         verify(exactly = 0) {
             mockCacheRepository.initialSync = true
         }
@@ -291,9 +306,11 @@ internal class SyncViewModelTest: BaseTest() {
         sut.outputs.showRetry.test {
             assertValue(true)
         }
-        sut.outputs.navigate.test {
-            assertEventNotFired()
-        }
+
+        val navigateObserver = sut.outputs.navigate.testObserve()
+        advanceUntilIdle()
+        navigateObserver.assertEventNotFired()
+
         verify(exactly = 0) {
             mockCacheRepository.initialSync = true
         }
@@ -322,9 +339,11 @@ internal class SyncViewModelTest: BaseTest() {
         sut.outputs.showRetry.test {
             assertValue(true)
         }
-        sut.outputs.navigate.test {
-            assertEventNotFired()
-        }
+
+        val navigateObserver = sut.outputs.navigate.testObserve()
+        advanceUntilIdle()
+        navigateObserver.assertEventNotFired()
+
         verify(exactly = 0) {
             mockCacheRepository.initialSync = true
         }

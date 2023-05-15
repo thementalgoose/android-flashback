@@ -14,6 +14,7 @@ import tmg.flashback.maintenance.contract.MaintenanceNavigationComponent
 import tmg.flashback.style.AppTheme
 import tmg.flashback.ui.HomeActivity
 import tmg.flashback.ui.base.BaseActivity
+import tmg.flashback.ui.sync.SyncState.LOADING
 import tmg.utilities.extensions.observeEvent
 import tmg.utilities.extensions.setStatusBarColor
 import javax.inject.Inject
@@ -35,10 +36,20 @@ class SyncActivity: BaseActivity() {
         setContent {
             AppTheme {
                 Scaffold(content = {
-                    val showRetry = viewModel.outputs.showRetry.observeAsState(false)
+                    val drivers = viewModel.outputs.driversState.observeAsState(initial = LOADING)
+                    val circuits = viewModel.outputs.circuitsState.observeAsState(initial = LOADING)
+                    val constructors = viewModel.outputs.constructorsState.observeAsState(initial = LOADING)
+                    val races = viewModel.outputs.racesState.observeAsState(initial = LOADING)
+                    val config = viewModel.outputs.configState.observeAsState(initial = LOADING)
+                    val showTryAgain = viewModel.outputs.showRetry.observeAsState(false)
 
                     SyncScreen(
-                        showLoading = !showRetry.value,
+                        drivers = drivers.value,
+                        circuits = circuits.value,
+                        config = config.value,
+                        constructors = constructors.value,
+                        races = races.value,
+                        showTryAgain = showTryAgain.value,
                         tryAgainClicked = viewModel.inputs::startLoading
                     )
                 })
