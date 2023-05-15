@@ -25,6 +25,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.compose.rememberNavController
 import androidx.window.layout.WindowLayoutInfo
 import kotlinx.coroutines.launch
 import tmg.flashback.ads.ads.components.AdvertProvider
@@ -60,6 +61,7 @@ fun DashboardScreen(
 
     val seasonItemsList = navViewModel.outputs.seasonsItemsList.observeAsState(emptyList())
     val currentlySelectedSeason = navViewModel.outputs.currentlySelectedSeason.observeAsState(0)
+    val defaultSeason = navViewModel.outputs.defaultSeason
 
     val showBottomBar = navViewModel.outputs.showBottomBar.observeAsState(true)
     val showMenu = navViewModel.outputs.showMenu.observeAsState(false)
@@ -72,12 +74,17 @@ fun DashboardScreen(
     val titleIcon = viewModel.outputs.titleIcon.observeAsState(null)
     val ukraine = viewModel.outputs.ukraine.observeAsState(false)
 
+    val navController = rememberNavController()
+    navigator.navController = navController
+    navController.addOnDestinationChangedListener(navViewModel)
+
     DashboardScreen(
         windowSize = windowSize,
         windowLayoutInfo = windowLayoutInfo,
         advertProvider = advertProvider,
         navigator = navigator,
         closeApp = closeApp,
+        defaultSeason = defaultSeason,
         currentlySelectedItem = currentlySelectedItem.value,
         appFeatureItemsList = appFeatureItemsList.value,
         seasonScreenItemsList = seasonScreenItemsList.value,
@@ -107,6 +114,7 @@ fun DashboardScreen(
     advertProvider: AdvertProvider,
     navigator: Navigator,
     closeApp: () -> Unit,
+    defaultSeason: Int,
     currentlySelectedItem: MenuItem,
     appFeatureItemsList: List<MenuItem>,
     seasonScreenItemsList: List<MenuItem>,
@@ -126,6 +134,7 @@ fun DashboardScreen(
     easterEggTitleIcon: MenuIcons?,
     easterEggUkraine: Boolean,
 ) {
+
     val panelsState = rememberOverlappingPanelsState(OverlappingPanelsValue.Closed)
     val coroutineScope = rememberCoroutineScope()
 
@@ -260,11 +269,13 @@ fun DashboardScreen(
                             AppGraph(
                                 modifier = Modifier.weight(1f),
                                 advertProvider = advertProvider,
+                                navController = navigator.navController,
                                 openMenu = openMenu,
                                 windowSize = windowSize,
                                 windowInfo = windowLayoutInfo,
                                 navigator = navigator,
-                                closeApp = closeApp
+                                closeApp = closeApp,
+                                defaultSeason = defaultSeason
                             )
                         }
                     }
