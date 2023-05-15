@@ -40,17 +40,12 @@ private val lapTimeWidth: Dp = 64.dp
 
 internal fun LazyListScope.sprintQualifying(
     driverClicked: (Driver) -> Unit,
-    list: List<SprintQualifyingModel>,
-    header: SprintQualifyingHeader
+    list: List<SprintQualifyingModel>
 ) {
     if (list.any { it.isResult }) {
         item("qheader") {
             Spacer(Modifier.height(AppTheme.dimens.medium))
-            Header(
-                showQ1 = header.first,
-                showQ2 = header.second,
-                showQ3 = header.third,
-            )
+            Header()
         }
     }
     items(list, key = { it.id }) {
@@ -78,36 +73,26 @@ internal fun LazyListScope.sprintQualifying(
 @Composable
 private fun Header(
     modifier: Modifier = Modifier,
-    showQ1: Boolean = true,
-    showQ2: Boolean = true,
-    showQ3: Boolean = true,
 ) {
     Row(modifier = modifier
         .padding(vertical = AppTheme.dimens.small)
     ) {
         Box(Modifier.weight(1f))
-
-        if (showQ1) {
-            TextSection(
-                modifier = Modifier.width(lapTimeWidth),
-                text = stringResource(id = R.string.sprint_qualifying_header_q1),
-                textAlign = TextAlign.Center
-            )
-        }
-        if (showQ2) {
-            TextSection(
-                modifier = Modifier.width(lapTimeWidth),
-                text = stringResource(id = R.string.sprint_qualifying_header_q2),
-                textAlign = TextAlign.Center
-            )
-        }
-        if (showQ3) {
-            TextSection(
-                modifier = Modifier.width(lapTimeWidth),
-                text = stringResource(id = R.string.sprint_qualifying_header_q3),
-                textAlign = TextAlign.Center
-            )
-        }
+        TextSection(
+            modifier = Modifier.width(lapTimeWidth),
+            text = stringResource(id = R.string.sprint_qualifying_header_q1),
+            textAlign = TextAlign.Center
+        )
+        TextSection(
+            modifier = Modifier.width(lapTimeWidth),
+            text = stringResource(id = R.string.sprint_qualifying_header_q2),
+            textAlign = TextAlign.Center
+        )
+        TextSection(
+            modifier = Modifier.width(lapTimeWidth),
+            text = stringResource(id = R.string.sprint_qualifying_header_q3),
+            textAlign = TextAlign.Center
+        )
         Spacer(Modifier.width(AppTheme.dimens.medium))
     }
 }
@@ -227,8 +212,7 @@ private fun Preview(
                 driverClicked = { },
                 list = listOf(
                     fakeQualifyingModel(driverConstructor)
-                ),
-                header = SprintQualifyingHeader(true, true, true)
+                )
             )
         })
     }

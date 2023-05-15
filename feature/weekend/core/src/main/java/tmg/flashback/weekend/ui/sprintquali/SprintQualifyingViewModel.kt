@@ -31,7 +31,6 @@ interface SprintQualifyingViewModelInputs {
 
 interface SprintQualifyingViewModelOutputs {
     val list: LiveData<List<SprintQualifyingModel>>
-    val headersToShow: LiveData<SprintQualifyingHeader>
 }
 
 typealias SprintQualifyingHeader = Triple<Boolean, Boolean, Boolean>
@@ -62,19 +61,10 @@ class SprintQualifyingViewModel @Inject constructor(
                 }
                 return@map list
             }
-            headersToShow.postValue(
-                SprintQualifyingHeader(
-                    first = true,
-                    second = true,
-                    third = true
-                )
-            )
 
             return@map race.getSprintShootout()
         }
         .asLiveData(viewModelScope.coroutineContext)
-
-    override val headersToShow: MutableLiveData<SprintQualifyingHeader> = MutableLiveData()
 
     override fun load(season: Int, round: Int) {
         seasonRound.value = Pair(season, round)

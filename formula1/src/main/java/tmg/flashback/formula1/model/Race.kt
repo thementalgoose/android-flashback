@@ -52,6 +52,9 @@ data class Race(
 
     val hasSprint: Boolean = sprint.qualifying.isNotEmpty() || sprint.race.isNotEmpty()
 
+    val hasSprintQualifying: Boolean = sprint.qualifying.isNotEmpty()
+    val hasSprintRace: Boolean = sprint.race.isNotEmpty()
+
     fun has(raceQualifyingType: QualifyingType): Boolean {
         return qualifying.any { it.label == raceQualifyingType}
     }
