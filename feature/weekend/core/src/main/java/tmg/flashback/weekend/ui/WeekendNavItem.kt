@@ -20,7 +20,7 @@ enum class WeekendNavItem(
     ),
     SPRINT_QUALIFYING(
         label = R.string.nav_sprint_qualifying,
-        icon = R.drawable.nav_sprint
+        icon = R.drawable.nav_sprint_qualifying
     ),
     SPRINT(
         label = R.string.nav_sprint,
