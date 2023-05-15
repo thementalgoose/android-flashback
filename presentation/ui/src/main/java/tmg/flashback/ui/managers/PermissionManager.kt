@@ -12,7 +12,7 @@ import javax.inject.Singleton
 
 @Singleton
 class PermissionManager @Inject constructor(
-    private val topActivityProvider: tmg.flashback.navigation.ActivityProvider
+    private val topActivityProvider: ActivityProvider
 ) {
     private var completableDeferred: CompletableDeferred<Boolean>? = null
 

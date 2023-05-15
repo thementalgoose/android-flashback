@@ -95,7 +95,6 @@ class RaceMapper @Inject constructor(
                     lapTime = it.qualifyingResult.q1?.toLapTime(),
                     position = lapTimeOrder.firstOrNull { (id, _) -> id == it.driver.id }?.second
                         ?: it.qualifyingResult.qualified
-                        ?: -1
                 )
             }
             qualifyingData.add(QualifyingRound(Q1, 1,driverListForRound.sortedBy { it.position }))
@@ -112,7 +111,6 @@ class RaceMapper @Inject constructor(
                     position = lapTimeOrder.firstOrNull { (id, _) -> id == it.driver.id }?.second
                         ?: qualifyingData.firstOrNull { it.order == 1 }?.results?.firstOrNull { model -> model.driver.driver.id == it.driver.id }?.position
                         ?: it.qualifyingResult.qualified
-                        ?: -1
                 )
             }
             qualifyingData.add(QualifyingRound(Q2, 2, driverListForRound.sortedBy { it.position }))
@@ -130,7 +128,6 @@ class RaceMapper @Inject constructor(
                         ?: qualifyingData.firstOrNull { it.order == 2 }?.results?.firstOrNull { model -> model.driver.driver.id == it.driver.id }?.position
                         ?: qualifyingData.firstOrNull { it.order == 1 }?.results?.firstOrNull { model -> model.driver.driver.id == it.driver.id }?.position
                         ?: it.qualifyingResult.qualified
-                        ?: -1
                 )
             }
             qualifyingData.add(QualifyingRound(Q3, 3, driverListForRound.sortedBy { it.position }))
@@ -169,7 +166,6 @@ class RaceMapper @Inject constructor(
                     lapTime = it.qualifyingResult.sq1?.toLapTime(),
                     position = lapTimeOrder.firstOrNull { (id, _) -> id == it.driver.id }?.second
                         ?: it.qualifyingResult.qualified
-                        ?: -1
                 )
             }
             qualifyingData.add(SprintQualifyingRound(SQ1, 1,driverListForRound.sortedBy { it.position }))
@@ -186,7 +182,6 @@ class RaceMapper @Inject constructor(
                     position = lapTimeOrder.firstOrNull { (id, _) -> id == it.driver.id }?.second
                         ?: qualifyingData.firstOrNull { it.order == 1 }?.results?.firstOrNull { model -> model.driver.driver.id == it.driver.id }?.position
                         ?: it.qualifyingResult.qualified
-                        ?: -1
                 )
             }
             qualifyingData.add(SprintQualifyingRound(SQ2, 2, driverListForRound.sortedBy { it.position }))
@@ -204,7 +199,6 @@ class RaceMapper @Inject constructor(
                         ?: qualifyingData.firstOrNull { it.order == 2 }?.results?.firstOrNull { model -> model.driver.driver.id == it.driver.id }?.position
                         ?: qualifyingData.firstOrNull { it.order == 1 }?.results?.firstOrNull { model -> model.driver.driver.id == it.driver.id }?.position
                         ?: it.qualifyingResult.qualified
-                        ?: -1
                 )
             }
             qualifyingData.add(SprintQualifyingRound(SQ3, 3, driverListForRound.sortedBy { it.position }))

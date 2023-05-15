@@ -58,8 +58,8 @@ internal class TimestampTest {
 
         val sut = Timestamp(localDate, localTime, zone)
 
-        val resultDateTimeUTC: LocalDateTime? = sut.utcLocalDateTime
-        val resultDateTimeDevice: LocalDateTime? = sut.deviceLocalDateTime
+        val resultDateTimeUTC: LocalDateTime = sut.utcLocalDateTime
+        val resultDateTimeDevice: LocalDateTime = sut.deviceLocalDateTime
 
         assertEquals(LocalDateTime.of(2020, 1, 1, 12, 0), resultDateTimeUTC)
         assertEquals(LocalDateTime.of(2020, 1, 1, deviceHour, 0), resultDateTimeDevice)

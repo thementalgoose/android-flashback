@@ -7,7 +7,7 @@ import tmg.flashback.ui.settings.appearance.theme.ThemeBottomSheetFragment
 import javax.inject.Inject
 
 class AppearanceNavigationComponent @Inject constructor(
-    private val activityProvider: tmg.flashback.navigation.ActivityProvider
+    private val activityProvider: ActivityProvider
 ) {
     fun nightModeDialog() = activityProvider.launch {
         val activity = it as? AppCompatActivity ?: return@launch

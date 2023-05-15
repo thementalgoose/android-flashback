@@ -9,8 +9,7 @@ interface ScreenViewViewModelInputs {
     fun viewScreen(name: String, args: Map<String, String>)
 }
 
-interface ScreenViewViewModelOutputs {
-}
+interface ScreenViewViewModelOutputs
 
 @HiltViewModel
 class ScreenViewViewModel @Inject constructor(

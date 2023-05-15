@@ -8,6 +8,6 @@ internal class ReleaseNotesNavigationComponentTest {
 
     @Test
     fun `release notes`() {
-        assertEquals("release_notes", tmg.flashback.navigation.Screen.ReleaseNotes.route)
+        assertEquals("release_notes", Screen.ReleaseNotes.route)
     }
 }

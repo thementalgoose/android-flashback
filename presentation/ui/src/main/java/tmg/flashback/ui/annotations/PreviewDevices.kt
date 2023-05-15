@@ -17,4 +17,4 @@ import androidx.compose.ui.tooling.preview.Preview
     device = "spec:shape=Normal,width=673,height=841,unit=dp,dpi=480",
     name = "Foldable"
 )
-annotation class PreviewDevices(){}
+annotation class PreviewDevices
