@@ -20,14 +20,11 @@ import tmg.flashback.ads.ads.components.AdvertProvider
 import tmg.flashback.configuration.usecases.ConfigSyncUseCase
 import tmg.flashback.crash_reporting.manager.CrashManager
 import tmg.flashback.maintenance.contract.MaintenanceNavigationComponent
+import tmg.flashback.navigation.Navigator
 import tmg.flashback.results.usecases.ContentSyncUseCase
 import tmg.flashback.style.AppTheme
 import tmg.flashback.ui.base.BaseActivity
 import tmg.flashback.ui.dashboard.DashboardScreen
-import tmg.flashback.navigation.Navigator
-import tmg.flashback.navigation.Screen
-import tmg.flashback.rss.contract.RSS
-import tmg.flashback.search.contract.Search
 import tmg.flashback.ui.sync.SyncActivity
 import javax.inject.Inject
 
@@ -75,7 +72,8 @@ class HomeActivity: BaseActivity(), SplashScreen.KeepOnScreenCondition {
                     windowLayoutInfo = windowInfoTracker.collectAsState(WindowLayoutInfo(emptyList())).value,
                     navigator = navigator,
                     advertProvider = advertProvider,
-                    closeApp = { finish() }
+                    closeApp = { finish() },
+                    deeplink = intent.extras?.getString("screen")
                 )
             }
         }
@@ -93,13 +91,6 @@ class HomeActivity: BaseActivity(), SplashScreen.KeepOnScreenCondition {
                 maintenanceNavigationComponent.forceUpgrade()
                 finish()
             }
-        }
-
-        // Deep links
-        when (intent.extras?.getString("screen")) {
-            "search" -> { navigator.navigate(Screen.Search) }
-            "rss" -> { navigator.navigate(Screen.RSS) }
-            else -> {}
         }
 
         // Content sync

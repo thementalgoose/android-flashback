@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -81,6 +82,7 @@ fun AppGraph(
     openMenu: () -> Unit,
     defaultSeason: Int,
     navController: NavHostController,
+    deeplink: String?,
     windowSize: WindowSizeClass,
     windowInfo: WindowLayoutInfo,
     navigator: Navigator,
@@ -289,6 +291,17 @@ fun AppGraph(
                 actionUpClicked = { navController.popBackStack() }
             )
         }
+    }
+
+    DisposableEffect(deeplink) {
+        if (deeplink != null) {
+            when (deeplink) {
+                "search" -> { navigator.navigate(Screen.Search) }
+                "rss" -> { navigator.navigate(Screen.RSS) }
+                else -> { }
+            }
+        }
+        this.onDispose { }
     }
 }
 
