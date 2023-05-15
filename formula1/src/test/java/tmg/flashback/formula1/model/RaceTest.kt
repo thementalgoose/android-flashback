@@ -1,7 +1,9 @@
 package tmg.flashback.formula1.model
 
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertNull
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
@@ -243,6 +245,48 @@ internal class RaceTest {
         )
 
         assertEquals(expectedDriverOverview, model.driverOverview(driver.id))
+    }
+
+    @Test
+    fun `has sprint values return false if no sprint data available`() {
+        val race = Race.model(
+            sprint = SprintResult.model(
+                qualifying = emptyList(),
+                race = emptyList()
+            )
+        )
+
+        assertFalse(race.hasSprint)
+        assertFalse(race.hasSprintQualifying)
+        assertFalse(race.hasSprintRace)
+    }
+
+    @Test
+    fun `has sprint qualifying values return true`() {
+        val race = Race.model(
+            sprint = SprintResult.model(
+                qualifying = listOf(SprintQualifyingRound.model()),
+                race = emptyList()
+            )
+        )
+
+        assertTrue(race.hasSprint)
+        assertTrue(race.hasSprintQualifying)
+        assertFalse(race.hasSprintRace)
+    }
+
+    @Test
+    fun `has sprint race values return true`() {
+        val race = Race.model(
+            sprint = SprintResult.model(
+                qualifying = emptyList(),
+                race = listOf(SprintRaceResult.model())
+            )
+        )
+
+        assertTrue(race.hasSprint)
+        assertFalse(race.hasSprintQualifying)
+        assertTrue(race.hasSprintRace)
     }
 
     @Test
