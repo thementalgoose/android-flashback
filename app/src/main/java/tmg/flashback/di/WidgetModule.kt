@@ -12,7 +12,7 @@ import tmg.flashback.widgets.WidgetNavigationComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class WidgetModule() {
+abstract class WidgetModule {
 
     @Binds
     abstract fun bindsWidgetNavigationComponent(impl: AppWidgetNavigationComponent): WidgetNavigationComponent

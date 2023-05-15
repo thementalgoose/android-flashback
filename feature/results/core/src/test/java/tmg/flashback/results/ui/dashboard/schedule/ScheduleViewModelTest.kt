@@ -119,8 +119,8 @@ internal class ScheduleViewModelTest: BaseTest() {
     @Test
     fun `show events returns true when events are contained`() {
         every { mockEventsRepository.getEvents(2020) } returns flow { emit(listOf(
-            tmg.flashback.formula1.model.Event.model(date = LocalDate.of(2020, 1, 2)),
-            tmg.flashback.formula1.model.Event.model(date = LocalDate.now().plusDays(1))
+            Event.model(date = LocalDate.of(2020, 1, 2)),
+            Event.model(date = LocalDate.now().plusDays(1))
         )) }
 
         initUnderTest()
@@ -136,8 +136,8 @@ internal class ScheduleViewModelTest: BaseTest() {
     @Test
     fun `expected list shows upcoming events intertwined with calendar models`() {
         every { mockEventsRepository.getEvents(2020) } returns flow { emit(listOf(
-            tmg.flashback.formula1.model.Event.model(date = LocalDate.of(2020, 1, 2)),
-            tmg.flashback.formula1.model.Event.model(date = LocalDate.now().plusDays(1))
+            Event.model(date = LocalDate.of(2020, 1, 2)),
+            Event.model(date = LocalDate.now().plusDays(1))
         )) }
 
         initUnderTest()
