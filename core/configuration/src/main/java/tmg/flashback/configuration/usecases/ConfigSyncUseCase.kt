@@ -35,7 +35,7 @@ class ConfigSyncUseCase @Inject constructor(
 
         WorkManager
             .getInstance(applicationContext)
-            .enqueueUniquePeriodicWork("CONTENT_SYNC", ExistingPeriodicWorkPolicy.REPLACE, request)
+            .enqueueUniquePeriodicWork("CONTENT_SYNC", ExistingPeriodicWorkPolicy.UPDATE, request)
     }
 
     private fun delayUntilEndOfDay(): Long {

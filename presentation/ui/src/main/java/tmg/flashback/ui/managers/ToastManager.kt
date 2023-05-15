@@ -12,7 +12,7 @@ import javax.inject.Singleton
 class ToastManager @Inject constructor(
     @ApplicationContext
     private val applicationContext: Context,
-    private val activityProvider: tmg.flashback.navigation.ActivityProvider
+    private val activityProvider: ActivityProvider
 ) {
     fun displayToast(@StringRes msg: Int) {
         Toast.makeText(activityProvider.activity ?: applicationContext, msg, Toast.LENGTH_LONG).show()
