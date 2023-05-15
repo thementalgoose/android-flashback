@@ -36,6 +36,7 @@ import tmg.flashback.domain.repo.CircuitRepository
 import tmg.flashback.domain.repo.ConstructorRepository
 import tmg.flashback.domain.repo.DriverRepository
 import tmg.flashback.domain.repo.OverviewRepository
+import tmg.flashback.navigation.ApplicationNavigationComponent
 import tmg.flashback.results.contract.ResultsNavigationComponent
 import tmg.flashback.results.repository.models.NotificationChannel
 import tmg.flashback.style.AppTheme
@@ -80,7 +81,7 @@ class DebugActivity: BaseActivity() {
     lateinit var preferenceManager: PreferenceManager
 
     @Inject
-    lateinit var applicationNavigationComponent: tmg.flashback.navigation.ApplicationNavigationComponent
+    lateinit var applicationNavigationComponent: ApplicationNavigationComponent
 
     @Inject
     lateinit var resultsNavigationComponent: ResultsNavigationComponent
