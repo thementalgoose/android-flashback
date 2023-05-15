@@ -240,13 +240,13 @@ internal class ScheduleViewModelTest: BaseTest() {
         underTest.load(2020)
 
         val refreshing = underTest.outputs.isRefreshing.testObserve()
-        assertValue(, atIndex =)
+        refreshing.assertValueAt(false, 0)
         runBlocking {
             underTest.refresh()
         }
 
-        assertValue(, atIndex =)
-        assertValue(, atIndex =)
+        refreshing.assertValueAt(true, 1)
+        refreshing.assertValueAt(false, 2)
         coVerify {
             mockFetchSeasonUseCase.fetchSeason(2020)
         }
