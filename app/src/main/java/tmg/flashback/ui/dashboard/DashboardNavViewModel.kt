@@ -139,10 +139,6 @@ class DashboardNavViewModel @Inject constructor(
         }
     }
 
-    fun bindNavController() {
-        navigator.navController?.addOnDestinationChangedListener(this)
-    }
-
     private fun initialiseItems() {
         val bottom = listOf(MenuItem.Calendar, MenuItem.Drivers, MenuItem.Constructors)
         val side = mutableListOf<MenuItem>().apply {
