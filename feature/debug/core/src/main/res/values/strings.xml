@@ -3,6 +3,7 @@
     <string name="debug_list_item">Debug screen</string>
 
     <string name="debug_menu_styleguide">Style Guide</string>
+    <string name="debug_menu_sync">Sync</string>
     <string name="debug_menu_debug">Debug</string>
     <string name="debug_menu_ads_config">Ads Config</string>
 
