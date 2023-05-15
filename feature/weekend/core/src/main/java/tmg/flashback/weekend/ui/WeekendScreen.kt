@@ -42,6 +42,9 @@ import tmg.flashback.weekend.contract.model.ScreenWeekendData
 import tmg.flashback.weekend.ui.details.DetailsModel
 import tmg.flashback.weekend.ui.race.RaceResultType
 import tmg.flashback.weekend.ui.sprint.SprintResultType
+import tmg.flashback.weekend.ui.sprintquali.SprintQualifyingHeader
+import tmg.flashback.weekend.ui.sprintquali.SprintQualifyingViewModel
+import tmg.flashback.weekend.ui.sprintquali.sprintQualifying
 import tmg.utilities.extensions.toEnum
 
 data class WeekendScreenState(
@@ -107,6 +110,8 @@ fun WeekendScreenVM(
             val qualifyingHeader = qualifyingVM.outputs.headersToShow.observeAsState(
                 QualifyingHeader(true, true, true)
             )
+            val sprintQualifyingVM: SprintQualifyingViewModel = hiltViewModel()
+            val sprintQualifyingList = sprintQualifyingVM.outputs.list.observeAsState(emptyList())
             val sprintVM: SprintViewModel = hiltViewModel()
             val sprintList = sprintVM.outputs.list.observeAsState(emptyList())
             val sprintResultType = sprintVM.outputs.sprintResultType.observeAsState(SprintResultType.DRIVERS)
@@ -130,6 +135,7 @@ fun WeekendScreenVM(
 
                         detailsVM.inputs.load(weekendInfo.season, weekendInfo.round)
                         qualifyingVM.inputs.load(weekendInfo.season, weekendInfo.round)
+                        sprintQualifyingVM.inputs.load(weekendInfo.season, weekendInfo.round)
                         sprintVM.inputs.load(weekendInfo.season, weekendInfo.round)
                         raceVM.inputs.load(weekendInfo.season, weekendInfo.round)
 
@@ -146,6 +152,12 @@ fun WeekendScreenVM(
                                     driverClicked = qualifyingVM.inputs::clickDriver,
                                     list = qualifyingList.value,
                                     header = qualifyingHeader.value
+                                )
+                            }
+                            WeekendNavItem.SPRINT_QUALIFYING -> {
+                                sprintQualifying(
+                                    driverClicked = sprintQualifyingVM.inputs::clickDriver,
+                                    list = sprintQualifyingList.value
                                 )
                             }
                             WeekendNavItem.SPRINT -> {
@@ -166,6 +178,7 @@ fun WeekendScreenVM(
                                     constructorClicked = raceVM.inputs::clickConstructor
                                 )
                             }
+
                         }
                     }
                 )
