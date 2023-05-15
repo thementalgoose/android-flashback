@@ -1,13 +1,19 @@
+@file:OptIn(ExperimentalFoundationApi::class)
+
 package tmg.flashback.ui.components.navigation
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
@@ -21,6 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -105,20 +112,33 @@ private fun Item(
                 contentDescription = null,
             )
         }
-        TextBody1(
-            textAlign = TextAlign.Center,
-            maxLines = 1,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(
-                    bottom = 10.dp,
-                    start = 2.dp,
-                    end = 2.dp
-                ),
-            text = stringResource(id = item.label),
-            textColor = colour.value,
-            bold = true
-        )
+        Box(Modifier
+            .fillMaxWidth()
+            .height(IntrinsicSize.Min)
+        ) {
+            TextBody1(
+                textAlign = TextAlign.Center,
+                maxLines = 1,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .basicMarquee(1)
+                    .padding(
+                        bottom = 10.dp,
+                        start = 4.dp,
+                        end = 4.dp
+                    ),
+                text = stringResource(id = item.label),
+                textColor = colour.value,
+                bold = true
+            )
+            Box(
+                Modifier
+                    .fillMaxHeight()
+                    .width(AppTheme.dimens.small)
+                    .align(Alignment.CenterEnd)
+                    .background(Brush.horizontalGradient(listOf(Color.Transparent, AppTheme.colors.backgroundNav)))
+            )
+        }
     }
 }
 
