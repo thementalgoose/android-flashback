@@ -1,5 +1,6 @@
 package tmg.flashback.ui.dashboard
 
+import android.os.Bundle
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -7,9 +8,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
@@ -68,27 +72,26 @@ class DashboardNavViewModel @Inject constructor(
     private val dashboardSyncUseCase: DashboardSyncUseCase,
     private val debugNavigationComponent: DebugNavigationComponent,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
-): ViewModel(), DashboardNavViewModelInputs, DashboardNavViewModelOutputs {
+): ViewModel(), DashboardNavViewModelInputs, DashboardNavViewModelOutputs,
+    NavController.OnDestinationChangedListener {
 
     val inputs: DashboardNavViewModelInputs = this
     val outputs: DashboardNavViewModelOutputs = this
 
     override val defaultSeason: Int = defaultSeasonUseCase.defaultSeason
 
-    private val currentDestination = navigator
-        .destination
-        .asSharedFlow()
+    private val currentDestination: MutableStateFlow<String?> = MutableStateFlow(null)
 
     override val currentlySelectedItem: LiveData<MenuItem> = currentDestination
         .map { destination ->
             if (destination == null) return@map null
             val item: MenuItem? = when {
-                destination.route.startsWith("results/calendar/") -> MenuItem.Calendar
-                destination.route.startsWith("results/drivers/") -> MenuItem.Drivers
-                destination.route.startsWith("results/constructors/") -> MenuItem.Constructors
-                destination.route.startsWith("settings") -> MenuItem.Settings
-                destination.route.startsWith("rss") -> MenuItem.RSS
-                destination.route.startsWith("search") -> MenuItem.Search
+                destination.startsWith("results/calendar/") -> MenuItem.Calendar
+                destination.startsWith("results/drivers/") -> MenuItem.Drivers
+                destination.startsWith("results/constructors/") -> MenuItem.Constructors
+                destination.startsWith("settings") -> MenuItem.Settings
+                destination.startsWith("rss") -> MenuItem.RSS
+                destination.startsWith("search") -> MenuItem.Search
                 else -> null
             }
             return@map item
@@ -101,10 +104,10 @@ class DashboardNavViewModel @Inject constructor(
             if (destination == null) return@map null
 
             return@map when {
-                destination.route.startsWith("results/") -> true
-                destination.route == "settings" -> true
-                destination.route == "rss" -> true
-                destination.route == "search" -> true
+                destination.startsWith("results/") -> true
+                destination == "settings" -> true
+                destination == "rss" -> true
+                destination == "search" -> true
                 else -> false
             }
         }
@@ -114,7 +117,7 @@ class DashboardNavViewModel @Inject constructor(
     override val showBottomBar: LiveData<Boolean> = currentDestination
         .map {
             if (it == null) return@map false
-            return@map it.route.startsWith("results/")
+            return@map it.startsWith("results/")
         }
         .asLiveData(viewModelScope.coroutineContext)
 
@@ -134,6 +137,10 @@ class DashboardNavViewModel @Inject constructor(
             val result = dashboardSyncUseCase.sync()
             crashManager.log("Dashboard synchronisation complete $result")
         }
+    }
+
+    fun bindNavController() {
+        navigator.navController?.addOnDestinationChangedListener(this)
     }
 
     private fun initialiseItems() {
@@ -202,5 +209,13 @@ class DashboardNavViewModel @Inject constructor(
 
     override fun clickDebug(debugMenuItem: DebugMenuItem) {
         debugNavigationComponent.navigateTo(debugMenuItem.id)
+    }
+
+    override fun onDestinationChanged(
+        controller: NavController,
+        destination: NavDestination,
+        arguments: Bundle?
+    ) {
+        currentDestination.value = destination.route
     }
 }

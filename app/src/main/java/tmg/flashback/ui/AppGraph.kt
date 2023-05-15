@@ -1,18 +1,19 @@
 package tmg.flashback.ui
 
 import android.os.Build
-import android.os.Bundle
 import android.os.Parcelable
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavBackStackEntry
+import androidx.navigation.NavController
+import androidx.navigation.NavHost
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -35,13 +36,10 @@ import tmg.flashback.drivers.contract.model.ScreenDriverData
 import tmg.flashback.drivers.contract.model.ScreenDriverSeasonData
 import tmg.flashback.drivers.ui.overview.DriverOverviewScreenVM
 import tmg.flashback.drivers.ui.season.DriverSeasonScreenVM
-import tmg.flashback.formula1.constants.Formula1
+import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
-import tmg.flashback.navigation.asNavigationDestination
-import tmg.flashback.navigation.navIntRequired
 import tmg.flashback.navigation.navString
 import tmg.flashback.navigation.navStringRequired
-import tmg.flashback.navigation.navigate
 import tmg.flashback.privacypolicy.contract.PrivacyPolicy
 import tmg.flashback.privacypolicy.ui.PrivacyPolicyScreenVM
 import tmg.flashback.releasenotes.ReleaseNotes
@@ -82,16 +80,14 @@ import tmg.flashback.weekend.ui.WeekendScreenVM
 fun AppGraph(
     openMenu: () -> Unit,
     defaultSeason: Int,
+    navController: NavHostController,
     windowSize: WindowSizeClass,
     windowInfo: WindowLayoutInfo,
-    navigator: tmg.flashback.navigation.Navigator,
+    navigator: Navigator,
     closeApp: () -> Unit,
     advertProvider: AdvertProvider,
     modifier: Modifier = Modifier
 ) {
-    val navController = rememberNavController()
-    val destination by navigator.destination.collectAsState()
-
     val isCompact = windowSize.widthSizeClass == WindowWidthSizeClass.Compact
 
     NavHost(
@@ -294,24 +290,15 @@ fun AppGraph(
             )
         }
     }
+}
 
-    // Updates current destination if graph is updated
-    LaunchedEffect(destination) {
-        if (navController.currentDestination?.route != destination?.route) {
-            val dest = destination ?: return@LaunchedEffect
-            navController.navigate(dest)
-        }
+private fun NavController.buildCurrentRoute(): String? {
+    val dest = currentBackStackEntry?.destination ?: return null
+    var route = dest.route
+    dest.arguments.forEach { (key, navArgument) ->
+       route = route?.replace("{${key}}", navArgument.toString())
     }
-
-    // Updates navigation destination in navigator if
-    //  nav controller updates outside of Navigator
-    LaunchedEffect(Unit) {
-        navController.addOnDestinationChangedListener { controller, destination, arguments ->
-            destination.route?.asNavigationDestination()?.let {
-                navigator.navigate(it)
-            }
-        }
-    }
+    return route
 }
 
 private inline fun <reified T: Parcelable> NavBackStackEntry.getArgument(key: String): T {

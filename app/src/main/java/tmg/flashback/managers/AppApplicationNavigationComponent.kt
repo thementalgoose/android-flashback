@@ -7,14 +7,13 @@ import tmg.flashback.analytics.manager.AnalyticsManager
 import tmg.flashback.constants.AboutThisAppConfig
 import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.device.repository.DeviceRepository
+import tmg.flashback.navigation.ActivityProvider
+import tmg.flashback.navigation.ApplicationNavigationComponent
+import tmg.flashback.navigation.Navigator
 import tmg.flashback.notifications.navigation.NotificationNavigationProvider
 import tmg.flashback.repositories.ContactRepository
 import tmg.flashback.rss.usecases.AllSupportedSourcesUseCase
 import tmg.flashback.ui.HomeActivity
-import tmg.flashback.navigation.ActivityProvider
-import tmg.flashback.navigation.ApplicationNavigationComponent
-import tmg.flashback.navigation.Navigator
-import tmg.flashback.navigation.Screen
 import tmg.flashback.ui.settings.All
 import tmg.flashback.ui.sync.SyncActivity
 import javax.inject.Inject
@@ -25,9 +24,9 @@ class AppApplicationNavigationComponent @Inject constructor(
     private val contactRepository: ContactRepository,
     private val analyticsManager: AnalyticsManager,
     private val allSupportedSourcesUseCase: AllSupportedSourcesUseCase,
-    private val activityProvider: tmg.flashback.navigation.ActivityProvider,
-    private val navigator: tmg.flashback.navigation.Navigator,
-): tmg.flashback.navigation.ApplicationNavigationComponent, NotificationNavigationProvider {
+    private val activityProvider: ActivityProvider,
+    private val navigator: Navigator,
+): ApplicationNavigationComponent, NotificationNavigationProvider {
 
     override fun relaunchApp() = activityProvider.launch {
         it.startActivity(relaunchAppIntent(it))
