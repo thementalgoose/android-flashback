@@ -46,7 +46,7 @@ data class Race(
             sprintQ1 = sprint.qualifying.firstOrNull { it.label == SQ1 }?.results?.firstOrNull { it.driver.driver.id == driverId },
             sprintQ2 = sprint.qualifying.firstOrNull { it.label == SQ2 }?.results?.firstOrNull { it.driver.driver.id == driverId },
             sprintQ3 = sprint.qualifying.firstOrNull { it.label == SQ3 }?.results?.firstOrNull { it.driver.driver.id == driverId },
-            sprintRace = sprint.race.firstOrNull { it.driver.driver.id == driverId },
+            sprintRace = sprint.race.firstOrNull { it.driver.driver.id == driverId }
         )
     }
 

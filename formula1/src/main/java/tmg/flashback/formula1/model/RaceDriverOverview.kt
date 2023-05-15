@@ -11,7 +11,7 @@ data class RaceDriverOverview(
     val sprintRace: SprintRaceResult?,
     val race: RaceResult?,
     val qualified: Int? = q3?.position ?: q2?.position ?: q1?.position,
-    val officialQualifyingPosition: Int? = race?.qualified ?: qualified,
+    val officialQualifyingPosition: Int? = race?.qualified ?: qualified
 ) {
     companion object
 }

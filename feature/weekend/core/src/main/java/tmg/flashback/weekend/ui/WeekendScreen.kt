@@ -4,8 +4,6 @@ import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Icon
@@ -21,28 +19,25 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.launch
 import tmg.flashback.analytics.constants.AnalyticsConstants.analyticsRound
 import tmg.flashback.analytics.constants.AnalyticsConstants.analyticsSeason
+import tmg.flashback.style.AppTheme
+import tmg.flashback.ui.components.analytics.ScreenView
+import tmg.flashback.ui.components.navigation.NavigationBar
+import tmg.flashback.ui.components.navigation.NavigationItem
+import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
+import tmg.flashback.weekend.contract.model.ScreenWeekendData
+import tmg.flashback.weekend.ui.details.DetailsModel
 import tmg.flashback.weekend.ui.details.DetailsViewModel
 import tmg.flashback.weekend.ui.details.details
 import tmg.flashback.weekend.ui.info.RaceInfoHeader
 import tmg.flashback.weekend.ui.qualifying.QualifyingHeader
 import tmg.flashback.weekend.ui.qualifying.QualifyingViewModel
 import tmg.flashback.weekend.ui.qualifying.qualifying
+import tmg.flashback.weekend.ui.race.RaceResultType
 import tmg.flashback.weekend.ui.race.RaceViewModel
 import tmg.flashback.weekend.ui.race.race
+import tmg.flashback.weekend.ui.sprint.SprintResultType
 import tmg.flashback.weekend.ui.sprint.SprintViewModel
 import tmg.flashback.weekend.ui.sprint.sprint
-import tmg.flashback.style.AppTheme
-import tmg.flashback.style.buttons.ButtonSecondarySegments
-import tmg.flashback.ui.components.analytics.ScreenView
-import tmg.flashback.ui.components.navigation.NavigationBar
-import tmg.flashback.ui.components.navigation.NavigationItem
-import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
-import tmg.flashback.weekend.R
-import tmg.flashback.weekend.contract.model.ScreenWeekendData
-import tmg.flashback.weekend.ui.details.DetailsModel
-import tmg.flashback.weekend.ui.race.RaceResultType
-import tmg.flashback.weekend.ui.sprint.SprintResultType
-import tmg.flashback.weekend.ui.sprintquali.SprintQualifyingHeader
 import tmg.flashback.weekend.ui.sprintquali.SprintQualifyingViewModel
 import tmg.flashback.weekend.ui.sprintquali.sprintQualifying
 import tmg.utilities.extensions.toEnum
@@ -178,7 +173,6 @@ fun WeekendScreenVM(
                                     constructorClicked = raceVM.inputs::clickConstructor
                                 )
                             }
-
                         }
                     }
                 )
