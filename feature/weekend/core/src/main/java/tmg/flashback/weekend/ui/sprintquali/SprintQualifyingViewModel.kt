@@ -33,8 +33,6 @@ interface SprintQualifyingViewModelOutputs {
     val list: LiveData<List<SprintQualifyingModel>>
 }
 
-typealias SprintQualifyingHeader = Triple<Boolean, Boolean, Boolean>
-
 @HiltViewModel
 class SprintQualifyingViewModel @Inject constructor(
     private val raceRepository: RaceRepository,
@@ -73,17 +71,18 @@ class SprintQualifyingViewModel @Inject constructor(
     private fun Race.getSprintShootout(): List<SprintQualifyingModel> {
         val list = this.sprint.qualifying.firstOrNull { it.label == SprintQualifyingType.SQ3 } ?: return emptyList()
 
-        return list.results.map {
-            val overview = driverOverview(it.driver.driver.id)
-            return@map SprintQualifyingModel.Result(
-                driver = it.driver,
-                finalQualifyingPosition = overview?.qualified,
-                sq1 = overview?.sprintQ1,
-                sq2 = overview?.sprintQ2,
-                sq3 = overview?.sprintQ3,
-                grid = overview?.race?.grid
-            )
-        }
+        return list.results
+            .mapIndexed { index, it ->
+                val overview = driverOverview(it.driver.driver.id)
+                return@mapIndexed SprintQualifyingModel.Result(
+                    driver = it.driver,
+                    finalQualifyingPosition = overview?.sprintQ3?.position ?: overview?.sprintQ2?.position ?: overview?.sprintQ1?.position ?: (index + 1),
+                    sq1 = overview?.sprintQ1,
+                    sq2 = overview?.sprintQ2,
+                    sq3 = overview?.sprintQ3,
+                    grid = overview?.sprintRace?.grid
+                )
+            }
     }
 
     override fun clickDriver(result: Driver) {
