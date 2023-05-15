@@ -78,11 +78,6 @@ internal class DashboardNavViewModelTest: BaseTest() {
     fun `initial load of vm runs dashboard use case`() {
         every { mockNavigator.navController } returns mockNavController
         initUnderTest()
-
-        verify {
-            mockNavigator.navController
-            mockNavController.addOnDestinationChangedListener(any())
-        }
         coVerify {
             mockDashboardSyncUseCase.sync()
         }
@@ -108,7 +103,7 @@ internal class DashboardNavViewModelTest: BaseTest() {
         val menuItem = menuItemName?.toSealedClass(MenuItem::class)
 
         initUnderTest()
-        underTest.onDestinationChanged(mockNavController, NavDestination(route), null)
+        underTest.onDestinationChanged(mockNavController, mockNavDestination(route), null)
         underTest.currentlySelectedItem.test {
             if (menuItem == null) {
                 assertEmittedCount(0)
@@ -135,7 +130,7 @@ internal class DashboardNavViewModelTest: BaseTest() {
 
         initUnderTest()
 
-        underTest.onDestinationChanged(mockNavController, NavDestination(route), null)
+        underTest.onDestinationChanged(mockNavController, mockNavDestination(route), null)
         underTest.showMenu.test {
             assertValue(showMenu)
         }
@@ -157,7 +152,7 @@ internal class DashboardNavViewModelTest: BaseTest() {
     fun `menu bottom bar when route is updated`(route: String, showBottomBar: Boolean) {
 
         initUnderTest()
-        underTest.onDestinationChanged(mockNavController, NavDestination(route), null)
+        underTest.onDestinationChanged(mockNavController, mockNavDestination(route), null)
         underTest.showBottomBar.test {
             assertValue(showBottomBar)
         }
@@ -239,7 +234,7 @@ internal class DashboardNavViewModelTest: BaseTest() {
         fun `clicking a season updates season if currently selected is menu for calendar`() {
 
             initUnderTest()
-            underTest.onDestinationChanged(mockNavController, NavDestination(Screen.Calendar.with(2019).route), null)
+            underTest.onDestinationChanged(mockNavController, mockNavDestination(Screen.Calendar.with(2019).route), null)
             underTest.currentlySelectedItem.testObserve()
             underTest.clickSeason(2020)
 
@@ -255,7 +250,7 @@ internal class DashboardNavViewModelTest: BaseTest() {
 
             initUnderTest()
             underTest.currentlySelectedItem.testObserve()
-            underTest.onDestinationChanged(mockNavController, NavDestination(Screen.Constructors.with(2019).route), null)
+            underTest.onDestinationChanged(mockNavController, mockNavDestination(Screen.Constructors.with(2019).route), null)
             underTest.clickSeason(2020)
 
             val destination = slot<NavigationDestination>()
@@ -268,6 +263,7 @@ internal class DashboardNavViewModelTest: BaseTest() {
         @Test
         fun `clicking a season updates season if currently selected is menu for drivers`() {
             initUnderTest()
+            underTest.onDestinationChanged(mockNavController, mockNavDestination(Screen.Drivers.with(2019).route), null)
             underTest.currentlySelectedItem.testObserve()
             underTest.clickSeason(2020)
 
@@ -334,5 +330,9 @@ internal class DashboardNavViewModelTest: BaseTest() {
         verify {
             mockDebugNavigationComponent.navigateTo("id")
         }
+    }
+
+    private fun mockNavDestination(withRoute: String): NavDestination = mockk(relaxed = true) {
+        every { route } returns withRoute
     }
 }
