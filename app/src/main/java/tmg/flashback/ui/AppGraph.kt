@@ -294,12 +294,10 @@ fun AppGraph(
     }
 
     DisposableEffect(deeplink) {
-        if (deeplink != null) {
-            when (deeplink) {
-                "search" -> { navigator.navigate(Screen.Search) }
-                "rss" -> { navigator.navigate(Screen.RSS) }
-                else -> { }
-            }
+        when (deeplink) {
+            "search" -> { navigator.navigate(Screen.Search) }
+            "rss" -> { navigator.navigate(Screen.RSS) }
+            else -> { }
         }
         this.onDispose { }
     }
