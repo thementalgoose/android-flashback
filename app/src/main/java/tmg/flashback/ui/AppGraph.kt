@@ -303,15 +303,6 @@ fun AppGraph(
     }
 }
 
-private fun NavController.buildCurrentRoute(): String? {
-    val dest = currentBackStackEntry?.destination ?: return null
-    var route = dest.route
-    dest.arguments.forEach { (key, navArgument) ->
-       route = route?.replace("{${key}}", navArgument.toString())
-    }
-    return route
-}
-
 private inline fun <reified T: Parcelable> NavBackStackEntry.getArgument(key: String): T {
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
         this.arguments?.getParcelable(key, T::class.java)!!

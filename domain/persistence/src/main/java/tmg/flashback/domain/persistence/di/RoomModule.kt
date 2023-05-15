@@ -82,7 +82,7 @@ private val MIGRATION_4_5 = object : Migration(4, 5) {
                 "(driver_id, season, round, constructor_id, qualified, q1, q2, q3, id, season_round_id) " +
                 "SELECT driver_id, season, round, constructor_id, qualified, q1, q2, q3, id, season_round_id " +
                 "FROM QualifyingResult")
-        database.execSQL("DROP TABLE QualifyingResult");
+        database.execSQL("DROP TABLE QualifyingResult")
         database.execSQL("ALTER TABLE QualifyingResult_Temp RENAME TO QualifyingResult")
 
         // Add SprintResult
@@ -155,7 +155,7 @@ private val MIGRATION_8_9 = object : Migration(8, 9) {
                 "(driver_id, season, round, constructor_id, qualified, q1, q2, q3, id, season_round_id) " +
                 "SELECT driver_id, season, round, constructor_id, qualified, q1, q2, q3, id, season_round_id " +
                 "FROM QualifyingResult")
-        database.execSQL("DROP TABLE QualifyingResult");
+        database.execSQL("DROP TABLE QualifyingResult")
         database.execSQL("ALTER TABLE QualifyingResult_Temp RENAME TO QualifyingResult")
 
         Log.i("Database", "Migrated DB from version $startVersion to $endVersion")

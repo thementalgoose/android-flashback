@@ -115,7 +115,7 @@ private fun Item(
                     start = 2.dp,
                     end = 2.dp
                 ),
-            text = item.label?.let { stringResource(id = it) } ?: "",
+            text = stringResource(id = item.label),
             textColor = colour.value,
             bold = true
         )

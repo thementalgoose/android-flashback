@@ -336,7 +336,7 @@ private val fakeStat = ConstructorSeasonModel.Stat(
 )
 
 private fun DriverEntry.driverSummary() =
-    tmg.flashback.constructors.ui.season.ConstructorSeasonModel.Driver(
+    ConstructorSeasonModel.Driver(
         this.driver()
     )
 

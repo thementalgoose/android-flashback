@@ -8,7 +8,7 @@ import javax.inject.Singleton
 
 @Singleton
 class AppDeviceConfigManager @Inject constructor(
-    private val topActivityProvider: tmg.flashback.navigation.ActivityProvider
+    private val topActivityProvider: ActivityProvider
 ): DeviceConfigManager {
     override fun getDeviceStatus(): DeviceStatus? {
         return topActivityProvider.activity?.let {

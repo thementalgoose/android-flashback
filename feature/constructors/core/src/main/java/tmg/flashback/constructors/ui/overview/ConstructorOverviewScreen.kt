@@ -419,7 +419,7 @@ private val fakeStat = ConstructorOverviewModel.Stat(
     value = "4"
 )
 private fun DriverEntry.history1() =
-    tmg.flashback.constructors.ui.overview.ConstructorOverviewModel.History(
+    ConstructorOverviewModel.History(
         season = 2022,
         pipe = PipeType.START,
         isInProgress = true,
@@ -432,7 +432,7 @@ private fun DriverEntry.history1() =
     )
 
 private fun DriverEntry.history2() =
-    tmg.flashback.constructors.ui.overview.ConstructorOverviewModel.History(
+    ConstructorOverviewModel.History(
         season = 2021,
         pipe = PipeType.START_END,
         isInProgress = false,
@@ -445,7 +445,7 @@ private fun DriverEntry.history2() =
     )
 
 private fun DriverEntry.history3() =
-    tmg.flashback.constructors.ui.overview.ConstructorOverviewModel.History(
+    ConstructorOverviewModel.History(
         season = 2020,
         pipe = PipeType.END,
         isInProgress = false,

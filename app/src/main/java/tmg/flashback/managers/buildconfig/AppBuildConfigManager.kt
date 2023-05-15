@@ -9,7 +9,7 @@ import javax.inject.Singleton
 
 @Singleton
 class AppBuildConfigManager @Inject constructor(
-    private val topActivityProvider: tmg.flashback.navigation.ActivityProvider
+    private val topActivityProvider: ActivityProvider
 ) : BuildConfigManager {
 
     override val versionCode: Int

@@ -17,7 +17,7 @@ interface ProvidedByViewModelOutputs {
 @HiltViewModel
 class ProvidedByViewModel @Inject constructor(
     private val homeRepository: HomeRepository,
-    private val navigationComponent: tmg.flashback.navigation.ApplicationNavigationComponent
+    private val navigationComponent: ApplicationNavigationComponent
 ): ViewModel(), ProvidedByViewModelInputs, ProvidedByViewModelOutputs {
 
     val inputs: ProvidedByViewModelInputs = this

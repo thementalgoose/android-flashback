@@ -14,9 +14,7 @@ import javax.inject.Inject
 
 //region Inputs
 
-interface ForceUpgradeViewModelInputs {
-
-}
+interface ForceUpgradeViewModelInputs
 
 //endregion
 
