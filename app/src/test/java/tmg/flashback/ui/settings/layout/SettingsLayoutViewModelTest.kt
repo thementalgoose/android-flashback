@@ -55,4 +55,38 @@ internal class SettingsLayoutViewModelTest: BaseTest() {
         }
         observer.assertEmittedCount(2)
     }
+
+    @Test
+    fun `empty weeks in schedule is true when pref is true`() {
+        every { mockHomeRepository.emptyWeeksInSchedule } returns true
+
+        initUnderTest()
+        underTest.outputs.emptyWeeksInSchedule.test {
+            assertValue(true)
+        }
+    }
+
+    @Test
+    fun `empty weeks in schedule is false when pref is false`() {
+        every { mockHomeRepository.emptyWeeksInSchedule } returns false
+
+        initUnderTest()
+        underTest.outputs.emptyWeeksInSchedule.test {
+            assertValue(false)
+        }
+    }
+
+    @Test
+    fun `click show empty weeks in schedule updates pref and updates value`() {
+        every { mockHomeRepository.emptyWeeksInSchedule } returns false
+
+        initUnderTest()
+        val observer = underTest.outputs.emptyWeeksInSchedule.testObserve()
+        underTest.inputs.prefClicked(Settings.Layout.showEmptyWeeksInSchedule(true))
+
+        verify {
+            mockHomeRepository.emptyWeeksInSchedule = true
+        }
+        observer.assertEmittedCount(2)
+    }
 }

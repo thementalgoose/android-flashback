@@ -38,6 +38,16 @@ object Settings {
             isChecked = isChecked,
             isEnabled = isEnabled
         )
+
+        val emptyWeeksInSchedule = "empty_weeks"
+        fun showEmptyWeeksInSchedule(isChecked: Boolean, isEnabled: Boolean = true) = Setting.Switch(
+            _key = emptyWeeksInSchedule,
+            title = R.string.settings_pref_empty_week_title,
+            subtitle = R.string.settings_pref_empty_week_description,
+            isBeta = true,
+            isChecked = isChecked,
+            isEnabled = isEnabled
+        )
     }
 
     object RSS {
