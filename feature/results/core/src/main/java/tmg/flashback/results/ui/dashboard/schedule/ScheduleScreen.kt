@@ -141,7 +141,7 @@ fun ScheduleScreen(
 
             items(items ?: emptyList(), key = { it.key }) { item ->
                 when (item) {
-                    is ScheduleModel.List -> {
+                    is ScheduleModel.RaceWeek -> {
                         Schedule(
                             model = item,
                             itemClicked = itemClicked
@@ -150,7 +150,7 @@ fun ScheduleScreen(
                     is ScheduleModel.Event -> {
                         Event(event = item)
                     }
-                    is ScheduleModel.CollapsableList -> {
+                    is ScheduleModel.GroupedCompletedRaces -> {
                         Spacer(Modifier.height(AppTheme.dimens.xsmall))
                         CollapsableList(
                             model = item,
@@ -160,6 +160,10 @@ fun ScheduleScreen(
                     }
                     ScheduleModel.Loading -> {
                         SkeletonViewList()
+                    }
+
+                    is ScheduleModel.EmptyWeek -> {
+                        TextBody2(text = "Week ${item.monday}")
                     }
                 }
             }
@@ -173,8 +177,8 @@ fun ScheduleScreen(
 
 @Composable
 private fun CollapsableList(
-    model: ScheduleModel.CollapsableList,
-    itemClicked: (ScheduleModel.CollapsableList) -> Unit,
+    model: ScheduleModel.GroupedCompletedRaces,
+    itemClicked: (ScheduleModel.GroupedCompletedRaces) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val contentDescription = stringResource(id = R.string.ab_collapsed_section,
@@ -185,7 +189,7 @@ private fun CollapsableList(
     )
     Row(modifier = modifier
         .clickable { itemClicked(model) }
-        .semantics(mergeDescendants = true) {  }
+        .semantics(mergeDescendants = true) { }
         .clearAndSetSemantics { this.stateDescription = contentDescription }
         .padding(
             horizontal = AppTheme.dimens.xsmall,
@@ -303,12 +307,12 @@ private fun PreviewSchedule(
     AppThemePreview {
         Column(Modifier.fillMaxWidth()) {
             Schedule(
-                model = ScheduleModel.List(race, notificationSchedule = fakeNotificationSchedule),
+                model = ScheduleModel.RaceWeek(race, notificationSchedule = fakeNotificationSchedule),
                 itemClicked = { }
             )
             Spacer(Modifier.height(16.dp))
             Schedule(
-                model = ScheduleModel.List(race, notificationSchedule = fakeNotificationSchedule, showScheduleList = true),
+                model = ScheduleModel.RaceWeek(race, notificationSchedule = fakeNotificationSchedule, showScheduleList = true),
                 itemClicked = { }
             )
         }

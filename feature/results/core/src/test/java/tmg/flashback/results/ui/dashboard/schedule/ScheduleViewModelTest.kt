@@ -24,7 +24,6 @@ import tmg.flashback.navigation.Screen
 import tmg.flashback.results.contract.ResultsNavigationComponent
 import tmg.flashback.results.model.toScreenWeekendData
 import tmg.flashback.weekend.contract.Weekend
-import tmg.flashback.weekend.contract.model.ScreenWeekendData
 import tmg.flashback.weekend.contract.with
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.test
@@ -101,12 +100,12 @@ internal class ScheduleViewModelTest: BaseTest() {
 
         underTest.outputs.items.test {
             assertValue(listOf(
-                ScheduleModel.List(
+                ScheduleModel.RaceWeek(
                     model = OverviewRace.model(round = 1, date = LocalDate.of(2020, 1, 1)),
                     notificationSchedule = fakeNotificationSchedule,
                     showScheduleList = false
                 ),
-                ScheduleModel.List(
+                ScheduleModel.RaceWeek(
                     model = OverviewRace.model(round = 2, date = LocalDate.of(2020, 1, 3)),
                     notificationSchedule = fakeNotificationSchedule,
                     showScheduleList = false
@@ -145,12 +144,12 @@ internal class ScheduleViewModelTest: BaseTest() {
 
         underTest.outputs.items.test {
             assertValue(listOf(
-                ScheduleModel.List(
+                ScheduleModel.RaceWeek(
                     model = OverviewRace.model(round = 1, date = LocalDate.of(2020, 1, 1)),
                     notificationSchedule = fakeNotificationSchedule,
                     showScheduleList = false
                 ),
-                ScheduleModel.List(
+                ScheduleModel.RaceWeek(
                     model = OverviewRace.model(round = 2, date = LocalDate.of(2020, 1, 3)),
                     notificationSchedule = fakeNotificationSchedule,
                     showScheduleList = false
@@ -181,21 +180,21 @@ internal class ScheduleViewModelTest: BaseTest() {
 
         underTest.outputs.items.test {
             assertValue(listOf(
-                ScheduleModel.CollapsableList(
+                ScheduleModel.GroupedCompletedRaces(
                     first = dayBeforeDayBeforeYesterday,
                     last = dayBeforeYesterday
                 ),
-                ScheduleModel.List(
+                ScheduleModel.RaceWeek(
                     model = yesterday,
                     notificationSchedule = fakeNotificationSchedule,
                     showScheduleList = false
                 ),
-                ScheduleModel.List(
+                ScheduleModel.RaceWeek(
                     model = today,
                     notificationSchedule = fakeNotificationSchedule,
                     showScheduleList = true
                 ),
-                ScheduleModel.List(
+                ScheduleModel.RaceWeek(
                     model = tomorrow,
                     notificationSchedule = fakeNotificationSchedule,
                     showScheduleList = false
@@ -220,12 +219,12 @@ internal class ScheduleViewModelTest: BaseTest() {
 
         underTest.outputs.items.test {
             assertValue(listOf(
-                ScheduleModel.List(
+                ScheduleModel.RaceWeek(
                     model = today,
                     notificationSchedule = fakeNotificationSchedule,
                     showScheduleList = true
                 ),
-                ScheduleModel.List(
+                ScheduleModel.RaceWeek(
                     model = tomorrow,
                     notificationSchedule = fakeNotificationSchedule,
                     showScheduleList = false
@@ -257,7 +256,7 @@ internal class ScheduleViewModelTest: BaseTest() {
     fun `clicking item goes to constructor overview`() {
         initUnderTest()
         underTest.load(2020)
-        val model = ScheduleModel.List(
+        val model = ScheduleModel.RaceWeek(
             model = OverviewRace.model(round = 1),
             notificationSchedule = fakeNotificationSchedule,
             showScheduleList = false

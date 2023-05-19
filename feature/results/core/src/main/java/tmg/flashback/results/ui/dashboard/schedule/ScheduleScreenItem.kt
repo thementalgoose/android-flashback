@@ -51,8 +51,8 @@ private const val pastScheduleAlpha = 0.2f
 
 @Composable
 internal fun Schedule(
-    model: ScheduleModel.List,
-    itemClicked: (ScheduleModel.List) -> Unit,
+    model: ScheduleModel.RaceWeek,
+    itemClicked: (ScheduleModel.RaceWeek) -> Unit,
     modifier: Modifier = Modifier,
     card: Boolean = false
 ) {
@@ -331,7 +331,7 @@ private fun Preview(
     AppThemePreview {
         Column(Modifier.fillMaxWidth()) {
             Schedule(
-                model = ScheduleModel.List(
+                model = ScheduleModel.RaceWeek(
                     model = overviewRace,
                     showScheduleList = false,
                     notificationSchedule = fakeNotificationSchedule,
@@ -340,7 +340,7 @@ private fun Preview(
                 itemClicked = {}
             )
             Schedule(
-                model = ScheduleModel.List(
+                model = ScheduleModel.RaceWeek(
                     model = overviewRace,
                     showScheduleList = true,
                     notificationSchedule = fakeNotificationSchedule,
