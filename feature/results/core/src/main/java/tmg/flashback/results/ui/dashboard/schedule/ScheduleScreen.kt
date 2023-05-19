@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.runtime.Composable
@@ -43,8 +44,10 @@ import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.navigation.appBarHeight
+import tmg.flashback.ui.components.now.Now
 import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
 import tmg.utilities.extensions.format
+import tmg.utilities.extensions.startOfWeek
 
 private const val listAlpha = 0.6f
 private val expandIcon = 20.dp
@@ -163,7 +166,7 @@ fun ScheduleScreen(
                     }
 
                     is ScheduleModel.EmptyWeek -> {
-                        TextBody2(text = "Week ${item.monday}")
+                        EmptyWeek(model = item)
                     }
                 }
             }
@@ -246,6 +249,29 @@ private fun CollapsableList(
         }
 
         Expand()
+    }
+}
+
+@Composable
+private fun EmptyWeek(
+    model: ScheduleModel.EmptyWeek
+) { 
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(AppTheme.dimens.medium)
+    ) {
+        if (model.monday == LocalDate.now().startOfWeek()) {
+            Now(Modifier.align(Alignment.CenterStart).alpha(0.5f))
+        }
+        Box(Modifier
+            .fillMaxWidth()
+            .height(2.dp)
+            .align(Alignment.Center)
+            .padding(horizontal = AppTheme.dimens.medium)
+            .background(AppTheme.colors.backgroundSecondary)
+            .alpha(0.3f)
+        )
     }
 }
 
