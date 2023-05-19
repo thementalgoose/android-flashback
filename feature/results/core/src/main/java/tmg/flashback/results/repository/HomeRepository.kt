@@ -74,13 +74,6 @@ class HomeRepository @Inject constructor(
     /**
      * Default to which tab
      */
-    var defaultToSchedule: Boolean
-        get() = preferenceManager.getBoolean(keyDefaultToSchedule, true)
-        set(value) = preferenceManager.save(keyDefaultToSchedule, value)
-
-    /**
-     * Default to which tab
-     */
     var collapseList: Boolean
         get() = preferenceManager.getBoolean(keyDashboardCollapseList, true)
         set(value) = preferenceManager.save(keyDashboardCollapseList, value)
