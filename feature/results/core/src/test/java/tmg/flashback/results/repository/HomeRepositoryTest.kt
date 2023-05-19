@@ -163,32 +163,6 @@ internal class HomeRepositoryTest {
 
 
 
-
-    //region Default to schedule
-
-    @Test
-    fun `default to schedule reads value from preferences repository`() {
-        every { mockPreferenceManager.getBoolean(keyDefaultToSchedule, true) } returns true
-        initSUT()
-
-        assertTrue(sut.defaultToSchedule)
-        verify {
-            mockPreferenceManager.getBoolean(keyDefaultToSchedule, true)
-        }
-    }
-
-    @Test
-    fun `default to schedule saves value to shared prefs repository`() {
-        initSUT()
-
-        sut.defaultToSchedule = true
-        verify {
-            mockPreferenceManager.save(keyDefaultToSchedule, true)
-        }
-    }
-
-    //endregion
-
     //region Dashboard Collapse List
 
     @Test
@@ -209,6 +183,28 @@ internal class HomeRepositoryTest {
         sut.collapseList = true
         verify {
             mockPreferenceManager.save(keyDashboardCollapseList, true)
+        }
+    }
+
+
+    @Test
+    fun `empty weeks in schedule reads value from preferences repository`() {
+        every { mockPreferenceManager.getBoolean(keyEmptyWeeksInSchedule, false) } returns true
+        initSUT()
+
+        assertTrue(sut.emptyWeeksInSchedule)
+        verify {
+            mockPreferenceManager.getBoolean(keyEmptyWeeksInSchedule, false)
+        }
+    }
+
+    @Test
+    fun `empty weeks in schedule saves value to shared prefs repository`() {
+        initSUT()
+
+        sut.emptyWeeksInSchedule = true
+        verify {
+            mockPreferenceManager.save(keyEmptyWeeksInSchedule, true)
         }
     }
 
@@ -313,9 +309,9 @@ internal class HomeRepositoryTest {
         private const val keyDataProvidedBy: String = "data_provided"
         private const val keySupportedSeasons: String = "supported_seasons"
         private const val keySearch: String = "search"
+        private const val keyEmptyWeeksInSchedule: String = "empty_weeks_in_schedule"
 
         // Prefs
-        private const val keyDefaultToSchedule: String = "DASHBOARD_DEFAULT_TAB_SCHEDULE"
         private const val keyDashboardCollapseList: String = "DASHBOARD_COLLAPSE_LIST"
         private const val keyFavouriteSeasons: String = "FAVOURITE_SEASONS"
         private const val keyDefaultSeason: String = "DEFAULT_SEASON"

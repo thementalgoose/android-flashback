@@ -7,13 +7,20 @@ import tmg.flashback.results.repository.models.NotificationSchedule
 sealed class ScheduleModel(
     val key: String
 ) {
-    data class List(
+
+    data class EmptyWeek(
+        val monday: LocalDate,
+    ): ScheduleModel(
+        key = "empty-$monday"
+    )
+
+    data class RaceWeek(
         val model: OverviewRace,
         private val showScheduleList: Boolean = false,
         val notificationSchedule: NotificationSchedule,
         val id: String = model.raceName
     ): ScheduleModel(
-        key = "${model.season} ${model.raceName}"
+        key = "${model.season} ${model.round} ${model.raceName}"
     ) {
         val date: LocalDate
             get() = model.date
@@ -28,7 +35,7 @@ sealed class ScheduleModel(
             get() = model.date.isAfter(LocalDate.now()) && !shouldShowScheduleList
     }
 
-    data class CollapsableList(
+    data class GroupedCompletedRaces(
         val first: OverviewRace,
         val last: OverviewRace?
     ): ScheduleModel(

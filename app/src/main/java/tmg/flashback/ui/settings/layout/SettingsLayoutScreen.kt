@@ -28,12 +28,14 @@ fun SettingsLayoutScreenVM(
 ) {
     ScreenView(screenName = "Settings - Layout")
 
-    val providedByAtTopEnabled = viewModel.outputs.collapsedListEnabled.observeAsState(true)
+    val collapsedList = viewModel.outputs.collapsedListEnabled.observeAsState(true)
+    val emptyWeeksInSchedule = viewModel.outputs.emptyWeeksInSchedule.observeAsState(false)
     SettingsLayoutScreen(
         showBack = showBack,
         actionUpClicked = actionUpClicked,
         prefClicked = viewModel.inputs::prefClicked,
-        collapsedListEnabled = providedByAtTopEnabled.value
+        collapsedListEnabled = collapsedList.value,
+        showEmptyWeeksInSchedule = emptyWeeksInSchedule.value
     )
 }
 
@@ -42,7 +44,8 @@ fun SettingsLayoutScreen(
     showBack: Boolean,
     actionUpClicked: () -> Unit,
     prefClicked: (Setting) -> Unit,
-    collapsedListEnabled: Boolean
+    collapsedListEnabled: Boolean,
+    showEmptyWeeksInSchedule: Boolean
 ) {
     LazyColumn(
         modifier = Modifier
@@ -66,6 +69,10 @@ fun SettingsLayoutScreen(
                 model = Settings.Layout.collapseList(collapsedListEnabled),
                 onClick = prefClicked
             )
+            Switch(
+                model = Settings.Layout.showEmptyWeeksInSchedule(showEmptyWeeksInSchedule),
+                onClick = prefClicked
+            )
 
             Footer()
         }
@@ -80,7 +87,8 @@ private fun Preview() {
             showBack = true,
             actionUpClicked = {},
             prefClicked = {},
-            collapsedListEnabled = true
+            collapsedListEnabled = true,
+            showEmptyWeeksInSchedule = false
         )
     }
 }
