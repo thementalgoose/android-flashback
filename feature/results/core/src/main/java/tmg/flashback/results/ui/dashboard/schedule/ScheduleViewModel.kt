@@ -114,61 +114,6 @@ class ScheduleViewModel @Inject constructor(
         .flowOn(ioDispatcher)
         .asLiveData(viewModelScope.coroutineContext)
 
-    private fun List<OverviewRace>.getLatestUpcoming(): OverviewRace? {
-        return this
-            .sortedBy { it.date }
-            .firstOrNull { it.date >= LocalDate.now() }
-    }
-
-    override fun load(season: Int) {
-        if (this.season.value != season) {
-            this.showCollapsablePlaceholder.value = homeRepository.collapseList
-        }
-        this.season.value = season
-    }
-
-    override fun refresh() {
-        val season = season.value ?: return
-
-        showEvents.postValue(false)
-        isRefreshing.postValue(true)
-        viewModelScope.launch(ioDispatcher) {
-            fetchSeasonUseCase.fetchSeason(season)
-            isRefreshing.postValue(false)
-        }
-    }
-
-    override fun clickTyre(season: Int) {
-        resultsNavigationComponent.tyres(season)
-    }
-
-    override fun clickPreseason(season: Int) {
-        resultsNavigationComponent.preseasonEvents(season)
-    }
-
-    override fun clickItem(model: ScheduleModel) {
-        when (model) {
-            is ScheduleModel.List -> navigator.navigate(
-                Screen.Weekend.with(
-                ScreenWeekendData(
-                    season = model.model.season,
-                    round = model.model.round,
-                    raceName = model.model.raceName,
-                    circuitId = model.model.circuitId,
-                    circuitName = model.model.circuitName,
-                    country = model.model.country,
-                    countryISO = model.model.countryISO,
-                    date = model.model.date,
-                )
-            ))
-            is ScheduleModel.CollapsableList -> {
-                showCollapsablePlaceholder.value = false
-            }
-            is ScheduleModel.Event -> {}
-            ScheduleModel.Loading -> {}
-        }
-    }
-
     private fun schedule(
         overview: Overview,
         upcomingEvents: List<Event>,
@@ -237,6 +182,61 @@ class ScheduleViewModel @Inject constructor(
                     else -> null
                 }
             }
+    }
+
+    private fun List<OverviewRace>.getLatestUpcoming(): OverviewRace? {
+        return this
+            .sortedBy { it.date }
+            .firstOrNull { it.date >= LocalDate.now() }
+    }
+
+    override fun load(season: Int) {
+        if (this.season.value != season) {
+            this.showCollapsablePlaceholder.value = homeRepository.collapseList
+        }
+        this.season.value = season
+    }
+
+    override fun refresh() {
+        val season = season.value ?: return
+
+        showEvents.postValue(false)
+        isRefreshing.postValue(true)
+        viewModelScope.launch(ioDispatcher) {
+            fetchSeasonUseCase.fetchSeason(season)
+            isRefreshing.postValue(false)
+        }
+    }
+
+    override fun clickTyre(season: Int) {
+        resultsNavigationComponent.tyres(season)
+    }
+
+    override fun clickPreseason(season: Int) {
+        resultsNavigationComponent.preseasonEvents(season)
+    }
+
+    override fun clickItem(model: ScheduleModel) {
+        when (model) {
+            is ScheduleModel.List -> navigator.navigate(
+                Screen.Weekend.with(
+                ScreenWeekendData(
+                    season = model.model.season,
+                    round = model.model.round,
+                    raceName = model.model.raceName,
+                    circuitId = model.model.circuitId,
+                    circuitName = model.model.circuitName,
+                    country = model.model.country,
+                    countryISO = model.model.countryISO,
+                    date = model.model.date,
+                )
+            ))
+            is ScheduleModel.CollapsableList -> {
+                showCollapsablePlaceholder.value = false
+            }
+            is ScheduleModel.Event -> {}
+            ScheduleModel.Loading -> {}
+        }
     }
 }
 
