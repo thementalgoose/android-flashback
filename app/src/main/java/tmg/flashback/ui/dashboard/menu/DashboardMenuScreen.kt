@@ -244,7 +244,7 @@ private fun Label(
                 start = AppTheme.dimens.medium,
                 end = AppTheme.dimens.medium,
                 top = AppTheme.dimens.nsmall,
-                bottom = AppTheme.dimens.small
+                bottom = AppTheme.dimens.large
             ),
         text = msg
     )
