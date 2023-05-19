@@ -153,9 +153,6 @@ internal class ScheduleViewModelTest: BaseTest() {
                     model = OverviewRace.model(round = 2, date = LocalDate.of(2020, 1, 3)),
                     notificationSchedule = fakeNotificationSchedule,
                     showScheduleList = false
-                ),
-                ScheduleModel.Event(
-                    Event.model(date = LocalDate.now().plusDays(1))
                 )
             ))
         }
