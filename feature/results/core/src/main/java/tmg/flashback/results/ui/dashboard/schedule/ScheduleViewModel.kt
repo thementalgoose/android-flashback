@@ -101,7 +101,7 @@ class ScheduleViewModel @Inject constructor(
                             events = events,
                             showCollapsePreviousRaces = showCollapsible,
                             notificationSchedule = notificationRepository.notificationSchedule,
-                            showEmptyWeeks = false
+                            showEmptyWeeks = homeRepository.emptyWeeksInSchedule
                         )
                     }
                 }
