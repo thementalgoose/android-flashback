@@ -26,9 +26,9 @@ class HomeRepository @Inject constructor(
         private const val keyDataProvidedBy: String = "data_provided"
         private const val keySupportedSeasons: String = "supported_seasons"
         private const val keySearch: String = "search"
+        private const val keyEmptyWeeksInSchedule: String = "empty_weeks_in_schedule"
 
         // Prefs
-        private const val keyDefaultToSchedule: String = "DASHBOARD_DEFAULT_TAB_SCHEDULE"
         private const val keyDashboardCollapseList: String = "DASHBOARD_COLLAPSE_LIST"
         private const val keyFavouriteSeasons: String = "FAVOURITE_SEASONS"
         private const val keyDefaultSeason: String = "DEFAULT_SEASON"
@@ -70,6 +70,13 @@ class HomeRepository @Inject constructor(
      */
     val searchEnabled: Boolean
         get() = configManager.getBoolean(keySearch)
+
+    /**
+     * Show empty week indicators
+     */
+    var emptyWeeksInSchedule: Boolean
+        get() = preferenceManager.getBoolean(keyEmptyWeeksInSchedule, false)
+        set(value) = preferenceManager.save(keyEmptyWeeksInSchedule, value)
 
     /**
      * Default to which tab
