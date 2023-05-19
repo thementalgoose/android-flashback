@@ -163,32 +163,6 @@ internal class HomeRepositoryTest {
 
 
 
-
-    //region Default to schedule
-
-    @Test
-    fun `default to schedule reads value from preferences repository`() {
-        every { mockPreferenceManager.getBoolean(keyDefaultToSchedule, true) } returns true
-        initSUT()
-
-        assertTrue(sut.defaultToSchedule)
-        verify {
-            mockPreferenceManager.getBoolean(keyDefaultToSchedule, true)
-        }
-    }
-
-    @Test
-    fun `default to schedule saves value to shared prefs repository`() {
-        initSUT()
-
-        sut.defaultToSchedule = true
-        verify {
-            mockPreferenceManager.save(keyDefaultToSchedule, true)
-        }
-    }
-
-    //endregion
-
     //region Dashboard Collapse List
 
     @Test
