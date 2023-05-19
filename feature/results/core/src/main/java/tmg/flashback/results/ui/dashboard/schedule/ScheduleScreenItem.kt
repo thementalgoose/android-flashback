@@ -40,8 +40,10 @@ import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextSection
 import tmg.flashback.style.text.TextTitle
 import tmg.flashback.ui.components.layouts.Container
+import tmg.flashback.ui.components.now.Now
 import tmg.utilities.extensions.format
 import tmg.utilities.extensions.ordinalAbbreviation
+import tmg.utilities.extensions.startOfWeek
 
 private val countryBadgeSize = 32.dp
 private const val listAlpha = 0.6f
@@ -51,8 +53,8 @@ private const val pastScheduleAlpha = 0.2f
 
 @Composable
 internal fun Schedule(
-    model: ScheduleModel.List,
-    itemClicked: (ScheduleModel.List) -> Unit,
+    model: ScheduleModel.RaceWeek,
+    itemClicked: (ScheduleModel.RaceWeek) -> Unit,
     modifier: Modifier = Modifier,
     card: Boolean = false
 ) {
@@ -79,14 +81,18 @@ internal fun Schedule(
                 Box(modifier = Modifier
                     .padding(
                         top = AppTheme.dimens.medium,
-                        end = AppTheme.dimens.nsmall,
-                        start = AppTheme.dimens.nsmall
+                        end = AppTheme.dimens.nsmall
                     )
                 ) {
+                    if (model.model.date.startOfWeek() == LocalDate.now().startOfWeek()) {
+                        Now(Modifier.align(Alignment.CenterStart))
+                    }
                     Flag(
                         iso = model.model.countryISO,
                         nationality = null,
-                        modifier = Modifier.size(countryBadgeSize),
+                        modifier = Modifier
+                            .padding(start = AppTheme.dimens.medium)
+                            .size(countryBadgeSize),
                     )
                 }
                 Column(modifier = Modifier
@@ -221,7 +227,7 @@ private fun Dates(
         state = scrollState,
         content = {
             item {
-                Spacer(Modifier.width(countryBadgeSize + (AppTheme.dimens.nsmall * 2)))
+                Spacer(Modifier.width(countryBadgeSize + (AppTheme.dimens.nsmall + AppTheme.dimens.medium)))
             }
             for ((date, list) in schedule) {
                 val alpha = if (date.isBefore(LocalDate.now()) || list.all { it.timestamp.isInPast }) pastScheduleAlpha else 1f
@@ -331,7 +337,7 @@ private fun Preview(
     AppThemePreview {
         Column(Modifier.fillMaxWidth()) {
             Schedule(
-                model = ScheduleModel.List(
+                model = ScheduleModel.RaceWeek(
                     model = overviewRace,
                     showScheduleList = false,
                     notificationSchedule = fakeNotificationSchedule,
@@ -340,7 +346,7 @@ private fun Preview(
                 itemClicked = {}
             )
             Schedule(
-                model = ScheduleModel.List(
+                model = ScheduleModel.RaceWeek(
                     model = overviewRace,
                     showScheduleList = true,
                     notificationSchedule = fakeNotificationSchedule,

@@ -43,6 +43,7 @@ import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextSection
 import tmg.flashback.ui.components.navigation.NavigationTimelineItem
 import tmg.flashback.ui.components.navigation.PipeType
+import tmg.flashback.ui.components.now.Now
 import tmg.flashback.ui.dashboard.FeaturePrompt
 import tmg.flashback.ui.dashboard.MenuItem
 
@@ -188,14 +189,7 @@ private fun TimelineItem(
             .fillMaxHeight()
         ) {
             if (season == Formula1.currentSeasonYear) {
-                Icon(
-                    modifier = Modifier
-                        .align(Alignment.Center)
-                        .alpha(0.4f),
-                    painter = painterResource(id = tmg.flashback.results.R.drawable.ic_current_indicator),
-                    contentDescription = null,
-                    tint = AppTheme.colors.contentPrimary
-                )
+                Now(Modifier.align(Alignment.Center))
             }
         }
         Timeline(

@@ -11,7 +11,7 @@ internal class ScheduleModelTest {
 
     @Test
     fun `should show schedule list returns true when requested and schedule not empty`() {
-        val item = ScheduleModel.List(
+        val item = ScheduleModel.RaceWeek(
             model = OverviewRace.model(),
             notificationSchedule = mockk(),
             showScheduleList = true
@@ -22,7 +22,7 @@ internal class ScheduleModelTest {
 
     @Test
     fun `should show schedule list returns false when requested and schedule empty`() {
-        val item = ScheduleModel.List(
+        val item = ScheduleModel.RaceWeek(
             model = OverviewRace.model(schedule = emptyList()),
             notificationSchedule = mockk(),
             showScheduleList = true
@@ -33,7 +33,7 @@ internal class ScheduleModelTest {
 
     @Test
     fun `should show schedule list returns false when not requested and schedule empty`() {
-        val item = ScheduleModel.List(
+        val item = ScheduleModel.RaceWeek(
             model = OverviewRace.model(),
             notificationSchedule = mockk(),
             showScheduleList = false
@@ -46,7 +46,7 @@ internal class ScheduleModelTest {
 
     @Test
     fun `fade item returns true if item is in future and doesnt have schedule`() {
-        val item = ScheduleModel.List(
+        val item = ScheduleModel.RaceWeek(
             model = OverviewRace.model(
                 date = LocalDate.now().plusDays(1L),
                 schedule = emptyList()
@@ -60,7 +60,7 @@ internal class ScheduleModelTest {
 
     @Test
     fun `fade item returns false if item is in future and has showing schedule`() {
-        val item = ScheduleModel.List(
+        val item = ScheduleModel.RaceWeek(
             model = OverviewRace.model(
                 date = LocalDate.now().plusDays(1L),
             ),
@@ -73,7 +73,7 @@ internal class ScheduleModelTest {
 
     @Test
     fun `fade item returns false if item is today`() {
-        val item = ScheduleModel.List(
+        val item = ScheduleModel.RaceWeek(
             model = OverviewRace.model(
                 date = LocalDate.now(),
             ),
@@ -86,7 +86,7 @@ internal class ScheduleModelTest {
 
     @Test
     fun `fade item returns false if item is in past`() {
-        val item = ScheduleModel.List(
+        val item = ScheduleModel.RaceWeek(
             model = OverviewRace.model(
                 date = LocalDate.now().minusDays(1L),
             ),

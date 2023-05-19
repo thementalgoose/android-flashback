@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.runtime.Composable
@@ -43,8 +44,10 @@ import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.navigation.appBarHeight
+import tmg.flashback.ui.components.now.Now
 import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
 import tmg.utilities.extensions.format
+import tmg.utilities.extensions.startOfWeek
 
 private const val listAlpha = 0.6f
 private val expandIcon = 20.dp
@@ -141,7 +144,7 @@ fun ScheduleScreen(
 
             items(items ?: emptyList(), key = { it.key }) { item ->
                 when (item) {
-                    is ScheduleModel.List -> {
+                    is ScheduleModel.RaceWeek -> {
                         Schedule(
                             model = item,
                             itemClicked = itemClicked
@@ -150,7 +153,7 @@ fun ScheduleScreen(
                     is ScheduleModel.Event -> {
                         Event(event = item)
                     }
-                    is ScheduleModel.CollapsableList -> {
+                    is ScheduleModel.GroupedCompletedRaces -> {
                         Spacer(Modifier.height(AppTheme.dimens.xsmall))
                         CollapsableList(
                             model = item,
@@ -160,6 +163,10 @@ fun ScheduleScreen(
                     }
                     ScheduleModel.Loading -> {
                         SkeletonViewList()
+                    }
+
+                    is ScheduleModel.EmptyWeek -> {
+                        EmptyWeek(model = item)
                     }
                 }
             }
@@ -173,8 +180,8 @@ fun ScheduleScreen(
 
 @Composable
 private fun CollapsableList(
-    model: ScheduleModel.CollapsableList,
-    itemClicked: (ScheduleModel.CollapsableList) -> Unit,
+    model: ScheduleModel.GroupedCompletedRaces,
+    itemClicked: (ScheduleModel.GroupedCompletedRaces) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val contentDescription = stringResource(id = R.string.ab_collapsed_section,
@@ -185,7 +192,7 @@ private fun CollapsableList(
     )
     Row(modifier = modifier
         .clickable { itemClicked(model) }
-        .semantics(mergeDescendants = true) {  }
+        .semantics(mergeDescendants = true) { }
         .clearAndSetSemantics { this.stateDescription = contentDescription }
         .padding(
             horizontal = AppTheme.dimens.xsmall,
@@ -242,6 +249,29 @@ private fun CollapsableList(
         }
 
         Expand()
+    }
+}
+
+@Composable
+private fun EmptyWeek(
+    model: ScheduleModel.EmptyWeek
+) { 
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(AppTheme.dimens.medium)
+    ) {
+        if (model.monday == LocalDate.now().startOfWeek()) {
+            Now(Modifier.align(Alignment.CenterStart).alpha(0.5f))
+        }
+        Box(Modifier
+            .fillMaxWidth()
+            .height(2.dp)
+            .align(Alignment.Center)
+            .padding(horizontal = AppTheme.dimens.medium)
+            .background(AppTheme.colors.backgroundSecondary)
+            .alpha(0.3f)
+        )
     }
 }
 
@@ -303,12 +333,12 @@ private fun PreviewSchedule(
     AppThemePreview {
         Column(Modifier.fillMaxWidth()) {
             Schedule(
-                model = ScheduleModel.List(race, notificationSchedule = fakeNotificationSchedule),
+                model = ScheduleModel.RaceWeek(race, notificationSchedule = fakeNotificationSchedule),
                 itemClicked = { }
             )
             Spacer(Modifier.height(16.dp))
             Schedule(
-                model = ScheduleModel.List(race, notificationSchedule = fakeNotificationSchedule, showScheduleList = true),
+                model = ScheduleModel.RaceWeek(race, notificationSchedule = fakeNotificationSchedule, showScheduleList = true),
                 itemClicked = { }
             )
         }

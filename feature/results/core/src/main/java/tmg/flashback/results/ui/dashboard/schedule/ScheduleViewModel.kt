@@ -26,6 +26,7 @@ import tmg.flashback.results.usecases.FetchSeasonUseCase
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.flashback.results.contract.ResultsNavigationComponent
+import tmg.flashback.results.ui.dashboard.schedule.ScheduleModelBuilder.generateScheduleModel
 import tmg.flashback.weekend.contract.Weekend
 import tmg.flashback.weekend.contract.model.ScreenWeekendData
 import tmg.flashback.weekend.contract.with
@@ -93,20 +94,14 @@ class ScheduleViewModel @Inject constructor(
                             return@combine listOf(ScheduleModel.Loading)
                         }
 
-                        val upcoming = overview.overviewRaces.getLatestUpcoming()
-                        val upcomingEvents = if (upcoming?.round == 1 && upcoming.date >= LocalDate.now().plusDays(3)) {
-                            events
-                        } else {
-                            events.filter { it.date >= LocalDate.now() }
-                        }
-
                         showEvents.postValue(events.any())
 
-                        return@combine schedule(
+                        return@combine generateScheduleModel(
                             overview = overview,
-                            upcomingEvents = upcomingEvents,
-                            upcoming = upcoming,
-                            showCollapsible = showCollapsible
+                            events = events,
+                            showCollapsePreviousRaces = showCollapsible,
+                            notificationSchedule = notificationRepository.notificationSchedule,
+                            showEmptyWeeks = homeRepository.emptyWeeksInSchedule
                         )
                     }
                 }
@@ -148,7 +143,8 @@ class ScheduleViewModel @Inject constructor(
 
     override fun clickItem(model: ScheduleModel) {
         when (model) {
-            is ScheduleModel.List -> navigator.navigate(
+            is ScheduleModel.EmptyWeek -> {}
+            is ScheduleModel.RaceWeek -> navigator.navigate(
                 Screen.Weekend.with(
                 ScreenWeekendData(
                     season = model.model.season,
@@ -161,82 +157,12 @@ class ScheduleViewModel @Inject constructor(
                     date = model.model.date,
                 )
             ))
-            is ScheduleModel.CollapsableList -> {
+            is ScheduleModel.GroupedCompletedRaces -> {
                 showCollapsablePlaceholder.value = false
             }
             is ScheduleModel.Event -> {}
             ScheduleModel.Loading -> {}
         }
-    }
-
-    private fun schedule(
-        overview: Overview,
-        upcomingEvents: List<Event>,
-        upcoming: OverviewRace?,
-        showCollapsible: Boolean
-    ): List<ScheduleModel> {
-        return mutableListOf<ScheduleModel>()
-            .apply {
-                val first = overview.overviewRaces.minByOrNull { it.round }
-                if (showCollapsible &&
-                    upcoming != null &&
-                    first != null &&
-                    first.round != upcoming.round &&
-                    upcoming.round > 3
-                ) {
-                    val previousRace = overview.overviewRaces.firstOrNull { it.round == upcoming.round - 1 }
-                    if (previousRace != null) {
-                        add(ScheduleModel.CollapsableList(
-                            first = first,
-                            last = overview.overviewRaces.firstOrNull { it.round == upcoming.round - 2 }
-                        ))
-                        addAll(overview.overviewRaces
-                            .filter { it.round >= upcoming.round - 1 }
-                            .map {
-                                ScheduleModel.List(
-                                    model = it,
-                                    notificationSchedule = notificationRepository.notificationSchedule,
-                                    showScheduleList = it == upcoming
-                                )
-                            }
-                        )
-                    } else {
-                        add(ScheduleModel.CollapsableList(
-                            first = first,
-                            last = overview.overviewRaces.firstOrNull { it.round == upcoming.round - 1 }
-                        ))
-                        addAll(overview.overviewRaces
-                            .filter { it.round >= upcoming.round }
-                            .map {
-                                ScheduleModel.List(
-                                    model = it,
-                                    notificationSchedule = notificationRepository.notificationSchedule,
-                                    showScheduleList = it == upcoming
-                                )
-                            }
-                        )
-                    }
-                } else {
-                    addAll(overview.overviewRaces.map {
-                        ScheduleModel.List(
-                            model = it,
-                            notificationSchedule = notificationRepository.notificationSchedule,
-                            showScheduleList = it == upcoming
-                        )
-                    })
-                }
-                addAll(upcomingEvents.map {
-                    ScheduleModel.Event(it)
-                })
-            }
-            .sortedBy {
-                when (it) {
-                    is ScheduleModel.CollapsableList -> it.first.date
-                    is ScheduleModel.Event -> it.date
-                    is ScheduleModel.List -> it.date
-                    else -> null
-                }
-            }
     }
 }
 

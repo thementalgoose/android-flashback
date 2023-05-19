@@ -15,6 +15,7 @@ interface SettingsLayoutViewModelInputs {
 
 interface SettingsLayoutViewModelOutputs {
     val collapsedListEnabled: LiveData<Boolean>
+    val emptyWeeksInSchedule: LiveData<Boolean>
 }
 
 @HiltViewModel
@@ -26,12 +27,17 @@ class SettingsLayoutViewModel @Inject constructor(
     val outputs: SettingsLayoutViewModelOutputs = this
 
     override val collapsedListEnabled: MutableLiveData<Boolean> = MutableLiveData(homeRepository.collapseList)
+    override val emptyWeeksInSchedule: MutableLiveData<Boolean> = MutableLiveData(homeRepository.emptyWeeksInSchedule)
 
     override fun prefClicked(pref: Setting) {
         when (pref.key) {
             Settings.Layout.collapseListKey -> {
                 homeRepository.collapseList = !homeRepository.collapseList
                 collapsedListEnabled.value = homeRepository.collapseList
+            }
+            Settings.Layout.emptyWeeksInSchedule -> {
+                homeRepository.emptyWeeksInSchedule = !homeRepository.emptyWeeksInSchedule
+                emptyWeeksInSchedule.value = homeRepository.emptyWeeksInSchedule
             }
         }
     }
