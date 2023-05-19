@@ -189,7 +189,7 @@ internal class HomeRepositoryTest {
 
     @Test
     fun `empty weeks in schedule reads value from preferences repository`() {
-        every { mockPreferenceManager.getBoolean(keyEmptyWeeksInSchedule, true) } returns true
+        every { mockPreferenceManager.getBoolean(keyEmptyWeeksInSchedule, false) } returns true
         initSUT()
 
         assertTrue(sut.emptyWeeksInSchedule)
@@ -204,7 +204,7 @@ internal class HomeRepositoryTest {
 
         sut.emptyWeeksInSchedule = true
         verify {
-            mockPreferenceManager.save(keyEmptyWeeksInSchedule, false)
+            mockPreferenceManager.save(keyEmptyWeeksInSchedule, true)
         }
     }
 
