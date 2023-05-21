@@ -82,20 +82,20 @@ private fun PreviewSwitch(
         Column {
             InputSelection(
                 label = "Night mode",
-                icon = R.drawable.lb_ic_shuffle,
+                icon = androidx.core.R.drawable.ic_call_answer_low,
                 isSelected = isSelected
             )
             Spacer(Modifier.height(16.dp))
             InputSelection(
                 label = "Night mode",
-                icon = R.drawable.lb_ic_shuffle,
+                icon = androidx.core.R.drawable.ic_call_answer_low,
                 isSelected = isSelected,
                 isChecked = true
             )
             Spacer(Modifier.height(16.dp))
             InputSelection(
                 label = "Night mode",
-                icon = R.drawable.lb_ic_shuffle,
+                icon = androidx.core.R.drawable.ic_call_answer_low,
                 isSelected = isSelected,
                 isChecked = false
             )
