@@ -17,10 +17,10 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_centerInParent="true"
-        android:paddingTop="2dp"
-        android:paddingBottom="2dp"
         android:paddingStart="0dp"
-        android:paddingEnd="@dimen/paddingSmall">
+        android:paddingTop="@dimen/paddingSmall"
+        android:paddingEnd="@dimen/paddingSmall"
+        android:paddingBottom="@dimen/paddingSmall">
 
         <TextView
             android:id="@+id/name"
@@ -72,36 +72,44 @@
             tools:text="days to go" />
 
         <ImageView
-            android:id="@+id/refresh"
-            android:layout_width="@dimen/widgetRefreshWidth"
-            android:layout_height="match_parent"
-            android:layout_alignTop="@id/flag"
-            android:layout_alignBottom="@id/flag"
-            android:layout_alignParentEnd="true"
-            android:importantForAccessibility="no"
-            android:src="@drawable/ic_widget_refresh"
-            app:tint="#fcfcfc" />
-
-        <ImageView
             android:id="@+id/circuit"
             android:layout_width="@dimen/widgetCircuitWidth"
             android:layout_height="@dimen/widgetCircuitHeight"
+            android:layout_alignBottom="@id/daystogo"
             android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/paddingSmall"
+            android:layout_toStartOf="@id/flag_container"
             android:importantForAccessibility="no"
             app:tint="#fcfcfc"
-            tools:src="@drawable/circuit_bahrain" />
+            tools:src="@drawable/circuit_bahrain"
+            tools:tint="#ffffff" />
 
-        <ImageView
-            android:id="@+id/flag"
-            android:layout_width="@dimen/widgetFlagSize"
-            android:layout_height="@dimen/widgetFlagSize"
-            android:layout_below="@id/circuit"
-            android:layout_alignStart="@id/circuit"
-            android:layout_alignEnd="@id/circuit"
-            android:layout_marginEnd="@dimen/paddingMedium"
-            android:importantForAccessibility="no"
-            app:srcCompat="@drawable/bh" />
+        <LinearLayout
+            android:id="@+id/flag_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/daystogo"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:padding="0dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/flag"
+                    android:layout_width="@dimen/widgetFlagSize"
+                    android:layout_height="@dimen/widgetFlagSize"
+                    android:importantForAccessibility="no"
+                    app:srcCompat="@drawable/bh" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
 
     </RelativeLayout>
 
