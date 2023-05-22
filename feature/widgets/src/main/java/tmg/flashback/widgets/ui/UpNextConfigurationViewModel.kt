@@ -43,8 +43,8 @@ internal class UpNextConfigurationViewModel @Inject constructor(
     }
 
     override fun changeShowBackground(enabled: Boolean) {
-        showBackground.value = enabled
         widgetRepository.setShowBackground(appWidgetId, enabled)
+        showBackground.value = enabled
     }
 
     override fun save() {

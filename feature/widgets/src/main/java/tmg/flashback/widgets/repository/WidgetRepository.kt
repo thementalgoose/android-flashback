@@ -5,7 +5,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-internal class WidgetRepository @Inject constructor(
+class WidgetRepository @Inject constructor(
     private val preferenceManager: PreferenceManager
 ) {
 
