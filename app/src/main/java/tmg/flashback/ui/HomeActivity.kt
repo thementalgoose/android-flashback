@@ -73,6 +73,7 @@ class HomeActivity: BaseActivity(), SplashScreen.KeepOnScreenCondition {
                     navigator = navigator,
                     advertProvider = advertProvider,
                     closeApp = { finish() },
+                    viewModelStore = this.viewModelStore,
                     deeplink = intent.extras?.getString("screen")
                 )
             }
