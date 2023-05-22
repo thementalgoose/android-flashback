@@ -18,8 +18,10 @@ import android.view.View
 import android.widget.RemoteViews
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
+import androidx.lifecycle.LiveData
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -34,10 +36,13 @@ import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.formula1.enums.TrackLayout
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.domain.repo.ScheduleRepository
+import tmg.flashback.formula1.model.Event
+import tmg.flashback.formula1.model.Schedule
 import tmg.flashback.ui.utils.DrawableUtils.getFlagResourceAlpha3
 import tmg.flashback.widgets.BuildConfig
 import tmg.flashback.widgets.R
 import tmg.flashback.widgets.WidgetNavigationComponent
+import tmg.flashback.widgets.repository.WidgetRepository
 import tmg.utilities.extensions.toEnum
 import tmg.utilities.utils.LocalDateUtils
 import javax.inject.Inject
@@ -57,6 +62,8 @@ class UpNextWidgetProvider @Inject constructor() : AppWidgetProvider() {
     protected lateinit var scheduleRepository: ScheduleRepository
     @Inject
     protected lateinit var widgetNavigationComponent: WidgetNavigationComponent
+    @Inject
+    protected lateinit var widgetsRepository: WidgetRepository
 
     override fun onReceive(context: Context?, intent: Intent?) {
         super.onReceive(context, intent)
@@ -72,17 +79,13 @@ class UpNextWidgetProvider @Inject constructor() : AppWidgetProvider() {
         }
 
         // Pre app checks
-        val nextEvent: OverviewRace? = runBlocking {
-            scheduleRepository.getUpcomingEvents()
-                .minByOrNull { it.date }
+        val race: OverviewRace? = runBlocking {
+            scheduleRepository.getUpcomingEvents().minByOrNull { it.date }
         }
-        if (BuildConfig.DEBUG) {
-            Log.i("Widgets", "Next event found to be $nextEvent")
-        }
-        if (context == null) {
-            return
-        }
-        if (nextEvent == null) {
+        Log.i("Widgets", "Next event found to be $race")
+
+        if (context == null) { return }
+        if (race == null) {
             appWidgetIds?.forEach { widgetId ->
                 val remoteView = RemoteViews(buildConfigManager.applicationId, R.layout.widget_up_next)
                 remoteView.error(appWidgetManager, widgetId, context)
@@ -91,61 +94,34 @@ class UpNextWidgetProvider @Inject constructor() : AppWidgetProvider() {
         }
 
         // Given we have valid app widget ids and an up next item
-        var tintedIcon: Bitmap? = null
-        try {
-            val icon: Int? = nextEvent.circuitId.toEnum<TrackLayout> { it.circuitId }?.icon
-            if (icon != null) {
-                tintedIcon = tintDrawable(context, icon)
-            }
-        }
-        catch (e: Exception) {
-            Log.i("Widgets", "Failed to tint icon ${e.message}")
-            e.printStackTrace()
-            crashController.logException(e, "Widget Up Next provider couldn't tint bitmap")
-        }
+        val tintedIcon = race.getTintedCircuitIcon(context)
 
         // Update all the widget ids
         appWidgetIds?.forEach { widgetId ->
-
             val remoteView = RemoteViews(buildConfigManager.applicationId, R.layout.widget_up_next)
-
             try {
-                remoteView.setTextViewText(R.id.name, nextEvent.raceName)
-                remoteView.setTextViewText(R.id.subtitle, nextEvent.circuitName)
 
-                if (tintedIcon != null) {
-                    remoteView.setImageViewBitmap(R.id.circuit, tintedIcon)
+                remoteView.setData(context, race)
+
+                remoteView.setInt(R.id.box, "setBackgroundColor", when (widgetsRepository.getShowBackground(widgetId)) {
+                    true -> ContextCompat.getColor(context, R.color.widget_upnext_background)
+                    false -> Color.TRANSPARENT
+                })
+
+                when (tintedIcon) {
+                    null -> remoteView.setImageViewResource(R.id.circuit, R.drawable.widget_circuit_unknown)
+                    else -> remoteView.setImageViewBitmap(R.id.circuit, tintedIcon)
                 }
-                else {
-                    remoteView.setImageViewResource(R.id.circuit, R.drawable.widget_circuit_unknown)
-                }
 
-                remoteView.setViewVisibility(R.id.flag, View.VISIBLE)
-                remoteView.setImageViewResource(R.id.flag, context.getFlagResourceAlpha3(nextEvent.countryISO))
-
-                remoteView.setTextViewText(R.id.days, nextEvent.date.format(DateTimeFormatter.ofPattern("d MMMM yyyy")))
-                remoteView.setTextViewText(R.id.daystogo, "")
-
-                val eventsToday = nextEvent.schedule
-                    .filter { it.timestamp.utcLocalDateTime.toLocalDate() == LocalDate.now() }
-                    .sortedBy { it.timestamp.string() }
-
-                val eventsInFuture = nextEvent.schedule
-                    .filter { it.timestamp.utcLocalDateTime.toLocalDate() > LocalDate.now() }
-                    .sortedBy { it.timestamp.string() }
+                val eventsToday = race.eventsToday()
+                val eventsInFuture = race.eventsInFuture()
 
                 if (eventsToday.isNotEmpty()) {
-
                     remoteView.setTextViewText(R.id.days, context.getString(R.string.dashboard_up_next_date_today))
-                    remoteView.setTextViewText(R.id.daystogo, eventsToday.joinToString(separator = ", ") {
-                        val result: String = it.timestamp.deviceLocalDateTime.toLocalTime().format(
-                            DateTimeFormatter.ofPattern("HH:mm"))
-                        return@joinToString "${it.label} ($result)"
-                    })
+                    remoteView.setTextViewText(R.id.daystogo, eventsToday.label())
                     remoteView.setViewVisibility(R.id.daystogo, View.VISIBLE)
-                }
-                if (eventsToday.isEmpty() && eventsInFuture.isNotEmpty()) {
-                    val next = nextEvent
+                } else if (eventsInFuture.isNotEmpty()) {
+                    val next = race
                         .schedule
                         .sortedBy { it.timestamp.string() }
                         .filter {
@@ -157,11 +133,7 @@ class UpNextWidgetProvider @Inject constructor() : AppWidgetProvider() {
                     )
 
                     remoteView.setTextViewText(R.id.days, context.resources.getQuantityString(R.plurals.dashboard_up_next_suffix_days, days, days))
-                    remoteView.setTextViewText(R.id.daystogo, next.joinToString(separator = ", ") {
-                        val result: String = it.timestamp.deviceLocalDateTime.toLocalTime().format(
-                            DateTimeFormatter.ofPattern("HH:mm"))
-                        return@joinToString "${it.label} ($result)"
-                    })
+                    remoteView.setTextViewText(R.id.daystogo, next.label())
                     remoteView.setViewVisibility(R.id.daystogo, View.VISIBLE)
                 }
 
@@ -179,11 +151,59 @@ class UpNextWidgetProvider @Inject constructor() : AppWidgetProvider() {
     }
 
     /**
+     * Set the next state for the widget
+     */
+    private fun RemoteViews.setData(context: Context, race: OverviewRace) {
+        this.setTextViewText(R.id.name, race.raceName)
+//        this.setTextViewText(R.id.subtitle, race.circuitName)
+
+        this.setViewVisibility(R.id.flag, View.VISIBLE)
+        this.setImageViewResource(R.id.flag, context.getFlagResourceAlpha3(race.countryISO))
+
+        this.setTextViewText(R.id.days, race.date.format(DateTimeFormatter.ofPattern("d MMMM yyyy")))
+        this.setTextViewText(R.id.daystogo, "")
+    }
+
+    /**
+     * Get the tinted circuit icon for the overview race
+     */
+    private fun OverviewRace.getTintedCircuitIcon(context: Context): Bitmap? {
+        var tintedIcon: Bitmap? = null
+        try {
+            val icon: Int? = this.circuitId.toEnum<TrackLayout> { it.circuitId }?.icon
+            if (icon != null) {
+                tintedIcon = tintDrawable(context, icon)
+            }
+        }
+        catch (e: Exception) {
+            e.printStackTrace()
+            crashController.logException(e, "Widget Up Next provider couldn't tint bitmap")
+        }
+        return tintedIcon
+    }
+
+    private fun OverviewRace.eventsToday(): List<Schedule> = this
+        .schedule
+        .filter { it.timestamp.utcLocalDateTime.toLocalDate() == LocalDate.now() }
+        .sortedBy { it.timestamp.string() }
+
+    private fun OverviewRace.eventsInFuture() = this
+        .schedule
+        .filter { it.timestamp.utcLocalDateTime.toLocalDate() > LocalDate.now() }
+        .sortedBy { it.timestamp.string() }
+
+    private fun List<Schedule>.label() = this.joinToString(separator = ", ") {
+        val result: String = it.timestamp.deviceLocalDateTime.toLocalTime().format(
+            DateTimeFormatter.ofPattern("HH:mm"))
+        return@joinToString "${it.label} ($result)"
+    }
+
+    /**
      * Set the error state for the widget
      */
     private fun RemoteViews.error(appWidgetManager: AppWidgetManager?, widgetId: Int, context: Context) {
         this.setTextViewText(R.id.name, context.getString(R.string.widget_up_next_nothing_title))
-        this.setTextViewText(R.id.subtitle, context.getString(R.string.widget_up_next_nothing_subtitle))
+//        this.setTextViewText(R.id.subtitle, context.getString(R.string.widget_up_next_nothing_subtitle))
         this.setImageViewResource(R.id.circuit, R.drawable.widget_circuit_unknown)
         this.setViewVisibility(R.id.flag, View.GONE)
         this.setTextViewText(R.id.days, "")
@@ -193,6 +213,10 @@ class UpNextWidgetProvider @Inject constructor() : AppWidgetProvider() {
 
         appWidgetManager?.updateAppWidget(widgetId, this)
     }
+
+
+
+
 
     private fun tintDrawable(context: Context, @DrawableRes drawableId: Int): Bitmap {
         val source = (ResourcesCompat.getDrawable(context.resources, drawableId, null) as VectorDrawable).toBitmap()
