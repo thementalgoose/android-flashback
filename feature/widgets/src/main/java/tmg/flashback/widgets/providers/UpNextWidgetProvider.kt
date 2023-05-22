@@ -249,14 +249,14 @@ class UpNextWidgetProvider @Inject constructor() : AppWidgetProvider() {
             contentColour = when {
                 showBackground && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && isDarkMode -> ContextCompat.getColor(this, android.R.color.system_neutral1_50)
                 showBackground && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> ContextCompat.getColor(this, android.R.color.system_neutral1_800)
-                showBackground -> ContextCompat.getColor(this, R.color.widget_upnext_background)
-                else -> Color.TRANSPARENT
+                showBackground -> ContextCompat.getColor(this, R.color.widget_content)
+                else -> ContextCompat.getColor(this, R.color.widget_content)
             },
             backgroundColor = when {
                 showBackground && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && isDarkMode -> ContextCompat.getColor(this, android.R.color.system_accent2_800)
                 showBackground && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> ContextCompat.getColor(this, android.R.color.system_accent2_50)
-                showBackground -> ContextCompat.getColor(this, R.color.widget_content)
-                else -> ContextCompat.getColor(this, R.color.widget_content)
+                showBackground -> ContextCompat.getColor(this, R.color.widget_upnext_background)
+                else -> Color.TRANSPARENT
             }
         )
     }
