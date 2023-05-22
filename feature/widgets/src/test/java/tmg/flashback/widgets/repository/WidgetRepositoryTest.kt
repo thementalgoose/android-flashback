@@ -31,7 +31,7 @@ internal class WidgetRepositoryTest {
 
     @Test
     fun `up next - get show background to app widget id`() {
-        every { mockPreferenceManager.getBoolean("${WIDGET_UP_NEXT_SHOW_BACKGROUND}_1", false) } returns false
+        every { mockPreferenceManager.getBoolean("${WIDGET_UP_NEXT_SHOW_BACKGROUND}_1", false) } returns true
 
         initUnderTest()
         assertTrue(underTest.getShowBackground(1))

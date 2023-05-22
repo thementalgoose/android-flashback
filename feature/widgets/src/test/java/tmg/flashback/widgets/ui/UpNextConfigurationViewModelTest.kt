@@ -6,10 +6,10 @@ import io.mockk.verify
 import org.junit.jupiter.api.Test
 import tmg.flashback.widgets.repository.WidgetRepository
 import tmg.flashback.widgets.usecases.UpdateWidgetsUseCase
+import tmg.testutils.BaseTest
 import tmg.testutils.livedata.test
-import tmg.testutils.livedata.testObserve
 
-internal class UpNextConfigurationViewModelTest {
+internal class UpNextConfigurationViewModelTest: BaseTest() {
 
     private val widgetId = 1
 
@@ -23,6 +23,7 @@ internal class UpNextConfigurationViewModelTest {
             widgetRepository = mockWidgetRepository,
             updateWidgetsUseCase = mockUpdateWidgetsUseCase,
         )
+        every { mockWidgetRepository.getShowBackground(widgetId) } returns true
         underTest.inputs.load(widgetId)
     }
 
@@ -38,12 +39,13 @@ internal class UpNextConfigurationViewModelTest {
 
     @Test
     fun `changing background updates background for app widget`() {
-        val observer = underTest.outputs.showBackground.testObserve()
 
         initUnderTest()
         underTest.inputs.changeShowBackground(false)
 
-        observer.assertValue(false)
+        underTest.outputs.showBackground.test {
+            assertValue(false)
+        }
         verify {
             mockWidgetRepository.setShowBackground(widgetId, false)
         }

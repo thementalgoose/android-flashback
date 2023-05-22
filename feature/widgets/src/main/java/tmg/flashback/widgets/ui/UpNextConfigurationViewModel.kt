@@ -39,12 +39,12 @@ internal class UpNextConfigurationViewModel @Inject constructor(
 
     override fun load(appWidgetId: Int) {
         this.appWidgetId = appWidgetId
-        showBackground.value = widgetRepository.getShowBackground(appWidgetId)
+        showBackground.postValue(widgetRepository.getShowBackground(appWidgetId))
     }
 
     override fun changeShowBackground(enabled: Boolean) {
         widgetRepository.setShowBackground(appWidgetId, enabled)
-        showBackground.value = enabled
+        showBackground.postValue(enabled)
     }
 
     override fun save() {
