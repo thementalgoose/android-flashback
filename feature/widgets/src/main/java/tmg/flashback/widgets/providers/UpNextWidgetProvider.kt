@@ -233,9 +233,7 @@ class UpNextWidgetProvider @Inject constructor() : AppWidgetProvider() {
     }
 
     private fun getOpenAppPendingIntent(context: Context): PendingIntent {
-        val intent = widgetNavigationComponent.launchApp(context).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        }
+        val intent = widgetNavigationComponent.launchApp(context)
         return PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
     }
 
