@@ -17,7 +17,7 @@
 
     <style name="Text.Widget.Days" parent="Text">
         <item name="android:fontFamily">@font/montserrat</item>
-        <item name="android:textSize">@dimen/textSizeXLarge</item>
+        <item name="android:textSize">@dimen/textSizeLarge</item>
         <item name="android:textColor">#fcfcfc</item>
     </style>
 

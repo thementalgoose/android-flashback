@@ -13,6 +13,7 @@ import android.graphics.Paint
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.graphics.drawable.VectorDrawable
+import android.os.Build
 import android.util.Log
 import android.view.View
 import android.widget.RemoteViews
@@ -21,7 +22,6 @@ import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
-import androidx.lifecycle.LiveData
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -36,13 +36,13 @@ import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.formula1.enums.TrackLayout
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.domain.repo.ScheduleRepository
-import tmg.flashback.formula1.model.Event
 import tmg.flashback.formula1.model.Schedule
 import tmg.flashback.ui.utils.DrawableUtils.getFlagResourceAlpha3
 import tmg.flashback.widgets.BuildConfig
 import tmg.flashback.widgets.R
 import tmg.flashback.widgets.WidgetNavigationComponent
 import tmg.flashback.widgets.repository.WidgetRepository
+import tmg.utilities.extensions.isInNightMode
 import tmg.utilities.extensions.toEnum
 import tmg.utilities.utils.LocalDateUtils
 import javax.inject.Inject
@@ -93,9 +93,6 @@ class UpNextWidgetProvider @Inject constructor() : AppWidgetProvider() {
             return
         }
 
-        // Given we have valid app widget ids and an up next item
-        val tintedIcon = race.getTintedCircuitIcon(context)
-
         // Update all the widget ids
         appWidgetIds?.forEach { widgetId ->
             val remoteView = RemoteViews(buildConfigManager.applicationId, R.layout.widget_up_next)
@@ -103,14 +100,16 @@ class UpNextWidgetProvider @Inject constructor() : AppWidgetProvider() {
 
                 remoteView.setData(context, race)
 
-                remoteView.setInt(R.id.box, "setBackgroundColor", when (widgetsRepository.getShowBackground(widgetId)) {
-                    true -> ContextCompat.getColor(context, R.color.widget_upnext_background)
-                    false -> Color.TRANSPARENT
-                })
+                val showBackground = widgetsRepository.getShowBackground(widgetId)
+                val colourData = context.getWidgetColourData(showBackground, context.isInNightMode())
+                remoteView.setInt(R.id.box, "setBackgroundColor", colourData.backgroundColor)
+                remoteView.setTextColor(R.id.name, colourData.contentColour)
+                remoteView.setTextColor(R.id.days, colourData.contentColour)
+                remoteView.setTextColor(R.id.daystogo, colourData.contentColour)
 
-                when (tintedIcon) {
+                when (val icon = race.getTintedCircuitIcon(context, colourData.contentColour)) {
                     null -> remoteView.setImageViewResource(R.id.circuit, R.drawable.widget_circuit_unknown)
-                    else -> remoteView.setImageViewBitmap(R.id.circuit, tintedIcon)
+                    else -> remoteView.setImageViewBitmap(R.id.circuit, icon)
                 }
 
                 val eventsToday = race.eventsToday()
@@ -139,7 +138,6 @@ class UpNextWidgetProvider @Inject constructor() : AppWidgetProvider() {
 
                 remoteView.setOnClickPendingIntent(R.id.flag, getRefreshWidgetPendingIntent(context, widgetId, appWidgetIds))
                 remoteView.setOnClickPendingIntent(R.id.circuit, getRefreshWidgetPendingIntent(context, widgetId, appWidgetIds))
-                remoteView.setOnClickPendingIntent(R.id.refresh, getRefreshWidgetPendingIntent(context, widgetId, appWidgetIds))
 
                 remoteView.setOnClickPendingIntent(R.id.container, getOpenAppPendingIntent(context))
                 appWidgetManager?.updateAppWidget(widgetId, remoteView)
@@ -167,12 +165,12 @@ class UpNextWidgetProvider @Inject constructor() : AppWidgetProvider() {
     /**
      * Get the tinted circuit icon for the overview race
      */
-    private fun OverviewRace.getTintedCircuitIcon(context: Context): Bitmap? {
+    private fun OverviewRace.getTintedCircuitIcon(context: Context, @ColorInt toColour: Int): Bitmap? {
         var tintedIcon: Bitmap? = null
         try {
             val icon: Int? = this.circuitId.toEnum<TrackLayout> { it.circuitId }?.icon
             if (icon != null) {
-                tintedIcon = tintDrawable(context, icon)
+                tintedIcon = tintDrawable(context, icon, toColour)
             }
         }
         catch (e: Exception) {
@@ -203,7 +201,6 @@ class UpNextWidgetProvider @Inject constructor() : AppWidgetProvider() {
      */
     private fun RemoteViews.error(appWidgetManager: AppWidgetManager?, widgetId: Int, context: Context) {
         this.setTextViewText(R.id.name, context.getString(R.string.widget_up_next_nothing_title))
-//        this.setTextViewText(R.id.subtitle, context.getString(R.string.widget_up_next_nothing_subtitle))
         this.setImageViewResource(R.id.circuit, R.drawable.widget_circuit_unknown)
         this.setViewVisibility(R.id.flag, View.GONE)
         this.setTextViewText(R.id.days, "")
@@ -218,9 +215,9 @@ class UpNextWidgetProvider @Inject constructor() : AppWidgetProvider() {
 
 
 
-    private fun tintDrawable(context: Context, @DrawableRes drawableId: Int): Bitmap {
+    private fun tintDrawable(context: Context, @DrawableRes drawableId: Int, @ColorInt toColour: Int): Bitmap {
         val source = (ResourcesCompat.getDrawable(context.resources, drawableId, null) as VectorDrawable).toBitmap()
-        return changeBitmapColour(source, Color.WHITE)
+        return changeBitmapColour(source, toColour)
     }
 
     private fun changeBitmapColour(source: Bitmap, @ColorInt colour: Int): Bitmap {
@@ -246,4 +243,26 @@ class UpNextWidgetProvider @Inject constructor() : AppWidgetProvider() {
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds ?: IntArray(0))
         return PendingIntent.getBroadcast(context, widgetId, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
     }
+
+    private fun Context.getWidgetColourData(showBackground: Boolean, isDarkMode: Boolean): ColData {
+        return ColData(
+            contentColour = when {
+                showBackground && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && isDarkMode -> ContextCompat.getColor(this, android.R.color.system_neutral1_50)
+                showBackground && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> ContextCompat.getColor(this, android.R.color.system_neutral1_800)
+                showBackground -> ContextCompat.getColor(this, R.color.widget_upnext_background)
+                else -> Color.TRANSPARENT
+            },
+            backgroundColor = when {
+                showBackground && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && isDarkMode -> ContextCompat.getColor(this, android.R.color.system_accent2_800)
+                showBackground && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> ContextCompat.getColor(this, android.R.color.system_accent2_50)
+                showBackground -> ContextCompat.getColor(this, R.color.widget_content)
+                else -> ContextCompat.getColor(this, R.color.widget_content)
+            }
+        )
+    }
+
+    data class ColData(
+        val contentColour: Int,
+        val backgroundColor: Int
+    )
 }
