@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
@@ -23,13 +22,14 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModelStore
 import androidx.navigation.compose.rememberNavController
 import androidx.window.layout.WindowLayoutInfo
 import kotlinx.coroutines.launch
 import tmg.flashback.ads.ads.components.AdvertProvider
 import tmg.flashback.debug.model.DebugMenuItem
 import tmg.flashback.eastereggs.model.MenuIcons
-import tmg.flashback.navigation.NavigationDestination
+import tmg.flashback.navigation.Navigator
 import tmg.flashback.style.AppTheme
 import tmg.flashback.ui.AppGraph
 import tmg.flashback.ui.components.layouts.OverlappingPanels
@@ -41,15 +41,11 @@ import tmg.flashback.ui.components.navigation.appBarHeight
 import tmg.flashback.ui.dashboard.menu.DashboardMenuExpandedScreen
 import tmg.flashback.ui.dashboard.menu.DashboardMenuScreen
 import tmg.flashback.ui.foldables.getFoldingConfig
-import tmg.flashback.navigation.Navigator
-import tmg.flashback.navigation.Screen
-import tmg.flashback.navigation.navigate
-import tmg.flashback.rss.contract.RSS
-import tmg.flashback.search.contract.Search
 
 @Composable
 fun DashboardScreen(
     windowSize: WindowSizeClass,
+    viewModelStore: ViewModelStore,
     windowLayoutInfo: WindowLayoutInfo,
     advertProvider: AdvertProvider,
     navigator: Navigator,
@@ -80,6 +76,7 @@ fun DashboardScreen(
 
     val navController = rememberNavController()
     navigator.navController = navController
+    navController.setViewModelStore(viewModelStore)
     navController.addOnDestinationChangedListener(navViewModel)
 
     DashboardScreen(
