@@ -4,6 +4,7 @@ import android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_ID
 import android.appwidget.AppWidgetManager.INVALID_APPWIDGET_ID
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
@@ -14,7 +15,9 @@ import tmg.utilities.extensions.observe
 @AndroidEntryPoint
 class UpNextConfigurationActivity: BaseActivity() {
 
-    private val appWidgetId = intent?.extras?.getInt(EXTRA_APPWIDGET_ID, INVALID_APPWIDGET_ID) ?: INVALID_APPWIDGET_ID
+    private val appWidgetId by lazy {
+        intent?.extras?.getInt(EXTRA_APPWIDGET_ID, INVALID_APPWIDGET_ID) ?: INVALID_APPWIDGET_ID
+    }
 
     private val viewModel: UpNextConfigurationViewModel by viewModels()
 
