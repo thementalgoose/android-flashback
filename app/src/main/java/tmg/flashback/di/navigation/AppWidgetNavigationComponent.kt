@@ -12,6 +12,8 @@ class AppWidgetNavigationComponent @Inject constructor(
 ): WidgetNavigationComponent {
     override fun launchApp(context: Context): Intent {
         analyticsManager.logEvent("relaunch_app")
-        return Intent(context, HomeActivity::class.java)
+        return Intent(context, HomeActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+        }
     }
 }
