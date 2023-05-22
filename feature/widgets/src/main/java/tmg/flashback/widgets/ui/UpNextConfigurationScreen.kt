@@ -21,6 +21,7 @@ import tmg.flashback.strings.R.string
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.buttons.ButtonPrimary
 import tmg.flashback.ui.components.header.Header
+import tmg.flashback.ui.components.settings.SettingHeader
 import tmg.flashback.ui.components.settings.SettingSwitch
 import tmg.flashback.ui.settings.Setting
 import tmg.flashback.widgets.R
@@ -47,9 +48,10 @@ private fun UpNextConfigurationScreen(
     updateShowBackground: (Boolean) -> Unit,
     save: () -> Unit
 ) {
-    Column(Modifier
-        .fillMaxSize()
-        .background(AppTheme.colors.backgroundPrimary)
+    Column(
+        Modifier
+            .fillMaxSize()
+            .background(AppTheme.colors.backgroundPrimary)
     ) {
         Box(
             modifier = Modifier.weight(1f)
@@ -66,13 +68,13 @@ private fun UpNextConfigurationScreen(
                         )
                     }
                     item {
+                        SettingHeader(
+                            model = UpNextConfigurationSettings.header
+                        )
+                    }
+                    item {
                         SettingSwitch(
-                            model = Setting.Switch(
-                                _key = "show_background",
-                                title = string.widget_settings_background_title,
-                                subtitle = string.widget_settings_background_description,
-                                isChecked = showBackground
-                            ),
+                            model = UpNextConfigurationSettings.showBackground(showBackground),
                             onClick = { updateShowBackground(!showBackground) }
                         )
                     }
@@ -82,7 +84,14 @@ private fun UpNextConfigurationScreen(
                 .align(Alignment.BottomCenter)
                 .height(AppTheme.dimens.large)
                 .fillMaxWidth()
-                .background(Brush.verticalGradient(listOf(Color.Transparent, AppTheme.colors.backgroundPrimary)))
+                .background(
+                    Brush.verticalGradient(
+                        listOf(
+                            Color.Transparent,
+                            AppTheme.colors.backgroundPrimary
+                        )
+                    )
+                )
             )
         }
         Column(Modifier.fillMaxWidth()) {

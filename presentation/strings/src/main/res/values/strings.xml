@@ -464,6 +464,7 @@
         <item quantity="other">%d days to go</item>
     </plurals>
 
+    <string name="widget_configure">Customise</string>
     <string name="widget_settings_background_title">Show background</string>
     <string name="widget_settings_background_description">Show a faded black background alongside the widget</string>
     <string name="widget_up_next_save">Save</string>
