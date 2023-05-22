@@ -463,6 +463,11 @@
         <item quantity="one">Tomorrow</item>
         <item quantity="other">%d days to go</item>
     </plurals>
+
+    <string name="widget_settings_background_title">Show background</string>
+    <string name="widget_settings_background_description">Show a faded black background alongside the widget</string>
+    <string name="widget_up_next_save">Save</string>
+
     <string name="dashboard_up_next_your_time">Device time</string>
     <string name="dashboard_up_next_shown_in_device_time">All times shown in your timezone</string>
     <plurals name="dashboard_up_next_starts_in">
