@@ -48,8 +48,24 @@ class HomeActivity: BaseActivity(), SplashScreen.KeepOnScreenCondition {
     @Inject
     lateinit var advertProvider: AdvertProvider
 
+    private var deeplink: String? = null
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.remove("screen")
+        super.onSaveInstanceState(outState)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        deeplink = savedInstanceState.getString("screen", "")
+        super.onRestoreInstanceState(savedInstanceState)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        if (deeplink == null) {
+            deeplink = intent.extras?.getString("screen")
+        }
 
         logScreenViewed("Dashboard")
 
@@ -74,7 +90,7 @@ class HomeActivity: BaseActivity(), SplashScreen.KeepOnScreenCondition {
                     advertProvider = advertProvider,
                     closeApp = { finish() },
                     viewModelStore = this.viewModelStore,
-                    deeplink = intent.extras?.getString("screen")
+                    deeplink = deeplink
                 )
             }
         }
