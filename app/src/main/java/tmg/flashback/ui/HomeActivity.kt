@@ -107,5 +107,10 @@ class HomeActivity: BaseActivity(), SplashScreen.KeepOnScreenCondition {
         }
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.remove("screen")
+        super.onSaveInstanceState(outState)
+    }
+
     override fun shouldKeepOnScreen(): Boolean = viewModel.appliedChanges
 }
