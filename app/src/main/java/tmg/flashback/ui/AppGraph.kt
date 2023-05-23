@@ -293,7 +293,7 @@ fun AppGraph(
         }
     }
 
-    DisposableEffect(deeplink) {
+    DisposableEffect(Unit) {
         when (deeplink) {
             "search" -> { navigator.navigate(Screen.Search) }
             "rss" -> { navigator.navigate(Screen.RSS) }
