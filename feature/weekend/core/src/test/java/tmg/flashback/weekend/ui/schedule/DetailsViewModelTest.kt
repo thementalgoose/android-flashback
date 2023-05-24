@@ -63,8 +63,8 @@ internal class DetailsViewModelTest: BaseTest() {
         underTest.outputs.list.test {
             assertValue(listOf(
                 links,
+                tmg.flashback.weekend.ui.details.DetailsModel.ScheduleWeekend.model(),
                 tmg.flashback.weekend.ui.details.DetailsModel.Track.model(),
-                tmg.flashback.weekend.ui.details.DetailsModel.ScheduleDay.model()
             ))
         }
     }
@@ -124,26 +124,14 @@ internal class DetailsViewModelTest: BaseTest() {
         underTest.outputs.list.test {
             assertValue(listOf(
                 links,
+                tmg.flashback.weekend.ui.details.DetailsModel.ScheduleWeekend.model(
+                    days = listOf(
+                        fp1.date to listOf(fp1 to enabled),
+                        qualifying.date to listOf(fp2 to enabled, qualifying to enabled),
+                        race.date to listOf(race to enabled)
+                    )
+                ),
                 tmg.flashback.weekend.ui.details.DetailsModel.Track.model(),
-                tmg.flashback.weekend.ui.details.DetailsModel.ScheduleDay(
-                    date = fp1.date,
-                    schedules = listOf(
-                        fp1 to enabled
-                    )
-                ),
-                tmg.flashback.weekend.ui.details.DetailsModel.ScheduleDay(
-                    date = qualifying.date,
-                    schedules = listOf(
-                        fp2 to enabled,
-                        qualifying to enabled
-                    )
-                ),
-                tmg.flashback.weekend.ui.details.DetailsModel.ScheduleDay(
-                    date = race.date,
-                    schedules = listOf(
-                        race to enabled
-                    )
-                )
             ))
         }
     }
