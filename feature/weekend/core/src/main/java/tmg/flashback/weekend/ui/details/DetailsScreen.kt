@@ -2,6 +2,7 @@ package tmg.flashback.weekend.ui.details
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -49,9 +50,11 @@ import tmg.flashback.weekend.ui.toWeekendInfo
 import tmg.utilities.extensions.format
 import tmg.utilities.extensions.keySet
 import tmg.utilities.extensions.ordinalAbbreviation
+import tmg.utilities.extensions.toDecimalPlacesString
 import kotlin.math.roundToInt
 
 private val trackSize: Dp = 200.dp
+private val weatherIconSize: Dp = 48.dp
 
 internal fun LazyListScope.details(
     weekendInfo: ScreenWeekendData,
@@ -102,6 +105,7 @@ private fun Track(
     val track = TrackLayout.getTrack(model.circuit.id, model.season, model.raceName)
     Column(Modifier.padding(
         start = AppTheme.dimens.medium,
+        top = AppTheme.dimens.xsmall,
         end = AppTheme.dimens.medium,
         bottom = AppTheme.dimens.xsmall,
     )) {
@@ -263,8 +267,6 @@ private fun EventItem(
                             .size(16.dp)
                             .align(Alignment.CenterVertically)
                     )
-                } else {
-                    Box(Modifier.size(16.dp))
                 }
             }
             TextTitle(
@@ -278,29 +280,54 @@ private fun EventItem(
         item.weather?.let { weather ->
             Column(
                 modifier = Modifier.padding(
-                    horizontal = AppTheme.dimens.xsmall
+                    start = AppTheme.dimens.xsmall,
+                    end = AppTheme.dimens.xsmall,
+                    bottom = AppTheme.dimens.xsmall
                 ),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+                val summary = weather.summary.firstOrNull()
                 Image(
-                    painter = painterResource(id = item.weather!!.summary.first().icon),
-                    contentDescription = null,
-                    modifier = Modifier.size(36.dp)
+                    painter = painterResource(id = summary?.icon ?: R.drawable.weather_unknown),
+                    contentDescription = stringResource(id = summary?.label ?: R.string.empty),
+                    modifier = Modifier.size(weatherIconSize)
                 )
 
                 // Rain Percentage
-                val rainPercent = (weather.rainPercent * 100).roundToInt()
+                val rainPercent = (weather.rainPercent * 100).roundToInt().coerceIn(0, 100)
                 Row {
                     Image(
+                        modifier = Modifier.size(16.dp),
                         painter = painterResource(id = R.drawable.weather_indicator_rain),
-                        contentDescription = null
+                        contentDescription = stringResource(id = R.string.ab_change_of_rain)
                     )
-                    TextBody2(
+                    TextBody1(
                         textColor = AppTheme.colors.contentTertiary,
-                        modifier = Modifier.align(Alignment.CenterVertically),
+                        modifier = Modifier
+                            .align(Alignment.CenterVertically)
+                            .padding(start = 2.dp),
                         text = "$rainPercent%"
                     )
                 }
+
+                // Temp
+//                val tempAverage = (weather.tempMinC + ((weather.tempMaxC - weather.tempMinC) / 2))
+//                    .toFloat()
+//                    .toDecimalPlacesString(1)
+//                Row(Modifier.fillMaxWidth()) {
+//                    Image(
+//                        modifier = Modifier.size(16.dp),
+//                        painter = painterResource(id = R.drawable.weather_indicator_temp),
+//                        contentDescription = null
+//                    )
+//                    TextBody1(
+//                        textColor = AppTheme.colors.contentTertiary,
+//                        modifier = Modifier
+//                            .align(Alignment.CenterVertically)
+//                            .padding(start = 2.dp),
+//                        text = "$tempAverage °C"
+//                    )
+//                }
             }
         }
     }

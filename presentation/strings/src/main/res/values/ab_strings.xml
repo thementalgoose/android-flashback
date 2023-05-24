@@ -49,4 +49,6 @@
     <string name="ab_collapsed_section">%s, round %d to %s, round %d.</string>
     <string name="ab_schedule_date_card">%s, at %s device time</string>
     <string name="ab_schedule_date_card_notifications_enabled">%s, at %s device time. Notifications enabled</string>
+
+    <string name="ab_change_of_rain">Chance of rain</string>
 </resources>
