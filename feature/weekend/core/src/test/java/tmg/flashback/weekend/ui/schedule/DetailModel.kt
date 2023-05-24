@@ -9,6 +9,16 @@ import tmg.flashback.weekend.R
 import tmg.flashback.weekend.ui.details.DetailsModel
 import tmg.utilities.models.StringHolder
 
+fun DetailsModel.ScheduleWeekend.Companion.model(
+    days: List<Pair<LocalDate, List<Pair<Schedule, Boolean>>>> = listOf(
+        LocalDate.of(2020, 1, 1) to listOf(
+            Schedule.model() to true
+        )
+    )
+): DetailsModel.ScheduleWeekend = DetailsModel.ScheduleWeekend(
+    days = days
+)
+
 fun DetailsModel.ScheduleDay.Companion.model(
     date: LocalDate = LocalDate.of(2020, 1, 1),
     schedules: List<Pair<Schedule, Boolean>> = listOf(

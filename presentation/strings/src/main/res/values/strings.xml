@@ -555,4 +555,7 @@
     <!-- Easter Eggs -->
     <string name="easter_egg_slava_ukraine">Slava Ukraini 🇺🇦</string>
 
+
+    <string name="percentage">%s%</string>
+
 </resources>

@@ -122,28 +122,28 @@ class DetailsViewModel @Inject constructor(
     }
 
     private fun initialSchedule(models: List<Schedule>): List<DetailsModel> {
-        return models
+        val dayGroupings = models
             .groupBy { it.timestamp.deviceLocalDateTime.toLocalDate() }
             .toSortedMap()
-            .map { (date, schedules) ->
-                DetailsModel.ScheduleDay(
-                    date, schedules
-                        .sortedBy { it.timestamp.utcLocalDateTime }
-                        .map {
-                            val notificationsEnabled =
-                                when (NotificationUtils.getCategoryBasedOnLabel(
-                                    it.label
-                                )) {
-                                    RaceWeekend.FREE_PRACTICE -> notificationRepository.notificationUpcomingFreePractice
-                                    RaceWeekend.QUALIFYING -> notificationRepository.notificationUpcomingQualifying
-                                    RaceWeekend.SPRINT -> notificationRepository.notificationUpcomingSprint
-                                    RaceWeekend.RACE -> notificationRepository.notificationUpcomingRace
-                                    null -> notificationRepository.notificationUpcomingOther
-                                }
-                            Pair(it, notificationsEnabled)
-                        }
-                )
+        return listOf(DetailsModel.ScheduleWeekend(
+            days = dayGroupings.map { (date, schedules) ->
+                date to schedules
+                    .sortedBy { it.timestamp.utcLocalDateTime }
+                    .map {
+                        val notificationsEnabled =
+                            when (NotificationUtils.getCategoryBasedOnLabel(
+                                it.label
+                            )) {
+                                RaceWeekend.FREE_PRACTICE -> notificationRepository.notificationUpcomingFreePractice
+                                RaceWeekend.QUALIFYING -> notificationRepository.notificationUpcomingQualifying
+                                RaceWeekend.SPRINT -> notificationRepository.notificationUpcomingSprint
+                                RaceWeekend.RACE -> notificationRepository.notificationUpcomingRace
+                                null -> notificationRepository.notificationUpcomingOther
+                            }
+                        Pair(it, notificationsEnabled)
+                    }
             }
+        ))
     }
 
     companion object {
