@@ -50,6 +50,14 @@ object AboutThisAppConfig {
                         backgroundColor = Color.TRANSPARENT,
                         url = "https://www.flaticon.com/authors/freepik"
                 ),
+                AboutThisAppDependency(
+                        order = 0,
+                        dependencyName = "IconFinder: Weatherful Icon Pack",
+                        author = "Rasmus Neilson",
+                        imageUrl = "https://www.iconfinder.com/static/img/favicons/favicon-194x194.png",
+                        backgroundColor = Color.TRANSPARENT,
+                        url = "https://www.iconfinder.com/iconsets/weatherful"
+                ),
         )
         return AboutThisAppConfiguration(
                 themeRes = R.style.FlashbackAppTheme_AboutThisApp,
