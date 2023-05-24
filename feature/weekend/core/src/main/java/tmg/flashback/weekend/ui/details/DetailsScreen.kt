@@ -266,15 +266,15 @@ private fun Preview(
                     DetailsModel.ScheduleDay(
                         date = LocalDate.of(2020, 1, 1),
                         schedules = listOf(
-                            Schedule("FP1", LocalDate.now(), LocalTime.of(9, 0)) to true,
-                            Schedule("FP2", LocalDate.now(), LocalTime.of(11, 0)) to false
+                            Schedule("FP1", LocalDate.now(), LocalTime.of(9, 0), weather = null) to true,
+                            Schedule("FP2", LocalDate.now(), LocalTime.of(11, 0), weather = null) to false
                         )
                     ),
                     DetailsModel.ScheduleDay(
                         date = LocalDate.of(2020, 1, 2),
                         schedules = listOf(
-                            Schedule("FP3", LocalDate.now(), LocalTime.of(9, 0)) to true,
-                            Schedule("Qualifying", LocalDate.now(), LocalTime.of(12, 0)) to true
+                            Schedule("FP3", LocalDate.now(), LocalTime.of(9, 0), weather = null) to true,
+                            Schedule("Qualifying", LocalDate.now(), LocalTime.of(12, 0), weather = null) to true
                         )
                     )
                 ),
