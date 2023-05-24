@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.runtime.Composable
@@ -120,7 +119,7 @@ fun ScheduleScreen(
                                 )
                             }
                         }
-                        SeasonTyres.getBySeason(season)?.let { _ ->
+                        SeasonTyres.getBySeason(season)?.let {
                             IconButton(onClick = { tyreClicked(season) }) {
                                 Icon(
                                     painter = painterResource(id = R.drawable.ic_tyre),
