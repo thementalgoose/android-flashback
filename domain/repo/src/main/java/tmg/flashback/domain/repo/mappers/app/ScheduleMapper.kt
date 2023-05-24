@@ -53,13 +53,8 @@ class ScheduleMapper @Inject constructor() {
             WeatherType.SAND -> "sand"
             WeatherType.FOG -> "fog"
             WeatherType.MIST -> "mist"
-            WeatherType.UNKNOWN -> "unknown"
         }
     private fun String.toWeatherType(): WeatherType? {
-        val weatherType = WeatherType.values().firstOrNull { it.expectedKey == this }
-        if (weatherType == WeatherType.UNKNOWN) {
-            return null
-        }
-        return weatherType
+        return WeatherType.values().firstOrNull { it.expectedKey == this }
     }
 }
