@@ -397,6 +397,23 @@
     <string name="settings_rss_add_cancel">Cancel</string>
 
 
+    <!-- Weather -->
+    <string name="weather_type_clear_sky">Sunny</string>
+    <string name="weather_type_clouds_light">Light clouds</string>
+    <string name="weather_type_clouds_scattered">Scattered clouds</string>
+    <string name="weather_type_clouds_broken">Scattered clouds</string>
+    <string name="weather_type_clouds_overcast">Overcast</string>
+    <string name="weather_type_rain_light">Light Rain</string>
+    <string name="weather_type_rain_moderate">Moderate Rain</string>
+    <string name="weather_type_rain_heavy">Heavy Rain</string>
+    <string name="weather_type_thunderstorm">Thunderstorm</string>
+    <string name="weather_type_snow">Snow</string>
+    <string name="weather_type_sand">Sand</string>
+    <string name="weather_type_fog">Fog</string>
+    <string name="weather_type_mist">Mist</string>
+
+
+
     <!-- RSS Configure -->
     <string name="rss_configure_title">Configure RSS</string>
     <string name="rss_configure_header_items">Your RSS list</string>
