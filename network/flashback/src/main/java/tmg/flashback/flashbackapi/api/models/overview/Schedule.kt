@@ -8,7 +8,8 @@ import kotlinx.serialization.Serializable
 data class Schedule(
     val label: String,
     val date: String,
-    val time: String
+    val time: String,
+    val weather: ScheduleWeather?
 ) {
     companion object
 }
