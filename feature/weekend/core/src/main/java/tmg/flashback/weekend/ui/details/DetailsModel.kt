@@ -10,11 +10,11 @@ import tmg.utilities.models.StringHolder
 sealed class DetailsModel(
     val id: String
 ) {
-    data class ScheduleDay(
-        val date: LocalDate,
-        val schedules: List<Pair<Schedule, Boolean>> // Schedule, isNotificationSet
+
+    data class ScheduleWeekend(
+        val days: List<Pair<LocalDate, List<Pair<Schedule, Boolean>>>>
     ): DetailsModel(
-        id = "${date.dayOfMonth}-${date.month}-${date.year}"
+        id = "weekend"
     ) {
         companion object
     }
