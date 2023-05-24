@@ -28,7 +28,13 @@ class NetworkScheduleMapper @Inject constructor() {
             round = round,
             label = data.label,
             date = data.date,
-            time = data.time
+            time = data.time,
+            rainPercent = data.weather?.rainPercent,
+            tempMaxC = data.weather?.tempMaxC,
+            tempMinC = data.weather?.tempMinC,
+            windMs = data.weather?.windMs,
+            windBearing = data.weather?.windBearing,
+            summary = data.weather?.summary?.joinToString(separator = "|")
         )
     }
 }

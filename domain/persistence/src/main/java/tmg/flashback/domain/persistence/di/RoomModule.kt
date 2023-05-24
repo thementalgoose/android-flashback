@@ -30,7 +30,8 @@ internal class RoomModule {
             MIGRATION_5_6,
             MIGRATION_6_7,
             MIGRATION_7_8,
-            MIGRATION_8_9
+            MIGRATION_8_9,
+            MIGRATION_9_10,
         )
         .build()
 
@@ -158,6 +159,19 @@ private val MIGRATION_8_9 = object : Migration(8, 9) {
         database.execSQL("DROP TABLE QualifyingResult")
         database.execSQL("ALTER TABLE QualifyingResult_Temp RENAME TO QualifyingResult")
 
+        Log.i("Database", "Migrated DB from version $startVersion to $endVersion")
+    }
+}
+
+
+private val MIGRATION_9_10 = object : Migration(9, 10) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        database.execSQL("ALTER TABLE Schedule ADD COLUMN rain_percent REAL")
+        database.execSQL("ALTER TABLE Schedule ADD COLUMN wind_ms REAL")
+        database.execSQL("ALTER TABLE Schedule ADD COLUMN wind_bearing INTEGER")
+        database.execSQL("ALTER TABLE Schedule ADD COLUMN temp_max_c REAL")
+        database.execSQL("ALTER TABLE Schedule ADD COLUMN temp_min_c REAL")
+        database.execSQL("ALTER TABLE Schedule ADD COLUMN weather_summary TEXT")
         Log.i("Database", "Migrated DB from version $startVersion to $endVersion")
     }
 }

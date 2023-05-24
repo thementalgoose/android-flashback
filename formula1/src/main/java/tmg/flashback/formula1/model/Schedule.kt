@@ -10,7 +10,8 @@ import org.threeten.bp.LocalTime
 data class Schedule(
     val label: String,
     val date: LocalDate,
-    val time: LocalTime
+    val time: LocalTime,
+    val weather: ScheduleWeather?
 ): Parcelable {
 
     @IgnoredOnParcel
