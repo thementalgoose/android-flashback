@@ -91,14 +91,14 @@ class DetailsViewModel @Inject constructor(
             }
             list.add(DetailsModel.Links(links))
 
+            list.addAll(initialSchedule(it.schedule))
+
             list.add(DetailsModel.Track(
                 circuit = it.raceInfo.circuit,
                 raceName = it.raceInfo.name,
                 season = it.raceInfo.season,
                 laps = it.raceInfo.laps
             ))
-
-            list.addAll(initialSchedule(it.schedule))
 
             return@map list
         }

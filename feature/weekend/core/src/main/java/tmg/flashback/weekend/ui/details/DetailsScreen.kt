@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
@@ -22,6 +23,7 @@ import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
@@ -45,8 +47,11 @@ import tmg.flashback.weekend.R
 import tmg.flashback.weekend.contract.model.ScreenWeekendData
 import tmg.flashback.weekend.ui.toWeekendInfo
 import tmg.utilities.extensions.format
+import tmg.utilities.extensions.keySet
 import tmg.utilities.extensions.ordinalAbbreviation
 import kotlin.math.roundToInt
+
+private val trackSize: Dp = 200.dp
 
 internal fun LazyListScope.details(
     weekendInfo: ScreenWeekendData,
@@ -100,17 +105,17 @@ private fun Track(
         end = AppTheme.dimens.medium,
         bottom = AppTheme.dimens.xsmall,
     )) {
-        Icon(
-            tint = AppTheme.colors.contentPrimary,
-            modifier = Modifier.size(160.dp),
-            painter = painterResource(id = track?.icon ?: R.drawable.circuit_unknown),
-            contentDescription = null
-        )
         model.laps?.toIntOrNull()?.let { laps ->
             BadgeView(
                 model = Badge(stringResource(id = R.string.weekend_info_laps, laps))
             )
         }
+        Icon(
+            tint = AppTheme.colors.contentPrimary,
+            modifier = Modifier.size(trackSize),
+            painter = painterResource(id = track?.icon ?: R.drawable.circuit_unknown),
+            contentDescription = null
+        )
     }
 }
 
@@ -169,8 +174,15 @@ private fun Weekend(
     model: DetailsModel.ScheduleWeekend,
     modifier: Modifier = Modifier
 ) {
-    Row(modifier = modifier
-        .horizontalScroll(rememberScrollState())) {
+
+    var targetIndex = model.days.keySet()
+        .indexOfFirst { it == LocalDate.now() }
+    if (targetIndex == -1) targetIndex = model.days.size - 1
+    val scrollState = rememberScrollState(
+        initial = targetIndex.coerceIn(0, model.days.size - 1)
+    )
+
+    Row(modifier = modifier.horizontalScroll(scrollState)) {
         model.days.forEach { (date, list) ->
             Column(modifier = modifier
                 .fillMaxWidth()
@@ -316,12 +328,6 @@ private fun Preview(
                             url = "https://www.wiki.com"
                         )
                     )),
-                    DetailsModel.Track(
-                        circuit = race.raceInfo.circuit,
-                        raceName = race.raceInfo.name,
-                        season = race.raceInfo.season,
-                        laps = race.raceInfo.laps
-                    ),
                     DetailsModel.ScheduleWeekend(
                         days = listOf(
                             LocalDate.of(2020, 1, 1) to listOf(
@@ -333,6 +339,12 @@ private fun Preview(
                                 Schedule("Qualifying", LocalDate.now(), LocalTime.of(12, 0), weather = weather) to true
                             )
                         )
+                    ),
+                    DetailsModel.Track(
+                        circuit = race.raceInfo.circuit,
+                        raceName = race.raceInfo.name,
+                        season = race.raceInfo.season,
+                        laps = race.raceInfo.laps
                     )
                 ),
                 linkClicked = { }

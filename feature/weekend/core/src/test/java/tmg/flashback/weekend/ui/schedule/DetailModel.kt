@@ -19,16 +19,6 @@ fun DetailsModel.ScheduleWeekend.Companion.model(
     days = days
 )
 
-fun DetailsModel.ScheduleDay.Companion.model(
-    date: LocalDate = LocalDate.of(2020, 1, 1),
-    schedules: List<Pair<Schedule, Boolean>> = listOf(
-        Schedule.model() to true
-    )
-): DetailsModel.ScheduleDay = DetailsModel.ScheduleDay(
-    date = date,
-    schedules = schedules
-)
-
 fun DetailsModel.Link.Companion.model(
     label: Int = 0,
     icon: Int = 1,
