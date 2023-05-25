@@ -125,6 +125,9 @@ class DetailsViewModel @Inject constructor(
         val dayGroupings = models
             .groupBy { it.timestamp.deviceLocalDateTime.toLocalDate() }
             .toSortedMap()
+        if (dayGroupings.isEmpty()) {
+            return emptyList()
+        }
         return listOf(DetailsModel.ScheduleWeekend(
             days = dayGroupings.map { (date, schedules) ->
                 date to schedules

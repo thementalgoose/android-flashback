@@ -179,40 +179,43 @@ private fun Weekend(
     model: DetailsModel.ScheduleWeekend,
     modifier: Modifier = Modifier
 ) {
+    if (model.days.isNotEmpty()) {
 
-    var targetIndex = model.days.keySet()
-        .indexOfFirst { it == LocalDate.now() }
-    if (targetIndex == -1) targetIndex = model.days.size - 1
-    val scrollState = rememberLazyListState(
-        initialFirstVisibleItemIndex = targetIndex.coerceIn(0, model.days.size - 1)
-    )
+        var targetIndex = model.days.keySet()
+            .indexOfFirst { it == LocalDate.now() }
+        if (targetIndex == -1) targetIndex = 0
+        val scrollState = rememberLazyListState(
+            initialFirstVisibleItemIndex = targetIndex.coerceIn(0, model.days.size - 1)
+        )
 
-    LazyRow(
-        modifier = modifier.padding(bottom = AppTheme.dimens.small),
-        state = scrollState,
-        content = {
-            items(model.days) { (date, list) ->
-                Column(modifier = modifier
-                    .fillMaxWidth()
-                    .padding(
-                        top = AppTheme.dimens.xsmall,
-                        start = AppTheme.dimens.medium,
-                        end = AppTheme.dimens.medium
-                    )
-                ) {
-                    Title(date)
-                    Row(
-                        horizontalArrangement = Arrangement.spacedBy(AppTheme.dimens.medium)
+        LazyRow(
+            modifier = modifier.padding(bottom = AppTheme.dimens.small),
+            state = scrollState,
+            content = {
+                items(model.days) { (date, list) ->
+                    Column(
+                        modifier = modifier
+                            .fillMaxWidth()
+                            .padding(
+                                top = AppTheme.dimens.xsmall,
+                                start = AppTheme.dimens.medium,
+                                end = AppTheme.dimens.medium
+                            )
                     ) {
-                        list.forEach { (schedule, isNotificationSet) ->
-                            EventItem(item = schedule, showNotificationBell = isNotificationSet)
+                        Title(date)
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(AppTheme.dimens.medium)
+                        ) {
+                            list.forEach { (schedule, isNotificationSet) ->
+                                EventItem(item = schedule, showNotificationBell = isNotificationSet)
+                            }
                         }
                     }
-                }
 
+                }
             }
-        }
-    )
+        )
+    }
 }
 
 @Composable
