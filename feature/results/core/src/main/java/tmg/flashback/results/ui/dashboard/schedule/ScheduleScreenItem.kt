@@ -1,5 +1,6 @@
 package tmg.flashback.results.ui.dashboard.schedule
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -48,6 +49,7 @@ import tmg.utilities.extensions.startOfWeek
 private val countryBadgeSize = 32.dp
 private const val listAlpha = 0.6f
 private const val pastScheduleAlpha = 0.2f
+private val weatherIconSize = 42.dp
 
 //region Schedule view
 
@@ -222,6 +224,8 @@ private fun Dates(
         initialFirstVisibleItemIndex = targetIndex.coerceIn(0, schedule.size - 1)
     )
 
+    val showWeather = schedule.values.map { it }.flatten().all { it.weather != null }
+
     LazyRow(
         modifier = modifier.padding(bottom = AppTheme.dimens.small),
         state = scrollState,
@@ -248,6 +252,7 @@ private fun Dates(
                             list.forEach {
                                 DateCard(
                                     schedule = it,
+                                    showWeather = showWeather,
                                     showNotificationBadge = notificationSchedule.getByLabel(it.label)
                                 )
                                 Spacer(Modifier.width(AppTheme.dimens.small))
@@ -278,6 +283,7 @@ internal fun Round(
 private fun DateCard(
     schedule: Schedule,
     showNotificationBadge: Boolean,
+    showWeather: Boolean,
     modifier: Modifier = Modifier
 ) {
     val alpha = if (schedule.timestamp.isInPast) pastScheduleAlpha else 1f
@@ -295,10 +301,23 @@ private fun DateCard(
         .background(AppTheme.colors.backgroundTertiary)
         .alpha(alpha)
         .padding(
-            vertical = AppTheme.dimens.nsmall,
-            horizontal = AppTheme.dimens.nsmall
+            bottom = AppTheme.dimens.nsmall,
+            start = AppTheme.dimens.nsmall,
+            end = AppTheme.dimens.nsmall
         )
     ) {
+        if (showWeather && schedule.weather != null) {
+            Spacer(Modifier.height(AppTheme.dimens.small))
+
+            val summary = schedule.weather!!.summary.firstOrNull()
+            Image(
+                painter = painterResource(id = summary?.icon ?: R.drawable.weather_unknown),
+                contentDescription = stringResource(id = summary?.label ?: R.string.empty),
+                modifier = Modifier.size(weatherIconSize)
+            )
+        } else {
+            Spacer(Modifier.height(AppTheme.dimens.nsmall))
+        }
         Row(modifier = Modifier
             .fillMaxWidth()
             .padding(bottom = AppTheme.dimens.small),
@@ -318,9 +337,9 @@ private fun DateCard(
                 )
             }
         }
-        TextBody2(
+        TextBody1(
             modifier = Modifier.fillMaxWidth(),
-            textAlign = TextAlign.Center,
+            textAlign = TextAlign.Start,
             text = time,
             bold = true
         )
