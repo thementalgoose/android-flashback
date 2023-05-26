@@ -60,5 +60,8 @@ jobs:
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         with:
-          title: "Main branch has failing tests"
-          color: 0xff91a4
+          nodetail: true
+          title: "App: Failing unit tests"
+          description: |
+            Branch `main` has failing tests
+          color: 0xfa4665

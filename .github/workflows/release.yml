@@ -174,9 +174,10 @@ jobs:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         with:
           nodetail: true
-          title: "Release ${{ steps.get_version_name.outputs.VERSION }} (${{ steps.get_version_code.outputs.VERSION }}) deployment to internal test track failed"
-          description: "Run number ${{ github.run_number }}\n[Action run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})"
-          color: 0xff91a4
+          title: "Android: Release ${{ steps.get_version_name.outputs.VERSION }} (${{ steps.get_version_code.outputs.VERSION }}) deployment failed"
+          description: |
+            Run number ${{ github.run_number }} - [Action](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+          color: 0xfa4665
 
       - name: Notify discord of success
         uses: sarisia/actions-status-discord@v1.10.2
@@ -185,7 +186,8 @@ jobs:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         with:
           nodetail: true
-          title: "Release ${{ steps.get_version_name.outputs.VERSION }} (${{ steps.get_version_code.outputs.VERSION }}) deployment to internal test track successful"
-          description: "Run number ${{ github.run_number }}\n[Action run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})"
-          color: 0x35a55f
+          title: "Android: Release ${{ steps.get_version_name.outputs.VERSION }} (${{ steps.get_version_code.outputs.VERSION }}) deployed"
+          description: |
+            Run number ${{ github.run_number }} - [Action](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+          color: 0x3dc91a
 
