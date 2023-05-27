@@ -47,7 +47,7 @@ internal class RaceTest {
         )
 
         assertEquals(listOf(constructor1, constructor2), model.constructors)
-        assertEquals(listOf(driver1, driver2, driver3, driver4), model.drivers)
+        assertEquals(listOf(driver1, driver2, driver3, driver4), model.entries)
     }
 
     @ParameterizedTest(name = "has({1}) with data containing {0} returns {1}")

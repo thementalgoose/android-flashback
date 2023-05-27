@@ -107,9 +107,9 @@ class QualifyingViewModel @Inject constructor(
         }
 
         return list.results.map {
-            val overview = driverOverview(it.driver.driver.id)
+            val overview = driverOverview(it.entry.driver.id)
             return@map QualifyingModel.Q1Q2Q3(
-                driver = it.driver,
+                driver = it.entry,
                 finalQualifyingPosition = overview?.qualified,
                 q1 = overview?.q1,
                 q2 = overview?.q2,
@@ -123,9 +123,9 @@ class QualifyingViewModel @Inject constructor(
         return qualifying.firstOrNull()
             ?.results
             ?.map {
-                val overview = driverOverview(it.driver.driver.id)
+                val overview = driverOverview(it.entry.driver.id)
                 return@map QualifyingModel.Q1Q2(
-                    driver = it.driver,
+                    driver = it.entry,
                     finalQualifyingPosition = overview?.qualified,
                     q1 = overview?.q1,
                     q2 = overview?.q2
@@ -139,9 +139,9 @@ class QualifyingViewModel @Inject constructor(
         return qualifying.firstOrNull()
             ?.results
             ?.map {
-                val overview = driverOverview(it.driver.driver.id)
+                val overview = driverOverview(it.entry.driver.id)
                 return@map QualifyingModel.Q1(
-                    driver = it.driver,
+                    driver = it.entry,
                     finalQualifyingPosition = overview?.qualified,
                     q1 = overview?.q1,
                 )

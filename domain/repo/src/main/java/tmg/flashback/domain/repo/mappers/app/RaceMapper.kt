@@ -12,19 +12,16 @@ import tmg.flashback.formula1.model.QualifyingType.Q2
 import tmg.flashback.formula1.model.QualifyingType.Q3
 import tmg.flashback.formula1.model.RaceResult
 import tmg.flashback.formula1.model.SprintQualifyingRound
-import tmg.flashback.formula1.model.SprintQualifyingType
 import tmg.flashback.formula1.model.SprintQualifyingType.SQ1
 import tmg.flashback.formula1.model.SprintQualifyingType.SQ2
 import tmg.flashback.formula1.model.SprintQualifyingType.SQ3
 import tmg.flashback.formula1.model.SprintRaceResult
 import tmg.flashback.formula1.model.SprintResult
 import tmg.flashback.formula1.utils.toLapTime
-import tmg.flashback.flashbackapi.api.models.races.SprintEvent
 import tmg.flashback.domain.persistence.models.race.QualifyingDriverResult
 import tmg.flashback.domain.persistence.models.race.RaceDriverResult
 import tmg.flashback.domain.persistence.models.race.RaceInfoWithCircuit
 import tmg.flashback.domain.persistence.models.race.SprintQualifyingDriverResult
-import tmg.flashback.domain.persistence.models.race.SprintQualifyingResult
 import tmg.flashback.domain.persistence.models.race.SprintRaceDriverResult
 import tmg.utilities.utils.LocalDateUtils.Companion.requireFromDate
 import tmg.utilities.utils.LocalTimeUtils.Companion.fromTime
@@ -91,7 +88,7 @@ class RaceMapper @Inject constructor(
                 .mapIndexed { index, item -> Pair(item.driver.id, index + 1) }
             val driverListForRound = input.map {
                 QualifyingResult(
-                    driver = DriverEntry(driverDataMapper.mapDriver(it.driver), constructorDataMapper.mapConstructorData(it.constructor)),
+                    entry = DriverEntry(driverDataMapper.mapDriver(it.driver), constructorDataMapper.mapConstructorData(it.constructor)),
                     lapTime = it.qualifyingResult.q1?.toLapTime(),
                     position = lapTimeOrder.firstOrNull { (id, _) -> id == it.driver.id }?.second
                         ?: it.qualifyingResult.qualified
@@ -106,10 +103,10 @@ class RaceMapper @Inject constructor(
                 .mapIndexed { index, item -> Pair(item.driver.id, index + 1) }
             val driverListForRound = input.map {
                 QualifyingResult(
-                    driver = DriverEntry(driverDataMapper.mapDriver(it.driver), constructorDataMapper.mapConstructorData(it.constructor)),
+                    entry = DriverEntry(driverDataMapper.mapDriver(it.driver), constructorDataMapper.mapConstructorData(it.constructor)),
                     lapTime = it.qualifyingResult.q2?.toLapTime(),
                     position = lapTimeOrder.firstOrNull { (id, _) -> id == it.driver.id }?.second
-                        ?: qualifyingData.firstOrNull { it.order == 1 }?.results?.firstOrNull { model -> model.driver.driver.id == it.driver.id }?.position
+                        ?: qualifyingData.firstOrNull { it.order == 1 }?.results?.firstOrNull { model -> model.entry.driver.id == it.driver.id }?.position
                         ?: it.qualifyingResult.qualified
                 )
             }
@@ -122,11 +119,11 @@ class RaceMapper @Inject constructor(
                 .mapIndexed { index, item -> Pair(item.driver.id, index + 1) }
             val driverListForRound = input.map {
                 QualifyingResult(
-                    driver = DriverEntry(driverDataMapper.mapDriver(it.driver), constructorDataMapper.mapConstructorData(it.constructor)),
+                    entry = DriverEntry(driverDataMapper.mapDriver(it.driver), constructorDataMapper.mapConstructorData(it.constructor)),
                     lapTime = it.qualifyingResult.q3?.toLapTime(),
                     position = lapTimeOrder.firstOrNull { (id, _) -> id == it.driver.id }?.second
-                        ?: qualifyingData.firstOrNull { it.order == 2 }?.results?.firstOrNull { model -> model.driver.driver.id == it.driver.id }?.position
-                        ?: qualifyingData.firstOrNull { it.order == 1 }?.results?.firstOrNull { model -> model.driver.driver.id == it.driver.id }?.position
+                        ?: qualifyingData.firstOrNull { it.order == 2 }?.results?.firstOrNull { model -> model.entry.driver.id == it.driver.id }?.position
+                        ?: qualifyingData.firstOrNull { it.order == 1 }?.results?.firstOrNull { model -> model.entry.driver.id == it.driver.id }?.position
                         ?: it.qualifyingResult.qualified
                 )
             }
@@ -141,7 +138,7 @@ class RaceMapper @Inject constructor(
             qualifying = mapSprintQualifying(sprintQualifying),
             race = sprintRace.map { result ->
                 SprintRaceResult(
-                    driver = DriverEntry(driverDataMapper.mapDriver(result.driver), constructorDataMapper.mapConstructorData(result.constructor)),
+                    entry = DriverEntry(driverDataMapper.mapDriver(result.driver), constructorDataMapper.mapConstructorData(result.constructor)),
                     time = result.sprintResult.time?.toLapTime(),
                     points = result.sprintResult.points,
                     grid = result.sprintResult.gridPos ?: 0,
@@ -162,7 +159,7 @@ class RaceMapper @Inject constructor(
                 .mapIndexed { index, item -> Pair(item.driver.id, index + 1) }
             val driverListForRound = input.map {
                 tmg.flashback.formula1.model.SprintQualifyingResult(
-                    driver = DriverEntry(driverDataMapper.mapDriver(it.driver), constructorDataMapper.mapConstructorData(it.constructor)),
+                    entry = DriverEntry(driverDataMapper.mapDriver(it.driver), constructorDataMapper.mapConstructorData(it.constructor)),
                     lapTime = it.qualifyingResult.sq1?.toLapTime(),
                     position = lapTimeOrder.firstOrNull { (id, _) -> id == it.driver.id }?.second
                         ?: it.qualifyingResult.qualified
@@ -177,10 +174,10 @@ class RaceMapper @Inject constructor(
                 .mapIndexed { index, item -> Pair(item.driver.id, index + 1) }
             val driverListForRound = input.map {
                 tmg.flashback.formula1.model.SprintQualifyingResult(
-                    driver = DriverEntry(driverDataMapper.mapDriver(it.driver), constructorDataMapper.mapConstructorData(it.constructor)),
+                    entry = DriverEntry(driverDataMapper.mapDriver(it.driver), constructorDataMapper.mapConstructorData(it.constructor)),
                     lapTime = it.qualifyingResult.sq2?.toLapTime(),
                     position = lapTimeOrder.firstOrNull { (id, _) -> id == it.driver.id }?.second
-                        ?: qualifyingData.firstOrNull { it.order == 1 }?.results?.firstOrNull { model -> model.driver.driver.id == it.driver.id }?.position
+                        ?: qualifyingData.firstOrNull { it.order == 1 }?.results?.firstOrNull { model -> model.entry.driver.id == it.driver.id }?.position
                         ?: it.qualifyingResult.qualified
                 )
             }
@@ -193,11 +190,11 @@ class RaceMapper @Inject constructor(
                 .mapIndexed { index, item -> Pair(item.driver.id, index + 1) }
             val driverListForRound = input.map {
                 tmg.flashback.formula1.model.SprintQualifyingResult(
-                    driver = DriverEntry(driverDataMapper.mapDriver(it.driver), constructorDataMapper.mapConstructorData(it.constructor)),
+                    entry = DriverEntry(driverDataMapper.mapDriver(it.driver), constructorDataMapper.mapConstructorData(it.constructor)),
                     lapTime = it.qualifyingResult.sq3?.toLapTime(),
                     position = lapTimeOrder.firstOrNull { (id, _) -> id == it.driver.id }?.second
-                        ?: qualifyingData.firstOrNull { it.order == 2 }?.results?.firstOrNull { model -> model.driver.driver.id == it.driver.id }?.position
-                        ?: qualifyingData.firstOrNull { it.order == 1 }?.results?.firstOrNull { model -> model.driver.driver.id == it.driver.id }?.position
+                        ?: qualifyingData.firstOrNull { it.order == 2 }?.results?.firstOrNull { model -> model.entry.driver.id == it.driver.id }?.position
+                        ?: qualifyingData.firstOrNull { it.order == 1 }?.results?.firstOrNull { model -> model.entry.driver.id == it.driver.id }?.position
                         ?: it.qualifyingResult.qualified
                 )
             }
@@ -226,7 +223,7 @@ class RaceMapper @Inject constructor(
             }
             .map { (driver, raceResult) ->
                 RaceResult(
-                    driver = driver,
+                    entry = driver,
                     time = raceResult.time?.toLapTime(),
                     points = raceResult.points,
                     grid = raceResult.gridPos ?: 0,

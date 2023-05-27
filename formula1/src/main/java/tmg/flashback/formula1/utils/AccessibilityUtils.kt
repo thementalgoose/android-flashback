@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import tmg.flashback.formula1.R
 import tmg.flashback.formula1.model.DriverEntry
-import tmg.flashback.formula1.model.QualifyingResult
 import tmg.flashback.formula1.model.RaceResult
 import tmg.flashback.formula1.model.SprintRaceResult
 import tmg.utilities.extensions.ordinalAbbreviation
@@ -29,8 +28,8 @@ object AccessibilityUtils {
 
         return stringResource(R.string.ab_result_race_overview,
             this.finish.ordinalAbbreviation,
-            this.driver.driver.name,
-            this.driver.constructor.name
+            this.entry.driver.name,
+            this.entry.constructor.name
         ) + fastestLap
     }
 
@@ -38,8 +37,8 @@ object AccessibilityUtils {
     fun SprintRaceResult.overview(): String {
         return stringResource(R.string.ab_result_race_overview,
             this.finish.ordinalAbbreviation,
-            this.driver.driver.name,
-            this.driver.constructor.name
+            this.entry.driver.name,
+            this.entry.constructor.name
         )
     }
 
