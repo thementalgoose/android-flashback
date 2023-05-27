@@ -1,7 +1,7 @@
 package tmg.flashback.formula1.model
 
 data class RaceDriverOverview(
-    val driver: DriverEntry,
+    val entry: DriverEntry,
     val q1: QualifyingResult?,
     val q2: QualifyingResult?,
     val q3: QualifyingResult?,

@@ -51,8 +51,6 @@ import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.navigation.appBarHeight
 import tmg.flashback.ui.components.progressbar.ProgressBar
 import tmg.flashback.weekend.R
-import tmg.flashback.weekend.ui.race.RaceModel
-import tmg.flashback.weekend.ui.race.RaceResultType
 import tmg.flashback.weekend.ui.shared.ConstructorIndicator
 import tmg.flashback.weekend.ui.shared.DriverPoints
 import tmg.flashback.weekend.ui.shared.finishingPositionWidth
@@ -124,7 +122,7 @@ private fun DriverResult(
         modifier = modifier.height(IntrinsicSize.Min),
         horizontalArrangement = Arrangement.Center
     ) {
-        ConstructorIndicator(constructor = model.driver.constructor)
+        ConstructorIndicator(constructor = model.entry.constructor)
         Row(modifier = Modifier
             .weight(1f)
             .semantics(mergeDescendants = true) { }
@@ -149,10 +147,10 @@ private fun DriverResult(
                 )
             }
             DriverIcon(
-                photoUrl = model.driver.driver.photoUrl,
-                number = model.driver.driver.number,
-                code = model.driver.driver.code,
-                constructorColor = model.driver.constructor.colour,
+                photoUrl = model.entry.driver.photoUrl,
+                number = model.entry.driver.number,
+                code = model.entry.driver.code,
+                constructorColor = model.entry.constructor.colour,
                 driverClicked = null
             )
             Column(
@@ -166,10 +164,10 @@ private fun DriverResult(
                 verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
                 DriverName(
-                    firstName = model.driver.driver.firstName,
-                    lastName = model.driver.driver.lastName
+                    firstName = model.entry.driver.firstName,
+                    lastName = model.entry.driver.lastName
                 )
-                TextBody2(text = model.driver.constructor.name)
+                TextBody2(text = model.entry.constructor.name)
             }
         }
         Points(
@@ -334,7 +332,7 @@ private fun Preview(
 
 private fun fakeSprintModel(driverConstructor: DriverEntry) = SprintModel.DriverResult(
     result = SprintRaceResult(
-        driver = driverConstructor,
+        entry = driverConstructor,
         time = null,
         points = 2.0,
         grid = 3,

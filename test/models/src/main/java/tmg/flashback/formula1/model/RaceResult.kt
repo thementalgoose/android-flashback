@@ -12,7 +12,7 @@ fun RaceResult.Companion.model(
     status: RaceStatus = RaceStatus.from("status"),
     fastestLap: FastestLap? = FastestLap.model(),
 ): RaceResult = RaceResult(
-    driver = driver,
+    entry = driver,
     time = time,
     points = points,
     grid = grid,

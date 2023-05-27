@@ -180,7 +180,7 @@ private fun PodiumResult(
                 .size(80.dp)
                 .clip(RoundedCornerShape(AppTheme.dimens.radiusSmall))
                 .align(Alignment.CenterHorizontally)
-                .background(model.driver.constructor.colour)
+                .background(model.entry.constructor.colour)
                 .clickable(onClick = { driverClicked(model) })
         ) {
             AsyncImage(
@@ -188,13 +188,13 @@ private fun PodiumResult(
                     .padding(4.dp)
                     .clip(RoundedCornerShape(AppTheme.dimens.radiusSmall)),
                 contentScale = ContentScale.Crop,
-                model = model.driver.driver.photoUrl,
+                model = model.entry.driver.photoUrl,
                 contentDescription = null,
                 error = painterResource(id = R.drawable.unknown_avatar)
             )
         }
         TextTitle(
-            text = model.driver.driver.firstName,
+            text = model.entry.driver.firstName,
             bold = true,
             textAlign = TextAlign.Center,
             modifier = Modifier
@@ -206,7 +206,7 @@ private fun PodiumResult(
                 )
         )
         TextTitle(
-            text = model.driver.driver.lastName,
+            text = model.entry.driver.lastName,
             bold = true,
             textAlign = TextAlign.Center,
             modifier = Modifier
@@ -228,8 +228,8 @@ private fun PodiumResult(
             horizontalArrangement = Arrangement.Center
         ) {
             Flag(
-                iso = model.driver.driver.nationalityISO,
-                nationality = model.driver.driver.nationality,
+                iso = model.entry.driver.nationalityISO,
+                nationality = model.entry.driver.nationality,
                 modifier = Modifier
                     .size(16.dp)
                     .align(Alignment.CenterVertically),
@@ -237,7 +237,7 @@ private fun PodiumResult(
             Spacer(Modifier.width(AppTheme.dimens.xsmall))
             Delta(grid = model.grid, finish = model.finish)
             Spacer(Modifier.width(AppTheme.dimens.xxsmall))
-            TextBody2(text = model.driver.constructor.name)
+            TextBody2(text = model.entry.constructor.name)
         }
         TextBody2(
             modifier = Modifier

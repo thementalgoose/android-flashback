@@ -17,7 +17,7 @@ sealed class SprintModel(
     data class DriverResult(
         val result: SprintRaceResult
     ): SprintModel(
-        id = "driver-${result.driver.driver.id}"
+        id = "driver-${result.entry.driver.id}"
     ) {
         companion object
     }
