@@ -134,15 +134,15 @@ internal class QualifyingViewModelTest: BaseTest() {
         underTest.load(2020, 1)
 
         val input = QualifyingResult.model()
-        underTest.inputs.clickDriver(input.driver.driver)
+        underTest.inputs.clickDriver(input.entry.driver)
 
         underTest.outputs.list.testObserve()
 
         verify {
             mockNavigator.navigate(
                 Screen.DriverSeason.with(
-                driverId = input.driver.driver.id,
-                driverName = input.driver.driver.name,
+                driverId = input.entry.driver.id,
+                driverName = input.entry.driver.name,
                 season = 2020
             ))
         }

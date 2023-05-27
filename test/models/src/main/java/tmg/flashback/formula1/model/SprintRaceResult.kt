@@ -10,7 +10,7 @@ fun SprintRaceResult.Companion.model(
     finish: Int = 1,
     status: RaceStatus = RaceStatus.from("status")
 ): SprintRaceResult = SprintRaceResult(
-    driver = driver,
+    entry = driver,
     time = time,
     points = points,
     grid = grid,

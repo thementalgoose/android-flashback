@@ -2,7 +2,6 @@ package tmg.flashback.weekend.ui.sprintquali
 
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
@@ -18,7 +17,6 @@ import tmg.flashback.drivers.contract.with
 import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
 import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.model.Race
-import tmg.flashback.formula1.model.QualifyingType
 import tmg.flashback.navigation.Screen
 import tmg.flashback.domain.repo.RaceRepository
 import tmg.flashback.formula1.model.SprintQualifyingType
@@ -73,9 +71,9 @@ class SprintQualifyingViewModel @Inject constructor(
 
         return list.results
             .mapIndexed { index, it ->
-                val overview = driverOverview(it.driver.driver.id)
+                val overview = driverOverview(it.entry.driver.id)
                 return@mapIndexed SprintQualifyingModel.Result(
-                    driver = it.driver,
+                    driver = it.entry,
                     finalQualifyingPosition = overview?.sprintQ3?.position ?: overview?.sprintQ2?.position ?: overview?.sprintQ1?.position ?: (index + 1),
                     sq1 = overview?.sprintQ1,
                     sq2 = overview?.sprintQ2,
