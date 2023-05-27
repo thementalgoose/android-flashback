@@ -32,6 +32,8 @@ import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.DriverEntry
 import tmg.flashback.formula1.model.LapTime
 import tmg.flashback.formula1.model.SprintRaceResult
+import tmg.flashback.formula1.utils.AccessibilityUtils.by
+import tmg.flashback.formula1.utils.AccessibilityUtils.overview
 import tmg.flashback.providers.DriverConstructorProvider
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
@@ -117,12 +119,7 @@ private fun DriverResult(
     driverClicked: (SprintRaceResult) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val contentDescription = stringResource(
-        id = R.string.ab_result_overview,
-        model.finish.ordinalAbbreviation,
-        model.driver.driver.name,
-        model.driver.constructor.name
-    )
+    val contentDescription = model.overview()
     Row(
         modifier = modifier.height(IntrinsicSize.Min),
         horizontalArrangement = Arrangement.Center
@@ -243,11 +240,9 @@ private fun ConstructorResult(
     constructorClicked: (Constructor) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val contentDescription = "${model.position?.ordinalAbbreviation}. ${stringResource(id = R.string.ab_scored, model.constructor.name, model.points.pointsDisplay())}."
+    val contentDescription = "${model.position?.ordinalAbbreviation}. ${model.points.pointsDisplay().by(model.constructor.name)}."
     val drivers = model.drivers
-        .map {
-            stringResource(id = R.string.ab_scored, it.first.name, it.second.pointsDisplay())
-        }
+        .map { it.second.pointsDisplay().by(it.first.name) }
         .joinToString(separator = ",")
 
     Row(

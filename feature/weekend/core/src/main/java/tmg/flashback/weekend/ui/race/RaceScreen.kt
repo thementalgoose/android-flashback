@@ -25,6 +25,8 @@ import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.FastestLap
 import tmg.flashback.formula1.model.LapTime
 import tmg.flashback.formula1.model.RaceResult
+import tmg.flashback.formula1.utils.AccessibilityUtils
+import tmg.flashback.formula1.utils.AccessibilityUtils.overview
 import tmg.flashback.providers.RaceRaceResultProvider
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
@@ -129,15 +131,7 @@ private fun Result(
     driverClicked: (RaceResult) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val contentDescription = stringResource(
-        id = when (model.fastestLap?.rank == 1) {
-            true -> R.string.ab_result_overview_fastest_lap
-            false -> R.string.ab_result_overview
-        },
-        model.finish.ordinalAbbreviation,
-        model.driver.driver.name,
-        model.driver.constructor.name
-    )
+    val contentDescription = model.overview()
     Row(modifier = modifier
         .height(IntrinsicSize.Min)
     ) {
