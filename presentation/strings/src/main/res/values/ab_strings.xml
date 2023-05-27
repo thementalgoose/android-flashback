@@ -13,9 +13,12 @@
     <string name="ab_close">Close</string>
     <string name="ab_back">Back</string>
 
-    <string name="ab_result_overview">%s, %s, driving for %s</string>
+    <string name="ab_result_race_overview">%s, %s, driving for %s</string>
+    <string name="ab_result_qualifying_overview">%s, driving for %s, qualified P %s</string>
+    <string name="ab_result_qualifying_overview_dnq">%s, driving for %s, did not qualify</string>
     <string name="ab_result_overview_fastest_lap">%s, %s, driving for %s. They had the fastest lap</string>
     <string name="ab_did_not_qualify">Did not qualify</string>
+    <string name="ab_result_fastest_lap">They had the fastest lap</string>
 
     <string name="ab_result_finish_time">Finished %s seconds behind the winner</string>
     <string name="ab_result_finish_p1">Finished in %s</string>

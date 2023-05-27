@@ -5,7 +5,7 @@ fun SprintQualifyingResult.Companion.model(
     lapTime: LapTime? = LapTime.model(),
     position: Int = 1
 ): SprintQualifyingResult = SprintQualifyingResult(
-    driver = driver,
+    entry = driver,
     lapTime = lapTime,
     position = position
 )

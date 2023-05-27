@@ -11,7 +11,7 @@ fun RaceDriverOverview.Companion.model(
     sprintQ3: SprintQualifyingResult? = SprintQualifyingResult.model(),
     sprintRace: SprintRaceResult? = SprintRaceResult.model(),
 ): RaceDriverOverview = RaceDriverOverview(
-    driver = driver,
+    entry = driver,
     q1 = q1,
     q2 = q2,
     q3 = q3,

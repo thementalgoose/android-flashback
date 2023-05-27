@@ -34,7 +34,7 @@ sealed class RaceModel(
 
     data class DriverResult(
         val result: RaceResult
-    ): RaceModel(id = "driver-${result.driver.driver.id}") {
+    ): RaceModel(id = "driver-${result.entry.driver.id}") {
         companion object
     }
 }

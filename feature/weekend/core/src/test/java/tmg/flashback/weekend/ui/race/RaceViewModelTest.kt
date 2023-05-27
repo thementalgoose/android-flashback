@@ -125,8 +125,8 @@ internal class RaceViewModelTest: BaseTest() {
         verify {
             mockNavigator.navigate(
                 Screen.DriverSeason.with(
-                    driverId = input.driver.driver.id,
-                    driverName = input.driver.driver.name,
+                    driverId = input.entry.driver.id,
+                    driverName = input.entry.driver.name,
                     season = 2020
                 ))
         }

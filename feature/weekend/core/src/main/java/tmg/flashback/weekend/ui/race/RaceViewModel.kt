@@ -90,14 +90,14 @@ class RaceViewModel @Inject constructor(
             } else {
                 list.addAll(
                     race.race
-                        .groupBy { it.driver.constructor }
+                        .groupBy { it.entry.constructor }
                         .map { (constructor, listOfResult) ->
                             RaceModel.ConstructorResult(
                                 constructor = constructor,
                                 points = listOfResult.sumOf { it.points },
                                 position = 0,
                                 drivers = listOfResult.map {
-                                    it.driver.driver to it.points
+                                    it.entry.driver to it.points
                                 },
                                 maxTeamPoints = 0.0,
                                 highestDriverPosition = listOfResult.minOf { it.finish }
@@ -141,8 +141,8 @@ class RaceViewModel @Inject constructor(
         val season = seasonRound.value?.first ?: return
         navigator.navigate(
             Screen.DriverSeason.with(
-            driverId = result.driver.driver.id,
-            driverName = result.driver.driver.name,
+            driverId = result.entry.driver.id,
+            driverName = result.entry.driver.name,
             season = season
         ))
     }
@@ -150,8 +150,8 @@ class RaceViewModel @Inject constructor(
     private fun getDriverFromConstructor(race: Race, constructorId: String): List<Pair<Driver, Double>> {
         return race.race
             .mapNotNull { raceResult ->
-                if (raceResult.driver.constructor.id != constructorId) return@mapNotNull null
-                return@mapNotNull Pair(raceResult.driver.driver, raceResult.points)
+                if (raceResult.entry.constructor.id != constructorId) return@mapNotNull null
+                return@mapNotNull Pair(raceResult.entry.driver, raceResult.points)
             }
             .sortedByDescending { it.second }
     }

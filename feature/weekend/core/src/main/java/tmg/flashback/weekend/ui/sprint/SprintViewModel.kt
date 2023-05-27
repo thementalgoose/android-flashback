@@ -25,8 +25,6 @@ import tmg.flashback.domain.repo.RaceRepository
 import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.navigation.Screen
 import tmg.flashback.weekend.R
-import tmg.flashback.weekend.ui.race.RaceModel
-import tmg.flashback.weekend.ui.race.RaceResultType
 import tmg.utilities.extensions.combinePair
 import javax.inject.Inject
 
@@ -85,14 +83,14 @@ class SprintViewModel @Inject constructor(
                 list.addAll(race
                     .sprint
                     .race
-                    .groupBy { it.driver.constructor }
+                    .groupBy { it.entry.constructor }
                     .map { (constructor, listOfResult) ->
                         SprintModel.ConstructorResult(
                             constructor = constructor,
                             points = listOfResult.sumOf { it.points },
                             position = 0,
                             drivers = listOfResult.map {
-                                it.driver.driver to it.points
+                                it.entry.driver to it.points
                             },
                             maxTeamPoints = 0.0,
                             highestDriverPosition = listOfResult.minOf { it.finish }
@@ -124,8 +122,8 @@ class SprintViewModel @Inject constructor(
         val season = seasonRound.value?.first ?: return
         navigator.navigate(
             Screen.DriverSeason.with(
-            driverId = result.driver.driver.id,
-            driverName = result.driver.driver.name,
+            driverId = result.entry.driver.id,
+            driverName = result.entry.driver.name,
             season = season
         ))
     }

@@ -5,7 +5,7 @@ fun QualifyingResult.Companion.model(
     lapTime: LapTime? = LapTime.model(),
     position: Int = 1,
 ): QualifyingResult = QualifyingResult(
-    driver = driver,
+    entry = driver,
     lapTime = lapTime,
     position = position
 )

@@ -32,6 +32,8 @@ import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.DriverEntry
 import tmg.flashback.formula1.model.LapTime
 import tmg.flashback.formula1.model.SprintRaceResult
+import tmg.flashback.formula1.utils.AccessibilityUtils.by
+import tmg.flashback.formula1.utils.AccessibilityUtils.overview
 import tmg.flashback.providers.DriverConstructorProvider
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
@@ -49,8 +51,6 @@ import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.navigation.appBarHeight
 import tmg.flashback.ui.components.progressbar.ProgressBar
 import tmg.flashback.weekend.R
-import tmg.flashback.weekend.ui.race.RaceModel
-import tmg.flashback.weekend.ui.race.RaceResultType
 import tmg.flashback.weekend.ui.shared.ConstructorIndicator
 import tmg.flashback.weekend.ui.shared.DriverPoints
 import tmg.flashback.weekend.ui.shared.finishingPositionWidth
@@ -117,17 +117,12 @@ private fun DriverResult(
     driverClicked: (SprintRaceResult) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val contentDescription = stringResource(
-        id = R.string.ab_result_overview,
-        model.finish.ordinalAbbreviation,
-        model.driver.driver.name,
-        model.driver.constructor.name
-    )
+    val contentDescription = model.overview()
     Row(
         modifier = modifier.height(IntrinsicSize.Min),
         horizontalArrangement = Arrangement.Center
     ) {
-        ConstructorIndicator(constructor = model.driver.constructor)
+        ConstructorIndicator(constructor = model.entry.constructor)
         Row(modifier = Modifier
             .weight(1f)
             .semantics(mergeDescendants = true) { }
@@ -152,10 +147,10 @@ private fun DriverResult(
                 )
             }
             DriverIcon(
-                photoUrl = model.driver.driver.photoUrl,
-                number = model.driver.driver.number,
-                code = model.driver.driver.code,
-                constructorColor = model.driver.constructor.colour,
+                photoUrl = model.entry.driver.photoUrl,
+                number = model.entry.driver.number,
+                code = model.entry.driver.code,
+                constructorColor = model.entry.constructor.colour,
                 driverClicked = null
             )
             Column(
@@ -169,10 +164,10 @@ private fun DriverResult(
                 verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
                 DriverName(
-                    firstName = model.driver.driver.firstName,
-                    lastName = model.driver.driver.lastName
+                    firstName = model.entry.driver.firstName,
+                    lastName = model.entry.driver.lastName
                 )
-                TextBody2(text = model.driver.constructor.name)
+                TextBody2(text = model.entry.constructor.name)
             }
         }
         Points(
@@ -243,11 +238,9 @@ private fun ConstructorResult(
     constructorClicked: (Constructor) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val contentDescription = "${model.position?.ordinalAbbreviation}. ${stringResource(id = R.string.ab_scored, model.constructor.name, model.points.pointsDisplay())}."
+    val contentDescription = "${model.position?.ordinalAbbreviation}. ${model.points.pointsDisplay().by(model.constructor.name)}."
     val drivers = model.drivers
-        .map {
-            stringResource(id = R.string.ab_scored, it.first.name, it.second.pointsDisplay())
-        }
+        .map { it.second.pointsDisplay().by(it.first.name) }
         .joinToString(separator = ",")
 
     Row(
@@ -339,7 +332,7 @@ private fun Preview(
 
 private fun fakeSprintModel(driverConstructor: DriverEntry) = SprintModel.DriverResult(
     result = SprintRaceResult(
-        driver = driverConstructor,
+        entry = driverConstructor,
         time = null,
         points = 2.0,
         grid = 3,
