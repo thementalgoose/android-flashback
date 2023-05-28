@@ -7,6 +7,8 @@ import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.withContext
 import tmg.flashback.domain.repo.OverviewRepository
 import tmg.flashback.results.usecases.DefaultSeasonUseCase
