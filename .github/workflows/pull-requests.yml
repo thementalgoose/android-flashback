@@ -16,6 +16,12 @@ jobs:
         with:
           fetch-depth: 0
 
+      # Setup Java 17
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
       # Checkout branch in head vs. base so diff can be checked
       - name: Checkout - branches
         run: git checkout ${{ github.base_ref }}
