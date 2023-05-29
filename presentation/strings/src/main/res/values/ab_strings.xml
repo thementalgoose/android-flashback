@@ -20,7 +20,7 @@
     <string name="ab_did_not_qualify">Did not qualify</string>
     <string name="ab_result_fastest_lap">They had the fastest lap</string>
 
-    <string name="ab_result_finish_time">Finished %s seconds behind the winner</string>
+    <string name="ab_result_finish_time">Finished %s behind the winner</string>
     <string name="ab_result_finish_p1">Finished in %s</string>
     <string name="ab_result_finish_dnf">Did not finish. %s</string>
 

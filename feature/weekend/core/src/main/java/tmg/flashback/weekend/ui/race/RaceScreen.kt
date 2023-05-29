@@ -25,7 +25,6 @@ import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.FastestLap
 import tmg.flashback.formula1.model.LapTime
 import tmg.flashback.formula1.model.RaceResult
-import tmg.flashback.formula1.utils.AccessibilityUtils.overview
 import tmg.flashback.providers.RaceRaceResultProvider
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
@@ -130,7 +129,18 @@ private fun Result(
     driverClicked: (RaceResult) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val contentDescription = model.overview()
+    val fastestLap = if (model.fastestLap?.rank == 1) {
+        ". ${stringResource(tmg.flashback.formula1.R.string.ab_result_fastest_lap)}"
+    } else {
+        "."
+    }
+
+    val contentDescription = stringResource(
+        R.string.ab_result_race_overview,
+        model.finish.ordinalAbbreviation,
+        model.entry.driver.name,
+        model.entry.constructor.name
+    ) + fastestLap
     Row(modifier = modifier
         .height(IntrinsicSize.Min)
     ) {
@@ -209,7 +219,7 @@ private fun Time(
 ) {
     val contentDescription = when {
         lapTime?.noTime == false && position == 1 -> stringResource(id = R.string.ab_result_finish_p1, lapTime.time)
-        lapTime?.noTime == false-> stringResource(id = R.string.ab_result_finish_time, "+${lapTime.time}")
+        lapTime?.noTime == false-> stringResource(id = R.string.ab_result_finish_time, "+${lapTime.contentDescription}")
         status.isStatusFinished() -> status.label
         else -> stringResource(id = R.string.ab_result_finish_dnf, status.label)
     }

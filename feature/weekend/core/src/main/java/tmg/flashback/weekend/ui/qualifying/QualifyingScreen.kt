@@ -20,7 +20,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.weekend.R
 import tmg.flashback.formula1.model.*
-import tmg.flashback.formula1.utils.AccessibilityUtils.qualified
 import tmg.flashback.providers.DriverConstructorProvider
 import tmg.flashback.weekend.ui.fakeWeekendInfo
 import tmg.flashback.weekend.ui.info.RaceInfoHeader
@@ -280,7 +279,20 @@ private fun DriverLabel(
     grid: Int?,
     modifier: Modifier = Modifier
 ) {
-    val contentDescription = driver.qualified(qualified = qualifyingPosition)
+    val contentDescription = if (qualifyingPosition == null) {
+        stringResource(
+            tmg.flashback.formula1.R.string.ab_result_qualifying_overview_dnq,
+            driver.driver.name,
+            driver.constructor.name
+        )
+    } else {
+        stringResource(
+            tmg.flashback.formula1.R.string.ab_result_qualifying_overview,
+            driver.driver.name,
+            driver.driver.name,
+            qualifyingPosition.ordinalAbbreviation
+        )
+    }
     Row(modifier = modifier
         .height(IntrinsicSize.Min)
         .semantics(mergeDescendants = true) { }

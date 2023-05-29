@@ -17,22 +17,19 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import tmg.flashback.weekend.R
 import tmg.flashback.formula1.model.*
-import tmg.flashback.formula1.utils.AccessibilityUtils.qualified
 import tmg.flashback.providers.DriverConstructorProvider
-import tmg.flashback.weekend.ui.fakeWeekendInfo
-import tmg.flashback.ui.components.errors.NotAvailable
-import tmg.flashback.ui.components.errors.NotAvailableYet
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextSection
 import tmg.flashback.ui.components.drivers.DriverName
+import tmg.flashback.ui.components.errors.NotAvailable
+import tmg.flashback.ui.components.errors.NotAvailableYet
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.navigation.appBarHeight
-import tmg.flashback.weekend.ui.qualifying.QualifyingModel
+import tmg.flashback.weekend.R
 import tmg.flashback.weekend.ui.shared.ConstructorIndicator
 import tmg.flashback.weekend.ui.shared.Position
 import tmg.utilities.extensions.ordinalAbbreviation
@@ -144,7 +141,20 @@ private fun DriverLabel(
     grid: Int?,
     modifier: Modifier = Modifier
 ) {
-    val contentDescription = driver.qualified(qualified = qualifyingPosition)
+    val contentDescription = if (qualifyingPosition == null) {
+        stringResource(
+            R.string.ab_result_qualifying_overview_dnq,
+            driver.driver.name,
+            driver.constructor.name
+        )
+    } else {
+        stringResource(
+            R.string.ab_result_qualifying_overview,
+            driver.driver.name,
+            driver.driver.name,
+            qualifyingPosition.ordinalAbbreviation
+        )
+    }
     Row(modifier = modifier
         .height(IntrinsicSize.Min)
         .semantics(mergeDescendants = true) { }
