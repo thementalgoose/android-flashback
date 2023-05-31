@@ -103,7 +103,7 @@ private fun CornerLink(
 private fun Track(
     model: DetailsModel.Track
 ) {
-    val track = TrackLayout.getTrack(model.circuit.id, model.season, model.raceName)
+    val track = TrackLayout.getTrack(model.circuit.id)?.getIcon(model.season, model.raceName) ?: R.drawable.circuit_unknown
     Column(Modifier.padding(
         start = AppTheme.dimens.medium,
         top = AppTheme.dimens.xsmall,
@@ -118,7 +118,7 @@ private fun Track(
         Icon(
             tint = AppTheme.colors.contentPrimary,
             modifier = Modifier.size(trackSize),
-            painter = painterResource(id = track?.icon ?: R.drawable.circuit_unknown),
+            painter = painterResource(id = track),
             contentDescription = null
         )
     }
