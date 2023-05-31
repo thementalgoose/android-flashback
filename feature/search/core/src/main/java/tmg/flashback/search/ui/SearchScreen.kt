@@ -232,7 +232,7 @@ private fun ResultCircuit(
             Icon(
                 tint = AppTheme.colors.contentPrimary,
                 modifier = Modifier.size(64.dp),
-                painter = painterResource(id = track?.icon ?: R.drawable.circuit_unknown),
+                painter = painterResource(id = track?.getDefaultIcon() ?: R.drawable.circuit_unknown),
                 contentDescription = null
             )
         }

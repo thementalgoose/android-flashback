@@ -168,7 +168,7 @@ class UpNextWidgetProvider @Inject constructor() : AppWidgetProvider() {
     private fun OverviewRace.getTintedCircuitIcon(context: Context, @ColorInt toColour: Int): Bitmap? {
         var tintedIcon: Bitmap? = null
         try {
-            val icon: Int? = this.circuitId.toEnum<TrackLayout> { it.circuitId }?.icon
+            val icon: Int? = this.circuitId.toEnum<TrackLayout> { it.circuitId }?.getDefaultIcon()
             if (icon != null) {
                 tintedIcon = tintDrawable(context, icon, toColour)
             }

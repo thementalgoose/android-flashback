@@ -168,7 +168,7 @@ private fun Stats(
     modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier) {
-        val trackIcon = TrackLayout.getTrack(circuitId = model.circuitId)?.icon ?: R.drawable.circuit_unknown
+        val trackIcon = TrackLayout.getTrack(circuitId = model.circuitId)?.getDefaultIcon() ?: R.drawable.circuit_unknown
         Row(modifier = Modifier.padding(horizontal = AppTheme.dimens.medium)) {
             Icon(
                 painter = painterResource(id = trackIcon),
