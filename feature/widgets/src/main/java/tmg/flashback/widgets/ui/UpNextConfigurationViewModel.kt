@@ -15,11 +15,13 @@ import javax.inject.Inject
 interface UpNextConfigurationViewModelInputs {
     fun load(appWidgetId: Int)
     fun changeShowBackground(enabled: Boolean)
+    fun changeShowWeather(show: Boolean)
     fun save()
 }
 
 interface UpNextConfigurationViewModelOutputs {
     val showBackground: LiveData<Boolean>
+    val showWeather: LiveData<Boolean>
     val save: SingleLiveEvent<Unit>
 }
 
@@ -35,7 +37,9 @@ internal class UpNextConfigurationViewModel @Inject constructor(
     private var appWidgetId: Int = -1
 
     override val save: SingleLiveEvent<Unit> = SingleLiveEvent()
+
     override val showBackground: MutableLiveData<Boolean> = MutableLiveData(false)
+    override val showWeather: MutableLiveData<Boolean> = MutableLiveData(false)
 
     override fun load(appWidgetId: Int) {
         this.appWidgetId = appWidgetId
@@ -45,6 +49,11 @@ internal class UpNextConfigurationViewModel @Inject constructor(
     override fun changeShowBackground(enabled: Boolean) {
         widgetRepository.setShowBackground(appWidgetId, enabled)
         showBackground.postValue(enabled)
+    }
+
+    override fun changeShowWeather(show: Boolean) {
+        widgetRepository.setShowWeather(appWidgetId, show)
+        showWeather.postValue(show)
     }
 
     override fun save() {
