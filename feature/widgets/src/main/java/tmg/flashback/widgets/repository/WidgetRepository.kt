@@ -11,6 +11,7 @@ class WidgetRepository @Inject constructor(
 
     companion object {
         private fun widgetUpNextShowBackground(appWidgetId: Int) = "widget_upnext_show_background_$appWidgetId"
+        private fun widgetUpNextShowWeather(appWidgetId: Int) = "widget_upnext_show_weather_$appWidgetId"
     }
 
     fun setShowBackground(appWidgetId: Int, showBackground: Boolean) {
@@ -19,5 +20,13 @@ class WidgetRepository @Inject constructor(
 
     fun getShowBackground(appWidgetId: Int): Boolean {
         return preferenceManager.getBoolean(widgetUpNextShowBackground(appWidgetId), false)
+    }
+
+    fun setShowWeather(appWidgetId: Int, showWeather: Boolean) {
+        preferenceManager.save(widgetUpNextShowWeather(appWidgetId), showWeather)
+    }
+
+    fun getShowWeather(appWidgetId: Int): Boolean {
+        return preferenceManager.getBoolean(widgetUpNextShowWeather(appWidgetId))
     }
 }

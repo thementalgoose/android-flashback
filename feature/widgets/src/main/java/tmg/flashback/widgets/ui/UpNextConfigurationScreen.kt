@@ -32,11 +32,14 @@ internal fun UpNextConfigurationScreenVM(
     viewModel: UpNextConfigurationViewModel = hiltViewModel()
 ) {
     val showBackground = viewModel.outputs.showBackground.observeAsState(initial = false)
+    val showWeather = viewModel.outputs.showWeather.observeAsState(initial = false)
 
     UpNextConfigurationScreen(
         actionUpClicked = actionUpClicked,
         showBackground = showBackground.value,
         updateShowBackground = viewModel.inputs::changeShowBackground,
+        showWeather = showWeather.value,
+        updateShowWeather = viewModel.inputs::changeShowWeather,
         save = viewModel.inputs::save
     )
 }
@@ -45,7 +48,9 @@ internal fun UpNextConfigurationScreenVM(
 private fun UpNextConfigurationScreen(
     actionUpClicked: () -> Unit,
     showBackground: Boolean,
+    showWeather: Boolean,
     updateShowBackground: (Boolean) -> Unit,
+    updateShowWeather: (Boolean) -> Unit,
     save: () -> Unit
 ) {
     Column(
@@ -76,6 +81,12 @@ private fun UpNextConfigurationScreen(
                         SettingSwitch(
                             model = UpNextConfigurationSettings.showBackground(showBackground),
                             onClick = { updateShowBackground(!showBackground) }
+                        )
+                    }
+                    item {
+                        SettingSwitch(
+                            model = UpNextConfigurationSettings.showWeather(showWeather),
+                            onClick = { updateShowWeather(!showWeather) }
                         )
                     }
                 }

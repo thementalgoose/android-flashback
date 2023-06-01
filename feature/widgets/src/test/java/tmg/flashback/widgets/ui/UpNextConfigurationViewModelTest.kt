@@ -52,6 +52,20 @@ internal class UpNextConfigurationViewModelTest: BaseTest() {
     }
 
     @Test
+    fun `changing weather updates weather for app widget`() {
+
+        initUnderTest()
+        underTest.inputs.changeShowWeather(false)
+
+        underTest.outputs.showWeather.test {
+            assertValue(false)
+        }
+        verify {
+            mockWidgetRepository.setShowWeather(widgetId, false)
+        }
+    }
+
+    @Test
     fun `saving calls update widgets and calls save`() {
         initUnderTest()
         underTest.inputs.save()

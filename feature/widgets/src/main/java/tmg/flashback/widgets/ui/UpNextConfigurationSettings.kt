@@ -15,6 +15,14 @@ object UpNextConfigurationSettings {
         title = R.string.widget_settings_background_title,
         subtitle = R.string.widget_settings_background_description,
         isChecked = isChecked,
+        isBeta = false
+    )
+
+    fun showWeather(show: Boolean) = Setting.Switch(
+        _key = "show_weather",
+        title = R.string.widget_settings_weather_title,
+        subtitle = R.string.widget_settings_weather_description,
+        isChecked = show,
         isBeta = true
     )
 }
