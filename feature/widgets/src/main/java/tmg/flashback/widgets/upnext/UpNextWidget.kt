@@ -13,6 +13,7 @@ import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
 import androidx.glance.Image
 import androidx.glance.ImageProvider
+import androidx.glance.LocalGlanceId
 import androidx.glance.LocalSize
 import androidx.glance.action.clickable
 import androidx.glance.appwidget.GlanceAppWidget
@@ -49,13 +50,14 @@ import tmg.flashback.widgets.presentation.TextFeature
 import tmg.flashback.widgets.presentation.TextTitle
 import tmg.flashback.widgets.presentation.WidgetConfigurationData
 import tmg.flashback.widgets.presentation.getWidgetColourData
+import tmg.utilities.extensions.isInDayMode
+import tmg.utilities.extensions.isInNightMode
 import tmg.utilities.extensions.ordinalAbbreviation
 import tmg.utilities.extensions.startOfWeek
 
 class UpNextWidget: GlanceAppWidget() {
 
     companion object {
-
         private val configIcon = DpSize(48.dp, 48.dp)
         private val configRaceOnlyCompressed = DpSize(90.dp, 48.dp)
         private val configRaceOnly = DpSize(180.dp, 48.dp)
@@ -76,8 +78,9 @@ class UpNextWidget: GlanceAppWidget() {
 
     override suspend fun provideGlance(context: Context, id: GlanceId) = provideContent {
         val overviewRace = getNextOverviewRace(context)
-        Log.i("Widget", "Updating glance id $id")
-        val widgetData = getWidgetColourData(context, showBackground = true, isDarkMode = true)
+        val widgetsRepository = WidgetsEntryPoints.get(context).widgetsRepository()
+        val appWidgetId = LocalGlanceId.current.toString().filter { it.isDigit() }.toInt()
+        val widgetData = getWidgetColourData(context, showBackground = widgetsRepository.getShowBackground(appWidgetId), isDarkMode = context.isInNightMode())
 
         if (overviewRace != null) {
             when (LocalSize.current) {

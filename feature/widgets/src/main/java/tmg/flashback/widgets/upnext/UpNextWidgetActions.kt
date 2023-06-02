@@ -12,10 +12,9 @@ internal class UpNextWidgetOpenAll: ActionCallback {
         glanceId: GlanceId,
         parameters: ActionParameters
     ) {
-        WidgetsEntryPoints.get(context).updateWidgetUseCase().update()
-
-//        val intent = WidgetsEntryPoints.get(context).widgetsNavigationComponent().launchApp(context)
-//        context.startActivity(intent)
+//        WidgetsEntryPoints.get(context).updateWidgetUseCase().update()
+        val intent = WidgetsEntryPoints.get(context).widgetsNavigationComponent().launchApp(context)
+        context.startActivity(intent)
     }
 }
 
