@@ -5,6 +5,7 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Test
 import tmg.flashback.widgets.repository.WidgetRepository
+import tmg.flashback.widgets.upnext.configure.UpNextConfigurationViewModel
 import tmg.flashback.widgets.usecases.UpdateWidgetsUseCase
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.test

@@ -1,4 +1,4 @@
-package tmg.flashback.widgets.providers
+package tmg.flashback.widgets.upnext
 
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:configure="tmg.flashback.widgets.ui.UpNextConfigurationActivity"
+    android:configure="tmg.flashback.widgets.upnext.configure.UpNextConfigurationActivity"
     android:initialLayout="@layout/widget_up_next"
     android:minWidth="@dimen/widgetMinWidth"
     android:minHeight="50dp"
