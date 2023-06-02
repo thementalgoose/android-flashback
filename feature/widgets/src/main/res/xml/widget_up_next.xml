@@ -7,7 +7,7 @@
     android:minResizeWidth="48dp"
     android:minResizeHeight="48dp"
     android:maxResizeHeight="250dp"
-    android:description="@string/widget_up_next_title"
+    android:description="@string/widget_up_next_description"
     android:previewImage="@drawable/widget_up_next_preview"
     android:resizeMode="horizontal|vertical"
     android:targetCellWidth="3"
