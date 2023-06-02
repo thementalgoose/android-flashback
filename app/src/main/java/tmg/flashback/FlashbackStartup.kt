@@ -37,7 +37,7 @@ import tmg.flashback.style.SupportedTheme
 import tmg.flashback.ui.model.NightMode
 import tmg.flashback.ui.model.Theme
 import tmg.flashback.ui.repository.ThemeRepository
-import tmg.flashback.widgets.updateAllWidgets
+import tmg.flashback.widgets.usecases.UpdateWidgetsUseCase
 import tmg.utilities.extensions.isInDayMode
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -63,7 +63,8 @@ class FlashbackStartup @Inject constructor(
     private val remoteNotificationUnsubscribeUseCase: RemoteNotificationUnsubscribeUseCase,
     private val appOpenedUseCase: AppOpenedUseCase,
     private val getDeviceInfoUseCase: GetDeviceInfoUseCase,
-    private val initialiseAdsUseCase: InitialiseAdsUseCase
+    private val initialiseAdsUseCase: InitialiseAdsUseCase,
+    private val updateWidgetsUseCase: UpdateWidgetsUseCase,
 ) {
     fun startup(application: FlashbackApplication) {
 
@@ -170,6 +171,6 @@ class FlashbackStartup @Inject constructor(
         )
 
         // Update Widgets
-        application.updateAllWidgets()
+        updateWidgetsUseCase.update()
     }
 }
