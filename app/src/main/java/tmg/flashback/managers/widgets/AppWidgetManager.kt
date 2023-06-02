@@ -4,7 +4,7 @@ import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
-import tmg.flashback.widgets.providers.UpNextWidgetProvider
+import tmg.flashback.widgets.upnext.UpNextWidgetProvider
 import javax.inject.Inject
 import javax.inject.Singleton
 

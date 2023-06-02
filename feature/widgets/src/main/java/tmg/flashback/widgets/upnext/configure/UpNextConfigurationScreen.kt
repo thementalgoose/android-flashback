@@ -1,4 +1,4 @@
-package tmg.flashback.widgets.ui
+package tmg.flashback.widgets.upnext.configure
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -23,7 +23,6 @@ import tmg.flashback.style.buttons.ButtonPrimary
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.settings.SettingHeader
 import tmg.flashback.ui.components.settings.SettingSwitch
-import tmg.flashback.ui.settings.Setting
 import tmg.flashback.widgets.R
 
 @Composable

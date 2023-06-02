@@ -1,12 +1,9 @@
-package tmg.flashback.widgets.ui
+package tmg.flashback.widgets.upnext.configure
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import tmg.flashback.ui.settings.Setting
-import tmg.flashback.widgets.R
-import tmg.flashback.strings.R.*
 import tmg.flashback.widgets.repository.WidgetRepository
 import tmg.flashback.widgets.usecases.UpdateWidgetsUseCase
 import tmg.utilities.lifecycle.SingleLiveEvent
