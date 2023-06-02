@@ -15,7 +15,8 @@ dependencies {
     implementation libs.compose.material3
     implementation libs.compose.windowsize
     implementation libs.compose.animation
-    implementation libs.compose.ui.tooling
+    debugImplementation libs.compose.ui.tooling
+    implementation libs.compose.ui.toolingpreview
     implementation libs.compose.ui.viewbinding
     implementation libs.compose.livedata
 
