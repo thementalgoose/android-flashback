@@ -94,14 +94,14 @@ class UpNextWidget: GlanceAppWidget() {
                     context,
                     widgetData,
                     overviewRace,
-                    timeSize = 18.sp,
+                    timeSize = 22.sp,
                     modifier = GlanceModifier.clickable(actionRunCallback<UpNextWidgetOpenAll>()),
                 )
                 configRaceOnly -> RaceOnly(
                     context,
                     widgetData,
                     overviewRace,
-                    timeSize = 28.sp,
+                    timeSize = 30.sp,
                     modifier = GlanceModifier.clickable(actionRunCallback<UpNextWidgetOpenAll>()),
                 )
                 configRaceScheduleFullList -> RaceScheduleFullList(
@@ -300,7 +300,10 @@ internal fun RaceScheduleFullListLargeRace(
                     }
             }
             if (showTrackIcon) {
-                TrackIcon(overviewRace = overviewRace)
+                TrackIcon(
+                    overviewRace = overviewRace,
+                    trackColour = widgetData.contentColour
+                )
             }
         }
     }
@@ -423,13 +426,14 @@ private fun CountryIcon(
 @Composable
 private fun TrackIcon(
     overviewRace: OverviewRace,
+    trackColour: Color,
     modifier: GlanceModifier = GlanceModifier.width(100.dp).wrapContentHeight()
 ) {
     val trackLayout = TrackLayout.getTrack(overviewRace.circuitId)?.getIcon(overviewRace.season, overviewRace.raceName) ?: R.drawable.widget_circuit_unknown
     Image(
         provider = ImageProvider(resId = trackLayout),
         contentDescription = overviewRace.circuitName,
-        colorFilter = ColorFilter.tint(ColorProvider(Color.White)),
+        colorFilter = ColorFilter.tint(ColorProvider(trackColour)),
         modifier = modifier
     )
 }

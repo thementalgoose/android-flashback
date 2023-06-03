@@ -14,6 +14,7 @@ interface UpNextConfigurationViewModelInputs {
     fun changeShowBackground(enabled: Boolean)
     fun changeShowWeather(show: Boolean)
     fun save()
+    fun update()
 }
 
 interface UpNextConfigurationViewModelOutputs {
@@ -53,8 +54,12 @@ internal class UpNextConfigurationViewModel @Inject constructor(
         showWeather.postValue(show)
     }
 
-    override fun save() {
+    override fun update() {
         updateWidgetsUseCase.update()
+    }
+
+    override fun save() {
+        update()
         save.call()
     }
 }
