@@ -12,7 +12,7 @@
     android:resizeMode="horizontal|vertical"
     android:targetCellWidth="3"
     android:targetCellHeight="2"
-    android:updatePeriodMillis="14400000"
+    android:updatePeriodMillis="7200000"
     android:widgetCategory="home_screen|keyguard"
     android:widgetFeatures="reconfigurable|configuration_optional"
     tools:ignore="UnusedAttribute" />
