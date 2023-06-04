@@ -1,7 +1,6 @@
 package tmg.flashback.widgets.upnext
 
 import android.content.Context
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.DpSize
@@ -51,9 +50,7 @@ import tmg.flashback.widgets.presentation.TextTitle
 import tmg.flashback.widgets.presentation.WidgetConfigurationData
 import tmg.flashback.widgets.presentation.getWidgetColourData
 import tmg.flashback.widgets.utils.appWidgetId
-import tmg.utilities.extensions.isInDayMode
 import tmg.utilities.extensions.isInNightMode
-import tmg.utilities.extensions.ordinalAbbreviation
 import tmg.utilities.extensions.startOfWeek
 
 class UpNextWidget: GlanceAppWidget() {
@@ -96,6 +93,7 @@ class UpNextWidget: GlanceAppWidget() {
                     widgetData,
                     overviewRace,
                     timeSize = 22.sp,
+                    showRefresh = false,
                     modifier = GlanceModifier.clickable(actionRunCallback<UpNextWidgetOpenAll>()),
                 )
                 configRaceOnly -> RaceOnly(
@@ -103,6 +101,7 @@ class UpNextWidget: GlanceAppWidget() {
                     widgetData,
                     overviewRace,
                     timeSize = 30.sp,
+                    showRefresh = true,
                     modifier = GlanceModifier.clickable(actionRunCallback<UpNextWidgetOpenAll>()),
                 )
                 configRaceScheduleFullList -> RaceScheduleFullList(
@@ -161,7 +160,7 @@ private fun Schedule.labels(): Pair<String, String> {
     return if (sameWeek) {
         deviceTime.format(DateTimeFormatter.ofPattern("EEE")) to deviceTime.format(DateTimeFormatter.ofPattern("HH:mm"))
     } else {
-        "${deviceTime.dayOfMonth.ordinalAbbreviation} ${deviceTime.format(DateTimeFormatter.ofPattern("MMM"))}" to deviceTime.format(DateTimeFormatter.ofPattern("HH:mm"))
+        "${deviceTime.dayOfMonth} ${deviceTime.format(DateTimeFormatter.ofPattern("MMM"))}" to deviceTime.format(DateTimeFormatter.ofPattern("HH:mm"))
     }
 }
 
@@ -217,6 +216,7 @@ internal fun RaceOnly(
     widgetData: WidgetConfigurationData,
     overviewRace: OverviewRace,
     timeSize: TextUnit = 28.sp,
+    showRefresh: Boolean = false,
     modifier: GlanceModifier = GlanceModifier,
 ) {
     Column(
@@ -235,15 +235,25 @@ internal fun RaceOnly(
                     overviewRace = overviewRace
                 )
                 TextBody(
-                    modifier = GlanceModifier.padding(
-                        top = 4.dp,
-                        start = 8.dp,
-                        end = 8.dp,
-                        bottom = 2.dp
-                    ),
+                    modifier = GlanceModifier
+                        .defaultWeight()
+                        .padding(
+                            top = 4.dp,
+                            start = 8.dp,
+                            end = 8.dp,
+                            bottom = 2.dp
+                        ),
                     text = overviewRace.raceName,
                     color = widgetData.contentColour
                 )
+                if (showRefresh) {
+                    Image(
+                        modifier = GlanceModifier.clickable(actionRunCallback<UpNextWidgetRefreshWidget>()),
+                        provider = ImageProvider(R.drawable.ic_widget_refresh),
+                        contentDescription = context.getString(R.string.ab_refresh),
+                        colorFilter = ColorFilter.tint(ColorProvider(widgetData.contentColour))
+                    )
+                }
             }
 
             FeatureDate(
@@ -304,6 +314,7 @@ internal fun RaceScheduleFullListLargeRace(
                     .forEach {
                         Schedule(
                             model = it,
+                            compressed = false,
                             widgetData = widgetData
                         )
                     }
@@ -354,6 +365,7 @@ internal fun RaceScheduleFullList(
                     .forEach {
                         Schedule(
                             model = it,
+                            compressed = true,
                             widgetData = widgetData
                         )
                     }
@@ -450,6 +462,7 @@ private fun TrackIcon(
 @Composable
 private fun Schedule(
     model: Schedule,
+    compressed: Boolean,
     widgetData: WidgetConfigurationData,
     modifier: GlanceModifier = GlanceModifier
 ) {
@@ -460,7 +473,7 @@ private fun Schedule(
         TextBody(
             modifier = GlanceModifier,
             color = widgetData.contentColour.copy(alpha = alpha),
-            text = model.label,
+            text = if (compressed) model.label.shortenLabel() else model.label,
             weight = FontWeight.Bold
         )
         Spacer(GlanceModifier.width(12.dp))
@@ -469,4 +482,12 @@ private fun Schedule(
             text = "$day (${time})"
         )
     }
+}
+
+private fun String.shortenLabel() = when (this.lowercase()) {
+    "sprint qualifying" -> "Sprint Q.."
+    "sprint shootout" -> "Sprint Q.."
+    "qualifying" -> "Quali.."
+    "qualify" -> "Quali.."
+    else -> this
 }

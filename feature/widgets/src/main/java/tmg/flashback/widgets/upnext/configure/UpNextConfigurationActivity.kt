@@ -4,7 +4,6 @@ import android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_ID
 import android.appwidget.AppWidgetManager.INVALID_APPWIDGET_ID
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
@@ -49,7 +48,6 @@ class UpNextConfigurationActivity: BaseActivity() {
 
     override fun onStop() {
         viewModel.inputs.update()
-        Log.i("UpNextWidget", "Activity onStop updating $appWidgetId")
         super.onStop()
     }
 }

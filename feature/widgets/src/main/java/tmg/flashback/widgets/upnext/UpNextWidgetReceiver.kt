@@ -2,22 +2,12 @@ package tmg.flashback.widgets.upnext
 
 import android.appwidget.AppWidgetManager
 import android.content.Context
-import android.content.Intent
-import android.util.Log
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.DpSize
-import androidx.compose.ui.unit.dp
-import androidx.datastore.preferences.core.intPreferencesKey
-import androidx.glance.GlanceId
 import androidx.glance.LocalContext
 import androidx.glance.appwidget.GlanceAppWidget
-import androidx.glance.appwidget.GlanceAppWidgetManager
 import androidx.glance.appwidget.GlanceAppWidgetReceiver
-import androidx.glance.appwidget.state.updateAppWidgetState
 import androidx.glance.appwidget.updateAll
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.MainScope
@@ -43,7 +33,6 @@ class UpNextWidgetReceiver: GlanceAppWidgetReceiver() {
     ) {
         super.onUpdate(context, appWidgetManager, appWidgetIds)
         coroutineScope.launch {
-            Log.i("UpNextWidget", "Updating all....")
             glanceAppWidget.updateAll(context)
         }
     }

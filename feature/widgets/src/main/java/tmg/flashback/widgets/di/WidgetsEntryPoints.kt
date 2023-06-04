@@ -14,11 +14,9 @@ import tmg.flashback.widgets.usecases.UpdateWidgetsUseCase
 @EntryPoint
 @InstallIn(SingletonComponent::class)
 internal interface WidgetsEntryPoints {
-    fun buildConfigManager(): BuildConfigManager
     fun widgetsRepository(): WidgetRepository
     fun widgetsNavigationComponent(): WidgetNavigationComponent
     fun scheduleRepository(): ScheduleRepository
-    fun updateWidgetUseCase(): UpdateWidgetsUseCase
 
     companion object {
         fun get(context: Context): WidgetsEntryPoints = EntryPointAccessors.fromApplication(context, WidgetsEntryPoints::class.java)
