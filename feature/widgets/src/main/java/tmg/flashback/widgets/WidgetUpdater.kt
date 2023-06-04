@@ -5,10 +5,10 @@ import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import tmg.flashback.widgets.providers.UpNextWidgetProvider
+import tmg.flashback.widgets.upnext.UpNextWidgetReceiver
 
-fun Context.updateAllWidgets() {
-    updateWidgets(UpNextWidgetProvider::class.java)
+internal fun Context.updateAllWidgets() {
+    updateWidgets(UpNextWidgetReceiver::class.java)
 }
 
 internal fun <T : AppWidgetProvider> Context.updateWidgets(zClass: Class<T>) {
