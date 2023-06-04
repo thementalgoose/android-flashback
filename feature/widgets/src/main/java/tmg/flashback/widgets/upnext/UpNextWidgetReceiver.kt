@@ -12,6 +12,7 @@ import androidx.glance.appwidget.updateAll
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
 import tmg.flashback.formula1.model.OverviewRace
@@ -19,23 +20,11 @@ import tmg.flashback.formula1.model.Schedule
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.widgets.presentation.WidgetConfigurationData
 
+// https://developer.android.com/reference/kotlin/androidx/glance/appwidget/GlanceAppWidgetReceiver
 @AndroidEntryPoint
 class UpNextWidgetReceiver: GlanceAppWidgetReceiver() {
-
-    override val glanceAppWidget: GlanceAppWidget = UpNextWidget()
-
-    private val coroutineScope = MainScope()
-
-    override fun onUpdate(
-        context: Context,
-        appWidgetManager: AppWidgetManager,
-        appWidgetIds: IntArray
-    ) {
-        super.onUpdate(context, appWidgetManager, appWidgetIds)
-        coroutineScope.launch {
-            glanceAppWidget.updateAll(context)
-        }
-    }
+    override val glanceAppWidget: GlanceAppWidget
+        get() = UpNextWidget()
 }
 
 @Preview
