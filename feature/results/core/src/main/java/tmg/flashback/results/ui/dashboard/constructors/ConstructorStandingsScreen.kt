@@ -178,7 +178,7 @@ private fun ConstructorStandings(
             val progress = (model.standings.points / maxPoints).toFloat().coerceIn(0f, 1f)
             ProgressBar(
                 modifier = Modifier
-                    .weight(2f)
+                    .width(110.dp)
                     .height(48.dp)
                     .fillMaxHeight(),
                 endProgress = progress,

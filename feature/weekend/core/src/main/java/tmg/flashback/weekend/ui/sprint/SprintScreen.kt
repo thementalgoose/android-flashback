@@ -299,7 +299,7 @@ private fun ConstructorResult(
             val progress = (model.points / model.maxTeamPoints).toFloat().coerceIn(0f, 1f)
             ProgressBar(
                 modifier = Modifier
-                    .width(80.dp)
+                    .weight(2f)
                     .height(48.dp),
                 endProgress = progress,
                 barColor = model.constructor.colour,
