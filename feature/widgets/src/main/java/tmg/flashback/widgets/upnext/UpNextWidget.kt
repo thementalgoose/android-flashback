@@ -1,24 +1,23 @@
 package tmg.flashback.widgets.upnext
 
 import android.content.Context
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.glance.ColorFilter
-import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
 import androidx.glance.Image
 import androidx.glance.ImageProvider
+import androidx.glance.LocalContext
 import androidx.glance.LocalGlanceId
 import androidx.glance.LocalSize
 import androidx.glance.action.clickable
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.SizeMode
 import androidx.glance.appwidget.action.actionRunCallback
-import androidx.glance.appwidget.provideContent
 import androidx.glance.background
 import androidx.glance.layout.Alignment
 import androidx.glance.layout.Column
@@ -33,7 +32,6 @@ import androidx.glance.layout.width
 import androidx.glance.layout.wrapContentHeight
 import androidx.glance.text.FontWeight
 import androidx.glance.text.TextAlign
-import androidx.glance.unit.ColorProvider
 import kotlinx.coroutines.runBlocking
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
@@ -73,15 +71,25 @@ class UpNextWidget: GlanceAppWidget() {
         configRaceScheduleFullListLargeRaceTrackIcon
     ))
 
+    @Composable
+    override fun Content() {
+        val context = LocalContext.current
 
-    override suspend fun provideGlance(context: Context, id: GlanceId) = provideContent {
+        Log.i("UpNextWidget", "provideGlance")
+
         val overviewRace = getNextOverviewRace(context)
         val widgetsRepository = WidgetsEntryPoints.get(context).widgetsRepository()
+
+        Log.i("UpNextWidget", "Next race found $overviewRace")
+
         val appWidgetId = LocalGlanceId.current.appWidgetId
         val widgetData = getWidgetColourData(context, showBackground = widgetsRepository.getShowBackground(appWidgetId), isDarkMode = context.isInNightMode())
-
         if (overviewRace != null) {
-            when (LocalSize.current) {
+
+            val config = LocalSize.current
+            Log.i("UpNextWidget", "Loading config $config")
+
+            when (config) {
                 configIcon -> Icon(
                     context,
                     widgetData,
@@ -124,15 +132,21 @@ class UpNextWidget: GlanceAppWidget() {
                     modifier = GlanceModifier.clickable(actionRunCallback<UpNextWidgetOpenAll>()),
                     showTrackIcon = true
                 )
-                else -> throw IllegalArgumentException("Invalid size not matching the provided ones")
+                else -> {
+                    Log.e("UpNextWidget", "Invalid size, throwing IAW")
+                    throw IllegalArgumentException("Invalid size not matching the provided ones")
+                }
             }
         } else {
+            Log.i("UpNextWidget", "No race found, showing fallback")
             NoRace(
                 context,
                 widgetData,
                 modifier = GlanceModifier.clickable(actionRunCallback<UpNextWidgetRefreshWidget>()),
             )
         }
+
+        Log.i("UpNextWidget", "provideFlance finished")
     }
 
     private fun getNextOverviewRace(context: Context): OverviewRace? {
@@ -251,7 +265,7 @@ internal fun RaceOnly(
                         modifier = GlanceModifier.clickable(actionRunCallback<UpNextWidgetRefreshWidget>()),
                         provider = ImageProvider(R.drawable.ic_widget_refresh),
                         contentDescription = context.getString(R.string.ab_refresh),
-                        colorFilter = ColorFilter.tint(ColorProvider(widgetData.contentColour))
+//                        colorFilter = ColorFilter.tint(ColorProvider(widgetData.contentColour))
                     )
                 }
             }
@@ -296,7 +310,7 @@ internal fun RaceScheduleFullListLargeRace(
                 modifier = GlanceModifier.clickable(actionRunCallback<UpNextWidgetRefreshWidget>()),
                 provider = ImageProvider(R.drawable.ic_widget_refresh),
                 contentDescription = context.getString(R.string.ab_refresh),
-                colorFilter = ColorFilter.tint(ColorProvider(widgetData.contentColour))
+//                colorFilter = ColorFilter.tint(ColorProvider(widgetData.contentColour))
             )
         }
 
@@ -454,7 +468,7 @@ private fun TrackIcon(
     Image(
         provider = ImageProvider(resId = trackLayout),
         contentDescription = overviewRace.circuitName,
-        colorFilter = ColorFilter.tint(ColorProvider(trackColour)),
+//        colorFilter = ColorFilter.tint(ColorProvider(trackColour)),
         modifier = modifier
     )
 }
