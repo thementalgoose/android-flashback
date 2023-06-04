@@ -9,6 +9,7 @@
     <string name="ab_rss_configure_supported_add">Add to feed</string>
     <string name="ab_rss_configure_add">Add feed</string>
 
+    <string name="ab_refresh">Refresh</string>
     <string name="ab_menu">Menu</string>
     <string name="ab_close">Close</string>
     <string name="ab_back">Back</string>

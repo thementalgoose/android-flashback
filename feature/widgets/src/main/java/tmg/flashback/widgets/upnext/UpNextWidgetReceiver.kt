@@ -11,10 +11,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
+import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.glance.GlanceId
 import androidx.glance.LocalContext
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.GlanceAppWidgetManager
 import androidx.glance.appwidget.GlanceAppWidgetReceiver
+import androidx.glance.appwidget.state.updateAppWidgetState
+import androidx.glance.appwidget.updateAll
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
@@ -39,13 +43,8 @@ class UpNextWidgetReceiver: GlanceAppWidgetReceiver() {
     ) {
         super.onUpdate(context, appWidgetManager, appWidgetIds)
         coroutineScope.launch {
-            val glanceId = GlanceAppWidgetManager(context)
-                .getGlanceIds(UpNextWidget::class.java)
-                .firstOrNull()
-
-            if (glanceId != null) {
-                glanceAppWidget.update(context, glanceId)
-            }
+            Log.i("UpNextWidget", "Updating all....")
+            glanceAppWidget.updateAll(context)
         }
     }
 }

@@ -50,6 +50,7 @@ import tmg.flashback.widgets.presentation.TextFeature
 import tmg.flashback.widgets.presentation.TextTitle
 import tmg.flashback.widgets.presentation.WidgetConfigurationData
 import tmg.flashback.widgets.presentation.getWidgetColourData
+import tmg.flashback.widgets.utils.appWidgetId
 import tmg.utilities.extensions.isInDayMode
 import tmg.utilities.extensions.isInNightMode
 import tmg.utilities.extensions.ordinalAbbreviation
@@ -79,7 +80,7 @@ class UpNextWidget: GlanceAppWidget() {
     override suspend fun provideGlance(context: Context, id: GlanceId) = provideContent {
         val overviewRace = getNextOverviewRace(context)
         val widgetsRepository = WidgetsEntryPoints.get(context).widgetsRepository()
-        val appWidgetId = LocalGlanceId.current.toString().filter { it.isDigit() }.toInt()
+        val appWidgetId = LocalGlanceId.current.appWidgetId
         val widgetData = getWidgetColourData(context, showBackground = widgetsRepository.getShowBackground(appWidgetId), isDarkMode = context.isInNightMode())
 
         if (overviewRace != null) {
@@ -272,12 +273,20 @@ internal fun RaceScheduleFullListLargeRace(
                 overviewRace = overviewRace
             )
             TextBody(
-                modifier = GlanceModifier.padding(
-                    start = 8.dp,
-                    end = 8.dp
-                ),
+                modifier = GlanceModifier
+                    .defaultWeight()
+                    .padding(
+                        start = 8.dp,
+                        end = 8.dp
+                    ),
                 text = overviewRace.raceName,
                 color = widgetData.contentColour
+            )
+            Image(
+                modifier = GlanceModifier.clickable(actionRunCallback<UpNextWidgetRefreshWidget>()),
+                provider = ImageProvider(R.drawable.ic_widget_refresh),
+                contentDescription = context.getString(R.string.ab_refresh),
+                colorFilter = ColorFilter.tint(ColorProvider(widgetData.contentColour))
             )
         }
 
