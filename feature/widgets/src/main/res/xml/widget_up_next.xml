@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:configure="tmg.flashback.widgets.ui.UpNextConfigurationActivity"
-    android:initialLayout="@layout/widget_up_next"
-    android:minWidth="@dimen/widgetMinWidth"
-    android:minHeight="50dp"
+    android:configure="tmg.flashback.widgets.upnext.configure.UpNextConfigurationActivity"
+    android:minWidth="90dp"
+    android:minHeight="90dp"
+    android:minResizeWidth="48dp"
+    android:minResizeHeight="48dp"
+    android:maxResizeHeight="250dp"
+    android:description="@string/widget_up_next_description"
     android:previewImage="@drawable/widget_up_next_preview"
     android:resizeMode="horizontal|vertical"
-    android:targetCellWidth="4"
-    android:targetCellHeight="1"
-    android:updatePeriodMillis="14400000"
+    android:targetCellWidth="3"
+    android:targetCellHeight="2"
+    android:updatePeriodMillis="7200000"
     android:widgetCategory="home_screen|keyguard"
     android:widgetFeatures="reconfigurable|configuration_optional"
-    tools:ignore="UnusedAttribute">
-
-</appwidget-provider>
+    tools:ignore="UnusedAttribute" />
+<!--    android:initialLayout="@layout/widget_up_next"-->

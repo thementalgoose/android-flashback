@@ -4,7 +4,7 @@ import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
-import tmg.flashback.widgets.providers.UpNextWidgetProvider
+import tmg.flashback.widgets.upnext.UpNextWidgetReceiver
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -19,7 +19,7 @@ class AppWidgetManager @Inject constructor(
     @Suppress("EXPERIMENTAL_API_USAGE")
     override val hasWidgets: Boolean
         get() {
-            val currentIds = appWidgetManager.getAppWidgetIds(ComponentName(applicationContext, UpNextWidgetProvider::class.java))
+            val currentIds = appWidgetManager.getAppWidgetIds(ComponentName(applicationContext, UpNextWidgetReceiver::class.java))
             return currentIds.isNotEmpty()
         }
 }

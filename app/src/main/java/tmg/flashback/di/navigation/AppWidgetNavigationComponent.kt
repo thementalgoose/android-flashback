@@ -1,5 +1,6 @@
 package tmg.flashback.di.navigation
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import tmg.flashback.analytics.manager.AnalyticsManager
@@ -15,5 +16,9 @@ class AppWidgetNavigationComponent @Inject constructor(
         return Intent(context, HomeActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
         }
+    }
+
+    override fun getHomeActivityClass(): Class<out Activity> {
+        return HomeActivity::class.java
     }
 }

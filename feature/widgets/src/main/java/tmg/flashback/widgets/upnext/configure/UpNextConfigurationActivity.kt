@@ -1,16 +1,17 @@
-package tmg.flashback.widgets.ui
+package tmg.flashback.widgets.upnext.configure
 
 import android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_ID
 import android.appwidget.AppWidgetManager.INVALID_APPWIDGET_ID
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import tmg.flashback.style.AppTheme
 import tmg.flashback.ui.base.BaseActivity
+import tmg.flashback.widgets.usecases.UpdateWidgetsUseCase
 import tmg.utilities.extensions.observe
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class UpNextConfigurationActivity: BaseActivity() {
@@ -25,7 +26,7 @@ class UpNextConfigurationActivity: BaseActivity() {
         super.onCreate(savedInstanceState)
 
         val value = Intent().putExtra(EXTRA_APPWIDGET_ID, appWidgetId)
-        setResult(RESULT_CANCELED, value)
+        setResult(RESULT_OK, value)
 
         viewModel.inputs.load(appWidgetId)
 
@@ -43,5 +44,10 @@ class UpNextConfigurationActivity: BaseActivity() {
             setResult(RESULT_OK, resultValue)
             finish()
         }
+    }
+
+    override fun onStop() {
+        viewModel.inputs.update()
+        super.onStop()
     }
 }

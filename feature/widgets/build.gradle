@@ -17,6 +17,8 @@ android {
 
 dependencies {
 
+    implementation libs.bundles.androidx.glance
+
     implementation project(path: ':formula1')
     implementation project(path: ':domain:repo')
 
