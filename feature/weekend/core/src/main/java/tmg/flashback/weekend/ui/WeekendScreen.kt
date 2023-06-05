@@ -56,7 +56,8 @@ fun WeekendScreenVM(
 ) {
     viewModel.inputs.load(
         season = weekendInfo.season,
-        round = weekendInfo.round
+        round = weekendInfo.round,
+        date = weekendInfo.date
     )
 
     ScreenView(screenName = "Weekend", args = mapOf(
