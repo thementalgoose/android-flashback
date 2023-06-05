@@ -1,24 +1,26 @@
 package tmg.flashback.widgets.upnext
 
 import android.content.Context
+import android.graphics.BitmapFactory
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.glance.ColorFilter
-import androidx.glance.GlanceId
+import androidx.core.graphics.drawable.toBitmap
 import androidx.glance.GlanceModifier
 import androidx.glance.Image
 import androidx.glance.ImageProvider
+import androidx.glance.LocalContext
 import androidx.glance.LocalGlanceId
 import androidx.glance.LocalSize
 import androidx.glance.action.clickable
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.SizeMode
 import androidx.glance.appwidget.action.actionRunCallback
-import androidx.glance.appwidget.provideContent
 import androidx.glance.background
 import androidx.glance.layout.Alignment
 import androidx.glance.layout.Column
@@ -33,7 +35,7 @@ import androidx.glance.layout.width
 import androidx.glance.layout.wrapContentHeight
 import androidx.glance.text.FontWeight
 import androidx.glance.text.TextAlign
-import androidx.glance.unit.ColorProvider
+import com.google.android.material.internal.ViewUtils.dpToPx
 import kotlinx.coroutines.runBlocking
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
@@ -49,7 +51,10 @@ import tmg.flashback.widgets.presentation.TextFeature
 import tmg.flashback.widgets.presentation.TextTitle
 import tmg.flashback.widgets.presentation.WidgetConfigurationData
 import tmg.flashback.widgets.presentation.getWidgetColourData
+import tmg.flashback.widgets.utils.BitmapUtils
+import tmg.flashback.widgets.utils.BitmapUtils.getBitmapFromVectorDrawable
 import tmg.flashback.widgets.utils.appWidgetId
+import tmg.utilities.extensions.dpToPx
 import tmg.utilities.extensions.isInNightMode
 import tmg.utilities.extensions.startOfWeek
 
@@ -73,15 +78,25 @@ class UpNextWidget: GlanceAppWidget() {
         configRaceScheduleFullListLargeRaceTrackIcon
     ))
 
+    @Composable
+    override fun Content() {
+        val context = LocalContext.current
 
-    override suspend fun provideGlance(context: Context, id: GlanceId) = provideContent {
+        Log.i("UpNextWidget", "provideGlance")
+
         val overviewRace = getNextOverviewRace(context)
         val widgetsRepository = WidgetsEntryPoints.get(context).widgetsRepository()
+
+        Log.i("UpNextWidget", "Next race found $overviewRace")
+
         val appWidgetId = LocalGlanceId.current.appWidgetId
         val widgetData = getWidgetColourData(context, showBackground = widgetsRepository.getShowBackground(appWidgetId), isDarkMode = context.isInNightMode())
-
         if (overviewRace != null) {
-            when (LocalSize.current) {
+
+            val config = LocalSize.current
+            Log.i("UpNextWidget", "Loading config $config")
+
+            when (config) {
                 configIcon -> Icon(
                     context,
                     widgetData,
@@ -124,15 +139,21 @@ class UpNextWidget: GlanceAppWidget() {
                     modifier = GlanceModifier.clickable(actionRunCallback<UpNextWidgetOpenAll>()),
                     showTrackIcon = true
                 )
-                else -> throw IllegalArgumentException("Invalid size not matching the provided ones")
+                else -> {
+                    Log.e("UpNextWidget", "Invalid size, throwing IAW")
+                    throw IllegalArgumentException("Invalid size not matching the provided ones")
+                }
             }
         } else {
+            Log.i("UpNextWidget", "No race found, showing fallback")
             NoRace(
                 context,
                 widgetData,
                 modifier = GlanceModifier.clickable(actionRunCallback<UpNextWidgetRefreshWidget>()),
             )
         }
+
+        Log.i("UpNextWidget", "provideFlance finished")
     }
 
     private fun getNextOverviewRace(context: Context): OverviewRace? {
@@ -251,7 +272,7 @@ internal fun RaceOnly(
                         modifier = GlanceModifier.clickable(actionRunCallback<UpNextWidgetRefreshWidget>()),
                         provider = ImageProvider(R.drawable.ic_widget_refresh),
                         contentDescription = context.getString(R.string.ab_refresh),
-                        colorFilter = ColorFilter.tint(ColorProvider(widgetData.contentColour))
+//                        colorFilter = ColorFilter.tint(ColorProvider(widgetData.contentColour))
                     )
                 }
             }
@@ -296,7 +317,6 @@ internal fun RaceScheduleFullListLargeRace(
                 modifier = GlanceModifier.clickable(actionRunCallback<UpNextWidgetRefreshWidget>()),
                 provider = ImageProvider(R.drawable.ic_widget_refresh),
                 contentDescription = context.getString(R.string.ab_refresh),
-                colorFilter = ColorFilter.tint(ColorProvider(widgetData.contentColour))
             )
         }
 
@@ -321,6 +341,7 @@ internal fun RaceScheduleFullListLargeRace(
             }
             if (showTrackIcon) {
                 TrackIcon(
+                    context = context,
                     overviewRace = overviewRace,
                     trackColour = widgetData.contentColour
                 )
@@ -446,17 +467,21 @@ private fun CountryIcon(
 
 @Composable
 private fun TrackIcon(
+    context: Context,
     overviewRace: OverviewRace,
     trackColour: Color,
     modifier: GlanceModifier = GlanceModifier.width(100.dp).wrapContentHeight()
 ) {
     val trackLayout = TrackLayout.getTrack(overviewRace.circuitId)?.getIcon(overviewRace.season, overviewRace.raceName) ?: R.drawable.widget_circuit_unknown
-    Image(
-        provider = ImageProvider(resId = trackLayout),
-        contentDescription = overviewRace.circuitName,
-        colorFilter = ColorFilter.tint(ColorProvider(trackColour)),
-        modifier = modifier
-    )
+    val bitmap = getBitmapFromVectorDrawable(context, trackLayout, trackColour.toArgb())
+    if (bitmap != null) {
+        Image(
+            provider = ImageProvider(bitmap),
+            contentDescription = overviewRace.circuitName,
+    //        colorFilter = ColorFilter.tint(ColorProvider(trackColour)),
+            modifier = modifier
+        )
+    }
 }
 
 @Composable
