@@ -1,13 +1,16 @@
 package tmg.flashback.widgets.upnext
 
 import android.content.Context
+import android.graphics.BitmapFactory
 import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.graphics.drawable.toBitmap
 import androidx.glance.GlanceModifier
 import androidx.glance.Image
 import androidx.glance.ImageProvider
@@ -32,6 +35,7 @@ import androidx.glance.layout.width
 import androidx.glance.layout.wrapContentHeight
 import androidx.glance.text.FontWeight
 import androidx.glance.text.TextAlign
+import com.google.android.material.internal.ViewUtils.dpToPx
 import kotlinx.coroutines.runBlocking
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
@@ -47,7 +51,10 @@ import tmg.flashback.widgets.presentation.TextFeature
 import tmg.flashback.widgets.presentation.TextTitle
 import tmg.flashback.widgets.presentation.WidgetConfigurationData
 import tmg.flashback.widgets.presentation.getWidgetColourData
+import tmg.flashback.widgets.utils.BitmapUtils
+import tmg.flashback.widgets.utils.BitmapUtils.getBitmapFromVectorDrawable
 import tmg.flashback.widgets.utils.appWidgetId
+import tmg.utilities.extensions.dpToPx
 import tmg.utilities.extensions.isInNightMode
 import tmg.utilities.extensions.startOfWeek
 
@@ -310,7 +317,6 @@ internal fun RaceScheduleFullListLargeRace(
                 modifier = GlanceModifier.clickable(actionRunCallback<UpNextWidgetRefreshWidget>()),
                 provider = ImageProvider(R.drawable.ic_widget_refresh),
                 contentDescription = context.getString(R.string.ab_refresh),
-//                colorFilter = ColorFilter.tint(ColorProvider(widgetData.contentColour))
             )
         }
 
@@ -335,6 +341,7 @@ internal fun RaceScheduleFullListLargeRace(
             }
             if (showTrackIcon) {
                 TrackIcon(
+                    context = context,
                     overviewRace = overviewRace,
                     trackColour = widgetData.contentColour
                 )
@@ -460,17 +467,21 @@ private fun CountryIcon(
 
 @Composable
 private fun TrackIcon(
+    context: Context,
     overviewRace: OverviewRace,
     trackColour: Color,
     modifier: GlanceModifier = GlanceModifier.width(100.dp).wrapContentHeight()
 ) {
     val trackLayout = TrackLayout.getTrack(overviewRace.circuitId)?.getIcon(overviewRace.season, overviewRace.raceName) ?: R.drawable.widget_circuit_unknown
-    Image(
-        provider = ImageProvider(resId = trackLayout),
-        contentDescription = overviewRace.circuitName,
-//        colorFilter = ColorFilter.tint(ColorProvider(trackColour)),
-        modifier = modifier
-    )
+    val bitmap = getBitmapFromVectorDrawable(context, trackLayout, trackColour.toArgb())
+    if (bitmap != null) {
+        Image(
+            provider = ImageProvider(bitmap),
+            contentDescription = overviewRace.circuitName,
+    //        colorFilter = ColorFilter.tint(ColorProvider(trackColour)),
+            modifier = modifier
+        )
+    }
 }
 
 @Composable
