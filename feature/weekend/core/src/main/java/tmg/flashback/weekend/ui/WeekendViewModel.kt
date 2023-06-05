@@ -15,15 +15,19 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import org.threeten.bp.LocalDate
+import tmg.flashback.domain.repo.RaceRepository
 import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
 import tmg.flashback.formula1.model.Race
-import tmg.flashback.domain.repo.RaceRepository
 import tmg.flashback.weekend.contract.model.ScreenWeekendData
+import tmg.flashback.weekend.ui.WeekendNavItem.QUALIFYING
+import tmg.flashback.weekend.ui.WeekendNavItem.RACE
+import tmg.flashback.weekend.ui.WeekendNavItem.SCHEDULE
 import tmg.utilities.extensions.combinePair
 import javax.inject.Inject
 
 interface WeekendViewModelInputs {
-    fun load(season: Int, round: Int)
+    fun load(season: Int, round: Int, date: LocalDate)
     fun clickTab(state: WeekendNavItem)
     fun refresh()
 }
@@ -43,7 +47,7 @@ class WeekendViewModel @Inject constructor(
     val inputs: WeekendViewModelInputs = this
     val outputs: WeekendViewModelOutputs = this
 
-    private val selectedTab: MutableStateFlow<WeekendNavItem> = MutableStateFlow(WeekendNavItem.SCHEDULE)
+    private val selectedTab: MutableStateFlow<WeekendNavItem> = MutableStateFlow(SCHEDULE)
     private val seasonRound: MutableStateFlow<Pair<Int, Int>?> = MutableStateFlow(null)
     private val seasonRoundWithRequest: Flow<Pair<Int, Int>?> = seasonRound
         .filterNotNull()
@@ -81,15 +85,15 @@ class WeekendViewModel @Inject constructor(
         .combinePair(selectedTab)
         .map { (race, navItem) ->
             val list = mutableListOf<WeekendScreenState>()
-            list.add(WeekendScreenState(WeekendNavItem.SCHEDULE, isSelected = navItem == WeekendNavItem.SCHEDULE))
-            list.add(WeekendScreenState(WeekendNavItem.QUALIFYING, isSelected = navItem == WeekendNavItem.QUALIFYING))
+            list.add(WeekendScreenState(SCHEDULE, isSelected = navItem == SCHEDULE))
+            list.add(WeekendScreenState(QUALIFYING, isSelected = navItem == QUALIFYING))
             if (race?.hasSprintQualifying == true) {
                 list.add(WeekendScreenState(WeekendNavItem.SPRINT_QUALIFYING, isSelected = navItem == WeekendNavItem.SPRINT_QUALIFYING))
             }
             if (race?.hasSprintRace == true) {
                 list.add(WeekendScreenState(WeekendNavItem.SPRINT, isSelected = navItem == WeekendNavItem.SPRINT))
             }
-            list.add(WeekendScreenState(WeekendNavItem.RACE, isSelected = navItem == WeekendNavItem.RACE))
+            list.add(WeekendScreenState(RACE, isSelected = navItem == RACE))
             return@map list
         }
         .asLiveData(viewModelScope.coroutineContext)
@@ -100,12 +104,16 @@ class WeekendViewModel @Inject constructor(
         selectedTab.value = state
     }
 
-    override fun load(season: Int, round: Int) {
+    override fun load(season: Int, round: Int, date: LocalDate) {
         val existing = seasonRound.value
         if (existing?.first != season || existing.second != round) {
-            selectedTab.value = when (season) {
-                currentSeasonYear -> WeekendNavItem.SCHEDULE
-                else -> WeekendNavItem.RACE
+            val now = LocalDate.now()
+            selectedTab.value = when {
+                season != currentSeasonYear -> RACE
+                date == now -> RACE
+                date == now.minusDays(1L) -> QUALIFYING
+                date.isAfter(now) -> SCHEDULE
+                else -> RACE
             }
             seasonRound.value = Pair(season, round)
         }
