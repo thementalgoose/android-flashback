@@ -7,11 +7,8 @@ import org.junit.jupiter.api.Test
 import tmg.flashback.R
 import tmg.flashback.crash_reporting.repository.CrashRepository
 import tmg.flashback.device.managers.BuildConfigManager
-import tmg.flashback.releasenotes.ReleaseNotes
-import tmg.flashback.ui.managers.ToastManager
 import tmg.flashback.navigation.ApplicationNavigationComponent
-import tmg.flashback.navigation.Navigator
-import tmg.flashback.navigation.Screen
+import tmg.flashback.ui.managers.ToastManager
 import tmg.flashback.ui.settings.Settings
 import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.testutils.BaseTest
