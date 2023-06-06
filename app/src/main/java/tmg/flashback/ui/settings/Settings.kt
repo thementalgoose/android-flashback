@@ -244,11 +244,6 @@ object Settings {
             title = R.string.settings_switch_review_title,
             subtitle = R.string.settings_switch_review_description
         )
-        val releaseNotes = Setting.Pref(
-            _key = "release_notes",
-            title = R.string.settings_switch_release_notes_title,
-            subtitle = R.string.settings_switch_release_notes_description
-        )
         val shakeToReportKey = "shake_to_report"
         fun shakeToReport(isChecked: Boolean, isEnabled: Boolean = true) = Setting.Switch(
             _key = shakeToReportKey,

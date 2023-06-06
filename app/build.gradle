@@ -14,7 +14,6 @@ apply plugin: 'com.github.triplet.play'
 apply plugin: 'com.google.firebase.firebase-perf'
 
 apply from: rootDir.absolutePath + "/gradle/script-remoteconfig.gradle"
-apply from: rootDir.absolutePath + "/gradle/script-releasenotes.gradle"
 
 android {
     compileSdkVersion project.ext.compileSdkVersion
@@ -103,9 +102,6 @@ tasks.whenTaskAdded { task ->
     if (task.name.contains("assemble")) {
         task.dependsOn generateRemoteConfigDefaults
     }
-    if (task.name.contains("assemble")) {
-        task.dependsOn generateReleaseNotes
-    }
 }
 
 dependencies {
@@ -115,7 +111,6 @@ dependencies {
     implementation project(path: ":feature:rss:contract")
     implementation project(path: ':feature:maintenance:core')
     implementation project(path: ':feature:maintenance:contract')
-    implementation project(path: ':feature:releasenotes')
     implementation project(path: ':feature:privacypolicy:core')
     implementation project(path: ':feature:privacypolicy:contract')
     implementation project(path: ":feature:widgets")
