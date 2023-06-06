@@ -299,8 +299,6 @@
     <string name="settings_switch_about_this_app_description">About the app, the devs and the dependencies</string>
     <string name="settings_switch_review_title">Review</string>
     <string name="settings_switch_review_description">Review the app on the play store</string>
-    <string name="settings_switch_release_notes_title">Release Notes</string>
-    <string name="settings_switch_release_notes_description">What\'s changed between builds</string>
     <string name="settings_pref_shake_to_report_title">Shake to report</string>
     <string name="settings_pref_shake_to_report_description">Shake the screen to provide feedback or bug reports to the developer</string>
 
@@ -510,11 +508,6 @@
     <string name="unable_to_open_url">Unable to open url</string>
     <string name="home_last_updated">Last updated %s</string>
 
-
-    <!-- Release notes -->
-    <string name="release_notes_description">Here\'s what\'s changed since you last updated</string>
-    <string name="release_notes_title">Release notes</string>
-    <string name="release_notes_version">Version %s</string>
 
 
     <!-- Privacy Policy -->

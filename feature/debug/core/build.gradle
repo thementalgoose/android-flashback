@@ -40,5 +40,4 @@ dependencies {
     // Stats
     implementation project(path: ':feature:results:core')
     implementation project(path: ':feature:results:contract')
-    implementation project(path: ':feature:releasenotes')
 }

@@ -28,7 +28,6 @@ interface SettingsAboutViewModelOutputs {
 @HiltViewModel
 class SettingsAboutViewModel @Inject constructor(
     private val crashRepository: CrashRepository,
-    private val navigator: Navigator,
     private val applicationNavigationComponent: ApplicationNavigationComponent,
     private val openWebpageUseCase: OpenWebpageUseCase,
     private val toastManager: ToastManager,
@@ -49,9 +48,6 @@ class SettingsAboutViewModel @Inject constructor(
             }
             Settings.Other.review.key -> {
                 openWebpageUseCase.open(url = reviewUrl, title = "")
-            }
-            Settings.Other.releaseNotes.key -> {
-                navigator.navigate(Screen.ReleaseNotes)
             }
             Settings.Other.shakeToReportKey -> {
                 crashRepository.shakeToReport = !crashRepository.shakeToReport
