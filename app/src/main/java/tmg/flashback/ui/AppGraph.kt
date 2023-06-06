@@ -43,8 +43,6 @@ import tmg.flashback.navigation.navString
 import tmg.flashback.navigation.navStringRequired
 import tmg.flashback.privacypolicy.contract.PrivacyPolicy
 import tmg.flashback.privacypolicy.ui.PrivacyPolicyScreenVM
-import tmg.flashback.releasenotes.ReleaseNotes
-import tmg.flashback.releasenotes.ui.releasenotes.ReleaseScreenVM
 import tmg.flashback.results.Calendar
 import tmg.flashback.results.Constructors
 import tmg.flashback.results.Drivers
@@ -134,13 +132,6 @@ fun AppGraph(
                 menuClicked = openMenu,
                 showMenu = isCompact,
                 season = season
-            )
-        }
-
-        // Release Notes
-        composable(Screen.ReleaseNotes.route) {
-            ReleaseScreenVM(
-                actionUpClicked = { navController.popBackStack() }
             )
         }
 

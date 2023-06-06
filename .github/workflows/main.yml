@@ -6,7 +6,6 @@ name: Main
     paths-ignore:
       - '**.md'
       - '**.yml'
-      - 'releases.json'
 jobs:
 
   unit_tests:
