@@ -73,10 +73,6 @@ fun SettingsAboutScreen(
                 model = Settings.Other.review,
                 onClick = prefClicked
             )
-            Pref(
-                model = Settings.Other.releaseNotes,
-                onClick = prefClicked
-            )
             Switch(
                 model = Settings.Other.shakeToReport(shakeToReportEnabled),
                 onClick = prefClicked

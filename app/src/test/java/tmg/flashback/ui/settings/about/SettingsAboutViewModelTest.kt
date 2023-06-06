@@ -21,7 +21,6 @@ import tmg.testutils.livedata.testObserve
 internal class SettingsAboutViewModelTest: BaseTest() {
 
     private val mockCrashRepository: CrashRepository = mockk(relaxed = true)
-    private val mockNavigator: Navigator = mockk(relaxed = true)
     private val mockApplicationNavigationComponent: ApplicationNavigationComponent = mockk(relaxed = true)
     private val mockOpenWebpageUseCase: OpenWebpageUseCase = mockk(relaxed = true)
     private val mockToastManager: ToastManager = mockk(relaxed = true)
@@ -32,7 +31,6 @@ internal class SettingsAboutViewModelTest: BaseTest() {
     private fun initUnderTest() {
         underTest = SettingsAboutViewModel(
             crashRepository = mockCrashRepository,
-            navigator = mockNavigator,
             applicationNavigationComponent = mockApplicationNavigationComponent,
             openWebpageUseCase = mockOpenWebpageUseCase,
             toastManager = mockToastManager,
@@ -78,16 +76,6 @@ internal class SettingsAboutViewModelTest: BaseTest() {
 
         verify {
             mockOpenWebpageUseCase.open(url = REVIEW_URL, title = "")
-        }
-    }
-
-    @Test
-    fun `click release notes launches release notes`() {
-        initUnderTest()
-        underTest.inputs.prefClicked(Settings.Other.releaseNotes)
-
-        verify {
-            mockNavigator.navigate(Screen.ReleaseNotes)
         }
     }
 
