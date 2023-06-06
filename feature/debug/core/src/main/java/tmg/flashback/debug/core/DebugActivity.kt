@@ -31,7 +31,6 @@ import tmg.flashback.device.repository.DeviceRepository
 import tmg.flashback.notifications.receiver.LocalNotificationBroadcastReceiver
 import tmg.flashback.notifications.repository.NotificationRepository
 import tmg.flashback.prefs.manager.PreferenceManager
-import tmg.flashback.releasenotes.ReleaseNotesNavigationComponent
 import tmg.flashback.domain.repo.CircuitRepository
 import tmg.flashback.domain.repo.ConstructorRepository
 import tmg.flashback.domain.repo.DriverRepository
@@ -76,8 +75,6 @@ class DebugActivity: BaseActivity() {
     lateinit var notificationRepository: NotificationRepository
 
     @Inject
-    lateinit var releaseNotesNavigationComponent: ReleaseNotesNavigationComponent
-    @Inject
     lateinit var preferenceManager: PreferenceManager
 
     @Inject
@@ -108,13 +105,6 @@ class DebugActivity: BaseActivity() {
 
                     Div()
                     this.Notifications()
-
-                    Div()
-                    TextSection(text = "Release Notes")
-                    ButtonPrimary(text = "Release Notes", onClick = {
-                        preferenceManager.save(keyReleaseNotesSeenVersion, 1)
-                        releaseNotesNavigationComponent.releaseNotesNext()
-                    })
 
                     Div()
                     TextSection(text = "Sync")

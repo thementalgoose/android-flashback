@@ -7,11 +7,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import tmg.flashback.R
 import tmg.flashback.crash_reporting.repository.CrashRepository
 import tmg.flashback.device.managers.BuildConfigManager
-import tmg.flashback.releasenotes.ReleaseNotes
-import tmg.flashback.ui.managers.ToastManager
 import tmg.flashback.navigation.ApplicationNavigationComponent
-import tmg.flashback.navigation.Navigator
-import tmg.flashback.navigation.Screen
+import tmg.flashback.ui.managers.ToastManager
 import tmg.flashback.ui.settings.Setting
 import tmg.flashback.ui.settings.Settings
 import tmg.flashback.web.usecases.OpenWebpageUseCase
@@ -28,7 +25,6 @@ interface SettingsAboutViewModelOutputs {
 @HiltViewModel
 class SettingsAboutViewModel @Inject constructor(
     private val crashRepository: CrashRepository,
-    private val navigator: Navigator,
     private val applicationNavigationComponent: ApplicationNavigationComponent,
     private val openWebpageUseCase: OpenWebpageUseCase,
     private val toastManager: ToastManager,
@@ -49,9 +45,6 @@ class SettingsAboutViewModel @Inject constructor(
             }
             Settings.Other.review.key -> {
                 openWebpageUseCase.open(url = reviewUrl, title = "")
-            }
-            Settings.Other.releaseNotes.key -> {
-                navigator.navigate(Screen.ReleaseNotes)
             }
             Settings.Other.shakeToReportKey -> {
                 crashRepository.shakeToReport = !crashRepository.shakeToReport
