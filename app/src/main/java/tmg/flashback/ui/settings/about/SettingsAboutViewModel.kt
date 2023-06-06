@@ -7,11 +7,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import tmg.flashback.R
 import tmg.flashback.crash_reporting.repository.CrashRepository
 import tmg.flashback.device.managers.BuildConfigManager
-import tmg.flashback.releasenotes.ReleaseNotes
-import tmg.flashback.ui.managers.ToastManager
 import tmg.flashback.navigation.ApplicationNavigationComponent
-import tmg.flashback.navigation.Navigator
-import tmg.flashback.navigation.Screen
+import tmg.flashback.ui.managers.ToastManager
 import tmg.flashback.ui.settings.Setting
 import tmg.flashback.ui.settings.Settings
 import tmg.flashback.web.usecases.OpenWebpageUseCase
