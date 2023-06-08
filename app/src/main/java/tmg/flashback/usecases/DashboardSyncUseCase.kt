@@ -11,7 +11,7 @@ import tmg.flashback.domain.repo.OverviewRepository
 import tmg.flashback.domain.repo.RaceRepository
 import tmg.flashback.results.usecases.DefaultSeasonUseCase
 import tmg.flashback.results.usecases.ScheduleNotificationsUseCase
-import tmg.flashback.widgets.usecases.UpdateWidgetsUseCase
+import tmg.flashback.widgets.contract.usecases.UpdateWidgetsUseCase
 import javax.inject.Inject
 
 class DashboardSyncUseCase @Inject constructor(

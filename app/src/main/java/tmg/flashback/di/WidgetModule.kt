@@ -1,23 +1,17 @@
 package tmg.flashback.di
 
-import dagger.Binds
 import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import tmg.flashback.di.navigation.AppWidgetNavigationComponent
-import tmg.flashback.managers.widgets.AppWidgetManager
-import tmg.flashback.managers.widgets.WidgetManager
-import tmg.flashback.widgets.WidgetNavigationComponent
+import tmg.flashback.widgets.contract.WidgetNavigationComponent
 
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class WidgetModule {
+class WidgetModule {
 
-    @Binds
-    abstract fun bindsWidgetNavigationComponent(impl: AppWidgetNavigationComponent): WidgetNavigationComponent
-
-    @Binds
-    abstract fun bindsWidgetManager(impl: AppWidgetManager): WidgetManager
-
+    @Provides
+    fun bindsWidgetNavigationComponent(impl: AppWidgetNavigationComponent): WidgetNavigationComponent = impl
 }
