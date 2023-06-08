@@ -10,7 +10,7 @@ android {
         minSdkVersion project.ext.minSdkVersion
         targetSdkVersion project.ext.targetSdkVersion
     }
-    namespace 'tmg.flashback.constructors.contract'
+    namespace 'tmg.flashback.widgets.contract'
 }
 
 dependencies {
