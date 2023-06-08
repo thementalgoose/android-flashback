@@ -1,0 +1,38 @@
+apply plugin:  'com.android.library'
+apply from: rootDir.absolutePath + "/gradle/config-android.gradle"
+apply from: rootDir.absolutePath + "/gradle/config-util.gradle"
+apply from: rootDir.absolutePath + "/gradle/config-junit5.gradle"
+apply from: rootDir.absolutePath + "/gradle/config-hilt.gradle"
+apply from: rootDir.absolutePath + "/gradle/config-compose.gradle"
+
+android {
+    compileSdkVersion project.ext.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion project.ext.minSdkVersion
+        targetSdkVersion project.ext.targetSdkVersion
+    }
+    namespace 'tmg.flashback.widgets'
+}
+
+dependencies {
+
+    implementation libs.bundles.androidx.glance
+
+    implementation project(path: ':formula1')
+    implementation project(path: ':domain:repo')
+
+    implementation project(path: ':presentation:style')
+    implementation project(path: ':presentation:ui')
+    implementation project(path: ":presentation:strings")
+
+    // Core modules
+    implementation project(path: ':core:analytics')
+    implementation project(path: ':core:configuration')
+    implementation project(path: ':core:crash-reporting')
+    implementation project(path: ':core:device')
+    implementation project(path: ':core:notifications')
+    implementation project(path: ':core:preferences')
+
+    implementation project(path: ':feature:widgets:contract')
+}
