@@ -6,7 +6,7 @@ import io.mockk.verify
 import org.junit.jupiter.api.Test
 import tmg.flashback.widgets.repository.WidgetRepository
 import tmg.flashback.widgets.upnext.configure.UpNextConfigurationViewModel
-import tmg.flashback.widgets.usecases.UpdateWidgetsUseCase
+import tmg.flashback.widgets.usecases.UpdateWidgetsUseCaseImpl
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.test
 
@@ -15,7 +15,7 @@ internal class UpNextConfigurationViewModelTest: BaseTest() {
     private val widgetId = 1
 
     private val mockWidgetRepository: WidgetRepository = mockk(relaxed = true)
-    private val mockUpdateWidgetsUseCase: UpdateWidgetsUseCase = mockk(relaxed = true)
+    private val mockUpdateWidgetsUseCase: UpdateWidgetsUseCaseImpl = mockk(relaxed = true)
 
     private lateinit var underTest: UpNextConfigurationViewModel
 

@@ -14,11 +14,11 @@ import tmg.flashback.domain.repo.OverviewRepository
 import tmg.flashback.domain.repo.RaceRepository
 import tmg.flashback.results.usecases.DefaultSeasonUseCase
 import tmg.flashback.results.usecases.ScheduleNotificationsUseCase
-import tmg.flashback.widgets.usecases.UpdateWidgetsUseCase
+import tmg.flashback.widgets.usecases.UpdateWidgetsUseCaseImpl
 
 internal class DashboardSyncUseCaseTest {
 
-    private val mockUpdateWidgetsUseCase: UpdateWidgetsUseCase = mockk(relaxed = true)
+    private val mockUpdateWidgetsUseCase: UpdateWidgetsUseCaseImpl = mockk(relaxed = true)
     private val mockScheduleNotificationsUseCase: ScheduleNotificationsUseCase = mockk(relaxed = true)
     private val mockDefaultSeasonUseCase: DefaultSeasonUseCase = mockk(relaxed = true)
     private val mockFetchConfigUseCase: FetchConfigUseCase = mockk(relaxed = true)
