@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import tmg.flashback.widgets.repository.WidgetRepository
-import tmg.flashback.widgets.usecases.UpdateWidgetsUseCase
+import tmg.flashback.widgets.usecases.UpdateWidgetsUseCaseImpl
 import tmg.utilities.lifecycle.SingleLiveEvent
 import javax.inject.Inject
 
@@ -26,7 +26,7 @@ interface UpNextConfigurationViewModelOutputs {
 @HiltViewModel
 internal class UpNextConfigurationViewModel @Inject constructor(
     private val widgetRepository: WidgetRepository,
-    private val updateWidgetsUseCase: UpdateWidgetsUseCase
+    private val updateWidgetsUseCase: UpdateWidgetsUseCaseImpl
 ): ViewModel(), UpNextConfigurationViewModelInputs, UpNextConfigurationViewModelOutputs {
 
     val inputs: UpNextConfigurationViewModelInputs = this

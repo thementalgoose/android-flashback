@@ -25,7 +25,6 @@ import tmg.flashback.crash_reporting.usecases.InitialiseCrashReportingUseCase
 import tmg.flashback.device.repository.DeviceRepository
 import tmg.flashback.device.usecases.AppOpenedUseCase
 import tmg.flashback.device.usecases.GetDeviceInfoUseCase
-import tmg.flashback.managers.widgets.WidgetManager
 import tmg.flashback.notifications.managers.SystemNotificationManager
 import tmg.flashback.notifications.usecases.RemoteNotificationSubscribeUseCase
 import tmg.flashback.notifications.usecases.RemoteNotificationUnsubscribeUseCase
@@ -37,7 +36,8 @@ import tmg.flashback.style.SupportedTheme
 import tmg.flashback.ui.model.NightMode
 import tmg.flashback.ui.model.Theme
 import tmg.flashback.ui.repository.ThemeRepository
-import tmg.flashback.widgets.usecases.UpdateWidgetsUseCase
+import tmg.flashback.widgets.contract.usecases.HasWidgetsUseCase
+import tmg.flashback.widgets.contract.usecases.UpdateWidgetsUseCase
 import tmg.utilities.extensions.isInDayMode
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -53,7 +53,6 @@ class FlashbackStartup @Inject constructor(
     private val crashRepository: CrashRepository,
     private val contactRepository: ContactRepository,
     private val initialiseCrashReportingUseCase: InitialiseCrashReportingUseCase,
-    private val widgetManager: WidgetManager,
     private val notificationRepository: NotificationsRepositoryImpl,
     private val themeRepository: ThemeRepository,
     private val analyticsManager: AnalyticsManager,
@@ -65,6 +64,7 @@ class FlashbackStartup @Inject constructor(
     private val getDeviceInfoUseCase: GetDeviceInfoUseCase,
     private val initialiseAdsUseCase: InitialiseAdsUseCase,
     private val updateWidgetsUseCase: UpdateWidgetsUseCase,
+    private val hasWidgetsUseCase: HasWidgetsUseCase,
 ) {
     fun startup(application: FlashbackApplication) {
 
@@ -160,7 +160,7 @@ class FlashbackStartup @Inject constructor(
         analyticsManager.setUserProperty(APP_VERSION, BuildConfig.VERSION_NAME)
         analyticsManager.setUserProperty(
             WIDGET_USAGE,
-            if (widgetManager.hasWidgets) "true" else "false"
+            if (hasWidgetsUseCase.hasWidgets()) "true" else "false"
         )
         analyticsManager.setUserProperty(
             DEVICE_THEME, when (themeRepository.nightMode) {

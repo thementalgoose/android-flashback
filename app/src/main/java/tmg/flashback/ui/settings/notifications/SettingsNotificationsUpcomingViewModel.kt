@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import tmg.flashback.widgets.contract.ResultsNavigationComponent
+import tmg.flashback.results.contract.ResultsNavigationComponent
 import tmg.flashback.results.repository.NotificationsRepositoryImpl
 import tmg.flashback.results.usecases.ScheduleNotificationsUseCase
 import tmg.flashback.ui.managers.PermissionManager

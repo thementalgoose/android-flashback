@@ -9,8 +9,6 @@ import androidx.glance.GlanceId
 import androidx.glance.action.ActionParameters
 import androidx.glance.appwidget.action.ActionCallback
 import androidx.glance.appwidget.state.updateAppWidgetState
-import androidx.glance.appwidget.updateAll
-import androidx.glance.appwidget.updateIf
 import tmg.flashback.widgets.di.WidgetsEntryPoints
 import tmg.flashback.widgets.utils.appWidgetId
 import java.util.UUID
@@ -22,7 +20,7 @@ internal class UpNextWidgetOpenAll: ActionCallback {
         parameters: ActionParameters
     ) {
         Log.i("UpNextWidget", "Opening app for $glanceId (${glanceId.appWidgetId})")
-        val intent = WidgetsEntryPoints.get(context).widgetsNavigationComponent().launchApp(context)
+        val intent = WidgetsEntryPoints.get(context).widgetsNavigationComponent().getLaunchAppIntent(context)
         context.startActivity(intent)
     }
 }

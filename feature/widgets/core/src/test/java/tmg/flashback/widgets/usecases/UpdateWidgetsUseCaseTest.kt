@@ -12,10 +12,10 @@ internal class UpdateWidgetsUseCaseTest {
 
     private val mockApplicationContext: Context = mockk(relaxed = true)
 
-    private lateinit var underTest: UpdateWidgetsUseCase
+    private lateinit var underTest: UpdateWidgetsUseCaseImpl
 
     private fun initUnderTest() {
-        underTest = UpdateWidgetsUseCase(
+        underTest = UpdateWidgetsUseCaseImpl(
             applicationContext = mockApplicationContext
         )
     }
