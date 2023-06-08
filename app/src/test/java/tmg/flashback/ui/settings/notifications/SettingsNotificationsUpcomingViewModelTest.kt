@@ -5,7 +5,7 @@ import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.CompletableDeferred
 import org.junit.jupiter.api.Test
-import tmg.flashback.results.contract.ResultsNavigationComponent
+import tmg.flashback.widgets.contract.ResultsNavigationComponent
 import tmg.flashback.results.repository.NotificationsRepositoryImpl
 import tmg.flashback.results.usecases.ScheduleNotificationsUseCase
 import tmg.flashback.ui.managers.PermissionManager

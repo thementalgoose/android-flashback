@@ -1,6 +1,7 @@
 apply plugin:  'com.android.library'
 apply from: rootDir.absolutePath + "/gradle/config-android.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-util.gradle"
+apply from: rootDir.absolutePath + "/gradle/config-junit5.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-hilt.gradle"
 
 android {
@@ -10,7 +11,7 @@ android {
         minSdkVersion project.ext.minSdkVersion
         targetSdkVersion project.ext.targetSdkVersion
     }
-    namespace 'tmg.flashback.constructors.contract'
+    namespace 'tmg.flashback.widgets.contract'
 }
 
 dependencies {
