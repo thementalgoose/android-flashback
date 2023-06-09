@@ -208,7 +208,12 @@ private fun Weekend(
                             horizontalArrangement = Arrangement.spacedBy(AppTheme.dimens.medium)
                         ) {
                             list.forEach { (schedule, isNotificationSet) ->
-                                EventItem(item = schedule, showNotificationBell = isNotificationSet)
+                                EventItem(
+                                    item = schedule,
+                                    temperatureMetric = model.temperatureMetric,
+                                    windspeedMetric = model.windspeedMetric,
+                                    showNotificationBell = isNotificationSet
+                                )
                             }
                         }
                     }
@@ -239,6 +244,8 @@ private fun Title(
 @Composable
 private fun EventItem(
     item: Schedule,
+    temperatureMetric: Boolean,
+    windspeedMetric: Boolean,
     showNotificationBell: Boolean,
     modifier: Modifier = Modifier
 ) {
@@ -321,11 +328,6 @@ private fun EventItem(
                 }
 
                 // Temp
-                val tempAverage = (weather.tempMinC + ((weather.tempMaxC - weather.tempMinC) / 2))
-                    .toFloat()
-                    .roundToInt()
-                    .toString()
-//                    .toDecimalPlacesString(1)
                 Row(Modifier.fillMaxWidth()) {
                     Image(
                         modifier = Modifier.size(weatherMetadataIconSize),
@@ -337,7 +339,7 @@ private fun EventItem(
                         modifier = Modifier
                             .align(Alignment.CenterVertically)
                             .padding(start = 2.dp),
-                        text = stringResource(id = R.string.weather_temp_degrees_c, tempAverage)
+                        text = weather.getAverageTemp(metric = temperatureMetric)
                     )
                 }
 
@@ -354,12 +356,24 @@ private fun EventItem(
                         modifier = Modifier
                             .align(Alignment.CenterVertically)
                             .padding(start = 2.dp),
-                        text = stringResource(id = R.string.weather_wind_mph, windSpeed)
+                        text = weather.getWindspeed(metric = windspeedMetric)
                     )
                 }
             }
         }
     }
+}
+
+@Composable
+private fun ScheduleWeather.getAverageTemp(metric: Boolean): String = when (metric) {
+    true -> stringResource(id = R.string.weather_temp_degrees_c, this.tempAverageC.toFloat().roundToInt().toString())
+    false -> stringResource(id = R.string.weather_temp_degrees_f, this.tempAverageF.toFloat().roundToInt().toString())
+}
+
+@Composable
+private fun ScheduleWeather.getWindspeed(metric: Boolean): String = when (metric) {
+    true -> stringResource(id = R.string.weather_wind_kph, this.windKph.toFloat().toDecimalPlacesString(1))
+    false -> stringResource(id = R.string.weather_wind_mph, this.windMph.toFloat().toDecimalPlacesString(1))
 }
 
 @PreviewTheme
@@ -394,7 +408,9 @@ private fun Preview(
                                 Schedule("FP3", LocalDate.now(), LocalTime.of(9, 0), weather = weather) to true,
                                 Schedule("Qualifying", LocalDate.now(), LocalTime.of(12, 0), weather = weather) to true
                             )
-                        )
+                        ),
+                        temperatureMetric = true,
+                        windspeedMetric = false
                     ),
                     DetailsModel.Track(
                         circuit = race.raceInfo.circuit,

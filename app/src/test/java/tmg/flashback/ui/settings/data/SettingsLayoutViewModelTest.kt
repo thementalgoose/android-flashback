@@ -1,4 +1,4 @@
-package tmg.flashback.ui.settings.layout
+package tmg.flashback.ui.settings.data
 
 import io.mockk.every
 import io.mockk.mockk

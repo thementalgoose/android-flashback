@@ -30,8 +30,6 @@ class HomeRepository @Inject constructor(
 
         // Prefs
         private const val keyEmptyWeeksInSchedule: String = "empty_weeks_in_schedule"
-        private const val keyWeatherTemperatureMetric: String = "WEATHER_TEMPERATURE_METRIC"
-        private const val keyWeatherWindspeedMetric: String = "WEATHER_WINDSPEED_METRIC"
         private const val keyDashboardCollapseList: String = "DASHBOARD_COLLAPSE_LIST"
         private const val keyFavouriteSeasons: String = "FAVOURITE_SEASONS"
         private const val keyDefaultSeason: String = "DEFAULT_SEASON"
@@ -81,15 +79,6 @@ class HomeRepository @Inject constructor(
         get() = preferenceManager.getBoolean(keyEmptyWeeksInSchedule, false)
         set(value) = preferenceManager.save(keyEmptyWeeksInSchedule, value)
 
-    /**
-     * Weather metrics
-     */
-    var weatherTemperatureMetric: Boolean
-        get() = preferenceManager.getBoolean(keyWeatherTemperatureMetric, true)
-        set(value) = preferenceManager.save(keyWeatherTemperatureMetric, value)
-    var weatherWindspeedMetric: Boolean
-        get() = preferenceManager.getBoolean(keyWeatherWindspeedMetric, false)
-        set(value) = preferenceManager.save(keyWeatherWindspeedMetric, value)
 
     /**
      * Default to which tab

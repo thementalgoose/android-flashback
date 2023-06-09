@@ -20,6 +20,7 @@ import tmg.flashback.results.contract.repository.NotificationsRepository
 import tmg.flashback.domain.repo.RaceRepository
 import tmg.flashback.weekend.R
 import tmg.flashback.web.usecases.OpenWebpageUseCase
+import tmg.flashback.weekend.repository.WeatherRepository
 import tmg.flashback.weekend.ui.details.DetailsViewModel
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.test
@@ -30,6 +31,7 @@ internal class DetailsViewModelTest: BaseTest() {
     private val mockNotificationRepository: NotificationsRepository = mockk(relaxed = true)
     private val mockOpenWebpageUseCase: OpenWebpageUseCase = mockk(relaxed = true)
     private val mockNavigator: Navigator = mockk(relaxed = true)
+    private val mockWeatherRepository: WeatherRepository = mockk(relaxed = true)
 
     private lateinit var underTest: DetailsViewModel
 
@@ -38,7 +40,8 @@ internal class DetailsViewModelTest: BaseTest() {
             raceRepository = mockRaceRepository,
             notificationRepository = mockNotificationRepository,
             openWebpageUseCase = mockOpenWebpageUseCase,
-            navigator = mockNavigator
+            navigator = mockNavigator,
+            weatherRepository = mockWeatherRepository
         )
     }
 
@@ -48,6 +51,8 @@ internal class DetailsViewModelTest: BaseTest() {
         every { mockNotificationRepository.notificationUpcomingQualifying } returns true
         every { mockNotificationRepository.notificationUpcomingRace } returns true
         every { mockNotificationRepository.notificationUpcomingOther } returns true
+        every { mockWeatherRepository.weatherTemperatureMetric } returns true
+        every { mockWeatherRepository.weatherWindspeedMetric } returns false
     }
 
     @Test
