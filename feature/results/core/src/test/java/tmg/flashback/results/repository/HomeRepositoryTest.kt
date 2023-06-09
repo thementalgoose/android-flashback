@@ -309,9 +309,9 @@ internal class HomeRepositoryTest {
         private const val keyDataProvidedBy: String = "data_provided"
         private const val keySupportedSeasons: String = "supported_seasons"
         private const val keySearch: String = "search"
-        private const val keyEmptyWeeksInSchedule: String = "empty_weeks_in_schedule"
 
         // Prefs
+        private const val keyEmptyWeeksInSchedule: String = "empty_weeks_in_schedule"
         private const val keyDashboardCollapseList: String = "DASHBOARD_COLLAPSE_LIST"
         private const val keyFavouriteSeasons: String = "FAVOURITE_SEASONS"
         private const val keyDefaultSeason: String = "DEFAULT_SEASON"

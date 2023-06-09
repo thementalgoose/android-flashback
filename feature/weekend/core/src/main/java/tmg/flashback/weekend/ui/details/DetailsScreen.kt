@@ -56,6 +56,7 @@ import kotlin.math.roundToInt
 
 private val trackSize: Dp = 200.dp
 private val weatherIconSize: Dp = 48.dp
+private val weatherMetadataIconSize: Dp = 20.dp
 
 internal fun LazyListScope.details(
     weekendInfo: ScreenWeekendData,
@@ -207,7 +208,12 @@ private fun Weekend(
                             horizontalArrangement = Arrangement.spacedBy(AppTheme.dimens.medium)
                         ) {
                             list.forEach { (schedule, isNotificationSet) ->
-                                EventItem(item = schedule, showNotificationBell = isNotificationSet)
+                                EventItem(
+                                    item = schedule,
+                                    temperatureMetric = model.temperatureMetric,
+                                    windspeedMetric = model.windspeedMetric,
+                                    showNotificationBell = isNotificationSet
+                                )
                             }
                         }
                     }
@@ -238,6 +244,8 @@ private fun Title(
 @Composable
 private fun EventItem(
     item: Schedule,
+    temperatureMetric: Boolean,
+    windspeedMetric: Boolean,
     showNotificationBell: Boolean,
     modifier: Modifier = Modifier
 ) {
@@ -293,7 +301,7 @@ private fun EventItem(
                     end = AppTheme.dimens.xsmall,
                     bottom = AppTheme.dimens.xsmall
                 ),
-                horizontalAlignment = Alignment.CenterHorizontally
+                horizontalAlignment = Alignment.Start
             ) {
                 val summary = weather.summary.firstOrNull()
                 Image(
@@ -306,40 +314,66 @@ private fun EventItem(
                 val rainPercent = (weather.rainPercent * 100).roundToInt().coerceIn(0, 100)
                 Row {
                     Image(
-                        modifier = Modifier.size(16.dp),
+                        modifier = Modifier.size(weatherMetadataIconSize),
                         painter = painterResource(id = R.drawable.weather_indicator_rain),
                         contentDescription = stringResource(id = R.string.ab_change_of_rain)
                     )
-                    TextBody1(
+                    TextBody2(
                         textColor = AppTheme.colors.contentTertiary,
                         modifier = Modifier
                             .align(Alignment.CenterVertically)
                             .padding(start = 2.dp),
-                        text = "$rainPercent%"
+                        text = stringResource(id = R.string.weather_rain_percent, rainPercent.toString())
                     )
                 }
 
                 // Temp
-//                val tempAverage = (weather.tempMinC + ((weather.tempMaxC - weather.tempMinC) / 2))
-//                    .toFloat()
-//                    .toDecimalPlacesString(1)
-//                Row(Modifier.fillMaxWidth()) {
-//                    Image(
-//                        modifier = Modifier.size(16.dp),
-//                        painter = painterResource(id = R.drawable.weather_indicator_temp),
-//                        contentDescription = null
-//                    )
-//                    TextBody1(
-//                        textColor = AppTheme.colors.contentTertiary,
-//                        modifier = Modifier
-//                            .align(Alignment.CenterVertically)
-//                            .padding(start = 2.dp),
-//                        text = "$tempAverage °C"
-//                    )
-//                }
+                Row(Modifier.fillMaxWidth()) {
+                    Image(
+                        modifier = Modifier.size(weatherMetadataIconSize),
+                        painter = painterResource(id = R.drawable.weather_indicator_temp),
+                        contentDescription = null
+                    )
+                    TextBody2(
+                        textColor = AppTheme.colors.contentTertiary,
+                        modifier = Modifier
+                            .align(Alignment.CenterVertically)
+                            .padding(start = 2.dp),
+                        text = weather.getAverageTemp(metric = temperatureMetric)
+                    )
+                }
+
+                // Wind
+                val windSpeed = weather.windMph.toFloat().toDecimalPlacesString(1)
+                Row(Modifier.fillMaxWidth()) {
+                    Image(
+                        modifier = Modifier.size(weatherMetadataIconSize),
+                        painter = painterResource(id = R.drawable.weather_indicator_wind),
+                        contentDescription = null
+                    )
+                    TextBody2(
+                        textColor = AppTheme.colors.contentTertiary,
+                        modifier = Modifier
+                            .align(Alignment.CenterVertically)
+                            .padding(start = 2.dp),
+                        text = weather.getWindspeed(metric = windspeedMetric)
+                    )
+                }
             }
         }
     }
+}
+
+@Composable
+private fun ScheduleWeather.getAverageTemp(metric: Boolean): String = when (metric) {
+    true -> stringResource(id = R.string.weather_temp_degrees_c, this.tempAverageC.toFloat().roundToInt().toString())
+    false -> stringResource(id = R.string.weather_temp_degrees_f, this.tempAverageF.toFloat().roundToInt().toString())
+}
+
+@Composable
+private fun ScheduleWeather.getWindspeed(metric: Boolean): String = when (metric) {
+    true -> stringResource(id = R.string.weather_wind_kph, this.windKph.toFloat().toDecimalPlacesString(1))
+    false -> stringResource(id = R.string.weather_wind_mph, this.windMph.toFloat().toDecimalPlacesString(1))
 }
 
 @PreviewTheme
@@ -374,7 +408,9 @@ private fun Preview(
                                 Schedule("FP3", LocalDate.now(), LocalTime.of(9, 0), weather = weather) to true,
                                 Schedule("Qualifying", LocalDate.now(), LocalTime.of(12, 0), weather = weather) to true
                             )
-                        )
+                        ),
+                        temperatureMetric = true,
+                        windspeedMetric = false
                     ),
                     DetailsModel.Track(
                         circuit = race.raceInfo.circuit,

@@ -83,9 +83,13 @@ fun SettingsAllScreen(
                     onClick = prefClicked
                 )
             }
-            Header(title = R.string.settings_header_layout)
+            Header(title = R.string.settings_header_data)
             Section(
-                model = Settings.Layout.home,
+                model = Settings.Data.layout,
+                onClick = prefClicked
+            )
+            Section(
+                model = Settings.Data.weather,
                 onClick = prefClicked
             )
             if (isRSSEnabled) {

@@ -1,4 +1,4 @@
-package tmg.flashback.ui.settings.layout
+package tmg.flashback.ui.settings.data
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -31,15 +31,14 @@ class SettingsLayoutViewModel @Inject constructor(
 
     override fun prefClicked(pref: Setting) {
         when (pref.key) {
-            Settings.Layout.collapseListKey -> {
+            Settings.Data.collapseListKey -> {
                 homeRepository.collapseList = !homeRepository.collapseList
                 collapsedListEnabled.value = homeRepository.collapseList
             }
-            Settings.Layout.emptyWeeksInSchedule -> {
+            Settings.Data.emptyWeeksInSchedule -> {
                 homeRepository.emptyWeeksInSchedule = !homeRepository.emptyWeeksInSchedule
                 emptyWeeksInSchedule.value = homeRepository.emptyWeeksInSchedule
             }
         }
     }
-
 }

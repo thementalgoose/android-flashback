@@ -63,11 +63,14 @@ import tmg.flashback.ui.settings.NotificationsResults
 import tmg.flashback.ui.settings.NotificationsUpcoming
 import tmg.flashback.ui.settings.Privacy
 import tmg.flashback.ui.settings.SettingsAllScreenVM
+import tmg.flashback.ui.settings.Weather
 import tmg.flashback.ui.settings.Web
 import tmg.flashback.ui.settings.about.SettingsAboutScreenVM
 import tmg.flashback.ui.settings.about.SettingsPrivacyScreenVM
 import tmg.flashback.ui.settings.ads.SettingsAdsScreenVM
-import tmg.flashback.ui.settings.layout.SettingsLayoutScreenVM
+import tmg.flashback.ui.settings.data.SettingsLayoutScreenVM
+import tmg.flashback.ui.settings.data.SettingsWeatherScreen
+import tmg.flashback.ui.settings.data.SettingsWeatherScreenVM
 import tmg.flashback.ui.settings.notifications.SettingsNotificationsResultsScreenVM
 import tmg.flashback.ui.settings.notifications.SettingsNotificationsUpcomingScreenVM
 import tmg.flashback.ui.settings.web.SettingsWebScreenVM
@@ -151,6 +154,11 @@ fun AppGraph(
         }
         composable(Screen.Settings.Home.route) {
             SettingsLayoutScreenVM(
+                actionUpClicked = { navController.popBackStack() }
+            )
+        }
+        composable(Screen.Settings.Weather.route) {
+            SettingsWeatherScreenVM(
                 actionUpClicked = { navController.popBackStack() }
             )
         }

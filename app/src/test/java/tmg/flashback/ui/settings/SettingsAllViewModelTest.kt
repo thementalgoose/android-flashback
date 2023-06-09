@@ -136,13 +136,25 @@ internal class SettingsAllViewModelTest: BaseTest() {
     @Test
     fun `clicking layout opens layout`() {
         initUnderTest()
-        underTest.inputs.itemClicked(Settings.Layout.home)
+        underTest.inputs.itemClicked(Settings.Data.layout)
 
         val slot = slot<NavigationDestination>()
         verify {
             mockNavigator.navigate(capture(slot))
         }
         assertEquals(Screen.Settings.Home.route, slot.captured.route)
+    }
+
+    @Test
+    fun `clicking weather opens weather`() {
+        initUnderTest()
+        underTest.inputs.itemClicked(Settings.Data.weather)
+
+        val slot = slot<NavigationDestination>()
+        verify {
+            mockNavigator.navigate(capture(slot))
+        }
+        assertEquals(Screen.Settings.Weather.route, slot.captured.route)
     }
 
     @Test
