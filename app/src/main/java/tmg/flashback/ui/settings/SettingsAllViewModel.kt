@@ -54,8 +54,11 @@ class SettingsAllViewModel @Inject constructor(
             Settings.Theme.theme.key -> {
                 appearanceNavigationComponent.themeDialog()
             }
-            Settings.Layout.home.key -> {
+            Settings.Data.layout.key -> {
                 navigator.navigate(Screen.Settings.Home)
+            }
+            Settings.Data.weather.key -> {
+                navigator.navigate(Screen.Settings.Weather)
             }
             Settings.RSS.rss.key -> {
                 navigator.navigate(Screen.Settings.RSSConfigure)
