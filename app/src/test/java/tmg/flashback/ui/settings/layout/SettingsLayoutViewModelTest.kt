@@ -6,6 +6,7 @@ import io.mockk.verify
 import org.junit.jupiter.api.Test
 import tmg.flashback.results.repository.HomeRepository
 import tmg.flashback.ui.settings.Settings
+import tmg.flashback.ui.settings.data.SettingsLayoutViewModel
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.test
 import tmg.testutils.livedata.testObserve
@@ -48,7 +49,7 @@ internal class SettingsLayoutViewModelTest: BaseTest() {
 
         initUnderTest()
         val observer = underTest.outputs.collapsedListEnabled.testObserve()
-        underTest.inputs.prefClicked(Settings.Layout.collapseList(true))
+        underTest.inputs.prefClicked(Settings.Data.collapseList(true))
 
         verify {
             mockHomeRepository.collapseList = true
@@ -82,7 +83,7 @@ internal class SettingsLayoutViewModelTest: BaseTest() {
 
         initUnderTest()
         val observer = underTest.outputs.emptyWeeksInSchedule.testObserve()
-        underTest.inputs.prefClicked(Settings.Layout.showEmptyWeeksInSchedule(true))
+        underTest.inputs.prefClicked(Settings.Data.showEmptyWeeksInSchedule(true))
 
         verify {
             mockHomeRepository.emptyWeeksInSchedule = true

@@ -21,8 +21,8 @@ object Settings {
         )
     }
 
-    object Layout {
-        val home = Setting.Section(
+    object Data {
+        val layout = Setting.Section(
             _key = "home",
             title = R.string.settings_section_home_title,
             subtitle = R.string.settings_section_home_description,
@@ -47,6 +47,31 @@ object Settings {
             isBeta = true,
             isChecked = isChecked,
             isEnabled = isEnabled
+        )
+
+        val weather = Setting.Section(
+            _key = "weather",
+            title = R.string.settings_section_weather_title,
+            subtitle = R.string.settings_section_weather_description,
+            icon = R.drawable.ic_settings_weather
+        )
+        val temperatureUnitsKey = "temperature_units"
+        fun temperatureUnits(isChecked: Boolean) = Setting.Switch(
+            _key = temperatureUnitsKey,
+            title = R.string.settings_pref_temperature_unit_title,
+            subtitle = R.string.settings_pref_temperature_unit_description,
+            isBeta = false,
+            isChecked = isChecked,
+            isEnabled = true
+        )
+        val windSpeedUnitsKey = "wind_speed_units"
+        fun windSpeedUnits(isChecked: Boolean) = Setting.Switch(
+            _key = windSpeedUnitsKey,
+            title = R.string.settings_pref_wind_speed_unit_title,
+            subtitle = R.string.settings_pref_wind_speed_unit_description,
+            isBeta = false,
+            isChecked = isChecked,
+            isEnabled = true
         )
     }
 

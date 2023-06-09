@@ -12,6 +12,8 @@ internal val Screen.Settings.Adverts: NavigationDestination
 internal val Screen.Settings.Home: NavigationDestination
     get() = NavigationDestination("settings/home", popUpTo = "settings")
 
+internal val Screen.Settings.Weather: NavigationDestination
+    get() = NavigationDestination("settings/weather", popUpTo = "settings")
 
 internal val Screen.Settings.Web: NavigationDestination
     get() = NavigationDestination("settings/web", popUpTo = "settings")
