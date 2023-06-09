@@ -354,7 +354,7 @@ private fun EventItem(
                         modifier = Modifier
                             .align(Alignment.CenterVertically)
                             .padding(start = 2.dp),
-                        text = stringResource(id = R.string.weather_temp_degrees_mph, windSpeed)
+                        text = stringResource(id = R.string.weather_wind_mph, windSpeed)
                     )
                 }
             }

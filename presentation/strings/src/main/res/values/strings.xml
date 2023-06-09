@@ -413,9 +413,9 @@
     <string name="weather_rain_percent">%s \%%</string>
     <string name="weather_temp_degrees_c">%s °C</string>
     <string name="weather_temp_degrees_f">%s °F</string>
-    <string name="weather_temp_degrees_metre_per_second">%s m/s</string>
-    <string name="weather_temp_degrees_mph">%s mph</string>
-    <string name="weather_temp_degrees_kph">%s kph</string>
+    <string name="weather_wind_metre_per_second">%s m/s</string>
+    <string name="weather_wind_mph">%s mph</string>
+    <string name="weather_wind_kph">%s kph</string>
 
 
     <!-- RSS Configure -->
