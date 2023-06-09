@@ -56,6 +56,7 @@ import kotlin.math.roundToInt
 
 private val trackSize: Dp = 200.dp
 private val weatherIconSize: Dp = 48.dp
+private val weatherMetadataIconSize: Dp = 20.dp
 
 internal fun LazyListScope.details(
     weekendInfo: ScreenWeekendData,
@@ -293,7 +294,7 @@ private fun EventItem(
                     end = AppTheme.dimens.xsmall,
                     bottom = AppTheme.dimens.xsmall
                 ),
-                horizontalAlignment = Alignment.CenterHorizontally
+                horizontalAlignment = Alignment.Start
             ) {
                 val summary = weather.summary.firstOrNull()
                 Image(
@@ -306,37 +307,56 @@ private fun EventItem(
                 val rainPercent = (weather.rainPercent * 100).roundToInt().coerceIn(0, 100)
                 Row {
                     Image(
-                        modifier = Modifier.size(16.dp),
+                        modifier = Modifier.size(weatherMetadataIconSize),
                         painter = painterResource(id = R.drawable.weather_indicator_rain),
                         contentDescription = stringResource(id = R.string.ab_change_of_rain)
                     )
-                    TextBody1(
+                    TextBody2(
                         textColor = AppTheme.colors.contentTertiary,
                         modifier = Modifier
                             .align(Alignment.CenterVertically)
                             .padding(start = 2.dp),
-                        text = "$rainPercent%"
+                        text = stringResource(id = R.string.weather_rain_percent, rainPercent.toString())
                     )
                 }
 
                 // Temp
-//                val tempAverage = (weather.tempMinC + ((weather.tempMaxC - weather.tempMinC) / 2))
-//                    .toFloat()
+                val tempAverage = (weather.tempMinC + ((weather.tempMaxC - weather.tempMinC) / 2))
+                    .toFloat()
+                    .roundToInt()
+                    .toString()
 //                    .toDecimalPlacesString(1)
-//                Row(Modifier.fillMaxWidth()) {
-//                    Image(
-//                        modifier = Modifier.size(16.dp),
-//                        painter = painterResource(id = R.drawable.weather_indicator_temp),
-//                        contentDescription = null
-//                    )
-//                    TextBody1(
-//                        textColor = AppTheme.colors.contentTertiary,
-//                        modifier = Modifier
-//                            .align(Alignment.CenterVertically)
-//                            .padding(start = 2.dp),
-//                        text = "$tempAverage °C"
-//                    )
-//                }
+                Row(Modifier.fillMaxWidth()) {
+                    Image(
+                        modifier = Modifier.size(weatherMetadataIconSize),
+                        painter = painterResource(id = R.drawable.weather_indicator_temp),
+                        contentDescription = null
+                    )
+                    TextBody2(
+                        textColor = AppTheme.colors.contentTertiary,
+                        modifier = Modifier
+                            .align(Alignment.CenterVertically)
+                            .padding(start = 2.dp),
+                        text = stringResource(id = R.string.weather_temp_degrees_c, tempAverage)
+                    )
+                }
+
+                // Wind
+                val windSpeed = weather.windMph.toFloat().toDecimalPlacesString(1)
+                Row(Modifier.fillMaxWidth()) {
+                    Image(
+                        modifier = Modifier.size(weatherMetadataIconSize),
+                        painter = painterResource(id = R.drawable.weather_indicator_wind),
+                        contentDescription = null
+                    )
+                    TextBody2(
+                        textColor = AppTheme.colors.contentTertiary,
+                        modifier = Modifier
+                            .align(Alignment.CenterVertically)
+                            .padding(start = 2.dp),
+                        text = stringResource(id = R.string.weather_temp_degrees_mph, windSpeed)
+                    )
+                }
             }
         }
     }
