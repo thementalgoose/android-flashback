@@ -14,9 +14,13 @@ fun DetailsModel.ScheduleWeekend.Companion.model(
         LocalDate.of(2020, 1, 1) to listOf(
             Schedule.model() to true
         )
-    )
+    ),
+    temperatureMetric: Boolean = true,
+    windspeedMetric: Boolean = false
 ): DetailsModel.ScheduleWeekend = DetailsModel.ScheduleWeekend(
-    days = days
+    days = days,
+    temperatureMetric = temperatureMetric,
+    windspeedMetric = windspeedMetric
 )
 
 fun DetailsModel.Link.Companion.model(

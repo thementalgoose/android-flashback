@@ -12,7 +12,9 @@ sealed class DetailsModel(
 ) {
 
     data class ScheduleWeekend(
-        val days: List<Pair<LocalDate, List<Pair<Schedule, Boolean>>>>
+        val days: List<Pair<LocalDate, List<Pair<Schedule, Boolean>>>>,
+        val temperatureMetric: Boolean,
+        val windspeedMetric: Boolean
     ): DetailsModel(
         id = "weekend"
     ) {

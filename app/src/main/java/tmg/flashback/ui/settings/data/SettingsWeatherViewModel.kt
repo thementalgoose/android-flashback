@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import tmg.flashback.results.repository.HomeRepository
 import tmg.flashback.ui.settings.Setting
 import tmg.flashback.ui.settings.Settings
+import tmg.flashback.weekend.repository.WeatherRepository
 import javax.inject.Inject
 
 interface SettingsWeatherViewModelInputs {
@@ -20,24 +20,24 @@ interface SettingsWeatherViewModelOutputs {
 
 @HiltViewModel
 class SettingsWeatherViewModel @Inject constructor(
-    private val homeRepository: HomeRepository
+    private val weatherRepository: WeatherRepository
 ): ViewModel(), SettingsWeatherViewModelInputs, SettingsWeatherViewModelOutputs {
 
     val inputs: SettingsWeatherViewModelInputs = this
     val outputs: SettingsWeatherViewModelOutputs = this
 
-    override val weatherTemperatureMetric: MutableLiveData<Boolean> = MutableLiveData(homeRepository.weatherTemperatureMetric)
-    override val weatherWindspeedMetric: MutableLiveData<Boolean> = MutableLiveData(homeRepository.weatherWindspeedMetric)
+    override val weatherTemperatureMetric: MutableLiveData<Boolean> = MutableLiveData(weatherRepository.weatherTemperatureMetric)
+    override val weatherWindspeedMetric: MutableLiveData<Boolean> = MutableLiveData(weatherRepository.weatherWindspeedMetric)
 
     override fun prefClicked(pref: Setting) {
         when (pref.key) {
             Settings.Data.temperatureUnitsKey -> {
-                homeRepository.weatherTemperatureMetric = !homeRepository.weatherTemperatureMetric
-                weatherTemperatureMetric.value = homeRepository.weatherTemperatureMetric
+                weatherRepository.weatherTemperatureMetric = !weatherRepository.weatherTemperatureMetric
+                weatherTemperatureMetric.value = weatherRepository.weatherTemperatureMetric
             }
             Settings.Data.windSpeedUnitsKey -> {
-                homeRepository.weatherWindspeedMetric = !homeRepository.weatherWindspeedMetric
-                weatherWindspeedMetric.value = homeRepository.weatherWindspeedMetric
+                weatherRepository.weatherWindspeedMetric = !weatherRepository.weatherWindspeedMetric
+                weatherWindspeedMetric.value = weatherRepository.weatherWindspeedMetric
             }
         }
     }
