@@ -22,6 +22,7 @@ import tmg.flashback.results.contract.repository.NotificationsRepository
 import tmg.flashback.domain.repo.RaceRepository
 import tmg.flashback.weekend.R
 import tmg.flashback.web.usecases.OpenWebpageUseCase
+import tmg.flashback.weekend.repository.WeatherRepository
 import tmg.utilities.models.StringHolder
 import javax.inject.Inject
 
@@ -39,6 +40,7 @@ class DetailsViewModel @Inject constructor(
     private val raceRepository: RaceRepository,
     private val notificationRepository: NotificationsRepository,
     private val navigator: Navigator,
+    private val weatherRepository: WeatherRepository,
     private val openWebpageUseCase: OpenWebpageUseCase
 ): ViewModel(), DetailsViewModelInputs, DetailsViewModelOutputs {
 
@@ -145,7 +147,9 @@ class DetailsViewModel @Inject constructor(
                             }
                         Pair(it, notificationsEnabled)
                     }
-            }
+            },
+            temperatureMetric = weatherRepository.weatherTemperatureMetric,
+            windspeedMetric = weatherRepository.weatherWindspeedMetric
         ))
     }
 

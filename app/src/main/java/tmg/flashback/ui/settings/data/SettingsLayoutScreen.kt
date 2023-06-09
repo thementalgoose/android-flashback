@@ -1,4 +1,4 @@
-package tmg.flashback.ui.settings.layout
+package tmg.flashback.ui.settings.data
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
@@ -66,11 +66,11 @@ fun SettingsLayoutScreen(
 
             Header(title = R.string.settings_header_home)
             Switch(
-                model = Settings.Layout.collapseList(collapsedListEnabled),
+                model = Settings.Data.collapseList(collapsedListEnabled),
                 onClick = prefClicked
             )
             Switch(
-                model = Settings.Layout.showEmptyWeeksInSchedule(showEmptyWeeksInSchedule),
+                model = Settings.Data.showEmptyWeeksInSchedule(showEmptyWeeksInSchedule),
                 onClick = prefClicked
             )
 
