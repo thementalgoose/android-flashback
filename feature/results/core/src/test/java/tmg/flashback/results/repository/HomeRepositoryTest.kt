@@ -210,6 +210,54 @@ internal class HomeRepositoryTest {
 
     //endregion
 
+    //region Weather
+
+
+    @Test
+    fun `weather temperature metrics reads value from preferences repository`() {
+        every { mockPreferenceManager.getBoolean(keyWeatherTemperatureMetric, true) } returns true
+        initSUT()
+
+        assertTrue(sut.weatherTemperatureMetric)
+        verify {
+            mockPreferenceManager.getBoolean(keyWeatherTemperatureMetric, true)
+        }
+    }
+
+    @Test
+    fun `weather temperature metrics saves value to shared prefs repository`() {
+        initSUT()
+
+        sut.weatherTemperatureMetric = true
+        verify {
+            mockPreferenceManager.save(keyWeatherTemperatureMetric, true)
+        }
+    }
+
+
+    @Test
+    fun `weather wind speed metrics reads value from preferences repository`() {
+        every { mockPreferenceManager.getBoolean(keyWeatherWindspeedMetric, false) } returns true
+        initSUT()
+
+        assertTrue(sut.weatherWindspeedMetric)
+        verify {
+            mockPreferenceManager.getBoolean(keyWeatherWindspeedMetric, false)
+        }
+    }
+
+    @Test
+    fun `weather wind speed metrics saves value to shared prefs repository`() {
+        initSUT()
+
+        sut.weatherWindspeedMetric = true
+        verify {
+            mockPreferenceManager.save(keyWeatherWindspeedMetric, true)
+        }
+    }
+
+    //endregion
+
     //region Favourite Seasons
 
     @Test
@@ -309,9 +357,11 @@ internal class HomeRepositoryTest {
         private const val keyDataProvidedBy: String = "data_provided"
         private const val keySupportedSeasons: String = "supported_seasons"
         private const val keySearch: String = "search"
-        private const val keyEmptyWeeksInSchedule: String = "empty_weeks_in_schedule"
 
         // Prefs
+        private const val keyEmptyWeeksInSchedule: String = "empty_weeks_in_schedule"
+        private const val keyWeatherTemperatureMetric: String = "WEATHER_TEMPERATURE_METRIC"
+        private const val keyWeatherWindspeedMetric: String = "WEATHER_WINDSPEED_METRIC"
         private const val keyDashboardCollapseList: String = "DASHBOARD_COLLAPSE_LIST"
         private const val keyFavouriteSeasons: String = "FAVOURITE_SEASONS"
         private const val keyDefaultSeason: String = "DEFAULT_SEASON"
