@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import tmg.flashback.widgets.repository.WidgetRepository
 import tmg.flashback.widgets.usecases.UpdateWidgetsUseCaseImpl
 import tmg.utilities.lifecycle.SingleLiveEvent
@@ -18,9 +20,8 @@ interface UpNextConfigurationViewModelInputs {
 }
 
 interface UpNextConfigurationViewModelOutputs {
-    val showBackground: LiveData<Boolean>
-    val showWeather: LiveData<Boolean>
-    val save: SingleLiveEvent<Unit>
+    val showBackground: StateFlow<Boolean>
+    val showWeather: StateFlow<Boolean>
 }
 
 @HiltViewModel
@@ -34,24 +35,23 @@ internal class UpNextConfigurationViewModel @Inject constructor(
 
     private var appWidgetId: Int = -1
 
-    override val save: SingleLiveEvent<Unit> = SingleLiveEvent()
-
-    override val showBackground: MutableLiveData<Boolean> = MutableLiveData(false)
-    override val showWeather: MutableLiveData<Boolean> = MutableLiveData(false)
+    override val showBackground: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    override val showWeather: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
     override fun load(appWidgetId: Int) {
         this.appWidgetId = appWidgetId
-        showBackground.postValue(widgetRepository.getShowBackground(appWidgetId))
+        showBackground.value = widgetRepository.getShowBackground(appWidgetId)
+        showWeather.value = widgetRepository.getShowWeather(appWidgetId)
     }
 
     override fun changeShowBackground(enabled: Boolean) {
         widgetRepository.setShowBackground(appWidgetId, enabled)
-        showBackground.postValue(enabled)
+        showBackground.value = enabled
     }
 
     override fun changeShowWeather(show: Boolean) {
         widgetRepository.setShowWeather(appWidgetId, show)
-        showWeather.postValue(show)
+        showWeather.value = show
     }
 
     override fun update() {
@@ -60,6 +60,5 @@ internal class UpNextConfigurationViewModel @Inject constructor(
 
     override fun save() {
         update()
-        save.call()
     }
 }
