@@ -1,9 +1,12 @@
 package tmg.flashback.maintenance.ui.forceupgrade
 
+import app.cash.turbine.test
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
+import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import tmg.flashback.configuration.usecases.ResetConfigUseCase
 import tmg.flashback.maintenance.repository.MaintenanceRepository
@@ -32,24 +35,24 @@ internal class ForceUpgradeViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `force upgrade null error message displayed prompting app restart`() {
+    fun `force upgrade null error message displayed prompting app restart`() = runTest {
 
         every { mockMaintenanceRepository.forceUpgrade } returns null
         initSUT()
 
         sut.outputs.title.test {
-            assertValue("Error :(")
+            assertEquals("Error :(", expectMostRecentItem())
         }
         sut.outputs.message.test {
-            assertValue("Please restart the app")
+            assertEquals("Please restart the app", expectMostRecentItem())
         }
         sut.outputs.showLink.test {
-            assertValue(null)
+            assertEquals(null, expectMostRecentItem())
         }
     }
 
     @Test
-    fun `force upgrade shows message from configuration with link`() {
+    fun `force upgrade shows message from configuration with link`() = runTest {
 
         every { mockMaintenanceRepository.forceUpgrade } returns ForceUpgrade(
             title = "title",
@@ -59,13 +62,13 @@ internal class ForceUpgradeViewModelTest: BaseTest() {
         initSUT()
 
         sut.outputs.title.test {
-            assertValue("title")
+            assertEquals("title", awaitItem())
         }
         sut.outputs.message.test {
-            assertValue("message")
+            assertEquals("message", awaitItem())
         }
         sut.outputs.showLink.test {
-            assertValue(Pair("text", "https://www.google.com"))
+            assertEquals(Pair("text", "https://www.google.com"), awaitItem())
         }
 
         verify {
@@ -77,7 +80,7 @@ internal class ForceUpgradeViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `force upgrade shows message from configuration without link`() {
+    fun `force upgrade shows message from configuration without link`() = runTest {
 
         every { mockMaintenanceRepository.forceUpgrade } returns ForceUpgrade(
             title = "title",
@@ -87,13 +90,13 @@ internal class ForceUpgradeViewModelTest: BaseTest() {
         initSUT()
 
         sut.outputs.title.test {
-            assertValue("title")
+            assertEquals("title", awaitItem())
         }
         sut.outputs.message.test {
-            assertValue("message")
+            assertEquals("message", awaitItem())
         }
         sut.outputs.showLink.test {
-            assertValue(null)
+            assertEquals(null, awaitItem())
         }
 
         verify {
