@@ -1,11 +1,20 @@
 package tmg.flashback.results.ui.dashboard.calendar
 
+import app.cash.turbine.Event
+import app.cash.turbine.test
+import app.cash.turbine.testIn
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
@@ -65,17 +74,19 @@ internal class CalendarViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `current season use case is fetched on initial load`() {
+    fun `current season use case is fetched on initial load`() = runTest {
         initUnderTest()
         underTest.load(2020)
 
-        underTest.outputs.items.testObserve()
+        underTest.outputs.items.test {
+            assertNotNull(awaitItem())
+        }
 
         verify { mockFetchSeasonUseCase.fetch(2020) }
     }
 
     @Test
-    fun `null is returned when DB returns no standings and hasnt made request`() {
+    fun `null is returned when DB returns no standings and hasnt made request`() = runTest {
         every { mockFetchSeasonUseCase.fetch(any()) } returns flow { emit(false) }
         every { mockOverviewRepository.getOverview(any()) } returns flow { emit(Overview.model(overviewRaces = emptyList())) }
 
@@ -83,34 +94,37 @@ internal class CalendarViewModelTest: BaseTest() {
         underTest.load(2020)
 
         underTest.outputs.items.test {
-            assertValue(listOf(CalendarModel.Loading))
+            assertEquals(listOf(CalendarModel.Loading), awaitItem())
         }
     }
 
     @Test
-    fun `expected list is returned when items are loaded from the DB`() {
+    fun `expected list is returned when items are loaded from the DB`() = runTest {
         initUnderTest()
         underTest.load(2020)
 
         underTest.outputs.items.test {
-            assertListMatchesItem { it is CalendarModel.Week && it.race == race1 && it.startOfWeek == LocalDate.of(2019, 12, 30) }
-            assertListMatchesItem { it is CalendarModel.Week && it.race == race2 && it.startOfWeek == LocalDate.of(2020, 1, 20) }
+            val item = awaitItem()
+            assertTrue(item.any { it is CalendarModel.Week && it.race == race1 && it.startOfWeek == LocalDate.of(2019, 12, 30) })
+            assertTrue(item.any { it is CalendarModel.Week && it.race == race2 && it.startOfWeek == LocalDate.of(2020, 1, 20) })
         }
     }
 
     @Test
-    fun `refresh calls fetch season and updates is refreshing`() = coroutineTest {
+    fun `refresh calls fetch season and updates is refreshing`() = runTest {
         initUnderTest()
         underTest.load(2020)
 
-        val refreshing = underTest.outputs.isRefreshing.testObserve()
-        refreshing.assertValueAt(false, 0)
-        runBlocking {
-            underTest.refresh()
-        }
+        val observer = underTest.outputs.isRefreshing.testIn(this)
 
-        refreshing.assertValueAt(true, 1)
-        refreshing.assertValueAt(false, 2)
+        underTest.refresh()
+        advanceUntilIdle()
+
+        val items = observer.cancelAndConsumeRemainingEvents()
+        assertEquals(false, (items[0] as Event.Item<Boolean>).value) // Initialise
+        assertEquals(true, (items[1] as Event.Item<Boolean>).value)
+        assertEquals(false, (items[2] as Event.Item<Boolean>).value) // Refresh
+
         coVerify {
             mockFetchSeasonUseCase.fetchSeason(2020)
         }
@@ -118,7 +132,7 @@ internal class CalendarViewModelTest: BaseTest() {
 
 
     @Test
-    fun `clicking item goes to constructor overview`() {
+    fun `clicking item goes to constructor overview`() = runTest {
         initUnderTest()
         underTest.load(2020)
         val model = CalendarModel.Week(
@@ -138,7 +152,7 @@ internal class CalendarViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `clicking tyre with season launches tyre sheet`() {
+    fun `clicking tyre with season launches tyre sheet`() = runTest {
         initUnderTest()
         underTest.load(2020)
 

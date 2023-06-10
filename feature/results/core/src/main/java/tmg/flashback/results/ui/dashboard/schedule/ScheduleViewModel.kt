@@ -9,10 +9,13 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.threeten.bp.LocalDate
 import tmg.flashback.formula1.model.Event
@@ -51,9 +54,9 @@ interface ScheduleViewModelInputs {
 }
 
 interface ScheduleViewModelOutputs {
-    val items: LiveData<List<ScheduleModel>?>
-    val isRefreshing: LiveData<Boolean>
-    val showEvents: LiveData<Boolean>
+    val items: StateFlow<List<ScheduleModel>?>
+    val isRefreshing: StateFlow<Boolean>
+    val showEvents: StateFlow<Boolean>
 }
 
 @HiltViewModel
@@ -71,16 +74,16 @@ class ScheduleViewModel @Inject constructor(
     val inputs: ScheduleViewModelInputs = this
     val outputs: ScheduleViewModelOutputs = this
 
-    override val isRefreshing: MutableLiveData<Boolean> = MutableLiveData(false)
+    override val isRefreshing: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
     private var showCollapsablePlaceholder: MutableStateFlow<Boolean> = MutableStateFlow(homeRepository.collapseList)
-    override val showEvents: MutableLiveData<Boolean> = MutableLiveData(false)
+    override val showEvents: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
     private val season: MutableStateFlow<Int?> = MutableStateFlow(null)
-    override val items: LiveData<List<ScheduleModel>?> = season
+    override val items: StateFlow<List<ScheduleModel>?> = season
         .filterNotNull()
         .flatMapLatest { season ->
-            isRefreshing.postValue(true)
+            isRefreshing.value = true
             fetchSeasonUseCase
                 .fetch(season)
                 .flatMapLatest { hasMadeRequest ->
@@ -89,12 +92,12 @@ class ScheduleViewModel @Inject constructor(
                         eventsRepository.getEvents(season),
                         showCollapsablePlaceholder
                     ) { overview, events, showCollapsible ->
-                        isRefreshing.postValue(false)
+                        isRefreshing.value = false
                         if (!hasMadeRequest) {
                             return@combine listOf(ScheduleModel.Loading)
                         }
 
-                        showEvents.postValue(events.any())
+                        showEvents.value = events.any()
 
                         return@combine generateScheduleModel(
                             overview = overview,
@@ -107,7 +110,7 @@ class ScheduleViewModel @Inject constructor(
                 }
         }
         .flowOn(ioDispatcher)
-        .asLiveData(viewModelScope.coroutineContext)
+        .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
     private fun List<OverviewRace>.getLatestUpcoming(): OverviewRace? {
         return this
@@ -125,11 +128,11 @@ class ScheduleViewModel @Inject constructor(
     override fun refresh() {
         val season = season.value ?: return
 
-        showEvents.postValue(false)
-        isRefreshing.postValue(true)
+        showEvents.value = false
+        isRefreshing.value = true
         viewModelScope.launch(ioDispatcher) {
             fetchSeasonUseCase.fetchSeason(season)
-            isRefreshing.postValue(false)
+            isRefreshing.value = false
         }
     }
 

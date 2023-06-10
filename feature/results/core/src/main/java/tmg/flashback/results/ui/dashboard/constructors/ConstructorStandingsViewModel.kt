@@ -9,10 +9,13 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import tmg.flashback.constructors.contract.Constructor
 import tmg.flashback.constructors.contract.with
@@ -31,8 +34,8 @@ interface ConstructorsStandingViewModelInputs {
 }
 
 interface ConstructorsStandingViewModelOutputs {
-    val items: LiveData<List<ConstructorStandingsModel>?>
-    val isRefreshing: LiveData<Boolean>
+    val items: StateFlow<List<ConstructorStandingsModel>?>
+    val isRefreshing: StateFlow<Boolean>
 }
 
 @HiltViewModel
@@ -46,19 +49,19 @@ class ConstructorsStandingViewModel @Inject constructor(
     val inputs: ConstructorsStandingViewModelInputs = this
     val outputs: ConstructorsStandingViewModelOutputs = this
 
-    override val isRefreshing: MutableLiveData<Boolean> = MutableLiveData(false)
+    override val isRefreshing: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
     private val season: MutableStateFlow<Int?> = MutableStateFlow(null)
-    override val items: LiveData<List<ConstructorStandingsModel>?> = season
+    override val items: StateFlow<List<ConstructorStandingsModel>?> = season
         .filterNotNull()
         .flatMapLatest { season ->
-            isRefreshing.postValue(true)
+            isRefreshing.value = true
             fetchSeasonUseCase
                 .fetch(season)
                 .flatMapLatest { hasMadeRequest ->
                     seasonRepository.getConstructorStandings(season)
                         .map {
-                            isRefreshing.postValue(false)
+                            isRefreshing.value = false
                             if (!hasMadeRequest) {
                                 return@map listOf(ConstructorStandingsModel.Loading)
                             }
@@ -74,7 +77,7 @@ class ConstructorsStandingViewModel @Inject constructor(
                 }
         }
         .flowOn(ioDispatcher)
-        .asLiveData(viewModelScope.coroutineContext)
+        .stateIn(viewModelScope, SharingStarted.Lazily, null)
 
     override fun load(season: Int) {
         this.season.value = season
@@ -83,10 +86,10 @@ class ConstructorsStandingViewModel @Inject constructor(
     override fun refresh() {
         val season = season.value ?: return
 
-        isRefreshing.postValue(true)
+        isRefreshing.value = true
         viewModelScope.launch(ioDispatcher) {
             fetchSeasonUseCase.fetchSeason(season)
-            isRefreshing.postValue(false)
+            isRefreshing.value = false
         }
     }
 

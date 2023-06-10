@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import tmg.flashback.results.repository.NotificationsRepositoryImpl
 import tmg.flashback.results.repository.models.NotificationChannel
 import tmg.utilities.models.Selected
@@ -14,7 +16,7 @@ interface NotificationOnboardingViewModelInputs {
 }
 
 interface NotificationOnboardingViewModelOutputs {
-    val notificationPreferences: LiveData<List<Selected<NotificationOnboardingModel>>>
+    val notificationPreferences: StateFlow<List<Selected<NotificationOnboardingModel>>>
 }
 
 @HiltViewModel
@@ -25,7 +27,7 @@ class NotificationOnboardingViewModel @Inject constructor(
     val inputs: NotificationOnboardingViewModelInputs = this
     val outputs: NotificationOnboardingViewModelOutputs = this
 
-    override val notificationPreferences: MutableLiveData<List<Selected<NotificationOnboardingModel>>> = MutableLiveData()
+    override val notificationPreferences: MutableStateFlow<List<Selected<NotificationOnboardingModel>>> = MutableStateFlow(emptyList())
 
     init {
         notificationRepository.seenNotificationOnboarding = true

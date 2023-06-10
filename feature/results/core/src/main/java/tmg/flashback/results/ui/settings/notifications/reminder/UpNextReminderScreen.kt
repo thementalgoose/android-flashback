@@ -2,6 +2,7 @@ package tmg.flashback.results.ui.settings.notifications.reminder
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -17,7 +18,7 @@ fun UpNextReminderScreenVM(
     viewModel: UpNextReminderViewModel = hiltViewModel(),
     dismiss: () -> Unit
 ) {
-    val current = viewModel.outputs.currentlySelected.observeAsState(NotificationReminder.MINUTES_30)
+    val current = viewModel.outputs.currentlySelected.collectAsState(NotificationReminder.MINUTES_30)
     UpNextReminderScreen(
         currentlySelected = current.value,
         itemClicked = viewModel.inputs::selectNotificationReminder,

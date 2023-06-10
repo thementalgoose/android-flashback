@@ -9,6 +9,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -60,9 +61,9 @@ fun ScheduleScreenVM(
 ) {
     viewModel.inputs.load(season)
 
-    val isRefreshing = viewModel.outputs.isRefreshing.observeAsState(false)
-    val items = viewModel.outputs.items.observeAsState(listOf(ScheduleModel.Loading))
-    val showPreseason = viewModel.outputs.showEvents.observeAsState(false)
+    val isRefreshing = viewModel.outputs.isRefreshing.collectAsState(false)
+    val items = viewModel.outputs.items.collectAsState(listOf(ScheduleModel.Loading))
+    val showPreseason = viewModel.outputs.showEvents.collectAsState(false)
     SwipeRefresh(
         isLoading = isRefreshing.value,
         onRefresh = viewModel.inputs::refresh
