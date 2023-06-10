@@ -8,6 +8,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -51,7 +52,7 @@ fun DriverStatHistoryScreenVM(
         "stat" to driverStatHistoryType.analyticsKey
     ))
 
-    val list = viewModel.outputs.results.observeAsState(emptyList())
+    val list = viewModel.outputs.results.collectAsState(emptyList())
     DriverStatHistoryScreen(
         driverName = driverName,
         list = list.value,

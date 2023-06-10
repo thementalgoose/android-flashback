@@ -2,6 +2,7 @@ package tmg.flashback.drivers.ui.overview
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.compose.runtime.MutableState
 import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -41,8 +42,8 @@ interface DriverOverviewViewModelInputs {
 //region Outputs
 
 interface DriverOverviewViewModelOutputs {
-    val list: LiveData<List<DriverOverviewModel>>
-    val showLoading: LiveData<Boolean>
+    val list: StateFlow<List<DriverOverviewModel>>
+    val showLoading: StateFlow<Boolean>
 }
 
 //endregion
@@ -72,23 +73,23 @@ class DriverOverviewViewModel @Inject constructor(
         .flatMapLatest { id ->
             return@flatMapLatest flow {
                 if (driverRepository.getDriverSeasonCount(id) == 0) {
-                    showLoading.postValue(true)
+                    showLoading.value = true
                     emit(null)
                     driverRepository.fetchDriver(id)
-                    showLoading.postValue(false)
+                    showLoading.value = false
                     emit(id)
                 }
                 else {
                     emit(id)
-                    showLoading.postValue(true)
+                    showLoading.value = true
                     driverRepository.fetchDriver(id)
-                    showLoading.postValue(false)
+                    showLoading.value = false
                 }
             }
         }
         .flowOn(ioDispatcher)
 
-    override val list: LiveData<List<DriverOverviewModel>> = driverIdWithRequest
+    override val list: StateFlow<List<DriverOverviewModel>> = driverIdWithRequest
         .flatMapLatest { id ->
 
             if (id == null) {
@@ -143,9 +144,9 @@ class DriverOverviewViewModel @Inject constructor(
                     return@map list
                 }
         }
-        .asLiveData(viewModelScope.coroutineContext)
+        .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
-    override val showLoading: MutableLiveData<Boolean> = MutableLiveData()
+    override val showLoading: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
     init {
 
@@ -186,7 +187,7 @@ class DriverOverviewViewModel @Inject constructor(
         viewModelScope.launch(context = ioDispatcher) {
             driverId?.let {
                 driverRepository.fetchDriver(driverId)
-                showLoading.postValue(false)
+                showLoading.value = false
             }
         }
     }
