@@ -1,8 +1,11 @@
 package tmg.flashback.drivers.ui.stathistory
 
+import app.cash.turbine.test
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import tmg.flashback.drivers.contract.model.DriverStatHistoryType
 import tmg.flashback.formula1.model.DriverHistory
@@ -20,7 +23,7 @@ internal class DriverStatHistoryViewModelTest: BaseTest() {
 
     private lateinit var underTest: DriverStatHistoryViewModel
 
-    private fun initUnderTest() {
+    private fun initUnderTest() = runTest {
         underTest = DriverStatHistoryViewModel(
             driverRepository = mockDriverRepository,
             ioDispatcher = coroutineScope.testDispatcher
@@ -28,7 +31,7 @@ internal class DriverStatHistoryViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `initialise with championship type returns championship`() {
+    fun `initialise with championship type returns championship`() = runTest {
         every { mockDriverRepository.getDriverOverview(any()) } returns flow {
             emit(DriverHistory.model(
                 standings = listOf(
@@ -44,15 +47,15 @@ internal class DriverStatHistoryViewModelTest: BaseTest() {
         underTest.inputs.load("driverId", DriverStatHistoryType.CHAMPIONSHIPS)
 
         underTest.outputs.results.test {
-            assertValue(listOf(
+            assertEquals(listOf(
                 DriverStatHistoryModel.modelYear(season = 2021),
                 DriverStatHistoryModel.modelYear(season = 2019),
-            ))
+            ), awaitItem())
         }
     }
 
     @Test
-    fun `initialise with wins type returns wins`() {
+    fun `initialise with wins type returns wins`() = runTest {
         every { mockDriverRepository.getDriverOverview(any()) } returns flow {
             emit(DriverHistory.model(
                 standings = listOf(
@@ -102,7 +105,7 @@ internal class DriverStatHistoryViewModelTest: BaseTest() {
         underTest.inputs.load("driverId", DriverStatHistoryType.WINS)
 
         underTest.outputs.results.test {
-            assertValue(listOf(
+            assertEquals(listOf(
                 DriverStatHistoryModel.modelLabel("2021"),
                 DriverStatHistoryModel.modelRace(
                     raceInfo = RaceInfo.model(season = 2021, round = 3),
@@ -114,14 +117,14 @@ internal class DriverStatHistoryViewModelTest: BaseTest() {
                 DriverStatHistoryModel.modelRace(
                     raceInfo = RaceInfo.model(season = 2020, round = 2),
                 ),
-            ))
+            ), awaitItem())
         }
     }
 
 
 
     @Test
-    fun `initialise with podiums type returns podiums`() {
+    fun `initialise with podiums type returns podiums`() = runTest {
         every { mockDriverRepository.getDriverOverview(any()) } returns flow {
             emit(DriverHistory.model(
                 standings = listOf(
@@ -171,7 +174,7 @@ internal class DriverStatHistoryViewModelTest: BaseTest() {
         underTest.inputs.load("driverId", DriverStatHistoryType.PODIUMS)
 
         underTest.outputs.results.test {
-            assertValue(listOf(
+            assertEquals(listOf(
                 DriverStatHistoryModel.modelLabel("2021"),
                 DriverStatHistoryModel.modelRacePosition(
                     position = 1,
@@ -198,12 +201,12 @@ internal class DriverStatHistoryViewModelTest: BaseTest() {
                     position = 3,
                     raceInfo = RaceInfo.model(season = 2020, round = 1),
                 ),
-            ))
+            ), awaitItem())
         }
     }
 
     @Test
-    fun `initialise with pole positions type returns poles`() {
+    fun `initialise with pole positions type returns poles`() = runTest {
         every { mockDriverRepository.getDriverOverview(any()) } returns flow {
             emit(DriverHistory.model(
                 standings = listOf(
@@ -253,7 +256,7 @@ internal class DriverStatHistoryViewModelTest: BaseTest() {
         underTest.inputs.load("driverId", DriverStatHistoryType.POLES)
 
         underTest.outputs.results.test {
-            assertValue(listOf(
+            assertEquals(listOf(
                 DriverStatHistoryModel.modelLabel("2021"),
                 DriverStatHistoryModel.modelRace(
                     raceInfo = RaceInfo.model(season = 2021, round = 3),
@@ -265,7 +268,7 @@ internal class DriverStatHistoryViewModelTest: BaseTest() {
                 DriverStatHistoryModel.modelRace(
                     raceInfo = RaceInfo.model(season = 2020, round = 2),
                 ),
-            ))
+            ), awaitItem())
         }
     }
 }

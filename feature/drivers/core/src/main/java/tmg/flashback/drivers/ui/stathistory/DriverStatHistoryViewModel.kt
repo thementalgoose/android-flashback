@@ -7,10 +7,13 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import tmg.flashback.drivers.contract.model.DriverStatHistoryType
 import tmg.flashback.formula1.model.DriverHistory
 import tmg.flashback.domain.repo.DriverRepository
@@ -22,7 +25,7 @@ interface DriverStatHistoryViewModelInputs {
 }
 
 interface DriverStatHistoryViewModelOutputs {
-    val results: LiveData<List<DriverStatHistoryModel>>
+    val results: StateFlow<List<DriverStatHistoryModel>>
 }
 
 @HiltViewModel
@@ -37,7 +40,7 @@ class DriverStatHistoryViewModel @Inject constructor(
     private val driverId: MutableStateFlow<String?> = MutableStateFlow(null)
     private val statType: MutableStateFlow<DriverStatHistoryType?> = MutableStateFlow(null)
 
-    override val results: LiveData<List<DriverStatHistoryModel>> = driverId
+    override val results: StateFlow<List<DriverStatHistoryModel>> = driverId
         .filterNotNull()
         .flatMapLatest { driverRepository.getDriverOverview(it) }
         .combinePair(statType.filterNotNull())
@@ -53,7 +56,7 @@ class DriverStatHistoryViewModel @Inject constructor(
             }
         }
         .flowOn(ioDispatcher)
-        .asLiveData(viewModelScope.coroutineContext)
+        .stateIn(viewModelScope, SharingStarted.Lazily, listOf(DriverStatHistoryModel.Empty))
 
     override fun load(driverId: String, driverStatHistoryType: DriverStatHistoryType) {
         this.driverId.value = driverId

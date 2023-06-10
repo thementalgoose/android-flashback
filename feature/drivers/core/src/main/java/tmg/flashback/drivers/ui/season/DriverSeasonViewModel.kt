@@ -9,16 +9,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import tmg.flashback.device.managers.NetworkConnectivityManager
+import tmg.flashback.domain.repo.DriverRepository
 import tmg.flashback.drivers.R
 import tmg.flashback.formula1.constants.Formula1
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.DriverHistorySeason
-import tmg.flashback.domain.repo.DriverRepository
 import tmg.flashback.ui.components.navigation.PipeType
 import tmg.flashback.ui.repository.ThemeRepository
 import tmg.utilities.extensions.ordinalAbbreviation
-import tmg.utilities.lifecycle.DataEvent
-import tmg.utilities.lifecycle.Event
 import javax.inject.Inject
 
 //region Inputs
@@ -36,11 +34,9 @@ interface DriverSeasonViewModelInputs {
 //region Outputs
 
 interface DriverSeasonViewModelOutputs {
-    val openSeasonRound: LiveData<DataEvent<DriverSeasonModel.Result>>
-    val list: LiveData<List<DriverSeasonModel>>
+    val list: StateFlow<List<DriverSeasonModel>>
 
-    val isLoading: LiveData<Boolean>
-    val showRefreshError: LiveData<Event>
+    val isLoading: StateFlow<Boolean>
 }
 
 //endregion
@@ -57,9 +53,7 @@ class DriverSeasonViewModel @Inject constructor(
     var inputs: DriverSeasonViewModelInputs = this
     var outputs: DriverSeasonViewModelOutputs = this
 
-    override val openSeasonRound: MutableLiveData<DataEvent<DriverSeasonModel.Result>> = MutableLiveData()
-    override val isLoading: MutableLiveData<Boolean> = MutableLiveData()
-    override val showRefreshError: MutableLiveData<Event> = MutableLiveData()
+    override val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
     private var season: Int = -1
 
@@ -69,23 +63,23 @@ class DriverSeasonViewModel @Inject constructor(
         .flatMapLatest { id ->
             return@flatMapLatest flow {
                 if (driverRepository.getDriverSeasonCount(id) == 0) {
-                    isLoading.postValue(true)
+                    isLoading.value = true
                     emit(null)
                     driverRepository.fetchDriver(id)
-                    isLoading.postValue(false)
+                    isLoading.value = false
                     emit(id)
                 }
                 else {
                     emit(id)
-                    isLoading.postValue(true)
+                    isLoading.value = true
                     driverRepository.fetchDriver(id)
-                    isLoading.postValue(false)
+                    isLoading.value = false
                 }
             }
         }
         .flowOn(ioDispatcher)
 
-    override val list: LiveData<List<DriverSeasonModel>> = driverIdWithRequest
+    override val list: StateFlow<List<DriverSeasonModel>> = driverIdWithRequest
         .filterNotNull()
         .flatMapLatest { driverRepository.getDriverOverview(it) }
         .map { overview ->
@@ -198,7 +192,7 @@ class DriverSeasonViewModel @Inject constructor(
             }
             return@map list
         }
-        .asLiveData(viewModelScope.coroutineContext)
+        .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
     //region Inputs
 
@@ -210,7 +204,7 @@ class DriverSeasonViewModel @Inject constructor(
     }
 
     override fun clickSeasonRound(result: DriverSeasonModel.Result) {
-        openSeasonRound.value = DataEvent(result)
+        // TODO: Do something with this?
     }
 
     override fun refresh() {
@@ -218,10 +212,7 @@ class DriverSeasonViewModel @Inject constructor(
         viewModelScope.launch(context = ioDispatcher) {
             driverId.value?.let {
                 val result = driverRepository.fetchDriver(it)
-                isLoading.postValue(false)
-                if (!result) {
-                    showRefreshError.postValue(Event())
-                }
+                isLoading.value = false
             }
         }
     }
