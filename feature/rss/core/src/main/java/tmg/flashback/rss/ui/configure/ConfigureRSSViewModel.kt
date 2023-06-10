@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import tmg.flashback.rss.repo.RssRepository
 import tmg.flashback.rss.repo.model.SupportedArticleSource
 import tmg.flashback.rss.usecases.AllSupportedSourcesUseCase
@@ -18,9 +20,9 @@ interface ConfigureRSSViewModelInputs {
 }
 
 interface ConfigureRSSViewModelOutputs {
-    val showDescriptionEnabled: LiveData<Boolean>
-    val rssSources: LiveData<List<RSSSource>>
-    val showAddCustom: LiveData<Boolean>
+    val showDescriptionEnabled: StateFlow<Boolean>
+    val rssSources: StateFlow<List<RSSSource>>
+    val showAddCustom: StateFlow<Boolean>
 }
 
 @HiltViewModel
@@ -37,9 +39,9 @@ class ConfigureRSSViewModel @Inject constructor(
     private val rssUrls: MutableSet<String>
         get() = repository.rssUrls.toMutableSet()
 
-    override val showAddCustom: MutableLiveData<Boolean> = MutableLiveData<Boolean>(repository.addCustom)
-    override val rssSources: MutableLiveData<List<RSSSource>> = MutableLiveData(emptyList())
-    override val showDescriptionEnabled: MutableLiveData<Boolean> = MutableLiveData<Boolean>(repository.rssShowDescription)
+    override val showAddCustom: MutableStateFlow<Boolean> = MutableStateFlow<Boolean>(repository.addCustom)
+    override val rssSources: MutableStateFlow<List<RSSSource>> = MutableStateFlow(emptyList())
+    override val showDescriptionEnabled: MutableStateFlow<Boolean> = MutableStateFlow<Boolean>(repository.rssShowDescription)
 
     init {
         updateList()
@@ -47,7 +49,7 @@ class ConfigureRSSViewModel @Inject constructor(
 
     override fun clickShowDescription(state: Boolean) {
         repository.rssShowDescription = state
-        showDescriptionEnabled.value = repository.rssShowDescription
+        showDescriptionEnabled.value = state
     }
 
     override fun visitWebsite(article: SupportedArticleSource) {

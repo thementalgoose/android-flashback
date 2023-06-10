@@ -17,6 +17,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -60,9 +61,9 @@ fun ConfigureRSSScreenVM(
 ) {
     ScreenView(screenName = "RSS Configure")
     
-    val showDescriptionEnabled = viewModel.outputs.showDescriptionEnabled.observeAsState(true)
-    val showCustomAdd = viewModel.outputs.showAddCustom.observeAsState(false)
-    val sources = viewModel.outputs.rssSources.observeAsState(emptyList())
+    val showDescriptionEnabled = viewModel.outputs.showDescriptionEnabled.collectAsState(true)
+    val showCustomAdd = viewModel.outputs.showAddCustom.collectAsState(false)
+    val sources = viewModel.outputs.rssSources.collectAsState(emptyList())
 
     ConfigureRSSScreen(
         actionUpClicked = actionUpClicked,
