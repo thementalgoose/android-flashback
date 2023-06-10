@@ -37,9 +37,9 @@ interface ConstructorOverviewViewModelInputs {
 //region Outputs
 
 interface ConstructorOverviewViewModelOutputs {
-    val list: LiveData<List<ConstructorOverviewModel>>
+    val list: StateFlow<List<ConstructorOverviewModel>>
 
-    val showLoading: LiveData<Boolean>
+    val showLoading: StateFlow<Boolean>
 }
 
 //endregion
@@ -63,17 +63,17 @@ class ConstructorOverviewViewModel @Inject constructor(
         .flatMapLatest { id ->
             return@flatMapLatest flow {
                 if (constructorRepository.getConstructorSeasonCount(id.first) == 0) {
-                    showLoading.postValue(true)
+                    showLoading.value = true
                     emit(null)
                     constructorRepository.fetchConstructor(id.first)
-                    showLoading.postValue(false)
+                    showLoading.value = false
                     emit(id)
                 }
                 else {
                     emit(id)
-                    showLoading.postValue(true)
+                    showLoading.value = true
                     constructorRepository.fetchConstructor(id.first)
-                    showLoading.postValue(false)
+                    showLoading.value = false
                 }
             }
         }
@@ -82,7 +82,7 @@ class ConstructorOverviewViewModel @Inject constructor(
     private val isConnected: Boolean
         get() = networkConnectivityManager.isConnected
 
-    override val list: LiveData<List<ConstructorOverviewModel>> = constructorIdWithRequest
+    override val list: StateFlow<List<ConstructorOverviewModel>> = constructorIdWithRequest
         .flatMapLatest { idAndName ->
 
             if (idAndName == null) {
@@ -132,9 +132,9 @@ class ConstructorOverviewViewModel @Inject constructor(
                     return@map list
                 }
         }
-        .asLiveData(viewModelScope.coroutineContext)
+        .stateIn(viewModelScope, SharingStarted.Lazily, listOf(ConstructorOverviewModel.Loading))
 
-    override val showLoading: MutableLiveData<Boolean> = MutableLiveData()
+    override val showLoading: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
 
     //region Inputs
@@ -165,7 +165,7 @@ class ConstructorOverviewViewModel @Inject constructor(
         viewModelScope.launch(context = ioDispatcher) {
             constructorId?.let {
                 constructorRepository.fetchConstructor(it.first)
-                showLoading.postValue(false)
+                showLoading.value = false
             }
         }
     }
