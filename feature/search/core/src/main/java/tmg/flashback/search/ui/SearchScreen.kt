@@ -23,6 +23,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -66,10 +67,10 @@ fun SearchScreenVM(
 ) {
     ScreenView(screenName = "Search")
 
-    val category = viewModel.outputs.selectedCategory.observeAsState()
-    val list = viewModel.outputs.results.observeAsState(emptyList())
+    val category = viewModel.outputs.selectedCategory.collectAsState()
+    val list = viewModel.outputs.results.collectAsState(emptyList())
 
-    val isLoading = viewModel.outputs.isLoading.observeAsState(false)
+    val isLoading = viewModel.outputs.isLoading.collectAsState(false)
     SwipeRefresh(
         isLoading = isLoading.value,
         onRefresh = viewModel.inputs::refresh
