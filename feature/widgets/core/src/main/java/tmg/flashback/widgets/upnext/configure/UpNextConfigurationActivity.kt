@@ -32,15 +32,14 @@ class UpNextConfigurationActivity: BaseActivity() {
             AppTheme {
                 UpNextConfigurationScreenVM(
                     viewModel = viewModel,
-                    actionUpClicked = { finish() }
+                    actionUpClicked = { finish() },
+                    saveClicked = {
+                        val resultValue = Intent().putExtra(EXTRA_APPWIDGET_ID, appWidgetId)
+                        setResult(RESULT_OK, resultValue)
+                        finish()
+                    }
                 )
             }
-        }
-
-        observe(viewModel.outputs.save) {
-            val resultValue = Intent().putExtra(EXTRA_APPWIDGET_ID, appWidgetId)
-            setResult(RESULT_OK, resultValue)
-            finish()
         }
     }
 
