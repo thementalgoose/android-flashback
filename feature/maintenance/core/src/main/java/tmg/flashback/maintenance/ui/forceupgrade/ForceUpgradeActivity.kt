@@ -7,6 +7,7 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.material.Scaffold
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.livedata.observeAsState
 import dagger.hilt.android.AndroidEntryPoint
 import tmg.flashback.style.AppTheme
@@ -30,9 +31,9 @@ internal class ForceUpgradeActivity: BaseActivity() {
             AppTheme {
                 Scaffold(
                     content = {
-                        val title = viewModel.outputs.title.observeAsState("")
-                        val message = viewModel.outputs.message.observeAsState("")
-                        val showLink = viewModel.outputs.showLink.observeAsState(null)
+                        val title = viewModel.outputs.title.collectAsState("")
+                        val message = viewModel.outputs.message.collectAsState("")
+                        val showLink = viewModel.outputs.showLink.collectAsState(null)
 
                         ForceUpgradeScreen(
                             title = title.value,
