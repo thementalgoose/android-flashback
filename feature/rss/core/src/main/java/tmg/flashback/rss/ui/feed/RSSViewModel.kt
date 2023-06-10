@@ -30,8 +30,8 @@ interface RSSViewModelInputs {
 //region Outputs
 
 interface RSSViewModelOutputs {
-    val list: LiveData<List<RSSModel>>
-    val isRefreshing: LiveData<Boolean>
+    val list: StateFlow<List<RSSModel>>
+    val isRefreshing: StateFlow<Boolean>
 }
 
 //endregion
@@ -47,7 +47,7 @@ class RSSViewModel @Inject constructor(
     private val connectivityManager: NetworkConnectivityManager
 ): ViewModel(), RSSViewModelInputs, RSSViewModelOutputs {
 
-    override val isRefreshing: MutableLiveData<Boolean> = MutableLiveData()
+    override val isRefreshing: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
     private var refreshingUUID: String? = null
 
@@ -96,9 +96,9 @@ class RSSViewModel @Inject constructor(
             isRefreshing.value = false
         }
 
-    override val list: LiveData<List<RSSModel>> = newsList
+    override val list: StateFlow<List<RSSModel>> = newsList
         .shareIn(viewModelScope, SharingStarted.Lazily)
-        .asLiveData(viewModelScope.coroutineContext)
+        .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
     var inputs: RSSViewModelInputs = this
     var outputs: RSSViewModelOutputs = this
