@@ -1,5 +1,6 @@
 package tmg.flashback.search.ui
 
+import app.cash.turbine.test
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
@@ -7,6 +8,9 @@ import io.mockk.verify
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.ads.ads.repository.AdsRepository
@@ -27,6 +31,7 @@ import tmg.flashback.domain.repo.CircuitRepository
 import tmg.flashback.domain.repo.ConstructorRepository
 import tmg.flashback.domain.repo.DriverRepository
 import tmg.flashback.domain.repo.OverviewRepository
+import tmg.flashback.navigation.Navigator
 import tmg.flashback.weekend.contract.Weekend
 import tmg.flashback.weekend.contract.model.ScreenWeekendData
 import tmg.flashback.weekend.contract.with
@@ -40,7 +45,7 @@ internal class SearchViewModelTest: BaseTest() {
     private val mockConstructorsRepository: ConstructorRepository = mockk(relaxed = true)
     private val mockDriversRepository: DriverRepository = mockk(relaxed = true)
     private val mockOverviewRepository: OverviewRepository = mockk(relaxed = true)
-    private val mockNavigator: tmg.flashback.navigation.Navigator = mockk(relaxed = true)
+    private val mockNavigator: Navigator = mockk(relaxed = true)
     private val mockAdsRepository: AdsRepository = mockk(relaxed = true)
 
     private lateinit var sut: SearchViewModel
@@ -79,102 +84,102 @@ internal class SearchViewModelTest: BaseTest() {
     //region Content
 
     @Test
-    fun `search hides adverts if toggle is off`() = coroutineTest {
+    fun `search hides adverts if toggle is off`() = runTest {
         every { mockAdsRepository.advertConfig } returns AdvertConfig(
             onSearch = false
         )
         initSUT()
         sut.outputs.results.test {
-            assertListDoesNotMatchItem { it is SearchItem.Advert }
+            assertFalse(awaitItem().any { it is SearchItem.Advert })
         }
     }
 
     @Test
-    fun `search defaults to placeholder`() = coroutineTest {
+    fun `search defaults to placeholder`() = runTest {
         initSUT()
         sut.outputs.results.test {
-            assertValue(listOf(
+            assertEquals(listOf(
                 SearchItem.Advert,
                 SearchItem.Placeholder
-            ))
+            ), awaitItem())
         }
     }
 
     @Test
-    fun `search category drivers returns driver models`() = coroutineTest {
+    fun `search category drivers returns driver models`() = runTest {
         initSUT()
         runBlocking {
             sut.inputs.inputCategory(SearchCategory.DRIVER)
         }
         sut.outputs.results.test {
-            assertValue(listOf(
+            assertEquals(listOf(
                 SearchItem.Advert,
                 SearchItem.Driver.model()
-            ))
+            ), awaitItem())
         }
     }
 
     @Test
-    fun `search category constructors returns constructors models`() = coroutineTest {
+    fun `search category constructors returns constructors models`() = runTest {
         initSUT()
         runBlocking {
             sut.inputs.inputCategory(SearchCategory.CONSTRUCTOR)
         }
         sut.outputs.results.test {
-            assertValue(listOf(
+            assertEquals(listOf(
                 SearchItem.Advert,
                 SearchItem.Constructor.model()
-            ))
+            ), awaitItem())
         }
     }
 
     @Test
-    fun `search category circuits returns circuits models`() = coroutineTest {
+    fun `search category circuits returns circuits models`() = runTest {
         initSUT()
         runBlocking {
             sut.inputs.inputCategory(SearchCategory.CIRCUIT)
         }
         sut.outputs.results.test {
-            assertValue(listOf(
+            assertEquals(listOf(
                 SearchItem.Advert,
                 SearchItem.Circuit.model()
-            ))
+            ), awaitItem())
         }
     }
 
     @Test
-    fun `search category races returns races models`() = coroutineTest {
+    fun `search category races returns races models`() = runTest {
         initSUT()
         runBlocking {
             sut.inputs.inputCategory(SearchCategory.RACE)
         }
         sut.outputs.results.test {
-            assertValue(listOf(
+            assertEquals(listOf(
                 SearchItem.Advert,
                 SearchItem.Race.model()
-            ))
+            ), awaitItem())
         }
     }
 
     @Test
-    fun `search shows no results when search term not met`() = coroutineTest {
+    fun `search shows no results when search term not met`() = runTest {
         initSUT()
         runBlocking {
             sut.inputs.inputCategory(SearchCategory.DRIVER)
             sut.inputs.inputSearch("zzzzzz")
         }
         sut.outputs.isLoading.test {
-            assertValue(false)
+            assertEquals(false, awaitItem())
         }
         sut.outputs.results.test {
-            assertValue(listOf(
+            assertEquals(listOf(
                 SearchItem.ErrorItem
-            ))
+            ), awaitItem())
         }
     }
 
     @Test
-    fun `search refines items down`() = coroutineTest {
+    fun `search refines items down`() = runTest {
 
         val input1 = Driver.model()
         val input2 = Driver.model(id = "driverId2", firstName = "z", lastName = "fish")
@@ -191,11 +196,11 @@ internal class SearchViewModelTest: BaseTest() {
         advanceUntilIdle()
 
         sut.outputs.results.test {
-            assertValue(listOf(
+            assertEquals(listOf(
                 SearchItem.Advert,
                 model1,
                 model2
-            ))
+            ), awaitItem())
         }
 
         runBlocking {
@@ -203,10 +208,10 @@ internal class SearchViewModelTest: BaseTest() {
         }
         advanceUntilIdle()
         sut.outputs.results.test {
-            assertValue(listOf(
+            assertEquals(listOf(
                 SearchItem.Advert,
                 model2
-            ))
+            ), awaitItem())
         }
 
         runBlocking {
@@ -214,9 +219,9 @@ internal class SearchViewModelTest: BaseTest() {
         }
         advanceUntilIdle()
         sut.outputs.results.test {
-            assertValue(listOf(
+            assertEquals(listOf(
                 SearchItem.ErrorItem
-            ))
+            ), awaitItem())
         }
 
         runBlocking {
@@ -224,10 +229,10 @@ internal class SearchViewModelTest: BaseTest() {
         }
         advanceUntilIdle()
         sut.outputs.results.test {
-            assertValue(listOf(
+            assertEquals(listOf(
                 SearchItem.Advert,
                 model1
-            ))
+            ), awaitItem())
         }
     }
 
@@ -236,7 +241,7 @@ internal class SearchViewModelTest: BaseTest() {
     //region Refresh
 
     @Test
-    fun `refresh when category is drivers fetches drivers`() = coroutineTest {
+    fun `refresh when category is drivers fetches drivers`() = runTest {
         initSUT()
         runBlocking {
             sut.inputs.inputCategory(SearchCategory.DRIVER)
@@ -247,12 +252,12 @@ internal class SearchViewModelTest: BaseTest() {
             mockDriversRepository.fetchDrivers()
         }
         sut.outputs.isLoading.test {
-            assertValue(false)
+            assertEquals(false, awaitItem())
         }
     }
 
     @Test
-    fun `refresh when category is constructors fetches constructors`() = coroutineTest {
+    fun `refresh when category is constructors fetches constructors`() = runTest {
         initSUT()
         runBlocking {
             sut.inputs.inputCategory(SearchCategory.CONSTRUCTOR)
@@ -263,12 +268,12 @@ internal class SearchViewModelTest: BaseTest() {
             mockConstructorsRepository.fetchConstructors()
         }
         sut.outputs.isLoading.test {
-            assertValue(false)
+            assertEquals(false, awaitItem())
         }
     }
 
     @Test
-    fun `refresh when category is circuits fetches circuits`() = coroutineTest {
+    fun `refresh when category is circuits fetches circuits`() = runTest {
         initSUT()
         runBlocking {
             sut.inputs.inputCategory(SearchCategory.CIRCUIT)
@@ -279,12 +284,12 @@ internal class SearchViewModelTest: BaseTest() {
             mockCircuitRepository.fetchCircuits()
         }
         sut.outputs.isLoading.test {
-            assertValue(false)
+            assertEquals(false, awaitItem())
         }
     }
 
     @Test
-    fun `refresh when category is overview fetches overview`() = coroutineTest {
+    fun `refresh when category is overview fetches overview`() = runTest {
         initSUT()
         runBlocking {
             sut.inputs.inputCategory(SearchCategory.RACE)
@@ -295,14 +300,14 @@ internal class SearchViewModelTest: BaseTest() {
             mockOverviewRepository.fetchOverview()
         }
         sut.outputs.isLoading.test {
-            assertValue(false)
+            assertEquals(false, awaitItem())
         }
     }
 
     //endregion
 
     @Test
-    fun `click item for constructor fires click event`() = coroutineTest {
+    fun `click item for constructor fires click event`() = runTest {
         val model = SearchItem.Constructor.model()
 
         initSUT()
@@ -319,7 +324,7 @@ internal class SearchViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `click item for driver fires click event`() = coroutineTest {
+    fun `click item for driver fires click event`() = runTest {
         val model = SearchItem.Driver.model()
 
         initSUT()
@@ -336,7 +341,7 @@ internal class SearchViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `click item for race fires click event`() = coroutineTest {
+    fun `click item for race fires click event`() = runTest {
         val model = SearchItem.Race.model()
 
         initSUT()
@@ -362,7 +367,7 @@ internal class SearchViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `click item for circuit fires click event`() = coroutineTest {
+    fun `click item for circuit fires click event`() = runTest {
         val model = SearchItem.Circuit.model()
 
         initSUT()
