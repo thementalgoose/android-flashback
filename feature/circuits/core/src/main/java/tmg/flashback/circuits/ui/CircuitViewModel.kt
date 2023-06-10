@@ -1,5 +1,6 @@
 package tmg.flashback.circuits.ui
 
+import androidx.compose.runtime.MutableState
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,11 +11,14 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.formula1.model.CircuitHistory
@@ -35,8 +39,8 @@ interface CircuitViewModelInputs {
 }
 
 interface CircuitViewModelOutputs {
-    val list: LiveData<List<CircuitModel>>
-    val showLoading: LiveData<Boolean>
+    val list: StateFlow<List<CircuitModel>>
+    val showLoading: StateFlow<Boolean>
 }
 
 @HiltViewModel
@@ -51,7 +55,7 @@ class CircuitViewModel @Inject constructor(
     val inputs: CircuitViewModelInputs = this
     val outputs: CircuitViewModelOutputs = this
 
-    override val showLoading: MutableLiveData<Boolean> = MutableLiveData()
+    override val showLoading: MutableStateFlow<Boolean> = MutableStateFlow(true)
 
     private val isConnected: Boolean
         get() = networkConnectivityManager.isConnected
@@ -62,10 +66,10 @@ class CircuitViewModel @Inject constructor(
         .flatMapLatest { id ->
             return@flatMapLatest flow {
                 if (circuitRepository.getCircuitRounds(id) == 0) {
-                    showLoading.postValue(true)
+                    showLoading.value = true
                     emit(null)
                     circuitRepository.fetchCircuit(id)
-                    showLoading.postValue(false)
+                    showLoading.value = false
                     emit(id)
                 }
                 else {
@@ -76,7 +80,7 @@ class CircuitViewModel @Inject constructor(
         .flowOn(ioDispatcher)
 
 
-    override val list: LiveData<List<CircuitModel>> = circuitIdWithRequest
+    override val list: StateFlow<List<CircuitModel>> = circuitIdWithRequest
         .flatMapLatest { id ->
             if (id == null) {
                 return@flatMapLatest flow {
@@ -111,7 +115,7 @@ class CircuitViewModel @Inject constructor(
                     return@map list
                 }
         }
-        .asLiveData(viewModelScope.coroutineContext)
+        .stateIn(viewModelScope, SharingStarted.Lazily, mutableListOf(CircuitModel.Loading))
 
     override fun load(circuitId: String) {
         this.circuitId.value = circuitId
@@ -142,7 +146,7 @@ class CircuitViewModel @Inject constructor(
         viewModelScope.launch(context = ioDispatcher) {
             circuitId?.let {
                 circuitRepository.fetchCircuit(circuitId)
-                showLoading.postValue(false)
+                showLoading.value = false
             }
         }
     }

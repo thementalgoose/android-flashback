@@ -1,5 +1,6 @@
 package tmg.flashback.circuits.ui
 
+import app.cash.turbine.test
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
@@ -8,6 +9,8 @@ import io.mockk.slot
 import io.mockk.verify
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -17,6 +20,7 @@ import tmg.flashback.formula1.model.CircuitHistoryRace
 import tmg.flashback.formula1.model.model
 import tmg.flashback.navigation.NavigationDestination
 import tmg.flashback.domain.repo.CircuitRepository
+import tmg.flashback.navigation.Navigator
 import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.test
@@ -28,7 +32,7 @@ internal class CircuitViewModelTest: BaseTest() {
     private val mockCircuitRepository: CircuitRepository = mockk(relaxed = true)
     private val mockConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
     private val mockOpenWebpageUseCase: OpenWebpageUseCase = mockk(relaxed = true)
-    private val mockNavigator: tmg.flashback.navigation.Navigator = mockk(relaxed = true)
+    private val mockNavigator: Navigator = mockk(relaxed = true)
 
     @BeforeEach
     internal fun setUp() {
@@ -51,7 +55,7 @@ internal class CircuitViewModelTest: BaseTest() {
     //region List
 
     @Test
-    fun `circuit data with empty results and no network shows pull to refresh`() = coroutineTest {
+    fun `circuit data with empty results and no network shows pull to refresh`() = runTest {
         val input = CircuitHistory.model(results = emptyList())
         every { mockCircuitRepository.getCircuitHistory(any()) } returns flow { emit(input) }
         every { mockConnectivityManager.isConnected } returns false
@@ -60,15 +64,15 @@ internal class CircuitViewModelTest: BaseTest() {
         sut.inputs.load("circuitId")
 
         sut.outputs.list.test {
-            assertValue(listOf(
+            assertEquals(listOf(
                 CircuitModel.Stats.model(),
                 CircuitModel.Error
-            ))
+            ), awaitItem())
         }
     }
 
     @Test
-    fun `circuit data with null item and no network shows pull to refresh`() = coroutineTest {
+    fun `circuit data with null item and no network shows pull to refresh`() = runTest {
         every { mockCircuitRepository.getCircuitHistory(any()) } returns flow { emit(null) }
         every { mockConnectivityManager.isConnected } returns false
 
@@ -76,14 +80,14 @@ internal class CircuitViewModelTest: BaseTest() {
         sut.inputs.load("circuitId")
 
         sut.outputs.list.test {
-            assertValue(listOf(
+            assertEquals(listOf(
                 CircuitModel.Error
-            ))
+            ), awaitItem())
         }
     }
 
     @Test
-    fun `circuit data with empty results and network shows data unavailable`() = coroutineTest {
+    fun `circuit data with empty results and network shows data unavailable`() = runTest {
         val input = CircuitHistory.model(results = emptyList())
         every { mockCircuitRepository.getCircuitHistory(any()) } returns flow { emit(input) }
         every { mockConnectivityManager.isConnected } returns true
@@ -94,15 +98,15 @@ internal class CircuitViewModelTest: BaseTest() {
         }
 
         sut.outputs.list.test {
-            assertValue(listOf(
+            assertEquals(listOf(
                 CircuitModel.Stats.model(),
                 CircuitModel.Error
-            ))
+            ), awaitItem())
         }
     }
 
     @Test
-    fun `circuit data with null item and network shows data unavailable`() = coroutineTest {
+    fun `circuit data with null item and network shows data unavailable`() = runTest {
         every { mockCircuitRepository.getCircuitHistory(any()) } returns flow { emit(null) }
         every { mockConnectivityManager.isConnected } returns true
 
@@ -110,14 +114,14 @@ internal class CircuitViewModelTest: BaseTest() {
         sut.inputs.load("circuitId")
 
         sut.outputs.list.test {
-            assertValue(listOf(
+            assertEquals(listOf(
                 CircuitModel.Error
-            ))
+            ), awaitItem())
         }
     }
 
     @Test
-    fun `circuit data with results and network shows list of results in descending order`() = coroutineTest {
+    fun `circuit data with results and network shows list of results in descending order`() = runTest {
         val input = CircuitHistory.model(results = listOf(
             CircuitHistoryRace.model(round = 1),
             CircuitHistoryRace.model(round = 2)
@@ -130,7 +134,7 @@ internal class CircuitViewModelTest: BaseTest() {
         }
 
         sut.outputs.list.test {
-            assertValue(listOf(
+            assertEquals(listOf(
                 CircuitModel.Stats.model(
                     numberOfGrandPrix = 2,
                     startYear = 2020,
@@ -138,7 +142,7 @@ internal class CircuitViewModelTest: BaseTest() {
                 ),
                 CircuitModel.Item.model(data = CircuitHistoryRace.model(round = 2)),
                 CircuitModel.Item.model(data = CircuitHistoryRace.model(round = 1)),
-            ))
+            ), awaitItem())
         }
     }
 
@@ -147,7 +151,7 @@ internal class CircuitViewModelTest: BaseTest() {
     //region Request
 
     @Test
-    fun `circuit request is not made when rounds found in DB`() = coroutineTest {
+    fun `circuit request is not made when rounds found in DB`() = runTest {
         coEvery { mockCircuitRepository.getCircuitRounds(any()) } returns 1
 
         initSUT()
@@ -161,7 +165,7 @@ internal class CircuitViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `circuit request is made when no rounds found in DB showing skeleton loading view`() = coroutineTest {
+    fun `circuit request is made when no rounds found in DB showing skeleton loading view`() = runTest {
         coEvery { mockCircuitRepository.getCircuitRounds(any()) } returns 0
 
         initSUT()
@@ -171,17 +175,14 @@ internal class CircuitViewModelTest: BaseTest() {
         }
 
         sut.outputs.list.test {
-            assertValueAt(listOf(
-                CircuitModel.Loading
-            ), 0)
-            assertValueAt(listOf(
+            assertEquals(listOf(
                 CircuitModel.Stats.model(
                     numberOfGrandPrix = 1,
                     startYear = 2020,
                     endYear = 2020
                 ),
                 CircuitModel.Item.model(),
-            ), 1)
+            ), awaitItem())
         }
         coVerify {
             mockCircuitRepository.fetchCircuit("circuitId")
@@ -207,7 +208,7 @@ internal class CircuitViewModelTest: BaseTest() {
     //region Refresh
 
     @Test
-    fun `refresh calls circuit repository fetch circuit and shows loading false when done`() {
+    fun `refresh calls circuit repository fetch circuit and shows loading false when done`() = runTest {
         initSUT()
         sut.inputs.load("circuitId")
 
@@ -219,7 +220,7 @@ internal class CircuitViewModelTest: BaseTest() {
             mockCircuitRepository.fetchCircuit("circuitId")
         }
         sut.outputs.showLoading.test {
-            assertValue(false)
+            assertEquals(false, awaitItem())
         }
     }
 
