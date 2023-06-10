@@ -1,9 +1,15 @@
 package tmg.flashback.weekend.ui.race
 
+import app.cash.turbine.Event
+import app.cash.turbine.test
+import app.cash.turbine.testIn
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
 import tmg.flashback.constructors.contract.ConstructorSeason
 import tmg.flashback.constructors.contract.with
@@ -38,7 +44,7 @@ internal class RaceViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `loading view with no race results in same year shows not available yet`() {
+    fun `loading view with no race results in same year shows not available yet`() = runTest {
         val currentSeason = Year.now().value
         every { mockRaceRepository.getRace(currentSeason, 1) } returns flow { emit(null) }
 
@@ -46,14 +52,14 @@ internal class RaceViewModelTest: BaseTest() {
         underTest.load(currentSeason, 1)
 
         underTest.outputs.list.test {
-            assertValue(listOf(
+            assertEquals(listOf(
                 RaceModel.NotAvailableYet
-            ))
+            ), awaitItem())
         }
     }
 
     @Test
-    fun `loading view with no race results in different year shows not available`() {
+    fun `loading view with no race results in different year shows not available`() = runTest {
         val currentSeason = 2020
         every { mockRaceRepository.getRace(currentSeason, 1) } returns flow { emit(null) }
 
@@ -61,14 +67,14 @@ internal class RaceViewModelTest: BaseTest() {
         underTest.load(currentSeason, 1)
 
         underTest.outputs.list.test {
-            assertValue(listOf(
+            assertEquals(listOf(
                 RaceModel.NotAvailable
-            ))
+            ), awaitItem())
         }
     }
 
     @Test
-    fun `loading view with list of results for driver`() {
+    fun `loading view with list of results for driver`() = runTest {
         val currentSeason = 2020
         every { mockRaceRepository.getRace(currentSeason, 1) } returns flow { emit(Race.model()) }
 
@@ -76,14 +82,14 @@ internal class RaceViewModelTest: BaseTest() {
         underTest.load(currentSeason, 1)
 
         underTest.outputs.list.test {
-            assertValue(listOf(
+            assertEquals(listOf(
                 RaceModel.DriverResult.model()
-            ))
+            ), awaitItem())
         }
     }
 
     @Test
-    fun `loading view with list of results for constructor`() {
+    fun `loading view with list of results for constructor`() = runTest {
         val currentSeason = 2020
         every { mockRaceRepository.getRace(currentSeason, 1) } returns flow { emit(Race.model()) }
 
@@ -92,35 +98,40 @@ internal class RaceViewModelTest: BaseTest() {
         underTest.load(currentSeason, 1)
 
         underTest.outputs.list.test {
-            assertValue(listOf(
+            assertEquals(listOf(
                 RaceModel.ConstructorResult.model()
-            ))
+            ), awaitItem())
         }
     }
 
     @Test
-    fun `race result type updates when item is changed`() {
+    fun `race result type updates when item is changed`() = runTest {
         initUnderTest()
 
-        val observer = underTest.raceResultType.testObserve()
-        observer.assertValue(RaceResultType.DRIVERS)
+        val observer = underTest.raceResultType.testIn(this)
 
         underTest.show(RaceResultType.CONSTRUCTORS)
-        observer.assertValue(RaceResultType.CONSTRUCTORS)
 
         underTest.show(RaceResultType.DRIVERS)
-        observer.assertValue(RaceResultType.DRIVERS)
+
+        val list = observer.cancelAndConsumeRemainingEvents()
+        assertEquals(RaceResultType.DRIVERS, (list[0] as Event.Item<RaceResultType>).value)
+        assertEquals(RaceResultType.CONSTRUCTORS, (list[1] as Event.Item<RaceResultType>).value)
+        assertEquals(RaceResultType.DRIVERS, (list[2] as Event.Item<RaceResultType>).value)
+        assertEquals(3, list.size)
     }
 
     @Test
-    fun `clicking race result launches stats navigation component`() {
+    fun `clicking race result launches stats navigation component`() = runTest {
         initUnderTest()
         underTest.load(2020, 1)
 
         val input = RaceResult.model()
         underTest.inputs.clickDriver(input)
 
-        underTest.outputs.list.testObserve()
+        underTest.outputs.list.test {
+            assertNotNull(awaitItem())
+        }
 
         verify {
             mockNavigator.navigate(
@@ -133,14 +144,16 @@ internal class RaceViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `clicking driver race result launches stats navigation component`() {
+    fun `clicking driver race result launches stats navigation component`() = runTest {
         initUnderTest()
         underTest.load(2020, 1)
 
         val input = Constructor.model()
         underTest.inputs.clickConstructor(input)
 
-        underTest.outputs.list.testObserve()
+        underTest.outputs.list.test {
+            assertNotNull(awaitItem())
+        }
 
         verify {
             mockNavigator.navigate(

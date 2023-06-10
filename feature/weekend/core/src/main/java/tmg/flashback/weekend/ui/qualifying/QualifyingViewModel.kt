@@ -8,10 +8,13 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import tmg.flashback.drivers.contract.DriverSeason
 import tmg.flashback.drivers.contract.with
 import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
@@ -28,8 +31,8 @@ interface QualifyingViewModelInputs {
 }
 
 interface QualifyingViewModelOutputs {
-    val list: LiveData<List<QualifyingModel>>
-    val headersToShow: LiveData<QualifyingHeader>
+    val list: StateFlow<List<QualifyingModel>>
+    val headersToShow: StateFlow<QualifyingHeader>
 }
 
 typealias QualifyingHeader = Triple<Boolean, Boolean, Boolean>
@@ -45,7 +48,7 @@ class QualifyingViewModel @Inject constructor(
     val outputs: QualifyingViewModelOutputs = this
 
     private val seasonRound: MutableStateFlow<Pair<Int, Int>?> = MutableStateFlow(null)
-    override val list: LiveData<List<QualifyingModel>> = seasonRound
+    override val list: StateFlow<List<QualifyingModel>> = seasonRound
         .filterNotNull()
         .flatMapLatest { (season, round) -> raceRepository.getRace(season, round) }
         .flowOn(ioDispatcher)
@@ -62,26 +65,20 @@ class QualifyingViewModel @Inject constructor(
             }
 
             when {
-                race.has(QualifyingType.Q3) -> headersToShow.postValue(
-                    QualifyingHeader(
+                race.has(QualifyingType.Q3) -> headersToShow.value = QualifyingHeader(
                     first = true,
                     second = true,
                     third = true
                 )
-                )
-                race.has(QualifyingType.Q2) -> headersToShow.postValue(
-                    QualifyingHeader(
+                race.has(QualifyingType.Q2) -> headersToShow.value = QualifyingHeader(
                     first = true,
                     second = true,
                     third = false
                 )
-                )
-                race.has(QualifyingType.Q1) -> headersToShow.postValue(
-                    QualifyingHeader(
+                race.has(QualifyingType.Q1) -> headersToShow.value = QualifyingHeader(
                     first = true,
                     second = false,
                     third = false
-                )
                 )
             }
 
@@ -92,9 +89,9 @@ class QualifyingViewModel @Inject constructor(
                 else -> listOf(QualifyingModel.NotAvailable)
             }
         }
-        .asLiveData(viewModelScope.coroutineContext)
+        .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
-    override val headersToShow: MutableLiveData<QualifyingHeader> = MutableLiveData()
+    override val headersToShow: MutableStateFlow<QualifyingHeader> = MutableStateFlow(QualifyingHeader(true, true, true))
 
     override fun load(season: Int, round: Int) {
         seasonRound.value = Pair(season, round)

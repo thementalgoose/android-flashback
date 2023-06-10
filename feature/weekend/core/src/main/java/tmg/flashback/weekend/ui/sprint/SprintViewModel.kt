@@ -10,10 +10,15 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import tmg.flashback.constructors.contract.ConstructorSeason
 import tmg.flashback.constructors.contract.with
 import tmg.flashback.drivers.contract.DriverSeason
@@ -36,8 +41,8 @@ interface SprintViewModelInputs {
 }
 
 interface SprintViewModelOutputs {
-    val list: LiveData<List<SprintModel>>
-    val sprintResultType: LiveData<SprintResultType>
+    val list: StateFlow<List<SprintModel>>
+    val sprintResultType: StateFlow<SprintResultType>
 }
 
 @HiltViewModel
@@ -50,13 +55,13 @@ class SprintViewModel @Inject constructor(
     val inputs: SprintViewModelInputs = this
     val outputs: SprintViewModelOutputs = this
 
-    override val sprintResultType: MutableLiveData<SprintResultType> = MutableLiveData(SprintResultType.DRIVERS)
+    override val sprintResultType: MutableStateFlow<SprintResultType> = MutableStateFlow(SprintResultType.DRIVERS)
 
     private val seasonRound: MutableStateFlow<Pair<Int, Int>?> = MutableStateFlow(null)
-    override val list: LiveData<List<SprintModel>> = seasonRound
+    override val list: StateFlow<List<SprintModel>> = seasonRound
         .filterNotNull()
         .flatMapLatest { (season, round) -> raceRepository.getRace(season, round) }
-        .combinePair(sprintResultType.asFlow())
+        .combine(sprintResultType.asStateFlow()) { a, b -> a to b }
         .flowOn(ioDispatcher)
         .map { (race, sprintResultType) ->
             if (race == null || race.sprint.race.isEmpty()) {
@@ -108,7 +113,7 @@ class SprintViewModel @Inject constructor(
             }
             return@map list
         }
-        .asLiveData(viewModelScope.coroutineContext)
+        .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
     override fun load(season: Int, round: Int) {
         seasonRound.value = Pair(season, round)

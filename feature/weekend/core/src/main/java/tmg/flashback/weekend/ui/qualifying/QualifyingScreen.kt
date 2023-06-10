@@ -6,6 +6,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -51,8 +52,8 @@ fun QualifyingScreenVM(
         round = info.round
     )
 
-    val qualifying = viewModel.outputs.list.observeAsState(listOf(QualifyingModel.Loading))
-    val qualifyingHeader = viewModel.outputs.headersToShow.observeAsState(
+    val qualifying = viewModel.outputs.list.collectAsState(listOf(QualifyingModel.Loading))
+    val qualifyingHeader = viewModel.outputs.headersToShow.collectAsState(
         QualifyingHeader(
             first = false,
             second = false,

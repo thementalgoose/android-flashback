@@ -1,9 +1,13 @@
 package tmg.flashback.weekend.ui.sprint
 
+import app.cash.turbine.test
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
 import tmg.flashback.constructors.contract.ConstructorSeason
 import tmg.flashback.constructors.contract.with
@@ -38,7 +42,7 @@ internal class SprintViewModelTest: BaseTest() {
 
 
     @Test
-    fun `loading view with no race results in same year shows not available yet`() {
+    fun `loading view with no race results in same year shows not available yet`() = runTest {
         val currentSeason = Year.now().value
         every { mockRaceRepository.getRace(currentSeason, 1) } returns flow { emit(null) }
 
@@ -46,14 +50,14 @@ internal class SprintViewModelTest: BaseTest() {
         underTest.load(currentSeason, 1)
 
         underTest.outputs.list.test {
-            assertValue(listOf(
+            assertEquals(listOf(
                 SprintModel.NotAvailableYet
-            ))
+            ), awaitItem())
         }
     }
 
     @Test
-    fun `loading view with no race results in different year shows not available`() {
+    fun `loading view with no race results in different year shows not available`() = runTest {
         val currentSeason = 2020
         every { mockRaceRepository.getRace(currentSeason, 1) } returns flow { emit(null) }
 
@@ -61,14 +65,14 @@ internal class SprintViewModelTest: BaseTest() {
         underTest.load(currentSeason, 1)
 
         underTest.outputs.list.test {
-            assertValue(listOf(
+            assertEquals(listOf(
                 SprintModel.NotAvailable
-            ))
+            ), awaitItem())
         }
     }
 
     @Test
-    fun `loading view with list of driver results`() {
+    fun `loading view with list of driver results`() = runTest {
         val currentSeason = 2020
         every { mockRaceRepository.getRace(currentSeason, 1) } returns flow { emit(Race.model()) }
 
@@ -76,14 +80,14 @@ internal class SprintViewModelTest: BaseTest() {
         underTest.load(currentSeason, 1)
 
         underTest.outputs.list.test {
-            assertValue(listOf(
+            assertEquals(listOf(
                 SprintModel.DriverResult.model()
-            ))
+            ), awaitItem())
         }
     }
 
     @Test
-    fun `loading view with list of constructor results`() {
+    fun `loading view with list of constructor results`() = runTest {
         val currentSeason = 2020
         every { mockRaceRepository.getRace(currentSeason, 1) } returns flow { emit(Race.model()) }
 
@@ -92,21 +96,23 @@ internal class SprintViewModelTest: BaseTest() {
         underTest.load(currentSeason, 1)
 
         underTest.outputs.list.test {
-            assertValue(listOf(
+            assertEquals(listOf(
                 SprintModel.ConstructorResult.model()
-            ))
+            ), awaitItem())
         }
     }
 
     @Test
-    fun `clicking sprint driver result launches stats navigation component`() {
+    fun `clicking sprint driver result launches stats navigation component`() = runTest {
         initUnderTest()
         underTest.load(2020, 1)
 
         val input = SprintRaceResult.model()
         underTest.inputs.clickDriver(input)
 
-        underTest.outputs.list.testObserve()
+        underTest.outputs.list.test {
+            assertNotNull(awaitItem())
+        }
 
         verify {
             mockNavigator.navigate(
@@ -119,14 +125,16 @@ internal class SprintViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `clicking sprint constructor result launches stats navigation component`() {
+    fun `clicking sprint constructor result launches stats navigation component`() = runTest {
         initUnderTest()
         underTest.load(2020, 1)
 
         val input = Constructor.model()
         underTest.inputs.clickConstructor(input)
 
-        underTest.outputs.list.testObserve()
+        underTest.outputs.list.test {
+            assertNotNull(awaitItem())
+        }
 
         verify {
             mockNavigator.navigate(

@@ -8,9 +8,12 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import tmg.flashback.circuits.contract.Circuit
 import tmg.flashback.circuits.contract.with
 import tmg.flashback.formula1.enums.RaceWeekend
@@ -32,7 +35,7 @@ interface DetailsViewModelInputs {
 }
 
 interface DetailsViewModelOutputs {
-    val list: LiveData<List<DetailsModel>>
+    val list: StateFlow<List<DetailsModel>>
 }
 
 @HiltViewModel
@@ -48,7 +51,7 @@ class DetailsViewModel @Inject constructor(
     val outputs: DetailsViewModelOutputs = this
 
     private val seasonRound: MutableStateFlow<Pair<Int, Int>?> = MutableStateFlow(null)
-    override val list: LiveData<List<DetailsModel>> = seasonRound
+    override val list: StateFlow<List<DetailsModel>> = seasonRound
         .filterNotNull()
         .flatMapLatest { (season, round) -> raceRepository.getRace(season, round) }
         .map {
@@ -104,7 +107,7 @@ class DetailsViewModel @Inject constructor(
 
             return@map list
         }
-        .asLiveData(viewModelScope.coroutineContext)
+        .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
     override fun load(season: Int, round: Int) {
         seasonRound.value = Pair(season, round)

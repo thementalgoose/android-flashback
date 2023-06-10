@@ -9,11 +9,14 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.threeten.bp.LocalDate
 import tmg.flashback.domain.repo.RaceRepository
@@ -33,9 +36,9 @@ interface WeekendViewModelInputs {
 }
 
 interface WeekendViewModelOutputs {
-    val tabs: LiveData<List<WeekendScreenState>>
-    val isRefreshing: LiveData<Boolean>
-    val weekendInfo: LiveData<ScreenWeekendData>
+    val tabs: StateFlow<List<WeekendScreenState>>
+    val isRefreshing: StateFlow<Boolean>
+    val weekendInfo: StateFlow<ScreenWeekendData?>
 }
 
 @HiltViewModel
@@ -54,17 +57,17 @@ class WeekendViewModel @Inject constructor(
         .flatMapLatest { (season, round) ->
             return@flatMapLatest flow {
                 if (!raceRepository.hasntPreviouslySynced(season)) {
-                    isRefreshing.postValue(true)
+                    isRefreshing.value = true
                     emit(null)
                     raceRepository.fetchRaces(season)
-                    isRefreshing.postValue(false)
+                    isRefreshing.value = false
                     emit(Pair(season, round))
                 }
                 else {
                     emit(Pair(season, round))
-                    isRefreshing.postValue(true)
+                    isRefreshing.value = true
                     raceRepository.fetchRaces(season)
-                    isRefreshing.postValue(false)
+                    isRefreshing.value = false
                 }
             }
         }
@@ -74,12 +77,12 @@ class WeekendViewModel @Inject constructor(
         .filterNotNull()
         .flatMapLatest { (season, round) -> raceRepository.getRace(season, round) }
 
-    override val weekendInfo: LiveData<ScreenWeekendData> = raceFlow
+    override val weekendInfo: StateFlow<ScreenWeekendData?> = raceFlow
         .filterNotNull()
         .map { it.raceInfo.toWeekendInfo() }
-        .asLiveData(viewModelScope.coroutineContext)
+        .stateIn(viewModelScope, SharingStarted.Lazily, null)
 
-    override val tabs: LiveData<List<WeekendScreenState>> = seasonRound
+    override val tabs: StateFlow<List<WeekendScreenState>> = seasonRound
         .filterNotNull()
         .flatMapLatest { (season, round) -> raceRepository.getRace(season, round) }
         .combinePair(selectedTab)
@@ -96,9 +99,9 @@ class WeekendViewModel @Inject constructor(
             list.add(WeekendScreenState(RACE, isSelected = navItem == RACE))
             return@map list
         }
-        .asLiveData(viewModelScope.coroutineContext)
+        .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
-    override val isRefreshing: MutableLiveData<Boolean> = MutableLiveData()
+    override val isRefreshing: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
     override fun clickTab(state: WeekendNavItem) {
         selectedTab.value = state
@@ -121,10 +124,10 @@ class WeekendViewModel @Inject constructor(
 
     override fun refresh() {
         seasonRound.value?.first?.let { season ->
-            isRefreshing.postValue(true)
+            isRefreshing.value = true
             viewModelScope.launch(ioDispatcher) {
                 raceRepository.fetchRaces(season)
-                isRefreshing.postValue(false)
+                isRefreshing.value = false
             }
         }
     }

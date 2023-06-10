@@ -1,10 +1,14 @@
 package tmg.flashback.weekend.ui.schedule
 
 import android.net.Uri
+import app.cash.turbine.test
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
@@ -21,6 +25,8 @@ import tmg.flashback.domain.repo.RaceRepository
 import tmg.flashback.weekend.R
 import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.flashback.weekend.repository.WeatherRepository
+import tmg.flashback.weekend.ui.details.DetailsModel
+import tmg.flashback.weekend.ui.details.DetailsModel.Links
 import tmg.flashback.weekend.ui.details.DetailsViewModel
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.test
@@ -56,7 +62,7 @@ internal class DetailsViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `initial loads details model for race`() {
+    fun `initial loads details model for race`() = runTest {
         val schedule = Schedule.model()
         every { mockRaceRepository.getRace(2020, 1) } returns flow {
             emit(Race.model(schedule = listOf(schedule)))
@@ -66,27 +72,27 @@ internal class DetailsViewModelTest: BaseTest() {
         underTest.inputs.load(2020, 1)
 
         underTest.outputs.list.test {
-            assertValue(listOf(
+            assertEquals(listOf(
                 links,
-                tmg.flashback.weekend.ui.details.DetailsModel.ScheduleWeekend.model(),
-                tmg.flashback.weekend.ui.details.DetailsModel.Track.model(),
-            ))
+                DetailsModel.ScheduleWeekend.model(),
+                DetailsModel.Track.model(),
+            ), awaitItem())
         }
     }
 
     @Test
-    fun `initial loads details model for race weekend with notifications enabled`() {
+    fun `initial loads details model for race weekend with notifications enabled`() = runTest {
         `initial loads details model for race weekend`(true)
     }
 
     @Test
-    fun `initial loads details model for race weekend with notifications disabled`() {
+    fun `initial loads details model for race weekend with notifications disabled`() = runTest {
         `initial loads details model for race weekend`(false)
     }
 
     @Test
-    fun `click link opens webpage`() {
-        val link = tmg.flashback.weekend.ui.details.DetailsModel.Link(0, 0, "https://url.com")
+    fun `click link opens webpage`() = runTest {
+        val link = DetailsModel.Link(0, 0, "https://url.com")
         initUnderTest()
 
         underTest.inputs.linkClicked(link)
@@ -97,8 +103,8 @@ internal class DetailsViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `click link with circuit history url navigates to circuit`() {
-        val link = tmg.flashback.weekend.ui.details.DetailsModel.Link(0, 0, "flashback://circuit-history/circuitId/circuitName")
+    fun `click link with circuit history url navigates to circuit`() = runTest {
+        val link = DetailsModel.Link(0, 0, "flashback://circuit-history/circuitId/circuitName")
         initUnderTest()
 
         underTest.inputs.linkClicked(link)
@@ -108,7 +114,7 @@ internal class DetailsViewModelTest: BaseTest() {
         }
     }
 
-    private fun `initial loads details model for race weekend`(enabled: Boolean) {
+    private suspend fun TestScope.`initial loads details model for race weekend`(enabled: Boolean) {
         val fp1 = Schedule.model(label = "FP1", date = LocalDate.of(2020, 1, 1))
         val fp2 = Schedule.model(label = "FP2", date = LocalDate.of(2020, 1, 2))
         val qualifying = Schedule.model(label = "Qualifying", date = LocalDate.of(2020, 1, 2), time = LocalTime.of(14, 30))
@@ -127,28 +133,28 @@ internal class DetailsViewModelTest: BaseTest() {
         underTest.inputs.load(2020, 1)
 
         underTest.outputs.list.test {
-            assertValue(listOf(
+            assertEquals(listOf(
                 links,
-                tmg.flashback.weekend.ui.details.DetailsModel.ScheduleWeekend.model(
+                DetailsModel.ScheduleWeekend.model(
                     days = listOf(
                         fp1.date to listOf(fp1 to enabled),
                         qualifying.date to listOf(fp2 to enabled, qualifying to enabled),
                         race.date to listOf(race to enabled)
                     )
                 ),
-                tmg.flashback.weekend.ui.details.DetailsModel.Track.model(),
-            ))
+                DetailsModel.Track.model(),
+            ), awaitItem())
         }
     }
 
-    private val links: tmg.flashback.weekend.ui.details.DetailsModel.Links get() = tmg.flashback.weekend.ui.details.DetailsModel.Links(
+    private val links: Links get() = Links(
         listOf(
-            tmg.flashback.weekend.ui.details.DetailsModel.Link(
+            DetailsModel.Link(
                 label = R.string.details_link_circuit,
                 icon = R.drawable.ic_details_track,
                 url = "flashback://circuit-history/circuitId/circuitName"
             ),
-            tmg.flashback.weekend.ui.details.DetailsModel.Link(
+            DetailsModel.Link(
                 label = R.string.details_link_map,
                 icon = R.drawable.ic_details_maps,
                 url = "geo:51.101,-1.101?q=${Uri.encode("circuitName")}"
