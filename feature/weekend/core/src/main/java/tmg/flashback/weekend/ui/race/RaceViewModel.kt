@@ -10,10 +10,15 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import tmg.flashback.constructors.contract.ConstructorSeason
 import tmg.flashback.constructors.contract.with
 import tmg.flashback.domain.repo.RaceRepository
@@ -24,6 +29,7 @@ import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.model.Race
 import tmg.flashback.formula1.model.RaceResult
+import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.flashback.weekend.R
 import tmg.utilities.extensions.combinePair
@@ -37,27 +43,27 @@ interface RaceViewModelInputs {
 }
 
 interface RaceViewModelOutputs {
-    val list: LiveData<List<RaceModel>>
-    val raceResultType: LiveData<RaceResultType>
+    val list: StateFlow<List<RaceModel>>
+    val raceResultType: StateFlow<RaceResultType>
 }
 
 @HiltViewModel
 class RaceViewModel @Inject constructor(
     private val raceRepository: RaceRepository,
-    private val navigator: tmg.flashback.navigation.Navigator,
+    private val navigator: Navigator,
     private val ioDispatcher: CoroutineDispatcher
 ): ViewModel(), RaceViewModelInputs, RaceViewModelOutputs {
 
     val inputs: RaceViewModelInputs = this
     val outputs: RaceViewModelOutputs = this
 
-    override val raceResultType: MutableLiveData<RaceResultType> = MutableLiveData(RaceResultType.DRIVERS)
+    override val raceResultType: MutableStateFlow<RaceResultType> = MutableStateFlow(RaceResultType.DRIVERS)
 
     private val seasonRound: MutableStateFlow<Pair<Int, Int>?> = MutableStateFlow(null)
-    override val list: LiveData<List<RaceModel>> = seasonRound
+    override val list: StateFlow<List<RaceModel>> = seasonRound
         .filterNotNull()
         .flatMapLatest { (season, round) -> raceRepository.getRace(season, round) }
-        .combinePair(raceResultType.asFlow())
+        .combine(raceResultType.asStateFlow()) { a, b -> a to b }
         .flowOn(ioDispatcher)
         .map { (race, raceDisplayType) ->
             val raceResults = race?.race ?: emptyList()
@@ -115,7 +121,7 @@ class RaceViewModel @Inject constructor(
             }
             return@map list
         }
-        .asLiveData(viewModelScope.coroutineContext)
+        .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
 
     override fun load(season: Int, round: Int) {
