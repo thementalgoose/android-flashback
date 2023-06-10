@@ -1,11 +1,18 @@
 package tmg.flashback.results.ui.dashboard.constructors
 
+import app.cash.turbine.Event
+import app.cash.turbine.test
+import app.cash.turbine.testIn
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.constructors.contract.Constructor
@@ -31,7 +38,7 @@ internal class ConstructorsStandingViewModelTest: BaseTest() {
 
     private lateinit var underTest: ConstructorsStandingViewModel
 
-    private fun initUnderTest() {
+    private fun initUnderTest() = runTest {
         underTest = ConstructorsStandingViewModel(
             seasonRepository = mockSeasonRepository,
             fetchSeasonUseCase = mockFetchSeasonUseCase,
@@ -41,7 +48,7 @@ internal class ConstructorsStandingViewModelTest: BaseTest() {
     }
 
     @BeforeEach
-    internal fun setUp() {
+    internal fun setUp() = runTest {
         every { mockSeasonRepository.getConstructorStandings(2020) } returns flow { emit(SeasonConstructorStandings.model(
             standings = listOf(
                 SeasonConstructorStandingSeason.model(points = 2.0, constructor = Constructor.model(id = "1"), championshipPosition = 2),
@@ -52,17 +59,19 @@ internal class ConstructorsStandingViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `current season use case is fetched on initial load`() {
+    fun `current season use case is fetched on initial load`() = runTest {
         initUnderTest()
         underTest.load(2020)
 
-        underTest.outputs.items.testObserve()
+        underTest.outputs.items.test {
+            assertNotNull(awaitItem())
+        }
 
         verify { mockFetchSeasonUseCase.fetch(2020) }
     }
 
     @Test
-    fun `loading is returned when DB returns no standings and hasnt made request`() {
+    fun `loading is returned when DB returns no standings and hasnt made request`() = runTest {
         every { mockFetchSeasonUseCase.fetch(any()) } returns flow { emit(false) }
         every { mockSeasonRepository.getConstructorStandings(any()) } returns flow { emit(null) }
 
@@ -70,12 +79,12 @@ internal class ConstructorsStandingViewModelTest: BaseTest() {
         underTest.load(2020)
 
         underTest.outputs.items.test {
-            assertValue(listOf(ConstructorStandingsModel.Loading))
+            assertEquals(listOf(ConstructorStandingsModel.Loading), awaitItem())
         }
     }
 
     @Test
-    fun `null is returned when DB returns no standings and has made request`() {
+    fun `null is returned when DB returns no standings and has made request`() = runTest {
         every { mockFetchSeasonUseCase.fetch(any()) } returns flow { emit(true) }
         every { mockSeasonRepository.getConstructorStandings(any()) } returns flow { emit(null) }
 
@@ -83,41 +92,43 @@ internal class ConstructorsStandingViewModelTest: BaseTest() {
         underTest.load(2020)
 
         underTest.outputs.items.test {
-            assertValue(null)
+            assertEquals(null, awaitItem())
         }
     }
 
     @Test
-    fun `expected list is returned when items are loaded from the DB`() {
+    fun `expected list is returned when items are loaded from the DB`() = runTest {
         initUnderTest()
         underTest.load(2020)
 
         underTest.outputs.items.test {
-            assertValue(listOf(
+            assertEquals(listOf(
                 ConstructorStandingsModel.Standings(
                     standings = SeasonConstructorStandingSeason.model(points = 3.0, constructor = Constructor.model(id = "2"), championshipPosition = 1)
                 ),
                 ConstructorStandingsModel.Standings(
                     standings = SeasonConstructorStandingSeason.model(points = 2.0, constructor = Constructor.model(id = "1"), championshipPosition = 2),
                 )
-            ))
+            ), awaitItem())
         }
     }
 
 
     @Test
-    fun `refresh calls fetch season and updates is refreshing`() = coroutineTest {
+    fun `refresh calls fetch season and updates is refreshing`() = runTest {
         initUnderTest()
         underTest.load(2020)
 
-        val refreshing = underTest.outputs.isRefreshing.testObserve()
-        refreshing.assertValueAt(false, 0)
-        runBlocking {
-            underTest.refresh()
-        }
+        val observer = underTest.outputs.isRefreshing.testIn(this)
 
-        refreshing.assertValueAt(true, 1)
-        refreshing.assertValueAt(false, 2)
+        underTest.refresh()
+        advanceUntilIdle()
+
+        val items = observer.cancelAndConsumeRemainingEvents()
+        assertEquals(false, (items[0] as Event.Item<Boolean>).value) // Initialise
+        assertEquals(true, (items[1] as Event.Item<Boolean>).value)
+        assertEquals(false, (items[2] as Event.Item<Boolean>).value) // Refresh
+
         coVerify {
             mockFetchSeasonUseCase.fetchSeason(2020)
         }
@@ -125,7 +136,7 @@ internal class ConstructorsStandingViewModelTest: BaseTest() {
 
 
     @Test
-    fun `clicking item goes to constructor overview`() {
+    fun `clicking item goes to constructor overview`() = runTest {
         initUnderTest()
         underTest.load(2020)
         val model = ConstructorStandingsModel.Standings(

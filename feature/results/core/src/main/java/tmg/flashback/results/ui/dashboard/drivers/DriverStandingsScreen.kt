@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -50,8 +51,8 @@ fun DriverStandingsScreenVM(
 ) {
     viewModel.inputs.load(season)
 
-    val isRefreshing = viewModel.outputs.isRefreshing.observeAsState(false)
-    val items = viewModel.outputs.items.observeAsState(listOf())
+    val isRefreshing = viewModel.outputs.isRefreshing.collectAsState(false)
+    val items = viewModel.outputs.items.collectAsState(listOf())
     SwipeRefresh(
         isLoading = isRefreshing.value,
         onRefresh = viewModel.inputs::refresh

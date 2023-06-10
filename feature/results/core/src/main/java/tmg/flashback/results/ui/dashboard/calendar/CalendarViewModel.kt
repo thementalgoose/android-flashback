@@ -9,10 +9,13 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.threeten.bp.LocalDate
 import tmg.flashback.formula1.model.Event
@@ -39,8 +42,8 @@ interface CalendarViewModelInputs {
 }
 
 interface CalendarViewModelOutputs {
-    val items: LiveData<List<CalendarModel>>
-    val isRefreshing: LiveData<Boolean>
+    val items: StateFlow<List<CalendarModel>>
+    val isRefreshing: StateFlow<Boolean>
 }
 
 @HiltViewModel
@@ -57,13 +60,13 @@ class CalendarViewModel @Inject constructor(
     val outputs: CalendarViewModelOutputs = this
 
 
-    override val isRefreshing: MutableLiveData<Boolean> = MutableLiveData(false)
+    override val isRefreshing: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
     private val season: MutableStateFlow<Int?> = MutableStateFlow(null)
-    override val items: LiveData<List<CalendarModel>> = season
+    override val items: StateFlow<List<CalendarModel>> = season
         .filterNotNull()
         .flatMapLatest { season ->
-            isRefreshing.postValue(true)
+            isRefreshing.value = true
             fetchSeasonUseCase
                 .fetch(season)
                 .flatMapLatest { hasMadeRequest ->
@@ -71,7 +74,7 @@ class CalendarViewModel @Inject constructor(
                         overviewRepository.getOverview(season),
                         eventsRepository.getEvents(season)
                     ) { overview, events ->
-                        isRefreshing.postValue(false)
+                        isRefreshing.value = false
                         if (!hasMadeRequest) {
                             return@combine listOf(CalendarModel.Loading)
                         }
@@ -85,7 +88,7 @@ class CalendarViewModel @Inject constructor(
                 }
         }
         .flowOn(ioDispatcher)
-        .asLiveData(viewModelScope.coroutineContext)
+        .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
     private fun List<OverviewRace>.getLatestUpcoming(): OverviewRace? {
         return this
@@ -100,10 +103,10 @@ class CalendarViewModel @Inject constructor(
     override fun refresh() {
         val season = season.value ?: return
 
-        isRefreshing.postValue(true)
+        isRefreshing.value = true
         viewModelScope.launch(ioDispatcher) {
             fetchSeasonUseCase.fetchSeason(season)
-            isRefreshing.postValue(false)
+            isRefreshing.value = false
         }
     }
 

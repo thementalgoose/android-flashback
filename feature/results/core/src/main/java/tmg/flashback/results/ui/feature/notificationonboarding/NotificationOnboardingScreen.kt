@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.Checkbox
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,7 +31,7 @@ fun NotificationOnboardingScreenVM(
 ) {
     ScreenView(screenName = "Onboarding Notifications")
 
-    val list = viewModel.outputs.notificationPreferences.observeAsState(emptyList())
+    val list = viewModel.outputs.notificationPreferences.collectAsState(emptyList())
 
     NotificationOnboardingScreen(
         list = list.value,
