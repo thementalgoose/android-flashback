@@ -15,8 +15,6 @@ import tmg.utilities.extensions.observe
 @AndroidEntryPoint
 internal class PrivacyPolicyActivity: BaseActivity() {
 
-    private val viewModel: PrivacyPolicyViewModel by viewModels()
-
     @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,20 +22,12 @@ internal class PrivacyPolicyActivity: BaseActivity() {
             AppTheme {
                 Scaffold(content = {
                     PrivacyPolicyScreenVM(
-                        actionUpClicked = viewModel.inputs::clickBack
+                        actionUpClicked = {
+                            finish()
+                        }
                     )
                 })
             }
-        }
-
-        observe(viewModel.outputs.goBack) {
-            finish()
-        }
-    }
-
-    companion object {
-        fun intent(context: Context): Intent {
-            return Intent(context, PrivacyPolicyActivity::class.java)
         }
     }
 }
