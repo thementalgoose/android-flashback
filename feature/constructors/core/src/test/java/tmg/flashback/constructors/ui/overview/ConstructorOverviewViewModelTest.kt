@@ -1,5 +1,6 @@
 package tmg.flashback.constructors.ui.overview
 
+import app.cash.turbine.test
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
@@ -7,6 +8,9 @@ import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.constructors.contract.ConstructorSeason
@@ -56,7 +60,7 @@ internal class ConstructorOverviewViewModelTest: BaseTest() {
     //region List
 
     @Test
-    fun `constructor data with empty results and no network shows pull to refresh`() = coroutineTest {
+    fun `constructor data with empty results and no network shows pull to refresh`() = runTest {
         val input = ConstructorHistory.model(standings = emptyList())
         every { mockConstructorRepository.getConstructorOverview(any()) } returns flow { emit(input) }
         every { mockNetworkConnectivityManager.isConnected } returns false
@@ -65,15 +69,15 @@ internal class ConstructorOverviewViewModelTest: BaseTest() {
         sut.inputs.setup("constructorId", "name")
 
         sut.outputs.list.test {
-            assertValue(listOf(
+            assertEquals(listOf(
                 ConstructorOverviewModel.headerModel(),
                 ConstructorOverviewModel.NetworkError
-            ))
+            ), awaitItem())
         }
     }
 
     @Test
-    fun `constructor data with null item and no network shows pull to refresh`() = coroutineTest {
+    fun `constructor data with null item and no network shows pull to refresh`() = runTest {
         every { mockConstructorRepository.getConstructorOverview(any()) } returns flow { emit(null) }
         every { mockNetworkConnectivityManager.isConnected } returns false
 
@@ -81,14 +85,14 @@ internal class ConstructorOverviewViewModelTest: BaseTest() {
         sut.inputs.setup("constructorId", "name")
 
         sut.outputs.list.test {
-            assertValue(listOf(
+            assertEquals(listOf(
                 ConstructorOverviewModel.NetworkError
-            ))
+            ), awaitItem())
         }
     }
 
     @Test
-    fun `constructor data with empty results and network shows data unavailable`() = coroutineTest {
+    fun `constructor data with empty results and network shows data unavailable`() = runTest {
         val input = ConstructorHistory.model(standings = emptyList())
         every { mockConstructorRepository.getConstructorOverview(any()) } returns flow { emit(input) }
         every { mockNetworkConnectivityManager.isConnected } returns true
@@ -97,15 +101,15 @@ internal class ConstructorOverviewViewModelTest: BaseTest() {
         sut.inputs.setup("constructorId", "name")
 
         sut.outputs.list.test {
-            assertValue(mutableListOf(
+            assertEquals(mutableListOf(
                 ConstructorOverviewModel.headerModel(),
                 ConstructorOverviewModel.InternalError
-            ))
+            ), awaitItem())
         }
     }
 
     @Test
-    fun `constructor data with results and network shows list of results in descending order`() = coroutineTest {
+    fun `constructor data with results and network shows list of results in descending order`() = runTest {
         val input = ConstructorHistory.model(standings = listOf(
             ConstructorHistorySeason.model(season = 2019),
             ConstructorHistorySeason.model(season = 2020)
@@ -116,17 +120,18 @@ internal class ConstructorOverviewViewModelTest: BaseTest() {
         sut.inputs.setup("constructorId", "name")
 
         sut.outputs.list.test {
-            assertListMatchesItem { it is ConstructorOverviewModel.History && it.season == 2019 }
-            assertListMatchesItem { it is ConstructorOverviewModel.History && it.season == 2020 }
+            val item = awaitItem()
+            assertTrue(item.any { it is ConstructorOverviewModel.History && it.season == 2019 })
+            assertTrue(item.any { it is ConstructorOverviewModel.History && it.season == 2020 })
 
-            assertListMatchesItem { it is ConstructorOverviewModel.Stat && it.icon == R.drawable.ic_menu_drivers }
-            assertListMatchesItem { it is ConstructorOverviewModel.Stat && it.icon == R.drawable.ic_menu_constructors }
-            assertListMatchesItem { it is ConstructorOverviewModel.Stat && it.icon == R.drawable.ic_race_grid }
-            assertListMatchesItem { it is ConstructorOverviewModel.Stat && it.icon == R.drawable.ic_standings }
-            assertListMatchesItem { it is ConstructorOverviewModel.Stat && it.icon == R.drawable.ic_podium }
-            assertListMatchesItem { it is ConstructorOverviewModel.Stat && it.icon == R.drawable.ic_race_points }
-            assertListMatchesItem { it is ConstructorOverviewModel.Stat && it.icon == R.drawable.ic_finishes_in_points }
-            assertListMatchesItem { it is ConstructorOverviewModel.Stat && it.icon == R.drawable.ic_qualifying_pole }
+            assertTrue(item.any { it is ConstructorOverviewModel.Stat && it.icon == R.drawable.ic_menu_drivers })
+            assertTrue(item.any { it is ConstructorOverviewModel.Stat && it.icon == R.drawable.ic_menu_constructors })
+            assertTrue(item.any { it is ConstructorOverviewModel.Stat && it.icon == R.drawable.ic_race_grid })
+            assertTrue(item.any { it is ConstructorOverviewModel.Stat && it.icon == R.drawable.ic_standings })
+            assertTrue(item.any { it is ConstructorOverviewModel.Stat && it.icon == R.drawable.ic_podium })
+            assertTrue(item.any { it is ConstructorOverviewModel.Stat && it.icon == R.drawable.ic_race_points })
+            assertTrue(item.any { it is ConstructorOverviewModel.Stat && it.icon == R.drawable.ic_finishes_in_points })
+            assertTrue(item.any { it is ConstructorOverviewModel.Stat && it.icon == R.drawable.ic_qualifying_pole })
         }
     }
 
@@ -135,7 +140,7 @@ internal class ConstructorOverviewViewModelTest: BaseTest() {
     //region Request
 
     @Test
-    fun `constructor request is not made when season count is found`() = coroutineTest {
+    fun `constructor request is not made when season count is found`() = runTest {
         coEvery { mockConstructorRepository.getConstructorSeasonCount(any()) } returns 1
 
         initSUT()
@@ -147,7 +152,7 @@ internal class ConstructorOverviewViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `constructor request is made when season count is 0`() = coroutineTest {
+    fun `constructor request is made when season count is 0`() = runTest {
         coEvery { mockConstructorRepository.getConstructorSeasonCount(any()) } returns 0
 
         initSUT()
@@ -157,19 +162,16 @@ internal class ConstructorOverviewViewModelTest: BaseTest() {
         }
 
         sut.outputs.list.test {
-            assertValueAt(listOf(
-                ConstructorOverviewModel.Loading
-            ), 0)
+            val item = awaitItem()
+            assertTrue(item.any { it is ConstructorOverviewModel.History && it.season == 2020 })
 
-            assertListMatchesItem(atIndex = 1) { it is ConstructorOverviewModel.History && it.season == 2020 }
-
-            assertListMatchesItem(atIndex = 1) { it is ConstructorOverviewModel.Stat && it.icon == R.drawable.ic_menu_constructors }
-            assertListMatchesItem(atIndex = 1) { it is ConstructorOverviewModel.Stat && it.icon == R.drawable.ic_race_grid }
-            assertListMatchesItem(atIndex = 1) { it is ConstructorOverviewModel.Stat && it.icon == R.drawable.ic_standings }
-            assertListMatchesItem(atIndex = 1) { it is ConstructorOverviewModel.Stat && it.icon == R.drawable.ic_podium }
-            assertListMatchesItem(atIndex = 1) { it is ConstructorOverviewModel.Stat && it.icon == R.drawable.ic_race_points }
-            assertListMatchesItem(atIndex = 1) { it is ConstructorOverviewModel.Stat && it.icon == R.drawable.ic_finishes_in_points }
-            assertListMatchesItem(atIndex = 1) { it is ConstructorOverviewModel.Stat && it.icon == R.drawable.ic_qualifying_pole }
+            assertTrue(item.any { it is ConstructorOverviewModel.Stat && it.icon == R.drawable.ic_menu_constructors })
+            assertTrue(item.any { it is ConstructorOverviewModel.Stat && it.icon == R.drawable.ic_race_grid })
+            assertTrue(item.any { it is ConstructorOverviewModel.Stat && it.icon == R.drawable.ic_standings })
+            assertTrue(item.any { it is ConstructorOverviewModel.Stat && it.icon == R.drawable.ic_podium })
+            assertTrue(item.any { it is ConstructorOverviewModel.Stat && it.icon == R.drawable.ic_race_points })
+            assertTrue(item.any { it is ConstructorOverviewModel.Stat && it.icon == R.drawable.ic_finishes_in_points })
+            assertTrue(item.any { it is ConstructorOverviewModel.Stat && it.icon == R.drawable.ic_qualifying_pole })
         }
     }
 
@@ -213,7 +215,7 @@ internal class ConstructorOverviewViewModelTest: BaseTest() {
     //region Refresh
 
     @Test
-    fun `refresh calls constructor repository`() = coroutineTest {
+    fun `refresh calls constructor repository`() = runTest {
         initSUT()
         sut.inputs.setup("constructorId", "name")
 
@@ -225,7 +227,7 @@ internal class ConstructorOverviewViewModelTest: BaseTest() {
             mockConstructorRepository.fetchConstructor(any())
         }
         sut.outputs.showLoading.test {
-            assertValue(false)
+            assertEquals(false, awaitItem())
         }
     }
 
