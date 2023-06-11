@@ -1,9 +1,6 @@
 package tmg.flashback.weekend.ui.qualifying
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -15,14 +12,14 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import tmg.flashback.domain.repo.RaceRepository
 import tmg.flashback.drivers.contract.DriverSeason
 import tmg.flashback.drivers.contract.with
 import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
 import tmg.flashback.formula1.model.Driver
-import tmg.flashback.formula1.model.Race
 import tmg.flashback.formula1.model.QualifyingType
+import tmg.flashback.formula1.model.Race
 import tmg.flashback.navigation.Screen
-import tmg.flashback.domain.repo.RaceRepository
 import javax.inject.Inject
 
 interface QualifyingViewModelInputs {

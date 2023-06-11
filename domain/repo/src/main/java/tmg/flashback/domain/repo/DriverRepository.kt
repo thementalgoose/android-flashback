@@ -4,8 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import tmg.flashback.crash_reporting.manager.CrashManager
 import tmg.flashback.device.managers.NetworkConnectivityManager
-import tmg.flashback.formula1.model.DriverHistory
-import tmg.flashback.flashbackapi.api.api.FlashbackApi
+import tmg.flashback.domain.persistence.FlashbackDatabase
 import tmg.flashback.domain.repo.base.BaseRepository
 import tmg.flashback.domain.repo.mappers.app.DriverDataMapper
 import tmg.flashback.domain.repo.mappers.app.DriverMapper
@@ -14,7 +13,8 @@ import tmg.flashback.domain.repo.mappers.network.NetworkConstructorDataMapper
 import tmg.flashback.domain.repo.mappers.network.NetworkDriverDataMapper
 import tmg.flashback.domain.repo.mappers.network.NetworkDriverMapper
 import tmg.flashback.domain.repo.mappers.network.NetworkRaceDataMapper
-import tmg.flashback.domain.persistence.FlashbackDatabase
+import tmg.flashback.flashbackapi.api.api.FlashbackApi
+import tmg.flashback.formula1.model.DriverHistory
 import javax.inject.Inject
 import javax.inject.Singleton
 

@@ -13,7 +13,6 @@ import tmg.flashback.ui.managers.ToastManager
 import tmg.flashback.ui.model.Theme
 import tmg.flashback.ui.repository.ThemeRepository
 import tmg.testutils.BaseTest
-import tmg.testutils.livedata.test
 
 internal class ThemeViewModelTest: BaseTest() {
 

@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.device.managers.NetworkConnectivityManager
+import tmg.flashback.domain.repo.DriverRepository
 import tmg.flashback.drivers.R
 import tmg.flashback.drivers.contract.DriverNavigationComponent
 import tmg.flashback.drivers.contract.DriverSeason
@@ -24,11 +25,8 @@ import tmg.flashback.formula1.model.DriverHistorySeason
 import tmg.flashback.formula1.model.model
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
-import tmg.flashback.domain.repo.DriverRepository
 import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.testutils.BaseTest
-import tmg.testutils.livedata.assertListMatchesItem
-import tmg.testutils.livedata.test
 
 internal class DriverOverviewViewModelTest: BaseTest() {
 

@@ -4,10 +4,10 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.flashback.flashbackapi.api.models.overview.OverviewRace
-import tmg.flashback.flashbackapi.api.models.overview.model
 import tmg.flashback.domain.persistence.models.overview.Overview
 import tmg.flashback.domain.persistence.models.overview.model
+import tmg.flashback.flashbackapi.api.models.overview.OverviewRace
+import tmg.flashback.flashbackapi.api.models.overview.model
 
 internal class NetworkOverviewMapperTest {
 

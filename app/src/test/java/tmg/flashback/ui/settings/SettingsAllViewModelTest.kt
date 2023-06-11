@@ -10,15 +10,14 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import tmg.flashback.ads.ads.repository.AdsRepository
 import tmg.flashback.device.managers.BuildConfigManager
-import tmg.flashback.rss.repo.RssRepository
 import tmg.flashback.navigation.NavigationDestination
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.flashback.rss.contract.RSSConfigure
+import tmg.flashback.rss.repo.RssRepository
 import tmg.flashback.ui.repository.ThemeRepository
 import tmg.flashback.ui.settings.appearance.AppearanceNavigationComponent
 import tmg.testutils.BaseTest
-import tmg.testutils.livedata.test
 
 internal class SettingsAllViewModelTest: BaseTest() {
 

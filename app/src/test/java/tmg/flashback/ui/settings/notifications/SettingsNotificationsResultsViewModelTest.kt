@@ -15,8 +15,6 @@ import tmg.flashback.ui.managers.PermissionManager
 import tmg.flashback.ui.repository.PermissionRepository
 import tmg.flashback.ui.settings.Settings
 import tmg.testutils.BaseTest
-import tmg.testutils.livedata.test
-import tmg.testutils.livedata.testObserve
 
 internal class SettingsNotificationsResultsViewModelTest: BaseTest() {
 

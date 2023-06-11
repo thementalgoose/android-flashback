@@ -9,20 +9,18 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
+import tmg.flashback.domain.repo.RaceRepository
 import tmg.flashback.drivers.contract.DriverSeason
 import tmg.flashback.drivers.contract.with
 import tmg.flashback.formula1.model.LapTime
-import tmg.flashback.formula1.model.Race
 import tmg.flashback.formula1.model.QualifyingResult
 import tmg.flashback.formula1.model.QualifyingRound
 import tmg.flashback.formula1.model.QualifyingType
+import tmg.flashback.formula1.model.Race
 import tmg.flashback.formula1.model.model
-import tmg.flashback.domain.repo.RaceRepository
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.testutils.BaseTest
-import tmg.testutils.livedata.test
-import tmg.testutils.livedata.testObserve
 import java.time.Year
 
 internal class QualifyingViewModelTest: BaseTest() {

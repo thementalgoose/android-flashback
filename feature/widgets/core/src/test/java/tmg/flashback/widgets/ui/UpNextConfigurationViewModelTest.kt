@@ -4,7 +4,6 @@ import app.cash.turbine.test
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
@@ -12,7 +11,6 @@ import tmg.flashback.widgets.repository.WidgetRepository
 import tmg.flashback.widgets.upnext.configure.UpNextConfigurationViewModel
 import tmg.flashback.widgets.usecases.UpdateWidgetsUseCaseImpl
 import tmg.testutils.BaseTest
-import tmg.testutils.livedata.test
 
 internal class UpNextConfigurationViewModelTest: BaseTest() {
 

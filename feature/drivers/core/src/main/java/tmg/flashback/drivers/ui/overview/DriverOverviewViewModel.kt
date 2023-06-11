@@ -2,7 +2,6 @@ package tmg.flashback.drivers.ui.overview
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.compose.runtime.MutableState
 import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -10,14 +9,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import tmg.flashback.device.managers.NetworkConnectivityManager
-import tmg.flashback.formula1.extensions.pointsDisplay
-import tmg.flashback.formula1.model.DriverHistory
 import tmg.flashback.domain.repo.DriverRepository
 import tmg.flashback.drivers.R
 import tmg.flashback.drivers.contract.DriverNavigationComponent
 import tmg.flashback.drivers.contract.DriverSeason
 import tmg.flashback.drivers.contract.model.DriverStatHistoryType
 import tmg.flashback.drivers.contract.with
+import tmg.flashback.formula1.extensions.pointsDisplay
+import tmg.flashback.formula1.model.DriverHistory
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.flashback.ui.components.navigation.PipeType

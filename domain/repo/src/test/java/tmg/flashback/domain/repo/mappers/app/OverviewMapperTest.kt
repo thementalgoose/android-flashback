@@ -8,12 +8,12 @@ import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.format.DateTimeParseException
-import tmg.flashback.formula1.model.OverviewRace
-import tmg.flashback.formula1.model.Schedule
-import tmg.flashback.formula1.model.model
 import tmg.flashback.domain.persistence.models.overview.Overview
 import tmg.flashback.domain.persistence.models.overview.OverviewWithCircuit
 import tmg.flashback.domain.persistence.models.overview.model
+import tmg.flashback.formula1.model.OverviewRace
+import tmg.flashback.formula1.model.Schedule
+import tmg.flashback.formula1.model.model
 
 internal class OverviewMapperTest {
 

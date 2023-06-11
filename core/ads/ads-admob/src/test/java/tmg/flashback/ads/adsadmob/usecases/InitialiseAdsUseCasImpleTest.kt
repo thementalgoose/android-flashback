@@ -7,7 +7,6 @@ import io.mockk.verify
 import org.junit.jupiter.api.Test
 import tmg.flashback.ads.ads.repository.AdsRepository
 import tmg.flashback.ads.adsadmob.manager.AdsManager
-import tmg.flashback.ads.adsadmob.usecases.InitialiseAdsUseCaseImpl
 
 internal class InitialiseAdsUseCasImpleTest {
 

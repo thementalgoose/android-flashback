@@ -7,7 +7,6 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -20,7 +19,6 @@ import tmg.flashback.style.AppTheme
 import tmg.flashback.ui.HomeActivity
 import tmg.flashback.ui.base.BaseActivity
 import tmg.flashback.ui.sync.SyncState.LOADING
-import tmg.utilities.extensions.observeEvent
 import tmg.utilities.extensions.setStatusBarColor
 import javax.inject.Inject
 

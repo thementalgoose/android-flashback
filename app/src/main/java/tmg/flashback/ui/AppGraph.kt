@@ -8,16 +8,11 @@ import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavBackStackEntry
-import androidx.navigation.NavController
-import androidx.navigation.NavHost
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
 import androidx.window.layout.WindowLayoutInfo
@@ -69,7 +64,6 @@ import tmg.flashback.ui.settings.about.SettingsAboutScreenVM
 import tmg.flashback.ui.settings.about.SettingsPrivacyScreenVM
 import tmg.flashback.ui.settings.ads.SettingsAdsScreenVM
 import tmg.flashback.ui.settings.data.SettingsLayoutScreenVM
-import tmg.flashback.ui.settings.data.SettingsWeatherScreen
 import tmg.flashback.ui.settings.data.SettingsWeatherScreenVM
 import tmg.flashback.ui.settings.notifications.SettingsNotificationsResultsScreenVM
 import tmg.flashback.ui.settings.notifications.SettingsNotificationsUpcomingScreenVM

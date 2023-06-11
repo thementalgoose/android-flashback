@@ -8,11 +8,10 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
+import tmg.flashback.domain.repo.EventsRepository
 import tmg.flashback.formula1.model.Event
 import tmg.flashback.formula1.model.model
-import tmg.flashback.domain.repo.EventsRepository
 import tmg.testutils.BaseTest
-import tmg.testutils.livedata.test
 
 internal class EventsViewModelTest: BaseTest() {
 

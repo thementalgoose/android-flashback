@@ -12,7 +12,6 @@ import tmg.flashback.configuration.usecases.ResetConfigUseCase
 import tmg.flashback.maintenance.repository.MaintenanceRepository
 import tmg.flashback.maintenance.repository.model.ForceUpgrade
 import tmg.testutils.BaseTest
-import tmg.testutils.livedata.test
 
 internal class ForceUpgradeViewModelTest: BaseTest() {
 

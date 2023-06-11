@@ -4,9 +4,9 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import tmg.flashback.results.ResultsNavigationComponentImpl
 import tmg.flashback.results.contract.ResultsNavigationComponent
 import tmg.flashback.results.contract.repository.NotificationsRepository
-import tmg.flashback.results.ResultsNavigationComponentImpl
 import tmg.flashback.results.repository.NotificationsRepositoryImpl
 
 @Module

@@ -8,7 +8,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -19,12 +18,10 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.analytics.constants.AnalyticsConstants.analyticsDriverId
-import tmg.flashback.formula1.model.DriverEntry
-import tmg.flashback.providers.DriverConstructorProvider
-import tmg.flashback.ui.components.timeline.Timeline
-import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.drivers.R
 import tmg.flashback.drivers.contract.model.DriverStatHistoryType
+import tmg.flashback.formula1.model.DriverEntry
+import tmg.flashback.providers.DriverConstructorProvider
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
@@ -33,10 +30,12 @@ import tmg.flashback.style.text.TextBody1
 import tmg.flashback.ui.components.analytics.ScreenView
 import tmg.flashback.ui.components.drivers.DriverImage
 import tmg.flashback.ui.components.errors.NetworkError
+import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.messages.Message
 import tmg.flashback.ui.components.navigation.PipeType
 import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
+import tmg.flashback.ui.components.timeline.Timeline
 import tmg.utilities.extensions.format
 
 private val headerImageSize: Dp = 120.dp

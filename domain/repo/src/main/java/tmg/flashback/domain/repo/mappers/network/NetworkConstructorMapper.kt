@@ -1,9 +1,9 @@
 package tmg.flashback.domain.repo.mappers.network
 
-import tmg.flashback.flashbackapi.api.models.constructors.ConstructorHistoryStanding
-import tmg.flashback.flashbackapi.api.models.constructors.ConstructorHistoryStandingDriver
 import tmg.flashback.domain.persistence.models.constructors.ConstructorSeason
 import tmg.flashback.domain.persistence.models.constructors.ConstructorSeasonDriver
+import tmg.flashback.flashbackapi.api.models.constructors.ConstructorHistoryStanding
+import tmg.flashback.flashbackapi.api.models.constructors.ConstructorHistoryStandingDriver
 import javax.inject.Inject
 
 class NetworkConstructorMapper @Inject constructor() {

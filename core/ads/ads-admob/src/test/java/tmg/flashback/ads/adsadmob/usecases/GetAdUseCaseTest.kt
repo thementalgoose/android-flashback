@@ -14,7 +14,6 @@ import org.junit.jupiter.api.Test
 import tmg.flashback.ads.ads.repository.AdsRepository
 import tmg.flashback.ads.adsadmob.manager.AdsManager
 import tmg.flashback.ads.adsadmob.repository.AdsCacheRepository
-import tmg.flashback.ads.adsadmob.usecases.GetAdUseCase
 import tmg.testutils.BaseTest
 
 internal class GetAdUseCaseTest: BaseTest() {

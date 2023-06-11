@@ -18,8 +18,6 @@ import tmg.flashback.formula1.model.model
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.testutils.BaseTest
-import tmg.testutils.livedata.test
-import tmg.testutils.livedata.testObserve
 import java.time.Year
 
 internal class SprintQualifyingViewModelTest: BaseTest() {

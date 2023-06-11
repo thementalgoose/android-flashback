@@ -7,8 +7,8 @@ import dagger.hilt.components.SingletonComponent
 import tmg.flashback.appshortcuts.provider.HomeClassProvider
 import tmg.flashback.di.navigation.AppHomeClassProvider
 import tmg.flashback.managers.AppApplicationNavigationComponent
-import tmg.flashback.notifications.navigation.NotificationNavigationProvider
 import tmg.flashback.navigation.ApplicationNavigationComponent
+import tmg.flashback.notifications.navigation.NotificationNavigationProvider
 
 @Module
 @InstallIn(SingletonComponent::class)

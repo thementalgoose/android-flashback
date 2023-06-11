@@ -13,20 +13,18 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import tmg.flashback.constructors.R
 import tmg.flashback.constructors.contract.ConstructorSeason
 import tmg.flashback.constructors.contract.with
 import tmg.flashback.device.managers.NetworkConnectivityManager
+import tmg.flashback.domain.repo.ConstructorRepository
 import tmg.flashback.formula1.model.ConstructorHistory
 import tmg.flashback.formula1.model.ConstructorHistorySeason
 import tmg.flashback.formula1.model.model
-import tmg.flashback.domain.repo.ConstructorRepository
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
-import tmg.flashback.constructors.R
 import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.testutils.BaseTest
-import tmg.testutils.livedata.assertListMatchesItem
-import tmg.testutils.livedata.test
 
 
 internal class ConstructorOverviewViewModelTest: BaseTest() {

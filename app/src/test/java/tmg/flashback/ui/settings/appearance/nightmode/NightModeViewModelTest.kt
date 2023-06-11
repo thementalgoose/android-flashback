@@ -12,7 +12,6 @@ import tmg.flashback.ui.model.NightMode
 import tmg.flashback.ui.repository.ThemeRepository
 import tmg.flashback.ui.usecases.ChangeNightModeUseCase
 import tmg.testutils.BaseTest
-import tmg.testutils.livedata.test
 
 internal class NightModeViewModelTest: BaseTest() {
 

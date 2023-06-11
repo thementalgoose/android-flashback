@@ -9,7 +9,6 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -23,18 +22,18 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.analytics.constants.AnalyticsConstants.analyticsDriverId
+import tmg.flashback.drivers.R
+import tmg.flashback.drivers.contract.model.DriverStatHistoryType
 import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.Race
 import tmg.flashback.formula1.model.RaceInfo
 import tmg.flashback.providers.RaceProvider
-import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.*
-import tmg.flashback.drivers.R
-import tmg.flashback.drivers.contract.model.DriverStatHistoryType
 import tmg.flashback.ui.components.analytics.ScreenView
+import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.ui.components.header.Header
 
 @Composable

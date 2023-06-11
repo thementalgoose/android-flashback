@@ -1,8 +1,8 @@
 package tmg.flashback.domain.repo.mappers.network
 
+import tmg.flashback.domain.persistence.models.overview.Schedule
 import tmg.flashback.flashbackapi.api.models.overview.OverviewRace
 import tmg.flashback.flashbackapi.api.models.races.Race
-import tmg.flashback.domain.persistence.models.overview.Schedule
 import javax.inject.Inject
 
 class NetworkScheduleMapper @Inject constructor() {

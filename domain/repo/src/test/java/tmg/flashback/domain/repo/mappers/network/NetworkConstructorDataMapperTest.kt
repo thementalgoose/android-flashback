@@ -4,9 +4,9 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.NetworkConstructor
-import tmg.flashback.flashbackapi.api.models.constructors.model
 import tmg.flashback.domain.persistence.models.constructors.Constructor
 import tmg.flashback.domain.persistence.models.constructors.model
+import tmg.flashback.flashbackapi.api.models.constructors.model
 
 internal class NetworkConstructorDataMapperTest {
 

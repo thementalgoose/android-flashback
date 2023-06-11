@@ -9,8 +9,8 @@ import android.widget.ImageView
 import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
-import tmg.flashback.ads.adsadmob.R
 import tmg.flashback.ads.ads.repository.AdsRepository
+import tmg.flashback.ads.adsadmob.R
 import tmg.flashback.ads.adsadmob.databinding.AdmobNativeBannerBinding
 import tmg.flashback.ads.adsadmob.usecases.GetAdUseCase
 import tmg.utilities.extensions.dpToPx

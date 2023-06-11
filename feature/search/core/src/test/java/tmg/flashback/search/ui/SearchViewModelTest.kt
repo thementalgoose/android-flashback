@@ -19,6 +19,10 @@ import tmg.flashback.circuits.contract.Circuit
 import tmg.flashback.circuits.contract.with
 import tmg.flashback.constructors.contract.Constructor
 import tmg.flashback.constructors.contract.with
+import tmg.flashback.domain.repo.CircuitRepository
+import tmg.flashback.domain.repo.ConstructorRepository
+import tmg.flashback.domain.repo.DriverRepository
+import tmg.flashback.domain.repo.OverviewRepository
 import tmg.flashback.drivers.contract.Driver
 import tmg.flashback.drivers.contract.with
 import tmg.flashback.formula1.model.Circuit
@@ -26,18 +30,12 @@ import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.model.model
-import tmg.flashback.navigation.Screen
-import tmg.flashback.domain.repo.CircuitRepository
-import tmg.flashback.domain.repo.ConstructorRepository
-import tmg.flashback.domain.repo.DriverRepository
-import tmg.flashback.domain.repo.OverviewRepository
 import tmg.flashback.navigation.Navigator
+import tmg.flashback.navigation.Screen
 import tmg.flashback.weekend.contract.Weekend
 import tmg.flashback.weekend.contract.model.ScreenWeekendData
 import tmg.flashback.weekend.contract.with
 import tmg.testutils.BaseTest
-import tmg.testutils.livedata.assertListDoesNotMatchItem
-import tmg.testutils.livedata.test
 
 internal class SearchViewModelTest: BaseTest() {
 

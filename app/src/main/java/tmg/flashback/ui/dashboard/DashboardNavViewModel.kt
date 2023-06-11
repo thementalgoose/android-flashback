@@ -2,11 +2,7 @@ package tmg.flashback.ui.dashboard
 
 import android.os.Bundle
 import androidx.compose.ui.graphics.Color
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
@@ -16,7 +12,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -27,17 +22,17 @@ import tmg.flashback.debug.model.DebugMenuItem
 import tmg.flashback.formula1.constants.Formula1
 import tmg.flashback.navigation.ApplicationNavigationComponent
 import tmg.flashback.navigation.Navigator
-import tmg.flashback.rss.repo.RssRepository
+import tmg.flashback.navigation.Screen
 import tmg.flashback.results.Calendar
 import tmg.flashback.results.Constructors
 import tmg.flashback.results.Drivers
 import tmg.flashback.results.usecases.DefaultSeasonUseCase
 import tmg.flashback.results.with
+import tmg.flashback.rss.contract.RSS
+import tmg.flashback.rss.repo.RssRepository
+import tmg.flashback.search.contract.Search
 import tmg.flashback.ui.components.navigation.NavigationTimelineItem
 import tmg.flashback.ui.components.navigation.PipeType
-import tmg.flashback.navigation.Screen
-import tmg.flashback.rss.contract.RSS
-import tmg.flashback.search.contract.Search
 import tmg.flashback.ui.settings.All
 import tmg.flashback.usecases.DashboardSyncUseCase
 import tmg.flashback.usecases.GetSeasonsUseCase

@@ -15,8 +15,6 @@ import tmg.flashback.ui.managers.ToastManager
 import tmg.flashback.ui.settings.Settings
 import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.testutils.BaseTest
-import tmg.testutils.livedata.test
-import tmg.testutils.livedata.testObserve
 
 internal class SettingsAboutViewModelTest: BaseTest() {
 
