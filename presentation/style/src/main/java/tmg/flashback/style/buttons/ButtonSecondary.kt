@@ -8,10 +8,8 @@ import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,9 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
-import tmg.flashback.style.FlashbackTheme
 import tmg.flashback.style.annotations.PreviewTheme
-import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 
 private val colour: Color

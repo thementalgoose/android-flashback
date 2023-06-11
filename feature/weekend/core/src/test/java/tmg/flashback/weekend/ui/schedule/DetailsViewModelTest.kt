@@ -15,21 +15,20 @@ import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
 import tmg.flashback.circuits.contract.Circuit
 import tmg.flashback.circuits.contract.with
+import tmg.flashback.domain.repo.RaceRepository
 import tmg.flashback.formula1.model.Race
 import tmg.flashback.formula1.model.Schedule
 import tmg.flashback.formula1.model.model
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.flashback.results.contract.repository.NotificationsRepository
-import tmg.flashback.domain.repo.RaceRepository
-import tmg.flashback.weekend.R
 import tmg.flashback.web.usecases.OpenWebpageUseCase
+import tmg.flashback.weekend.R
 import tmg.flashback.weekend.repository.WeatherRepository
 import tmg.flashback.weekend.ui.details.DetailsModel
 import tmg.flashback.weekend.ui.details.DetailsModel.Links
 import tmg.flashback.weekend.ui.details.DetailsViewModel
 import tmg.testutils.BaseTest
-import tmg.testutils.livedata.test
 
 internal class DetailsViewModelTest: BaseTest() {
 

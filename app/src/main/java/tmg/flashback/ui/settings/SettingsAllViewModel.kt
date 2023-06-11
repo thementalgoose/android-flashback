@@ -1,7 +1,5 @@
 package tmg.flashback.ui.settings
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -9,10 +7,10 @@ import kotlinx.coroutines.flow.StateFlow
 import tmg.flashback.BuildConfig
 import tmg.flashback.ads.ads.repository.AdsRepository
 import tmg.flashback.device.managers.BuildConfigManager
-import tmg.flashback.rss.repo.RssRepository
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.flashback.rss.contract.RSSConfigure
+import tmg.flashback.rss.repo.RssRepository
 import tmg.flashback.ui.repository.ThemeRepository
 import tmg.flashback.ui.settings.appearance.AppearanceNavigationComponent
 import javax.inject.Inject

@@ -8,7 +8,6 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -17,18 +16,15 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.constructors.contract.Constructor
 import tmg.flashback.constructors.contract.with
+import tmg.flashback.domain.repo.SeasonRepository
 import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.SeasonConstructorStandingSeason
 import tmg.flashback.formula1.model.SeasonConstructorStandings
 import tmg.flashback.formula1.model.model
-import tmg.flashback.domain.repo.SeasonRepository
-import tmg.flashback.results.usecases.FetchSeasonUseCase
-import tmg.flashback.results.with
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
+import tmg.flashback.results.usecases.FetchSeasonUseCase
 import tmg.testutils.BaseTest
-import tmg.testutils.livedata.test
-import tmg.testutils.livedata.testObserve
 
 internal class ConstructorsStandingViewModelTest: BaseTest() {
 

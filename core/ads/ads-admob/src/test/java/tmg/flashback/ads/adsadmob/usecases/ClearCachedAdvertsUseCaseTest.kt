@@ -7,7 +7,6 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.ads.adsadmob.repository.AdsCacheRepository
-import tmg.flashback.ads.adsadmob.usecases.ClearCachedAdvertsUseCase
 
 internal class ClearCachedAdvertsUseCaseTest {
 

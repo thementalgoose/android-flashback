@@ -10,8 +10,6 @@ import org.junit.jupiter.api.Test
 import tmg.flashback.ui.settings.Settings
 import tmg.flashback.weekend.repository.WeatherRepository
 import tmg.testutils.BaseTest
-import tmg.testutils.livedata.test
-import tmg.testutils.livedata.testObserve
 
 internal class SettingsWeatherViewModelTest: BaseTest() {
 

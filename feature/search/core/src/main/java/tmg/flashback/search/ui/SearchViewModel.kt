@@ -1,9 +1,6 @@
 package tmg.flashback.search.ui
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -25,16 +22,16 @@ import tmg.flashback.circuits.contract.Circuit
 import tmg.flashback.circuits.contract.with
 import tmg.flashback.constructors.contract.Constructor
 import tmg.flashback.constructors.contract.with
+import tmg.flashback.domain.repo.CircuitRepository
+import tmg.flashback.domain.repo.ConstructorRepository
+import tmg.flashback.domain.repo.DriverRepository
+import tmg.flashback.domain.repo.OverviewRepository
 import tmg.flashback.drivers.contract.Driver
 import tmg.flashback.drivers.contract.with
 import tmg.flashback.formula1.model.Circuit
 import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.model.OverviewRace
-import tmg.flashback.domain.repo.CircuitRepository
-import tmg.flashback.domain.repo.ConstructorRepository
-import tmg.flashback.domain.repo.DriverRepository
-import tmg.flashback.domain.repo.OverviewRepository
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.flashback.weekend.contract.Weekend

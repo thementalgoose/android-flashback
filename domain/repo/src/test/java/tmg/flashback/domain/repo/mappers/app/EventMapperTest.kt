@@ -4,9 +4,9 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.flashback.formula1.model.model
 import tmg.flashback.domain.persistence.models.overview.Event
 import tmg.flashback.domain.persistence.models.overview.model
+import tmg.flashback.formula1.model.model
 
 internal class EventMapperTest {
 

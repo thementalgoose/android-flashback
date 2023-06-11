@@ -1,6 +1,6 @@
 package tmg.flashback.privacypolicy.contract
 
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import tmg.flashback.navigation.Screen
 

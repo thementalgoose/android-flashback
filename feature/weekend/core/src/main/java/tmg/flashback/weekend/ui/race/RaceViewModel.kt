@@ -1,11 +1,7 @@
 package tmg.flashback.weekend.ui.race
 
 import androidx.annotation.StringRes
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asFlow
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -32,7 +28,6 @@ import tmg.flashback.formula1.model.RaceResult
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.flashback.weekend.R
-import tmg.utilities.extensions.combinePair
 import javax.inject.Inject
 
 interface RaceViewModelInputs {

@@ -12,7 +12,6 @@ import tmg.flashback.results.repository.NotificationsRepositoryImpl
 import tmg.flashback.results.repository.models.NotificationReminder
 import tmg.flashback.results.usecases.ScheduleNotificationsUseCase
 import tmg.testutils.BaseTest
-import tmg.testutils.livedata.test
 
 
 internal class UpNextReminderViewModelTest: BaseTest() {

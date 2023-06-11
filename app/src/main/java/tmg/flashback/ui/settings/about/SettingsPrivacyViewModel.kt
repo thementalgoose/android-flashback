@@ -1,7 +1,5 @@
 package tmg.flashback.ui.settings.about
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -10,7 +8,7 @@ import tmg.flashback.R
 import tmg.flashback.analytics.manager.AnalyticsManager
 import tmg.flashback.crash_reporting.repository.CrashRepository
 import tmg.flashback.navigation.Navigator
-import tmg.flashback.privacypolicy.contract.*
+import tmg.flashback.privacypolicy.contract.PrivacyPolicy
 import tmg.flashback.ui.managers.ToastManager
 import tmg.flashback.ui.settings.Setting
 import tmg.flashback.ui.settings.Settings

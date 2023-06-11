@@ -1,8 +1,6 @@
 package tmg.flashback.drivers.ui.stathistory
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -14,9 +12,9 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import tmg.flashback.domain.repo.DriverRepository
 import tmg.flashback.drivers.contract.model.DriverStatHistoryType
 import tmg.flashback.formula1.model.DriverHistory
-import tmg.flashback.domain.repo.DriverRepository
 import tmg.utilities.extensions.combinePair
 import javax.inject.Inject
 

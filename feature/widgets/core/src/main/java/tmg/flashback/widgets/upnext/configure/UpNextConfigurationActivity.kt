@@ -9,7 +9,6 @@ import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import tmg.flashback.style.AppTheme
 import tmg.flashback.ui.base.BaseActivity
-import tmg.utilities.extensions.observe
 
 @AndroidEntryPoint
 class UpNextConfigurationActivity: BaseActivity() {

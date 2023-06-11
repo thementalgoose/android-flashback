@@ -1,7 +1,7 @@
 package tmg.flashback.domain.repo.mappers.app
 
-import tmg.flashback.formula1.model.Season
 import tmg.flashback.domain.persistence.models.overview.Event
+import tmg.flashback.formula1.model.Season
 import javax.inject.Inject
 
 class SeasonMapper @Inject constructor(

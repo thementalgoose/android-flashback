@@ -3,11 +3,11 @@ package tmg.flashback.domain.repo.mappers.network
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.flashback.flashbackapi.api.models.circuits.CircuitResult
-import tmg.flashback.flashbackapi.api.models.circuits.model
 import tmg.flashback.domain.persistence.models.circuit.CircuitRound
 import tmg.flashback.domain.persistence.models.circuit.CircuitRoundResult
 import tmg.flashback.domain.persistence.models.circuit.model
+import tmg.flashback.flashbackapi.api.models.circuits.CircuitResult
+import tmg.flashback.flashbackapi.api.models.circuits.model
 
 internal class NetworkCircuitMapperTest {
 

@@ -8,13 +8,13 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import tmg.flashback.domain.repo.SeasonRepository
 import tmg.flashback.drivers.contract.Driver
 import tmg.flashback.drivers.contract.with
 import tmg.flashback.formula1.model.Driver
@@ -23,11 +23,8 @@ import tmg.flashback.formula1.model.SeasonDriverStandings
 import tmg.flashback.formula1.model.model
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
-import tmg.flashback.domain.repo.SeasonRepository
 import tmg.flashback.results.usecases.FetchSeasonUseCase
 import tmg.testutils.BaseTest
-import tmg.testutils.livedata.test
-import tmg.testutils.livedata.testObserve
 
 internal class DriversStandingViewModelTest: BaseTest() {
 

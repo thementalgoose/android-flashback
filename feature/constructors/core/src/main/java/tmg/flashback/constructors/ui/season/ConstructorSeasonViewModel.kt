@@ -2,10 +2,7 @@ package tmg.flashback.constructors.ui.season
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -23,9 +20,9 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import tmg.flashback.constructors.R
 import tmg.flashback.device.managers.NetworkConnectivityManager
+import tmg.flashback.domain.repo.ConstructorRepository
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.ConstructorHistorySeason
-import tmg.flashback.domain.repo.ConstructorRepository
 import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.utilities.extensions.ordinalAbbreviation
 import javax.inject.Inject

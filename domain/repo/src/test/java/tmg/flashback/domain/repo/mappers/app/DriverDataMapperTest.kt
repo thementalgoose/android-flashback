@@ -4,9 +4,9 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.RoomDriver
+import tmg.flashback.domain.persistence.models.drivers.model
 import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.model.model
-import tmg.flashback.domain.persistence.models.drivers.model
 
 internal class DriverDataMapperTest {
 

@@ -5,7 +5,6 @@ import androidx.navigation.NavOptionsBuilder
 import io.mockk.mockk
 import io.mockk.slot
 import io.mockk.verify
-import kotlinx.coroutines.flow.asStateFlow
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import tmg.flashback.crash_reporting.manager.CrashManager

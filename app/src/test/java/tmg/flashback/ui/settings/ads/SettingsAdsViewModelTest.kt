@@ -10,8 +10,6 @@ import org.junit.jupiter.api.Test
 import tmg.flashback.ads.ads.repository.AdsRepository
 import tmg.flashback.ui.settings.Settings
 import tmg.testutils.BaseTest
-import tmg.testutils.livedata.test
-import tmg.testutils.livedata.testObserve
 
 internal class SettingsAdsViewModelTest: BaseTest() {
 

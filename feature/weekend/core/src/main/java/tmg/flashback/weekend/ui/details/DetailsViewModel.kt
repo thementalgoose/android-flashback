@@ -2,9 +2,7 @@ package tmg.flashback.weekend.ui.details
 
 import android.net.Uri
 import android.webkit.URLUtil
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,17 +14,16 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import tmg.flashback.circuits.contract.Circuit
 import tmg.flashback.circuits.contract.with
+import tmg.flashback.domain.repo.RaceRepository
 import tmg.flashback.formula1.enums.RaceWeekend
 import tmg.flashback.formula1.model.Schedule
 import tmg.flashback.formula1.utils.NotificationUtils
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.flashback.results.contract.repository.NotificationsRepository
-import tmg.flashback.domain.repo.RaceRepository
-import tmg.flashback.weekend.R
 import tmg.flashback.web.usecases.OpenWebpageUseCase
+import tmg.flashback.weekend.R
 import tmg.flashback.weekend.repository.WeatherRepository
-import tmg.utilities.models.StringHolder
 import javax.inject.Inject
 
 interface DetailsViewModelInputs {

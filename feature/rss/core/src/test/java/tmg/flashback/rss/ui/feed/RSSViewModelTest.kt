@@ -17,21 +17,16 @@ import org.threeten.bp.LocalDateTime
 import tmg.flashback.ads.ads.repository.AdsRepository
 import tmg.flashback.ads.ads.repository.model.AdvertConfig
 import tmg.flashback.device.managers.NetworkConnectivityManager
-import tmg.flashback.rss.repo.RssRepository
-import tmg.flashback.rss.repo.model.Article
-import tmg.flashback.rss.repo.model.ArticleSource
-import tmg.flashback.rss.repo.model.Response
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.flashback.rss.contract.RSSConfigure
 import tmg.flashback.rss.network.RssService
+import tmg.flashback.rss.repo.RssRepository
+import tmg.flashback.rss.repo.model.Article
+import tmg.flashback.rss.repo.model.ArticleSource
+import tmg.flashback.rss.repo.model.Response
 import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.testutils.BaseTest
-import tmg.testutils.livedata.assertListContainsItem
-import tmg.testutils.livedata.assertListDoesNotMatchItem
-import tmg.testutils.livedata.assertListMatchesItem
-import tmg.testutils.livedata.test
-import tmg.testutils.livedata.testObserve
 
 internal class RSSViewModelTest: BaseTest() {
 

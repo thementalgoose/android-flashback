@@ -1,14 +1,11 @@
 package tmg.flashback.widgets.upnext.configure
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import tmg.flashback.widgets.repository.WidgetRepository
 import tmg.flashback.widgets.usecases.UpdateWidgetsUseCaseImpl
-import tmg.utilities.lifecycle.SingleLiveEvent
 import javax.inject.Inject
 
 interface UpNextConfigurationViewModelInputs {

@@ -1,6 +1,7 @@
 package tmg.flashback.results.ui.dashboard.schedule
 
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import tmg.flashback.formula1.model.Event

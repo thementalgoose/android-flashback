@@ -1,6 +1,5 @@
 package tmg.flashback.ui.dashboard
 
-import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.NavHostController
 import app.cash.turbine.test
@@ -10,10 +9,8 @@ import io.mockk.mockk
 import io.mockk.slot
 import io.mockk.verify
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
@@ -27,12 +24,12 @@ import tmg.flashback.navigation.ApplicationNavigationComponent
 import tmg.flashback.navigation.NavigationDestination
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
-import tmg.flashback.rss.repo.RssRepository
 import tmg.flashback.results.Calendar
 import tmg.flashback.results.Constructors
 import tmg.flashback.results.Drivers
 import tmg.flashback.results.usecases.DefaultSeasonUseCase
 import tmg.flashback.results.with
+import tmg.flashback.rss.repo.RssRepository
 import tmg.flashback.ui.settings.All
 import tmg.flashback.usecases.DashboardSyncUseCase
 import tmg.flashback.usecases.GetSeasonsUseCase
@@ -40,9 +37,6 @@ import tmg.flashback.usecases.IsFirst
 import tmg.flashback.usecases.IsLast
 import tmg.testutils.BaseTest
 import tmg.testutils.junit.toSealedClass
-import tmg.testutils.livedata.assertListMatchesItem
-import tmg.testutils.livedata.test
-import tmg.testutils.livedata.testObserve
 
 internal class DashboardNavViewModelTest: BaseTest() {
 

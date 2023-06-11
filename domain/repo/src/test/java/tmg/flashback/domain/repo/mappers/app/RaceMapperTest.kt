@@ -11,6 +11,7 @@ import org.threeten.bp.format.DateTimeParseException
 import tmg.flashback.RoomRace
 import tmg.flashback.RoomRaceInfo
 import tmg.flashback.RoomRaceInfoWithCircuit
+import tmg.flashback.domain.persistence.models.race.model
 import tmg.flashback.formula1.model.Circuit
 import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.Driver
@@ -18,7 +19,6 @@ import tmg.flashback.formula1.model.Race
 import tmg.flashback.formula1.model.RaceInfo
 import tmg.flashback.formula1.model.Schedule
 import tmg.flashback.formula1.model.model
-import tmg.flashback.domain.persistence.models.race.model
 
 internal class RaceMapperTest {
 

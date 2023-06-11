@@ -1,7 +1,7 @@
 package tmg.flashback.domain.repo.mappers.app
 
-import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.domain.persistence.models.overview.OverviewWithCircuit
+import tmg.flashback.formula1.model.OverviewRace
 import tmg.utilities.utils.LocalDateUtils.Companion.requireFromDate
 import tmg.utilities.utils.LocalTimeUtils.Companion.fromTime
 import javax.inject.Inject

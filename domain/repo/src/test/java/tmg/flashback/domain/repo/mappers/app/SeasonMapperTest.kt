@@ -6,12 +6,12 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.RoomRace
+import tmg.flashback.domain.persistence.models.overview.model
+import tmg.flashback.domain.persistence.models.race.model
 import tmg.flashback.formula1.model.Event
 import tmg.flashback.formula1.model.Race
 import tmg.flashback.formula1.model.Season
 import tmg.flashback.formula1.model.model
-import tmg.flashback.domain.persistence.models.overview.model
-import tmg.flashback.domain.persistence.models.race.model
 
 internal class SeasonMapperTest {
 

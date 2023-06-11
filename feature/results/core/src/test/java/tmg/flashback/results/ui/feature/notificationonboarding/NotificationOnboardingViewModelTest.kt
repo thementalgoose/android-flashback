@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test
 import tmg.flashback.results.repository.NotificationsRepositoryImpl
 import tmg.flashback.results.repository.models.NotificationChannel
 import tmg.testutils.BaseTest
-import tmg.testutils.livedata.test
 import tmg.utilities.models.Selected
 
 internal class NotificationOnboardingViewModelTest: BaseTest() {

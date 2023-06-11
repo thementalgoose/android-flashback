@@ -12,17 +12,13 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
+import tmg.flashback.domain.repo.RaceRepository
 import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
 import tmg.flashback.formula1.model.Race
 import tmg.flashback.formula1.model.RaceInfo
 import tmg.flashback.formula1.model.SprintResult
 import tmg.flashback.formula1.model.model
-import tmg.flashback.domain.repo.RaceRepository
-import tmg.flashback.weekend.contract.model.ScreenWeekendData
 import tmg.testutils.BaseTest
-import tmg.testutils.livedata.assertListDoesNotMatchItem
-import tmg.testutils.livedata.assertListMatchesItem
-import tmg.testutils.livedata.test
 
 internal class WeekendViewModelTest: BaseTest() {
 

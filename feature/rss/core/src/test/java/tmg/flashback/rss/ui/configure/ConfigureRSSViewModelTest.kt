@@ -14,10 +14,6 @@ import tmg.flashback.rss.usecases.AllSupportedSourcesUseCase
 import tmg.flashback.rss.usecases.GetSupportedSourceUseCase
 import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.testutils.BaseTest
-import tmg.testutils.livedata.assertListDoesNotMatchItem
-import tmg.testutils.livedata.assertListMatchesItem
-import tmg.testutils.livedata.test
-import tmg.testutils.livedata.testObserve
 
 internal class ConfigureRSSViewModelTest: BaseTest() {
 

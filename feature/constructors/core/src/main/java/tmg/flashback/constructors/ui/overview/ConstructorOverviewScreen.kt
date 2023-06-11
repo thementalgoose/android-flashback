@@ -9,7 +9,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -25,29 +24,29 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import tmg.flashback.analytics.constants.AnalyticsConstants.analyticsConstructorId
+import tmg.flashback.constructors.R
 import tmg.flashback.formula1.constants.Formula1
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.ConstructorHistorySeasonDriver
 import tmg.flashback.formula1.model.DriverEntry
 import tmg.flashback.providers.DriverConstructorProvider
-import tmg.flashback.ui.components.timeline.TimelineTop
-import tmg.flashback.ui.components.timeline.dotDiameter
-import tmg.flashback.ui.components.timeline.heightOfTopDot
-import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
+import tmg.flashback.style.buttons.ButtonSecondary
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextCaption
-import tmg.flashback.constructors.R
-import tmg.flashback.style.buttons.ButtonSecondary
 import tmg.flashback.ui.components.analytics.ScreenView
 import tmg.flashback.ui.components.errors.NetworkError
+import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.navigation.PipeType
 import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
+import tmg.flashback.ui.components.timeline.TimelineTop
+import tmg.flashback.ui.components.timeline.dotDiameter
+import tmg.flashback.ui.components.timeline.heightOfTopDot
 import tmg.utilities.extensions.ordinalAbbreviation
 
 

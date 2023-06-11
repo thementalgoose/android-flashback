@@ -4,12 +4,12 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.flashback.flashbackapi.api.models.drivers.DriverHistoryStanding
-import tmg.flashback.flashbackapi.api.models.drivers.DriverHistoryStandingRace
-import tmg.flashback.flashbackapi.api.models.drivers.model
 import tmg.flashback.domain.persistence.models.drivers.DriverSeason
 import tmg.flashback.domain.persistence.models.drivers.DriverSeasonRace
 import tmg.flashback.domain.persistence.models.drivers.model
+import tmg.flashback.flashbackapi.api.models.drivers.DriverHistoryStanding
+import tmg.flashback.flashbackapi.api.models.drivers.DriverHistoryStandingRace
+import tmg.flashback.flashbackapi.api.models.drivers.model
 
 internal class NetworkDriverMapperTest {
 

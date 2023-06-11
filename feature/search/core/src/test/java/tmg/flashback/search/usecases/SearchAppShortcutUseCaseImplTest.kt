@@ -3,7 +3,7 @@ package tmg.flashback.search.usecases
 import io.mockk.mockk
 import io.mockk.slot
 import io.mockk.verify
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import tmg.flashback.appshortcuts.manager.AppShortcutManager
 import tmg.flashback.appshortcuts.models.ShortcutInfo

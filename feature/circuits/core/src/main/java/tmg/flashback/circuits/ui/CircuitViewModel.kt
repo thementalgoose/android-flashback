@@ -1,10 +1,6 @@
 package tmg.flashback.circuits.ui
 
-import androidx.compose.runtime.MutableState
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -21,8 +17,8 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import tmg.flashback.device.managers.NetworkConnectivityManager
-import tmg.flashback.formula1.model.CircuitHistory
 import tmg.flashback.domain.repo.CircuitRepository
+import tmg.flashback.formula1.model.CircuitHistory
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.flashback.web.usecases.OpenWebpageUseCase

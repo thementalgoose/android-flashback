@@ -28,9 +28,6 @@ import androidx.compose.ui.platform.ViewRootForInspector
 import androidx.compose.ui.semantics.popup
 import androidx.compose.ui.semantics.semantics
 import androidx.core.view.children
-import androidx.lifecycle.findViewTreeLifecycleOwner
-import androidx.lifecycle.findViewTreeViewModelStoreOwner
-import androidx.lifecycle.withCreated
 import androidx.savedstate.findViewTreeSavedStateRegistryOwner
 import androidx.savedstate.setViewTreeSavedStateRegistryOwner
 import java.util.UUID

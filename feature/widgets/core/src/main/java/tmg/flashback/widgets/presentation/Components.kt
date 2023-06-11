@@ -5,7 +5,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 import androidx.glance.GlanceModifier
-import androidx.glance.background
 import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextAlign

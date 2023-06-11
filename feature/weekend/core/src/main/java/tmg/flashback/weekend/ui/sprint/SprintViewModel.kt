@@ -1,11 +1,7 @@
 package tmg.flashback.weekend.ui.sprint
 
 import androidx.annotation.StringRes
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asFlow
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -21,16 +17,15 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import tmg.flashback.constructors.contract.ConstructorSeason
 import tmg.flashback.constructors.contract.with
+import tmg.flashback.domain.repo.RaceRepository
 import tmg.flashback.drivers.contract.DriverSeason
 import tmg.flashback.drivers.contract.with
 import tmg.flashback.formula1.constants.Formula1
+import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.SprintRaceResult
 import tmg.flashback.navigation.Navigator
-import tmg.flashback.domain.repo.RaceRepository
-import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.navigation.Screen
 import tmg.flashback.weekend.R
-import tmg.utilities.extensions.combinePair
 import javax.inject.Inject
 
 interface SprintViewModelInputs {

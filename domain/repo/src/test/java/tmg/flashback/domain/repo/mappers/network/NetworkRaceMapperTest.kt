@@ -7,10 +7,10 @@ import org.junit.jupiter.api.Test
 import tmg.flashback.NetworkQualifyingResult
 import tmg.flashback.NetworkRaceResult
 import tmg.flashback.NetworkSprintResult
-import tmg.flashback.flashbackapi.api.models.races.model
 import tmg.flashback.domain.persistence.models.race.QualifyingResult
 import tmg.flashback.domain.persistence.models.race.RaceResult
 import tmg.flashback.domain.persistence.models.race.model
+import tmg.flashback.flashbackapi.api.models.races.model
 
 internal class NetworkRaceMapperTest {
 

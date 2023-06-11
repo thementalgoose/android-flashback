@@ -2,7 +2,6 @@ package tmg.flashback.search.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,13 +17,11 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -42,20 +39,15 @@ import coil.compose.AsyncImage
 import tmg.flashback.ads.ads.components.AdvertProvider
 import tmg.flashback.formula1.enums.TrackLayout
 import tmg.flashback.search.R
-import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
-import tmg.flashback.style.buttons.ButtonPrimary
-import tmg.flashback.style.buttons.ButtonSecondary
-import tmg.flashback.style.buttons.ButtonSecondarySegments
-import tmg.flashback.style.buttons.ButtonTertiary
 import tmg.flashback.style.input.InputPrimary
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.ui.components.analytics.ScreenView
+import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.ui.components.header.Header
-import tmg.flashback.ui.components.layouts.BottomSheet
 import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
 
 @Composable

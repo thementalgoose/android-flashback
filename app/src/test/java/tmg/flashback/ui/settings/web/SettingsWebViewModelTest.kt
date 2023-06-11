@@ -1,7 +1,6 @@
 package tmg.flashback.ui.settings.web
 
 import app.cash.turbine.test
-import app.cash.turbine.testIn
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -11,8 +10,6 @@ import org.junit.jupiter.api.Test
 import tmg.flashback.ui.settings.Settings
 import tmg.flashback.web.repository.WebBrowserRepository
 import tmg.testutils.BaseTest
-import tmg.testutils.livedata.test
-import tmg.testutils.livedata.testObserve
 
 internal class SettingsWebViewModelTest: BaseTest() {
 
