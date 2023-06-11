@@ -17,6 +17,7 @@ import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -54,25 +55,25 @@ fun DashboardScreen(
     viewModel: DashboardViewModel = hiltViewModel(),
     deeplink: String?
 ) {
-    val currentlySelectedItem = navViewModel.outputs.currentlySelectedItem.observeAsState(MenuItem.Calendar)
-    val seasonScreenItemsList = navViewModel.outputs.seasonScreenItemsList.observeAsState(emptyList())
-    val appFeatureItemsList = navViewModel.outputs.appFeatureItemsList.observeAsState(emptyList())
-    val debugMenuItems = navViewModel.outputs.debugMenuItems.observeAsState(emptyList())
+    val currentlySelectedItem = navViewModel.outputs.currentlySelectedItem.collectAsState(MenuItem.Calendar)
+    val seasonScreenItemsList = navViewModel.outputs.seasonScreenItemsList.collectAsState(emptyList())
+    val appFeatureItemsList = navViewModel.outputs.appFeatureItemsList.collectAsState(emptyList())
+    val debugMenuItems = navViewModel.outputs.debugMenuItems.collectAsState(emptyList())
 
-    val seasonItemsList = navViewModel.outputs.seasonsItemsList.observeAsState(emptyList())
-    val currentlySelectedSeason = navViewModel.outputs.currentlySelectedSeason.observeAsState(0)
+    val seasonItemsList = navViewModel.outputs.seasonsItemsList.collectAsState(emptyList())
+    val currentlySelectedSeason = navViewModel.outputs.currentlySelectedSeason.collectAsState(0)
     val defaultSeason = navViewModel.outputs.defaultSeason
 
-    val showBottomBar = navViewModel.outputs.showBottomBar.observeAsState(true)
-    val showMenu = navViewModel.outputs.showMenu.observeAsState(false)
+    val showBottomBar = navViewModel.outputs.showBottomBar.collectAsState(true)
+    val showMenu = navViewModel.outputs.showMenu.collectAsState(false)
 
-    val darkMode = viewModel.outputs.isDarkMode.observeAsState(false)
-    val featurePromptList = viewModel.outputs.featurePromptsList.observeAsState(emptyList())
-    val appVersion = viewModel.outputs.appVersion.observeAsState("")
+    val darkMode = viewModel.outputs.isDarkMode.collectAsState(false)
+    val featurePromptList = viewModel.outputs.featurePromptsList.collectAsState(emptyList())
+    val appVersion = viewModel.outputs.appVersion.collectAsState("")
 
-    val snow = viewModel.outputs.snow.observeAsState(false)
-    val titleIcon = viewModel.outputs.titleIcon.observeAsState(null)
-    val ukraine = viewModel.outputs.ukraine.observeAsState(false)
+    val snow = viewModel.outputs.snow.collectAsState(false)
+    val titleIcon = viewModel.outputs.titleIcon.collectAsState(null)
+    val ukraine = viewModel.outputs.ukraine.collectAsState(false)
 
     val navController = rememberNavController()
     navigator.navController = navController

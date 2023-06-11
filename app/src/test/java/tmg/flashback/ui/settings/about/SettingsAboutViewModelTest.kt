@@ -1,8 +1,11 @@
 package tmg.flashback.ui.settings.about
 
+import app.cash.turbine.test
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
+import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import tmg.flashback.R
 import tmg.flashback.crash_reporting.repository.CrashRepository
@@ -36,22 +39,22 @@ internal class SettingsAboutViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `shake to report is enabled when pref is true`() {
+    fun `shake to report is enabled when pref is true`() = runTest {
         every { mockCrashRepository.shakeToReport } returns true
 
         initUnderTest()
         underTest.outputs.shakeToReportEnabled.test {
-            assertValue(true)
+            assertEquals(true, awaitItem())
         }
     }
 
     @Test
-    fun `shake to report is disabled when pref is disabled`() {
+    fun `shake to report is disabled when pref is disabled`() = runTest {
         every { mockCrashRepository.shakeToReport } returns false
 
         initUnderTest()
         underTest.outputs.shakeToReportEnabled.test {
-            assertValue(false)
+            assertEquals(false, awaitItem())
         }
     }
 
@@ -77,17 +80,17 @@ internal class SettingsAboutViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `click shake to report updates pref and updates value`() {
+    fun `click shake to report updates pref and updates value`() = runTest {
         every { mockCrashRepository.shakeToReport } returns false
         initUnderTest()
-        val observer = underTest.outputs.shakeToReportEnabled.testObserve()
+        underTest.outputs.shakeToReportEnabled.test { awaitItem() }
         underTest.inputs.prefClicked(Settings.Other.shakeToReport(true))
 
         verify {
             mockCrashRepository.shakeToReport = true
             mockToastManager.displayToast(R.string.settings_restart_app_required)
         }
-        observer.assertEmittedCount(2)
+        underTest.outputs.shakeToReportEnabled.test { awaitItem() }
     }
 
     companion object {

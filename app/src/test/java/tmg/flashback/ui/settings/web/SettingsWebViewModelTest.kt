@@ -1,8 +1,12 @@
 package tmg.flashback.ui.settings.web
 
+import app.cash.turbine.test
+import app.cash.turbine.testIn
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
+import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import tmg.flashback.ui.settings.Settings
 import tmg.flashback.web.repository.WebBrowserRepository
@@ -23,70 +27,74 @@ internal class SettingsWebViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `browser is enabled when open in external enabled`() {
+    fun `browser is enabled when open in external enabled`() = runTest {
         every { mockWebBrowserRepository.openInExternal } returns false
 
         initUnderTest()
         underTest.outputs.enable.test {
-            assertValue(true)
+            assertEquals(true, awaitItem())
         }
     }
 
     @Test
-    fun `browser is disabled when open in external disabled`() {
+    fun `browser is disabled when open in external disabled`() = runTest {
         every { mockWebBrowserRepository.openInExternal } returns true
 
         initUnderTest()
         underTest.outputs.enable.test {
-            assertValue(false)
+            assertEquals(false, awaitItem())
         }
     }
 
     @Test
-    fun `javascript is enabled when enable javascript is true`() {
+    fun `javascript is enabled when enable javascript is true`() = runTest {
         every { mockWebBrowserRepository.enableJavascript } returns true
 
         initUnderTest()
         underTest.outputs.enableJavascript.test {
-            assertValue(true)
+            assertEquals(true, awaitItem())
         }
     }
 
     @Test
-    fun `javascript is disabled when enable javascript is false`() {
+    fun `javascript is disabled when enable javascript is false`() = runTest {
         every { mockWebBrowserRepository.enableJavascript } returns false
 
         initUnderTest()
         underTest.outputs.enableJavascript.test {
-            assertValue(false)
+            assertEquals(false, awaitItem())
         }
     }
 
     @Test
-    fun `clicking enable updates pref and updates value`() {
+    fun `clicking enable updates pref and updates value`() = runTest {
         every { mockWebBrowserRepository.openInExternal } returns false
 
         initUnderTest()
-        val observer = underTest.outputs.enable.testObserve()
+        underTest.outputs.enable.test {
+            assertEquals(true, awaitItem())
+        }
         underTest.inputs.prefClicked(Settings.Web.enable(true))
 
         verify {
             mockWebBrowserRepository.openInExternal = true
         }
-        observer.assertEmittedCount(2)
+        underTest.outputs.enable.test { awaitItem() }
     }
 
     @Test
-    fun `clicking enable javascript updates pref and updates value`() {
+    fun `clicking enable javascript updates pref and updates value`() = runTest {
         every { mockWebBrowserRepository.enableJavascript } returns false
 
         initUnderTest()
-        val observer = underTest.outputs.enableJavascript.testObserve()
+        underTest.outputs.enable.test {
+            assertEquals(true, awaitItem())
+        }
         underTest.inputs.prefClicked(Settings.Web.javascript(true))
 
+        underTest.outputs.enable.test { awaitItem() }
         verify {
             mockWebBrowserRepository.enableJavascript = true
         }
-        observer.assertEmittedCount(2)
     }
 }

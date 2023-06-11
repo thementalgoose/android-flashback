@@ -1,9 +1,14 @@
 package tmg.flashback.ui.dashboard
 
+import app.cash.turbine.test
+import app.cash.turbine.testIn
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -68,11 +73,13 @@ internal class DashboardViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `dark mode result is read`() {
+    fun `dark mode result is read`() = runTest {
         every { mockStyleManager.isDayMode } returns true
 
         initUnderTest()
-        underTest.outputs.isDarkMode.test { assertValue(false) }
+        underTest.outputs.isDarkMode.test {
+            assertEquals(false, awaitItem())
+        }
     }
 
     @ParameterizedTest(name = "Clicking dark mode to state {0} sets dark mode {1}")
@@ -80,13 +87,13 @@ internal class DashboardViewModelTest: BaseTest() {
         "true,NIGHT",
         "false,DAY"
     )
-    fun `clicking dark mode calls use case`(state: Boolean, nightMode: NightMode) {
+    fun `clicking dark mode calls use case`(state: Boolean, nightMode: NightMode) = runTest {
         every { mockStyleManager.isDayMode } returns !state
         initUnderTest()
 
         underTest.inputs.clickDarkMode(state)
         underTest.outputs.isDarkMode.test {
-            assertValue(state)
+            assertEquals(state, awaitItem())
         }
         verify {
             mockChangeNightModeUseCase.setNightMode(nightMode)
@@ -94,42 +101,42 @@ internal class DashboardViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `app version is read from build config manager`() {
+    fun `app version is read from build config manager`() = runTest {
         every { mockBuildConfigManager.versionName } returns "version-name"
 
         initUnderTest()
         underTest.outputs.appVersion.test {
-            assertValue("version-name")
+            assertEquals("version-name", awaitItem())
         }
     }
 
     @Test
-    fun `snow easter egg is emitted from use case`() {
+    fun `snow easter egg is emitted from use case`() = runTest {
         every { mockIsSnowEnabledUseCase.invoke() } returns true
 
         initUnderTest()
         underTest.outputs.snow.test {
-            assertValue(true)
+            assertEquals(true, awaitItem())
         }
     }
 
     @Test
-    fun `ukraine easter egg is emitted from use case`() {
+    fun `ukraine easter egg is emitted from use case`() = runTest {
         every { mockIsUkraineEnabledUseCase.invoke() } returns true
 
         initUnderTest()
         underTest.outputs.ukraine.test {
-            assertValue(true)
+            assertEquals(true, awaitItem())
         }
     }
 
     @Test
-    fun `menu title is emitted from use case`() {
+    fun `menu title is emitted from use case`() = runTest {
         every { mockIsMenuIconEnabledUseCase.invoke() } returns MenuIcons.CHRISTMAS
 
         initUnderTest()
         underTest.outputs.titleIcon.test {
-            assertValue(MenuIcons.CHRISTMAS)
+            assertEquals(MenuIcons.CHRISTMAS, awaitItem())
         }
     }
 
@@ -152,17 +159,18 @@ internal class DashboardViewModelTest: BaseTest() {
             seenRuntimeNotifications: Boolean,
             isRuntimeNotificationsEnabled: Boolean,
             isFeatureIncluded: Boolean
-        ) {
+        ) = runTest {
             every { mockBuildConfigManager.isRuntimeNotificationsSupported } returns isRuntimeNotificationsSupported
             every { mockNotificationRepository.seenRuntimeNotifications } returns seenRuntimeNotifications
             every { mockPermissionRepository.isRuntimeNotificationsEnabled } returns isRuntimeNotificationsEnabled
 
             initUnderTest()
             underTest.featurePromptsList.test {
+                val item = awaitItem()
                 if (isFeatureIncluded) {
-                    assertListMatchesItem { it is FeaturePrompt.RuntimeNotifications }
+                    assertTrue(item.any { it is FeaturePrompt.RuntimeNotifications  })
                 } else {
-                    assertListDoesNotMatchItem { it is FeaturePrompt.RuntimeNotifications }
+                    assertTrue(item.none { it is FeaturePrompt.RuntimeNotifications  })
                 }
             }
         }
@@ -178,51 +186,66 @@ internal class DashboardViewModelTest: BaseTest() {
             isRuntimeNotificationsSupported: Boolean,
             seenNotificationOnboarding: Boolean,
             isFeatureIncluded: Boolean
-        ) {
+        ) = runTest {
             every { mockBuildConfigManager.isRuntimeNotificationsSupported } returns isRuntimeNotificationsSupported
             every { mockNotificationRepository.seenNotificationOnboarding } returns seenNotificationOnboarding
 
             initUnderTest()
             underTest.featurePromptsList.test {
+                val item = awaitItem()
                 if (isFeatureIncluded) {
-                    assertListMatchesItem { it is FeaturePrompt.Notifications }
+                    assertTrue(item.any { it is FeaturePrompt.Notifications })
                 } else {
-                    assertListDoesNotMatchItem { it is FeaturePrompt.Notifications }
+                    assertTrue(item.none { it is FeaturePrompt.Notifications })
                 }
             }
         }
 
         @Test
-        fun `clicking notifications`() {
+        fun `clicking notifications`() = runTest {
             initUnderTest()
-            val featureList = underTest.outputs.featurePromptsList.testObserve()
+            underTest.outputs.featurePromptsList.test {
+                assertEquals(listOf(FeaturePrompt.Notifications), awaitItem())
+            }
 
+            every { mockNotificationRepository.seenNotificationOnboarding } returns true
             underTest.inputs.clickFeaturePrompt(FeaturePrompt.Notifications)
 
             verify {
                 mockResultsNavigationComponent.featureNotificationOnboarding()
                 mockNotificationRepository.seenNotificationOnboarding = true
             }
-            featureList.assertEmittedCount(2)
+            underTest.outputs.featurePromptsList.test {
+                assertEquals(listOf<FeaturePrompt>(), awaitItem())
+            }
         }
 
         @Test
-        fun `clicking runtime notifications`() {
+        fun `clicking runtime notifications`() = runTest {
             val permissions: CompletableDeferred<Boolean> = CompletableDeferred()
             every { mockPermissionManager.requestPermission(RationaleType.RuntimeNotifications) } returns permissions
-            every { mockPermissionRepository.isRuntimeNotificationsEnabled } returns true
+            every { mockBuildConfigManager.isRuntimeNotificationsSupported } returns true
+            every { mockNotificationRepository.seenRuntimeNotifications } returns false
+            every { mockPermissionRepository.isRuntimeNotificationsEnabled } returns false
 
             initUnderTest()
-            val featureList = underTest.outputs.featurePromptsList.testObserve()
+            underTest.outputs.featurePromptsList.test {
+                assertEquals(listOf(FeaturePrompt.RuntimeNotifications), awaitItem())
+            }
 
             underTest.inputs.clickFeaturePrompt(FeaturePrompt.RuntimeNotifications)
+            // Simulate ticking it
+            every { mockPermissionRepository.isRuntimeNotificationsEnabled } returns true
+            every { mockNotificationRepository.seenRuntimeNotifications } returns true
             permissions.complete(true)
 
             verify {
                 mockNotificationRepository.seenRuntimeNotifications = true
                 mockResultsNavigationComponent.featureNotificationOnboarding()
             }
-            featureList.assertEmittedCount(2)
+            underTest.outputs.featurePromptsList.test {
+                assertEquals(listOf<FeaturePrompt>(), awaitItem())
+            }
         }
     }
 }

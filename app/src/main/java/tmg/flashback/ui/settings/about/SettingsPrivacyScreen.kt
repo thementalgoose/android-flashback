@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -29,8 +30,8 @@ fun SettingsPrivacyScreenVM(
 ) {
     ScreenView(screenName = "Settings - Privacy")
 
-    val crashReportingEnabled = viewModel.outputs.crashReportingEnabled.observeAsState(false)
-    val analyticsEnabled = viewModel.outputs.analyticsEnabled.observeAsState(false)
+    val crashReportingEnabled = viewModel.outputs.crashReportingEnabled.collectAsState(false)
+    val analyticsEnabled = viewModel.outputs.analyticsEnabled.collectAsState(false)
 
     SettingsPrivacyScreen(
         showBack = showBack,

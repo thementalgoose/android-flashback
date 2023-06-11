@@ -1,11 +1,14 @@
 package tmg.flashback.ui.sync
 
+import app.cash.turbine.test
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.configuration.repository.ConfigRepository
@@ -22,10 +25,6 @@ import tmg.flashback.ui.sync.SyncNavTarget.DASHBOARD
 import tmg.flashback.ui.sync.SyncNavTarget.FORCE_UPGRADE
 import tmg.flashback.usecases.SetupAppShortcutUseCase
 import tmg.testutils.BaseTest
-import tmg.testutils.livedata.assertDataEventValue
-import tmg.testutils.livedata.assertEventNotFired
-import tmg.testutils.livedata.test
-import tmg.testutils.livedata.testObserve
 
 internal class SyncViewModelTest: BaseTest() {
 
@@ -72,7 +71,7 @@ internal class SyncViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `start loading with config not synced sends go to home event`() = coroutineTest {
+    fun `start loading with config not synced sends go to home event`() = runTest {
         every { mockConfigRepository.requireSynchronisation } returns true
 
         initSUT()
@@ -82,21 +81,18 @@ internal class SyncViewModelTest: BaseTest() {
             mockResetConfigUseCase.ensureReset()
             mockFetchConfigUseCase.fetchAndApply()
         }
-        sut.outputs.circuitsState.test { assertValue(SyncState.DONE) }
-        sut.outputs.constructorsState.test { assertValue(SyncState.DONE) }
-        sut.outputs.driversState.test { assertValue(SyncState.DONE) }
-        sut.outputs.racesState.test { assertValue(SyncState.DONE) }
-        sut.outputs.configState.test { assertValue(SyncState.DONE) }
-        sut.outputs.loadingState.test {
-            assertValue(SyncState.DONE)
-        }
-        sut.outputs.showRetry.test {
-            assertValue(false)
-        }
+        sut.outputs.circuitsState.test { assertEquals(SyncState.DONE, awaitItem()) }
+        sut.outputs.constructorsState.test { assertEquals(SyncState.DONE, awaitItem()) }
+        sut.outputs.driversState.test { assertEquals(SyncState.DONE, awaitItem()) }
+        sut.outputs.racesState.test { assertEquals(SyncState.DONE, awaitItem()) }
+        sut.outputs.configState.test { assertEquals(SyncState.DONE, awaitItem()) }
+        sut.outputs.loadingState.test { assertEquals(SyncState.DONE, awaitItem()) }
+        sut.outputs.showRetry.test { assertEquals(false, awaitItem()) }
 
-        val navigateObserver = sut.outputs.navigate.testObserve()
         advanceUntilIdle()
-        navigateObserver.assertDataEventValue(DASHBOARD)
+        sut.outputs.navigate.test {
+            assertEquals(DASHBOARD, awaitItem())
+        }
 
         verify {
             mockCacheRepository.initialSync = true
@@ -106,7 +102,7 @@ internal class SyncViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `start loading with config not synced sends go to force upgrade event`() = coroutineTest {
+    fun `start loading with config not synced sends go to force upgrade event`() = runTest {
         every { mockConfigRepository.requireSynchronisation } returns true
         every { mockShouldForceUpgradeUseCase.shouldForceUpgrade() } returns true
 
@@ -117,21 +113,18 @@ internal class SyncViewModelTest: BaseTest() {
             mockResetConfigUseCase.ensureReset()
             mockFetchConfigUseCase.fetchAndApply()
         }
-        sut.outputs.circuitsState.test { assertValue(SyncState.DONE) }
-        sut.outputs.constructorsState.test { assertValue(SyncState.DONE) }
-        sut.outputs.driversState.test { assertValue(SyncState.DONE) }
-        sut.outputs.racesState.test { assertValue(SyncState.DONE) }
-        sut.outputs.configState.test { assertValue(SyncState.DONE) }
-        sut.outputs.loadingState.test {
-            assertValue(SyncState.DONE)
-        }
-        sut.outputs.showRetry.test {
-            assertValue(false)
-        }
+        sut.outputs.circuitsState.test { assertEquals(SyncState.DONE, awaitItem()) }
+        sut.outputs.constructorsState.test { assertEquals(SyncState.DONE, awaitItem()) }
+        sut.outputs.driversState.test { assertEquals(SyncState.DONE, awaitItem()) }
+        sut.outputs.racesState.test { assertEquals(SyncState.DONE, awaitItem()) }
+        sut.outputs.configState.test { assertEquals(SyncState.DONE, awaitItem()) }
+        sut.outputs.loadingState.test { assertEquals(SyncState.DONE, awaitItem()) }
+        sut.outputs.showRetry.test { assertEquals(false, awaitItem()) }
 
-        val navigateObserver = sut.outputs.navigate.testObserve()
         advanceUntilIdle()
-        navigateObserver.assertDataEventValue(FORCE_UPGRADE)
+        sut.outputs.navigate.test {
+            assertEquals(FORCE_UPGRADE, awaitItem())
+        }
 
         verify {
             mockCacheRepository.initialSync = true
@@ -141,7 +134,7 @@ internal class SyncViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `start loading with config previously synced sends go to home event`() = coroutineTest {
+    fun `start loading with config previously synced sends go to home event`() = runTest {
         every { mockConfigRepository.requireSynchronisation } returns false
 
         initSUT()
@@ -151,22 +144,18 @@ internal class SyncViewModelTest: BaseTest() {
             mockResetConfigUseCase.ensureReset()
             mockFetchConfigUseCase.fetchAndApply()
         }
-        sut.outputs.circuitsState.test { assertValue(SyncState.DONE) }
-        sut.outputs.constructorsState.test { assertValue(SyncState.DONE) }
-        sut.outputs.driversState.test { assertValue(SyncState.DONE) }
-        sut.outputs.racesState.test { assertValue(SyncState.DONE) }
-        sut.outputs.configState.test { assertValue(SyncState.DONE) }
-        sut.outputs.loadingState.test {
-            assertValue(SyncState.DONE)
-        }
-        sut.outputs.showRetry.test {
-            assertValue(false)
-        }
+        sut.outputs.circuitsState.test { assertEquals(SyncState.DONE, awaitItem()) }
+        sut.outputs.constructorsState.test { assertEquals(SyncState.DONE, awaitItem()) }
+        sut.outputs.driversState.test { assertEquals(SyncState.DONE, awaitItem()) }
+        sut.outputs.racesState.test { assertEquals(SyncState.DONE, awaitItem()) }
+        sut.outputs.configState.test { assertEquals(SyncState.DONE, awaitItem()) }
+        sut.outputs.loadingState.test { assertEquals(SyncState.DONE, awaitItem()) }
+        sut.outputs.showRetry.test { assertEquals(false, awaitItem()) }
 
-
-        val navigateObserver = sut.outputs.navigate.testObserve()
         advanceUntilIdle()
-        navigateObserver.assertDataEventValue(DASHBOARD)
+        sut.outputs.navigate.test {
+            assertEquals(DASHBOARD, awaitItem())
+        }
 
         verify {
             mockCacheRepository.initialSync = true
@@ -182,7 +171,7 @@ internal class SyncViewModelTest: BaseTest() {
 
 
     @Test
-    fun `start loading with config failed changes state to failed`() = coroutineTest {
+    fun `start loading with config failed changes state to failed`() = runTest {
         every { mockConfigRepository.requireSynchronisation } returns true
         coEvery { mockFetchConfigUseCase.fetchAndApply() } returns false
 
@@ -196,21 +185,18 @@ internal class SyncViewModelTest: BaseTest() {
         verify {
             mockSetupAppShortcutUseCase.setup()
         }
-        sut.outputs.circuitsState.test { assertValue(SyncState.DONE) }
-        sut.outputs.constructorsState.test { assertValue(SyncState.DONE) }
-        sut.outputs.driversState.test { assertValue(SyncState.DONE) }
-        sut.outputs.racesState.test { assertValue(SyncState.DONE) }
-        sut.outputs.configState.test { assertValue(SyncState.FAILED) }
-        sut.outputs.loadingState.test {
-            assertValue(SyncState.FAILED)
-        }
-        sut.outputs.showRetry.test {
-            assertValue(true)
-        }
+        sut.outputs.circuitsState.test { assertEquals(SyncState.DONE, awaitItem()) }
+        sut.outputs.constructorsState.test { assertEquals(SyncState.DONE, awaitItem()) }
+        sut.outputs.driversState.test { assertEquals(SyncState.DONE, awaitItem()) }
+        sut.outputs.racesState.test { assertEquals(SyncState.DONE, awaitItem()) }
+        sut.outputs.configState.test { assertEquals(SyncState.FAILED, awaitItem()) }
+        sut.outputs.loadingState.test { assertEquals(SyncState.FAILED, awaitItem()) }
+        sut.outputs.showRetry.test { assertEquals(true, awaitItem()) }
 
-        val navigateObserver = sut.outputs.navigate.testObserve()
         advanceUntilIdle()
-        navigateObserver.assertEventNotFired()
+        sut.outputs.navigate.test {
+            assertEquals(null, awaitItem())
+        }
 
         verify(exactly = 0) {
             mockCacheRepository.initialSync = true
@@ -218,7 +204,7 @@ internal class SyncViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `start loading with circuits failing changes state to failed`() = coroutineTest {
+    fun `start loading with circuits failing changes state to failed`() = runTest {
         every { mockConfigRepository.requireSynchronisation } returns false
         coEvery { mockCircuitRepository.fetchCircuits() } returns false
 
@@ -229,21 +215,18 @@ internal class SyncViewModelTest: BaseTest() {
             mockResetConfigUseCase.ensureReset()
             mockFetchConfigUseCase.fetchAndApply()
         }
-        sut.outputs.circuitsState.test { assertValue(SyncState.FAILED) }
-        sut.outputs.constructorsState.test { assertValue(SyncState.DONE) }
-        sut.outputs.driversState.test { assertValue(SyncState.DONE) }
-        sut.outputs.racesState.test { assertValue(SyncState.DONE) }
-        sut.outputs.configState.test { assertValue(SyncState.DONE) }
-        sut.outputs.loadingState.test {
-            assertValue(SyncState.FAILED)
-        }
-        sut.outputs.showRetry.test {
-            assertValue(true)
-        }
+        sut.outputs.circuitsState.test { assertEquals(SyncState.FAILED, awaitItem()) }
+        sut.outputs.constructorsState.test { assertEquals(SyncState.DONE, awaitItem()) }
+        sut.outputs.driversState.test { assertEquals(SyncState.DONE, awaitItem()) }
+        sut.outputs.racesState.test { assertEquals(SyncState.DONE, awaitItem()) }
+        sut.outputs.configState.test { assertEquals(SyncState.DONE, awaitItem()) }
+        sut.outputs.loadingState.test { assertEquals(SyncState.FAILED, awaitItem()) }
+        sut.outputs.showRetry.test { assertEquals(true, awaitItem()) }
 
-        val navigateObserver = sut.outputs.navigate.testObserve()
         advanceUntilIdle()
-        navigateObserver.assertEventNotFired()
+        sut.outputs.navigate.test {
+            assertEquals(null, awaitItem())
+        }
 
         verify(exactly = 0) {
             mockCacheRepository.initialSync = true
@@ -251,7 +234,7 @@ internal class SyncViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `start loading with races failing changes state to failed`() = coroutineTest {
+    fun `start loading with races failing changes state to failed`() = runTest {
         every { mockConfigRepository.requireSynchronisation } returns false
         coEvery { mockOverviewRepository.fetchOverview() } returns false
 
@@ -262,21 +245,18 @@ internal class SyncViewModelTest: BaseTest() {
             mockResetConfigUseCase.ensureReset()
             mockFetchConfigUseCase.fetchAndApply()
         }
-        sut.outputs.circuitsState.test { assertValue(SyncState.DONE) }
-        sut.outputs.constructorsState.test { assertValue(SyncState.DONE) }
-        sut.outputs.driversState.test { assertValue(SyncState.DONE) }
-        sut.outputs.racesState.test { assertValue(SyncState.FAILED) }
-        sut.outputs.configState.test { assertValue(SyncState.DONE) }
-        sut.outputs.loadingState.test {
-            assertValue(SyncState.FAILED)
-        }
-        sut.outputs.showRetry.test {
-            assertValue(true)
-        }
+        sut.outputs.circuitsState.test { assertEquals(SyncState.DONE, awaitItem()) }
+        sut.outputs.constructorsState.test { assertEquals(SyncState.DONE, awaitItem()) }
+        sut.outputs.driversState.test { assertEquals(SyncState.DONE, awaitItem()) }
+        sut.outputs.racesState.test { assertEquals(SyncState.FAILED, awaitItem()) }
+        sut.outputs.configState.test { assertEquals(SyncState.DONE, awaitItem()) }
+        sut.outputs.loadingState.test { assertEquals(SyncState.FAILED, awaitItem()) }
+        sut.outputs.showRetry.test { assertEquals(true, awaitItem()) }
 
-        val navigateObserver = sut.outputs.navigate.testObserve()
         advanceUntilIdle()
-        navigateObserver.assertEventNotFired()
+        sut.outputs.navigate.test {
+            assertEquals(null, awaitItem())
+        }
 
         verify(exactly = 0) {
             mockCacheRepository.initialSync = true
@@ -284,7 +264,7 @@ internal class SyncViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `start loading with constructors failing changes state to failed`() = coroutineTest {
+    fun `start loading with constructors failing changes state to failed`() = runTest {
         every { mockConfigRepository.requireSynchronisation } returns false
         coEvery { mockConstructorRepository.fetchConstructors() } returns false
 
@@ -295,21 +275,18 @@ internal class SyncViewModelTest: BaseTest() {
             mockResetConfigUseCase.ensureReset()
             mockFetchConfigUseCase.fetchAndApply()
         }
-        sut.outputs.circuitsState.test { assertValue(SyncState.DONE) }
-        sut.outputs.constructorsState.test { assertValue(SyncState.FAILED) }
-        sut.outputs.driversState.test { assertValue(SyncState.DONE) }
-        sut.outputs.racesState.test { assertValue(SyncState.DONE) }
-        sut.outputs.configState.test { assertValue(SyncState.DONE) }
-        sut.outputs.loadingState.test {
-            assertValue(SyncState.FAILED)
-        }
-        sut.outputs.showRetry.test {
-            assertValue(true)
-        }
+        sut.outputs.circuitsState.test { assertEquals(SyncState.DONE, awaitItem()) }
+        sut.outputs.constructorsState.test { assertEquals(SyncState.FAILED, awaitItem()) }
+        sut.outputs.driversState.test { assertEquals(SyncState.DONE, awaitItem()) }
+        sut.outputs.racesState.test { assertEquals(SyncState.DONE, awaitItem()) }
+        sut.outputs.configState.test { assertEquals(SyncState.DONE, awaitItem()) }
+        sut.outputs.loadingState.test { assertEquals(SyncState.FAILED, awaitItem()) }
+        sut.outputs.showRetry.test { assertEquals(true, awaitItem()) }
 
-        val navigateObserver = sut.outputs.navigate.testObserve()
         advanceUntilIdle()
-        navigateObserver.assertEventNotFired()
+        sut.outputs.navigate.test {
+            assertEquals(null, awaitItem())
+        }
 
         verify(exactly = 0) {
             mockCacheRepository.initialSync = true
@@ -317,7 +294,7 @@ internal class SyncViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `start loading with drivers failing changes state to failed`() = coroutineTest {
+    fun `start loading with drivers failing changes state to failed`() = runTest {
         every { mockConfigRepository.requireSynchronisation } returns false
         coEvery { mockDriverRepository.fetchDrivers() } returns false
 
@@ -328,21 +305,18 @@ internal class SyncViewModelTest: BaseTest() {
             mockResetConfigUseCase.ensureReset()
             mockFetchConfigUseCase.fetchAndApply()
         }
-        sut.outputs.circuitsState.test { assertValue(SyncState.DONE) }
-        sut.outputs.constructorsState.test { assertValue(SyncState.DONE) }
-        sut.outputs.driversState.test { assertValue(SyncState.FAILED) }
-        sut.outputs.racesState.test { assertValue(SyncState.DONE) }
-        sut.outputs.configState.test { assertValue(SyncState.DONE) }
-        sut.outputs.loadingState.test {
-            assertValue(SyncState.FAILED)
-        }
-        sut.outputs.showRetry.test {
-            assertValue(true)
-        }
+        sut.outputs.circuitsState.test { assertEquals(SyncState.DONE, awaitItem()) }
+        sut.outputs.constructorsState.test { assertEquals(SyncState.DONE, awaitItem()) }
+        sut.outputs.driversState.test { assertEquals(SyncState.FAILED, awaitItem()) }
+        sut.outputs.racesState.test { assertEquals(SyncState.DONE, awaitItem()) }
+        sut.outputs.configState.test { assertEquals(SyncState.DONE, awaitItem()) }
+        sut.outputs.loadingState.test { assertEquals(SyncState.FAILED, awaitItem()) }
+        sut.outputs.showRetry.test { assertEquals(true, awaitItem()) }
 
-        val navigateObserver = sut.outputs.navigate.testObserve()
         advanceUntilIdle()
-        navigateObserver.assertEventNotFired()
+        sut.outputs.navigate.test {
+            assertEquals(null, awaitItem())
+        }
 
         verify(exactly = 0) {
             mockCacheRepository.initialSync = true

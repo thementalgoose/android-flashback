@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import tmg.flashback.ui.model.NightMode
 import tmg.flashback.ui.repository.ThemeRepository
 import tmg.flashback.ui.usecases.ChangeNightModeUseCase
@@ -20,7 +22,7 @@ interface NightModeViewModelInputs {
 //region Outputs
 
 interface NightModeViewModelOutputs {
-    val currentlySelected: LiveData<NightMode>
+    val currentlySelected: StateFlow<NightMode>
 }
 
 //endregion
@@ -34,7 +36,7 @@ class NightModeViewModel @Inject constructor(
     var inputs: NightModeViewModelInputs = this
     var outputs: NightModeViewModelOutputs = this
 
-    override val currentlySelected: MutableLiveData<NightMode> = MutableLiveData()
+    override val currentlySelected: MutableStateFlow<NightMode> = MutableStateFlow(NightMode.DEFAULT)
 
     init {
         currentlySelected.value = themeRepository.nightMode

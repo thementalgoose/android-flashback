@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import tmg.flashback.ui.settings.Setting
 import tmg.flashback.ui.settings.Settings
 import tmg.flashback.web.repository.WebBrowserRepository
@@ -14,8 +16,8 @@ interface SettingsWebViewModelInputs {
 }
 
 interface SettingsWebViewModelOutputs {
-    val enable: LiveData<Boolean>
-    val enableJavascript: LiveData<Boolean>
+    val enable: StateFlow<Boolean>
+    val enableJavascript: StateFlow<Boolean>
 }
 
 @HiltViewModel
@@ -26,8 +28,8 @@ class SettingsWebViewModel @Inject constructor(
     val inputs: SettingsWebViewModelInputs = this
     val outputs: SettingsWebViewModelOutputs = this
 
-    override val enable: MutableLiveData<Boolean> = MutableLiveData(!webBrowserRepository.openInExternal)
-    override val enableJavascript: MutableLiveData<Boolean> = MutableLiveData(webBrowserRepository.enableJavascript)
+    override val enable: MutableStateFlow<Boolean> = MutableStateFlow(!webBrowserRepository.openInExternal)
+    override val enableJavascript: MutableStateFlow<Boolean> = MutableStateFlow(webBrowserRepository.enableJavascript)
 
     override fun prefClicked(pref: Setting) {
         when (pref.key) {
