@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -28,8 +29,8 @@ fun SettingsWebScreenVM(
 ) {
     ScreenView(screenName = "Settings - Web")
 
-    val webBrowserEnabled = viewModel.outputs.enable.observeAsState(false)
-    val javascriptEnabled = viewModel.outputs.enableJavascript.observeAsState(false)
+    val webBrowserEnabled = viewModel.outputs.enable.collectAsState(false)
+    val javascriptEnabled = viewModel.outputs.enableJavascript.collectAsState(false)
 
     SettingsWebScreen(
         showBack = showBack,

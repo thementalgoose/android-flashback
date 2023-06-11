@@ -1,8 +1,11 @@
 package tmg.flashback.ui.settings.appearance.nightmode
 
+import app.cash.turbine.test
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
+import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.ui.model.NightMode
@@ -28,11 +31,11 @@ internal class NightModeViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `initial value is pulled from theme repository`() {
+    fun `initial value is pulled from theme repository`() = runTest {
         initUnderTest()
 
         underTest.outputs.currentlySelected.test {
-            assertValue(NightMode.DEFAULT)
+            assertEquals(NightMode.DEFAULT, awaitItem())
         }
         verify {
             mockThemeRepository.nightMode

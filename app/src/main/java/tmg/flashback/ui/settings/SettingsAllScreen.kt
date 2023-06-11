@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -28,9 +29,9 @@ fun SettingsAllScreenVM(
 ) {
     ScreenView(screenName = "Settings")
 
-    val isThemeEnabled = viewModel.outputs.isThemeEnabled.observeAsState(false)
-    val isAdsEnabled = viewModel.outputs.isAdsEnabled.observeAsState(false)
-    val isRSSEnabled = viewModel.outputs.isRSSEnabled.observeAsState(false)
+    val isThemeEnabled = viewModel.outputs.isThemeEnabled.collectAsState(false)
+    val isAdsEnabled = viewModel.outputs.isAdsEnabled.collectAsState(false)
+    val isRSSEnabled = viewModel.outputs.isRSSEnabled.collectAsState(false)
 
     LaunchedEffect(Unit) {
         viewModel.refresh()

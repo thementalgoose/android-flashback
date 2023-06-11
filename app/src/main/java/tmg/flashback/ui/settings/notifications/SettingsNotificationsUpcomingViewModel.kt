@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import tmg.flashback.results.contract.ResultsNavigationComponent
 import tmg.flashback.results.repository.NotificationsRepositoryImpl
 import tmg.flashback.results.usecases.ScheduleNotificationsUseCase
@@ -19,12 +21,12 @@ interface SettingsNotificationsUpcomingViewModelInputs {
 }
 
 interface SettingsNotificationsUpcomingViewModelOutputs {
-    val permissionEnabled: LiveData<Boolean>
-    val freePracticeEnabled: LiveData<Boolean>
-    val qualifyingEnabled: LiveData<Boolean>
-    val sprintEnabled: LiveData<Boolean>
-    val raceEnabled: LiveData<Boolean>
-    val otherEnabled: LiveData<Boolean>
+    val permissionEnabled: StateFlow<Boolean>
+    val freePracticeEnabled: StateFlow<Boolean>
+    val qualifyingEnabled: StateFlow<Boolean>
+    val sprintEnabled: StateFlow<Boolean>
+    val raceEnabled: StateFlow<Boolean>
+    val otherEnabled: StateFlow<Boolean>
 }
 
 @HiltViewModel
@@ -39,12 +41,12 @@ class SettingsNotificationsUpcomingViewModel @Inject constructor(
     val inputs: SettingsNotificationsUpcomingViewModelInputs = this
     val outputs: SettingsNotificationsUpcomingViewModelOutputs = this
 
-    override val permissionEnabled: MutableLiveData<Boolean> = MutableLiveData(permissionRepository.isRuntimeNotificationsEnabled)
-    override val freePracticeEnabled: MutableLiveData<Boolean> = MutableLiveData(notificationRepository.notificationUpcomingFreePractice)
-    override val qualifyingEnabled: MutableLiveData<Boolean> = MutableLiveData(notificationRepository.notificationUpcomingQualifying)
-    override val sprintEnabled: MutableLiveData<Boolean> = MutableLiveData(notificationRepository.notificationUpcomingSprint)
-    override val raceEnabled: MutableLiveData<Boolean> = MutableLiveData(notificationRepository.notificationUpcomingRace)
-    override val otherEnabled: MutableLiveData<Boolean> = MutableLiveData(notificationRepository.notificationUpcomingOther)
+    override val permissionEnabled: MutableStateFlow<Boolean> = MutableStateFlow(permissionRepository.isRuntimeNotificationsEnabled)
+    override val freePracticeEnabled: MutableStateFlow<Boolean> = MutableStateFlow(notificationRepository.notificationUpcomingFreePractice)
+    override val qualifyingEnabled: MutableStateFlow<Boolean> = MutableStateFlow(notificationRepository.notificationUpcomingQualifying)
+    override val sprintEnabled: MutableStateFlow<Boolean> = MutableStateFlow(notificationRepository.notificationUpcomingSprint)
+    override val raceEnabled: MutableStateFlow<Boolean> = MutableStateFlow(notificationRepository.notificationUpcomingRace)
+    override val otherEnabled: MutableStateFlow<Boolean> = MutableStateFlow(notificationRepository.notificationUpcomingOther)
 
     override fun prefClicked(pref: Setting) {
         when (pref.key) {

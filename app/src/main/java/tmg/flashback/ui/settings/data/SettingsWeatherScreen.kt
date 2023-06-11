@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -28,8 +29,8 @@ fun SettingsWeatherScreenVM(
 ) {
     ScreenView(screenName = "Settings - Weather")
 
-    val temperatureMetric = viewModel.outputs.weatherTemperatureMetric.observeAsState(true)
-    val windspeedMetric = viewModel.outputs.weatherWindspeedMetric.observeAsState(false)
+    val temperatureMetric = viewModel.outputs.weatherTemperatureMetric.collectAsState(true)
+    val windspeedMetric = viewModel.outputs.weatherWindspeedMetric.collectAsState(false)
     SettingsWeatherScreen(
         showBack = showBack,
         actionUpClicked = actionUpClicked,

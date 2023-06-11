@@ -14,9 +14,12 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import tmg.flashback.crash_reporting.manager.CrashManager
 import tmg.flashback.debug.DebugNavigationComponent
@@ -47,16 +50,16 @@ interface DashboardNavViewModelInputs {
 }
 
 interface DashboardNavViewModelOutputs {
-    val currentlySelectedItem: LiveData<MenuItem>
-    val debugMenuItems: LiveData<List<DebugMenuItem>>
-    val appFeatureItemsList: LiveData<List<MenuItem>>
-    val seasonScreenItemsList: LiveData<List<MenuItem>>
+    val currentlySelectedItem: StateFlow<MenuItem>
+    val debugMenuItems: StateFlow<List<DebugMenuItem>>
+    val appFeatureItemsList: StateFlow<List<MenuItem>>
+    val seasonScreenItemsList: StateFlow<List<MenuItem>>
 
-    val showBottomBar: LiveData<Boolean>
-    val showMenu: LiveData<Boolean>
+    val showBottomBar: StateFlow<Boolean>
+    val showMenu: StateFlow<Boolean>
 
-    val seasonsItemsList: LiveData<List<NavigationTimelineItem>>
-    val currentlySelectedSeason: LiveData<Int>
+    val seasonsItemsList: StateFlow<List<NavigationTimelineItem>>
+    val currentlySelectedSeason: StateFlow<Int>
 
     val defaultSeason: Int
 }
@@ -82,7 +85,7 @@ class DashboardNavViewModel @Inject constructor(
 
     private val currentDestination: MutableStateFlow<String?> = MutableStateFlow(null)
 
-    override val currentlySelectedItem: LiveData<MenuItem> = currentDestination
+    override val currentlySelectedItem: StateFlow<MenuItem> = currentDestination
         .map { destination ->
             if (destination == null) return@map null
             val item: MenuItem? = when {
@@ -97,9 +100,9 @@ class DashboardNavViewModel @Inject constructor(
             return@map item
         }
         .filterNotNull()
-        .asLiveData(viewModelScope.coroutineContext)
+        .stateIn(viewModelScope, SharingStarted.Lazily, MenuItem.Calendar)
 
-    override val showMenu: LiveData<Boolean> = currentDestination
+    override val showMenu: StateFlow<Boolean> = currentDestination
         .map { destination ->
             if (destination == null) return@map null
 
@@ -112,23 +115,24 @@ class DashboardNavViewModel @Inject constructor(
             }
         }
         .filterNotNull()
-        .asLiveData(viewModelScope.coroutineContext)
+        .stateIn(viewModelScope, SharingStarted.Lazily, false)
 
-    override val showBottomBar: LiveData<Boolean> = currentDestination
+    override val showBottomBar: StateFlow<Boolean> = currentDestination
         .map {
             if (it == null) return@map false
             return@map it.startsWith("results/")
         }
-        .asLiveData(viewModelScope.coroutineContext)
+        .stateIn(viewModelScope, SharingStarted.Lazily, false)
 
-    override val appFeatureItemsList: MutableLiveData<List<MenuItem>> = MutableLiveData()
-    override val seasonScreenItemsList: MutableLiveData<List<MenuItem>> = MutableLiveData()
-    override val debugMenuItems: LiveData<List<DebugMenuItem>> = MutableLiveData(debugNavigationComponent.getDebugMenuItems())
+    override val appFeatureItemsList: MutableStateFlow<List<MenuItem>> = MutableStateFlow(emptyList())
+    override val seasonScreenItemsList: MutableStateFlow<List<MenuItem>> = MutableStateFlow(emptyList())
+    override val debugMenuItems: MutableStateFlow<List<DebugMenuItem>> = MutableStateFlow(debugNavigationComponent.getDebugMenuItems())
 
-    override val currentlySelectedSeason: MutableLiveData<Int> = MutableLiveData(defaultSeasonUseCase.defaultSeason)
+    override val currentlySelectedSeason: MutableStateFlow<Int> = MutableStateFlow(defaultSeasonUseCase.defaultSeason)
 
-    override val seasonsItemsList: LiveData<List<NavigationTimelineItem>> = currentlySelectedSeason
+    override val seasonsItemsList: StateFlow<List<NavigationTimelineItem>> = currentlySelectedSeason
         .map { season -> getSeasons(season) }
+        .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
     init {
         initialiseItems()
@@ -149,13 +153,13 @@ class DashboardNavViewModel @Inject constructor(
             add(MenuItem.Settings)
             add(MenuItem.Contact)
         }
-        seasonScreenItemsList.postValue(bottom)
-        appFeatureItemsList.postValue(side)
+        seasonScreenItemsList.value = bottom
+        appFeatureItemsList.value = side
     }
 
     override fun clickSeason(season: Int) {
         currentlySelectedSeason.value = season
-        val current = currentlySelectedItem.value ?: return
+        val current = currentlySelectedItem.value
         when (current) {
             MenuItem.Calendar -> navigator.navigate(Screen.Calendar.with(season))
             MenuItem.Constructors -> navigator.navigate(Screen.Constructors.with(season))

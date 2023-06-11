@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.eastereggs.model.MenuIcons
@@ -28,14 +30,14 @@ interface DashboardViewModelInputs {
 
 interface DashboardViewModelOutputs {
 
-    val isDarkMode: LiveData<Boolean>
-    val featurePromptsList: LiveData<List<FeaturePrompt>>
-    val appVersion: LiveData<String>
+    val isDarkMode: StateFlow<Boolean>
+    val featurePromptsList: StateFlow<List<FeaturePrompt>>
+    val appVersion: StateFlow<String>
 
     // Easter eggs
-    val snow: LiveData<Boolean>
-    val titleIcon: LiveData<MenuIcons?>
-    val ukraine: LiveData<Boolean>
+    val snow: StateFlow<Boolean>
+    val titleIcon: StateFlow<MenuIcons?>
+    val ukraine: StateFlow<Boolean>
 }
 
 @HiltViewModel
@@ -55,14 +57,14 @@ class DashboardViewModel @Inject constructor(
     val inputs: DashboardViewModelInputs = this
     val outputs: DashboardViewModelOutputs = this
 
-    override val isDarkMode: MutableLiveData<Boolean> = MutableLiveData()
-    override val appVersion: MutableLiveData<String> = MutableLiveData(buildConfigManager.versionName)
+    override val isDarkMode: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    override val appVersion: MutableStateFlow<String> = MutableStateFlow(buildConfigManager.versionName)
 
-    override val featurePromptsList: MutableLiveData<List<FeaturePrompt>> = MutableLiveData()
+    override val featurePromptsList: MutableStateFlow<List<FeaturePrompt>> = MutableStateFlow(emptyList())
 
-    override val snow: MutableLiveData<Boolean> = MutableLiveData(isSnowEnabledUseCase())
-    override val titleIcon: LiveData<MenuIcons?> = MutableLiveData(isMenuIconEnabledUseCase())
-    override val ukraine: LiveData<Boolean> = MutableLiveData(isUkraineEnabledUseCase())
+    override val snow: MutableStateFlow<Boolean> = MutableStateFlow(isSnowEnabledUseCase())
+    override val titleIcon: MutableStateFlow<MenuIcons?> = MutableStateFlow(isMenuIconEnabledUseCase())
+    override val ukraine: MutableStateFlow<Boolean> = MutableStateFlow(isUkraineEnabledUseCase())
 
     init {
         initialiseFeatureList()
@@ -77,11 +79,12 @@ class DashboardViewModel @Inject constructor(
             ) {
                 add(FeaturePrompt.RuntimeNotifications)
             }
-            if (!buildConfigManager.isRuntimeNotificationsSupported && !notificationRepository.seenNotificationOnboarding) {
+            if (!buildConfigManager.isRuntimeNotificationsSupported &&
+                !notificationRepository.seenNotificationOnboarding) {
                 add(FeaturePrompt.Notifications)
             }
         }
-        featurePromptsList.postValue(list)
+        featurePromptsList.value = list
     }
 
     override fun clickDarkMode(toState: Boolean) {

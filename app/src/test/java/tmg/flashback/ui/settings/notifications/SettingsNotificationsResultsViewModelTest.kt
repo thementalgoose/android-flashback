@@ -1,10 +1,13 @@
 package tmg.flashback.ui.settings.notifications
 
+import app.cash.turbine.test
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import tmg.flashback.results.repository.NotificationsRepositoryImpl
 import tmg.flashback.results.usecases.ResubscribeNotificationsUseCase
@@ -34,126 +37,124 @@ internal class SettingsNotificationsResultsViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `permission enabled is true when runtime permissions are enabled`() {
+    fun `permission enabled is true when runtime permissions are enabled`() = runTest {
         every { mockPermissionRepository.isRuntimeNotificationsEnabled } returns true
 
         initUnderTest()
         underTest.outputs.permissionEnabled.test {
-            assertValue(true)
+            assertEquals(true, awaitItem())
         }
     }
 
     @Test
-    fun `permission enabled is false when runtime permissions are disabled`() {
+    fun `permission enabled is false when runtime permissions are disabled`() = runTest {
         every { mockPermissionRepository.isRuntimeNotificationsEnabled } returns false
 
         initUnderTest()
         underTest.outputs.permissionEnabled.test {
-            assertValue(false)
+            assertEquals(false, awaitItem())
         }
     }
 
     @Test
-    fun `qualifying enabled is true when qualifying pref are enabled`() {
+    fun `qualifying enabled is true when qualifying pref are enabled`() = runTest {
         every { mockNotificationRepository.notificationNotifyQualifying } returns true
 
         initUnderTest()
         underTest.outputs.qualifyingEnabled.test {
-            assertValue(true)
+            assertEquals(true, awaitItem())
         }
     }
 
     @Test
-    fun `qualifying enabled is false when qualifying pref are disabled`() {
+    fun `qualifying enabled is false when qualifying pref are disabled`() = runTest {
         every { mockNotificationRepository.notificationNotifyQualifying } returns false
 
         initUnderTest()
         underTest.outputs.qualifyingEnabled.test {
-            assertValue(false)
+            assertEquals(false, awaitItem())
         }
     }
 
     @Test
-    fun `race enabled is true when race pref are enabled`() {
+    fun `race enabled is true when race pref are enabled`() = runTest {
         every { mockNotificationRepository.notificationNotifyRace } returns true
 
         initUnderTest()
         underTest.outputs.raceEnabled.test {
-            assertValue(true)
+            assertEquals(true, awaitItem())
         }
     }
 
     @Test
-    fun `race enabled is false when race pref are disabled`() {
+    fun `race enabled is false when race pref are disabled`() = runTest {
         every { mockNotificationRepository.notificationNotifyRace } returns false
 
         initUnderTest()
         underTest.outputs.raceEnabled.test {
-            assertValue(false)
+            assertEquals(false, awaitItem())
         }
     }
 
     @Test
-    fun `other enabled is true when other pref are enabled`() {
+    fun `other enabled is true when other pref are enabled`() = runTest {
         every { mockNotificationRepository.notificationNotifySprint } returns true
 
         initUnderTest()
         underTest.outputs.sprintEnabled.test {
-            assertValue(true)
+            assertEquals(true, awaitItem())
         }
     }
 
     @Test
-    fun `other enabled is false when other pref are disabled`() {
+    fun `other enabled is false when other pref are disabled`() = runTest {
         every { mockNotificationRepository.notificationNotifySprint } returns false
 
         initUnderTest()
         underTest.outputs.sprintEnabled.test {
-            assertValue(false)
+            assertEquals(false, awaitItem())
         }
     }
 
     @Test
-    fun `clicking enable permission calls permission flow`() {
+    fun `clicking enable permission calls permission flow`() = runTest {
         val deferred = CompletableDeferred<Boolean>(parent = null)
         every { mockPermissionManager.requestPermission(any()) } returns deferred
         every { mockPermissionRepository.isRuntimeNotificationsEnabled } returns false
 
         initUnderTest()
-        val observer = underTest.outputs.permissionEnabled.testObserve()
-        observer.assertEmittedCount(1)
+        underTest.outputs.permissionEnabled.test { awaitItem() }
 
         underTest.inputs.prefClicked(Settings.Notifications.notificationPermissionEnable)
         verify {
             mockPermissionManager.requestPermission(any())
         }
         deferred.complete(true)
-        observer.assertEmittedCount(2)
+        underTest.outputs.permissionEnabled.test { awaitItem() }
     }
 
     @Test
-    fun `clicking enable permission calls refresh if already enabled`() {
+    fun `clicking enable permission calls refresh if already enabled`() = runTest {
         val deferred = CompletableDeferred<Boolean>(parent = null)
         every { mockPermissionManager.requestPermission(any()) } returns deferred
         every { mockPermissionRepository.isRuntimeNotificationsEnabled } returns true
 
         initUnderTest()
-        val observer = underTest.outputs.permissionEnabled.testObserve()
-        observer.assertEmittedCount(1)
+        underTest.outputs.permissionEnabled.test { awaitItem() }
 
         underTest.inputs.prefClicked(Settings.Notifications.notificationPermissionEnable)
         verify(exactly = 0) {
             mockPermissionManager.requestPermission(any())
         }
-        observer.assertEmittedCount(2)
+        underTest.outputs.permissionEnabled.test { awaitItem() }
     }
 
     @Test
-    fun `clicking sprint updates pref and updates value`() {
+    fun `clicking sprint updates pref and updates value`() = runTest {
         every { mockNotificationRepository.notificationNotifySprint } returns false
 
         initUnderTest()
-        val observer = underTest.outputs.sprintEnabled.testObserve()
+        underTest.outputs.sprintEnabled.test { awaitItem() }
         underTest.inputs.prefClicked(Settings.Notifications.notificationResultsSprint(true))
 
         verify {
@@ -162,15 +163,15 @@ internal class SettingsNotificationsResultsViewModelTest: BaseTest() {
         coVerify {
             mockResubscribeNotificationsUseCase.resubscribe()
         }
-        observer.assertEmittedCount(2)
+        underTest.outputs.sprintEnabled.test { awaitItem() }
     }
 
     @Test
-    fun `clicking qualifying updates pref and updates value`() {
+    fun `clicking qualifying updates pref and updates value`() = runTest {
         every { mockNotificationRepository.notificationNotifyQualifying } returns false
 
         initUnderTest()
-        val observer = underTest.outputs.qualifyingEnabled.testObserve()
+        underTest.outputs.qualifyingEnabled.test { awaitItem() }
         underTest.inputs.prefClicked(Settings.Notifications.notificationResultsQualifying(true))
 
         verify {
@@ -179,15 +180,15 @@ internal class SettingsNotificationsResultsViewModelTest: BaseTest() {
         coVerify {
             mockResubscribeNotificationsUseCase.resubscribe()
         }
-        observer.assertEmittedCount(2)
+        underTest.outputs.qualifyingEnabled.test { awaitItem() }
     }
 
     @Test
-    fun `clicking race updates pref and updates value`() {
+    fun `clicking race updates pref and updates value`() = runTest {
         every { mockNotificationRepository.notificationNotifyRace } returns false
 
         initUnderTest()
-        val observer = underTest.outputs.raceEnabled.testObserve()
+        underTest.outputs.raceEnabled.test { awaitItem() }
         underTest.inputs.prefClicked(Settings.Notifications.notificationResultsRace(true))
 
         verify {
@@ -196,6 +197,6 @@ internal class SettingsNotificationsResultsViewModelTest: BaseTest() {
         coVerify {
             mockResubscribeNotificationsUseCase.resubscribe()
         }
-        observer.assertEmittedCount(2)
+        underTest.outputs.raceEnabled.test { awaitItem() }
     }
 }
