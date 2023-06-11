@@ -4,10 +4,8 @@ import kotlinx.serialization.json.Json
 import tmg.flashback.drivers.contract.model.DriverStatHistoryType
 import tmg.flashback.drivers.contract.model.ScreenDriverData
 import tmg.flashback.drivers.contract.model.ScreenDriverSeasonData
-import tmg.flashback.navigation.ActivityProvider
 import tmg.flashback.navigation.NavigationDestination
 import tmg.flashback.navigation.Screen
-import javax.inject.Inject
 
 
 @JvmInline

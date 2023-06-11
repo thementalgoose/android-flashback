@@ -2,7 +2,7 @@ package tmg.flashback.ui.settings.appearance.nightmode
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -19,7 +19,7 @@ fun NightModeScreenVM(
     viewModel: NightModeViewModel = hiltViewModel(),
     dismiss: () -> Unit,
 ) {
-    val nightMode = viewModel.outputs.currentlySelected.observeAsState(initial = NightMode.DEFAULT)
+    val nightMode = viewModel.outputs.currentlySelected.collectAsState(initial = NightMode.DEFAULT)
     NightModeScreen(
         currentlySelectedNightMode = nightMode.value,
         nightModeClicked = viewModel.inputs::selectNightMode,

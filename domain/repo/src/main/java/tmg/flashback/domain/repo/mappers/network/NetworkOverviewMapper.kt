@@ -1,7 +1,7 @@
 package tmg.flashback.domain.repo.mappers.network
 
-import tmg.flashback.flashbackapi.api.models.overview.OverviewRace
 import tmg.flashback.domain.persistence.models.overview.Overview
+import tmg.flashback.flashbackapi.api.models.overview.OverviewRace
 import javax.inject.Inject
 
 class NetworkOverviewMapper @Inject constructor() {

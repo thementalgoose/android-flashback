@@ -7,11 +7,11 @@ import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.ads.ads.repository.AdsRepository
 import tmg.flashback.device.managers.NetworkConnectivityManager
-import tmg.flashback.rss.repo.RssRepository
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.flashback.rss.contract.RSSConfigure
 import tmg.flashback.rss.network.RssService
+import tmg.flashback.rss.repo.RssRepository
 import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.utilities.extensions.then
 import java.util.*
@@ -30,8 +30,8 @@ interface RSSViewModelInputs {
 //region Outputs
 
 interface RSSViewModelOutputs {
-    val list: LiveData<List<RSSModel>>
-    val isRefreshing: LiveData<Boolean>
+    val list: StateFlow<List<RSSModel>>
+    val isRefreshing: StateFlow<Boolean>
 }
 
 //endregion
@@ -47,7 +47,7 @@ class RSSViewModel @Inject constructor(
     private val connectivityManager: NetworkConnectivityManager
 ): ViewModel(), RSSViewModelInputs, RSSViewModelOutputs {
 
-    override val isRefreshing: MutableLiveData<Boolean> = MutableLiveData()
+    override val isRefreshing: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
     private var refreshingUUID: String? = null
 
@@ -96,9 +96,9 @@ class RSSViewModel @Inject constructor(
             isRefreshing.value = false
         }
 
-    override val list: LiveData<List<RSSModel>> = newsList
+    override val list: StateFlow<List<RSSModel>> = newsList
         .shareIn(viewModelScope, SharingStarted.Lazily)
-        .asLiveData(viewModelScope.coroutineContext)
+        .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
     var inputs: RSSViewModelInputs = this
     var outputs: RSSViewModelOutputs = this

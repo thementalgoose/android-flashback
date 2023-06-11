@@ -6,13 +6,13 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import tmg.flashback.domain.persistence.models.standings.DriverStandingWithConstructors
+import tmg.flashback.domain.persistence.models.standings.model
 import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.model.SeasonDriverStandingSeason
 import tmg.flashback.formula1.model.SeasonDriverStandings
 import tmg.flashback.formula1.model.model
-import tmg.flashback.domain.persistence.models.standings.DriverStandingWithConstructors
-import tmg.flashback.domain.persistence.models.standings.model
 
 internal class DriverStandingMapperTest {
 

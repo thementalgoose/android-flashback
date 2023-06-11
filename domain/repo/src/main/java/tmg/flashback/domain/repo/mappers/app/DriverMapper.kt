@@ -1,11 +1,11 @@
 package tmg.flashback.domain.repo.mappers.app
 
+import tmg.flashback.domain.persistence.models.drivers.DriverSeasonRaceWithConstructor
+import tmg.flashback.domain.persistence.models.drivers.DriverSeasonWithRaces
 import tmg.flashback.formula1.enums.RaceStatus
 import tmg.flashback.formula1.model.DriverHistory
 import tmg.flashback.formula1.model.DriverHistorySeason
 import tmg.flashback.formula1.model.DriverHistorySeasonRace
-import tmg.flashback.domain.persistence.models.drivers.DriverSeasonRaceWithConstructor
-import tmg.flashback.domain.persistence.models.drivers.DriverSeasonWithRaces
 import javax.inject.Inject
 
 class DriverMapper @Inject constructor(

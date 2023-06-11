@@ -1,8 +1,11 @@
 package tmg.flashback.ui.settings.appearance.theme
 
+import app.cash.turbine.test
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
+import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.R
@@ -10,7 +13,6 @@ import tmg.flashback.ui.managers.ToastManager
 import tmg.flashback.ui.model.Theme
 import tmg.flashback.ui.repository.ThemeRepository
 import tmg.testutils.BaseTest
-import tmg.testutils.livedata.test
 
 internal class ThemeViewModelTest: BaseTest() {
 
@@ -32,11 +34,11 @@ internal class ThemeViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `initial value is pulled from theme repository`() {
+    fun `initial value is pulled from theme repository`() = runTest {
         initUnderTest()
 
         underTest.outputs.currentlySelected.test {
-            assertValue(Theme.DEFAULT)
+            assertEquals(Theme.DEFAULT, awaitItem())
         }
         verify {
             mockThemeRepository.theme

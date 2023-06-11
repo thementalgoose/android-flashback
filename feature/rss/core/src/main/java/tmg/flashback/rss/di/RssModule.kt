@@ -5,7 +5,6 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import tmg.flashback.rss.contract.usecases.RSSAppShortcutUseCase
-import tmg.flashback.rss.network.RssService
 import tmg.flashback.rss.usecases.RSSAppShortcutUseCaseImpl
 
 @Module

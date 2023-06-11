@@ -5,10 +5,10 @@ import retrofit2.HttpException
 import retrofit2.Response
 import tmg.flashback.crash_reporting.manager.CrashManager
 import tmg.flashback.device.managers.NetworkConnectivityManager
+import tmg.flashback.domain.repo.BuildConfig
 import tmg.flashback.flashbackapi.api.models.MetadataWrapper
 import tmg.flashback.flashbackapi.api.utils.data
 import tmg.flashback.flashbackapi.api.utils.hasData
-import tmg.flashback.domain.repo.BuildConfig
 import java.io.IOException
 import java.net.UnknownHostException
 

@@ -1,14 +1,15 @@
 package tmg.flashback.ui.settings.data
 
+import app.cash.turbine.test
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
+import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import tmg.flashback.ui.settings.Settings
 import tmg.flashback.weekend.repository.WeatherRepository
 import tmg.testutils.BaseTest
-import tmg.testutils.livedata.test
-import tmg.testutils.livedata.testObserve
 
 internal class SettingsWeatherViewModelTest: BaseTest() {
 
@@ -23,70 +24,70 @@ internal class SettingsWeatherViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `temperature is true when pref is true`() {
+    fun `temperature is true when pref is true`() = runTest {
         every { mockWeatherRepository.weatherTemperatureMetric } returns true
 
         initUnderTest()
         underTest.outputs.weatherTemperatureMetric.test {
-            assertValue(true)
+            assertEquals(true, awaitItem())
         }
     }
 
     @Test
-    fun `temperature is false when pref is false`() {
+    fun `temperature is false when pref is false`() = runTest {
         every { mockWeatherRepository.weatherTemperatureMetric } returns false
 
         initUnderTest()
         underTest.outputs.weatherTemperatureMetric.test {
-            assertValue(false)
+            assertEquals(false, awaitItem())
         }
     }
 
     @Test
-    fun `click show temperature updates pref and updates value`() {
+    fun `click show temperature updates pref and updates value`() = runTest {
         every { mockWeatherRepository.weatherTemperatureMetric } returns false
 
         initUnderTest()
-        val observer = underTest.outputs.weatherTemperatureMetric.testObserve()
+        underTest.outputs.weatherTemperatureMetric.test { awaitItem() }
         underTest.inputs.prefClicked(Settings.Data.temperatureUnits(true))
 
         verify {
             mockWeatherRepository.weatherTemperatureMetric = true
         }
-        observer.assertEmittedCount(2)
+        underTest.outputs.weatherTemperatureMetric.test { awaitItem() }
     }
 
     @Test
-    fun `windspeed metric is true when pref is true`() {
+    fun `windspeed metric is true when pref is true`() = runTest {
         every { mockWeatherRepository.weatherWindspeedMetric } returns true
 
         initUnderTest()
         underTest.outputs.weatherWindspeedMetric.test {
-            assertValue(true)
+            assertEquals(true, awaitItem())
         }
     }
 
     @Test
-    fun `windspeed metric is false when pref is false`() {
+    fun `windspeed metric is false when pref is false`() = runTest {
         every { mockWeatherRepository.weatherWindspeedMetric } returns false
 
         initUnderTest()
         underTest.outputs.weatherWindspeedMetric.test {
-            assertValue(false)
+            assertEquals(false, awaitItem())
         }
     }
 
     @Test
-    fun `click show windspeed metric updates pref and updates value`() {
+    fun `click show windspeed metric updates pref and updates value`() = runTest {
         every { mockWeatherRepository.weatherWindspeedMetric } returns false
 
         initUnderTest()
-        val observer = underTest.outputs.weatherWindspeedMetric.testObserve()
+        underTest.outputs.weatherWindspeedMetric.test { awaitItem() }
         underTest.inputs.prefClicked(Settings.Data.windSpeedUnits(true))
 
         verify {
             mockWeatherRepository.weatherWindspeedMetric = true
         }
-        observer.assertEmittedCount(2)
+        underTest.outputs.weatherWindspeedMetric.test { awaitItem() }
     }
 }

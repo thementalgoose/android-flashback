@@ -8,7 +8,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -22,23 +22,22 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.analytics.constants.AnalyticsConstants.analyticsCircuitId
+import tmg.flashback.circuits.R
 import tmg.flashback.formula1.enums.TrackLayout
 import tmg.flashback.formula1.extensions.positionIcon
 import tmg.flashback.formula1.model.CircuitHistoryRace
 import tmg.flashback.formula1.model.CircuitHistoryRaceResult
 import tmg.flashback.providers.CircuitHistoryRaceProvider
-import tmg.flashback.circuits.R
-import tmg.flashback.ui.components.flag.Flag
-import tmg.flashback.ui.components.errors.NotAvailable
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.buttons.ButtonSecondary
-import tmg.flashback.style.buttons.ButtonTertiary
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.ui.components.analytics.ScreenView
 import tmg.flashback.ui.components.drivers.DriverNumber
+import tmg.flashback.ui.components.errors.NotAvailable
+import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
@@ -65,8 +64,8 @@ fun CircuitScreenVM(
 
     viewModel.inputs.load(circuitId)
 
-    val list = viewModel.outputs.list.observeAsState(listOf(CircuitModel.Loading))
-    val isLoading = viewModel.outputs.showLoading.observeAsState(false)
+    val list = viewModel.outputs.list.collectAsState(listOf(CircuitModel.Loading))
+    val isLoading = viewModel.outputs.showLoading.collectAsState(false)
     SwipeRefresh(
         isLoading = isLoading.value,
         onRefresh = viewModel.inputs::refresh

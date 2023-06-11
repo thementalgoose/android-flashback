@@ -3,9 +3,9 @@ package tmg.flashback.drivers.ui.overview
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import org.threeten.bp.LocalDate
+import tmg.flashback.drivers.R
 import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.model
-import tmg.flashback.drivers.R
 import tmg.flashback.ui.components.navigation.PipeType
 
 fun DriverOverviewModel.Companion.headerModel(

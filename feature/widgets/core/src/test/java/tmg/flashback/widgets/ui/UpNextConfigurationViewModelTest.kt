@@ -1,14 +1,16 @@
 package tmg.flashback.widgets.ui
 
+import app.cash.turbine.test
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
+import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import tmg.flashback.widgets.repository.WidgetRepository
 import tmg.flashback.widgets.upnext.configure.UpNextConfigurationViewModel
 import tmg.flashback.widgets.usecases.UpdateWidgetsUseCaseImpl
 import tmg.testutils.BaseTest
-import tmg.testutils.livedata.test
 
 internal class UpNextConfigurationViewModelTest: BaseTest() {
 
@@ -25,27 +27,30 @@ internal class UpNextConfigurationViewModelTest: BaseTest() {
             updateWidgetsUseCase = mockUpdateWidgetsUseCase,
         )
         every { mockWidgetRepository.getShowBackground(widgetId) } returns true
+        every { mockWidgetRepository.getShowWeather(widgetId) } returns true
         underTest.inputs.load(widgetId)
     }
 
     @Test
-    fun `loading widget loads show background`() {
+    fun `loading widget loads show background`() = runTest {
         every { mockWidgetRepository.getShowBackground(widgetId) } returns true
 
         initUnderTest()
         underTest.outputs.showBackground.test {
-            assertValue(true)
+
+            assertEquals(true, awaitItem())
         }
     }
 
     @Test
-    fun `changing background updates background for app widget`() {
+    fun `changing background updates background for app widget`() = runTest {
 
         initUnderTest()
-        underTest.inputs.changeShowBackground(false)
 
         underTest.outputs.showBackground.test {
-            assertValue(false)
+            assertEquals(true, awaitItem())
+            underTest.inputs.changeShowBackground(false)
+            assertEquals(false, awaitItem())
         }
         verify {
             mockWidgetRepository.setShowBackground(widgetId, false)
@@ -53,13 +58,14 @@ internal class UpNextConfigurationViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `changing weather updates weather for app widget`() {
+    fun `changing weather updates weather for app widget`() = runTest {
 
         initUnderTest()
-        underTest.inputs.changeShowWeather(false)
 
         underTest.outputs.showWeather.test {
-            assertValue(false)
+            assertEquals(true, awaitItem())
+            underTest.inputs.changeShowWeather(false)
+            assertEquals(false, awaitItem())
         }
         verify {
             mockWidgetRepository.setShowWeather(widgetId, false)
@@ -73,9 +79,6 @@ internal class UpNextConfigurationViewModelTest: BaseTest() {
 
         verify {
             mockUpdateWidgetsUseCase.update()
-        }
-        underTest.outputs.save.test {
-            assertEmittedCount(1)
         }
     }
 }

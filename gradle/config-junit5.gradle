@@ -52,6 +52,7 @@ tasks.withType(Test) {
 }
 
 dependencies {
+    testImplementation libs.turbine
     testImplementation libs.junit5.api
     testImplementation libs.junit5.engine
     testImplementation libs.junit5.params

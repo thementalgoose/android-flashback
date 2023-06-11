@@ -1,14 +1,16 @@
 package tmg.flashback.results.ui.feature.notificationonboarding
 
+import app.cash.turbine.test
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
+import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.results.repository.NotificationsRepositoryImpl
 import tmg.flashback.results.repository.models.NotificationChannel
 import tmg.testutils.BaseTest
-import tmg.testutils.livedata.test
 import tmg.utilities.models.Selected
 
 internal class NotificationOnboardingViewModelTest: BaseTest() {
@@ -40,15 +42,15 @@ internal class NotificationOnboardingViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `init updates list with initial values`() {
+    fun `init updates list with initial values`() = runTest {
         initUnderTest()
         underTest.notificationPreferences.test {
-            assertValue(NotificationChannel.values().map {
+            assertEquals(NotificationChannel.values().map {
                 Selected(
                     NotificationOnboardingModel(it.name, it, it.label, it.icon),
                     true
                 )
-            })
+            }, awaitItem())
         }
     }
 
@@ -89,15 +91,15 @@ internal class NotificationOnboardingViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `selecting notification channel updates list with new values`() {
+    fun `selecting notification channel updates list with new values`() = runTest {
         initUnderTest()
         underTest.notificationPreferences.test {
-            assertValue(NotificationChannel.values().map {
+            assertEquals(NotificationChannel.values().map {
                 Selected(
                     NotificationOnboardingModel(it.name, it, it.label, it.icon),
                     true
                 )
-            })
+            }, awaitItem())
         }
 
         // Assumes selecting channel works
@@ -105,12 +107,12 @@ internal class NotificationOnboardingViewModelTest: BaseTest() {
         underTest.inputs.selectNotificationChannel(NotificationChannel.RACE)
 
         underTest.notificationPreferences.test {
-            assertValue(NotificationChannel.values().map {
+            assertEquals(NotificationChannel.values().map {
                 Selected(
                     NotificationOnboardingModel(it.name, it, it.label, it.icon),
                     it != NotificationChannel.RACE
                 )
-            })
+            }, awaitItem())
         }
     }
 }

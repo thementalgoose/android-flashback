@@ -1,5 +1,6 @@
 package tmg.flashback.drivers.ui.overview
 
+import app.cash.turbine.test
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
@@ -7,9 +8,13 @@ import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.device.managers.NetworkConnectivityManager
+import tmg.flashback.domain.repo.DriverRepository
 import tmg.flashback.drivers.R
 import tmg.flashback.drivers.contract.DriverNavigationComponent
 import tmg.flashback.drivers.contract.DriverSeason
@@ -20,11 +25,8 @@ import tmg.flashback.formula1.model.DriverHistorySeason
 import tmg.flashback.formula1.model.model
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
-import tmg.flashback.domain.repo.DriverRepository
 import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.testutils.BaseTest
-import tmg.testutils.livedata.assertListMatchesItem
-import tmg.testutils.livedata.test
 
 internal class DriverOverviewViewModelTest: BaseTest() {
 
@@ -57,7 +59,7 @@ internal class DriverOverviewViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `opening driver stat history launches stats navigation component`() = coroutineTest {
+    fun `opening driver stat history launches stats navigation component`() = runTest {
         initSUT()
         sut.inputs.setup("driverId", "firstName lastName")
 
@@ -71,7 +73,7 @@ internal class DriverOverviewViewModelTest: BaseTest() {
     //region List
 
     @Test
-    fun `driver data with empty results and no network shows pull to refresh`() = coroutineTest {
+    fun `driver data with empty results and no network shows pull to refresh`() = runTest {
         val input = DriverHistory.model(standings = emptyList())
         every { mockDriverRepository.getDriverOverview(any()) } returns flow { emit(input) }
         every { mockNetworkConnectivityManager.isConnected } returns false
@@ -80,15 +82,15 @@ internal class DriverOverviewViewModelTest: BaseTest() {
         sut.inputs.setup("driverId", "firstName lastName")
 
         sut.outputs.list.test {
-            assertValue(listOf(
+            assertEquals(listOf(
                 DriverOverviewModel.headerModel(),
                 DriverOverviewModel.NetworkError
-            ))
+            ), awaitItem())
         }
     }
 
     @Test
-    fun `driver data with null item and no network shows pull to refresh`() = coroutineTest {
+    fun `driver data with null item and no network shows pull to refresh`() = runTest {
         every { mockDriverRepository.getDriverOverview(any()) } returns flow { emit(null) }
         every { mockNetworkConnectivityManager.isConnected } returns false
 
@@ -96,14 +98,14 @@ internal class DriverOverviewViewModelTest: BaseTest() {
         sut.inputs.setup("driverId", "firstName lastName")
 
         sut.outputs.list.test {
-            assertValue(listOf(
+            assertEquals(listOf(
                 DriverOverviewModel.NetworkError
-            ))
+            ), awaitItem())
         }
     }
 
     @Test
-    fun `driver data with empty results and network shows data unavailable`() = coroutineTest {
+    fun `driver data with empty results and network shows data unavailable`() = runTest {
         val input = DriverHistory.model(standings = emptyList())
         every { mockDriverRepository.getDriverOverview(any()) } returns flow { emit(input) }
         every { mockNetworkConnectivityManager.isConnected } returns true
@@ -112,15 +114,15 @@ internal class DriverOverviewViewModelTest: BaseTest() {
         sut.inputs.setup("driverId", "firstName lastName")
 
         sut.outputs.list.test {
-            assertValue(mutableListOf(
+            assertEquals(mutableListOf(
                 DriverOverviewModel.headerModel(),
                 DriverOverviewModel.InternalError
-            ))
+            ), awaitItem())
         }
     }
 
     @Test
-    fun `driver data with results and network shows list of results in descending order`() = coroutineTest {
+    fun `driver data with results and network shows list of results in descending order`() = runTest {
         val input = DriverHistory.model(standings = listOf(
             DriverHistorySeason.model(season = 2019),
             DriverHistorySeason.model(season = 2020)
@@ -131,21 +133,22 @@ internal class DriverOverviewViewModelTest: BaseTest() {
         sut.inputs.setup("driverId", "firstName lastName")
 
         sut.outputs.list.test {
-            assertListMatchesItem { it is DriverOverviewModel.RacedFor && it.season == 2019 }
-            assertListMatchesItem { it is DriverOverviewModel.RacedFor && it.season == 2020 }
+            val item = awaitItem()
+            assertTrue(item.any { it is DriverOverviewModel.RacedFor && it.season == 2019 })
+            assertTrue(item.any { it is DriverOverviewModel.RacedFor && it.season == 2020 })
 
-            assertListMatchesItem { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_driver }
-            assertListMatchesItem { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_standings }
-            assertListMatchesItem { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_podium }
-            assertListMatchesItem { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_race_starts }
-            assertListMatchesItem { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_race_finishes }
-            assertListMatchesItem { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_race_retirements }
-            assertListMatchesItem { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_best_finish }
-            assertListMatchesItem { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_finishes_in_points }
-            assertListMatchesItem { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_race_points }
-            assertListMatchesItem { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_qualifying_pole }
-            assertListMatchesItem { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_qualifying_front_row }
-            assertListMatchesItem { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_qualifying_top_ten }
+            assertTrue(item.any { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_driver })
+            assertTrue(item.any { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_standings })
+            assertTrue(item.any { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_podium })
+            assertTrue(item.any { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_race_starts })
+            assertTrue(item.any { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_race_finishes })
+            assertTrue(item.any { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_race_retirements })
+            assertTrue(item.any { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_best_finish })
+            assertTrue(item.any { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_finishes_in_points })
+            assertTrue(item.any { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_race_points })
+            assertTrue(item.any { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_qualifying_pole })
+            assertTrue(item.any { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_qualifying_front_row })
+            assertTrue(item.any { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_qualifying_top_ten })
         }
     }
 
@@ -154,7 +157,7 @@ internal class DriverOverviewViewModelTest: BaseTest() {
     //region Request
 
     @Test
-    fun `driver request is not made when season count is found`() = coroutineTest {
+    fun `driver request is not made when season count is found`() = runTest {
         coEvery { mockDriverRepository.getDriverSeasonCount(any()) } returns 1
 
         initSUT()
@@ -166,7 +169,7 @@ internal class DriverOverviewViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `driver request is made when season count is 0`() = coroutineTest {
+    fun `driver request is made when season count is 0`() = runTest {
         coEvery { mockDriverRepository.getDriverSeasonCount(any()) } returns 0
 
         initSUT()
@@ -176,24 +179,21 @@ internal class DriverOverviewViewModelTest: BaseTest() {
         }
 
         sut.outputs.list.test {
-            assertValue(listOf(
-                DriverOverviewModel.Loading
-            ), atIndex = 0)
+            val item = awaitItem()
+            assertTrue(item.any { it is DriverOverviewModel.RacedFor && it.season == 2020 })
 
-            assertListMatchesItem(atIndex = 1) { it is DriverOverviewModel.RacedFor && it.season == 2020 }
-
-            assertListMatchesItem(atIndex = 1) { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_driver }
-            assertListMatchesItem(atIndex = 1) { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_standings }
-            assertListMatchesItem(atIndex = 1) { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_podium }
-            assertListMatchesItem(atIndex = 1) { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_race_starts }
-            assertListMatchesItem(atIndex = 1) { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_race_finishes }
-            assertListMatchesItem(atIndex = 1) { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_race_retirements }
-            assertListMatchesItem(atIndex = 1) { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_best_finish }
-            assertListMatchesItem(atIndex = 1) { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_finishes_in_points }
-            assertListMatchesItem(atIndex = 1) { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_race_points }
-            assertListMatchesItem(atIndex = 1) { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_qualifying_pole }
-            assertListMatchesItem(atIndex = 1) { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_qualifying_front_row }
-            assertListMatchesItem(atIndex = 1) { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_qualifying_top_ten }
+            assertTrue(item.any { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_driver })
+            assertTrue(item.any { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_standings })
+            assertTrue(item.any { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_podium })
+            assertTrue(item.any { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_race_starts })
+            assertTrue(item.any { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_race_finishes })
+            assertTrue(item.any { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_race_retirements })
+            assertTrue(item.any { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_best_finish })
+            assertTrue(item.any { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_finishes_in_points })
+            assertTrue(item.any { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_race_points })
+            assertTrue(item.any { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_qualifying_pole })
+            assertTrue(item.any { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_qualifying_front_row })
+            assertTrue(item.any { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_qualifying_top_ten })
         }
     }
 
@@ -236,7 +236,7 @@ internal class DriverOverviewViewModelTest: BaseTest() {
     //region Refresh
 
     @Test
-    fun `refresh calls driver repository`() = coroutineTest {
+    fun `refresh calls driver repository`() = runTest {
         initSUT()
         sut.inputs.setup("driverId", "firstName lastName")
 
@@ -248,7 +248,7 @@ internal class DriverOverviewViewModelTest: BaseTest() {
             mockDriverRepository.fetchDriver(any())
         }
         sut.outputs.showLoading.test {
-            assertValue(false)
+            assertEquals(false, awaitItem())
         }
     }
 

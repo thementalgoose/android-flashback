@@ -1,10 +1,10 @@
 package tmg.flashback.ui.settings.notifications
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import tmg.flashback.results.repository.NotificationsRepositoryImpl
 import tmg.flashback.results.usecases.ResubscribeNotificationsUseCase
@@ -20,10 +20,10 @@ interface SettingsNotificationsResultsViewModelInputs {
 }
 
 interface SettingsNotificationsResultsViewModelOutputs {
-    val permissionEnabled: LiveData<Boolean>
-    val qualifyingEnabled: LiveData<Boolean>
-    val sprintEnabled: LiveData<Boolean>
-    val raceEnabled: LiveData<Boolean>
+    val permissionEnabled: StateFlow<Boolean>
+    val qualifyingEnabled: StateFlow<Boolean>
+    val sprintEnabled: StateFlow<Boolean>
+    val raceEnabled: StateFlow<Boolean>
 }
 
 @HiltViewModel
@@ -37,10 +37,10 @@ class SettingsNotificationsResultsViewModel @Inject constructor(
     val inputs: SettingsNotificationsResultsViewModelInputs = this
     val outputs: SettingsNotificationsResultsViewModelOutputs = this
 
-    override val permissionEnabled: MutableLiveData<Boolean> = MutableLiveData(permissionRepository.isRuntimeNotificationsEnabled)
-    override val qualifyingEnabled: MutableLiveData<Boolean> = MutableLiveData(notificationRepository.notificationNotifyQualifying)
-    override val sprintEnabled: MutableLiveData<Boolean> = MutableLiveData(notificationRepository.notificationNotifySprint)
-    override val raceEnabled: MutableLiveData<Boolean> = MutableLiveData(notificationRepository.notificationNotifyRace)
+    override val permissionEnabled: MutableStateFlow<Boolean> = MutableStateFlow(permissionRepository.isRuntimeNotificationsEnabled)
+    override val qualifyingEnabled: MutableStateFlow<Boolean> = MutableStateFlow(notificationRepository.notificationNotifyQualifying)
+    override val sprintEnabled: MutableStateFlow<Boolean> = MutableStateFlow(notificationRepository.notificationNotifySprint)
+    override val raceEnabled: MutableStateFlow<Boolean> = MutableStateFlow(notificationRepository.notificationNotifyRace)
 
     override fun prefClicked(pref: Setting) {
         when (pref.key) {

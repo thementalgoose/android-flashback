@@ -1,15 +1,17 @@
 package tmg.flashback.results.ui.events
 
+import app.cash.turbine.test
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
+import tmg.flashback.domain.repo.EventsRepository
 import tmg.flashback.formula1.model.Event
 import tmg.flashback.formula1.model.model
-import tmg.flashback.domain.repo.EventsRepository
 import tmg.testutils.BaseTest
-import tmg.testutils.livedata.test
 
 internal class EventsViewModelTest: BaseTest() {
 
@@ -25,7 +27,7 @@ internal class EventsViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `setup events returns list from repository`() {
+    fun `setup events returns list from repository`() = runTest {
         val event1 = Event.model(date = LocalDate.of(2020, 10, 2))
         val event2 = Event.model(date = LocalDate.of(2020, 10, 3))
         every { mockEventsRepository.getEvents(2020) } returns flow { emit(listOf(event2, event1)) }
@@ -34,7 +36,7 @@ internal class EventsViewModelTest: BaseTest() {
         underTest.inputs.setup(2020)
 
         underTest.outputs.events.test {
-            assertValue(listOf(event1, event2))
+            assertEquals(listOf(event1, event2), awaitItem())
         }
     }
 }

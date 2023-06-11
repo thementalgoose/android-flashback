@@ -9,7 +9,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -28,10 +28,11 @@ import tmg.flashback.widgets.R
 @Composable
 internal fun UpNextConfigurationScreenVM(
     actionUpClicked: () -> Unit,
+    saveClicked: () -> Unit,
     viewModel: UpNextConfigurationViewModel = hiltViewModel()
 ) {
-    val showBackground = viewModel.outputs.showBackground.observeAsState(initial = false)
-    val showWeather = viewModel.outputs.showWeather.observeAsState(initial = false)
+    val showBackground = viewModel.outputs.showBackground.collectAsState(initial = false)
+    val showWeather = viewModel.outputs.showWeather.collectAsState(initial = false)
 
     UpNextConfigurationScreen(
         actionUpClicked = actionUpClicked,
@@ -39,7 +40,10 @@ internal fun UpNextConfigurationScreenVM(
         updateShowBackground = viewModel.inputs::changeShowBackground,
         showWeather = showWeather.value,
         updateShowWeather = viewModel.inputs::changeShowWeather,
-        save = viewModel.inputs::save
+        save = {
+            viewModel.inputs.save()
+            saveClicked()
+        }
     )
 }
 

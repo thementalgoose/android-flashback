@@ -10,12 +10,12 @@ import androidx.compose.ui.unit.dp
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.Driver
 import tmg.flashback.providers.DriverProvider
-import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.style.AppTheme
-import tmg.flashback.weekend.R
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.text.TextBody2
+import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.ui.utils.pluralResource
+import tmg.flashback.weekend.R
 import kotlin.math.roundToInt
 
 @Composable

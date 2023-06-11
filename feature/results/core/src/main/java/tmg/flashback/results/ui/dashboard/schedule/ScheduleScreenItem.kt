@@ -32,7 +32,6 @@ import tmg.flashback.formula1.model.Schedule
 import tmg.flashback.providers.OverviewRaceProvider
 import tmg.flashback.results.R
 import tmg.flashback.results.repository.models.NotificationSchedule
-import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
@@ -40,6 +39,7 @@ import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextSection
 import tmg.flashback.style.text.TextTitle
+import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.ui.components.layouts.Container
 import tmg.flashback.ui.components.now.Now
 import tmg.utilities.extensions.format

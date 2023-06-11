@@ -4,8 +4,8 @@ import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
 import org.threeten.bp.format.DateTimeParseException
 import org.threeten.bp.temporal.ChronoUnit
-import tmg.flashback.prefs.manager.PreferenceManager
 import tmg.flashback.domain.repo.constants.CacheTimeout
+import tmg.flashback.prefs.manager.PreferenceManager
 import java.util.Locale
 import javax.inject.Inject
 import javax.inject.Singleton

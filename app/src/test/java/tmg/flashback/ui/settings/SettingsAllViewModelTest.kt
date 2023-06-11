@@ -1,22 +1,23 @@
 package tmg.flashback.ui.settings
 
+import app.cash.turbine.test
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
 import io.mockk.verify
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import tmg.flashback.ads.ads.repository.AdsRepository
 import tmg.flashback.device.managers.BuildConfigManager
-import tmg.flashback.rss.repo.RssRepository
 import tmg.flashback.navigation.NavigationDestination
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.flashback.rss.contract.RSSConfigure
+import tmg.flashback.rss.repo.RssRepository
 import tmg.flashback.ui.repository.ThemeRepository
 import tmg.flashback.ui.settings.appearance.AppearanceNavigationComponent
 import tmg.testutils.BaseTest
-import tmg.testutils.livedata.test
 
 internal class SettingsAllViewModelTest: BaseTest() {
 
@@ -41,75 +42,75 @@ internal class SettingsAllViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `theme is disabled if theme picker is disabled`() {
+    fun `theme is disabled if theme picker is disabled`() = runTest {
         every { mockThemeRepository.enableThemePicker } returns false
         every { mockBuildConfigManager.isMonetThemeSupported } returns true
 
         initUnderTest()
         underTest.outputs.isThemeEnabled.test {
-            assertValue(false)
+            assertEquals(false, awaitItem())
         }
     }
 
     @Test
-    fun `theme is disabled if less than android 12`() {
+    fun `theme is disabled if less than android 12`() = runTest {
         every { mockThemeRepository.enableThemePicker } returns true
         every { mockBuildConfigManager.isMonetThemeSupported } returns false
 
         initUnderTest()
         underTest.outputs.isThemeEnabled.test {
-            assertValue(false)
+            assertEquals(false, awaitItem())
         }
     }
 
     @Test
-    fun `theme is enabled if enabled in config and android 12 or more`() {
+    fun `theme is enabled if enabled in config and android 12 or more`() = runTest {
         every { mockThemeRepository.enableThemePicker } returns true
         every { mockBuildConfigManager.isMonetThemeSupported } returns true
 
         initUnderTest()
         underTest.outputs.isThemeEnabled.test {
-            assertValue(true)
+            assertEquals(true, awaitItem())
         }
     }
 
     @Test
-    fun `ads is enabled if user pref enabled`() {
+    fun `ads is enabled if user pref enabled`() = runTest {
         every { mockAdsRepository.allowUserConfig } returns true
 
         initUnderTest()
         underTest.outputs.isAdsEnabled.test {
-            assertValue(true)
+            assertEquals(true, awaitItem())
         }
     }
 
     @Test
-    fun `ads is disabled if user pref disabled`() {
+    fun `ads is disabled if user pref disabled`() = runTest {
         every { mockAdsRepository.allowUserConfig } returns false
 
         initUnderTest()
         underTest.outputs.isAdsEnabled.test {
-            assertValue(false)
+            assertEquals(false, awaitItem())
         }
     }
 
     @Test
-    fun `rss is enabled if rss in config is enabled`() {
+    fun `rss is enabled if rss in config is enabled`() = runTest {
         every { mockRSSRepository.enabled } returns true
 
         initUnderTest()
         underTest.outputs.isRSSEnabled.test {
-            assertValue(true)
+            assertEquals(true, awaitItem())
         }
     }
 
     @Test
-    fun `rss is disabled if rss in config is disabled`() {
+    fun `rss is disabled if rss in config is disabled`() = runTest {
         every { mockRSSRepository.enabled } returns false
 
         initUnderTest()
         underTest.outputs.isRSSEnabled.test {
-            assertValue(false)
+            assertEquals(false, awaitItem())
         }
     }
 

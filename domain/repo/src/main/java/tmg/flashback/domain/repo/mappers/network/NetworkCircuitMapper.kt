@@ -1,8 +1,8 @@
 package tmg.flashback.domain.repo.mappers.network
 
+import tmg.flashback.domain.persistence.models.circuit.*
 import tmg.flashback.flashbackapi.api.models.circuits.CircuitPreviewPosition
 import tmg.flashback.flashbackapi.api.models.circuits.CircuitResult
-import tmg.flashback.domain.persistence.models.circuit.*
 import javax.inject.Inject
 
 class NetworkCircuitMapper @Inject constructor() {

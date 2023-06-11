@@ -5,12 +5,12 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.NetworkSchedule
 import tmg.flashback.RoomSchedule
+import tmg.flashback.domain.persistence.models.overview.Schedule
+import tmg.flashback.domain.persistence.models.overview.model
 import tmg.flashback.flashbackapi.api.models.overview.OverviewRace
 import tmg.flashback.flashbackapi.api.models.overview.model
 import tmg.flashback.flashbackapi.api.models.races.Race
 import tmg.flashback.flashbackapi.api.models.races.model
-import tmg.flashback.domain.persistence.models.overview.Schedule
-import tmg.flashback.domain.persistence.models.overview.model
 
 internal class NetworkScheduleMapperTest {
 

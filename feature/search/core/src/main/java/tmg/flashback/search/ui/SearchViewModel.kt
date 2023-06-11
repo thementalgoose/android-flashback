@@ -1,37 +1,37 @@
 package tmg.flashback.search.ui
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import tmg.flashback.ads.ads.repository.AdsRepository
 import tmg.flashback.circuits.contract.Circuit
 import tmg.flashback.circuits.contract.with
 import tmg.flashback.constructors.contract.Constructor
 import tmg.flashback.constructors.contract.with
+import tmg.flashback.domain.repo.CircuitRepository
+import tmg.flashback.domain.repo.ConstructorRepository
+import tmg.flashback.domain.repo.DriverRepository
+import tmg.flashback.domain.repo.OverviewRepository
 import tmg.flashback.drivers.contract.Driver
 import tmg.flashback.drivers.contract.with
 import tmg.flashback.formula1.model.Circuit
 import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.model.OverviewRace
-import tmg.flashback.domain.repo.CircuitRepository
-import tmg.flashback.domain.repo.ConstructorRepository
-import tmg.flashback.domain.repo.DriverRepository
-import tmg.flashback.domain.repo.OverviewRepository
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.flashback.weekend.contract.Weekend
@@ -48,9 +48,9 @@ interface SearchViewModelInputs {
 }
 
 interface SearchViewModelOutputs {
-    val results: LiveData<List<SearchItem>>
-    val selectedCategory: LiveData<SearchCategory?>
-    val isLoading: LiveData<Boolean>
+    val results: StateFlow<List<SearchItem>>
+    val selectedCategory: StateFlow<SearchCategory?>
+    val isLoading: StateFlow<Boolean>
 }
 
 @HiltViewModel
@@ -69,9 +69,9 @@ class SearchViewModel @Inject constructor(
 
     private val category: MutableStateFlow<SearchCategory?> = MutableStateFlow(null)
     private val search: MutableStateFlow<String> = MutableStateFlow("")
-    override val isLoading: MutableLiveData<Boolean> = MutableLiveData(false)
+    override val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
-    override val results: LiveData<List<SearchItem>> = category
+    override val results: StateFlow<List<SearchItem>> = category
         .filterNotNull()
         .flatMapLatest { category ->
             when (category) {
@@ -123,10 +123,10 @@ class SearchViewModel @Inject constructor(
             })
         }
         .flowOn(ioDispatcher)
-        .asLiveData(viewModelScope.coroutineContext)
+        .stateIn(viewModelScope, SharingStarted.Lazily, listOf(SearchItem.Placeholder))
 
-    override val selectedCategory: LiveData<SearchCategory?> = category
-        .asLiveData(viewModelScope.coroutineContext)
+    override val selectedCategory: StateFlow<SearchCategory?> = category
+        .stateIn(viewModelScope, SharingStarted.Lazily, null)
 
     override fun inputCategory(searchCategory: SearchCategory) {
         this.category.value = searchCategory
@@ -182,7 +182,7 @@ class SearchViewModel @Inject constructor(
 
     override fun refresh() {
         viewModelScope.launch(ioDispatcher) {
-            isLoading.postValue(true)
+            isLoading.value = true
             when (category.value) {
                 SearchCategory.DRIVER -> {
                     driverRepository.fetchDrivers()
@@ -198,7 +198,7 @@ class SearchViewModel @Inject constructor(
                 }
                 null -> { }
             }
-            isLoading.postValue(false)
+            isLoading.value = false
         }
     }
 

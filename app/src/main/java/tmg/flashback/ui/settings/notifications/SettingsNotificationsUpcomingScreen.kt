@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -30,12 +30,12 @@ fun SettingsNotificationsUpcomingScreenVM(
 ) {
     ScreenView(screenName = "Settings - Notification Upcoming")
 
-    val permissionEnabled = viewModel.outputs.permissionEnabled.observeAsState(false)
-    val freePracticeEnabled = viewModel.outputs.freePracticeEnabled.observeAsState(false)
-    val qualifyingEnabled = viewModel.outputs.qualifyingEnabled.observeAsState(false)
-    val sprintEnabled = viewModel.outputs.sprintEnabled.observeAsState(false)
-    val raceEnabled = viewModel.outputs.raceEnabled.observeAsState(false)
-    val otherEnabled = viewModel.outputs.otherEnabled.observeAsState(false)
+    val permissionEnabled = viewModel.outputs.permissionEnabled.collectAsState(false)
+    val freePracticeEnabled = viewModel.outputs.freePracticeEnabled.collectAsState(false)
+    val qualifyingEnabled = viewModel.outputs.qualifyingEnabled.collectAsState(false)
+    val sprintEnabled = viewModel.outputs.sprintEnabled.collectAsState(false)
+    val raceEnabled = viewModel.outputs.raceEnabled.collectAsState(false)
+    val otherEnabled = viewModel.outputs.otherEnabled.collectAsState(false)
 
     LaunchedEffect(Unit) {
         viewModel.refresh()

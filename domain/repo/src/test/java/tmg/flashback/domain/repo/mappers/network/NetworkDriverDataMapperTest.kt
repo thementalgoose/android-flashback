@@ -5,9 +5,9 @@ import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.NetworkDriver
-import tmg.flashback.flashbackapi.api.models.drivers.model
 import tmg.flashback.domain.persistence.models.drivers.Driver
 import tmg.flashback.domain.persistence.models.drivers.model
+import tmg.flashback.flashbackapi.api.models.drivers.model
 
 internal class NetworkDriverDataMapperTest {
 

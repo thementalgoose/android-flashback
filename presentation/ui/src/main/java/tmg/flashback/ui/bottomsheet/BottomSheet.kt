@@ -21,7 +21,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
-import tmg.flashback.style.AppTheme
 
 /**
  * Modal sheet that behaves like bottom sheet and draws over system UI.

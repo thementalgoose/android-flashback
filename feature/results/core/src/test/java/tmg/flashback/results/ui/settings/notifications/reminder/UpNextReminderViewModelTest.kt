@@ -1,15 +1,17 @@
 package tmg.flashback.results.ui.settings.notifications.reminder
 
+import app.cash.turbine.test
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
+import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.results.repository.NotificationsRepositoryImpl
 import tmg.flashback.results.repository.models.NotificationReminder
 import tmg.flashback.results.usecases.ScheduleNotificationsUseCase
 import tmg.testutils.BaseTest
-import tmg.testutils.livedata.test
 
 
 internal class UpNextReminderViewModelTest: BaseTest() {
@@ -32,10 +34,10 @@ internal class UpNextReminderViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `init loads notification list`() {
+    fun `init loads notification list`() = runTest {
         initSUT()
         sut.outputs.currentlySelected.test {
-            assertValue(NotificationReminder.MINUTES_30)
+            assertEquals(NotificationReminder.MINUTES_30, awaitItem())
         }
     }
 

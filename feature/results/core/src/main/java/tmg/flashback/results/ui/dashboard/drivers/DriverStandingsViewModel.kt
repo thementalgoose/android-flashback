@@ -1,26 +1,25 @@
 package tmg.flashback.results.ui.dashboard.drivers
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import tmg.flashback.domain.repo.SeasonRepository
 import tmg.flashback.drivers.contract.Driver
 import tmg.flashback.drivers.contract.with
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
-import tmg.flashback.domain.repo.SeasonRepository
 import tmg.flashback.results.usecases.FetchSeasonUseCase
-import tmg.flashback.results.with
 import javax.inject.Inject
 
 interface DriversStandingViewModelInputs {
@@ -31,8 +30,8 @@ interface DriversStandingViewModelInputs {
 }
 
 interface DriversStandingViewModelOutputs {
-    val items: LiveData<List<DriverStandingsModel>?>
-    val isRefreshing: LiveData<Boolean>
+    val items: StateFlow<List<DriverStandingsModel>?>
+    val isRefreshing: StateFlow<Boolean>
 }
 
 @HiltViewModel
@@ -46,19 +45,19 @@ class DriversStandingViewModel @Inject constructor(
     val inputs: DriversStandingViewModelInputs = this
     val outputs: DriversStandingViewModelOutputs = this
 
-    override val isRefreshing: MutableLiveData<Boolean> = MutableLiveData(false)
+    override val isRefreshing: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
     private val season: MutableStateFlow<Int?> = MutableStateFlow(null)
-    override val items: LiveData<List<DriverStandingsModel>?> = season
+    override val items: StateFlow<List<DriverStandingsModel>?> = season
         .filterNotNull()
         .flatMapLatest { season ->
-            isRefreshing.postValue(true)
+            isRefreshing.value = true
             fetchSeasonUseCase
                 .fetch(season)
                 .flatMapLatest { hasMadeRequest ->
                     seasonRepository.getDriverStandings(season)
                         .map {
-                            isRefreshing.postValue(false)
+                            isRefreshing.value = false
                             if (!hasMadeRequest) {
                                 return@map listOf(DriverStandingsModel.Loading)
                             }
@@ -74,7 +73,7 @@ class DriversStandingViewModel @Inject constructor(
                 }
         }
         .flowOn(ioDispatcher)
-        .asLiveData(viewModelScope.coroutineContext)
+        .stateIn(viewModelScope, SharingStarted.Lazily, null)
 
     override fun load(season: Int) {
         this.season.value = season
@@ -83,10 +82,10 @@ class DriversStandingViewModel @Inject constructor(
     override fun refresh() {
         val season = season.value ?: return
 
-        isRefreshing.postValue(true)
+        isRefreshing.value = true
         viewModelScope.launch(ioDispatcher) {
             fetchSeasonUseCase.fetchSeason(season)
-            isRefreshing.postValue(false)
+            isRefreshing.value = false
         }
     }
 

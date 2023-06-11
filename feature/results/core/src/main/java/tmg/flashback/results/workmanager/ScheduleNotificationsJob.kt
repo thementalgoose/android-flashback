@@ -11,13 +11,13 @@ import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.threeten.bp.LocalDateTime
+import tmg.flashback.domain.repo.ScheduleRepository
 import tmg.flashback.formula1.enums.RaceWeekend
 import tmg.flashback.formula1.model.Timestamp
 import tmg.flashback.formula1.utils.NotificationUtils
 import tmg.flashback.notifications.repository.NotificationRepository
 import tmg.flashback.notifications.usecases.LocalNotificationCancelUseCase
 import tmg.flashback.notifications.usecases.LocalNotificationScheduleUseCase
-import tmg.flashback.domain.repo.ScheduleRepository
 import tmg.flashback.results.BuildConfig
 import tmg.flashback.results.repository.models.NotificationChannel
 

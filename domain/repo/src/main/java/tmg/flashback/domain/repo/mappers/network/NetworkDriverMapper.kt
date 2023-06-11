@@ -1,9 +1,9 @@
 package tmg.flashback.domain.repo.mappers.network
 
-import tmg.flashback.flashbackapi.api.models.drivers.DriverHistoryStanding
-import tmg.flashback.flashbackapi.api.models.drivers.DriverHistoryStandingRace
 import tmg.flashback.domain.persistence.models.drivers.DriverSeason
 import tmg.flashback.domain.persistence.models.drivers.DriverSeasonRace
+import tmg.flashback.flashbackapi.api.models.drivers.DriverHistoryStanding
+import tmg.flashback.flashbackapi.api.models.drivers.DriverHistoryStandingRace
 import javax.inject.Inject
 
 class NetworkDriverMapper @Inject constructor() {

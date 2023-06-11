@@ -5,8 +5,8 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import tmg.flashback.results.repository.HomeRepository
 import tmg.flashback.navigation.ApplicationNavigationComponent
+import tmg.flashback.results.repository.HomeRepository
 
 internal class ProvidedByViewModelTest {
 
