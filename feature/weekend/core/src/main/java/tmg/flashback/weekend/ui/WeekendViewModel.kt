@@ -99,7 +99,11 @@ class WeekendViewModel @Inject constructor(
             list.add(WeekendScreenState(RACE, isSelected = navItem == RACE))
             return@map list
         }
-        .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+        .stateIn(viewModelScope, SharingStarted.Lazily, listOf(
+            WeekendScreenState(SCHEDULE, true),
+            WeekendScreenState(QUALIFYING, false),
+            WeekendScreenState(RACE, false)
+        ))
 
     override val isRefreshing: MutableStateFlow<Boolean> = MutableStateFlow(false)
 

@@ -110,7 +110,7 @@ fun SettingSwitch(
         .alpha(if (model.isEnabled) 1f else disabledAlpha)
         .toggleable(model.isChecked, onValueChange = {
             onClick(model)
-        })
+        }, enabled = model.isEnabled)
         .padding(
             vertical = AppTheme.dimens.small,
             horizontal = AppTheme.dimens.medium
