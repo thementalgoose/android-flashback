@@ -22,7 +22,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.res.pluralStringResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.tooling.preview.Preview
@@ -33,7 +32,6 @@ import tmg.flashback.style.AppThemePreview
 import tmg.flashback.ui.R
 import tmg.flashback.ui.utils.MeasureTextWidth
 import tmg.flashback.ui.utils.pointsDisplay
-import tmg.utilities.utils.ColorUtils
 import tmg.utilities.utils.ColorUtils.Companion.contrastTextLight
 import kotlin.math.roundToInt
 

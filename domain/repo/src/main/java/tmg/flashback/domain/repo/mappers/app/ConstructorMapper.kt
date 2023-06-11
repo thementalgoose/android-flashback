@@ -1,12 +1,12 @@
 package tmg.flashback.domain.repo.mappers.app
 
+import tmg.flashback.domain.persistence.models.constructors.Constructor
+import tmg.flashback.domain.persistence.models.constructors.ConstructorSeasonDriverWithDriver
+import tmg.flashback.domain.persistence.models.constructors.ConstructorSeasonWithDrivers
 import tmg.flashback.formula1.model.ConstructorHistory
 import tmg.flashback.formula1.model.ConstructorHistorySeason
 import tmg.flashback.formula1.model.ConstructorHistorySeasonDriver
 import tmg.flashback.formula1.model.DriverEntry
-import tmg.flashback.domain.persistence.models.constructors.Constructor
-import tmg.flashback.domain.persistence.models.constructors.ConstructorSeasonDriverWithDriver
-import tmg.flashback.domain.persistence.models.constructors.ConstructorSeasonWithDrivers
 import javax.inject.Inject
 
 class ConstructorMapper @Inject constructor(

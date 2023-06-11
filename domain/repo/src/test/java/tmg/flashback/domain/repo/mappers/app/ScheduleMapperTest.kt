@@ -5,9 +5,9 @@ import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.RoomSchedule
+import tmg.flashback.domain.persistence.models.overview.model
 import tmg.flashback.formula1.model.Schedule
 import tmg.flashback.formula1.model.model
-import tmg.flashback.domain.persistence.models.overview.model
 
 internal class ScheduleMapperTest {
 

@@ -1,10 +1,10 @@
 package tmg.flashback.domain.repo.mappers.app
 
+import tmg.flashback.domain.persistence.models.standings.DriverStandingConstructorWithConstructor
+import tmg.flashback.domain.persistence.models.standings.DriverStandingWithConstructors
 import tmg.flashback.formula1.model.SeasonDriverStandingSeason
 import tmg.flashback.formula1.model.SeasonDriverStandingSeasonConstructor
 import tmg.flashback.formula1.model.SeasonDriverStandings
-import tmg.flashback.domain.persistence.models.standings.DriverStandingConstructorWithConstructor
-import tmg.flashback.domain.persistence.models.standings.DriverStandingWithConstructors
 import javax.inject.Inject
 
 class DriverStandingMapper @Inject constructor(

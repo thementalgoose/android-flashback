@@ -3,8 +3,8 @@ package tmg.flashback.ads.adsadmob.usecases
 import android.content.Context
 import android.util.Log
 import com.google.android.gms.ads.nativead.NativeAd
-import tmg.flashback.ads.adsadmob.BuildConfig
 import tmg.flashback.ads.ads.repository.AdsRepository
+import tmg.flashback.ads.adsadmob.BuildConfig
 import tmg.flashback.ads.adsadmob.manager.AdsManager
 import tmg.flashback.ads.adsadmob.repository.AdsCacheRepository
 import javax.inject.Inject

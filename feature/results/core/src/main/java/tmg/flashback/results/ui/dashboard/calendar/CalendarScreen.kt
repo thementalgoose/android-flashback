@@ -7,7 +7,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -45,8 +45,8 @@ fun CalendarScreenVM(
 ) {
     viewModel.inputs.load(season)
 
-    val isRefreshing = viewModel.outputs.isRefreshing.observeAsState(false)
-    val items = viewModel.outputs.items.observeAsState(listOf(CalendarModel.Loading))
+    val isRefreshing = viewModel.outputs.isRefreshing.collectAsState(false)
+    val items = viewModel.outputs.items.collectAsState(listOf(CalendarModel.Loading))
     SwipeRefresh(
         isLoading = isRefreshing.value,
         onRefresh = viewModel.inputs::refresh

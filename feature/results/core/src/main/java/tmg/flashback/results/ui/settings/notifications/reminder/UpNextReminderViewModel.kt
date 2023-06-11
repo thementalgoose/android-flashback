@@ -1,9 +1,9 @@
 package tmg.flashback.results.ui.settings.notifications.reminder
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import tmg.flashback.results.repository.NotificationsRepositoryImpl
 import tmg.flashback.results.repository.models.NotificationReminder
 import tmg.flashback.results.usecases.ScheduleNotificationsUseCase
@@ -20,7 +20,7 @@ interface UpNextReminderViewModelInputs {
 //region Outputs
 
 interface UpNextReminderViewModelOutputs {
-    val currentlySelected: LiveData<NotificationReminder>
+    val currentlySelected: StateFlow<NotificationReminder>
 }
 
 //endregion
@@ -34,11 +34,7 @@ class UpNextReminderViewModel @Inject constructor(
     var inputs: UpNextReminderViewModelInputs = this
     var outputs: UpNextReminderViewModelOutputs = this
 
-    override val currentlySelected: MutableLiveData<NotificationReminder> = MutableLiveData()
-
-    init {
-        currentlySelected.value = notificationRepository.notificationReminderPeriod
-    }
+    override val currentlySelected: MutableStateFlow<NotificationReminder> = MutableStateFlow(notificationRepository.notificationReminderPeriod)
 
     override fun selectNotificationReminder(reminder: NotificationReminder) {
         notificationRepository.notificationReminderPeriod = reminder

@@ -3,12 +3,12 @@ package tmg.flashback.domain.repo.mappers.network
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.flashback.flashbackapi.api.models.constructors.ConstructorHistoryStanding
-import tmg.flashback.flashbackapi.api.models.constructors.ConstructorHistoryStandingDriver
-import tmg.flashback.flashbackapi.api.models.constructors.model
 import tmg.flashback.domain.persistence.models.constructors.ConstructorSeason
 import tmg.flashback.domain.persistence.models.constructors.ConstructorSeasonDriver
 import tmg.flashback.domain.persistence.models.constructors.model
+import tmg.flashback.flashbackapi.api.models.constructors.ConstructorHistoryStanding
+import tmg.flashback.flashbackapi.api.models.constructors.ConstructorHistoryStandingDriver
+import tmg.flashback.flashbackapi.api.models.constructors.model
 
 internal class NetworkConstructorMapperTest {
 

@@ -2,27 +2,27 @@ package tmg.flashback.constructors.ui.season
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import tmg.flashback.constructors.R
 import tmg.flashback.device.managers.NetworkConnectivityManager
+import tmg.flashback.domain.repo.ConstructorRepository
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.ConstructorHistorySeason
-import tmg.flashback.domain.repo.ConstructorRepository
 import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.utilities.extensions.ordinalAbbreviation
 import javax.inject.Inject
@@ -34,8 +34,8 @@ interface ConstructorSeasonViewModelInputs {
 }
 
 interface ConstructorSeasonViewModelOutputs {
-    val list: LiveData<List<ConstructorSeasonModel>>
-    val showLoading: LiveData<Boolean>
+    val list: StateFlow<List<ConstructorSeasonModel>>
+    val showLoading: StateFlow<Boolean>
 }
 
 @HiltViewModel
@@ -49,7 +49,7 @@ class ConstructorSeasonViewModel @Inject constructor(
     val inputs: ConstructorSeasonViewModelInputs = this
     val outputs: ConstructorSeasonViewModelOutputs = this
 
-    override val showLoading: MutableLiveData<Boolean> = MutableLiveData(false)
+    override val showLoading: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
     private val constructorId: MutableStateFlow<Pair<String, Int>?> = MutableStateFlow(null)
     private val constructorIdWithRequest: Flow<Pair<String, Int>?> = constructorId
@@ -57,17 +57,17 @@ class ConstructorSeasonViewModel @Inject constructor(
         .flatMapLatest { id ->
             return@flatMapLatest flow {
                 if (constructorRepository.getConstructorSeasonCount(id.first) == 0) {
-                    showLoading.postValue(true)
+                    showLoading.value = true
                     emit(null)
                     constructorRepository.fetchConstructor(id.first)
-                    showLoading.postValue(false)
+                    showLoading.value = false
                     emit(id)
                 }
                 else {
                     emit(id)
-                    showLoading.postValue(true)
+                    showLoading.value = true
                     constructorRepository.fetchConstructor(id.first)
-                    showLoading.postValue(false)
+                    showLoading.value = false
                 }
             }
         }
@@ -76,7 +76,7 @@ class ConstructorSeasonViewModel @Inject constructor(
     private val isConnected: Boolean
         get() = networkConnectivityManager.isConnected
 
-    override val list: LiveData<List<ConstructorSeasonModel>> = constructorIdWithRequest
+    override val list: StateFlow<List<ConstructorSeasonModel>> = constructorIdWithRequest
         .flatMapLatest { idAndSeason ->
             if (idAndSeason == null) {
                 return@flatMapLatest flow {
@@ -123,7 +123,7 @@ class ConstructorSeasonViewModel @Inject constructor(
                     return@map list
                 }
         }
-        .asLiveData(viewModelScope.coroutineContext)
+        .stateIn(viewModelScope, SharingStarted.Lazily, listOf(ConstructorSeasonModel.Loading))
 
     override fun setup(constructorId: String, season: Int) {
         this.constructorId.value = Pair(constructorId, season)
@@ -140,7 +140,7 @@ class ConstructorSeasonViewModel @Inject constructor(
         viewModelScope.launch(context = ioDispatcher) {
             constructorId?.let {
                 constructorRepository.fetchConstructor(it.first)
-                showLoading.postValue(false)
+                showLoading.value = false
             }
         }
     }

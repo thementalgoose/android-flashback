@@ -6,7 +6,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -18,22 +18,22 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import tmg.flashback.weekend.R
 import tmg.flashback.formula1.model.*
 import tmg.flashback.providers.DriverConstructorProvider
-import tmg.flashback.weekend.ui.fakeWeekendInfo
-import tmg.flashback.weekend.ui.info.RaceInfoHeader
-import tmg.flashback.ui.components.errors.NotAvailable
-import tmg.flashback.ui.components.errors.NotAvailableYet
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextSection
 import tmg.flashback.ui.components.drivers.DriverName
+import tmg.flashback.ui.components.errors.NotAvailable
+import tmg.flashback.ui.components.errors.NotAvailableYet
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.navigation.appBarHeight
+import tmg.flashback.weekend.R
 import tmg.flashback.weekend.contract.model.ScreenWeekendData
+import tmg.flashback.weekend.ui.fakeWeekendInfo
+import tmg.flashback.weekend.ui.info.RaceInfoHeader
 import tmg.flashback.weekend.ui.shared.ConstructorIndicator
 import tmg.flashback.weekend.ui.shared.Position
 import tmg.utilities.extensions.ordinalAbbreviation
@@ -51,8 +51,8 @@ fun QualifyingScreenVM(
         round = info.round
     )
 
-    val qualifying = viewModel.outputs.list.observeAsState(listOf(QualifyingModel.Loading))
-    val qualifyingHeader = viewModel.outputs.headersToShow.observeAsState(
+    val qualifying = viewModel.outputs.list.collectAsState(listOf(QualifyingModel.Loading))
+    val qualifyingHeader = viewModel.outputs.headersToShow.collectAsState(
         QualifyingHeader(
             first = false,
             second = false,

@@ -4,7 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -28,8 +28,8 @@ fun SettingsLayoutScreenVM(
 ) {
     ScreenView(screenName = "Settings - Layout")
 
-    val collapsedList = viewModel.outputs.collapsedListEnabled.observeAsState(true)
-    val emptyWeeksInSchedule = viewModel.outputs.emptyWeeksInSchedule.observeAsState(false)
+    val collapsedList = viewModel.outputs.collapsedListEnabled.collectAsState(true)
+    val emptyWeeksInSchedule = viewModel.outputs.emptyWeeksInSchedule.collectAsState(false)
     SettingsLayoutScreen(
         showBack = showBack,
         actionUpClicked = actionUpClicked,

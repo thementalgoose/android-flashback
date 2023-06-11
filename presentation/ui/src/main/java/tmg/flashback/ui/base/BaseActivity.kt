@@ -8,10 +8,10 @@ import androidx.annotation.StyleRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import tmg.flashback.analytics.manager.AnalyticsManager
+import tmg.flashback.navigation.ActivityProvider
 import tmg.flashback.ui.managers.PermissionManager
 import tmg.flashback.ui.managers.StyleManager
 import tmg.flashback.ui.model.DisplayType
-import tmg.flashback.navigation.ActivityProvider
 import tmg.flashback.ui.permissions.RationaleBottomSheetFragment
 import tmg.flashback.ui.permissions.RationaleBottomSheetFragmentCallback
 import tmg.flashback.ui.permissions.RationaleType

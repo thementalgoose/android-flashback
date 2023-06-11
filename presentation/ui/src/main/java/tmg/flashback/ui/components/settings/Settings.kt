@@ -19,7 +19,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.Dp
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
@@ -110,7 +109,7 @@ fun SettingSwitch(
         .alpha(if (model.isEnabled) 1f else disabledAlpha)
         .toggleable(model.isChecked, onValueChange = {
             onClick(model)
-        })
+        }, enabled = model.isEnabled)
         .padding(
             vertical = AppTheme.dimens.small,
             horizontal = AppTheme.dimens.medium

@@ -14,7 +14,6 @@ import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.badge.Badge
-import tmg.flashback.style.badge.BadgeView
 import tmg.flashback.style.badge.BadgesView
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2

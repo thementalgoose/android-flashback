@@ -1,8 +1,8 @@
 package tmg.flashback.domain.repo.mappers.network
 
-import tmg.flashback.flashbackapi.api.models.races.DriverStandings
 import tmg.flashback.domain.persistence.models.standings.DriverStanding
 import tmg.flashback.domain.persistence.models.standings.DriverStandingConstructor
+import tmg.flashback.flashbackapi.api.models.races.DriverStandings
 import javax.inject.Inject
 
 class NetworkDriverStandingMapper @Inject constructor() {

@@ -2,7 +2,7 @@ package tmg.flashback.ui.settings.appearance.theme
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -19,7 +19,7 @@ fun ThemeScreenVM(
     viewModel: ThemeViewModel = hiltViewModel(),
     dismiss: () -> Unit
 ) {
-    val currentTheme = viewModel.outputs.currentlySelected.observeAsState(initial = Theme.DEFAULT)
+    val currentTheme = viewModel.outputs.currentlySelected.collectAsState(initial = Theme.DEFAULT)
     ThemeScreen(
         currentlySelectedTheme = currentTheme.value,
         themeClicked = viewModel.inputs::selectTheme,

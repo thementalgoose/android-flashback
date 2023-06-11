@@ -2,22 +2,21 @@
 
 package tmg.flashback.ui.sync
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asFlow
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.delayEach
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.timeout
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import tmg.flashback.configuration.repository.ConfigRepository
 import tmg.flashback.configuration.usecases.FetchConfigUseCase
@@ -33,11 +32,7 @@ import tmg.flashback.ui.sync.SyncState.DONE
 import tmg.flashback.ui.sync.SyncState.FAILED
 import tmg.flashback.ui.sync.SyncState.LOADING
 import tmg.flashback.usecases.SetupAppShortcutUseCase
-import tmg.utilities.lifecycle.DataEvent
 import javax.inject.Inject
-import kotlin.time.Duration
-import kotlin.time.Duration.Companion.milliseconds
-import kotlin.time.Duration.Companion.seconds
 import kotlin.time.ExperimentalTime
 
 //region Inputs
@@ -52,16 +47,16 @@ interface SyncViewModelInputs {
 
 interface SyncViewModelOutputs {
 
-    val circuitsState: LiveData<SyncState>
-    val constructorsState: LiveData<SyncState>
-    val driversState: LiveData<SyncState>
-    val racesState: LiveData<SyncState>
-    val configState: LiveData<SyncState>
+    val circuitsState: StateFlow<SyncState>
+    val constructorsState: StateFlow<SyncState>
+    val driversState: StateFlow<SyncState>
+    val racesState: StateFlow<SyncState>
+    val configState: StateFlow<SyncState>
 
-    val loadingState: LiveData<SyncState>
-    val showRetry: LiveData<Boolean>
+    val loadingState: StateFlow<SyncState>
+    val showRetry: StateFlow<Boolean>
 
-    val navigate: LiveData<DataEvent<SyncNavTarget>>
+    val navigate: StateFlow<SyncNavTarget?>
 }
 
 //endregion
@@ -85,20 +80,20 @@ class SyncViewModel @Inject constructor(
     var inputs: SyncViewModelInputs = this
     var outputs: SyncViewModelOutputs = this
 
-    override val circuitsState: MutableLiveData<SyncState> = MutableLiveData(LOADING)
-    override val constructorsState: MutableLiveData<SyncState> = MutableLiveData(LOADING)
-    override val driversState: MutableLiveData<SyncState> = MutableLiveData(LOADING)
-    override val racesState: MutableLiveData<SyncState> = MutableLiveData(LOADING)
-    override val configState: MutableLiveData<SyncState> = MutableLiveData(LOADING)
+    override val circuitsState: MutableStateFlow<SyncState> = MutableStateFlow(LOADING)
+    override val constructorsState: MutableStateFlow<SyncState> = MutableStateFlow(LOADING)
+    override val driversState: MutableStateFlow<SyncState> = MutableStateFlow(LOADING)
+    override val racesState: MutableStateFlow<SyncState> = MutableStateFlow(LOADING)
+    override val configState: MutableStateFlow<SyncState> = MutableStateFlow(LOADING)
 
-    override val showRetry: MutableLiveData<Boolean> = MutableLiveData(false)
+    override val showRetry: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
-    override val loadingState: LiveData<SyncState> = combine(
-        circuitsState.asFlow(),
-        constructorsState.asFlow(),
-        driversState.asFlow(),
-        racesState.asFlow(),
-        configState.asFlow()
+    override val loadingState: StateFlow<SyncState> = combine(
+        circuitsState.asStateFlow(),
+        constructorsState.asStateFlow(),
+        driversState.asStateFlow(),
+        racesState.asStateFlow(),
+        configState.asStateFlow()
     ) { circuit, constructor, driver, races, config ->
         val all = listOf(circuit, constructor, driver, races, config)
         if (all.all { it == DONE }) {
@@ -113,14 +108,13 @@ class SyncViewModel @Inject constructor(
     }
         .map {
             if (it == FAILED) {
-                showRetry.postValue(true)
+                showRetry.value = true
             }
             return@map it
         }
-        .asLiveData(viewModelScope.coroutineContext)
+        .stateIn(viewModelScope, SharingStarted.Lazily, SyncState.LOADING)
 
-    override val navigate: LiveData<DataEvent<SyncNavTarget>> = loadingState
-        .asFlow()
+    override val navigate: StateFlow<SyncNavTarget?> = loadingState
         .filter { it == DONE }
         .map {
             cacheRepository.initialSync = true
@@ -131,8 +125,7 @@ class SyncViewModel @Inject constructor(
             }
         }
         .onEach { delay(500) }
-        .map { DataEvent(it) }
-        .asLiveData(viewModelScope.coroutineContext)
+        .stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
     override fun startLoading() {
         showRetry.value = false
@@ -160,7 +153,7 @@ class SyncViewModel @Inject constructor(
             if (result) {
                 goToNextScreen()
             } else {
-                configState.postValue(FAILED)
+                configState.value = FAILED
             }
         }
     }
@@ -170,8 +163,8 @@ class SyncViewModel @Inject constructor(
             driversState.value = LOADING
             viewModelScope.launch(ioDispatcher) {
                 when (driverRepository.fetchDrivers()) {
-                    true -> driversState.postValue(DONE)
-                    false -> driversState.postValue(FAILED)
+                    true -> driversState.value = DONE
+                    false -> driversState.value = FAILED
                 }
             }
         }
@@ -182,8 +175,8 @@ class SyncViewModel @Inject constructor(
             constructorsState.value = LOADING
             viewModelScope.launch(ioDispatcher) {
                 when (constructorRepository.fetchConstructors()) {
-                    true -> constructorsState.postValue(DONE)
-                    false -> constructorsState.postValue(FAILED)
+                    true -> constructorsState.value = DONE
+                    false -> constructorsState.value = FAILED
                 }
             }
         }
@@ -194,8 +187,8 @@ class SyncViewModel @Inject constructor(
             circuitsState.value = LOADING
             viewModelScope.launch(ioDispatcher) {
                 when (circuitRepository.fetchCircuits()) {
-                    true -> circuitsState.postValue(DONE)
-                    false -> circuitsState.postValue(FAILED)
+                    true -> circuitsState.value = DONE
+                    false -> circuitsState.value = FAILED
                 }
             }
         }
@@ -206,15 +199,15 @@ class SyncViewModel @Inject constructor(
             racesState.value = LOADING
             viewModelScope.launch(ioDispatcher) {
                 when (overviewRepository.fetchOverview()) {
-                    true -> racesState.postValue(DONE)
-                    false -> racesState.postValue(FAILED)
+                    true -> racesState.value = DONE
+                    false -> racesState.value = FAILED
                 }
             }
         }
     }
 
     private fun goToNextScreen() {
-        configState.postValue(DONE)
+        configState.value = DONE
     }
 
     private fun performConfigUpdates() {

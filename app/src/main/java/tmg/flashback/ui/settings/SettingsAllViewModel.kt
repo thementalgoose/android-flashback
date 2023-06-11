@@ -1,16 +1,16 @@
 package tmg.flashback.ui.settings
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import tmg.flashback.BuildConfig
 import tmg.flashback.ads.ads.repository.AdsRepository
 import tmg.flashback.device.managers.BuildConfigManager
-import tmg.flashback.rss.repo.RssRepository
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.flashback.rss.contract.RSSConfigure
+import tmg.flashback.rss.repo.RssRepository
 import tmg.flashback.ui.repository.ThemeRepository
 import tmg.flashback.ui.settings.appearance.AppearanceNavigationComponent
 import javax.inject.Inject
@@ -20,9 +20,9 @@ interface SettingsAllViewModelInputs {
 }
 
 interface SettingsAllViewModelOutputs {
-    val isThemeEnabled: LiveData<Boolean>
-    val isAdsEnabled: LiveData<Boolean>
-    val isRSSEnabled: LiveData<Boolean>
+    val isThemeEnabled: StateFlow<Boolean>
+    val isAdsEnabled: StateFlow<Boolean>
+    val isRSSEnabled: StateFlow<Boolean>
 }
 
 @HiltViewModel
@@ -38,13 +38,9 @@ class SettingsAllViewModel @Inject constructor(
     val inputs: SettingsAllViewModelInputs = this
     val outputs: SettingsAllViewModelOutputs = this
 
-    override val isThemeEnabled: MutableLiveData<Boolean> = MutableLiveData()
-    override val isAdsEnabled: MutableLiveData<Boolean> = MutableLiveData()
-    override val isRSSEnabled: MutableLiveData<Boolean> = MutableLiveData()
-
-    init {
-        refresh()
-    }
+    override val isThemeEnabled: MutableStateFlow<Boolean> = MutableStateFlow(themeRepository.enableThemePicker && buildConfig.isMonetThemeSupported)
+    override val isAdsEnabled: MutableStateFlow<Boolean> = MutableStateFlow(adsRepository.allowUserConfig)
+    override val isRSSEnabled: MutableStateFlow<Boolean> = MutableStateFlow(rssRepository.enabled)
 
     override fun itemClicked(pref: Setting) {
         when (pref.key) {

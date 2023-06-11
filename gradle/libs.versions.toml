@@ -134,6 +134,8 @@ junit5_api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "ju
 junit5_engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit" }
 junit5_params = { module = "org.junit.jupiter:junit-jupiter-params", version.ref = "junit" }
 
+turbine = "app.cash.turbine:turbine:0.13.0"
+
 mockk = "io.mockk:mockk:1.13.5"
 
 tmg_testutils = "com.github.thementalgoose:android-test-utilities:1.2.2"

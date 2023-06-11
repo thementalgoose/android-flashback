@@ -1,9 +1,9 @@
 package tmg.flashback.ui.settings.about
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import tmg.flashback.R
 import tmg.flashback.crash_reporting.repository.CrashRepository
 import tmg.flashback.device.managers.BuildConfigManager
@@ -19,7 +19,7 @@ interface SettingsAboutViewModelInputs {
 }
 
 interface SettingsAboutViewModelOutputs {
-    val shakeToReportEnabled: LiveData<Boolean>
+    val shakeToReportEnabled: StateFlow<Boolean>
 }
 
 @HiltViewModel
@@ -36,7 +36,7 @@ class SettingsAboutViewModel @Inject constructor(
     val inputs: SettingsAboutViewModelInputs = this
     val outputs: SettingsAboutViewModelOutputs = this
 
-    override val shakeToReportEnabled: MutableLiveData<Boolean> = MutableLiveData(crashRepository.shakeToReport)
+    override val shakeToReportEnabled: MutableStateFlow<Boolean> = MutableStateFlow(crashRepository.shakeToReport)
 
     override fun prefClicked(pref: Setting) {
         when (pref.key) {

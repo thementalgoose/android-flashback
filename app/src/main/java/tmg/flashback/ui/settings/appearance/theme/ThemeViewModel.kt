@@ -1,9 +1,9 @@
 package tmg.flashback.ui.settings.appearance.theme
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import tmg.flashback.R
 import tmg.flashback.ui.managers.ToastManager
 import tmg.flashback.ui.model.Theme
@@ -21,7 +21,7 @@ interface ThemeViewModelInputs {
 //region Outputs
 
 interface ThemeViewModelOutputs {
-    val currentlySelected: LiveData<Theme>
+    val currentlySelected: StateFlow<Theme>
 }
 
 //endregion
@@ -35,7 +35,7 @@ class ThemeViewModel @Inject constructor(
     var inputs: ThemeViewModelInputs = this
     var outputs: ThemeViewModelOutputs = this
 
-    override val currentlySelected: MutableLiveData<Theme> = MutableLiveData()
+    override val currentlySelected: MutableStateFlow<Theme> = MutableStateFlow(Theme.DEFAULT)
 
     init {
         currentlySelected.value = themeRepository.theme

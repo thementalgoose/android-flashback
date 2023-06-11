@@ -10,7 +10,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -65,8 +65,8 @@ fun WeekendScreenVM(
         analyticsRound to weekendInfo.round.toString()
     ))
 
-    val dbWeekendInfo = viewModel.outputs.weekendInfo.observeAsState(weekendInfo)
-    val tabState = viewModel.outputs.tabs.observeAsState(listOf(
+    val dbWeekendInfo = viewModel.outputs.weekendInfo.collectAsState(weekendInfo)
+    val tabState = viewModel.outputs.tabs.collectAsState(listOf(
         WeekendScreenState(tab = WeekendNavItem.SCHEDULE, isSelected = true),
         WeekendScreenState(tab = WeekendNavItem.QUALIFYING, isSelected = false),
         WeekendScreenState(tab = WeekendNavItem.RACE, isSelected = false),
@@ -97,23 +97,23 @@ fun WeekendScreenVM(
                 .fillMaxSize()
                 .background(AppTheme.colors.backgroundPrimary)
             )
-            val isRefreshing = viewModel.outputs.isRefreshing.observeAsState(false)
+            val isRefreshing = viewModel.outputs.isRefreshing.collectAsState(false)
 
             val detailsVM: DetailsViewModel = hiltViewModel()
-            val detailsList = detailsVM.outputs.list.observeAsState(emptyList())
+            val detailsList = detailsVM.outputs.list.collectAsState(emptyList())
             val qualifyingVM: QualifyingViewModel = hiltViewModel()
-            val qualifyingList = qualifyingVM.outputs.list.observeAsState(emptyList())
-            val qualifyingHeader = qualifyingVM.outputs.headersToShow.observeAsState(
+            val qualifyingList = qualifyingVM.outputs.list.collectAsState(emptyList())
+            val qualifyingHeader = qualifyingVM.outputs.headersToShow.collectAsState(
                 QualifyingHeader(true, true, true)
             )
             val sprintQualifyingVM: SprintQualifyingViewModel = hiltViewModel()
-            val sprintQualifyingList = sprintQualifyingVM.outputs.list.observeAsState(emptyList())
+            val sprintQualifyingList = sprintQualifyingVM.outputs.list.collectAsState(emptyList())
             val sprintVM: SprintViewModel = hiltViewModel()
-            val sprintList = sprintVM.outputs.list.observeAsState(emptyList())
-            val sprintResultType = sprintVM.outputs.sprintResultType.observeAsState(SprintResultType.DRIVERS)
+            val sprintList = sprintVM.outputs.list.collectAsState(emptyList())
+            val sprintResultType = sprintVM.outputs.sprintResultType.collectAsState(SprintResultType.DRIVERS)
             val raceVM: RaceViewModel = hiltViewModel()
-            val raceList = raceVM.outputs.list.observeAsState(emptyList())
-            val raceResultType = raceVM.outputs.raceResultType.observeAsState(RaceResultType.DRIVERS)
+            val raceList = raceVM.outputs.list.collectAsState(emptyList())
+            val raceResultType = raceVM.outputs.raceResultType.collectAsState(RaceResultType.DRIVERS)
 
             SwipeRefresh(
                 isLoading = isRefreshing.value,
@@ -124,7 +124,7 @@ fun WeekendScreenVM(
                     content = {
                         item("header") {
                             RaceInfoHeader(
-                                model = dbWeekendInfo.value,
+                                model = dbWeekendInfo.value ?: weekendInfo,
                                 actionUpClicked = actionUpClicked,
                             )
                         }

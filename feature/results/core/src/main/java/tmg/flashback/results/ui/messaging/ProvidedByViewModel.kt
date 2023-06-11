@@ -2,8 +2,8 @@ package tmg.flashback.results.ui.messaging
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import tmg.flashback.results.repository.HomeRepository
 import tmg.flashback.navigation.ApplicationNavigationComponent
+import tmg.flashback.results.repository.HomeRepository
 import javax.inject.Inject
 
 interface ProvidedByViewModelInputs {

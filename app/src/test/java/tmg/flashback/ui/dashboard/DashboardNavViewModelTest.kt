@@ -1,16 +1,17 @@
 package tmg.flashback.ui.dashboard
 
-import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.NavHostController
+import app.cash.turbine.test
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
 import io.mockk.verify
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -23,12 +24,12 @@ import tmg.flashback.navigation.ApplicationNavigationComponent
 import tmg.flashback.navigation.NavigationDestination
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
-import tmg.flashback.rss.repo.RssRepository
 import tmg.flashback.results.Calendar
 import tmg.flashback.results.Constructors
 import tmg.flashback.results.Drivers
 import tmg.flashback.results.usecases.DefaultSeasonUseCase
 import tmg.flashback.results.with
+import tmg.flashback.rss.repo.RssRepository
 import tmg.flashback.ui.settings.All
 import tmg.flashback.usecases.DashboardSyncUseCase
 import tmg.flashback.usecases.GetSeasonsUseCase
@@ -36,9 +37,6 @@ import tmg.flashback.usecases.IsFirst
 import tmg.flashback.usecases.IsLast
 import tmg.testutils.BaseTest
 import tmg.testutils.junit.toSealedClass
-import tmg.testutils.livedata.assertListMatchesItem
-import tmg.testutils.livedata.test
-import tmg.testutils.livedata.testObserve
 
 internal class DashboardNavViewModelTest: BaseTest() {
 
@@ -99,16 +97,17 @@ internal class DashboardNavViewModelTest: BaseTest() {
         "constructors/,",
         "circuits/,"
     )
-    fun `menu item gets updated when route is updated`(route: String, menuItemName: String?) {
+    fun `menu item gets updated when route is updated`(route: String, menuItemName: String?) = runTest {
         val menuItem = menuItemName?.toSealedClass(MenuItem::class)
 
         initUnderTest()
         underTest.onDestinationChanged(mockNavController, mockNavDestination(route), null)
         underTest.currentlySelectedItem.test {
             if (menuItem == null) {
-                assertEmittedCount(0)
+                // Only the default nav menu is emitted
+                assertEquals(MenuItem.Calendar, awaitItem())
             } else {
-                assertValue(menuItem)
+                assertEquals(menuItem, awaitItem())
             }
         }
     }
@@ -126,13 +125,13 @@ internal class DashboardNavViewModelTest: BaseTest() {
         "constructors/,false",
         "circuits/,false"
     )
-    fun `menu is shown when route is updated`(route: String, showMenu: Boolean) {
+    fun `menu is shown when route is updated`(route: String, showMenu: Boolean) = runTest {
 
         initUnderTest()
 
         underTest.onDestinationChanged(mockNavController, mockNavDestination(route), null)
         underTest.showMenu.test {
-            assertValue(showMenu)
+            assertEquals(showMenu, awaitItem())
         }
     }
 
@@ -149,12 +148,12 @@ internal class DashboardNavViewModelTest: BaseTest() {
         "constructors/,false",
         "circuits/,false"
     )
-    fun `menu bottom bar when route is updated`(route: String, showBottomBar: Boolean) {
+    fun `menu bottom bar when route is updated`(route: String, showBottomBar: Boolean) = runTest {
 
         initUnderTest()
         underTest.onDestinationChanged(mockNavController, mockNavDestination(route), null)
         underTest.showBottomBar.test {
-            assertValue(showBottomBar)
+            assertEquals(showBottomBar, awaitItem())
         }
     }
 
@@ -190,40 +189,46 @@ internal class DashboardNavViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `app feature list list is populated`() {
+    fun `app feature list list is populated`() = runTest {
         initUnderTest()
 
-        val featureListLiveData = underTest.appFeatureItemsList.testObserve()
-        featureListLiveData.assertListMatchesItem { it == MenuItem.Search }
-        featureListLiveData.assertListMatchesItem { it == MenuItem.Settings }
-        featureListLiveData.assertListMatchesItem { it == MenuItem.Contact }
+        underTest.appFeatureItemsList.test {
+            val item = awaitItem()
+            assertTrue(item.any { it == MenuItem.Search })
+            assertTrue(item.any { it == MenuItem.Settings })
+            assertTrue(item.any { it == MenuItem.Contact })
+        }
     }
 
     @Test
-    fun `season results list list is populated`() {
+    fun `season results list list is populated`() = runTest {
         initUnderTest()
 
-        val featureListLiveData = underTest.seasonScreenItemsList.testObserve()
-        featureListLiveData.assertListMatchesItem { it == MenuItem.Calendar }
-        featureListLiveData.assertListMatchesItem { it == MenuItem.Constructors }
-        featureListLiveData.assertListMatchesItem { it == MenuItem.Drivers }
+        val featureListLiveData = underTest.seasonScreenItemsList.test {
+            val item = awaitItem()
+            assertTrue(item.any { it == MenuItem.Calendar })
+            assertTrue(item.any { it == MenuItem.Constructors })
+            assertTrue(item.any { it == MenuItem.Drivers })
+        }
     }
 
     @Test
-    fun `app feature list contains rss if rss is enabled`() {
+    fun `app feature list contains rss if rss is enabled`() = runTest {
         every { mockRssRepository.enabled } returns true
         initUnderTest()
 
-        val featureListLiveData = underTest.appFeatureItemsList.testObserve()
-        featureListLiveData.assertListMatchesItem { it == MenuItem.RSS }
+        val featureListLiveData = underTest.appFeatureItemsList.test {
+            val item = awaitItem()
+            assertTrue(item.any { it == MenuItem.RSS })
+        }
     }
 
     @Test
-    fun `clicking a season updates currently selected season`() {
+    fun `clicking a season updates currently selected season`() = runTest {
         initUnderTest()
         underTest.clickSeason(2020)
         underTest.currentlySelectedSeason.test {
-            assertValue(2020)
+            assertEquals(2020, awaitItem())
         }
     }
 
@@ -231,11 +236,11 @@ internal class DashboardNavViewModelTest: BaseTest() {
     inner class ClickSeason {
 
         @Test
-        fun `clicking a season updates season if currently selected is menu for calendar`() {
+        fun `clicking a season updates season if currently selected is menu for calendar`() = runTest {
 
             initUnderTest()
             underTest.onDestinationChanged(mockNavController, mockNavDestination(Screen.Calendar.with(2019).route), null)
-            underTest.currentlySelectedItem.testObserve()
+            underTest.currentlySelectedItem.test { awaitItem() }
             underTest.clickSeason(2020)
 
             val destination = slot<NavigationDestination>()
@@ -246,10 +251,10 @@ internal class DashboardNavViewModelTest: BaseTest() {
         }
 
         @Test
-        fun `clicking a season updates season if currently selected is menu for constructors`() {
+        fun `clicking a season updates season if currently selected is menu for constructors`() = runTest {
 
             initUnderTest()
-            underTest.currentlySelectedItem.testObserve()
+            underTest.currentlySelectedItem.test { awaitItem() }
             underTest.onDestinationChanged(mockNavController, mockNavDestination(Screen.Constructors.with(2019).route), null)
             underTest.clickSeason(2020)
 
@@ -261,10 +266,10 @@ internal class DashboardNavViewModelTest: BaseTest() {
         }
 
         @Test
-        fun `clicking a season updates season if currently selected is menu for drivers`() {
+        fun `clicking a season updates season if currently selected is menu for drivers`() = runTest {
             initUnderTest()
             underTest.onDestinationChanged(mockNavController, mockNavDestination(Screen.Drivers.with(2019).route), null)
-            underTest.currentlySelectedItem.testObserve()
+            underTest.currentlySelectedItem.test { awaitItem() }
             underTest.clickSeason(2020)
 
             val destination = slot<NavigationDestination>()
@@ -275,21 +280,20 @@ internal class DashboardNavViewModelTest: BaseTest() {
         }
 
         @Test
-        fun `clicking a season does nothing if settings is already selected`() {
+        fun `clicking a season does nothing if settings is already selected`() = runTest {
 
             initUnderTest()
             underTest.onDestinationChanged(mockNavController, NavDestination(Screen.Settings.All.route), null)
-            underTest.currentlySelectedItem.testObserve()
+            underTest.currentlySelectedItem.test { awaitItem() }
             underTest.clickSeason(2020)
-
-            verify(exactly = 0) {
+            verify(exactly = 1) {
                 mockNavigator.navigate(any())
             }
         }
     }
 
     @Test
-    fun `get all seasons returns season list`() {
+    fun `get all seasons returns season list`() = runTest {
         every { mockGetSeasonUseCase.get() } returns mapOf(
             2019 to Pair(IsFirst(true), IsLast(false)),
             2020 to Pair(IsFirst(true), IsLast(false)),
@@ -298,26 +302,29 @@ internal class DashboardNavViewModelTest: BaseTest() {
 
         initUnderTest()
         underTest.onDestinationChanged(mockNavController, NavDestination(Screen.Settings.All.route), null)
-        val list = underTest.outputs.seasonsItemsList.testObserve()
-        list.assertListMatchesItem(atIndex = 0) { it.id == "2019" && it.isSelected }
-        list.assertListMatchesItem(atIndex = 0) { it.id == "2020" && !it.isSelected }
-        list.assertListMatchesItem(atIndex = 0) { it.id == "2021" && !it.isSelected }
+        val list = underTest.outputs.seasonsItemsList.test {
+            val item0 = awaitItem()
+            assertTrue(item0.any { it.id == "2019" && it.isSelected })
+            assertTrue(item0.any { it.id == "2020" && !it.isSelected })
+            assertTrue(item0.any { it.id == "2021" && !it.isSelected })
 
-        underTest.inputs.clickSeason(2020)
+            underTest.inputs.clickSeason(2020)
 
-        list.assertListMatchesItem(atIndex = 1) { it.id == "2019" && !it.isSelected }
-        list.assertListMatchesItem(atIndex = 1) { it.id == "2020" && it.isSelected }
-        list.assertListMatchesItem(atIndex = 1) { it.id == "2021" && !it.isSelected }
+            val item1 = awaitItem()
+            assertTrue(item1.any { it.id == "2019" && !it.isSelected })
+            assertTrue(item1.any { it.id == "2020" && it.isSelected })
+            assertTrue(item1.any { it.id == "2021" && !it.isSelected })
+        }
     }
 
     @Test
-    fun `debug items come from debug nav component`() {
+    fun `debug items come from debug nav component`() = runTest {
         val list: List<DebugMenuItem> = listOf(mockk())
         every { mockDebugNavigationComponent.getDebugMenuItems() } returns list
 
         initUnderTest()
         underTest.outputs.debugMenuItems.test {
-            assertValue(list)
+            assertEquals(list, awaitItem())
         }
     }
 

@@ -4,9 +4,9 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.NetworkCircuit
-import tmg.flashback.flashbackapi.api.models.circuits.model
 import tmg.flashback.domain.persistence.models.circuit.Circuit
 import tmg.flashback.domain.persistence.models.circuit.model
+import tmg.flashback.flashbackapi.api.models.circuits.model
 
 internal class NetworkCircuitDataMapperTest {
 

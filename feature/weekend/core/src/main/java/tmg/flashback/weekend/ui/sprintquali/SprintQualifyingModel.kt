@@ -1,7 +1,6 @@
 package tmg.flashback.weekend.ui.sprintquali
 
 import tmg.flashback.formula1.model.DriverEntry
-import tmg.flashback.formula1.model.QualifyingResult
 import tmg.flashback.formula1.model.SprintQualifyingResult
 
 

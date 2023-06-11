@@ -1,31 +1,32 @@
 package tmg.flashback.rss.ui.feed
 
+import app.cash.turbine.Event
+import app.cash.turbine.test
+import app.cash.turbine.testIn
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDateTime
 import tmg.flashback.ads.ads.repository.AdsRepository
 import tmg.flashback.ads.ads.repository.model.AdvertConfig
 import tmg.flashback.device.managers.NetworkConnectivityManager
-import tmg.flashback.rss.repo.RssRepository
-import tmg.flashback.rss.repo.model.Article
-import tmg.flashback.rss.repo.model.ArticleSource
-import tmg.flashback.rss.repo.model.Response
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.flashback.rss.contract.RSSConfigure
 import tmg.flashback.rss.network.RssService
+import tmg.flashback.rss.repo.RssRepository
+import tmg.flashback.rss.repo.model.Article
+import tmg.flashback.rss.repo.model.ArticleSource
+import tmg.flashback.rss.repo.model.Response
 import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.testutils.BaseTest
-import tmg.testutils.livedata.assertListContainsItem
-import tmg.testutils.livedata.assertListDoesNotMatchItem
-import tmg.testutils.livedata.assertListMatchesItem
-import tmg.testutils.livedata.test
-import tmg.testutils.livedata.testObserve
 
 internal class RSSViewModelTest: BaseTest() {
 
@@ -86,30 +87,33 @@ internal class RSSViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `is refreshing is initialised is reset after refresh flow`() = coroutineTest {
+    fun `is refreshing is initialised is reset after refresh flow`() = runTest {
 
         initUnderTest()
 
-        val observer = underTest.outputs.isRefreshing.testObserve()
+        val observer = underTest.outputs.isRefreshing.testIn(this)
         advanceUntilIdle()
 
         underTest.outputs.list.test {
-            assertListContainsItem(RSSModel.RSS(mockArticle))
-            assertListContainsItem(RSSModel.Advert)
-            assertListMatchesItem { it is RSSModel.Message }
+            val item = awaitItem()
+            assertTrue(item.any { it == RSSModel.RSS(mockArticle) })
+            assertTrue(item.any { it == RSSModel.Advert })
+            assertTrue(item.any { it is RSSModel.Message })
         }
 
-        observer.assertEmittedItems(true, false)
-
         underTest.inputs.refresh()
-
         advanceUntilIdle()
 
-        observer.assertEmittedItems(true, false, true, false)
+        val events = observer.cancelAndConsumeRemainingEvents()
+        assertEquals(false, (events[0] as Event.Item<Boolean>).value) // Initial
+        assertEquals(true, (events[1] as Event.Item<Boolean>).value)
+        assertEquals(false, (events[2] as Event.Item<Boolean>).value) // After init refresh
+        assertEquals(true, (events[3] as Event.Item<Boolean>).value)
+        assertEquals(false, (events[4] as Event.Item<Boolean>).value) // After second refresh
     }
 
     @Test
-    fun `init with ads disabled doesnt show advert item`() = coroutineTest {
+    fun `init with ads disabled doesnt show advert item`() = runTest {
         every { mockAdsRepository.advertConfig } returns AdvertConfig(
             onRss = false
         )
@@ -119,26 +123,28 @@ internal class RSSViewModelTest: BaseTest() {
         advanceUntilIdle()
 
         underTest.outputs.list.test {
-            assertListContainsItem(RSSModel.RSS(mockArticle))
-            assertListDoesNotMatchItem { it is RSSModel.Advert }
+            val item = awaitItem()
+            assertTrue(item.any { it == RSSModel.RSS(mockArticle) })
+            assertTrue(item.none { it == RSSModel.Advert })
         }
     }
 
     @Test
-    fun `init loads all news sources`() = coroutineTest {
+    fun `init loads all news sources`() = runTest {
 
         initUnderTest()
         advanceUntilIdle()
 
         underTest.outputs.list.test {
-            assertListContainsItem(RSSModel.RSS(mockArticle))
-            assertListContainsItem(RSSModel.Advert)
-            assertListMatchesItem { it is RSSModel.Message && it.msg.split(":").size == 3 }
+            val item = awaitItem()
+            assertTrue(item.any { it == RSSModel.RSS(mockArticle) })
+            assertTrue(item.any { it == RSSModel.Advert })
+            assertTrue(item.any { it is RSSModel.Message && it.msg.split(":").size == 3})
         }
     }
 
     @Test
-    fun `init all sources disabled if excludes list contains all news sources`() = coroutineTest {
+    fun `init all sources disabled if excludes list contains all news sources`() = runTest {
 
         every { mockRssService.getNews() } returns mockResponse500
         every { mockRssRepository.rssUrls } returns emptySet()
@@ -151,12 +157,12 @@ internal class RSSViewModelTest: BaseTest() {
         advanceUntilIdle()
 
         underTest.outputs.list.test {
-            assertValue(expected)
+            assertEquals(expected, awaitItem())
         }
     }
 
     @Test
-    fun `init internal error is thrown if results are empty`() = coroutineTest {
+    fun `init internal error is thrown if results are empty`() = runTest {
 
         every { mockRssService.getNews() } returns mockResponse500
 
@@ -168,12 +174,12 @@ internal class RSSViewModelTest: BaseTest() {
         advanceUntilIdle()
 
         underTest.outputs.list.test {
-            assertValue(expected)
+            assertEquals(expected, awaitItem())
         }
     }
 
     @Test
-    fun `no network error shown when network response code is no network`() = coroutineTest {
+    fun `no network error shown when network response code is no network`() = runTest {
 
         every { mockRssService.getNews() } returns mockResponseNoNetwork
 
@@ -185,12 +191,12 @@ internal class RSSViewModelTest: BaseTest() {
         advanceUntilIdle()
 
         underTest.outputs.list.test {
-            assertValue(expected)
+            assertEquals(expected, awaitItem())
         }
     }
 
     @Test
-    fun `no network error shown when network connectivity check returns false`() = coroutineTest {
+    fun `no network error shown when network connectivity check returns false`() = runTest {
 
         every { mockConnectivityManager.isConnected } returns false
 
@@ -202,12 +208,12 @@ internal class RSSViewModelTest: BaseTest() {
         advanceUntilIdle()
 
         underTest.outputs.list.test {
-            assertValue(expected)
+            assertEquals(expected, awaitItem())
         }
     }
 
     @Test
-    fun `click configure opens rss settings`() = coroutineTest {
+    fun `click configure opens rss settings`() = runTest {
 
         initUnderTest()
         advanceUntilIdle()

@@ -247,7 +247,7 @@
     <string name="settings_header_home">Home</string>
     <string name="settings_pref_collapsed_list_title">Collapse races</string>
     <string name="settings_pref_collapsed_list_description">Hide all but one of the completed races for the current season, showing the upcoming events higher in the feed</string>
-    <string name="settings_pref_empty_week_title">Add spacing for empty weeks</string>
+    <string name="settings_pref_empty_week_title">Show empty weeks</string>
     <string name="settings_pref_empty_week_description">Show a little spacing indicator between races to highlight double and triple headers in the upcoming season</string>
 
     <string name="settings_section_rss_configure_title">Configure</string>

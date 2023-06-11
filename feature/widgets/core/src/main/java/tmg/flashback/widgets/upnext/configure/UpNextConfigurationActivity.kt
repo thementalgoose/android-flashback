@@ -9,7 +9,6 @@ import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import tmg.flashback.style.AppTheme
 import tmg.flashback.ui.base.BaseActivity
-import tmg.utilities.extensions.observe
 
 @AndroidEntryPoint
 class UpNextConfigurationActivity: BaseActivity() {
@@ -32,15 +31,14 @@ class UpNextConfigurationActivity: BaseActivity() {
             AppTheme {
                 UpNextConfigurationScreenVM(
                     viewModel = viewModel,
-                    actionUpClicked = { finish() }
+                    actionUpClicked = { finish() },
+                    saveClicked = {
+                        val resultValue = Intent().putExtra(EXTRA_APPWIDGET_ID, appWidgetId)
+                        setResult(RESULT_OK, resultValue)
+                        finish()
+                    }
                 )
             }
-        }
-
-        observe(viewModel.outputs.save) {
-            val resultValue = Intent().putExtra(EXTRA_APPWIDGET_ID, appWidgetId)
-            setResult(RESULT_OK, resultValue)
-            finish()
         }
     }
 

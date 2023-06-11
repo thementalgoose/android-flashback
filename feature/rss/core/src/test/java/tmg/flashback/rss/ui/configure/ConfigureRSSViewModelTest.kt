@@ -1,8 +1,12 @@
 package tmg.flashback.rss.ui.configure
 
+import app.cash.turbine.test
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
+import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import tmg.flashback.rss.repo.RssRepository
 import tmg.flashback.rss.repo.model.SupportedArticleSource
@@ -10,10 +14,6 @@ import tmg.flashback.rss.usecases.AllSupportedSourcesUseCase
 import tmg.flashback.rss.usecases.GetSupportedSourceUseCase
 import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.testutils.BaseTest
-import tmg.testutils.livedata.assertListDoesNotMatchItem
-import tmg.testutils.livedata.assertListMatchesItem
-import tmg.testutils.livedata.test
-import tmg.testutils.livedata.testObserve
 
 internal class ConfigureRSSViewModelTest: BaseTest() {
 
@@ -34,61 +34,65 @@ internal class ConfigureRSSViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `show add custom is enabled when config is true`() = coroutineTest {
+    fun `show add custom is enabled when config is true`() = runTest {
         every { mockRssRepository.addCustom } returns true
 
         initUnderTest()
         underTest.outputs.showAddCustom.test {
-            assertValue(true)
+            assertEquals(true, awaitItem())
         }
     }
 
     @Test
-    fun `show add custom is disabled when config is false`() = coroutineTest {
+    fun `show add custom is disabled when config is false`() = runTest {
         every { mockRssRepository.addCustom } returns false
 
         initUnderTest()
         underTest.outputs.showAddCustom.test {
-            assertValue(false)
+            assertEquals(false, awaitItem())
         }
     }
 
     @Test
-    fun `show description is enabled when pref is true`() = coroutineTest {
+    fun `show description is enabled when pref is true`() = runTest {
         every { mockRssRepository.rssShowDescription } returns true
 
         initUnderTest()
         underTest.outputs.showDescriptionEnabled.test {
-            assertValue(true)
+            assertEquals(true, awaitItem())
         }
     }
 
     @Test
-    fun `show description is disabled when pref is false`() = coroutineTest {
+    fun `show description is disabled when pref is false`() = runTest {
         every { mockRssRepository.rssShowDescription } returns false
 
         initUnderTest()
         underTest.outputs.showDescriptionEnabled.test {
-            assertValue(false)
+            assertEquals(false, awaitItem())
         }
     }
 
     @Test
-    fun `clicking show description updates pref and updates value`() = coroutineTest {
+    fun `clicking show description updates pref and updates value`() = runTest {
         every { mockRssRepository.rssShowDescription } returns false
 
         initUnderTest()
-        val observer = underTest.outputs.showDescriptionEnabled.testObserve()
+        underTest.outputs.showDescriptionEnabled.test {
+            assertEquals(false, awaitItem())
+        }
         underTest.inputs.clickShowDescription(true)
 
+        underTest.outputs.showDescriptionEnabled.test {
+            assertEquals(true, awaitItem())
+        }
         verify {
             mockRssRepository.rssShowDescription = true
         }
-        observer.assertEmittedCount(2)
     }
 
     @Test
-    fun `rss list is emitted with supported and custom sources`() = coroutineTest {
+    fun `rss list is emitted with supported and custom sources`() = runTest {
         every { mockRssRepository.rssUrls } returns setOf(
             fakeSupportedArticleSource.rssLink,
             "https://www.custom_rss.com/rss"
@@ -97,13 +101,14 @@ internal class ConfigureRSSViewModelTest: BaseTest() {
 
         initUnderTest()
         underTest.outputs.rssSources.test {
-            assertListMatchesItem { it.isChecked && it.url == "https://www.custom_rss.com/rss" }
-            assertListMatchesItem { it.isChecked && it.url == fakeSupportedArticleSource.rssLink && it.supportedArticleSource == fakeSupportedArticleSource }
+            val item = awaitItem()
+            assertTrue(item.any { it.isChecked && it.url == "https://www.custom_rss.com/rss" })
+            assertTrue(item.any { it.isChecked && it.url == fakeSupportedArticleSource.rssLink && it.supportedArticleSource == fakeSupportedArticleSource })
         }
     }
 
     @Test
-    fun `adding custom source updates rss list`() = coroutineTest {
+    fun `adding custom source updates rss list`() = runTest {
         every { mockRssRepository.rssUrls } returns setOf(
             fakeSupportedArticleSource.rssLink
         )
@@ -118,13 +123,14 @@ internal class ConfigureRSSViewModelTest: BaseTest() {
         underTest.inputs.addItem("https://www.custom_rss.com/rss", isChecked = true)
 
         underTest.outputs.rssSources.test {
-            assertListMatchesItem { it.isChecked && it.url == "https://www.custom_rss.com/rss" }
-            assertListMatchesItem { it.isChecked && it.url == fakeSupportedArticleSource.rssLink && it.supportedArticleSource == fakeSupportedArticleSource }
+            val item = awaitItem()
+            assertTrue(item.any { it.isChecked && it.url == "https://www.custom_rss.com/rss" })
+            assertTrue(item.any { it.isChecked && it.url == fakeSupportedArticleSource.rssLink && it.supportedArticleSource == fakeSupportedArticleSource })
         }
     }
 
     @Test
-    fun `removing custom source updates rss list`() = coroutineTest {
+    fun `removing custom source updates rss list`() = runTest {
         every { mockRssRepository.rssUrls } returns setOf(
             fakeSupportedArticleSource.rssLink,
             "https://www.custom_rss.com/rss"
@@ -139,13 +145,14 @@ internal class ConfigureRSSViewModelTest: BaseTest() {
         underTest.inputs.addItem("https://www.custom_rss.com/rss", isChecked = false)
 
         underTest.outputs.rssSources.test {
-            assertListDoesNotMatchItem { it.isChecked && it.url == "https://www.custom_rss.com/rss"}
-            assertListMatchesItem { it.isChecked && it.url == fakeSupportedArticleSource.rssLink && it.supportedArticleSource == fakeSupportedArticleSource }
+            val item = awaitItem()
+            assertTrue(item.none { it.isChecked && it.url == "https://www.custom_rss.com/rss"})
+            assertTrue(item.any { it.isChecked && it.url == fakeSupportedArticleSource.rssLink && it.supportedArticleSource == fakeSupportedArticleSource })
         }
     }
 
     @Test
-    fun `adding supported source updates rss list`() = coroutineTest {
+    fun `adding supported source updates rss list`() = runTest {
         every { mockRssRepository.rssUrls } returns setOf(
             "https://www.custom_rss.com/rss"
         )
@@ -153,8 +160,9 @@ internal class ConfigureRSSViewModelTest: BaseTest() {
 
         initUnderTest()
         underTest.outputs.rssSources.test {
-            assertListMatchesItem { it.isChecked && it.url == "https://www.custom_rss.com/rss" }
-            assertListMatchesItem { !it.isChecked && it.url == fakeSupportedArticleSource.rssLink && it.supportedArticleSource == fakeSupportedArticleSource }
+            val item = awaitItem()
+            assertTrue(item.any { it.isChecked && it.url == "https://www.custom_rss.com/rss" })
+            assertTrue(item.any { !it.isChecked && it.url == fakeSupportedArticleSource.rssLink && it.supportedArticleSource == fakeSupportedArticleSource })
         }
 
         every { mockRssRepository.rssUrls } returns setOf(
@@ -164,13 +172,14 @@ internal class ConfigureRSSViewModelTest: BaseTest() {
         underTest.inputs.addItem(fakeSupportedArticleSource.rssLink, isChecked = true)
 
         underTest.outputs.rssSources.test {
-            assertListMatchesItem { it.isChecked && it.url == "https://www.custom_rss.com/rss" }
-            assertListMatchesItem { it.isChecked && it.url == fakeSupportedArticleSource.rssLink }
+            val item = awaitItem()
+            assertTrue(item.any { it.isChecked && it.url == "https://www.custom_rss.com/rss" })
+            assertTrue(item.any { it.isChecked && it.url == fakeSupportedArticleSource.rssLink })
         }
     }
 
     @Test
-    fun `removing supported source updates rss list`() = coroutineTest {
+    fun `removing supported source updates rss list`() = runTest {
         every { mockRssRepository.rssUrls } returns setOf(
             "https://www.custom_rss.com/rss",
             fakeSupportedArticleSource.rssLink
@@ -179,8 +188,9 @@ internal class ConfigureRSSViewModelTest: BaseTest() {
 
         initUnderTest()
         underTest.outputs.rssSources.test {
-            assertListMatchesItem { it.url == "https://www.custom_rss.com/rss" }
-            assertListMatchesItem { it.isChecked && it.url == fakeSupportedArticleSource.rssLink && it.supportedArticleSource == fakeSupportedArticleSource }
+            val item = awaitItem()
+            assertTrue(item.any { it.url == "https://www.custom_rss.com/rss" })
+            assertTrue(item.any { it.isChecked && it.url == fakeSupportedArticleSource.rssLink && it.supportedArticleSource == fakeSupportedArticleSource })
         }
 
         every { mockRssRepository.rssUrls } returns setOf(
@@ -190,13 +200,14 @@ internal class ConfigureRSSViewModelTest: BaseTest() {
 
 
         underTest.outputs.rssSources.test {
-            assertListMatchesItem { it.url == "https://www.custom_rss.com/rss" }
-            assertListMatchesItem { !it.isChecked && it.url == fakeSupportedArticleSource.rssLink && it.supportedArticleSource == fakeSupportedArticleSource }
+            val item = awaitItem()
+            assertTrue(item.any { it.url == "https://www.custom_rss.com/rss" })
+            assertTrue(item.any { !it.isChecked && it.url == fakeSupportedArticleSource.rssLink && it.supportedArticleSource == fakeSupportedArticleSource })
         }
     }
 
     @Test
-    fun `visit website forwards call to website navigator`() = coroutineTest {
+    fun `visit website forwards call to website navigator`() = runTest {
         initUnderTest()
         underTest.inputs.visitWebsite(fakeSupportedArticleSource)
 

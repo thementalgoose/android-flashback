@@ -1,33 +1,37 @@
 package tmg.flashback.results.ui.dashboard.schedule
 
+import app.cash.turbine.Event.Item
+import app.cash.turbine.test
+import app.cash.turbine.testIn
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
+import tmg.flashback.domain.repo.EventsRepository
+import tmg.flashback.domain.repo.OverviewRepository
 import tmg.flashback.formula1.model.Event
 import tmg.flashback.formula1.model.Overview
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.model.model
-import tmg.flashback.domain.repo.EventsRepository
-import tmg.flashback.domain.repo.OverviewRepository
-import tmg.flashback.results.repository.HomeRepository
-import tmg.flashback.results.repository.NotificationsRepositoryImpl
-import tmg.flashback.results.repository.models.NotificationSchedule
-import tmg.flashback.results.usecases.FetchSeasonUseCase
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.flashback.results.contract.ResultsNavigationComponent
 import tmg.flashback.results.model.toScreenWeekendData
+import tmg.flashback.results.repository.HomeRepository
+import tmg.flashback.results.repository.NotificationsRepositoryImpl
+import tmg.flashback.results.repository.models.NotificationSchedule
+import tmg.flashback.results.usecases.FetchSeasonUseCase
 import tmg.flashback.weekend.contract.Weekend
 import tmg.flashback.weekend.contract.with
 import tmg.testutils.BaseTest
-import tmg.testutils.livedata.test
-import tmg.testutils.livedata.testObserve
 
 internal class ScheduleViewModelTest: BaseTest() {
 
@@ -71,17 +75,19 @@ internal class ScheduleViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `current season use case is fetched on initial load`() {
+    fun `current season use case is fetched on initial load`() = runTest {
         initUnderTest()
         underTest.load(2020)
 
-        underTest.outputs.items.testObserve()
+        underTest.outputs.items.test {
+            assertNotNull(awaitItem())
+        }
 
         verify { mockFetchSeasonUseCase.fetch(2020) }
     }
 
     @Test
-    fun `null is returned when DB returns no standings and hasnt made request`() {
+    fun `null is returned when DB returns no standings and hasnt made request`() = runTest {
         every { mockFetchSeasonUseCase.fetch(any()) } returns flow { emit(false) }
         every { mockOverviewRepository.getOverview(any()) } returns flow { emit(Overview.model(overviewRaces = emptyList())) }
 
@@ -89,17 +95,17 @@ internal class ScheduleViewModelTest: BaseTest() {
         underTest.load(2020)
 
         underTest.outputs.items.test {
-            assertValue(listOf(ScheduleModel.Loading))
+            assertEquals(listOf(ScheduleModel.Loading), awaitItem())
         }
     }
 
     @Test
-    fun `expected list is returned when items are loaded from the DB`() {
+    fun `expected list is returned when items are loaded from the DB`() = runTest {
         initUnderTest()
         underTest.load(2020)
 
         underTest.outputs.items.test {
-            assertValue(listOf(
+            assertEquals(listOf(
                 ScheduleModel.RaceWeek(
                     model = OverviewRace.model(round = 1, date = LocalDate.of(2020, 1, 1)),
                     notificationSchedule = fakeNotificationSchedule,
@@ -110,13 +116,13 @@ internal class ScheduleViewModelTest: BaseTest() {
                     notificationSchedule = fakeNotificationSchedule,
                     showScheduleList = false
                 )
-            ))
+            ), awaitItem())
         }
     }
 
 
     @Test
-    fun `show events returns true when events are contained`() {
+    fun `show events returns true when events are contained`() = runTest {
         every { mockEventsRepository.getEvents(2020) } returns flow { emit(listOf(
             Event.model(date = LocalDate.of(2020, 1, 2)),
             Event.model(date = LocalDate.now().plusDays(1))
@@ -125,15 +131,17 @@ internal class ScheduleViewModelTest: BaseTest() {
         initUnderTest()
         underTest.load(2020)
 
-        val loadInfo = underTest.outputs.items.testObserve()
+        underTest.outputs.items.test {
+            assertNotNull(awaitItem())
+        }
         underTest.outputs.showEvents.test {
-            assertValue(true)
+            assertEquals(true, awaitItem())
         }
     }
 
 
     @Test
-    fun `expected list shows upcoming events intertwined with calendar models`() {
+    fun `expected list shows upcoming events intertwined with calendar models`() = runTest {
         every { mockEventsRepository.getEvents(2020) } returns flow { emit(listOf(
             Event.model(date = LocalDate.of(2020, 1, 2)),
             Event.model(date = LocalDate.now().plusDays(1))
@@ -143,7 +151,7 @@ internal class ScheduleViewModelTest: BaseTest() {
         underTest.load(2020)
 
         underTest.outputs.items.test {
-            assertValue(listOf(
+            assertEquals(listOf(
                 ScheduleModel.RaceWeek(
                     model = OverviewRace.model(round = 1, date = LocalDate.of(2020, 1, 1)),
                     notificationSchedule = fakeNotificationSchedule,
@@ -154,12 +162,12 @@ internal class ScheduleViewModelTest: BaseTest() {
                     notificationSchedule = fakeNotificationSchedule,
                     showScheduleList = false
                 )
-            ))
+            ), awaitItem())
         }
     }
 
     @Test
-    fun `expected list shows collapsible list section if pref is enabled`() {
+    fun `expected list shows collapsible list section if pref is enabled`() = runTest {
 
         val dayBeforeDayBeforeYesterday = OverviewRace.model(round = 1, date = LocalDate.now().minusDays(3L))
         val dayBeforeYesterday = OverviewRace.model(round = 2, date = LocalDate.now().minusDays(2L))
@@ -176,7 +184,7 @@ internal class ScheduleViewModelTest: BaseTest() {
         underTest.load(LocalDate.now().year)
 
         underTest.outputs.items.test {
-            assertValue(listOf(
+            assertEquals(listOf(
                 ScheduleModel.GroupedCompletedRaces(
                     first = dayBeforeDayBeforeYesterday,
                     last = dayBeforeYesterday
@@ -196,12 +204,12 @@ internal class ScheduleViewModelTest: BaseTest() {
                     notificationSchedule = fakeNotificationSchedule,
                     showScheduleList = false
                 )
-            ))
+            ), awaitItem())
         }
     }
 
     @Test
-    fun `expected list doesnt show collapsible list section if no previous`() {
+    fun `expected list doesnt show collapsible list section if no previous`() = runTest {
 
         val today = OverviewRace.model(round = 3, date = LocalDate.now())
         val tomorrow = OverviewRace.model(round = 4, date = LocalDate.now().plusDays(1L))
@@ -215,7 +223,7 @@ internal class ScheduleViewModelTest: BaseTest() {
         underTest.load(LocalDate.now().year)
 
         underTest.outputs.items.test {
-            assertValue(listOf(
+            assertEquals(listOf(
                 ScheduleModel.RaceWeek(
                     model = today,
                     notificationSchedule = fakeNotificationSchedule,
@@ -226,23 +234,24 @@ internal class ScheduleViewModelTest: BaseTest() {
                     notificationSchedule = fakeNotificationSchedule,
                     showScheduleList = false
                 )
-            ))
+            ), awaitItem())
         }
     }
 
     @Test
-    fun `refresh calls fetch season and updates is refreshing`() = coroutineTest {
+    fun `refresh calls fetch season and updates is refreshing`() = runTest {
         initUnderTest()
         underTest.load(2020)
 
-        val refreshing = underTest.outputs.isRefreshing.testObserve()
-        refreshing.assertValueAt(false, 0)
-        runBlocking {
-            underTest.refresh()
-        }
+        val observer = underTest.outputs.isRefreshing.testIn(this)
 
-        refreshing.assertValueAt(true, 1)
-        refreshing.assertValueAt(false, 2)
+        underTest.refresh()
+
+        advanceUntilIdle()
+        val items = observer.cancelAndConsumeRemainingEvents()
+        assertEquals(false, (items[0] as Item<Boolean>).value) // Initialise
+        assertEquals(true, (items[1] as Item<Boolean>).value)
+        assertEquals(false, (items[2] as Item<Boolean>).value) // Refresh
         coVerify {
             mockFetchSeasonUseCase.fetchSeason(2020)
         }
@@ -250,7 +259,7 @@ internal class ScheduleViewModelTest: BaseTest() {
 
 
     @Test
-    fun `clicking item goes to constructor overview`() {
+    fun `clicking item goes to constructor overview`() = runTest {
         initUnderTest()
         underTest.load(2020)
         val model = ScheduleModel.RaceWeek(
@@ -270,7 +279,7 @@ internal class ScheduleViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `clicking tyre with season launches tyre sheet`() {
+    fun `clicking tyre with season launches tyre sheet`() = runTest {
         initUnderTest()
         underTest.load(2020)
 
@@ -282,7 +291,7 @@ internal class ScheduleViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `clicking preseason with season launches preseason sheet`() {
+    fun `clicking preseason with season launches preseason sheet`() = runTest {
         initUnderTest()
         underTest.load(2020)
 
