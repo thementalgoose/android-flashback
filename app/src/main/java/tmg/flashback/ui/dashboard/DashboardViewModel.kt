@@ -55,7 +55,7 @@ class DashboardViewModel @Inject constructor(
     val inputs: DashboardViewModelInputs = this
     val outputs: DashboardViewModelOutputs = this
 
-    override val isDarkMode: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    override val isDarkMode: MutableStateFlow<Boolean> = MutableStateFlow(!styleManager.isDayMode)
     override val appVersion: MutableStateFlow<String> = MutableStateFlow(buildConfigManager.versionName)
 
     override val featurePromptsList: MutableStateFlow<List<FeaturePrompt>> = MutableStateFlow(emptyList())
