@@ -3,7 +3,9 @@
 package tmg.flashback.ui.components.navigation
 
 import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
@@ -32,6 +34,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import tmg.flashback.style.AppTheme
@@ -40,7 +43,7 @@ import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody1
 
 private val selectedPillWidth: Dp = 64.dp
-private val pillHeight: Dp = 28.dp
+private val pillHeight: Dp = 32.dp
 private val iconSize: Dp = 24.dp
 val appBarHeight: Dp = 80.dp
 
@@ -78,13 +81,13 @@ private fun Item(
         true -> selectedPillWidth
         false -> iconSize
     })
-    val backgroundColor = animateColorAsState(targetValue = when (item.isSelected ?: false) {
-        true -> AppTheme.colors.primary.copy(alpha = 0.2f)
-        false -> Color.Transparent
+    val selectedX = animateDpAsState(targetValue = when (item.isSelected ?: false) {
+        true -> 0.dp
+        false -> (selectedPillWidth - iconSize) / 2
     })
-    val colour = animateColorAsState(targetValue = when (item.isSelected ?: false) {
-        true -> AppTheme.colors.primary
-        false -> AppTheme.colors.contentPrimary
+    val backgroundColor = animateColorAsState(targetValue = when (item.isSelected ?: false) {
+        true -> AppTheme.colors.primary.copy(alpha = 0.3f)
+        false -> Color.Transparent
     })
 
     Column(
@@ -99,8 +102,8 @@ private fun Item(
             Box(modifier = Modifier
                 .width(selectedWidth.value)
                 .height(pillHeight)
-                .align(Alignment.Center)
-                .offset(x = (selectedPillWidth - selectedWidth.value) / 2)
+                .align(Alignment.CenterStart)
+                .offset(x = selectedX.value)
                 .clip(RoundedCornerShape(pillHeight / 2))
                 .background(backgroundColor.value))
             Icon(
@@ -108,13 +111,14 @@ private fun Item(
                     .size(iconSize)
                     .align(Alignment.Center),
                 painter = painterResource(id = item.icon),
-                tint = colour.value,
+                tint = AppTheme.colors.contentPrimary,
                 contentDescription = null,
             )
         }
-        Box(Modifier
-            .fillMaxWidth()
-            .height(IntrinsicSize.Min)
+        Box(
+            Modifier
+                .fillMaxWidth()
+                .height(IntrinsicSize.Min)
         ) {
             TextBody1(
                 textAlign = TextAlign.Center,
@@ -128,15 +132,22 @@ private fun Item(
                         end = 4.dp
                     ),
                 text = stringResource(id = item.label),
-                textColor = colour.value,
-                bold = true
+                textColor = AppTheme.colors.contentPrimary,
+                bold = item.isSelected == true
             )
             Box(
                 Modifier
                     .fillMaxHeight()
                     .width(AppTheme.dimens.small)
                     .align(Alignment.CenterEnd)
-                    .background(Brush.horizontalGradient(listOf(Color.Transparent, AppTheme.colors.backgroundNav)))
+                    .background(
+                        Brush.horizontalGradient(
+                            listOf(
+                                Color.Transparent,
+                                AppTheme.colors.backgroundNav
+                            )
+                        )
+                    )
             )
         }
     }
