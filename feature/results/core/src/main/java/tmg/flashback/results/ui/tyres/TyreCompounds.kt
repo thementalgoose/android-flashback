@@ -28,6 +28,7 @@ import tmg.flashback.ui.components.layouts.BottomSheet
 @Composable
 fun TyreCompounds(
     season: Int,
+    actionUpClicked: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     ScreenView(screenName = "Tyre Compounds", args = mapOf(
@@ -38,7 +39,8 @@ fun TyreCompounds(
     BottomSheet(
         modifier = modifier.background(AppTheme.colors.backgroundPrimary),
         title = stringResource(id = R.string.tyres_list_title, season.toString()),
-        subtitle = stringResource(id = R.string.tyres_list_subtitle)
+        subtitle = stringResource(id = R.string.tyres_list_subtitle),
+        backClicked = actionUpClicked
     ) {
         val dry = tyres?.tyres?.filter { it.tyre.isDry } ?: emptyList()
         if (dry.isNotEmpty()) {
@@ -105,6 +107,9 @@ private fun TyreRow(
 @Composable
 private fun Preview() {
     AppThemePreview {
-        TyreCompounds(season = 2022)
+        TyreCompounds(
+            season = 2022,
+            actionUpClicked = { }
+        )
     }
 }

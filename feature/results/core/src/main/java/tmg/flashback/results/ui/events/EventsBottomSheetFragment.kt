@@ -12,7 +12,12 @@ class EventsBottomSheetFragment : BaseBottomSheetComposeFragment() {
     val season: Int get() = arguments?.getInt(keySeason, Formula1.currentSeasonYear) ?: Formula1.currentSeasonYear
 
     override val content = @Composable {
-        EventsScreenVM(season = season)
+        EventsScreenVM(
+            season = season,
+            actionUpClicked = {
+                this.dismiss()
+            }
+        )
     }
 
     companion object {

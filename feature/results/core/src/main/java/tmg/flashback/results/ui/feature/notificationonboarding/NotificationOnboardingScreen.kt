@@ -26,7 +26,8 @@ import tmg.utilities.models.Selected
 
 @Composable
 fun NotificationOnboardingScreenVM(
-    viewModel: NotificationOnboardingViewModel = hiltViewModel()
+    viewModel: NotificationOnboardingViewModel = hiltViewModel(),
+    actionUpClicked: () -> Unit,
 ) {
     ScreenView(screenName = "Onboarding Notifications")
 
@@ -34,6 +35,7 @@ fun NotificationOnboardingScreenVM(
 
     NotificationOnboardingScreen(
         list = list.value,
+        actionUpClicked = actionUpClicked,
         itemClicked = {
             viewModel.inputs.selectNotificationChannel(it.channel)
         }
@@ -43,11 +45,13 @@ fun NotificationOnboardingScreenVM(
 @Composable
 fun NotificationOnboardingScreen(
     list: List<Selected<NotificationOnboardingModel>>,
-    itemClicked: (NotificationOnboardingModel) -> Unit
+    itemClicked: (NotificationOnboardingModel) -> Unit,
+    actionUpClicked: () -> Unit,
 ) {
     BottomSheet(
         title = stringResource(id = R.string.notification_onboarding_title),
-        subtitle = stringResource(id = R.string.notification_onboarding_description)
+        subtitle = stringResource(id = R.string.notification_onboarding_description),
+        backClicked = actionUpClicked
     ) {
         list.forEach { item ->
             Item(
@@ -122,6 +126,7 @@ private fun Preview() {
                     icon = R.drawable.ic_notification_reminder_30
                 ), true)
             ),
+            actionUpClicked = {},
             itemClicked = {}
         )
     }
