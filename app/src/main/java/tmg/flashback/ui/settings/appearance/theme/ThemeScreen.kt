@@ -35,7 +35,8 @@ fun ThemeScreen(
 ) {
     BottomSheet(
         title = stringResource(id = R.string.settings_theme_theme_title),
-        subtitle = stringResource(id = R.string.settings_theme_theme_description)
+        subtitle = stringResource(id = R.string.settings_theme_theme_description),
+        backClicked = dismiss
     ) {
         Theme.values().forEach { theme ->
             InputSelection(

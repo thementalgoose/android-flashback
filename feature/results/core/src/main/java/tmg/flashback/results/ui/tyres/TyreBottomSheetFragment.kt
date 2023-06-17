@@ -12,7 +12,12 @@ class TyreBottomSheetFragment: BaseBottomSheetComposeFragment() {
     val season: Int get() = arguments?.getInt(keySeason, currentSeasonYear) ?: currentSeasonYear
 
     override val content = @Composable {
-        TyreCompounds(season = season)
+        TyreCompounds(
+            season = season,
+            actionUpClicked = {
+                this.dismiss()
+            }
+        )
     }
 
     companion object {

@@ -35,7 +35,8 @@ fun NightModeScreen(
 ) {
     BottomSheet(
         title = stringResource(id = R.string.settings_theme_nightmode_title),
-        subtitle = stringResource(id = R.string.settings_theme_nightmode_description)
+        subtitle = stringResource(id = R.string.settings_theme_nightmode_description),
+        backClicked = dismiss
     ) {
         NightMode.values().forEach { nightMode ->
             InputSelection(
