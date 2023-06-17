@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
+import org.simpleframework.xml.Transient;
 
 @Keep
 @Root(name = "item", strict = false)
