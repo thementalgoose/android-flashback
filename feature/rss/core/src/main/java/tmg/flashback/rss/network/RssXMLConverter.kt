@@ -54,7 +54,10 @@ internal fun RssXMLModel.convert(getSupportedSourceUseCase: GetSupportedSourceUs
                 title = it.title.replace("&#039;", "'"),
                 description = when (showDescription) {
                     false -> null
-                    true -> it.description?.trim()
+                    true -> it.description
+                        ?.substringBefore("&lt;/p&gt;")
+                        ?.substringBefore("</p>")
+                        ?.trim()
                 },
                 link = it.link!!.replace("http://", "https://"),
                 date = LocalDateTime.parse(it.pubDate!!.replace("GMT", "+0000"), DateTimeFormatter.ofPattern(dateFormat, Locale.ENGLISH)),
