@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
+
 package tmg.flashback.rss.ui.configure
 
 import androidx.compose.foundation.background
@@ -15,15 +17,21 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.AlertDialog
+import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.Text
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -44,6 +52,7 @@ import tmg.flashback.style.input.InputSwitch
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextHeadline2
 import tmg.flashback.style.text.TextTitle
+import tmg.flashback.ui.bottomsheet.ModalSheet
 import tmg.flashback.ui.components.analytics.ScreenView
 import tmg.flashback.ui.components.settings.Footer
 import tmg.flashback.ui.components.settings.Header
@@ -151,46 +160,25 @@ fun ConfigureRSSScreen(
         }
     )
 
-    if (customRssBox.value) {
-        val input = remember { mutableStateOf(TextFieldValue("")) }
-        AlertDialog(
-            title = {
-                TextHeadline2(text = stringResource(id = R.string.settings_rss_add_title))
-            },
-            text = {
-                Column(Modifier.fillMaxWidth()) {
-                    TextBody2(text = stringResource(id = R.string.settings_rss_add_description))
-                    Spacer(Modifier.height(AppTheme.dimens.medium))
-                    InputPrimary(
-                        text = input,
-                        placeholder = "https://www.website.com/rss"
-                    )
-                }
-            },
-            onDismissRequest = {
+    val keyboardController = LocalSoftwareKeyboardController.current
+    ModalSheet(
+        visible = customRssBox.value,
+        onVisibleChange = {
+            if (!it) {
+                keyboardController?.hide()
                 customRssBox.value = false
+            }
+        },
+        cancelable = true
+    ) {
+        AddRSSScreen(
+            sourceAdded = {
+                keyboardController?.hide()
+                sourceAdded(it)
             },
-            confirmButton = {
-                ButtonTertiary(
-                    narrow = false,
-                    text = stringResource(id = R.string.settings_rss_add_confirm),
-                    onClick = {
-                        if (input.value.text.isNotEmpty()) {
-                            sourceAdded(input.value.text)
-                        }
-                        customRssBox.value = false
-                    }
-                )
-            },
-            dismissButton = {
-                ButtonTertiary(
-                    narrow = false,
-                    text = stringResource(id = R.string.settings_rss_add_cancel),
-                    onClick = {
-                        input.value = TextFieldValue("")
-                        customRssBox.value = false
-                    }
-                )
+            closeSheet = {
+                keyboardController?.hide()
+                customRssBox.value = false
             }
         )
     }
