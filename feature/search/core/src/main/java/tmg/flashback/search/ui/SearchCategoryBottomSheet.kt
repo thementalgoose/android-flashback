@@ -32,7 +32,8 @@ fun SearchCategoryBottomSheet(
     ) {
         BottomSheet(
             title = stringResource(id = R.string.search_category_option_title),
-            subtitle = stringResource(id = R.string.search_category_option_description)
+            subtitle = stringResource(id = R.string.search_category_option_description),
+            backClicked = dismiss
         ) {
             Column(Modifier.padding(horizontal = AppTheme.dimens.medium)) {
                 SearchCategory.values().forEach {

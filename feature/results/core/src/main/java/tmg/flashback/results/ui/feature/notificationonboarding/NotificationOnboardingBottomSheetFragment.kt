@@ -9,7 +9,11 @@ import tmg.flashback.ui.base.BaseBottomSheetComposeFragment
 class NotificationOnboardingBottomSheetFragment: BaseBottomSheetComposeFragment() {
 
     override val content = @Composable {
-        NotificationOnboardingScreenVM()
+        NotificationOnboardingScreenVM(
+            actionUpClicked = {
+                this.dismiss()
+            }
+        )
     }
 
     companion object {

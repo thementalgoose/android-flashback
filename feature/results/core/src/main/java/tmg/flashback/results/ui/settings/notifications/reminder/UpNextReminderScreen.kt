@@ -34,6 +34,7 @@ fun UpNextReminderScreen(
     BottomSheet(
         title = stringResource(id = R.string.settings_up_next_reminder_title),
         subtitle = stringResource(id = R.string.settings_up_next_reminder_description),
+        backClicked = dismiss,
         content = {
             NotificationReminder.values()
                 .sortedByDescending { it.seconds }
