@@ -30,7 +30,8 @@ sealed class QualifyingModel(
         val q2: QualifyingResult?,
         val q3: QualifyingResult?,
         val qualified: Int? = finalQualifyingPosition ?: q3?.position ?: q2?.position ?: q1?.position,
-        val grid: Int?
+        val grid: Int?,
+        val sprintRaceGrid: Int? // For 2021 and 2022 when qualifying set grid for sprint
     ) : QualifyingModel(driver.driver.id, true) {
         companion object
     }
