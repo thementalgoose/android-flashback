@@ -318,19 +318,18 @@ private fun DriverLabel(
             )
 
             if (qualifyingPosition != null) {
-                when {
-                    sprintQualifyingGrid != null -> {
+                if (sprintQualifyingGrid != null) {
+                    if (sprintQualifyingGrid > qualifyingPosition) {
                         BadgeView(
                             modifier = Modifier.padding(bottom = AppTheme.dimens.xsmall),
-                            model = Badge(stringResource(id = R.string.qualifying_penalty_sprint, sprintQualifyingGrid))
+                            model = Badge(stringResource(id = R.string.qualifying_penalty_sprint, sprintQualifyingGrid.ordinalAbbreviation))
                         )
                     }
-                    grid != null -> {
-                        BadgeView(
-                            modifier = Modifier.padding(bottom = AppTheme.dimens.xsmall),
-                            model = Badge(stringResource(id = R.string.qualifying_penalty, grid))
-                        )
-                    }
+                } else if (grid != null && grid > qualifyingPosition) {
+                    BadgeView(
+                        modifier = Modifier.padding(bottom = AppTheme.dimens.xsmall),
+                        model = Badge(stringResource(id = R.string.qualifying_penalty, grid.ordinalAbbreviation))
+                    )
                 }
             }
         }
