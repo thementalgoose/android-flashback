@@ -58,6 +58,7 @@
     <string name="sprint_qualifying_header_q2">SQ2</string>
     <string name="sprint_qualifying_header_q3">SQ3</string>
     <string name="qualifying_penalty">Penalty, starts %s</string>
+    <string name="qualifying_penalty_sprint">Penalty, starts sprint %s</string>
 
 
     <!-- Results -->
