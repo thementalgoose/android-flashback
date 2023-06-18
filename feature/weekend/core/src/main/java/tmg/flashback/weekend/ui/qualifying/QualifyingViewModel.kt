@@ -108,7 +108,11 @@ class QualifyingViewModel @Inject constructor(
                 q1 = overview?.q1,
                 q2 = overview?.q2,
                 q3 = overview?.q3,
-                grid = overview?.race?.grid
+                grid = overview?.race?.grid,
+                sprintRaceGrid = when (this.raceInfo.season) {
+                     2021, 2022 -> overview?.sprintRace?.grid
+                     else -> null
+                }
             )
         }
     }

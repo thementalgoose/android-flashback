@@ -23,6 +23,8 @@ import tmg.flashback.providers.DriverConstructorProvider
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
+import tmg.flashback.style.badge.Badge
+import tmg.flashback.style.badge.BadgeView
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextSection
 import tmg.flashback.ui.components.drivers.DriverName
@@ -192,7 +194,8 @@ private fun Qualifying(
                         .clickable(onClick = { driverClicked(model.driver.driver) }),
                     driver = model.driver,
                     qualifyingPosition = model.qualified,
-                    grid = model.grid
+                    grid = model.grid,
+                    sprintQualifyingGrid = model.sprintRaceGrid
                 )
             }
             Time(
@@ -231,6 +234,7 @@ private fun Qualifying(
             driver = model.driver,
             qualifyingPosition = model.qualified,
             grid = null,
+            sprintQualifyingGrid = null
         )
         Time(
             modifier = Modifier.fillMaxHeight(),
@@ -262,6 +266,7 @@ private fun Qualifying(
             driver = model.driver,
             qualifyingPosition = model.qualified,
             grid = null,
+            sprintQualifyingGrid = null
         )
         Time(
             modifier = Modifier.fillMaxHeight(),
@@ -277,6 +282,7 @@ private fun DriverLabel(
     driver: DriverEntry,
     qualifyingPosition: Int?,
     grid: Int?,
+    sprintQualifyingGrid: Int?,
     modifier: Modifier = Modifier
 ) {
     val contentDescription = if (qualifyingPosition == null) {
@@ -310,12 +316,23 @@ private fun DriverLabel(
                 text = driver.constructor.name,
                 modifier = Modifier.padding(vertical = AppTheme.dimens.xsmall)
             )
-//            if (grid != null && qualifyingPosition != null && grid > qualifyingPosition) {
-//                BadgeView(
-//                    modifier = Modifier.padding(bottom = AppTheme.dimens.xsmall),
-//                    model = Badge(stringResource(id = R.string.qualifying_penalty, grid))
-//                )
-//            }
+
+            if (qualifyingPosition != null) {
+                when {
+                    sprintQualifyingGrid != null -> {
+                        BadgeView(
+                            modifier = Modifier.padding(bottom = AppTheme.dimens.xsmall),
+                            model = Badge(stringResource(id = R.string.qualifying_penalty_sprint, sprintQualifyingGrid))
+                        )
+                    }
+                    grid != null -> {
+                        BadgeView(
+                            modifier = Modifier.padding(bottom = AppTheme.dimens.xsmall),
+                            model = Badge(stringResource(id = R.string.qualifying_penalty, grid))
+                        )
+                    }
+                }
+            }
         }
     }
 }
@@ -375,7 +392,8 @@ private fun fakeQualifyingModel(driverConstructor: DriverEntry) = QualifyingMode
     q1 = QualifyingResult(driverConstructor, lapTime = LapTime(92382), position = 1),
     q2 = QualifyingResult(driverConstructor, lapTime = LapTime(92293), position = 1),
     q3 = QualifyingResult(driverConstructor, lapTime = LapTime(91934), position = 1),
-    grid = 1
+    grid = 1,
+    sprintRaceGrid = null
 )
 
 private enum class QualifyingColumn { Q1, Q2, Q3 }
