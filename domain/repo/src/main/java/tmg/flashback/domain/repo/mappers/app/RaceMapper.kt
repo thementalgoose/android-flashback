@@ -66,13 +66,12 @@ class RaceMapper @Inject constructor(
 
     fun mapRace(data: tmg.flashback.domain.persistence.models.race.Race?): Race? {
         if (data == null) return null
+        val race = mapRace(data.race)
         return Race(
             raceInfo = mapRaceInfo(data),
             sprint = mapSprint(data.sprintQualifying, data.sprintRace),
             qualifying = mapQualifying(data.qualifying),
-            race = mapRace(
-                input = data.race
-            ),
+            race = race,
             schedule = data.schedule.mapNotNull { scheduleMapper.mapSchedule(it) }
         )
     }
@@ -94,7 +93,11 @@ class RaceMapper @Inject constructor(
                         ?: it.qualifyingResult.qualified
                 )
             }
-            qualifyingData.add(QualifyingRound(Q1, 1,driverListForRound.sortedBy { it.position }))
+            qualifyingData.add(QualifyingRound(
+                label = Q1,
+                order = 1,
+                results = driverListForRound.sortedBy { it.position }
+            ))
         }
         // Q2
         if (input.any { it.qualifyingResult.q2 != null }) {
@@ -110,7 +113,11 @@ class RaceMapper @Inject constructor(
                         ?: it.qualifyingResult.qualified
                 )
             }
-            qualifyingData.add(QualifyingRound(Q2, 2, driverListForRound.sortedBy { it.position }))
+            qualifyingData.add(QualifyingRound(
+                label = Q2,
+                order = 2,
+                results = driverListForRound.sortedBy { it.position }
+            ))
         }
         // Q3
         if (input.any { it.qualifyingResult.q3 != null }) {
@@ -127,7 +134,11 @@ class RaceMapper @Inject constructor(
                         ?: it.qualifyingResult.qualified
                 )
             }
-            qualifyingData.add(QualifyingRound(Q3, 3, driverListForRound.sortedBy { it.position }))
+            qualifyingData.add(QualifyingRound(
+                label = Q3,
+                order = 3,
+                results = driverListForRound.sortedBy { it.position }
+            ))
         }
 
         return qualifyingData
@@ -165,7 +176,11 @@ class RaceMapper @Inject constructor(
                         ?: it.qualifyingResult.qualified
                 )
             }
-            qualifyingData.add(SprintQualifyingRound(SQ1, 1,driverListForRound.sortedBy { it.position }))
+            qualifyingData.add(SprintQualifyingRound(
+                label = SQ1,
+                order = 1,
+                results = driverListForRound.sortedBy { it.position }
+            ))
         }
         // SQ2
         if (input.any { it.qualifyingResult.sq2 != null }) {
@@ -181,7 +196,11 @@ class RaceMapper @Inject constructor(
                         ?: it.qualifyingResult.qualified
                 )
             }
-            qualifyingData.add(SprintQualifyingRound(SQ2, 2, driverListForRound.sortedBy { it.position }))
+            qualifyingData.add(SprintQualifyingRound(
+                label = SQ2,
+                order = 2,
+                results = driverListForRound.sortedBy { it.position }
+            ))
         }
         // SQ3
         if (input.any { it.qualifyingResult.sq3 != null }) {
@@ -198,7 +217,11 @@ class RaceMapper @Inject constructor(
                         ?: it.qualifyingResult.qualified
                 )
             }
-            qualifyingData.add(SprintQualifyingRound(SQ3, 3, driverListForRound.sortedBy { it.position }))
+            qualifyingData.add(SprintQualifyingRound(
+                label = SQ3,
+                order = 3,
+                results = driverListForRound.sortedBy { it.position }
+            ))
         }
 
         return qualifyingData

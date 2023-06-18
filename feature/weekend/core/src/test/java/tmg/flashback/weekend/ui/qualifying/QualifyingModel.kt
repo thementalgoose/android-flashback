@@ -12,14 +12,16 @@ fun QualifyingModel.Q1Q2Q3.Companion.model(
     q1: QualifyingResult? = QualifyingResult.model(lapTime = LapTime.model(0, 1, 2, 1)),
     q2: QualifyingResult? = QualifyingResult.model(lapTime = LapTime.model(0, 1, 2, 2)),
     q3: QualifyingResult? = QualifyingResult.model(lapTime = LapTime.model(0, 1, 2, 3)),
-    grid: Int? = RaceResult.model().grid
+    grid: Int? = RaceResult.model().grid,
+    sprintRaceGrid: Int? = null
 ): QualifyingModel.Q1Q2Q3 = QualifyingModel.Q1Q2Q3(
     driver = driver,
     finalQualifyingPosition = finalQualifyingPosition,
     q1 = q1,
     q2 = q2,
     q3 = q3,
-    grid = grid
+    grid = grid,
+    sprintRaceGrid = sprintRaceGrid,
 )
 
 fun QualifyingModel.Q1Q2.Companion.model(

@@ -22,6 +22,8 @@ import tmg.flashback.providers.DriverConstructorProvider
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
+import tmg.flashback.style.badge.Badge
+import tmg.flashback.style.badge.BadgeView
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextSection
 import tmg.flashback.ui.components.drivers.DriverName
@@ -172,6 +174,20 @@ private fun DriverLabel(
                 text = driver.constructor.name,
                 modifier = Modifier.padding(vertical = AppTheme.dimens.xsmall)
             )
+
+            if (qualifyingPosition != null && grid != null) {
+                if (grid > qualifyingPosition) {
+                    BadgeView(
+                        modifier = Modifier.padding(bottom = AppTheme.dimens.xsmall),
+                        model = Badge(stringResource(id = R.string.qualifying_penalty_starts_sprint, grid.ordinalAbbreviation))
+                    )
+                } else if (grid == 0) {
+                    BadgeView(
+                        modifier = Modifier.padding(bottom = AppTheme.dimens.xsmall),
+                        model = Badge(stringResource(id = R.string.qualifying_penalty, grid.ordinalAbbreviation))
+                    )
+                }
+            }
         }
     }
 }
