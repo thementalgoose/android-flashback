@@ -322,14 +322,26 @@ private fun DriverLabel(
                     if (sprintQualifyingGrid > qualifyingPosition) {
                         BadgeView(
                             modifier = Modifier.padding(bottom = AppTheme.dimens.xsmall),
-                            model = Badge(stringResource(id = R.string.qualifying_penalty_sprint, sprintQualifyingGrid.ordinalAbbreviation))
+                            model = Badge(stringResource(id = R.string.qualifying_penalty_starts_sprint, sprintQualifyingGrid.ordinalAbbreviation))
+                        )
+                    } else if (sprintQualifyingGrid == 0) {
+                        BadgeView(
+                            modifier = Modifier.padding(bottom = AppTheme.dimens.xsmall),
+                            model = Badge(stringResource(id = R.string.qualifying_penalty, sprintQualifyingGrid.ordinalAbbreviation))
                         )
                     }
-                } else if (grid != null && grid > qualifyingPosition) {
-                    BadgeView(
-                        modifier = Modifier.padding(bottom = AppTheme.dimens.xsmall),
-                        model = Badge(stringResource(id = R.string.qualifying_penalty, grid.ordinalAbbreviation))
-                    )
+                } else if (grid != null) {
+                    if (grid > qualifyingPosition) {
+                        BadgeView(
+                            modifier = Modifier.padding(bottom = AppTheme.dimens.xsmall),
+                            model = Badge(stringResource(id = R.string.qualifying_penalty_starts, grid.ordinalAbbreviation))
+                        )
+                    } else if (grid == 0) {
+                        BadgeView(
+                            modifier = Modifier.padding(bottom = AppTheme.dimens.xsmall),
+                            model = Badge(stringResource(id = R.string.qualifying_penalty, grid.ordinalAbbreviation))
+                        )
+                    }
                 }
             }
         }
