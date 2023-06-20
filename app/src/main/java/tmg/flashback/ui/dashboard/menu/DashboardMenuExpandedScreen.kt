@@ -90,9 +90,10 @@ fun DashboardMenuExpandedScreen(
     easterEggSnow: Boolean,
     easterEggTitleIcon: MenuIcons?,
     easterEggUkraine: Boolean,
-    lockExpanded: Boolean
+    lockExpanded: Boolean,
+    initialExpandedState: Boolean = true
 ) {
-    val expanded = remember { mutableStateOf(lockExpanded) }
+    val expanded = remember { mutableStateOf(initialExpandedState) }
     val width = animateDpAsState(targetValue = when {
         lockExpanded -> columnWidthExpandedLocked
         expanded.value -> {
@@ -102,7 +103,7 @@ fun DashboardMenuExpandedScreen(
             }
         }
         else -> columnWidthCollapsed
-    })
+    }, label = "MenuWidthDp")
 
     Column(modifier = modifier
         .width(width.value)
@@ -488,7 +489,8 @@ private fun PreviewCompactTimeline() {
             easterEggSnow = false,
             easterEggTitleIcon = null,
             easterEggUkraine = false,
-            lockExpanded = false
+            lockExpanded = false,
+            initialExpandedState = false
         )
     }
 }
