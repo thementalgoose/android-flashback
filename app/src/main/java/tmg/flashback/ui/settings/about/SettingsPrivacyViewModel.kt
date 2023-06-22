@@ -5,7 +5,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import tmg.flashback.R
-import tmg.flashback.analytics.manager.AnalyticsManager
+import tmg.flashback.googleanalytics.manager.AnalyticsManager
 import tmg.flashback.device.repository.PrivacyRepository
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.privacypolicy.contract.PrivacyPolicy

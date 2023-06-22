@@ -1,7 +1,7 @@
 package tmg.flashback.navigation
 
 import androidx.navigation.NavHostController
-import tmg.flashback.crash_reporting.manager.CrashManager
+import tmg.flashback.crashlytics.manager.CrashManager
 import javax.inject.Inject
 import javax.inject.Singleton
 

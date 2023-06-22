@@ -10,7 +10,7 @@ import androidx.compose.ui.platform.ComposeView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import tmg.flashback.analytics.manager.AnalyticsManager
+import tmg.flashback.googleanalytics.manager.AnalyticsManager
 import tmg.flashback.style.AppTheme
 import javax.inject.Inject
 

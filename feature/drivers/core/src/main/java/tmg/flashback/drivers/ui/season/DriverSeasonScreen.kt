@@ -24,8 +24,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import org.threeten.bp.LocalDate
-import tmg.flashback.analytics.constants.AnalyticsConstants.analyticsDriverId
-import tmg.flashback.analytics.constants.AnalyticsConstants.analyticsSeason
+import tmg.flashback.googleanalytics.constants.AnalyticsConstants.analyticsDriverId
+import tmg.flashback.googleanalytics.constants.AnalyticsConstants.analyticsSeason
 import tmg.flashback.drivers.R
 import tmg.flashback.formula1.enums.RaceStatus
 import tmg.flashback.formula1.enums.isStatusFinished

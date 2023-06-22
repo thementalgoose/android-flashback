@@ -18,7 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import tmg.flashback.BuildConfig
 import tmg.flashback.ads.ads.components.AdvertProvider
 import tmg.flashback.configuration.usecases.ConfigSyncUseCase
-import tmg.flashback.crash_reporting.manager.CrashManager
+import tmg.flashback.crashlytics.manager.CrashManager
 import tmg.flashback.maintenance.contract.MaintenanceNavigationComponent
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.results.usecases.ContentSyncUseCase

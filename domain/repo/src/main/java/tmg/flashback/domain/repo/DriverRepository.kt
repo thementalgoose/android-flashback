@@ -2,7 +2,7 @@ package tmg.flashback.domain.repo
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import tmg.flashback.crash_reporting.manager.CrashManager
+import tmg.flashback.crashlytics.manager.CrashManager
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.domain.persistence.FlashbackDatabase
 import tmg.flashback.domain.repo.base.BaseRepository
