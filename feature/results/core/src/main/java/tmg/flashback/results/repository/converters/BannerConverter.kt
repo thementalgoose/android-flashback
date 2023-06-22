@@ -1,7 +1,7 @@
 package tmg.flashback.results.repository.converters
 
 import android.webkit.URLUtil
-import tmg.flashback.crash_reporting.manager.CrashManager
+import tmg.flashback.crashlytics.manager.CrashManager
 import tmg.flashback.results.BuildConfig
 import tmg.flashback.results.repository.json.BannerItemJson
 import tmg.flashback.results.repository.json.BannerJson

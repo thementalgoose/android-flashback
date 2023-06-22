@@ -17,11 +17,13 @@
             <option value="$PROJECT_DIR$/core/ads/ads" />
             <option value="$PROJECT_DIR$/core/ads/ads-admob" />
             <option value="$PROJECT_DIR$/core/ads/ads-noop" />
-            <option value="$PROJECT_DIR$/core/analytics" />
             <option value="$PROJECT_DIR$/core/appshortcuts" />
             <option value="$PROJECT_DIR$/core/configuration" />
-            <option value="$PROJECT_DIR$/core/crash-reporting" />
             <option value="$PROJECT_DIR$/core/device" />
+            <option value="$PROJECT_DIR$/core/metrics" />
+            <option value="$PROJECT_DIR$/core/metrics/crashlytics" />
+            <option value="$PROJECT_DIR$/core/metrics/googleanalytics" />
+            <option value="$PROJECT_DIR$/core/metrics/newrelic" />
             <option value="$PROJECT_DIR$/core/notifications" />
             <option value="$PROJECT_DIR$/core/preferences" />
             <option value="$PROJECT_DIR$/core/webbrowser" />

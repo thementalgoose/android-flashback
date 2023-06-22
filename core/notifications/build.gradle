@@ -20,7 +20,7 @@ dependencies {
     implementation project(path: ':core:preferences')
 
     // Crash reporting
-    implementation project(path: ':core:crash-reporting')
+    implementation project(path: ':core:metrics:crashlytics')
 
     // Cloud messaging support
     implementation platform(libs.firebase.bom)

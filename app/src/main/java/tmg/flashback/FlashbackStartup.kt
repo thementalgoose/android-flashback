@@ -13,16 +13,16 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import tmg.flashback.ads.ads.usecases.InitialiseAdsUseCase
-import tmg.flashback.analytics.UserProperty.APP_VERSION
-import tmg.flashback.analytics.UserProperty.DEVICE_MODEL
-import tmg.flashback.analytics.UserProperty.DEVICE_THEME
-import tmg.flashback.analytics.UserProperty.OS_VERSION
-import tmg.flashback.analytics.UserProperty.WIDGET_USAGE
-import tmg.flashback.analytics.manager.AnalyticsManager
+import tmg.flashback.googleanalytics.UserProperty.APP_VERSION
+import tmg.flashback.googleanalytics.UserProperty.DEVICE_MODEL
+import tmg.flashback.googleanalytics.UserProperty.DEVICE_THEME
+import tmg.flashback.googleanalytics.UserProperty.OS_VERSION
+import tmg.flashback.googleanalytics.UserProperty.WIDGET_USAGE
+import tmg.flashback.googleanalytics.manager.AnalyticsManager
 import tmg.flashback.configuration.usecases.InitialiseConfigUseCase
-import tmg.flashback.crash_reporting.repository.CrashRepository
-import tmg.flashback.crash_reporting.usecases.InitialiseCrashReportingUseCase
+import tmg.flashback.crashlytics.usecases.InitialiseCrashReportingUseCase
 import tmg.flashback.device.repository.DeviceRepository
+import tmg.flashback.device.repository.PrivacyRepository
 import tmg.flashback.device.usecases.AppOpenedUseCase
 import tmg.flashback.device.usecases.GetDeviceInfoUseCase
 import tmg.flashback.notifications.managers.SystemNotificationManager
@@ -50,7 +50,7 @@ import javax.inject.Singleton
 @Singleton
 class FlashbackStartup @Inject constructor(
     private val deviceRepository: DeviceRepository,
-    private val crashRepository: CrashRepository,
+    private val privacyRepository: PrivacyRepository,
     private val contactRepository: ContactRepository,
     private val initialiseCrashReportingUseCase: InitialiseCrashReportingUseCase,
     private val notificationRepository: NotificationsRepositoryImpl,
@@ -88,7 +88,7 @@ class FlashbackStartup @Inject constructor(
         initialiseConfigUseCase.initialise()
 
         // Shake to report a bug
-        if (crashRepository.shakeToReport) {
+        if (privacyRepository.shakeToReport) {
             Log.i("Startup", "Enabling shake to report")
             Shaky.with(application, object : EmailShakeDelegate(contactRepository.contactEmail) {
                 override fun onSubmit(result: Result): Intent {

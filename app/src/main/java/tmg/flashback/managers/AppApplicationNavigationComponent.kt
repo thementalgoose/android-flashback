@@ -3,7 +3,7 @@ package tmg.flashback.managers
 import android.content.Context
 import android.content.Intent
 import tmg.aboutthisapp.AboutThisAppActivity
-import tmg.flashback.analytics.manager.AnalyticsManager
+import tmg.flashback.googleanalytics.manager.AnalyticsManager
 import tmg.flashback.constants.AboutThisAppConfig
 import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.device.repository.DeviceRepository

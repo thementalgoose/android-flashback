@@ -8,8 +8,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import tmg.flashback.R
-import tmg.flashback.analytics.manager.AnalyticsManager
-import tmg.flashback.crash_reporting.repository.CrashRepository
+import tmg.flashback.device.repository.PrivacyRepository
 import tmg.flashback.privacypolicy.contract.PrivacyPolicy
 import tmg.flashback.ui.managers.ToastManager
 import tmg.flashback.ui.settings.Settings
@@ -17,8 +16,7 @@ import tmg.testutils.BaseTest
 
 internal class SettingsPrivacyViewModelTest: BaseTest() {
 
-    private val mockCrashRepository: CrashRepository = mockk(relaxed = true)
-    private val mockAnalyticsManager: AnalyticsManager = mockk(relaxed = true)
+    private val mockPrivacyRepository: PrivacyRepository = mockk(relaxed = true)
     private val mockToastManager: ToastManager = mockk(relaxed = true)
     private val mockNavigator: tmg.flashback.navigation.Navigator = mockk(relaxed = true)
 
@@ -26,8 +24,7 @@ internal class SettingsPrivacyViewModelTest: BaseTest() {
 
     private fun initUnderTest() {
         underTest = SettingsPrivacyViewModel(
-            crashRepository = mockCrashRepository,
-            analyticsManager = mockAnalyticsManager,
+            privacyRepository = mockPrivacyRepository,
             toastManager = mockToastManager,
             navigator = mockNavigator
         )
@@ -35,7 +32,7 @@ internal class SettingsPrivacyViewModelTest: BaseTest() {
 
     @Test
     fun `crash reporting enabled is true when crash reporting is enabled`() = runTest {
-        every { mockCrashRepository.isEnabled } returns true
+        every { mockPrivacyRepository.crashReporting } returns true
 
         initUnderTest()
         underTest.outputs.crashReportingEnabled.test {
@@ -45,7 +42,7 @@ internal class SettingsPrivacyViewModelTest: BaseTest() {
 
     @Test
     fun `crash reporting enabled is false when crash reporting is disabled`() = runTest {
-        every { mockCrashRepository.isEnabled } returns false
+        every { mockPrivacyRepository.crashReporting } returns false
 
         initUnderTest()
         underTest.outputs.crashReportingEnabled.test {
@@ -55,7 +52,7 @@ internal class SettingsPrivacyViewModelTest: BaseTest() {
 
     @Test
     fun `analytics enabled is true when analytics is enabled`() = runTest {
-        every { mockAnalyticsManager.enabled } returns true
+        every { mockPrivacyRepository.analytics } returns true
 
         initUnderTest()
         underTest.outputs.analyticsEnabled.test {
@@ -65,7 +62,7 @@ internal class SettingsPrivacyViewModelTest: BaseTest() {
 
     @Test
     fun `analytics enabled is false when analytics is disabled`() = runTest {
-        every { mockAnalyticsManager.enabled } returns false
+        every { mockPrivacyRepository.analytics } returns false
 
         initUnderTest()
         underTest.outputs.analyticsEnabled.test {
@@ -85,14 +82,14 @@ internal class SettingsPrivacyViewModelTest: BaseTest() {
 
     @Test
     fun `click crash reporting updates pref and updates value`() = runTest {
-        every { mockCrashRepository.isEnabled } returns false
+        every { mockPrivacyRepository.crashReporting } returns false
 
         initUnderTest()
         underTest.outputs.crashReportingEnabled.test { awaitItem() }
         underTest.inputs.prefClicked(Settings.Other.crashReporting(true))
 
         verify {
-            mockCrashRepository.isEnabled = true
+            mockPrivacyRepository.crashReporting = true
             mockToastManager.displayToast(R.string.settings_restart_app_required)
         }
         underTest.outputs.crashReportingEnabled.test { awaitItem() }
@@ -100,14 +97,14 @@ internal class SettingsPrivacyViewModelTest: BaseTest() {
 
     @Test
     fun `click analytics updates pref and updates value`() = runTest {
-        every { mockAnalyticsManager.enabled } returns false
+        every { mockPrivacyRepository.analytics } returns false
 
         initUnderTest()
         underTest.outputs.analyticsEnabled.test { awaitItem() }
         underTest.inputs.prefClicked(Settings.Other.analytics(true))
 
         verify {
-            mockAnalyticsManager.enabled = true
+            mockPrivacyRepository.analytics = true
             mockToastManager.displayToast(R.string.settings_restart_app_required)
         }
         underTest.outputs.analyticsEnabled.test { awaitItem() }

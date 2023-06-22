@@ -2,7 +2,7 @@ package tmg.flashback.ui.components.analytics
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import tmg.flashback.analytics.manager.AnalyticsManager
+import tmg.flashback.googleanalytics.manager.AnalyticsManager
 import javax.inject.Inject
 
 interface ScreenViewViewModelInputs {

@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
-import tmg.flashback.analytics.constants.AnalyticsConstants.analyticsConstructorId
+import tmg.flashback.googleanalytics.constants.AnalyticsConstants.analyticsConstructorId
 import tmg.flashback.constructors.R
 import tmg.flashback.formula1.constants.Formula1
 import tmg.flashback.formula1.extensions.pointsDisplay

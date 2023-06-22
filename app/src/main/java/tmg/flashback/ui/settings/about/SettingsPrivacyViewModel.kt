@@ -5,8 +5,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import tmg.flashback.R
-import tmg.flashback.analytics.manager.AnalyticsManager
-import tmg.flashback.crash_reporting.repository.CrashRepository
+import tmg.flashback.googleanalytics.manager.AnalyticsManager
+import tmg.flashback.device.repository.PrivacyRepository
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.privacypolicy.contract.PrivacyPolicy
 import tmg.flashback.ui.managers.ToastManager
@@ -25,8 +25,7 @@ interface SettingsPrivacyViewModelOutputs {
 
 @HiltViewModel
 class SettingsPrivacyViewModel @Inject constructor(
-    private val crashRepository: CrashRepository,
-    private val analyticsManager: AnalyticsManager,
+    private val privacyRepository: PrivacyRepository,
     private val toastManager: ToastManager,
     private val navigator: Navigator,
 ): ViewModel(), SettingsPrivacyViewModelInputs, SettingsPrivacyViewModelOutputs {
@@ -34,8 +33,8 @@ class SettingsPrivacyViewModel @Inject constructor(
     val inputs: SettingsPrivacyViewModelInputs = this
     val outputs: SettingsPrivacyViewModelOutputs = this
 
-    override val crashReportingEnabled: MutableStateFlow<Boolean> = MutableStateFlow(crashRepository.isEnabled)
-    override val analyticsEnabled: MutableStateFlow<Boolean> = MutableStateFlow(analyticsManager.enabled)
+    override val crashReportingEnabled: MutableStateFlow<Boolean> = MutableStateFlow(privacyRepository.crashReporting)
+    override val analyticsEnabled: MutableStateFlow<Boolean> = MutableStateFlow(privacyRepository.analytics)
 
     override fun prefClicked(pref: Setting) {
         when (pref.key) {
@@ -43,13 +42,13 @@ class SettingsPrivacyViewModel @Inject constructor(
                 navigator.navigate(tmg.flashback.navigation.Screen.Settings.PrivacyPolicy)
             }
             Settings.Other.crashReportingKey -> {
-                crashRepository.isEnabled = !crashRepository.isEnabled
-                crashReportingEnabled.value = crashRepository.isEnabled
+                privacyRepository.crashReporting = !privacyRepository.crashReporting
+                crashReportingEnabled.value = privacyRepository.crashReporting
                 toastManager.displayToast(R.string.settings_restart_app_required)
             }
             Settings.Other.analyticsKey -> {
-                analyticsManager.enabled = !analyticsManager.enabled
-                analyticsEnabled.value = analyticsManager.enabled
+                privacyRepository.analytics = !privacyRepository.analytics
+                analyticsEnabled.value = privacyRepository.analytics
                 toastManager.displayToast(R.string.settings_restart_app_required)
             }
         }
