@@ -2,7 +2,7 @@ package tmg.flashback.di.navigation
 
 import android.content.Context
 import android.content.Intent
-import tmg.flashback.analytics.manager.AnalyticsManager
+import tmg.flashback.googleanalytics.manager.AnalyticsManager
 import tmg.flashback.ui.HomeActivity
 import tmg.flashback.widgets.contract.WidgetNavigationComponent
 import javax.inject.Inject

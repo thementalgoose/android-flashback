@@ -17,8 +17,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.launch
-import tmg.flashback.analytics.constants.AnalyticsConstants.analyticsRound
-import tmg.flashback.analytics.constants.AnalyticsConstants.analyticsSeason
+import tmg.flashback.googleanalytics.constants.AnalyticsConstants.analyticsRound
+import tmg.flashback.googleanalytics.constants.AnalyticsConstants.analyticsSeason
 import tmg.flashback.style.AppTheme
 import tmg.flashback.ui.components.analytics.ScreenView
 import tmg.flashback.ui.components.navigation.NavigationBar

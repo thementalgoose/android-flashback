@@ -7,7 +7,7 @@ import io.mockk.slot
 import io.mockk.verify
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import tmg.flashback.crash_reporting.manager.CrashManager
+import tmg.flashback.crashlytics.manager.CrashManager
 
 internal class NavigatorTest {
 

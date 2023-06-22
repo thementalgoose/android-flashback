@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import tmg.flashback.configuration.manager.ConfigManager
-import tmg.flashback.crash_reporting.manager.CrashManager
+import tmg.flashback.crashlytics.manager.CrashManager
 import tmg.flashback.prefs.manager.PreferenceManager
 import tmg.flashback.results.repository.json.AllSeasonsJson
 import tmg.flashback.results.repository.json.BannerItemJson

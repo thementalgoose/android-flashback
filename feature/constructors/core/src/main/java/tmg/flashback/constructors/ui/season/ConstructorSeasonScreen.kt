@@ -30,8 +30,8 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
-import tmg.flashback.analytics.constants.AnalyticsConstants.analyticsConstructorId
-import tmg.flashback.analytics.constants.AnalyticsConstants.analyticsSeason
+import tmg.flashback.googleanalytics.constants.AnalyticsConstants.analyticsConstructorId
+import tmg.flashback.googleanalytics.constants.AnalyticsConstants.analyticsSeason
 import tmg.flashback.constructors.R
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.ConstructorHistorySeasonDriver

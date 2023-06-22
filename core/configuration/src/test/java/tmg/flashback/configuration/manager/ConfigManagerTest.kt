@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import tmg.flashback.configuration.services.RemoteConfigService
-import tmg.flashback.crash_reporting.manager.CrashManager
+import tmg.flashback.crashlytics.manager.CrashManager
 
 internal class ConfigManagerTest {
 

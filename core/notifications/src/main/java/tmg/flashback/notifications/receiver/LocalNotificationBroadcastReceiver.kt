@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import dagger.hilt.android.AndroidEntryPoint
-import tmg.flashback.crash_reporting.manager.CrashManager
+import tmg.flashback.crashlytics.manager.CrashManager
 import tmg.flashback.notifications.BuildConfig
 import tmg.flashback.notifications.managers.SystemNotificationManager
 import tmg.flashback.notifications.model.NotificationPriority

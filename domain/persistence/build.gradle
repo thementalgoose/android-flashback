@@ -18,5 +18,5 @@ android {
 dependencies {
 
     // Explicit crash reporting link
-    implementation project(path: ':core:crash-reporting')
+    implementation project(path: ':core:metrics:crashlytics')
 }

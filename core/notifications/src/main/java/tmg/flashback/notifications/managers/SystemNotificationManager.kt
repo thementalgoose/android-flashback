@@ -12,7 +12,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.core.app.NotificationCompat
 import dagger.hilt.android.qualifiers.ApplicationContext
-import tmg.flashback.crash_reporting.manager.CrashManager
+import tmg.flashback.crashlytics.manager.CrashManager
 import tmg.flashback.notifications.R
 import tmg.flashback.notifications.model.NotificationPriority
 import tmg.flashback.notifications.navigation.NotificationNavigationProvider

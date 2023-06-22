@@ -1,7 +1,7 @@
 package tmg.flashback.results
 
 import androidx.appcompat.app.AppCompatActivity
-import tmg.flashback.crash_reporting.manager.CrashManager
+import tmg.flashback.crashlytics.manager.CrashManager
 import tmg.flashback.navigation.NavigationDestination
 import tmg.flashback.navigation.Screen
 import tmg.flashback.results.contract.ResultsNavigationComponent

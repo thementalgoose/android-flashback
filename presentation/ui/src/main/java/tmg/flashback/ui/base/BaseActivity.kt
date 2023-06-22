@@ -7,7 +7,7 @@ import androidx.activity.result.contract.ActivityResultContracts.RequestPermissi
 import androidx.annotation.StyleRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import tmg.flashback.analytics.manager.AnalyticsManager
+import tmg.flashback.googleanalytics.manager.AnalyticsManager
 import tmg.flashback.navigation.ActivityProvider
 import tmg.flashback.ui.managers.PermissionManager
 import tmg.flashback.ui.managers.StyleManager

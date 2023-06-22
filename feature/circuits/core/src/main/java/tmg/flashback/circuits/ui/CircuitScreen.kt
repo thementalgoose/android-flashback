@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import org.threeten.bp.format.DateTimeFormatter
-import tmg.flashback.analytics.constants.AnalyticsConstants.analyticsCircuitId
+import tmg.flashback.googleanalytics.constants.AnalyticsConstants.analyticsCircuitId
 import tmg.flashback.circuits.R
 import tmg.flashback.formula1.enums.TrackLayout
 import tmg.flashback.formula1.extensions.positionIcon

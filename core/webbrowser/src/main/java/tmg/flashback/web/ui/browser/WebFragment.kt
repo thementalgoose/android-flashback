@@ -9,8 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import dagger.hilt.android.AndroidEntryPoint
-import tmg.flashback.analytics.manager.AnalyticsManager
-import tmg.flashback.crash_reporting.manager.CrashManager
+import tmg.flashback.googleanalytics.manager.AnalyticsManager
+import tmg.flashback.crashlytics.manager.CrashManager
 import tmg.flashback.web.R
 import tmg.flashback.web.client.FlashbackWebChromeClient
 import tmg.flashback.web.client.FlashbackWebViewClient
