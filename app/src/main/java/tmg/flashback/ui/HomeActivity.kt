@@ -21,6 +21,7 @@ import tmg.flashback.configuration.usecases.ConfigSyncUseCase
 import tmg.flashback.crashlytics.manager.CrashManager
 import tmg.flashback.maintenance.contract.MaintenanceNavigationComponent
 import tmg.flashback.navigation.Navigator
+import tmg.flashback.newrelic.usecases.InitializeNewRelicUseCase
 import tmg.flashback.results.usecases.ContentSyncUseCase
 import tmg.flashback.style.AppTheme
 import tmg.flashback.ui.base.BaseActivity
@@ -47,6 +48,8 @@ class HomeActivity: BaseActivity(), SplashScreen.KeepOnScreenCondition {
 
     @Inject
     lateinit var advertProvider: AdvertProvider
+    @Inject
+    lateinit var initializeNewRelicUseCase: InitializeNewRelicUseCase
 
     private var deeplink: String? = null
 
@@ -62,6 +65,8 @@ class HomeActivity: BaseActivity(), SplashScreen.KeepOnScreenCondition {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        initializeNewRelicUseCase.start(this.applicationContext)
 
         if (deeplink == null) {
             deeplink = intent.extras?.getString("screen")

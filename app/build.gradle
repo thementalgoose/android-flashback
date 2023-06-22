@@ -142,9 +142,10 @@ dependencies {
     debugImplementation project(path: ":core:ads:ads-admob")
     releaseImplementation project(path: ":core:ads:ads-noop")
     implementation project(path: ":core:metrics:googleanalytics")
+    implementation project(path: ":core:metrics:crashlytics")
+    implementation project(path: ":core:metrics:newrelic"   )
     implementation project(path: ":core:appshortcuts")
     implementation project(path: ":core:configuration")
-    implementation project(path: ":core:metrics:crashlytics")
     implementation project(path: ":core:device")
     implementation project(path: ":core:notifications")
     implementation project(path: ":core:preferences")
@@ -180,6 +181,8 @@ dependencies {
     implementation libs.firebase.crashlytics
     implementation libs.firebase.messaging
     implementation libs.firebase.perf
+
+    implementation libs.newrelic
 
     // Test Utils
     testImplementation project(':test:models')
