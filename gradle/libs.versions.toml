@@ -15,6 +15,7 @@ firebase = "32.0.0"
 junit = "5.9.3"
 okhttp = "4.9.3"
 retrofit = "2.9.0"
+newrelic = "6.11.1"
 
 [libraries]  # ===========================================================================
 androidx_core = "androidx.core:core-ktx:1.10.1"
@@ -85,6 +86,8 @@ hilt_kapt_compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "an
 hilt_workmanager = { module = "androidx.hilt:hilt-work", version.ref = "androidx_hilt" }
 
 lottie = "com.airbnb.android:lottie-compose:6.0.0"
+
+newrelic = { module = "com.newrelic.agent.android:android-agent", version.ref = "newrelic" }
 
 retrofit_core = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit_converter_simplexml = { module = "com.squareup.retrofit2:converter-simplexml", version.ref = "retrofit" }
