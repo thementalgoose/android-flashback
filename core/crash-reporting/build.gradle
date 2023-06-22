@@ -17,6 +17,7 @@ android {
 dependencies {
 
     // Preferences library
+    implementation project(path: ':core:device')
     implementation project(path: ':core:preferences')
 
     // Firebase analytics

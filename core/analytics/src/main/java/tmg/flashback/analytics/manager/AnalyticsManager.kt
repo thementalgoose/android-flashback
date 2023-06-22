@@ -2,20 +2,20 @@ package tmg.flashback.analytics.manager
 
 import android.os.Bundle
 import tmg.flashback.analytics.UserProperty
-import tmg.flashback.analytics.repository.AnalyticsRepository
 import tmg.flashback.analytics.services.AnalyticsService
+import tmg.flashback.device.repository.PrivacyRepository
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class AnalyticsManager @Inject constructor(
-    private val analyticsRepository: AnalyticsRepository,
+    private val privacyRepository: PrivacyRepository,
     private val analyticsService: AnalyticsService
 ) {
     var enabled: Boolean
-        get() = analyticsRepository.isEnabled
+        get() = privacyRepository.analytics
         set(value) {
-            analyticsRepository.isEnabled = value
+            privacyRepository.analytics = value
         }
 
     fun initialise(userId: String) {
