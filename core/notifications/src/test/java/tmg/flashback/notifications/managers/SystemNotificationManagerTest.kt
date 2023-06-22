@@ -9,7 +9,7 @@ import io.mockk.verify
 import org.junit.Ignore
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.flashback.crash_reporting.manager.CrashManager
+import tmg.flashback.crashlytics.manager.CrashManager
 import tmg.flashback.notifications.navigation.NotificationNavigationProvider
 import tmg.testutils.BaseTest
 

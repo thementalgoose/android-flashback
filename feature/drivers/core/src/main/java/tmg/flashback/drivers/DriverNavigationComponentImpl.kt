@@ -1,7 +1,7 @@
 package tmg.flashback.drivers
 
 import androidx.appcompat.app.AppCompatActivity
-import tmg.flashback.crash_reporting.manager.CrashManager
+import tmg.flashback.crashlytics.manager.CrashManager
 import tmg.flashback.drivers.contract.DriverNavigationComponent
 import tmg.flashback.drivers.contract.model.DriverStatHistoryType
 import tmg.flashback.drivers.ui.stathistory.DriverStatHistoryBottomSheetFragment

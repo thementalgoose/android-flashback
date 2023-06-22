@@ -8,8 +8,8 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import tmg.flashback.R
-import tmg.flashback.crash_reporting.repository.CrashRepository
 import tmg.flashback.device.managers.BuildConfigManager
+import tmg.flashback.device.repository.PrivacyRepository
 import tmg.flashback.navigation.ApplicationNavigationComponent
 import tmg.flashback.ui.managers.ToastManager
 import tmg.flashback.ui.settings.Settings
@@ -18,7 +18,7 @@ import tmg.testutils.BaseTest
 
 internal class SettingsAboutViewModelTest: BaseTest() {
 
-    private val mockCrashRepository: CrashRepository = mockk(relaxed = true)
+    private val mockPrivacyRepository: PrivacyRepository = mockk(relaxed = true)
     private val mockApplicationNavigationComponent: ApplicationNavigationComponent = mockk(relaxed = true)
     private val mockOpenWebpageUseCase: OpenWebpageUseCase = mockk(relaxed = true)
     private val mockToastManager: ToastManager = mockk(relaxed = true)
@@ -28,7 +28,7 @@ internal class SettingsAboutViewModelTest: BaseTest() {
 
     private fun initUnderTest() {
         underTest = SettingsAboutViewModel(
-            crashRepository = mockCrashRepository,
+            privacyRepository = mockPrivacyRepository,
             applicationNavigationComponent = mockApplicationNavigationComponent,
             openWebpageUseCase = mockOpenWebpageUseCase,
             toastManager = mockToastManager,
@@ -38,7 +38,7 @@ internal class SettingsAboutViewModelTest: BaseTest() {
 
     @Test
     fun `shake to report is enabled when pref is true`() = runTest {
-        every { mockCrashRepository.shakeToReport } returns true
+        every { mockPrivacyRepository.shakeToReport } returns true
 
         initUnderTest()
         underTest.outputs.shakeToReportEnabled.test {
@@ -48,7 +48,7 @@ internal class SettingsAboutViewModelTest: BaseTest() {
 
     @Test
     fun `shake to report is disabled when pref is disabled`() = runTest {
-        every { mockCrashRepository.shakeToReport } returns false
+        every { mockPrivacyRepository.shakeToReport } returns false
 
         initUnderTest()
         underTest.outputs.shakeToReportEnabled.test {
@@ -79,13 +79,13 @@ internal class SettingsAboutViewModelTest: BaseTest() {
 
     @Test
     fun `click shake to report updates pref and updates value`() = runTest {
-        every { mockCrashRepository.shakeToReport } returns false
+        every { mockPrivacyRepository.shakeToReport } returns false
         initUnderTest()
         underTest.outputs.shakeToReportEnabled.test { awaitItem() }
         underTest.inputs.prefClicked(Settings.Other.shakeToReport(true))
 
         verify {
-            mockCrashRepository.shakeToReport = true
+            mockPrivacyRepository.shakeToReport = true
             mockToastManager.displayToast(R.string.settings_restart_app_required)
         }
         underTest.outputs.shakeToReportEnabled.test { awaitItem() }

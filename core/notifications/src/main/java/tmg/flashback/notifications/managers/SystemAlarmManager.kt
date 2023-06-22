@@ -9,7 +9,7 @@ import androidx.core.app.AlarmManagerCompat
 import dagger.hilt.android.qualifiers.ApplicationContext
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.ZoneOffset
-import tmg.flashback.crash_reporting.manager.CrashManager
+import tmg.flashback.crashlytics.manager.CrashManager
 import tmg.flashback.notifications.BuildConfig
 import tmg.flashback.notifications.receiver.LocalNotificationBroadcastReceiver
 import javax.inject.Inject

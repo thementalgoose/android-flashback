@@ -3,7 +3,7 @@ package tmg.flashback.domain.repo.base
 import android.util.Log
 import retrofit2.HttpException
 import retrofit2.Response
-import tmg.flashback.crash_reporting.manager.CrashManager
+import tmg.flashback.crashlytics.manager.CrashManager
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.domain.repo.BuildConfig
 import tmg.flashback.flashbackapi.api.models.MetadataWrapper
