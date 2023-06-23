@@ -4,7 +4,7 @@ apply from: rootDir.absolutePath + "/gradle/config-util.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-junit5.gradle"
 
 android {
-    compileSdkVersion project.ext.compileSdkVersion
+    compileSdk project.ext.compileSdk
 
     defaultConfig {
         minSdkVersion project.ext.minSdkVersion
