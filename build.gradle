@@ -18,11 +18,13 @@ buildscript {
         mavenCentral()
         maven { url 'https://maven.fabric.io/public' }
         maven { url "https://plugins.gradle.org/m2/" }
+        maven { url "https://oss.sonatype.org/content/repositories/comnewrelic-2718" } // Remove when AGP 8 is officially supported for newrelic
         maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
         gradlePluginPortal()
     }
 
     dependencies {
+        classpath "com.newrelic.agent.android:agent-gradle-plugin:${libs.versions.newrelic.get()}"
         classpath 'com.android.tools.build:gradle:7.4.2'
         classpath "com.github.triplet.gradle:play-publisher:3.8.1"
         classpath "com.google.gms:google-services:4.3.15"
@@ -42,6 +44,7 @@ allprojects {
     repositories {
         google()
         mavenCentral()
+        maven { url "https://oss.sonatype.org/content/repositories/comnewrelic-2718" } // Remove when AGP 8 is officially supported for newrelic
         maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
         maven { url 'https://jitpack.io' }
     }
