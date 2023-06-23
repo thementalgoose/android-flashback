@@ -27,7 +27,7 @@ androidx_navigation_fragment = { module = "androidx.navigation:navigation-fragme
 androidx_navigation_ui = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "androidx_navigation" }
 androidx_preference = "androidx.preference:preference-ktx:1.2.0"
 androidx_splashscreen = "androidx.core:core-splashscreen:1.0.1"
-androidx_window = "androidx.window:window:1.2.0-alpha03"
+androidx_window = "androidx.window:window:1.1.0-rc01"
 
 androidx_glance_core = { module = "androidx.glance:glance", version.ref = "androidx_glance" }
 androidx_glance_appwidget = { module = "androidx.glance:glance-appwidget", version.ref = "androidx_glance" }
