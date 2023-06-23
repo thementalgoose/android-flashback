@@ -66,7 +66,7 @@ class HomeActivity: BaseActivity(), SplashScreen.KeepOnScreenCondition {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        initializeNewRelicUseCase.start(this.applicationContext)
+        initializeNewRelicUseCase.start(this.application)
 
         if (deeplink == null) {
             deeplink = intent.extras?.getString("screen")

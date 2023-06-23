@@ -1,6 +1,8 @@
 import com.github.triplet.gradle.androidpublisher.ResolutionStrategy
 
 apply plugin: 'com.android.application'
+apply plugin: getNewRelicPlugin()
+
 apply from: rootDir.absolutePath + "/gradle/config-android.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-util.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-junit5.gradle"
@@ -182,7 +184,7 @@ dependencies {
     implementation libs.firebase.messaging
     implementation libs.firebase.perf
 
-    implementation libs.newrelic
+    implementation libs.newrelic.agent
 
     // Test Utils
     testImplementation project(':test:models')
@@ -199,3 +201,17 @@ dependencies {
 }
 
 apply plugin: 'com.google.gms.google-services'
+
+def isDebug() {
+    return gradle.startParameter.taskNames.any { it.toLowerCase().contains("debug") }
+}
+
+def getNewRelicPlugin() {
+    if (isDebug() && !newRelicEnabledOnDebug.toBoolean()) {
+        logger.warn("[NEWRELIC] Plugin disabled")
+        return 'com.android.application'
+    } else {
+        logger.warn("[NEWRELIC] Plugin enabled")
+        return 'newrelic'
+    }
+}
