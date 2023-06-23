@@ -6,7 +6,7 @@ apply from: rootDir.absolutePath + "/gradle/config-hilt.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-room.gradle"
 
 android {
-    compileSdkVersion project.ext.compileSdkVersion
+    compileSdk project.ext.compileSdk
 
     defaultConfig {
         minSdkVersion project.ext.minSdkVersion

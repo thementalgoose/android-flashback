@@ -4,7 +4,7 @@ import io.mockk.every
 import io.mockk.mockk
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
-import org.junit.Test
+import org.junit.jupiter.api.Test
 import tmg.flashback.maintenance.repository.MaintenanceRepository
 
 internal class ShouldForceUpgradeUseCaseImplTest {

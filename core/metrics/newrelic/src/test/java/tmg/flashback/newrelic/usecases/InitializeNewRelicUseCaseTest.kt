@@ -5,8 +5,7 @@ import com.newrelic.agent.android.FeatureFlag
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import org.junit.Test
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Test
 import tmg.flashback.device.repository.PrivacyRepository
 import tmg.flashback.newrelic.services.NewRelicService
 
