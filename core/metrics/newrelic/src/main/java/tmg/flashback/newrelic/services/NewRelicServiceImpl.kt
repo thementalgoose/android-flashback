@@ -1,6 +1,7 @@
 package tmg.flashback.newrelic.services
 
 import android.content.Context
+import com.newrelic.agent.android.FeatureFlag
 import com.newrelic.agent.android.NewRelic
 import com.newrelic.agent.android.logging.AgentLog
 import tmg.flashback.analytics.BuildConfig
@@ -13,12 +14,13 @@ internal class NewRelicServiceImpl @Inject constructor(
     private val privacyRepository: PrivacyRepository,
     private val deviceRepository: DeviceRepository,
 ): NewRelicService {
+
     override fun start(applicationContext: Context) {
         val token = applicationContext.getString(R.string.new_relic_token)
         NewRelic
             .withApplicationToken(token)
             .withLogLevel(AgentLog.AUDIT)
-            .withLoggingEnabled(BuildConfig.DEBUG || privacyRepository.analytics)
+            .withLoggingEnabled(BuildConfig.DEBUG)
             .withCrashReportingEnabled(privacyRepository.crashReporting)
             .withDeviceID(deviceRepository.deviceUdid)
             .apply {
@@ -27,5 +29,40 @@ internal class NewRelicServiceImpl @Inject constructor(
                 }
             }
             .start(applicationContext)
+    }
+
+    override fun enableFeature(flag: FeatureFlag) {
+        NewRelic.enableFeature(flag)
+    }
+
+    override fun disableFeature(flag: FeatureFlag) {
+        NewRelic.disableFeature(flag)
+    }
+
+    override fun setFeature(flag: FeatureFlag, isEnabled: Boolean) {
+        when (isEnabled) {
+            true -> enableFeature(flag)
+            false -> disableFeature(flag)
+        }
+    }
+
+    override fun setSessionAttribute(key: String, value: String) {
+        NewRelic.setAttribute(key, value)
+    }
+
+    override fun setSessionAttribute(key: String, value: Boolean) {
+        NewRelic.setAttribute(key, value)
+    }
+
+    override fun setSessionAttribute(key: String, value: Double) {
+        NewRelic.setAttribute(key, value)
+    }
+
+    override fun logEvent(
+        eventName: String,
+        attributes: Map<String, Any>
+    ) {
+        NewRelic
+            .recordCustomEvent("MobileEvent", eventName, attributes)
     }
 }
