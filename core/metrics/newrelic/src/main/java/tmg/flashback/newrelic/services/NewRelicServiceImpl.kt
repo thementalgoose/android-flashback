@@ -1,18 +1,22 @@
 package tmg.flashback.newrelic.services
 
 import android.content.Context
+import android.util.Log
 import com.newrelic.agent.android.FeatureFlag
 import com.newrelic.agent.android.NewRelic
 import com.newrelic.agent.android.logging.AgentLog
 import tmg.flashback.analytics.BuildConfig
 import tmg.flashback.analytics.R
+import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.device.repository.DeviceRepository
 import tmg.flashback.device.repository.PrivacyRepository
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 internal class NewRelicServiceImpl @Inject constructor(
     private val privacyRepository: PrivacyRepository,
-    private val deviceRepository: DeviceRepository,
+    private val deviceRepository: DeviceRepository
 ): NewRelicService {
 
     override fun start(applicationContext: Context) {
@@ -37,13 +41,6 @@ internal class NewRelicServiceImpl @Inject constructor(
 
     override fun disableFeature(flag: FeatureFlag) {
         NewRelic.disableFeature(flag)
-    }
-
-    override fun setFeature(flag: FeatureFlag, isEnabled: Boolean) {
-        when (isEnabled) {
-            true -> enableFeature(flag)
-            false -> disableFeature(flag)
-        }
     }
 
     override fun setSessionAttribute(key: String, value: String) {

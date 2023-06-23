@@ -19,4 +19,6 @@ interface BuildConfigManager {
     val isAppShortcutsSupported: Boolean
 
     val isRuntimeNotificationsSupported: Boolean
+
+    val isEmulator: Boolean
 }
