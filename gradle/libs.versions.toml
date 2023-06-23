@@ -15,6 +15,12 @@ firebase = "32.1.1"
 junit = "5.9.3"
 okhttp = "4.11.0"
 retrofit = "2.9.0"
+# New Relic
+# Remove this when AGP 8 is officialy supported
+# https://docs.google.com/document/d/1lVf40qbB0J1v47K1lNNYHuOsCmLJqztEE2S_SZcFl2Q/edit
+# https://forum.newrelic.com/s/hubtopic/aAX8W00000005vhWAA/android-sdk-blocks-project-updates-to-gradle-800
+newrelicsnapshot = "2718"
+newrelic = "7.0.0-beta01"
 
 [libraries]  # ===========================================================================
 androidx_core = "androidx.core:core-ktx:1.10.1"
@@ -85,6 +91,8 @@ hilt_kapt_compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "an
 hilt_workmanager = { module = "androidx.hilt:hilt-work", version.ref = "androidx_hilt" }
 
 lottie = "com.airbnb.android:lottie-compose:6.0.0"
+
+newrelic_agent = { module = "com.newrelic.agent.android:android-agent", version.ref = "newrelic" }
 
 retrofit_core = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit_converter_simplexml = { module = "com.squareup.retrofit2:converter-simplexml", version.ref = "retrofit" }
