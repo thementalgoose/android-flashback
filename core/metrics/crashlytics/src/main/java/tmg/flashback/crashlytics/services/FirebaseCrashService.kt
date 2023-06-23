@@ -4,9 +4,12 @@ import android.os.Build
 import android.util.Log
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import tmg.flashback.crashlytics.BuildConfig
+import tmg.flashback.device.managers.BuildConfigManager
 import javax.inject.Inject
 
-internal class FirebaseCrashService @Inject constructor(): CrashService {
+internal class FirebaseCrashService @Inject constructor(
+    private val buildConfigManager: BuildConfigManager
+): CrashService {
 
     private val isDebug: Boolean
         get() = BuildConfig.DEBUG
@@ -41,7 +44,7 @@ internal class FirebaseCrashService @Inject constructor(): CrashService {
             Log.i("Crashlytics", "Disabling crashlytics")
         }
 
-        instance.setCustomKey(keyEmulator, isEmulator)
+        instance.setCustomKey(keyEmulator, buildConfigManager.isEmulator)
         instance.setCustomKey(keyDebug, isDebug)
 
         instance.setUserId(deviceUdid)
@@ -97,22 +100,4 @@ internal class FirebaseCrashService @Inject constructor(): CrashService {
             error.printStackTrace()
         }
     }
-
-    private val isEmulator: Boolean
-        get() = (Build.BRAND.startsWith("generic") && Build.DEVICE.startsWith("generic"))
-                || Build.FINGERPRINT.startsWith("generic")
-                || Build.FINGERPRINT.startsWith("unknown")
-                || Build.HARDWARE.contains("goldfish")
-                || Build.HARDWARE.contains("ranchu")
-                || Build.MODEL.contains("google_sdk")
-                || Build.MODEL.contains("Emulator")
-                || Build.MODEL.contains("Android SDK built for x86")
-                || Build.MANUFACTURER.contains("Genymotion")
-                || Build.PRODUCT.contains("sdk_google")
-                || Build.PRODUCT.contains("google_sdk")
-                || Build.PRODUCT.contains("sdk")
-                || Build.PRODUCT.contains("sdk_x86")
-                || Build.PRODUCT.contains("vbox86p")
-                || Build.PRODUCT.contains("emulator")
-                || Build.PRODUCT.contains("simulator")
 }

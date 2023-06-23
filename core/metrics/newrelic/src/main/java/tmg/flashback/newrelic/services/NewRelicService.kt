@@ -7,7 +7,12 @@ interface NewRelicService {
     fun start(applicationContext: Context)
     fun enableFeature(flag: FeatureFlag)
     fun disableFeature(flag: FeatureFlag)
-    fun setFeature(flag: FeatureFlag, isEnabled: Boolean)
+    fun setFeature(flag: FeatureFlag, isEnabled: Boolean) {
+        when (isEnabled)  {
+            true -> enableFeature(flag)
+            false -> disableFeature(flag)
+        }
+    }
     fun setSessionAttribute(key: String, value: String)
     fun setSessionAttribute(key: String, value: Boolean)
     fun setSessionAttribute(key: String, value: Double)

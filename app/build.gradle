@@ -207,7 +207,7 @@ def isDebug() {
 }
 
 def getNewRelicPlugin() {
-    if (isDebug() && !newRelicEnabledOnDebug.toBoolean()) {
+    if (isDebug()) {
         logger.warn("[NEWRELIC] Plugin disabled")
         return 'com.android.application'
     } else {
