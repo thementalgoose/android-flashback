@@ -1,7 +1,10 @@
 package tmg.flashback.ui.dashboard.menu
 
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -38,6 +41,7 @@ import androidx.compose.ui.graphics.PathOperation
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
@@ -51,6 +55,7 @@ import tmg.flashback.formula1.constants.Formula1
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
+import tmg.flashback.style.input.InputSwitch
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.ui.components.loading.Fade
@@ -152,6 +157,24 @@ fun DashboardMenuExpandedScreen(
                     Spacer(Modifier.height(AppTheme.dimens.xsmall))
                 }
                 item { Div() }
+                item {
+                    DarkModeToggle(
+                        isExpanded = expanded.value,
+                        darkMode = darkMode,
+                        darkModeClicked = darkModeClicked
+                    )
+                }
+                item { Div() }
+                if (featurePromptList.isNotEmpty()) {
+                    items(featurePromptList, key = { "menufeature-${it.id}" }) {
+                        FeatureItem(
+                            isExpanded = expanded.value,
+                            featurePrompt = it,
+                            onClick = featurePromptClicked
+                        )
+                    }
+                    item { Div() }
+                }
                 if (debugMenuItems.isNotEmpty()) {
                     items(debugMenuItems, key = { "menudebug-$it" }) { menuItem ->
                         NavigationItem(
@@ -218,11 +241,11 @@ private fun NavigationItem(
     val backgroundColor = animateColorAsState(targetValue = when (item.isSelected) {
         true -> AppTheme.colors.primary.copy(alpha = 0.2f)
         else -> AppTheme.colors.backgroundContainer
-    })
+    }, label = "navItem-backgroundColor")
     val iconPadding = animateDpAsState(targetValue = when (isExpanded) {
         true -> AppTheme.dimens.medium
         false -> (itemSize - iconSize) / 2
-    })
+    }, label = "navItem-iconPadding")
 
     Row(modifier = modifier
         .padding(
@@ -264,6 +287,128 @@ private fun NavigationItem(
 }
 
 @Composable
+private fun DarkModeToggle(
+    isExpanded: Boolean,
+    darkMode: Boolean,
+    darkModeClicked: (Boolean) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val iconPadding = animateDpAsState(targetValue = when (isExpanded) {
+        true -> AppTheme.dimens.medium
+        false -> (itemSize - iconSize) / 2
+    }, label = "navItem-iconPadding")
+    val switchScale = animateFloatAsState(targetValue = when (isExpanded) {
+        true -> 1f
+        false -> 0f
+    }, label = "navItem-switchScale")
+
+    Row(modifier = modifier
+        .padding(
+            horizontal = (columnWidthCollapsed - itemSize) / 2
+        )
+        .fillMaxWidth()
+        .height(itemSize)
+        .clip(RoundedCornerShape(AppTheme.dimens.radiusMedium))
+        .clickable(
+            onClick = {
+                darkModeClicked.invoke(!darkMode)
+            }
+        )
+        .padding(
+            horizontal = iconPadding.value,
+        )
+    ) {
+        Icon(
+            modifier = Modifier
+                .size(iconSize)
+                .align(Alignment.CenterVertically),
+            painter = painterResource(id = R.drawable.ic_settings_dark_mode),
+            tint = AppTheme.colors.contentPrimary,
+            contentDescription = null
+        )
+        if (isExpanded) {
+            Row(modifier = modifier
+                .fillMaxWidth()
+                .fillMaxHeight()
+                .padding(
+                    start = AppTheme.dimens.small,
+                ),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                TextBody1(
+                    text = stringResource(id = R.string.dashboard_links_dark_mode),
+                    modifier = Modifier
+                        .weight(1f)
+                        .align(Alignment.CenterVertically)
+                )
+                if (switchScale.value > 0.8f) {
+                    InputSwitch(
+                        modifier = Modifier
+                            .align(Alignment.CenterVertically),
+                        isChecked = darkMode
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun FeatureItem(
+    isExpanded: Boolean,
+    featurePrompt: FeaturePrompt,
+    modifier: Modifier = Modifier,
+    onClick: (FeaturePrompt) -> Unit
+) {
+    val textColor = animateColorAsState(
+        targetValue = when (isExpanded) {
+            true -> AppTheme.colors.contentPrimary
+            false -> Color.Transparent
+        },
+        label = "featureItem-textOpacity"
+    )
+    Row(modifier = modifier
+        .background(AppTheme.colors.backgroundSecondary)
+        .clickable(
+            onClick = {
+                onClick.invoke(featurePrompt)
+            }
+        )
+        .padding(
+            vertical = AppTheme.dimens.small,
+            horizontal = (columnWidthCollapsed - itemSize) / 2
+        )
+        .fillMaxWidth()
+    ) {
+        if (isExpanded) {
+            TextBody1(
+                maxLines = 2,
+                modifier = Modifier
+                    .padding(
+                        horizontal = AppTheme.dimens.medium,
+                        vertical = AppTheme.dimens.small
+                    )
+                    .align(Alignment.CenterVertically)
+                    .fillMaxWidth(),
+                text = stringResource(id = featurePrompt.label)
+            )
+        } else {
+            TextBody1(
+                text = " \n ",
+                textColor = textColor.value,
+                modifier = Modifier
+                    .padding(
+                        vertical = AppTheme.dimens.small
+                    )
+                    .align(Alignment.CenterVertically)
+                    .fillMaxWidth(),
+                textAlign= TextAlign.Center
+            )
+        }
+    }
+}
+
+@Composable
 private fun HeroItem(
     isExpanded: Boolean,
     menuIcons: MenuIcons?,
@@ -274,7 +419,7 @@ private fun HeroItem(
     val iconPadding = animateDpAsState(targetValue = when (isExpanded) {
         true -> AppTheme.dimens.medium
         false -> (itemSize - iconSize) / 2
-    })
+    }, label = "iconPadding")
 
     Row(
         modifier = modifier
@@ -323,7 +468,7 @@ private fun NavigationTimelineItem(
     val iconPadding = animateDpAsState(targetValue = when (isExpanded) {
         true -> AppTheme.dimens.medium
         false -> (itemSize - iconSize) / 2
-    })
+    }, label = "navTimelineItem-iconPadding")
 
     Box {
         Row(modifier = modifier
