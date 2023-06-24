@@ -10,7 +10,7 @@ import android.net.Uri
 import android.os.Build
 import android.webkit.URLUtil
 import android.widget.Toast
-import tmg.flashback.googleanalytics.manager.AnalyticsManager
+import tmg.flashback.googleanalytics.manager.FirebaseAnalyticsManager
 import tmg.flashback.navigation.ActivityProvider
 import tmg.flashback.web.R
 import tmg.flashback.web.repository.WebBrowserRepository
@@ -20,7 +20,7 @@ import javax.inject.Inject
 
 class OpenWebpageUseCase @Inject constructor(
     private val webBrowserRepository: WebBrowserRepository,
-    private val analyticsManager: AnalyticsManager,
+    private val firebaseAnalyticsManager: FirebaseAnalyticsManager,
     private val activityProvider: ActivityProvider,
 ) {
     fun open(url: String, title: String) {
@@ -30,7 +30,7 @@ class OpenWebpageUseCase @Inject constructor(
     }
 
     fun open(activity: Activity, url: String, title: String) {
-        analyticsManager.logEvent("Opening URL", mapOf(
+        firebaseAnalyticsManager.logEvent("Opening URL", mapOf(
             "url" to url,
             "title" to title
         ))

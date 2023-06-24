@@ -4,18 +4,18 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Test
-import tmg.flashback.crashlytics.services.CrashService
+import tmg.flashback.crashlytics.services.FirebaseCrashService
 import tmg.flashback.device.repository.PrivacyRepository
 
-internal class CrashManagerTest {
+internal class CrashlyticsManagerTest {
 
     private var mockPrivacyRepository: PrivacyRepository = mockk(relaxed = true)
-    private var mockCrashService: CrashService = mockk(relaxed = true)
+    private var mockFirebaseCrashService: FirebaseCrashService = mockk(relaxed = true)
 
-    private lateinit var underTest: CrashManager
+    private lateinit var underTest: CrashlyticsManager
 
     private fun initUnderTest() {
-        underTest = CrashManager(mockPrivacyRepository, mockCrashService)
+        underTest = CrashlyticsManager(mockPrivacyRepository, mockFirebaseCrashService)
     }
 
     //region Logging
@@ -27,7 +27,7 @@ internal class CrashManagerTest {
         initUnderTest()
         underTest.log("msg")
 
-        verify { mockCrashService.logInfo("msg") }
+        verify { mockFirebaseCrashService.logInfo("msg") }
     }
 
     @Test
@@ -37,7 +37,7 @@ internal class CrashManagerTest {
         initUnderTest()
         underTest.log("msg")
 
-        verify(exactly = 0) { mockCrashService.logInfo("msg") }
+        verify(exactly = 0) { mockFirebaseCrashService.logInfo("msg") }
     }
 
     @Test
@@ -47,7 +47,7 @@ internal class CrashManagerTest {
         initUnderTest()
         underTest.logError("msg")
 
-        verify { mockCrashService.logError("msg") }
+        verify { mockFirebaseCrashService.logError("msg") }
     }
 
     @Test
@@ -57,7 +57,7 @@ internal class CrashManagerTest {
         initUnderTest()
         underTest.logError("msg")
 
-        verify(exactly = 0) { mockCrashService.logError("msg") }
+        verify(exactly = 0) { mockFirebaseCrashService.logError("msg") }
     }
 
     @Test
@@ -68,7 +68,7 @@ internal class CrashManagerTest {
         initUnderTest()
         underTest.logException(exception, "msg")
 
-        verify { mockCrashService.logException(exception, "msg") }
+        verify { mockFirebaseCrashService.logException(exception, "msg") }
     }
 
     @Test
@@ -79,7 +79,7 @@ internal class CrashManagerTest {
         initUnderTest()
         underTest.logException(exception, "msg")
 
-        verify(exactly = 0) { mockCrashService.logException(exception, "msg") }
+        verify(exactly = 0) { mockFirebaseCrashService.logException(exception, "msg") }
     }
 
     //endregion

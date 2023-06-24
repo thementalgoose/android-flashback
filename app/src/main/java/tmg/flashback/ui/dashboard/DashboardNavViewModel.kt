@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import tmg.flashback.crashlytics.manager.CrashManager
+import tmg.flashback.crashlytics.manager.CrashlyticsManager
 import tmg.flashback.debug.DebugNavigationComponent
 import tmg.flashback.debug.model.DebugMenuItem
 import tmg.flashback.formula1.constants.Formula1
@@ -66,7 +66,7 @@ class DashboardNavViewModel @Inject constructor(
     private val navigator: Navigator,
     private val getSeasonUseCase: GetSeasonsUseCase,
     private val applicationNavigationComponent: ApplicationNavigationComponent,
-    private val crashManager: CrashManager,
+    private val crashlyticsManager: CrashlyticsManager,
     private val dashboardSyncUseCase: DashboardSyncUseCase,
     private val debugNavigationComponent: DebugNavigationComponent,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
@@ -134,7 +134,7 @@ class DashboardNavViewModel @Inject constructor(
 
         viewModelScope.launch(ioDispatcher) {
             val result = dashboardSyncUseCase.sync()
-            crashManager.log("Dashboard synchronisation complete $result")
+            crashlyticsManager.log("Dashboard synchronisation complete $result")
         }
     }
 

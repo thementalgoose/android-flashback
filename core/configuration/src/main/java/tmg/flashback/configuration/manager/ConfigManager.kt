@@ -4,14 +4,14 @@ import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
 import tmg.flashback.configuration.services.RemoteConfigService
-import tmg.flashback.crashlytics.manager.CrashManager
+import tmg.flashback.crashlytics.manager.CrashlyticsManager
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class ConfigManager @Inject constructor(
     private val configService: RemoteConfigService,
-    private val crashController: CrashManager
+    private val crashController: CrashlyticsManager
 ) {
 
     /**

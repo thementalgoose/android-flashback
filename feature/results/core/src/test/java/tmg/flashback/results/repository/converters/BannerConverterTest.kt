@@ -5,13 +5,13 @@ import io.mockk.verify
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
-import tmg.flashback.crashlytics.manager.CrashManager
+import tmg.flashback.crashlytics.manager.CrashlyticsManager
 import tmg.flashback.results.repository.json.BannerItemJson
 import tmg.flashback.results.repository.models.Banner
 
 internal class BannerConverterTest {
 
-    private val mockCrashManager: CrashManager = mockk(relaxed = true)
+    private val mockCrashlyticsManager: CrashlyticsManager = mockk(relaxed = true)
 
     @Test
     fun `null message results in null banner object`() {
@@ -22,7 +22,7 @@ internal class BannerConverterTest {
             season = null
         )
 
-        assertNull(json.convert(mockCrashManager))
+        assertNull(json.convert(mockCrashlyticsManager))
     }
 
     @Test
@@ -40,7 +40,7 @@ internal class BannerConverterTest {
             season = null
         )
 
-        assertEquals(expected, json.convert(mockCrashManager))
+        assertEquals(expected, json.convert(mockCrashlyticsManager))
     }
 
     @Test
@@ -52,7 +52,7 @@ internal class BannerConverterTest {
             season = null
         )
 
-        assertNull(json.convert(mockCrashManager))
+        assertNull(json.convert(mockCrashlyticsManager))
     }
 
     @Test
@@ -64,9 +64,9 @@ internal class BannerConverterTest {
             season = null
         )
 
-        assertNull(json.convert(mockCrashManager)!!.url)
+        assertNull(json.convert(mockCrashlyticsManager)!!.url)
         verify {
-            mockCrashManager.logException(any())
+            mockCrashlyticsManager.logException(any())
         }
     }
 
@@ -85,6 +85,6 @@ internal class BannerConverterTest {
             season = null
         )
 
-        assertEquals(expected, json.convert(mockCrashManager))
+        assertEquals(expected, json.convert(mockCrashlyticsManager))
     }
 }

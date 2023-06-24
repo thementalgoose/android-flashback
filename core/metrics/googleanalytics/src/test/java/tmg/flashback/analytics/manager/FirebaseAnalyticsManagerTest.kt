@@ -7,19 +7,19 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import tmg.flashback.googleanalytics.UserProperty
 import tmg.flashback.device.repository.PrivacyRepository
-import tmg.flashback.googleanalytics.services.AnalyticsService
-import tmg.flashback.googleanalytics.manager.AnalyticsManager
+import tmg.flashback.googleanalytics.services.FireabseAnalyticsService
+import tmg.flashback.googleanalytics.manager.FirebaseAnalyticsManager
 
 
-internal class AnalyticsManagerTest {
+internal class FirebaseAnalyticsManagerTest {
 
     private val mockPrivacyRepository: PrivacyRepository = mockk(relaxed = true)
-    private val mockAnalyticsService: AnalyticsService = mockk(relaxed = true)
+    private val mockFireabseAnalyticsService: FireabseAnalyticsService = mockk(relaxed = true)
 
-    private lateinit var sut: AnalyticsManager
+    private lateinit var sut: FirebaseAnalyticsManager
 
     private fun initSUT() {
-        sut = AnalyticsManager(mockPrivacyRepository, mockAnalyticsService)
+        sut = FirebaseAnalyticsManager(mockPrivacyRepository, mockFireabseAnalyticsService)
     }
 
     //region enabled
@@ -59,8 +59,8 @@ internal class AnalyticsManagerTest {
         initSUT()
         sut.initialise("my-user-id")
         verify {
-            mockAnalyticsService.setUserId("my-user-id")
-            mockAnalyticsService.setAnalyticsCollectionEnabled(true)
+            mockFireabseAnalyticsService.setUserId("my-user-id")
+            mockFireabseAnalyticsService.setAnalyticsCollectionEnabled(true)
         }
     }
 
@@ -77,7 +77,7 @@ internal class AnalyticsManagerTest {
         sut.logEvent("testKey")
 
         verify {
-            mockAnalyticsService.logEvent("testKey")
+            mockFireabseAnalyticsService.logEvent("testKey")
         }
     }
 
@@ -89,7 +89,7 @@ internal class AnalyticsManagerTest {
         sut.logEvent("testKey", mapOf("test" to "hello"))
 
         verify {
-            mockAnalyticsService.logEvent("testKey", any())
+            mockFireabseAnalyticsService.logEvent("testKey", any())
         }
     }
 
@@ -102,7 +102,7 @@ internal class AnalyticsManagerTest {
         sut.logEvent("testKey")
 
         verify(exactly = 0) {
-            mockAnalyticsService.logEvent("testKey")
+            mockFireabseAnalyticsService.logEvent("testKey")
         }
     }
 
@@ -119,7 +119,7 @@ internal class AnalyticsManagerTest {
         sut.setUserProperty(UserProperty.APP_VERSION, "test-value")
 
         verify {
-            mockAnalyticsService.setProperty(any(), any())
+            mockFireabseAnalyticsService.setProperty(any(), any())
         }
     }
 
@@ -132,7 +132,7 @@ internal class AnalyticsManagerTest {
         sut.setUserProperty(UserProperty.APP_VERSION, "test-value")
 
         verify(exactly = 0) {
-            mockAnalyticsService.setProperty(any(), any())
+            mockFireabseAnalyticsService.setProperty(any(), any())
         }
     }
 
@@ -149,7 +149,7 @@ internal class AnalyticsManagerTest {
         sut.viewScreen("screen", emptyMap(), this.javaClass)
 
         verify {
-            mockAnalyticsService.logViewScreen(any(), any(), any())
+            mockFireabseAnalyticsService.logViewScreen(any(), any(), any())
         }
     }
 
@@ -162,7 +162,7 @@ internal class AnalyticsManagerTest {
         sut.viewScreen("screen", emptyMap(), this.javaClass)
 
         verify(exactly = 0) {
-            mockAnalyticsService.logViewScreen(any(), any(), any())
+            mockFireabseAnalyticsService.logViewScreen(any(), any(), any())
         }
     }
 

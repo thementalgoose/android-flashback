@@ -3,17 +3,17 @@ package tmg.flashback.ui.components.analytics
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Test
-import tmg.flashback.googleanalytics.manager.AnalyticsManager
+import tmg.flashback.googleanalytics.manager.FirebaseAnalyticsManager
 
 internal class ScreenViewViewModelTest {
 
-    private val mockAnalyticsManager: AnalyticsManager = mockk(relaxed = true)
+    private val mockFirebaseAnalyticsManager: FirebaseAnalyticsManager = mockk(relaxed = true)
 
     private lateinit var underTest: ScreenViewViewModel
 
     private fun initUnderTest() {
         underTest = ScreenViewViewModel(
-            analyticsManager = mockAnalyticsManager
+            firebaseAnalyticsManager = mockFirebaseAnalyticsManager
         )
     }
 
@@ -23,7 +23,7 @@ internal class ScreenViewViewModelTest {
         underTest.inputs.viewScreen("name", mapOf("arg" to "arg"))
 
         verify {
-            mockAnalyticsManager.viewScreen("name", mapOf("arg" to "arg"))
+            mockFirebaseAnalyticsManager.viewScreen("name", mapOf("arg" to "arg"))
         }
     }
 }

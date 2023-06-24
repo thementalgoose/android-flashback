@@ -2,7 +2,7 @@ package tmg.flashback.domain.repo
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import tmg.flashback.crashlytics.manager.CrashManager
+import tmg.flashback.crashlytics.manager.CrashlyticsManager
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.domain.persistence.FlashbackDatabase
 import tmg.flashback.domain.repo.base.BaseRepository
@@ -21,7 +21,7 @@ import javax.inject.Singleton
 class CircuitRepository @Inject constructor(
     private val api: FlashbackApi,
     private val persistence: FlashbackDatabase,
-    crashController: CrashManager,
+    crashController: CrashlyticsManager,
     networkConnectivityManager: NetworkConnectivityManager,
     private val networkCircuitMapper: NetworkCircuitMapper,
     private val networkDriverDataMapper: NetworkDriverDataMapper,

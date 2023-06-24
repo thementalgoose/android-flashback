@@ -2,7 +2,7 @@ package tmg.flashback.results.repository
 
 import org.threeten.bp.Year
 import tmg.flashback.configuration.manager.ConfigManager
-import tmg.flashback.crashlytics.manager.CrashManager
+import tmg.flashback.crashlytics.manager.CrashlyticsManager
 import tmg.flashback.prefs.manager.PreferenceManager
 import tmg.flashback.results.repository.converters.convert
 import tmg.flashback.results.repository.json.AllSeasonsJson
@@ -15,7 +15,7 @@ import javax.inject.Singleton
 class HomeRepository @Inject constructor(
         private val preferenceManager: PreferenceManager,
         private val configManager: ConfigManager,
-        private val crashManager: CrashManager
+        private val crashlyticsManager: CrashlyticsManager
 ) {
 
     companion object {
@@ -49,7 +49,7 @@ class HomeRepository @Inject constructor(
     val banners: List<Banner>
         get() = configManager
             .getJson(keyDefaultBanners, BannerJson.serializer())
-            ?.convert(crashManager = crashManager) ?: emptyList()
+            ?.convert(crashlyticsManager = crashlyticsManager) ?: emptyList()
 
     /**
      * Banner to be displayed at the top of the screen

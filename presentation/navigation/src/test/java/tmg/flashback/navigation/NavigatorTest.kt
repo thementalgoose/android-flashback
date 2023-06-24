@@ -7,11 +7,11 @@ import io.mockk.slot
 import io.mockk.verify
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import tmg.flashback.crashlytics.manager.CrashManager
+import tmg.flashback.crashlytics.manager.CrashlyticsManager
 
 internal class NavigatorTest {
 
-    private val mockCrashManager: CrashManager = mockk(relaxed = true)
+    private val mockCrashlyticsManager: CrashlyticsManager = mockk(relaxed = true)
 
     private val mockNavController: NavHostController = mockk(relaxed = true)
 
@@ -19,7 +19,7 @@ internal class NavigatorTest {
 
     private fun initUnderTest() {
         underTest = Navigator(
-            crashManager = mockCrashManager
+            crashlyticsManager = mockCrashlyticsManager
         )
         underTest.navController = mockNavController
     }
@@ -34,7 +34,7 @@ internal class NavigatorTest {
         val dest = slot<String>()
         verify {
             mockNavController.navigate(capture(dest), any<NavOptionsBuilder.() -> Unit>())
-            mockCrashManager.log(any())
+            mockCrashlyticsManager.log(any())
         }
         assertEquals(destination.route, dest.captured)
     }
