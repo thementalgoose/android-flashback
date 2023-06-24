@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
-import tmg.flashback.crashlytics.manager.CrashManager
+import tmg.flashback.crashlytics.manager.CrashlyticsManager
 import tmg.flashback.debug.DebugNavigationComponent
 import tmg.flashback.debug.model.DebugMenuItem
 import tmg.flashback.navigation.ApplicationNavigationComponent
@@ -44,7 +44,7 @@ internal class DashboardNavViewModelTest: BaseTest() {
     private val mockDefaultSeasonUseCase: DefaultSeasonUseCase = mockk(relaxed = true)
     private val mockGetSeasonUseCase: GetSeasonsUseCase = mockk(relaxed = true)
     private val mockApplicationNavigationComponent: ApplicationNavigationComponent = mockk(relaxed = true)
-    private val mockCrashManager: CrashManager = mockk(relaxed = true)
+    private val mockCrashlyticsManager: CrashlyticsManager = mockk(relaxed = true)
     private val mockDashboardSyncUseCase: DashboardSyncUseCase = mockk(relaxed = true)
     private val mockDebugNavigationComponent: DebugNavigationComponent = mockk(relaxed = true)
 
@@ -60,7 +60,7 @@ internal class DashboardNavViewModelTest: BaseTest() {
             navigator = mockNavigator,
             getSeasonUseCase = mockGetSeasonUseCase,
             applicationNavigationComponent = mockApplicationNavigationComponent,
-            crashManager = mockCrashManager,
+            crashlyticsManager = mockCrashlyticsManager,
             dashboardSyncUseCase = mockDashboardSyncUseCase,
             debugNavigationComponent = mockDebugNavigationComponent,
             ioDispatcher = Dispatchers.Unconfined
@@ -80,7 +80,7 @@ internal class DashboardNavViewModelTest: BaseTest() {
             mockDashboardSyncUseCase.sync()
         }
         verify {
-            mockCrashManager.log(any())
+            mockCrashlyticsManager.log(any())
         }
     }
 

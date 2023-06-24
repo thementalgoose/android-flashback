@@ -8,7 +8,7 @@ import kotlinx.coroutines.launch
 import tmg.flashback.BuildConfig
 import tmg.flashback.configuration.repository.ConfigRepository
 import tmg.flashback.configuration.usecases.ApplyConfigUseCase
-import tmg.flashback.crashlytics.manager.CrashManager
+import tmg.flashback.crashlytics.manager.CrashlyticsManager
 import tmg.flashback.domain.repo.repository.CacheRepository
 import tmg.flashback.maintenance.contract.usecases.ShouldForceUpgradeUseCase
 import tmg.flashback.results.usecases.ScheduleNotificationsUseCase
@@ -38,7 +38,7 @@ interface HomeViewModelOutputs {
 class HomeViewModel @Inject constructor(
     private val configRepository: ConfigRepository,
     private val applyConfigUseCase: ApplyConfigUseCase,
-    private val crashManager: CrashManager,
+    private val crashlyticsManager: CrashlyticsManager,
     private val shouldForceUpgradeUseCase: ShouldForceUpgradeUseCase,
     private val cacheRepository: CacheRepository,
     private val setupAppShortcutUseCase: SetupAppShortcutUseCase,
@@ -68,7 +68,7 @@ class HomeViewModel @Inject constructor(
                         }
                         performConfigUpdates()
                     } catch (e: Exception) {
-                        crashManager.logException(e)
+                        crashlyticsManager.logException(e)
                     }
                     appliedChanges = false
                 }

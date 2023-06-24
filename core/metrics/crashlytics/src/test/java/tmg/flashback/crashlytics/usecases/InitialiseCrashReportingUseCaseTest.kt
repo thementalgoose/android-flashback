@@ -5,20 +5,20 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
-import tmg.flashback.crashlytics.services.CrashService
+import tmg.flashback.crashlytics.services.FirebaseCrashService
 import tmg.flashback.device.repository.PrivacyRepository
 
 internal class InitialiseCrashReportingUseCaseTest {
 
     private val mockPrivacyRepository: PrivacyRepository = mockk(relaxed = true)
-    private val mockCrashService: CrashService = mockk(relaxed = true)
+    private val mockFirebaseCrashService: FirebaseCrashService = mockk(relaxed = true)
 
     private lateinit var underTest: InitialiseCrashReportingUseCase
 
     private fun initUnderTest() {
         underTest = InitialiseCrashReportingUseCase(
             mockPrivacyRepository,
-            mockCrashService
+            mockFirebaseCrashService
         )
     }
 
@@ -37,7 +37,7 @@ internal class InitialiseCrashReportingUseCaseTest {
         )
 
         verify {
-            mockCrashService.initialise(
+            mockFirebaseCrashService.initialise(
                 enableCrashReporting = true,
                 deviceUdid = deviceUdid,
                 appFirstOpened = "01 Jan 2021",
@@ -61,7 +61,7 @@ internal class InitialiseCrashReportingUseCaseTest {
         )
 
         verify {
-            mockCrashService.initialise(
+            mockFirebaseCrashService.initialise(
                 enableCrashReporting = false,
                 deviceUdid = deviceUdid,
                 appFirstOpened = "01 Jan 2021",

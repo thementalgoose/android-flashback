@@ -10,7 +10,7 @@ import androidx.compose.ui.platform.ComposeView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import tmg.flashback.googleanalytics.manager.AnalyticsManager
+import tmg.flashback.googleanalytics.manager.FirebaseAnalyticsManager
 import tmg.flashback.style.AppTheme
 import javax.inject.Inject
 
@@ -18,7 +18,7 @@ import javax.inject.Inject
 abstract class BaseBottomSheetComposeFragment: BottomSheetDialogFragment() {
 
     @Inject
-    protected lateinit var analyticsManager: AnalyticsManager
+    protected lateinit var firebaseAnalyticsManager: FirebaseAnalyticsManager
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,6 +51,6 @@ abstract class BaseBottomSheetComposeFragment: BottomSheetDialogFragment() {
      * Logging screen analytics
      */
     fun logScreenViewed(name: String, params: Map<String, String> = mapOf()) {
-        analyticsManager.viewScreen(name, params, this::class.java)
+        firebaseAnalyticsManager.viewScreen(name, params, this::class.java)
     }
 }
