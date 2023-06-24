@@ -8,10 +8,10 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import tmg.flashback.googleanalytics.BuildConfig
 import javax.inject.Inject
 
-internal class FirebaseAnalyticsService @Inject constructor(
+internal class FirebaseFireabseAnalyticsServiceImpl @Inject constructor(
     @ApplicationContext
     private val context: Context
-): AnalyticsService {
+): FireabseAnalyticsService {
 
     private val analytics: FirebaseAnalytics = FirebaseAnalytics.getInstance(context)
 

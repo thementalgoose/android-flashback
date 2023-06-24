@@ -2,7 +2,7 @@ package tmg.flashback.ui.components.analytics
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import tmg.flashback.googleanalytics.manager.AnalyticsManager
+import tmg.flashback.googleanalytics.manager.FirebaseAnalyticsManager
 import javax.inject.Inject
 
 interface ScreenViewViewModelInputs {
@@ -13,13 +13,13 @@ interface ScreenViewViewModelOutputs
 
 @HiltViewModel
 class ScreenViewViewModel @Inject constructor(
-    private val analyticsManager: AnalyticsManager
+    private val firebaseAnalyticsManager: FirebaseAnalyticsManager
 ): ViewModel(), ScreenViewViewModelInputs, ScreenViewViewModelOutputs {
 
     val inputs: ScreenViewViewModelInputs = this
     val outputs: ScreenViewViewModelOutputs = this
 
     override fun viewScreen(name: String, args: Map<String, String>) {
-        analyticsManager.viewScreen(name, args)
+        firebaseAnalyticsManager.viewScreen(name, args)
     }
 }

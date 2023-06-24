@@ -3,7 +3,7 @@ package tmg.flashback.domain.repo.base
 import android.util.Log
 import retrofit2.HttpException
 import retrofit2.Response
-import tmg.flashback.crashlytics.manager.CrashManager
+import tmg.flashback.crashlytics.manager.CrashlyticsManager
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.domain.repo.BuildConfig
 import tmg.flashback.flashbackapi.api.models.MetadataWrapper
@@ -13,7 +13,7 @@ import java.io.IOException
 import java.net.UnknownHostException
 
 abstract class BaseRepository(
-    protected val crashController: CrashManager,
+    protected val crashController: CrashlyticsManager,
     private val networkConnectivityManager: NetworkConnectivityManager
 ) {
     suspend fun <T> attempt(

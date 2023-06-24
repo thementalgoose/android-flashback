@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import tmg.flashback.configuration.manager.ConfigManager
-import tmg.flashback.crashlytics.manager.CrashManager
+import tmg.flashback.crashlytics.manager.CrashlyticsManager
 import tmg.flashback.prefs.manager.PreferenceManager
 import tmg.flashback.results.repository.json.AllSeasonsJson
 import tmg.flashback.results.repository.json.BannerItemJson
@@ -20,7 +20,7 @@ internal class HomeRepositoryTest {
 
     private val mockPreferenceManager: PreferenceManager = mockk(relaxed = true)
     private val mockConfigManager: ConfigManager = mockk(relaxed = true)
-    private val mockCrashManager: CrashManager = mockk(relaxed = true)
+    private val mockCrashlyticsManager: CrashlyticsManager = mockk(relaxed = true)
 
     private lateinit var sut: HomeRepository
 
@@ -28,7 +28,7 @@ internal class HomeRepositoryTest {
         sut = HomeRepository(
             preferenceManager = mockPreferenceManager,
             configManager = mockConfigManager,
-            crashManager = mockCrashManager
+            crashlyticsManager = mockCrashlyticsManager
         )
     }
 

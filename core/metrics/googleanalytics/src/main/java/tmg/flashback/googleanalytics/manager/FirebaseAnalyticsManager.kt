@@ -2,15 +2,15 @@ package tmg.flashback.googleanalytics.manager
 
 import android.os.Bundle
 import tmg.flashback.googleanalytics.UserProperty
-import tmg.flashback.googleanalytics.services.AnalyticsService
+import tmg.flashback.googleanalytics.services.FireabseAnalyticsService
 import tmg.flashback.device.repository.PrivacyRepository
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class AnalyticsManager @Inject constructor(
+class FirebaseAnalyticsManager @Inject constructor(
     private val privacyRepository: PrivacyRepository,
-    private val analyticsService: AnalyticsService
+    private val fireabseAnalyticsService: FireabseAnalyticsService
 ) {
     var enabled: Boolean
         get() = privacyRepository.analytics
@@ -19,8 +19,8 @@ class AnalyticsManager @Inject constructor(
         }
 
     fun initialise(userId: String) {
-        analyticsService.setUserId(userId)
-        analyticsService.setAnalyticsCollectionEnabled(enabled)
+        fireabseAnalyticsService.setUserId(userId)
+        fireabseAnalyticsService.setAnalyticsCollectionEnabled(enabled)
     }
 
     fun logEvent(key: String, params: Map<String, String> = emptyMap()) {
@@ -31,23 +31,23 @@ class AnalyticsManager @Inject constructor(
                         putString(x.key, x.value)
                     }
                 }
-                analyticsService.logEvent(key, bundle)
+                fireabseAnalyticsService.logEvent(key, bundle)
             }
             else {
-                analyticsService.logEvent(key)
+                fireabseAnalyticsService.logEvent(key)
             }
         }
     }
 
     fun setUserProperty(property: UserProperty, value: String) {
         if (enabled) {
-            analyticsService.setProperty(property.key, value)
+            fireabseAnalyticsService.setProperty(property.key, value)
         }
     }
 
     fun viewScreen(screenName: String, params: Map<String, String> = emptyMap(), clazz: Class<*>? = null) {
         if (enabled) {
-            analyticsService.logViewScreen(screenName, params, clazz)
+            fireabseAnalyticsService.logViewScreen(screenName, params, clazz)
         }
     }
 }
