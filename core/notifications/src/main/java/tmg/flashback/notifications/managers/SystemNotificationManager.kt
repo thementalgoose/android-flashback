@@ -12,7 +12,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.core.app.NotificationCompat
 import dagger.hilt.android.qualifiers.ApplicationContext
-import tmg.flashback.crashlytics.manager.CrashManager
+import tmg.flashback.crashlytics.manager.CrashlyticsManager
 import tmg.flashback.notifications.R
 import tmg.flashback.notifications.model.NotificationPriority
 import tmg.flashback.notifications.navigation.NotificationNavigationProvider
@@ -23,7 +23,7 @@ import javax.inject.Singleton
 class SystemNotificationManager @Inject constructor(
     @ApplicationContext
     private val applicationContext: Context,
-    private val crashController: CrashManager,
+    private val crashController: CrashlyticsManager,
     private val navigationProvider: NotificationNavigationProvider
 ) {
 

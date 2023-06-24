@@ -3,7 +3,7 @@ package tmg.flashback.managers
 import android.content.Context
 import android.content.Intent
 import tmg.aboutthisapp.AboutThisAppActivity
-import tmg.flashback.googleanalytics.manager.AnalyticsManager
+import tmg.flashback.googleanalytics.manager.FirebaseAnalyticsManager
 import tmg.flashback.constants.AboutThisAppConfig
 import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.device.repository.DeviceRepository
@@ -22,7 +22,7 @@ class AppApplicationNavigationComponent @Inject constructor(
     private val buildConfigManager: BuildConfigManager,
     private val deviceRepository: DeviceRepository,
     private val contactRepository: ContactRepository,
-    private val analyticsManager: AnalyticsManager,
+    private val firebaseAnalyticsManager: FirebaseAnalyticsManager,
     private val allSupportedSourcesUseCase: AllSupportedSourcesUseCase,
     private val activityProvider: ActivityProvider,
     private val navigator: Navigator,
@@ -33,7 +33,7 @@ class AppApplicationNavigationComponent @Inject constructor(
     }
 
     override fun relaunchAppIntent(context: Context): Intent {
-        analyticsManager.logEvent("relaunch_app")
+        firebaseAnalyticsManager.logEvent("relaunch_app")
         return Intent(context, HomeActivity::class.java)
     }
 
@@ -44,7 +44,7 @@ class AppApplicationNavigationComponent @Inject constructor(
     }
 
     override fun aboutAppIntent(context: Context): Intent {
-        analyticsManager.viewScreen("About This App", mapOf(
+        firebaseAnalyticsManager.viewScreen("About This App", mapOf(
             "version" to buildConfigManager.versionName
         ), AboutThisAppActivity::class.java)
 

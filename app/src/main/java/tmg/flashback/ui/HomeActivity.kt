@@ -18,7 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import tmg.flashback.BuildConfig
 import tmg.flashback.ads.ads.components.AdvertProvider
 import tmg.flashback.configuration.usecases.ConfigSyncUseCase
-import tmg.flashback.crashlytics.manager.CrashManager
+import tmg.flashback.crashlytics.manager.CrashlyticsManager
 import tmg.flashback.maintenance.contract.MaintenanceNavigationComponent
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.newrelic.usecases.InitializeNewRelicUseCase
@@ -40,7 +40,7 @@ class HomeActivity: BaseActivity(), SplashScreen.KeepOnScreenCondition {
     @Inject
     lateinit var configSyncUseCase: ConfigSyncUseCase
     @Inject
-    lateinit var crashController: CrashManager
+    lateinit var crashController: CrashlyticsManager
     @Inject
     lateinit var navigator: Navigator
     @Inject

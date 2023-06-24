@@ -18,7 +18,7 @@ import tmg.flashback.googleanalytics.UserProperty.DEVICE_MODEL
 import tmg.flashback.googleanalytics.UserProperty.DEVICE_THEME
 import tmg.flashback.googleanalytics.UserProperty.OS_VERSION
 import tmg.flashback.googleanalytics.UserProperty.WIDGET_USAGE
-import tmg.flashback.googleanalytics.manager.AnalyticsManager
+import tmg.flashback.googleanalytics.manager.FirebaseAnalyticsManager
 import tmg.flashback.configuration.usecases.InitialiseConfigUseCase
 import tmg.flashback.crashlytics.usecases.InitialiseCrashReportingUseCase
 import tmg.flashback.device.repository.DeviceRepository
@@ -55,7 +55,7 @@ class FlashbackStartup @Inject constructor(
     private val initialiseCrashReportingUseCase: InitialiseCrashReportingUseCase,
     private val notificationRepository: NotificationsRepositoryImpl,
     private val themeRepository: ThemeRepository,
-    private val analyticsManager: AnalyticsManager,
+    private val firebaseAnalyticsManager: FirebaseAnalyticsManager,
     private val initialiseConfigUseCase: InitialiseConfigUseCase,
     private val systemNotificationManager: SystemNotificationManager,
     private val remoteNotificationSubscribeUseCase: RemoteNotificationSubscribeUseCase,
@@ -154,15 +154,15 @@ class FlashbackStartup @Inject constructor(
         }
 
         // Initialise user properties
-        analyticsManager.initialise(userId = deviceRepository.deviceUdid)
-        analyticsManager.setUserProperty(DEVICE_MODEL, Build.MODEL)
-        analyticsManager.setUserProperty(OS_VERSION, Build.VERSION.SDK_INT.toString())
-        analyticsManager.setUserProperty(APP_VERSION, BuildConfig.VERSION_NAME)
-        analyticsManager.setUserProperty(
+        firebaseAnalyticsManager.initialise(userId = deviceRepository.deviceUdid)
+        firebaseAnalyticsManager.setUserProperty(DEVICE_MODEL, Build.MODEL)
+        firebaseAnalyticsManager.setUserProperty(OS_VERSION, Build.VERSION.SDK_INT.toString())
+        firebaseAnalyticsManager.setUserProperty(APP_VERSION, BuildConfig.VERSION_NAME)
+        firebaseAnalyticsManager.setUserProperty(
             WIDGET_USAGE,
             if (hasWidgetsUseCase.hasWidgets()) "true" else "false"
         )
-        analyticsManager.setUserProperty(
+        firebaseAnalyticsManager.setUserProperty(
             DEVICE_THEME, when (themeRepository.nightMode) {
                 NightMode.DAY -> "day"
                 NightMode.NIGHT -> "night"

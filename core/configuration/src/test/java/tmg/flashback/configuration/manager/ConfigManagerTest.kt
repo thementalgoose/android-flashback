@@ -9,12 +9,12 @@ import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import tmg.flashback.configuration.services.RemoteConfigService
-import tmg.flashback.crashlytics.manager.CrashManager
+import tmg.flashback.crashlytics.manager.CrashlyticsManager
 
 internal class ConfigManagerTest {
 
     private val mockConfigService: RemoteConfigService = mockk(relaxed = true)
-    private val mockCrashController: CrashManager = mockk(relaxed = true)
+    private val mockCrashController: CrashlyticsManager = mockk(relaxed = true)
 
     private lateinit var underTest: ConfigManager
 

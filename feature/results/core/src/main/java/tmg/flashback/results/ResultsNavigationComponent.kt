@@ -1,7 +1,7 @@
 package tmg.flashback.results
 
 import androidx.appcompat.app.AppCompatActivity
-import tmg.flashback.crashlytics.manager.CrashManager
+import tmg.flashback.crashlytics.manager.CrashlyticsManager
 import tmg.flashback.navigation.NavigationDestination
 import tmg.flashback.navigation.Screen
 import tmg.flashback.results.contract.ResultsNavigationComponent
@@ -44,29 +44,29 @@ fun ScreenConstructors.with(
 )
 
 internal class ResultsNavigationComponentImpl @Inject constructor(
-    private val crashManager: CrashManager,
+    private val crashlyticsManager: CrashlyticsManager,
     private val activityProvider: tmg.flashback.navigation.ActivityProvider
 ): ResultsNavigationComponent {
     override fun upNext() = activityProvider.launch {
-        crashManager.log("Navigating to up next")
+        crashlyticsManager.log("Navigating to up next")
         val activity = it as? AppCompatActivity ?: return@launch
         UpNextReminderBottomSheetFragment().show(activity.supportFragmentManager, "UP_NEXT")
     }
 
     override fun tyres(season: Int) = activityProvider.launch {
-        crashManager.log("Navigating to tyres $season")
+        crashlyticsManager.log("Navigating to tyres $season")
         val activity = it as? AppCompatActivity ?: return@launch
         TyreBottomSheetFragment.instance(season).show(activity.supportFragmentManager, "TYRES")
     }
 
     override fun preseasonEvents(season: Int) = activityProvider.launch {
-        crashManager.log("Navigating to preseason $season")
+        crashlyticsManager.log("Navigating to preseason $season")
         val activity = it as? AppCompatActivity ?: return@launch
         EventsBottomSheetFragment.instance(season).show(activity.supportFragmentManager, "PRESEASON")
     }
 
     override fun featureNotificationOnboarding() = activityProvider.launch {
-        crashManager.log("Navigating to notification onboarding")
+        crashlyticsManager.log("Navigating to notification onboarding")
         val activity = it as? AppCompatActivity ?: return@launch
         NotificationOnboardingBottomSheetFragment.instance().show(activity.supportFragmentManager, "FEATURE_NOTIFICATIONS")
     }

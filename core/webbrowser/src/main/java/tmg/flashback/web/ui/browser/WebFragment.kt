@@ -9,8 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import dagger.hilt.android.AndroidEntryPoint
-import tmg.flashback.googleanalytics.manager.AnalyticsManager
-import tmg.flashback.crashlytics.manager.CrashManager
+import tmg.flashback.googleanalytics.manager.FirebaseAnalyticsManager
+import tmg.flashback.crashlytics.manager.CrashlyticsManager
 import tmg.flashback.web.R
 import tmg.flashback.web.client.FlashbackWebChromeClient
 import tmg.flashback.web.client.FlashbackWebViewClient
@@ -30,9 +30,9 @@ internal class WebFragment : Fragment() {
     private var binding: FragmentWebBinding? = null
 
     @Inject
-    protected lateinit var analyticsManager: AnalyticsManager
+    protected lateinit var firebaseAnalyticsManager: FirebaseAnalyticsManager
     @Inject
-    protected lateinit var crashController: CrashManager
+    protected lateinit var crashController: CrashlyticsManager
 
     @Inject
     protected lateinit var webBrowserRepository: WebBrowserRepository
@@ -81,7 +81,7 @@ internal class WebFragment : Fragment() {
             try {
                 val host = Uri.parse(pageUrl).host
                 host?.let {
-                    analyticsManager.viewScreen(
+                    firebaseAnalyticsManager.viewScreen(
                         screenName = "Webpage",
                         clazz = WebFragment::class.java,
                         params = mapOf(

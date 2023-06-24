@@ -7,22 +7,22 @@ import dagger.hilt.EntryPoint
 import dagger.hilt.EntryPoints
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import tmg.flashback.crashlytics.manager.CrashManager
-import tmg.flashback.crashlytics.services.CrashService
+import tmg.flashback.crashlytics.manager.CrashlyticsManager
 import tmg.flashback.crashlytics.services.FirebaseCrashService
+import tmg.flashback.crashlytics.services.FirebaseFirebaseCrashServiceImpl
 
 @Module
 @InstallIn(SingletonComponent::class)
 internal abstract class CrashReportingModule {
 
     @Binds
-    abstract fun bindCrashService(impl: FirebaseCrashService): CrashService
+    abstract fun bindCrashService(impl: FirebaseFirebaseCrashServiceImpl): FirebaseCrashService
 }
 
 @EntryPoint
 @InstallIn(SingletonComponent::class)
 interface CrashModule {
-    fun crashManager(): CrashManager
+    fun crashManager(): CrashlyticsManager
 
     companion object {
         fun entryPoints(context: Context): CrashModule {

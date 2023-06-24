@@ -1,7 +1,7 @@
 package tmg.flashback.results.repository.converters
 
 import android.webkit.URLUtil
-import tmg.flashback.crashlytics.manager.CrashManager
+import tmg.flashback.crashlytics.manager.CrashlyticsManager
 import tmg.flashback.results.BuildConfig
 import tmg.flashback.results.repository.json.BannerItemJson
 import tmg.flashback.results.repository.json.BannerJson
@@ -9,14 +9,14 @@ import tmg.flashback.results.repository.models.Banner
 import java.text.ParseException
 
 fun BannerJson.convert(
-    crashManager: CrashManager
+    crashlyticsManager: CrashlyticsManager
 ): List<Banner> {
     return (this.banners ?: emptyList())
-        .mapNotNull { it.convert(crashManager) }
+        .mapNotNull { it.convert(crashlyticsManager) }
 }
 
 fun BannerItemJson.convert(
-    crashManager: CrashManager
+    crashlyticsManager: CrashlyticsManager
 ): Banner? {
     if (this.msg.isNullOrEmpty()) {
         return null
@@ -28,7 +28,7 @@ fun BannerItemJson.convert(
                 this.url == null -> null
                 URLUtil.isValidUrl(this.url) -> this.url
                 else -> {
-                    crashManager.logException(ParseException("Banner url ${this.url} is not a valid URL", 0))
+                    crashlyticsManager.logException(ParseException("Banner url ${this.url} is not a valid URL", 0))
                     null
                 }
             }
@@ -36,7 +36,7 @@ fun BannerItemJson.convert(
             if (BuildConfig.DEBUG) {
                 e.printStackTrace()
             }
-            crashManager.logException(e)
+            crashlyticsManager.logException(e)
             null
         },
         highlight = this.highlight ?: false,
