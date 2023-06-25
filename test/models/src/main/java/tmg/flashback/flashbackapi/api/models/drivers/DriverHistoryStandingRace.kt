@@ -6,7 +6,7 @@ import tmg.flashback.flashbackapi.api.models.races.RaceData
 import tmg.flashback.flashbackapi.api.models.races.model
 
 fun DriverHistoryStandingRace.Companion.model(
-    construct: Constructor = Constructor.model(),
+    constructor: Constructor = Constructor.model(),
     race: RaceData = RaceData.model(),
     sprintQuali: Boolean? = true,
     qualified: Int = 1,
@@ -15,7 +15,7 @@ fun DriverHistoryStandingRace.Companion.model(
     status: String = "status",
     points: Double = 1.0,
 ): DriverHistoryStandingRace = DriverHistoryStandingRace(
-    construct = construct,
+    constructor = constructor,
     race = race,
     sprintQuali = sprintQuali,
     qualified = qualified,
