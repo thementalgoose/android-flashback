@@ -29,7 +29,7 @@ data class DriverHistoryStanding(
 @Keep
 @Serializable
 data class DriverHistoryStandingRace(
-    val construct: Constructor,
+    val constructor: Constructor,
     val race: RaceData,
     val sprintQuali: Boolean?,
     val qualified: Int?,
