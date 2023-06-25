@@ -25,7 +25,7 @@ class NetworkDriverMapper @Inject constructor() {
             driverId = driverId,
             season = season,
             round = data.race.round,
-            constructorId = data.construct.id,
+            constructorId = data.constructor.id,
             sprintQuali = data.sprintQuali ?: false,
             qualified = data.qualified,
             gridPos = data.gridPos,

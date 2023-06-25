@@ -92,7 +92,7 @@ class DriverRepository @Inject constructor(
 
     private fun saveConstructors(data: tmg.flashback.flashbackapi.api.models.drivers.DriverHistory): Boolean {
         val constructors = data.standings.values
-            .map { it.races.values.map { it.construct } }
+            .map { it.races.values.map { it.constructor } }
             .flatten()
             .toSet()
             .map { networkConstructorDataMapper.mapConstructorData(it) }

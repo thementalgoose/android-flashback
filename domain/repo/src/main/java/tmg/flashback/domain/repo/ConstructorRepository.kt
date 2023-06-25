@@ -56,10 +56,10 @@ class ConstructorRepository @Inject constructor(
 
         saveDrivers(data)
 
-        val constructor = networkConstructorDataMapper.mapConstructorData(data.construct)
+        val constructor = networkConstructorDataMapper.mapConstructorData(data.constructor)
         val allSeasons = data.standings.values
             .map { standing ->
-                networkConstructorMapper.mapConstructorSeason(data.construct.id, standing)
+                networkConstructorMapper.mapConstructorSeason(data.constructor.id, standing)
             }
         val allSeasonDrivers = data.standings.values
             .map { standing -> standing.drivers.values.map { Pair(standing.season, it) } }
