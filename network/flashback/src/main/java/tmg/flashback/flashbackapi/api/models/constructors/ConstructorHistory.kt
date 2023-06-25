@@ -7,7 +7,7 @@ import tmg.flashback.flashbackapi.api.models.drivers.Driver
 @Keep
 @Serializable
 data class ConstructorHistory(
-    val construct: Constructor,
+    val constructor: Constructor,
     val standings: Map<String, ConstructorHistoryStanding>
 ) {
     companion object
