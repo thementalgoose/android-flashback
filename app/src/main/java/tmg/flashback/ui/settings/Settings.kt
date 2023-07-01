@@ -166,6 +166,7 @@ object Settings {
             get() = when (this) {
                 NotificationResultsAvailable.RACE -> R.string.settings_switch_notification_results_race_title
                 NotificationResultsAvailable.SPRINT -> R.string.settings_switch_notification_results_sprint_title
+                NotificationResultsAvailable.SPRINT_QUALIFYING -> R.string.settings_switch_notification_results_sprint_qualifying_title
                 NotificationResultsAvailable.QUALIFYING -> R.string.settings_switch_notification_results_qualifying_title
             }
         fun notificationResultsAvailable(available: NotificationResultsAvailable, isChecked: Boolean, isEnabled: Boolean = true) = Setting.Switch(
