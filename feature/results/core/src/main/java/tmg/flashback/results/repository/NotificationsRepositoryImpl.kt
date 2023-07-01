@@ -47,6 +47,7 @@ class NotificationsRepositoryImpl @Inject constructor(
             freePractice = isUpcomingEnabled(NotificationUpcoming.FREE_PRACTICE),
             qualifying = isUpcomingEnabled(NotificationUpcoming.QUALIFYING),
             sprint = isUpcomingEnabled(NotificationUpcoming.SPRINT),
+            sprintQualifying = isUpcomingEnabled(NotificationUpcoming.SPRINT_QUALIFYING),
             race = isUpcomingEnabled(NotificationUpcoming.RACE),
             other = isUpcomingEnabled(NotificationUpcoming.OTHER)
         )
