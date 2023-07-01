@@ -349,5 +349,6 @@ private val fakeNotificationSchedule = NotificationSchedule(
     qualifying = true,
     sprint = true,
     race = true,
+    sprintQualifying = true,
     other = true,
 )
