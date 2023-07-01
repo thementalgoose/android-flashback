@@ -10,6 +10,8 @@ import org.junit.jupiter.api.Test
 import tmg.flashback.notifications.usecases.RemoteNotificationSubscribeUseCase
 import tmg.flashback.notifications.usecases.RemoteNotificationUnsubscribeUseCase
 import tmg.flashback.results.contract.repository.models.NotificationResultsAvailable
+import tmg.flashback.results.contract.repository.models.NotificationResultsAvailable.QUALIFYING
+import tmg.flashback.results.contract.repository.models.NotificationResultsAvailable.RACE
 import tmg.flashback.results.repository.NotificationsRepositoryImpl
 import tmg.testutils.BaseTest
 
@@ -31,15 +33,15 @@ internal class ResubscribeNotificationsUseCaseTest: BaseTest() {
 
     @Test
     fun `resubscribe subscribes subscribes if preference is enabled`() = coroutineTest {
-        every { mockNotificationRepository.isEnabled(NotificationResultsAvailable.RACE) } returns true
-        every { mockNotificationRepository.isEnabled(NotificationResultsAvailable.QUALIFYING) } returns false
+        every { mockNotificationRepository.isEnabled(RACE) } returns true
+        every { mockNotificationRepository.isEnabled(QUALIFYING) } returns false
 
         initUnderTest()
         runBlocking { underTest.resubscribe() }
 
         coVerify {
-            mockRemoteNotificationSubscribeUseCase.subscribe(NotificationResultsAvailable.RACE.remoteSubscriptionTopic)
-            mockRemoteNotificationSubscribeUseCase.subscribe(NotificationResultsAvailable.QUALIFYING.remoteSubscriptionTopic)
+            mockRemoteNotificationSubscribeUseCase.subscribe(RACE.remoteSubscriptionTopic)
+            mockRemoteNotificationUnsubscribeUseCase.unsubscribe(QUALIFYING.remoteSubscriptionTopic)
         }
     }
 }

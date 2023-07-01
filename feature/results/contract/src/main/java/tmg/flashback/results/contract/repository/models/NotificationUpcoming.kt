@@ -1,10 +1,17 @@
 package tmg.flashback.results.contract.repository.models
 
-enum class NotificationUpcoming {
-    RACE,
-    SPRINT,
+import androidx.annotation.StringRes
+import tmg.flashback.results.contract.R
+
+enum class NotificationUpcoming(
+    val channelId: String,
+    @StringRes
+    val channelLabel: Int,
+) {
+    RACE("flashback_race", R.string.notification_channel_free_practice),
+    SPRINT("flashback_sprint", R.string.notification_channel_qualifying),
 //    SPRINT_QUALIFYING,
-    QUALIFYING,
-    FREE_PRACTICE,
-    OTHER
+    QUALIFYING("flashback_qualifying", R.string.notification_channel_sprint),
+    FREE_PRACTICE("flashback_free_practice", R.string.notification_channel_race),
+    OTHER("flashback_info", R.string.notification_channel_info)
 }

@@ -30,11 +30,8 @@ import tmg.flashback.notifications.usecases.RemoteNotificationSubscribeUseCase
 import tmg.flashback.notifications.usecases.RemoteNotificationUnsubscribeUseCase
 import tmg.flashback.repositories.ContactRepository
 import tmg.flashback.results.contract.repository.models.NotificationResultsAvailable
-import tmg.flashback.results.contract.repository.models.NotificationResultsAvailable.QUALIFYING
-import tmg.flashback.results.contract.repository.models.NotificationResultsAvailable.RACE
-import tmg.flashback.results.contract.repository.models.NotificationResultsAvailable.SPRINT
+import tmg.flashback.results.contract.repository.models.NotificationUpcoming
 import tmg.flashback.results.repository.NotificationsRepositoryImpl
-import tmg.flashback.results.repository.models.NotificationChannel
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.SupportedTheme
 import tmg.flashback.ui.model.NightMode
@@ -126,8 +123,11 @@ class FlashbackStartup @Inject constructor(
         //endregion
 
         // Notifications
-        NotificationChannel.values().forEach {
-            systemNotificationManager.createChannel(it.channelId, it.label)
+        NotificationUpcoming.values().forEach {
+            systemNotificationManager.createChannel(
+                it.channelId,
+                it.channelLabel
+            )
         }
 
         NotificationResultsAvailable.values().forEach { results ->
