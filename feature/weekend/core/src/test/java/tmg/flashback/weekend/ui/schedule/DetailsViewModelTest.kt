@@ -52,10 +52,7 @@ internal class DetailsViewModelTest: BaseTest() {
 
     @BeforeEach
     internal fun setUp() {
-        every { mockNotificationRepository.notificationUpcomingFreePractice } returns true
-        every { mockNotificationRepository.notificationUpcomingQualifying } returns true
-        every { mockNotificationRepository.notificationUpcomingRace } returns true
-        every { mockNotificationRepository.notificationUpcomingOther } returns true
+        every { mockNotificationRepository.isUpcomingEnabled(any()) } returns true
         every { mockWeatherRepository.weatherTemperatureMetric } returns true
         every { mockWeatherRepository.weatherWindspeedMetric } returns false
     }
@@ -119,10 +116,7 @@ internal class DetailsViewModelTest: BaseTest() {
         val qualifying = Schedule.model(label = "Qualifying", date = LocalDate.of(2020, 1, 2), time = LocalTime.of(14, 30))
         val race = Schedule.model(label = "Race", date = LocalDate.of(2020, 1, 3))
 
-        every { mockNotificationRepository.notificationUpcomingFreePractice } returns enabled
-        every { mockNotificationRepository.notificationUpcomingQualifying } returns enabled
-        every { mockNotificationRepository.notificationUpcomingRace } returns enabled
-        every { mockNotificationRepository.notificationUpcomingOther } returns enabled
+        every { mockNotificationRepository.isUpcomingEnabled(any()) } returns enabled
 
         every { mockRaceRepository.getRace(2020, 1) } returns flow {
             emit(Race.model(schedule = listOf(fp1, qualifying, race, fp2)))
