@@ -5,7 +5,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import tmg.flashback.results.contract.ResultsNavigationComponent
+import tmg.flashback.results.contract.repository.models.NotificationResultsAvailable
+import tmg.flashback.results.contract.repository.models.NotificationUpcoming
 import tmg.flashback.results.repository.NotificationsRepositoryImpl
+import tmg.flashback.results.repository.models.prefKey
 import tmg.flashback.results.usecases.ScheduleNotificationsUseCase
 import tmg.flashback.ui.managers.PermissionManager
 import tmg.flashback.ui.permissions.RationaleType
@@ -19,12 +22,8 @@ interface SettingsNotificationsUpcomingViewModelInputs {
 }
 
 interface SettingsNotificationsUpcomingViewModelOutputs {
+    val notifications: StateFlow<List<Pair<NotificationUpcoming, Boolean>>>
     val permissionEnabled: StateFlow<Boolean>
-    val freePracticeEnabled: StateFlow<Boolean>
-    val qualifyingEnabled: StateFlow<Boolean>
-    val sprintEnabled: StateFlow<Boolean>
-    val raceEnabled: StateFlow<Boolean>
-    val otherEnabled: StateFlow<Boolean>
 }
 
 @HiltViewModel
@@ -39,14 +38,19 @@ class SettingsNotificationsUpcomingViewModel @Inject constructor(
     val inputs: SettingsNotificationsUpcomingViewModelInputs = this
     val outputs: SettingsNotificationsUpcomingViewModelOutputs = this
 
+    override val notifications: MutableStateFlow<List<Pair<NotificationUpcoming, Boolean>>> = MutableStateFlow(
+        NotificationUpcoming.values().map { it to notificationRepository.isUpcomingEnabled(it) }
+    )
     override val permissionEnabled: MutableStateFlow<Boolean> = MutableStateFlow(permissionRepository.isRuntimeNotificationsEnabled)
-    override val freePracticeEnabled: MutableStateFlow<Boolean> = MutableStateFlow(notificationRepository.notificationUpcomingFreePractice)
-    override val qualifyingEnabled: MutableStateFlow<Boolean> = MutableStateFlow(notificationRepository.notificationUpcomingQualifying)
-    override val sprintEnabled: MutableStateFlow<Boolean> = MutableStateFlow(notificationRepository.notificationUpcomingSprint)
-    override val raceEnabled: MutableStateFlow<Boolean> = MutableStateFlow(notificationRepository.notificationUpcomingRace)
-    override val otherEnabled: MutableStateFlow<Boolean> = MutableStateFlow(notificationRepository.notificationUpcomingOther)
 
     override fun prefClicked(pref: Setting) {
+        val upcoming: NotificationUpcoming? = NotificationUpcoming.values().firstOrNull { it.prefKey == pref.key }
+        if (upcoming != null) {
+            notificationRepository.setUpcomingEnabled(upcoming, !notificationRepository.isUpcomingEnabled(upcoming))
+            refresh()
+            return
+        }
+
         when (pref.key) {
             Settings.Notifications.notificationPermissionEnable.key -> {
                 if (!permissionRepository.isRuntimeNotificationsEnabled) {
@@ -63,33 +67,6 @@ class SettingsNotificationsUpcomingViewModel @Inject constructor(
                     refresh()
                 }
             }
-
-            Settings.Notifications.notificationUpcomingOtherKey -> {
-                notificationRepository.notificationUpcomingOther = !notificationRepository.notificationUpcomingOther
-                otherEnabled.value = notificationRepository.notificationUpcomingOther
-                resubscribe()
-            }
-            Settings.Notifications.notificationUpcomingFreePracticeKey -> {
-                notificationRepository.notificationUpcomingFreePractice = !notificationRepository.notificationUpcomingFreePractice
-                freePracticeEnabled.value = notificationRepository.notificationUpcomingFreePractice
-                resubscribe()
-            }
-            Settings.Notifications.notificationUpcomingQualifyingKey -> {
-                notificationRepository.notificationUpcomingQualifying = !notificationRepository.notificationUpcomingQualifying
-                qualifyingEnabled.value = notificationRepository.notificationUpcomingQualifying
-                resubscribe()
-            }
-            Settings.Notifications.notificationUpcomingSprintKey -> {
-                notificationRepository.notificationUpcomingSprint = !notificationRepository.notificationUpcomingSprint
-                sprintEnabled.value = notificationRepository.notificationUpcomingSprint
-                resubscribe()
-            }
-            Settings.Notifications.notificationUpcomingRaceKey -> {
-                notificationRepository.notificationUpcomingRace = !notificationRepository.notificationUpcomingRace
-                raceEnabled.value = notificationRepository.notificationUpcomingRace
-                resubscribe()
-            }
-
             Settings.Notifications.notificationNoticePeriodKey -> {
                 resultsNavigationComponent.upNext()
             }
@@ -101,6 +78,7 @@ class SettingsNotificationsUpcomingViewModel @Inject constructor(
     }
 
     fun refresh() {
+        notifications.value = NotificationUpcoming.values().map { it to notificationRepository.isUpcomingEnabled(it) }
         permissionEnabled.value = permissionRepository.isRuntimeNotificationsEnabled
         resubscribe()
     }

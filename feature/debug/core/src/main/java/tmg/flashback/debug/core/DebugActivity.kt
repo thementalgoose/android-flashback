@@ -37,7 +37,7 @@ import tmg.flashback.notifications.receiver.LocalNotificationBroadcastReceiver
 import tmg.flashback.notifications.repository.NotificationRepository
 import tmg.flashback.prefs.manager.PreferenceManager
 import tmg.flashback.results.contract.ResultsNavigationComponent
-import tmg.flashback.results.repository.models.NotificationChannel
+import tmg.flashback.results.contract.repository.models.NotificationUpcoming
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.buttons.ButtonPrimary
 import tmg.flashback.style.buttons.ButtonTertiary
@@ -236,7 +236,7 @@ class DebugActivity: BaseActivity() {
             onClick = {
                 val intent = LocalNotificationBroadcastReceiver.intent(
                     context = applicationContext,
-                    channelId = NotificationChannel.RACE.channelId,
+                    channelId = NotificationUpcoming.RACE.channelId,
                     title = "This is a debug notification!",
                     description = "This is a long description inside the notification"
                 )

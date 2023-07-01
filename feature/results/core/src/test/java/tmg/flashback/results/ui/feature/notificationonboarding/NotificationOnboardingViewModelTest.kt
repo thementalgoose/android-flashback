@@ -8,8 +8,10 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import tmg.flashback.results.contract.repository.models.NotificationUpcoming
+import tmg.flashback.results.contract.repository.models.NotificationUpcoming.RACE
 import tmg.flashback.results.repository.NotificationsRepositoryImpl
-import tmg.flashback.results.repository.models.NotificationChannel
+import tmg.flashback.results.repository.models.icon
 import tmg.testutils.BaseTest
 import tmg.utilities.models.Selected
 
@@ -22,11 +24,7 @@ internal class NotificationOnboardingViewModelTest: BaseTest() {
     @BeforeEach
     internal fun setUp() {
         every { mockNotificationRepository.seenNotificationOnboarding } returns false
-        every { mockNotificationRepository.notificationUpcomingRace } returns true
-        every { mockNotificationRepository.notificationUpcomingSprint } returns true
-        every { mockNotificationRepository.notificationUpcomingQualifying } returns true
-        every { mockNotificationRepository.notificationUpcomingFreePractice } returns true
-        every { mockNotificationRepository.notificationUpcomingOther } returns true
+        every { mockNotificationRepository.isUpcomingEnabled(any()) } returns true
     }
 
     private fun initUnderTest() {
@@ -45,9 +43,9 @@ internal class NotificationOnboardingViewModelTest: BaseTest() {
     fun `init updates list with initial values`() = runTest {
         initUnderTest()
         underTest.notificationPreferences.test {
-            assertEquals(NotificationChannel.values().map {
+            assertEquals(NotificationUpcoming.values().map {
                 Selected(
-                    NotificationOnboardingModel(it.name, it, it.label, it.icon),
+                    NotificationOnboardingModel(it.name, it, it.channelLabel, it.icon),
                     true
                 )
             }, awaitItem())
@@ -57,36 +55,9 @@ internal class NotificationOnboardingViewModelTest: BaseTest() {
     @Test
     fun `selecting notification channel race updates up next controller`() {
         initUnderTest()
-        underTest.inputs.selectNotificationChannel(NotificationChannel.RACE)
+        underTest.inputs.selectNotificationChannel(RACE)
         verify {
-            mockNotificationRepository.notificationUpcomingRace = false
-        }
-    }
-
-    @Test
-    fun `selecting notification channel qualifying updates up next controller`() {
-        initUnderTest()
-        underTest.inputs.selectNotificationChannel(NotificationChannel.QUALIFYING)
-        verify {
-            mockNotificationRepository.notificationUpcomingQualifying = false
-        }
-    }
-
-    @Test
-    fun `selecting notification channel free practice updates up next controller`() {
-        initUnderTest()
-        underTest.inputs.selectNotificationChannel(NotificationChannel.FREE_PRACTICE)
-        verify {
-            mockNotificationRepository.notificationUpcomingFreePractice = false
-        }
-    }
-
-    @Test
-    fun `selecting notification channel other updates up next controller`() {
-        initUnderTest()
-        underTest.inputs.selectNotificationChannel(NotificationChannel.SEASON_INFO)
-        verify {
-            mockNotificationRepository.notificationUpcomingOther = false
+            mockNotificationRepository.setUpcomingEnabled(RACE, false)
         }
     }
 
@@ -94,23 +65,23 @@ internal class NotificationOnboardingViewModelTest: BaseTest() {
     fun `selecting notification channel updates list with new values`() = runTest {
         initUnderTest()
         underTest.notificationPreferences.test {
-            assertEquals(NotificationChannel.values().map {
+            assertEquals(NotificationUpcoming.values().map {
                 Selected(
-                    NotificationOnboardingModel(it.name, it, it.label, it.icon),
+                    NotificationOnboardingModel(it.name, it, it.channelLabel, it.icon),
                     true
                 )
             }, awaitItem())
         }
 
         // Assumes selecting channel works
-        every { mockNotificationRepository.notificationUpcomingRace } returns false
-        underTest.inputs.selectNotificationChannel(NotificationChannel.RACE)
+        every { mockNotificationRepository.isUpcomingEnabled(RACE) } returns false
+        underTest.inputs.selectNotificationChannel(RACE)
 
         underTest.notificationPreferences.test {
-            assertEquals(NotificationChannel.values().map {
+            assertEquals(NotificationUpcoming.values().map {
                 Selected(
-                    NotificationOnboardingModel(it.name, it, it.label, it.icon),
-                    it != NotificationChannel.RACE
+                    NotificationOnboardingModel(it.name, it, it.channelLabel, it.icon),
+                    it != RACE
                 )
             }, awaitItem())
         }
