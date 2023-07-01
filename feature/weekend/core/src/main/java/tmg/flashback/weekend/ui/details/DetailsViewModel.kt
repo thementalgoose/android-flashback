@@ -21,6 +21,12 @@ import tmg.flashback.formula1.utils.NotificationUtils
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.flashback.results.contract.repository.NotificationsRepository
+import tmg.flashback.results.contract.repository.models.NotificationUpcoming
+import tmg.flashback.results.contract.repository.models.NotificationUpcoming.FREE_PRACTICE
+import tmg.flashback.results.contract.repository.models.NotificationUpcoming.OTHER
+import tmg.flashback.results.contract.repository.models.NotificationUpcoming.QUALIFYING
+import tmg.flashback.results.contract.repository.models.NotificationUpcoming.RACE
+import tmg.flashback.results.contract.repository.models.NotificationUpcoming.SPRINT
 import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.flashback.weekend.R
 import tmg.flashback.weekend.repository.WeatherRepository
@@ -139,11 +145,11 @@ class DetailsViewModel @Inject constructor(
                             when (NotificationUtils.getCategoryBasedOnLabel(
                                 it.label
                             )) {
-                                RaceWeekend.FREE_PRACTICE -> notificationRepository.notificationUpcomingFreePractice
-                                RaceWeekend.QUALIFYING -> notificationRepository.notificationUpcomingQualifying
-                                RaceWeekend.SPRINT -> notificationRepository.notificationUpcomingSprint
-                                RaceWeekend.RACE -> notificationRepository.notificationUpcomingRace
-                                null -> notificationRepository.notificationUpcomingOther
+                                RaceWeekend.FREE_PRACTICE -> notificationRepository.isUpcomingEnabled(FREE_PRACTICE)
+                                RaceWeekend.QUALIFYING -> notificationRepository.isUpcomingEnabled(QUALIFYING)
+                                RaceWeekend.SPRINT -> notificationRepository.isUpcomingEnabled(SPRINT)
+                                RaceWeekend.RACE -> notificationRepository.isUpcomingEnabled(RACE)
+                                null -> notificationRepository.isUpcomingEnabled(OTHER)
                             }
                         Pair(it, notificationsEnabled)
                     }

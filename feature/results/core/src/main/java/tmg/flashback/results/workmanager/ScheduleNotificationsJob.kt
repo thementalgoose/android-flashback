@@ -19,12 +19,12 @@ import tmg.flashback.notifications.repository.NotificationRepository
 import tmg.flashback.notifications.usecases.LocalNotificationCancelUseCase
 import tmg.flashback.notifications.usecases.LocalNotificationScheduleUseCase
 import tmg.flashback.results.BuildConfig
+import tmg.flashback.results.contract.repository.models.NotificationUpcoming
 import tmg.flashback.results.contract.repository.models.NotificationUpcoming.FREE_PRACTICE
 import tmg.flashback.results.contract.repository.models.NotificationUpcoming.OTHER
 import tmg.flashback.results.contract.repository.models.NotificationUpcoming.QUALIFYING
 import tmg.flashback.results.contract.repository.models.NotificationUpcoming.RACE
 import tmg.flashback.results.contract.repository.models.NotificationUpcoming.SPRINT
-import tmg.flashback.results.repository.models.NotificationChannel
 
 @HiltWorker
 class ScheduleNotificationsJob @AssistedInject constructor(
@@ -74,13 +74,7 @@ class ScheduleNotificationsJob @AssistedInject constructor(
                 }
             }
             .filter {
-                when (it.channel) {
-                    NotificationChannel.RACE -> notificationRepository.isUpcomingEnabled(RACE)
-                    NotificationChannel.SPRINT -> notificationRepository.isUpcomingEnabled(SPRINT)
-                    NotificationChannel.QUALIFYING -> notificationRepository.isUpcomingEnabled(QUALIFYING)
-                    NotificationChannel.FREE_PRACTICE -> notificationRepository.isUpcomingEnabled(FREE_PRACTICE)
-                    NotificationChannel.SEASON_INFO -> notificationRepository.isUpcomingEnabled(OTHER)
-                }
+                notificationRepository.isUpcomingEnabled(it.channel)
             }
 
 
@@ -139,19 +133,19 @@ class ScheduleNotificationsJob @AssistedInject constructor(
         val title: String,
         val label: String,
         val timestamp: Timestamp,
-        val channel: NotificationChannel
+        val channel: NotificationUpcoming
     ) {
         var requestCode: Int = -1
         lateinit var utcDateTime: LocalDateTime
     }
 
-    private fun String.toChannel(): NotificationChannel {
+    private fun String.toChannel(): NotificationUpcoming {
         return when (NotificationUtils.getCategoryBasedOnLabel(this)) {
-            RaceWeekend.FREE_PRACTICE -> NotificationChannel.FREE_PRACTICE
-            RaceWeekend.QUALIFYING -> NotificationChannel.QUALIFYING
-            RaceWeekend.SPRINT -> NotificationChannel.SPRINT
-            RaceWeekend.RACE -> NotificationChannel.RACE
-            null -> NotificationChannel.SEASON_INFO
+            RaceWeekend.FREE_PRACTICE -> FREE_PRACTICE
+            RaceWeekend.QUALIFYING -> QUALIFYING
+            RaceWeekend.SPRINT -> SPRINT
+            RaceWeekend.RACE -> RACE
+            null -> OTHER
         }
     }
 }

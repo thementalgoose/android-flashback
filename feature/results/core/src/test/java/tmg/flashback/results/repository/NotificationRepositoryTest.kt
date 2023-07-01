@@ -123,7 +123,9 @@ internal class NotificationRepositoryTest {
     fun `is enabled for upcoming notifications sends key to pref manager`() {
         every { mockPreferenceManager.getBoolean(NotificationUpcoming.RACE.prefKey, false) } returns true
 
+        initUnderTest()
         assertEquals(true, underTest.isUpcomingEnabled(NotificationUpcoming.RACE))
+
         verify {
             mockPreferenceManager.getBoolean(NotificationUpcoming.RACE.prefKey, false)
         }
@@ -132,6 +134,7 @@ internal class NotificationRepositoryTest {
 
     @Test
     fun `set enabled for upcoming notifications sends key to pref manager`() {
+        initUnderTest()
         underTest.setUpcomingEnabled(NotificationUpcoming.RACE, true)
 
         verify {
@@ -144,7 +147,9 @@ internal class NotificationRepositoryTest {
     fun `is enabled for results available notifications sends key to pref manager`() {
         every { mockPreferenceManager.getBoolean(NotificationResultsAvailable.RACE.prefKey, false) } returns true
 
+        initUnderTest()
         assertEquals(true, underTest.isEnabled(NotificationResultsAvailable.RACE))
+
         verify {
             mockPreferenceManager.getBoolean(NotificationResultsAvailable.RACE.prefKey, false)
         }
@@ -153,6 +158,7 @@ internal class NotificationRepositoryTest {
 
     @Test
     fun `set enabled for results available notifications sends key to pref manager`() {
+        initUnderTest()
         underTest.setEnabled(NotificationResultsAvailable.RACE, true)
 
         verify {
