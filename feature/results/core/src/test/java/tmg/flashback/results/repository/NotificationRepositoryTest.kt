@@ -32,6 +32,7 @@ internal class NotificationRepositoryTest {
         val expected = NotificationSchedule(
             freePractice = true,
             qualifying = true,
+            sprintQualifying = true,
             sprint = true,
             race = true,
             other = true,

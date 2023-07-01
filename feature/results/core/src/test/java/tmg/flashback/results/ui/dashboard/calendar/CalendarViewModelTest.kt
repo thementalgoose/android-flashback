@@ -160,6 +160,7 @@ internal class CalendarViewModelTest: BaseTest() {
     private val fakeNotificationSchedule: NotificationSchedule = NotificationSchedule(
         freePractice = true,
         qualifying = true,
+        sprintQualifying = true,
         sprint = true,
         race = true,
         other = true,

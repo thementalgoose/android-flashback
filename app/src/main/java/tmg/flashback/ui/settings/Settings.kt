@@ -1,5 +1,6 @@
 package tmg.flashback.ui.settings
 
+import android.app.Notification
 import tmg.flashback.R
 import tmg.flashback.results.contract.repository.models.NotificationResultsAvailable
 import tmg.flashback.results.contract.repository.models.NotificationUpcoming
@@ -138,6 +139,7 @@ object Settings {
             get() = when (this) {
                 NotificationUpcoming.RACE -> R.string.settings_switch_notification_upcoming_race_title
                 NotificationUpcoming.SPRINT -> R.string.settings_switch_notification_upcoming_sprint_title
+                NotificationUpcoming.SPRINT_QUALIFYING -> R.string.settings_switch_notification_upcoming_sprint_qualifying_title
                 NotificationUpcoming.QUALIFYING -> R.string.settings_switch_notification_upcoming_qualifying_title
                 NotificationUpcoming.FREE_PRACTICE -> R.string.settings_switch_notification_upcoming_fp_title
                 NotificationUpcoming.OTHER -> R.string.settings_switch_notification_upcoming_other_title
@@ -164,6 +166,7 @@ object Settings {
             get() = when (this) {
                 NotificationResultsAvailable.RACE -> R.string.settings_switch_notification_results_race_title
                 NotificationResultsAvailable.SPRINT -> R.string.settings_switch_notification_results_sprint_title
+                NotificationResultsAvailable.SPRINT_QUALIFYING -> R.string.settings_switch_notification_results_sprint_qualifying_title
                 NotificationResultsAvailable.QUALIFYING -> R.string.settings_switch_notification_results_qualifying_title
             }
         fun notificationResultsAvailable(available: NotificationResultsAvailable, isChecked: Boolean, isEnabled: Boolean = true) = Setting.Switch(
