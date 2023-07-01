@@ -101,7 +101,14 @@ class FlashbackStartup @Inject constructor(
             })
         }
 
-        // App startup
+        // App evnts
+        if (deviceRepository.appOpenedCount == 0) {
+            onFirstRun()
+        } else if (deviceRepository.lastAppVersion != BuildConfig.VERSION_CODE) {
+            onAppUpgrade()
+        }
+
+        // App Startup
         appOpenedUseCase.run()
         applicationScope.launch(Dispatchers.IO) {
             appOpenedUseCase.preload()
@@ -150,10 +157,7 @@ class FlashbackStartup @Inject constructor(
         firebaseAnalyticsManager.setUserProperty(DEVICE_MODEL, Build.MODEL)
         firebaseAnalyticsManager.setUserProperty(OS_VERSION, Build.VERSION.SDK_INT.toString())
         firebaseAnalyticsManager.setUserProperty(APP_VERSION, BuildConfig.VERSION_NAME)
-        firebaseAnalyticsManager.setUserProperty(
-            WIDGET_USAGE,
-            if (hasWidgetsUseCase.hasWidgets()) "true" else "false"
-        )
+        firebaseAnalyticsManager.setUserProperty(WIDGET_USAGE, if (hasWidgetsUseCase.hasWidgets()) "true" else "false")
         firebaseAnalyticsManager.setUserProperty(
             DEVICE_THEME, when (themeRepository.nightMode) {
                 NightMode.DAY -> "day"
@@ -164,5 +168,23 @@ class FlashbackStartup @Inject constructor(
 
         // Update Widgets
         updateWidgetsUseCase.update()
+    }
+
+    private fun onFirstRun() {
+        // Do something here only when the app is first setup
+    }
+
+    private fun onAppUpgrade() {
+        when {
+            deviceRepository.lastAppVersion <= 325 -> {
+                // Introduced sprint qualifying notifications, so migrate users pref for sprint over to sprint quali
+                if (notificationRepository.isEnabled(NotificationResultsAvailable.SPRINT)) {
+                    notificationRepository.setEnabled(NotificationResultsAvailable.SPRINT_QUALIFYING, true)
+                }
+                if (notificationRepository.isUpcomingEnabled(NotificationUpcoming.SPRINT)) {
+                    notificationRepository.setUpcomingEnabled(NotificationUpcoming.SPRINT_QUALIFYING, true)
+                }
+            }
+        }
     }
 }
