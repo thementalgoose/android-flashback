@@ -105,7 +105,7 @@ class FlashbackStartup @Inject constructor(
         if (deviceRepository.appOpenedCount == 0) {
             onFirstRun()
         } else if (deviceRepository.lastAppVersion != BuildConfig.VERSION_CODE) {
-            onAppUpgrade()
+            onAppUpgrade(deviceRepository.lastAppVersion)
         }
 
         // App Startup
@@ -174,9 +174,9 @@ class FlashbackStartup @Inject constructor(
         // Do something here only when the app is first setup
     }
 
-    private fun onAppUpgrade() {
+    private fun onAppUpgrade(previousAppVersion: Int) {
         when {
-            deviceRepository.lastAppVersion <= 325 -> {
+            previousAppVersion <= 325 -> {
                 // Introduced sprint qualifying notifications, so migrate users pref for sprint over to sprint quali
                 if (notificationRepository.isEnabled(NotificationResultsAvailable.SPRINT)) {
                     notificationRepository.setEnabled(NotificationResultsAvailable.SPRINT_QUALIFYING, true)
