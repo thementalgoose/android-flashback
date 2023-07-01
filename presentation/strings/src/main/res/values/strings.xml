@@ -280,6 +280,7 @@
     <string name="settings_switch_notification_upcoming_fp_title">Free Practice</string>
     <string name="settings_switch_notification_upcoming_qualifying_title">Qualifying</string>
     <string name="settings_switch_notification_upcoming_sprint_title">Sprint</string>
+    <string name="settings_switch_notification_upcoming_sprint_qualifying_title">Sprint Shootout</string>
     <string name="settings_switch_notification_upcoming_race_title">Race</string>
     <string name="settings_switch_notification_upcoming_other_title">Other</string>
     <string name="settings_switch_notification_results_qualifying_title">Qualifying</string>
@@ -456,14 +457,16 @@
     <string name="notification_onboarding_title">Notifications</string>
     <string name="notification_onboarding_description">Get notified just before race, qualifying, free practice or testing events are coming up next in the formula 1. You can change these anytime in the settings, as well as how long before you wish to be notified</string>
 
-    <string name="notification_channel_race">Race starts</string>
-    <string name="notification_channel_sprint">Sprint starts</string>
-    <string name="notification_channel_qualifying">Qualifying starts</string>
-    <string name="notification_channel_free_practice">Free Practice starts</string>
+    <string name="notification_channel_race">Upcoming reminders: Race</string>
+    <string name="notification_channel_sprint">Upcoming reminders: Sprint</string>
+    <string name="notification_channel_sprint_qualifying">Upcoming reminders: Sprint Shootout</string>
+    <string name="notification_channel_qualifying">Upcoming reminders: Qualifying</string>
+    <string name="notification_channel_free_practice">Upcoming reminders: Free Practice</string>
     <string name="notification_channel_info">Season information</string>
-    <string name="notification_channel_race_notify">Race results available</string>
-    <string name="notification_channel_sprint_notify">Sprint results available</string>
-    <string name="notification_channel_qualifying_notify">Qualifying results available</string>
+    <string name="notification_channel_race_notify">Results available: Race</string>
+    <string name="notification_channel_sprint_notify">Results available: Sprint</string>
+    <string name="notification_channel_sprint_qualifying_notify">Result available: Sprint Shootout</string>
+    <string name="notification_channel_qualifying_notify">Results available: Qualifying</string>
 
 
     <!-- App Shortcuts -->
