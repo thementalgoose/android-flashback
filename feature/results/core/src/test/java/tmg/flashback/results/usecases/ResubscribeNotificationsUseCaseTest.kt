@@ -1,5 +1,6 @@
 package tmg.flashback.results.usecases
 
+import android.app.Notification
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
@@ -8,6 +9,9 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.notifications.usecases.RemoteNotificationSubscribeUseCase
 import tmg.flashback.notifications.usecases.RemoteNotificationUnsubscribeUseCase
+import tmg.flashback.results.contract.repository.models.NotificationResultsAvailable
+import tmg.flashback.results.contract.repository.models.NotificationResultsAvailable.QUALIFYING
+import tmg.flashback.results.contract.repository.models.NotificationResultsAvailable.RACE
 import tmg.flashback.results.repository.NotificationsRepositoryImpl
 import tmg.testutils.BaseTest
 
@@ -27,88 +31,17 @@ internal class ResubscribeNotificationsUseCaseTest: BaseTest() {
         )
     }
 
-    @BeforeEach
-    internal fun setUp() {
-        every { mockNotificationRepository.notificationNotifyRace } returns false
-        every { mockNotificationRepository.notificationNotifySprint } returns false
-        every { mockNotificationRepository.notificationNotifyQualifying } returns false
-    }
-
     @Test
-    fun `resubscribe subscribes notify race if preference is enabled`() = coroutineTest {
-        every { mockNotificationRepository.notificationNotifyRace } returns true
+    fun `resubscribe subscribes subscribes if preference is enabled`() = coroutineTest {
+        every { mockNotificationRepository.isEnabled(RACE) } returns true
+        every { mockNotificationRepository.isEnabled(QUALIFYING) } returns false
 
         initUnderTest()
         runBlocking { underTest.resubscribe() }
 
         coVerify {
-            mockRemoteNotificationSubscribeUseCase.subscribe(NOTIFY_RACE)
+            mockRemoteNotificationSubscribeUseCase.subscribe(RACE.remoteSubscriptionTopic)
+            mockRemoteNotificationUnsubscribeUseCase.unsubscribe(QUALIFYING.remoteSubscriptionTopic)
         }
-    }
-
-    @Test
-    fun `resubscribe unsubscribes notify race if preference is disabled`() = coroutineTest {
-        every { mockNotificationRepository.notificationNotifyRace } returns false
-
-        initUnderTest()
-        runBlocking { underTest.resubscribe() }
-
-        coVerify {
-            mockRemoteNotificationUnsubscribeUseCase.unsubscribe(NOTIFY_RACE)
-        }
-    }
-
-    @Test
-    fun `resubscribe subscribes notify sprint if preference is enabled`() = coroutineTest {
-        every { mockNotificationRepository.notificationNotifySprint } returns true
-
-        initUnderTest()
-        runBlocking { underTest.resubscribe() }
-
-        coVerify {
-            mockRemoteNotificationSubscribeUseCase.subscribe(NOTIFY_SPRINT)
-        }
-    }
-
-    @Test
-    fun `resubscribe unsubscribes notify sprint if preference is disabled`() = coroutineTest {
-        every { mockNotificationRepository.notificationNotifySprint } returns false
-
-        initUnderTest()
-        runBlocking { underTest.resubscribe() }
-
-        coVerify {
-            mockRemoteNotificationUnsubscribeUseCase.unsubscribe(NOTIFY_SPRINT)
-        }
-    }
-
-    @Test
-    fun `resubscribe subscribes notify qualifying if preference is enabled`() = coroutineTest {
-        every { mockNotificationRepository.notificationNotifyQualifying } returns true
-
-        initUnderTest()
-        runBlocking { underTest.resubscribe() }
-
-        coVerify {
-            mockRemoteNotificationSubscribeUseCase.subscribe(NOTIFY_QUALIFYING)
-        }
-    }
-
-    @Test
-    fun `resubscribe unsubscribes notify qualifying if preference is disabled`() = coroutineTest {
-        every { mockNotificationRepository.notificationNotifyQualifying } returns false
-
-        initUnderTest()
-        runBlocking { underTest.resubscribe() }
-
-        coVerify {
-            mockRemoteNotificationUnsubscribeUseCase.unsubscribe(NOTIFY_QUALIFYING)
-        }
-    }
-
-    companion object {
-        private const val NOTIFY_RACE = "notify_race"
-        private const val NOTIFY_SPRINT = "notify_sprint"
-        private const val NOTIFY_QUALIFYING = "notify_qualifying"
     }
 }

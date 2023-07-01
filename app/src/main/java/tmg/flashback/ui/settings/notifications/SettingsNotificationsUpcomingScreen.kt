@@ -11,6 +11,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.R
+import tmg.flashback.results.contract.repository.models.NotificationUpcoming
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
@@ -31,11 +32,7 @@ fun SettingsNotificationsUpcomingScreenVM(
     ScreenView(screenName = "Settings - Notification Upcoming")
 
     val permissionEnabled = viewModel.outputs.permissionEnabled.collectAsState(false)
-    val freePracticeEnabled = viewModel.outputs.freePracticeEnabled.collectAsState(false)
-    val qualifyingEnabled = viewModel.outputs.qualifyingEnabled.collectAsState(false)
-    val sprintEnabled = viewModel.outputs.sprintEnabled.collectAsState(false)
-    val raceEnabled = viewModel.outputs.raceEnabled.collectAsState(false)
-    val otherEnabled = viewModel.outputs.otherEnabled.collectAsState(false)
+    val notifications = viewModel.outputs.notifications.collectAsState(emptyList())
 
     LaunchedEffect(Unit) {
         viewModel.refresh()
@@ -46,11 +43,7 @@ fun SettingsNotificationsUpcomingScreenVM(
         actionUpClicked = actionUpClicked,
         prefClicked = viewModel.inputs::prefClicked,
         permissionEnabled = permissionEnabled.value,
-        freePracticeEnabled = freePracticeEnabled.value,
-        qualifyingEnabled = qualifyingEnabled.value,
-        sprintEnabled = sprintEnabled.value,
-        raceEnabled = raceEnabled.value,
-        otherEnabled = otherEnabled.value,
+        notifications = notifications.value,
     )
 }
 
@@ -60,11 +53,7 @@ fun SettingsNotificationsUpcomingScreen(
     actionUpClicked: () -> Unit,
     prefClicked: (Setting) -> Unit,
     permissionEnabled: Boolean,
-    freePracticeEnabled: Boolean,
-    qualifyingEnabled: Boolean,
-    sprintEnabled: Boolean,
-    raceEnabled: Boolean,
-    otherEnabled: Boolean,
+    notifications: List<Pair<NotificationUpcoming, Boolean>>
 ) {
     LazyColumn(
         modifier = Modifier
@@ -91,26 +80,12 @@ fun SettingsNotificationsUpcomingScreen(
                 )
             }
             Header(title = R.string.settings_header_notifications)
-            Switch(
-                model = Settings.Notifications.notificationUpcomingFreePractice(freePracticeEnabled, isEnabled = permissionEnabled),
-                onClick = prefClicked
-            )
-            Switch(
-                model = Settings.Notifications.notificationUpcomingQualifying(qualifyingEnabled, isEnabled = permissionEnabled),
-                onClick = prefClicked
-            )
-            Switch(
-                model = Settings.Notifications.notificationUpcomingSprint(sprintEnabled, isEnabled = permissionEnabled),
-                onClick = prefClicked
-            )
-            Switch(
-                model = Settings.Notifications.notificationUpcomingRace(raceEnabled, isEnabled = permissionEnabled),
-                onClick = prefClicked
-            )
-            Switch(
-                model = Settings.Notifications.notificationUpcomingOther(otherEnabled, isEnabled = permissionEnabled),
-                onClick = prefClicked
-            )
+            notifications.forEach { (upcoming, isChecked) ->
+                Switch(
+                    model = Settings.Notifications.notificationUpcoming(upcoming, isChecked, isEnabled = permissionEnabled),
+                    onClick = prefClicked
+                )
+            }
 
             Header(title = R.string.settings_header_notice)
             Pref(
@@ -132,11 +107,7 @@ private fun Preview() {
             actionUpClicked = { },
             prefClicked = { },
             permissionEnabled = false,
-            freePracticeEnabled = true,
-            qualifyingEnabled = true,
-            sprintEnabled = false,
-            raceEnabled = false,
-            otherEnabled = true,
+            notifications = NotificationUpcoming.values().map { it to true },
         )
     }
 }

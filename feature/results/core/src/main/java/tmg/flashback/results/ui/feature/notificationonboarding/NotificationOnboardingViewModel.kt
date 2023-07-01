@@ -4,13 +4,14 @@ import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import tmg.flashback.results.contract.repository.models.NotificationUpcoming
 import tmg.flashback.results.repository.NotificationsRepositoryImpl
-import tmg.flashback.results.repository.models.NotificationChannel
+import tmg.flashback.results.repository.models.icon
 import tmg.utilities.models.Selected
 import javax.inject.Inject
 
 interface NotificationOnboardingViewModelInputs {
-    fun selectNotificationChannel(notificationChannel: NotificationChannel)
+    fun selectNotificationChannel(notificationChannel: NotificationUpcoming)
 }
 
 interface NotificationOnboardingViewModelOutputs {
@@ -34,31 +35,24 @@ class NotificationOnboardingViewModel @Inject constructor(
 
     //region Inputs
 
-    override fun selectNotificationChannel(notificationChannel: NotificationChannel) {
-        when (notificationChannel) {
-            NotificationChannel.RACE -> notificationRepository.notificationUpcomingRace = !notificationRepository.notificationUpcomingRace
-            NotificationChannel.SPRINT -> notificationRepository.notificationUpcomingSprint = !notificationRepository.notificationUpcomingSprint
-            NotificationChannel.QUALIFYING -> notificationRepository.notificationUpcomingQualifying = !notificationRepository.notificationUpcomingQualifying
-            NotificationChannel.FREE_PRACTICE -> notificationRepository.notificationUpcomingFreePractice = !notificationRepository.notificationUpcomingFreePractice
-            NotificationChannel.SEASON_INFO -> notificationRepository.notificationUpcomingOther = !notificationRepository.notificationUpcomingOther
-        }
+    override fun selectNotificationChannel(upcoming: NotificationUpcoming) {
+        notificationRepository.setUpcomingEnabled(upcoming, !notificationRepository.isUpcomingEnabled(upcoming))
         updateList()
     }
 
     //endregion
 
     private fun updateList() {
-        notificationPreferences.value = NotificationChannel.values()
+        notificationPreferences.value = NotificationUpcoming.values()
             .map {
                 Selected(
-                    NotificationOnboardingModel(id = it.name, channel = it, name = it.label, icon = it.icon),
-                    when (it) {
-                        NotificationChannel.RACE -> notificationRepository.notificationUpcomingRace
-                        NotificationChannel.SPRINT -> notificationRepository.notificationUpcomingSprint
-                        NotificationChannel.QUALIFYING -> notificationRepository.notificationUpcomingQualifying
-                        NotificationChannel.FREE_PRACTICE -> notificationRepository.notificationUpcomingFreePractice
-                        NotificationChannel.SEASON_INFO -> notificationRepository.notificationUpcomingOther
-                    }
+                    value = NotificationOnboardingModel(
+                        id = it.name,
+                        channel = it,
+                        name = it.channelLabel,
+                        icon = it.icon
+                    ),
+                    isSelected = notificationRepository.isUpcomingEnabled(it)
                 )
             }
     }

@@ -15,7 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.results.R
-import tmg.flashback.results.repository.models.NotificationChannel
+import tmg.flashback.results.contract.repository.models.NotificationUpcoming
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
@@ -109,19 +109,19 @@ private fun Preview() {
             list = listOf(
                 Selected(NotificationOnboardingModel(
                     id = "1",
-                    channel = NotificationChannel.QUALIFYING,
+                    channel = NotificationUpcoming.QUALIFYING,
                     name = R.string.notification_channel_race,
                     icon = R.drawable.ic_notification_reminder_15
                 ), false),
                 Selected(NotificationOnboardingModel(
                     id = "3",
-                    channel = NotificationChannel.FREE_PRACTICE,
+                    channel = NotificationUpcoming.FREE_PRACTICE,
                     name = R.string.notification_channel_race,
                     icon = R.drawable.ic_notification_reminder_60
                 ), false),
                 Selected(NotificationOnboardingModel(
                     id = "2",
-                    channel = NotificationChannel.RACE,
+                    channel = NotificationUpcoming.RACE,
                     name = R.string.notification_channel_race,
                     icon = R.drawable.ic_notification_reminder_30
                 ), true)

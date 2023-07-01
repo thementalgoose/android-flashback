@@ -11,6 +11,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.R
+import tmg.flashback.results.contract.repository.models.NotificationResultsAvailable
+import tmg.flashback.results.contract.repository.models.NotificationResultsAvailable.QUALIFYING
+import tmg.flashback.results.contract.repository.models.NotificationResultsAvailable.RACE
+import tmg.flashback.results.contract.repository.models.NotificationResultsAvailable.SPRINT
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
@@ -31,9 +35,7 @@ fun SettingsNotificationsResultsScreenVM(
     ScreenView(screenName = "Settings - Notification Results")
 
     val permissionEnabled = viewModel.outputs.permissionEnabled.collectAsState(false)
-    val qualifyingEnabled = viewModel.outputs.qualifyingEnabled.collectAsState(false)
-    val sprintEnabled = viewModel.outputs.sprintEnabled.collectAsState(false)
-    val raceEnabled = viewModel.outputs.raceEnabled.collectAsState(false)
+    val notifications = viewModel.outputs.notifications.collectAsState(emptyList())
 
     LaunchedEffect(Unit) {
         viewModel.refresh()
@@ -44,9 +46,7 @@ fun SettingsNotificationsResultsScreenVM(
         actionUpClicked = actionUpClicked,
         prefClicked = viewModel.inputs::prefClicked,
         permissionEnabled = permissionEnabled.value,
-        qualifyingEnabled = qualifyingEnabled.value,
-        sprintEnabled = sprintEnabled.value,
-        raceEnabled = raceEnabled.value
+        notifications = notifications.value
     )
 }
 
@@ -56,9 +56,7 @@ fun SettingsNotificationsResultsScreen(
     actionUpClicked: () -> Unit,
     prefClicked: (Setting) -> Unit,
     permissionEnabled: Boolean,
-    qualifyingEnabled: Boolean,
-    sprintEnabled: Boolean,
-    raceEnabled: Boolean
+    notifications: List<Pair<NotificationResultsAvailable, Boolean>>,
 ) {
     LazyColumn(
         modifier = Modifier
@@ -85,19 +83,12 @@ fun SettingsNotificationsResultsScreen(
                 )
             }
             Header(title = R.string.settings_header_notifications)
-            Switch(
-                model = Settings.Notifications.notificationResultsQualifying(qualifyingEnabled, isEnabled = permissionEnabled),
-                onClick = prefClicked
-            )
-            Switch(
-                model = Settings.Notifications.notificationResultsSprint(sprintEnabled, isEnabled = permissionEnabled),
-                onClick = prefClicked
-            )
-            Switch(
-                model = Settings.Notifications.notificationResultsRace(raceEnabled, isEnabled = permissionEnabled),
-                onClick = prefClicked
-            )
-
+            notifications.forEach { (results, isChecked) ->
+                Switch(
+                    model = Settings.Notifications.notificationResultsAvailable(results, isChecked, isEnabled = permissionEnabled),
+                    onClick = prefClicked
+                )
+            }
             Footer()
         }
     )
@@ -112,9 +103,8 @@ private fun Preview() {
             actionUpClicked = { },
             prefClicked = { },
             permissionEnabled = false,
-            qualifyingEnabled = true,
-            sprintEnabled = true,
-            raceEnabled = false
+            notifications = NotificationResultsAvailable.values()
+                .map { it to true }
         )
     }
 }

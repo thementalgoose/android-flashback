@@ -7,9 +7,11 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import tmg.flashback.prefs.manager.PreferenceManager
+import tmg.flashback.results.contract.repository.models.NotificationResultsAvailable
+import tmg.flashback.results.contract.repository.models.NotificationUpcoming
 import tmg.flashback.results.repository.models.NotificationReminder
-import tmg.flashback.results.repository.models.NotificationResults
 import tmg.flashback.results.repository.models.NotificationSchedule
+import tmg.flashback.results.repository.models.prefKey
 
 internal class NotificationRepositoryTest {
 
@@ -20,186 +22,6 @@ internal class NotificationRepositoryTest {
     private fun initUnderTest() {
         underTest = NotificationsRepositoryImpl(mockPreferenceManager)
     }
-
-    //region Notification preferences - Race
-
-    @Test
-    fun `is notification race reads value from preferences repository with default to false`() {
-        every { mockPreferenceManager.getBoolean(any(), any()) } returns true
-
-        initUnderTest()
-
-        Assertions.assertTrue(underTest.notificationUpcomingRace)
-        verify {
-            mockPreferenceManager.getBoolean(keyNotificationRace, false)
-        }
-    }
-
-    @Test
-    fun `setting notification race enabled saves value from preferences repository`() {
-        initUnderTest()
-
-        underTest.notificationUpcomingRace = true
-        verify {
-            mockPreferenceManager.save(keyNotificationRace, true)
-        }
-    }
-
-    @Test
-    fun `setting notification race disabled saves value from preferences repository`() {
-        initUnderTest()
-
-        underTest.notificationUpcomingRace = false
-        verify {
-            mockPreferenceManager.save(keyNotificationRace, false)
-        }
-    }
-
-    //endregion
-
-    //region Notification preferences - Sprint
-
-    @Test
-    fun `is notification sprint reads value from preferences repository with default to false`() {
-        every { mockPreferenceManager.getBoolean(any(), any()) } returns true
-
-        initUnderTest()
-
-        Assertions.assertTrue(underTest.notificationUpcomingSprint)
-        verify {
-            mockPreferenceManager.getBoolean(keyNotificationSprint, false)
-        }
-    }
-
-    @Test
-    fun `setting notification sprint enabled saves value from preferences repository`() {
-        initUnderTest()
-
-        underTest.notificationUpcomingSprint = true
-        verify {
-            mockPreferenceManager.save(keyNotificationSprint, true)
-        }
-    }
-
-    @Test
-    fun `setting notification sprint disabled saves value from preferences repository`() {
-        initUnderTest()
-
-        underTest.notificationUpcomingSprint = false
-        verify {
-            mockPreferenceManager.save(keyNotificationSprint, false)
-        }
-    }
-
-    //endregion
-
-    //region Notification preferences - Qualifying
-
-    @Test
-    fun `is notification qualifying reads value from preferences repository with default to false`() {
-        every { mockPreferenceManager.getBoolean(any(), any()) } returns true
-
-        initUnderTest()
-
-        Assertions.assertTrue(underTest.notificationUpcomingQualifying)
-        verify {
-            mockPreferenceManager.getBoolean(keyNotificationQualifying, false)
-        }
-    }
-
-    @Test
-    fun `setting notification qualifying enabled saves value from preferences repository`() {
-        initUnderTest()
-
-        underTest.notificationUpcomingQualifying = true
-        verify {
-            mockPreferenceManager.save(keyNotificationQualifying, true)
-        }
-    }
-
-    @Test
-    fun `setting notification qualifying disabled saves value from preferences repository`() {
-        initUnderTest()
-
-        underTest.notificationUpcomingQualifying = false
-        verify {
-            mockPreferenceManager.save(keyNotificationQualifying, false)
-        }
-    }
-
-    //endregion
-
-    //region Notification preferences - Free Practice
-
-    @Test
-    fun `is notification free practice reads value from preferences repository with default to false`() {
-        every { mockPreferenceManager.getBoolean(any(), any()) } returns true
-
-        initUnderTest()
-
-        Assertions.assertTrue(underTest.notificationUpcomingFreePractice )
-        verify {
-            mockPreferenceManager.getBoolean(keyNotificationFreePractice, false)
-        }
-    }
-
-    @Test
-    fun `setting notification free practice enabled saves value from preferences repository`() {
-        initUnderTest()
-
-        underTest.notificationUpcomingFreePractice = true
-        verify {
-            mockPreferenceManager.save(keyNotificationFreePractice, true)
-        }
-    }
-
-    @Test
-    fun `setting notification free practice disabled saves value from preferences repository`() {
-        initUnderTest()
-
-        underTest.notificationUpcomingFreePractice = false
-        verify {
-            mockPreferenceManager.save(keyNotificationFreePractice, false)
-        }
-    }
-
-    //endregion
-
-    //region Notification preferences - Other
-
-    @Test
-    fun `is notification other reads value from preferences repository with default to false`() {
-        every { mockPreferenceManager.getBoolean(any(), any()) } returns true
-
-        initUnderTest()
-
-        Assertions.assertTrue(underTest.notificationUpcomingOther )
-        verify {
-            mockPreferenceManager.getBoolean(keyNotificationOther, false)
-        }
-    }
-
-    @Test
-    fun `setting notification other enabled saves value from preferences repository`() {
-        initUnderTest()
-
-        underTest.notificationUpcomingOther = true
-        verify {
-            mockPreferenceManager.save(keyNotificationOther, true)
-        }
-    }
-
-    @Test
-    fun `setting notification other disabled saves value from preferences repository`() {
-        initUnderTest()
-
-        underTest.notificationUpcomingOther = false
-        verify {
-            mockPreferenceManager.save(keyNotificationOther, false)
-        }
-    }
-
-    //endregion
 
 
     @Test
@@ -215,13 +37,6 @@ internal class NotificationRepositoryTest {
             other = true,
         )
         assertEquals(expected, underTest.notificationSchedule)
-
-        verify {
-            mockPreferenceManager.getBoolean(keyNotificationFreePractice, any())
-            mockPreferenceManager.getBoolean(keyNotificationQualifying, any())
-            mockPreferenceManager.getBoolean(keyNotificationRace, any())
-            mockPreferenceManager.getBoolean(keyNotificationOther, any())
-        }
     }
 
 
@@ -304,137 +119,57 @@ internal class NotificationRepositoryTest {
 
 
 
-    //region Notification preferences - Race Notify
-
     @Test
-    fun `is notification race notify reads value from preferences repository with default to false`() {
-        every { mockPreferenceManager.getBoolean(any(), any()) } returns true
+    fun `is enabled for upcoming notifications sends key to pref manager`() {
+        every { mockPreferenceManager.getBoolean(NotificationUpcoming.RACE.prefKey, false) } returns true
 
         initUnderTest()
+        assertEquals(true, underTest.isUpcomingEnabled(NotificationUpcoming.RACE))
 
-        Assertions.assertTrue(underTest.notificationNotifyRace)
         verify {
-            mockPreferenceManager.getBoolean(keyNotificationRaceNotify, false)
+            mockPreferenceManager.getBoolean(NotificationUpcoming.RACE.prefKey, false)
         }
     }
 
-    @Test
-    fun `setting notification race notify enabled saves value from preferences repository`() {
-        initUnderTest()
 
-        underTest.notificationNotifyRace = true
+    @Test
+    fun `set enabled for upcoming notifications sends key to pref manager`() {
+        initUnderTest()
+        underTest.setUpcomingEnabled(NotificationUpcoming.RACE, true)
+
         verify {
-            mockPreferenceManager.save(keyNotificationRaceNotify, true)
+            mockPreferenceManager.save(NotificationUpcoming.RACE.prefKey, true)
         }
     }
 
-    @Test
-    fun `setting notification race notify disabled saves value from preferences repository`() {
-        initUnderTest()
 
-        underTest.notificationNotifyRace = false
+    @Test
+    fun `is enabled for results available notifications sends key to pref manager`() {
+        every { mockPreferenceManager.getBoolean(NotificationResultsAvailable.RACE.prefKey, false) } returns true
+
+        initUnderTest()
+        assertEquals(true, underTest.isEnabled(NotificationResultsAvailable.RACE))
+
         verify {
-            mockPreferenceManager.save(keyNotificationRaceNotify, false)
+            mockPreferenceManager.getBoolean(NotificationResultsAvailable.RACE.prefKey, false)
         }
     }
 
-    //endregion
-
-    //region Notification preferences - Sprint Notify
 
     @Test
-    fun `is notification sprint notify reads value from preferences repository with default to false`() {
-        every { mockPreferenceManager.getBoolean(any(), any()) } returns true
-
+    fun `set enabled for results available notifications sends key to pref manager`() {
         initUnderTest()
+        underTest.setEnabled(NotificationResultsAvailable.RACE, true)
 
-        Assertions.assertTrue(underTest.notificationNotifySprint)
         verify {
-            mockPreferenceManager.getBoolean(keyNotificationSprintNotify, false)
+            mockPreferenceManager.save(NotificationResultsAvailable.RACE.prefKey, true)
         }
     }
 
-    @Test
-    fun `setting notification sprint notify enabled saves value from preferences repository`() {
-        initUnderTest()
-
-        underTest.notificationNotifySprint = true
-        verify {
-            mockPreferenceManager.save(keyNotificationSprintNotify, true)
-        }
-    }
-
-    @Test
-    fun `setting notification sprint notify disabled saves value from preferences repository`() {
-        initUnderTest()
-
-        underTest.notificationNotifySprint = false
-        verify {
-            mockPreferenceManager.save(keyNotificationSprintNotify, false)
-        }
-    }
-
-    //endregion
-
-    //region Notification preferences - Qualifying Notify
-
-    @Test
-    fun `is notification qualifying notify reads value from preferences repository with default to false`() {
-        every { mockPreferenceManager.getBoolean(any(), any()) } returns true
-
-        initUnderTest()
-
-        Assertions.assertTrue(underTest.notificationNotifyQualifying)
-        verify {
-            mockPreferenceManager.getBoolean(keyNotificationQualifyingNotify, false)
-        }
-    }
-
-    @Test
-    fun `setting notification qualifying notify enabled saves value from preferences repository`() {
-        initUnderTest()
-
-        underTest.notificationNotifyQualifying = true
-        verify {
-            mockPreferenceManager.save(keyNotificationQualifyingNotify, true)
-        }
-    }
-
-    @Test
-    fun `setting notification qualifying notify disabled saves value from preferences repository`() {
-        initUnderTest()
-
-        underTest.notificationNotifyQualifying = false
-        verify {
-            mockPreferenceManager.save(keyNotificationQualifyingNotify, false)
-        }
-    }
-
-    //endregion
 
 
 
 
-
-
-    @Test
-    fun `getting notification results queries all preferences`() {
-        every { mockPreferenceManager.getBoolean(any(), any()) } returns true
-        initUnderTest()
-
-        val expected = NotificationResults(
-            sprint = true,
-            qualifying = true,
-            race = true,
-        )
-        assertEquals(expected, underTest.notificationResults)
-
-        verify {
-            mockPreferenceManager.getBoolean(keyNotificationQualifyingNotify, any())
-            mockPreferenceManager.getBoolean(keyNotificationSprintNotify, any())
-            mockPreferenceManager.getBoolean(keyNotificationRaceNotify, any())
-        }
-    }
 
 
 
@@ -477,16 +212,7 @@ internal class NotificationRepositoryTest {
     //endregion
 
     companion object {
-        private const val keyNotificationRace: String = "UP_NEXT_NOTIFICATION_RACE"
-        private const val keyNotificationSprint: String = "UP_NEXT_NOTIFICATION_SPRINT"
-        private const val keyNotificationQualifying: String = "UP_NEXT_NOTIFICATION_QUALIFYING"
-        private const val keyNotificationFreePractice: String = "UP_NEXT_NOTIFICATION_FREE_PRACTICE"
-        private const val keyNotificationOther: String = "UP_NEXT_NOTIFICATION_OTHER"
         private const val keyNotificationReminder: String = "UP_NEXT_NOTIFICATION_REMINDER"
-
-        private const val keyNotificationRaceNotify: String = "UP_NEXT_NOTIFICATION_RACE_NOTIFY"
-        private const val keyNotificationSprintNotify: String = "UP_NEXT_NOTIFICATION_SPRINT_NOTIFY"
-        private const val keyNotificationQualifyingNotify: String = "UP_NEXT_NOTIFICATION_QUALIFYING_NOTIFY"
 
         private const val keyRuntimeNotifications: String = "RUNTIME_NOTIFICATION_PROMPT"
         private const val keyNotificationOnboarding: String = "UP_NEXT_NOTIFICATION_ONBOARDING"

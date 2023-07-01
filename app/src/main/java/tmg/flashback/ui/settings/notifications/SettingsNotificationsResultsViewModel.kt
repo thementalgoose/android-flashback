@@ -6,7 +6,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import tmg.flashback.results.contract.repository.models.NotificationResultsAvailable
 import tmg.flashback.results.repository.NotificationsRepositoryImpl
+import tmg.flashback.results.repository.models.prefKey
 import tmg.flashback.results.usecases.ResubscribeNotificationsUseCase
 import tmg.flashback.ui.managers.PermissionManager
 import tmg.flashback.ui.permissions.RationaleType
@@ -20,10 +22,8 @@ interface SettingsNotificationsResultsViewModelInputs {
 }
 
 interface SettingsNotificationsResultsViewModelOutputs {
+    val notifications: StateFlow<List<Pair<NotificationResultsAvailable, Boolean>>>
     val permissionEnabled: StateFlow<Boolean>
-    val qualifyingEnabled: StateFlow<Boolean>
-    val sprintEnabled: StateFlow<Boolean>
-    val raceEnabled: StateFlow<Boolean>
 }
 
 @HiltViewModel
@@ -37,12 +37,20 @@ class SettingsNotificationsResultsViewModel @Inject constructor(
     val inputs: SettingsNotificationsResultsViewModelInputs = this
     val outputs: SettingsNotificationsResultsViewModelOutputs = this
 
+    override val notifications: MutableStateFlow<List<Pair<NotificationResultsAvailable, Boolean>>> = MutableStateFlow(
+        NotificationResultsAvailable.values().map { it to notificationRepository.isEnabled(it) }
+    )
     override val permissionEnabled: MutableStateFlow<Boolean> = MutableStateFlow(permissionRepository.isRuntimeNotificationsEnabled)
-    override val qualifyingEnabled: MutableStateFlow<Boolean> = MutableStateFlow(notificationRepository.notificationNotifyQualifying)
-    override val sprintEnabled: MutableStateFlow<Boolean> = MutableStateFlow(notificationRepository.notificationNotifySprint)
-    override val raceEnabled: MutableStateFlow<Boolean> = MutableStateFlow(notificationRepository.notificationNotifyRace)
 
     override fun prefClicked(pref: Setting) {
+
+        val notificationResults: NotificationResultsAvailable? = NotificationResultsAvailable.values().firstOrNull { it.prefKey == pref.key }
+        if (notificationResults != null) {
+            notificationRepository.setEnabled(notificationResults, !notificationRepository.isEnabled(notificationResults))
+            refresh()
+            return
+        }
+
         when (pref.key) {
             Settings.Notifications.notificationPermissionEnable.key -> {
                 if (!permissionRepository.isRuntimeNotificationsEnabled) {
@@ -59,21 +67,6 @@ class SettingsNotificationsResultsViewModel @Inject constructor(
                     refresh()
                 }
             }
-            Settings.Notifications.notificationResultsQualifyingKey -> {
-                notificationRepository.notificationNotifyQualifying = !notificationRepository.notificationNotifyQualifying
-                qualifyingEnabled.value = notificationRepository.notificationNotifyQualifying
-                resubscribe()
-            }
-            Settings.Notifications.notificationResultsSprintKey -> {
-                notificationRepository.notificationNotifySprint = !notificationRepository.notificationNotifySprint
-                sprintEnabled.value = notificationRepository.notificationNotifySprint
-                resubscribe()
-            }
-            Settings.Notifications.notificationResultsRaceKey -> {
-                notificationRepository.notificationNotifyRace = !notificationRepository.notificationNotifyRace
-                raceEnabled.value = notificationRepository.notificationNotifyRace
-                resubscribe()
-            }
         }
     }
 
@@ -84,6 +77,7 @@ class SettingsNotificationsResultsViewModel @Inject constructor(
     }
 
     fun refresh() {
+        notifications.value = NotificationResultsAvailable.values().map { it to notificationRepository.isEnabled(it) }
         permissionEnabled.value = permissionRepository.isRuntimeNotificationsEnabled
         resubscribe()
     }
