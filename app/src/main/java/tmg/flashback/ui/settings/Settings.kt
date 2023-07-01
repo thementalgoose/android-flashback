@@ -1,6 +1,9 @@
 package tmg.flashback.ui.settings
 
 import tmg.flashback.R
+import tmg.flashback.results.contract.repository.models.NotificationResultsAvailable
+import tmg.flashback.results.contract.repository.models.NotificationUpcoming
+import tmg.flashback.results.repository.models.prefKey
 
 object Settings {
 
@@ -131,46 +134,22 @@ object Settings {
             subtitle = R.string.settings_pref_notification_permission_description
         )
 
-        val notificationUpcomingFreePracticeKey = "notification_upcoming_fp"
-        fun notificationUpcomingFreePractice(isChecked: Boolean, isEnabled: Boolean = true) = Setting.Switch(
-            _key = notificationUpcomingFreePracticeKey,
-            title = R.string.settings_switch_notification_upcoming_fp_title,
+        val NotificationUpcoming.title: Int
+            get() = when (this) {
+                NotificationUpcoming.RACE -> R.string.settings_switch_notification_upcoming_race_title
+                NotificationUpcoming.SPRINT -> R.string.settings_switch_notification_upcoming_sprint_title
+                NotificationUpcoming.QUALIFYING -> R.string.settings_switch_notification_upcoming_qualifying_title
+                NotificationUpcoming.FREE_PRACTICE -> R.string.settings_switch_notification_upcoming_fp_title
+                NotificationUpcoming.OTHER -> R.string.settings_switch_notification_upcoming_other_title
+            }
+        fun notificationUpcoming(value: NotificationUpcoming, isChecked: Boolean, isEnabled: Boolean = true) = Setting.Switch(
+            _key = value.prefKey,
+            title = value.title,
             subtitle = null,
             isChecked = isChecked,
             isEnabled = isEnabled
         )
-        val notificationUpcomingSprintKey = "notification_upcoming_sprint"
-        fun notificationUpcomingSprint(isChecked: Boolean, isEnabled: Boolean = true) = Setting.Switch(
-            _key = notificationUpcomingSprintKey,
-            title = R.string.settings_switch_notification_upcoming_sprint_title,
-            subtitle = null,
-            isChecked = isChecked,
-            isEnabled = isEnabled
-        )
-        val notificationUpcomingQualifyingKey = "notification_upcoming_qualifying"
-        fun notificationUpcomingQualifying(isChecked: Boolean, isEnabled: Boolean = true) = Setting.Switch(
-            _key = notificationUpcomingQualifyingKey,
-            title = R.string.settings_switch_notification_upcoming_qualifying_title,
-            subtitle = null,
-            isChecked = isChecked,
-            isEnabled = isEnabled
-        )
-        val notificationUpcomingOtherKey = "notification_upcoming_other"
-        fun notificationUpcomingOther(isChecked: Boolean, isEnabled: Boolean = true) = Setting.Switch(
-            _key = notificationUpcomingOtherKey,
-            title = R.string.settings_switch_notification_upcoming_other_title,
-            subtitle = null,
-            isChecked = isChecked,
-            isEnabled = isEnabled
-        )
-        val notificationUpcomingRaceKey = "notification_upcoming_race"
-        fun notificationUpcomingRace(isChecked: Boolean, isEnabled: Boolean = true) = Setting.Switch(
-            _key = notificationUpcomingRaceKey,
-            title = R.string.settings_switch_notification_upcoming_race_title,
-            subtitle = null,
-            isChecked = isChecked,
-            isEnabled = isEnabled
-        )
+
 
         val notificationNoticePeriodKey = "notification_notice_period"
         fun notificationNoticePeriod(isEnabled: Boolean = true) = Setting.Pref(
@@ -181,26 +160,15 @@ object Settings {
         )
 
 
-        val notificationResultsQualifyingKey = "notification_results_qualifying"
-        fun notificationResultsQualifying(isChecked: Boolean, isEnabled: Boolean = true) = Setting.Switch(
-            _key = notificationResultsQualifyingKey,
-            title = R.string.settings_switch_notification_results_qualifying_title,
-            subtitle = null,
-            isChecked = isChecked,
-            isEnabled = isEnabled
-        )
-        val notificationResultsSprintKey = "notification_results_sprint"
-        fun notificationResultsSprint(isChecked: Boolean, isEnabled: Boolean = true) = Setting.Switch(
-            _key = notificationResultsSprintKey,
-            title = R.string.settings_switch_notification_results_sprint_title,
-            subtitle = null,
-            isChecked = isChecked,
-            isEnabled = isEnabled
-        )
-        val notificationResultsRaceKey = "notification_results_race"
-        fun notificationResultsRace(isChecked: Boolean, isEnabled: Boolean = true) = Setting.Switch(
-            _key = notificationResultsRaceKey,
-            title = R.string.settings_switch_notification_results_race_title,
+        val NotificationResultsAvailable.title: Int
+            get() = when (this) {
+                NotificationResultsAvailable.RACE -> R.string.settings_switch_notification_results_race_title
+                NotificationResultsAvailable.SPRINT -> R.string.settings_switch_notification_results_sprint_title
+                NotificationResultsAvailable.QUALIFYING -> R.string.settings_switch_notification_results_qualifying_title
+            }
+        fun notificationResultsAvailable(available: NotificationResultsAvailable, isChecked: Boolean, isEnabled: Boolean = true) = Setting.Switch(
+            _key = available.prefKey,
+            title = available.title,
             subtitle = null,
             isChecked = isChecked,
             isEnabled = isEnabled
