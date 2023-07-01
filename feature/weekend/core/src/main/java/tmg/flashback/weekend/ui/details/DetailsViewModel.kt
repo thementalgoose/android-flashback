@@ -27,6 +27,7 @@ import tmg.flashback.results.contract.repository.models.NotificationUpcoming.OTH
 import tmg.flashback.results.contract.repository.models.NotificationUpcoming.QUALIFYING
 import tmg.flashback.results.contract.repository.models.NotificationUpcoming.RACE
 import tmg.flashback.results.contract.repository.models.NotificationUpcoming.SPRINT
+import tmg.flashback.results.contract.repository.models.NotificationUpcoming.SPRINT_QUALIFYING
 import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.flashback.weekend.R
 import tmg.flashback.weekend.repository.WeatherRepository
@@ -148,6 +149,7 @@ class DetailsViewModel @Inject constructor(
                                 RaceWeekend.FREE_PRACTICE -> notificationRepository.isUpcomingEnabled(FREE_PRACTICE)
                                 RaceWeekend.QUALIFYING -> notificationRepository.isUpcomingEnabled(QUALIFYING)
                                 RaceWeekend.SPRINT -> notificationRepository.isUpcomingEnabled(SPRINT)
+                                RaceWeekend.SPRINT_QUALIFYING -> notificationRepository.isUpcomingEnabled(SPRINT_QUALIFYING)
                                 RaceWeekend.RACE -> notificationRepository.isUpcomingEnabled(RACE)
                                 null -> notificationRepository.isUpcomingEnabled(OTHER)
                             }

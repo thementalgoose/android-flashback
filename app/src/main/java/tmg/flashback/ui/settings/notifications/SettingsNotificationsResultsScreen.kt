@@ -12,9 +12,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.R
 import tmg.flashback.results.contract.repository.models.NotificationResultsAvailable
-import tmg.flashback.results.contract.repository.models.NotificationResultsAvailable.QUALIFYING
-import tmg.flashback.results.contract.repository.models.NotificationResultsAvailable.RACE
-import tmg.flashback.results.contract.repository.models.NotificationResultsAvailable.SPRINT
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme

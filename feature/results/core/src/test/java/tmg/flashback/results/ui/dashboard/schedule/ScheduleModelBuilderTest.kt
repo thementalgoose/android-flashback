@@ -24,7 +24,14 @@ internal class ScheduleModelBuilderTest {
 
     private val event = Event.model()
 
-    private val fakeNotificationSchedule = NotificationSchedule(true, true, false, true, false)
+    private val fakeNotificationSchedule = NotificationSchedule(
+        freePractice = true,
+        qualifying = false,
+        sprint = true,
+        sprintQualifying = true,
+        race = false,
+        other = true
+    )
 
     private fun initResult(
         overview: Overview,

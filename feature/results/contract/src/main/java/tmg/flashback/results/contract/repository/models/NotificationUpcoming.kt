@@ -10,7 +10,7 @@ enum class NotificationUpcoming(
 ) {
     RACE("flashback_race", R.string.notification_channel_free_practice),
     SPRINT("flashback_sprint", R.string.notification_channel_qualifying),
-//    SPRINT_QUALIFYING,
+    SPRINT_QUALIFYING("flashback_sprint_qualifying", R.string.notification_channel_qualifying),
     QUALIFYING("flashback_qualifying", R.string.notification_channel_sprint),
     FREE_PRACTICE("flashback_free_practice", R.string.notification_channel_race),
     OTHER("flashback_info", R.string.notification_channel_info)

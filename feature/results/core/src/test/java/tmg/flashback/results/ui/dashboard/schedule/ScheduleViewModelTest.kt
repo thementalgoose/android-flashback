@@ -306,6 +306,7 @@ internal class ScheduleViewModelTest: BaseTest() {
         freePractice = true,
         qualifying = true,
         sprint = true,
+        sprintQualifying = true,
         race = true,
         other = true,
     )

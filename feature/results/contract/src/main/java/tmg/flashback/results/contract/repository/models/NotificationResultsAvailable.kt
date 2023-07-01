@@ -11,6 +11,6 @@ enum class NotificationResultsAvailable(
 ) {
     RACE("notify_race", R.string.notification_channel_race_notify),
     SPRINT("notify_sprint", R.string.notification_channel_sprint_notify),
-//    SPRINT_QUALIFYING,
+    SPRINT_QUALIFYING("notify_sprint_qualifying", R.string.notification_channel_sprint_qualifying_notify),
     QUALIFYING("notify_qualifying", R.string.notification_channel_qualifying_notify)
 }
