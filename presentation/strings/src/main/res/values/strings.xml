@@ -284,6 +284,7 @@
     <string name="settings_switch_notification_upcoming_race_title">Race</string>
     <string name="settings_switch_notification_upcoming_other_title">Other</string>
     <string name="settings_switch_notification_results_qualifying_title">Qualifying</string>
+    <string name="settings_switch_notification_results_sprint_qualifying_title">Sprint Shootout</string>
     <string name="settings_switch_notification_results_sprint_title">Sprint</string>
     <string name="settings_switch_notification_results_race_title">Race</string>
 

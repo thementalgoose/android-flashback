@@ -25,6 +25,7 @@ import tmg.flashback.results.contract.repository.models.NotificationUpcoming.OTH
 import tmg.flashback.results.contract.repository.models.NotificationUpcoming.QUALIFYING
 import tmg.flashback.results.contract.repository.models.NotificationUpcoming.RACE
 import tmg.flashback.results.contract.repository.models.NotificationUpcoming.SPRINT
+import tmg.flashback.results.contract.repository.models.NotificationUpcoming.SPRINT_QUALIFYING
 
 @HiltWorker
 class ScheduleNotificationsJob @AssistedInject constructor(
@@ -143,6 +144,7 @@ class ScheduleNotificationsJob @AssistedInject constructor(
         return when (NotificationUtils.getCategoryBasedOnLabel(this)) {
             RaceWeekend.FREE_PRACTICE -> FREE_PRACTICE
             RaceWeekend.QUALIFYING -> QUALIFYING
+            RaceWeekend.SPRINT_QUALIFYING -> SPRINT_QUALIFYING
             RaceWeekend.SPRINT -> SPRINT
             RaceWeekend.RACE -> RACE
             null -> OTHER
