@@ -29,6 +29,10 @@ import tmg.flashback.notifications.managers.SystemNotificationManager
 import tmg.flashback.notifications.usecases.RemoteNotificationSubscribeUseCase
 import tmg.flashback.notifications.usecases.RemoteNotificationUnsubscribeUseCase
 import tmg.flashback.repositories.ContactRepository
+import tmg.flashback.results.contract.repository.models.NotificationResultsAvailable
+import tmg.flashback.results.contract.repository.models.NotificationResultsAvailable.QUALIFYING
+import tmg.flashback.results.contract.repository.models.NotificationResultsAvailable.RACE
+import tmg.flashback.results.contract.repository.models.NotificationResultsAvailable.SPRINT
 import tmg.flashback.results.repository.NotificationsRepositoryImpl
 import tmg.flashback.results.repository.models.NotificationChannel
 import tmg.flashback.style.AppTheme
@@ -126,30 +130,18 @@ class FlashbackStartup @Inject constructor(
             systemNotificationManager.createChannel(it.channelId, it.label)
         }
 
-        systemNotificationManager.createChannel(
-            "notify_race",
-            R.string.notification_channel_race_notify
-        )
-        systemNotificationManager.createChannel(
-            "notify_qualifying",
-            R.string.notification_channel_qualifying_notify
-        )
-        systemNotificationManager.createChannel(
-            "notify_sprint",
-            R.string.notification_channel_sprint_notify
-        )
+        NotificationResultsAvailable.values().forEach { results ->
+            systemNotificationManager.createChannel(
+                results.channelId,
+                results.channelLabel
+            )
+        }
         applicationScope.launch(Dispatchers.IO) {
-            when (notificationRepository.notificationNotifyQualifying) {
-                true -> remoteNotificationSubscribeUseCase.subscribe("notify_qualifying")
-                false -> remoteNotificationUnsubscribeUseCase.unsubscribe("notify_qualifying")
-            }
-            when (notificationRepository.notificationNotifySprint) {
-                true -> remoteNotificationSubscribeUseCase.subscribe("notify_sprint")
-                false -> remoteNotificationUnsubscribeUseCase.unsubscribe("notify_sprint")
-            }
-            when (notificationRepository.notificationNotifyRace) {
-                true -> remoteNotificationSubscribeUseCase.subscribe("notify_race")
-                false -> remoteNotificationUnsubscribeUseCase.unsubscribe("notify_race")
+            NotificationResultsAvailable.values().forEach { result ->
+                when (notificationRepository.isEnabled(result)) {
+                    true -> remoteNotificationSubscribeUseCase.subscribe(result.remoteSubscriptionTopic)
+                    false -> remoteNotificationUnsubscribeUseCase.unsubscribe(result.remoteSubscriptionTopic)
+                }
             }
         }
 

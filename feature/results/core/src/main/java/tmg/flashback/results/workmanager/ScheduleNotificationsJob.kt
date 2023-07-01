@@ -19,6 +19,11 @@ import tmg.flashback.notifications.repository.NotificationRepository
 import tmg.flashback.notifications.usecases.LocalNotificationCancelUseCase
 import tmg.flashback.notifications.usecases.LocalNotificationScheduleUseCase
 import tmg.flashback.results.BuildConfig
+import tmg.flashback.results.contract.repository.models.NotificationUpcoming.FREE_PRACTICE
+import tmg.flashback.results.contract.repository.models.NotificationUpcoming.OTHER
+import tmg.flashback.results.contract.repository.models.NotificationUpcoming.QUALIFYING
+import tmg.flashback.results.contract.repository.models.NotificationUpcoming.RACE
+import tmg.flashback.results.contract.repository.models.NotificationUpcoming.SPRINT
 import tmg.flashback.results.repository.models.NotificationChannel
 
 @HiltWorker
@@ -70,11 +75,11 @@ class ScheduleNotificationsJob @AssistedInject constructor(
             }
             .filter {
                 when (it.channel) {
-                    NotificationChannel.RACE -> notificationRepository.notificationUpcomingRace
-                    NotificationChannel.SPRINT -> notificationRepository.notificationUpcomingSprint
-                    NotificationChannel.QUALIFYING -> notificationRepository.notificationUpcomingQualifying
-                    NotificationChannel.FREE_PRACTICE -> notificationRepository.notificationUpcomingFreePractice
-                    NotificationChannel.SEASON_INFO -> notificationRepository.notificationUpcomingOther
+                    NotificationChannel.RACE -> notificationRepository.isUpcomingEnabled(RACE)
+                    NotificationChannel.SPRINT -> notificationRepository.isUpcomingEnabled(SPRINT)
+                    NotificationChannel.QUALIFYING -> notificationRepository.isUpcomingEnabled(QUALIFYING)
+                    NotificationChannel.FREE_PRACTICE -> notificationRepository.isUpcomingEnabled(FREE_PRACTICE)
+                    NotificationChannel.SEASON_INFO -> notificationRepository.isUpcomingEnabled(OTHER)
                 }
             }
 

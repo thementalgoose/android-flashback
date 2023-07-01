@@ -9,6 +9,8 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import tmg.flashback.results.contract.ResultsNavigationComponent
+import tmg.flashback.results.contract.repository.models.NotificationResultsAvailable
+import tmg.flashback.results.contract.repository.models.NotificationUpcoming
 import tmg.flashback.results.repository.NotificationsRepositoryImpl
 import tmg.flashback.results.usecases.ScheduleNotificationsUseCase
 import tmg.flashback.ui.managers.PermissionManager
@@ -56,105 +58,31 @@ internal class SettingsNotificationsUpcomingViewModelTest: BaseTest() {
         }
     }
 
-    @Test
-    fun `free practice enabled is true when free practice pref are enabled`() = runTest {
-        every { mockNotificationRepository.notificationUpcomingFreePractice } returns true
 
+
+
+
+    @Test
+    fun `enabled notification permission updates value in repository`() = runTest {
+        every { mockNotificationRepository.isUpcomingEnabled(any()) } returns true
+
+        val expected = NotificationUpcoming.values().map { it to true }
         initUnderTest()
-        underTest.outputs.freePracticeEnabled.test {
-            assertEquals(true, awaitItem())
+        underTest.outputs.notifications.test {
+            assertEquals(expected, awaitItem())
+        }
+
+        underTest.inputs.prefClicked(Settings.Notifications.notificationUpcoming(
+            NotificationUpcoming.RACE, false))
+        verify {
+            mockNotificationRepository.setUpcomingEnabled(NotificationUpcoming.RACE, false)
+        }
+        underTest.outputs.notifications.test {
+            // Expected will be the same because mocked refresh call
+            assertEquals(expected, awaitItem())
         }
     }
 
-    @Test
-    fun `free practice enabled is false when free practice pref are disabled`() = runTest {
-        every { mockNotificationRepository.notificationUpcomingFreePractice } returns false
-
-        initUnderTest()
-        underTest.outputs.freePracticeEnabled.test {
-            assertEquals(false, awaitItem())
-        }
-    }
-
-    @Test
-    fun `qualifying enabled is true when qualifying pref are enabled`() = runTest {
-        every { mockNotificationRepository.notificationUpcomingFreePractice } returns true
-
-        initUnderTest()
-        underTest.outputs.freePracticeEnabled.test {
-            assertEquals(true, awaitItem())
-        }
-    }
-
-    @Test
-    fun `qualifying enabled is false when qualifying pref are disabled`() = runTest {
-        every { mockNotificationRepository.notificationUpcomingQualifying } returns false
-
-        initUnderTest()
-        underTest.outputs.qualifyingEnabled.test {
-            assertEquals(false, awaitItem())
-        }
-    }
-
-    @Test
-    fun `race enabled is true when race pref are enabled`() = runTest {
-        every { mockNotificationRepository.notificationUpcomingRace } returns true
-
-        initUnderTest()
-        underTest.outputs.raceEnabled.test {
-            assertEquals(true, awaitItem())
-        }
-    }
-
-    @Test
-    fun `race enabled is false when race pref are disabled`() = runTest {
-        every { mockNotificationRepository.notificationUpcomingRace } returns false
-
-        initUnderTest()
-        underTest.outputs.raceEnabled.test {
-            assertEquals(false, awaitItem())
-        }
-    }
-
-    @Test
-    fun `sprint enabled is true when sprint pref are enabled`() = runTest {
-        every { mockNotificationRepository.notificationUpcomingSprint } returns true
-
-        initUnderTest()
-        underTest.outputs.sprintEnabled.test {
-            assertEquals(true, awaitItem())
-        }
-    }
-
-    @Test
-    fun `sprint enabled is false when sprint pref are disabled`() = runTest {
-        every { mockNotificationRepository.notificationUpcomingSprint } returns false
-
-        initUnderTest()
-        underTest.outputs.sprintEnabled.test {
-            assertEquals(false, awaitItem())
-        }
-    }
-
-    @Test
-    fun `other enabled is true when other pref are enabled`() = runTest {
-        every { mockNotificationRepository.notificationUpcomingOther } returns true
-
-        initUnderTest()
-        underTest.outputs.otherEnabled.test {
-            assertEquals(true, awaitItem())
-        }
-    }
-
-    @Test
-    fun `other enabled is false when other pref are disabled`() = runTest {
-        every { mockNotificationRepository.notificationUpcomingOther } returns false
-
-        initUnderTest()
-        underTest.outputs.otherEnabled.test {
-            assertEquals(false, awaitItem())
-        }
-    }
 
     @Test
     fun `clicking enable permission calls permission flow`() = runTest {
@@ -189,65 +117,6 @@ internal class SettingsNotificationsUpcomingViewModelTest: BaseTest() {
         underTest.outputs.permissionEnabled.test { awaitItem() }
     }
 
-    @Test
-    fun `clicking free practice updates pref and updates value`() = runTest {
-        every { mockNotificationRepository.notificationUpcomingFreePractice } returns false
-
-        initUnderTest()
-        underTest.outputs.freePracticeEnabled.test { awaitItem() }
-        underTest.inputs.prefClicked(Settings.Notifications.notificationUpcomingFreePractice(true))
-
-        verify {
-            mockNotificationRepository.notificationUpcomingFreePractice = true
-            mockScheduleNotificationsUseCase.schedule()
-        }
-        underTest.outputs.freePracticeEnabled.test { awaitItem() }
-    }
-
-    @Test
-    fun `clicking qualifying updates pref and updates value`() = runTest {
-        every { mockNotificationRepository.notificationUpcomingQualifying } returns false
-
-        initUnderTest()
-        underTest.outputs.qualifyingEnabled.test { awaitItem() }
-        underTest.inputs.prefClicked(Settings.Notifications.notificationUpcomingQualifying(true))
-
-        verify {
-            mockNotificationRepository.notificationUpcomingQualifying = true
-            mockScheduleNotificationsUseCase.schedule()
-        }
-        underTest.outputs.qualifyingEnabled.test { awaitItem() }
-    }
-
-    @Test
-    fun `clicking race updates pref and updates value`() = runTest {
-        every { mockNotificationRepository.notificationUpcomingRace } returns false
-
-        initUnderTest()
-        underTest.outputs.raceEnabled.test { awaitItem() }
-        underTest.inputs.prefClicked(Settings.Notifications.notificationUpcomingRace(true))
-
-        verify {
-            mockNotificationRepository.notificationUpcomingRace = true
-            mockScheduleNotificationsUseCase.schedule()
-        }
-        underTest.outputs.raceEnabled.test { awaitItem() }
-    }
-
-    @Test
-    fun `clicking other updates pref and updates value`() = runTest {
-        every { mockNotificationRepository.notificationUpcomingOther } returns false
-
-        initUnderTest()
-        underTest.outputs.otherEnabled.test { awaitItem() }
-        underTest.inputs.prefClicked(Settings.Notifications.notificationUpcomingOther(true))
-
-        verify {
-            mockNotificationRepository.notificationUpcomingOther = true
-            mockScheduleNotificationsUseCase.schedule()
-        }
-        underTest.outputs.otherEnabled.test { awaitItem() }
-    }
 
     @Test
     fun `clicking minutes before opens up next notice period`() = runTest {

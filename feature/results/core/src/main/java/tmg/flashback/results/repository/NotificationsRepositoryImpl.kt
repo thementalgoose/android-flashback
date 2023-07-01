@@ -2,9 +2,11 @@ package tmg.flashback.results.repository
 
 import tmg.flashback.prefs.manager.PreferenceManager
 import tmg.flashback.results.contract.repository.NotificationsRepository
+import tmg.flashback.results.contract.repository.models.NotificationUpcoming
+import tmg.flashback.results.contract.repository.models.NotificationResultsAvailable
 import tmg.flashback.results.repository.models.NotificationReminder
-import tmg.flashback.results.repository.models.NotificationResults
 import tmg.flashback.results.repository.models.NotificationSchedule
+import tmg.flashback.results.repository.models.prefKey
 import tmg.utilities.extensions.toEnum
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -15,71 +17,40 @@ class NotificationsRepositoryImpl @Inject constructor(
 ): NotificationsRepository {
 
     companion object {
-        private const val keyNotificationRace: String = "UP_NEXT_NOTIFICATION_RACE"
-        private const val keyNotificationSprint: String = "UP_NEXT_NOTIFICATION_SPRINT"
-        private const val keyNotificationQualifying: String = "UP_NEXT_NOTIFICATION_QUALIFYING"
-        private const val keyNotificationFreePractice: String = "UP_NEXT_NOTIFICATION_FREE_PRACTICE"
-        private const val keyNotificationOther: String = "UP_NEXT_NOTIFICATION_OTHER"
         private const val keyNotificationReminder: String = "UP_NEXT_NOTIFICATION_REMINDER"
-
-        private const val keyNotificationRaceNotify: String = "UP_NEXT_NOTIFICATION_RACE_NOTIFY"
-        private const val keyNotificationSprintNotify: String = "UP_NEXT_NOTIFICATION_SPRINT_NOTIFY"
-        private const val keyNotificationQualifyingNotify: String = "UP_NEXT_NOTIFICATION_QUALIFYING_NOTIFY"
 
         private const val keyRuntimeNotifications: String = "RUNTIME_NOTIFICATION_PROMPT"
         private const val keyNotificationOnboarding: String = "UP_NEXT_NOTIFICATION_ONBOARDING"
     }
 
 
+    override fun isEnabled(resultsAvailable: NotificationResultsAvailable): Boolean {
+        return preferenceManager.getBoolean(resultsAvailable.prefKey, false)
+    }
 
-    override var notificationUpcomingRace: Boolean
-        get() = preferenceManager.getBoolean(keyNotificationRace, false)
-        set(value) = preferenceManager.save(keyNotificationRace, value)
+    override fun setEnabled(upcoming: NotificationResultsAvailable, value: Boolean) {
+        preferenceManager.save(upcoming.prefKey, value)
+    }
 
-    override var notificationUpcomingSprint: Boolean
-        get() = preferenceManager.getBoolean(keyNotificationSprint, false)
-        set(value) = preferenceManager.save(keyNotificationSprint, value)
+    override fun isUpcomingEnabled(upcoming: NotificationUpcoming): Boolean {
+        return preferenceManager.getBoolean(upcoming.prefKey, false)
+    }
 
-    override var notificationUpcomingQualifying: Boolean
-        get() = preferenceManager.getBoolean(keyNotificationQualifying, false)
-        set(value) = preferenceManager.save(keyNotificationQualifying, value)
+    override fun setUpcomingEnabled(upcoming: NotificationUpcoming, value: Boolean) {
+        preferenceManager.save(upcoming.prefKey, value)
+    }
 
-    override var notificationUpcomingFreePractice: Boolean
-        get() = preferenceManager.getBoolean(keyNotificationFreePractice, false)
-        set(value) = preferenceManager.save(keyNotificationFreePractice, value)
 
-    override var notificationUpcomingOther: Boolean
-        get() = preferenceManager.getBoolean(keyNotificationOther, false)
-        set(value) = preferenceManager.save(keyNotificationOther, value)
 
     val notificationSchedule: NotificationSchedule
         get() = NotificationSchedule(
-            freePractice = notificationUpcomingFreePractice,
-            qualifying = notificationUpcomingQualifying,
-            sprint = notificationUpcomingSprint,
-            race = notificationUpcomingRace,
-            other = notificationUpcomingOther
+            freePractice = isUpcomingEnabled(NotificationUpcoming.FREE_PRACTICE),
+            qualifying = isUpcomingEnabled(NotificationUpcoming.QUALIFYING),
+            sprint = isUpcomingEnabled(NotificationUpcoming.SPRINT),
+            race = isUpcomingEnabled(NotificationUpcoming.RACE),
+            other = isUpcomingEnabled(NotificationUpcoming.OTHER)
         )
 
-
-    var notificationNotifyRace: Boolean
-        get() = preferenceManager.getBoolean(keyNotificationRaceNotify, false)
-        set(value) = preferenceManager.save(keyNotificationRaceNotify, value)
-
-    var notificationNotifySprint: Boolean
-        get() = preferenceManager.getBoolean(keyNotificationSprintNotify, false)
-        set(value) = preferenceManager.save(keyNotificationSprintNotify, value)
-
-    var notificationNotifyQualifying: Boolean
-        get() = preferenceManager.getBoolean(keyNotificationQualifyingNotify, false)
-        set(value) = preferenceManager.save(keyNotificationQualifyingNotify, value)
-
-    val notificationResults: NotificationResults
-        get() = NotificationResults(
-            qualifying = notificationNotifyQualifying,
-            sprint = notificationNotifySprint,
-            race = notificationNotifyRace
-        )
 
 
     var seenNotificationOnboarding: Boolean
