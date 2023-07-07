@@ -88,12 +88,12 @@ private fun UpNextConfigurationScreen(
                             onClick = { updateShowBackground(!showBackground) }
                         )
                     }
-                    item {
-                        SettingSwitch(
-                            model = UpNextConfigurationSettings.showWeather(showWeather),
-                            onClick = { updateShowWeather(!showWeather) }
-                        )
-                    }
+//                    item {
+//                        SettingSwitch(
+//                            model = UpNextConfigurationSettings.showWeather(showWeather),
+//                            onClick = { updateShowWeather(!showWeather) }
+//                        )
+//                    }
                 }
             )
             Box(modifier = Modifier
