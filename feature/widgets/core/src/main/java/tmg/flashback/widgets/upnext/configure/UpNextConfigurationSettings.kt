@@ -18,6 +18,15 @@ object UpNextConfigurationSettings {
         isBeta = false
     )
 
+
+    fun clickToEvent(isChecked: Boolean) = Setting.Switch(
+        _key = "click_to_event",
+        title = R.string.widget_settings_click_to_event_title,
+        subtitle = R.string.widget_settings_click_to_event_description,
+        isChecked = isChecked,
+        isBeta = true
+    )
+
     fun showWeather(show: Boolean) = Setting.Switch(
         _key = "show_weather",
         title = R.string.widget_settings_weather_title,

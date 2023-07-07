@@ -35,6 +35,7 @@ internal fun UpNextConfigurationScreenVM(
 ) {
     val showBackground = viewModel.outputs.showBackground.collectAsState(initial = false)
     val showWeather = viewModel.outputs.showWeather.collectAsState(initial = false)
+    val clicktoEvent = viewModel.outputs.clickToEvent.collectAsState(initial = false)
 
     UpNextConfigurationScreen(
         actionUpClicked = actionUpClicked,
@@ -42,6 +43,8 @@ internal fun UpNextConfigurationScreenVM(
         updateShowBackground = viewModel.inputs::changeShowBackground,
         showWeather = showWeather.value,
         updateShowWeather = viewModel.inputs::changeShowWeather,
+        clickToEvent = clicktoEvent.value,
+        updateClickToEvent = viewModel.inputs::changeClickToEvent,
         save = {
             viewModel.inputs.save()
             saveClicked()
@@ -54,8 +57,10 @@ private fun UpNextConfigurationScreen(
     actionUpClicked: () -> Unit,
     showBackground: Boolean,
     showWeather: Boolean,
+    clickToEvent: Boolean,
     updateShowBackground: (Boolean) -> Unit,
     updateShowWeather: (Boolean) -> Unit,
+    updateClickToEvent: (Boolean) -> Unit,
     save: () -> Unit
 ) {
     Column(
@@ -94,6 +99,12 @@ private fun UpNextConfigurationScreen(
 //                            onClick = { updateShowWeather(!showWeather) }
 //                        )
 //                    }
+                    item {
+                        SettingSwitch(
+                            model = UpNextConfigurationSettings.clickToEvent(clickToEvent),
+                            onClick = { updateClickToEvent(!clickToEvent) }
+                        )
+                    }
                 }
             )
             Box(modifier = Modifier
@@ -131,8 +142,10 @@ private fun Preview() {
             actionUpClicked = { },
             showBackground = true,
             showWeather = true,
+            clickToEvent = true,
             updateShowBackground = { },
             updateShowWeather = { },
+            updateClickToEvent = { },
             save = { }
         )
     }
