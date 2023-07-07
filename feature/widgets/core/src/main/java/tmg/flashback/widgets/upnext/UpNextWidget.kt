@@ -15,6 +15,7 @@ import androidx.glance.ImageProvider
 import androidx.glance.LocalContext
 import androidx.glance.LocalGlanceId
 import androidx.glance.LocalSize
+import androidx.glance.action.actionParametersOf
 import androidx.glance.action.clickable
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.SizeMode
@@ -91,12 +92,19 @@ class UpNextWidget: GlanceAppWidget() {
             val config = LocalSize.current
             Log.i("UpNextWidget", "Loading config $config")
 
+            val modifier = when (widgetsRepository.getClickToEvent(appWidgetId)) {
+                true -> GlanceModifier.clickable(actionRunCallback<UpNextWidgetOpenEvent>(actionParametersOf(
+                    UpNextWidgetOpenEvent.PARAM_DATA to overviewRace,
+                )))
+                false -> GlanceModifier.clickable(actionRunCallback<UpNextWidgetOpenAll>())
+            }
+
             when (config) {
                 configIcon -> Icon(
                     context,
                     widgetData,
                     overviewRace,
-                    modifier = GlanceModifier.clickable(actionRunCallback<UpNextWidgetOpenAll>()),
+                    modifier = modifier,
                 )
                 configRaceOnlyCompressed -> RaceOnly(
                     context,
@@ -104,7 +112,7 @@ class UpNextWidget: GlanceAppWidget() {
                     overviewRace,
                     timeSize = 22.sp,
                     showRefresh = false,
-                    modifier = GlanceModifier.clickable(actionRunCallback<UpNextWidgetOpenAll>()),
+                    modifier = modifier,
                 )
                 configRaceOnly -> RaceOnly(
                     context,
@@ -112,26 +120,26 @@ class UpNextWidget: GlanceAppWidget() {
                     overviewRace,
                     timeSize = 30.sp,
                     showRefresh = true,
-                    modifier = GlanceModifier.clickable(actionRunCallback<UpNextWidgetOpenAll>()),
+                    modifier = modifier,
                 )
                 configRaceScheduleFullList -> RaceScheduleFullList(
                     context,
                     widgetData,
                     overviewRace,
-                    modifier = GlanceModifier.clickable(actionRunCallback<UpNextWidgetOpenAll>()),
+                    modifier = modifier,
                 )
                 configRaceScheduleFullListLargeRace -> RaceScheduleFullListLargeRace(
                     context,
                     widgetData,
                     overviewRace,
-                    modifier = GlanceModifier.clickable(actionRunCallback<UpNextWidgetOpenAll>()),
+                    modifier = modifier,
                     showTrackIcon = false
                 )
                 configRaceScheduleFullListLargeRaceTrackIcon -> RaceScheduleFullListLargeRace(
                     context,
                     widgetData,
                     overviewRace,
-                    modifier = GlanceModifier.clickable(actionRunCallback<UpNextWidgetOpenAll>()),
+                    modifier = modifier,
                     showTrackIcon = true
                 )
                 else -> {
