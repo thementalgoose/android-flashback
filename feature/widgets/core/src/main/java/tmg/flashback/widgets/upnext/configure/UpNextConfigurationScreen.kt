@@ -142,8 +142,10 @@ private fun Preview() {
             actionUpClicked = { },
             showBackground = true,
             showWeather = true,
+            clickToEvent = true,
             updateShowBackground = { },
             updateShowWeather = { },
+            updateClickToEvent = { },
             save = { }
         )
     }
