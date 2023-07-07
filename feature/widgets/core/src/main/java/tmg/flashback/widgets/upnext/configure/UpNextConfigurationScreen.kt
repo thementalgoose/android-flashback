@@ -19,6 +19,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.strings.R.string
 import tmg.flashback.style.AppTheme
+import tmg.flashback.style.AppThemePreview
+import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.buttons.ButtonPrimary
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.settings.SettingHeader
@@ -129,5 +131,20 @@ private fun UpNextConfigurationScreen(
                 onClick = { save() }
             )
         }
+    }
+}
+
+@PreviewTheme
+@Composable
+private fun Preview() {
+    AppThemePreview {
+        UpNextConfigurationScreen(
+            actionUpClicked = { },
+            showBackground = true,
+            showWeather = true,
+            updateShowBackground = { },
+            updateShowWeather = { },
+            save = { }
+        )
     }
 }
