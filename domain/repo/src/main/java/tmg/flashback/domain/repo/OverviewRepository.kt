@@ -109,6 +109,7 @@ class OverviewRepository @Inject constructor(
                     overviewRaces = overview
                         .filterNotNull()
                         .map { overviewMapper.mapOverview(it) }
+                        .sortedBy { it.round }
                 )
             }
     }
