@@ -32,7 +32,6 @@ class HomeRepository @Inject constructor(
         private const val keyEmptyWeeksInSchedule: String = "empty_weeks_in_schedule"
         private const val keyDashboardCollapseList: String = "DASHBOARD_COLLAPSE_LIST"
         private const val keyFavouriteSeasons: String = "FAVOURITE_SEASONS"
-        private const val keyDefaultSeason: String = "DEFAULT_SEASON"
         private const val keyProvidedByAtTop: String = "PROVIDED_BY_AT_TOP"
     }
 
@@ -97,24 +96,6 @@ class HomeRepository @Inject constructor(
             return value
                 .mapNotNull { it.toIntOrNull() }
                 .toSet()
-        }
-
-    /**
-     * Default season to be shown in the app
-     *  null = no default set
-     */
-    var defaultSeason: Int?
-        get() {
-            val value = preferenceManager.getInt(keyDefaultSeason, -1)
-            if (value == -1) return null
-            return value
-        }
-        set(value) {
-            val valueToSave = when (value) {
-                null -> -1
-                else -> value
-            }
-            preferenceManager.save(keyDefaultSeason, valueToSave)
         }
 
     /**
