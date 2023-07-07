@@ -5,6 +5,7 @@ import tmg.flashback.formula1.model.Event
 import tmg.flashback.formula1.model.Overview
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.results.repository.models.NotificationSchedule
+import tmg.utilities.extensions.format
 import tmg.utilities.extensions.startOfWeek
 import tmg.utilities.utils.LocalDateUtils
 
@@ -80,11 +81,11 @@ internal object ScheduleModelBuilder {
         return list
             .sortedBy {
                 when (it) {
-                    is ScheduleModel.EmptyWeek -> it.monday
-                    is ScheduleModel.GroupedCompletedRaces -> it.first.date
-                    is ScheduleModel.Event -> it.date
-                    is ScheduleModel.RaceWeek -> it.date
-                    else -> null
+                    is ScheduleModel.EmptyWeek -> it.monday.format("yyyy-MM-dd")
+                    is ScheduleModel.GroupedCompletedRaces -> it.first.date.format("yyyy-MM-dd")
+                    is ScheduleModel.Event -> it.date.format("yyyy-MM-dd")
+                    is ScheduleModel.RaceWeek -> it.date.format("yyyy-MM-dd")
+                    ScheduleModel.Loading -> "0000-00-00"
                 }
             }
     }
