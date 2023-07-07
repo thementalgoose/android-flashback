@@ -233,48 +233,6 @@ internal class HomeRepositoryTest {
 
     //endregion
 
-    //region Default Season
-
-    @Test
-    fun `default stream will return null if value is not specified`() {
-        every { mockPreferenceManager.getInt(keyDefaultSeason, -1) } returns -1
-        initSUT()
-        assertNull(sut.defaultSeason)
-        verify {
-            mockPreferenceManager.getInt(keyDefaultSeason, -1)
-        }
-    }
-
-    @Test
-    fun `default stream will return value if value is specified`() {
-        every { mockPreferenceManager.getInt(keyDefaultSeason, -1) } returns 123
-        initSUT()
-        assertEquals(123, sut.defaultSeason)
-        verify {
-            mockPreferenceManager.getInt(keyDefaultSeason, -1)
-        }
-    }
-
-    @Test
-    fun `default stream saving null saves -1 to shared preferences`() {
-        initSUT()
-        sut.defaultSeason = null
-        verify {
-            mockPreferenceManager.save(keyDefaultSeason, -1)
-        }
-    }
-
-    @Test
-    fun `default stream saving values saves value to shared preferences`() {
-        initSUT()
-        sut.defaultSeason = 123
-        verify {
-            mockPreferenceManager.save(keyDefaultSeason, 123)
-        }
-    }
-
-    //endregion
-
     //region Data Provided by label at top
 
     @Test
