@@ -12,6 +12,7 @@ interface UpNextConfigurationViewModelInputs {
     fun load(appWidgetId: Int)
     fun changeShowBackground(enabled: Boolean)
     fun changeShowWeather(show: Boolean)
+    fun changeClickToEvent(clickToEvent: Boolean)
     fun save()
     fun update()
 }
@@ -19,6 +20,7 @@ interface UpNextConfigurationViewModelInputs {
 interface UpNextConfigurationViewModelOutputs {
     val showBackground: StateFlow<Boolean>
     val showWeather: StateFlow<Boolean>
+    val clickToEvent: StateFlow<Boolean>
 }
 
 @HiltViewModel
@@ -34,11 +36,13 @@ internal class UpNextConfigurationViewModel @Inject constructor(
 
     override val showBackground: MutableStateFlow<Boolean> = MutableStateFlow(false)
     override val showWeather: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    override val clickToEvent: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
     override fun load(appWidgetId: Int) {
         this.appWidgetId = appWidgetId
         showBackground.value = widgetRepository.getShowBackground(appWidgetId)
         showWeather.value = widgetRepository.getShowWeather(appWidgetId)
+        clickToEvent.value = widgetRepository.getClickToEvent(appWidgetId)
     }
 
     override fun changeShowBackground(enabled: Boolean) {
@@ -49,6 +53,11 @@ internal class UpNextConfigurationViewModel @Inject constructor(
     override fun changeShowWeather(show: Boolean) {
         widgetRepository.setShowWeather(appWidgetId, show)
         showWeather.value = show
+    }
+
+    override fun changeClickToEvent(enabled: Boolean) {
+        widgetRepository.setClickToEvent(appWidgetId, enabled)
+        clickToEvent.value = enabled
     }
 
     override fun update() {

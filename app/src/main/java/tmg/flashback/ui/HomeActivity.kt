@@ -1,5 +1,6 @@
 package tmg.flashback.ui
 
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -20,6 +21,8 @@ import tmg.flashback.ads.ads.components.AdvertProvider
 import tmg.flashback.configuration.usecases.ConfigSyncUseCase
 import tmg.flashback.crashlytics.manager.CrashlyticsManager
 import tmg.flashback.maintenance.contract.MaintenanceNavigationComponent
+import tmg.flashback.navigation.Deeplink
+import tmg.flashback.navigation.Deeplink.SCREEN_PARAM
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.newrelic.usecases.InitializeNewRelicUseCase
 import tmg.flashback.results.usecases.ContentSyncUseCase
@@ -54,12 +57,12 @@ class HomeActivity: BaseActivity(), SplashScreen.KeepOnScreenCondition {
     private var deeplink: String? = null
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.remove("screen")
+        outState.remove(SCREEN_PARAM)
         super.onSaveInstanceState(outState)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        deeplink = savedInstanceState.getString("screen", "")
+        deeplink = savedInstanceState.getString(SCREEN_PARAM, "")
         super.onRestoreInstanceState(savedInstanceState)
     }
 
@@ -69,7 +72,7 @@ class HomeActivity: BaseActivity(), SplashScreen.KeepOnScreenCondition {
         initializeNewRelicUseCase.start(this.application)
 
         if (deeplink == null) {
-            deeplink = intent.extras?.getString("screen")
+            deeplink = intent.extras?.getString(SCREEN_PARAM)
         }
 
         logScreenViewed("Dashboard")

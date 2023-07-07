@@ -504,6 +504,8 @@
     <string name="widget_configure">Customise</string>
     <string name="widget_settings_background_title">Show background</string>
     <string name="widget_settings_background_description">Make this widget have a solid background colour</string>
+    <string name="widget_settings_click_to_event_title">Deeplink to event</string>
+    <string name="widget_settings_click_to_event_description">Clicking the widget deeplinks you to the event being shown</string>
     <string name="widget_settings_weather_title">Show weather</string>
     <string name="widget_settings_weather_description">Show a icon symbolising the weather for the event, if available</string>
     <string name="widget_up_next_save">Save</string>

@@ -28,6 +28,7 @@ internal class UpNextConfigurationViewModelTest: BaseTest() {
         )
         every { mockWidgetRepository.getShowBackground(widgetId) } returns true
         every { mockWidgetRepository.getShowWeather(widgetId) } returns true
+        every { mockWidgetRepository.getClickToEvent(widgetId) } returns true
         underTest.inputs.load(widgetId)
     }
 
@@ -37,6 +38,17 @@ internal class UpNextConfigurationViewModelTest: BaseTest() {
 
         initUnderTest()
         underTest.outputs.showBackground.test {
+
+            assertEquals(true, awaitItem())
+        }
+    }
+
+    @Test
+    fun `loading widget loads show click to event`() = runTest {
+        every { mockWidgetRepository.getClickToEvent(widgetId) } returns true
+
+        initUnderTest()
+        underTest.outputs.clickToEvent.test {
 
             assertEquals(true, awaitItem())
         }
@@ -69,6 +81,21 @@ internal class UpNextConfigurationViewModelTest: BaseTest() {
         }
         verify {
             mockWidgetRepository.setShowWeather(widgetId, false)
+        }
+    }
+
+    @Test
+    fun `changing click to event updates click to event`() = runTest {
+
+        initUnderTest()
+
+        underTest.outputs.clickToEvent.test {
+            assertEquals(true, awaitItem())
+            underTest.inputs.changeClickToEvent(false)
+            assertEquals(false, awaitItem())
+        }
+        verify {
+            mockWidgetRepository.setClickToEvent(widgetId, false)
         }
     }
 
