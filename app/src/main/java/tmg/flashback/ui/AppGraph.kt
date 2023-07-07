@@ -34,6 +34,7 @@ import tmg.flashback.drivers.ui.overview.DriverOverviewScreenVM
 import tmg.flashback.drivers.ui.season.DriverSeasonScreenVM
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
+import tmg.flashback.navigation.asNavigationDestination
 import tmg.flashback.navigation.navString
 import tmg.flashback.navigation.navStringRequired
 import tmg.flashback.privacypolicy.contract.PrivacyPolicy
@@ -287,10 +288,8 @@ fun AppGraph(
     }
 
     DisposableEffect(Unit) {
-        when (deeplink) {
-            "search" -> { navigator.navigate(Screen.Search) }
-            "rss" -> { navigator.navigate(Screen.RSS) }
-            else -> { }
+        deeplink?.let {
+            navigator.navigate(it.asNavigationDestination())
         }
         this.onDispose { }
     }

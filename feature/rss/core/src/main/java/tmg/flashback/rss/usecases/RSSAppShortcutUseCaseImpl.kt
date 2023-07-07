@@ -4,7 +4,10 @@ import android.content.Intent
 import android.net.Uri
 import tmg.flashback.appshortcuts.manager.AppShortcutManager
 import tmg.flashback.appshortcuts.models.ShortcutInfo
+import tmg.flashback.navigation.Deeplink.SCREEN_PARAM
+import tmg.flashback.navigation.Screen
 import tmg.flashback.rss.R
+import tmg.flashback.rss.contract.RSS
 import tmg.flashback.rss.contract.usecases.RSSAppShortcutUseCase
 import tmg.flashback.rss.repo.RssRepository
 import javax.inject.Inject
@@ -31,7 +34,7 @@ internal class RSSAppShortcutUseCaseImpl @Inject constructor(
             unavailableMessage = R.string.app_shortcut_rss_disabled,
             intentResolver = { context, homeClass ->
                 val intent = Intent(Intent.ACTION_MAIN, Uri.EMPTY, context, homeClass)
-                intent.putExtra("screen", "rss")
+                intent.putExtra(SCREEN_PARAM, Screen.RSS.route)
                 return@ShortcutInfo intent
             }
         )
