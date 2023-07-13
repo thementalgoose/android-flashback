@@ -289,7 +289,9 @@ fun AppGraph(
 
     DisposableEffect(Unit) {
         deeplink?.let {
-            navigator.navigate(it.asNavigationDestination())
+            if (it.isNotEmpty()) {
+                navigator.navigate(it.asNavigationDestination())
+            }
         }
         this.onDispose { }
     }
