@@ -62,7 +62,7 @@ class HomeActivity: BaseActivity(), SplashScreen.KeepOnScreenCondition {
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        deeplink = savedInstanceState.getString(SCREEN_PARAM, "")
+        deeplink = savedInstanceState.getString(SCREEN_PARAM)
         super.onRestoreInstanceState(savedInstanceState)
     }
 
