@@ -45,6 +45,7 @@ import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextTitle
 import tmg.flashback.ui.components.analytics.ScreenView
+import tmg.flashback.ui.components.drivers.DriverIcon
 import tmg.flashback.ui.components.drivers.DriverImage
 import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.flag.Flag
@@ -240,9 +241,10 @@ private fun DriverSummary(
         start = AppTheme.dimens.medium,
         end = AppTheme.dimens.medium
     )) {
-        DriverImage(
+        DriverIcon(
             photoUrl = model.data.driver.driver.photoUrl,
             number = model.data.driver.driver.number,
+            constructorColor = model.data.driver.constructor.colour,
             code = model.data.driver.driver.code,
             size = 96.dp
         )
