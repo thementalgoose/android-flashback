@@ -9,6 +9,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -143,9 +145,17 @@ private fun ConstructorStandings(
     modifier: Modifier = Modifier,
 ) {
     Row(
-        modifier = modifier.clickable(onClick = {
-            itemClicked(model)
-        }),
+        modifier = modifier
+            .drawBehind {
+                this.drawRect(
+                    color = model.standings.constructor.colour,
+                    size = Size(6.dp.toPx(), this.size.height)
+                )
+            }
+            .padding(start = 6.dp)
+            .clickable(onClick = {
+                itemClicked(model)
+            }),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         TextTitle(
