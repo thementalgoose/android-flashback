@@ -1,6 +1,7 @@
 package tmg.flashback.style.badge
 
 import androidx.annotation.DrawableRes
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -50,6 +51,7 @@ fun BadgesView(
 @Composable
 fun BadgeView(
     model: Badge,
+    tintIcon: Boolean = true,
     modifier: Modifier = Modifier
 ) {
     Row(modifier = modifier
@@ -62,12 +64,20 @@ fun BadgeView(
         verticalAlignment = Alignment.CenterVertically
     ) {
         if (model.icon != null) {
-            Icon(
-                painter = painterResource(id = model.icon),
-                contentDescription = null,
-                tint = AppTheme.colors.contentPrimary,
-                modifier = Modifier.size(16.dp)
-            )
+            if (tintIcon) {
+                Icon(
+                    painter = painterResource(id = model.icon),
+                    contentDescription = null,
+                    tint = AppTheme.colors.contentPrimary,
+                    modifier = Modifier.size(16.dp)
+                )
+            } else {
+                Image(
+                    painter = painterResource(id = model.icon),
+                    contentDescription = null,
+                    modifier = Modifier.size(16.dp)
+                )
+            }
             Spacer(Modifier.width(6.dp))
         }
         TextBody2(
