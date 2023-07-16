@@ -1,6 +1,7 @@
 package tmg.flashback.results.ui.dashboard.drivers
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -11,6 +12,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -31,6 +36,7 @@ import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextTitle
+import tmg.flashback.ui.components.drivers.DriverIcon
 import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.ui.components.header.Header
@@ -169,8 +175,16 @@ fun DriverStandings(
     maxPoints: Double,
     modifier: Modifier = Modifier,
 ) {
+    val constructorColor = model.standings.constructors.lastOrNull()?.constructor?.colour ?: AppTheme.colors.backgroundTertiary
     Row(
         modifier = modifier
+            .drawBehind {
+                this.drawRect(
+                    color = constructorColor,
+                    size = Size(6.dp.toPx(), this.size.height)
+                )
+            }
+            .padding(start = 6.dp)
             .clickable(onClick = {
                 itemClicked(model)
             }),
@@ -182,19 +196,11 @@ fun DriverStandings(
             textAlign = TextAlign.Center,
             modifier = Modifier.width(36.dp)
         )
-        Box(modifier = Modifier
-            .size(36.dp)
-            .clip(RoundedCornerShape(AppTheme.dimens.radiusSmall))
-            .background(AppTheme.colors.backgroundSecondary)
-        ) {
-            AsyncImage(
-                error = painterResource(id = R.drawable.unknown_avatar),
-                modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop,
-                model = model.standings.driver.photoUrl ?: R.drawable.unknown_avatar,
-                contentDescription = null
-            )
-        }
+        DriverIcon(
+            photoUrl = model.standings.driver.photoUrl,
+            constructorColor = constructorColor,
+            size = 40.dp
+        )
         Row(modifier = Modifier
             .padding(
                 top = AppTheme.dimens.small,

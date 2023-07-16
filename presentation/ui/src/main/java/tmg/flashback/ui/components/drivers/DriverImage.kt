@@ -52,7 +52,7 @@ fun DriverIcon(
         modifier = modifier
             .size(size + borderSize)
             .clip(CircleShape)
-            .background(constructorColor ?: AppTheme.colors.primary)
+            .background(constructorColor ?: AppTheme.colors.backgroundTertiary)
             .clickable(
                 enabled = driverClicked != null,
                 onClick = {

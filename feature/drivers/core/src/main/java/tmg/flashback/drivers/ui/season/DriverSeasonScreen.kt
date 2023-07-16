@@ -2,9 +2,11 @@ package tmg.flashback.drivers.ui.season
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -12,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
@@ -38,11 +41,13 @@ import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.badge.Badge
 import tmg.flashback.style.badge.BadgeView
+import tmg.flashback.style.buttons.ButtonSecondary
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextCaption
 import tmg.flashback.style.text.TextTitle
 import tmg.flashback.ui.components.analytics.ScreenView
+import tmg.flashback.ui.components.drivers.DriverIcon
 import tmg.flashback.ui.components.drivers.DriverImage
 import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.flag.Flag
@@ -53,6 +58,8 @@ import tmg.flashback.ui.components.navigation.PipeType
 import tmg.flashback.ui.components.progressbar.ProgressBar
 import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
 import tmg.flashback.ui.components.timeline.Timeline
+import tmg.flashback.ui.utils.DrawableUtils.getFlagResourceAlpha3
+import tmg.flashback.ui.utils.isInPreview
 import tmg.utilities.extensions.format
 import tmg.utilities.extensions.ordinalAbbreviation
 import kotlin.math.roundToInt
@@ -429,7 +436,7 @@ private fun Header(
     Column(modifier = modifier.padding(
         horizontal = AppTheme.dimens.medium
     )) {
-        DriverImage(
+        DriverIcon(
             photoUrl = model.driver.photoUrl,
             number = model.driver.number,
             code = model.driver.code,
@@ -438,27 +445,32 @@ private fun Header(
         Row(
             modifier = Modifier
                 .padding(top = 4.dp)
+                .horizontalScroll(rememberScrollState())
                 .fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
         ) {
-            Flag(
-                iso = model.driver.nationalityISO,
-                nationality = model.driver.nationality,
-                modifier = Modifier
-                    .size(16.dp)
-                    .align(Alignment.CenterVertically),
-            )
-            Spacer(Modifier.width(AppTheme.dimens.small))
+            val context = LocalContext.current
+            val resourceId = when (isInPreview()) {
+                true -> tmg.flashback.ui.R.drawable.gb
+                false -> context.getFlagResourceAlpha3(model.driver.nationalityISO)
+            }
+            BadgeView(model = Badge(label = model.driver.nationality, icon = resourceId), tintIcon = false)
 
-            val birthday = model.driver.dateOfBirth
-                .format("dd MMMM yyyy")
-                ?.let { birthday -> stringResource(id = R.string.driver_overview_stat_birthday, birthday) } ?: ""
-            TextBody1(
-                modifier = Modifier
-                    .padding(vertical = AppTheme.dimens.xsmall)
-                    .fillMaxWidth(),
-                text = "${model.driver.nationality} - $birthday"
+            Spacer(Modifier.width(AppTheme.dimens.small))
+            val birthday = model.driver.dateOfBirth.format("dd MMMM yyyy")!!
+            BadgeView(model = Badge(label = birthday, icon = R.drawable.ic_driver_birthday))
+
+            if (model.driver.code != null && model.driver.number != null) {
+                Spacer(Modifier.width(AppTheme.dimens.small))
+                BadgeView(model = Badge(label = "${model.driver.code} ${model.driver.number}", icon = R.drawable.ic_driver_code))
+            }
+        }
+        if (!model.driver.wikiUrl.isNullOrEmpty()) {
+            ButtonSecondary(
+                text = stringResource(id = R.string.details_link_wikipedia),
+                onClick = { linkClicked(model.driver.wikiUrl!!) },
             )
+            Spacer(Modifier.height(AppTheme.dimens.xsmall))
         }
     }
 }
