@@ -583,5 +583,6 @@ private fun DriverEntry.result() = DriverSeasonModel.Result(
     finished = 1,
     raceStatus = RaceStatus.from("Retired"),
     points = 10.0,
-    maxPoints = 25
+    maxPoints = 25,
+    isSprint = false
 )
