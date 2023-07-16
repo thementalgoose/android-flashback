@@ -32,6 +32,7 @@ internal class RoomModule {
             MIGRATION_7_8,
             MIGRATION_8_9,
             MIGRATION_9_10,
+            MIGRATION_10_11,
         )
         .build()
 
@@ -172,6 +173,15 @@ private val MIGRATION_9_10 = object : Migration(9, 10) {
         database.execSQL("ALTER TABLE Schedule ADD COLUMN temp_max_c REAL")
         database.execSQL("ALTER TABLE Schedule ADD COLUMN temp_min_c REAL")
         database.execSQL("ALTER TABLE Schedule ADD COLUMN weather_summary TEXT")
+        Log.i("Database", "Migrated DB from version $startVersion to $endVersion")
+    }
+}
+
+
+private val MIGRATION_10_11 = object : Migration(10, 11) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        database.execSQL("ALTER TABLE DriverSeasonRace RENAME COLUMN is_sprint_quali TO sprint_qualifying")
+        database.execSQL("ALTER TABLE DriverSeasonRace ADD COLUMN sprint_race INTEGER NOT NULL DEFAULT 0")
         Log.i("Database", "Migrated DB from version $startVersion to $endVersion")
     }
 }

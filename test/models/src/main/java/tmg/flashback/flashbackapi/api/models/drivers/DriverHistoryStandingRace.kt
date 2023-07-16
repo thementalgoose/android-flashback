@@ -8,7 +8,7 @@ import tmg.flashback.flashbackapi.api.models.races.model
 fun DriverHistoryStandingRace.Companion.model(
     constructor: Constructor = Constructor.model(),
     race: RaceData = RaceData.model(),
-    sprintQuali: Boolean? = true,
+    sprint: DriverHistoryStandingRaceSprint? = DriverHistoryStandingRaceSprint.model(),
     qualified: Int = 1,
     gridPos: Int? = 1,
     finished: Int = 1,
@@ -17,7 +17,7 @@ fun DriverHistoryStandingRace.Companion.model(
 ): DriverHistoryStandingRace = DriverHistoryStandingRace(
     constructor = constructor,
     race = race,
-    sprintQuali = sprintQuali,
+    sprint = sprint,
     qualified = qualified,
     gridPos = gridPos,
     finished = finished,

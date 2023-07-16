@@ -33,7 +33,7 @@ import tmg.flashback.domain.persistence.models.standings.DriverStanding
 import tmg.flashback.domain.persistence.models.standings.DriverStandingConstructor
 
 @Database(
-    version = 10,
+    version = 11,
     entities = [
         Circuit::class,
         CircuitRound::class,
