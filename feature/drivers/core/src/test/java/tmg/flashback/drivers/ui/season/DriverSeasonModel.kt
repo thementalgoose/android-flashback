@@ -64,8 +64,10 @@ fun DriverSeasonModel.Companion.resultModel(
     finished: Int? = 1,
     raceStatus: RaceStatus = RaceStatus.FINISHED,
     points: Double = 0.0,
-    maxPoints: Int = 25
+    maxPoints: Int = 25,
+    isSprint: Boolean = true
 ): DriverSeasonModel.Result = DriverSeasonModel.Result(
+    isSprint = isSprint,
     season = season,
     round = round,
     raceName = raceName,

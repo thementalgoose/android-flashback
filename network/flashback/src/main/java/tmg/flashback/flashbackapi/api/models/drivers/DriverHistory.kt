@@ -31,12 +31,21 @@ data class DriverHistoryStanding(
 data class DriverHistoryStandingRace(
     val constructor: Constructor,
     val race: RaceData,
-    val sprintQuali: Boolean?,
+    val sprint: DriverHistoryStandingRaceSprint?,
     val qualified: Int?,
     val gridPos: Int?,
     val finished: Int,
     val status: String,
     val points: Double
+) {
+    companion object
+}
+
+@Keep
+@Serializable
+data class DriverHistoryStandingRaceSprint(
+    val qualifying: Boolean = false,
+    val race: Boolean = false
 ) {
     companion object
 }

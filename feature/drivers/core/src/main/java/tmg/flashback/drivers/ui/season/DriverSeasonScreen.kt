@@ -318,31 +318,32 @@ private fun Result(
             }
         )
         .padding(
-            top = AppTheme.dimens.xsmall,
-            bottom = AppTheme.dimens.xsmall,
             end = AppTheme.dimens.medium
         )
     ) {
         Column(
             Modifier.weight(1f)
         ) {
-            RaceInfo(
-                raceName = model.raceName,
-                raceCountryISO = model.raceCountryISO,
-                constructorColor = model.constructor.colour.copy(alpha = 0.2f),
-                circuitName = model.circuitName,
-                constructor = model.constructor,
-                round = model.round
-            )
-            if (model.showConstructorLabel) {
-                TextCaption(
-                    modifier = Modifier
-                        .padding(
-                            start = 48.dp,
-                            bottom = AppTheme.dimens.xsmall
-                        )
-                        .fillMaxWidth(),
-                    text = model.constructor.name
+            if (model.isSprint) {
+                SprintInfo(
+                    raceName = model.raceName,
+                    raceCountryISO = model.raceCountryISO,
+                    constructorColor = model.constructor.colour,
+                    circuitName = model.circuitName,
+                    country = model.raceCountry,
+                    constructor = model.constructor,
+                    round = model.round,
+                    showConstructorLabel = model.showConstructorLabel
+                )
+            } else {
+                RaceInfo(
+                    raceName = model.raceName,
+                    raceCountryISO = model.raceCountryISO,
+                    constructorColor = model.constructor.colour,
+                    circuitName = model.circuitName,
+                    constructor = model.constructor,
+                    round = model.round,
+                    showConstructorLabel = model.showConstructorLabel
                 )
             }
         }
@@ -483,6 +484,7 @@ private fun RaceInfo(
     circuitName: String,
     constructorColor: Color,
     constructor: Constructor,
+    showConstructorLabel: Boolean,
     round: Int?,
     modifier: Modifier = Modifier,
 ) {
@@ -510,7 +512,10 @@ private fun RaceInfo(
         }
         Column(modifier = Modifier
             .weight(1f)
-            .padding(vertical = 3.dp)
+            .padding(
+                top = 3.dp,
+                bottom = AppTheme.dimens.small
+            )
         ) {
             Row(modifier = Modifier.height(IntrinsicSize.Min)) {
                 TextTitle(
@@ -531,6 +536,77 @@ private fun RaceInfo(
                 Spacer(Modifier.width(AppTheme.dimens.small))
                 TextBody2(text = circuitName)
             }
+
+            if (showConstructorLabel) {
+                TextCaption(
+                    modifier = Modifier
+                        .padding(
+                            top = AppTheme.dimens.xsmall,
+                            bottom = AppTheme.dimens.xsmall
+                        )
+                        .fillMaxWidth(),
+                    text = constructor.name
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun SprintInfo(
+    raceName: String,
+    raceCountryISO: String,
+    circuitName: String,
+    country: String,
+    constructorColor: Color,
+    constructor: Constructor,
+    showConstructorLabel: Boolean,
+    round: Int?,
+    modifier: Modifier = Modifier,
+) {
+
+    Row(modifier = modifier
+        .height(IntrinsicSize.Min)
+    ) {
+        Box(modifier = Modifier
+            .fillMaxHeight()
+            .width(colorIndicator)
+            .background(constructorColor)
+        )
+        if (round != null) {
+            TextTitle(
+                modifier = Modifier
+                    .width(36.dp)
+                    .padding(horizontal = AppTheme.dimens.xsmall)
+                    .align(Alignment.CenterVertically),
+                bold = true,
+                textAlign = TextAlign.Center,
+                text = ""
+            )
+        } else {
+            Spacer(Modifier.width(AppTheme.dimens.medium - colorIndicator))
+        }
+        Column(modifier = Modifier
+            .weight(1f)
+            .padding(
+                top = 6.dp,
+                bottom = AppTheme.dimens.medium
+            )
+        ) {
+            BadgeView(model = Badge(label = stringResource(id = R.string.nav_sprint)))
+            Spacer(Modifier.height(AppTheme.dimens.xsmall))
+            if (showConstructorLabel) {
+                TextCaption(
+                    modifier = Modifier
+                        .padding(
+                            start = AppTheme.dimens.small,
+                            top = AppTheme.dimens.xsmall,
+                            bottom = AppTheme.dimens.xsmall
+                        )
+                        .fillMaxWidth(),
+                    text = constructor.name
+                )
+            }
         }
     }
 }
@@ -547,7 +623,9 @@ private fun Preview(
                 fakeStat,
                 driverConstructor.racedFor(),
                 DriverSeasonModel.ResultHeader,
-                driverConstructor.result()
+                driverConstructor.result(round = 1),
+                driverConstructor.result(round = 1, isSprint = true, showConstructorLabel = false),
+                driverConstructor.result(round = 2)
             ),
             driverName = "firstName lastName",
             season = 2020,
@@ -574,20 +652,25 @@ private fun DriverEntry.racedFor() = DriverSeasonModel.RacedFor(
     constructors = constructor,
     isChampionship = false
 )
-private fun DriverEntry.result() = DriverSeasonModel.Result(
+private fun DriverEntry.result(
+    isSprint: Boolean = false,
+    round: Int = 1,
+    showConstructorLabel: Boolean = true
+) = DriverSeasonModel.Result(
     season = 2020,
-    round = 1,
+    round = round,
     raceName = "raceName",
     circuitName = "circuitName",
     circuitId = "circuitId",
     raceCountry = "country",
     raceCountryISO = "countryISO",
     date = LocalDate.now(),
-    showConstructorLabel = true,
+    showConstructorLabel = showConstructorLabel,
     constructor = this.constructor,
     qualified = 2,
     finished = 1,
-    raceStatus = RaceStatus.from("Retired"),
+    raceStatus = RaceStatus.from("Finished"),
     points = 10.0,
-    maxPoints = 25
+    maxPoints = 25,
+    isSprint = isSprint
 )
