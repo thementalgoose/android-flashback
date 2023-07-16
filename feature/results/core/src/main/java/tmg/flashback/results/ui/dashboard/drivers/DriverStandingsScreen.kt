@@ -199,7 +199,7 @@ fun DriverStandings(
         DriverIcon(
             photoUrl = model.standings.driver.photoUrl,
             constructorColor = constructorColor,
-            size = 48.dp
+            size = 40.dp
         )
         Row(modifier = Modifier
             .padding(
