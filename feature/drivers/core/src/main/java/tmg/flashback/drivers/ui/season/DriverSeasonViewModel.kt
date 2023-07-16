@@ -169,6 +169,7 @@ class DriverSeasonViewModel @Inject constructor(
                         .raceOverview
                         .map {
                             DriverSeasonModel.Result(
+                                isSprint = it.isSprint,
                                 season = it.raceInfo.season,
                                 round = it.raceInfo.round,
                                 raceName = it.raceInfo.name,
@@ -186,6 +187,7 @@ class DriverSeasonViewModel @Inject constructor(
                                 maxPoints = Formula1.maxDriverPointsBySeason(it.raceInfo.season)
                             )
                         }
+                        .sortedBy { it.isSprint }
                         .sortedBy { it.round }
                     )
                 }

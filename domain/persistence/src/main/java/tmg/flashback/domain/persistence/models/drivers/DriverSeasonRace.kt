@@ -14,8 +14,10 @@ data class DriverSeasonRace(
     val round: Int,
     @ColumnInfo(name = "constructor_id")
     val constructorId: String,
-    @ColumnInfo(name = "is_sprint_quali")
-    val sprintQuali: Boolean,
+    @ColumnInfo(name = "sprint_qualifying")
+    val sprintQualifying: Boolean,
+    @ColumnInfo(name = "sprint_race")
+    val sprintRace: Boolean,
     @ColumnInfo(name = "qualified")
     val qualified: Int?,
     @ColumnInfo(name = "gridPos")
@@ -28,11 +30,21 @@ data class DriverSeasonRace(
     val points: Double,
     @PrimaryKey
     @ColumnInfo(name = "id")
-    val id: String = "${driverId}_${season}_${round}",
+    val id: String = "${driverId}_${season}_${round}${pkSprint(sprintQualifying, sprintRace)}",
     @ColumnInfo(name = "driver_season_id")
     val driverSeasonId: String = "${driverId}_${season}",
     @ColumnInfo(name = "season_round_id")
     val seasonRoundId: String = "${season}_${round}"
 ) {
-    companion object
+    companion object {
+        private fun pkSprint(
+            sprintQualifying: Boolean,
+            sprintRace: Boolean
+        ): String = when {
+            sprintQualifying && sprintRace -> "_sprint_qr"
+            sprintQualifying -> "_sprint_q"
+            sprintRace -> "_sprint_r"
+            else -> ""
+        }
+    }
 }

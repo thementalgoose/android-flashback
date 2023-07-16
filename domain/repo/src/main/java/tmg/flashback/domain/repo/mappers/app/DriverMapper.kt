@@ -40,6 +40,7 @@ class DriverMapper @Inject constructor(
 
     private fun mapDriverSeasonRace(data: DriverSeasonRaceWithConstructor): DriverHistorySeasonRace {
         return DriverHistorySeasonRace(
+            isSprint = data.race.sprintRace || data.race.sprintQualifying,
             status = RaceStatus.from(data.race.status),
             finished = data.race.finished,
             points = data.race.points,

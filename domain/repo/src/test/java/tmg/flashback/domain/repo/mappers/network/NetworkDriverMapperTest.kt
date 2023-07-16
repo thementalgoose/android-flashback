@@ -43,8 +43,9 @@ internal class NetworkDriverMapperTest {
     fun `mapDriverSeasonRace null sprint quali defaults to false`() {
         val inputDriverId: String = "driverId"
         val inputSeason: Int = 2020
-        val inputData = DriverHistoryStandingRace.model(sprintQuali = null)
+        val inputData = DriverHistoryStandingRace.model(sprint = null)
 
-        assertFalse(sut.mapDriverSeasonRace(inputDriverId, inputSeason, inputData).sprintQuali)
+        assertFalse(sut.mapDriverSeasonRace(inputDriverId, inputSeason, inputData).sprintRace)
+        assertFalse(sut.mapDriverSeasonRace(inputDriverId, inputSeason, inputData).sprintQualifying)
     }
 }
