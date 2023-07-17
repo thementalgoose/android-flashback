@@ -21,8 +21,12 @@ import kotlinx.coroutines.launch
 import tmg.flashback.constructors.R
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.domain.repo.ConstructorRepository
+import tmg.flashback.drivers.contract.DriverSeason
+import tmg.flashback.drivers.contract.with
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.ConstructorHistorySeason
+import tmg.flashback.navigation.Navigator
+import tmg.flashback.navigation.Screen
 import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.utilities.extensions.ordinalAbbreviation
 import javax.inject.Inject
@@ -30,6 +34,7 @@ import javax.inject.Inject
 interface ConstructorSeasonViewModelInputs {
     fun setup(constructorId: String, season: Int)
     fun openUrl(url: String)
+    fun driverClicked(model: ConstructorSeasonModel.Driver, season: Int)
     fun refresh()
 }
 
@@ -43,6 +48,7 @@ class ConstructorSeasonViewModel @Inject constructor(
     private val constructorRepository: ConstructorRepository,
     private val networkConnectivityManager: NetworkConnectivityManager,
     private val openWebpageUseCase: OpenWebpageUseCase,
+    private val navigator: Navigator,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), ConstructorSeasonViewModelInputs, ConstructorSeasonViewModelOutputs {
 
@@ -143,6 +149,14 @@ class ConstructorSeasonViewModel @Inject constructor(
                 showLoading.value = false
             }
         }
+    }
+
+    override fun driverClicked(model: ConstructorSeasonModel.Driver, season: Int) {
+        navigator.navigate(Screen.DriverSeason.with(
+            driverId = model.data.driver.driver.id,
+            driverName = model.data.driver.driver.name,
+            season = season
+        ))
     }
 
     /**

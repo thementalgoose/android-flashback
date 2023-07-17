@@ -2,6 +2,7 @@ package tmg.flashback.constructors.ui.season
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -81,6 +82,7 @@ fun ConstructorSeasonScreenVM(
             constructorName = constructorName,
             season = season,
             actionUpClicked = actionUpClicked,
+            driverClicked = viewModel.inputs::driverClicked,
             linkClicked = viewModel.inputs::openUrl
         )
     }
@@ -91,6 +93,7 @@ fun ConstructorSeasonScreen(
     list: List<ConstructorSeasonModel>,
     constructorName: String,
     season: Int,
+    driverClicked: (ConstructorSeasonModel.Driver, Int) -> Unit,
     linkClicked: (String) -> Unit,
     actionUpClicked: () -> Unit
 ) {
@@ -116,7 +119,11 @@ fun ConstructorSeasonScreen(
                         )
                     }
                     is ConstructorSeasonModel.Driver -> {
-                        DriverSummary(model = it)
+                        DriverSummary(
+                            model = it,
+                            driverClicked = driverClicked,
+                            season = season,
+                        )
                     }
                     is ConstructorSeasonModel.Message -> {
                         Message(title = stringResource(id = it.label, *it.args.toTypedArray()))
@@ -233,14 +240,21 @@ private fun Stat(
 @Composable
 private fun DriverSummary(
     model: ConstructorSeasonModel.Driver,
+    driverClicked: (ConstructorSeasonModel.Driver, Int) -> Unit,
+    season: Int,
     modifier: Modifier = Modifier
 ) {
-    Row(modifier = modifier.padding(
-        top = AppTheme.dimens.large,
-        bottom = AppTheme.dimens.small,
-        start = AppTheme.dimens.medium,
-        end = AppTheme.dimens.medium
-    )) {
+    Row(modifier = modifier
+        .clickable {
+            driverClicked(model, season)
+        }
+        .padding(
+            top = AppTheme.dimens.large,
+            bottom = AppTheme.dimens.small,
+            start = AppTheme.dimens.medium,
+            end = AppTheme.dimens.medium
+        )
+    ) {
         DriverIcon(
             photoUrl = model.data.driver.driver.photoUrl,
             number = model.data.driver.driver.number,
@@ -315,6 +329,7 @@ private fun Preview(
             constructorName = "name",
             season = 2020,
             linkClicked = { },
+            driverClicked = { _, _ -> },
             list = listOf(
                 fakeStat,
                 fakeStatWinning,
