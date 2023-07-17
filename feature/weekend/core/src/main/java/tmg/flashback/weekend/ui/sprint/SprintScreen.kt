@@ -125,7 +125,7 @@ private fun DriverResult(
     driverClicked: (DriverEntry) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Row(modifier = modifier.status(model.status)) {
+    Row(modifier = modifier.status(model.status, AppTheme.colors.backgroundSecondary)) {
         DriverInfoWithIcon(
             modifier = Modifier
                 .weight(1f),
