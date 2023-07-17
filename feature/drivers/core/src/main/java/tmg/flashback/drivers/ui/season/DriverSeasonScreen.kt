@@ -454,7 +454,7 @@ private fun Header(
                 true -> tmg.flashback.ui.R.drawable.gb
                 false -> context.getFlagResourceAlpha3(model.driver.nationalityISO)
             }
-            BadgeView(model = Badge(label = model.driver.nationality, icon = resourceId), tintIcon = false)
+            BadgeView(model = Badge(label = model.driver.nationality, icon = resourceId), tintIcon = null)
 
             Spacer(Modifier.width(AppTheme.dimens.small))
             val birthday = model.driver.dateOfBirth.format("dd MMMM yyyy")!!
