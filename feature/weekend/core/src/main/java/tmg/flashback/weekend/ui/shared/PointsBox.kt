@@ -8,11 +8,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.text.TextBody1
+import tmg.flashback.ui.utils.pluralResource
+import tmg.flashback.weekend.R
+import kotlin.math.roundToInt
 
 
 internal val pointsWidth: Dp = 64.dp
@@ -24,13 +29,17 @@ fun PointsBox(
     modifier: Modifier = Modifier,
     maxPoints: Double = 60.0
 ) {
+    val pointsLabel = pluralResource(resId = R.plurals.race_points, quantity = points.roundToInt(), points.pointsDisplay())
     Box(modifier = modifier
         .width(pointsWidth)
         .padding(top = AppTheme.dimens.medium)
+        .clearAndSetSemantics {
+            this.contentDescription = pointsLabel
+        }
     ) {
         TextBody1(
             modifier = modifier.align(Alignment.Center),
-            text = points.pointsDisplay()
+            text = points.pointsDisplay(),
         )
     }
 //    val progress = (points / maxPoints).toFloat().coerceIn(0f, 1f)
