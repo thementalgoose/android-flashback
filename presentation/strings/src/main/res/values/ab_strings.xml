@@ -14,6 +14,9 @@
     <string name="ab_close">Close</string>
     <string name="ab_back">Back</string>
 
+    <string name="ab_points">Points</string>
+    <string name="ab_status">Status</string>
+
     <string name="ab_result_race_overview">%s, %s, driving for %s</string>
     <string name="ab_result_qualifying_overview">%s, driving for %s, qualified P %s</string>
     <string name="ab_result_qualifying_overview_dnq">%s, driving for %s, did not qualify</string>

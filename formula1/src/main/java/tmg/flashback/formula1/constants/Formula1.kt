@@ -42,11 +42,18 @@ object Formula1 {
      */
     fun maxDriverPointsBySeason(season: Int): Int {
         return when {
-            season >= 2022 -> 35
-            season >= 2021 -> 28
-            season >= 2010 -> 25
-            season >= 1991 -> 10
+            season >= 2010 -> 26
+            season >= 1991 -> 11
             else -> 8
+        }
+    }
+    fun maxTeamPointsBySeason(season: Int): Int {
+        return when {
+            season >= 2022 -> 60
+            season >= 2021 -> 47
+            season >= 2010 -> 42
+            season >= 1991 -> 19
+            else -> 14
         }
     }
 
