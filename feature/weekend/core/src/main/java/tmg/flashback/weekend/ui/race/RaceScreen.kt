@@ -35,6 +35,7 @@ import tmg.flashback.style.buttons.ButtonSecondarySegments
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextTitle
+import tmg.flashback.ui.components.constructorIndicator
 import tmg.flashback.ui.components.drivers.DriverIcon
 import tmg.flashback.ui.components.drivers.DriverName
 import tmg.flashback.ui.components.drivers.driverIconSize
@@ -44,7 +45,6 @@ import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.navigation.appBarHeight
 import tmg.flashback.ui.components.progressbar.ProgressBar
 import tmg.flashback.weekend.R
-import tmg.flashback.weekend.ui.shared.ConstructorIndicator
 import tmg.flashback.weekend.ui.shared.DriverPoints
 import tmg.flashback.weekend.ui.shared.finishingPositionWidth
 import tmg.utilities.extensions.ordinalAbbreviation
@@ -141,10 +141,9 @@ private fun Result(
         model.entry.driver.name,
         model.entry.constructor.name
     ) + fastestLap
-    Row(modifier = modifier
-        .height(IntrinsicSize.Min)
+    Row(modifier = Modifier
+        .constructorIndicator(model.entry.constructor.colour)
     ) {
-        ConstructorIndicator(constructor = model.entry.constructor)
         Row(modifier = Modifier
             .weight(1f)
             .semantics(mergeDescendants = true) { }
@@ -203,10 +202,6 @@ private fun Result(
             status = model.status,
             position = model.finish
         )
-//        RelativePosition(
-//            delta = model.finish - (model.grid ?: 0),
-//            modifier = Modifier.width(48.dp)
-//        )
     }
 }
 
@@ -294,7 +289,7 @@ private fun ConstructorResult(
 
     Row(
         modifier = modifier
-            .height(IntrinsicSize.Min)
+            .constructorIndicator(colour = model.constructor.colour)
             .semantics(mergeDescendants = true) { }
             .clearAndSetSemantics {
                 this.contentDescription = contentDescription + drivers
@@ -304,7 +299,6 @@ private fun ConstructorResult(
             }),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        ConstructorIndicator(constructor = model.constructor)
         Box(Modifier.size(finishingPositionWidth, driverIconSize)) {
             TextTitle(
                 modifier = Modifier
