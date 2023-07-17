@@ -47,6 +47,7 @@ import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextCaption
 import tmg.flashback.style.text.TextTitle
 import tmg.flashback.ui.components.analytics.ScreenView
+import tmg.flashback.ui.components.constructorIndicator
 import tmg.flashback.ui.components.drivers.DriverIcon
 import tmg.flashback.ui.components.drivers.DriverImage
 import tmg.flashback.ui.components.errors.NetworkError
@@ -566,13 +567,8 @@ private fun SprintInfo(
 ) {
 
     Row(modifier = modifier
-        .height(IntrinsicSize.Min)
+        .constructorIndicator(constructorColor)
     ) {
-        Box(modifier = Modifier
-            .fillMaxHeight()
-            .width(colorIndicator)
-            .background(constructorColor)
-        )
         if (round != null) {
             TextTitle(
                 modifier = Modifier
@@ -594,8 +590,8 @@ private fun SprintInfo(
             )
         ) {
             BadgeView(model = Badge(label = stringResource(id = R.string.nav_sprint)))
-            Spacer(Modifier.height(AppTheme.dimens.xsmall))
             if (showConstructorLabel) {
+                Spacer(Modifier.height(AppTheme.dimens.xsmall))
                 TextCaption(
                     modifier = Modifier
                         .padding(
