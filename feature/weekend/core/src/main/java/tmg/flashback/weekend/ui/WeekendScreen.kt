@@ -158,6 +158,7 @@ fun WeekendScreenVM(
                             }
                             WeekendNavItem.SPRINT -> {
                                 sprint(
+                                    season = weekendInfo.season,
                                     showSprintType = sprintVM.inputs::show,
                                     sprintResultType = sprintResultType.value,
                                     list = sprintList.value,
@@ -167,6 +168,7 @@ fun WeekendScreenVM(
                             }
                             WeekendNavItem.RACE -> {
                                 race(
+                                    season = weekendInfo.season,
                                     showRaceType = raceVM.inputs::show,
                                     raceResultType = raceResultType.value,
                                     list = raceList.value,

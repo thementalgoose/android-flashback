@@ -23,6 +23,7 @@ import tmg.flashback.drivers.contract.with
 import tmg.flashback.formula1.constants.Formula1
 import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.Driver
+import tmg.flashback.formula1.model.DriverEntry
 import tmg.flashback.formula1.model.Race
 import tmg.flashback.formula1.model.RaceResult
 import tmg.flashback.navigation.Navigator
@@ -33,7 +34,7 @@ import javax.inject.Inject
 interface RaceViewModelInputs {
     fun load(season: Int, round: Int)
     fun show(raceResultType: RaceResultType)
-    fun clickDriver(result: RaceResult)
+    fun clickDriver(result: DriverEntry)
     fun clickConstructor(constructor: Constructor)
 }
 
@@ -138,12 +139,12 @@ class RaceViewModel @Inject constructor(
         )
     }
 
-    override fun clickDriver(result: RaceResult) {
+    override fun clickDriver(result: DriverEntry) {
         val season = seasonRound.value?.first ?: return
         navigator.navigate(
             Screen.DriverSeason.with(
-            driverId = result.entry.driver.id,
-            driverName = result.entry.driver.name,
+            driverId = result.driver.id,
+            driverName = result.driver.name,
             season = season
         ))
     }

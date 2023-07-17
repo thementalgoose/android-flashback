@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -51,7 +52,7 @@ fun BadgesView(
 @Composable
 fun BadgeView(
     model: Badge,
-    tintIcon: Boolean = true,
+    tintIcon: Color? = AppTheme.colors.contentPrimary,
     modifier: Modifier = Modifier
 ) {
     Row(modifier = modifier
@@ -64,11 +65,11 @@ fun BadgeView(
         verticalAlignment = Alignment.CenterVertically
     ) {
         if (model.icon != null) {
-            if (tintIcon) {
+            if (tintIcon != null) {
                 Icon(
                     painter = painterResource(id = model.icon),
                     contentDescription = null,
-                    tint = AppTheme.colors.contentPrimary,
+                    tint = tintIcon,
                     modifier = Modifier.size(16.dp)
                 )
             } else {

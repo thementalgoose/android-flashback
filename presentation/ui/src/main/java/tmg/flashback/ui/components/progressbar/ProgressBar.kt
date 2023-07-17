@@ -71,7 +71,7 @@ fun ProgressBar(
                 durationMillis = animationDuration,
                 easing = FastOutSlowInEasing,
                 delayMillis = 0
-            )
+            ), label = ""
         ).value
 
         Box(
