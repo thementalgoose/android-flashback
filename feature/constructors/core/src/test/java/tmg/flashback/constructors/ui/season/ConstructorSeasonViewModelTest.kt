@@ -233,7 +233,7 @@ internal class ConstructorSeasonViewModelTest: BaseTest() {
         initSUT()
         sut.inputs.driverClicked(ConstructorSeasonModel.driverModel(), 2020)
 
-        val expected = Screen.DriverSeason.with("driverId", "driverName", 2020)
+        val expected = Screen.DriverSeason.with("driverId", "firstName lastName", 2020)
         verify {
             mockNavigator.navigate(expected)
         }
