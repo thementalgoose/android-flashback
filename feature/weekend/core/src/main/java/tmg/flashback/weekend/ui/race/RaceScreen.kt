@@ -1,16 +1,18 @@
+@file:OptIn(ExperimentalFoundationApi::class)
+
 package tmg.flashback.weekend.ui.race
 
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
@@ -18,10 +20,11 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import tmg.flashback.formula1.enums.RaceStatus
+import tmg.flashback.formula1.constants.Formula1
 import tmg.flashback.formula1.enums.isStatusFinished
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.Constructor
+import tmg.flashback.formula1.model.DriverEntry
 import tmg.flashback.formula1.model.FastestLap
 import tmg.flashback.formula1.model.LapTime
 import tmg.flashback.formula1.model.RaceResult
@@ -29,35 +32,31 @@ import tmg.flashback.providers.RaceRaceResultProvider
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
-import tmg.flashback.style.badge.Badge
-import tmg.flashback.style.badge.BadgeView
 import tmg.flashback.style.buttons.ButtonSecondarySegments
-import tmg.flashback.style.text.TextBody1
-import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextTitle
 import tmg.flashback.ui.components.constructorIndicator
-import tmg.flashback.ui.components.drivers.DriverIcon
-import tmg.flashback.ui.components.drivers.DriverName
 import tmg.flashback.ui.components.drivers.driverIconSize
 import tmg.flashback.ui.components.errors.NotAvailable
 import tmg.flashback.ui.components.errors.NotAvailableYet
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.navigation.appBarHeight
-import tmg.flashback.ui.components.progressbar.ProgressBar
 import tmg.flashback.weekend.R
+import tmg.flashback.weekend.ui.shared.DriverInfoWithIcon
 import tmg.flashback.weekend.ui.shared.DriverPoints
+import tmg.flashback.weekend.ui.shared.PointsBox
+import tmg.flashback.weekend.ui.shared.RaceHeader
+import tmg.flashback.weekend.ui.shared.Time
 import tmg.flashback.weekend.ui.shared.finishingPositionWidth
+import tmg.flashback.weekend.ui.shared.status
+import tmg.flashback.weekend.ui.shared.timeWidth
 import tmg.utilities.extensions.ordinalAbbreviation
-import kotlin.math.roundToInt
-
-private val timeWidth = 88.dp
-private val pointsWidth = 56.dp
 
 internal fun LazyListScope.race(
     list: List<RaceModel>,
+    season: Int,
     raceResultType: RaceResultType,
     showRaceType: (RaceResultType) -> Unit,
-    driverClicked: (RaceResult) -> Unit,
+    driverClicked: (DriverEntry) -> Unit,
     constructorClicked: (Constructor) -> Unit
 ) {
     item {
@@ -73,31 +72,37 @@ internal fun LazyListScope.race(
             showTick = true
         )
     }
+    item {
+        RaceHeader(
+            showPoints = true,
+            showStatus = raceResultType == RaceResultType.DRIVERS
+        )
+    }
     items(list, key = { it.id }) {
         when (it) {
             is RaceModel.DriverPodium -> {
                 Column(Modifier.fillMaxWidth()) {
                     Result(
                         model = it.p1,
+                        season = season,
                         driverClicked = driverClicked
                     )
                     Result(
                         model = it.p2,
+                        season = season,
                         driverClicked = driverClicked
                     )
                     Result(
                         model = it.p3,
+                        season = season,
                         driverClicked = driverClicked
                     )
                 }
-//                Podium(
-//                    model = it,
-//                    driverClicked = driverClicked
-//                )
             }
             is RaceModel.DriverResult -> {
                 Result(
                     model = it.result,
+                    season = season,
                     driverClicked = driverClicked
                 )
             }
@@ -126,152 +131,39 @@ internal fun LazyListScope.race(
 @Composable
 private fun Result(
     model: RaceResult,
-    driverClicked: (RaceResult) -> Unit,
+    season: Int,
+    driverClicked: (DriverEntry) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val fastestLap = if (model.fastestLap?.rank == 1) {
-        ". ${stringResource(tmg.flashback.formula1.R.string.ab_result_fastest_lap)}"
-    } else {
-        "."
-    }
+    Row(modifier = modifier.status(model.status, AppTheme.colors.backgroundSecondary)) {
+        DriverInfoWithIcon(
+            modifier = Modifier
+                .weight(1f),
+            entry = model.entry,
+            position = model.finish,
+            driverClicked = driverClicked,
+            fastestLap = model.fastestLap?.rank == 1
+        )
 
-    val contentDescription = stringResource(
-        R.string.ab_result_race_overview,
-        model.finish.ordinalAbbreviation,
-        model.entry.driver.name,
-        model.entry.constructor.name
-    ) + fastestLap
-    Row(modifier = Modifier
-        .constructorIndicator(model.entry.constructor.colour)
-    ) {
-        Row(modifier = Modifier
-            .weight(1f)
-            .semantics(mergeDescendants = true) { }
-            .clickable(
-                enabled = true,
-                onClick = { driverClicked(model) }
-            )
-            .clearAndSetSemantics { this.contentDescription = contentDescription }
-            .padding(vertical = AppTheme.dimens.xsmall)
+        Box(
+            modifier = Modifier
+                .width(timeWidth)
+                .padding(top = AppTheme.dimens.medium)
         ) {
-            Box(Modifier.size(finishingPositionWidth, driverIconSize)) {
-                TextTitle(
-                    modifier = Modifier
-                        .align(Alignment.Center)
-                        .padding(
-                            horizontal = AppTheme.dimens.xsmall,
-                            vertical = AppTheme.dimens.medium
-                        ),
-                    bold = true,
-                    textAlign = TextAlign.Center,
-                    text = model.finish.toString()
-                )
-            }
-            DriverIcon(
-                photoUrl = model.entry.driver.photoUrl,
-                number = model.entry.driver.number,
-                code = model.entry.driver.code,
-                constructorColor = model.entry.constructor.colour,
-                driverClicked = null
-            )
-            Column(
+            Time(
                 modifier = Modifier
-                    .padding(
-                        top = AppTheme.dimens.small,
-                        start = AppTheme.dimens.small,
-                        end = AppTheme.dimens.small,
-                    )
-                    .fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(4.dp)
-            ) {
-                DriverName(
-                    firstName = model.entry.driver.firstName,
-                    lastName = model.entry.driver.lastName
-                )
-                TextBody2(text = model.entry.constructor.name)
-                if (model.fastestLap?.rank == 1) {
-                    BadgeView(model = Badge(stringResource(id = R.string.ab_fastest_lap)))
-                }
-            }
+                    .align(Alignment.Center),
+                lapTime = model.time,
+                status = model.status
+            )
         }
-        Points(
-            points = model.points
-        )
-        Time(
-            lapTime = model.time,
-            status = model.status,
-            position = model.finish
-        )
-    }
-}
 
-@Composable
-private fun Time(
-    lapTime: LapTime?,
-    status: RaceStatus,
-    position: Int,
-    modifier: Modifier = Modifier
-) {
-    val contentDescription = when {
-        lapTime?.noTime == false && position == 1 -> stringResource(id = R.string.ab_result_finish_p1, lapTime.time)
-        lapTime?.noTime == false-> stringResource(id = R.string.ab_result_finish_time, "+${lapTime.contentDescription}")
-        status.isStatusFinished() -> status.label
-        else -> stringResource(id = R.string.ab_result_finish_dnf, status.label)
-    }
-    Box(modifier = modifier
-        .size(timeWidth, driverIconSize)
-        .semantics(mergeDescendants = true) { }
-        .clearAndSetSemantics {
-            this.contentDescription = contentDescription
-        }
-    ) {
-        TextBody2(
-            modifier = Modifier.align(Alignment.Center),
-            textAlign = TextAlign.Center,
-            maxLines = 2,
-            text = when {
-                lapTime?.noTime == false && position == 1 -> lapTime.time
-                lapTime?.noTime == false -> "+${lapTime.time}"
-                status.isStatusFinished() -> status.label
-                else -> "${stringResource(id = R.string.race_status_retired)}\n${status.label}"
-            },
+        PointsBox(
+            points = model.points,
+            maxPoints = Formula1.maxDriverPointsBySeason(season).toDouble(),
+            colour = model.entry.constructor.colour,
         )
     }
-}
-
-@Composable
-private fun Points(
-    points: Double,
-    modifier: Modifier = Modifier
-) {
-    val pointsLabel = points.takeIf { it != 0.0 }?.pointsDisplay() ?: ""
-    val contentDescription = pluralStringResource(id = R.plurals.race_points, count = points.roundToInt(), pointsLabel)
-    Box(modifier = modifier
-        .semantics(mergeDescendants = true) { }
-        .clearAndSetSemantics { this.contentDescription = contentDescription }
-        .size(pointsWidth, driverIconSize)
-    ) {
-        TextBody1(
-            modifier = Modifier.align(Alignment.Center),
-            bold = true,
-            textAlign = TextAlign.Center,
-            text = pointsLabel,
-        )
-    }
-}
-
-@Composable
-internal fun FastestLap(
-    modifier: Modifier = Modifier
-) {
-    Icon(
-        painter = painterResource(id = R.drawable.ic_fastest_lap),
-        contentDescription = stringResource(id = R.string.ab_fastest_lap),
-        modifier = modifier
-            .padding(top = 4.dp)
-            .size(14.dp),
-        tint = AppTheme.colors.f1FastestSector
-    )
 }
 
 @Composable
@@ -297,7 +189,7 @@ private fun ConstructorResult(
             .clickable(onClick = {
                 itemClicked(model.constructor)
             }),
-        verticalAlignment = Alignment.CenterVertically,
+        verticalAlignment = Alignment.Top,
     ) {
         Box(Modifier.size(finishingPositionWidth, driverIconSize)) {
             TextTitle(
@@ -315,7 +207,6 @@ private fun ConstructorResult(
         Row(modifier = Modifier
             .padding(
                 top = AppTheme.dimens.small,
-                end = AppTheme.dimens.medium,
                 bottom = AppTheme.dimens.small
             )
         ) {
@@ -334,20 +225,10 @@ private fun ConstructorResult(
                 }
             }
             Spacer(Modifier.width(AppTheme.dimens.small))
-            val progress = (model.points / model.maxTeamPoints).toFloat().coerceIn(0f, 1f)
-            ProgressBar(
-                modifier = Modifier
-                    .width(110.dp)
-                    .height(48.dp),
-                endProgress = progress,
-                barColor = model.constructor.colour,
-                label = {
-                    when (it) {
-                        0f -> "0"
-                        progress -> model.points.pointsDisplay()
-                        else -> (it * model.maxTeamPoints).takeIf { !it.isNaN() }?.roundToInt()?.toString() ?: model.points.pointsDisplay()
-                    }
-                }
+            PointsBox(
+                points = model.points,
+                maxPoints = model.maxTeamPoints,
+                colour = model.constructor.colour
             )
         }
     }
@@ -362,6 +243,7 @@ private fun Preview(
         LazyColumn(content = {
             race(
                 raceResultType = RaceResultType.DRIVERS,
+                season = 2023,
                 list = listOf(
                     RaceModel.DriverPodium(
                         p1 = result.copy(fastestLap = FastestLap(1, LapTime(0,1,2,3))),
@@ -389,14 +271,27 @@ private fun PreviewConstructors(
         LazyColumn(content = {
             race(
                 raceResultType = RaceResultType.CONSTRUCTORS,
+                season = 2023,
                 list = listOf(
-                    RaceModel.DriverPodium(
-                        p1 = result.copy(fastestLap = FastestLap(1, LapTime(0,1,2,3))),
-                        p2 = result,
-                        p3 = result,
+                    RaceModel.ConstructorResult(
+                        constructor = result.entry.constructor,
+                        position = 1,
+                        points = 40.0,
+                        drivers = listOf(
+                            result.entry.driver to 30.0
+                        ),
+                        maxTeamPoints = 45.0,
+                        highestDriverPosition = 3
                     ),
-                    RaceModel.DriverResult(
-                        result = result.copy(fastestLap = FastestLap(1, LapTime(0,1,2,3)))
+                    RaceModel.ConstructorResult(
+                        constructor = result.entry.constructor.copy(id = "3"),
+                        position = 3,
+                        points = 20.0,
+                        drivers = listOf(
+                            result.entry.driver to 30.0
+                        ),
+                        maxTeamPoints = 45.0,
+                        highestDriverPosition = 3
                     )
                 ),
                 showRaceType = { },

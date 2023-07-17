@@ -15,6 +15,7 @@ import tmg.flashback.domain.repo.RaceRepository
 import tmg.flashback.drivers.contract.DriverSeason
 import tmg.flashback.drivers.contract.with
 import tmg.flashback.formula1.model.Constructor
+import tmg.flashback.formula1.model.DriverEntry
 import tmg.flashback.formula1.model.Race
 import tmg.flashback.formula1.model.SprintRaceResult
 import tmg.flashback.formula1.model.model
@@ -105,7 +106,7 @@ internal class SprintViewModelTest: BaseTest() {
         initUnderTest()
         underTest.load(2020, 1)
 
-        val input = SprintRaceResult.model()
+        val input = DriverEntry.model()
         underTest.inputs.clickDriver(input)
 
         underTest.outputs.list.test {
@@ -115,8 +116,8 @@ internal class SprintViewModelTest: BaseTest() {
         verify {
             mockNavigator.navigate(
                 Screen.DriverSeason.with(
-                    driverId = input.entry.driver.id,
-                    driverName = input.entry.driver.name,
+                    driverId = input.driver.id,
+                    driverName = input.driver.name,
                     season = 2020
                 ))
         }

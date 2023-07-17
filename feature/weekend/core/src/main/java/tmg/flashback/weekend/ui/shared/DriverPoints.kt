@@ -13,6 +13,7 @@ import tmg.flashback.providers.DriverProvider
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.text.TextBody2
+import tmg.flashback.style.text.TextCaption
 import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.ui.utils.pluralResource
 import tmg.flashback.weekend.R
@@ -28,11 +29,9 @@ fun DriverPoints(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        TextBody2(text = driver.name)
         Column(modifier = Modifier
             .padding(
-                vertical = AppTheme.dimens.xxsmall,
-                horizontal = AppTheme.dimens.xsmall
+                vertical = AppTheme.dimens.xxsmall
             )
         ) {
             Flag(
@@ -41,7 +40,12 @@ fun DriverPoints(
                 modifier = Modifier.size(16.dp)
             )
         }
-        TextBody2(text = pluralResource(R.plurals.race_points, points.takeIf { !it.isNaN() }?.roundToInt() ?: 0, points.pointsDisplay()))
+        TextBody2(
+            text = driver.name,
+            modifier = Modifier.padding(horizontal = AppTheme.dimens.xsmall)
+        )
+        val points = pluralResource(R.plurals.race_points, points.takeIf { !it.isNaN() }?.roundToInt() ?: 0, points.pointsDisplay())
+        TextCaption(text = "- $points")
     }
 }
 

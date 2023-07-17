@@ -1,4 +1,4 @@
-package tmg.flashback.weekend.ui.race
+package tmg.flashback.weekend.ui.shared
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,6 +22,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.Dp
@@ -40,7 +42,7 @@ import tmg.flashback.style.text.TextTitle
 import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.ui.utils.pluralResource
 import tmg.flashback.weekend.R
-import tmg.flashback.weekend.ui.shared.Delta
+import tmg.flashback.weekend.ui.race.RaceModel
 import tmg.utilities.extensions.ordinalAbbreviation
 
 private val p1Height = 165.dp
@@ -163,6 +165,21 @@ private fun PodiumBar(
             )
         }
     }
+}
+
+
+@Composable
+internal fun FastestLap(
+    modifier: Modifier = Modifier
+) {
+    Icon(
+        painter = painterResource(id = R.drawable.ic_fastest_lap),
+        contentDescription = stringResource(id = R.string.ab_fastest_lap),
+        modifier = modifier
+            .padding(top = 4.dp)
+            .size(14.dp),
+        tint = AppTheme.colors.f1FastestSector
+    )
 }
 
 @Composable

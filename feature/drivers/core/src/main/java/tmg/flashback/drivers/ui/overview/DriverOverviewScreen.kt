@@ -167,7 +167,7 @@ private fun Header(
                 true -> gb
                 false -> context.getFlagResourceAlpha3(model.driverNationalityISO)
             }
-            BadgeView(model = Badge(label = model.driverNationality, icon = resourceId), tintIcon = false)
+            BadgeView(model = Badge(label = model.driverNationality, icon = resourceId), tintIcon = null)
 
             Spacer(Modifier.width(AppTheme.dimens.small))
             val birthday = model.driverBirthday.format("dd MMMM yyyy")!!
