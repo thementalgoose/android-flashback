@@ -32,6 +32,8 @@ dependencies {
     implementation project(path: ":domain:repo")
     implementation project(path: ":feature:constructors:contract")
 
+    implementation project(path: ":feature:drivers:contract")
+
     implementation libs.bundles.retrofit
     implementation libs.bundles.okhttp
     implementation libs.tmg.labelledprogressbar
