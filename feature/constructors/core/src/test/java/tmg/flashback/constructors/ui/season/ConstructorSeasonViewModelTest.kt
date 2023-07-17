@@ -16,10 +16,14 @@ import org.junit.jupiter.api.Test
 import tmg.flashback.constructors.R
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.domain.repo.ConstructorRepository
+import tmg.flashback.drivers.contract.DriverSeason
+import tmg.flashback.drivers.contract.with
 import tmg.flashback.formula1.model.ConstructorHistory
 import tmg.flashback.formula1.model.ConstructorHistorySeason
 import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.model.model
+import tmg.flashback.navigation.Navigator
+import tmg.flashback.navigation.Screen
 import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.testutils.BaseTest
 
@@ -28,6 +32,7 @@ internal class ConstructorSeasonViewModelTest: BaseTest() {
     private val mockConstructorRepository: ConstructorRepository = mockk(relaxed = true)
     private val mockNetworkConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
     private val mockOpenWebpageUseCase: OpenWebpageUseCase = mockk(relaxed = true)
+    private val mockNavigator: Navigator = mockk(relaxed = true)
 
     private lateinit var sut: ConstructorSeasonViewModel
 
@@ -36,6 +41,7 @@ internal class ConstructorSeasonViewModelTest: BaseTest() {
             mockConstructorRepository,
             mockNetworkConnectivityManager,
             mockOpenWebpageUseCase,
+            mockNavigator,
             ioDispatcher = coroutineScope.testDispatcher
         )
     }
@@ -221,4 +227,15 @@ internal class ConstructorSeasonViewModelTest: BaseTest() {
     }
 
     //endregion
+
+    @Test
+    fun `clicking driver navigates to driver season`() {
+        initSUT()
+        sut.inputs.driverClicked(ConstructorSeasonModel.driverModel(), 2020)
+
+        val expected = Screen.DriverSeason.with("driverId", "firstName lastName", 2020)
+        verify {
+            mockNavigator.navigate(expected)
+        }
+    }
 }
