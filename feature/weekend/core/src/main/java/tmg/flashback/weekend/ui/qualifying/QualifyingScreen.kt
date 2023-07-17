@@ -27,6 +27,7 @@ import tmg.flashback.style.badge.Badge
 import tmg.flashback.style.badge.BadgeView
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextSection
+import tmg.flashback.ui.components.constructorIndicator
 import tmg.flashback.ui.components.drivers.DriverName
 import tmg.flashback.ui.components.errors.NotAvailable
 import tmg.flashback.ui.components.errors.NotAvailableYet
@@ -36,7 +37,6 @@ import tmg.flashback.weekend.R
 import tmg.flashback.weekend.contract.model.ScreenWeekendData
 import tmg.flashback.weekend.ui.fakeWeekendInfo
 import tmg.flashback.weekend.ui.info.RaceInfoHeader
-import tmg.flashback.weekend.ui.shared.ConstructorIndicator
 import tmg.flashback.weekend.ui.shared.Position
 import tmg.utilities.extensions.ordinalAbbreviation
 
@@ -300,11 +300,10 @@ private fun DriverLabel(
         )
     }
     Row(modifier = modifier
-        .height(IntrinsicSize.Min)
+        .constructorIndicator(driver.constructor.colour)
         .semantics(mergeDescendants = true) { }
         .clearAndSetSemantics { this.contentDescription = contentDescription }
     ) {
-        ConstructorIndicator(driver.constructor)
         Position(label = qualifyingPosition?.toString() ?: "-")
         Column(Modifier.fillMaxWidth()) {
             DriverName(
