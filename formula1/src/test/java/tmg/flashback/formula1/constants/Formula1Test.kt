@@ -15,7 +15,7 @@ internal class Formula1Test {
         "2020,26",
         "2010,26",
         "2009,11",
-        "1991,10",
+        "1991,11",
         "1990,8",
         "1950,8"
     )
@@ -43,18 +43,18 @@ internal class Formula1Test {
         "2021,47",
         "2020,42",
         "2010,42",
-        "2009,10",
+        "2009,19",
         "1991,19",
         "1990,14",
         "1950,14"
     )
     fun `maxTeamPoints by season returns correct amount of points`(season: Int, expectedPoints: Int) {
 
-        assertEquals(expectedPoints, Formula1.maxDriverPointsBySeason(season))
+        assertEquals(expectedPoints, Formula1.maxTeamPointsBySeason(season))
     }
     @Test
     fun `maxTeamPoints by current year returns correct amounts of points`() {
 
-        assertEquals(60, Formula1.maxDriverPointsBySeason(Year.now().value))
+        assertEquals(60, Formula1.maxTeamPointsBySeason(Year.now().value))
     }
 }
