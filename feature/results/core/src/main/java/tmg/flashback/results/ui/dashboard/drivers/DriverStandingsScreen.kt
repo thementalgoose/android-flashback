@@ -36,6 +36,7 @@ import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextTitle
+import tmg.flashback.ui.components.constructorIndicator
 import tmg.flashback.ui.components.drivers.DriverIcon
 import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.flag.Flag
@@ -178,13 +179,7 @@ fun DriverStandings(
     val constructorColor = model.standings.constructors.lastOrNull()?.constructor?.colour ?: AppTheme.colors.backgroundTertiary
     Row(
         modifier = modifier
-            .drawBehind {
-                this.drawRect(
-                    color = constructorColor,
-                    size = Size(6.dp.toPx(), this.size.height)
-                )
-            }
-            .padding(start = 6.dp)
+            .constructorIndicator(constructorColor)
             .clickable(onClick = {
                 itemClicked(model)
             }),

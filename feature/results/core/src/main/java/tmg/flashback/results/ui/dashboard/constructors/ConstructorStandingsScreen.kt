@@ -9,8 +9,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -29,6 +27,7 @@ import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextTitle
+import tmg.flashback.ui.components.constructorIndicator
 import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.loading.SkeletonViewList
@@ -146,13 +145,7 @@ private fun ConstructorStandings(
 ) {
     Row(
         modifier = modifier
-            .drawBehind {
-                this.drawRect(
-                    color = model.standings.constructor.colour,
-                    size = Size(6.dp.toPx(), this.size.height)
-                )
-            }
-            .padding(start = 6.dp)
+            .constructorIndicator(model.standings.constructor.colour)
             .clickable(onClick = {
                 itemClicked(model)
             }),

@@ -40,6 +40,7 @@ import tmg.flashback.style.buttons.ButtonSecondarySegments
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextTitle
+import tmg.flashback.ui.components.constructorIndicator
 import tmg.flashback.ui.components.drivers.DriverIcon
 import tmg.flashback.ui.components.drivers.DriverName
 import tmg.flashback.ui.components.drivers.driverIconSize
@@ -49,7 +50,6 @@ import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.navigation.appBarHeight
 import tmg.flashback.ui.components.progressbar.ProgressBar
 import tmg.flashback.weekend.R
-import tmg.flashback.weekend.ui.shared.ConstructorIndicator
 import tmg.flashback.weekend.ui.shared.DriverPoints
 import tmg.flashback.weekend.ui.shared.finishingPositionWidth
 import tmg.utilities.extensions.ordinalAbbreviation
@@ -122,10 +122,10 @@ private fun DriverResult(
         model.entry.constructor.name
     )
     Row(
-        modifier = modifier.height(IntrinsicSize.Min),
+        modifier = modifier
+            .constructorIndicator(model.entry.constructor.colour),
         horizontalArrangement = Arrangement.Center
     ) {
-        ConstructorIndicator(constructor = model.entry.constructor)
         Row(modifier = Modifier
             .weight(1f)
             .semantics(mergeDescendants = true) { }
@@ -250,7 +250,7 @@ private fun ConstructorResult(
 
     Row(
         modifier = modifier
-            .height(IntrinsicSize.Min)
+            .constructorIndicator(model.constructor.colour)
             .semantics(mergeDescendants = true) { }
             .clearAndSetSemantics {
                 this.contentDescription = contentDescription + drivers
@@ -260,7 +260,6 @@ private fun ConstructorResult(
             }),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        ConstructorIndicator(constructor = model.constructor)
         Box(Modifier.size(finishingPositionWidth, driverIconSize)) {
             TextTitle(
                 modifier = Modifier
