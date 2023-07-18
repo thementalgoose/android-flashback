@@ -31,7 +31,7 @@ data class DriverHistoryStanding(
 data class DriverHistoryStandingRace(
     val constructor: Constructor,
     val race: RaceData,
-    val sprint: DriverHistoryStandingRaceSprint?,
+    val sprint: DriverHistoryStandingRaceSprint? = null,
     val qualified: Int?,
     val gridPos: Int?,
     val finished: Int,
