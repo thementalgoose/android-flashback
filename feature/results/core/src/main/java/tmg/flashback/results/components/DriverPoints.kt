@@ -12,10 +12,13 @@ import androidx.compose.ui.unit.dp
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.Driver
 import tmg.flashback.providers.DriverProvider
+import tmg.flashback.results.R
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextCaption
 import tmg.flashback.ui.components.flag.Flag
+import tmg.flashback.ui.utils.pluralResource
+import kotlin.math.roundToInt
 
 @Composable
 fun DriverPoints(
@@ -37,7 +40,8 @@ fun DriverPoints(
             modifier = Modifier.padding(2.dp)
         )
         val pointsLabel = points.takeIf { !it.isNaN() }?.pointsDisplay() ?: ""
-        TextCaption("- $pointsLabel")
+        val points = pluralResource(resId = R.plurals.race_points, quantity = points.roundToInt(), pointsLabel)
+        TextCaption("- $points")
     }
 }
 
