@@ -148,7 +148,7 @@ private fun Result(
         Box(
             modifier = Modifier
                 .width(timeWidth)
-                .padding(top = AppTheme.dimens.medium)
+                .padding(top = AppTheme.dimens.medium + 2.dp)
         ) {
             Time(
                 modifier = Modifier

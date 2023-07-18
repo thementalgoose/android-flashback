@@ -44,8 +44,8 @@
 
     <!-- Race -->
     <plurals name="race_points">
-        <item quantity="one">%s pts</item>
-        <item quantity="other">%s pts</item>
+        <item quantity="one">%s points</item>
+        <item quantity="other">%s points</item>
     </plurals>
     <string name="race_status_retired">DNF</string>
 
