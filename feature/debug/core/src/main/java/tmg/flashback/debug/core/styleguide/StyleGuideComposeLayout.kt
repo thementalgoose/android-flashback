@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -39,7 +40,7 @@ internal fun StyleGuideComposeLayout(
     actionUpClicked: () -> Unit,
     changeNightMode: () -> Unit,
 ) {
-    val currentTab: MutableState<StyleGuideTabs?> = remember { mutableStateOf(startingTab) }
+    val currentTab: MutableState<StyleGuideTabs?> = rememberSaveable { mutableStateOf(startingTab) }
 
     Column(modifier = modifier.fillMaxSize()) {
         Row(
