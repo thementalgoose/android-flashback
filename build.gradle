@@ -1,7 +1,5 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
-apply from: rootDir.absolutePath + "/gradle/script-dependencyreport.gradle"
-
 buildscript {
 
     apply from: rootDir.absolutePath + "/versions.gradle"
@@ -18,7 +16,6 @@ buildscript {
         mavenCentral()
         maven { url 'https://maven.fabric.io/public' }
         maven { url "https://plugins.gradle.org/m2/" }
-        maven { url "https://oss.sonatype.org/content/repositories/comnewrelic-2718" } // Remove when AGP 8 is officially supported for newrelic
         maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
         gradlePluginPortal()
     }
@@ -31,8 +28,8 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${libs.versions.kotlin.get()}"
         classpath "io.fabric.tools:gradle:1.31.2"
         classpath "org.jetbrains.kotlin:kotlin-serialization:${libs.versions.kotlin.get()}"
-        classpath "com.google.firebase:firebase-crashlytics-gradle:2.9.6"
-        classpath "de.mannodermaus.gradle.plugins:android-junit5:1.8.2.1"
+        classpath "com.google.firebase:firebase-crashlytics-gradle:2.9.7"
+        classpath "de.mannodermaus.gradle.plugins:android-junit5:1.9.3.0"
         classpath "com.google.dagger:hilt-android-gradle-plugin:${libs.versions.hilt.get()}"
         classpath 'com.google.firebase:perf-plugin:1.4.2'
         //noinspection GradleDependency
@@ -40,11 +37,16 @@ buildscript {
     }
 }
 
+plugins {
+    id 'com.google.devtools.ksp' version '1.9.0-1.0.12' apply false
+}
+
+apply from: rootDir.absolutePath + "/gradle/script-dependencyreport.gradle"
+
 allprojects {
     repositories {
         google()
         mavenCentral()
-        maven { url "https://oss.sonatype.org/content/repositories/comnewrelic-2718" } // Remove when AGP 8 is officially supported for newrelic
         maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
         maven { url 'https://jitpack.io' }
     }
