@@ -1,6 +1,6 @@
 [versions]  # ===========================================================================
-kotlin = "1.8.21"
-hilt = "2.46.1"
+kotlin = "1.9.0"
+hilt = "2.47"
 androidx_navigation = "2.6.0"
 androidx_lifecycle = "2.6.1"
 androidx_hilt = "1.0.0"
@@ -8,19 +8,14 @@ androidx_room = "2.5.2"
 androidx_workmanager = "2.8.1"
 androidx_glance = "1.0.0-alpha03" #beta01 has update frequency issues!
 compose = "2023.06.01"
-composecompiler = "1.4.7"
+composecompiler = "1.5.0"
 compose_accompanist = "0.30.1"
-coroutines = "1.7.1"
-firebase = "32.1.1"
+coroutines = "1.7.2"
+firebase = "32.2.0"
 junit = "5.9.3"
 okhttp = "4.11.0"
 retrofit = "2.9.0"
-# New Relic
-# Remove this when AGP 8 is officialy supported
-# https://docs.google.com/document/d/1lVf40qbB0J1v47K1lNNYHuOsCmLJqztEE2S_SZcFl2Q/edit
-# https://forum.newrelic.com/s/hubtopic/aAX8W00000005vhWAA/android-sdk-blocks-project-updates-to-gradle-800
-newrelicsnapshot = "2718"
-newrelic = "7.0.0-beta01"
+newrelic = "7.0.0"
 
 [libraries]  # ===========================================================================
 androidx_core = "androidx.core:core-ktx:1.10.1"
@@ -90,7 +85,7 @@ hilt_compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref =
 hilt_kapt_compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "androidx_hilt" }
 hilt_workmanager = { module = "androidx.hilt:hilt-work", version.ref = "androidx_hilt" }
 
-lottie = "com.airbnb.android:lottie-compose:6.0.0"
+lottie = "com.airbnb.android:lottie-compose:6.1.0"
 
 newrelic_agent = { module = "com.newrelic.agent.android:android-agent", version.ref = "newrelic" }
 
@@ -110,7 +105,7 @@ room_testing = { module = "androidx.room:room-testing", version.ref = "androidx_
 shakey = "com.linkedin.shaky:shaky:3.0.4"
 falcon = "com.jraska:falcon:2.2.0"
 
-playservicesads = "com.google.android.gms:play-services-ads:22.1.0"
+playservicesads = "com.google.android.gms:play-services-ads:22.2.0"
 
 skeletonlayout = "com.faltenreich:skeletonlayout:4.0.0"
 
