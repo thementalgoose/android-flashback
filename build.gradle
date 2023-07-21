@@ -1,7 +1,5 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
-apply from: rootDir.absolutePath + "/gradle/script-dependencyreport.gradle"
-
 buildscript {
 
     apply from: rootDir.absolutePath + "/versions.gradle"
@@ -38,6 +36,12 @@ buildscript {
         classpath "com.github.ben-manes:gradle-versions-plugin:0.46.0"
     }
 }
+
+plugins {
+    id 'com.google.devtools.ksp' version '1.9.0-1.0.12' apply false
+}
+
+apply from: rootDir.absolutePath + "/gradle/script-dependencyreport.gradle"
 
 allprojects {
     repositories {
