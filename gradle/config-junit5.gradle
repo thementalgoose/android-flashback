@@ -64,5 +64,5 @@ dependencies {
 
     testImplementation libs.test.androidx.core
     testImplementation libs.test.androidx.arch
-    kaptTest libs.test.androidx.lifecycle
+    kspTest libs.test.androidx.lifecycle
 }
