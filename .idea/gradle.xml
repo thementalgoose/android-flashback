@@ -32,6 +32,9 @@
             <option value="$PROJECT_DIR$/domain/repo" />
             <option value="$PROJECT_DIR$/eastereggs" />
             <option value="$PROJECT_DIR$/feature" />
+            <option value="$PROJECT_DIR$/feature/announcements" />
+            <option value="$PROJECT_DIR$/feature/announcements/contract" />
+            <option value="$PROJECT_DIR$/feature/announcements/core" />
             <option value="$PROJECT_DIR$/feature/circuits" />
             <option value="$PROJECT_DIR$/feature/circuits/contract" />
             <option value="$PROJECT_DIR$/feature/circuits/core" />
