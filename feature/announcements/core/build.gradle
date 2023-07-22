@@ -1,0 +1,36 @@
+apply plugin:  'com.android.library'
+apply from: rootDir.absolutePath + "/gradle/config-android.gradle"
+apply from: rootDir.absolutePath + "/gradle/config-util.gradle"
+apply from: rootDir.absolutePath + "/gradle/config-junit5.gradle"
+apply from: rootDir.absolutePath + "/gradle/config-hilt.gradle"
+apply from: rootDir.absolutePath + "/gradle/config-compose.gradle"
+
+android {
+    compileSdk project.ext.compileSdk
+
+    defaultConfig {
+        minSdkVersion project.ext.minSdkVersion
+        targetSdkVersion project.ext.targetSdkVersion
+    }
+    namespace 'tmg.flashback.announcements'
+}
+
+dependencies {
+
+    implementation project(path: ':formula1')
+    implementation project(path: ':domain:repo')
+
+    implementation project(path: ':presentation:style')
+    implementation project(path: ':presentation:ui')
+    implementation project(path: ":presentation:strings")
+
+    // Core modules
+    implementation project(path: ':core:metrics:googleanalytics')
+    implementation project(path: ':core:configuration')
+    implementation project(path: ':core:metrics:crashlytics')
+    implementation project(path: ':core:device')
+    implementation project(path: ':core:notifications')
+    implementation project(path: ':core:preferences')
+
+    implementation project(path: ':feature:announcements:contract')
+}
