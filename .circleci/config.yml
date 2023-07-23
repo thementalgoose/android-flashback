@@ -1,18 +1,19 @@
 version: 2.1
 
 orbs:
-  android: "2.1.2"
+  android: circleci/android@2.3.0
 
 jobs:
   unit-test:
     executor:
       name: android/android-docker
-      tag: 2022.08.1
+      tag: 2023.03.1
     steps:
       - checkout
       - android/restore-gradle-cache
-      - android/run-tests:
-          test-command: ./gradlew testDebugUnitTest :app:testSandDebugUnitTest
+      - run:
+          name: Unit Test
+          command: ./gradlew testDebugUnitTest :app:testSandDebugUnitTest
       - android/save-gradle-cache
       - run:
           name: Save test results
@@ -26,9 +27,6 @@ jobs:
           path: ~/test-results/junit
 
 workflows:
-  test-and-build:
+  unit-tests:
     jobs:
-      - unit-test:
-          filters:
-            branches:
-              only: main
+      - unit-test
