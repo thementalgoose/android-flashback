@@ -1,20 +1,23 @@
 version: 2.1
 
-orbs:
-  android: circleci/android@2.3.0
-
 jobs:
   unit-test:
     docker:
-      - image: cimg/openjdk:17.0
+      - image: circleci/android:api-30
+    environment:
+      JVM_OPTS: -Xmx3200m
     steps:
       - checkout
-      - android/restore-gradle-cache
+      - restore_cache:
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
           name: Unit Test
           command: ./gradlew testDebugUnitTest :app:testSandDebugUnitTest
           no_output_timeout: 20m
-      - android/save-gradle-cache
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
           name: Save test results
           command: |
