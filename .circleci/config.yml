@@ -10,6 +10,7 @@ jobs:
       tag: 2022.08.1
     steps:
       - checkout
+      - android/restore-gradle-cache
       - run:
           name: Install OpenJDK 17
           command: |
@@ -18,10 +19,9 @@ jobs:
             sudo update-alternatives --set javac /usr/lib/jvm/java-17-openjdk-amd64/bin/javac
             java -version
             export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
-      - android/change-java-version:
-          java-version: 17
-      - android/restore-gradle-cache
+            echo $JAVA_HOME
       - android/run-tests:
+          max-tries: 1
           test-command: ./gradlew testDebugUnitTest :app:testSandDebugUnitTest
       - android/save-gradle-cache
       - run:
