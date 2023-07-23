@@ -7,19 +7,12 @@ jobs:
   unit-test:
     executor:
       name: android/android-docker
-      tag: 2022.08.1
+      tag: 2023.03.1
     steps:
       - checkout
+      - android/change-java-version:
+          java-version: 17
       - android/restore-gradle-cache
-      - run:
-          name: Install OpenJDK 17
-          command: |
-            sudo apt-get update && sudo apt-get install openjdk-17-jdk
-            sudo update-alternatives --set java /usr/lib/jvm/java-17-openjdk-amd64/bin/java
-            sudo update-alternatives --set javac /usr/lib/jvm/java-17-openjdk-amd64/bin/javac
-            java -version
-            export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
-            echo $JAVA_HOME
       - android/run-tests:
           max-tries: 1
           test-command: ./gradlew testDebugUnitTest :app:testSandDebugUnitTest
