@@ -2,9 +2,11 @@ package tmg.flashback.results.ui.dashboard.schedule
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -36,6 +38,8 @@ import tmg.flashback.results.ui.messaging.ProvidedBy
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
+import tmg.flashback.style.buttons.ButtonSecondary
+import tmg.flashback.style.buttons.ButtonTertiary
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.ui.components.errors.NetworkError
@@ -261,15 +265,19 @@ private fun EmptyWeek(
             .height(AppTheme.dimens.medium)
     ) {
         if (model.monday == LocalDate.now().startOfWeek()) {
-            Now(Modifier.align(Alignment.CenterStart).alpha(0.5f))
+            Now(
+                Modifier
+                    .align(Alignment.CenterStart)
+                    .alpha(0.5f))
         }
-        Box(Modifier
-            .fillMaxWidth()
-            .height(2.dp)
-            .align(Alignment.Center)
-            .padding(horizontal = AppTheme.dimens.medium)
-            .background(AppTheme.colors.backgroundSecondary)
-            .alpha(0.3f)
+        Box(
+            Modifier
+                .fillMaxWidth()
+                .height(2.dp)
+                .align(Alignment.Center)
+                .padding(horizontal = AppTheme.dimens.medium)
+                .background(AppTheme.colors.backgroundSecondary)
+                .alpha(0.3f)
         )
     }
 }
