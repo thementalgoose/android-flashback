@@ -19,6 +19,9 @@ jobs:
             java -version
       - android/change-java-version:
           java-version: 17
+      - run:
+          command: |
+            echo $JAVA_HOME
       - android/restore-gradle-cache
       - android/run-tests:
           test-command: ./gradlew testDebugUnitTest :app:testSandDebugUnitTest
