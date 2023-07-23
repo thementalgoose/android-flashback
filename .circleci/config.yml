@@ -1,0 +1,34 @@
+version: 2.1
+
+orbs:
+  android: "2.1.2"
+
+jobs:
+  unit-test:
+    executor:
+      name: android/android-docker
+      tag: 2022.08.1
+    steps:
+      - checkout
+      - android/restore-gradle-cache
+      - android/run-tests:
+          test-command: ./gradlew testDebugUnitTest :app:testSandDebugUnitTest
+      - android/save-gradle-cache
+      - run:
+          name: Save test results
+          command: |
+            mkdir -p ~/test-results/junit/
+            find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} ~/test-results/junit/ \;
+          when: always
+      - store_test_results:
+          path: ~/test-results
+      - store_artifacts:
+          path: ~/test-results/junit
+
+workflows:
+  test-and-build:
+    jobs:
+      - unit-test:
+          filters:
+            branches:
+              only: main
