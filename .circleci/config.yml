@@ -29,6 +29,3 @@ workflows:
   test-and-build:
     jobs:
       - unit-test:
-          filters:
-            branches:
-              only: main
