@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  android: circleci/android@2.3.0
+  android: circleci/android@2.2.0
 
 jobs:
   unit-test:
@@ -10,6 +10,8 @@ jobs:
       tag: 2023.03.1
     steps:
       - checkout
+      - android/change-java-version:
+          java-version: 11
       - android/restore-gradle-cache
       - run:
           name: Unit Test
