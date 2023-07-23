@@ -17,11 +17,9 @@ jobs:
             sudo update-alternatives --set java /usr/lib/jvm/java-17-openjdk-amd64/bin/java
             sudo update-alternatives --set javac /usr/lib/jvm/java-17-openjdk-amd64/bin/javac
             java -version
+            export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
       - android/change-java-version:
           java-version: 17
-      - run:
-          command: |
-            echo $JAVA_HOME
       - android/restore-gradle-cache
       - android/run-tests:
           test-command: ./gradlew testDebugUnitTest :app:testSandDebugUnitTest
