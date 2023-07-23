@@ -13,9 +13,9 @@ jobs:
       - android/change-java-version:
           java-version: 17
       - android/restore-gradle-cache
-      - android/run-tests:
-          max-tries: 1
-          test-command: ./gradlew testDebugUnitTest :app:testSandDebugUnitTest
+      - run:
+          name: Unit Test
+          command: ./gradlew testDebugUnitTest :app:testSandDebugUnitTest
       - android/save-gradle-cache
       - run:
           name: Save test results
@@ -29,6 +29,6 @@ jobs:
           path: ~/test-results/junit
 
 workflows:
-  test-and-build:
+  unit-tests:
     jobs:
       - unit-test
