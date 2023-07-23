@@ -14,6 +14,7 @@ jobs:
       - run:
           name: Unit Test
           command: ./gradlew testDebugUnitTest :app:testSandDebugUnitTest
+          no_output_timeout: 20m
       - android/save-gradle-cache
       - run:
           name: Save test results
