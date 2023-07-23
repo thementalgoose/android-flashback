@@ -5,19 +5,10 @@ orbs:
 
 jobs:
   unit-test:
-    executor:
-      name: android/android-docker
-      tag: 2023.05.1
+    machine:
+      image: ubuntu-2204:2022.04.2
     steps:
       - checkout
-      - run:
-          name: Install OpenJDK 17
-          command: |
-            sudo apt-get update && sudo apt-get install openjdk-17-jdk
-            sudo update-alternatives --set java /usr/lib/jvm/java-17-openjdk-amd64/bin/java
-            sudo update-alternatives --set javac /usr/lib/jvm/java-17-openjdk-amd64/bin/javac
-            java -version
-            echo $JAVA_VERSION
       - android/change-java-version:
           java-version: 17
       - android/restore-gradle-cache
