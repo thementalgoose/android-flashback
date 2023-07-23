@@ -10,6 +10,8 @@ jobs:
       tag: 2022.08.1
     steps:
       - checkout
+      - android/change-java-version:
+          java-version: 17
       - android/restore-gradle-cache
       - android/run-tests:
           test-command: ./gradlew testDebugUnitTest :app:testSandDebugUnitTest
