@@ -7,11 +7,9 @@ jobs:
   unit-test:
     executor:
       name: android/android-docker
-      tag: 2023.03.1
+      tag: 2023.05.1
     steps:
       - checkout
-      - run:
-          command: echo $JAVA_VERSION
       - run:
           name: Install OpenJDK 17
           command: |
