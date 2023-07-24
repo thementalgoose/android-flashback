@@ -5,17 +5,30 @@ orbs:
 
 jobs:
   unit-test:
-    machine:
-      image: ubuntu-2204:2022.04.2
+    docker:
+      - image: cimg/android:2023.07
+    environment:
+      JVM_OPTS: -Xmx3200m
+      GRADLE_OPTS: -Dorg.gradle.jvmargs="-XX:MaxMetaspaceSize=2g"
     steps:
       - checkout
-      - android/change-java-version:
-          java-version: 17
-      - android/restore-gradle-cache
+      - run:
+          name: Install OpenJDK 17
+          command: |
+            sudo apt-get update && sudo apt-get install openjdk-17-jdk
+            sudo update-alternatives --set java /usr/lib/jvm/java-17-openjdk-amd64/bin/java
+            sudo update-alternatives --set javac /usr/lib/jvm/java-17-openjdk-amd64/bin/javac
+            java -version
+      - restore_cache:
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
           name: Unit Test
-          command: ./gradlew testDebugUnitTest :app:testSandDebugUnitTest
-      - android/save-gradle-cache
+          command: ./gradlew testDebugUnitTest :app:testSandDebugUnitTest --no-daemon
+          no_output_timeout: 20m
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
           name: Save test results
           command: |
