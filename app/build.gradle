@@ -60,7 +60,7 @@ android {
     }
 
 
-    flavorDimensions 'version'
+    flavorDimensions ['version']
     productFlavors {
         sand {
             isDefault.set(true)
