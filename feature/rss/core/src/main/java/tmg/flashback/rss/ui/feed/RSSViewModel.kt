@@ -3,15 +3,18 @@ package tmg.flashback.rss.ui.feed
 import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.ads.ads.repository.AdsRepository
 import tmg.flashback.device.managers.NetworkConnectivityManager
+import tmg.flashback.device.managers.TimeManager
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.flashback.rss.contract.RSSConfigure
 import tmg.flashback.rss.network.RssService
 import tmg.flashback.rss.repo.RssRepository
+import tmg.flashback.rss.repo.model.Article
 import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.utilities.extensions.then
 import java.util.*
@@ -22,7 +25,7 @@ import javax.inject.Inject
 interface RSSViewModelInputs {
     fun refresh()
     fun configure()
-    fun clickModel(model: RSSModel.RSS)
+    fun clickArticle(article: Article?)
 }
 
 //endregion
@@ -30,8 +33,8 @@ interface RSSViewModelInputs {
 //region Outputs
 
 interface RSSViewModelOutputs {
-    val list: StateFlow<List<RSSModel>>
-    val isRefreshing: StateFlow<Boolean>
+    val uiState: StateFlow<RSSViewModel.UiState>
+    val isLoading: StateFlow<Boolean>
 }
 
 //endregion
@@ -43,62 +46,28 @@ class RSSViewModel @Inject constructor(
     private val rssRepository: RssRepository,
     private val adsRepository: AdsRepository,
     private val navigator: Navigator,
-    private val openWebpageUseCase: OpenWebpageUseCase,
-    private val connectivityManager: NetworkConnectivityManager
+//    private val openWebpageUseCase: OpenWebpageUseCase,
+    private val connectivityManager: NetworkConnectivityManager,
+    private val timeManager: TimeManager
 ): ViewModel(), RSSViewModelInputs, RSSViewModelOutputs {
 
-    override val isRefreshing: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
-    private var refreshingUUID: String? = null
+    override val uiState: MutableStateFlow<UiState>
+    override val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
-    private val refreshNews: MutableStateFlow<String> = MutableStateFlow(UUID.randomUUID().toString())
-    private val newsList: Flow<List<RSSModel>> = refreshNews
-        .asStateFlow()
-        .filter {
-            it != refreshingUUID
+    init {
+        val initialState = when {
+            !connectivityManager.isConnected -> UiState.NoNetwork
+            rssRepository.rssUrls.isEmpty() -> UiState.SourcesDisabled
+            else -> UiState.Data()
         }
-        .then {
-            isRefreshing.value = true
+        uiState = MutableStateFlow(initialState)
+        if (initialState is UiState.Data) {
+            refresh()
         }
-        .flatMapLatest {
-            refreshingUUID = it
-            rssService.getNews()
-        }
-        .map { response ->
-            if (response.isNoNetwork || !connectivityManager.isConnected) {
-                return@map listOf<RSSModel>(RSSModel.NoNetwork)
-            }
-            val results = response.result?.map { RSSModel.RSS(it) } ?: emptyList()
-            if (results.isEmpty()) {
-                if (rssRepository.rssUrls.isEmpty()) {
-                    return@map listOf<RSSModel>(
-                        RSSModel.SourcesDisabled
-                    )
-                }
-                else {
-                    return@map listOf<RSSModel>(RSSModel.InternalError)
-                }
-            }
-            return@map mutableListOf<RSSModel>().apply {
-                add(
-                    RSSModel.Message(
-                        LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"))
-                    )
-                )
-                if (adsRepository.advertConfig.onRss) {
-                    add(RSSModel.Advert)
-                }
-                addAll(results)
-            }
-        }
-        .onStart { emitAll(flow { emptyList<RSSModel>() }) }
-        .then {
-            isRefreshing.value = false
-        }
+    }
 
-    override val list: StateFlow<List<RSSModel>> = newsList
-        .shareIn(viewModelScope, SharingStarted.Lazily)
-        .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+    // adsRepository.advertConfig.onRss
 
     var inputs: RSSViewModelInputs = this
     var outputs: RSSViewModelOutputs = this
@@ -106,19 +75,60 @@ class RSSViewModel @Inject constructor(
     //region Inputs
 
     override fun refresh() {
-        refreshNews.value = UUID.randomUUID().toString()
+        viewModelScope.launch {
+            uiState.value = when {
+                !connectivityManager.isConnected -> UiState.NoNetwork
+                rssRepository.rssUrls.isEmpty() -> UiState.SourcesDisabled
+                else -> {
+                    isLoading.value = true
+                    val response = rssService.getNews()
+                    isLoading.value = false
+                    if (response.isNoNetwork || response.result == null) {
+                        UiState.NoNetwork
+                    } else {
+                        createOrUpdate {
+                            this.copy(
+                                lastUpdated = timeManager.now.format(DateTimeFormatter.ofPattern("HH:mm:ss")),
+                                showAdvert = adsRepository.advertConfig.onRss,
+                                rssItems = response.result,
+                            )
+                        }
+                    }
+                }
+            }
+        }
     }
 
     override fun configure() {
         navigator.navigate(Screen.Settings.RSSConfigure)
     }
 
-    override fun clickModel(model: RSSModel.RSS) {
-        openWebpageUseCase.open(
-            url = model.item.link,
-            title = model.item.title
-        )
+    override fun clickArticle(article: Article?) {
+        uiState.value = createOrUpdate {
+            this.copy(
+                articleSelected = article
+            )
+        }
+    }
+
+    private fun createOrUpdate(callback: UiState.Data.() -> UiState.Data): UiState.Data {
+        return when (val x = uiState.value) {
+            is UiState.Data -> callback(x)
+            else -> callback(UiState.Data())
+        }
     }
 
     //endregion
+
+    sealed class UiState {
+        data class Data(
+            val lastUpdated: String? = null,
+            val showAdvert: Boolean = false,
+            val rssItems: List<Article> = emptyList(),
+            val articleSelected: Article? = null
+        ): UiState()
+
+        data object SourcesDisabled: UiState()
+        data object NoNetwork: UiState()
+    }
 }
