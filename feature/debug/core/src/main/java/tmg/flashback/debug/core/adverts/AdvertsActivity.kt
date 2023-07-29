@@ -20,6 +20,7 @@ import tmg.flashback.debug.core.R
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.text.TextTitle
 import tmg.flashback.ui.components.header.Header
+import tmg.flashback.ui.components.header.HeaderAction
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -61,8 +62,7 @@ class AdvertsActivity: AppCompatActivity() {
         ) {
             Header(
                 text = "Debug",
-                icon = painterResource(id = R.drawable.ic_back),
-                iconContentDescription = null,
+                action = HeaderAction.BACK,
                 actionUpClicked = actionUpClicked
             )
             Column(

@@ -53,6 +53,7 @@ import tmg.flashback.ui.components.drivers.DriverImage
 import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.ui.components.header.Header
+import tmg.flashback.ui.components.header.HeaderAction
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.messages.Message
 import tmg.flashback.ui.components.navigation.PipeType
@@ -119,8 +120,7 @@ fun DriverSeasonScreen(
             item(key = "header") {
                 Header(
                     text = "${driverName}\n${season}",
-                    icon = painterResource(id = R.drawable.ic_back),
-                    iconContentDescription = stringResource(id = R.string.ab_back),
+                    action = HeaderAction.BACK,
                     actionUpClicked = actionUpClicked
                 )
             }
