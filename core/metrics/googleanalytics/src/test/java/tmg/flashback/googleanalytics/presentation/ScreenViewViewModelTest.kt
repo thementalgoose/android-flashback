@@ -1,10 +1,9 @@
-package tmg.flashback.ui.components.analytics
+package tmg.flashback.googleanalytics.presentation
 
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Test
 import tmg.flashback.googleanalytics.manager.FirebaseAnalyticsManager
-import tmg.flashback.googleanalytics.presentation.ScreenViewViewModel
 
 internal class ScreenViewViewModelTest {
 

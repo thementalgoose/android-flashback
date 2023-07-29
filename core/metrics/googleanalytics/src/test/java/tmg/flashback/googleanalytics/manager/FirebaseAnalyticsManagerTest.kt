@@ -1,4 +1,4 @@
-package tmg.flashback.analytics.manager
+package tmg.flashback.googleanalytics.manager
 
 import io.mockk.every
 import io.mockk.mockk
@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test
 import tmg.flashback.googleanalytics.UserProperty
 import tmg.flashback.device.repository.PrivacyRepository
 import tmg.flashback.googleanalytics.services.FireabseAnalyticsService
-import tmg.flashback.googleanalytics.manager.FirebaseAnalyticsManager
 
 
 internal class FirebaseAnalyticsManagerTest {
