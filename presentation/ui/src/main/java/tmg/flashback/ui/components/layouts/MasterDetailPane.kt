@@ -5,13 +5,15 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
+import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
+import tmg.flashback.style.text.TextHeadline1
 import tmg.flashback.ui.annotations.PreviewFoldable
 import tmg.flashback.ui.annotations.PreviewPhone
 import tmg.flashback.ui.annotations.PreviewTablet
@@ -19,31 +21,34 @@ import tmg.flashback.ui.utils.fakeCompactWindowSizeClass
 import tmg.flashback.ui.utils.fakeExpandedWindowSizeClass
 import tmg.flashback.ui.utils.fakeMediumWindowSizeClass
 
+private val backgroundColor: Color
+    @Composable get() = AppTheme.colors.backgroundContainer
+
 @Composable
-fun SplitPane(
+fun MasterDetailPane(
     windowSizeClass: WindowSizeClass,
     main: @Composable BoxScope.() -> Unit,
     modifier: Modifier = Modifier,
-    contentExpandedFallback: @Composable (BoxScope.() -> Unit) = { },
     content: @Composable (BoxScope.() -> Unit)? = null,
 ) {
-    Box(modifier = modifier) {
+    Box(modifier = modifier
+        .background(backgroundColor)
+    ) {
         Row(modifier = Modifier.fillMaxSize()) {
             Box(modifier = Modifier.weight(4f)) {
                 main()
             }
-            if (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Expanded) {
+            if (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Expanded && content != null) {
                 Box(modifier = Modifier.weight(5f)) {
-                    if (content != null) {
-                        content()
-                    } else {
-                        contentExpandedFallback()
-                    }
+                    content()
                 }
             }
         }
         if (windowSizeClass.widthSizeClass != WindowWidthSizeClass.Expanded && content != null) {
-            Box(modifier = Modifier.fillMaxSize()) {
+            Box(modifier = Modifier
+                .fillMaxSize()
+                .background(backgroundColor)
+            ) {
                 content()
             }
         }
@@ -54,10 +59,12 @@ fun SplitPane(
 @Composable
 private fun PreviewNoContentExpanded() {
     AppThemePreview {
-        SplitPane(
+        MasterDetailPane(
             windowSizeClass = fakeExpandedWindowSizeClass,
             main = {
-                Box(Modifier.fillMaxSize().background(Color.Blue))
+                Box(Modifier.fillMaxSize()) {
+                    TextHeadline1(text = "Main")
+                }
             }
         )
     }
@@ -67,10 +74,12 @@ private fun PreviewNoContentExpanded() {
 @Composable
 private fun PreviewNoContentMedium() {
     AppThemePreview {
-        SplitPane(
+        MasterDetailPane(
             windowSizeClass = fakeMediumWindowSizeClass,
             main = {
-                Box(Modifier.fillMaxSize().background(Color.Blue))
+                Box(Modifier.fillMaxSize()) {
+                    TextHeadline1(text = "Main")
+                }
             }
         )
     }
@@ -80,10 +89,12 @@ private fun PreviewNoContentMedium() {
 @Composable
 private fun PreviewNoContentCompact() {
     AppThemePreview {
-        SplitPane(
+        MasterDetailPane(
             windowSizeClass = fakeCompactWindowSizeClass,
             main = {
-                Box(Modifier.fillMaxSize().background(Color.Blue))
+                Box(Modifier.fillMaxSize()) {
+                    TextHeadline1(text = "Main")
+                }
             }
         )
     }
@@ -94,13 +105,19 @@ private fun PreviewNoContentCompact() {
 @Composable
 private fun PreviewWithContentExpanded() {
     AppThemePreview {
-        SplitPane(
+        MasterDetailPane(
             windowSizeClass = fakeExpandedWindowSizeClass,
             main = {
-                Box(Modifier.fillMaxSize().background(Color.Blue))
+                Box(Modifier.fillMaxSize()) {
+                    TextHeadline1(text = "Main")
+                }
             },
             content = {
-                Box(Modifier.fillMaxSize().background(Color.Magenta))
+                Box(
+                    Modifier
+                        .fillMaxSize()) {
+                    TextHeadline1(text = "Detail")
+                }
             }
         )
     }
@@ -111,13 +128,19 @@ private fun PreviewWithContentExpanded() {
 @Composable
 private fun PreviewWithContentMedium() {
     AppThemePreview {
-        SplitPane(
+        MasterDetailPane(
             windowSizeClass = fakeMediumWindowSizeClass,
             main = {
-                Box(Modifier.fillMaxSize().background(Color.Blue))
+                Box(Modifier.fillMaxSize()) {
+                    TextHeadline1(text = "Main")
+                }
             },
             content = {
-                Box(Modifier.fillMaxSize().background(Color.Magenta))
+                Box(
+                    Modifier
+                        .fillMaxSize()) {
+                    TextHeadline1(text = "Detail")
+                }
             }
         )
     }
@@ -127,13 +150,19 @@ private fun PreviewWithContentMedium() {
 @Composable
 private fun PreviewWithContentCompact() {
     AppThemePreview {
-        SplitPane(
+        MasterDetailPane(
             windowSizeClass = fakeCompactWindowSizeClass,
             main = {
-                Box(Modifier.fillMaxSize().background(Color.Blue))
+                Box(Modifier.fillMaxSize()) {
+                    TextHeadline1(text = "Main")
+                }
             },
             content = {
-                Box(Modifier.fillMaxSize().background(Color.Magenta))
+                Box(
+                    Modifier
+                        .fillMaxSize()) {
+                    TextHeadline1(text = "Detail")
+                }
             }
         )
     }
