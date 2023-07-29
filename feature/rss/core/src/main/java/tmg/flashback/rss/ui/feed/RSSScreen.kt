@@ -71,38 +71,19 @@ fun RSSScreenVM(
     val uiState = viewModel.outputs.uiState.collectAsState()
     val isLoading = viewModel.outputs.isLoading.collectAsState(false)
 
-    MasterDetailPane(
-        windowSizeClass = windowSizeClass,
-        main = {
-            SwipeRefresh(
-                isLoading = isLoading.value,
-                onRefresh = viewModel.inputs::refresh
-            ) {
-                RSSScreen(
-                    showMenu = showMenu,
-                    advertProvider = advertProvider,
-                    uiState = uiState.value,
-                    itemClicked = viewModel.inputs::clickArticle,
-                    configureSources = viewModel.inputs::configure,
-                    actionUpClicked = actionUpClicked
-                )
-            }
-        },
-        showContent = (uiState.value as? RSSViewModel.UiState.Data)?.articleSelected != null,
-        content = {
-            (uiState.value as? RSSViewModel.UiState.Data)?.articleSelected?.let { article ->
-                WebScreenVM(
-                    title = article.title,
-                    url = article.link,
-                    actionUpClicked = {
-                        viewModel.clickArticle(null)
-                    },
-                    shareClicked = { },
-                    openInBrowser = { }
-                )
-            }
-        }
-    )
+    SwipeRefresh(
+        isLoading = isLoading.value,
+        onRefresh = viewModel.inputs::refresh
+    ) {
+        RSSScreen(
+            showMenu = showMenu,
+            advertProvider = advertProvider,
+            uiState = uiState.value,
+            itemClicked = viewModel.inputs::clickArticle,
+            configureSources = viewModel.inputs::configure,
+            actionUpClicked = actionUpClicked
+        )
+    }
 }
 
 @Composable

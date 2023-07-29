@@ -72,7 +72,8 @@ internal class RSSViewModelTest: BaseTest() {
             adsRepository = mockAdsRepository,
             navigator = mockNavigator,
             connectivityManager = mockConnectivityManager,
-            timeManager = mockTimeManager
+            timeManager = mockTimeManager,
+            openWebpageUseCase = mockk(relaxed = true)
         )
         underTest.refresh()
     }

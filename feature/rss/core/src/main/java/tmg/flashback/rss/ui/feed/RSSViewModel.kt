@@ -46,7 +46,7 @@ class RSSViewModel @Inject constructor(
     private val rssRepository: RssRepository,
     private val adsRepository: AdsRepository,
     private val navigator: Navigator,
-//    private val openWebpageUseCase: OpenWebpageUseCase,
+    private val openWebpageUseCase: OpenWebpageUseCase,
     private val connectivityManager: NetworkConnectivityManager,
     private val timeManager: TimeManager
 ): ViewModel(), RSSViewModelInputs, RSSViewModelOutputs {
@@ -109,6 +109,9 @@ class RSSViewModel @Inject constructor(
                 articleSelected = article
             )
         }
+
+        // TODO: Remove this when RSS supports split pane
+        article?.let { openWebpageUseCase.open(it.link, it.title) }
     }
 
     private fun createOrUpdate(callback: UiState.Data.() -> UiState.Data): UiState.Data {
