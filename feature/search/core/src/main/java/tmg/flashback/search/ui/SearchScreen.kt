@@ -48,6 +48,7 @@ import tmg.flashback.style.text.TextBody2
 import tmg.flashback.ui.components.analytics.ScreenView
 import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.ui.components.header.Header
+import tmg.flashback.ui.components.header.HeaderAction
 import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
 
 @Composable
@@ -114,8 +115,7 @@ fun SearchScreen(
                                 SearchCategory.RACE -> stringResource(id = R.string.search_category_races)
                                 null -> stringResource(id = R.string.search_title)
                             },
-                            icon = if (showMenu) painterResource(id = R.drawable.ic_menu) else null,
-                            iconContentDescription = stringResource(id = R.string.ab_menu),
+                            action = if (showMenu) HeaderAction.MENU else null,
                             actionUpClicked = actionUpClicked,
                             overrideIcons = @Composable {
                                 IconButton(onClick = {

@@ -15,6 +15,7 @@ import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.ui.components.analytics.ScreenView
 import tmg.flashback.ui.components.header.Header
+import tmg.flashback.ui.components.header.HeaderAction
 import tmg.flashback.ui.components.settings.Footer
 import tmg.flashback.ui.components.settings.Header
 import tmg.flashback.ui.components.settings.Pref
@@ -55,11 +56,7 @@ fun SettingsAboutScreen(
             item("header") {
                 Header(
                     text = stringResource(id = R.string.settings_section_about_title),
-                    icon = when (showBack) {
-                        true -> painterResource(id = R.drawable.ic_back)
-                        false -> null
-                    },
-                    iconContentDescription = stringResource(id = R.string.ab_back),
+                    action = if (showBack) HeaderAction.BACK else null,
                     actionUpClicked = actionUpClicked
                 )
             }

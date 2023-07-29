@@ -29,6 +29,7 @@ import tmg.flashback.style.text.TextSection
 import tmg.flashback.style.text.TextTitle
 import tmg.flashback.ui.R
 import tmg.flashback.ui.components.header.Header
+import tmg.flashback.ui.components.header.HeaderAction
 import tmg.flashback.ui.settings.Setting
 
 private const val disabledAlpha = 0.5f
@@ -265,7 +266,11 @@ fun SettingSection(
 private fun Preview() {
     AppThemePreview {
         Column(Modifier.fillMaxWidth()) {
-            Header(text = "Settings", icon = painterResource(id = R.drawable.ic_back), iconContentDescription = null, actionUpClicked = { })
+            Header(
+                text = "Settings",
+                action = HeaderAction.BACK,
+                actionUpClicked = { }
+            )
             SettingHeader(
                 model = Setting.Heading.get()
             )
