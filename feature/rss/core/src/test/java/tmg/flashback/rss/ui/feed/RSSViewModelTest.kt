@@ -1,31 +1,24 @@
 package tmg.flashback.rss.ui.feed
 
-import app.cash.turbine.Event
 import app.cash.turbine.test
-import app.cash.turbine.testIn
+import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.verify
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDateTime
 import tmg.flashback.ads.ads.repository.AdsRepository
 import tmg.flashback.ads.ads.repository.model.AdvertConfig
 import tmg.flashback.device.managers.NetworkConnectivityManager
+import tmg.flashback.device.managers.TimeManager
 import tmg.flashback.navigation.Navigator
-import tmg.flashback.navigation.Screen
-import tmg.flashback.rss.contract.RSSConfigure
 import tmg.flashback.rss.network.RssService
 import tmg.flashback.rss.repo.RssRepository
 import tmg.flashback.rss.repo.model.Article
 import tmg.flashback.rss.repo.model.ArticleSource
 import tmg.flashback.rss.repo.model.Response
-import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.testutils.BaseTest
 
 internal class RSSViewModelTest: BaseTest() {
@@ -36,8 +29,8 @@ internal class RSSViewModelTest: BaseTest() {
     private val mockRssRepository: RssRepository = mockk(relaxed = true)
     private val mockAdsRepository: AdsRepository = mockk(relaxed = true)
     private val mockNavigator: Navigator = mockk(relaxed = true)
-    private val mockOpenWebpageUseCase: OpenWebpageUseCase = mockk(relaxed = true)
     private val mockConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
+    private val mockTimeManager: TimeManager = mockk(relaxed = true)
 
     private val mockLocalDate: LocalDateTime = LocalDateTime.of(2020, 1, 1, 1, 2, 3, 0)
     private val mockArticleSource = ArticleSource(
@@ -57,9 +50,8 @@ internal class RSSViewModelTest: BaseTest() {
         source = mockArticleSource
     )
 
-    private val mockResponse200 = flow { emit(Response<List<Article>>(listOf(mockArticle))) }
-    private val mockResponse500 = flow { emit(Response<List<Article>>(null)) }
-    private val mockResponseNoNetwork = flow { emit(Response<List<Article>>(null, -1)) }
+    private val mockResponse200 = Response<List<Article>>(listOf(mockArticle))
+    private val mockResponseNoNetwork = Response<List<Article>>(null, -1)
 
     @BeforeEach
     internal fun setUp() {
@@ -67,10 +59,9 @@ internal class RSSViewModelTest: BaseTest() {
         every { mockConnectivityManager.isConnected } returns true
         every { mockRssRepository.rssUrls } returns setOf("https://www.mock.rss.url.com")
         every { mockRssRepository.rssShowDescription } returns true
-        every { mockRssService.getNews() } returns mockResponse200
-        every { mockAdsRepository.advertConfig } returns AdvertConfig(
-            onRss = true
-        )
+        coEvery { mockRssService.getNews() } returns mockResponse200
+        every { mockAdsRepository.advertConfig } returns AdvertConfig(onRss = true)
+        every { mockTimeManager.now } returns mockLocalDate
     }
 
     private fun initUnderTest() {
@@ -80,162 +71,128 @@ internal class RSSViewModelTest: BaseTest() {
             rssRepository = mockRssRepository,
             adsRepository = mockAdsRepository,
             navigator = mockNavigator,
-            openWebpageUseCase = mockOpenWebpageUseCase,
-            connectivityManager = mockConnectivityManager
+            connectivityManager = mockConnectivityManager,
+            timeManager = mockTimeManager,
+            openWebpageUseCase = mockk(relaxed = true)
         )
         underTest.refresh()
     }
 
     @Test
-    fun `is refreshing is initialised is reset after refresh flow`() = runTest {
-
-        initUnderTest()
-
-        val observer = underTest.outputs.isRefreshing.testIn(this)
-        advanceUntilIdle()
-
-        underTest.outputs.list.test {
-            val item = awaitItem()
-            assertTrue(item.any { it == RSSModel.RSS(mockArticle) })
-            assertTrue(item.any { it == RSSModel.Advert })
-            assertTrue(item.any { it is RSSModel.Message })
-        }
-
-        underTest.inputs.refresh()
-        advanceUntilIdle()
-
-        val events = observer.cancelAndConsumeRemainingEvents()
-        assertEquals(false, (events[0] as Event.Item<Boolean>).value) // Initial
-        assertEquals(true, (events[1] as Event.Item<Boolean>).value)
-        assertEquals(false, (events[2] as Event.Item<Boolean>).value) // After init refresh
-        assertEquals(true, (events[3] as Event.Item<Boolean>).value)
-        assertEquals(false, (events[4] as Event.Item<Boolean>).value) // After second refresh
-    }
-
-    @Test
-    fun `init with ads disabled doesnt show advert item`() = runTest {
-        every { mockAdsRepository.advertConfig } returns AdvertConfig(
-            onRss = false
-        )
-
-        initUnderTest()
-
-        advanceUntilIdle()
-
-        underTest.outputs.list.test {
-            val item = awaitItem()
-            assertTrue(item.any { it == RSSModel.RSS(mockArticle) })
-            assertTrue(item.none { it == RSSModel.Advert })
-        }
-    }
-
-    @Test
-    fun `init loads all news sources`() = runTest {
-
-        initUnderTest()
-        advanceUntilIdle()
-
-        underTest.outputs.list.test {
-            val item = awaitItem()
-            assertTrue(item.any { it == RSSModel.RSS(mockArticle) })
-            assertTrue(item.any { it == RSSModel.Advert })
-            assertTrue(item.any { it is RSSModel.Message && it.msg.split(":").size == 3})
-        }
-    }
-
-    @Test
-    fun `init all sources disabled if excludes list contains all news sources`() = runTest {
-
-        every { mockRssService.getNews() } returns mockResponse500
-        every { mockRssRepository.rssUrls } returns emptySet()
-
-        val expected = listOf<RSSModel>(
-            RSSModel.SourcesDisabled
-        )
-
-        initUnderTest()
-        advanceUntilIdle()
-
-        underTest.outputs.list.test {
-            assertEquals(expected, awaitItem())
-        }
-    }
-
-    @Test
-    fun `init internal error is thrown if results are empty`() = runTest {
-
-        every { mockRssService.getNews() } returns mockResponse500
-
-        val expected = listOf<RSSModel>(
-            RSSModel.InternalError
-        )
-
-        initUnderTest()
-        advanceUntilIdle()
-
-        underTest.outputs.list.test {
-            assertEquals(expected, awaitItem())
-        }
-    }
-
-    @Test
-    fun `no network error shown when network response code is no network`() = runTest {
-
-        every { mockRssService.getNews() } returns mockResponseNoNetwork
-
-        val expected = listOf<RSSModel>(
-            RSSModel.NoNetwork
-        )
-
-        initUnderTest()
-        advanceUntilIdle()
-
-        underTest.outputs.list.test {
-            assertEquals(expected, awaitItem())
-        }
-    }
-
-    @Test
-    fun `no network error shown when network connectivity check returns false`() = runTest {
-
+    fun `initial state is set to no network when network is not connected`() = runTest {
         every { mockConnectivityManager.isConnected } returns false
 
-        val expected = listOf<RSSModel>(
-            RSSModel.NoNetwork
-        )
-
         initUnderTest()
-        advanceUntilIdle()
-
-        underTest.outputs.list.test {
-            assertEquals(expected, awaitItem())
+        underTest.uiState.test {
+            assertEquals(RSSViewModel.UiState.NoNetwork, awaitItem())
         }
     }
 
     @Test
-    fun `click configure opens rss settings`() = runTest {
+    fun `initial state is set to sources disables if rss repository has no sources`() = runTest {
+        every { mockRssRepository.rssUrls } returns emptySet()
 
         initUnderTest()
-        advanceUntilIdle()
-
-        underTest.inputs.configure()
-
-        verify {
-            mockNavigator.navigate(Screen.Settings.RSSConfigure)
+        underTest.uiState.test {
+            assertEquals(RSSViewModel.UiState.SourcesDisabled, awaitItem())
         }
     }
 
     @Test
-    fun `click model with open in external browser disabled opens in in-app browser`() {
-        val model: RSSModel.RSS = mockk {
-            every { item } returns mockk(relaxed = true)
-        }
+    fun `state is set to no network when responses have no network flag`() = runTest {
+        coEvery { mockRssService.getNews() } returns mockResponseNoNetwork
         initUnderTest()
+        underTest.uiState.test {
+            assertEquals(RSSViewModel.UiState.NoNetwork, awaitItem())
+        }
+    }
 
-        underTest.inputs.clickModel(model)
+    @Test
+    fun `state is set to data with show advert config and rss list items`() = runTest {
+        initUnderTest()
+        underTest.uiState.test {
+            assertEquals(RSSViewModel.UiState.Data(
+                lastUpdated = "01:02:03",
+                showAdvert = true,
+                rssItems = listOf(mockArticle)
+            ), awaitItem())
+        }
+    }
 
-        verify {
-            mockOpenWebpageUseCase.open(any(), any())
+    @Test
+    fun `state is set to no network when refreshed but no network connection`() = runTest {
+        initUnderTest()
+        underTest.uiState.test {
+            assertEquals(RSSViewModel.UiState.Data(
+                lastUpdated = "01:02:03",
+                showAdvert = true,
+                rssItems = listOf(mockArticle)
+            ), awaitItem())
+        }
+
+        coEvery { mockRssService.getNews() } returns mockResponseNoNetwork
+        underTest.refresh()
+        underTest.uiState.test {
+            assertEquals(RSSViewModel.UiState.NoNetwork, awaitItem())
+        }
+    }
+
+    @Test
+    fun `state is set to sources disabled when refreshed but to have no rss sources`() = runTest {
+        initUnderTest()
+        underTest.uiState.test {
+            assertEquals(RSSViewModel.UiState.Data(
+                lastUpdated = "01:02:03",
+                showAdvert = true,
+                rssItems = listOf(mockArticle)
+            ), awaitItem())
+        }
+
+        every { mockRssRepository.rssUrls } returns emptySet()
+        underTest.refresh()
+        underTest.uiState.test {
+            assertEquals(RSSViewModel.UiState.SourcesDisabled, awaitItem())
+        }
+    }
+
+    @Test
+    fun `state is set to data with new rss feeds when refreshed`() = runTest {
+        coEvery { mockRssService.getNews() } returns mockResponseNoNetwork
+        initUnderTest()
+        underTest.uiState.test {
+            assertEquals(RSSViewModel.UiState.NoNetwork, awaitItem())
+        }
+
+        coEvery { mockRssService.getNews() } returns mockResponse200
+        underTest.refresh()
+        underTest.uiState.test {
+            assertEquals(RSSViewModel.UiState.Data(
+                lastUpdated = "01:02:03",
+                showAdvert = true,
+                rssItems = listOf(mockArticle)
+            ), awaitItem())
+        }
+    }
+
+    @Test
+    fun `clicking article sets selected article in data`() = runTest {
+        initUnderTest()
+        underTest.uiState.test {
+            assertEquals(RSSViewModel.UiState.Data(
+                lastUpdated = "01:02:03",
+                showAdvert = true,
+                rssItems = listOf(mockArticle)
+            ), awaitItem())
+        }
+
+        underTest.clickArticle(mockArticle)
+        underTest.uiState.test {
+            assertEquals(RSSViewModel.UiState.Data(
+                lastUpdated = "01:02:03",
+                showAdvert = true,
+                rssItems = listOf(mockArticle),
+                articleSelected = mockArticle
+            ), awaitItem())
         }
     }
 }
