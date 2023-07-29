@@ -35,6 +35,7 @@ import tmg.flashback.style.text.*
 import tmg.flashback.ui.components.analytics.ScreenView
 import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.ui.components.header.Header
+import tmg.flashback.ui.components.header.HeaderAction
 
 @Composable
 fun DriverStatHistoryScreenVM(
@@ -74,8 +75,7 @@ private fun DriverStatHistoryScreen(
             item(key = "header") {
                 Header(
                     text = "$driverName\n${stringResource(id = driverStatHistoryType.label)}",
-                    icon = painterResource(id = R.drawable.ic_web_close),
-                    iconContentDescription = null,
+                    action = HeaderAction.CLOSE,
                     actionUpClicked = actionUpClicked
                 )
             }

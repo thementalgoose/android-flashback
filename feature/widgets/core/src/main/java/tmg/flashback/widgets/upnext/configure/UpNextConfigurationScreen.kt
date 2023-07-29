@@ -23,6 +23,7 @@ import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.buttons.ButtonPrimary
 import tmg.flashback.ui.components.header.Header
+import tmg.flashback.ui.components.header.HeaderAction
 import tmg.flashback.ui.components.settings.SettingHeader
 import tmg.flashback.ui.components.settings.SettingSwitch
 import tmg.flashback.widgets.R
@@ -77,8 +78,7 @@ private fun UpNextConfigurationScreen(
                     item {
                         Header(
                             text = stringResource(id = R.string.widget_up_next_title),
-                            icon = painterResource(id = R.drawable.ic_close),
-                            iconContentDescription = stringResource(id = R.string.ab_close),
+                            action = HeaderAction.CLOSE,
                             actionUpClicked = { actionUpClicked() }
                         )
                     }

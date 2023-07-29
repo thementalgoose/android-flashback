@@ -48,6 +48,7 @@ import tmg.flashback.style.text.TextCaption
 import tmg.flashback.ui.components.analytics.ScreenView
 import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.header.Header
+import tmg.flashback.ui.components.header.HeaderAction
 import tmg.flashback.ui.components.messages.Message
 import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
 import tmg.utilities.extensions.fromHtml
@@ -97,8 +98,7 @@ fun RSSScreen(
             item("header") {
                 Header(
                     text = stringResource(id = R.string.title_rss),
-                    icon = if (showMenu) painterResource(id = R.drawable.ic_menu) else null,
-                    iconContentDescription = stringResource(id = R.string.ab_menu),
+                    action = if (showMenu) HeaderAction.MENU else null,
                     overrideIcons = {
                         IconButton(onClick = configureSources) {
                             Icon(
