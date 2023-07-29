@@ -18,6 +18,7 @@ import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.ui.components.analytics.ScreenView
 import tmg.flashback.ui.components.header.Header
+import tmg.flashback.ui.components.header.HeaderAction
 import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.getColor
 
@@ -34,8 +35,7 @@ fun PrivacyPolicyScreenVM(
     ) {
         Header(
             text = stringResource(id = R.string.privacy_policy_title),
-            icon = painterResource(id = R.drawable.ic_back),
-            iconContentDescription = stringResource(id = R.string.ab_back),
+            action = HeaderAction.BACK,
             actionUpClicked = actionUpClicked
         )
         AndroidView(

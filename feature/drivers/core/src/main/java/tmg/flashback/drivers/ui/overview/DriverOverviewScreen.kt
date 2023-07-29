@@ -39,6 +39,7 @@ import tmg.flashback.ui.components.drivers.DriverIcon
 import tmg.flashback.ui.components.drivers.DriverImage
 import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.flag.Flag
+import tmg.flashback.ui.components.header.HeaderAction
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.messages.Message
 import tmg.flashback.ui.components.navigation.PipeType
@@ -99,8 +100,7 @@ fun DriverOverviewScreen(
             item("header") {
                 tmg.flashback.ui.components.header.Header(
                     text = driverName,
-                    icon = painterResource(id = R.drawable.ic_back),
-                    iconContentDescription = stringResource(id = R.string.ab_back),
+                    action = HeaderAction.BACK,
                     actionUpClicked = actionUpClicked
                 )
             }
