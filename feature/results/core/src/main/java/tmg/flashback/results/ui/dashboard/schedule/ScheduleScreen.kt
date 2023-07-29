@@ -45,6 +45,7 @@ import tmg.flashback.style.text.TextBody2
 import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.ui.components.header.Header
+import tmg.flashback.ui.components.header.HeaderAction
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.navigation.appBarHeight
 import tmg.flashback.ui.components.now.Now
@@ -104,14 +105,7 @@ fun ScheduleScreen(
             item(key = "header") {
                 Header(
                     text = season.toString(),
-                    icon = when (showMenu) {
-                        true -> painterResource(id = R.drawable.ic_menu)
-                        false -> null
-                    },
-                    iconContentDescription = when (showMenu) {
-                        true -> stringResource(id = R.string.ab_menu)
-                        false -> null
-                    },
+                    action = if (showMenu) HeaderAction.MENU else null,
                     actionUpClicked = { menuClicked?.invoke() },
                     overrideIcons = {
                         if (showPreseason) {

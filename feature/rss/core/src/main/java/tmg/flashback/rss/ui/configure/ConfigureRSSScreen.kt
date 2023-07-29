@@ -54,6 +54,7 @@ import tmg.flashback.style.text.TextHeadline2
 import tmg.flashback.style.text.TextTitle
 import tmg.flashback.ui.bottomsheet.ModalSheet
 import tmg.flashback.ui.components.analytics.ScreenView
+import tmg.flashback.ui.components.header.HeaderAction
 import tmg.flashback.ui.components.settings.Footer
 import tmg.flashback.ui.components.settings.Header
 import tmg.flashback.ui.components.settings.Pref
@@ -112,8 +113,7 @@ fun ConfigureRSSScreen(
             item(key = "header") {
                 tmg.flashback.ui.components.header.Header(
                     text = stringResource(id = R.string.settings_rss_configure_sources_title),
-                    icon = painterResource(id = R.drawable.ic_back),
-                    iconContentDescription = stringResource(id = R.string.ab_back),
+                    action = HeaderAction.BACK,
                     actionUpClicked = actionUpClicked
                 )
             }

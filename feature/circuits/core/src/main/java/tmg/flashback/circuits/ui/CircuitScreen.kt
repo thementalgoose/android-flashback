@@ -39,6 +39,7 @@ import tmg.flashback.ui.components.drivers.DriverNumber
 import tmg.flashback.ui.components.errors.NotAvailable
 import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.ui.components.header.Header
+import tmg.flashback.ui.components.header.HeaderAction
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
 import tmg.utilities.extensions.ordinalAbbreviation
@@ -96,8 +97,7 @@ fun CircuitScreen(
         item(key = "header") {
             Header(
                 text = circuitName,
-                icon = painterResource(id = R.drawable.ic_back),
-                iconContentDescription = stringResource(id = R.string.ab_back),
+                action = HeaderAction.BACK,
                 actionUpClicked = actionUpClicked
             )
         }
