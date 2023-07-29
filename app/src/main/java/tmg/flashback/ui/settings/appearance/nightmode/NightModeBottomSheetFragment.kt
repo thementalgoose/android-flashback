@@ -3,7 +3,7 @@ package tmg.flashback.ui.settings.appearance.nightmode
 import androidx.compose.runtime.Composable
 import dagger.hilt.android.AndroidEntryPoint
 import tmg.flashback.ui.base.BaseBottomSheetComposeFragment
-import tmg.flashback.ui.components.analytics.ScreenView
+import tmg.flashback.googleanalytics.presentation.ScreenView
 
 @AndroidEntryPoint
 class NightModeBottomSheetFragment: BaseBottomSheetComposeFragment() {

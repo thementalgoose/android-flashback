@@ -1,4 +1,4 @@
-package tmg.flashback.ui.components.analytics
+package tmg.flashback.googleanalytics.presentation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
