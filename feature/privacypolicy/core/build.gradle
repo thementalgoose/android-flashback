@@ -17,6 +17,7 @@ android {
 }
 
 dependencies {
+    implementation project(path: ":core:metrics:googleanalytics")
     implementation project(path: ":presentation:navigation")
 
     // Core modules

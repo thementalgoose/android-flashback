@@ -25,7 +25,7 @@ import tmg.utilities.extensions.getColor
 fun PrivacyPolicyScreenVM(
     actionUpClicked: () -> Unit
 ) {
-    tmg.flashback.googleanalytics.presentation.ScreenView(screenName = "Privacy Policy")
+    ScreenView(screenName = "Privacy Policy")
 
     Column(
         modifier = Modifier

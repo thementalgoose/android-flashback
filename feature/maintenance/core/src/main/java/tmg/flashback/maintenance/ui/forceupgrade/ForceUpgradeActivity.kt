@@ -9,6 +9,7 @@ import androidx.activity.viewModels
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.collectAsState
 import dagger.hilt.android.AndroidEntryPoint
+import tmg.flashback.googleanalytics.presentation.ScreenView
 import tmg.flashback.style.AppTheme
 import tmg.flashback.ui.base.BaseActivity
 import tmg.flashback.ui.model.DisplayType
@@ -24,8 +25,6 @@ internal class ForceUpgradeActivity: BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        logScreenViewed("Force upgrade")
-
         setContent {
             AppTheme {
                 Scaffold(
@@ -33,6 +32,8 @@ internal class ForceUpgradeActivity: BaseActivity() {
                         val title = viewModel.outputs.title.collectAsState("")
                         val message = viewModel.outputs.message.collectAsState("")
                         val showLink = viewModel.outputs.showLink.collectAsState(null)
+
+                        ScreenView(screenName = "Force upgrade")
 
                         ForceUpgradeScreen(
                             title = title.value,
