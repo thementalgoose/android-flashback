@@ -275,6 +275,7 @@ fun AppGraph(
             deepLinks = listOf(navDeepLink { uriPattern = "flashback://rss" })
         ) {
             RSSScreenVM(
+                windowSizeClass = windowSize,
                 advertProvider = advertProvider,
                 showMenu = windowSize.widthSizeClass == WindowWidthSizeClass.Compact,
                 actionUpClicked = openMenu

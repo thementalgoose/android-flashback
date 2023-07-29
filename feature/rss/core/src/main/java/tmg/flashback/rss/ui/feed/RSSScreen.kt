@@ -19,6 +19,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
@@ -49,14 +50,17 @@ import tmg.flashback.ui.components.analytics.ScreenView
 import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.header.HeaderAction
+import tmg.flashback.ui.components.layouts.MasterDetailPane
 import tmg.flashback.ui.components.messages.Message
 import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
+import tmg.flashback.web.ui.browser.WebScreenVM
 import tmg.utilities.extensions.fromHtml
 
 private val badgeSize: Dp = 40.dp
 
 @Composable
 fun RSSScreenVM(
+    windowSizeClass: WindowSizeClass,
     showMenu: Boolean = true,
     advertProvider: AdvertProvider,
     actionUpClicked: () -> Unit,
@@ -67,19 +71,38 @@ fun RSSScreenVM(
     val uiState = viewModel.outputs.uiState.collectAsState()
     val isLoading = viewModel.outputs.isLoading.collectAsState(false)
 
-    SwipeRefresh(
-        isLoading = isLoading.value,
-        onRefresh = viewModel.inputs::refresh
-    ) {
-        RSSScreen(
-            showMenu = showMenu,
-            advertProvider = advertProvider,
-            uiState = uiState.value,
-            itemClicked = viewModel.inputs::clickArticle,
-            configureSources = viewModel.inputs::configure,
-            actionUpClicked = actionUpClicked
-        )
-    }
+    MasterDetailPane(
+        windowSizeClass = windowSizeClass,
+        main = {
+            SwipeRefresh(
+                isLoading = isLoading.value,
+                onRefresh = viewModel.inputs::refresh
+            ) {
+                RSSScreen(
+                    showMenu = showMenu,
+                    advertProvider = advertProvider,
+                    uiState = uiState.value,
+                    itemClicked = viewModel.inputs::clickArticle,
+                    configureSources = viewModel.inputs::configure,
+                    actionUpClicked = actionUpClicked
+                )
+            }
+        },
+        showContent = (uiState.value as? RSSViewModel.UiState.Data)?.articleSelected != null,
+        content = {
+            (uiState.value as? RSSViewModel.UiState.Data)?.articleSelected?.let { article ->
+                WebScreenVM(
+                    title = article.title,
+                    url = article.link,
+                    actionUpClicked = {
+                        viewModel.clickArticle(null)
+                    },
+                    shareClicked = { },
+                    openInBrowser = { }
+                )
+            }
+        }
+    )
 }
 
 @Composable
