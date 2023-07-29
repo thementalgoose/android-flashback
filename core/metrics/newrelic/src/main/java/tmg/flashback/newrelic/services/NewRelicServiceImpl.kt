@@ -1,13 +1,11 @@
 package tmg.flashback.newrelic.services
 
 import android.content.Context
-import android.util.Log
 import com.newrelic.agent.android.FeatureFlag
 import com.newrelic.agent.android.NewRelic
 import com.newrelic.agent.android.logging.AgentLog
-import tmg.flashback.analytics.BuildConfig
-import tmg.flashback.analytics.R
-import tmg.flashback.device.managers.BuildConfigManager
+import tmg.flashback.newrelic.BuildConfig
+import tmg.flashback.newrelic.R
 import tmg.flashback.device.repository.DeviceRepository
 import tmg.flashback.device.repository.PrivacyRepository
 import javax.inject.Inject
