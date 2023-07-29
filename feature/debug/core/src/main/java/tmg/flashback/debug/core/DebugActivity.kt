@@ -47,6 +47,7 @@ import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextSection
 import tmg.flashback.ui.base.BaseActivity
 import tmg.flashback.ui.components.header.Header
+import tmg.flashback.ui.components.header.HeaderAction
 import tmg.flashback.ui.repository.PermissionRepository
 import tmg.utilities.extensions.copyToClipboard
 import javax.inject.Inject
@@ -133,8 +134,7 @@ class DebugActivity: BaseActivity() {
         ) {
             Header(
                 text = "Debug",
-                icon = painterResource(id = R.drawable.ic_back),
-                iconContentDescription = null,
+                action = HeaderAction.BACK,
                 actionUpClicked = actionUpClicked
             )
             Column(
