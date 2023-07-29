@@ -1,5 +1,8 @@
 package tmg.flashback.rss.network
 
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flow
@@ -28,8 +31,8 @@ class RssService @Inject constructor(
         "Accept" to "application/rss+xml, application/xml"
     )
 
-    private fun get(url: String): Flow<Response<List<Article>>> = flow {
-        val result: Response<List<Article>> = try {
+    private suspend fun get(url: String): Response<List<Article>> {
+        return try {
             val response = rssAPI
                 .getRssXML(headers, url)
                 .convert(getSupportedSourceUseCase, url, repository.rssShowDescription)
@@ -75,41 +78,40 @@ class RssService @Inject constructor(
             }
             Response(null, -1)
         }
-
-        emit(result)
     }
 
-    private fun getAll(): Flow<List<Response<List<Article>>>> = flow {
-        if (repository.rssUrls.isEmpty()) { emit(emptyList()) }
-        combine(repository.rssUrls.map { get(it) }) {
-            it.toList()
-        }.collect {
-            emit(it)
+    private suspend fun getAll(): List<Response<List<Article>>> = coroutineScope {
+        if (repository.rssUrls.isEmpty()) {
+            return@coroutineScope emptyList()
         }
+        return@coroutineScope repository.rssUrls
+            .map { async { get(it) } }
+            .awaitAll()
     }
 
-    fun getNews(): Flow<Response<List<Article>>> = getAll()
-        .map { responses ->
-            val errors = responses.filter { it.code != 200 }
-            if (responses.size != errors.size) {
-                // Only some requests failed, continue with list
-                val validResponses = responses
-                    .filter { it.result != null }
-                    .mapNotNull { it.result }
-                    .flatten()
-                    .sortedByDescending { it.date }
-                return@map Response(validResponses)
-            } else {
-                // All failed
-                if (errors.isNotEmpty()) {
-                    if (errors.any { it.isNoNetwork }) {
-                        return@map Response<List<Article>>(null, -1)
-                    } else {
-                        return@map errors.first()
-                    }
+    suspend fun getNews(): Response<List<Article>> {
+        val responses = getAll()
+        val errors = responses.filter { it.code != 200 }
+        if (responses.size != errors.size) {
+            // Only some requests failed, continue with list
+            val validResponses = responses
+                .filter { it.result != null }
+                .mapNotNull { it.result }
+                .flatten()
+                .sortedByDescending { it.date }
+            return Response(validResponses)
+        } else {
+            // All failed
+            return if (errors.isNotEmpty()) {
+                if (errors.any { it.isNoNetwork }) {
+                    Response(null, -1)
                 } else {
-                    return@map Response<List<Article>>(emptyList())
+                    errors.first()
                 }
+            } else {
+                Response(emptyList())
             }
         }
+
     }
+}

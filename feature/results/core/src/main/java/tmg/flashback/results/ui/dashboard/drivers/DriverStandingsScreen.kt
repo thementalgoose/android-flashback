@@ -142,28 +142,6 @@ fun DriverStandingsScreen(
 }
 
 @Composable
-fun DriverStandingsCard(
-    model: DriverStandingsModel.Standings,
-    itemClicked: (DriverStandingsModel.Standings) -> Unit,
-    maxPoints: Double,
-    modifier: Modifier = Modifier
-) {
-    Container(
-        modifier = modifier.padding(
-            horizontal = AppTheme.dimens.medium,
-            vertical = AppTheme.dimens.xxsmall
-        ),
-        isSelected = model.isSelected
-    ) {
-        DriverStandings(
-            model = model,
-            itemClicked = itemClicked,
-            maxPoints = maxPoints
-        )
-    }
-}
-
-@Composable
 fun DriverStandings(
     model: DriverStandingsModel.Standings,
     itemClicked: (DriverStandingsModel.Standings) -> Unit,
