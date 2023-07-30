@@ -29,6 +29,7 @@ import kotlinx.coroutines.launch
 import tmg.flashback.ads.ads.components.AdvertProvider
 import tmg.flashback.debug.model.DebugMenuItem
 import tmg.flashback.eastereggs.model.MenuIcons
+import tmg.flashback.googleanalytics.presentation.ScreenView
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.style.AppTheme
 import tmg.flashback.ui.AppGraph
@@ -137,6 +138,7 @@ fun DashboardScreen(
     easterEggTitleIcon: MenuIcons?,
     easterEggUkraine: Boolean,
 ) {
+    ScreenView(screenName = "Dashboard")
 
     val panelsState = rememberOverlappingPanelsState(OverlappingPanelsValue.Closed)
     val coroutineScope = rememberCoroutineScope()

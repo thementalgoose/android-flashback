@@ -10,15 +10,10 @@ import androidx.compose.ui.platform.ComposeView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import tmg.flashback.googleanalytics.manager.FirebaseAnalyticsManager
 import tmg.flashback.style.AppTheme
-import javax.inject.Inject
 
 @Deprecated("Please use ModalSheet(visible = true) instead!")
 abstract class BaseBottomSheetComposeFragment: BottomSheetDialogFragment() {
-
-    @Inject
-    protected lateinit var firebaseAnalyticsManager: FirebaseAnalyticsManager
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,12 +40,5 @@ abstract class BaseBottomSheetComposeFragment: BottomSheetDialogFragment() {
                 BottomSheetBehavior.from(layout).state = BottomSheetBehavior.STATE_HALF_EXPANDED
             }
         }
-    }
-
-    /**
-     * Logging screen analytics
-     */
-    fun logScreenViewed(name: String, params: Map<String, String> = mapOf()) {
-        firebaseAnalyticsManager.viewScreen(name, params, this::class.java)
     }
 }
