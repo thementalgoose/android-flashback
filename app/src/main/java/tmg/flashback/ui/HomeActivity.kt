@@ -75,8 +75,6 @@ class HomeActivity: BaseActivity(), SplashScreen.KeepOnScreenCondition {
             deeplink = intent.extras?.getString(SCREEN_PARAM)
         }
 
-        logScreenViewed("Dashboard")
-
         setTheme(themeRes)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             splashScreen.setSplashScreenTheme(themeRes)

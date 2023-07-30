@@ -1,4 +1,4 @@
-package tmg.flashback.ui.components.analytics
+package tmg.flashback.googleanalytics.presentation
 
 import io.mockk.mockk
 import io.mockk.verify

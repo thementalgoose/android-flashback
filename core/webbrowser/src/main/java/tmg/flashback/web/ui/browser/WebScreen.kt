@@ -15,6 +15,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidViewBinding
+import tmg.flashback.googleanalytics.presentation.ScreenView
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
@@ -46,9 +47,15 @@ fun WebScreen(
     shareClicked: (url: String) -> Unit,
     openInBrowser: (url: String) -> Unit,
 ) {
-    Column(Modifier
-        .background(AppTheme.colors.backgroundPrimary)
-        .fillMaxSize()
+    ScreenView(screenName = "In-app Web Browser", mapOf(
+        "url" to url,
+        "title" to title
+    ))
+
+    Column(
+        Modifier
+            .background(AppTheme.colors.backgroundPrimary)
+            .fillMaxSize()
     ) {
         val titleValue = remember { mutableStateOf(title) }
         val urlValue = remember { mutableStateOf(url) }

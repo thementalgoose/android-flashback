@@ -34,7 +34,7 @@ import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.buttons.ButtonSecondary
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
-import tmg.flashback.ui.components.analytics.ScreenView
+import tmg.flashback.googleanalytics.presentation.ScreenView
 import tmg.flashback.ui.components.drivers.DriverNumber
 import tmg.flashback.ui.components.errors.NotAvailable
 import tmg.flashback.ui.components.flag.Flag
