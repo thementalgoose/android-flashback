@@ -47,8 +47,8 @@ internal class SettingsAllViewModelTest: BaseTest() {
         every { mockBuildConfigManager.isMonetThemeSupported } returns true
 
         initUnderTest()
-        underTest.outputs.isThemeEnabled.test {
-            assertEquals(false, awaitItem())
+        underTest.outputs.uiState.test {
+            assertEquals(false, awaitItem().themeEnabled)
         }
     }
 
@@ -58,8 +58,8 @@ internal class SettingsAllViewModelTest: BaseTest() {
         every { mockBuildConfigManager.isMonetThemeSupported } returns false
 
         initUnderTest()
-        underTest.outputs.isThemeEnabled.test {
-            assertEquals(false, awaitItem())
+        underTest.outputs.uiState.test {
+            assertEquals(false, awaitItem().themeEnabled)
         }
     }
 
@@ -69,8 +69,8 @@ internal class SettingsAllViewModelTest: BaseTest() {
         every { mockBuildConfigManager.isMonetThemeSupported } returns true
 
         initUnderTest()
-        underTest.outputs.isThemeEnabled.test {
-            assertEquals(true, awaitItem())
+        underTest.outputs.uiState.test {
+            assertEquals(true, awaitItem().themeEnabled)
         }
     }
 
@@ -79,8 +79,8 @@ internal class SettingsAllViewModelTest: BaseTest() {
         every { mockAdsRepository.allowUserConfig } returns true
 
         initUnderTest()
-        underTest.outputs.isAdsEnabled.test {
-            assertEquals(true, awaitItem())
+        underTest.outputs.uiState.test {
+            assertEquals(true, awaitItem().adsEnabled)
         }
     }
 
@@ -89,8 +89,8 @@ internal class SettingsAllViewModelTest: BaseTest() {
         every { mockAdsRepository.allowUserConfig } returns false
 
         initUnderTest()
-        underTest.outputs.isAdsEnabled.test {
-            assertEquals(false, awaitItem())
+        underTest.outputs.uiState.test {
+            assertEquals(false, awaitItem().adsEnabled)
         }
     }
 
@@ -99,8 +99,8 @@ internal class SettingsAllViewModelTest: BaseTest() {
         every { mockRSSRepository.enabled } returns true
 
         initUnderTest()
-        underTest.outputs.isRSSEnabled.test {
-            assertEquals(true, awaitItem())
+        underTest.outputs.uiState.test {
+            assertEquals(true, awaitItem().rssEnabled)
         }
     }
 
@@ -109,8 +109,8 @@ internal class SettingsAllViewModelTest: BaseTest() {
         every { mockRSSRepository.enabled } returns false
 
         initUnderTest()
-        underTest.outputs.isRSSEnabled.test {
-            assertEquals(false, awaitItem())
+        underTest.outputs.uiState.test {
+            assertEquals(false, awaitItem().rssEnabled)
         }
     }
 
