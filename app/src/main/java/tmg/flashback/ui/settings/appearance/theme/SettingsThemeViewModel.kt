@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 //region Inputs
 
-interface ThemeViewModelInputs {
+interface SettingsThemeViewModelInputs {
     fun selectTheme(theme: Theme)
 }
 
@@ -20,20 +20,20 @@ interface ThemeViewModelInputs {
 
 //region Outputs
 
-interface ThemeViewModelOutputs {
+interface SettingsThemeViewModelOutputs {
     val currentlySelected: StateFlow<Theme>
 }
 
 //endregion
 
 @HiltViewModel
-class ThemeViewModel @Inject constructor(
+class SettingsThemeViewModel @Inject constructor(
     private val themeRepository: ThemeRepository,
     private val toastManager: ToastManager
-): ViewModel(), ThemeViewModelInputs, ThemeViewModelOutputs {
+): ViewModel(), SettingsThemeViewModelInputs, SettingsThemeViewModelOutputs {
 
-    var inputs: ThemeViewModelInputs = this
-    var outputs: ThemeViewModelOutputs = this
+    var inputs: SettingsThemeViewModelInputs = this
+    var outputs: SettingsThemeViewModelOutputs = this
 
     override val currentlySelected: MutableStateFlow<Theme> = MutableStateFlow(Theme.DEFAULT)
 
