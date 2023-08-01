@@ -25,7 +25,6 @@ internal class SettingsAllViewModelTest: BaseTest() {
     private val mockAdsRepository: AdsRepository = mockk(relaxed = true)
     private val mockRSSRepository: RssRepository = mockk(relaxed = true)
     private val mockNavigator: Navigator = mockk(relaxed = true)
-    private val mockAppearanceNavigationComponent: AppearanceNavigationComponent = mockk(relaxed = true)
 
     private lateinit var underTest: SettingsAllViewModel
 
@@ -36,7 +35,6 @@ internal class SettingsAllViewModelTest: BaseTest() {
             adsRepository = mockAdsRepository,
             rssRepository = mockRSSRepository,
             navigator = mockNavigator,
-            appearanceNavigationComponent = mockAppearanceNavigationComponent,
         )
     }
 
@@ -118,9 +116,11 @@ internal class SettingsAllViewModelTest: BaseTest() {
         initUnderTest()
         underTest.inputs.itemClicked(Settings.Theme.darkMode)
 
+        val slot = slot<NavigationDestination>()
         verify {
-            mockAppearanceNavigationComponent.nightModeDialog()
+            mockNavigator.navigate(capture(slot))
         }
+        assertEquals(Screen.Settings.NightMode.route, slot.captured.route)
     }
 
     @Test
@@ -128,9 +128,11 @@ internal class SettingsAllViewModelTest: BaseTest() {
         initUnderTest()
         underTest.inputs.itemClicked(Settings.Theme.theme)
 
+        val slot = slot<NavigationDestination>()
         verify {
-            mockAppearanceNavigationComponent.themeDialog()
+            mockNavigator.navigate(capture(slot))
         }
+        assertEquals(Screen.Settings.Theme.route, slot.captured.route)
     }
 
     @Test
