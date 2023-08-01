@@ -19,10 +19,10 @@ internal class ThemeViewModelTest: BaseTest() {
     private val mockThemeRepository: ThemeRepository = mockk(relaxed = true)
     private val mockToastManager: ToastManager = mockk(relaxed = true)
 
-    private lateinit var underTest: ThemeViewModel
+    private lateinit var underTest: SettingsThemeViewModel
 
     private fun initUnderTest() {
-        underTest = ThemeViewModel(
+        underTest = SettingsThemeViewModel(
             themeRepository = mockThemeRepository,
             toastManager = mockToastManager
         )

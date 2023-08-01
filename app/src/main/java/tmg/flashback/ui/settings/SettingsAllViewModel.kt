@@ -12,7 +12,6 @@ import tmg.flashback.navigation.Screen
 import tmg.flashback.rss.contract.RSSConfigure
 import tmg.flashback.rss.repo.RssRepository
 import tmg.flashback.ui.repository.ThemeRepository
-import tmg.flashback.ui.settings.appearance.AppearanceNavigationComponent
 import javax.inject.Inject
 
 interface SettingsAllViewModelInputs {
@@ -30,7 +29,6 @@ class SettingsAllViewModel @Inject constructor(
     private val adsRepository: AdsRepository,
     private val rssRepository: RssRepository,
     private val navigator: Navigator,
-    private val appearanceNavigationComponent: AppearanceNavigationComponent
 ): ViewModel(), SettingsAllViewModelInputs, SettingsAllViewModelOutputs {
 
     val inputs: SettingsAllViewModelInputs = this
@@ -45,11 +43,10 @@ class SettingsAllViewModel @Inject constructor(
     override fun itemClicked(pref: Setting) {
         when (pref.key) {
             Settings.Theme.darkMode.key -> {
-
-                appearanceNavigationComponent.nightModeDialog()
+                navigator.navigate(Screen.Settings.NightMode)
             }
             Settings.Theme.theme.key -> {
-                appearanceNavigationComponent.themeDialog()
+                navigator.navigate(Screen.Settings.Theme)
             }
             Settings.Data.layout.key -> {
                 navigator.navigate(Screen.Settings.Home)

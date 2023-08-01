@@ -55,15 +55,19 @@ import tmg.flashback.ui.settings.About
 import tmg.flashback.ui.settings.Ads
 import tmg.flashback.ui.settings.All
 import tmg.flashback.ui.settings.Home
+import tmg.flashback.ui.settings.NightMode
 import tmg.flashback.ui.settings.NotificationsResults
 import tmg.flashback.ui.settings.NotificationsUpcoming
 import tmg.flashback.ui.settings.Privacy
 import tmg.flashback.ui.settings.SettingsAllScreenVM
+import tmg.flashback.ui.settings.Theme
 import tmg.flashback.ui.settings.Weather
 import tmg.flashback.ui.settings.Web
 import tmg.flashback.ui.settings.about.SettingsAboutScreenVM
 import tmg.flashback.ui.settings.about.SettingsPrivacyScreenVM
 import tmg.flashback.ui.settings.ads.SettingsAdsScreenVM
+import tmg.flashback.ui.settings.appearance.nightmode.SettingsNightModeScreenVM
+import tmg.flashback.ui.settings.appearance.theme.SettingsThemeScreenVM
 import tmg.flashback.ui.settings.data.SettingsLayoutScreenVM
 import tmg.flashback.ui.settings.data.SettingsWeatherScreenVM
 import tmg.flashback.ui.settings.notifications.SettingsNotificationsResultsScreenVM
@@ -145,6 +149,16 @@ fun AppGraph(
             SettingsAllScreenVM(
                 showMenu = windowSize.widthSizeClass == WindowWidthSizeClass.Compact,
                 actionUpClicked = openMenu
+            )
+        }
+        composable(Screen.Settings.Theme.route) {
+            SettingsThemeScreenVM(
+                actionUpClicked = { navController.popBackStack() }
+            )
+        }
+        composable(Screen.Settings.NightMode.route) {
+            SettingsNightModeScreenVM(
+                actionUpClicked = { navController.popBackStack() }
             )
         }
         composable(Screen.Settings.Home.route) {
