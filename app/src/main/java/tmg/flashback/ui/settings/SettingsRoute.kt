@@ -6,6 +6,12 @@ import tmg.flashback.navigation.Screen
 internal val Screen.Settings.All: NavigationDestination
     get() = NavigationDestination("settings", launchSingleTop = true)
 
+internal val Screen.Settings.NightMode: NavigationDestination
+    get() = NavigationDestination("settings/nightmode", popUpTo = "settings")
+
+internal val Screen.Settings.Theme: NavigationDestination
+    get() = NavigationDestination("settings/theme", popUpTo = "settings")
+
 internal val Screen.Settings.Adverts: NavigationDestination
     get() = NavigationDestination("settings/adverts", popUpTo = "settings")
 
