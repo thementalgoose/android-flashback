@@ -5,6 +5,10 @@ import tmg.flashback.R
 import tmg.flashback.results.contract.repository.models.NotificationResultsAvailable
 import tmg.flashback.results.contract.repository.models.NotificationUpcoming
 import tmg.flashback.results.repository.models.prefKey
+import tmg.flashback.ui.model.NightMode
+import tmg.flashback.ui.model.Theme
+import tmg.flashback.ui.settings.appearance.nightmode.title
+import tmg.flashback.ui.settings.appearance.theme.title
 
 object Settings {
 
@@ -16,12 +20,24 @@ object Settings {
             subtitle = R.string.settings_section_dark_mode_description,
             icon = R.drawable.ic_settings_dark_mode
         )
+        fun darkModeOption(type: NightMode, isChecked: Boolean) = Setting.Option(
+            _key = type.key,
+            title = type.title,
+            subtitle = type.title,
+            isChecked = isChecked
+        )
 
         val theme = Setting.Section(
             _key = "theme",
             title = R.string.settings_section_theme_title,
             subtitle = R.string.settings_section_theme_description,
             icon = R.drawable.ic_settings_theme
+        )
+        fun themeOption(type: tmg.flashback.ui.model.Theme, isChecked: Boolean) = Setting.Option(
+            _key = type.key,
+            title = type.title,
+            subtitle = type.title,
+            isChecked = isChecked
         )
     }
 

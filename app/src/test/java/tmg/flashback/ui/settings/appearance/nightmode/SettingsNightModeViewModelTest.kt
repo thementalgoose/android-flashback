@@ -13,15 +13,15 @@ import tmg.flashback.ui.repository.ThemeRepository
 import tmg.flashback.ui.usecases.ChangeNightModeUseCase
 import tmg.testutils.BaseTest
 
-internal class NightModeViewModelTest: BaseTest() {
+internal class SettingsNightModeViewModelTest: BaseTest() {
 
     private val mockThemeRepository: ThemeRepository = mockk(relaxed = true)
     private val mockChangeNightModeUseCase: ChangeNightModeUseCase = mockk(relaxed = true)
 
-    private lateinit var underTest: NightModeViewModel
+    private lateinit var underTest: SettingsNightModeViewModel
 
     private fun initUnderTest() {
-        underTest = NightModeViewModel(mockThemeRepository, mockChangeNightModeUseCase)
+        underTest = SettingsNightModeViewModel(mockThemeRepository, mockChangeNightModeUseCase)
     }
 
     @BeforeEach
