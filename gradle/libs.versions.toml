@@ -1,7 +1,7 @@
 [versions]  # ===========================================================================
 kotlin = "1.9.0"
 hilt = "2.47"
-androidx_navigation = "2.7.0"
+androidx_navigation = "2.6.0"
 androidx_lifecycle = "2.6.1"
 androidx_hilt = "1.0.0"
 androidx_room = "2.5.2"
