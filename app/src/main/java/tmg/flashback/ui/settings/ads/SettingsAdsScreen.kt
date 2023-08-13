@@ -6,14 +6,14 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.R
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
-import tmg.flashback.ui.components.analytics.ScreenView
+import tmg.flashback.googleanalytics.presentation.ScreenView
+import tmg.flashback.ui.components.header.HeaderAction
 import tmg.flashback.ui.components.settings.Footer
 import tmg.flashback.ui.components.settings.Header
 import tmg.flashback.ui.components.settings.Switch
@@ -52,11 +52,7 @@ fun SettingsAdsScreen(
             item("header") {
                 tmg.flashback.ui.components.header.Header(
                     text = stringResource(id = R.string.settings_section_ads_title),
-                    icon = when (showBack) {
-                        true -> painterResource(id = R.drawable.ic_back)
-                        false -> null
-                    },
-                    iconContentDescription = stringResource(id = R.string.ab_back),
+                    action = if (showBack) HeaderAction.BACK else null,
                     actionUpClicked = actionUpClicked
                 )
             }

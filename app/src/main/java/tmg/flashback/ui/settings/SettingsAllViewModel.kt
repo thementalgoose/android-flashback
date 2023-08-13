@@ -12,7 +12,6 @@ import tmg.flashback.navigation.Screen
 import tmg.flashback.rss.contract.RSSConfigure
 import tmg.flashback.rss.repo.RssRepository
 import tmg.flashback.ui.repository.ThemeRepository
-import tmg.flashback.ui.settings.appearance.AppearanceNavigationComponent
 import javax.inject.Inject
 
 interface SettingsAllViewModelInputs {
@@ -20,9 +19,7 @@ interface SettingsAllViewModelInputs {
 }
 
 interface SettingsAllViewModelOutputs {
-    val isThemeEnabled: StateFlow<Boolean>
-    val isAdsEnabled: StateFlow<Boolean>
-    val isRSSEnabled: StateFlow<Boolean>
+    val uiState: StateFlow<SettingsAllViewModel.UiState>
 }
 
 @HiltViewModel
@@ -32,23 +29,24 @@ class SettingsAllViewModel @Inject constructor(
     private val adsRepository: AdsRepository,
     private val rssRepository: RssRepository,
     private val navigator: Navigator,
-    private val appearanceNavigationComponent: AppearanceNavigationComponent
 ): ViewModel(), SettingsAllViewModelInputs, SettingsAllViewModelOutputs {
 
     val inputs: SettingsAllViewModelInputs = this
     val outputs: SettingsAllViewModelOutputs = this
 
-    override val isThemeEnabled: MutableStateFlow<Boolean> = MutableStateFlow(themeRepository.enableThemePicker && buildConfig.isMonetThemeSupported)
-    override val isAdsEnabled: MutableStateFlow<Boolean> = MutableStateFlow(adsRepository.allowUserConfig)
-    override val isRSSEnabled: MutableStateFlow<Boolean> = MutableStateFlow(rssRepository.enabled)
+    override val uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState(
+        adsEnabled = adsRepository.allowUserConfig,
+        themeEnabled = isThemeEnabled,
+        rssEnabled = rssRepository.enabled
+    ))
 
     override fun itemClicked(pref: Setting) {
         when (pref.key) {
             Settings.Theme.darkMode.key -> {
-                appearanceNavigationComponent.nightModeDialog()
+                navigator.navigate(Screen.Settings.NightMode)
             }
             Settings.Theme.theme.key -> {
-                appearanceNavigationComponent.themeDialog()
+                navigator.navigate(Screen.Settings.Theme)
             }
             Settings.Data.layout.key -> {
                 navigator.navigate(Screen.Settings.Home)
@@ -83,9 +81,35 @@ class SettingsAllViewModel @Inject constructor(
         }
     }
 
+    private val isThemeEnabled: Boolean
+        get() = themeRepository.enableThemePicker && buildConfig.isMonetThemeSupported
+
     fun refresh() {
-        isThemeEnabled.value = themeRepository.enableThemePicker && buildConfig.isMonetThemeSupported
-        isAdsEnabled.value = adsRepository.allowUserConfig
-        isRSSEnabled.value = rssRepository.enabled
+        uiState.value = uiState.value.copy(
+            adsEnabled = adsRepository.allowUserConfig,
+            themeEnabled = isThemeEnabled,
+            rssEnabled = rssRepository.enabled
+        )
+    }
+
+    data class UiState(
+        val selectedSubScreen: SettingsScreen? = null,
+        val adsEnabled: Boolean,
+        val rssEnabled: Boolean,
+        val themeEnabled: Boolean
+    )
+
+    enum class SettingsScreen {
+        DARK_MODE,
+        THEME,
+        LAYOUT,
+        WEATHER,
+        RSS_CONFIGURE,
+        WEB_BROWSER,
+        NOTIFICATIONS_UPCOMING,
+        NOTIFICATIONS_RESULTS,
+        ADS,
+        PRIVACY,
+        ABOUT
     }
 }

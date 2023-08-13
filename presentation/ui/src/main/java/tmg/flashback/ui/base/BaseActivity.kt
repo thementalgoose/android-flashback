@@ -7,7 +7,6 @@ import androidx.activity.result.contract.ActivityResultContracts.RequestPermissi
 import androidx.annotation.StyleRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import tmg.flashback.googleanalytics.manager.FirebaseAnalyticsManager
 import tmg.flashback.navigation.ActivityProvider
 import tmg.flashback.ui.managers.PermissionManager
 import tmg.flashback.ui.managers.StyleManager
@@ -23,8 +22,6 @@ abstract class BaseActivity : AppCompatActivity(), RationaleBottomSheetFragmentC
     lateinit var styleManager: StyleManager
     @Inject
     lateinit var activityProvider: ActivityProvider
-    @Inject
-    lateinit var firebaseAnalyticsManager: FirebaseAnalyticsManager
     @Inject
     protected lateinit var permissionManager: PermissionManager
 
@@ -44,13 +41,6 @@ abstract class BaseActivity : AppCompatActivity(), RationaleBottomSheetFragmentC
     protected val themeRes: Int
         @StyleRes
         get() = styleManager.getStyleResource()
-
-    /**
-     * Logging screen analytics
-     */
-    fun logScreenViewed(name: String, params: Map<String, String> = mapOf()) {
-        firebaseAnalyticsManager.viewScreen(name, params, this::class.java)
-    }
 
     fun requestPermission(rationaleType: RationaleType) {
         when {

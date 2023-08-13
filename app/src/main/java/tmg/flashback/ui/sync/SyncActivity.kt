@@ -34,8 +34,6 @@ class SyncActivity: BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        logScreenViewed("Sync")
-
         setContent {
             AppTheme {
                 Scaffold(content = {

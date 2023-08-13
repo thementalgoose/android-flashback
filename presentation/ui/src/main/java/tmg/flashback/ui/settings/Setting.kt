@@ -61,4 +61,19 @@ sealed class Setting(
     ) {
         companion object
     }
+
+    data class Option(
+        private val _key: String,
+        @StringRes
+        val title: Int,
+        @StringRes
+        val subtitle: Int?,
+        val isChecked: Boolean,
+        val isEnabled: Boolean = true,
+        val isBeta: Boolean = false,
+    ): Setting(
+        key = _key
+    ) {
+        companion object
+    }
 }

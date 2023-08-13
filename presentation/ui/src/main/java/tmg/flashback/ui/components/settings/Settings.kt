@@ -23,12 +23,14 @@ import androidx.compose.ui.unit.Dp
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
+import tmg.flashback.style.input.InputRadio
 import tmg.flashback.style.input.InputSwitch
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextSection
 import tmg.flashback.style.text.TextTitle
 import tmg.flashback.ui.R
 import tmg.flashback.ui.components.header.Header
+import tmg.flashback.ui.components.header.HeaderAction
 import tmg.flashback.ui.settings.Setting
 
 private const val disabledAlpha = 0.5f
@@ -142,6 +144,67 @@ fun SettingSwitch(
             }
         }
         InputSwitch(
+            isChecked = model.isChecked,
+            modifier = Modifier.align(Alignment.CenterVertically)
+        )
+    }
+}
+
+fun LazyListScope.Option(
+    model: Setting.Option,
+    onClick: (Setting.Option) -> Unit
+) {
+    item(key = model.key) {
+        SettingOption(
+            model = model,
+            onClick = onClick
+        )
+    }
+}
+
+@Composable
+fun SettingOption(
+    model: Setting.Option,
+    onClick: (Setting.Option) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Row(modifier = modifier
+        .alpha(if (model.isEnabled) 1f else disabledAlpha)
+        .toggleable(model.isChecked, onValueChange = {
+            onClick(model)
+        }, enabled = model.isEnabled)
+        .padding(
+            vertical = AppTheme.dimens.small,
+            horizontal = AppTheme.dimens.medium
+        )
+    ) {
+        Column(
+            modifier = Modifier
+                .weight(1f)
+                .padding(end = AppTheme.dimens.medium),
+            verticalArrangement = Arrangement.Center
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                TextTitle(
+                    text = stringResource(id = model.title)
+                )
+                if (model.isBeta) {
+                    Spacer(Modifier.width(AppTheme.dimens.small))
+                    ExperimentalLabel()
+                }
+            }
+            model.subtitle?.let {
+                TextBody2(
+                    text = stringResource(id = it),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = AppTheme.dimens.xsmall)
+                )
+            }
+        }
+        InputRadio(
             isChecked = model.isChecked,
             modifier = Modifier.align(Alignment.CenterVertically)
         )
@@ -265,7 +328,11 @@ fun SettingSection(
 private fun Preview() {
     AppThemePreview {
         Column(Modifier.fillMaxWidth()) {
-            Header(text = "Settings", icon = painterResource(id = R.drawable.ic_back), iconContentDescription = null, actionUpClicked = { })
+            Header(
+                text = "Settings",
+                action = HeaderAction.BACK,
+                actionUpClicked = { }
+            )
             SettingHeader(
                 model = Setting.Heading.get()
             )
@@ -274,15 +341,8 @@ private fun Preview() {
                 onClick = {}
             )
             SettingSection(
-                model = Setting.Section.get(isBeta = true),
-                onClick = {}
-            )
-            SettingSection(
                 model = Setting.Section.get(isEnabled = false),
                 onClick = {}
-            )
-            SettingHeader(
-                model = Setting.Heading.get(isBeta = true)
             )
             SettingPref(
                 model = Setting.Pref.get(),
@@ -304,15 +364,7 @@ private fun Preview() {
                 onClick = {}
             )
             SettingSwitch(
-                model = Setting.Switch.get(isChecked = false),
-                onClick = {}
-            )
-            SettingSwitch(
                 model = Setting.Switch.get(isBeta = true),
-                onClick = {}
-            )
-            SettingSwitch(
-                model = Setting.Switch.get(isEnabled = false),
                 onClick = {}
             )
             SettingSwitch(
