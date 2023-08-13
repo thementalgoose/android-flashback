@@ -19,6 +19,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
@@ -45,9 +46,10 @@ import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextCaption
-import tmg.flashback.ui.components.analytics.ScreenView
+import tmg.flashback.googleanalytics.presentation.ScreenView
 import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.header.Header
+import tmg.flashback.ui.components.header.HeaderAction
 import tmg.flashback.ui.components.messages.Message
 import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
 import tmg.utilities.extensions.fromHtml
@@ -56,6 +58,7 @@ private val badgeSize: Dp = 40.dp
 
 @Composable
 fun RSSScreenVM(
+    windowSizeClass: WindowSizeClass,
     showMenu: Boolean = true,
     advertProvider: AdvertProvider,
     actionUpClicked: () -> Unit,
@@ -63,8 +66,9 @@ fun RSSScreenVM(
 ) {
     ScreenView(screenName = "RSS")
 
-    val list = viewModel.outputs.list.collectAsState(emptyList())
-    val isLoading = viewModel.outputs.isRefreshing.collectAsState(false)
+    val uiState = viewModel.outputs.uiState.collectAsState()
+    val isLoading = viewModel.outputs.isLoading.collectAsState(false)
+
     SwipeRefresh(
         isLoading = isLoading.value,
         onRefresh = viewModel.inputs::refresh
@@ -72,8 +76,8 @@ fun RSSScreenVM(
         RSSScreen(
             showMenu = showMenu,
             advertProvider = advertProvider,
-            list = list.value,
-            itemClicked = viewModel.inputs::clickModel,
+            uiState = uiState.value,
+            itemClicked = viewModel.inputs::clickArticle,
             configureSources = viewModel.inputs::configure,
             actionUpClicked = actionUpClicked
         )
@@ -84,8 +88,8 @@ fun RSSScreenVM(
 fun RSSScreen(
     showMenu: Boolean,
     advertProvider: AdvertProvider,
-    list: List<RSSModel>,
-    itemClicked: (RSSModel.RSS) -> Unit,
+    uiState: RSSViewModel.UiState,
+    itemClicked: (Article) -> Unit,
     configureSources: () -> Unit,
     actionUpClicked: () -> Unit
 ) {
@@ -97,8 +101,7 @@ fun RSSScreen(
             item("header") {
                 Header(
                     text = stringResource(id = R.string.title_rss),
-                    icon = if (showMenu) painterResource(id = R.drawable.ic_menu) else null,
-                    iconContentDescription = stringResource(id = R.string.ab_menu),
+                    action = if (showMenu) HeaderAction.MENU else null,
                     overrideIcons = {
                         IconButton(onClick = configureSources) {
                             Icon(
@@ -111,24 +114,33 @@ fun RSSScreen(
                     actionUpClicked = actionUpClicked
                 )
             }
-            items(list, key = { it.key }) {
-                when (it) {
-                    is RSSModel.RSS -> Item(it, itemClicked)
-                    is RSSModel.Message -> Message(stringResource(id = R.string.home_last_updated, it.msg))
-                    RSSModel.NoNetwork -> {
+            when (uiState) {
+                is RSSViewModel.UiState.SourcesDisabled -> {
+                    item(key = "sourcedisabled") {
+                        SourcesDisabled(sourceClicked = configureSources)
+                    }
+                }
+                is RSSViewModel.UiState.NoNetwork -> {
+                    item(key = "nonetwork") {
                         NetworkError(error = NetworkError.NETWORK_ERROR)
                     }
-                    RSSModel.Advert -> {
-                        advertProvider.NativeBanner(
-                            horizontalPadding = true,
-                            badgeOffset = true
-                        )
+                }
+                is RSSViewModel.UiState.Data -> {
+                    if (uiState.lastUpdated != null) {
+                        item(key = "updated") {
+                            Message(stringResource(id = R.string.home_last_updated, uiState.lastUpdated))
+                        }
                     }
-                    RSSModel.InternalError -> {
-                        NetworkError(error = NetworkError.INTERNAL_ERROR)
+                    if (uiState.showAdvert) {
+                        item(key = "advert") {
+                            advertProvider.NativeBanner(
+                                horizontalPadding = true,
+                                badgeOffset = true
+                            )
+                        }
                     }
-                    RSSModel.SourcesDisabled -> {
-                        SourcesDisabled(sourceClicked = configureSources)
+                    items(uiState.rssItems, key = { it.link }) {
+                        Item(it, itemClicked)
                     }
                 }
             }
@@ -138,8 +150,8 @@ fun RSSScreen(
 
 @Composable
 private fun Item(
-    model: RSSModel.RSS,
-    clickItem: (RSSModel.RSS) -> Unit,
+    model: Article,
+    clickItem: (Article) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(modifier = modifier
@@ -152,21 +164,21 @@ private fun Item(
         )
     ) {
         SourceBadge(
-            title = model.item.source.shortSource
-                ?: model.item.source.source.substring(0..2),
-            textColour = Color(model.item.source.textColor.toColorInt()),
-            colour = Color(model.item.source.colour.toColorInt())
+            title = model.source.shortSource
+                ?: model.source.source.substring(0..2),
+            textColour = Color(model.source.textColor.toColorInt()),
+            colour = Color(model.source.colour.toColorInt())
         )
         Spacer(Modifier.width(AppTheme.dimens.medium))
         Column(modifier = Modifier.weight(1f)) {
             TextBody1(
-                text = model.item.title,
+                text = model.title,
                 bold = true,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = 4.dp)
             )
-            model.item.description?.let { desc ->
+            model.description?.let { desc ->
                 AndroidView(factory = {
                     TextView(it).apply {
                         this.text = desc.split("<br").firstOrNull()
@@ -187,7 +199,7 @@ private fun Item(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 4.dp),
-                text = "${model.item.source.source} - ${model.item.date?.format(DateTimeFormatter.ofPattern("HH:mm 'at' dd MMM"))}",
+                text = "${model.source.source} - ${model.date?.format(DateTimeFormatter.ofPattern("HH:mm 'at' dd MMM"))}",
             )
         }
     }
@@ -247,7 +259,45 @@ private fun Preview() {
         RSSScreen(
             showMenu = true,
             advertProvider = fakeAdvertProvider,
-            list = listOf(RSSModel.Advert, RSSModel.SourcesDisabled, RSSModel.RSS(item = fakeArticle)),
+            uiState = RSSViewModel.UiState.Data(
+                rssItems = listOf(fakeArticle)
+            ),
+            itemClicked = {},
+            configureSources = {},
+            actionUpClicked = {}
+        )
+    }
+}
+
+@PreviewTheme
+@Composable
+private fun PreviewArticle() {
+    AppThemePreview {
+        RSSScreen(
+            showMenu = true,
+            advertProvider = fakeAdvertProvider,
+            uiState = RSSViewModel.UiState.Data(
+                rssItems = listOf(fakeArticle),
+                articleSelected = fakeArticle
+            ),
+            itemClicked = {},
+            configureSources = {},
+            actionUpClicked = {}
+        )
+    }
+}
+
+@PreviewTheme
+@Composable
+private fun PreviewArticleTablet() {
+    AppThemePreview {
+        RSSScreen(
+            showMenu = false,
+            advertProvider = fakeAdvertProvider,
+            uiState = RSSViewModel.UiState.Data(
+                rssItems = listOf(fakeArticle),
+                articleSelected = fakeArticle
+            ),
             itemClicked = {},
             configureSources = {},
             actionUpClicked = {}

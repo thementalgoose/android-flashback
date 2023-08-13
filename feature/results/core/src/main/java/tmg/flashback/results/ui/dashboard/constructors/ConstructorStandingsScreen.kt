@@ -30,6 +30,7 @@ import tmg.flashback.style.text.TextTitle
 import tmg.flashback.ui.components.constructorIndicator
 import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.header.Header
+import tmg.flashback.ui.components.header.HeaderAction
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.navigation.appBarHeight
 import tmg.flashback.ui.components.progressbar.ProgressBar
@@ -77,14 +78,7 @@ fun ConstructorStandingsScreen(
             item(key = "header") {
                 Header(
                     text = stringResource(id = R.string.season_standings_constructor, season.toString()),
-                    icon = when (showMenu) {
-                        true -> painterResource(id = R.drawable.ic_menu)
-                        false -> null
-                    },
-                    iconContentDescription = when (showMenu) {
-                        true -> stringResource(id = R.string.ab_menu)
-                        false -> null
-                    },
+                    action = if (showMenu) HeaderAction.MENU else null,
                     actionUpClicked = {
                         menuClicked?.invoke()
                     }

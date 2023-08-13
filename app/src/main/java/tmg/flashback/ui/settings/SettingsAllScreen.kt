@@ -7,15 +7,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.R
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
-import tmg.flashback.ui.components.analytics.ScreenView
+import tmg.flashback.googleanalytics.presentation.ScreenView
 import tmg.flashback.ui.components.header.Header
+import tmg.flashback.ui.components.header.HeaderAction
 import tmg.flashback.ui.components.settings.Footer
 import tmg.flashback.ui.components.settings.Header
 import tmg.flashback.ui.components.settings.Section
@@ -28,9 +28,7 @@ fun SettingsAllScreenVM(
 ) {
     ScreenView(screenName = "Settings")
 
-    val isThemeEnabled = viewModel.outputs.isThemeEnabled.collectAsState(false)
-    val isAdsEnabled = viewModel.outputs.isAdsEnabled.collectAsState(false)
-    val isRSSEnabled = viewModel.outputs.isRSSEnabled.collectAsState(false)
+    val uiState = viewModel.outputs.uiState.collectAsState()
 
     LaunchedEffect(Unit) {
         viewModel.refresh()
@@ -40,9 +38,7 @@ fun SettingsAllScreenVM(
         showMenu = showMenu,
         actionUpClicked = actionUpClicked,
         prefClicked = viewModel.inputs::itemClicked,
-        isThemeEnabled = isThemeEnabled.value,
-        isAdsEnabled = isAdsEnabled.value,
-        isRSSEnabled = isRSSEnabled.value
+        uiState = uiState.value
     )
 }
 
@@ -51,9 +47,7 @@ fun SettingsAllScreen(
     showMenu: Boolean,
     actionUpClicked: () -> Unit,
     prefClicked: (Setting) -> Unit,
-    isThemeEnabled: Boolean,
-    isAdsEnabled: Boolean,
-    isRSSEnabled: Boolean
+    uiState: SettingsAllViewModel.UiState,
 ) {
     LazyColumn(
         modifier = Modifier
@@ -63,11 +57,7 @@ fun SettingsAllScreen(
             item("header") {
                 Header(
                     text = stringResource(id = R.string.settings_title),
-                    icon = when (showMenu) {
-                        true -> painterResource(id = R.drawable.ic_menu)
-                        false -> null
-                    },
-                    iconContentDescription = stringResource(id = R.string.ab_menu),
+                    action = if (showMenu) HeaderAction.MENU else null,
                     actionUpClicked = actionUpClicked
                 )
             }
@@ -77,7 +67,7 @@ fun SettingsAllScreen(
                 model = Settings.Theme.darkMode,
                 onClick = prefClicked
             )
-            if (isThemeEnabled) {
+            if (uiState.themeEnabled) {
                 Section(
                     model = Settings.Theme.theme,
                     onClick = prefClicked
@@ -92,7 +82,7 @@ fun SettingsAllScreen(
                 model = Settings.Data.weather,
                 onClick = prefClicked
             )
-            if (isRSSEnabled) {
+            if (uiState.rssEnabled) {
                 Header(title = R.string.settings_header_rss_feed)
                 Section(
                     model = Settings.RSS.rss,
@@ -113,7 +103,7 @@ fun SettingsAllScreen(
                 model = Settings.Notifications.notificationResults,
                 onClick = prefClicked
             )
-            if (isAdsEnabled) {
+            if (uiState.adsEnabled) {
                 Header(title = R.string.settings_header_ads)
                 Section(
                     model = Settings.Ads.ads,
@@ -142,24 +132,28 @@ private fun Preview() {
             showMenu = true,
             actionUpClicked = {},
             prefClicked = {},
-            isThemeEnabled = true,
-            isAdsEnabled = true,
-            isRSSEnabled = true
+            uiState = SettingsAllViewModel.UiState(
+                adsEnabled = true,
+                rssEnabled = true,
+                themeEnabled = true
+            )
         )
     }
 }
 
 @PreviewTheme
 @Composable
-private fun PreviewNoTheme() {
+private fun PreviewAllHidden() {
     AppThemePreview {
         SettingsAllScreen(
             showMenu = true,
             actionUpClicked = {},
             prefClicked = {},
-            isThemeEnabled = false,
-            isAdsEnabled = false,
-            isRSSEnabled = false
+            uiState = SettingsAllViewModel.UiState(
+                adsEnabled = false,
+                rssEnabled = false,
+                themeEnabled = false
+            )
         )
     }
 }

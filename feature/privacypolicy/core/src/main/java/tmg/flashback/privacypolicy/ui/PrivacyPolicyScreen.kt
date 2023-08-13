@@ -9,15 +9,15 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.viewinterop.AndroidView
 import tmg.flashback.privacypolicy.R
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
-import tmg.flashback.ui.components.analytics.ScreenView
+import tmg.flashback.googleanalytics.presentation.ScreenView
 import tmg.flashback.ui.components.header.Header
+import tmg.flashback.ui.components.header.HeaderAction
 import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.getColor
 
@@ -34,8 +34,7 @@ fun PrivacyPolicyScreenVM(
     ) {
         Header(
             text = stringResource(id = R.string.privacy_policy_title),
-            icon = painterResource(id = R.drawable.ic_back),
-            iconContentDescription = stringResource(id = R.string.ab_back),
+            action = HeaderAction.BACK,
             actionUpClicked = actionUpClicked
         )
         AndroidView(

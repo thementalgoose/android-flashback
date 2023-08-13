@@ -21,7 +21,7 @@ sealed class RationaleType(
 ): Parcelable {
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-    object RuntimeNotifications: RationaleType(
+    data object RuntimeNotifications: RationaleType(
         permission = Manifest.permission.POST_NOTIFICATIONS,
         description = R.string.permissions_rationale_runtime_notifications_description,
         raw = R.raw.notifications

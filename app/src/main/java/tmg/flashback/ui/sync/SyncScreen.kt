@@ -23,6 +23,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import tmg.flashback.R
+import tmg.flashback.googleanalytics.presentation.ScreenView
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
@@ -44,6 +45,8 @@ fun SyncScreen(
     showTryAgain: Boolean,
     tryAgainClicked: () -> Unit
 ) {
+    ScreenView(screenName = "Sync")
+
     Column(modifier = Modifier
         .fillMaxSize()
         .background(AppTheme.colors.backgroundSplash)

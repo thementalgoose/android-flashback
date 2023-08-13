@@ -37,10 +37,11 @@ import tmg.flashback.style.buttons.ButtonSecondary
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextCaption
-import tmg.flashback.ui.components.analytics.ScreenView
+import tmg.flashback.googleanalytics.presentation.ScreenView
 import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.ui.components.header.Header
+import tmg.flashback.ui.components.header.HeaderAction
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.navigation.PipeType
 import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
@@ -99,8 +100,7 @@ fun ConstructorOverviewScreen(
             item(key = "header") {
                 Header(
                     text = constructorName,
-                    icon = painterResource(id = R.drawable.ic_back),
-                    iconContentDescription = stringResource(id = R.string.ab_back),
+                    action = HeaderAction.BACK,
                     actionUpClicked = actionUpClicked
                 )
             }

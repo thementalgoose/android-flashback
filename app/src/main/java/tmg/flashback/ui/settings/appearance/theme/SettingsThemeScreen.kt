@@ -1,4 +1,4 @@
-package tmg.flashback.ui.settings.data
+package tmg.flashback.ui.settings.appearance.theme
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,44 +9,46 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.R
+import tmg.flashback.googleanalytics.presentation.ScreenView
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
-import tmg.flashback.googleanalytics.presentation.ScreenView
 import tmg.flashback.ui.components.header.HeaderAction
 import tmg.flashback.ui.components.settings.Footer
 import tmg.flashback.ui.components.settings.Header
-import tmg.flashback.ui.components.settings.Switch
+import tmg.flashback.ui.components.settings.Option
+import tmg.flashback.ui.model.NightMode
+import tmg.flashback.ui.model.Theme
 import tmg.flashback.ui.settings.Setting
 import tmg.flashback.ui.settings.Settings
+import tmg.flashback.ui.settings.appearance.nightmode.SettingsNightModeViewModel
+import tmg.utilities.extensions.toEnum
 
 @Composable
-fun SettingsLayoutScreenVM(
-    showBack: Boolean = true,
-    actionUpClicked: () -> Unit = { },
-    viewModel: SettingsLayoutViewModel = hiltViewModel()
+fun SettingsThemeScreenVM(
+    actionUpClicked: () -> Unit,
+    viewModel: SettingsThemeViewModel = hiltViewModel(),
 ) {
-    ScreenView(screenName = "Settings - Layout")
+    val selected = viewModel.outputs.currentlySelected.collectAsState()
 
-    val collapsedList = viewModel.outputs.collapsedListEnabled.collectAsState(true)
-    val emptyWeeksInSchedule = viewModel.outputs.emptyWeeksInSchedule.collectAsState(false)
-    SettingsLayoutScreen(
-        showBack = showBack,
+    SettingsThemeScreen(
         actionUpClicked = actionUpClicked,
-        prefClicked = viewModel.inputs::prefClicked,
-        collapsedListEnabled = collapsedList.value,
-        showEmptyWeeksInSchedule = emptyWeeksInSchedule.value
+        selected = selected.value,
+        prefClicked = { option ->
+            val value = option.key.toEnum<Theme> { it.key }!!
+            viewModel.inputs.selectTheme(value)
+        }
     )
 }
 
 @Composable
-fun SettingsLayoutScreen(
-    showBack: Boolean,
+fun SettingsThemeScreen(
     actionUpClicked: () -> Unit,
-    prefClicked: (Setting) -> Unit,
-    collapsedListEnabled: Boolean,
-    showEmptyWeeksInSchedule: Boolean
+    selected: Theme,
+    prefClicked: (Setting.Option) -> Unit
 ) {
+    ScreenView(screenName = "Settings Appearance Theme")
+
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -54,19 +56,19 @@ fun SettingsLayoutScreen(
         content = {
             item("header") {
                 tmg.flashback.ui.components.header.Header(
-                    text = stringResource(id = R.string.settings_section_home_title),
-                    action = if (showBack) HeaderAction.BACK else null,
+                    text = stringResource(id = R.string.settings_theme_theme_title),
+                    action = HeaderAction.BACK,
                     actionUpClicked = actionUpClicked
                 )
             }
 
-            Header(title = R.string.settings_header_home)
-            Switch(
-                model = Settings.Data.collapseList(collapsedListEnabled),
+            Header(title = R.string.settings_theme_theme_title)
+            Option(
+                model = Settings.Theme.themeOption(type = Theme.DEFAULT, isChecked = selected == Theme.DEFAULT),
                 onClick = prefClicked
             )
-            Switch(
-                model = Settings.Data.showEmptyWeeksInSchedule(showEmptyWeeksInSchedule),
+            Option(
+                model = Settings.Theme.themeOption(type = Theme.MATERIAL_YOU, isChecked = selected == Theme.MATERIAL_YOU),
                 onClick = prefClicked
             )
 
@@ -79,12 +81,10 @@ fun SettingsLayoutScreen(
 @Composable
 private fun Preview() {
     AppThemePreview {
-        SettingsLayoutScreen(
-            showBack = true,
+        SettingsThemeScreen(
             actionUpClicked = {},
             prefClicked = {},
-            collapsedListEnabled = true,
-            showEmptyWeeksInSchedule = false
+            selected = Theme.MATERIAL_YOU
         )
     }
 }

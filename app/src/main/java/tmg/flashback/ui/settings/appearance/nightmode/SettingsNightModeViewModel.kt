@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 //region Inputs
 
-interface NightModeViewModelInputs {
+interface SettingsNightModeViewModelInputs {
     fun selectNightMode(nightMode: NightMode)
 }
 
@@ -19,20 +19,20 @@ interface NightModeViewModelInputs {
 
 //region Outputs
 
-interface NightModeViewModelOutputs {
+interface SettingsNightModeViewModelOutputs {
     val currentlySelected: StateFlow<NightMode>
 }
 
 //endregion
 
 @HiltViewModel
-class NightModeViewModel @Inject constructor(
+class SettingsNightModeViewModel @Inject constructor(
     private val themeRepository: ThemeRepository,
     private val changeNightModeUseCase: ChangeNightModeUseCase
-): ViewModel(), NightModeViewModelInputs, NightModeViewModelOutputs {
+): ViewModel(), SettingsNightModeViewModelInputs, SettingsNightModeViewModelOutputs {
 
-    var inputs: NightModeViewModelInputs = this
-    var outputs: NightModeViewModelOutputs = this
+    var inputs: SettingsNightModeViewModelInputs = this
+    var outputs: SettingsNightModeViewModelOutputs = this
 
     override val currentlySelected: MutableStateFlow<NightMode> = MutableStateFlow(NightMode.DEFAULT)
 
@@ -44,6 +44,7 @@ class NightModeViewModel @Inject constructor(
 
     override fun selectNightMode(nightMode: NightMode) {
         changeNightModeUseCase.setNightMode(nightMode)
+        currentlySelected.value = themeRepository.nightMode
     }
 
     //endregion

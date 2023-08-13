@@ -16,7 +16,6 @@ import tmg.flashback.navigation.Screen
 import tmg.flashback.rss.contract.RSSConfigure
 import tmg.flashback.rss.repo.RssRepository
 import tmg.flashback.ui.repository.ThemeRepository
-import tmg.flashback.ui.settings.appearance.AppearanceNavigationComponent
 import tmg.testutils.BaseTest
 
 internal class SettingsAllViewModelTest: BaseTest() {
@@ -26,7 +25,6 @@ internal class SettingsAllViewModelTest: BaseTest() {
     private val mockAdsRepository: AdsRepository = mockk(relaxed = true)
     private val mockRSSRepository: RssRepository = mockk(relaxed = true)
     private val mockNavigator: Navigator = mockk(relaxed = true)
-    private val mockAppearanceNavigationComponent: AppearanceNavigationComponent = mockk(relaxed = true)
 
     private lateinit var underTest: SettingsAllViewModel
 
@@ -37,7 +35,6 @@ internal class SettingsAllViewModelTest: BaseTest() {
             adsRepository = mockAdsRepository,
             rssRepository = mockRSSRepository,
             navigator = mockNavigator,
-            appearanceNavigationComponent = mockAppearanceNavigationComponent,
         )
     }
 
@@ -47,8 +44,8 @@ internal class SettingsAllViewModelTest: BaseTest() {
         every { mockBuildConfigManager.isMonetThemeSupported } returns true
 
         initUnderTest()
-        underTest.outputs.isThemeEnabled.test {
-            assertEquals(false, awaitItem())
+        underTest.outputs.uiState.test {
+            assertEquals(false, awaitItem().themeEnabled)
         }
     }
 
@@ -58,8 +55,8 @@ internal class SettingsAllViewModelTest: BaseTest() {
         every { mockBuildConfigManager.isMonetThemeSupported } returns false
 
         initUnderTest()
-        underTest.outputs.isThemeEnabled.test {
-            assertEquals(false, awaitItem())
+        underTest.outputs.uiState.test {
+            assertEquals(false, awaitItem().themeEnabled)
         }
     }
 
@@ -69,8 +66,8 @@ internal class SettingsAllViewModelTest: BaseTest() {
         every { mockBuildConfigManager.isMonetThemeSupported } returns true
 
         initUnderTest()
-        underTest.outputs.isThemeEnabled.test {
-            assertEquals(true, awaitItem())
+        underTest.outputs.uiState.test {
+            assertEquals(true, awaitItem().themeEnabled)
         }
     }
 
@@ -79,8 +76,8 @@ internal class SettingsAllViewModelTest: BaseTest() {
         every { mockAdsRepository.allowUserConfig } returns true
 
         initUnderTest()
-        underTest.outputs.isAdsEnabled.test {
-            assertEquals(true, awaitItem())
+        underTest.outputs.uiState.test {
+            assertEquals(true, awaitItem().adsEnabled)
         }
     }
 
@@ -89,8 +86,8 @@ internal class SettingsAllViewModelTest: BaseTest() {
         every { mockAdsRepository.allowUserConfig } returns false
 
         initUnderTest()
-        underTest.outputs.isAdsEnabled.test {
-            assertEquals(false, awaitItem())
+        underTest.outputs.uiState.test {
+            assertEquals(false, awaitItem().adsEnabled)
         }
     }
 
@@ -99,8 +96,8 @@ internal class SettingsAllViewModelTest: BaseTest() {
         every { mockRSSRepository.enabled } returns true
 
         initUnderTest()
-        underTest.outputs.isRSSEnabled.test {
-            assertEquals(true, awaitItem())
+        underTest.outputs.uiState.test {
+            assertEquals(true, awaitItem().rssEnabled)
         }
     }
 
@@ -109,8 +106,8 @@ internal class SettingsAllViewModelTest: BaseTest() {
         every { mockRSSRepository.enabled } returns false
 
         initUnderTest()
-        underTest.outputs.isRSSEnabled.test {
-            assertEquals(false, awaitItem())
+        underTest.outputs.uiState.test {
+            assertEquals(false, awaitItem().rssEnabled)
         }
     }
 
@@ -119,9 +116,11 @@ internal class SettingsAllViewModelTest: BaseTest() {
         initUnderTest()
         underTest.inputs.itemClicked(Settings.Theme.darkMode)
 
+        val slot = slot<NavigationDestination>()
         verify {
-            mockAppearanceNavigationComponent.nightModeDialog()
+            mockNavigator.navigate(capture(slot))
         }
+        assertEquals(Screen.Settings.NightMode.route, slot.captured.route)
     }
 
     @Test
@@ -129,9 +128,11 @@ internal class SettingsAllViewModelTest: BaseTest() {
         initUnderTest()
         underTest.inputs.itemClicked(Settings.Theme.theme)
 
+        val slot = slot<NavigationDestination>()
         verify {
-            mockAppearanceNavigationComponent.themeDialog()
+            mockNavigator.navigate(capture(slot))
         }
+        assertEquals(Screen.Settings.Theme.route, slot.captured.route)
     }
 
     @Test

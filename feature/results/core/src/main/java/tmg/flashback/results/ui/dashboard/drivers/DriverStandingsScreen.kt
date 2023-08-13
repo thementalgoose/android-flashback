@@ -41,6 +41,7 @@ import tmg.flashback.ui.components.drivers.DriverIcon
 import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.ui.components.header.Header
+import tmg.flashback.ui.components.header.HeaderAction
 import tmg.flashback.ui.components.layouts.Container
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.navigation.appBarHeight
@@ -89,14 +90,7 @@ fun DriverStandingsScreen(
             item(key = "header") {
                 Header(
                     text = stringResource(id = R.string.season_standings_driver, season.toString()),
-                    icon = when (showMenu) {
-                        true -> painterResource(id = R.drawable.ic_menu)
-                        false -> null
-                    },
-                    iconContentDescription = when (showMenu) {
-                        true -> stringResource(id = R.string.ab_menu)
-                        false -> null
-                    },
+                    action = if (showMenu) HeaderAction.MENU else null,
                     actionUpClicked = {
                         menuClicked?.invoke()
                     }
@@ -145,28 +139,6 @@ fun DriverStandingsScreen(
             }
         }
     )
-}
-
-@Composable
-fun DriverStandingsCard(
-    model: DriverStandingsModel.Standings,
-    itemClicked: (DriverStandingsModel.Standings) -> Unit,
-    maxPoints: Double,
-    modifier: Modifier = Modifier
-) {
-    Container(
-        modifier = modifier.padding(
-            horizontal = AppTheme.dimens.medium,
-            vertical = AppTheme.dimens.xxsmall
-        ),
-        isSelected = model.isSelected
-    ) {
-        DriverStandings(
-            model = model,
-            itemClicked = itemClicked,
-            maxPoints = maxPoints
-        )
-    }
 }
 
 @Composable

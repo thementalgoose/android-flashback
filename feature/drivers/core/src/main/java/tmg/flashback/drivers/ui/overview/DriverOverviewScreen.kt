@@ -2,7 +2,6 @@ package tmg.flashback.drivers.ui.overview
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -34,11 +33,10 @@ import tmg.flashback.style.badge.BadgeView
 import tmg.flashback.style.buttons.ButtonSecondary
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.ui.R.drawable.gb
-import tmg.flashback.ui.components.analytics.ScreenView
+import tmg.flashback.googleanalytics.presentation.ScreenView
 import tmg.flashback.ui.components.drivers.DriverIcon
-import tmg.flashback.ui.components.drivers.DriverImage
 import tmg.flashback.ui.components.errors.NetworkError
-import tmg.flashback.ui.components.flag.Flag
+import tmg.flashback.ui.components.header.HeaderAction
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.messages.Message
 import tmg.flashback.ui.components.navigation.PipeType
@@ -99,8 +97,7 @@ fun DriverOverviewScreen(
             item("header") {
                 tmg.flashback.ui.components.header.Header(
                     text = driverName,
-                    icon = painterResource(id = R.drawable.ic_back),
-                    iconContentDescription = stringResource(id = R.string.ab_back),
+                    action = HeaderAction.BACK,
                     actionUpClicked = actionUpClicked
                 )
             }
