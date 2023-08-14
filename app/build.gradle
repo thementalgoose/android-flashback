@@ -100,7 +100,7 @@ play {
 }
 
 // Adds generate tasks to assemble
-tasks.whenTaskAdded { task ->
+tasks.configureEach { task ->
     if (task.name.contains("assemble")) {
         task.dependsOn generateRemoteConfigDefaults
     }

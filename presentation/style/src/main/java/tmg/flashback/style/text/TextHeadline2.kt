@@ -91,7 +91,7 @@ private fun PreviewIcon() {
     AppThemePreview {
         TextHeadline2WithIcon(
             text = "Headline 2",
-            icon = painterResource(id = R.drawable.lb_ic_loop),
+            icon = painterResource(id = androidx.core.R.drawable.ic_call_answer_low),
             iconModifier = Modifier.rotate(40f)
         )
     }
