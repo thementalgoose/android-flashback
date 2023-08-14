@@ -16,6 +16,7 @@ import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.ui.R
+import tmg.flashback.strings.R.*
 
 enum class NetworkError(
     @StringRes
@@ -24,11 +25,11 @@ enum class NetworkError(
     val icon: Int
 ) {
     NETWORK_ERROR(
-        label = R.string.network_error_network,
+        label = string.network_error_network,
         icon = R.drawable.error_network
     ),
     INTERNAL_ERROR(
-        label = R.string.network_error_internal,
+        label = string.network_error_internal,
         icon = R.drawable.error_internal
     )
 }

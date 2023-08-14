@@ -89,7 +89,7 @@ private fun Preview() {
 private fun PreviewWithIcon() {
     AppThemePreview {
         ButtonTertiary(
-            icon = R.drawable.lb_ic_fast_forward,
+            icon = androidx.core.R.drawable.ic_call_answer_low,
             text = "Tertiary Button",
             onClick = { }
         )

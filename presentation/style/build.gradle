@@ -13,14 +13,5 @@ android {
         targetSdkVersion project.ext.targetSdkVersion
     }
 
-
-    buildTypes {
-        debug {
-            buildConfigField "boolean", "TABLET_UI", "true"
-        }
-        release {
-            buildConfigField "boolean", "TABLET_UI", "false"
-        }
-    }
     namespace 'tmg.flashback.style'
 }

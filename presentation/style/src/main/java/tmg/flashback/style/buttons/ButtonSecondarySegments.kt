@@ -116,8 +116,8 @@ fun ButtonSecondarySegments(
 private fun Preview() {
     AppThemePreview {
         ButtonSecondarySegments(
-            items = listOf(R.string.lb_playback_controls_play, R.string.lb_playback_controls_pause, R.string.lb_playback_controls_fast_forward),
-            selected = R.string.lb_playback_controls_play,
+            items = listOf(androidx.appcompat.R.string.abc_action_bar_up_description, androidx.appcompat.R.string.abc_action_bar_up_description, androidx.appcompat.R.string.abc_action_bar_up_description),
+            selected = androidx.appcompat.R.string.abc_action_bar_up_description,
             onClick = { }
         )
     }
@@ -128,8 +128,8 @@ private fun Preview() {
 private fun PreviewMany() {
     AppThemePreview {
         ButtonSecondarySegments(
-            items = listOf(R.string.lb_playback_controls_play, R.string.lb_playback_controls_pause, R.string.lb_playback_controls_fast_forward),
-            selected = R.string.lb_playback_controls_play,
+            items = listOf(androidx.appcompat.R.string.abc_action_bar_up_description, androidx.appcompat.R.string.abc_action_bar_up_description, androidx.appcompat.R.string.abc_action_bar_up_description),
+            selected = androidx.appcompat.R.string.abc_action_bar_up_description,
             onClick = { }
         )
     }
@@ -140,8 +140,8 @@ private fun PreviewMany() {
 private fun PreviewShowTick() {
     AppThemePreview {
         ButtonSecondarySegments(
-            items = listOf(R.string.lb_playback_controls_play, R.string.lb_playback_controls_pause, R.string.lb_playback_controls_fast_forward),
-            selected = R.string.lb_playback_controls_play,
+            items = listOf(androidx.appcompat.R.string.abc_action_bar_up_description, androidx.appcompat.R.string.abc_action_bar_up_description, androidx.appcompat.R.string.abc_action_bar_up_description),
+            selected = androidx.appcompat.R.string.abc_action_bar_up_description,
             onClick = { },
             showTick = true
         )

@@ -109,12 +109,12 @@ private val fakeMenuBadge = Badge(
 )
 private val fakeMenuIconBadge = Badge(
     label = "Pause",
-    icon = R.drawable.lb_ic_play
+    icon = androidx.core.R.drawable.ic_call_answer_low
 )
 private val fakeBackBadge = Badge(
     label = "Play"
 )
 private val fakeBackIconBadge = Badge(
     label = "Pause",
-    icon = R.drawable.lb_ic_loop
+    icon = androidx.core.R.drawable.ic_call_answer_low
 )
