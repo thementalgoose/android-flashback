@@ -102,16 +102,8 @@
 -keepattributes SourceFile,LineNumberTable
 -keep public class * extends java.lang.Exception
 
--keep class androidx.appcompat.view.ContextThemeWrapper
--keep class androidx.window.extensions.embedding.ActivityEmbeddingComponent
--keep class androidx.window.extensions.layout.WindowLayoutComponent
--keep class androidx.window.sidecar.SidecarDeviceState
--keep class androidx.window.sidecar.SidecarInterface
--keep class sun.misc.Unsafe
--keep class javax.xml.stream.XMLStreamException
--keep class com.squareup.okhttp.RequestBody
--keep class okhttp3.Call
--keep class okhttp3.RequestBody
+-dontwarn androidx.appcompat.view.ContextThemeWrapper
+-dontwarn javax.xml.stream.XMLStreamException
 
 -keep class com.newrelic.** { *; }
 -dontwarn com.newrelic.**

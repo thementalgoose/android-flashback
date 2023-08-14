@@ -1,13 +1,13 @@
 [versions]  # ===========================================================================
 kotlin = "1.9.0"
 hilt = "2.47"
-androidx_navigation = "2.7.0"
+androidx_navigation = "2.6.0"
 androidx_lifecycle = "2.6.1"
 androidx_hilt = "1.0.0"
 androidx_room = "2.5.2"
 androidx_workmanager = "2.8.1"
 androidx_glance = "1.0.0-alpha03" #beta01 has update frequency issues!
-compose = "2023.08.00"
+compose = "2023.06.01"
 composecompiler = "1.5.0"
 compose_accompanist = "0.30.1"
 coroutines = "1.7.2"
