@@ -64,7 +64,7 @@ object Settings {
             _key = emptyWeeksInSchedule,
             title = R.string.settings_pref_empty_week_title,
             subtitle = R.string.settings_pref_empty_week_description,
-            isBeta = true,
+            isBeta = false,
             isChecked = isChecked,
             isEnabled = isEnabled
         )
