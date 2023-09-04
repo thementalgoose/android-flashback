@@ -54,12 +54,6 @@ fun WeekendScreenVM(
     actionUpClicked: () -> Unit,
     viewModel: WeekendViewModel = hiltViewModel()
 ) {
-    viewModel.inputs.load(
-        season = weekendInfo.season,
-        round = weekendInfo.round,
-        date = weekendInfo.date
-    )
-
     ScreenView(screenName = "Weekend", args = mapOf(
         analyticsSeason to weekendInfo.season.toString(),
         analyticsRound to weekendInfo.round.toString()

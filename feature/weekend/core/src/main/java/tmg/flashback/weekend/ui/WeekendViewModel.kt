@@ -1,5 +1,6 @@
 package tmg.flashback.weekend.ui
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,15 +20,17 @@ import org.threeten.bp.LocalDate
 import tmg.flashback.domain.repo.RaceRepository
 import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
 import tmg.flashback.formula1.model.Race
+import tmg.flashback.weekend.contract.ScreenWeekend
 import tmg.flashback.weekend.contract.model.ScreenWeekendData
+import tmg.flashback.weekend.contract.model.ScreenWeekendNav
 import tmg.flashback.weekend.ui.WeekendNavItem.QUALIFYING
 import tmg.flashback.weekend.ui.WeekendNavItem.RACE
 import tmg.flashback.weekend.ui.WeekendNavItem.SCHEDULE
 import tmg.utilities.extensions.combinePair
+import tmg.utilities.extensions.toEnum
 import javax.inject.Inject
 
 interface WeekendViewModelInputs {
-    fun load(season: Int, round: Int, date: LocalDate)
     fun clickTab(state: WeekendNavItem)
     fun refresh()
 }
@@ -41,13 +44,25 @@ interface WeekendViewModelOutputs {
 @HiltViewModel
 class WeekendViewModel @Inject constructor(
     private val raceRepository: RaceRepository,
-    private val ioDispatcher: CoroutineDispatcher
+    private val ioDispatcher: CoroutineDispatcher,
+    private val savedStateHandle: SavedStateHandle
 ): ViewModel(), WeekendViewModelInputs, WeekendViewModelOutputs {
 
     val inputs: WeekendViewModelInputs = this
     val outputs: WeekendViewModelOutputs = this
 
-    private val selectedTab: MutableStateFlow<WeekendNavItem> = MutableStateFlow(SCHEDULE)
+    private val screenWeekendData: ScreenWeekendData?
+        get() = savedStateHandle[ScreenWeekend.DATA]
+
+    private val defaultTab: WeekendNavItem
+        get() = when (savedStateHandle.get<String>(ScreenWeekend.TAB)?.toEnum<ScreenWeekendNav>()) {
+            ScreenWeekendNav.SCHEDULE -> SCHEDULE
+            ScreenWeekendNav.QUALIFYING -> QUALIFYING
+            ScreenWeekendNav.RACE -> RACE
+            null -> SCHEDULE
+        }
+
+    private val selectedTab: MutableStateFlow<WeekendNavItem> = MutableStateFlow(defaultTab)
     private val seasonRound: MutableStateFlow<Pair<Int, Int>?> = MutableStateFlow(null)
     private val seasonRoundWithRequest: Flow<Pair<Int, Int>?> = seasonRound
         .filterNotNull()
@@ -97,9 +112,9 @@ class WeekendViewModel @Inject constructor(
             return@map list
         }
         .stateIn(viewModelScope, SharingStarted.Lazily, listOf(
-            WeekendScreenState(SCHEDULE, true),
-            WeekendScreenState(QUALIFYING, false),
-            WeekendScreenState(RACE, false)
+            WeekendScreenState(SCHEDULE, defaultTab == SCHEDULE),
+            WeekendScreenState(QUALIFYING, defaultTab == QUALIFYING),
+            WeekendScreenState(RACE, defaultTab == RACE)
         ))
 
     override val isRefreshing: MutableStateFlow<Boolean> = MutableStateFlow(false)
@@ -108,17 +123,15 @@ class WeekendViewModel @Inject constructor(
         selectedTab.value = state
     }
 
-    override fun load(season: Int, round: Int, date: LocalDate) {
+    init {
+        screenWeekendData?.let {
+            load(season = it.season, round = it.round)
+        }
+    }
+
+    private fun load(season: Int, round: Int) {
         val existing = seasonRound.value
         if (existing?.first != season || existing.second != round) {
-            val now = LocalDate.now()
-            selectedTab.value = when {
-                season != currentSeasonYear -> RACE
-                date == now -> RACE
-                date == now.minusDays(1L) -> QUALIFYING
-                date.isAfter(now) -> SCHEDULE
-                else -> RACE
-            }
             seasonRound.value = Pair(season, round)
         }
     }

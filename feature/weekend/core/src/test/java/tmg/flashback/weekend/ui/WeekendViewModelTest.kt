@@ -1,5 +1,7 @@
 package tmg.flashback.weekend.ui
 
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.createSavedStateHandle
 import app.cash.turbine.test
 import io.mockk.coVerify
 import io.mockk.every
@@ -18,6 +20,8 @@ import tmg.flashback.formula1.model.Race
 import tmg.flashback.formula1.model.RaceInfo
 import tmg.flashback.formula1.model.SprintResult
 import tmg.flashback.formula1.model.model
+import tmg.flashback.weekend.contract.model.ScreenWeekendData
+import tmg.flashback.weekend.contract.model.ScreenWeekendNav
 import tmg.testutils.BaseTest
 
 internal class WeekendViewModelTest: BaseTest() {
@@ -26,9 +30,13 @@ internal class WeekendViewModelTest: BaseTest() {
 
     private lateinit var underTest: WeekendViewModel
 
-    private fun underTest() {
+    private fun underTest(screenWeekendData: ScreenWeekendData = fakeScreenWeekendData, tab: ScreenWeekendNav? = null) {
         underTest = WeekendViewModel(
             raceRepository = mockRaceRepository,
+            savedStateHandle = SavedStateHandle(mapOf(
+                "data" to screenWeekendData,
+                "tab" to (tab?.name ?: "")
+            )),
             ioDispatcher = coroutineScope.testDispatcher
         )
     }
@@ -41,7 +49,6 @@ internal class WeekendViewModelTest: BaseTest() {
     @Test
     fun `loading season and round outputs weekend info`() = runTest {
         underTest()
-        underTest.inputs.load(season = 2020, round = 1, date = LocalDate.of(2020, 1, 1))
 
         underTest.outputs.weekendInfo.test {
             assertEquals(RaceInfo.model().toWeekendInfo(), awaitItem())
@@ -51,9 +58,26 @@ internal class WeekendViewModelTest: BaseTest() {
     @Test
     fun `loading season and round outputs default schedule tab`() = runTest {
         every { mockRaceRepository.getRace(season = currentSeasonYear, round = 1) } returns flow { emit(Race.model()) }
-        underTest()
-        underTest.inputs.load(season = currentSeasonYear, round = 1, date = LocalDate.of(
-            currentSeasonYear, 12, 31))
+        underTest(fakeScreenWeekendData.copy(
+            season = currentSeasonYear,
+            round = 1,
+            dateString = "31/12/$currentSeasonYear"
+        ))
+
+        underTest.outputs.tabs.test {
+            val item = awaitItem()
+            assertTrue(item.any { it.isSelected && it.tab == WeekendNavItem.SCHEDULE })
+        }
+    }
+
+    @Test
+    fun `loading season and round outputs default race tab when overridden`() = runTest {
+        every { mockRaceRepository.getRace(season = currentSeasonYear, round = 1) } returns flow { emit(Race.model()) }
+        underTest(fakeScreenWeekendData.copy(
+            season = currentSeasonYear,
+            round = 1,
+            dateString = "31/12/$currentSeasonYear"
+        ))
 
         underTest.outputs.tabs.test {
             val item = awaitItem()
@@ -65,11 +89,10 @@ internal class WeekendViewModelTest: BaseTest() {
     fun `loading season and round outputs on not current season year defaults to race tab`() = runTest {
         every { mockRaceRepository.getRace(season = currentSeasonYear, round = 1) } returns flow { emit(Race.model()) }
         underTest()
-        underTest.inputs.load(season = 2020, round = 1, date = LocalDate.of(2020, 1, 1))
 
         underTest.outputs.tabs.test {
             val item = awaitItem()
-            assertTrue(item.any { it.isSelected && it.tab == WeekendNavItem.RACE })
+            assertTrue(item.any { it.isSelected && it.tab == WeekendNavItem.SCHEDULE})
         }
     }
 
@@ -80,7 +103,6 @@ internal class WeekendViewModelTest: BaseTest() {
         )) }
 
         underTest()
-        underTest.inputs.load(season = 2020, round = 1, date = LocalDate.of(2020, 1, 1))
 
         underTest.outputs.tabs.test {
             val item = awaitItem()
@@ -94,7 +116,6 @@ internal class WeekendViewModelTest: BaseTest() {
     @Test
     fun `loading season and round with sprint quali shows all tabs`() = runTest {
         underTest()
-        underTest.inputs.load(season = 2020, round = 1, date = LocalDate.of(2020, 1, 1))
 
         underTest.outputs.tabs.test {
             val item = awaitItem()
@@ -108,7 +129,6 @@ internal class WeekendViewModelTest: BaseTest() {
     @Test
     fun `loading season and round and select tab schedule outputs schedule`() = runTest {
         underTest()
-        underTest.inputs.load(season = 2020, round = 1, date = LocalDate.of(2020, 1, 1))
 
         underTest.inputs.clickTab(WeekendNavItem.SCHEDULE)
         underTest.outputs.tabs.test {
@@ -120,7 +140,6 @@ internal class WeekendViewModelTest: BaseTest() {
     @Test
     fun `loading season and round and select tab qualifying outputs qualifying`() = runTest {
         underTest()
-        underTest.inputs.load(season = 2020, round = 1, date = LocalDate.of(2020, 1, 1))
 
         underTest.inputs.clickTab(WeekendNavItem.QUALIFYING)
         underTest.outputs.tabs.test {
@@ -132,7 +151,6 @@ internal class WeekendViewModelTest: BaseTest() {
     @Test
     fun `loading season and round and select tab sprint outputs sprint`() = runTest {
         underTest()
-        underTest.inputs.load(season = 2020, round = 1, date = LocalDate.of(2020, 1, 1))
 
         underTest.inputs.clickTab(WeekendNavItem.SPRINT)
         underTest.outputs.tabs.test {
@@ -144,7 +162,6 @@ internal class WeekendViewModelTest: BaseTest() {
     @Test
     fun `loading season and round and select tab race outputs race`() = runTest {
         underTest()
-        underTest.inputs.load(season = 2020, round = 1, date = LocalDate.of(2020, 1, 1))
 
         underTest.inputs.clickTab(WeekendNavItem.RACE)
         underTest.outputs.tabs.test {
@@ -156,7 +173,6 @@ internal class WeekendViewModelTest: BaseTest() {
     @Test
     fun `refresh calls driver repository`() = runTest {
         underTest()
-        underTest.inputs.load(season = 2020, round = 1, date = LocalDate.of(2020, 1, 1))
 
         runBlocking {
             underTest.inputs.refresh()
@@ -169,4 +185,15 @@ internal class WeekendViewModelTest: BaseTest() {
             assertEquals(false, awaitItem())
         }
     }
+
+    private val fakeScreenWeekendData = ScreenWeekendData(
+        season = 2020,
+        round = 1,
+        raceName = "raceName",
+        circuitId = "circuitId",
+        circuitName = "circuitName",
+        country = "country",
+        countryISO = "countryISO",
+        date = LocalDate.of(2020, 1, 1)
+    )
 }
