@@ -92,7 +92,7 @@ internal class WeekendViewModelTest: BaseTest() {
 
         underTest.outputs.tabs.test {
             val item = awaitItem()
-            assertTrue(item.any { it.isSelected && it.tab == WeekendNavItem.RACE })
+            assertTrue(item.any { it.isSelected && it.tab == WeekendNavItem.SCHEDULE})
         }
     }
 
