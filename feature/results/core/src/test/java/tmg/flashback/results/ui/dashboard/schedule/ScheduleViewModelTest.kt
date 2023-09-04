@@ -30,6 +30,7 @@ import tmg.flashback.results.repository.NotificationsRepositoryImpl
 import tmg.flashback.results.repository.models.NotificationSchedule
 import tmg.flashback.results.usecases.FetchSeasonUseCase
 import tmg.flashback.weekend.contract.Weekend
+import tmg.flashback.weekend.contract.model.ScreenWeekendNav
 import tmg.flashback.weekend.contract.with
 import tmg.testutils.BaseTest
 
@@ -259,7 +260,7 @@ internal class ScheduleViewModelTest: BaseTest() {
 
 
     @Test
-    fun `clicking item goes to constructor overview`() = runTest {
+    fun `clicking item goes to weekend overview with tab RACE`() = runTest {
         initUnderTest()
         underTest.load(2020)
         val model = ScheduleModel.RaceWeek(
@@ -273,8 +274,10 @@ internal class ScheduleViewModelTest: BaseTest() {
         verify {
             mockNavigator.navigate(
                 Screen.Weekend.with(
-                model.model.toRaceInfo().toScreenWeekendData()
-            ))
+                    weekendInfo = model.model.toRaceInfo().toScreenWeekendData(),
+                    tab = ScreenWeekendNav.RACE
+                )
+            )
         }
     }
 
