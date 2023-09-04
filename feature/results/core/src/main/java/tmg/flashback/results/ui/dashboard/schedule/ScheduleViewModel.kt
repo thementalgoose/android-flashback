@@ -17,6 +17,7 @@ import kotlinx.coroutines.launch
 import org.threeten.bp.LocalDate
 import tmg.flashback.domain.repo.EventsRepository
 import tmg.flashback.domain.repo.OverviewRepository
+import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
@@ -27,6 +28,7 @@ import tmg.flashback.results.ui.dashboard.schedule.ScheduleModelBuilder.generate
 import tmg.flashback.results.usecases.FetchSeasonUseCase
 import tmg.flashback.weekend.contract.Weekend
 import tmg.flashback.weekend.contract.model.ScreenWeekendData
+import tmg.flashback.weekend.contract.model.ScreenWeekendNav
 import tmg.flashback.weekend.contract.with
 import javax.inject.Inject
 
@@ -135,22 +137,34 @@ class ScheduleViewModel @Inject constructor(
             is ScheduleModel.EmptyWeek -> {}
             is ScheduleModel.RaceWeek -> navigator.navigate(
                 Screen.Weekend.with(
-                ScreenWeekendData(
-                    season = model.model.season,
-                    round = model.model.round,
-                    raceName = model.model.raceName,
-                    circuitId = model.model.circuitId,
-                    circuitName = model.model.circuitName,
-                    country = model.model.country,
-                    countryISO = model.model.countryISO,
-                    date = model.model.date,
+                    weekendInfo = ScreenWeekendData(
+                        season = model.model.season,
+                        round = model.model.round,
+                        raceName = model.model.raceName,
+                        circuitId = model.model.circuitId,
+                        circuitName = model.model.circuitName,
+                        country = model.model.country,
+                        countryISO = model.model.countryISO,
+                        date = model.model.date,
+                    ),
+                    tab = model.getScreenWeekendNav()
                 )
-            ))
+            )
             is ScheduleModel.GroupedCompletedRaces -> {
                 showCollapsablePlaceholder.value = false
             }
             is ScheduleModel.Event -> {}
             ScheduleModel.Loading -> {}
+        }
+    }
+
+    private fun ScheduleModel.RaceWeek.getScreenWeekendNav(): ScreenWeekendNav {
+        return when {
+            model.season > currentSeasonYear -> ScreenWeekendNav.SCHEDULE
+            model.season < currentSeasonYear -> ScreenWeekendNav.RACE
+            model.hasResults -> ScreenWeekendNav.RACE
+            model.hasQualifying -> ScreenWeekendNav.QUALIFYING
+            else -> ScreenWeekendNav.SCHEDULE
         }
     }
 }
