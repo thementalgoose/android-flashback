@@ -108,10 +108,10 @@ class ScreenPathTest {
     @Test
     fun weekend() {
         assertEquals(
-            "weekend/{data}", Screen.Weekend.route
+            "weekend/{data}?tab={tab}", Screen.Weekend.route
         )
         assertEquals(
-            """weekend/{"season":2020,"round":1,"raceName":"raceName","circuitId":"circuitId","circuitName":"circuitName","country":"country","countryISO":"countryISO","dateString":"date"}""".trimIndent(),
+            """weekend/{"season":2020,"round":1,"raceName":"raceName","circuitId":"circuitId","circuitName":"circuitName","country":"country","countryISO":"countryISO","dateString":"date"}?tab=RACE""".trimIndent(),
             Screen.Weekend.with(
                 ScreenWeekendData(
                     season = 2020,
