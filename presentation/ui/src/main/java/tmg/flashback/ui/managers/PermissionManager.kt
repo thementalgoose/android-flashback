@@ -4,9 +4,9 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultCallback
 import kotlinx.coroutines.CompletableDeferred
 import tmg.flashback.navigation.ActivityProvider
+import tmg.flashback.ui.AppPermissions
 import tmg.flashback.ui.R
 import tmg.flashback.ui.base.BaseActivity
-import tmg.flashback.ui.permissions.RationaleType
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -14,28 +14,28 @@ import javax.inject.Singleton
 class PermissionManager @Inject constructor(
     private val topActivityProvider: ActivityProvider
 ) {
-    private var completableDeferred: CompletableDeferred<Boolean>? = null
+    private var completableDeferred: CompletableDeferred<Map<String, Boolean>>? = null
 
     private val baseActivity: BaseActivity?
         get() = topActivityProvider.activity as? BaseActivity
 
-    internal val activityContract = ActivityResultCallback<Boolean> { isGranted ->
+    internal val activityContract = ActivityResultCallback<Map<String, Boolean>> { isGranted ->
         completableDeferred?.complete(isGranted)
         completableDeferred = null
-        if (!isGranted) {
-            Toast.makeText(
-                baseActivity,
-                R.string.permissions_rationale_permission_denied,
-                Toast.LENGTH_LONG
-            ).show()
+        val numberGranted = isGranted.count { it.value }
+        if (numberGranted != isGranted.size) {
+            when (val string = baseActivity?.resources?.getQuantityString(R.plurals.permissions_rationale_permissions_denied, numberGranted, numberGranted)) {
+                null -> Toast.makeText(baseActivity, R.string.permissions_rationale_permission_denied, Toast.LENGTH_LONG).show()
+                else -> Toast.makeText(baseActivity, string, Toast.LENGTH_LONG).show()
+            }
         }
     }
 
-    fun requestPermission(rationaleType: RationaleType): CompletableDeferred<Boolean> {
+    fun requestPermission(vararg rationaleType: AppPermissions.RuntimePermission): CompletableDeferred<Map<String, Boolean>> {
         completableDeferred = CompletableDeferred()
-        baseActivity?.requestPermission(rationaleType)
-        return completableDeferred ?: CompletableDeferred<Boolean>().apply {
-            this.complete(false)
+        baseActivity?.requestPermission(*rationaleType)
+        return completableDeferred ?: CompletableDeferred<Map<String, Boolean>>().apply {
+            this.complete(rationaleType.associate { it.permission to false })
         }
     }
 }

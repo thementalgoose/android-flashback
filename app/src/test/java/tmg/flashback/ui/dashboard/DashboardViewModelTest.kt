@@ -20,10 +20,10 @@ import tmg.flashback.eastereggs.usecases.IsSnowEnabledUseCase
 import tmg.flashback.eastereggs.usecases.IsUkraineEnabledUseCase
 import tmg.flashback.results.contract.ResultsNavigationComponent
 import tmg.flashback.results.repository.NotificationsRepositoryImpl
+import tmg.flashback.ui.AppPermissions
 import tmg.flashback.ui.managers.PermissionManager
 import tmg.flashback.ui.managers.StyleManager
 import tmg.flashback.ui.model.NightMode
-import tmg.flashback.ui.permissions.RationaleType
 import tmg.flashback.ui.repository.PermissionRepository
 import tmg.flashback.ui.usecases.ChangeNightModeUseCase
 import tmg.testutils.BaseTest
@@ -217,8 +217,8 @@ internal class DashboardViewModelTest: BaseTest() {
 
         @Test
         fun `clicking runtime notifications`() = runTest {
-            val permissions: CompletableDeferred<Boolean> = CompletableDeferred()
-            every { mockPermissionManager.requestPermission(RationaleType.RuntimeNotifications) } returns permissions
+            val permissions: CompletableDeferred<Map<String, Boolean>> = CompletableDeferred()
+            every { mockPermissionManager.requestPermission(AppPermissions.RuntimeNotifications) } returns permissions
             every { mockBuildConfigManager.isRuntimeNotificationsSupported } returns true
             every { mockNotificationRepository.seenRuntimeNotifications } returns false
             every { mockPermissionRepository.isRuntimeNotificationsEnabled } returns false
@@ -232,7 +232,7 @@ internal class DashboardViewModelTest: BaseTest() {
             // Simulate ticking it
             every { mockPermissionRepository.isRuntimeNotificationsEnabled } returns true
             every { mockNotificationRepository.seenRuntimeNotifications } returns true
-            permissions.complete(true)
+            permissions.complete(mapOf("" to true))
 
             verify {
                 mockNotificationRepository.seenRuntimeNotifications = true

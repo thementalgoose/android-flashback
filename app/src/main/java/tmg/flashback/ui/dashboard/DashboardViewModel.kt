@@ -13,10 +13,10 @@ import tmg.flashback.eastereggs.usecases.IsSnowEnabledUseCase
 import tmg.flashback.eastereggs.usecases.IsUkraineEnabledUseCase
 import tmg.flashback.results.contract.ResultsNavigationComponent
 import tmg.flashback.results.repository.NotificationsRepositoryImpl
+import tmg.flashback.ui.AppPermissions
 import tmg.flashback.ui.managers.PermissionManager
 import tmg.flashback.ui.managers.StyleManager
 import tmg.flashback.ui.model.NightMode
-import tmg.flashback.ui.permissions.RationaleType
 import tmg.flashback.ui.repository.PermissionRepository
 import tmg.flashback.ui.usecases.ChangeNightModeUseCase
 import javax.inject.Inject
@@ -107,7 +107,7 @@ class DashboardViewModel @Inject constructor(
             FeaturePrompt.RuntimeNotifications -> {
                 viewModelScope.launch {
                     permissionManager
-                        .requestPermission(RationaleType.RuntimeNotifications)
+                        .requestPermission(AppPermissions.RuntimeNotifications)
                         .invokeOnCompletion {
                             notificationRepository.seenRuntimeNotifications = true
                             if (permissionRepository.isRuntimeNotificationsEnabled) {

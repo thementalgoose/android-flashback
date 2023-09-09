@@ -7,7 +7,9 @@ import dagger.hilt.components.SingletonComponent
 import tmg.flashback.appshortcuts.provider.HomeClassProvider
 import tmg.flashback.di.navigation.AppHomeClassProvider
 import tmg.flashback.managers.AppApplicationNavigationComponent
+import tmg.flashback.managers.AppIntentNavigationComponent
 import tmg.flashback.navigation.ApplicationNavigationComponent
+import tmg.flashback.navigation.IntentNavigationComponent
 import tmg.flashback.notifications.navigation.NotificationNavigationProvider
 
 @Module
@@ -16,6 +18,9 @@ class NavigationModule {
 
     @Provides
     fun providesApplicationNavigationComponent(impl: AppApplicationNavigationComponent): ApplicationNavigationComponent = impl
+
+    @Provides
+    fun providesIntentNavigationComponent(impl: AppIntentNavigationComponent): IntentNavigationComponent = impl
 
     @Provides
     fun providesNotificationNavigationProvider(impl: AppApplicationNavigationComponent): NotificationNavigationProvider = impl
