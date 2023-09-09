@@ -207,8 +207,13 @@
     <string name="permissions_rationale_title">We need your permission</string>
     <string name="permissions_rationale_confirm">Confirm</string>
     <string name="permissions_rationale_cancel">Not now</string>
+    <plurals name="permissions_rationale_permissions_denied">
+        <item quantity="one">Permission denied, please check your app settings</item>
+        <item quantity="other">%d permissions denied, please check your app settings</item>
+    </plurals>
     <string name="permissions_rationale_permission_denied">Permission denied, please check your app settings</string>
-    <string name="permissions_rationale_runtime_notifications_description">If you wish to take advantage of Flashback\'s notifications for both upcoming events and when results are available in the app, we\'ll need your permission to show them!</string>
+    <string name="permissions_rationale_runtime_notifications_description">To get notified by the flashback team for race results being available or f1 weekend events about to begin, we need permission to send you notifications</string>
+    <string name="permissions_rationale_exact_alarms_description">In order to notify you accurately before a race, we need permission to schedule these reminders at a specific time</string>
 
 
     <!-- Adverts -->
@@ -275,6 +280,8 @@
     <string name="settings_header_permissions">Permission</string>
     <string name="settings_pref_notification_permission_title">Enable notifications</string>
     <string name="settings_pref_notification_permission_description">Grant permission for Flashback to send you notifications</string>
+    <string name="settings_pref_schedule_exact_alarm_title">Exact timings</string>
+    <string name="settings_pref_schedule_exact_alarm_description">Grant permission for Flashback to send you reminders at specific times</string>
     <string name="settings_pref_notification_notice_period_title">Minutes before</string>
     <string name="settings_pref_notification_notice_period_description">Get notified 15, 30 or 60 minutes before one of the above events starts</string>
     <string name="settings_switch_notification_upcoming_fp_title">Free Practice</string>

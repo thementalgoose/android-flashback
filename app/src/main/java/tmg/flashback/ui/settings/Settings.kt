@@ -151,6 +151,12 @@ object Settings {
             subtitle = R.string.settings_pref_notification_permission_description
         )
 
+        val notificationExactAlarmEnable = Setting.Pref(
+            _key = "notification_exact_alarm",
+            title = R.string.settings_pref_schedule_exact_alarm_title,
+            subtitle = R.string.settings_pref_schedule_exact_alarm_description
+        )
+
         val NotificationUpcoming.title: Int
             get() = when (this) {
                 NotificationUpcoming.RACE -> R.string.settings_switch_notification_upcoming_race_title

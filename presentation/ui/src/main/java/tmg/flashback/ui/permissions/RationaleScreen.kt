@@ -8,10 +8,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.airbnb.lottie.compose.LottieAnimation
@@ -19,15 +21,18 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import tmg.flashback.style.AppTheme
+import tmg.flashback.style.AppThemePreview
+import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.buttons.ButtonPrimary
 import tmg.flashback.style.buttons.ButtonTertiary
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextHeadline2
+import tmg.flashback.ui.AppPermissions
 import tmg.flashback.ui.R
 
 @Composable
 internal fun RationaleScreen(
-    type: RationaleType,
+    type: List<AppPermissions.RuntimePermission>,
     confirmClicked: () -> Unit,
     cancelClicked: () -> Unit,
 ) {
@@ -35,32 +40,32 @@ internal fun RationaleScreen(
         horizontal = AppTheme.dimens.medium,
         vertical = AppTheme.dimens.medium
     )) {
+        TextHeadline2(text = stringResource(id = R.string.permissions_rationale_title))
 
-        type.raw?.let { raw ->
-            val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(raw))
-            val progress by animateLottieCompositionAsState(composition, iterations = Int.MAX_VALUE)
-            Box(modifier = Modifier
+        type.forEach { rationale ->
+            Row(modifier = Modifier
                 .fillMaxWidth()
-                .padding(AppTheme.dimens.medium)
+                .padding(
+                    vertical = AppTheme.dimens.medium,
+                    horizontal = AppTheme.dimens.small
+                )
             ) {
-                LottieAnimation(
-                    modifier = Modifier
-                        .size(150.dp)
-                        .align(Alignment.Center),
-                    composition = composition,
-                    progress = { progress },
+                Icon(
+                    painter = painterResource(id = rationale.icon),
+                    contentDescription = null,
+                    tint = AppTheme.colors.contentPrimary
+                )
+                TextBody1(
+                    modifier = Modifier.padding(
+                        horizontal = AppTheme.dimens.medium
+                    ),
+                    text = stringResource(rationale.description)
                 )
             }
         }
-
-        TextHeadline2(text = stringResource(id = type.title))
-        TextBody1(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = AppTheme.dimens.medium),
-            text = stringResource(id = type.description)
-        )
-        Row {
+        Row(modifier = Modifier.padding(
+            top = AppTheme.dimens.medium
+        )) {
             ButtonTertiary(
                 modifier = Modifier.weight(1f),
                 narrow = false,
@@ -74,5 +79,17 @@ internal fun RationaleScreen(
                 onClick = confirmClicked
             )
         }
+    }
+}
+
+@PreviewTheme
+@Composable
+private fun Preview() {
+    AppThemePreview {
+        RationaleScreen(
+            type = listOf(AppPermissions.RuntimeNotifications),
+            confirmClicked = { },
+            cancelClicked = { }
+        )
     }
 }

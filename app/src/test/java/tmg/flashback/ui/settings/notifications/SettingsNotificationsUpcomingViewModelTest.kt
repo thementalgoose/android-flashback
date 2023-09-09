@@ -8,6 +8,7 @@ import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import tmg.flashback.navigation.IntentNavigationComponent
 import tmg.flashback.results.contract.ResultsNavigationComponent
 import tmg.flashback.results.contract.repository.models.NotificationResultsAvailable
 import tmg.flashback.results.contract.repository.models.NotificationUpcoming
@@ -25,6 +26,7 @@ internal class SettingsNotificationsUpcomingViewModelTest: BaseTest() {
     private val mockPermissionRepository: PermissionRepository = mockk(relaxed = true)
     private val mockPermissionManager: PermissionManager = mockk(relaxed = true)
     private val mockResultsNavigationComponent: ResultsNavigationComponent = mockk(relaxed = true)
+    private val mockIntentNavigationComponent: IntentNavigationComponent = mockk(relaxed = true)
 
     private lateinit var underTest: SettingsNotificationsUpcomingViewModel
 
@@ -35,6 +37,7 @@ internal class SettingsNotificationsUpcomingViewModelTest: BaseTest() {
             permissionRepository = mockPermissionRepository,
             permissionManager = mockPermissionManager,
             resultsNavigationComponent = mockResultsNavigationComponent,
+            intentNavigationComponent = mockIntentNavigationComponent
         )
     }
 
@@ -86,7 +89,7 @@ internal class SettingsNotificationsUpcomingViewModelTest: BaseTest() {
 
     @Test
     fun `clicking enable permission calls permission flow`() = runTest {
-        val deferred = CompletableDeferred<Boolean>(parent = null)
+        val deferred = CompletableDeferred<Map<String, Boolean>>(parent = null)
         every { mockPermissionManager.requestPermission(any()) } returns deferred
         every { mockPermissionRepository.isRuntimeNotificationsEnabled } returns false
 
@@ -97,13 +100,26 @@ internal class SettingsNotificationsUpcomingViewModelTest: BaseTest() {
         verify {
             mockPermissionManager.requestPermission(any())
         }
-        deferred.complete(true)
+        deferred.complete(mapOf("" to true))
         underTest.outputs.permissionEnabled.test { awaitItem() }
     }
 
     @Test
+    fun `clicking enable exact alarm calls permission flow`() = runTest {
+        every { mockPermissionRepository.isExactAlarmEnabled } returns false
+
+        initUnderTest()
+        underTest.outputs.exactAlarmEnabled.test { awaitItem() }
+
+        underTest.inputs.prefClicked(Settings.Notifications.notificationExactAlarmEnable)
+        verify {
+            mockIntentNavigationComponent.openIntent(any())
+        }
+    }
+
+    @Test
     fun `clicking enable permission calls refresh if already enabled`() = runTest {
-        val deferred = CompletableDeferred<Boolean>(parent = null)
+        val deferred = CompletableDeferred<Map<String, Boolean>>(parent = null)
         every { mockPermissionManager.requestPermission(any()) } returns deferred
         every { mockPermissionRepository.isRuntimeNotificationsEnabled } returns true
 
