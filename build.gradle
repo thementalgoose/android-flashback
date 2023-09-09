@@ -31,7 +31,7 @@ buildscript {
         classpath libs.gradle.newrelic
         classpath libs.play.publisher
         classpath libs.r8
-        classpath libs.kotlinx.serialization
+        classpath libs.kotlinx.serialization.core
         classpath libs.firebase.perf.plugin
         //noinspection GradleDependency
     }
