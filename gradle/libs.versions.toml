@@ -1,24 +1,24 @@
 [versions]  # ===========================================================================
 kotlin = "1.9.0"
 hilt = "2.47"
-androidx_navigation = "2.6.0"
-androidx_lifecycle = "2.6.1"
+androidx_navigation = "2.7.2"
+androidx_lifecycle = "2.6.2"
 androidx_hilt = "1.0.0"
 androidx_room = "2.5.2"
 androidx_workmanager = "2.8.1"
 androidx_glance = "1.0.0-alpha03" #beta01 has update frequency issues!
-compose = "2023.06.01"
+compose = "2023.09.00"
 composecompiler = "1.5.0"
 compose_accompanist = "0.30.1"
 coroutines = "1.7.2"
-firebase = "32.2.2"
+firebase = "32.2.3"
 junit = "5.9.3"
 okhttp = "4.11.0"
 retrofit = "2.9.0"
 newrelic = "7.0.0"
 
 [libraries]  # ===========================================================================
-androidx_core = "androidx.core:core-ktx:1.10.1"
+androidx_core = "androidx.core:core-ktx:1.12.0"
 androidx_appcompat = "androidx.appcompat:appcompat:1.6.1"
 androidx_constraintlayout = "androidx.constraintlayout:constraintlayout:2.1.4"
 androidx_lifecycle_viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "androidx_lifecycle" }
@@ -105,7 +105,7 @@ room_testing = { module = "androidx.room:room-testing", version.ref = "androidx_
 shakey = "com.linkedin.shaky:shaky:3.0.4"
 falcon = "com.jraska:falcon:2.2.0"
 
-playservicesads = "com.google.android.gms:play-services-ads:22.2.0"
+playservicesads = "com.google.android.gms:play-services-ads:22.3.0"
 
 skeletonlayout = "com.faltenreich:skeletonlayout:4.0.0"
 
