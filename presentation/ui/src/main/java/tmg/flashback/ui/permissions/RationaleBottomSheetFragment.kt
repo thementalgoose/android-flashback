@@ -5,31 +5,31 @@ import android.os.Build
 import androidx.compose.runtime.Composable
 import androidx.core.os.bundleOf
 import dagger.hilt.android.AndroidEntryPoint
+import tmg.flashback.ui.AppPermissions
 import tmg.flashback.ui.base.BaseActivity
 import tmg.flashback.ui.base.BaseBottomSheetComposeFragment
 
 @AndroidEntryPoint
 internal class RationaleBottomSheetFragment: BaseBottomSheetComposeFragment() {
 
-    var callback: RationaleBottomSheetFragmentCallback? = null
+    private var callback: RationaleBottomSheetFragmentCallback? = null
 
-    private val rationaleType: RationaleType by lazy {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            arguments?.getParcelable(keyRationale, RationaleType::class.java)!!
-        } else {
-            arguments?.getParcelable(keyRationale)!!
-        }
+    private val rationaleType: Array<String> by lazy {
+        arguments?.getStringArray(keyRationale)!!
+    }
+    private val appPermissions: List<AppPermissions.RuntimePermission> by lazy {
+        AppPermissions.RuntimePermission.get(rationaleType.toList())
     }
 
     override val content = @Composable {
         RationaleScreen(
-            type = rationaleType,
+            type = appPermissions,
             cancelClicked = {
-                callback?.rationaleCancelClicked(rationaleType)
+                callback?.rationaleCancelClicked(appPermissions)
                 dismissAllowingStateLoss()
             },
             confirmClicked = {
-                callback?.rationaleConfirmClicked(rationaleType)
+                callback?.rationaleConfirmClicked(appPermissions)
                 dismissAllowingStateLoss()
             }
         )
@@ -45,7 +45,7 @@ internal class RationaleBottomSheetFragment: BaseBottomSheetComposeFragment() {
     companion object {
         private const val keyRationale: String = "rationale"
 
-        fun instance(rationaleType: RationaleType): RationaleBottomSheetFragment {
+        fun instance(rationaleType: Array<String>): RationaleBottomSheetFragment {
             return RationaleBottomSheetFragment().apply {
                 arguments = bundleOf(keyRationale to rationaleType)
             }

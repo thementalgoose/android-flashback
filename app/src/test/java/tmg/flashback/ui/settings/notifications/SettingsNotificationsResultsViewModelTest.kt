@@ -79,7 +79,7 @@ internal class SettingsNotificationsResultsViewModelTest: BaseTest() {
 
     @Test
     fun `clicking enable permission calls permission flow`() = runTest {
-        val deferred = CompletableDeferred<Boolean>(parent = null)
+        val deferred = CompletableDeferred<Map<String, Boolean>>(parent = null)
         every { mockPermissionManager.requestPermission(any()) } returns deferred
         every { mockPermissionRepository.isRuntimeNotificationsEnabled } returns false
 
@@ -90,13 +90,13 @@ internal class SettingsNotificationsResultsViewModelTest: BaseTest() {
         verify {
             mockPermissionManager.requestPermission(any())
         }
-        deferred.complete(true)
+        deferred.complete(mapOf("" to true))
         underTest.outputs.permissionEnabled.test { awaitItem() }
     }
 
     @Test
     fun `clicking enable permission calls refresh if already enabled`() = runTest {
-        val deferred = CompletableDeferred<Boolean>(parent = null)
+        val deferred = CompletableDeferred<Map<String, Boolean>>(parent = null)
         every { mockPermissionManager.requestPermission(any()) } returns deferred
         every { mockPermissionRepository.isRuntimeNotificationsEnabled } returns true
 

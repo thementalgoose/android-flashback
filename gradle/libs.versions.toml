@@ -1,24 +1,39 @@
 [versions]  # ===========================================================================
 kotlin = "1.9.0"
 hilt = "2.47"
-androidx_navigation = "2.6.0"
-androidx_lifecycle = "2.6.1"
+androidx_navigation = "2.7.2"
+androidx_lifecycle = "2.6.2"
 androidx_hilt = "1.0.0"
 androidx_room = "2.5.2"
 androidx_workmanager = "2.8.1"
 androidx_glance = "1.0.0-alpha03" #beta01 has update frequency issues!
-compose = "2023.06.01"
+compose = "2023.09.00"
 composecompiler = "1.5.0"
 compose_accompanist = "0.30.1"
 coroutines = "1.7.2"
-firebase = "32.2.2"
+firebase = "32.2.3"
 junit = "5.9.3"
 okhttp = "4.11.0"
 retrofit = "2.9.0"
 newrelic = "7.0.0"
 
 [libraries]  # ===========================================================================
-androidx_core = "androidx.core:core-ktx:1.10.1"
+## Root build.gradle dependencies
+gradle_agp = "com.android.tools.build:gradle:8.1.1"
+gradle_crashlytics = "com.google.firebase:firebase-crashlytics-gradle:2.9.9"
+gradle_dep_report = "com.github.ben-manes:gradle-versions-plugin:0.46.0"
+gradle_hilt = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hilt" }
+gradle_junit5 = "de.mannodermaus.gradle.plugins:android-junit5:1.9.3.0"
+gradle_kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+gradle_newrelic = { module = "com.newrelic.agent.android:agent-gradle-plugin", version.ref = "newrelic" }
+google_services = "com.google.gms:google-services:4.3.15"
+kotlinx_serialization_core = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin" }
+firebase_perf_plugin = "com.google.firebase:perf-plugin:1.4.2"
+play_publisher = "com.github.triplet.gradle:play-publisher:3.8.4"
+r8 = "com.android.tools:r8:8.1.56"
+
+## App Dependencies
+androidx_core = "androidx.core:core-ktx:1.12.0"
 androidx_appcompat = "androidx.appcompat:appcompat:1.6.1"
 androidx_constraintlayout = "androidx.constraintlayout:constraintlayout:2.1.4"
 androidx_lifecycle_viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "androidx_lifecycle" }
@@ -43,7 +58,7 @@ kotlin_reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref =
 kotlinx_coroutines_core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 kotlinx_coroutines_android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
 kotlinx_coroutines_play_services = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services", version.ref = "coroutines" }
-kotlinx_serialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1"
+kotlinx_serialization_json = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1"
 
 accompanist_horizontalpager = { module = "com.google.accompanist:accompanist-pager", version.ref = "compose_accompanist" }
 accompanist_systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "compose_accompanist" }
@@ -105,7 +120,7 @@ room_testing = { module = "androidx.room:room-testing", version.ref = "androidx_
 shakey = "com.linkedin.shaky:shaky:3.0.4"
 falcon = "com.jraska:falcon:2.2.0"
 
-playservicesads = "com.google.android.gms:play-services-ads:22.2.0"
+playservicesads = "com.google.android.gms:play-services-ads:22.3.0"
 
 skeletonlayout = "com.faltenreich:skeletonlayout:4.0.0"
 
@@ -170,7 +185,7 @@ kotlin = [
     "kotlinx_coroutines_core",
     "kotlinx_coroutines_android",
     "kotlinx_coroutines_play_services",
-    "kotlinx_serialization"
+    "kotlinx_serialization_json"
 ]
 accompanist = [
     "accompanist_horizontalpager",

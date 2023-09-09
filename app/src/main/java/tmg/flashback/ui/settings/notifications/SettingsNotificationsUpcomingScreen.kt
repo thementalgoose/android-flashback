@@ -32,6 +32,7 @@ fun SettingsNotificationsUpcomingScreenVM(
     ScreenView(screenName = "Settings - Notification Upcoming")
 
     val permissionEnabled = viewModel.outputs.permissionEnabled.collectAsState(false)
+    val exactAlarmEnabled = viewModel.outputs.exactAlarmEnabled.collectAsState(false)
     val notifications = viewModel.outputs.notifications.collectAsState(emptyList())
 
     LaunchedEffect(Unit) {
@@ -43,6 +44,7 @@ fun SettingsNotificationsUpcomingScreenVM(
         actionUpClicked = actionUpClicked,
         prefClicked = viewModel.inputs::prefClicked,
         permissionEnabled = permissionEnabled.value,
+        exactAlarmEnabled = exactAlarmEnabled.value,
         notifications = notifications.value,
     )
 }
@@ -53,6 +55,7 @@ fun SettingsNotificationsUpcomingScreen(
     actionUpClicked: () -> Unit,
     prefClicked: (Setting) -> Unit,
     permissionEnabled: Boolean,
+    exactAlarmEnabled: Boolean,
     notifications: List<Pair<NotificationUpcoming, Boolean>>
 ) {
     LazyColumn(
@@ -68,24 +71,32 @@ fun SettingsNotificationsUpcomingScreen(
                 )
             }
 
-            if (!permissionEnabled) {
+            if (!permissionEnabled || !exactAlarmEnabled) {
                 Header(title = R.string.settings_header_permissions)
-                Pref(
-                    model = Settings.Notifications.notificationPermissionEnable,
-                    onClick = prefClicked
-                )
+                if (!permissionEnabled) {
+                    Pref(
+                        model = Settings.Notifications.notificationPermissionEnable,
+                        onClick = prefClicked
+                    )
+                }
+                if (!exactAlarmEnabled) {
+                    Pref(
+                        model = Settings.Notifications.notificationExactAlarmEnable,
+                        onClick = prefClicked
+                    )
+                }
             }
             Header(title = R.string.settings_header_notifications)
             notifications.forEach { (upcoming, isChecked) ->
                 Switch(
-                    model = Settings.Notifications.notificationUpcoming(upcoming, isChecked, isEnabled = permissionEnabled),
+                    model = Settings.Notifications.notificationUpcoming(upcoming, isChecked, isEnabled = permissionEnabled && exactAlarmEnabled),
                     onClick = prefClicked
                 )
             }
 
             Header(title = R.string.settings_header_notice)
             Pref(
-                model = Settings.Notifications.notificationNoticePeriod(isEnabled = permissionEnabled),
+                model = Settings.Notifications.notificationNoticePeriod(isEnabled = permissionEnabled && exactAlarmEnabled),
                 onClick = prefClicked
             )
 
@@ -103,6 +114,7 @@ private fun Preview() {
             actionUpClicked = { },
             prefClicked = { },
             permissionEnabled = false,
+            exactAlarmEnabled = false,
             notifications = NotificationUpcoming.values().map { it to true },
         )
     }

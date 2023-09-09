@@ -10,8 +10,8 @@ import tmg.flashback.results.contract.repository.models.NotificationResultsAvail
 import tmg.flashback.results.repository.NotificationsRepositoryImpl
 import tmg.flashback.results.repository.models.prefKey
 import tmg.flashback.results.usecases.ResubscribeNotificationsUseCase
+import tmg.flashback.ui.AppPermissions
 import tmg.flashback.ui.managers.PermissionManager
-import tmg.flashback.ui.permissions.RationaleType
 import tmg.flashback.ui.repository.PermissionRepository
 import tmg.flashback.ui.settings.Setting
 import tmg.flashback.ui.settings.Settings
@@ -55,7 +55,7 @@ class SettingsNotificationsResultsViewModel @Inject constructor(
             Settings.Notifications.notificationPermissionEnable.key -> {
                 if (!permissionRepository.isRuntimeNotificationsEnabled) {
                     permissionManager
-                        .requestPermission(RationaleType.RuntimeNotifications)
+                        .requestPermission(AppPermissions.RuntimeNotifications)
                         .invokeOnCompletion {
                             if (it != null) {
                                 // Open app settings!
