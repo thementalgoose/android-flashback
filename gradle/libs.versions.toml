@@ -18,6 +18,21 @@ retrofit = "2.9.0"
 newrelic = "7.0.0"
 
 [libraries]  # ===========================================================================
+## Root build.gradle dependencies
+gradle_agp = "com.android.tools.build:gradle:8.1.1"
+gradle_crashlytics = "com.google.firebase:firebase-crashlytics-gradle:2.9.9"
+gradle_dep_report = "com.github.ben-manes:gradle-versions-plugin:0.46.0"
+gradle_hilt = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hilt" }
+gradle_junit5 = "de.mannodermaus.gradle.plugins:android-junit5:1.9.3.0"
+gradle_kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+gradle_newrelic = { module = "com.newrelic.agent.android:agent-gradle-plugin", version.ref = "newrelic" }
+google_services = "com.google.gms:google-services:4.3.15"
+kotlinx_serialization = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin" }
+firebase_perf_plugin = "com.google.firebase:perf-plugin:1.4.2"
+play_publisher = "com.github.triplet.gradle:play-publisher:3.8.4"
+r8 = "com.android.tools:r8:8.1.56"
+
+## App Dependencies
 androidx_core = "androidx.core:core-ktx:1.12.0"
 androidx_appcompat = "androidx.appcompat:appcompat:1.6.1"
 androidx_constraintlayout = "androidx.constraintlayout:constraintlayout:2.1.4"
@@ -43,7 +58,7 @@ kotlin_reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref =
 kotlinx_coroutines_core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 kotlinx_coroutines_android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
 kotlinx_coroutines_play_services = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services", version.ref = "coroutines" }
-kotlinx_serialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1"
+kotlinx_serialization_json = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1"
 
 accompanist_horizontalpager = { module = "com.google.accompanist:accompanist-pager", version.ref = "compose_accompanist" }
 accompanist_systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "compose_accompanist" }
