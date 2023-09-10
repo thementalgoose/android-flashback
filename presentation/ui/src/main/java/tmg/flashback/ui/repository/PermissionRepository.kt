@@ -44,9 +44,9 @@ class PermissionRepository @Inject constructor(
 
     val isExactAlarmEnabled: Boolean
         get() {
-            val alarmManager = topActivityProvider.activity?.getSystemService(ALARM_SERVICE) as AlarmManager
+            val alarmManager = topActivityProvider.activity?.getSystemService(ALARM_SERVICE) as? AlarmManager
             return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                alarmManager.canScheduleExactAlarms()
+                alarmManager?.canScheduleExactAlarms() ?: false
             } else {
                 true
             }
