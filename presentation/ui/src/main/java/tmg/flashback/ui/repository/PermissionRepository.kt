@@ -33,7 +33,7 @@ class PermissionRepository @Inject constructor(
         get() {
             val baseActivity = topActivityProvider.activity ?: return false
             return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                when (ContextCompat.checkSelfPermission(baseActivity, Manifest.permission.POST_NOTIFICATIONS)) {
+                when (ContextCompat.checkSelfPermission(baseActivity, AppPermissions.RuntimeNotifications.permission)) {
                     PackageManager.PERMISSION_GRANTED -> true
                     else -> false
                 }
