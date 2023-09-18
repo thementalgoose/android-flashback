@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import tmg.flashback.navigation.ApplicationNavigationComponent
 import tmg.flashback.navigation.IntentNavigationComponent
 import tmg.flashback.results.contract.ResultsNavigationComponent
 import tmg.flashback.results.contract.repository.models.NotificationUpcoming
@@ -79,8 +78,7 @@ class SettingsNotificationsUpcomingViewModel @Inject constructor(
                     refresh()
                 }
             }
-            Settings.Notifications.notificationNoticePeriodKey -> {
-                resultsNavigationComponent.upNext()
+            Settings.Notifications.notificationUpcomingNotice -> {
             }
         }
     }

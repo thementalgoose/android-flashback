@@ -11,6 +11,7 @@ import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.flashback.rss.contract.RSSConfigure
 import tmg.flashback.rss.repo.RssRepository
+import tmg.flashback.ui.repository.PermissionRepository
 import tmg.flashback.ui.repository.ThemeRepository
 import javax.inject.Inject
 
@@ -28,6 +29,7 @@ class SettingsAllViewModel @Inject constructor(
     private val buildConfig: BuildConfigManager,
     private val adsRepository: AdsRepository,
     private val rssRepository: RssRepository,
+    private val permissionRepository: PermissionRepository,
     private val navigator: Navigator,
 ): ViewModel(), SettingsAllViewModelInputs, SettingsAllViewModelOutputs {
 
@@ -37,7 +39,9 @@ class SettingsAllViewModel @Inject constructor(
     override val uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState(
         adsEnabled = adsRepository.allowUserConfig,
         themeEnabled = isThemeEnabled,
-        rssEnabled = rssRepository.enabled
+        rssEnabled = rssRepository.enabled,
+        notificationRuntimePermission = permissionRepository.isRuntimeNotificationsEnabled,
+        notificationExactAlarmPermission = permissionRepository.isExactAlarmEnabled,
     ))
 
     override fun itemClicked(pref: Setting) {
@@ -65,6 +69,9 @@ class SettingsAllViewModel @Inject constructor(
             }
             Settings.Notifications.notificationUpcoming.key -> {
                 navigator.navigate(Screen.Settings.NotificationsUpcoming)
+            }
+            Settings.Notifications.notificationUpcomingNotice -> {
+                navigator.navigate(Screen.Settings.NotificationsUpcomingNotice)
             }
             Settings.Ads.ads.key -> {
                 navigator.navigate(Screen.Settings.Ads)
@@ -94,6 +101,8 @@ class SettingsAllViewModel @Inject constructor(
 
     data class UiState(
         val selectedSubScreen: SettingsScreen? = null,
+        val notificationRuntimePermission: Boolean,
+        val notificationExactAlarmPermission: Boolean,
         val adsEnabled: Boolean,
         val rssEnabled: Boolean,
         val themeEnabled: Boolean

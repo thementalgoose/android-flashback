@@ -15,6 +15,7 @@ import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.flashback.rss.contract.RSSConfigure
 import tmg.flashback.rss.repo.RssRepository
+import tmg.flashback.ui.repository.PermissionRepository
 import tmg.flashback.ui.repository.ThemeRepository
 import tmg.testutils.BaseTest
 
@@ -24,6 +25,7 @@ internal class SettingsAllViewModelTest: BaseTest() {
     private val mockBuildConfigManager: BuildConfigManager = mockk(relaxed = true)
     private val mockAdsRepository: AdsRepository = mockk(relaxed = true)
     private val mockRSSRepository: RssRepository = mockk(relaxed = true)
+    private val mockPermissionRepository: PermissionRepository = mockk(relaxed = true)
     private val mockNavigator: Navigator = mockk(relaxed = true)
 
     private lateinit var underTest: SettingsAllViewModel
@@ -34,6 +36,7 @@ internal class SettingsAllViewModelTest: BaseTest() {
             buildConfig = mockBuildConfigManager,
             adsRepository = mockAdsRepository,
             rssRepository = mockRSSRepository,
+            permissionRepository = mockPermissionRepository,
             navigator = mockNavigator,
         )
     }
@@ -193,6 +196,18 @@ internal class SettingsAllViewModelTest: BaseTest() {
             mockNavigator.navigate(capture(slot))
         }
         assertEquals(Screen.Settings.NotificationsUpcoming.route, slot.captured.route)
+    }
+
+    @Test
+    fun `clicking upcoming notifications opens upcoming notifications period`() {
+        initUnderTest()
+        underTest.inputs.itemClicked(Settings.Notifications.notificationUpcomingNotice())
+
+        val slot = slot<NavigationDestination>()
+        verify {
+            mockNavigator.navigate(capture(slot))
+        }
+        assertEquals(Screen.Settings.NotificationsUpcomingNotice.route, slot.captured.route)
     }
 
     @Test

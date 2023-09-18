@@ -96,7 +96,7 @@ fun SettingsNotificationsUpcomingScreen(
 
             Header(title = R.string.settings_header_notice)
             Pref(
-                model = Settings.Notifications.notificationNoticePeriod(isEnabled = permissionEnabled && exactAlarmEnabled),
+                model = Settings.Notifications.notificationUpcomingNotice(isEnabled = permissionEnabled && exactAlarmEnabled),
                 onClick = prefClicked
             )
 
