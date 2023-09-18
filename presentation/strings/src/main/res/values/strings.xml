@@ -282,8 +282,8 @@
     <string name="settings_pref_notification_permission_description">Grant permission for Flashback to send you notifications</string>
     <string name="settings_pref_schedule_exact_alarm_title">Exact timings</string>
     <string name="settings_pref_schedule_exact_alarm_description">Grant permission for Flashback to send you reminders at specific times</string>
-    <string name="settings_pref_notification_notice_period_title">Minutes before</string>
-    <string name="settings_pref_notification_notice_period_description">Get notified 15, 30 or 60 minutes before one of the above events starts</string>
+    <string name="settings_pref_notification_notice_period_title">Notice</string>
+    <string name="settings_pref_notification_notice_period_description">Choose between notified 15, 30 or 60 minutes before one of the above events starts</string>
     <string name="settings_switch_notification_upcoming_fp_title">Free Practice</string>
     <string name="settings_switch_notification_upcoming_qualifying_title">Qualifying</string>
     <string name="settings_switch_notification_upcoming_sprint_title">Sprint</string>
@@ -467,16 +467,16 @@
 
     <string name="notification_channel_title_upcoming">Upcoming reminders</string>
     <string name="notification_channel_title_results">Results available</string>
-    <string name="notification_channel_race">Upcoming reminders: Race</string>
-    <string name="notification_channel_sprint">Upcoming reminders: Sprint</string>
-    <string name="notification_channel_sprint_qualifying">Upcoming reminders: Sprint Shootout</string>
-    <string name="notification_channel_qualifying">Upcoming reminders: Qualifying</string>
-    <string name="notification_channel_free_practice">Upcoming reminders: Free Practice</string>
+    <string name="notification_channel_race">Race</string>
+    <string name="notification_channel_sprint">Sprint</string>
+    <string name="notification_channel_sprint_qualifying">Sprint Shootout</string>
+    <string name="notification_channel_qualifying">Qualifying</string>
+    <string name="notification_channel_free_practice">Free Practice</string>
+    <string name="notification_channel_race_notify">Race</string>
+    <string name="notification_channel_sprint_notify">Sprint</string>
+    <string name="notification_channel_sprint_qualifying_notify">Sprint Shootout</string>
+    <string name="notification_channel_qualifying_notify">Qualifying</string>
     <string name="notification_channel_info">Season information</string>
-    <string name="notification_channel_race_notify">Results available: Race</string>
-    <string name="notification_channel_sprint_notify">Results available: Sprint</string>
-    <string name="notification_channel_sprint_qualifying_notify">Result available: Sprint Shootout</string>
-    <string name="notification_channel_qualifying_notify">Results available: Qualifying</string>
 
 
     <!-- App Shortcuts -->

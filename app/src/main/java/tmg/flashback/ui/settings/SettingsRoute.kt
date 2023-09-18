@@ -31,6 +31,12 @@ internal val Screen.Settings.NotificationsUpcoming: NavigationDestination
         popUpTo = "settings"
     )
 
+internal val Screen.Settings.NotificationsUpcomingNotice: NavigationDestination
+    get() = NavigationDestination(
+        "settings/notifications/notice",
+        popUpTo = "settings"
+    )
+
 internal val Screen.Settings.NotificationsResults: NavigationDestination
     get() = NavigationDestination(
         "settings/notifications/results",

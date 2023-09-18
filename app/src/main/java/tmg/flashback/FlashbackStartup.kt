@@ -132,13 +132,20 @@ class FlashbackStartup @Inject constructor(
         // Notifications
         val notificationUpcoming = "upcoming"
         systemNotificationManager.createGroup(notificationUpcoming, application.getString(R.string.notification_channel_title_upcoming))
-        NotificationUpcoming.values().forEach {
+        NotificationUpcoming.values().filter { it != NotificationUpcoming.OTHER }.forEach {
             systemNotificationManager.createChannel(
                 it.channelId,
                 it.channelLabel,
                 groupId = notificationUpcoming
             )
         }
+
+        systemNotificationManager.createChannel(
+            NotificationUpcoming.OTHER.channelId,
+            NotificationUpcoming.OTHER.channelLabel,
+            groupId = null
+        )
+
         val notificationResultIds = "results"
         systemNotificationManager.createGroup(notificationResultIds, application.getString(R.string.notification_channel_title_results))
         NotificationResultsAvailable.values().forEach { results ->

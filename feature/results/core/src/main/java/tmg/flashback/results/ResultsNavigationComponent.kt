@@ -7,7 +7,6 @@ import tmg.flashback.navigation.Screen
 import tmg.flashback.results.contract.ResultsNavigationComponent
 import tmg.flashback.results.ui.events.EventsBottomSheetFragment
 import tmg.flashback.results.ui.feature.notificationonboarding.NotificationOnboardingBottomSheetFragment
-import tmg.flashback.results.ui.settings.notifications.reminder.UpNextReminderBottomSheetFragment
 import tmg.flashback.results.ui.tyres.TyreBottomSheetFragment
 import javax.inject.Inject
 
@@ -47,11 +46,6 @@ internal class ResultsNavigationComponentImpl @Inject constructor(
     private val crashlyticsManager: CrashlyticsManager,
     private val activityProvider: tmg.flashback.navigation.ActivityProvider
 ): ResultsNavigationComponent {
-    override fun upNext() = activityProvider.launch {
-        crashlyticsManager.log("Navigating to up next")
-        val activity = it as? AppCompatActivity ?: return@launch
-        UpNextReminderBottomSheetFragment().show(activity.supportFragmentManager, "UP_NEXT")
-    }
 
     override fun tyres(season: Int) = activityProvider.launch {
         crashlyticsManager.log("Navigating to tyres $season")

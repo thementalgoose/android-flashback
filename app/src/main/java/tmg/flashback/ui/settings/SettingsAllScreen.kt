@@ -18,6 +18,7 @@ import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.header.HeaderAction
 import tmg.flashback.ui.components.settings.Footer
 import tmg.flashback.ui.components.settings.Header
+import tmg.flashback.ui.components.settings.Pref
 import tmg.flashback.ui.components.settings.Section
 
 @Composable
@@ -103,6 +104,10 @@ fun SettingsAllScreen(
                 model = Settings.Notifications.notificationResults,
                 onClick = prefClicked
             )
+            Pref(
+                model = Settings.Notifications.notificationUpcomingNotice(isEnabled = uiState.notificationExactAlarmPermission),
+                onClick = prefClicked
+            )
             if (uiState.adsEnabled) {
                 Header(title = R.string.settings_header_ads)
                 Section(
@@ -135,7 +140,9 @@ private fun Preview() {
             uiState = SettingsAllViewModel.UiState(
                 adsEnabled = true,
                 rssEnabled = true,
-                themeEnabled = true
+                themeEnabled = true,
+                notificationRuntimePermission = true,
+                notificationExactAlarmPermission = true
             )
         )
     }
@@ -152,7 +159,9 @@ private fun PreviewAllHidden() {
             uiState = SettingsAllViewModel.UiState(
                 adsEnabled = false,
                 rssEnabled = false,
-                themeEnabled = false
+                themeEnabled = false,
+                notificationRuntimePermission = false,
+                notificationExactAlarmPermission = false
             )
         )
     }

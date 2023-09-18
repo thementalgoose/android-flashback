@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import tmg.flashback.navigation.IntentNavigationComponent
 import tmg.flashback.results.contract.ResultsNavigationComponent
-import tmg.flashback.results.contract.repository.models.NotificationResultsAvailable
 import tmg.flashback.results.contract.repository.models.NotificationUpcoming
 import tmg.flashback.results.repository.NotificationsRepositoryImpl
 import tmg.flashback.results.usecases.ScheduleNotificationsUseCase
@@ -137,7 +136,7 @@ internal class SettingsNotificationsUpcomingViewModelTest: BaseTest() {
     @Test
     fun `clicking minutes before opens up next notice period`() = runTest {
         initUnderTest()
-        underTest.inputs.prefClicked(Settings.Notifications.notificationNoticePeriod())
+        underTest.inputs.prefClicked(Settings.Notifications.notificationUpcomingNotice())
 
         verify {
             mockResultsNavigationComponent.upNext()

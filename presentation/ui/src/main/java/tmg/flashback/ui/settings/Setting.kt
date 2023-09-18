@@ -39,6 +39,8 @@ sealed class Setting(
         val title: Int,
         @StringRes
         val subtitle: Int?,
+        @DrawableRes
+        val icon: Int? = null,
         val isEnabled: Boolean = true,
         val isBeta: Boolean = false,
     ): Setting(

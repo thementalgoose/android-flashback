@@ -1,14 +1,17 @@
 package tmg.flashback.ui.components.settings
 
+import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.selection.toggleable
@@ -20,6 +23,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
@@ -64,6 +68,24 @@ fun SettingPref(
             horizontal = AppTheme.dimens.medium
         )
     ) {
+        if (model.icon != null) {
+            if (model.icon == 0) {
+                Box(Modifier
+                    .size(32.dp)
+                    .padding(start = AppTheme.dimens.small)
+                )
+            } else {
+                Icon(
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                        .padding(start = AppTheme.dimens.small),
+                    painter = painterResource(id = model.icon),
+                    contentDescription = null,
+                    tint = AppTheme.colors.contentPrimary
+                )
+            }
+            Spacer(Modifier.width(AppTheme.dimens.medium))
+        }
         Column(Modifier.fillMaxWidth()) {
             Row(
                 verticalAlignment = Alignment.CenterVertically
@@ -356,6 +378,14 @@ private fun Preview() {
                 model = Setting.Pref.get(isEnabled = false),
                 onClick = {}
             )
+            SettingPref(
+                model = Setting.Pref.get(icon = R.drawable.ic_menu),
+                onClick = {}
+            )
+            SettingPref(
+                model = Setting.Pref.get(icon = 0),
+                onClick = {}
+            )
             SettingHeader(
                 model = Setting.Heading.get()
             )
@@ -384,12 +414,15 @@ private fun Setting.Heading.Companion.get(
 )
 
 private fun Setting.Pref.Companion.get(
+    @DrawableRes
+    icon: Int? = null,
     isBeta: Boolean = false,
     isEnabled: Boolean = true
 ) = Setting.Pref(
     _key = "key",
     title = R.string.settings_theme_theme_title,
     subtitle = R.string.settings_theme_theme_description,
+    icon = icon,
     isEnabled = isEnabled,
     isBeta = isBeta
 )

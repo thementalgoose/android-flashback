@@ -1,12 +1,11 @@
 package tmg.flashback.ui.settings
 
-import android.app.Notification
 import tmg.flashback.R
 import tmg.flashback.results.contract.repository.models.NotificationResultsAvailable
 import tmg.flashback.results.contract.repository.models.NotificationUpcoming
+import tmg.flashback.results.repository.models.NotificationReminder
 import tmg.flashback.results.repository.models.prefKey
 import tmg.flashback.ui.model.NightMode
-import tmg.flashback.ui.model.Theme
 import tmg.flashback.ui.settings.appearance.nightmode.title
 import tmg.flashback.ui.settings.appearance.theme.title
 
@@ -175,12 +174,19 @@ object Settings {
         )
 
 
-        val notificationNoticePeriodKey = "notification_notice_period"
-        fun notificationNoticePeriod(isEnabled: Boolean = true) = Setting.Pref(
-            _key = notificationNoticePeriodKey,
+        val notificationUpcomingNotice = "notification_notice_period"
+        fun notificationUpcomingNotice(isEnabled: Boolean = true) = Setting.Pref(
+            _key = notificationUpcomingNotice,
             title = R.string.settings_pref_notification_notice_period_title,
             subtitle = R.string.settings_pref_notification_notice_period_description,
+            icon = 0,
             isEnabled = isEnabled
+        )
+        fun notificationNoticePeriod(reminder: NotificationReminder, isChecked: Boolean) = Setting.Option(
+            _key = reminder.name,
+            title = reminder.label,
+            subtitle = null,
+            isChecked = isChecked
         )
 
 
