@@ -2,6 +2,7 @@ package tmg.flashback.notifications.managers
 
 import android.app.Notification
 import android.app.NotificationChannel
+import android.app.NotificationChannelGroup
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
@@ -9,6 +10,7 @@ import android.content.Intent
 import android.media.RingtoneManager
 import android.os.Build
 import androidx.annotation.DrawableRes
+import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.core.app.NotificationCompat
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -93,16 +95,26 @@ class SystemNotificationManager @Inject constructor(
         notificationManager?.cancelAll() ?: crashController.logException(NullPointerException("Notification Manager null when cancelling all"), "Notification Manager null when cancelling all")
     }
 
+    fun createGroup(
+        id: String,
+        name: String
+    ) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            notificationManager?.createNotificationChannelGroup(NotificationChannelGroup(id, name))
+        }
+    }
+
     /**
      * Creates a notification channel
      */
-    fun createChannel(channelId: String, @StringRes title: Int) {
+    fun createChannel(channelId: String, @StringRes title: Int, groupId: String) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 channelId,
                 applicationContext.getString(title),
                 NotificationManager.IMPORTANCE_DEFAULT
             )
+            channel.group = groupId
             notificationManager?.createNotificationChannel(channel)
         }
     }
