@@ -1,11 +1,9 @@
 package tmg.flashback.ui.repository
 
-import android.Manifest
 import android.app.AlarmManager
 import android.content.Context.ALARM_SERVICE
 import android.content.pm.PackageManager
 import android.os.Build
-import androidx.core.app.AlarmManagerCompat
 import androidx.core.content.ContextCompat
 import tmg.flashback.navigation.ActivityProvider
 import tmg.flashback.ui.AppPermissions
@@ -23,7 +21,7 @@ class PermissionRepository @Inject constructor(
         }
     }
 
-    fun isEnabled(permission: AppPermissions.OpenIntent): Boolean {
+    fun isEnabled(permission: AppPermissions.SpecialPermission): Boolean {
         return when (permission) {
             AppPermissions.ScheduleExactAlarms -> isExactAlarmEnabled
         }

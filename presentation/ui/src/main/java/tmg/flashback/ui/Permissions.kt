@@ -32,8 +32,9 @@ sealed class AppPermissions: Parcelable {
         }
     }
 
+    // https://developer.android.com/training/permissions/requesting-special
     @Parcelize
-    sealed class OpenIntent(
+    sealed class SpecialPermission(
         val getIntent: () -> Intent,
     ): AppPermissions()
 
@@ -48,7 +49,7 @@ sealed class AppPermissions: Parcelable {
 
     @Parcelize
     @RequiresApi(Build.VERSION_CODES.S)
-    data object ScheduleExactAlarms: OpenIntent(
+    data object ScheduleExactAlarms: SpecialPermission(
         getIntent = { Intent(ACTION_REQUEST_SCHEDULE_EXACT_ALARM) }
     )
 }
