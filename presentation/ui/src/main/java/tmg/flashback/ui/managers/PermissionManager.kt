@@ -24,7 +24,8 @@ class PermissionManager @Inject constructor(
         completableDeferred = null
         val numberGranted = isGranted.count { it.value }
         if (numberGranted != isGranted.size) {
-            when (val string = baseActivity?.resources?.getQuantityString(R.plurals.permissions_rationale_permissions_denied, numberGranted, numberGranted)) {
+            val numberDenied = isGranted.size - numberGranted
+            when (val string = baseActivity?.resources?.getQuantityString(R.plurals.permissions_rationale_permissions_denied, numberDenied, numberDenied)) {
                 null -> Toast.makeText(baseActivity, R.string.permissions_rationale_permission_denied, Toast.LENGTH_LONG).show()
                 else -> Toast.makeText(baseActivity, string, Toast.LENGTH_LONG).show()
             }

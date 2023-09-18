@@ -19,6 +19,7 @@ import tmg.flashback.notifications.repository.NotificationRepository
 import tmg.flashback.notifications.usecases.LocalNotificationCancelUseCase
 import tmg.flashback.notifications.usecases.LocalNotificationScheduleUseCase
 import tmg.flashback.results.BuildConfig
+import tmg.flashback.results.contract.repository.NotificationsRepository
 import tmg.flashback.results.contract.repository.models.NotificationUpcoming
 import tmg.flashback.results.contract.repository.models.NotificationUpcoming.FREE_PRACTICE
 import tmg.flashback.results.contract.repository.models.NotificationUpcoming.OTHER
@@ -26,6 +27,7 @@ import tmg.flashback.results.contract.repository.models.NotificationUpcoming.QUA
 import tmg.flashback.results.contract.repository.models.NotificationUpcoming.RACE
 import tmg.flashback.results.contract.repository.models.NotificationUpcoming.SPRINT
 import tmg.flashback.results.contract.repository.models.NotificationUpcoming.SPRINT_QUALIFYING
+import tmg.flashback.results.repository.NotificationsRepositoryImpl
 
 @HiltWorker
 class ScheduleNotificationsJob @AssistedInject constructor(
@@ -33,7 +35,8 @@ class ScheduleNotificationsJob @AssistedInject constructor(
     private val notificationConfigRepository: NotificationRepository,
     private val localNotificationCancelUseCase: LocalNotificationCancelUseCase,
     private val localNotificationScheduleUseCase: LocalNotificationScheduleUseCase,
-    private val notificationRepository: tmg.flashback.results.repository.NotificationsRepositoryImpl,
+    // TODO: Change this to not use the impl!
+    private val notificationRepository: NotificationsRepositoryImpl,
     @Assisted context: Context,
     @Assisted parameters: WorkerParameters
 ): CoroutineWorker(
