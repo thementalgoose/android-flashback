@@ -465,6 +465,8 @@
     <string name="notification_onboarding_title">Notifications</string>
     <string name="notification_onboarding_description">Get notified just before race, qualifying, free practice or testing events are coming up next in the formula 1. You can change these anytime in the settings, as well as how long before you wish to be notified</string>
 
+    <string name="notification_channel_title_upcoming">Upcoming reminders</string>
+    <string name="notification_channel_title_results">Results available</string>
     <string name="notification_channel_race">Upcoming reminders: Race</string>
     <string name="notification_channel_sprint">Upcoming reminders: Sprint</string>
     <string name="notification_channel_sprint_qualifying">Upcoming reminders: Sprint Shootout</string>
