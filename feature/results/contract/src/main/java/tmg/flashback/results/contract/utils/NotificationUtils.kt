@@ -1,4 +1,4 @@
-package tmg.flashback.results.utils
+package tmg.flashback.results.contract.utils
 
 import android.content.Context
 import org.threeten.bp.LocalDateTime
@@ -6,8 +6,8 @@ import org.threeten.bp.ZoneId
 import org.threeten.bp.ZoneOffset
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.formula1.model.Timestamp
-import tmg.flashback.results.R
-import tmg.flashback.results.repository.models.NotificationReminder
+import tmg.flashback.results.contract.R
+import tmg.flashback.results.contract.repository.models.NotificationReminder
 import java.util.Locale
 
 object NotificationUtils {

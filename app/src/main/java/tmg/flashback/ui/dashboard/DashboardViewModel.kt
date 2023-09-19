@@ -12,14 +12,12 @@ import tmg.flashback.eastereggs.usecases.IsMenuIconEnabledUseCase
 import tmg.flashback.eastereggs.usecases.IsSnowEnabledUseCase
 import tmg.flashback.eastereggs.usecases.IsUkraineEnabledUseCase
 import tmg.flashback.navigation.ApplicationNavigationComponent
-import tmg.flashback.navigation.Navigator
-import tmg.flashback.results.contract.ResultsNavigationComponent
-import tmg.flashback.results.repository.NotificationsRepositoryImpl
-import tmg.flashback.ui.AppPermissions
+import tmg.flashback.results.contract.repository.NotificationsRepository
+import tmg.flashback.device.AppPermissions
 import tmg.flashback.ui.managers.PermissionManager
 import tmg.flashback.ui.managers.StyleManager
 import tmg.flashback.ui.model.NightMode
-import tmg.flashback.ui.repository.PermissionRepository
+import tmg.flashback.device.repository.PermissionRepository
 import tmg.flashback.ui.usecases.ChangeNightModeUseCase
 import javax.inject.Inject
 
@@ -47,7 +45,7 @@ class DashboardViewModel @Inject constructor(
     private val buildConfigManager: BuildConfigManager,
     private val applicationNavigationComponent: ApplicationNavigationComponent,
     private val permissionManager: PermissionManager,
-    private val notificationRepository: NotificationsRepositoryImpl,
+    private val notificationRepository: NotificationsRepository,
     private val permissionRepository: PermissionRepository,
     isSnowEnabledUseCase: IsSnowEnabledUseCase,
     isMenuIconEnabledUseCase: IsMenuIconEnabledUseCase,

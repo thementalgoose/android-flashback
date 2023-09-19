@@ -2,8 +2,7 @@ package tmg.flashback.ui.settings
 
 import tmg.flashback.R
 import tmg.flashback.results.contract.repository.models.NotificationResultsAvailable
-import tmg.flashback.results.contract.repository.models.NotificationUpcoming
-import tmg.flashback.results.repository.models.NotificationReminder
+import tmg.flashback.results.contract.repository.models.NotificationReminder
 import tmg.flashback.results.repository.models.prefKey
 import tmg.flashback.ui.model.NightMode
 import tmg.flashback.ui.settings.appearance.nightmode.title

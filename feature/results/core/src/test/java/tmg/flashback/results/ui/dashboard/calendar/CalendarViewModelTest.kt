@@ -26,7 +26,7 @@ import tmg.flashback.navigation.Screen
 import tmg.flashback.results.contract.ResultsNavigationComponent
 import tmg.flashback.results.model.toScreenWeekendData
 import tmg.flashback.results.repository.NotificationsRepositoryImpl
-import tmg.flashback.results.repository.models.NotificationSchedule
+import tmg.flashback.results.contract.repository.models.NotificationSchedule
 import tmg.flashback.results.usecases.FetchSeasonUseCase
 import tmg.flashback.weekend.contract.Weekend
 import tmg.flashback.weekend.contract.model.ScreenWeekendNav

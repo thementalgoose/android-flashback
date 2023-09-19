@@ -1,4 +1,4 @@
-package tmg.flashback.ui
+package tmg.flashback.device
 
 import android.Manifest
 import android.content.Intent
@@ -15,12 +15,13 @@ sealed class AppPermissions: Parcelable {
     @Parcelize
     sealed class RuntimePermission(
         val permission: String,
-        @StringRes
-        val description: Int,
-        @DrawableRes
-        val icon: Int
+//        @StringRes
+//        val description: Int,
+//        @DrawableRes
+//        val icon: Int
     ): AppPermissions() {
         companion object {
+            // TODO: Rip this out - It shouldn't be here!
             fun get(permissionStrings: List<String>): List<RuntimePermission> {
                 return permissionStrings.mapNotNull {
                     when (it) {
@@ -43,8 +44,6 @@ sealed class AppPermissions: Parcelable {
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     data object RuntimeNotifications: RuntimePermission(
         permission = Manifest.permission.POST_NOTIFICATIONS,
-        description = R.string.permissions_rationale_runtime_notifications_description,
-        icon = R.drawable.ic_permission_notifications
     )
 
     @Parcelize

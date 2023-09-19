@@ -9,11 +9,11 @@ import org.junit.jupiter.api.Test
 import tmg.flashback.prefs.manager.PreferenceManager
 import tmg.flashback.results.contract.repository.models.NotificationResultsAvailable
 import tmg.flashback.results.contract.repository.models.NotificationUpcoming
-import tmg.flashback.results.repository.models.NotificationReminder
-import tmg.flashback.results.repository.models.NotificationSchedule
+import tmg.flashback.results.contract.repository.models.NotificationReminder
+import tmg.flashback.results.contract.repository.models.NotificationSchedule
 import tmg.flashback.results.repository.models.prefKey
 
-internal class NotificationRepositoryTest {
+internal class NotificationRepositoryImplTest {
 
     private val mockPreferenceManager: PreferenceManager = mockk(relaxed = true)
 
@@ -39,44 +39,6 @@ internal class NotificationRepositoryTest {
         )
         assertEquals(expected, underTest.notificationSchedule)
     }
-
-
-
-    //region Notification preferences - Onboarding
-
-    @Test
-    fun `is notification onboarding reads value from preferences repository with default to false`() {
-        every { mockPreferenceManager.getBoolean(any(), any()) } returns true
-
-        initUnderTest()
-
-        Assertions.assertTrue(underTest.seenNotificationOnboarding )
-        verify {
-            mockPreferenceManager.getBoolean(keyNotificationOnboarding, false)
-        }
-    }
-
-    @Test
-    fun `setting notification onboarding enabled saves value from preferences repository`() {
-        initUnderTest()
-
-        underTest.seenNotificationOnboarding = true
-        verify {
-            mockPreferenceManager.save(keyNotificationOnboarding, true)
-        }
-    }
-
-    @Test
-    fun `setting notification onboarding disabled saves value from preferences repository`() {
-        initUnderTest()
-
-        underTest.seenNotificationOnboarding = false
-        verify {
-            mockPreferenceManager.save(keyNotificationOnboarding, false)
-        }
-    }
-
-    //endregion
 
 
 

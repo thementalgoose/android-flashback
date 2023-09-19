@@ -1,12 +1,14 @@
 package tmg.flashback.notifications.repository
 
+import tmg.flashback.notifications.managers.SystemNotificationManager
 import tmg.flashback.prefs.manager.PreferenceManager
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class NotificationRepository @Inject constructor(
-    private val preferenceManager: PreferenceManager
+    private val preferenceManager: PreferenceManager,
+    private val systemNotificationManager: SystemNotificationManager,
 ) {
 
     companion object {
@@ -29,4 +31,7 @@ class NotificationRepository @Inject constructor(
             .toSet()
         internal set(value) = preferenceManager.save(keyNotificationIds, value.map { it.toString() }.toSet())
 
+    fun isChannelEnabled(channelId: String): Boolean {
+        return systemNotificationManager.isChannelEnabled(channelId)
+    }
 }

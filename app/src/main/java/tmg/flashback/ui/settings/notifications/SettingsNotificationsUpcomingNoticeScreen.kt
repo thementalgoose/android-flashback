@@ -14,7 +14,7 @@ import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.googleanalytics.presentation.ScreenView
-import tmg.flashback.results.repository.models.NotificationReminder
+import tmg.flashback.results.contract.repository.models.NotificationReminder
 import tmg.flashback.ui.components.header.HeaderAction
 import tmg.flashback.ui.components.settings.Footer
 import tmg.flashback.ui.components.settings.Header

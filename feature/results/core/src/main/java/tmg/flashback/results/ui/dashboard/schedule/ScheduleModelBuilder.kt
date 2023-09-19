@@ -4,7 +4,7 @@ import org.threeten.bp.LocalDate
 import tmg.flashback.formula1.model.Event
 import tmg.flashback.formula1.model.Overview
 import tmg.flashback.formula1.model.OverviewRace
-import tmg.flashback.results.repository.models.NotificationSchedule
+import tmg.flashback.results.contract.repository.models.NotificationSchedule
 import tmg.utilities.extensions.format
 import tmg.utilities.extensions.startOfWeek
 import tmg.utilities.utils.LocalDateUtils

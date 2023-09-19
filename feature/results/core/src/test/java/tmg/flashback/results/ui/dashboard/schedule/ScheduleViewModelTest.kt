@@ -24,10 +24,11 @@ import tmg.flashback.formula1.model.model
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.flashback.results.contract.ResultsNavigationComponent
+import tmg.flashback.results.contract.repository.NotificationsRepository
 import tmg.flashback.results.model.toScreenWeekendData
 import tmg.flashback.results.repository.HomeRepository
 import tmg.flashback.results.repository.NotificationsRepositoryImpl
-import tmg.flashback.results.repository.models.NotificationSchedule
+import tmg.flashback.results.contract.repository.models.NotificationSchedule
 import tmg.flashback.results.usecases.FetchSeasonUseCase
 import tmg.flashback.weekend.contract.Weekend
 import tmg.flashback.weekend.contract.model.ScreenWeekendNav
@@ -39,7 +40,7 @@ internal class ScheduleViewModelTest: BaseTest() {
     private val mockOverviewRepository: OverviewRepository = mockk(relaxed = true)
     private val mockEventsRepository: EventsRepository = mockk(relaxed = true)
     private val mockFetchSeasonUseCase: FetchSeasonUseCase = mockk(relaxed = true)
-    private val mockNotificationRepository: NotificationsRepositoryImpl = mockk(relaxed = true)
+    private val mockNotificationRepository: NotificationsRepository = mockk(relaxed = true)
     private val mockNavigator: Navigator = mockk(relaxed = true)
     private val mockResultsNavigationComponent: ResultsNavigationComponent = mockk(relaxed = true)
     private val mockHomeRepository: HomeRepository = mockk(relaxed = true)
