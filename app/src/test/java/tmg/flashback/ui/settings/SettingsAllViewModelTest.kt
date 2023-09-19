@@ -17,9 +17,9 @@ import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.flashback.rss.contract.RSSConfigure
 import tmg.flashback.rss.repo.RssRepository
-import tmg.flashback.ui.AppPermissions
+import tmg.flashback.device.AppPermissions
 import tmg.flashback.ui.managers.PermissionManager
-import tmg.flashback.ui.repository.PermissionRepository
+import tmg.flashback.device.repository.PermissionRepository
 import tmg.flashback.ui.repository.ThemeRepository
 import tmg.testutils.BaseTest
 

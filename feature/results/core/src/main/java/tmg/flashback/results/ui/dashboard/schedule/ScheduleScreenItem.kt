@@ -31,7 +31,7 @@ import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.model.Schedule
 import tmg.flashback.providers.OverviewRaceProvider
 import tmg.flashback.results.R
-import tmg.flashback.results.repository.models.NotificationSchedule
+import tmg.flashback.results.contract.repository.models.NotificationSchedule
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme

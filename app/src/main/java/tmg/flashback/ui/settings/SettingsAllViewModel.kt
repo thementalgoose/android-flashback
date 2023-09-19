@@ -1,12 +1,9 @@
 package tmg.flashback.ui.settings
 
-import android.os.Build
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
 import tmg.flashback.BuildConfig
 import tmg.flashback.ads.ads.repository.AdsRepository
 import tmg.flashback.device.managers.BuildConfigManager
@@ -15,9 +12,9 @@ import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.flashback.rss.contract.RSSConfigure
 import tmg.flashback.rss.repo.RssRepository
-import tmg.flashback.ui.AppPermissions
+import tmg.flashback.device.AppPermissions
 import tmg.flashback.ui.managers.PermissionManager
-import tmg.flashback.ui.repository.PermissionRepository
+import tmg.flashback.device.repository.PermissionRepository
 import tmg.flashback.ui.repository.ThemeRepository
 import javax.inject.Inject
 

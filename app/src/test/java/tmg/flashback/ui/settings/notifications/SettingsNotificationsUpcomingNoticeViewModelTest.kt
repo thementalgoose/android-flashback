@@ -12,18 +12,18 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.EnumSource
 import tmg.flashback.navigation.ApplicationNavigationComponent
-import tmg.flashback.results.repository.NotificationsRepositoryImpl
-import tmg.flashback.results.repository.models.NotificationReminder
+import tmg.flashback.results.contract.repository.NotificationsRepository
+import tmg.flashback.results.contract.repository.models.NotificationReminder
 import tmg.flashback.results.usecases.ScheduleNotificationsUseCase
-import tmg.flashback.ui.AppPermissions
+import tmg.flashback.device.AppPermissions
 import tmg.flashback.ui.managers.PermissionManager
-import tmg.flashback.ui.repository.PermissionRepository
+import tmg.flashback.device.repository.PermissionRepository
 import tmg.flashback.ui.settings.Settings
 import tmg.testutils.BaseTest
 
 internal class SettingsNotificationsUpcomingNoticeViewModelTest: BaseTest() {
 
-    private val mockNotificationRepository: NotificationsRepositoryImpl = mockk(relaxed = true)
+    private val mockNotificationRepository: NotificationsRepository = mockk(relaxed = true)
     private val mockScheduleNotificationsUseCase: ScheduleNotificationsUseCase = mockk(relaxed = true)
     private val mockPermissionManager: PermissionManager = mockk(relaxed = true)
     private val mockPermissionRepository: PermissionRepository = mockk(relaxed = true)

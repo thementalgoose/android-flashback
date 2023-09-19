@@ -95,13 +95,22 @@ class SystemNotificationManager @Inject constructor(
         notificationManager?.cancelAll() ?: crashController.logException(NullPointerException("Notification Manager null when cancelling all"), "Notification Manager null when cancelling all")
     }
 
+    /**
+     * Check if notification channel is enabled
+     */
+    fun isChannelEnabled(channelId: String): Boolean {
+        val channel = notificationManager?.getNotificationChannel(channelId) ?: return false
+        return channel.importance != NotificationManager.IMPORTANCE_NONE
+    }
+
+    /**
+     * Create a notification group with a given code if applicable
+     */
     fun createGroup(
         id: String,
         name: String
     ) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            notificationManager?.createNotificationChannelGroup(NotificationChannelGroup(id, name))
-        }
+        notificationManager?.createNotificationChannelGroup(NotificationChannelGroup(id, name))
     }
 
     /**

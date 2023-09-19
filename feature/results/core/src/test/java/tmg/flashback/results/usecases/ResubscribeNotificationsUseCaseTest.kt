@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.notifications.usecases.RemoteNotificationSubscribeUseCase
 import tmg.flashback.notifications.usecases.RemoteNotificationUnsubscribeUseCase
+import tmg.flashback.results.contract.repository.NotificationsRepository
 import tmg.flashback.results.contract.repository.models.NotificationResultsAvailable
 import tmg.flashback.results.contract.repository.models.NotificationResultsAvailable.QUALIFYING
 import tmg.flashback.results.contract.repository.models.NotificationResultsAvailable.RACE
@@ -17,7 +18,7 @@ import tmg.testutils.BaseTest
 
 internal class ResubscribeNotificationsUseCaseTest: BaseTest() {
 
-    private val mockNotificationRepository: NotificationsRepositoryImpl = mockk(relaxed = true)
+    private val mockNotificationRepository: NotificationsRepository = mockk(relaxed = true)
     private val mockRemoteNotificationSubscribeUseCase: RemoteNotificationSubscribeUseCase = mockk(relaxed = true)
     private val mockRemoteNotificationUnsubscribeUseCase: RemoteNotificationUnsubscribeUseCase = mockk(relaxed = true)
 

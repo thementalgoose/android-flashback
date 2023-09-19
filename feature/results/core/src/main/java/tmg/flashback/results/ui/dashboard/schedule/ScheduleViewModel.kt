@@ -22,8 +22,8 @@ import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.flashback.results.contract.ResultsNavigationComponent
+import tmg.flashback.results.contract.repository.NotificationsRepository
 import tmg.flashback.results.repository.HomeRepository
-import tmg.flashback.results.repository.NotificationsRepositoryImpl
 import tmg.flashback.results.ui.dashboard.schedule.ScheduleModelBuilder.generateScheduleModel
 import tmg.flashback.results.usecases.FetchSeasonUseCase
 import tmg.flashback.weekend.contract.Weekend
@@ -51,7 +51,7 @@ interface ScheduleViewModelOutputs {
 class ScheduleViewModel @Inject constructor(
     private val fetchSeasonUseCase: FetchSeasonUseCase,
     private val overviewRepository: OverviewRepository,
-    private val notificationRepository: NotificationsRepositoryImpl,
+    private val notificationRepository: NotificationsRepository,
     private val homeRepository: HomeRepository,
     private val navigator: Navigator,
     private val resultsNavigationComponent: ResultsNavigationComponent,

@@ -5,14 +5,13 @@ import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.navigation.ApplicationNavigationComponent
-import tmg.flashback.results.repository.NotificationsRepositoryImpl
-import tmg.flashback.results.repository.models.NotificationReminder
+import tmg.flashback.results.contract.repository.NotificationsRepository
+import tmg.flashback.results.contract.repository.models.NotificationReminder
 import tmg.flashback.results.usecases.ScheduleNotificationsUseCase
-import tmg.flashback.ui.AppPermissions
+import tmg.flashback.device.AppPermissions
 import tmg.flashback.ui.managers.PermissionManager
-import tmg.flashback.ui.repository.PermissionRepository
+import tmg.flashback.device.repository.PermissionRepository
 import tmg.flashback.ui.settings.Setting
 import tmg.flashback.ui.settings.Settings
 import javax.inject.Inject
@@ -37,7 +36,7 @@ interface SettingsNotificationsUpcomingNoticeViewModelOutputs {
 
 @HiltViewModel
 class SettingsNotificationsUpcomingNoticeViewModel @Inject constructor(
-    private val notificationRepository: NotificationsRepositoryImpl,
+    private val notificationRepository: NotificationsRepository,
     private val permissionManager: PermissionManager,
     private val permissionRepository: PermissionRepository,
     private val applicationNavigationComponent: ApplicationNavigationComponent,

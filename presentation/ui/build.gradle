@@ -31,4 +31,5 @@ dependencies {
     implementation libs.lottie
 
     api libs.flagkit
+    implementation project(path: ':core:device')
 }

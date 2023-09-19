@@ -27,7 +27,6 @@ import tmg.flashback.results.contract.repository.models.NotificationUpcoming.QUA
 import tmg.flashback.results.contract.repository.models.NotificationUpcoming.RACE
 import tmg.flashback.results.contract.repository.models.NotificationUpcoming.SPRINT
 import tmg.flashback.results.contract.repository.models.NotificationUpcoming.SPRINT_QUALIFYING
-import tmg.flashback.results.repository.NotificationsRepositoryImpl
 
 @HiltWorker
 class ScheduleNotificationsJob @AssistedInject constructor(
@@ -35,8 +34,7 @@ class ScheduleNotificationsJob @AssistedInject constructor(
     private val notificationConfigRepository: NotificationRepository,
     private val localNotificationCancelUseCase: LocalNotificationCancelUseCase,
     private val localNotificationScheduleUseCase: LocalNotificationScheduleUseCase,
-    // TODO: Change this to not use the impl!
-    private val notificationRepository: NotificationsRepositoryImpl,
+    private val notificationRepository: NotificationsRepository,
     @Assisted context: Context,
     @Assisted parameters: WorkerParameters
 ): CoroutineWorker(
@@ -74,11 +72,8 @@ class ScheduleNotificationsJob @AssistedInject constructor(
             .map {
                 it.apply {
                     this.utcDateTime = it.timestamp.utcLocalDateTime
-                    this.requestCode = tmg.flashback.results.utils.NotificationUtils.getRequestCode(utcDateTime)
+                    this.requestCode = tmg.flashback.results.contract.utils.NotificationUtils.getRequestCode(utcDateTime)
                 }
-            }
-            .filter {
-                notificationRepository.isUpcomingEnabled(it.channel)
             }
 
 
@@ -103,7 +98,7 @@ class ScheduleNotificationsJob @AssistedInject constructor(
             // Remove the notification reminder period
             val scheduleTime = it.utcDateTime.minusSeconds(reminderPeriod.seconds.toLong())
 
-            val (title, text) = tmg.flashback.results.utils.NotificationUtils.getNotificationTitleText(
+            val (title, text) = tmg.flashback.results.contract.utils.NotificationUtils.getNotificationTitleText(
                 applicationContext,
                 it.title,
                 it.label,
