@@ -75,23 +75,8 @@ class AppApplicationNavigationComponent @Inject constructor(
 
 
     override fun appSettingsNotifications() = activityProvider.launch {
-        val intent = when {
-            Build.VERSION.SDK_INT >= Build.VERSION_CODES.O -> {
-                appSettingsNotificationsIntent()
-            }
-            Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1 -> Intent().apply {
-                action = Settings.ACTION_APP_NOTIFICATION_SETTINGS;
-                putExtra(Settings.EXTRA_APP_PACKAGE, it.packageName);
-            }
-            else -> Intent().apply {
-                action = Settings.ACTION_APP_NOTIFICATION_SETTINGS;
-                putExtra("app_package", it.packageName);
-                putExtra("app_uid", it.applicationInfo.uid);
-            }
-        }
-        it.startActivity(intent)
+        it.startActivity(appSettingsNotificationsIntent())
     }
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun appSettingsNotificationsIntent(): Intent {
         val settingsIntent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
         settingsIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)

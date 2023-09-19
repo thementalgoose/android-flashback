@@ -32,7 +32,8 @@ internal class LocalNotificationScheduleUseCaseTest {
             channelId = "2",
             title = "3",
             text = "4",
-            timestamp = timestamp
+            timestamp = timestamp,
+            exact = true
         )
 
         verify {
@@ -41,7 +42,8 @@ internal class LocalNotificationScheduleUseCaseTest {
                 channelId = "2",
                 requestText = "3",
                 requestDescription = "4",
-                requestTimestamp = timestamp
+                requestTimestamp = timestamp,
+                exact = true
             )
         }
     }
@@ -57,7 +59,8 @@ internal class LocalNotificationScheduleUseCaseTest {
             channelId = "2",
             title = "3",
             text = "4",
-            timestamp = timestamp
+            timestamp = timestamp,
+            exact = true
         )
 
         verify {

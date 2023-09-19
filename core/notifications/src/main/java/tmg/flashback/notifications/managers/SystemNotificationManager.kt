@@ -117,25 +117,21 @@ class SystemNotificationManager @Inject constructor(
      * Creates a notification channel
      */
     fun createChannel(channelId: String, @StringRes title: Int, groupId: String?) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(
-                channelId,
-                applicationContext.getString(title),
-                NotificationManager.IMPORTANCE_DEFAULT
-            )
-            if (groupId != null) {
-                channel.group = groupId
-            }
-            notificationManager?.createNotificationChannel(channel)
+        val channel = NotificationChannel(
+            channelId,
+            applicationContext.getString(title),
+            NotificationManager.IMPORTANCE_DEFAULT
+        )
+        if (groupId != null) {
+            channel.group = groupId
         }
+        notificationManager?.createNotificationChannel(channel)
     }
 
     /**
      * Cancels a notification channel
      */
     fun cancelChannel(channelId: String) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            notificationManager?.deleteNotificationChannel(channelId)
-        }
+        notificationManager?.deleteNotificationChannel(channelId)
     }
 }
