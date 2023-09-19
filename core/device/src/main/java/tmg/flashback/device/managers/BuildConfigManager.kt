@@ -12,11 +12,7 @@ interface BuildConfigManager {
 
     val versionName: String
 
-    val isNotificationChannelsSupported: Boolean
-
     val isMonetThemeSupported: Boolean
-
-    val isAppShortcutsSupported: Boolean
 
     val isRuntimeNotificationsSupported: Boolean
 

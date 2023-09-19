@@ -40,12 +40,12 @@ class SettingsPrivacyViewModel @Inject constructor(
             Settings.Other.privacyPolicy.key -> {
                 navigator.navigate(tmg.flashback.navigation.Screen.Settings.PrivacyPolicy)
             }
-            Settings.Other.crashReportingKey -> {
+            Settings.Other.crashReporting -> {
                 privacyRepository.crashReporting = !privacyRepository.crashReporting
                 crashReportingEnabled.value = privacyRepository.crashReporting
                 toastManager.displayToast(R.string.settings_restart_app_required)
             }
-            Settings.Other.analyticsKey -> {
+            Settings.Other.analytics -> {
                 privacyRepository.analytics = !privacyRepository.analytics
                 analyticsEnabled.value = privacyRepository.analytics
                 toastManager.displayToast(R.string.settings_restart_app_required)

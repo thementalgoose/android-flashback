@@ -2,7 +2,7 @@ package tmg.flashback.results.ui.dashboard.schedule
 
 import org.threeten.bp.LocalDate
 import tmg.flashback.formula1.model.OverviewRace
-import tmg.flashback.results.repository.models.NotificationSchedule
+import tmg.flashback.results.contract.repository.models.NotificationSchedule
 
 sealed class ScheduleModel(
     val key: String

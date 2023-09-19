@@ -20,7 +20,7 @@ import tmg.flashback.formula1.enums.getBySeason
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.providers.OverviewRaceProvider
 import tmg.flashback.results.R
-import tmg.flashback.results.repository.models.NotificationSchedule
+import tmg.flashback.results.contract.repository.models.NotificationSchedule
 import tmg.flashback.results.ui.dashboard.DashboardQuickLinks
 import tmg.flashback.results.ui.messaging.ProvidedBy
 import tmg.flashback.style.AppTheme

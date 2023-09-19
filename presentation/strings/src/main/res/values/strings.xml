@@ -233,6 +233,8 @@
     <string name="settings_header_rss_feed">RSS Feed</string>
     <string name="settings_header_web_browser">Web Browser</string>
     <string name="settings_header_notifications">Notifications</string>
+    <string name="settings_header_notifications_upcoming">Notifications (Upcoming)</string>
+    <string name="settings_header_notifications_results_available">Notifications (Results available)</string>
     <string name="settings_header_other">Other</string>
 
     <string name="settings_section_dark_mode_title">Dark mode</string>
@@ -281,9 +283,9 @@
     <string name="settings_pref_notification_permission_title">Enable notifications</string>
     <string name="settings_pref_notification_permission_description">Grant permission for Flashback to send you notifications</string>
     <string name="settings_pref_schedule_exact_alarm_title">Exact timings</string>
-    <string name="settings_pref_schedule_exact_alarm_description">Grant permission for Flashback to send you reminders at specific times</string>
-    <string name="settings_pref_notification_notice_period_title">Minutes before</string>
-    <string name="settings_pref_notification_notice_period_description">Get notified 15, 30 or 60 minutes before one of the above events starts</string>
+    <string name="settings_pref_schedule_exact_alarm_description">Grant permission for Flashback to send you reminders at specific times. Otherwise, notifications will be roughly 1h before the start of the event</string>
+    <string name="settings_pref_notification_notice_period_title">Notice</string>
+    <string name="settings_pref_notification_notice_period_description">Choose between notified 15, 30 or 60 minutes before one of the above events starts</string>
     <string name="settings_switch_notification_upcoming_fp_title">Free Practice</string>
     <string name="settings_switch_notification_upcoming_qualifying_title">Qualifying</string>
     <string name="settings_switch_notification_upcoming_sprint_title">Sprint</string>
@@ -457,24 +459,28 @@
 
     <!-- Notifications -->
     <string name="notification_content_title" formatted="false">%s starts in %s</string>
+    <string name="notification_content_title_inexact" formatted="false">%s starts at %s</string>
     <string name="notification_content_text" formatted="false">%s %s starts in %s at %s</string>
+    <string name="notification_content_text_inexact" formatted="false">%s %s starts at %s</string>
     <string name="notification_content_text_device_time" formatted="false">%s %s (device time)</string>
-    <string name="notification_reminder_mins_60">1 hour</string>
+    <string name="notification_reminder_mins_60">60 minutes</string>
     <string name="notification_reminder_mins_30">30 minutes</string>
     <string name="notification_reminder_mins_15">15 minutes</string>
     <string name="notification_onboarding_title">Notifications</string>
     <string name="notification_onboarding_description">Get notified just before race, qualifying, free practice or testing events are coming up next in the formula 1. You can change these anytime in the settings, as well as how long before you wish to be notified</string>
 
-    <string name="notification_channel_race">Upcoming reminders: Race</string>
-    <string name="notification_channel_sprint">Upcoming reminders: Sprint</string>
-    <string name="notification_channel_sprint_qualifying">Upcoming reminders: Sprint Shootout</string>
-    <string name="notification_channel_qualifying">Upcoming reminders: Qualifying</string>
-    <string name="notification_channel_free_practice">Upcoming reminders: Free Practice</string>
+    <string name="notification_channel_title_upcoming">Upcoming reminders</string>
+    <string name="notification_channel_title_results">Results available</string>
+    <string name="notification_channel_race">Race</string>
+    <string name="notification_channel_sprint">Sprint</string>
+    <string name="notification_channel_sprint_qualifying">Sprint Shootout</string>
+    <string name="notification_channel_qualifying">Qualifying</string>
+    <string name="notification_channel_free_practice">Free Practice</string>
+    <string name="notification_channel_race_notify">Race</string>
+    <string name="notification_channel_sprint_notify">Sprint</string>
+    <string name="notification_channel_sprint_qualifying_notify">Sprint Shootout</string>
+    <string name="notification_channel_qualifying_notify">Qualifying</string>
     <string name="notification_channel_info">Season information</string>
-    <string name="notification_channel_race_notify">Results available: Race</string>
-    <string name="notification_channel_sprint_notify">Results available: Sprint</string>
-    <string name="notification_channel_sprint_qualifying_notify">Result available: Sprint Shootout</string>
-    <string name="notification_channel_qualifying_notify">Results available: Qualifying</string>
 
 
     <!-- App Shortcuts -->

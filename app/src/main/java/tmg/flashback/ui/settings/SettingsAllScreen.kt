@@ -9,6 +9,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
 import tmg.flashback.R
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
@@ -18,7 +19,9 @@ import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.header.HeaderAction
 import tmg.flashback.ui.components.settings.Footer
 import tmg.flashback.ui.components.settings.Header
+import tmg.flashback.ui.components.settings.Pref
 import tmg.flashback.ui.components.settings.Section
+import tmg.flashback.ui.lifecycle.OnLifecycleEvent
 
 @Composable
 fun SettingsAllScreenVM(
@@ -30,7 +33,14 @@ fun SettingsAllScreenVM(
 
     val uiState = viewModel.outputs.uiState.collectAsState()
 
-    LaunchedEffect(Unit) {
+    OnLifecycleEvent { owner, event ->
+        when (event) {
+            Lifecycle.Event.ON_RESUME -> viewModel.refresh()
+            else -> { }
+        }
+    }
+
+    LaunchedEffect(uiState) {
         viewModel.refresh()
     }
 
@@ -96,11 +106,15 @@ fun SettingsAllScreen(
             )
             Header(title = R.string.settings_header_notifications)
             Section(
-                model = Settings.Notifications.notificationUpcoming,
+                model = Settings.Notifications.notificationResults,
                 onClick = prefClicked
             )
             Section(
-                model = Settings.Notifications.notificationResults,
+                model = Settings.Notifications.notificationUpcoming,
+                onClick = prefClicked
+            )
+            Pref(
+                model = Settings.Notifications.notificationUpcomingNotice,
                 onClick = prefClicked
             )
             if (uiState.adsEnabled) {
@@ -135,7 +149,9 @@ private fun Preview() {
             uiState = SettingsAllViewModel.UiState(
                 adsEnabled = true,
                 rssEnabled = true,
-                themeEnabled = true
+                themeEnabled = true,
+                notificationRuntimePermission = true,
+                notificationExactAlarmPermission = true
             )
         )
     }
@@ -152,7 +168,9 @@ private fun PreviewAllHidden() {
             uiState = SettingsAllViewModel.UiState(
                 adsEnabled = false,
                 rssEnabled = false,
-                themeEnabled = false
+                themeEnabled = false,
+                notificationRuntimePermission = false,
+                notificationExactAlarmPermission = false
             )
         )
     }

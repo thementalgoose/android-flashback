@@ -31,11 +31,11 @@ class SettingsWeatherViewModel @Inject constructor(
 
     override fun prefClicked(pref: Setting) {
         when (pref.key) {
-            Settings.Data.temperatureUnitsKey -> {
+            Settings.Data.temperatureUnits -> {
                 weatherRepository.weatherTemperatureMetric = !weatherRepository.weatherTemperatureMetric
                 weatherTemperatureMetric.value = weatherRepository.weatherTemperatureMetric
             }
-            Settings.Data.windSpeedUnitsKey -> {
+            Settings.Data.windSpeedUnits -> {
                 weatherRepository.weatherWindspeedMetric = !weatherRepository.weatherWindspeedMetric
                 weatherWindspeedMetric.value = weatherRepository.weatherWindspeedMetric
             }

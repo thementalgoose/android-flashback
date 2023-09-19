@@ -46,7 +46,7 @@ class SettingsAboutViewModel @Inject constructor(
             Settings.Other.review.key -> {
                 openWebpageUseCase.open(url = reviewUrl, title = "")
             }
-            Settings.Other.shakeToReportKey -> {
+            Settings.Other.shakeToReport -> {
                 privacyRepository.shakeToReport = !privacyRepository.shakeToReport
                 shakeToReportEnabled.value = privacyRepository.shakeToReport
                 toastManager.displayToast(R.string.settings_restart_app_required)

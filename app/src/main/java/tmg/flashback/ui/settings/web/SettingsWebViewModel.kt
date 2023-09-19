@@ -31,11 +31,11 @@ class SettingsWebViewModel @Inject constructor(
 
     override fun prefClicked(pref: Setting) {
         when (pref.key) {
-            Settings.Web.enableKey -> {
+            Settings.Web.enable -> {
                 webBrowserRepository.openInExternal = !webBrowserRepository.openInExternal
                 enable.value = !webBrowserRepository.openInExternal
             }
-            Settings.Web.javascriptKey -> {
+            Settings.Web.javascript -> {
                 webBrowserRepository.enableJavascript = !webBrowserRepository.enableJavascript
                 enableJavascript.value = webBrowserRepository.enableJavascript
             }

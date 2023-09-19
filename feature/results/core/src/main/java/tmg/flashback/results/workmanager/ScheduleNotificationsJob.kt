@@ -11,6 +11,7 @@ import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.threeten.bp.LocalDateTime
+import tmg.flashback.device.repository.PermissionRepository
 import tmg.flashback.domain.repo.ScheduleRepository
 import tmg.flashback.formula1.enums.RaceWeekend
 import tmg.flashback.formula1.model.Timestamp
@@ -18,7 +19,7 @@ import tmg.flashback.formula1.utils.NotificationUtils
 import tmg.flashback.notifications.repository.NotificationRepository
 import tmg.flashback.notifications.usecases.LocalNotificationCancelUseCase
 import tmg.flashback.notifications.usecases.LocalNotificationScheduleUseCase
-import tmg.flashback.results.BuildConfig
+import tmg.flashback.results.contract.repository.NotificationsRepository
 import tmg.flashback.results.contract.repository.models.NotificationUpcoming
 import tmg.flashback.results.contract.repository.models.NotificationUpcoming.FREE_PRACTICE
 import tmg.flashback.results.contract.repository.models.NotificationUpcoming.OTHER
@@ -26,6 +27,8 @@ import tmg.flashback.results.contract.repository.models.NotificationUpcoming.QUA
 import tmg.flashback.results.contract.repository.models.NotificationUpcoming.RACE
 import tmg.flashback.results.contract.repository.models.NotificationUpcoming.SPRINT
 import tmg.flashback.results.contract.repository.models.NotificationUpcoming.SPRINT_QUALIFYING
+import tmg.flashback.results.contract.utils.NotificationUtils.getInexactNotificationTitleText
+import tmg.flashback.results.contract.utils.NotificationUtils.getNotificationTitleText
 
 @HiltWorker
 class ScheduleNotificationsJob @AssistedInject constructor(
@@ -33,7 +36,8 @@ class ScheduleNotificationsJob @AssistedInject constructor(
     private val notificationConfigRepository: NotificationRepository,
     private val localNotificationCancelUseCase: LocalNotificationCancelUseCase,
     private val localNotificationScheduleUseCase: LocalNotificationScheduleUseCase,
-    private val notificationRepository: tmg.flashback.results.repository.NotificationsRepositoryImpl,
+    private val notificationRepository: NotificationsRepository,
+    private val permissionRepository: PermissionRepository,
     @Assisted context: Context,
     @Assisted parameters: WorkerParameters
 ): CoroutineWorker(
@@ -47,9 +51,7 @@ class ScheduleNotificationsJob @AssistedInject constructor(
 
         val force: Boolean = inputData.getBoolean("force", false)
 
-        if (BuildConfig.DEBUG) {
-            Log.i("Notification", "WorkManager - Scheduling notifications")
-        }
+        Log.i("Notification", "WorkManager - Scheduling notifications")
 
         val upNextItemsToSchedule = scheduleRepository
             .getUpcomingEvents()
@@ -71,23 +73,16 @@ class ScheduleNotificationsJob @AssistedInject constructor(
             .map {
                 it.apply {
                     this.utcDateTime = it.timestamp.utcLocalDateTime
-                    this.requestCode = tmg.flashback.results.utils.NotificationUtils.getRequestCode(utcDateTime)
+                    this.requestCode = tmg.flashback.results.contract.utils.NotificationUtils.getRequestCode(utcDateTime)
                 }
             }
-            .filter {
-                notificationRepository.isUpcomingEnabled(it.channel)
-            }
 
 
-        if (BuildConfig.DEBUG) {
-            Log.i("Notification", "WorkManager notificationsScheduled ${notificationConfigRepository.notificationIds}")
-            Log.i("Notification", "WorkManager upNextItems to schedule ${upNextItemsToSchedule.size}")
-            Log.i("Notification", "WorkManager upNextItems to schedule $upNextItemsToSchedule")
-        }
+        Log.i("Notification", "WorkManager notificationsScheduled ${notificationConfigRepository.notificationIds}")
+        Log.i("Notification", "WorkManager upNextItems to schedule ${upNextItemsToSchedule.size}")
+        Log.i("Notification", "WorkManager upNextItems to schedule $upNextItemsToSchedule")
         if (upNextItemsToSchedule.map { it.requestCode }.toSet() == notificationConfigRepository.notificationIds && !force) {
-            if (BuildConfig.DEBUG) {
-                Log.d("Notification", "WorkManager - Up Next items have remained unchanged since last sync - Skipping scheduling of notifications")
-            }
+            Log.d("Notification", "WorkManager - Up Next items have remained unchanged since last sync - Skipping scheduling of notifications")
             return@withContext Result.success()
         }
 
@@ -97,32 +92,53 @@ class ScheduleNotificationsJob @AssistedInject constructor(
 
         upNextItemsToSchedule.forEach {
 
+            val exactSupported = permissionRepository.isExactAlarmEnabled
+
             // Remove the notification reminder period
-            val scheduleTime = it.utcDateTime.minusSeconds(reminderPeriod.seconds.toLong())
+            when (exactSupported) {
+                true -> {
+                    val time = it.utcDateTime.minusSeconds(reminderPeriod.seconds.toLong())
+                    val (title, text) = getNotificationTitleText(
+                        applicationContext,
+                        it.title,
+                        it.label,
+                        it.timestamp,
+                        reminderPeriod
+                    )
+                    localNotificationScheduleUseCase.schedule(
+                        requestCode = it.requestCode,
+                        channelId = it.label.toChannel().channelId,
+                        title = title,
+                        text = text,
+                        timestamp = time,
+                        exact = true,
+                    )
 
-            val (title, text) = tmg.flashback.results.utils.NotificationUtils.getNotificationTitleText(
-                applicationContext,
-                it.title,
-                it.label,
-                it.timestamp,
-                reminderPeriod
-            )
+                    Log.i("Notification", "WorkManager - Exact Notification at $time - $title scheduled")
+                }
+                false -> {
+                    val time = it.utcDateTime.minusHours(1L)
+                    val (title, text) = getInexactNotificationTitleText(
+                        applicationContext,
+                        it.title,
+                        it.label,
+                        it.timestamp
+                    )
+                    localNotificationScheduleUseCase.schedule(
+                        requestCode = it.requestCode,
+                        channelId = it.label.toChannel().channelId,
+                        title = title,
+                        text = text,
+                        timestamp = time,
+                        exact = false,
+                    )
 
-            localNotificationScheduleUseCase.schedule(
-                requestCode = it.requestCode,
-                channelId = it.label.toChannel().channelId,
-                title = title,
-                text = text,
-                timestamp = scheduleTime
-            )
-            if (BuildConfig.DEBUG) {
-                Log.i("Notification", "WorkManager - Notification at $scheduleTime - $title scheduled")
+                    Log.i("Notification", "WorkManager - Inexact Notification at $time - $title scheduled")
+                }
             }
         }
 
-        if (BuildConfig.DEBUG) {
-            Log.i("Notification", "WorkManager - Finished scheduling notifications")
-        }
+        Log.i("Notification", "WorkManager - Finished scheduling notifications")
 
         return@withContext Result.success()
     }

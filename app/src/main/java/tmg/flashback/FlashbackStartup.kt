@@ -29,9 +29,9 @@ import tmg.flashback.notifications.managers.SystemNotificationManager
 import tmg.flashback.notifications.usecases.RemoteNotificationSubscribeUseCase
 import tmg.flashback.notifications.usecases.RemoteNotificationUnsubscribeUseCase
 import tmg.flashback.repositories.ContactRepository
+import tmg.flashback.results.contract.repository.NotificationsRepository
 import tmg.flashback.results.contract.repository.models.NotificationResultsAvailable
 import tmg.flashback.results.contract.repository.models.NotificationUpcoming
-import tmg.flashback.results.repository.NotificationsRepositoryImpl
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.SupportedTheme
 import tmg.flashback.ui.model.NightMode
@@ -54,7 +54,7 @@ class FlashbackStartup @Inject constructor(
     private val privacyRepository: PrivacyRepository,
     private val contactRepository: ContactRepository,
     private val initialiseCrashReportingUseCase: InitialiseCrashReportingUseCase,
-    private val notificationRepository: NotificationsRepositoryImpl,
+    private val notificationRepository: NotificationsRepository,
     private val themeRepository: ThemeRepository,
     private val firebaseAnalyticsManager: FirebaseAnalyticsManager,
     private val initialiseConfigUseCase: InitialiseConfigUseCase,
@@ -130,17 +130,29 @@ class FlashbackStartup @Inject constructor(
         //endregion
 
         // Notifications
-        NotificationUpcoming.values().forEach {
+        val notificationUpcoming = "upcoming"
+        systemNotificationManager.createGroup(notificationUpcoming, application.getString(R.string.notification_channel_title_upcoming))
+        NotificationUpcoming.values().filter { it != NotificationUpcoming.OTHER }.forEach {
             systemNotificationManager.createChannel(
                 it.channelId,
-                it.channelLabel
+                it.channelLabel,
+                groupId = notificationUpcoming
             )
         }
 
+        systemNotificationManager.createChannel(
+            NotificationUpcoming.OTHER.channelId,
+            NotificationUpcoming.OTHER.channelLabel,
+            groupId = null
+        )
+
+        val notificationResultIds = "results"
+        systemNotificationManager.createGroup(notificationResultIds, application.getString(R.string.notification_channel_title_results))
         NotificationResultsAvailable.values().forEach { results ->
             systemNotificationManager.createChannel(
                 results.channelId,
-                results.channelLabel
+                results.channelLabel,
+                groupId = notificationResultIds
             )
         }
         applicationScope.launch(Dispatchers.IO) {
@@ -176,15 +188,7 @@ class FlashbackStartup @Inject constructor(
 
     private fun onAppUpgrade(previousAppVersion: Int) {
         when {
-            previousAppVersion <= 325 -> {
-                // Introduced sprint qualifying notifications, so migrate users pref for sprint over to sprint quali
-                if (notificationRepository.isEnabled(NotificationResultsAvailable.SPRINT)) {
-                    notificationRepository.setEnabled(NotificationResultsAvailable.SPRINT_QUALIFYING, true)
-                }
-                if (notificationRepository.isUpcomingEnabled(NotificationUpcoming.SPRINT)) {
-                    notificationRepository.setUpcomingEnabled(NotificationUpcoming.SPRINT_QUALIFYING, true)
-                }
-            }
+            previousAppVersion < 0 -> { }
         }
     }
 }
