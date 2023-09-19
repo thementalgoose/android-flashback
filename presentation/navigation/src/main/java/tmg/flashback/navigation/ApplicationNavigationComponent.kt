@@ -22,7 +22,6 @@ interface ApplicationNavigationComponent {
 
     fun appSettingsNotifications()
 
-    @RequiresApi(Build.VERSION_CODES.O)
     fun appSettingsNotificationsIntent(): Intent
 
     @RequiresApi(Build.VERSION_CODES.S)
