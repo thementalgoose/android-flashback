@@ -49,7 +49,7 @@ object NotificationUtils {
         val deviceDateTime: LocalDateTime = timestamp.deviceLocalDateTime
         val timeString = deviceDateTime.format(DateTimeFormatter.ofPattern("HH:mm", Locale.UK))
 
-        val notificationTitle = context.getString(R.string.notification_content_title, label, timeString)
+        val notificationTitle = context.getString(R.string.notification_content_title_inexact, label, timeString)
         val deviceTimeString = context.getString(R.string.notification_content_text_device_time, timeString, ZoneId.systemDefault().id)
         val notificationText = context.getString(R.string.notification_content_text_inexact, title, label, deviceTimeString)
 
