@@ -77,7 +77,7 @@ internal class ScheduleViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `current season use case is fetched on initial load`() = runTest {
+    fun `current season use case is fetched on initial load`() = runTest(testDispatcher) {
         initUnderTest()
         underTest.load(2020)
 
@@ -89,7 +89,7 @@ internal class ScheduleViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `null is returned when DB returns no standings and hasnt made request`() = runTest {
+    fun `null is returned when DB returns no standings and hasnt made request`() = runTest(testDispatcher) {
         every { mockFetchSeasonUseCase.fetch(any()) } returns flow { emit(false) }
         every { mockOverviewRepository.getOverview(any()) } returns flow { emit(Overview.model(overviewRaces = emptyList())) }
 
@@ -102,7 +102,7 @@ internal class ScheduleViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `expected list is returned when items are loaded from the DB`() = runTest {
+    fun `expected list is returned when items are loaded from the DB`() = runTest(testDispatcher) {
         initUnderTest()
         underTest.load(2020)
 
@@ -124,7 +124,7 @@ internal class ScheduleViewModelTest: BaseTest() {
 
 
     @Test
-    fun `show events returns true when events are contained`() = runTest {
+    fun `show events returns true when events are contained`() = runTest(testDispatcher) {
         every { mockEventsRepository.getEvents(2020) } returns flow { emit(listOf(
             Event.model(date = LocalDate.of(2020, 1, 2)),
             Event.model(date = LocalDate.now().plusDays(1))
@@ -143,7 +143,7 @@ internal class ScheduleViewModelTest: BaseTest() {
 
 
     @Test
-    fun `expected list shows upcoming events intertwined with calendar models`() = runTest {
+    fun `expected list shows upcoming events intertwined with calendar models`() = runTest(testDispatcher) {
         every { mockEventsRepository.getEvents(2020) } returns flow { emit(listOf(
             Event.model(date = LocalDate.of(2020, 1, 2)),
             Event.model(date = LocalDate.now().plusDays(1))
@@ -169,7 +169,7 @@ internal class ScheduleViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `expected list shows collapsible list section if pref is enabled`() = runTest {
+    fun `expected list shows collapsible list section if pref is enabled`() = runTest(testDispatcher) {
 
         val dayBeforeDayBeforeYesterday = OverviewRace.model(round = 1, date = LocalDate.now().minusDays(3L))
         val dayBeforeYesterday = OverviewRace.model(round = 2, date = LocalDate.now().minusDays(2L))
@@ -211,7 +211,7 @@ internal class ScheduleViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `expected list doesnt show collapsible list section if no previous`() = runTest {
+    fun `expected list doesnt show collapsible list section if no previous`() = runTest(testDispatcher) {
 
         val today = OverviewRace.model(round = 3, date = LocalDate.now())
         val tomorrow = OverviewRace.model(round = 4, date = LocalDate.now().plusDays(1L))
@@ -241,7 +241,7 @@ internal class ScheduleViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `refresh calls fetch season and updates is refreshing`() = runTest {
+    fun `refresh calls fetch season and updates is refreshing`() = runTest(testDispatcher) {
         initUnderTest()
         underTest.load(2020)
 
@@ -261,7 +261,7 @@ internal class ScheduleViewModelTest: BaseTest() {
 
 
     @Test
-    fun `clicking item goes to weekend overview with tab RACE`() = runTest {
+    fun `clicking item goes to weekend overview with tab RACE`() = runTest(testDispatcher) {
         initUnderTest()
         underTest.load(2020)
         val model = ScheduleModel.RaceWeek(
@@ -283,7 +283,7 @@ internal class ScheduleViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `clicking tyre with season launches tyre sheet`() = runTest {
+    fun `clicking tyre with season launches tyre sheet`() = runTest(testDispatcher) {
         initUnderTest()
         underTest.load(2020)
 
@@ -295,7 +295,7 @@ internal class ScheduleViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `clicking preseason with season launches preseason sheet`() = runTest {
+    fun `clicking preseason with season launches preseason sheet`() = runTest(testDispatcher) {
         initUnderTest()
         underTest.load(2020)
 
