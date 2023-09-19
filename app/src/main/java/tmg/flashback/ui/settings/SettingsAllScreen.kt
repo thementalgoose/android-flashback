@@ -9,6 +9,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
 import tmg.flashback.R
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
@@ -20,6 +21,7 @@ import tmg.flashback.ui.components.settings.Footer
 import tmg.flashback.ui.components.settings.Header
 import tmg.flashback.ui.components.settings.Pref
 import tmg.flashback.ui.components.settings.Section
+import tmg.flashback.ui.lifecycle.OnLifecycleEvent
 
 @Composable
 fun SettingsAllScreenVM(
@@ -31,7 +33,14 @@ fun SettingsAllScreenVM(
 
     val uiState = viewModel.outputs.uiState.collectAsState()
 
-    LaunchedEffect(Unit) {
+    OnLifecycleEvent { owner, event ->
+        when (event) {
+            Lifecycle.Event.ON_RESUME -> viewModel.refresh()
+            else -> { }
+        }
+    }
+
+    LaunchedEffect(uiState) {
         viewModel.refresh()
     }
 
@@ -95,17 +104,37 @@ fun SettingsAllScreen(
                 model = Settings.Web.inAppBrowser,
                 onClick = prefClicked
             )
-            Header(title = R.string.settings_header_notifications)
+            Header(title = R.string.settings_header_notifications_results_available)
+            if (!uiState.notificationRuntimePermission) {
+                Pref(
+                    model = Settings.Notifications.notificationPermissionEnable,
+                    onClick = prefClicked
+                )
+            }
             Section(
-                model = Settings.Notifications.notificationUpcoming,
+                model = Settings.Notifications.notificationResults(isEnabled = uiState.notificationRuntimePermission),
                 onClick = prefClicked
             )
+            Header(title = R.string.settings_header_notifications_upcoming)
+            if (!uiState.notificationExactAlarmPermission || !uiState.notificationRuntimePermission) {
+                if (uiState.notificationExactAlarmPermission) {
+                    Pref(
+                        model = Settings.Notifications.notificationPermissionEnable,
+                        onClick = prefClicked
+                    )
+                } else {
+                    Pref(
+                        model = Settings.Notifications.notificationExactAlarmEnable,
+                        onClick = prefClicked
+                    )
+                }
+            }
             Section(
-                model = Settings.Notifications.notificationResults,
+                model = Settings.Notifications.notificationUpcoming(isEnabled = uiState.notificationExactAlarmPermission && uiState.notificationExactAlarmPermission),
                 onClick = prefClicked
             )
             Pref(
-                model = Settings.Notifications.notificationUpcomingNotice(isEnabled = uiState.notificationExactAlarmPermission),
+                model = Settings.Notifications.notificationUpcomingNotice(isEnabled = uiState.notificationExactAlarmPermission && uiState.notificationExactAlarmPermission),
                 onClick = prefClicked
             )
             if (uiState.adsEnabled) {

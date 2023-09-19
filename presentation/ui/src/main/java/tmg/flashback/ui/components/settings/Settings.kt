@@ -139,6 +139,24 @@ fun SettingSwitch(
             horizontal = AppTheme.dimens.medium
         )
     ) {
+        if (model.icon != null) {
+            if (model.icon == 0) {
+                Box(Modifier
+                    .size(32.dp)
+                    .padding(start = AppTheme.dimens.small)
+                )
+            } else {
+                Icon(
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                        .padding(start = AppTheme.dimens.small),
+                    painter = painterResource(id = model.icon),
+                    contentDescription = null,
+                    tint = AppTheme.colors.contentPrimary
+                )
+            }
+            Spacer(Modifier.width(AppTheme.dimens.medium))
+        }
         Column(
             modifier = Modifier
                 .weight(1f)
@@ -401,6 +419,14 @@ private fun Preview() {
                 model = Setting.Switch.get(isEnabled = false, isChecked = true),
                 onClick = {}
             )
+            SettingSwitch(
+                model = Setting.Switch.get(icon = R.drawable.ic_menu_drivers),
+                onClick = {}
+            )
+            SettingSwitch(
+                model = Setting.Switch.get(icon = 0),
+                onClick = {}
+            )
         }
     }
 }
@@ -428,6 +454,8 @@ private fun Setting.Pref.Companion.get(
 )
 
 private fun Setting.Switch.Companion.get(
+    @DrawableRes
+    icon: Int? = null,
     isChecked: Boolean = false,
     isBeta: Boolean = false,
     isEnabled: Boolean = true
@@ -436,6 +464,7 @@ private fun Setting.Switch.Companion.get(
     isChecked = isChecked,
     title = R.string.settings_theme_theme_title,
     subtitle = R.string.settings_theme_theme_description,
+    icon = icon,
     isEnabled = isEnabled,
     isBeta = isBeta
 )
