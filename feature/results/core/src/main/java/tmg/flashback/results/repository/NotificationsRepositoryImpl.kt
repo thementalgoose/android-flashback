@@ -13,7 +13,7 @@ import javax.inject.Singleton
 
 @Singleton
 class NotificationsRepositoryImpl @Inject constructor(
-    private val preferenceManager: PreferenceManager
+    private val preferenceManager: PreferenceManager,
 ): NotificationsRepository {
 
     companion object {

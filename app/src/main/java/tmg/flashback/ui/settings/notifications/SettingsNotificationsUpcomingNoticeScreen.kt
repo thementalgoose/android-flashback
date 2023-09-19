@@ -19,6 +19,7 @@ import tmg.flashback.ui.components.header.HeaderAction
 import tmg.flashback.ui.components.settings.Footer
 import tmg.flashback.ui.components.settings.Header
 import tmg.flashback.ui.components.settings.Option
+import tmg.flashback.ui.components.settings.Pref
 import tmg.flashback.ui.settings.Setting
 import tmg.flashback.ui.settings.Settings
 
@@ -31,6 +32,7 @@ fun SettingsNotificationUpcomingNoticeScreenVM(
     ScreenView(screenName = "Settings - Notification Notice")
 
     val result = viewModel.outputs.currentlySelected.collectAsState(NotificationReminder.MINUTES_30)
+    val permissions = viewModel.outputs.permissions.collectAsState()
 
     LaunchedEffect(Unit) {
         viewModel.refresh()
@@ -40,7 +42,8 @@ fun SettingsNotificationUpcomingNoticeScreenVM(
         showBack = showBack,
         actionUpClicked = actionUpClicked,
         prefClicked = viewModel.inputs::prefClicked,
-        result = result.value
+        result = result.value,
+        permissions = permissions.value
     )
 }
 
@@ -48,8 +51,9 @@ fun SettingsNotificationUpcomingNoticeScreenVM(
 fun SettingsNotificationUpcomingNoticeScreen(
     showBack: Boolean,
     actionUpClicked: () -> Unit,
-    prefClicked: (Setting.Option) -> Unit,
-    result: NotificationReminder
+    prefClicked: (Setting) -> Unit,
+    result: NotificationReminder,
+    permissions: UpcomingNoticePermissionState
 ) {
     LazyColumn(
         modifier = Modifier
@@ -65,11 +69,27 @@ fun SettingsNotificationUpcomingNoticeScreen(
             }
 
             Header(title = R.string.notification_onboarding_title)
+
+            if (!permissions.runtimePermission) {
+                Pref(
+                    model = Settings.Notifications.notificationPermissionEnable,
+                    onClick = prefClicked
+                )
+            } else if (!permissions.exactAlarmPermission) {
+                Pref(
+                    model = Settings.Notifications.notificationExactAlarmEnable,
+                    onClick = prefClicked
+                )
+            }
             NotificationReminder.values()
                 .sortedBy { it.seconds }
                 .forEach {
                     Option(
-                        model = Settings.Notifications.notificationNoticePeriod(it, it == result),
+                        model = Settings.Notifications.notificationNoticePeriod(
+                            reminder = it,
+                            isChecked = it == result && permissions.exactAlarmPermission && permissions.runtimePermission,
+                            isEnabled = permissions.exactAlarmPermission && permissions.runtimePermission
+                        ),
                         onClick = prefClicked
                     )
                 }
@@ -86,7 +106,8 @@ private fun Preview() {
             showBack = true,
             actionUpClicked = { },
             prefClicked = { },
-            result = NotificationReminder.MINUTES_30
+            result = NotificationReminder.MINUTES_30,
+            permissions = UpcomingNoticePermissionState(false, false)
         )
     }
 }

@@ -5,16 +5,20 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
 import io.mockk.verify
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import tmg.flashback.ads.ads.repository.AdsRepository
 import tmg.flashback.device.managers.BuildConfigManager
+import tmg.flashback.navigation.ApplicationNavigationComponent
 import tmg.flashback.navigation.NavigationDestination
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.flashback.rss.contract.RSSConfigure
 import tmg.flashback.rss.repo.RssRepository
+import tmg.flashback.ui.AppPermissions
+import tmg.flashback.ui.managers.PermissionManager
 import tmg.flashback.ui.repository.PermissionRepository
 import tmg.flashback.ui.repository.ThemeRepository
 import tmg.testutils.BaseTest
@@ -26,6 +30,8 @@ internal class SettingsAllViewModelTest: BaseTest() {
     private val mockAdsRepository: AdsRepository = mockk(relaxed = true)
     private val mockRSSRepository: RssRepository = mockk(relaxed = true)
     private val mockPermissionRepository: PermissionRepository = mockk(relaxed = true)
+    private val mockPermissionManager: PermissionManager = mockk(relaxed = true)
+    private val mockApplicationNavigationComponent: ApplicationNavigationComponent = mockk(relaxed = true)
     private val mockNavigator: Navigator = mockk(relaxed = true)
 
     private lateinit var underTest: SettingsAllViewModel
@@ -37,6 +43,8 @@ internal class SettingsAllViewModelTest: BaseTest() {
             adsRepository = mockAdsRepository,
             rssRepository = mockRSSRepository,
             permissionRepository = mockPermissionRepository,
+            permissionManager = mockPermissionManager,
+            applicationNavigationComponent = mockApplicationNavigationComponent,
             navigator = mockNavigator,
         )
     }
@@ -190,13 +198,48 @@ internal class SettingsAllViewModelTest: BaseTest() {
     @Test
     fun `clicking upcoming notifications opens upcoming notifications period`() {
         initUnderTest()
-        underTest.inputs.itemClicked(Settings.Notifications.notificationUpcomingNotice())
+        underTest.inputs.itemClicked(Settings.Notifications.notificationUpcomingNotice)
 
         val slot = slot<NavigationDestination>()
         verify {
             mockNavigator.navigate(capture(slot))
         }
         assertEquals(Screen.Settings.NotificationsUpcomingNotice.route, slot.captured.route)
+    }
+
+
+
+    @Test
+    fun `clicking results available notifications runs permission dialog and opens settings`() {
+        val deferrable = CompletableDeferred<Map<String, Boolean>>()
+        every { mockPermissionManager.requestPermission(any()) } returns deferrable
+        initUnderTest()
+        underTest.inputs.itemClicked(Settings.Notifications.notificationResults)
+        verify {
+            mockPermissionManager.requestPermission(AppPermissions.RuntimeNotifications)
+        }
+
+        deferrable.complete(mapOf())
+        verify {
+            mockApplicationNavigationComponent.appSettingsNotifications()
+        }
+    }
+
+
+    @Test
+    fun `clicking upcoming available notifications runs permission dialog and opens settings`() {
+        val deferrable = CompletableDeferred<Map<String, Boolean>>()
+        every { mockPermissionManager.requestPermission(any()) } returns deferrable
+        initUnderTest()
+        underTest.inputs.itemClicked(Settings.Notifications.notificationUpcoming)
+        verify {
+            mockPermissionManager.requestPermission(AppPermissions.RuntimeNotifications)
+        }
+
+        deferrable.complete(mapOf())
+        verify {
+            mockApplicationNavigationComponent.appSettingsNotifications()
+        }
     }
 
 

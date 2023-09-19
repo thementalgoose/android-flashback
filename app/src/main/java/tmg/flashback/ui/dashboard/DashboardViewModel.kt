@@ -11,6 +11,8 @@ import tmg.flashback.eastereggs.model.MenuIcons
 import tmg.flashback.eastereggs.usecases.IsMenuIconEnabledUseCase
 import tmg.flashback.eastereggs.usecases.IsSnowEnabledUseCase
 import tmg.flashback.eastereggs.usecases.IsUkraineEnabledUseCase
+import tmg.flashback.navigation.ApplicationNavigationComponent
+import tmg.flashback.navigation.Navigator
 import tmg.flashback.results.contract.ResultsNavigationComponent
 import tmg.flashback.results.repository.NotificationsRepositoryImpl
 import tmg.flashback.ui.AppPermissions
@@ -43,7 +45,7 @@ class DashboardViewModel @Inject constructor(
     private val styleManager: StyleManager,
     private val changeNightModeUseCase: ChangeNightModeUseCase,
     private val buildConfigManager: BuildConfigManager,
-    private val resultsNavigationComponent: ResultsNavigationComponent,
+    private val applicationNavigationComponent: ApplicationNavigationComponent,
     private val permissionManager: PermissionManager,
     private val notificationRepository: NotificationsRepositoryImpl,
     private val permissionRepository: PermissionRepository,
@@ -77,10 +79,6 @@ class DashboardViewModel @Inject constructor(
             ) {
                 add(FeaturePrompt.RuntimeNotifications)
             }
-            if (!buildConfigManager.isRuntimeNotificationsSupported &&
-                !notificationRepository.seenNotificationOnboarding) {
-                add(FeaturePrompt.Notifications)
-            }
         }
         featurePromptsList.value = list
     }
@@ -99,11 +97,6 @@ class DashboardViewModel @Inject constructor(
 
     override fun clickFeaturePrompt(prompt: FeaturePrompt) {
         when (prompt) {
-            FeaturePrompt.Notifications -> {
-                resultsNavigationComponent.featureNotificationOnboarding()
-                notificationRepository.seenNotificationOnboarding = true
-                initialiseFeatureList()
-            }
             FeaturePrompt.RuntimeNotifications -> {
                 viewModelScope.launch {
                     permissionManager
@@ -111,7 +104,7 @@ class DashboardViewModel @Inject constructor(
                         .invokeOnCompletion {
                             notificationRepository.seenRuntimeNotifications = true
                             if (permissionRepository.isRuntimeNotificationsEnabled) {
-                                resultsNavigationComponent.featureNotificationOnboarding()
+                                applicationNavigationComponent.appSettingsNotifications()
                             }
                             initialiseFeatureList()
                         }

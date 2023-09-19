@@ -6,7 +6,6 @@ import tmg.flashback.navigation.NavigationDestination
 import tmg.flashback.navigation.Screen
 import tmg.flashback.results.contract.ResultsNavigationComponent
 import tmg.flashback.results.ui.events.EventsBottomSheetFragment
-import tmg.flashback.results.ui.feature.notificationonboarding.NotificationOnboardingBottomSheetFragment
 import tmg.flashback.results.ui.tyres.TyreBottomSheetFragment
 import javax.inject.Inject
 
@@ -57,11 +56,5 @@ internal class ResultsNavigationComponentImpl @Inject constructor(
         crashlyticsManager.log("Navigating to preseason $season")
         val activity = it as? AppCompatActivity ?: return@launch
         EventsBottomSheetFragment.instance(season).show(activity.supportFragmentManager, "PRESEASON")
-    }
-
-    override fun featureNotificationOnboarding() = activityProvider.launch {
-        crashlyticsManager.log("Navigating to notification onboarding")
-        val activity = it as? AppCompatActivity ?: return@launch
-        NotificationOnboardingBottomSheetFragment.instance().show(activity.supportFragmentManager, "FEATURE_NOTIFICATIONS")
     }
 }

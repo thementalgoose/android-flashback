@@ -232,6 +232,7 @@
     <string name="settings_header_data">Data</string>
     <string name="settings_header_rss_feed">RSS Feed</string>
     <string name="settings_header_web_browser">Web Browser</string>
+    <string name="settings_header_notifications">Notifications</string>
     <string name="settings_header_notifications_upcoming">Notifications (Upcoming)</string>
     <string name="settings_header_notifications_results_available">Notifications (Results available)</string>
     <string name="settings_header_other">Other</string>
@@ -282,7 +283,7 @@
     <string name="settings_pref_notification_permission_title">Enable notifications</string>
     <string name="settings_pref_notification_permission_description">Grant permission for Flashback to send you notifications</string>
     <string name="settings_pref_schedule_exact_alarm_title">Exact timings</string>
-    <string name="settings_pref_schedule_exact_alarm_description">Grant permission for Flashback to send you reminders at specific times</string>
+    <string name="settings_pref_schedule_exact_alarm_description">Grant permission for Flashback to send you reminders at specific times. Otherwise, notifications will be roughly 1h before the start of the event</string>
     <string name="settings_pref_notification_notice_period_title">Notice</string>
     <string name="settings_pref_notification_notice_period_description">Choose between notified 15, 30 or 60 minutes before one of the above events starts</string>
     <string name="settings_switch_notification_upcoming_fp_title">Free Practice</string>

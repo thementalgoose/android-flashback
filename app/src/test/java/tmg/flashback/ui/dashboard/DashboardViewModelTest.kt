@@ -18,6 +18,7 @@ import tmg.flashback.eastereggs.model.MenuIcons
 import tmg.flashback.eastereggs.usecases.IsMenuIconEnabledUseCase
 import tmg.flashback.eastereggs.usecases.IsSnowEnabledUseCase
 import tmg.flashback.eastereggs.usecases.IsUkraineEnabledUseCase
+import tmg.flashback.navigation.ApplicationNavigationComponent
 import tmg.flashback.results.contract.ResultsNavigationComponent
 import tmg.flashback.results.repository.NotificationsRepositoryImpl
 import tmg.flashback.ui.AppPermissions
@@ -35,7 +36,7 @@ internal class DashboardViewModelTest: BaseTest() {
     private val mockBuildConfigManager: BuildConfigManager = mockk(relaxed = true)
     private val mockNotificationRepository: NotificationsRepositoryImpl = mockk(relaxed = true)
     private val mockPermissionRepository: PermissionRepository = mockk(relaxed = true)
-    private val mockResultsNavigationComponent: ResultsNavigationComponent = mockk(relaxed = true)
+    private val mockApplicationNavigationComponent: ApplicationNavigationComponent = mockk(relaxed = true)
     private val mockPermissionManager: PermissionManager = mockk(relaxed = true)
     private val mockIsSnowEnabledUseCase: IsSnowEnabledUseCase = mockk(relaxed = true)
     private val mockIsMenuIconEnabledUseCase: IsMenuIconEnabledUseCase = mockk(relaxed = true)
@@ -50,7 +51,7 @@ internal class DashboardViewModelTest: BaseTest() {
             buildConfigManager = mockBuildConfigManager,
             notificationRepository = mockNotificationRepository,
             permissionRepository = mockPermissionRepository,
-            resultsNavigationComponent = mockResultsNavigationComponent,
+            applicationNavigationComponent = mockApplicationNavigationComponent,
             permissionManager = mockPermissionManager,
             isSnowEnabledUseCase = mockIsSnowEnabledUseCase,
             isMenuIconEnabledUseCase = mockIsMenuIconEnabledUseCase,
@@ -170,51 +171,6 @@ internal class DashboardViewModelTest: BaseTest() {
             }
         }
 
-        @ParameterizedTest(name = "isRuntimeNotificationSupported = {0}, seenNotificationOnboarding = {1}, result = {2}")
-        @CsvSource(
-            "true ,true ,false",
-            "false,false,true ",
-            "false,true ,false",
-            "true ,false,false"
-        )
-        fun notifications(
-            isRuntimeNotificationsSupported: Boolean,
-            seenNotificationOnboarding: Boolean,
-            isFeatureIncluded: Boolean
-        ) = runTest {
-            every { mockBuildConfigManager.isRuntimeNotificationsSupported } returns isRuntimeNotificationsSupported
-            every { mockNotificationRepository.seenNotificationOnboarding } returns seenNotificationOnboarding
-
-            initUnderTest()
-            underTest.featurePromptsList.test {
-                val item = awaitItem()
-                if (isFeatureIncluded) {
-                    assertTrue(item.any { it is FeaturePrompt.Notifications })
-                } else {
-                    assertTrue(item.none { it is FeaturePrompt.Notifications })
-                }
-            }
-        }
-
-        @Test
-        fun `clicking notifications`() = runTest {
-            initUnderTest()
-            underTest.outputs.featurePromptsList.test {
-                assertEquals(listOf(FeaturePrompt.Notifications), awaitItem())
-            }
-
-            every { mockNotificationRepository.seenNotificationOnboarding } returns true
-            underTest.inputs.clickFeaturePrompt(FeaturePrompt.Notifications)
-
-            verify {
-                mockResultsNavigationComponent.featureNotificationOnboarding()
-                mockNotificationRepository.seenNotificationOnboarding = true
-            }
-            underTest.outputs.featurePromptsList.test {
-                assertEquals(listOf<FeaturePrompt>(), awaitItem())
-            }
-        }
-
         @Test
         fun `clicking runtime notifications`() = runTest {
             val permissions: CompletableDeferred<Map<String, Boolean>> = CompletableDeferred()
@@ -236,7 +192,7 @@ internal class DashboardViewModelTest: BaseTest() {
 
             verify {
                 mockNotificationRepository.seenRuntimeNotifications = true
-                mockResultsNavigationComponent.featureNotificationOnboarding()
+                mockApplicationNavigationComponent.appSettingsNotifications()
             }
             underTest.outputs.featurePromptsList.test {
                 assertEquals(listOf<FeaturePrompt>(), awaitItem())

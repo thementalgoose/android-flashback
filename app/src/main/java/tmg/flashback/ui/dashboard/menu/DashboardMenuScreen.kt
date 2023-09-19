@@ -374,7 +374,7 @@ private fun Preview() {
             debugMenuItemClicked = { },
             darkMode = false,
             darkModeClicked = { },
-            featurePromptList = listOf(FeaturePrompt.Notifications),
+            featurePromptList = listOf(FeaturePrompt.RuntimeNotifications),
             featurePromptClicked = { },
             seasonItemsList = fakeNavigationTimelineItems,
             seasonClicked = { },
