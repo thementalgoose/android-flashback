@@ -47,7 +47,7 @@ internal class WeekendViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `loading season and round outputs weekend info`() = runTest {
+    fun `loading season and round outputs weekend info`() = runTest(testDispatcher) {
         underTest()
 
         underTest.outputs.weekendInfo.test {
@@ -56,7 +56,7 @@ internal class WeekendViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `loading season and round outputs default schedule tab`() = runTest {
+    fun `loading season and round outputs default schedule tab`() = runTest(testDispatcher) {
         every { mockRaceRepository.getRace(season = currentSeasonYear, round = 1) } returns flow { emit(Race.model()) }
         underTest(fakeScreenWeekendData.copy(
             season = currentSeasonYear,
@@ -71,7 +71,7 @@ internal class WeekendViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `loading season and round outputs default race tab when overridden`() = runTest {
+    fun `loading season and round outputs default race tab when overridden`() = runTest(testDispatcher) {
         every { mockRaceRepository.getRace(season = currentSeasonYear, round = 1) } returns flow { emit(Race.model()) }
         underTest(fakeScreenWeekendData.copy(
             season = currentSeasonYear,
@@ -86,7 +86,7 @@ internal class WeekendViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `loading season and round outputs on not current season year defaults to race tab`() = runTest {
+    fun `loading season and round outputs on not current season year defaults to race tab`() = runTest(testDispatcher) {
         every { mockRaceRepository.getRace(season = currentSeasonYear, round = 1) } returns flow { emit(Race.model()) }
         underTest()
 
@@ -97,7 +97,7 @@ internal class WeekendViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `loading season and round with no sprint quali hides quali tab`() = runTest {
+    fun `loading season and round with no sprint quali hides quali tab`() = runTest(testDispatcher) {
         every { mockRaceRepository.getRace(season = any(), round = any()) } returns flow { emit(Race.model(
             sprint = SprintResult.model(qualifying = emptyList(), race = emptyList())
         )) }
@@ -114,7 +114,7 @@ internal class WeekendViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `loading season and round with sprint quali shows all tabs`() = runTest {
+    fun `loading season and round with sprint quali shows all tabs`() = runTest(testDispatcher) {
         underTest()
 
         underTest.outputs.tabs.test {
@@ -127,7 +127,7 @@ internal class WeekendViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `loading season and round and select tab schedule outputs schedule`() = runTest {
+    fun `loading season and round and select tab schedule outputs schedule`() = runTest(testDispatcher) {
         underTest()
 
         underTest.inputs.clickTab(WeekendNavItem.SCHEDULE)
@@ -138,7 +138,7 @@ internal class WeekendViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `loading season and round and select tab qualifying outputs qualifying`() = runTest {
+    fun `loading season and round and select tab qualifying outputs qualifying`() = runTest(testDispatcher) {
         underTest()
 
         underTest.inputs.clickTab(WeekendNavItem.QUALIFYING)
@@ -149,7 +149,7 @@ internal class WeekendViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `loading season and round and select tab sprint outputs sprint`() = runTest {
+    fun `loading season and round and select tab sprint outputs sprint`() = runTest(testDispatcher) {
         underTest()
 
         underTest.inputs.clickTab(WeekendNavItem.SPRINT)
@@ -160,7 +160,7 @@ internal class WeekendViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `loading season and round and select tab race outputs race`() = runTest {
+    fun `loading season and round and select tab race outputs race`() = runTest(testDispatcher) {
         underTest()
 
         underTest.inputs.clickTab(WeekendNavItem.RACE)
@@ -171,7 +171,7 @@ internal class WeekendViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `refresh calls driver repository`() = runTest {
+    fun `refresh calls driver repository`() = runTest(testDispatcher) {
         underTest()
 
         runBlocking {
