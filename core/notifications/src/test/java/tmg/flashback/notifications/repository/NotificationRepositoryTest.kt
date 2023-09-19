@@ -5,16 +5,21 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import tmg.flashback.notifications.managers.SystemNotificationManager
 import tmg.flashback.prefs.manager.PreferenceManager
 
 internal class NotificationRepositoryTest {
 
     private val mockPreferenceManager: PreferenceManager = mockk(relaxed = true)
+    private val mockSystemNotificationManager: SystemNotificationManager = mockk(relaxed = true)
 
     private lateinit var underTest: NotificationRepository
 
     private fun initUnderTest() {
-        underTest = NotificationRepository(mockPreferenceManager)
+        underTest = NotificationRepository(
+            preferenceManager = mockPreferenceManager,
+            systemNotificationManager = mockSystemNotificationManager
+        )
     }
 
     //region Notification Remote Topics
@@ -93,6 +98,15 @@ internal class NotificationRepositoryTest {
     }
 
     //endregion
+
+    @Test
+    fun `is channel enabled forwards call onto system notification manager`() {
+        initUnderTest()
+        underTest.isChannelEnabled("channelId")
+        verify {
+            mockSystemNotificationManager.isChannelEnabled("channelId")
+        }
+    }
 
     companion object {
 

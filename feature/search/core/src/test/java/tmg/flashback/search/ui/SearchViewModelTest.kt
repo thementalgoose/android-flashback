@@ -104,7 +104,7 @@ internal class SearchViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `search category drivers returns driver models`() = runTest {
+    fun `search category drivers returns driver models`() = runTest(testDispatcher) {
         initSUT()
         runBlocking {
             sut.inputs.inputCategory(SearchCategory.DRIVER)
@@ -118,7 +118,7 @@ internal class SearchViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `search category constructors returns constructors models`() = runTest {
+    fun `search category constructors returns constructors models`() = runTest(testDispatcher)  {
         initSUT()
         runBlocking {
             sut.inputs.inputCategory(SearchCategory.CONSTRUCTOR)
@@ -132,11 +132,9 @@ internal class SearchViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `search category circuits returns circuits models`() = runTest {
+    fun `search category circuits returns circuits models`() = runTest(testDispatcher)  {
         initSUT()
-        runBlocking {
-            sut.inputs.inputCategory(SearchCategory.CIRCUIT)
-        }
+        sut.inputs.inputCategory(SearchCategory.CIRCUIT)
         sut.outputs.results.test {
             assertEquals(listOf(
                 SearchItem.Advert,
@@ -146,11 +144,9 @@ internal class SearchViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `search category races returns races models`() = runTest {
+    fun `search category races returns races models`() = runTest(testDispatcher)  {
         initSUT()
-        runBlocking {
-            sut.inputs.inputCategory(SearchCategory.RACE)
-        }
+        sut.inputs.inputCategory(SearchCategory.RACE)
         sut.outputs.results.test {
             assertEquals(listOf(
                 SearchItem.Advert,
@@ -160,12 +156,10 @@ internal class SearchViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `search shows no results when search term not met`() = runTest {
+    fun `search shows no results when search term not met`() = runTest(testDispatcher)  {
         initSUT()
-        runBlocking {
-            sut.inputs.inputCategory(SearchCategory.DRIVER)
-            sut.inputs.inputSearch("zzzzzz")
-        }
+        sut.inputs.inputCategory(SearchCategory.DRIVER)
+        sut.inputs.inputSearch("zzzzzz")
         sut.outputs.isLoading.test {
             assertEquals(false, awaitItem())
         }

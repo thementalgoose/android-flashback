@@ -30,7 +30,7 @@ ext {
 
     compileSdk = 34
     targetSdkVersion = 34
-    minSdkVersion = 24
+    minSdkVersion = 26
 
     versionName = getVersionName() + "." + getVersionCode()
     versionCode = getVersionCode()

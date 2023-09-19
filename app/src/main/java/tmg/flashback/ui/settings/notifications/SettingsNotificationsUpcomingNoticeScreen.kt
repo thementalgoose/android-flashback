@@ -10,50 +10,50 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.R
-import tmg.flashback.results.contract.repository.models.NotificationResultsAvailable
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.googleanalytics.presentation.ScreenView
+import tmg.flashback.results.contract.repository.models.NotificationReminder
 import tmg.flashback.ui.components.header.HeaderAction
 import tmg.flashback.ui.components.settings.Footer
 import tmg.flashback.ui.components.settings.Header
+import tmg.flashback.ui.components.settings.Option
 import tmg.flashback.ui.components.settings.Pref
-import tmg.flashback.ui.components.settings.Switch
 import tmg.flashback.ui.settings.Setting
 import tmg.flashback.ui.settings.Settings
 
 @Composable
-fun SettingsNotificationsResultsScreenVM(
+fun SettingsNotificationUpcomingNoticeScreenVM(
     showBack: Boolean = true,
     actionUpClicked: () -> Unit = { },
-    viewModel: SettingsNotificationsResultsViewModel = hiltViewModel()
+    viewModel: SettingsNotificationsUpcomingNoticeViewModel = hiltViewModel()
 ) {
-    ScreenView(screenName = "Settings - Notification Results")
+    ScreenView(screenName = "Settings - Notification Notice")
 
-    val permissionEnabled = viewModel.outputs.permissionEnabled.collectAsState(false)
-    val notifications = viewModel.outputs.notifications.collectAsState(emptyList())
+    val result = viewModel.outputs.currentlySelected.collectAsState(NotificationReminder.MINUTES_30)
+    val permissions = viewModel.outputs.permissions.collectAsState()
 
     LaunchedEffect(Unit) {
         viewModel.refresh()
     }
 
-    SettingsNotificationsResultsScreen(
+    SettingsNotificationUpcomingNoticeScreen(
         showBack = showBack,
         actionUpClicked = actionUpClicked,
         prefClicked = viewModel.inputs::prefClicked,
-        permissionEnabled = permissionEnabled.value,
-        notifications = notifications.value
+        result = result.value,
+        permissions = permissions.value
     )
 }
 
 @Composable
-fun SettingsNotificationsResultsScreen(
+fun SettingsNotificationUpcomingNoticeScreen(
     showBack: Boolean,
     actionUpClicked: () -> Unit,
     prefClicked: (Setting) -> Unit,
-    permissionEnabled: Boolean,
-    notifications: List<Pair<NotificationResultsAvailable, Boolean>>,
+    result: NotificationReminder,
+    permissions: UpcomingNoticePermissionState
 ) {
     LazyColumn(
         modifier = Modifier
@@ -62,26 +62,37 @@ fun SettingsNotificationsResultsScreen(
         content = {
             item("header") {
                 tmg.flashback.ui.components.header.Header(
-                    text = stringResource(id = R.string.settings_section_notifications_results_title),
+                    text = stringResource(id = R.string.notification_onboarding_title),
                     action = if (showBack) HeaderAction.BACK else null,
                     actionUpClicked = actionUpClicked
                 )
             }
 
-            if (!permissionEnabled) {
-                Header(title = R.string.settings_header_permissions)
+            Header(title = R.string.notification_onboarding_title)
+
+            if (!permissions.runtimePermission) {
                 Pref(
                     model = Settings.Notifications.notificationPermissionEnable,
                     onClick = prefClicked
                 )
-            }
-            Header(title = R.string.settings_header_notifications)
-            notifications.forEach { (results, isChecked) ->
-                Switch(
-                    model = Settings.Notifications.notificationResultsAvailable(results, isChecked, isEnabled = permissionEnabled),
+            } else if (!permissions.exactAlarmPermission) {
+                Pref(
+                    model = Settings.Notifications.notificationExactAlarmEnable,
                     onClick = prefClicked
                 )
             }
+            NotificationReminder.values()
+                .sortedBy { it.seconds }
+                .forEach {
+                    Option(
+                        model = Settings.Notifications.notificationNoticePeriod(
+                            reminder = it,
+                            isChecked = it == result && permissions.exactAlarmPermission && permissions.runtimePermission,
+                            isEnabled = permissions.exactAlarmPermission && permissions.runtimePermission
+                        ),
+                        onClick = prefClicked
+                    )
+                }
             Footer()
         }
     )
@@ -91,13 +102,12 @@ fun SettingsNotificationsResultsScreen(
 @Composable
 private fun Preview() {
     AppThemePreview {
-        SettingsNotificationsResultsScreen(
+        SettingsNotificationUpcomingNoticeScreen(
             showBack = true,
             actionUpClicked = { },
             prefClicked = { },
-            permissionEnabled = false,
-            notifications = NotificationResultsAvailable.values()
-                .map { it to true }
+            result = NotificationReminder.MINUTES_30,
+            permissions = UpcomingNoticePermissionState(false, false)
         )
     }
 }

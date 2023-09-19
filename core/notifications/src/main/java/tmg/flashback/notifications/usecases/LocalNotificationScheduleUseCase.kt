@@ -17,15 +17,14 @@ class LocalNotificationScheduleUseCase @Inject constructor(
         channelId: String,
         title: String,
         text: String,
-        timestamp: LocalDateTime
+        timestamp: LocalDateTime,
+        exact: Boolean = true
     ) {
-        alarmManager.schedule(requestCode, channelId, title, text, timestamp)
+        alarmManager.schedule(requestCode, channelId, title, text, timestamp, exact)
         notificationRepository.notificationIds = notificationRepository.notificationIds
             .toMutableSet()
             .apply { add(requestCode) }
 
-        if (BuildConfig.DEBUG) {
-            Log.d("Notification", "Scheduled notification at ${timestamp.format("dd MMM yyyy HH:mm")} $title / $text - $requestCode")
-        }
+        Log.d("Notification", "Scheduled notification at ${timestamp.format("dd MMM yyyy HH:mm")} $title / $text - $requestCode")
     }
 }

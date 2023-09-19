@@ -4,7 +4,7 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultCallback
 import kotlinx.coroutines.CompletableDeferred
 import tmg.flashback.navigation.ActivityProvider
-import tmg.flashback.ui.AppPermissions
+import tmg.flashback.device.AppPermissions
 import tmg.flashback.ui.R
 import tmg.flashback.ui.base.BaseActivity
 import javax.inject.Inject
@@ -24,14 +24,15 @@ class PermissionManager @Inject constructor(
         completableDeferred = null
         val numberGranted = isGranted.count { it.value }
         if (numberGranted != isGranted.size) {
-            when (val string = baseActivity?.resources?.getQuantityString(R.plurals.permissions_rationale_permissions_denied, numberGranted, numberGranted)) {
+            val numberDenied = isGranted.size - numberGranted
+            when (val string = baseActivity?.resources?.getQuantityString(R.plurals.permissions_rationale_permissions_denied, numberDenied, numberDenied)) {
                 null -> Toast.makeText(baseActivity, R.string.permissions_rationale_permission_denied, Toast.LENGTH_LONG).show()
                 else -> Toast.makeText(baseActivity, string, Toast.LENGTH_LONG).show()
             }
         }
     }
 
-    fun requestPermission(vararg rationaleType: AppPermissions.RuntimePermission): CompletableDeferred<Map<String, Boolean>> {
+    fun requestPermission(vararg rationaleType: tmg.flashback.device.AppPermissions.RuntimePermission): CompletableDeferred<Map<String, Boolean>> {
         completableDeferred = CompletableDeferred()
         baseActivity?.requestPermission(*rationaleType)
         return completableDeferred ?: CompletableDeferred<Map<String, Boolean>>().apply {

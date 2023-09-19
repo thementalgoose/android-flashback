@@ -1,11 +1,10 @@
 package tmg.flashback.ui.permissions
 
 import android.content.Context
-import android.os.Build
 import androidx.compose.runtime.Composable
 import androidx.core.os.bundleOf
 import dagger.hilt.android.AndroidEntryPoint
-import tmg.flashback.ui.AppPermissions
+import tmg.flashback.device.AppPermissions
 import tmg.flashback.ui.base.BaseActivity
 import tmg.flashback.ui.base.BaseBottomSheetComposeFragment
 
@@ -17,8 +16,8 @@ internal class RationaleBottomSheetFragment: BaseBottomSheetComposeFragment() {
     private val rationaleType: Array<String> by lazy {
         arguments?.getStringArray(keyRationale)!!
     }
-    private val appPermissions: List<AppPermissions.RuntimePermission> by lazy {
-        AppPermissions.RuntimePermission.get(rationaleType.toList())
+    private val appPermissions: List<tmg.flashback.device.AppPermissions.RuntimePermission> by lazy {
+        tmg.flashback.device.AppPermissions.RuntimePermission.get(rationaleType.toList())
     }
 
     override val content = @Composable {

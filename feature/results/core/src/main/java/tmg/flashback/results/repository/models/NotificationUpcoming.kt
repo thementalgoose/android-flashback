@@ -1,5 +1,6 @@
 package tmg.flashback.results.repository.models
 
+import androidx.annotation.DrawableRes
 import tmg.flashback.results.R
 import tmg.flashback.results.contract.repository.models.NotificationUpcoming
 
@@ -14,6 +15,7 @@ val NotificationUpcoming.prefKey: String
     }
 
 val NotificationUpcoming.icon: Int
+    @DrawableRes
     get() = when (this) {
         NotificationUpcoming.RACE -> R.drawable.ic_notification_race
         NotificationUpcoming.SPRINT -> R.drawable.ic_notification_sprint

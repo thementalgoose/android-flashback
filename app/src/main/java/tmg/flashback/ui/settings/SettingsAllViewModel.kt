@@ -7,10 +7,14 @@ import kotlinx.coroutines.flow.StateFlow
 import tmg.flashback.BuildConfig
 import tmg.flashback.ads.ads.repository.AdsRepository
 import tmg.flashback.device.managers.BuildConfigManager
+import tmg.flashback.navigation.ApplicationNavigationComponent
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.flashback.rss.contract.RSSConfigure
 import tmg.flashback.rss.repo.RssRepository
+import tmg.flashback.device.AppPermissions
+import tmg.flashback.ui.managers.PermissionManager
+import tmg.flashback.device.repository.PermissionRepository
 import tmg.flashback.ui.repository.ThemeRepository
 import javax.inject.Inject
 
@@ -28,6 +32,9 @@ class SettingsAllViewModel @Inject constructor(
     private val buildConfig: BuildConfigManager,
     private val adsRepository: AdsRepository,
     private val rssRepository: RssRepository,
+    private val permissionRepository: PermissionRepository,
+    private val permissionManager: PermissionManager,
+    private val applicationNavigationComponent: ApplicationNavigationComponent,
     private val navigator: Navigator,
 ): ViewModel(), SettingsAllViewModelInputs, SettingsAllViewModelOutputs {
 
@@ -37,7 +44,9 @@ class SettingsAllViewModel @Inject constructor(
     override val uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState(
         adsEnabled = adsRepository.allowUserConfig,
         themeEnabled = isThemeEnabled,
-        rssEnabled = rssRepository.enabled
+        rssEnabled = rssRepository.enabled,
+        notificationRuntimePermission = permissionRepository.isRuntimeNotificationsEnabled,
+        notificationExactAlarmPermission = permissionRepository.isExactAlarmEnabled,
     ))
 
     override fun itemClicked(pref: Setting) {
@@ -61,10 +70,21 @@ class SettingsAllViewModel @Inject constructor(
                 navigator.navigate(Screen.Settings.Web)
             }
             Settings.Notifications.notificationResults.key -> {
-                navigator.navigate(Screen.Settings.NotificationsResults)
+                permissionManager
+                    .requestPermission(AppPermissions.RuntimeNotifications)
+                    .invokeOnCompletion {
+                        applicationNavigationComponent.appSettingsNotifications()
+                    }
             }
             Settings.Notifications.notificationUpcoming.key -> {
-                navigator.navigate(Screen.Settings.NotificationsUpcoming)
+                permissionManager
+                    .requestPermission(AppPermissions.RuntimeNotifications)
+                    .invokeOnCompletion {
+                        applicationNavigationComponent.appSettingsNotifications()
+                    }
+            }
+            Settings.Notifications.notificationUpcomingNotice.key -> {
+                navigator.navigate(Screen.Settings.NotificationsUpcomingNotice)
             }
             Settings.Ads.ads.key -> {
                 navigator.navigate(Screen.Settings.Ads)
@@ -88,12 +108,16 @@ class SettingsAllViewModel @Inject constructor(
         uiState.value = uiState.value.copy(
             adsEnabled = adsRepository.allowUserConfig,
             themeEnabled = isThemeEnabled,
-            rssEnabled = rssRepository.enabled
+            rssEnabled = rssRepository.enabled,
+            notificationRuntimePermission = permissionRepository.isRuntimeNotificationsEnabled,
+            notificationExactAlarmPermission = permissionRepository.isExactAlarmEnabled,
         )
     }
 
     data class UiState(
         val selectedSubScreen: SettingsScreen? = null,
+        val notificationRuntimePermission: Boolean,
+        val notificationExactAlarmPermission: Boolean,
         val adsEnabled: Boolean,
         val rssEnabled: Boolean,
         val themeEnabled: Boolean

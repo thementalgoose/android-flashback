@@ -10,7 +10,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.ZoneOffset
 import tmg.flashback.crashlytics.manager.CrashlyticsManager
-import tmg.flashback.notifications.BuildConfig
+import tmg.flashback.device.repository.PermissionRepository
 import tmg.flashback.notifications.receiver.LocalNotificationBroadcastReceiver
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -33,33 +33,37 @@ class SystemAlarmManager @Inject constructor(
         channelId: String,
         requestText: String,
         requestDescription: String,
-        requestTimestamp: LocalDateTime
+        requestTimestamp: LocalDateTime,
+        exact: Boolean
     ) {
         val alarmManager: AlarmManager = alarmManager ?: run {
             crashController.logException(NullPointerException("Alarm Manager null when scheduling alarm"), "Alarm Manager null when scheduling alarm")
             return
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            if (!alarmManager.canScheduleExactAlarms()) {
-                crashController.logError("Alarm Manager cannot schedule exact alarms")
-                return
-            }
-        }
-
         val pendingIntent = pendingIntent(applicationContext, channelId, requestCode, requestText, requestDescription)
-        val instant = requestTimestamp.toInstant(ZoneOffset.UTC)
 
-        if (BuildConfig.DEBUG) {
-            Log.d("Notification", "Scheduling alarm wakeup for ${instant.toEpochMilli()} (current system is ${System.currentTimeMillis()}, with millis diff being ${(instant.toEpochMilli() - System.currentTimeMillis()) / 1000} seconds)")
+        val instant = requestTimestamp.toInstant(ZoneOffset.UTC)
+        Log.d("Notification", "Scheduling (exact=$exact) alarm wakeup for ${instant.toEpochMilli()} (current system is ${System.currentTimeMillis()}, with millis diff being ${(instant.toEpochMilli() - System.currentTimeMillis()) / 1000} seconds)")
+        when (exact) {
+            true -> AlarmManagerCompat.setExactAndAllowWhileIdle(
+                alarmManager,
+                AlarmManager.RTC_WAKEUP,
+                instant.toEpochMilli(),
+                pendingIntent
+            )
+            false -> AlarmManagerCompat.setAndAllowWhileIdle(
+                alarmManager,
+                AlarmManager.RTC_WAKEUP,
+                instant.toEpochMilli(),
+                pendingIntent
+            )
         }
-        AlarmManagerCompat.setExactAndAllowWhileIdle(alarmManager, AlarmManager.RTC_WAKEUP, instant.toEpochMilli(), pendingIntent)
     }
 
     /**
      * Cancel a pending intent via. the request code
      */
     fun cancel(requestCode: Int) {
-
         val alarmManager: AlarmManager = alarmManager ?: run {
             crashController.logException(NullPointerException("Alarm Manager null when cancelling alarm"), "Alarm Manager null when cancelling alarm")
             return

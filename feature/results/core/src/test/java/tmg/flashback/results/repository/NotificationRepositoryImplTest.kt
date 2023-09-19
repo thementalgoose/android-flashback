@@ -6,27 +6,32 @@ import io.mockk.verify
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import tmg.flashback.notifications.repository.NotificationRepository
 import tmg.flashback.prefs.manager.PreferenceManager
 import tmg.flashback.results.contract.repository.models.NotificationResultsAvailable
 import tmg.flashback.results.contract.repository.models.NotificationUpcoming
-import tmg.flashback.results.repository.models.NotificationReminder
-import tmg.flashback.results.repository.models.NotificationSchedule
+import tmg.flashback.results.contract.repository.models.NotificationReminder
+import tmg.flashback.results.contract.repository.models.NotificationSchedule
 import tmg.flashback.results.repository.models.prefKey
 
-internal class NotificationRepositoryTest {
+internal class NotificationRepositoryImplTest {
 
     private val mockPreferenceManager: PreferenceManager = mockk(relaxed = true)
+    private val mockNotificationRepository: NotificationRepository = mockk(relaxed = true)
 
     private lateinit var underTest: NotificationsRepositoryImpl
 
     private fun initUnderTest() {
-        underTest = NotificationsRepositoryImpl(mockPreferenceManager)
+        underTest = NotificationsRepositoryImpl(
+            notificationRepository = mockNotificationRepository,
+            preferenceManager = mockPreferenceManager
+        )
     }
 
 
     @Test
     fun `getting notification schedule queries all preferences`() {
-        every { mockPreferenceManager.getBoolean(any(), any()) } returns true
+        every { mockNotificationRepository.isChannelEnabled(any()) } returns true
         initUnderTest()
 
         val expected = NotificationSchedule(
@@ -39,44 +44,6 @@ internal class NotificationRepositoryTest {
         )
         assertEquals(expected, underTest.notificationSchedule)
     }
-
-
-
-    //region Notification preferences - Onboarding
-
-    @Test
-    fun `is notification onboarding reads value from preferences repository with default to false`() {
-        every { mockPreferenceManager.getBoolean(any(), any()) } returns true
-
-        initUnderTest()
-
-        Assertions.assertTrue(underTest.seenNotificationOnboarding )
-        verify {
-            mockPreferenceManager.getBoolean(keyNotificationOnboarding, false)
-        }
-    }
-
-    @Test
-    fun `setting notification onboarding enabled saves value from preferences repository`() {
-        initUnderTest()
-
-        underTest.seenNotificationOnboarding = true
-        verify {
-            mockPreferenceManager.save(keyNotificationOnboarding, true)
-        }
-    }
-
-    @Test
-    fun `setting notification onboarding disabled saves value from preferences repository`() {
-        initUnderTest()
-
-        underTest.seenNotificationOnboarding = false
-        verify {
-            mockPreferenceManager.save(keyNotificationOnboarding, false)
-        }
-    }
-
-    //endregion
 
 
 
@@ -122,48 +89,26 @@ internal class NotificationRepositoryTest {
 
     @Test
     fun `is enabled for upcoming notifications sends key to pref manager`() {
-        every { mockPreferenceManager.getBoolean(NotificationUpcoming.RACE.prefKey, false) } returns true
+        every { mockNotificationRepository.isChannelEnabled(NotificationUpcoming.RACE.channelId) } returns true
 
         initUnderTest()
         assertEquals(true, underTest.isUpcomingEnabled(NotificationUpcoming.RACE))
 
         verify {
-            mockPreferenceManager.getBoolean(NotificationUpcoming.RACE.prefKey, false)
-        }
-    }
-
-
-    @Test
-    fun `set enabled for upcoming notifications sends key to pref manager`() {
-        initUnderTest()
-        underTest.setUpcomingEnabled(NotificationUpcoming.RACE, true)
-
-        verify {
-            mockPreferenceManager.save(NotificationUpcoming.RACE.prefKey, true)
+            mockNotificationRepository.isChannelEnabled(NotificationUpcoming.RACE.channelId)
         }
     }
 
 
     @Test
     fun `is enabled for results available notifications sends key to pref manager`() {
-        every { mockPreferenceManager.getBoolean(NotificationResultsAvailable.RACE.prefKey, false) } returns true
+        every { mockNotificationRepository.isChannelEnabled(NotificationResultsAvailable.RACE.channelId) } returns true
 
         initUnderTest()
         assertEquals(true, underTest.isEnabled(NotificationResultsAvailable.RACE))
 
         verify {
-            mockPreferenceManager.getBoolean(NotificationResultsAvailable.RACE.prefKey, false)
-        }
-    }
-
-
-    @Test
-    fun `set enabled for results available notifications sends key to pref manager`() {
-        initUnderTest()
-        underTest.setEnabled(NotificationResultsAvailable.RACE, true)
-
-        verify {
-            mockPreferenceManager.save(NotificationResultsAvailable.RACE.prefKey, true)
+            mockNotificationRepository.isChannelEnabled(NotificationResultsAvailable.RACE.channelId)
         }
     }
 

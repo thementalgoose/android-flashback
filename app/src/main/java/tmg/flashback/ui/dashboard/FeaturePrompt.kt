@@ -8,12 +8,8 @@ sealed class FeaturePrompt(
     @StringRes
     val label: Int
 ) {
-    object RuntimeNotifications: FeaturePrompt(
+    data object RuntimeNotifications: FeaturePrompt(
         id = "feature-runtime",
         label = R.string.feature_banner_runtime_notifications
-    )
-    object Notifications: FeaturePrompt(
-        id = "feature-notifications",
-        label = R.string.feature_banner_notifications
     )
 }

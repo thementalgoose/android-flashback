@@ -25,4 +25,5 @@ dependencies {
     // Cloud messaging support
     implementation platform(libs.firebase.bom)
     implementation libs.firebase.messaging
+    implementation project(path: ':core:device')
 }

@@ -1,12 +1,10 @@
 package tmg.flashback.ui.settings
 
-import android.app.Notification
 import tmg.flashback.R
 import tmg.flashback.results.contract.repository.models.NotificationResultsAvailable
-import tmg.flashback.results.contract.repository.models.NotificationUpcoming
+import tmg.flashback.results.contract.repository.models.NotificationReminder
 import tmg.flashback.results.repository.models.prefKey
 import tmg.flashback.ui.model.NightMode
-import tmg.flashback.ui.model.Theme
 import tmg.flashback.ui.settings.appearance.nightmode.title
 import tmg.flashback.ui.settings.appearance.theme.title
 
@@ -49,7 +47,7 @@ object Settings {
             icon = R.drawable.ic_settings_home
         )
 
-        val collapseListKey = "collapse_list"
+        const val collapseListKey = "collapse_list"
         fun collapseList(isChecked: Boolean, isEnabled: Boolean = true) = Setting.Switch(
             _key = collapseListKey,
             title = R.string.settings_pref_collapsed_list_title,
@@ -59,7 +57,7 @@ object Settings {
             isEnabled = isEnabled
         )
 
-        val emptyWeeksInSchedule = "empty_weeks"
+        const val emptyWeeksInSchedule = "empty_weeks"
         fun showEmptyWeeksInSchedule(isChecked: Boolean, isEnabled: Boolean = true) = Setting.Switch(
             _key = emptyWeeksInSchedule,
             title = R.string.settings_pref_empty_week_title,
@@ -75,18 +73,18 @@ object Settings {
             subtitle = R.string.settings_section_weather_description,
             icon = R.drawable.ic_settings_weather
         )
-        val temperatureUnitsKey = "temperature_units"
+        const val temperatureUnits = "temperature_units"
         fun temperatureUnits(isChecked: Boolean) = Setting.Switch(
-            _key = temperatureUnitsKey,
+            _key = temperatureUnits,
             title = R.string.settings_pref_temperature_unit_title,
             subtitle = R.string.settings_pref_temperature_unit_description,
             isBeta = false,
             isChecked = isChecked,
             isEnabled = true
         )
-        val windSpeedUnitsKey = "wind_speed_units"
+        const val windSpeedUnits = "wind_speed_units"
         fun windSpeedUnits(isChecked: Boolean) = Setting.Switch(
-            _key = windSpeedUnitsKey,
+            _key = windSpeedUnits,
             title = R.string.settings_pref_wind_speed_unit_title,
             subtitle = R.string.settings_pref_wind_speed_unit_description,
             isBeta = false,
@@ -112,18 +110,18 @@ object Settings {
             icon = R.drawable.ic_settings_web
         )
 
-        val enableKey = "in_app_browser_enable"
+        const val enable = "in_app_browser_enable"
         fun enable(isChecked: Boolean, isEnabled: Boolean = true) = Setting.Switch(
-            _key = enableKey,
+            _key = enable,
             title = R.string.settings_switch_enable_web_browser_title,
             subtitle = R.string.settings_switch_enable_web_browser_description,
             isChecked = isChecked,
             isEnabled = isEnabled
         )
 
-        val javascriptKey = "enable_javascript"
+        const val javascript = "enable_javascript"
         fun javascript(isChecked: Boolean, isEnabled: Boolean = true) = Setting.Switch(
-            _key = javascriptKey,
+            _key = javascript,
             title = R.string.settings_switch_enable_javascript_title,
             subtitle = R.string.settings_switch_enable_javascript_description,
             isChecked = isChecked,
@@ -157,29 +155,18 @@ object Settings {
             subtitle = R.string.settings_pref_schedule_exact_alarm_description
         )
 
-        val NotificationUpcoming.title: Int
-            get() = when (this) {
-                NotificationUpcoming.RACE -> R.string.settings_switch_notification_upcoming_race_title
-                NotificationUpcoming.SPRINT -> R.string.settings_switch_notification_upcoming_sprint_title
-                NotificationUpcoming.SPRINT_QUALIFYING -> R.string.settings_switch_notification_upcoming_sprint_qualifying_title
-                NotificationUpcoming.QUALIFYING -> R.string.settings_switch_notification_upcoming_qualifying_title
-                NotificationUpcoming.FREE_PRACTICE -> R.string.settings_switch_notification_upcoming_fp_title
-                NotificationUpcoming.OTHER -> R.string.settings_switch_notification_upcoming_other_title
-            }
-        fun notificationUpcoming(value: NotificationUpcoming, isChecked: Boolean, isEnabled: Boolean = true) = Setting.Switch(
-            _key = value.prefKey,
-            title = value.title,
-            subtitle = null,
-            isChecked = isChecked,
-            isEnabled = isEnabled
-        )
 
-
-        val notificationNoticePeriodKey = "notification_notice_period"
-        fun notificationNoticePeriod(isEnabled: Boolean = true) = Setting.Pref(
-            _key = notificationNoticePeriodKey,
+        val notificationUpcomingNotice = Setting.Pref(
+            _key = "notification_notice_period",
             title = R.string.settings_pref_notification_notice_period_title,
             subtitle = R.string.settings_pref_notification_notice_period_description,
+            icon = 0
+        )
+        fun notificationNoticePeriod(reminder: NotificationReminder, isChecked: Boolean, isEnabled: Boolean) = Setting.Option(
+            _key = reminder.name,
+            title = reminder.label,
+            subtitle = null,
+            isChecked = isChecked,
             isEnabled = isEnabled
         )
 
@@ -207,9 +194,9 @@ object Settings {
             subtitle = R.string.settings_section_ads_description,
             icon = R.drawable.ic_settings_ads
         )
-        val enableAdsKey = "ads_enable"
+        const val enableAds = "ads_enable"
         fun enableAds(isChecked: Boolean, isEnabled: Boolean = true) = Setting.Switch(
-            _key = enableAdsKey,
+            _key = enableAds,
             title = R.string.settings_switch_ads_enable_title,
             subtitle = R.string.settings_switch_ads_enable_description,
             isChecked = isChecked,
@@ -228,15 +215,15 @@ object Settings {
             title = R.string.settings_pref_privacy_policy_title,
             subtitle = R.string.settings_pref_privacy_policy_description
         )
-        val crashReportingKey = "crash_reporting"
+        const val crashReporting = "crash_reporting"
         fun crashReporting(isChecked: Boolean, isEnabled: Boolean = true) = Setting.Switch(
-            _key = crashReportingKey,
+            _key = crashReporting,
             title = R.string.settings_pref_crash_reporting_title,
             subtitle = R.string.settings_pref_crash_reporting_description,
             isChecked = isChecked,
             isEnabled = isEnabled
         )
-        val analyticsKey = "analytics"
+        const val analytics = "analytics"
         fun analytics(isChecked: Boolean, isEnabled: Boolean = true) = Setting.Switch(
             _key = "analytics",
             title = R.string.settings_pref_analytics_title,
@@ -262,9 +249,9 @@ object Settings {
             title = R.string.settings_switch_review_title,
             subtitle = R.string.settings_switch_review_description
         )
-        val shakeToReportKey = "shake_to_report"
+        const val shakeToReport = "shake_to_report"
         fun shakeToReport(isChecked: Boolean, isEnabled: Boolean = true) = Setting.Switch(
-            _key = shakeToReportKey,
+            _key = shakeToReport,
             title = R.string.settings_pref_shake_to_report_title,
             subtitle = R.string.settings_pref_shake_to_report_description,
             isChecked = isChecked,

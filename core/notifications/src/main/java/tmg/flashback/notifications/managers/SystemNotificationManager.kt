@@ -2,6 +2,7 @@ package tmg.flashback.notifications.managers
 
 import android.app.Notification
 import android.app.NotificationChannel
+import android.app.NotificationChannelGroup
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
@@ -9,6 +10,7 @@ import android.content.Intent
 import android.media.RingtoneManager
 import android.os.Build
 import androidx.annotation.DrawableRes
+import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.core.app.NotificationCompat
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -94,25 +96,42 @@ class SystemNotificationManager @Inject constructor(
     }
 
     /**
+     * Check if notification channel is enabled
+     */
+    fun isChannelEnabled(channelId: String): Boolean {
+        val channel = notificationManager?.getNotificationChannel(channelId) ?: return false
+        return channel.importance != NotificationManager.IMPORTANCE_NONE
+    }
+
+    /**
+     * Create a notification group with a given code if applicable
+     */
+    fun createGroup(
+        id: String,
+        name: String
+    ) {
+        notificationManager?.createNotificationChannelGroup(NotificationChannelGroup(id, name))
+    }
+
+    /**
      * Creates a notification channel
      */
-    fun createChannel(channelId: String, @StringRes title: Int) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(
-                channelId,
-                applicationContext.getString(title),
-                NotificationManager.IMPORTANCE_DEFAULT
-            )
-            notificationManager?.createNotificationChannel(channel)
+    fun createChannel(channelId: String, @StringRes title: Int, groupId: String?) {
+        val channel = NotificationChannel(
+            channelId,
+            applicationContext.getString(title),
+            NotificationManager.IMPORTANCE_DEFAULT
+        )
+        if (groupId != null) {
+            channel.group = groupId
         }
+        notificationManager?.createNotificationChannel(channel)
     }
 
     /**
      * Cancels a notification channel
      */
     fun cancelChannel(channelId: String) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            notificationManager?.deleteNotificationChannel(channelId)
-        }
+        notificationManager?.deleteNotificationChannel(channelId)
     }
 }

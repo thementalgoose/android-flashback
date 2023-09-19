@@ -19,14 +19,8 @@ class AppBuildConfigManager @Inject constructor() : BuildConfigManager {
     override val applicationId: String
         get() = BuildConfig.APPLICATION_ID
 
-    override val isNotificationChannelsSupported: Boolean
-        get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
-
     override val isMonetThemeSupported: Boolean
         get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
-
-    override val isAppShortcutsSupported: Boolean
-        get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1
 
     override val isRuntimeNotificationsSupported: Boolean
         get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
