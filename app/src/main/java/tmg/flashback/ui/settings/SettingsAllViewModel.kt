@@ -72,27 +72,21 @@ class SettingsAllViewModel @Inject constructor(
             Settings.Web.inAppBrowser.key -> {
                 navigator.navigate(Screen.Settings.Web)
             }
-            Settings.Notifications.notificationPermissionEnable.key -> {
+            Settings.Notifications.notificationResults.key -> {
                 permissionManager
                     .requestPermission(AppPermissions.RuntimeNotifications)
                     .invokeOnCompletion {
-                        refresh()
+                        applicationNavigationComponent.appSettingsNotifications()
                     }
             }
-            Settings.Notifications.notificationExactAlarmEnable.key -> {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && !permissionRepository.isExactAlarmEnabled) {
-                    applicationNavigationComponent.appSettingsSpecialPermissions()
-                } else {
-                    refresh()
-                }
+            Settings.Notifications.notificationUpcoming.key -> {
+                permissionManager
+                    .requestPermission(AppPermissions.RuntimeNotifications)
+                    .invokeOnCompletion {
+                        applicationNavigationComponent.appSettingsNotifications()
+                    }
             }
-            Settings.Notifications.notificationResultsKey -> {
-                applicationNavigationComponent.appSettingsNotifications()
-            }
-            Settings.Notifications.notificationUpcomingKey -> {
-                applicationNavigationComponent.appSettingsNotifications()
-            }
-            Settings.Notifications.notificationUpcomingNotice -> {
+            Settings.Notifications.notificationUpcomingNotice.key -> {
                 navigator.navigate(Screen.Settings.NotificationsUpcomingNotice)
             }
             Settings.Ads.ads.key -> {
@@ -107,13 +101,6 @@ class SettingsAllViewModel @Inject constructor(
             else -> if (BuildConfig.DEBUG) {
                 throw UnsupportedOperationException("Preference with key ${pref.key} is not handled")
             }
-        }
-    }
-
-    fun requestPermissions() {
-        viewModelScope.launch {
-            val result = permissionManager.requestPermission(AppPermissions.RuntimeNotifications).await()
-
         }
     }
 

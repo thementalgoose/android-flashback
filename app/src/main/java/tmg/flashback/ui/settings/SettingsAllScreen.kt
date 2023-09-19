@@ -104,37 +104,17 @@ fun SettingsAllScreen(
                 model = Settings.Web.inAppBrowser,
                 onClick = prefClicked
             )
-            Header(title = R.string.settings_header_notifications_results_available)
-            if (!uiState.notificationRuntimePermission) {
-                Pref(
-                    model = Settings.Notifications.notificationPermissionEnable,
-                    onClick = prefClicked
-                )
-            }
+            Header(title = R.string.settings_header_notifications)
             Section(
-                model = Settings.Notifications.notificationResults(isEnabled = uiState.notificationRuntimePermission),
+                model = Settings.Notifications.notificationResults,
                 onClick = prefClicked
             )
-            Header(title = R.string.settings_header_notifications_upcoming)
-            if (!uiState.notificationExactAlarmPermission || !uiState.notificationRuntimePermission) {
-                if (uiState.notificationExactAlarmPermission) {
-                    Pref(
-                        model = Settings.Notifications.notificationPermissionEnable,
-                        onClick = prefClicked
-                    )
-                } else {
-                    Pref(
-                        model = Settings.Notifications.notificationExactAlarmEnable,
-                        onClick = prefClicked
-                    )
-                }
-            }
             Section(
-                model = Settings.Notifications.notificationUpcoming(isEnabled = uiState.notificationExactAlarmPermission && uiState.notificationExactAlarmPermission),
+                model = Settings.Notifications.notificationUpcoming,
                 onClick = prefClicked
             )
             Pref(
-                model = Settings.Notifications.notificationUpcomingNotice(isEnabled = uiState.notificationExactAlarmPermission && uiState.notificationExactAlarmPermission),
+                model = Settings.Notifications.notificationUpcomingNotice,
                 onClick = prefClicked
             )
             if (uiState.adsEnabled) {

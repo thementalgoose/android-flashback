@@ -12,8 +12,4 @@ sealed class FeaturePrompt(
         id = "feature-runtime",
         label = R.string.feature_banner_runtime_notifications
     )
-    data object Notifications: FeaturePrompt(
-        id = "feature-notifications",
-        label = R.string.feature_banner_notifications
-    )
 }

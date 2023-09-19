@@ -29,7 +29,7 @@ class SettingsAdsViewModel @Inject constructor(
 
     override fun prefClicked(pref: Setting) {
         when (pref.key) {
-            Settings.Ads.enableAdsKey -> {
+            Settings.Ads.enableAds -> {
                 adsRepository.userPrefEnabled = !adsRepository.userPrefEnabled
                 adsEnabled.value = adsRepository.userPrefEnabled
             }

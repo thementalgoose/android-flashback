@@ -6,6 +6,5 @@ interface ResultsNavigationComponent {
 
     fun preseasonEvents(season: Int)
 
-    fun featureNotificationOnboarding()
 
 }
