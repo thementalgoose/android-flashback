@@ -25,21 +25,9 @@ internal val Screen.Settings.Web: NavigationDestination
     get() = NavigationDestination("settings/web", popUpTo = "settings")
 
 
-internal val Screen.Settings.NotificationsUpcoming: NavigationDestination
-    get() = NavigationDestination(
-        "settings/notifications/upcoming",
-        popUpTo = "settings"
-    )
-
 internal val Screen.Settings.NotificationsUpcomingNotice: NavigationDestination
     get() = NavigationDestination(
         "settings/notifications/notice",
-        popUpTo = "settings"
-    )
-
-internal val Screen.Settings.NotificationsResults: NavigationDestination
-    get() = NavigationDestination(
-        "settings/notifications/results",
         popUpTo = "settings"
     )
 

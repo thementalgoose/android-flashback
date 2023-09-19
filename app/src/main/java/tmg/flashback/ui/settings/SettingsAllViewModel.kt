@@ -1,16 +1,22 @@
 package tmg.flashback.ui.settings
 
+import android.os.Build
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import tmg.flashback.BuildConfig
 import tmg.flashback.ads.ads.repository.AdsRepository
 import tmg.flashback.device.managers.BuildConfigManager
+import tmg.flashback.navigation.ApplicationNavigationComponent
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.flashback.rss.contract.RSSConfigure
 import tmg.flashback.rss.repo.RssRepository
+import tmg.flashback.ui.AppPermissions
+import tmg.flashback.ui.managers.PermissionManager
 import tmg.flashback.ui.repository.PermissionRepository
 import tmg.flashback.ui.repository.ThemeRepository
 import javax.inject.Inject
@@ -30,6 +36,8 @@ class SettingsAllViewModel @Inject constructor(
     private val adsRepository: AdsRepository,
     private val rssRepository: RssRepository,
     private val permissionRepository: PermissionRepository,
+    private val permissionManager: PermissionManager,
+    private val applicationNavigationComponent: ApplicationNavigationComponent,
     private val navigator: Navigator,
 ): ViewModel(), SettingsAllViewModelInputs, SettingsAllViewModelOutputs {
 
@@ -64,11 +72,25 @@ class SettingsAllViewModel @Inject constructor(
             Settings.Web.inAppBrowser.key -> {
                 navigator.navigate(Screen.Settings.Web)
             }
-            Settings.Notifications.notificationResults.key -> {
-                navigator.navigate(Screen.Settings.NotificationsResults)
+            Settings.Notifications.notificationPermissionEnable.key -> {
+                permissionManager
+                    .requestPermission(AppPermissions.RuntimeNotifications)
+                    .invokeOnCompletion {
+                        refresh()
+                    }
             }
-            Settings.Notifications.notificationUpcoming.key -> {
-                navigator.navigate(Screen.Settings.NotificationsUpcoming)
+            Settings.Notifications.notificationExactAlarmEnable.key -> {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && !permissionRepository.isExactAlarmEnabled) {
+                    applicationNavigationComponent.appSettingsSpecialPermissions()
+                } else {
+                    refresh()
+                }
+            }
+            Settings.Notifications.notificationResultsKey -> {
+                applicationNavigationComponent.appSettingsNotifications()
+            }
+            Settings.Notifications.notificationUpcomingKey -> {
+                applicationNavigationComponent.appSettingsNotifications()
             }
             Settings.Notifications.notificationUpcomingNotice -> {
                 navigator.navigate(Screen.Settings.NotificationsUpcomingNotice)
@@ -88,6 +110,13 @@ class SettingsAllViewModel @Inject constructor(
         }
     }
 
+    fun requestPermissions() {
+        viewModelScope.launch {
+            val result = permissionManager.requestPermission(AppPermissions.RuntimeNotifications).await()
+
+        }
+    }
+
     private val isThemeEnabled: Boolean
         get() = themeRepository.enableThemePicker && buildConfig.isMonetThemeSupported
 
@@ -95,7 +124,9 @@ class SettingsAllViewModel @Inject constructor(
         uiState.value = uiState.value.copy(
             adsEnabled = adsRepository.allowUserConfig,
             themeEnabled = isThemeEnabled,
-            rssEnabled = rssRepository.enabled
+            rssEnabled = rssRepository.enabled,
+            notificationRuntimePermission = permissionRepository.isRuntimeNotificationsEnabled,
+            notificationExactAlarmPermission = permissionRepository.isExactAlarmEnabled,
         )
     }
 

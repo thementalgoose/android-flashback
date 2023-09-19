@@ -56,8 +56,6 @@ import tmg.flashback.ui.settings.Ads
 import tmg.flashback.ui.settings.All
 import tmg.flashback.ui.settings.Home
 import tmg.flashback.ui.settings.NightMode
-import tmg.flashback.ui.settings.NotificationsResults
-import tmg.flashback.ui.settings.NotificationsUpcoming
 import tmg.flashback.ui.settings.NotificationsUpcomingNotice
 import tmg.flashback.ui.settings.Privacy
 import tmg.flashback.ui.settings.SettingsAllScreenVM
@@ -72,8 +70,6 @@ import tmg.flashback.ui.settings.appearance.theme.SettingsThemeScreenVM
 import tmg.flashback.ui.settings.data.SettingsLayoutScreenVM
 import tmg.flashback.ui.settings.data.SettingsWeatherScreenVM
 import tmg.flashback.ui.settings.notifications.SettingsNotificationUpcomingNoticeScreenVM
-import tmg.flashback.ui.settings.notifications.SettingsNotificationsResultsScreenVM
-import tmg.flashback.ui.settings.notifications.SettingsNotificationsUpcomingScreenVM
 import tmg.flashback.ui.settings.web.SettingsWebScreenVM
 import tmg.flashback.weekend.contract.Weekend
 import tmg.flashback.weekend.contract.model.ScreenWeekendData
@@ -178,18 +174,8 @@ fun AppGraph(
                 actionUpClicked = { navController.popBackStack() }
             )
         }
-        composable(Screen.Settings.NotificationsUpcoming.route) {
-            SettingsNotificationsUpcomingScreenVM(
-                actionUpClicked = { navController.popBackStack() }
-            )
-        }
         composable(Screen.Settings.NotificationsUpcomingNotice.route) {
             SettingsNotificationUpcomingNoticeScreenVM(
-                actionUpClicked = { navController.popBackStack() }
-            )
-        }
-        composable(Screen.Settings.NotificationsResults.route) {
-            SettingsNotificationsResultsScreenVM(
                 actionUpClicked = { navController.popBackStack() }
             )
         }

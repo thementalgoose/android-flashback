@@ -186,17 +186,6 @@ internal class SettingsAllViewModelTest: BaseTest() {
         assertEquals(Screen.Settings.Web.route, slot.captured.route)
     }
 
-    @Test
-    fun `clicking upcoming notifications opens upcoming notifications`() {
-        initUnderTest()
-        underTest.inputs.itemClicked(Settings.Notifications.notificationUpcoming)
-
-        val slot = slot<NavigationDestination>()
-        verify {
-            mockNavigator.navigate(capture(slot))
-        }
-        assertEquals(Screen.Settings.NotificationsUpcoming.route, slot.captured.route)
-    }
 
     @Test
     fun `clicking upcoming notifications opens upcoming notifications period`() {
@@ -210,17 +199,6 @@ internal class SettingsAllViewModelTest: BaseTest() {
         assertEquals(Screen.Settings.NotificationsUpcomingNotice.route, slot.captured.route)
     }
 
-    @Test
-    fun `clicking results notifications opens results notifications`() {
-        initUnderTest()
-        underTest.inputs.itemClicked(Settings.Notifications.notificationResults)
-
-        val slot = slot<NavigationDestination>()
-        verify {
-            mockNavigator.navigate(capture(slot))
-        }
-        assertEquals(Screen.Settings.NotificationsResults.route, slot.captured.route)
-    }
 
     @Test
     fun `clicking ads opens ads`() {

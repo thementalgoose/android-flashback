@@ -130,16 +130,20 @@ object Settings {
         )
     }
     object Notifications {
-        val notificationUpcoming = Setting.Section(
-            _key = "notification_upcoming",
+        val notificationUpcomingKey = "notification_upcoming"
+        fun notificationUpcoming(isEnabled: Boolean) = Setting.Section(
+            _key = notificationUpcomingKey,
             title = R.string.settings_section_notifications_upcoming_title,
+            isEnabled = isEnabled,
             subtitle = R.string.settings_section_notifications_upcoming_description,
             icon = R.drawable.ic_settings_notifications_upcoming
         )
 
-        val notificationResults = Setting.Section(
-            _key = "notification_results",
+        val notificationResultsKey = "notification_results"
+        fun notificationResults(isEnabled: Boolean) = Setting.Section(
+            _key = notificationResultsKey,
             title = R.string.settings_section_notifications_results_title,
+            isEnabled = isEnabled,
             subtitle = R.string.settings_section_notifications_results_description,
             icon = R.drawable.ic_settings_notifications_results
         )

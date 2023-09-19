@@ -65,12 +65,14 @@ fun SettingsNotificationUpcomingNoticeScreen(
             }
 
             Header(title = R.string.notification_onboarding_title)
-            NotificationReminder.values().forEach {
-                Option(
-                    model = Settings.Notifications.notificationNoticePeriod(it, it == result),
-                    onClick = prefClicked
-                )
-            }
+            NotificationReminder.values()
+                .sortedBy { it.seconds }
+                .forEach {
+                    Option(
+                        model = Settings.Notifications.notificationNoticePeriod(it, it == result),
+                        onClick = prefClicked
+                    )
+                }
             Footer()
         }
     )

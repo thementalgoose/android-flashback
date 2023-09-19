@@ -232,7 +232,8 @@
     <string name="settings_header_data">Data</string>
     <string name="settings_header_rss_feed">RSS Feed</string>
     <string name="settings_header_web_browser">Web Browser</string>
-    <string name="settings_header_notifications">Notifications</string>
+    <string name="settings_header_notifications_upcoming">Notifications (Upcoming)</string>
+    <string name="settings_header_notifications_results_available">Notifications (Results available)</string>
     <string name="settings_header_other">Other</string>
 
     <string name="settings_section_dark_mode_title">Dark mode</string>
@@ -459,7 +460,7 @@
     <string name="notification_content_title" formatted="false">%s starts in %s</string>
     <string name="notification_content_text" formatted="false">%s %s starts in %s at %s</string>
     <string name="notification_content_text_device_time" formatted="false">%s %s (device time)</string>
-    <string name="notification_reminder_mins_60">1 hour</string>
+    <string name="notification_reminder_mins_60">60 minutes</string>
     <string name="notification_reminder_mins_30">30 minutes</string>
     <string name="notification_reminder_mins_15">15 minutes</string>
     <string name="notification_onboarding_title">Notifications</string>
