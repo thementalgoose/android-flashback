@@ -22,7 +22,7 @@ internal class DriverStatHistoryViewModelTest: BaseTest() {
 
     private lateinit var underTest: DriverStatHistoryViewModel
 
-    private fun initUnderTest() = runTest {
+    private fun initUnderTest() = runTest(testDispatcher) {
         underTest = DriverStatHistoryViewModel(
             driverRepository = mockDriverRepository,
             ioDispatcher = coroutineScope.testDispatcher
@@ -30,7 +30,7 @@ internal class DriverStatHistoryViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `initialise with championship type returns championship`() = runTest {
+    fun `initialise with championship type returns championship`() = runTest(testDispatcher) {
         every { mockDriverRepository.getDriverOverview(any()) } returns flow {
             emit(DriverHistory.model(
                 standings = listOf(
@@ -54,7 +54,7 @@ internal class DriverStatHistoryViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `initialise with wins type returns wins`() = runTest {
+    fun `initialise with wins type returns wins`() = runTest(testDispatcher) {
         every { mockDriverRepository.getDriverOverview(any()) } returns flow {
             emit(DriverHistory.model(
                 standings = listOf(
@@ -123,7 +123,7 @@ internal class DriverStatHistoryViewModelTest: BaseTest() {
 
 
     @Test
-    fun `initialise with podiums type returns podiums`() = runTest {
+    fun `initialise with podiums type returns podiums`() = runTest(testDispatcher) {
         every { mockDriverRepository.getDriverOverview(any()) } returns flow {
             emit(DriverHistory.model(
                 standings = listOf(
@@ -205,7 +205,7 @@ internal class DriverStatHistoryViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `initialise with pole positions type returns poles`() = runTest {
+    fun `initialise with pole positions type returns poles`() = runTest(testDispatcher) {
         every { mockDriverRepository.getDriverOverview(any()) } returns flow {
             emit(DriverHistory.model(
                 standings = listOf(

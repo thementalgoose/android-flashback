@@ -71,7 +71,7 @@ internal class SyncViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `start loading with config not synced sends go to home event`() = runTest {
+    fun `start loading with config not synced sends go to home event`() = runTest(testDispatcher) {
         every { mockConfigRepository.requireSynchronisation } returns true
 
         initSUT()
@@ -102,7 +102,7 @@ internal class SyncViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `start loading with config not synced sends go to force upgrade event`() = runTest {
+    fun `start loading with config not synced sends go to force upgrade event`() = runTest(testDispatcher) {
         every { mockConfigRepository.requireSynchronisation } returns true
         every { mockShouldForceUpgradeUseCase.shouldForceUpgrade() } returns true
 
@@ -134,7 +134,7 @@ internal class SyncViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `start loading with config previously synced sends go to home event`() = runTest {
+    fun `start loading with config previously synced sends go to home event`() = runTest(testDispatcher) {
         every { mockConfigRepository.requireSynchronisation } returns false
 
         initSUT()
@@ -171,7 +171,7 @@ internal class SyncViewModelTest: BaseTest() {
 
 
     @Test
-    fun `start loading with config failed changes state to failed`() = runTest {
+    fun `start loading with config failed changes state to failed`() = runTest(testDispatcher) {
         every { mockConfigRepository.requireSynchronisation } returns true
         coEvery { mockFetchConfigUseCase.fetchAndApply() } returns false
 
@@ -204,7 +204,7 @@ internal class SyncViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `start loading with circuits failing changes state to failed`() = runTest {
+    fun `start loading with circuits failing changes state to failed`() = runTest(testDispatcher) {
         every { mockConfigRepository.requireSynchronisation } returns false
         coEvery { mockCircuitRepository.fetchCircuits() } returns false
 
@@ -234,7 +234,7 @@ internal class SyncViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `start loading with races failing changes state to failed`() = runTest {
+    fun `start loading with races failing changes state to failed`() = runTest(testDispatcher) {
         every { mockConfigRepository.requireSynchronisation } returns false
         coEvery { mockOverviewRepository.fetchOverview() } returns false
 
@@ -264,7 +264,7 @@ internal class SyncViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `start loading with constructors failing changes state to failed`() = runTest {
+    fun `start loading with constructors failing changes state to failed`() = runTest(testDispatcher) {
         every { mockConfigRepository.requireSynchronisation } returns false
         coEvery { mockConstructorRepository.fetchConstructors() } returns false
 
@@ -294,7 +294,7 @@ internal class SyncViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `start loading with drivers failing changes state to failed`() = runTest {
+    fun `start loading with drivers failing changes state to failed`() = runTest(testDispatcher) {
         every { mockConfigRepository.requireSynchronisation } returns false
         coEvery { mockDriverRepository.fetchDrivers() } returns false
 

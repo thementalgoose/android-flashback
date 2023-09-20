@@ -24,7 +24,7 @@ internal class SettingsWebViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `browser is enabled when open in external enabled`() = runTest {
+    fun `browser is enabled when open in external enabled`() = runTest(testDispatcher) {
         every { mockWebBrowserRepository.openInExternal } returns false
 
         initUnderTest()
@@ -34,7 +34,7 @@ internal class SettingsWebViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `browser is disabled when open in external disabled`() = runTest {
+    fun `browser is disabled when open in external disabled`() = runTest(testDispatcher) {
         every { mockWebBrowserRepository.openInExternal } returns true
 
         initUnderTest()
@@ -44,7 +44,7 @@ internal class SettingsWebViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `javascript is enabled when enable javascript is true`() = runTest {
+    fun `javascript is enabled when enable javascript is true`() = runTest(testDispatcher) {
         every { mockWebBrowserRepository.enableJavascript } returns true
 
         initUnderTest()
@@ -54,7 +54,7 @@ internal class SettingsWebViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `javascript is disabled when enable javascript is false`() = runTest {
+    fun `javascript is disabled when enable javascript is false`() = runTest(testDispatcher) {
         every { mockWebBrowserRepository.enableJavascript } returns false
 
         initUnderTest()
@@ -64,7 +64,7 @@ internal class SettingsWebViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `clicking enable updates pref and updates value`() = runTest {
+    fun `clicking enable updates pref and updates value`() = runTest(testDispatcher) {
         every { mockWebBrowserRepository.openInExternal } returns false
 
         initUnderTest()
@@ -80,7 +80,7 @@ internal class SettingsWebViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `clicking enable javascript updates pref and updates value`() = runTest {
+    fun `clicking enable javascript updates pref and updates value`() = runTest(testDispatcher) {
         every { mockWebBrowserRepository.enableJavascript } returns false
 
         initUnderTest()

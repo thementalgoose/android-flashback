@@ -31,7 +31,7 @@ internal class SettingsPrivacyViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `crash reporting enabled is true when crash reporting is enabled`() = runTest {
+    fun `crash reporting enabled is true when crash reporting is enabled`() = runTest(testDispatcher) {
         every { mockPrivacyRepository.crashReporting } returns true
 
         initUnderTest()
@@ -41,7 +41,7 @@ internal class SettingsPrivacyViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `crash reporting enabled is false when crash reporting is disabled`() = runTest {
+    fun `crash reporting enabled is false when crash reporting is disabled`() = runTest(testDispatcher) {
         every { mockPrivacyRepository.crashReporting } returns false
 
         initUnderTest()
@@ -51,7 +51,7 @@ internal class SettingsPrivacyViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `analytics enabled is true when analytics is enabled`() = runTest {
+    fun `analytics enabled is true when analytics is enabled`() = runTest(testDispatcher) {
         every { mockPrivacyRepository.analytics } returns true
 
         initUnderTest()
@@ -61,7 +61,7 @@ internal class SettingsPrivacyViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `analytics enabled is false when analytics is disabled`() = runTest {
+    fun `analytics enabled is false when analytics is disabled`() = runTest(testDispatcher) {
         every { mockPrivacyRepository.analytics } returns false
 
         initUnderTest()
@@ -71,7 +71,7 @@ internal class SettingsPrivacyViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `click privacy policy opens privacy policy`() = runTest {
+    fun `click privacy policy opens privacy policy`() = runTest(testDispatcher) {
         initUnderTest()
         underTest.inputs.prefClicked(Settings.Other.privacyPolicy)
 
@@ -81,7 +81,7 @@ internal class SettingsPrivacyViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `click crash reporting updates pref and updates value`() = runTest {
+    fun `click crash reporting updates pref and updates value`() = runTest(testDispatcher) {
         every { mockPrivacyRepository.crashReporting } returns false
 
         initUnderTest()
@@ -96,7 +96,7 @@ internal class SettingsPrivacyViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `click analytics updates pref and updates value`() = runTest {
+    fun `click analytics updates pref and updates value`() = runTest(testDispatcher) {
         every { mockPrivacyRepository.analytics } returns false
 
         initUnderTest()

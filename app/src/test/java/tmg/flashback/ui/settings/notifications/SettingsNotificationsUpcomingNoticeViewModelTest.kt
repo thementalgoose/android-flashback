@@ -47,7 +47,7 @@ internal class SettingsNotificationsUpcomingNoticeViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `init loads notification list`() = runTest {
+    fun `init loads notification list`() = runTest(testDispatcher) {
         initUnderTest()
         underTest.outputs.currentlySelected.test {
             Assertions.assertEquals(NotificationReminder.MINUTES_30, awaitItem())

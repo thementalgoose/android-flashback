@@ -55,7 +55,7 @@ internal class DriversStandingViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `current season use case is fetched on initial load`() = runTest {
+    fun `current season use case is fetched on initial load`() = runTest(testDispatcher) {
         initUnderTest()
         underTest.load(2020)
 
@@ -67,7 +67,7 @@ internal class DriversStandingViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `loading is returned when DB returns no standings and hasnt made request`() = runTest {
+    fun `loading is returned when DB returns no standings and hasnt made request`() = runTest(testDispatcher) {
         every { mockFetchSeasonUseCase.fetch(any()) } returns flow { emit(false) }
         every { mockSeasonRepository.getDriverStandings(any()) } returns flow { emit(null) }
 
@@ -80,7 +80,7 @@ internal class DriversStandingViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `null is returned when DB returns no standings and has made request`() = runTest {
+    fun `null is returned when DB returns no standings and has made request`() = runTest(testDispatcher) {
         every { mockFetchSeasonUseCase.fetch(any()) } returns flow { emit(true) }
         every { mockSeasonRepository.getDriverStandings(any()) } returns flow { emit(null) }
 
@@ -93,7 +93,7 @@ internal class DriversStandingViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `expected list is returned when items are loaded from the DB`() = runTest {
+    fun `expected list is returned when items are loaded from the DB`() = runTest(testDispatcher) {
         initUnderTest()
         underTest.load(2020)
 
@@ -111,7 +111,7 @@ internal class DriversStandingViewModelTest: BaseTest() {
 
 
     @Test
-    fun `refresh calls fetch season and updates is refreshing`() = runTest {
+    fun `refresh calls fetch season and updates is refreshing`() = runTest(testDispatcher) {
         initUnderTest()
         underTest.load(2020)
 

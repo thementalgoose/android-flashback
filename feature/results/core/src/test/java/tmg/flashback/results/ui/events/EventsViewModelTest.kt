@@ -27,7 +27,7 @@ internal class EventsViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `setup events returns list from repository`() = runTest {
+    fun `setup events returns list from repository`() = runTest(testDispatcher) {
         val event1 = Event.model(date = LocalDate.of(2020, 10, 2))
         val event2 = Event.model(date = LocalDate.of(2020, 10, 3))
         every { mockEventsRepository.getEvents(2020) } returns flow { emit(listOf(event2, event1)) }
