@@ -68,7 +68,7 @@ fun SettingsNotificationUpcomingNoticeScreen(
                 )
             }
 
-            Header(title = R.string.notification_onboarding_title)
+            Header(title = R.string.notification_onboarding_title_howlong)
 
             if (!permissions.runtimePermission) {
                 Pref(
