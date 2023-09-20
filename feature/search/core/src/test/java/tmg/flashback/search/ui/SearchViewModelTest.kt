@@ -82,7 +82,7 @@ internal class SearchViewModelTest: BaseTest() {
     //region Content
 
     @Test
-    fun `search hides adverts if toggle is off`() = runTest {
+    fun `search hides adverts if toggle is off`() = runTest(testDispatcher) {
         every { mockAdsRepository.advertConfig } returns AdvertConfig(
             onSearch = false
         )
@@ -93,7 +93,7 @@ internal class SearchViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `search defaults to placeholder`() = runTest {
+    fun `search defaults to placeholder`() = runTest(testDispatcher) {
         initSUT()
         sut.outputs.results.test {
             assertEquals(listOf(
@@ -171,7 +171,7 @@ internal class SearchViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `search refines items down`() = runTest {
+    fun `search refines items down`() = runTest(testDispatcher) {
 
         val input1 = Driver.model()
         val input2 = Driver.model(id = "driverId2", firstName = "z", lastName = "fish")
@@ -233,7 +233,7 @@ internal class SearchViewModelTest: BaseTest() {
     //region Refresh
 
     @Test
-    fun `refresh when category is drivers fetches drivers`() = runTest {
+    fun `refresh when category is drivers fetches drivers`() = runTest(testDispatcher) {
         initSUT()
         runBlocking {
             sut.inputs.inputCategory(SearchCategory.DRIVER)
@@ -249,7 +249,7 @@ internal class SearchViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `refresh when category is constructors fetches constructors`() = runTest {
+    fun `refresh when category is constructors fetches constructors`() = runTest(testDispatcher) {
         initSUT()
         runBlocking {
             sut.inputs.inputCategory(SearchCategory.CONSTRUCTOR)
@@ -265,7 +265,7 @@ internal class SearchViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `refresh when category is circuits fetches circuits`() = runTest {
+    fun `refresh when category is circuits fetches circuits`() = runTest(testDispatcher) {
         initSUT()
         runBlocking {
             sut.inputs.inputCategory(SearchCategory.CIRCUIT)
@@ -281,7 +281,7 @@ internal class SearchViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `refresh when category is overview fetches overview`() = runTest {
+    fun `refresh when category is overview fetches overview`() = runTest(testDispatcher) {
         initSUT()
         runBlocking {
             sut.inputs.inputCategory(SearchCategory.RACE)
@@ -299,7 +299,7 @@ internal class SearchViewModelTest: BaseTest() {
     //endregion
 
     @Test
-    fun `click item for constructor fires click event`() = runTest {
+    fun `click item for constructor fires click event`() = runTest(testDispatcher) {
         val model = SearchItem.Constructor.model()
 
         initSUT()
@@ -316,7 +316,7 @@ internal class SearchViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `click item for driver fires click event`() = runTest {
+    fun `click item for driver fires click event`() = runTest(testDispatcher) {
         val model = SearchItem.Driver.model()
 
         initSUT()
@@ -333,7 +333,7 @@ internal class SearchViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `click item for race fires click event`() = runTest {
+    fun `click item for race fires click event`() = runTest(testDispatcher) {
         val model = SearchItem.Race.model()
 
         initSUT()
@@ -359,7 +359,7 @@ internal class SearchViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `click item for circuit fires click event`() = runTest {
+    fun `click item for circuit fires click event`() = runTest(testDispatcher) {
         val model = SearchItem.Circuit.model()
 
         initSUT()

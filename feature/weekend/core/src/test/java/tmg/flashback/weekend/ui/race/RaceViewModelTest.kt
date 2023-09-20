@@ -43,7 +43,7 @@ internal class RaceViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `loading view with no race results in same year shows not available yet`() = runTest {
+    fun `loading view with no race results in same year shows not available yet`() = runTest(testDispatcher) {
         val currentSeason = Year.now().value
         every { mockRaceRepository.getRace(currentSeason, 1) } returns flow { emit(null) }
 
@@ -58,7 +58,7 @@ internal class RaceViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `loading view with no race results in different year shows not available`() = runTest {
+    fun `loading view with no race results in different year shows not available`() = runTest(testDispatcher) {
         val currentSeason = 2020
         every { mockRaceRepository.getRace(currentSeason, 1) } returns flow { emit(null) }
 
@@ -73,7 +73,7 @@ internal class RaceViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `loading view with list of results for driver`() = runTest {
+    fun `loading view with list of results for driver`() = runTest(testDispatcher) {
         val currentSeason = 2020
         every { mockRaceRepository.getRace(currentSeason, 1) } returns flow { emit(Race.model()) }
 
@@ -88,7 +88,7 @@ internal class RaceViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `loading view with list of results for constructor`() = runTest {
+    fun `loading view with list of results for constructor`() = runTest(testDispatcher) {
         val currentSeason = 2020
         every { mockRaceRepository.getRace(currentSeason, 1) } returns flow { emit(Race.model()) }
 
@@ -104,7 +104,7 @@ internal class RaceViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `race result type updates when item is changed`() = runTest {
+    fun `race result type updates when item is changed`() = runTest(testDispatcher) {
         initUnderTest()
 
         val observer = underTest.raceResultType.testIn(this)
@@ -121,7 +121,7 @@ internal class RaceViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `clicking race result launches stats navigation component`() = runTest {
+    fun `clicking race result launches stats navigation component`() = runTest(testDispatcher) {
         initUnderTest()
         underTest.load(2020, 1)
 
@@ -143,7 +143,7 @@ internal class RaceViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `clicking driver race result launches stats navigation component`() = runTest {
+    fun `clicking driver race result launches stats navigation component`() = runTest(testDispatcher) {
         initUnderTest()
         underTest.load(2020, 1)
 

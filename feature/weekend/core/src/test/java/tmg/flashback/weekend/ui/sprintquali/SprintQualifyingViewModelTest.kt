@@ -36,7 +36,7 @@ internal class SprintQualifyingViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `loading view with no race results in same year shows not available yet`() = runTest {
+    fun `loading view with no race results in same year shows not available yet`() = runTest(testDispatcher) {
         val currentSeason = Year.now().value
         every { mockRaceRepository.getRace(currentSeason, 1) } returns flow { emit(null) }
 
@@ -51,7 +51,7 @@ internal class SprintQualifyingViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `loading view with no race results in different year shows not available`() = runTest {
+    fun `loading view with no race results in different year shows not available`() = runTest(testDispatcher) {
         val currentSeason = 2020
         every { mockRaceRepository.getRace(currentSeason, 1) } returns flow { emit(null) }
 
@@ -66,7 +66,7 @@ internal class SprintQualifyingViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `loading view with list of results for q1q2q3`() = runTest {
+    fun `loading view with list of results for q1q2q3`() = runTest(testDispatcher) {
         val currentSeason = 2020
         every { mockRaceRepository.getRace(currentSeason, 1) } returns flow { emit(Race.model()) }
 
@@ -81,7 +81,7 @@ internal class SprintQualifyingViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `clicking qualifying result launches stats navigation component`() = runTest {
+    fun `clicking qualifying result launches stats navigation component`() = runTest(testDispatcher) {
         initUnderTest()
         underTest.load(2020, 1)
 

@@ -34,7 +34,7 @@ internal class ForceUpgradeViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `force upgrade null error message displayed prompting app restart`() = runTest {
+    fun `force upgrade null error message displayed prompting app restart`() = runTest(testDispatcher) {
 
         every { mockMaintenanceRepository.forceUpgrade } returns null
         initSUT()
@@ -51,7 +51,7 @@ internal class ForceUpgradeViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `force upgrade shows message from configuration with link`() = runTest {
+    fun `force upgrade shows message from configuration with link`() = runTest(testDispatcher) {
 
         every { mockMaintenanceRepository.forceUpgrade } returns ForceUpgrade(
             title = "title",
@@ -79,7 +79,7 @@ internal class ForceUpgradeViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `force upgrade shows message from configuration without link`() = runTest {
+    fun `force upgrade shows message from configuration without link`() = runTest(testDispatcher) {
 
         every { mockMaintenanceRepository.forceUpgrade } returns ForceUpgrade(
             title = "title",

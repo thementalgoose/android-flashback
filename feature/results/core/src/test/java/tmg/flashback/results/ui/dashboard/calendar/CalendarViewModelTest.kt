@@ -69,7 +69,7 @@ internal class CalendarViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `current season use case is fetched on initial load`() = runTest {
+    fun `current season use case is fetched on initial load`() = runTest(testDispatcher) {
         initUnderTest()
         underTest.load(2020)
 
@@ -81,7 +81,7 @@ internal class CalendarViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `null is returned when DB returns no standings and hasnt made request`() = runTest {
+    fun `null is returned when DB returns no standings and hasnt made request`() = runTest(testDispatcher) {
         every { mockFetchSeasonUseCase.fetch(any()) } returns flow { emit(false) }
         every { mockOverviewRepository.getOverview(any()) } returns flow { emit(Overview.model(overviewRaces = emptyList())) }
 
@@ -94,7 +94,7 @@ internal class CalendarViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `expected list is returned when items are loaded from the DB`() = runTest {
+    fun `expected list is returned when items are loaded from the DB`() = runTest(testDispatcher) {
         initUnderTest()
         underTest.load(2020)
 
@@ -106,7 +106,7 @@ internal class CalendarViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `refresh calls fetch season and updates is refreshing`() = runTest {
+    fun `refresh calls fetch season and updates is refreshing`() = runTest(testDispatcher) {
         initUnderTest()
         underTest.load(2020)
 
@@ -127,7 +127,7 @@ internal class CalendarViewModelTest: BaseTest() {
 
 
     @Test
-    fun `clicking item goes to constructor overview`() = runTest {
+    fun `clicking item goes to constructor overview`() = runTest(testDispatcher) {
         initUnderTest()
         underTest.load(2020)
         val model = CalendarModel.Week(
@@ -147,7 +147,7 @@ internal class CalendarViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `clicking tyre with season launches tyre sheet`() = runTest {
+    fun `clicking tyre with season launches tyre sheet`() = runTest(testDispatcher) {
         initUnderTest()
         underTest.load(2020)
 

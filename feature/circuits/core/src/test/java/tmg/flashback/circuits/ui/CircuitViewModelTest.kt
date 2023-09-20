@@ -54,7 +54,7 @@ internal class CircuitViewModelTest: BaseTest() {
     //region List
 
     @Test
-    fun `circuit data with empty results and no network shows pull to refresh`() = runTest {
+    fun `circuit data with empty results and no network shows pull to refresh`() = runTest(testDispatcher) {
         val input = CircuitHistory.model(results = emptyList())
         every { mockCircuitRepository.getCircuitHistory(any()) } returns flow { emit(input) }
         every { mockConnectivityManager.isConnected } returns false
@@ -71,7 +71,7 @@ internal class CircuitViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `circuit data with null item and no network shows pull to refresh`() = runTest {
+    fun `circuit data with null item and no network shows pull to refresh`() = runTest(testDispatcher) {
         every { mockCircuitRepository.getCircuitHistory(any()) } returns flow { emit(null) }
         every { mockConnectivityManager.isConnected } returns false
 
@@ -86,7 +86,7 @@ internal class CircuitViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `circuit data with empty results and network shows data unavailable`() = runTest {
+    fun `circuit data with empty results and network shows data unavailable`() = runTest(testDispatcher) {
         val input = CircuitHistory.model(results = emptyList())
         every { mockCircuitRepository.getCircuitHistory(any()) } returns flow { emit(input) }
         every { mockConnectivityManager.isConnected } returns true
@@ -105,7 +105,7 @@ internal class CircuitViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `circuit data with null item and network shows data unavailable`() = runTest {
+    fun `circuit data with null item and network shows data unavailable`() = runTest(testDispatcher) {
         every { mockCircuitRepository.getCircuitHistory(any()) } returns flow { emit(null) }
         every { mockConnectivityManager.isConnected } returns true
 
@@ -120,7 +120,7 @@ internal class CircuitViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `circuit data with results and network shows list of results in descending order`() = runTest {
+    fun `circuit data with results and network shows list of results in descending order`() = runTest(testDispatcher) {
         val input = CircuitHistory.model(results = listOf(
             CircuitHistoryRace.model(round = 1),
             CircuitHistoryRace.model(round = 2)
@@ -150,7 +150,7 @@ internal class CircuitViewModelTest: BaseTest() {
     //region Request
 
     @Test
-    fun `circuit request is not made when rounds found in DB`() = runTest {
+    fun `circuit request is not made when rounds found in DB`() = runTest(testDispatcher) {
         coEvery { mockCircuitRepository.getCircuitRounds(any()) } returns 1
 
         initSUT()
@@ -164,7 +164,7 @@ internal class CircuitViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `circuit request is made when no rounds found in DB showing skeleton loading view`() = runTest {
+    fun `circuit request is made when no rounds found in DB showing skeleton loading view`() = runTest(testDispatcher) {
         coEvery { mockCircuitRepository.getCircuitRounds(any()) } returns 0
 
         initSUT()
@@ -207,7 +207,7 @@ internal class CircuitViewModelTest: BaseTest() {
     //region Refresh
 
     @Test
-    fun `refresh calls circuit repository fetch circuit and shows loading false when done`() = runTest {
+    fun `refresh calls circuit repository fetch circuit and shows loading false when done`() = runTest(testDispatcher) {
         initSUT()
         sut.inputs.load("circuitId")
 

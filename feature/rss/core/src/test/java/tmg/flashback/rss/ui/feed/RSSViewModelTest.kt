@@ -79,7 +79,7 @@ internal class RSSViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `initial state is set to no network when network is not connected`() = runTest {
+    fun `initial state is set to no network when network is not connected`() = runTest(testDispatcher) {
         every { mockConnectivityManager.isConnected } returns false
 
         initUnderTest()
@@ -89,7 +89,7 @@ internal class RSSViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `initial state is set to sources disables if rss repository has no sources`() = runTest {
+    fun `initial state is set to sources disables if rss repository has no sources`() = runTest(testDispatcher) {
         every { mockRssRepository.rssUrls } returns emptySet()
 
         initUnderTest()
@@ -99,7 +99,7 @@ internal class RSSViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `state is set to no network when responses have no network flag`() = runTest {
+    fun `state is set to no network when responses have no network flag`() = runTest(testDispatcher) {
         coEvery { mockRssService.getNews() } returns mockResponseNoNetwork
         initUnderTest()
         underTest.uiState.test {
@@ -108,7 +108,7 @@ internal class RSSViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `state is set to data with show advert config and rss list items`() = runTest {
+    fun `state is set to data with show advert config and rss list items`() = runTest(testDispatcher) {
         initUnderTest()
         underTest.uiState.test {
             assertEquals(RSSViewModel.UiState.Data(
@@ -120,7 +120,7 @@ internal class RSSViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `state is set to no network when refreshed but no network connection`() = runTest {
+    fun `state is set to no network when refreshed but no network connection`() = runTest(testDispatcher) {
         initUnderTest()
         underTest.uiState.test {
             assertEquals(RSSViewModel.UiState.Data(
@@ -138,7 +138,7 @@ internal class RSSViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `state is set to sources disabled when refreshed but to have no rss sources`() = runTest {
+    fun `state is set to sources disabled when refreshed but to have no rss sources`() = runTest(testDispatcher) {
         initUnderTest()
         underTest.uiState.test {
             assertEquals(RSSViewModel.UiState.Data(
@@ -156,7 +156,7 @@ internal class RSSViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `state is set to data with new rss feeds when refreshed`() = runTest {
+    fun `state is set to data with new rss feeds when refreshed`() = runTest(testDispatcher) {
         coEvery { mockRssService.getNews() } returns mockResponseNoNetwork
         initUnderTest()
         underTest.uiState.test {
@@ -175,7 +175,7 @@ internal class RSSViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `clicking article sets selected article in data`() = runTest {
+    fun `clicking article sets selected article in data`() = runTest(testDispatcher) {
         initUnderTest()
         underTest.uiState.test {
             assertEquals(RSSViewModel.UiState.Data(

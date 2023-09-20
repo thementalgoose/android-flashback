@@ -24,7 +24,7 @@ internal class SettingsWeatherViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `temperature is true when pref is true`() = runTest {
+    fun `temperature is true when pref is true`() = runTest(testDispatcher) {
         every { mockWeatherRepository.weatherTemperatureMetric } returns true
 
         initUnderTest()
@@ -34,7 +34,7 @@ internal class SettingsWeatherViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `temperature is false when pref is false`() = runTest {
+    fun `temperature is false when pref is false`() = runTest(testDispatcher) {
         every { mockWeatherRepository.weatherTemperatureMetric } returns false
 
         initUnderTest()
@@ -44,7 +44,7 @@ internal class SettingsWeatherViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `click show temperature updates pref and updates value`() = runTest {
+    fun `click show temperature updates pref and updates value`() = runTest(testDispatcher) {
         every { mockWeatherRepository.weatherTemperatureMetric } returns false
 
         initUnderTest()
@@ -58,7 +58,7 @@ internal class SettingsWeatherViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `windspeed metric is true when pref is true`() = runTest {
+    fun `windspeed metric is true when pref is true`() = runTest(testDispatcher) {
         every { mockWeatherRepository.weatherWindspeedMetric } returns true
 
         initUnderTest()
@@ -68,7 +68,7 @@ internal class SettingsWeatherViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `windspeed metric is false when pref is false`() = runTest {
+    fun `windspeed metric is false when pref is false`() = runTest(testDispatcher) {
         every { mockWeatherRepository.weatherWindspeedMetric } returns false
 
         initUnderTest()
@@ -78,7 +78,7 @@ internal class SettingsWeatherViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `click show windspeed metric updates pref and updates value`() = runTest {
+    fun `click show windspeed metric updates pref and updates value`() = runTest(testDispatcher) {
         every { mockWeatherRepository.weatherWindspeedMetric } returns false
 
         initUnderTest()

@@ -33,7 +33,7 @@ internal class UpNextConfigurationViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `loading widget loads show background`() = runTest {
+    fun `loading widget loads show background`() = runTest(testDispatcher) {
         every { mockWidgetRepository.getShowBackground(widgetId) } returns true
 
         initUnderTest()
@@ -44,7 +44,7 @@ internal class UpNextConfigurationViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `loading widget loads show click to event`() = runTest {
+    fun `loading widget loads show click to event`() = runTest(testDispatcher) {
         every { mockWidgetRepository.getClickToEvent(widgetId) } returns true
 
         initUnderTest()
@@ -55,7 +55,7 @@ internal class UpNextConfigurationViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `changing background updates background for app widget`() = runTest {
+    fun `changing background updates background for app widget`() = runTest(testDispatcher) {
 
         initUnderTest()
 
@@ -70,7 +70,7 @@ internal class UpNextConfigurationViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `changing weather updates weather for app widget`() = runTest {
+    fun `changing weather updates weather for app widget`() = runTest(testDispatcher) {
 
         initUnderTest()
 
@@ -85,7 +85,7 @@ internal class UpNextConfigurationViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `changing click to event updates click to event`() = runTest {
+    fun `changing click to event updates click to event`() = runTest(testDispatcher) {
 
         initUnderTest()
 
