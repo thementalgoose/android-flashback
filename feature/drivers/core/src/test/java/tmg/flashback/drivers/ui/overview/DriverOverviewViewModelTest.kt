@@ -59,7 +59,7 @@ internal class DriverOverviewViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `opening driver stat history launches stats navigation component`() = runTest {
+    fun `opening driver stat history launches stats navigation component`() = runTest(testDispatcher) {
         initSUT()
         sut.inputs.setup("driverId", "firstName lastName")
 
@@ -73,7 +73,7 @@ internal class DriverOverviewViewModelTest: BaseTest() {
     //region List
 
     @Test
-    fun `driver data with empty results and no network shows pull to refresh`() = runTest {
+    fun `driver data with empty results and no network shows pull to refresh`() = runTest(testDispatcher) {
         val input = DriverHistory.model(standings = emptyList())
         every { mockDriverRepository.getDriverOverview(any()) } returns flow { emit(input) }
         every { mockNetworkConnectivityManager.isConnected } returns false
@@ -90,7 +90,7 @@ internal class DriverOverviewViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `driver data with null item and no network shows pull to refresh`() = runTest {
+    fun `driver data with null item and no network shows pull to refresh`() = runTest(testDispatcher) {
         every { mockDriverRepository.getDriverOverview(any()) } returns flow { emit(null) }
         every { mockNetworkConnectivityManager.isConnected } returns false
 
@@ -105,7 +105,7 @@ internal class DriverOverviewViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `driver data with empty results and network shows data unavailable`() = runTest {
+    fun `driver data with empty results and network shows data unavailable`() = runTest(testDispatcher) {
         val input = DriverHistory.model(standings = emptyList())
         every { mockDriverRepository.getDriverOverview(any()) } returns flow { emit(input) }
         every { mockNetworkConnectivityManager.isConnected } returns true
@@ -122,7 +122,7 @@ internal class DriverOverviewViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `driver data with results and network shows list of results in descending order`() = runTest {
+    fun `driver data with results and network shows list of results in descending order`() = runTest(testDispatcher) {
         val input = DriverHistory.model(standings = listOf(
             DriverHistorySeason.model(season = 2019),
             DriverHistorySeason.model(season = 2020)
@@ -157,7 +157,7 @@ internal class DriverOverviewViewModelTest: BaseTest() {
     //region Request
 
     @Test
-    fun `driver request is not made when season count is found`() = runTest {
+    fun `driver request is not made when season count is found`() = runTest(testDispatcher) {
         coEvery { mockDriverRepository.getDriverSeasonCount(any()) } returns 1
 
         initSUT()
@@ -169,7 +169,7 @@ internal class DriverOverviewViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `driver request is made when season count is 0`() = runTest {
+    fun `driver request is made when season count is 0`() = runTest(testDispatcher) {
         coEvery { mockDriverRepository.getDriverSeasonCount(any()) } returns 0
 
         initSUT()
@@ -236,7 +236,7 @@ internal class DriverOverviewViewModelTest: BaseTest() {
     //region Refresh
 
     @Test
-    fun `refresh calls driver repository`() = runTest {
+    fun `refresh calls driver repository`() = runTest(testDispatcher) {
         initSUT()
         sut.inputs.setup("driverId", "firstName lastName")
 

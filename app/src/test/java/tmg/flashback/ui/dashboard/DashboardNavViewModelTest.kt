@@ -97,7 +97,7 @@ internal class DashboardNavViewModelTest: BaseTest() {
         "constructors/,",
         "circuits/,"
     )
-    fun `menu item gets updated when route is updated`(route: String, menuItemName: String?) = runTest {
+    fun `menu item gets updated when route is updated`(route: String, menuItemName: String?) = runTest(testDispatcher) {
         val menuItem = menuItemName?.toSealedClass(MenuItem::class)
 
         initUnderTest()
@@ -125,7 +125,7 @@ internal class DashboardNavViewModelTest: BaseTest() {
         "constructors/,false",
         "circuits/,false"
     )
-    fun `menu is shown when route is updated`(route: String, showMenu: Boolean) = runTest {
+    fun `menu is shown when route is updated`(route: String, showMenu: Boolean) = runTest(testDispatcher) {
 
         initUnderTest()
 
@@ -148,7 +148,7 @@ internal class DashboardNavViewModelTest: BaseTest() {
         "constructors/,false",
         "circuits/,false"
     )
-    fun `menu bottom bar when route is updated`(route: String, showBottomBar: Boolean) = runTest {
+    fun `menu bottom bar when route is updated`(route: String, showBottomBar: Boolean) = runTest(testDispatcher) {
 
         initUnderTest()
         underTest.onDestinationChanged(mockNavController, mockNavDestination(route), null)
@@ -189,7 +189,7 @@ internal class DashboardNavViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `app feature list list is populated`() = runTest {
+    fun `app feature list list is populated`() = runTest(testDispatcher) {
         initUnderTest()
 
         underTest.appFeatureItemsList.test {
@@ -201,7 +201,7 @@ internal class DashboardNavViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `season results list list is populated`() = runTest {
+    fun `season results list list is populated`() = runTest(testDispatcher) {
         initUnderTest()
 
         val featureListLiveData = underTest.seasonScreenItemsList.test {
@@ -213,7 +213,7 @@ internal class DashboardNavViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `app feature list contains rss if rss is enabled`() = runTest {
+    fun `app feature list contains rss if rss is enabled`() = runTest(testDispatcher) {
         every { mockRssRepository.enabled } returns true
         initUnderTest()
 
@@ -224,7 +224,7 @@ internal class DashboardNavViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `clicking a season updates currently selected season`() = runTest {
+    fun `clicking a season updates currently selected season`() = runTest(testDispatcher) {
         initUnderTest()
         underTest.clickSeason(2020)
         underTest.currentlySelectedSeason.test {
@@ -236,7 +236,7 @@ internal class DashboardNavViewModelTest: BaseTest() {
     inner class ClickSeason {
 
         @Test
-        fun `clicking a season updates season if currently selected is menu for calendar`() = runTest {
+        fun `clicking a season updates season if currently selected is menu for calendar`() = runTest(testDispatcher) {
 
             initUnderTest()
             underTest.onDestinationChanged(mockNavController, mockNavDestination(Screen.Calendar.with(2019).route), null)
@@ -251,7 +251,7 @@ internal class DashboardNavViewModelTest: BaseTest() {
         }
 
         @Test
-        fun `clicking a season updates season if currently selected is menu for constructors`() = runTest {
+        fun `clicking a season updates season if currently selected is menu for constructors`() = runTest(testDispatcher) {
 
             initUnderTest()
             underTest.currentlySelectedItem.test { awaitItem() }
@@ -266,7 +266,7 @@ internal class DashboardNavViewModelTest: BaseTest() {
         }
 
         @Test
-        fun `clicking a season updates season if currently selected is menu for drivers`() = runTest {
+        fun `clicking a season updates season if currently selected is menu for drivers`() = runTest(testDispatcher) {
             initUnderTest()
             underTest.onDestinationChanged(mockNavController, mockNavDestination(Screen.Drivers.with(2019).route), null)
             underTest.currentlySelectedItem.test { awaitItem() }
@@ -280,7 +280,7 @@ internal class DashboardNavViewModelTest: BaseTest() {
         }
 
         @Test
-        fun `clicking a season does nothing if settings is already selected`() = runTest {
+        fun `clicking a season does nothing if settings is already selected`() = runTest(testDispatcher) {
 
             initUnderTest()
             underTest.onDestinationChanged(mockNavController, NavDestination(Screen.Settings.All.route), null)
@@ -293,7 +293,7 @@ internal class DashboardNavViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `get all seasons returns season list`() = runTest {
+    fun `get all seasons returns season list`() = runTest(testDispatcher) {
         every { mockGetSeasonUseCase.get() } returns mapOf(
             2019 to Pair(IsFirst(true), IsLast(false)),
             2020 to Pair(IsFirst(true), IsLast(false)),
@@ -318,7 +318,7 @@ internal class DashboardNavViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `debug items come from debug nav component`() = runTest {
+    fun `debug items come from debug nav component`() = runTest(testDispatcher) {
         val list: List<DebugMenuItem> = listOf(mockk())
         every { mockDebugNavigationComponent.getDebugMenuItems() } returns list
 

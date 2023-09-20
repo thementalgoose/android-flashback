@@ -24,7 +24,7 @@ internal class SettingsLayoutViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `collapse list is true when pref is true`() = runTest {
+    fun `collapse list is true when pref is true`() = runTest(testDispatcher) {
         every { mockHomeRepository.collapseList } returns true
 
         initUnderTest()
@@ -34,7 +34,7 @@ internal class SettingsLayoutViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `collapse list is false when pref is false`() = runTest {
+    fun `collapse list is false when pref is false`() = runTest(testDispatcher) {
         every { mockHomeRepository.collapseList } returns false
 
         initUnderTest()
@@ -44,7 +44,7 @@ internal class SettingsLayoutViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `click show collapse list updates pref and updates value`() = runTest {
+    fun `click show collapse list updates pref and updates value`() = runTest(testDispatcher) {
         every { mockHomeRepository.collapseList } returns false
 
         initUnderTest()
@@ -58,7 +58,7 @@ internal class SettingsLayoutViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `empty weeks in schedule is true when pref is true`() = runTest {
+    fun `empty weeks in schedule is true when pref is true`() = runTest(testDispatcher) {
         every { mockHomeRepository.emptyWeeksInSchedule } returns true
 
         initUnderTest()
@@ -68,7 +68,7 @@ internal class SettingsLayoutViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `empty weeks in schedule is false when pref is false`() = runTest {
+    fun `empty weeks in schedule is false when pref is false`() = runTest(testDispatcher) {
         every { mockHomeRepository.emptyWeeksInSchedule } returns false
 
         initUnderTest()
@@ -78,7 +78,7 @@ internal class SettingsLayoutViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `click show empty weeks in schedule updates pref and updates value`() = runTest {
+    fun `click show empty weeks in schedule updates pref and updates value`() = runTest(testDispatcher) {
         every { mockHomeRepository.emptyWeeksInSchedule } returns false
 
         initUnderTest()

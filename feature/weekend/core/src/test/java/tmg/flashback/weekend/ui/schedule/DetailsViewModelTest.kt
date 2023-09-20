@@ -58,7 +58,7 @@ internal class DetailsViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `initial loads details model for race`() = runTest {
+    fun `initial loads details model for race`() = runTest(testDispatcher) {
         val schedule = Schedule.model()
         every { mockRaceRepository.getRace(2020, 1) } returns flow {
             emit(Race.model(schedule = listOf(schedule)))
@@ -77,17 +77,17 @@ internal class DetailsViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `initial loads details model for race weekend with notifications enabled`() = runTest {
+    fun `initial loads details model for race weekend with notifications enabled`() = runTest(testDispatcher) {
         `initial loads details model for race weekend`(true)
     }
 
     @Test
-    fun `initial loads details model for race weekend with notifications disabled`() = runTest {
+    fun `initial loads details model for race weekend with notifications disabled`() = runTest(testDispatcher) {
         `initial loads details model for race weekend`(false)
     }
 
     @Test
-    fun `click link opens webpage`() = runTest {
+    fun `click link opens webpage`() = runTest(testDispatcher) {
         val link = DetailsModel.Link(0, 0, "https://url.com")
         initUnderTest()
 
@@ -99,7 +99,7 @@ internal class DetailsViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `click link with circuit history url navigates to circuit`() = runTest {
+    fun `click link with circuit history url navigates to circuit`() = runTest(testDispatcher) {
         val link = DetailsModel.Link(0, 0, "flashback://circuit-history/circuitId/circuitName")
         initUnderTest()
 

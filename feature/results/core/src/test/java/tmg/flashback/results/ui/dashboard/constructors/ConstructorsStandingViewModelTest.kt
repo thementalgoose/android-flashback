@@ -34,7 +34,7 @@ internal class ConstructorsStandingViewModelTest: BaseTest() {
 
     private lateinit var underTest: ConstructorsStandingViewModel
 
-    private fun initUnderTest() = runTest {
+    private fun initUnderTest() = runTest(testDispatcher) {
         underTest = ConstructorsStandingViewModel(
             seasonRepository = mockSeasonRepository,
             fetchSeasonUseCase = mockFetchSeasonUseCase,
@@ -44,7 +44,7 @@ internal class ConstructorsStandingViewModelTest: BaseTest() {
     }
 
     @BeforeEach
-    internal fun setUp() = runTest {
+    internal fun setUp() = runTest(testDispatcher) {
         every { mockSeasonRepository.getConstructorStandings(2020) } returns flow { emit(SeasonConstructorStandings.model(
             standings = listOf(
                 SeasonConstructorStandingSeason.model(points = 2.0, constructor = Constructor.model(id = "1"), championshipPosition = 2),
@@ -55,7 +55,7 @@ internal class ConstructorsStandingViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `current season use case is fetched on initial load`() = runTest {
+    fun `current season use case is fetched on initial load`() = runTest(testDispatcher) {
         initUnderTest()
         underTest.load(2020)
 
@@ -67,7 +67,7 @@ internal class ConstructorsStandingViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `loading is returned when DB returns no standings and hasnt made request`() = runTest {
+    fun `loading is returned when DB returns no standings and hasnt made request`() = runTest(testDispatcher) {
         every { mockFetchSeasonUseCase.fetch(any()) } returns flow { emit(false) }
         every { mockSeasonRepository.getConstructorStandings(any()) } returns flow { emit(null) }
 
@@ -80,7 +80,7 @@ internal class ConstructorsStandingViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `null is returned when DB returns no standings and has made request`() = runTest {
+    fun `null is returned when DB returns no standings and has made request`() = runTest(testDispatcher) {
         every { mockFetchSeasonUseCase.fetch(any()) } returns flow { emit(true) }
         every { mockSeasonRepository.getConstructorStandings(any()) } returns flow { emit(null) }
 
@@ -93,7 +93,7 @@ internal class ConstructorsStandingViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `expected list is returned when items are loaded from the DB`() = runTest {
+    fun `expected list is returned when items are loaded from the DB`() = runTest(testDispatcher) {
         initUnderTest()
         underTest.load(2020)
 
@@ -111,7 +111,7 @@ internal class ConstructorsStandingViewModelTest: BaseTest() {
 
 
     @Test
-    fun `refresh calls fetch season and updates is refreshing`() = runTest {
+    fun `refresh calls fetch season and updates is refreshing`() = runTest(testDispatcher) {
         initUnderTest()
         underTest.load(2020)
 
@@ -132,7 +132,7 @@ internal class ConstructorsStandingViewModelTest: BaseTest() {
 
 
     @Test
-    fun `clicking item goes to constructor overview`() = runTest {
+    fun `clicking item goes to constructor overview`() = runTest(testDispatcher) {
         initUnderTest()
         underTest.load(2020)
         val model = ConstructorStandingsModel.Standings(

@@ -67,7 +67,7 @@ internal class DashboardViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `dark mode result is read`() = runTest {
+    fun `dark mode result is read`() = runTest(testDispatcher) {
         every { mockStyleManager.isDayMode } returns true
 
         initUnderTest()
@@ -81,7 +81,7 @@ internal class DashboardViewModelTest: BaseTest() {
         "true,NIGHT",
         "false,DAY"
     )
-    fun `clicking dark mode calls use case`(state: Boolean, nightMode: NightMode) = runTest {
+    fun `clicking dark mode calls use case`(state: Boolean, nightMode: NightMode) = runTest(testDispatcher) {
         every { mockStyleManager.isDayMode } returns !state
         initUnderTest()
 
@@ -95,7 +95,7 @@ internal class DashboardViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `app version is read from build config manager`() = runTest {
+    fun `app version is read from build config manager`() = runTest(testDispatcher) {
         every { mockBuildConfigManager.versionName } returns "version-name"
 
         initUnderTest()
@@ -105,7 +105,7 @@ internal class DashboardViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `snow easter egg is emitted from use case`() = runTest {
+    fun `snow easter egg is emitted from use case`() = runTest(testDispatcher) {
         every { mockIsSnowEnabledUseCase.invoke() } returns true
 
         initUnderTest()
@@ -115,7 +115,7 @@ internal class DashboardViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `ukraine easter egg is emitted from use case`() = runTest {
+    fun `ukraine easter egg is emitted from use case`() = runTest(testDispatcher) {
         every { mockIsUkraineEnabledUseCase.invoke() } returns true
 
         initUnderTest()
@@ -125,7 +125,7 @@ internal class DashboardViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `menu title is emitted from use case`() = runTest {
+    fun `menu title is emitted from use case`() = runTest(testDispatcher) {
         every { mockIsMenuIconEnabledUseCase.invoke() } returns MenuIcons.CHRISTMAS
 
         initUnderTest()
@@ -153,7 +153,7 @@ internal class DashboardViewModelTest: BaseTest() {
             seenRuntimeNotifications: Boolean,
             isRuntimeNotificationsEnabled: Boolean,
             isFeatureIncluded: Boolean
-        ) = runTest {
+        ) = runTest(testDispatcher) {
             every { mockBuildConfigManager.isRuntimeNotificationsSupported } returns isRuntimeNotificationsSupported
             every { mockNotificationRepository.seenRuntimeNotifications } returns seenRuntimeNotifications
             every { mockPermissionRepository.isRuntimeNotificationsEnabled } returns isRuntimeNotificationsEnabled
@@ -170,7 +170,7 @@ internal class DashboardViewModelTest: BaseTest() {
         }
 
         @Test
-        fun `clicking runtime notifications`() = runTest {
+        fun `clicking runtime notifications`() = runTest(testDispatcher) {
             val permissions: CompletableDeferred<Map<String, Boolean>> = CompletableDeferred()
             every { mockPermissionManager.requestPermission(AppPermissions.RuntimeNotifications) } returns permissions
             every { mockBuildConfigManager.isRuntimeNotificationsSupported } returns true
