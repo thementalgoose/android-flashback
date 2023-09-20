@@ -62,7 +62,7 @@ internal class ConstructorSeasonViewModelTest: BaseTest() {
 
     @Test
     fun `constructor data with empty results and no network shows pull to refresh`() =
-        runTest {
+        runTest(testDispatcher) {
             val input = ConstructorHistory.model(standings = emptyList())
             every { mockConstructorRepository.getConstructorOverview(any()) } returns flow {
                 emit(
@@ -85,7 +85,7 @@ internal class ConstructorSeasonViewModelTest: BaseTest() {
         }
 
     @Test
-    fun `constructor data with null item and no network shows pull to refresh`() = runTest {
+    fun `constructor data with null item and no network shows pull to refresh`() = runTest(testDispatcher) {
         every { mockConstructorRepository.getConstructorOverview(any()) } returns flow { emit(null) }
         every { mockNetworkConnectivityManager.isConnected } returns false
 
@@ -103,7 +103,7 @@ internal class ConstructorSeasonViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `constructor data with empty results and network shows data unavailable`() = runTest {
+    fun `constructor data with empty results and network shows data unavailable`() = runTest(testDispatcher) {
         val input = ConstructorHistory.model(standings = emptyList())
         every { mockConstructorRepository.getConstructorOverview(any()) } returns flow { emit(input) }
         every { mockNetworkConnectivityManager.isConnected } returns true
@@ -124,7 +124,7 @@ internal class ConstructorSeasonViewModelTest: BaseTest() {
 
     @Test
     fun `constructor data with results and network shows list of results in descending order`() =
-        runTest {
+        runTest(testDispatcher) {
             val input = ConstructorHistory.model(
                 standings = listOf(
                     ConstructorHistorySeason.model(season = 2020)
@@ -156,7 +156,7 @@ internal class ConstructorSeasonViewModelTest: BaseTest() {
     //region Request
 
     @Test
-    fun `constructor request is not made when season count is found`() = runTest {
+    fun `constructor request is not made when season count is found`() = runTest(testDispatcher) {
         coEvery { mockConstructorRepository.getConstructorSeasonCount(any()) } returns 1
 
         initSUT()
@@ -168,7 +168,7 @@ internal class ConstructorSeasonViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `constructor request is made when season count is 0`() = runTest {
+    fun `constructor request is made when season count is 0`() = runTest(testDispatcher) {
         coEvery { mockConstructorRepository.getConstructorSeasonCount(any()) } returns 0
 
         initSUT()
@@ -210,7 +210,7 @@ internal class ConstructorSeasonViewModelTest: BaseTest() {
     //region Refresh
 
     @Test
-    fun `refresh calls constructor repository`() = runTest {
+    fun `refresh calls constructor repository`() = runTest(testDispatcher) {
         initSUT()
         sut.inputs.setup("constructorId", 2020)
 

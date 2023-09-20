@@ -37,7 +37,7 @@ internal class SettingsAboutViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `shake to report is enabled when pref is true`() = runTest {
+    fun `shake to report is enabled when pref is true`() = runTest(testDispatcher) {
         every { mockPrivacyRepository.shakeToReport } returns true
 
         initUnderTest()
@@ -47,7 +47,7 @@ internal class SettingsAboutViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `shake to report is disabled when pref is disabled`() = runTest {
+    fun `shake to report is disabled when pref is disabled`() = runTest(testDispatcher) {
         every { mockPrivacyRepository.shakeToReport } returns false
 
         initUnderTest()
@@ -78,7 +78,7 @@ internal class SettingsAboutViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `click shake to report updates pref and updates value`() = runTest {
+    fun `click shake to report updates pref and updates value`() = runTest(testDispatcher) {
         every { mockPrivacyRepository.shakeToReport } returns false
         initUnderTest()
         underTest.outputs.shakeToReportEnabled.test { awaitItem() }

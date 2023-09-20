@@ -24,7 +24,7 @@ internal class SettingsAdsViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `ads enabled is true when user pref is enabled`() = runTest {
+    fun `ads enabled is true when user pref is enabled`() = runTest(testDispatcher) {
         every { mockAdsRepository.userPrefEnabled } returns true
 
         initUnderTest()
@@ -34,7 +34,7 @@ internal class SettingsAdsViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `ads enabled is false when user pref is false`() = runTest {
+    fun `ads enabled is false when user pref is false`() = runTest(testDispatcher) {
         every { mockAdsRepository.userPrefEnabled } returns false
 
         initUnderTest()
@@ -44,7 +44,7 @@ internal class SettingsAdsViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `clicking ads enabled updates pref and updates values`() = runTest {
+    fun `clicking ads enabled updates pref and updates values`() = runTest(testDispatcher) {
         every { mockAdsRepository.userPrefEnabled } returns false
 
         initUnderTest()

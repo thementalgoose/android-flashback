@@ -34,7 +34,7 @@ internal class ConfigureRSSViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `show add custom is enabled when config is true`() = runTest {
+    fun `show add custom is enabled when config is true`() = runTest(testDispatcher) {
         every { mockRssRepository.addCustom } returns true
 
         initUnderTest()
@@ -44,7 +44,7 @@ internal class ConfigureRSSViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `show add custom is disabled when config is false`() = runTest {
+    fun `show add custom is disabled when config is false`() = runTest(testDispatcher) {
         every { mockRssRepository.addCustom } returns false
 
         initUnderTest()
@@ -54,7 +54,7 @@ internal class ConfigureRSSViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `show description is enabled when pref is true`() = runTest {
+    fun `show description is enabled when pref is true`() = runTest(testDispatcher) {
         every { mockRssRepository.rssShowDescription } returns true
 
         initUnderTest()
@@ -64,7 +64,7 @@ internal class ConfigureRSSViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `show description is disabled when pref is false`() = runTest {
+    fun `show description is disabled when pref is false`() = runTest(testDispatcher) {
         every { mockRssRepository.rssShowDescription } returns false
 
         initUnderTest()
@@ -74,7 +74,7 @@ internal class ConfigureRSSViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `clicking show description updates pref and updates value`() = runTest {
+    fun `clicking show description updates pref and updates value`() = runTest(testDispatcher) {
         every { mockRssRepository.rssShowDescription } returns false
 
         initUnderTest()
@@ -92,7 +92,7 @@ internal class ConfigureRSSViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `rss list is emitted with supported and custom sources`() = runTest {
+    fun `rss list is emitted with supported and custom sources`() = runTest(testDispatcher) {
         every { mockRssRepository.rssUrls } returns setOf(
             fakeSupportedArticleSource.rssLink,
             "https://www.custom_rss.com/rss"
@@ -108,7 +108,7 @@ internal class ConfigureRSSViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `adding custom source updates rss list`() = runTest {
+    fun `adding custom source updates rss list`() = runTest(testDispatcher) {
         every { mockRssRepository.rssUrls } returns setOf(
             fakeSupportedArticleSource.rssLink
         )
@@ -130,7 +130,7 @@ internal class ConfigureRSSViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `removing custom source updates rss list`() = runTest {
+    fun `removing custom source updates rss list`() = runTest(testDispatcher) {
         every { mockRssRepository.rssUrls } returns setOf(
             fakeSupportedArticleSource.rssLink,
             "https://www.custom_rss.com/rss"
@@ -152,7 +152,7 @@ internal class ConfigureRSSViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `adding supported source updates rss list`() = runTest {
+    fun `adding supported source updates rss list`() = runTest(testDispatcher) {
         every { mockRssRepository.rssUrls } returns setOf(
             "https://www.custom_rss.com/rss"
         )
@@ -179,7 +179,7 @@ internal class ConfigureRSSViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `removing supported source updates rss list`() = runTest {
+    fun `removing supported source updates rss list`() = runTest(testDispatcher) {
         every { mockRssRepository.rssUrls } returns setOf(
             "https://www.custom_rss.com/rss",
             fakeSupportedArticleSource.rssLink
@@ -207,7 +207,7 @@ internal class ConfigureRSSViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `visit website forwards call to website navigator`() = runTest {
+    fun `visit website forwards call to website navigator`() = runTest(testDispatcher) {
         initUnderTest()
         underTest.inputs.visitWebsite(fakeSupportedArticleSource)
 

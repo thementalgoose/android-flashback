@@ -34,7 +34,7 @@ internal class ThemeViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `initial value is pulled from theme repository`() = runTest {
+    fun `initial value is pulled from theme repository`() = runTest(testDispatcher) {
         initUnderTest()
 
         underTest.outputs.currentlySelected.test {
