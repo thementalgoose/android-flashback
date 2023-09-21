@@ -9,6 +9,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
 import tmg.flashback.R
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
@@ -20,6 +21,7 @@ import tmg.flashback.ui.components.settings.Footer
 import tmg.flashback.ui.components.settings.Header
 import tmg.flashback.ui.components.settings.Option
 import tmg.flashback.ui.components.settings.Pref
+import tmg.flashback.ui.lifecycle.OnLifecycleEvent
 import tmg.flashback.ui.settings.Setting
 import tmg.flashback.ui.settings.Settings
 
@@ -34,6 +36,12 @@ fun SettingsNotificationUpcomingNoticeScreenVM(
     val result = viewModel.outputs.currentlySelected.collectAsState(NotificationReminder.MINUTES_30)
     val permissions = viewModel.outputs.permissions.collectAsState()
 
+    OnLifecycleEvent { owner, event ->
+        when (event) {
+            Lifecycle.Event.ON_RESUME -> viewModel.refresh()
+            else -> { }
+        }
+    }
     LaunchedEffect(Unit) {
         viewModel.refresh()
     }
