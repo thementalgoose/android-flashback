@@ -32,7 +32,7 @@ class PermissionManager @Inject constructor(
         }
     }
 
-    fun requestPermission(vararg rationaleType: tmg.flashback.device.AppPermissions.RuntimePermission): CompletableDeferred<Map<String, Boolean>> {
+    fun requestPermission(vararg rationaleType: AppPermissions.RuntimePermission): CompletableDeferred<Map<String, Boolean>> {
         completableDeferred = CompletableDeferred()
         baseActivity?.requestPermission(*rationaleType)
         return completableDeferred ?: CompletableDeferred<Map<String, Boolean>>().apply {
