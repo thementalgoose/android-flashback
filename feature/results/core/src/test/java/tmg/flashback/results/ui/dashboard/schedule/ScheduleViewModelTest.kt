@@ -136,9 +136,6 @@ internal class ScheduleViewModelTest: BaseTest() {
         underTest.outputs.items.test {
             assertNotNull(awaitItem())
         }
-        underTest.outputs.showEvents.test {
-            assertEquals(true, awaitItem())
-        }
     }
 
 
@@ -298,8 +295,7 @@ internal class ScheduleViewModelTest: BaseTest() {
     fun `clicking preseason with season launches preseason sheet`() = runTest(testDispatcher) {
         initUnderTest()
         underTest.load(2020)
-
-        underTest.inputs.clickPreseason(2020)
+        underTest.clickItem(ScheduleModel.AllEvents)
 
         verify {
             mockResultsNavigationComponent.preseasonEvents(2020)
