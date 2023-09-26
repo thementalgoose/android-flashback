@@ -19,6 +19,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.stateDescription
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -36,8 +37,10 @@ import tmg.flashback.results.ui.messaging.ProvidedBy
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
+import tmg.flashback.style.buttons.ButtonSecondary
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
+import tmg.flashback.style.text.TextSection
 import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.ui.components.header.Header
@@ -63,7 +66,6 @@ fun ScheduleScreenVM(
 
     val isRefreshing = viewModel.outputs.isRefreshing.collectAsState(false)
     val items = viewModel.outputs.items.collectAsState(listOf(ScheduleModel.Loading))
-    val showPreseason = viewModel.outputs.showEvents.collectAsState(false)
     SwipeRefresh(
         isLoading = isRefreshing.value,
         onRefresh = viewModel.inputs::refresh
@@ -71,11 +73,9 @@ fun ScheduleScreenVM(
         ScheduleScreen(
             showMenu = showMenu,
             tyreClicked = viewModel.inputs::clickTyre,
-            preseasonClicked = viewModel.inputs::clickPreseason,
             menuClicked = menuClicked,
             itemClicked = viewModel.inputs::clickItem,
             season = season,
-            showPreseason = showPreseason.value,
             items = items.value
         )
     }
@@ -86,11 +86,9 @@ fun ScheduleScreenVM(
 fun ScheduleScreen(
     showMenu: Boolean,
     tyreClicked: (season: Int) -> Unit,
-    preseasonClicked: (season: Int) -> Unit,
     menuClicked: (() -> Unit)? = null,
     itemClicked: (ScheduleModel) -> Unit,
     season: Int,
-    showPreseason: Boolean,
     items: List<ScheduleModel>?
 ) {
     LazyColumn(
@@ -104,15 +102,6 @@ fun ScheduleScreen(
                     action = if (showMenu) HeaderAction.MENU else null,
                     actionUpClicked = { menuClicked?.invoke() },
                     overrideIcons = {
-                        if (showPreseason) {
-                            IconButton(onClick = { preseasonClicked(season) }) {
-                                Icon(
-                                    painter = painterResource(id = R.drawable.ic_preseason_events),
-                                    contentDescription = stringResource(id = R.string.ab_preseason_events),
-                                    tint = AppTheme.colors.contentSecondary
-                                )
-                            }
-                        }
                         SeasonTyres.getBySeason(season)?.let {
                             IconButton(onClick = { tyreClicked(season) }) {
                                 Icon(
@@ -157,7 +146,12 @@ fun ScheduleScreen(
                     ScheduleModel.Loading -> {
                         SkeletonViewList()
                     }
-
+                    ScheduleModel.AllEvents -> {
+                        PreseasonEvents(
+                            model = ScheduleModel.AllEvents,
+                            itemClicked = itemClicked
+                        )
+                    }
                     is ScheduleModel.EmptyWeek -> {
                         EmptyWeek(model = item)
                     }
@@ -242,6 +236,25 @@ private fun CollapsableList(
         }
 
         Expand()
+    }
+}
+
+@Composable
+private fun PreseasonEvents(
+    model: ScheduleModel.AllEvents,
+    itemClicked: (ScheduleModel) -> Unit
+) {
+    Row(modifier = Modifier
+        .fillMaxWidth()
+        .padding(
+            horizontal = AppTheme.dimens.medium,
+            vertical = AppTheme.dimens.small
+        )
+    ) {
+        ButtonSecondary(
+            text = stringResource(id = R.string.ab_preseason_events),
+            onClick = { itemClicked(model) }
+        )
     }
 }
 
