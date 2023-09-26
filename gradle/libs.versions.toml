@@ -1,6 +1,7 @@
 [versions]  # ===========================================================================
 kotlin = "1.9.0"
 hilt = "2.48"
+androidx_activity = "1.7.2"
 androidx_navigation = "2.7.2"
 androidx_lifecycle = "2.6.2"
 androidx_hilt = "1.1.0-alpha01"
@@ -33,6 +34,7 @@ play_publisher = "com.github.triplet.gradle:play-publisher:3.8.4"
 r8 = "com.android.tools:r8:8.1.56"
 
 ## App Dependencies
+androidx_activity = { module = "androidx.activity:activity", version.ref = "androidx_activity" }
 androidx_core = "androidx.core:core-ktx:1.12.0"
 androidx_appcompat = "androidx.appcompat:appcompat:1.6.1"
 androidx_constraintlayout = "androidx.constraintlayout:constraintlayout:2.1.4"
@@ -67,7 +69,7 @@ accompanist_placeholder = { module = "com.google.accompanist:accompanist-placeho
 coil = "io.coil-kt:coil-compose:2.4.0"
 circleimageview = "de.hdodenhof:circleimageview:3.1.0"
 
-compose_activity = "androidx.activity:activity-compose:1.7.2"
+compose_activity = { module = "androidx.activity:activity-compose", version.ref = "androidx_activity" }
 compose_theme_adapter = "com.google.android.material:compose-theme-adapter:1.2.1"
 compose_navigation = { module = "androidx.navigation:navigation-compose", version.ref = "androidx_navigation" }
 compose_viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "androidx_lifecycle" }
