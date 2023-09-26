@@ -51,7 +51,9 @@ sealed class ScheduleModel(
             get() = event.date
     }
 
-    object Loading: ScheduleModel(
+    data object AllEvents: ScheduleModel("all-events")
+
+    data object Loading: ScheduleModel(
         key = "loading"
     )
 }

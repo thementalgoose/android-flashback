@@ -37,7 +37,6 @@ internal object ScheduleModelBuilder {
             })
             return list
         }
-
         if (showCollapsePreviousRaces && next.round >= 4) {
             val twoRacesAgo = overview.overviewRaces.first { it.round == next.round - 2 }
             list.add(ScheduleModel.GroupedCompletedRaces(
@@ -66,7 +65,10 @@ internal object ScheduleModelBuilder {
                 return@filter it.round >= next.round
             }
             .sortedBy { it.round }
-            .forEach { overviewRace ->
+            .forEachIndexed { index, overviewRace ->
+                if (index == 0 && events.any() && list.none { it is ScheduleModel.GroupedCompletedRaces } && overview.completed != 0) {
+                    list.add(ScheduleModel.AllEvents)
+                }
                 list.add(ScheduleModel.RaceWeek(
                     model = overviewRace,
                     showScheduleList = overviewRace.round == next.round,
@@ -86,6 +88,7 @@ internal object ScheduleModelBuilder {
                     is ScheduleModel.Event -> it.date.format("yyyy-MM-dd")
                     is ScheduleModel.RaceWeek -> it.date.format("yyyy-MM-dd")
                     ScheduleModel.Loading -> "0000-00-00"
+                    ScheduleModel.AllEvents -> "0000-00-00"
                 }
             }
     }

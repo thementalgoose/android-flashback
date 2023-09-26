@@ -37,14 +37,12 @@ interface ScheduleViewModelInputs {
     fun load(season: Int)
 
     fun clickTyre(season: Int)
-    fun clickPreseason(season: Int)
     fun clickItem(model: ScheduleModel)
 }
 
 interface ScheduleViewModelOutputs {
     val items: StateFlow<List<ScheduleModel>?>
     val isRefreshing: StateFlow<Boolean>
-    val showEvents: StateFlow<Boolean>
 }
 
 @HiltViewModel
@@ -65,7 +63,6 @@ class ScheduleViewModel @Inject constructor(
     override val isRefreshing: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
     private var showCollapsablePlaceholder: MutableStateFlow<Boolean> = MutableStateFlow(homeRepository.collapseList)
-    override val showEvents: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
     private val season: MutableStateFlow<Int?> = MutableStateFlow(null)
     override val items: StateFlow<List<ScheduleModel>?> = season
@@ -85,8 +82,6 @@ class ScheduleViewModel @Inject constructor(
                             return@combine listOf(ScheduleModel.Loading)
                         }
 
-                        showEvents.value = events.any()
-
                         return@combine generateScheduleModel(
                             overview = overview,
                             events = events,
@@ -100,12 +95,6 @@ class ScheduleViewModel @Inject constructor(
         .flowOn(ioDispatcher)
         .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
-    private fun List<OverviewRace>.getLatestUpcoming(): OverviewRace? {
-        return this
-            .sortedBy { it.date }
-            .firstOrNull { it.date >= LocalDate.now() }
-    }
-
     override fun load(season: Int) {
         if (this.season.value != season) {
             this.showCollapsablePlaceholder.value = homeRepository.collapseList
@@ -116,7 +105,6 @@ class ScheduleViewModel @Inject constructor(
     override fun refresh() {
         val season = season.value ?: return
 
-        showEvents.value = false
         isRefreshing.value = true
         viewModelScope.launch(ioDispatcher) {
             fetchSeasonUseCase.fetchSeason(season)
@@ -126,10 +114,6 @@ class ScheduleViewModel @Inject constructor(
 
     override fun clickTyre(season: Int) {
         resultsNavigationComponent.tyres(season)
-    }
-
-    override fun clickPreseason(season: Int) {
-        resultsNavigationComponent.preseasonEvents(season)
     }
 
     override fun clickItem(model: ScheduleModel) {
@@ -155,6 +139,11 @@ class ScheduleViewModel @Inject constructor(
             }
             is ScheduleModel.Event -> {}
             ScheduleModel.Loading -> {}
+            ScheduleModel.AllEvents -> {
+                season.value?.let {
+                    resultsNavigationComponent.preseasonEvents(it)
+                }
+            }
         }
     }
 
