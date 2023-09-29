@@ -194,7 +194,7 @@ private val MIGRATION_10_11 = object : Migration(10, 11) {
                 "status TEXT NOT NULL," +
                 "points REAL NOT NULL," +
                 "id TEXT NOT NULL PRIMARY KEY," +
-                "driver_season_id TEXT NOT NULL." +
+                "driver_season_id TEXT NOT NULL," +
                 "season_round_id TEXT NOT NULL" +
         ")")
         database.execSQL("INSERT INTO DriverSeasonRace_Temp " +
