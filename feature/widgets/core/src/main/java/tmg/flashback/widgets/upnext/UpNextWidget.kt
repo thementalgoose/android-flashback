@@ -9,6 +9,7 @@ import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
 import androidx.glance.Image
 import androidx.glance.ImageProvider
@@ -20,6 +21,7 @@ import androidx.glance.action.clickable
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.SizeMode
 import androidx.glance.appwidget.action.actionRunCallback
+import androidx.glance.appwidget.provideContent
 import androidx.glance.background
 import androidx.glance.layout.Alignment
 import androidx.glance.layout.Column
@@ -74,17 +76,13 @@ class UpNextWidget: GlanceAppWidget() {
         configRaceScheduleFullListLargeRaceTrackIcon
     ))
 
-    @Composable
-    override fun Content() {
-        val context = LocalContext.current
-
-        Log.i("UpNextWidget", "provideGlance")
-
+    override suspend fun provideGlance(
+        context: Context,
+        id: GlanceId
+    ) = provideContent {
         val overviewRace = getNextOverviewRace(context)
         val widgetsRepository = WidgetsEntryPoints.get(context).widgetsRepository()
-
         Log.i("UpNextWidget", "Next race found $overviewRace")
-
         val appWidgetId = LocalGlanceId.current.appWidgetId
         val widgetData = getWidgetColourData(context, showBackground = widgetsRepository.getShowBackground(appWidgetId), isDarkMode = context.isInNightMode())
         if (overviewRace != null) {
