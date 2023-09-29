@@ -27,7 +27,7 @@ gradle_hilt = { module = "com.google.dagger:hilt-android-gradle-plugin", version
 gradle_junit5 = "de.mannodermaus.gradle.plugins:android-junit5:1.9.3.0"
 gradle_kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 gradle_newrelic = { module = "com.newrelic.agent.android:agent-gradle-plugin", version.ref = "newrelic" }
-google_services = "com.google.gms:google-services:4.3.15"
+google_services = "com.google.gms:google-services:4.4.0"
 kotlinx_serialization_core = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin" }
 firebase_perf_plugin = "com.google.firebase:perf-plugin:1.4.2"
 play_publisher = "com.github.triplet.gradle:play-publisher:3.8.4"
@@ -122,7 +122,7 @@ room_testing = { module = "androidx.room:room-testing", version.ref = "androidx_
 shakey = "com.linkedin.shaky:shaky:3.0.4"
 falcon = "com.jraska:falcon:2.2.0"
 
-playservicesads = "com.google.android.gms:play-services-ads:22.3.0"
+playservicesads = "com.google.android.gms:play-services-ads:22.4.0"
 
 skeletonlayout = "com.faltenreich:skeletonlayout:4.0.0"
 
