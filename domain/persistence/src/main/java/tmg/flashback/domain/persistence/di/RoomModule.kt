@@ -180,8 +180,32 @@ private val MIGRATION_9_10 = object : Migration(9, 10) {
 
 private val MIGRATION_10_11 = object : Migration(10, 11) {
     override fun migrate(database: SupportSQLiteDatabase) {
-        database.execSQL("ALTER TABLE DriverSeasonRace RENAME COLUMN is_sprint_quali TO sprint_qualifying")
-        database.execSQL("ALTER TABLE DriverSeasonRace ADD COLUMN sprint_race INTEGER NOT NULL DEFAULT 0")
+
+        database.execSQL("CREATE TABLE DriverSeasonRace_Temp (" +
+                "driver_id TEXT NOT NULL," +
+                "season INTEGER NOT NULL," +
+                "round INTEGER NOT NULL," +
+                "constructor_id TEXT NOT NULL," +
+                "sprint_qualifying INTEGER NOT NULL DEFAULT 0," +
+                "sprint_race INTEGER NOT NULL DEFAULT 0," +
+                "qualified INTEGER," +
+                "gridPos INTEGER," +
+                "finished INTEGER NOT NULL," +
+                "status TEXT NOT NULL," +
+                "points REAL NOT NULL," +
+                "id TEXT NOT NULL PRIMARY KEY," +
+                "driver_season_id TEXT NOT NULL." +
+                "season_round_id TEXT NOT NULL" +
+        ")")
+        database.execSQL("INSERT INTO DriverSeasonRace_Temp " +
+                "(driver_id, season, round, constructor_id, sprint_qualifying, qualified, gridPos, finished, status, points, id, driver_season_id, season_round_id) " +
+                "SELECT driver_id, season, round, constructor_id, is_sprint_quali, qualified, gridPos, finished, status, points, id, driver_season_id, season_round_id " +
+                "FROM DriverSeasonRace")
+        database.execSQL("DROP TABLE DriverSeasonRace")
+        database.execSQL("ALTER TABLE DriverSeasonRace_Temp RENAME TO DriverSeasonRace")
+
+//        database.execSQL("ALTER TABLE DriverSeasonRace RENAME COLUMN is_sprint_quali TO sprint_qualifying")
+//        database.execSQL("ALTER TABLE DriverSeasonRace ADD COLUMN sprint_race INTEGER NOT NULL DEFAULT 0")
         Log.i("Database", "Migrated DB from version $startVersion to $endVersion")
     }
 }
