@@ -58,7 +58,7 @@ We plan to keep adding new features and statistics, if you have any suggestions 
 
 With the 2021 season underway, the calendar might be subject to change as races are cancelled or rescheduled. As such 2021 data may fail to appear in the app after a race has completed or the upcoming calendar in app may not be accurate. We will endeavour to get this resolved as soon as possible!
 
-Data is supplied by the Ergast API and cached by the flashback team, thanks to them for making this app possible! You can contact the Ergast API team at ergast.com/mrd/
+Data is sourced by the flashback team with special thanks to the Ergast API up to 2023, thanks to them for making this app possible! You can contact the Ergast API team at ergast.com/mrd/
 
 Flashback includes quick links for Formula 1 RSS feeds from autosport.com, crash.net, motorsport.com, pitpass.com, f1-fansite.com, bbc.co.uk, theguardian.com, wtf1.com, grandprix247.com, f1i.com, and f1technical.net, but is not affiliated with them in any way
 
