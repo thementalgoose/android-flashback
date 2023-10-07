@@ -32,7 +32,7 @@ fun Message(
 private fun Preview() {
     AppThemePreview {
         Message(
-            title = "Data is provided with <3 by the Flashback team and Ergast API"
+            title = "Data is provided with <3 by the Flashback team"
         )
     }
 }
