@@ -49,7 +49,7 @@ private fun ProvidedBy(
 private fun Preview() {
     AppThemePreview {
         ProvidedBy(
-            title = "Data is provided with <3 by the Flashback team and Ergast API",
+            title = "Data is provided with <3 by the Flashback team",
             clicked = {}
         )
     }
