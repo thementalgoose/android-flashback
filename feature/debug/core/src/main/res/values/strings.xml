@@ -6,6 +6,9 @@
     <string name="debug_menu_sync">Sync</string>
     <string name="debug_menu_debug">Debug</string>
     <string name="debug_menu_ads_config">Ads Config</string>
+    <string name="debug_menu_f1_race">Web: F1 Race</string>
+    <string name="debug_menu_f1_drivers">Web: F1 Drivers</string>
+    <string name="debug_menu_f1_constructors">Web: F1 Constructors</string>
 
     <string name="debug_constant">Constants</string>
 
