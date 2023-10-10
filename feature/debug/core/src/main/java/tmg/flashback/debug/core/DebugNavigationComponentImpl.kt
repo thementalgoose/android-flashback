@@ -41,6 +41,9 @@ internal class DebugNavigationComponentImpl @Inject constructor(
                 val currentYear = Year.now().value
                 it.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://www.formula1.com/en/results.html/${currentYear}/team.html")))
             }
+            MENU_GITHUB_ACTIONS -> activityProvider.launch {
+                it.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/thementalgoose/api-flashback/actions/workflows/sync-formula1.yml")))
+            }
             else -> { }
         }
     }
@@ -52,7 +55,8 @@ internal class DebugNavigationComponentImpl @Inject constructor(
         DebugMenuItem(R.string.debug_menu_sync, R.drawable.debug_list_sync, MENU_SYNC),
         DebugMenuItem(R.string.debug_menu_f1_race, R.drawable.debug_list_formula1, MENU_F1_RESULTS),
         DebugMenuItem(R.string.debug_menu_f1_drivers, R.drawable.debug_list_formula1, MENU_F1_DRIVERS),
-        DebugMenuItem(R.string.debug_menu_f1_constructors, R.drawable.debug_list_formula1, MENU_F1_CONSTRUCTORS)
+        DebugMenuItem(R.string.debug_menu_f1_constructors, R.drawable.debug_list_formula1, MENU_F1_CONSTRUCTORS),
+        DebugMenuItem(R.string.debug_menu_github_actions, R.drawable.debug_list_github, MENU_GITHUB_ACTIONS)
     )
 
     companion object {
@@ -60,6 +64,7 @@ internal class DebugNavigationComponentImpl @Inject constructor(
         internal const val MENU_F1_RESULTS = "f1_race"
         internal const val MENU_F1_DRIVERS = "f1_drivers"
         internal const val MENU_F1_CONSTRUCTORS = "f1_constructors"
+        internal const val MENU_GITHUB_ACTIONS = "github_actions"
         internal const val MENU_STYLEGUIDE = "styleguide"
         internal const val MENU_ADVERTS = "adverts"
         internal const val MENU_SYNC = "sync"
