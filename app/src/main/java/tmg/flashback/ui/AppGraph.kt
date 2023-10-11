@@ -78,7 +78,6 @@ import tmg.flashback.weekend.ui.WeekendScreenVM
 @Composable
 fun AppGraph(
     openMenu: () -> Unit,
-    defaultSeason: Int,
     navController: NavHostController,
     deeplink: String?,
     windowSize: WindowSizeClass,
@@ -103,7 +102,7 @@ fun AppGraph(
         )) {
             // Has to be nullable because initial navigation graph
             //  value cannot contain placeholder values
-            val season = it.arguments?.getString("season")?.toIntOrNull() ?: defaultSeason
+            val season = it.arguments?.getString("season")?.toIntOrNull() ?: 2023 // TODO: Fix this!
             ScheduleScreenVM(
                 menuClicked = openMenu,
                 showMenu = isCompact,
@@ -115,7 +114,7 @@ fun AppGraph(
             Screen.Constructors.route, arguments = listOf(
                 navStringRequired("season")
         )) {
-            val season = it.arguments?.getString("season")?.toIntOrNull() ?: defaultSeason
+            val season = it.arguments?.getString("season")?.toIntOrNull() ?: 2023 // TODO: Fix this!
             ConstructorStandingsScreenVM(
                 menuClicked = openMenu,
                 showMenu = isCompact,
@@ -127,7 +126,7 @@ fun AppGraph(
             Screen.Drivers.route, arguments = listOf(
                 navStringRequired("season")
         )) {
-            val season = it.arguments?.getString("season")!!.toIntOrNull() ?: defaultSeason
+            val season = it.arguments?.getString("season")!!.toIntOrNull() ?: 2023 // TODO: Fix this!
             DriverStandingsScreenVM(
                 menuClicked = openMenu,
                 showMenu = isCompact,
