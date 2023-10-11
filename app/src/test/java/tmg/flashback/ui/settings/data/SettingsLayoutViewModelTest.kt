@@ -7,7 +7,7 @@ import io.mockk.verify
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import tmg.flashback.results.repository.HomeRepository
+import tmg.flashback.season.repository.HomeRepository
 import tmg.flashback.ui.settings.Settings
 import tmg.testutils.BaseTest
 

@@ -36,7 +36,7 @@ dependencies {
     implementation project(path: ":feature:constructors:contract")
     implementation project(path: ":feature:drivers:contract")
     implementation project(path: ":feature:circuits:contract")
-    implementation project(path: ":feature:results:contract")
+    implementation project(path: ":feature:season:contract")
 
     implementation libs.bundles.retrofit
     implementation libs.bundles.okhttp

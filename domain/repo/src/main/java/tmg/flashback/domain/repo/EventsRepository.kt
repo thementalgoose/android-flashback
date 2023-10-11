@@ -28,7 +28,7 @@ class EventsRepository @Inject constructor(
      * Fetch overview events for a specific season [season]
      * @param season
      */
-    suspend fun fetchEvents(season: Int): Boolean = attempt(
+    internal suspend fun fetchEvents(season: Int): Boolean = attempt(
         apiCall = suspend { api.getOverviewEvents(season) },
         msgIfFailed = "overview/${season}/events.json"
     ) { data ->

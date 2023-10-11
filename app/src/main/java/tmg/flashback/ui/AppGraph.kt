@@ -24,34 +24,31 @@ import tmg.flashback.constructors.contract.Constructor
 import tmg.flashback.constructors.contract.ConstructorSeason
 import tmg.flashback.constructors.contract.model.ScreenConstructorData
 import tmg.flashback.constructors.contract.model.ScreenConstructorSeasonData
-import tmg.flashback.constructors.ui.overview.ConstructorOverviewScreenVM
-import tmg.flashback.constructors.ui.season.ConstructorSeasonScreenVM
+import tmg.flashback.constructors.presentation.overview.ConstructorOverviewScreenVM
+import tmg.flashback.constructors.presentation.season.ConstructorSeasonScreenVM
+import tmg.flashback.season.presentation.dashboard.constructors.ConstructorStandingsScreenVM
 import tmg.flashback.drivers.contract.Driver
 import tmg.flashback.drivers.contract.DriverSeason
-import tmg.flashback.drivers.contract.DriverStandings
 import tmg.flashback.drivers.contract.model.ScreenDriverData
 import tmg.flashback.drivers.contract.model.ScreenDriverSeasonData
 import tmg.flashback.drivers.presentation.overview.DriverOverviewScreenVM
 import tmg.flashback.drivers.presentation.season.DriverSeasonScreenVM
+import tmg.flashback.season.presentation.dashboard.drivers.DriverStandingsScreenVM
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.flashback.navigation.asNavigationDestination
-import tmg.flashback.navigation.navString
-import tmg.flashback.navigation.navStringRequired
 import tmg.flashback.privacypolicy.contract.PrivacyPolicy
 import tmg.flashback.privacypolicy.ui.PrivacyPolicyScreenVM
-import tmg.flashback.results.Calendar
-import tmg.flashback.results.Constructors
-import tmg.flashback.results.Drivers
-import tmg.flashback.results.ui.dashboard.constructors.ConstructorStandingsScreenVM
-import tmg.flashback.results.ui.dashboard.drivers.DriverStandingsScreenVM
-import tmg.flashback.results.ui.dashboard.schedule.ScheduleScreenVM
+import tmg.flashback.season.presentation.dashboard.races.RacesScreenVM
 import tmg.flashback.rss.contract.RSS
 import tmg.flashback.rss.contract.RSSConfigure
 import tmg.flashback.rss.ui.configure.ConfigureRSSScreenVM
 import tmg.flashback.rss.ui.feed.RSSScreenVM
 import tmg.flashback.search.contract.Search
 import tmg.flashback.search.ui.SearchScreenVM
+import tmg.flashback.season.contract.ConstructorsStandings
+import tmg.flashback.season.contract.DriverStandings
+import tmg.flashback.season.contract.Races
 import tmg.flashback.ui.settings.About
 import tmg.flashback.ui.settings.Ads
 import tmg.flashback.ui.settings.All
@@ -92,55 +89,29 @@ fun AppGraph(
 
     NavHost(
         navController = navController,
-        startDestination = Screen.DriverStandings.route,
+        startDestination = Screen.Races.route,
         modifier = Modifier
             .statusBarsPadding()
             .navigationBarsPadding()
     ) {
-        composable(
-            Screen.DriverStandings.route, arguments = emptyList()
-        ) {
-            tmg.flashback.drivers.presentation.standings.DriverStandingsScreenVM(
-                actionUpClicked = { navController.popBackStack() },
-                windowSizeClass = windowSize,
+        composable(Screen.Races.route) {
+            RacesScreenVM(
+                actionUpClicked = openMenu,
+                windowSizeClass = windowSize
             )
         }
 
-        composable(
-            Screen.Calendar.route, arguments = listOf(
-                navString("season")
-        )) {
-            // Has to be nullable because initial navigation graph
-            //  value cannot contain placeholder values
-            val season = it.arguments?.getString("season")?.toIntOrNull() ?: 2023 // TODO: Fix this!
-            ScheduleScreenVM(
-                menuClicked = openMenu,
-                showMenu = isCompact,
-                season = season
-            )
-        }
-
-        composable(
-            Screen.Constructors.route, arguments = listOf(
-                navStringRequired("season")
-        )) {
-            val season = it.arguments?.getString("season")?.toIntOrNull() ?: 2023 // TODO: Fix this!
+        composable(Screen.ConstructorsStandings.route) {
             ConstructorStandingsScreenVM(
-                menuClicked = openMenu,
-                showMenu = isCompact,
-                season = season
+                actionUpClicked = openMenu,
+                windowSizeClass = windowSize
             )
         }
 
-        composable(
-            Screen.Drivers.route, arguments = listOf(
-                navStringRequired("season")
-        )) {
-            val season = it.arguments?.getString("season")!!.toIntOrNull() ?: 2023 // TODO: Fix this!
+        composable(Screen.DriverStandings.route) {
             DriverStandingsScreenVM(
-                menuClicked = openMenu,
-                showMenu = isCompact,
-                season = season
+                actionUpClicked = openMenu,
+                windowSizeClass = windowSize
             )
         }
 

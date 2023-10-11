@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import tmg.flashback.results.repository.HomeRepository
+import tmg.flashback.season.repository.HomeRepository
 import tmg.flashback.ui.settings.Setting
 import tmg.flashback.ui.settings.Settings
 import javax.inject.Inject

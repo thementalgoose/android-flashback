@@ -11,7 +11,7 @@ import tmg.flashback.configuration.usecases.ApplyConfigUseCase
 import tmg.flashback.crashlytics.manager.CrashlyticsManager
 import tmg.flashback.domain.repo.repository.CacheRepository
 import tmg.flashback.maintenance.contract.usecases.ShouldForceUpgradeUseCase
-import tmg.flashback.results.usecases.ScheduleNotificationsUseCase
+import tmg.flashback.season.usecases.ScheduleNotificationsUseCase
 import tmg.flashback.usecases.SetupAppShortcutUseCase
 import javax.inject.Inject
 

@@ -1,9 +1,9 @@
 package tmg.flashback.ui.settings
 
 import tmg.flashback.R
-import tmg.flashback.results.contract.repository.models.NotificationResultsAvailable
-import tmg.flashback.results.contract.repository.models.NotificationReminder
-import tmg.flashback.results.repository.models.prefKey
+import tmg.flashback.season.contract.repository.models.NotificationResultsAvailable
+import tmg.flashback.season.contract.repository.models.NotificationReminder
+import tmg.flashback.season.repository.models.prefKey
 import tmg.flashback.ui.model.NightMode
 import tmg.flashback.ui.settings.appearance.nightmode.title
 import tmg.flashback.ui.settings.appearance.theme.title

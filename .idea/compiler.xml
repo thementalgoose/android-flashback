@@ -5,6 +5,10 @@
       <module name="android-flashback.data.network" target="17" />
       <module name="android-flashback.data.repo" target="17" />
       <module name="android-flashback.data.room" target="17" />
+      <module name="android-flashback.feature.races.contract" target="17" />
+      <module name="android-flashback.feature.races.core" target="17" />
+      <module name="android-flashback.feature.results.contract" target="17" />
+      <module name="android-flashback.feature.results.core" target="17" />
     </bytecodeTargetLevel>
   </component>
 </project>

@@ -35,8 +35,8 @@ import tmg.flashback.navigation.ApplicationNavigationComponent
 import tmg.flashback.notifications.receiver.LocalNotificationBroadcastReceiver
 import tmg.flashback.notifications.repository.NotificationRepository
 import tmg.flashback.prefs.manager.PreferenceManager
-import tmg.flashback.results.contract.ResultsNavigationComponent
-import tmg.flashback.results.contract.repository.models.NotificationUpcoming
+import tmg.flashback.season.contract.ResultsNavigationComponent
+import tmg.flashback.season.contract.repository.models.NotificationUpcoming
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.buttons.ButtonPrimary
 import tmg.flashback.style.buttons.ButtonTertiary

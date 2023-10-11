@@ -7,8 +7,6 @@ import tmg.flashback.drivers.contract.model.ScreenDriverSeasonData
 import tmg.flashback.navigation.NavigationDestination
 import tmg.flashback.navigation.Screen
 
-val Screen.DriverStandings get() = NavigationDestination("drivers")
-
 @JvmInline
 value class ScreenDriver(val route: String)
 val Screen.Driver get() = ScreenDriver("driver/{data}")

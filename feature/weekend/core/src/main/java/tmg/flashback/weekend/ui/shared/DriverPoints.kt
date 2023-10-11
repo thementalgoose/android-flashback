@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import tmg.flashback.formula1.extensions.pointsDisplay
@@ -12,6 +11,7 @@ import tmg.flashback.formula1.model.Driver
 import tmg.flashback.providers.DriverProvider
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
+import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextCaption
 import tmg.flashback.ui.components.flag.Flag
@@ -19,6 +19,16 @@ import tmg.flashback.ui.utils.pluralResource
 import tmg.flashback.weekend.R
 import kotlin.math.roundToInt
 
+@Deprecated(
+    message = "Use copy of this in presentation module",
+    replaceWith = ReplaceWith("""
+DriverPoints(
+    name = driver.name,
+    nationality = driver.nationality,
+    nationalityISO = driver.nationalityISO,
+    points = points,
+)
+    """, "tmg.flashback.ui.components.drivers.DriverPoints"))
 @Composable
 fun DriverPoints(
     driver: Driver,
@@ -49,22 +59,12 @@ fun DriverPoints(
     }
 }
 
-@Preview
+@PreviewTheme
 @Composable
-private fun PreviewLight(
+private fun Preview(
     @PreviewParameter(DriverProvider::class) driver: Driver
 ) {
-    AppThemePreview(isLight = true) {
-        DriverPoints(driver = driver, points = 3.0)
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewDark(
-    @PreviewParameter(DriverProvider::class) driver: Driver
-) {
-    AppThemePreview(isLight = false) {
+    AppThemePreview {
         DriverPoints(driver = driver, points = 3.0)
     }
 }
