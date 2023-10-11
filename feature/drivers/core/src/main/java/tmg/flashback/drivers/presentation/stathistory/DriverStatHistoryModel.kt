@@ -1,4 +1,4 @@
-package tmg.flashback.drivers.ui.stathistory
+package tmg.flashback.drivers.presentation.stathistory
 
 import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.RaceInfo

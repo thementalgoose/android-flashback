@@ -1,4 +1,4 @@
-package tmg.flashback.drivers.ui.season
+package tmg.flashback.drivers.presentation.season
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

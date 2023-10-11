@@ -1,4 +1,4 @@
-package tmg.flashback.drivers.ui.overview
+package tmg.flashback.drivers.presentation.overview
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
