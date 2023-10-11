@@ -134,7 +134,7 @@ class RaceRepository @Inject constructor(
             }
     }
 
-    suspend fun hasntPreviouslySynced(season: Int): Boolean {
+    fun hasntPreviouslySynced(season: Int): Boolean {
         return !cacheRepository.seasonsSyncAtLeastOnce.contains(season)
     }
 

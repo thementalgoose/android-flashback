@@ -222,19 +222,3 @@ fun DriverStandings(
         }
     }
 }
-
-@PreviewTheme
-@Composable
-private fun Preview(
-    @PreviewParameter(SeasonDriverStandingSeasonProvider::class) driverStandings: SeasonDriverStandingSeason
-) {
-    AppThemePreview {
-        DriverStandings(
-            model = DriverStandingsModel.Standings(
-                standings = driverStandings
-            ),
-            itemClicked = { },
-            maxPoints = 25.0
-        )
-    }
-}

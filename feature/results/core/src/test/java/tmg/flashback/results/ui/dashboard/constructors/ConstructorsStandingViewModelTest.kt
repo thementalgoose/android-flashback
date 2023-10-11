@@ -17,13 +17,13 @@ import org.junit.jupiter.api.Test
 import tmg.flashback.constructors.contract.Constructor
 import tmg.flashback.constructors.contract.with
 import tmg.flashback.domain.repo.SeasonRepository
+import tmg.flashback.domain.repo.usecases.FetchSeasonUseCase
 import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.SeasonConstructorStandingSeason
 import tmg.flashback.formula1.model.SeasonConstructorStandings
 import tmg.flashback.formula1.model.model
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
-import tmg.flashback.results.usecases.FetchSeasonUseCase
 import tmg.testutils.BaseTest
 
 internal class ConstructorsStandingViewModelTest: BaseTest() {

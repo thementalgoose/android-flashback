@@ -18,6 +18,7 @@ import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import tmg.flashback.domain.repo.EventsRepository
 import tmg.flashback.domain.repo.OverviewRepository
+import tmg.flashback.domain.repo.usecases.FetchSeasonUseCase
 import tmg.flashback.formula1.model.Overview
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.model.model
@@ -27,7 +28,6 @@ import tmg.flashback.results.contract.ResultsNavigationComponent
 import tmg.flashback.results.model.toScreenWeekendData
 import tmg.flashback.results.repository.NotificationsRepositoryImpl
 import tmg.flashback.results.contract.repository.models.NotificationSchedule
-import tmg.flashback.results.usecases.FetchSeasonUseCase
 import tmg.flashback.weekend.contract.Weekend
 import tmg.flashback.weekend.contract.model.ScreenWeekendNav
 import tmg.flashback.weekend.contract.with

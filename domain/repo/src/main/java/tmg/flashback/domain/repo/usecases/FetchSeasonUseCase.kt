@@ -1,4 +1,4 @@
-package tmg.flashback.results.usecases
+package tmg.flashback.domain.repo.usecases
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
