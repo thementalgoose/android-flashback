@@ -80,15 +80,15 @@ private fun Item(
     val selectedWidth = animateDpAsState(targetValue = when (item.isSelected ?: false) {
         true -> selectedPillWidth
         false -> iconSize
-    })
+    }, label = "selectedWidth")
     val selectedX = animateDpAsState(targetValue = when (item.isSelected ?: false) {
         true -> 0.dp
         false -> (selectedPillWidth - iconSize) / 2
-    })
+    }, label = "selectedX")
     val backgroundColor = animateColorAsState(targetValue = when (item.isSelected ?: false) {
         true -> AppTheme.colors.primary.copy(alpha = 0.3f)
         false -> Color.Transparent
-    })
+    }, label = "backgroundColor")
 
     Column(
         modifier = modifier
