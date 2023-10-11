@@ -13,9 +13,9 @@ import javax.inject.Inject
 value class ScreenCalendar(val route: String)
 val Screen.Calendar get() = ScreenCalendar("results/calendar/{season}")
 fun ScreenCalendar.with(
-    season: Int
+    season: Int?
 ) = NavigationDestination(
-    route = this@with.route.replace("{season}", season.toString()),
+    route = this@with.route.replace("{season}", season?.toString() ?: "current"),
     launchSingleTop = true
 )
 
@@ -24,9 +24,9 @@ fun ScreenCalendar.with(
 value class ScreenDrivers(val route: String)
 val Screen.Drivers get() = ScreenDrivers("results/drivers/{season}")
 fun ScreenDrivers.with(
-    season: Int
+    season: Int?
 ) = NavigationDestination(
-    route = this@with.route.replace("{season}", season.toString()),
+    route = this@with.route.replace("{season}", season?.toString() ?: "current"),
     launchSingleTop = true
 )
 
@@ -35,9 +35,9 @@ fun ScreenDrivers.with(
 value class ScreenConstructors(val route: String)
 val Screen.Constructors get() = ScreenCalendar("results/constructors/{season}")
 fun ScreenConstructors.with(
-    season: Int
+    season: Int?
 ) = NavigationDestination(
-    route = this@with.route.replace("{season}", season.toString()),
+    route = this@with.route.replace("{season}", season?.toString() ?: "current"),
     launchSingleTop = true
 )
 

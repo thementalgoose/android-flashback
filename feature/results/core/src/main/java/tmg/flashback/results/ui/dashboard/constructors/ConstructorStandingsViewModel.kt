@@ -19,12 +19,13 @@ import tmg.flashback.constructors.contract.with
 import tmg.flashback.domain.repo.SeasonRepository
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
+import tmg.flashback.results.usecases.DefaultSeasonUseCase
 import tmg.flashback.results.usecases.FetchSeasonUseCase
 import javax.inject.Inject
 
 interface ConstructorsStandingViewModelInputs {
     fun refresh()
-    fun load(season: Int)
+    fun load(season: Int?)
 
     fun clickItem(model: ConstructorStandingsModel.Standings)
 }
@@ -39,6 +40,7 @@ class ConstructorsStandingViewModel @Inject constructor(
     private val seasonRepository: SeasonRepository,
     private val fetchSeasonUseCase: FetchSeasonUseCase,
     private val navigator: Navigator,
+    private val defaultSeasonUseCase: DefaultSeasonUseCase,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), ConstructorsStandingViewModelInputs, ConstructorsStandingViewModelOutputs {
 
@@ -75,8 +77,12 @@ class ConstructorsStandingViewModel @Inject constructor(
         .flowOn(ioDispatcher)
         .stateIn(viewModelScope, SharingStarted.Lazily, null)
 
-    override fun load(season: Int) {
-        this.season.value = season
+    override fun load(season: Int?) {
+        if (season == null) {
+            this.season.value = defaultSeasonUseCase.defaultSeason
+        } else {
+            this.season.value = season
+        }
     }
 
     override fun refresh() {
