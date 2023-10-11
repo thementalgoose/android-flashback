@@ -67,7 +67,7 @@ class DashboardNavViewModel @Inject constructor(
         .map { destination ->
             if (destination == null) return@map null
             val item: MenuItem? = when {
-                destination.startsWith("results/calendar") -> MenuItem.Calendar
+                destination.startsWith("results/races") -> MenuItem.Calendar
                 destination.startsWith("results/drivers") -> MenuItem.Drivers
                 destination.startsWith("results/constructors") -> MenuItem.Constructors
                 destination.startsWith("settings") -> MenuItem.Settings

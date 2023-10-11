@@ -1,37 +1,28 @@
 package tmg.flashback.season.presentation.dashboard.races
 
-import app.cash.turbine.Event.Item
 import app.cash.turbine.test
-import app.cash.turbine.testIn
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import tmg.flashback.domain.repo.EventsRepository
 import tmg.flashback.domain.repo.OverviewRepository
 import tmg.flashback.domain.repo.usecases.FetchSeasonUseCase
-import tmg.flashback.formula1.model.Event
 import tmg.flashback.formula1.model.Overview
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.model.model
-import tmg.flashback.navigation.Navigator
-import tmg.flashback.navigation.Screen
 import tmg.flashback.season.contract.ResultsNavigationComponent
 import tmg.flashback.season.contract.repository.NotificationsRepository
-import tmg.flashback.season.model.toScreenWeekendData
 import tmg.flashback.season.repository.HomeRepository
-import tmg.flashback.season.contract.repository.models.NotificationSchedule
-import tmg.flashback.weekend.contract.Weekend
-import tmg.flashback.weekend.contract.model.ScreenWeekendNav
-import tmg.flashback.weekend.contract.with
+import tmg.flashback.season.usecases.DefaultSeasonUseCase
 import tmg.testutils.BaseTest
 
 internal class RacesViewModelTest: BaseTest() {
@@ -40,7 +31,7 @@ internal class RacesViewModelTest: BaseTest() {
     private val mockEventsRepository: EventsRepository = mockk(relaxed = true)
     private val mockFetchSeasonUseCase: FetchSeasonUseCase = mockk(relaxed = true)
     private val mockNotificationRepository: NotificationsRepository = mockk(relaxed = true)
-    private val mockNavigator: Navigator = mockk(relaxed = true)
+    private val mockDefaultSeasonUseCase: DefaultSeasonUseCase = mockk(relaxed = true)
     private val mockResultsNavigationComponent: ResultsNavigationComponent = mockk(relaxed = true)
     private val mockHomeRepository: HomeRepository = mockk(relaxed = true)
 
@@ -50,263 +41,131 @@ internal class RacesViewModelTest: BaseTest() {
         underTest = RacesViewModel(
             fetchSeasonUseCase = mockFetchSeasonUseCase,
             overviewRepository = mockOverviewRepository,
+            defaultSeasonUseCase = mockDefaultSeasonUseCase,
             notificationRepository = mockNotificationRepository,
             homeRepository = mockHomeRepository,
-            eventsRepository = mockEventsRepository,
-            navigator = mockNavigator,
             resultsNavigationComponent = mockResultsNavigationComponent,
+            eventsRepository = mockEventsRepository,
             ioDispatcher = coroutineScope.testDispatcher
         )
     }
+
+    private val overview1 = OverviewRace.model(round = 1, date = LocalDate.of(2020, 1, 1))
+    private val overview2 = OverviewRace.model(round = 2, date = LocalDate.of(2020, 1, 3))
+    private val overview3 = OverviewRace.model(round = 3, date = LocalDate.of(2020, 1, 6))
+    private val overview4 = OverviewRace.model(round = 4, date = LocalDate.of(2020, 1, 9))
+    private val expectedRaceWeek1 = RacesModel.RaceWeek(model = overview1, notificationSchedule = fakeNotificationSchedule)
+    private val expectedRaceWeek2 = RacesModel.RaceWeek(model = overview2, notificationSchedule = fakeNotificationSchedule)
 
     @BeforeEach
     internal fun setUp() {
         every { mockOverviewRepository.getOverview(2020) } returns flow { emit(
             Overview.model(
-                overviewRaces = listOf(
-                    OverviewRace.model(round = 1, date = LocalDate.of(2020, 1, 1)),
-                    OverviewRace.model(round = 2, date = LocalDate.of(2020, 1, 3))
-                )
+                overviewRaces = listOf(overview1, overview2)
             ))
         }
         every { mockHomeRepository.collapseList } returns false
         every { mockEventsRepository.getEvents(any()) } returns flow { emit(emptyList()) }
         every { mockNotificationRepository.notificationSchedule } returns fakeNotificationSchedule
         every { mockFetchSeasonUseCase.fetch(any()) } returns flow { emit(true) }
+        every { mockDefaultSeasonUseCase.defaultSeason } returns 2020
     }
 
     @Test
-    fun `current season use case is fetched on initial load`() = runTest(testDispatcher) {
+    fun `initial load sets default season`() = runTest {
         initUnderTest()
-        underTest.load(2020)
-
-        underTest.outputs.items.test {
-            assertNotNull(awaitItem())
-        }
-
-        verify { mockFetchSeasonUseCase.fetch(2020) }
-    }
-
-    @Test
-    fun `null is returned when DB returns no standings and hasnt made request`() = runTest(testDispatcher) {
-        every { mockFetchSeasonUseCase.fetch(any()) } returns flow { emit(false) }
-        every { mockOverviewRepository.getOverview(any()) } returns flow { emit(Overview.model(overviewRaces = emptyList())) }
-
-        initUnderTest()
-        underTest.load(2020)
-
-        underTest.outputs.items.test {
-            assertEquals(listOf(RacesModel.Loading), awaitItem())
+        underTest.outputs.uiState.test {
+            assertEquals(2020, awaitItem().season)
         }
     }
 
     @Test
-    fun `expected list is returned when items are loaded from the DB`() = runTest(testDispatcher) {
+    fun `initial load calls refresh`() = runTest {
         initUnderTest()
-        underTest.load(2020)
-
-        underTest.outputs.items.test {
-            assertEquals(listOf(
-                RacesModel.RaceWeek(
-                    model = OverviewRace.model(round = 1, date = LocalDate.of(2020, 1, 1)),
-                    notificationSchedule = fakeNotificationSchedule,
-                    showScheduleList = false
-                ),
-                RacesModel.RaceWeek(
-                    model = OverviewRace.model(round = 2, date = LocalDate.of(2020, 1, 3)),
-                    notificationSchedule = fakeNotificationSchedule,
-                    showScheduleList = false
-                )
-            ), awaitItem())
-        }
-    }
-
-
-    @Test
-    fun `show events returns true when events are contained`() = runTest(testDispatcher) {
-        every { mockEventsRepository.getEvents(2020) } returns flow { emit(listOf(
-            Event.model(date = LocalDate.of(2020, 1, 2)),
-            Event.model(date = LocalDate.now().plusDays(1))
-        )) }
-
-        initUnderTest()
-        underTest.load(2020)
-
-        underTest.outputs.items.test {
-            assertNotNull(awaitItem())
-        }
-    }
-
-
-    @Test
-    fun `expected list shows upcoming events intertwined with calendar models`() = runTest(testDispatcher) {
-        every { mockEventsRepository.getEvents(2020) } returns flow { emit(listOf(
-            Event.model(date = LocalDate.of(2020, 1, 2)),
-            Event.model(date = LocalDate.now().plusDays(1))
-        )) }
-
-        initUnderTest()
-        underTest.load(2020)
-
-        underTest.outputs.items.test {
-            assertEquals(listOf(
-                RacesModel.RaceWeek(
-                    model = OverviewRace.model(round = 1, date = LocalDate.of(2020, 1, 1)),
-                    notificationSchedule = fakeNotificationSchedule,
-                    showScheduleList = false
-                ),
-                RacesModel.RaceWeek(
-                    model = OverviewRace.model(round = 2, date = LocalDate.of(2020, 1, 3)),
-                    notificationSchedule = fakeNotificationSchedule,
-                    showScheduleList = false
-                )
-            ), awaitItem())
-        }
-    }
-
-    @Test
-    fun `expected list shows collapsible list section if pref is enabled`() = runTest(testDispatcher) {
-
-        val dayBeforeDayBeforeYesterday = OverviewRace.model(round = 1, date = LocalDate.now().minusDays(3L))
-        val dayBeforeYesterday = OverviewRace.model(round = 2, date = LocalDate.now().minusDays(2L))
-        val yesterday = OverviewRace.model(round = 3, date = LocalDate.now().minusDays(1L))
-        val today = OverviewRace.model(round = 4, date = LocalDate.now())
-        val tomorrow = OverviewRace.model(round = 5, date = LocalDate.now().plusDays(1L))
-
-        every { mockHomeRepository.collapseList } returns true
-        every { mockOverviewRepository.getOverview(any()) } returns flow { emit(Overview.model(
-            overviewRaces = listOf(dayBeforeDayBeforeYesterday, dayBeforeYesterday, yesterday, today, tomorrow)
-        )) }
-
-        initUnderTest()
-        underTest.load(LocalDate.now().year)
-
-        underTest.outputs.items.test {
-            assertEquals(listOf(
-                RacesModel.GroupedCompletedRaces(
-                    first = dayBeforeDayBeforeYesterday,
-                    last = dayBeforeYesterday
-                ),
-                RacesModel.RaceWeek(
-                    model = yesterday,
-                    notificationSchedule = fakeNotificationSchedule,
-                    showScheduleList = false
-                ),
-                RacesModel.RaceWeek(
-                    model = today,
-                    notificationSchedule = fakeNotificationSchedule,
-                    showScheduleList = true
-                ),
-                RacesModel.RaceWeek(
-                    model = tomorrow,
-                    notificationSchedule = fakeNotificationSchedule,
-                    showScheduleList = false
-                )
-            ), awaitItem())
-        }
-    }
-
-    @Test
-    fun `expected list doesnt show collapsible list section if no previous`() = runTest(testDispatcher) {
-
-        val today = OverviewRace.model(round = 3, date = LocalDate.now())
-        val tomorrow = OverviewRace.model(round = 4, date = LocalDate.now().plusDays(1L))
-
-        every { mockHomeRepository.collapseList } returns true
-        every { mockOverviewRepository.getOverview(any()) } returns flow { emit(Overview.model(
-            overviewRaces = listOf(today, tomorrow)
-        )) }
-
-        initUnderTest()
-        underTest.load(LocalDate.now().year)
-
-        underTest.outputs.items.test {
-            assertEquals(listOf(
-                RacesModel.RaceWeek(
-                    model = today,
-                    notificationSchedule = fakeNotificationSchedule,
-                    showScheduleList = true
-                ),
-                RacesModel.RaceWeek(
-                    model = tomorrow,
-                    notificationSchedule = fakeNotificationSchedule,
-                    showScheduleList = false
-                )
-            ), awaitItem())
-        }
-    }
-
-    @Test
-    fun `refresh calls fetch season and updates is refreshing`() = runTest(testDispatcher) {
-        initUnderTest()
-        underTest.load(2020)
-
-        val observer = underTest.outputs.isRefreshing.testIn(this)
-
-        underTest.refresh()
-
-        advanceUntilIdle()
-        val items = observer.cancelAndConsumeRemainingEvents()
-        assertEquals(false, (items[0] as Item<Boolean>).value) // Initialise
-        assertEquals(true, (items[1] as Item<Boolean>).value)
-        assertEquals(false, (items[2] as Item<Boolean>).value) // Refresh
         coVerify {
             mockFetchSeasonUseCase.fetchSeason(2020)
         }
     }
 
+    @Test
+    fun `initial load sets scheduled list of items`() = runTest {
+        initUnderTest()
+        underTest.outputs.uiState.test {
+            assertEquals(listOf(expectedRaceWeek1, expectedRaceWeek2), awaitItem().items)
+        }
+    }
 
     @Test
-    fun `clicking item goes to weekend overview with tab RACE`() = runTest(testDispatcher) {
+    fun `initial load with empty overview sets items to null`() = runTest {
+        every { mockOverviewRepository.getOverview(2020) } returns flow { emit(
+            Overview(
+                season = 2020,
+                overviewRaces = emptyList()
+            ))
+        }
         initUnderTest()
-        underTest.load(2020)
-        val model = RacesModel.RaceWeek(
-            model = OverviewRace.model(round = 1),
-            notificationSchedule = fakeNotificationSchedule,
-            showScheduleList = false
-        )
+        underTest.outputs.uiState.test {
+            val item = awaitItem()
+            assertEquals(null, item.items)
+            assertEquals(false, item.isLoading)
+            assertEquals(null, item.currentRace)
+        }
+    }
 
-        underTest.clickItem(model)
+    @Test
+    fun `clicking race item updates state to current race`() = runTest {
+        initUnderTest()
+
+        underTest.clickItem(expectedRaceWeek1)
+        underTest.outputs.uiState.test {
+            assertEquals(overview1, awaitItem().currentRace)
+        }
+    }
+
+    @Test
+    fun `clicking tyre opens navigation component`() = runTest {
+        every { mockDefaultSeasonUseCase.defaultSeason } returns 2023
+
+        initUnderTest()
+        underTest.clickTyre()
 
         verify {
-            mockNavigator.navigate(
-                Screen.Weekend.with(
-                    weekendInfo = model.model.toRaceInfo().toScreenWeekendData(),
-                    tab = ScreenWeekendNav.RACE
+            mockResultsNavigationComponent.tyres(2023)
+        }
+    }
+
+    @Test
+    fun `clicking grouped races uncollapses races`() = runTest {
+        every { mockOverviewRepository.getOverview(2020) } returns flow { emit(
+            Overview.model(
+                overviewRaces = listOf(
+                    OverviewRace.model(round = 1, date = LocalDate.now().minusDays(5L)),
+                    OverviewRace.model(round = 2, date = LocalDate.now().minusDays(2L)),
+                    OverviewRace.model(round = 3, date = LocalDate.now().minusDays(1L)),
+                    OverviewRace.model(round = 4, date = LocalDate.now().plusDays(5L)),
                 )
-            )
+            ))
+        }
+        every { mockHomeRepository.collapseList } returns true
+        initUnderTest()
+        underTest.outputs.uiState.test {
+            assertTrue(awaitItem().items?.any { it is RacesModel.GroupedCompletedRaces } == true)
+
+            val groupedRaces: RacesModel.GroupedCompletedRaces = mockk(relaxed = true)
+            underTest.inputs.clickItem(groupedRaces)
+
+            testScheduler.advanceUntilIdle()
+
+            assertTrue(awaitItem().items?.none { it is RacesModel.GroupedCompletedRaces } == true)
         }
     }
 
     @Test
-    fun `clicking tyre with season launches tyre sheet`() = runTest(testDispatcher) {
+    fun `clicking all events loads preseason events`() = runTest {
         initUnderTest()
-        underTest.load(2020)
-
-        underTest.inputs.clickTyre(2020)
-
-        verify {
-            mockResultsNavigationComponent.tyres(2020)
-        }
-    }
-
-    @Test
-    fun `clicking preseason with season launches preseason sheet`() = runTest(testDispatcher) {
-        initUnderTest()
-        underTest.load(2020)
-        underTest.clickItem(RacesModel.AllEvents)
-
+        underTest.inputs.clickItem(RacesModel.AllEvents)
         verify {
             mockResultsNavigationComponent.preseasonEvents(2020)
         }
     }
-
-    private val fakeNotificationSchedule: NotificationSchedule = NotificationSchedule(
-        freePractice = true,
-        qualifying = true,
-        sprint = true,
-        sprintQualifying = true,
-        race = true,
-        other = true,
-    )
 }

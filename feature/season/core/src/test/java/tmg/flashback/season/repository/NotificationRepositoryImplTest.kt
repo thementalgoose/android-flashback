@@ -8,11 +8,11 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import tmg.flashback.notifications.repository.NotificationRepository
 import tmg.flashback.prefs.manager.PreferenceManager
-import tmg.flashback.results.contract.repository.models.NotificationResultsAvailable
-import tmg.flashback.results.contract.repository.models.NotificationUpcoming
-import tmg.flashback.results.contract.repository.models.NotificationReminder
-import tmg.flashback.results.contract.repository.models.NotificationSchedule
-import tmg.flashback.results.repository.models.prefKey
+import tmg.flashback.season.contract.repository.models.NotificationResultsAvailable
+import tmg.flashback.season.contract.repository.models.NotificationUpcoming
+import tmg.flashback.season.contract.repository.models.NotificationReminder
+import tmg.flashback.season.contract.repository.models.NotificationSchedule
+import tmg.flashback.season.repository.models.prefKey
 
 internal class NotificationRepositoryImplTest {
 

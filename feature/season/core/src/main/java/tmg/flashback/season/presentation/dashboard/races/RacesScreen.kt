@@ -345,19 +345,19 @@ private fun PreviewSchedule(
     AppThemePreview {
         Column(Modifier.fillMaxWidth()) {
             Races(
-                model = RacesModel.RaceWeek(race, notificationSchedule = fakeNotificationSchedule),
+                model = RacesModel.RaceWeek(race, notificationSchedule = fakeNotificationScheduleModel),
                 itemClicked = { }
             )
             Spacer(Modifier.height(16.dp))
             Races(
-                model = RacesModel.RaceWeek(race, notificationSchedule = fakeNotificationSchedule, showScheduleList = true),
+                model = RacesModel.RaceWeek(race, notificationSchedule = fakeNotificationScheduleModel, showScheduleList = true),
                 itemClicked = { }
             )
         }
     }
 }
 
-private val fakeNotificationSchedule = NotificationSchedule(
+private val fakeNotificationScheduleModel = NotificationSchedule(
     freePractice = true,
     qualifying = true,
     sprint = true,

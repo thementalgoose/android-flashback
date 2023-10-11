@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import tmg.flashback.formula1.constants.Formula1
-import tmg.flashback.results.repository.HomeRepository
+import tmg.flashback.season.repository.HomeRepository
 
 internal class DefaultSeasonUseCaseTest {
 

@@ -12,9 +12,9 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.EnumSource
 import tmg.flashback.navigation.ApplicationNavigationComponent
-import tmg.flashback.results.contract.repository.NotificationsRepository
-import tmg.flashback.results.contract.repository.models.NotificationReminder
-import tmg.flashback.results.usecases.ScheduleNotificationsUseCase
+import tmg.flashback.season.contract.repository.NotificationsRepository
+import tmg.flashback.season.contract.repository.models.NotificationReminder
+import tmg.flashback.season.usecases.ScheduleNotificationsUseCase
 import tmg.flashback.device.AppPermissions
 import tmg.flashback.ui.managers.PermissionManager
 import tmg.flashback.device.repository.PermissionRepository

@@ -9,11 +9,11 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.notifications.usecases.RemoteNotificationSubscribeUseCase
 import tmg.flashback.notifications.usecases.RemoteNotificationUnsubscribeUseCase
-import tmg.flashback.results.contract.repository.NotificationsRepository
-import tmg.flashback.results.contract.repository.models.NotificationResultsAvailable
-import tmg.flashback.results.contract.repository.models.NotificationResultsAvailable.QUALIFYING
-import tmg.flashback.results.contract.repository.models.NotificationResultsAvailable.RACE
-import tmg.flashback.results.repository.NotificationsRepositoryImpl
+import tmg.flashback.season.contract.repository.NotificationsRepository
+import tmg.flashback.season.contract.repository.models.NotificationResultsAvailable
+import tmg.flashback.season.contract.repository.models.NotificationResultsAvailable.QUALIFYING
+import tmg.flashback.season.contract.repository.models.NotificationResultsAvailable.RACE
+import tmg.flashback.season.repository.NotificationsRepositoryImpl
 import tmg.testutils.BaseTest
 
 internal class ResubscribeNotificationsUseCaseTest: BaseTest() {

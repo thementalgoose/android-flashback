@@ -6,7 +6,7 @@ import io.mockk.verify
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import tmg.flashback.season.repository.HomeRepository
-import tmg.flashback.results.repository.models.Banner
+import tmg.flashback.season.repository.models.Banner
 import tmg.flashback.web.usecases.OpenWebpageUseCase
 
 internal class BannerViewModelTest {

@@ -10,10 +10,10 @@ import org.junit.jupiter.api.Test
 import tmg.flashback.configuration.manager.ConfigManager
 import tmg.flashback.crashlytics.manager.CrashlyticsManager
 import tmg.flashback.prefs.manager.PreferenceManager
-import tmg.flashback.results.repository.json.AllSeasonsJson
-import tmg.flashback.results.repository.json.BannerItemJson
-import tmg.flashback.results.repository.json.BannerJson
-import tmg.flashback.results.repository.models.Banner
+import tmg.flashback.season.repository.json.AllSeasonsJson
+import tmg.flashback.season.repository.json.BannerItemJson
+import tmg.flashback.season.repository.json.BannerJson
+import tmg.flashback.season.repository.models.Banner
 import java.time.Year
 
 internal class HomeRepositoryTest {
