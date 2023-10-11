@@ -22,6 +22,7 @@ class FetchSeasonUseCase @Inject constructor(
         }
     }
 
+    // TODO: See DashboardSyncUseCase to optimise this!
     suspend fun fetchSeason(season: Int): Boolean {
         overviewRepository.fetchOverview(season)
         raceRepository.fetchRaces(season)

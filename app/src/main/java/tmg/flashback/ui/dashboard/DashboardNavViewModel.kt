@@ -21,17 +21,14 @@ import tmg.flashback.debug.model.DebugMenuItem
 import tmg.flashback.navigation.ApplicationNavigationComponent
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
-import tmg.flashback.results.Calendar
-import tmg.flashback.results.Constructors
-import tmg.flashback.results.Drivers
-import tmg.flashback.results.usecases.DefaultSeasonUseCase
-import tmg.flashback.results.with
 import tmg.flashback.rss.contract.RSS
 import tmg.flashback.rss.repo.RssRepository
 import tmg.flashback.search.contract.Search
+import tmg.flashback.season.contract.ConstructorsStandings
+import tmg.flashback.season.contract.DriverStandings
+import tmg.flashback.season.contract.Races
 import tmg.flashback.ui.settings.All
 import tmg.flashback.usecases.DashboardSyncUseCase
-import tmg.flashback.usecases.GetSeasonsUseCase
 import javax.inject.Inject
 
 interface DashboardNavViewModelInputs {
@@ -70,9 +67,9 @@ class DashboardNavViewModel @Inject constructor(
         .map { destination ->
             if (destination == null) return@map null
             val item: MenuItem? = when {
-                destination.startsWith("results/calendar/") -> MenuItem.Calendar
-                destination.startsWith("results/drivers/") -> MenuItem.Drivers
-                destination.startsWith("results/constructors/") -> MenuItem.Constructors
+                destination.startsWith("results/calendar") -> MenuItem.Calendar
+                destination.startsWith("results/drivers") -> MenuItem.Drivers
+                destination.startsWith("results/constructors") -> MenuItem.Constructors
                 destination.startsWith("settings") -> MenuItem.Settings
                 destination.startsWith("rss") -> MenuItem.RSS
                 destination.startsWith("search") -> MenuItem.Search
@@ -134,9 +131,9 @@ class DashboardNavViewModel @Inject constructor(
 
     override fun clickItem(navigationItem: MenuItem) {
         when (navigationItem) {
-            MenuItem.Calendar -> navigator.navigate(Screen.Calendar.with(null))
-            MenuItem.Drivers -> navigator.navigate(Screen.Drivers.with(null))
-            MenuItem.Constructors -> navigator.navigate(Screen.Constructors.with(null))
+            MenuItem.Calendar -> navigator.navigate(Screen.Races)
+            MenuItem.Drivers -> navigator.navigate(Screen.DriverStandings)
+            MenuItem.Constructors -> navigator.navigate(Screen.ConstructorsStandings)
             MenuItem.Contact -> applicationNavigationComponent.aboutApp()
             MenuItem.RSS -> navigator.navigate(Screen.RSS)
             MenuItem.Search -> navigator.navigate(Screen.Search)

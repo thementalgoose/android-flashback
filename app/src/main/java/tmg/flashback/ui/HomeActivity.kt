@@ -25,7 +25,7 @@ import tmg.flashback.navigation.Deeplink
 import tmg.flashback.navigation.Deeplink.SCREEN_PARAM
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.newrelic.usecases.InitializeNewRelicUseCase
-import tmg.flashback.results.usecases.ContentSyncUseCase
+import tmg.flashback.season.usecases.ContentSyncUseCase
 import tmg.flashback.style.AppTheme
 import tmg.flashback.ui.base.BaseActivity
 import tmg.flashback.ui.dashboard.DashboardScreen

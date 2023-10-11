@@ -6,12 +6,12 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import tmg.flashback.navigation.ApplicationNavigationComponent
-import tmg.flashback.results.contract.repository.NotificationsRepository
-import tmg.flashback.results.contract.repository.models.NotificationReminder
-import tmg.flashback.results.usecases.ScheduleNotificationsUseCase
+import tmg.flashback.season.contract.repository.NotificationsRepository
+import tmg.flashback.season.usecases.ScheduleNotificationsUseCase
 import tmg.flashback.device.AppPermissions
 import tmg.flashback.ui.managers.PermissionManager
 import tmg.flashback.device.repository.PermissionRepository
+import tmg.flashback.season.contract.repository.models.NotificationReminder
 import tmg.flashback.ui.settings.Setting
 import tmg.flashback.ui.settings.Settings
 import javax.inject.Inject
@@ -41,13 +41,16 @@ class SettingsNotificationsUpcomingNoticeViewModel @Inject constructor(
     private val permissionRepository: PermissionRepository,
     private val applicationNavigationComponent: ApplicationNavigationComponent,
     private val scheduleNotificationsUseCase: ScheduleNotificationsUseCase,
-): ViewModel(), SettingsNotificationsUpcomingNoticeViewModelInputs, SettingsNotificationsUpcomingNoticeViewModelOutputs {
+) : ViewModel(), SettingsNotificationsUpcomingNoticeViewModelInputs,
+    SettingsNotificationsUpcomingNoticeViewModelOutputs {
 
     var inputs: SettingsNotificationsUpcomingNoticeViewModelInputs = this
     var outputs: SettingsNotificationsUpcomingNoticeViewModelOutputs = this
 
-    override val currentlySelected: MutableStateFlow<NotificationReminder> = MutableStateFlow(notificationRepository.notificationReminderPeriod)
-    override val permissions: MutableStateFlow<UpcomingNoticePermissionState> = MutableStateFlow(getPermissionState())
+    override val currentlySelected: MutableStateFlow<NotificationReminder> =
+        MutableStateFlow(notificationRepository.notificationReminderPeriod)
+    override val permissions: MutableStateFlow<UpcomingNoticePermissionState> =
+        MutableStateFlow(getPermissionState())
 
     override fun prefClicked(reminder: Setting) {
         when (reminder.key) {
@@ -58,17 +61,21 @@ class SettingsNotificationsUpcomingNoticeViewModel @Inject constructor(
                         refresh()
                     }
             }
+
             Settings.Notifications.notificationExactAlarmEnable.key -> {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                     applicationNavigationComponent.appSettingsSpecialPermissions()
                 }
             }
+
             NotificationReminder.MINUTES_15.name -> {
                 notificationRepository.notificationReminderPeriod = NotificationReminder.MINUTES_15
             }
+
             NotificationReminder.MINUTES_30.name -> {
                 notificationRepository.notificationReminderPeriod = NotificationReminder.MINUTES_30
             }
+
             NotificationReminder.MINUTES_60.name -> {
                 notificationRepository.notificationReminderPeriod = NotificationReminder.MINUTES_60
             }

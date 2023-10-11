@@ -24,11 +24,11 @@ import tmg.flashback.navigation.ApplicationNavigationComponent
 import tmg.flashback.navigation.NavigationDestination
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
-import tmg.flashback.results.Calendar
-import tmg.flashback.results.Constructors
-import tmg.flashback.results.Drivers
-import tmg.flashback.results.usecases.DefaultSeasonUseCase
-import tmg.flashback.results.with
+import tmg.flashback.season.Calendar
+import tmg.flashback.season.Constructors
+import tmg.flashback.season.Drivers
+import tmg.flashback.season.usecases.DefaultSeasonUseCase
+import tmg.flashback.season.with
 import tmg.flashback.rss.repo.RssRepository
 import tmg.flashback.ui.settings.All
 import tmg.flashback.usecases.DashboardSyncUseCase

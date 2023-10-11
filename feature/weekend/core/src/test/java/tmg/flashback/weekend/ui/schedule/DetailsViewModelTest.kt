@@ -21,7 +21,7 @@ import tmg.flashback.formula1.model.Schedule
 import tmg.flashback.formula1.model.model
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
-import tmg.flashback.results.contract.repository.NotificationsRepository
+import tmg.flashback.season.contract.repository.NotificationsRepository
 import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.flashback.weekend.R
 import tmg.flashback.weekend.repository.WeatherRepository

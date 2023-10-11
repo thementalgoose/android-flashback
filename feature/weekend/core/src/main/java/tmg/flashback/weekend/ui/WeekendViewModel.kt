@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.threeten.bp.LocalDate
 import tmg.flashback.domain.repo.RaceRepository
+import tmg.flashback.domain.repo.usecases.FetchSeasonUseCase
 import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
 import tmg.flashback.formula1.model.Race
 import tmg.flashback.weekend.contract.ScreenWeekend
@@ -44,6 +45,7 @@ interface WeekendViewModelOutputs {
 @HiltViewModel
 class WeekendViewModel @Inject constructor(
     private val raceRepository: RaceRepository,
+    private val fetchSeasonUseCase: FetchSeasonUseCase,
     private val ioDispatcher: CoroutineDispatcher,
     private val savedStateHandle: SavedStateHandle
 ): ViewModel(), WeekendViewModelInputs, WeekendViewModelOutputs {
@@ -71,14 +73,14 @@ class WeekendViewModel @Inject constructor(
                 if (!raceRepository.hasntPreviouslySynced(season)) {
                     isRefreshing.value = true
                     emit(null)
-                    raceRepository.fetchRaces(season)
+                    fetchSeasonUseCase.fetchSeason(season)
                     isRefreshing.value = false
                     emit(Pair(season, round))
                 }
                 else {
                     emit(Pair(season, round))
                     isRefreshing.value = true
-                    raceRepository.fetchRaces(season)
+                    fetchSeasonUseCase.fetchSeason(season)
                     isRefreshing.value = false
                 }
             }
@@ -140,7 +142,7 @@ class WeekendViewModel @Inject constructor(
         seasonRound.value?.first?.let { season ->
             isRefreshing.value = true
             viewModelScope.launch(ioDispatcher) {
-                raceRepository.fetchRaces(season)
+                fetchSeasonUseCase.fetchSeason(season)
                 isRefreshing.value = false
             }
         }
