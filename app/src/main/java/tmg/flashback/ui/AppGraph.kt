@@ -30,8 +30,8 @@ import tmg.flashback.drivers.contract.Driver
 import tmg.flashback.drivers.contract.DriverSeason
 import tmg.flashback.drivers.contract.model.ScreenDriverData
 import tmg.flashback.drivers.contract.model.ScreenDriverSeasonData
-import tmg.flashback.drivers.ui.overview.DriverOverviewScreenVM
-import tmg.flashback.drivers.ui.season.DriverSeasonScreenVM
+import tmg.flashback.drivers.presentation.overview.DriverOverviewScreenVM
+import tmg.flashback.drivers.presentation.season.DriverSeasonScreenVM
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.flashback.navigation.asNavigationDestination

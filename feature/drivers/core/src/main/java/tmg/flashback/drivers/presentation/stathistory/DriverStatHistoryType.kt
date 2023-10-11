@@ -1,4 +1,4 @@
-package tmg.flashback.drivers.ui.stathistory
+package tmg.flashback.drivers.presentation.stathistory
 
 import androidx.annotation.StringRes
 import tmg.flashback.drivers.R

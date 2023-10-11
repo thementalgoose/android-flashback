@@ -1,4 +1,4 @@
-package tmg.flashback.drivers.ui.overview
+package tmg.flashback.drivers.presentation.overview
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
@@ -118,13 +118,23 @@ class DriverOverviewViewModel @Inject constructor(
                     }
                     when {
                         (it == null || it.standings.isEmpty()) && !isConnected -> list.add(
-                            DriverOverviewModel.NetworkError)
+                            DriverOverviewModel.NetworkError
+                        )
                         (it == null || it.standings.isEmpty()) -> list.add(DriverOverviewModel.InternalError)
                         else -> {
                             if (it.hasChampionshipCurrentlyInProgress) {
                                 val latestRound = it.standings.maxByOrNull { it.season }?.raceOverview?.maxByOrNull { it.raceInfo.round }
                                 if (latestRound != null) {
-                                    list.add(DriverOverviewModel.Message(R.string.results_accurate_for_year, listOf(latestRound.raceInfo.season, latestRound.raceInfo.name, latestRound.raceInfo.round)))
+                                    list.add(
+                                        DriverOverviewModel.Message(
+                                            R.string.results_accurate_for_year,
+                                            listOf(
+                                                latestRound.raceInfo.season,
+                                                latestRound.raceInfo.name,
+                                                latestRound.raceInfo.round
+                                            )
+                                        )
+                                    )
                                 }
                             }
 
@@ -294,7 +304,8 @@ class DriverOverviewViewModel @Inject constructor(
                 label = label,
                 value = value,
                 driverStatHistoryType = driverStatHistoryType
-            ))
+            )
+        )
     }
 
     /**
@@ -318,11 +329,13 @@ class DriverOverviewViewModel @Inject constructor(
         return seasonConstructors
             .mapIndexed { index, pair ->
                 val (season, constructor) = pair
-                DriverOverviewModel.RacedFor(season, constructor, getPipeType(
-                    current = season,
-                    newer = seasonConstructors.getOrNull(index - 1)?.first,
-                    prev = seasonConstructors.getOrNull(index + 1)?.first
-                ), history.isWorldChampionFor(season))
+                DriverOverviewModel.RacedFor(
+                    season, constructor, getPipeType(
+                        current = season,
+                        newer = seasonConstructors.getOrNull(index - 1)?.first,
+                        prev = seasonConstructors.getOrNull(index + 1)?.first
+                    ), history.isWorldChampionFor(season)
+                )
             }
     }
 

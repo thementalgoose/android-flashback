@@ -4,8 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import tmg.flashback.crashlytics.manager.CrashlyticsManager
 import tmg.flashback.drivers.contract.DriverNavigationComponent
 import tmg.flashback.drivers.contract.model.DriverStatHistoryType
-import tmg.flashback.drivers.ui.stathistory.DriverStatHistoryBottomSheetFragment
-import tmg.flashback.drivers.ui.stathistory.analyticsKey
+import tmg.flashback.drivers.presentation.stathistory.DriverStatHistoryBottomSheetFragment
+import tmg.flashback.drivers.presentation.stathistory.analyticsKey
 import tmg.flashback.navigation.ActivityProvider
 import javax.inject.Inject
 

@@ -1,4 +1,4 @@
-package tmg.flashback.drivers.ui.overview
+package tmg.flashback.drivers.presentation.overview
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

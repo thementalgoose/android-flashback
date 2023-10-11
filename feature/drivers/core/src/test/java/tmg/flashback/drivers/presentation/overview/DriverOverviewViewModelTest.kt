@@ -1,4 +1,4 @@
-package tmg.flashback.drivers.ui.overview
+package tmg.flashback.drivers.presentation.overview
 
 import app.cash.turbine.test
 import io.mockk.coEvery

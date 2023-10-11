@@ -1,4 +1,4 @@
-package tmg.flashback.drivers.ui.season
+package tmg.flashback.drivers.presentation.season
 
 import app.cash.turbine.test
 import io.mockk.coEvery

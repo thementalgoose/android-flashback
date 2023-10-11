@@ -1,4 +1,4 @@
-package tmg.flashback.drivers.ui.season
+package tmg.flashback.drivers.presentation.season
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
@@ -129,11 +129,12 @@ class DriverSeasonViewModel @Inject constructor(
                         if (standing.constructors.size == 1) {
                             list.add(
                                 DriverSeasonModel.RacedFor(
-                                null,
-                                standing.constructors.first(),
-                                PipeType.SINGLE,
-                                false
-                            ))
+                                    null,
+                                    standing.constructors.first(),
+                                    PipeType.SINGLE,
+                                    false
+                                )
+                            )
                         }
                         else {
                             for (x in standing.constructors.indices) {
