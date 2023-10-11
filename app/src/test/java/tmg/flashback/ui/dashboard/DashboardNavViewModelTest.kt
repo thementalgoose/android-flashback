@@ -41,8 +41,6 @@ import tmg.testutils.junit.toSealedClass
 internal class DashboardNavViewModelTest: BaseTest() {
 
     private val mockRssRepository: RssRepository = mockk(relaxed = true)
-    private val mockDefaultSeasonUseCase: DefaultSeasonUseCase = mockk(relaxed = true)
-    private val mockGetSeasonUseCase: GetSeasonsUseCase = mockk(relaxed = true)
     private val mockApplicationNavigationComponent: ApplicationNavigationComponent = mockk(relaxed = true)
     private val mockCrashlyticsManager: CrashlyticsManager = mockk(relaxed = true)
     private val mockDashboardSyncUseCase: DashboardSyncUseCase = mockk(relaxed = true)
@@ -56,20 +54,13 @@ internal class DashboardNavViewModelTest: BaseTest() {
     private fun initUnderTest() {
         underTest = DashboardNavViewModel(
             rssRepository = mockRssRepository,
-            defaultSeasonUseCase = mockDefaultSeasonUseCase,
             navigator = mockNavigator,
-            getSeasonUseCase = mockGetSeasonUseCase,
             applicationNavigationComponent = mockApplicationNavigationComponent,
             crashlyticsManager = mockCrashlyticsManager,
             dashboardSyncUseCase = mockDashboardSyncUseCase,
             debugNavigationComponent = mockDebugNavigationComponent,
             ioDispatcher = Dispatchers.Unconfined
         )
-    }
-
-    @BeforeEach
-    internal fun setUp() {
-        every { mockDefaultSeasonUseCase.defaultSeason } returns 2019
     }
 
     @Test
@@ -181,14 +172,6 @@ internal class DashboardNavViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `default season is read from default season use case`() {
-        every { mockDefaultSeasonUseCase.defaultSeason } returns 2023
-        initUnderTest()
-
-        assertEquals(2023, underTest.outputs.defaultSeason)
-    }
-
-    @Test
     fun `app feature list list is populated`() = runTest(testDispatcher) {
         initUnderTest()
 
@@ -217,103 +200,9 @@ internal class DashboardNavViewModelTest: BaseTest() {
         every { mockRssRepository.enabled } returns true
         initUnderTest()
 
-        val featureListLiveData = underTest.appFeatureItemsList.test {
+        underTest.appFeatureItemsList.test {
             val item = awaitItem()
             assertTrue(item.any { it == MenuItem.RSS })
-        }
-    }
-
-    @Test
-    fun `clicking a season updates currently selected season`() = runTest(testDispatcher) {
-        initUnderTest()
-        underTest.clickSeason(2020)
-        underTest.currentlySelectedSeason.test {
-            assertEquals(2020, awaitItem())
-        }
-    }
-
-    @Nested
-    inner class ClickSeason {
-
-        @Test
-        fun `clicking a season updates season if currently selected is menu for calendar`() = runTest(testDispatcher) {
-
-            initUnderTest()
-            underTest.onDestinationChanged(mockNavController, mockNavDestination(Screen.Calendar.with(2019).route), null)
-            underTest.currentlySelectedItem.test { awaitItem() }
-            underTest.clickSeason(2020)
-
-            val destination = slot<NavigationDestination>()
-            verify {
-                mockNavigator.navigate(capture(destination))
-            }
-            assertEquals(Screen.Calendar.with(2020).route, destination.captured.route)
-        }
-
-        @Test
-        fun `clicking a season updates season if currently selected is menu for constructors`() = runTest(testDispatcher) {
-
-            initUnderTest()
-            underTest.currentlySelectedItem.test { awaitItem() }
-            underTest.onDestinationChanged(mockNavController, mockNavDestination(Screen.Constructors.with(2019).route), null)
-            underTest.clickSeason(2020)
-
-            val destination = slot<NavigationDestination>()
-            verify {
-                mockNavigator.navigate(capture(destination))
-            }
-            assertEquals(Screen.Constructors.with(2020).route, destination.captured.route)
-        }
-
-        @Test
-        fun `clicking a season updates season if currently selected is menu for drivers`() = runTest(testDispatcher) {
-            initUnderTest()
-            underTest.onDestinationChanged(mockNavController, mockNavDestination(Screen.Drivers.with(2019).route), null)
-            underTest.currentlySelectedItem.test { awaitItem() }
-            underTest.clickSeason(2020)
-
-            val destination = slot<NavigationDestination>()
-            verify {
-                mockNavigator.navigate(capture(destination))
-            }
-            assertEquals(Screen.Drivers.with(2020).route, destination.captured.route)
-        }
-
-        @Test
-        fun `clicking a season does nothing if settings is already selected`() = runTest(testDispatcher) {
-
-            initUnderTest()
-            underTest.onDestinationChanged(mockNavController, NavDestination(Screen.Settings.All.route), null)
-            underTest.currentlySelectedItem.test { awaitItem() }
-            underTest.clickSeason(2020)
-            verify(exactly = 1) {
-                mockNavigator.navigate(any())
-            }
-        }
-    }
-
-    @Test
-    fun `get all seasons returns season list`() = runTest(testDispatcher) {
-        every { mockGetSeasonUseCase.get() } returns mapOf(
-            2019 to Pair(IsFirst(true), IsLast(false)),
-            2020 to Pair(IsFirst(true), IsLast(false)),
-            2021 to Pair(IsFirst(false), IsLast(false))
-        )
-
-        initUnderTest()
-        underTest.onDestinationChanged(mockNavController, NavDestination(Screen.Settings.All.route), null)
-        val list = underTest.outputs.seasonsItemsList.test {
-            val item0 = awaitItem()
-            assertTrue(item0.any { it.id == "2019" && it.isSelected })
-            assertTrue(item0.any { it.id == "2020" && !it.isSelected })
-            assertTrue(item0.any { it.id == "2021" && !it.isSelected })
-
-            underTest.inputs.clickSeason(2020)
-
-            val item1 = awaitItem()
-            assertTrue(item1.any { it.id == "2019" && !it.isSelected })
-            assertTrue(item1.any { it.id == "2020" && it.isSelected })
-            assertTrue(item1.any { it.id == "2021" && !it.isSelected })
         }
     }
 

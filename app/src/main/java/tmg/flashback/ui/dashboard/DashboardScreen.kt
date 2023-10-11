@@ -37,7 +37,6 @@ import tmg.flashback.ui.components.layouts.OverlappingPanels
 import tmg.flashback.ui.components.layouts.OverlappingPanelsValue
 import tmg.flashback.ui.components.layouts.rememberOverlappingPanelsState
 import tmg.flashback.ui.components.navigation.NavigationBar
-import tmg.flashback.ui.components.navigation.NavigationTimelineItem
 import tmg.flashback.ui.components.navigation.appBarHeight
 import tmg.flashback.ui.dashboard.menu.DashboardMenuExpandedScreen
 import tmg.flashback.ui.dashboard.menu.DashboardMenuScreen
@@ -59,10 +58,6 @@ fun DashboardScreen(
     val seasonScreenItemsList = navViewModel.outputs.seasonScreenItemsList.collectAsState(emptyList())
     val appFeatureItemsList = navViewModel.outputs.appFeatureItemsList.collectAsState(emptyList())
     val debugMenuItems = navViewModel.outputs.debugMenuItems.collectAsState(emptyList())
-
-    val seasonItemsList = navViewModel.outputs.seasonsItemsList.collectAsState(emptyList())
-    val currentlySelectedSeason = navViewModel.outputs.currentlySelectedSeason.collectAsState(0)
-    val defaultSeason = navViewModel.outputs.defaultSeason
 
     val showBottomBar = navViewModel.outputs.showBottomBar.collectAsState(true)
     val showMenu = navViewModel.outputs.showMenu.collectAsState(false)
@@ -87,7 +82,6 @@ fun DashboardScreen(
         navigator = navigator,
         deeplink = deeplink,
         closeApp = closeApp,
-        defaultSeason = defaultSeason,
         currentlySelectedItem = currentlySelectedItem.value,
         appFeatureItemsList = appFeatureItemsList.value,
         seasonScreenItemsList = seasonScreenItemsList.value,
@@ -100,8 +94,6 @@ fun DashboardScreen(
         darkModeClicked = viewModel.inputs::clickDarkMode,
         featurePromptList = featurePromptList.value,
         featurePromptClicked = viewModel.inputs::clickFeaturePrompt,
-        seasonItemsList = seasonItemsList.value,
-        seasonClicked = navViewModel.inputs::clickSeason,
         appVersion = appVersion.value,
         easterEggSnow = snow.value,
         easterEggTitleIcon = titleIcon.value,
@@ -118,7 +110,6 @@ fun DashboardScreen(
     navigator: Navigator,
     deeplink: String?,
     closeApp: () -> Unit,
-    defaultSeason: Int,
     currentlySelectedItem: MenuItem,
     appFeatureItemsList: List<MenuItem>,
     seasonScreenItemsList: List<MenuItem>,
@@ -131,8 +122,6 @@ fun DashboardScreen(
     darkModeClicked: (Boolean) -> Unit,
     featurePromptList: List<FeaturePrompt>,
     featurePromptClicked: (FeaturePrompt) -> Unit,
-    seasonItemsList: List<NavigationTimelineItem>,
-    seasonClicked: (Int) -> Unit,
     appVersion: String,
     easterEggSnow: Boolean,
     easterEggTitleIcon: MenuIcons?,
@@ -206,8 +195,6 @@ fun DashboardScreen(
                         darkModeClicked = darkModeClicked,
                         featurePromptList = featurePromptList,
                         featurePromptClicked = featurePromptClicked,
-                        seasonItemsList = seasonItemsList,
-                        seasonClicked = seasonClicked,
                         appVersion = appVersion,
                         easterEggSnow = easterEggSnow,
                         easterEggTitleIcon = easterEggTitleIcon,
@@ -229,8 +216,6 @@ fun DashboardScreen(
                                 darkModeClicked = darkModeClicked,
                                 featurePromptList = featurePromptList,
                                 featurePromptClicked = featurePromptClicked,
-                                seasonItemsList = seasonItemsList,
-                                seasonClicked = seasonClicked,
                                 appVersion = appVersion,
                                 easterEggSnow = easterEggSnow,
                                 easterEggTitleIcon = easterEggTitleIcon,
@@ -251,8 +236,6 @@ fun DashboardScreen(
                                 darkModeClicked = darkModeClicked,
                                 featurePromptList = featurePromptList,
                                 featurePromptClicked = featurePromptClicked,
-                                seasonItemsList = seasonItemsList,
-                                seasonClicked = seasonClicked,
                                 appVersion = appVersion,
                                 easterEggSnow = easterEggSnow,
                                 easterEggTitleIcon = easterEggTitleIcon,
@@ -280,8 +263,7 @@ fun DashboardScreen(
                                 windowSize = windowSize,
                                 windowInfo = windowLayoutInfo,
                                 navigator = navigator,
-                                closeApp = closeApp,
-                                defaultSeason = defaultSeason
+                                closeApp = closeApp
                             )
                         }
                     }
