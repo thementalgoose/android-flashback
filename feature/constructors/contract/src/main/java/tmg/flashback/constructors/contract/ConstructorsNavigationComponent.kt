@@ -6,6 +6,8 @@ import tmg.flashback.constructors.contract.model.ScreenConstructorSeasonData
 import tmg.flashback.navigation.NavigationDestination
 import tmg.flashback.navigation.Screen
 
+val Screen.ConstructorsStandings get() = NavigationDestination("drivers")
+
 @JvmInline
 value class ScreenConstructor(val route: String)
 val Screen.Constructor get() = ScreenConstructor("constructors/{data}")

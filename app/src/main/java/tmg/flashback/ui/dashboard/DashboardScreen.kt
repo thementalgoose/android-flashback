@@ -220,7 +220,8 @@ fun DashboardScreen(
                                 easterEggSnow = easterEggSnow,
                                 easterEggTitleIcon = easterEggTitleIcon,
                                 easterEggUkraine = easterEggUkraine,
-                                lockExpanded = false
+                                lockExpanded = false,
+                                initialExpandedState = false
                             )
                         }
                         if (windowSize.widthSizeClass == WindowWidthSizeClass.Expanded) {
@@ -240,7 +241,8 @@ fun DashboardScreen(
                                 easterEggSnow = easterEggSnow,
                                 easterEggTitleIcon = easterEggTitleIcon,
                                 easterEggUkraine = easterEggUkraine,
-                                lockExpanded = true
+                                lockExpanded = false,
+                                initialExpandedState = false
                             )
                         }
                         Row(modifier = Modifier

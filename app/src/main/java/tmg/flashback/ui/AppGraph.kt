@@ -28,6 +28,7 @@ import tmg.flashback.constructors.ui.overview.ConstructorOverviewScreenVM
 import tmg.flashback.constructors.ui.season.ConstructorSeasonScreenVM
 import tmg.flashback.drivers.contract.Driver
 import tmg.flashback.drivers.contract.DriverSeason
+import tmg.flashback.drivers.contract.DriverStandings
 import tmg.flashback.drivers.contract.model.ScreenDriverData
 import tmg.flashback.drivers.contract.model.ScreenDriverSeasonData
 import tmg.flashback.drivers.presentation.overview.DriverOverviewScreenVM
@@ -91,11 +92,20 @@ fun AppGraph(
 
     NavHost(
         navController = navController,
-        startDestination = Screen.Calendar.route,
+        startDestination = Screen.DriverStandings.route,
         modifier = Modifier
             .statusBarsPadding()
             .navigationBarsPadding()
     ) {
+        composable(
+            Screen.DriverStandings.route, arguments = emptyList()
+        ) {
+            tmg.flashback.drivers.presentation.standings.DriverStandingsScreenVM(
+                actionUpClicked = { navController.popBackStack() },
+                windowSizeClass = windowSize,
+            )
+        }
+
         composable(
             Screen.Calendar.route, arguments = listOf(
                 navString("season")
