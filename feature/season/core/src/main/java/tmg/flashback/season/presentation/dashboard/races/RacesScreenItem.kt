@@ -377,7 +377,7 @@ private fun Preview(
     }
 }
 
-private val fakeNotificationSchedule = NotificationSchedule(
+val fakeNotificationSchedule = NotificationSchedule(
     freePractice = false,
     qualifying = true,
     sprintQualifying = true,

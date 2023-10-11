@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
 import tmg.flashback.crashlytics.manager.CrashlyticsManager
 import tmg.flashback.season.repository.json.BannerItemJson
-import tmg.flashback.results.repository.models.Banner
+import tmg.flashback.season.repository.models.Banner
 
 internal class BannerConverterTest {
 

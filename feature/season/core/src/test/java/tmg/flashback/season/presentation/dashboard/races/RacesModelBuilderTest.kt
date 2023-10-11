@@ -12,15 +12,15 @@ import tmg.flashback.season.contract.repository.models.NotificationSchedule
 
 internal class RacesModelBuilderTest {
 
-    private val racePreviousWeek4 = OverviewRace.model(date = LocalDate.now().minusDays(4 * 7), round = 1)
-    private val racePreviousWeek3 = OverviewRace.model(date = LocalDate.now().minusDays(3 * 7), round = 2)
-    private val racePreviousWeek2 = OverviewRace.model(date = LocalDate.now().minusDays(2 * 7), round = 3)
-    private val racePreviousWeek1 = OverviewRace.model(date = LocalDate.now().minusDays(1 * 7), round = 4)
-    private val raceThisWeek = OverviewRace.model(date = LocalDate.now(), round = 5)
-    private val raceNextWeek1 = OverviewRace.model(date = LocalDate.now().plusDays(7 * 1), round = 6)
-    private val raceNextWeek2 = OverviewRace.model(date = LocalDate.now().plusDays(7 * 2), round = 7)
-    private val raceNextWeek3 = OverviewRace.model(date = LocalDate.now().plusDays(7 * 3), round = 8)
-    private val raceNextWeek4 = OverviewRace.model(date = LocalDate.now().plusDays(7 * 4), round = 4)
+    internal val racePreviousWeek4 = OverviewRace.model(date = LocalDate.now().minusDays(4 * 7), round = 1)
+    internal val racePreviousWeek3 = OverviewRace.model(date = LocalDate.now().minusDays(3 * 7), round = 2)
+    internal val racePreviousWeek2 = OverviewRace.model(date = LocalDate.now().minusDays(2 * 7), round = 3)
+    internal val racePreviousWeek1 = OverviewRace.model(date = LocalDate.now().minusDays(1 * 7), round = 4)
+    internal val raceThisWeek = OverviewRace.model(date = LocalDate.now(), round = 5)
+    internal val raceNextWeek1 = OverviewRace.model(date = LocalDate.now().plusDays(7 * 1), round = 6)
+    internal val raceNextWeek2 = OverviewRace.model(date = LocalDate.now().plusDays(7 * 2), round = 7)
+    internal val raceNextWeek3 = OverviewRace.model(date = LocalDate.now().plusDays(7 * 3), round = 8)
+    internal val raceNextWeek4 = OverviewRace.model(date = LocalDate.now().plusDays(7 * 4), round = 4)
 
     private val event = Event.model()
 

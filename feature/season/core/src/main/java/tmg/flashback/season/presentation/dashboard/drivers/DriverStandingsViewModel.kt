@@ -13,6 +13,7 @@ import kotlinx.coroutines.launch
 import tmg.flashback.domain.repo.SeasonRepository
 import tmg.flashback.domain.repo.usecases.FetchSeasonUseCase
 import tmg.flashback.formula1.model.SeasonDriverStandingSeason
+import tmg.flashback.season.usecases.DefaultSeasonUseCase
 import javax.inject.Inject
 
 data class DriverStandingsScreenState(
@@ -35,16 +36,16 @@ interface DriverStandingsViewModelOutputs {
 
 @HiltViewModel
 class DriverStandingsViewModel @Inject constructor(
-    private val savedStateHandle: SavedStateHandle,
     private val seasonRepository: SeasonRepository,
     private val fetchSeasonUseCase: FetchSeasonUseCase,
+    private val defaultSeasonUseCase: DefaultSeasonUseCase,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), DriverStandingsViewModelInputs, DriverStandingsViewModelOutputs {
 
     val inputs: DriverStandingsViewModelInputs = this
     val outputs: DriverStandingsViewModelOutputs = this
 
-    private val season by lazy { 2023 } // savedStateHandle.get<Int>(SEASON)!! }
+    private val season by lazy { defaultSeasonUseCase.defaultSeason } // savedStateHandle.get<Int>(SEASON)!! }
 
     override val uiState: MutableStateFlow<DriverStandingsScreenState> = MutableStateFlow(
         DriverStandingsScreenState(
@@ -53,7 +54,9 @@ class DriverStandingsViewModel @Inject constructor(
     )
 
     init {
-        refresh()
+        viewModelScope.launch(ioDispatcher) {
+            populate()
+        }
     }
 
     override fun selectDriver(driver: SeasonDriverStandingSeason) {

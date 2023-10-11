@@ -12,14 +12,20 @@ import kotlinx.coroutines.launch
 import tmg.flashback.domain.repo.EventsRepository
 import tmg.flashback.domain.repo.OverviewRepository
 import tmg.flashback.domain.repo.usecases.FetchSeasonUseCase
+import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
 import tmg.flashback.formula1.enums.SeasonTyres
 import tmg.flashback.formula1.enums.getBySeason
 import tmg.flashback.formula1.model.OverviewRace
+import tmg.flashback.navigation.Screen
 import tmg.flashback.season.contract.ResultsNavigationComponent
 import tmg.flashback.season.contract.repository.NotificationsRepository
 import tmg.flashback.season.presentation.dashboard.races.RacesModelBuilder.generateScheduleModel
 import tmg.flashback.season.repository.HomeRepository
 import tmg.flashback.season.usecases.DefaultSeasonUseCase
+import tmg.flashback.weekend.contract.Weekend
+import tmg.flashback.weekend.contract.model.ScreenWeekendData
+import tmg.flashback.weekend.contract.model.ScreenWeekendNav
+import tmg.flashback.weekend.contract.with
 import javax.inject.Inject
 
 data class RacesScreenState(
@@ -83,9 +89,11 @@ class RacesViewModel @Inject constructor(
         val overview = overviewRepository.getOverview(season).firstOrNull()
         val events = eventsRepository.getEvents(season).firstOrNull()
 
-        if (overview == null) {
+        if (overview == null || overview.overviewRaces.isEmpty()) {
             uiState.value = uiState.value.copy(
-                items = listOf(RacesModel.Loading)
+                items = null,
+                isLoading = false,
+                currentRace = null
             )
             return
         }
@@ -115,6 +123,20 @@ class RacesViewModel @Inject constructor(
                 uiState.value = uiState.value.copy(
                     currentRace = model.model
                 )
+
+                Screen.Weekend.with(
+                    weekendInfo = ScreenWeekendData(
+                        season = model.model.season,
+                        round = model.model.round,
+                        raceName = model.model.raceName,
+                        circuitId = model.model.circuitId,
+                        circuitName = model.model.circuitName,
+                        country = model.model.country,
+                        countryISO = model.model.countryISO,
+                        date = model.model.date,
+                    ),
+                    tab = model.getScreenWeekendNav()
+                )
             }
             is RacesModel.GroupedCompletedRaces -> {
                 collapseRaces = false
@@ -128,14 +150,14 @@ class RacesViewModel @Inject constructor(
         }
     }
 
-//    private fun RacesModel.RaceWeek.getScreenWeekendNav(): ScreenWeekendNav {
-//        return when {
-//            model.season > currentSeasonYear -> ScreenWeekendNav.SCHEDULE
-//            model.season < currentSeasonYear -> ScreenWeekendNav.RACE
-//            model.hasResults -> ScreenWeekendNav.RACE
-//            model.hasQualifying -> ScreenWeekendNav.QUALIFYING
-//            else -> ScreenWeekendNav.SCHEDULE
-//        }
-//    }
+    private fun RacesModel.RaceWeek.getScreenWeekendNav(): ScreenWeekendNav {
+        return when {
+            model.season > currentSeasonYear -> ScreenWeekendNav.SCHEDULE
+            model.season < currentSeasonYear -> ScreenWeekendNav.RACE
+            model.hasResults -> ScreenWeekendNav.RACE
+            model.hasQualifying -> ScreenWeekendNav.QUALIFYING
+            else -> ScreenWeekendNav.SCHEDULE
+        }
+    }
 }
 
