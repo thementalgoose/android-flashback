@@ -16,6 +16,7 @@ import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
 import tmg.flashback.formula1.enums.SeasonTyres
 import tmg.flashback.formula1.enums.getBySeason
 import tmg.flashback.formula1.model.OverviewRace
+import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.flashback.season.contract.ResultsNavigationComponent
 import tmg.flashback.season.contract.repository.NotificationsRepository
@@ -55,6 +56,7 @@ class RacesViewModel @Inject constructor(
     private val homeRepository: HomeRepository,
     private val resultsNavigationComponent: ResultsNavigationComponent,
     private val eventsRepository: EventsRepository,
+    private val navigator: Navigator,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), RacesViewModelInputs, RacesViewModelOutputs {
 
@@ -124,18 +126,20 @@ class RacesViewModel @Inject constructor(
                     currentRace = model.model
                 )
 
-                Screen.Weekend.with(
-                    weekendInfo = ScreenWeekendData(
-                        season = model.model.season,
-                        round = model.model.round,
-                        raceName = model.model.raceName,
-                        circuitId = model.model.circuitId,
-                        circuitName = model.model.circuitName,
-                        country = model.model.country,
-                        countryISO = model.model.countryISO,
-                        date = model.model.date,
-                    ),
-                    tab = model.getScreenWeekendNav()
+                navigator.navigate(
+                    Screen.Weekend.with(
+                        weekendInfo = ScreenWeekendData(
+                            season = model.model.season,
+                            round = model.model.round,
+                            raceName = model.model.raceName,
+                            circuitId = model.model.circuitId,
+                            circuitName = model.model.circuitName,
+                            country = model.model.country,
+                            countryISO = model.model.countryISO,
+                            date = model.model.date,
+                        ),
+                        tab = model.getScreenWeekendNav()
+                    )
                 )
             }
             is RacesModel.GroupedCompletedRaces -> {
