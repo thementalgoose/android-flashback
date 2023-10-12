@@ -1,6 +1,5 @@
 package tmg.flashback.season.presentation.dashboard.constructors
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,6 +12,7 @@ import kotlinx.coroutines.launch
 import tmg.flashback.domain.repo.SeasonRepository
 import tmg.flashback.domain.repo.usecases.FetchSeasonUseCase
 import tmg.flashback.formula1.model.SeasonConstructorStandingSeason
+import tmg.flashback.season.usecases.DefaultSeasonUseCase
 import javax.inject.Inject
 
 data class ConstructorStandingsScreenState(
@@ -25,7 +25,7 @@ data class ConstructorStandingsScreenState(
 
 interface ConstructorStandingsViewModelInputs {
     fun selectConstructor(driver: SeasonConstructorStandingSeason)
-    fun closeDriverDetails()
+    fun closeConstructor()
     fun refresh()
 }
 
@@ -35,16 +35,16 @@ interface ConstructorStandingsViewModelOutputs {
 
 @HiltViewModel
 class ConstructorStandingsViewModel @Inject constructor(
-    private val savedStateHandle: SavedStateHandle,
     private val seasonRepository: SeasonRepository,
     private val fetchSeasonUseCase: FetchSeasonUseCase,
+    private val defaultSeasonUseCase: DefaultSeasonUseCase,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), ConstructorStandingsViewModelInputs, ConstructorStandingsViewModelOutputs {
 
     val inputs: ConstructorStandingsViewModelInputs = this
     val outputs: ConstructorStandingsViewModelOutputs = this
 
-    private val season by lazy { 2023 } // savedStateHandle.get<Int>(SEASON)!! }
+    private val season by lazy { defaultSeasonUseCase.defaultSeason } // savedStateHandle.get<Int>(SEASON)!! }
 
     override val uiState: MutableStateFlow<ConstructorStandingsScreenState> = MutableStateFlow(
         ConstructorStandingsScreenState(
@@ -60,7 +60,7 @@ class ConstructorStandingsViewModel @Inject constructor(
         uiState.value = uiState.value.copy(currentlySelected = driver)
     }
 
-    override fun closeDriverDetails() {
+    override fun closeConstructor() {
         uiState.value = uiState.value.copy(currentlySelected = null)
     }
 

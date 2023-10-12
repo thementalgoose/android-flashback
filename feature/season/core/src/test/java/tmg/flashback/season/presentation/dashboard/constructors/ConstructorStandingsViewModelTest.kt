@@ -1,11 +1,9 @@
-package tmg.flashback.season.presentation.dashboard.drivers
+package tmg.flashback.season.presentation.dashboard.constructors
 
 import app.cash.turbine.test
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.verify
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.*
@@ -13,23 +11,23 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.domain.repo.SeasonRepository
 import tmg.flashback.domain.repo.usecases.FetchSeasonUseCase
-import tmg.flashback.formula1.model.Driver
-import tmg.flashback.formula1.model.SeasonDriverStandingSeason
-import tmg.flashback.formula1.model.SeasonDriverStandings
+import tmg.flashback.formula1.model.Constructor
+import tmg.flashback.formula1.model.SeasonConstructorStandingSeason
+import tmg.flashback.formula1.model.SeasonConstructorStandings
 import tmg.flashback.formula1.model.model
 import tmg.flashback.season.usecases.DefaultSeasonUseCase
 import tmg.testutils.BaseTest
 
-internal class DriverStandingsViewModelTest: BaseTest() {
+internal class ConstructorStandingsViewModelTest: BaseTest() {
 
     private val mockSeasonRepository: SeasonRepository = mockk(relaxed = true)
     private val mockDefaultSeasonUseCase: DefaultSeasonUseCase = mockk(relaxed = true)
     private val mockFetchSeasonsUseCase: FetchSeasonUseCase = mockk(relaxed = true)
 
-    private lateinit var underTest: DriverStandingsViewModel
+    private lateinit var underTest: ConstructorStandingsViewModel
 
     private fun initUnderTest() {
-        underTest = DriverStandingsViewModel(
+        underTest = ConstructorStandingsViewModel(
             seasonRepository = mockSeasonRepository,
             fetchSeasonUseCase = mockFetchSeasonsUseCase,
             defaultSeasonUseCase = mockDefaultSeasonUseCase,
@@ -37,14 +35,16 @@ internal class DriverStandingsViewModelTest: BaseTest() {
         )
     }
 
-    private val standing1 = SeasonDriverStandingSeason.model()
-    private val standing2 = SeasonDriverStandingSeason.model(driver = Driver.model(id = "2"))
+    private val standing1 = SeasonConstructorStandingSeason.model()
+    private val standing2 = SeasonConstructorStandingSeason.model(constructor = Constructor.model(id = "2"))
 
     @BeforeEach
     fun setUp() {
-        every { mockSeasonRepository.getDriverStandings(2020) } returns flow { emit(SeasonDriverStandings.model(
-            standings = listOf(standing1)
-        )) }
+        every { mockSeasonRepository.getConstructorStandings(2020) } returns flow { emit(
+            SeasonConstructorStandings.model(
+                standings = listOf(standing1)
+            )
+        ) }
         every { mockDefaultSeasonUseCase.defaultSeason } returns 2020
     }
 
@@ -62,9 +62,11 @@ internal class DriverStandingsViewModelTest: BaseTest() {
         underTest.outputs.uiState.test {
             assertEquals(listOf(standing1), awaitItem().standings)
 
-            every { mockSeasonRepository.getDriverStandings(2020) } returns flow { emit(SeasonDriverStandings.model(
-                standings = listOf(standing1, standing2)
-            )) }
+            every { mockSeasonRepository.getConstructorStandings(2020) } returns flow { emit(
+                SeasonConstructorStandings.model(
+                    standings = listOf(standing1, standing2)
+                )
+            ) }
 
             underTest.refresh()
             coVerify {
@@ -85,7 +87,7 @@ internal class DriverStandingsViewModelTest: BaseTest() {
     @Test
     fun `selecting item updates state`() = runTest {
         initUnderTest()
-        underTest.inputs.selectDriver(standing1)
+        underTest.inputs.selectConstructor(standing1)
         underTest.outputs.uiState.test {
             assertEquals(standing1, awaitItem().currentlySelected)
         }
@@ -94,11 +96,11 @@ internal class DriverStandingsViewModelTest: BaseTest() {
     @Test
     fun `closing item updates state`() = runTest {
         initUnderTest()
-        underTest.inputs.selectDriver(standing1)
+        underTest.inputs.selectConstructor(standing1)
         underTest.outputs.uiState.test {
             assertEquals(standing1, awaitItem().currentlySelected)
 
-            underTest.inputs.closeDriverDetails()
+            underTest.inputs.closeConstructor()
 
             assertEquals(null, awaitItem().currentlySelected)
         }

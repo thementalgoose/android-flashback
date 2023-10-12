@@ -57,7 +57,7 @@ fun ConstructorStandingsScreenVM(
         windowSizeClass = windowSizeClass,
         uiState = state.value,
         constructorClicked = viewModel.inputs::selectConstructor,
-        closeDriverDetails = viewModel.inputs::closeDriverDetails,
+        closeDriverDetails = viewModel.inputs::closeConstructor,
         refresh = viewModel.inputs::refresh
     )
 }

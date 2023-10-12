@@ -1,5 +1,6 @@
 [versions]  # ===========================================================================
 kotlin = "1.9.10"
+ksp = "1.9.10-1.0.13" # Update with kotlin https://github.com/google/ksp/releases
 hilt = "2.48"
 androidx_activity = "1.7.2"
 androidx_navigation = "2.7.3"
@@ -214,3 +215,6 @@ androidxtest = [
     "test_androidx_junit_api",
     "test_espresso_core"
 ]
+
+[plugins]
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }

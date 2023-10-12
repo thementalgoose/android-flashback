@@ -56,6 +56,7 @@ internal class RacesViewModelTest: BaseTest() {
     private val overview4 = OverviewRace.model(round = 4, date = LocalDate.of(2020, 1, 9))
     private val expectedRaceWeek1 = RacesModel.RaceWeek(model = overview1, notificationSchedule = fakeNotificationSchedule)
     private val expectedRaceWeek2 = RacesModel.RaceWeek(model = overview2, notificationSchedule = fakeNotificationSchedule)
+    private val expectedRaceWeek3 = RacesModel.RaceWeek(model = overview3, notificationSchedule = fakeNotificationSchedule)
 
     @BeforeEach
     internal fun setUp() {
@@ -109,6 +110,25 @@ internal class RacesViewModelTest: BaseTest() {
             assertEquals(null, item.items)
             assertEquals(false, item.isLoading)
             assertEquals(null, item.currentRace)
+        }
+    }
+
+    @Test
+    fun `refresh calls refresh`() = runTest {
+        initUnderTest()
+        underTest.outputs.uiState.test {
+            assertEquals(listOf(expectedRaceWeek1, expectedRaceWeek2), awaitItem().items)
+
+            every { mockOverviewRepository.getOverview(2020) } returns flow { emit(
+                Overview.model(
+                    overviewRaces = listOf(overview1, overview2, overview3)
+                ))
+            }
+            underTest.inputs.refresh()
+            coVerify {
+                mockFetchSeasonUseCase.fetchSeason(2020)
+            }
+            assertEquals(listOf(expectedRaceWeek1, expectedRaceWeek2, expectedRaceWeek3), awaitItem().items)
         }
     }
 
