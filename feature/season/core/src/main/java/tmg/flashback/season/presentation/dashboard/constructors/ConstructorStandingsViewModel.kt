@@ -31,7 +31,7 @@ data class ConstructorStandingsScreenState(
 )
 
 interface ConstructorStandingsViewModelInputs {
-    fun selectConstructor(driver: SeasonConstructorStandingSeason)
+    fun selectConstructor(constructor: SeasonConstructorStandingSeason)
     fun closeConstructor()
     fun refresh()
 }

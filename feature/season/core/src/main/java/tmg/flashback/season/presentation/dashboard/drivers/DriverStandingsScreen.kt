@@ -121,10 +121,10 @@ internal fun DriverStandingsScreen(
         detailsActionUpClicked = closeDriverDetails,
         detailsShow = false, // uiState.currentlySelected != null,
         details = {
-            Box(
-                Modifier
-                    .size(100.dp)
-                    .background(Color.Magenta))
+//            Box(
+//                Modifier
+//                    .size(100.dp)
+//                    .background(Color.Magenta))
 //            DriverSeasonScreenVM(
 //                driverId = uiState.currentlySelected!!.driver.id,
 //                driverName = uiState.currentlySelected.driver.name,

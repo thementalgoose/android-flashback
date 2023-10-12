@@ -153,7 +153,7 @@ private fun ConstructorStandings(
         )
         Row(modifier = Modifier.padding(
             top = AppTheme.dimens.small,
-            start = AppTheme.dimens.small,
+            start = 0.dp,
             end = AppTheme.dimens.medium,
             bottom = AppTheme.dimens.small
         )) {
@@ -177,7 +177,7 @@ private fun ConstructorStandings(
             val progress = (model.points / maxPoints).toFloat().coerceIn(0f, 1f)
             ProgressBar(
                 modifier = Modifier
-                    .width(110.dp)
+                    .weight(2f)
                     .height(48.dp)
                     .fillMaxHeight(),
                 endProgress = progress,
