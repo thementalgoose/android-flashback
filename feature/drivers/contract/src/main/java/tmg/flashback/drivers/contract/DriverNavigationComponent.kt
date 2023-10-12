@@ -1,5 +1,12 @@
 package tmg.flashback.drivers.contract
 
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
+import dagger.hilt.EntryPoint
+import dagger.hilt.EntryPoints
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.json.Json
 import tmg.flashback.drivers.contract.model.DriverStatHistoryType
 import tmg.flashback.drivers.contract.model.ScreenDriverData
@@ -29,6 +36,16 @@ fun ScreenDriverSeason.with(
 )
 
 interface DriverNavigationComponent {
+
+    @Composable
+    fun DriverSeasonScreen(
+        actionUpClicked: () -> Unit,
+        windowSizeClass: WindowSizeClass,
+        driverId: String,
+        driverName: String,
+        season: Int,
+    )
+
     fun driverStatHistory(
         driverId: String,
         driverName: String,

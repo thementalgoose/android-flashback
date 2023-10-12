@@ -24,7 +24,6 @@ internal class ConstructorStandingsViewModelTest: BaseTest() {
     private val mockSeasonRepository: SeasonRepository = mockk(relaxed = true)
     private val mockDefaultSeasonUseCase: DefaultSeasonUseCase = mockk(relaxed = true)
     private val mockFetchSeasonsUseCase: FetchSeasonUseCase = mockk(relaxed = true)
-    private val mockNavigator: Navigator = mockk(relaxed = true)
 
     private lateinit var underTest: ConstructorStandingsViewModel
 
@@ -33,7 +32,6 @@ internal class ConstructorStandingsViewModelTest: BaseTest() {
             seasonRepository = mockSeasonRepository,
             fetchSeasonUseCase = mockFetchSeasonsUseCase,
             defaultSeasonUseCase = mockDefaultSeasonUseCase,
-            navigator = mockNavigator,
             ioDispatcher = coroutineScope.testDispatcher
         )
     }

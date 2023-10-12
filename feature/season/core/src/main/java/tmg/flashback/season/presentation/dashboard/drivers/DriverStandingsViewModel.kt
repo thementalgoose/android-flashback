@@ -44,7 +44,6 @@ class DriverStandingsViewModel @Inject constructor(
     private val seasonRepository: SeasonRepository,
     private val fetchSeasonUseCase: FetchSeasonUseCase,
     private val defaultSeasonUseCase: DefaultSeasonUseCase,
-    private val navigator: Navigator,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), DriverStandingsViewModelInputs, DriverStandingsViewModelOutputs {
 
@@ -67,13 +66,6 @@ class DriverStandingsViewModel @Inject constructor(
 
     override fun selectDriver(driver: SeasonDriverStandingSeason) {
         uiState.value = uiState.value.copy(currentlySelected = driver)
-        navigator.navigate(
-            Screen.DriverSeason.with(
-                driverId = driver.driver.id,
-                driverName = driver.driver.name,
-                season = driver.season
-            )
-        )
     }
 
     override fun closeDriverDetails() {

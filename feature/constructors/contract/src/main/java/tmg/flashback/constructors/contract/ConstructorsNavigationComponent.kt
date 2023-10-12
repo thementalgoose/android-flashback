@@ -1,5 +1,7 @@
 package tmg.flashback.constructors.contract
 
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
+import androidx.compose.runtime.Composable
 import kotlinx.serialization.json.Json
 import tmg.flashback.constructors.contract.model.ScreenConstructorData
 import tmg.flashback.constructors.contract.model.ScreenConstructorSeasonData
@@ -26,3 +28,15 @@ fun ScreenConstructorSeason.with(
 ) = NavigationDestination(
     this@with.route.replace("{data}", Json.encodeToString(ScreenConstructorSeasonData.serializer(), ScreenConstructorSeasonData(constructorId, constructorName, season)))
 )
+
+interface ConstructorsNavigationComponent {
+
+    @Composable
+    fun ConstructorSeasonScreen(
+        actionUpClicked: () -> Unit,
+        windowSizeClass: WindowSizeClass,
+        constructorId: String,
+        constructorName: String,
+        season: Int,
+    )
+}

@@ -8,6 +8,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.Icon
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
@@ -24,6 +26,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import org.threeten.bp.LocalDate
@@ -59,6 +62,7 @@ import tmg.flashback.ui.components.navigation.PipeType
 import tmg.flashback.ui.components.progressbar.ProgressBar
 import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
 import tmg.flashback.ui.components.timeline.Timeline
+import tmg.flashback.ui.foldables.isWidthExpanded
 import tmg.flashback.ui.utils.DrawableUtils.getFlagResourceAlpha3
 import tmg.flashback.ui.utils.isInPreview
 import tmg.utilities.extensions.format
@@ -69,15 +73,16 @@ import kotlin.math.roundToInt
  * If the width of the container is more than this value, put the stuff side by side
  */
 private val resultColumnFlexBorder: Dp = 300.dp
-private val resultColumnWidth: Dp = 60.dp
+private val resultColumnWidth: Dp = 42.dp
 private val headerImageSize: Dp = 120.dp
 
 @Composable
 fun DriverSeasonScreenVM(
+    actionUpClicked: () -> Unit,
+    windowSizeClass: WindowSizeClass,
     driverId: String,
     driverName: String,
     season: Int,
-    actionUpClicked: () -> Unit,
     viewModel: DriverSeasonViewModel = hiltViewModel()
 ) {
     ScreenView(screenName = "Driver Season", args = mapOf(
@@ -94,10 +99,11 @@ fun DriverSeasonScreenVM(
         onRefresh = viewModel.inputs::refresh
     ) {
         DriverSeasonScreen(
+            actionUpClicked = actionUpClicked,
+            windowSizeClass = windowSizeClass,
             list = list.value,
             driverName = driverName,
             season = season,
-            actionUpClicked = actionUpClicked,
             resultClicked = viewModel.inputs::clickSeasonRound
         )
     }
@@ -105,10 +111,11 @@ fun DriverSeasonScreenVM(
 
 @Composable
 fun DriverSeasonScreen(
+    actionUpClicked: () -> Unit,
+    windowSizeClass: WindowSizeClass,
     list: List<DriverSeasonModel>,
     driverName: String,
     season: Int,
-    actionUpClicked: () -> Unit,
     resultClicked: (DriverSeasonModel.Result) -> Unit,
 ) {
     LazyColumn(
@@ -118,8 +125,11 @@ fun DriverSeasonScreen(
         content = {
             item(key = "header") {
                 Header(
-                    text = "${driverName}\n${season}",
-                    action = HeaderAction.BACK,
+                    text = "${season}\n${driverName}",
+                    action = when (windowSizeClass.isWidthExpanded) {
+                        false -> HeaderAction.BACK
+                        true -> null
+                    },
                     actionUpClicked = actionUpClicked
                 )
             }
@@ -402,26 +412,13 @@ private fun Result(
         Box(
             Modifier
                 .width(resultColumnWidth)
-                .padding(vertical = AppTheme.dimens.xsmall)
+                .padding(vertical = AppTheme.dimens.small)
         ) {
-            val progress = (model.points / model.maxPoints).toFloat().coerceIn(0f, 1f)
-            val contentDescription = pluralStringResource(id = R.plurals.race_points, count = model.points.roundToInt(), model.points.pointsDisplay())
-            ProgressBar(
+            TextBody1(
+                text = model.points.pointsDisplay(),
+                textAlign = TextAlign.Center,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .semantics(mergeDescendants = true) { }
-                    .clearAndSetSemantics { this.contentDescription = contentDescription }
-                    .height(36.dp),
-                endProgress = progress,
-                backgroundColor = Color.Transparent,
-                barColor = model.constructor.colour,
-                label = {
-                    when (it) {
-                        0f -> "0"
-                        progress -> model.points.pointsDisplay()
-                        else -> (it * model.maxPoints).takeIf { !it.isNaN() }?.roundToInt()?.toString() ?: model.points.pointsDisplay()
-                    }
-                }
             )
         }
     }
@@ -606,6 +603,7 @@ private fun SprintInfo(
     }
 }
 
+@ExperimentalMaterial3WindowSizeClassApi
 @PreviewTheme
 @Composable
 private fun Preview(
@@ -625,6 +623,7 @@ private fun Preview(
             driverName = "firstName lastName",
             season = 2020,
             actionUpClicked = { },
+            windowSizeClass = WindowSizeClass.calculateFromSize(DpSize(400.dp, 400.dp)),
             resultClicked = { }
         )
     }

@@ -18,6 +18,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
@@ -28,6 +30,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
@@ -54,14 +57,16 @@ import tmg.flashback.ui.components.header.HeaderAction
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.messages.Message
 import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
+import tmg.flashback.ui.foldables.isWidthExpanded
 import tmg.utilities.extensions.ordinalAbbreviation
 
 @Composable
 fun ConstructorSeasonScreenVM(
+    actionUpClicked: () -> Unit,
+    windowSizeClass: WindowSizeClass,
     constructorId: String,
     constructorName: String,
     season: Int,
-    actionUpClicked: () -> Unit,
     viewModel: ConstructorSeasonViewModel = hiltViewModel()
 ) {
     ScreenView(screenName = "Constructor Season", args = mapOf(
@@ -78,10 +83,11 @@ fun ConstructorSeasonScreenVM(
         onRefresh = viewModel.inputs::refresh
     ) {
         ConstructorSeasonScreen(
+            actionUpClicked = actionUpClicked,
+            windowSizeClass = windowSizeClass,
             list = list.value,
             constructorName = constructorName,
             season = season,
-            actionUpClicked = actionUpClicked,
             driverClicked = viewModel.inputs::driverClicked,
             linkClicked = viewModel.inputs::openUrl
         )
@@ -90,12 +96,13 @@ fun ConstructorSeasonScreenVM(
 
 @Composable
 fun ConstructorSeasonScreen(
+    actionUpClicked: () -> Unit,
+    windowSizeClass: WindowSizeClass,
     list: List<ConstructorSeasonModel>,
     constructorName: String,
     season: Int,
     driverClicked: (ConstructorSeasonModel.Driver, Int) -> Unit,
     linkClicked: (String) -> Unit,
-    actionUpClicked: () -> Unit
 ) {
     LazyColumn(
         modifier = Modifier
@@ -104,8 +111,11 @@ fun ConstructorSeasonScreen(
         content = {
             item(key = "header") {
                 Header(
-                    text = "${constructorName}\n${season}",
-                    action = HeaderAction.BACK,
+                    text = "${season}\n${constructorName}",
+                    action = when (windowSizeClass.isWidthExpanded) {
+                        false -> HeaderAction.BACK
+                        true -> null
+                    },
                     actionUpClicked = actionUpClicked
                 )
             }
@@ -317,6 +327,7 @@ private fun SummaryCell(
     }
 }
 
+@ExperimentalMaterial3WindowSizeClassApi
 @PreviewTheme
 @Composable
 private fun Preview(
@@ -329,6 +340,7 @@ private fun Preview(
             season = 2020,
             linkClicked = { },
             driverClicked = { _, _ -> },
+            windowSizeClass = WindowSizeClass.calculateFromSize(DpSize.Unspecified),
             list = listOf(
                 fakeStat,
                 fakeStatWinning,

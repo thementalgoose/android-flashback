@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
@@ -25,6 +26,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import tmg.flashback.constructors.contract.ConstructorsNavigationComponent
+import tmg.flashback.constructors.contract.requireConstructorsNavigationComponent
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.SeasonConstructorStandingSeason
 import tmg.flashback.providers.SeasonConstructorStandingSeasonProvider
@@ -51,11 +54,13 @@ fun ConstructorStandingsScreenVM(
     actionUpClicked: () -> Unit,
     windowSizeClass: WindowSizeClass,
     viewModel: ConstructorStandingsViewModel = hiltViewModel(),
+    constructorsNavigationComponent: ConstructorsNavigationComponent = requireConstructorsNavigationComponent()
 ) {
     val state = viewModel.outputs.uiState.collectAsState()
 
     ConstructorStandingsScreen(
         actionUpClicked = actionUpClicked,
+        constructorsNavigationComponent = constructorsNavigationComponent,
         windowSizeClass = windowSizeClass,
         uiState = state.value,
         constructorClicked = viewModel.inputs::selectConstructor,
@@ -67,6 +72,7 @@ fun ConstructorStandingsScreenVM(
 @Composable
 fun ConstructorStandingsScreen(
     actionUpClicked: () -> Unit,
+    constructorsNavigationComponent: ConstructorsNavigationComponent,
     windowSizeClass: WindowSizeClass,
     uiState: ConstructorStandingsScreenState,
     constructorClicked: (SeasonConstructorStandingSeason) -> Unit,
@@ -86,9 +92,9 @@ fun ConstructorStandingsScreen(
                         item(key = "header") {
                             Header(
                                 text = stringResource(id = R.string.season_standings_constructor, uiState.season.toString()),
-                                action = when (windowSizeClass.isWidthExpanded) {
-                                    false -> HeaderAction.MENU
-                                    true -> null
+                                action = when (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact) {
+                                    true -> HeaderAction.MENU
+                                    false -> null
                                 },
                                 actionUpClicked = actionUpClicked
                             )
@@ -110,22 +116,22 @@ fun ConstructorStandingsScreen(
                         }
                         item(key = "footer") {
                             ProvidedBy()
-                            Spacer(Modifier.height(appBarHeight))
+//                            Spacer(Modifier.height(appBarHeight))
                         }
                     }
                 )
             }
         },
         detailsActionUpClicked = closeDriverDetails,
-        detailsShow = false, // uiState.currentlySelected != null,
+        detailsShow = uiState.currentlySelected != null,
         details = {
-            Box(Modifier.size(100.dp).background(Color.Red))
-//            ConstructorSeasonScreenVM(
-//                constructorId = uiState.currentlySelected!!.constructor.id,
-//                constructorName = uiState.currentlySelected.constructor.name,
-//                season = uiState.currentlySelected.season,
-//                actionUpClicked = closeDriverDetails
-//            )
+            constructorsNavigationComponent.ConstructorSeasonScreen(
+                actionUpClicked = closeDriverDetails,
+                windowSizeClass = windowSizeClass,
+                constructorId = uiState.currentlySelected!!.constructor.id,
+                constructorName = uiState.currentlySelected.constructor.name,
+                season = uiState.currentlySelected.season,
+            )
         }
     )
 }

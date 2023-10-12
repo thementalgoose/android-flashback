@@ -24,6 +24,7 @@ import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.ui.annotations.PreviewPhone
 import tmg.flashback.ui.annotations.PreviewTablet
+import tmg.flashback.ui.components.loading.Fade
 
 @Composable
 fun MasterDetailsPane(
@@ -45,6 +46,7 @@ fun MasterDetailsPane(
         ) {
             if (windowSizeClass.widthSizeClass != WindowWidthSizeClass.Expanded && detailsShow) {
                 details()
+                BackHandler(onBack = detailsActionUpClicked)
             } else {
                 master()
             }
@@ -56,8 +58,10 @@ fun MasterDetailsPane(
                     .fillMaxHeight()
             ) {
                 if (detailsShow) {
+                    Fade(visible = detailsShow) {
+                        details()
+                    }
                     BackHandler(onBack = detailsActionUpClicked)
-                    details()
                 }
             }
         }

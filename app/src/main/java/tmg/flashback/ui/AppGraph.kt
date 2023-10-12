@@ -90,7 +90,7 @@ fun AppGraph(
     NavHost(
         navController = navController,
         startDestination = Screen.Races.route,
-        modifier = Modifier
+        modifier = modifier
             .statusBarsPadding()
             .navigationBarsPadding()
     ) {
@@ -214,10 +214,11 @@ fun AppGraph(
         )) {
             val driverData = it.getArgument<ScreenDriverSeasonData>("data")
             DriverSeasonScreenVM(
+                windowSizeClass = windowSize,
+                actionUpClicked = { navController.popBackStack() },
                 driverId = driverData.driverId,
                 driverName = driverData.driverName,
                 season = driverData.season,
-                actionUpClicked = { navController.popBackStack() }
             )
         }
         composable(
@@ -238,10 +239,11 @@ fun AppGraph(
         )) {
             val constructorData = it.getArgument<ScreenConstructorSeasonData>("data")
             ConstructorSeasonScreenVM(
+                actionUpClicked = { navController.popBackStack() },
+                windowSizeClass = windowSize,
                 constructorId = constructorData.constructorId,
                 constructorName = constructorData.constructorName,
                 season = constructorData.season,
-                actionUpClicked = { navController.popBackStack() }
             )
         }
 
