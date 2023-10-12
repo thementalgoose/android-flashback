@@ -210,24 +210,24 @@ internal class HomeRepositoryTest {
 
     //endregion
 
-    //region Favourite Seasons
+    //region Season Onboarding prompt
 
     @Test
-    fun `favourite seasons reads value from preferences repository`() {
-        every { mockPreferenceManager.getSet(keyFavouriteSeasons, emptySet()) } returns mutableSetOf("2013")
+    fun `season onboarding prompt reads value from preferences repository`() {
+        every { mockPreferenceManager.getBoolean(keySeasonOnboarding, false) } returns true
         initSUT()
-        assertEquals(mutableSetOf(2013), sut.favouriteSeasons)
+        assertEquals(true, sut.hasSeenSeasonOnboarding)
         verify {
-            mockPreferenceManager.getSet(keyFavouriteSeasons, emptySet())
+            mockPreferenceManager.getBoolean(keySeasonOnboarding, false)
         }
     }
 
     @Test
-    fun `favourite seasons saves value in preferences repository`() {
+    fun `season onboarding prompt saves value in preferences repository`() {
         initSUT()
-        sut.favouriteSeasons = setOf(2012)
+        sut.setHasSeenSeasonOnboarding()
         verify {
-            mockPreferenceManager.save(keyFavouriteSeasons, setOf("2012"))
+            mockPreferenceManager.save(keySeasonOnboarding, true)
         }
     }
 
@@ -271,8 +271,7 @@ internal class HomeRepositoryTest {
         // Prefs
         private const val keyEmptyWeeksInSchedule: String = "empty_weeks_in_schedule"
         private const val keyDashboardCollapseList: String = "DASHBOARD_COLLAPSE_LIST"
-        private const val keyFavouriteSeasons: String = "FAVOURITE_SEASONS"
-        private const val keyDefaultSeason: String = "DEFAULT_SEASON"
         private const val keyProvidedByAtTop: String = "PROVIDED_BY_AT_TOP"
+        private const val keySeasonOnboarding: String = "ONBOARDING_SEASON"
     }
 }

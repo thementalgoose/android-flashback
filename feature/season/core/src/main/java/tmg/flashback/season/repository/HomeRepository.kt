@@ -27,12 +27,12 @@ class HomeRepository @Inject constructor(
         private const val keySupportedSeasons: String = "supported_seasons"
         private const val keySearch: String = "search"
 
-
         // Prefs
         private const val keyEmptyWeeksInSchedule: String = "empty_weeks_in_schedule"
         private const val keyDashboardCollapseList: String = "DASHBOARD_COLLAPSE_LIST"
-        private const val keyFavouriteSeasons: String = "FAVOURITE_SEASONS"
         private const val keyProvidedByAtTop: String = "PROVIDED_BY_AT_TOP"
+
+        private const val keySeasonOnboarding: String = "ONBOARDING_SEASON"
     }
 
     /**
@@ -86,17 +86,11 @@ class HomeRepository @Inject constructor(
         get() = preferenceManager.getBoolean(keyDashboardCollapseList, true)
         set(value) = preferenceManager.save(keyDashboardCollapseList, value)
 
-    /**
-     * Favourited seasons in the list
-     */
-    var favouriteSeasons: Set<Int>
-        set(value) = preferenceManager.save(keyFavouriteSeasons, value.map { it.toString() }.toSet())
-        get() {
-            val value = preferenceManager.getSet(keyFavouriteSeasons, setOf())
-            return value
-                .mapNotNull { it.toIntOrNull() }
-                .toSet()
-        }
+    val hasSeenSeasonOnboarding: Boolean
+        get() = preferenceManager.getBoolean(keySeasonOnboarding, false)
+    fun setHasSeenSeasonOnboarding() {
+        preferenceManager.save(keySeasonOnboarding, true)
+    }
 
     /**
      * Whether or not the "Data provided by" cell is displayed at the top of lists or not
