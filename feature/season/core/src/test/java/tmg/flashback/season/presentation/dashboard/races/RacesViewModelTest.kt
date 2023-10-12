@@ -19,6 +19,7 @@ import tmg.flashback.domain.repo.usecases.FetchSeasonUseCase
 import tmg.flashback.formula1.model.Overview
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.model.model
+import tmg.flashback.navigation.Navigator
 import tmg.flashback.season.contract.ResultsNavigationComponent
 import tmg.flashback.season.contract.repository.NotificationsRepository
 import tmg.flashback.season.repository.HomeRepository
@@ -34,6 +35,7 @@ internal class RacesViewModelTest: BaseTest() {
     private val mockDefaultSeasonUseCase: DefaultSeasonUseCase = mockk(relaxed = true)
     private val mockResultsNavigationComponent: ResultsNavigationComponent = mockk(relaxed = true)
     private val mockHomeRepository: HomeRepository = mockk(relaxed = true)
+    private val mockNavigator: Navigator = mockk(relaxed = true)
 
     private lateinit var underTest: RacesViewModel
 
@@ -46,6 +48,7 @@ internal class RacesViewModelTest: BaseTest() {
             homeRepository = mockHomeRepository,
             resultsNavigationComponent = mockResultsNavigationComponent,
             eventsRepository = mockEventsRepository,
+            navigator = mockNavigator,
             ioDispatcher = coroutineScope.testDispatcher
         )
     }

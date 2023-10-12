@@ -17,6 +17,7 @@ import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.model.SeasonDriverStandingSeason
 import tmg.flashback.formula1.model.SeasonDriverStandings
 import tmg.flashback.formula1.model.model
+import tmg.flashback.navigation.Navigator
 import tmg.flashback.season.usecases.DefaultSeasonUseCase
 import tmg.testutils.BaseTest
 
@@ -25,6 +26,7 @@ internal class DriverStandingsViewModelTest: BaseTest() {
     private val mockSeasonRepository: SeasonRepository = mockk(relaxed = true)
     private val mockDefaultSeasonUseCase: DefaultSeasonUseCase = mockk(relaxed = true)
     private val mockFetchSeasonsUseCase: FetchSeasonUseCase = mockk(relaxed = true)
+    private val mockNavigator: Navigator = mockk(relaxed = true)
 
     private lateinit var underTest: DriverStandingsViewModel
 
@@ -33,6 +35,7 @@ internal class DriverStandingsViewModelTest: BaseTest() {
             seasonRepository = mockSeasonRepository,
             fetchSeasonUseCase = mockFetchSeasonsUseCase,
             defaultSeasonUseCase = mockDefaultSeasonUseCase,
+            navigator = mockNavigator,
             ioDispatcher = coroutineScope.testDispatcher
         )
     }

@@ -29,6 +29,8 @@ import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.SeasonConstructorStandingSeason
 import tmg.flashback.providers.SeasonConstructorStandingSeasonProvider
 import tmg.flashback.season.R
+import tmg.flashback.season.presentation.messaging.Banner
+import tmg.flashback.season.presentation.messaging.ProvidedBy
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
@@ -91,8 +93,13 @@ fun ConstructorStandingsScreen(
                                 actionUpClicked = actionUpClicked
                             )
                         }
-                        item(key = "banner") {
-
+                        uiState.inProgress?.let { (raceName, round) ->
+                            item(key = "banner") {
+                                Banner(
+                                    message = stringResource(id = R.string.results_accurate_for, raceName, round),
+                                    showLink = false
+                                )
+                            }
                         }
                         items(uiState.standings, key = { "constructor=${it.constructor.id}" }) {
                             ConstructorStandings(
@@ -102,7 +109,7 @@ fun ConstructorStandingsScreen(
                             )
                         }
                         item(key = "footer") {
-                            //                ProvidedBy()
+                            ProvidedBy()
                             Spacer(Modifier.height(appBarHeight))
                         }
                     }
@@ -110,7 +117,7 @@ fun ConstructorStandingsScreen(
             }
         },
         detailsActionUpClicked = closeDriverDetails,
-        detailsShow = uiState.currentlySelected != null,
+        detailsShow = false, // uiState.currentlySelected != null,
         details = {
             Box(Modifier.size(100.dp).background(Color.Red))
 //            ConstructorSeasonScreenVM(
