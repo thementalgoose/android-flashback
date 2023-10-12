@@ -9,6 +9,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
@@ -92,9 +93,9 @@ fun ScheduleScreen(
                 item(key = "header") {
                     Header(
                         text = uiState.season.toString(),
-                        action = when (windowSizeClass.isWidthExpanded) {
-                            false -> HeaderAction.MENU
-                            true -> null
+                        action = when (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact) {
+                            true -> HeaderAction.MENU
+                            false -> null
                         },
                         actionUpClicked = actionUpClicked,
                         overrideIcons = {
@@ -160,7 +161,7 @@ fun ScheduleScreen(
                 }
                 item(key = "footer") {
                     ProvidedBy()
-                    Spacer(Modifier.height(appBarHeight))
+//                    Spacer(Modifier.height(appBarHeight))
                 }
             }
         )

@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Scaffold
@@ -159,6 +160,10 @@ fun DashboardScreen(
         }
     }
 
+    val navigationBarPosition = animateDpAsState(
+        targetValue = if (panelsState.isStartPanelOpen || !showBottomBar) appBarHeight else 0.dp,
+        label = "navigationBarPosition"
+    )
     Scaffold(
         modifier = Modifier
             .background(AppTheme.colors.backgroundContainer)
@@ -166,9 +171,9 @@ fun DashboardScreen(
             .statusBarsPadding(),
         bottomBar = {
             if (windowSize.widthSizeClass == WindowWidthSizeClass.Compact) {
-                val position = animateDpAsState(targetValue = if (panelsState.isStartPanelOpen || !showBottomBar) appBarHeight else 0.dp)
+
                 NavigationBar(
-                    modifier = Modifier.offset(y = position.value),
+                    modifier = Modifier.offset(y = navigationBarPosition.value),
                     list = seasonScreenItemsList.map { it.toNavigationItem(currentlySelectedItem == it) },
                     itemClicked = { item ->
                         menuItemClicked(seasonScreenItemsList.first { it.id == item.id })
@@ -257,7 +262,12 @@ fun DashboardScreen(
                                         .background(AppTheme.colors.backgroundSecondary.copy(alpha = 0.5f)))
                             }
                             AppGraph(
-                                modifier = Modifier.weight(1f),
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .padding(bottom = when (windowSize.widthSizeClass == WindowWidthSizeClass.Compact) {
+                                        true -> appBarHeight - navigationBarPosition.value
+                                        false -> 0.dp
+                                    }),
                                 advertProvider = advertProvider,
                                 deeplink = deeplink,
                                 navController = navigator.navController,

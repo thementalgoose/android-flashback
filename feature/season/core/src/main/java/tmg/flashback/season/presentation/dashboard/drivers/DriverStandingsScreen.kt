@@ -1,8 +1,6 @@
 package tmg.flashback.season.presentation.dashboard.drivers
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -16,16 +14,18 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import tmg.flashback.drivers.contract.DriverNavigationComponent
+import tmg.flashback.drivers.contract.requireDriverNavigationComponent
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.SeasonDriverStandingSeason
 import tmg.flashback.providers.SeasonDriverStandingSeasonProvider
@@ -54,15 +54,17 @@ fun DriverStandingsScreenVM(
     actionUpClicked: () -> Unit,
     windowSizeClass: WindowSizeClass,
     viewModel: DriverStandingsViewModel = hiltViewModel(),
+    driverNavigationComponent: DriverNavigationComponent = requireDriverNavigationComponent()
 ) {
     val state = viewModel.outputs.uiState.collectAsState()
 
     DriverStandingsScreen(
         actionUpClicked = actionUpClicked,
+        driverNavigationComponent = driverNavigationComponent,
         uiState = state.value,
         windowSizeClass = windowSizeClass,
         driverClicked = viewModel.inputs::selectDriver,
-        closeDriverDetails = viewModel.inputs::closeDriverDetails,
+        closeConstructorDetails = viewModel.inputs::closeDriverDetails,
         refresh = viewModel.inputs::refresh
     )
 }
@@ -70,10 +72,11 @@ fun DriverStandingsScreenVM(
 @Composable
 internal fun DriverStandingsScreen(
     actionUpClicked: () -> Unit,
+    driverNavigationComponent: DriverNavigationComponent,
     windowSizeClass: WindowSizeClass,
     uiState: DriverStandingsScreenState,
     driverClicked: (SeasonDriverStandingSeason) -> Unit,
-    closeDriverDetails: () -> Unit,
+    closeConstructorDetails: () -> Unit,
     refresh: () -> Unit
 ) {
     MasterDetailsPane(
@@ -88,9 +91,9 @@ internal fun DriverStandingsScreen(
                         item(key = "header") {
                             Header(
                                 text = stringResource(id = R.string.season_standings_driver, uiState.season.toString()),
-                                action = when (windowSizeClass.isWidthExpanded) {
-                                    false -> HeaderAction.MENU
-                                    true -> null
+                                action = when (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact) {
+                                    true -> HeaderAction.MENU
+                                    false -> null
                                 },
                                 actionUpClicked = actionUpClicked
                             )
@@ -112,25 +115,22 @@ internal fun DriverStandingsScreen(
                         }
                         item(key = "footer") {
                             ProvidedBy()
-                            Spacer(Modifier.height(appBarHeight))
+//                            Spacer(Modifier.height(appBarHeight))
                         }
                     }
                 )
             }
         },
-        detailsActionUpClicked = closeDriverDetails,
-        detailsShow = false, // uiState.currentlySelected != null,
+        detailsActionUpClicked = closeConstructorDetails,
+        detailsShow = uiState.currentlySelected != null,
         details = {
-//            Box(
-//                Modifier
-//                    .size(100.dp)
-//                    .background(Color.Magenta))
-//            DriverSeasonScreenVM(
-//                driverId = uiState.currentlySelected!!.driver.id,
-//                driverName = uiState.currentlySelected.driver.name,
-//                season = uiState.currentlySelected.season,
-//                actionUpClicked = closeDriverDetails
-//            )
+            driverNavigationComponent.DriverSeasonScreen(
+                windowSizeClass = windowSizeClass,
+                actionUpClicked = closeConstructorDetails,
+                driverId = uiState.currentlySelected!!.driver.id,
+                driverName = uiState.currentlySelected.driver.name,
+                season = uiState.currentlySelected.season,
+            )
         }
     )
 }
