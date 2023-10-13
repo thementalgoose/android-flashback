@@ -32,6 +32,7 @@ import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.SeasonConstructorStandingSeason
 import tmg.flashback.providers.SeasonConstructorStandingSeasonProvider
 import tmg.flashback.season.R
+import tmg.flashback.season.presentation.dashboard.shared.seasonpicker.SeasonTitleVM
 import tmg.flashback.season.presentation.messaging.Banner
 import tmg.flashback.season.presentation.messaging.ProvidedBy
 import tmg.flashback.style.AppTheme
@@ -91,7 +92,9 @@ fun ConstructorStandingsScreen(
                     content = {
                         item(key = "header") {
                             Header(
-                                text = stringResource(id = R.string.season_standings_constructor, uiState.season.toString()),
+                                content = {
+                                    SeasonTitleVM(subtitle = stringResource(id = R.string.season_standings_constructor))
+                                },
                                 action = when (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact) {
                                     true -> HeaderAction.MENU
                                     false -> null

@@ -4,6 +4,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -24,11 +25,11 @@ import tmg.flashback.ui.R
 
 @Composable
 fun Header(
-    text: String,
     actionUpClicked: () -> Unit,
     modifier: Modifier = Modifier,
     action: HeaderAction? = null,
     overrideIcons: @Composable () -> Unit = { },
+    content: @Composable RowScope.() -> Unit
 ) {
     Column(
         modifier = modifier
@@ -52,6 +53,32 @@ fun Header(
         Row(
             verticalAlignment = Alignment.Top
         ) {
+            content()
+            if (action == null) {
+                Row(
+                    modifier = Modifier.align(Alignment.CenterVertically)
+                ) {
+                    overrideIcons()
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun Header(
+    text: String,
+    actionUpClicked: () -> Unit,
+    modifier: Modifier = Modifier,
+    action: HeaderAction? = null,
+    overrideIcons: @Composable () -> Unit = { },
+) {
+    Header(
+        actionUpClicked = actionUpClicked,
+        modifier = modifier,
+        action = action,
+        overrideIcons = overrideIcons,
+        content = {
             TextHeadline1(
                 text = text,
                 modifier = Modifier
@@ -63,15 +90,8 @@ fun Header(
                         bottom = AppTheme.dimens.medium
                     )
             )
-            if (action == null) {
-                Row(
-                    modifier = Modifier.align(Alignment.CenterVertically)
-                ) {
-                    overrideIcons()
-                }
-            }
         }
-    }
+    )
 }
 
 enum class HeaderAction(

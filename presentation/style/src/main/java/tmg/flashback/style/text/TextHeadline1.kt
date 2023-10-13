@@ -25,6 +25,23 @@ fun TextHeadline1(
         )
     )
 }
+@Composable
+fun TextHeadline1Inline(
+    text: String,
+    modifier: Modifier = Modifier,
+    brand: Boolean = false
+) {
+    Text(
+        text,
+        modifier = modifier,
+        style = AppTheme.typography.h1.copy(
+            color = when (brand) {
+                true -> AppTheme.colors.primary
+                false -> AppTheme.colors.contentPrimary
+            }
+        )
+    )
+}
 
 @PreviewTheme
 @Composable

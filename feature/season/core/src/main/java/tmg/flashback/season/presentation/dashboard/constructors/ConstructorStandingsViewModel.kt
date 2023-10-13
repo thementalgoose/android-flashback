@@ -60,7 +60,9 @@ class ConstructorStandingsViewModel @Inject constructor(
     )
 
     init {
-        refresh()
+        viewModelScope.launch(ioDispatcher) {
+            populate()
+        }
     }
 
     override fun selectConstructor(constructor: SeasonConstructorStandingSeason) {
