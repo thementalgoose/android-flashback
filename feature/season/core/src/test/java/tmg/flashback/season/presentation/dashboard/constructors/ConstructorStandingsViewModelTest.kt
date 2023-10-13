@@ -4,6 +4,7 @@ import app.cash.turbine.test
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.verify
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.*
@@ -82,6 +83,9 @@ internal class ConstructorStandingsViewModelTest: BaseTest() {
         initUnderTest()
         underTest.outputs.uiState.test {
             assertEquals(listOf(standing1), awaitItem().standings)
+        }
+        coVerify(exactly = 0) {
+            mockFetchSeasonsUseCase.fetchSeason(any())
         }
     }
 

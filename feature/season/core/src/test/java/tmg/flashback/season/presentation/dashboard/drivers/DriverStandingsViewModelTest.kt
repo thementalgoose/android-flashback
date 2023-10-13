@@ -81,6 +81,9 @@ internal class DriverStandingsViewModelTest: BaseTest() {
         underTest.outputs.uiState.test {
             assertEquals(listOf(standing1), awaitItem().standings)
         }
+        coVerify(exactly = 0) {
+            mockFetchSeasonsUseCase.fetchSeason(any())
+        }
     }
 
     @Test

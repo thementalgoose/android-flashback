@@ -85,8 +85,8 @@
     <string name="dashboard_tab_calendar">Calendar</string>
     <string name="dashboard_tab_drivers">Drivers</string>
     <string name="dashboard_tab_constructors">Constructors</string>
-    <string name="season_standings_driver">%s\nDriver Standings</string>
-    <string name="season_standings_constructor">%s\nConstructor Standings</string>
+    <string name="season_standings_driver">Driver Standings</string>
+    <string name="season_standings_constructor">Constructor Standings</string>
 
 
     <!-- Driver overview -->

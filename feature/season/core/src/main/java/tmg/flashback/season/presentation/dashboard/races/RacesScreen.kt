@@ -32,6 +32,7 @@ import tmg.flashback.providers.OverviewRaceProvider
 import tmg.flashback.season.R
 import tmg.flashback.season.contract.repository.models.NotificationSchedule
 import tmg.flashback.season.presentation.dashboard.DashboardQuickLinks
+import tmg.flashback.season.presentation.dashboard.shared.seasonpicker.SeasonTitleVM
 import tmg.flashback.season.presentation.messaging.ProvidedBy
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
@@ -44,10 +45,8 @@ import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.header.HeaderAction
 import tmg.flashback.ui.components.loading.SkeletonViewList
-import tmg.flashback.ui.components.navigation.appBarHeight
 import tmg.flashback.ui.components.now.Now
 import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
-import tmg.flashback.ui.foldables.isWidthExpanded
 import tmg.utilities.extensions.format
 import tmg.utilities.extensions.startOfWeek
 
@@ -92,7 +91,9 @@ fun ScheduleScreen(
             content = {
                 item(key = "header") {
                     Header(
-                        text = uiState.season.toString(),
+                        content = {
+                            SeasonTitleVM(subtitle = null)
+                        },
                         action = when (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact) {
                             true -> HeaderAction.MENU
                             false -> null
