@@ -5,6 +5,7 @@ import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
@@ -22,6 +23,7 @@ import tmg.flashback.formula1.model.model
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.season.contract.ResultsNavigationComponent
 import tmg.flashback.season.contract.repository.NotificationsRepository
+import tmg.flashback.season.presentation.dashboard.shared.seasonpicker.CurrentSeasonHolder
 import tmg.flashback.season.repository.HomeRepository
 import tmg.flashback.season.usecases.DefaultSeasonUseCase
 import tmg.testutils.BaseTest
@@ -32,7 +34,7 @@ internal class RacesViewModelTest: BaseTest() {
     private val mockEventsRepository: EventsRepository = mockk(relaxed = true)
     private val mockFetchSeasonUseCase: FetchSeasonUseCase = mockk(relaxed = true)
     private val mockNotificationRepository: NotificationsRepository = mockk(relaxed = true)
-    private val mockDefaultSeasonUseCase: DefaultSeasonUseCase = mockk(relaxed = true)
+    private val mockCurrentSeasonHolder: CurrentSeasonHolder = mockk(relaxed = true)
     private val mockResultsNavigationComponent: ResultsNavigationComponent = mockk(relaxed = true)
     private val mockHomeRepository: HomeRepository = mockk(relaxed = true)
     private val mockNavigator: Navigator = mockk(relaxed = true)
@@ -43,7 +45,7 @@ internal class RacesViewModelTest: BaseTest() {
         underTest = RacesViewModel(
             fetchSeasonUseCase = mockFetchSeasonUseCase,
             overviewRepository = mockOverviewRepository,
-            defaultSeasonUseCase = mockDefaultSeasonUseCase,
+            currentSeasonHolder = mockCurrentSeasonHolder,
             notificationRepository = mockNotificationRepository,
             homeRepository = mockHomeRepository,
             resultsNavigationComponent = mockResultsNavigationComponent,
@@ -53,13 +55,18 @@ internal class RacesViewModelTest: BaseTest() {
         )
     }
 
+    private val currentSeasonFlow: MutableStateFlow<Int> = MutableStateFlow(2020)
+
     private val overview1 = OverviewRace.model(round = 1, date = LocalDate.of(2020, 1, 1))
     private val overview2 = OverviewRace.model(round = 2, date = LocalDate.of(2020, 1, 3))
     private val overview3 = OverviewRace.model(round = 3, date = LocalDate.of(2020, 1, 6))
     private val overview4 = OverviewRace.model(round = 4, date = LocalDate.of(2020, 1, 9))
+    private val overview5 = OverviewRace.model(round = 1, date = LocalDate.of(2021, 1, 9))
     private val expectedRaceWeek1 = RacesModel.RaceWeek(model = overview1, notificationSchedule = fakeNotificationSchedule)
     private val expectedRaceWeek2 = RacesModel.RaceWeek(model = overview2, notificationSchedule = fakeNotificationSchedule)
     private val expectedRaceWeek3 = RacesModel.RaceWeek(model = overview3, notificationSchedule = fakeNotificationSchedule)
+    private val expectedRaceWeek4 = RacesModel.RaceWeek(model = overview4, notificationSchedule = fakeNotificationSchedule)
+    private val expectedRaceWeek5 = RacesModel.RaceWeek(model = overview5, notificationSchedule = fakeNotificationSchedule)
 
     @BeforeEach
     internal fun setUp() {
@@ -68,11 +75,30 @@ internal class RacesViewModelTest: BaseTest() {
                 overviewRaces = listOf(overview1, overview2)
             ))
         }
+        every { mockOverviewRepository.getOverview(2021) } returns flow { emit(
+            Overview.model(
+                overviewRaces = listOf(overview5)
+            ))
+        }
         every { mockHomeRepository.collapseList } returns false
         every { mockEventsRepository.getEvents(any()) } returns flow { emit(emptyList()) }
         every { mockNotificationRepository.notificationSchedule } returns fakeNotificationSchedule
         every { mockFetchSeasonUseCase.fetch(any()) } returns flow { emit(true) }
-        every { mockDefaultSeasonUseCase.defaultSeason } returns 2020
+        every { mockCurrentSeasonHolder.currentSeason } returns 2020
+        every { mockCurrentSeasonHolder.currentSeasonFlow } returns currentSeasonFlow
+    }
+
+    @Test
+    fun `content refreshed when current season flow changes`() = runTest {
+        initUnderTest()
+        underTest.outputs.uiState.test {
+            assertEquals(listOf(expectedRaceWeek1, expectedRaceWeek2), awaitItem().items)
+
+            currentSeasonFlow.emit(2021)
+            val item = awaitItem()
+            assertEquals(listOf(expectedRaceWeek5), item.items)
+            assertEquals(2021, item.season)
+        }
     }
 
     @Test
@@ -84,10 +110,20 @@ internal class RacesViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `initial load calls refresh`() = runTest {
+    fun `initial load calls refresh if in current year`() = runTest {
+        every { mockCurrentSeasonHolder.defaultSeason } returns 2020
         initUnderTest()
         coVerify {
             mockFetchSeasonUseCase.fetchSeason(2020)
+        }
+    }
+
+    @Test
+    fun `initial load does not calls refresh if not in current year`() = runTest {
+        every { mockCurrentSeasonHolder.defaultSeason } returns 2021
+        initUnderTest()
+        coVerify(exactly = 0) {
+            mockFetchSeasonUseCase.fetchSeason(any())
         }
     }
 
@@ -147,13 +183,11 @@ internal class RacesViewModelTest: BaseTest() {
 
     @Test
     fun `clicking tyre opens navigation component`() = runTest {
-        every { mockDefaultSeasonUseCase.defaultSeason } returns 2023
-
         initUnderTest()
         underTest.clickTyre()
 
         verify {
-            mockResultsNavigationComponent.tyres(2023)
+            mockResultsNavigationComponent.tyres(2020)
         }
     }
 
