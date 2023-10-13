@@ -7,6 +7,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import tmg.flashback.domain.repo.EventsRepository
@@ -21,6 +22,7 @@ import tmg.flashback.navigation.Screen
 import tmg.flashback.season.contract.ResultsNavigationComponent
 import tmg.flashback.season.contract.repository.NotificationsRepository
 import tmg.flashback.season.presentation.dashboard.races.RacesModelBuilder.generateScheduleModel
+import tmg.flashback.season.presentation.dashboard.shared.seasonpicker.CurrentSeasonHolder
 import tmg.flashback.season.repository.HomeRepository
 import tmg.flashback.season.usecases.DefaultSeasonUseCase
 import tmg.flashback.weekend.contract.Weekend
@@ -31,11 +33,13 @@ import javax.inject.Inject
 
 data class RacesScreenState(
     val season: Int,
-    val showTyres: Boolean,
     val items: List<RacesModel>? = listOf(RacesModel.Loading),
     val isLoading: Boolean = false,
     val currentRace: OverviewRace? = null,
-)
+) {
+    val showTyres: Boolean
+        get() = SeasonTyres.getBySeason(season) != null
+}
 
 interface RacesViewModelInputs {
     fun refresh()
@@ -51,7 +55,7 @@ interface RacesViewModelOutputs {
 class RacesViewModel @Inject constructor(
     private val fetchSeasonUseCase: FetchSeasonUseCase,
     private val overviewRepository: OverviewRepository,
-    private val defaultSeasonUseCase: DefaultSeasonUseCase,
+    private val currentSeasonHolder: CurrentSeasonHolder,
     private val notificationRepository: NotificationsRepository,
     private val homeRepository: HomeRepository,
     private val resultsNavigationComponent: ResultsNavigationComponent,
@@ -64,15 +68,21 @@ class RacesViewModel @Inject constructor(
     val outputs: RacesViewModelOutputs = this
 
     override val uiState: MutableStateFlow<RacesScreenState> = MutableStateFlow(RacesScreenState(
-        season = defaultSeasonUseCase.defaultSeason,
-        showTyres = SeasonTyres.getBySeason(defaultSeasonUseCase.defaultSeason) != null
+        season = currentSeasonHolder.currentSeason
     ))
 
     private var collapseRaces: Boolean = homeRepository.collapseList
     private var showEmptyWeeks: Boolean = homeRepository.emptyWeeksInSchedule
 
     init {
-        refresh()
+        viewModelScope.launch(ioDispatcher) {
+            currentSeasonHolder.currentSeasonFlow.collectLatest {
+                uiState.value = uiState.value.copy(season = it)
+                if (!populate(it) || it == currentSeasonHolder.defaultSeason) {
+                    refresh()
+                }
+            }
+        }
     }
 
     override fun refresh() {
@@ -87,7 +97,7 @@ class RacesViewModel @Inject constructor(
         }
     }
 
-    private suspend fun populate(season: Int) {
+    private suspend fun populate(season: Int): Boolean {
         val overview = overviewRepository.getOverview(season).firstOrNull()
         val events = eventsRepository.getEvents(season).firstOrNull()
 
@@ -97,7 +107,7 @@ class RacesViewModel @Inject constructor(
                 isLoading = false,
                 currentRace = null
             )
-            return
+            return false
         }
 
         val raceList = generateScheduleModel(
@@ -112,6 +122,7 @@ class RacesViewModel @Inject constructor(
             items = raceList,
             isLoading = false
         )
+        return true
     }
 
     override fun clickTyre() {

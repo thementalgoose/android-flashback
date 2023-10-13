@@ -33,6 +33,7 @@ import org.threeten.bp.LocalDate
 import tmg.flashback.googleanalytics.constants.AnalyticsConstants.analyticsDriverId
 import tmg.flashback.googleanalytics.constants.AnalyticsConstants.analyticsSeason
 import tmg.flashback.drivers.R
+import tmg.flashback.drivers.presentation.Delta
 import tmg.flashback.formula1.enums.RaceStatus
 import tmg.flashback.formula1.enums.isStatusFinished
 import tmg.flashback.formula1.extensions.pointsDisplay
@@ -73,7 +74,7 @@ import kotlin.math.roundToInt
  * If the width of the container is more than this value, put the stuff side by side
  */
 private val resultColumnFlexBorder: Dp = 300.dp
-private val resultColumnWidth: Dp = 42.dp
+private val resultColumnWidth: Dp = 50.dp
 private val headerImageSize: Dp = 120.dp
 
 @Composable
@@ -264,9 +265,7 @@ private fun History(
 private fun ResultHeader(
     modifier: Modifier = Modifier
 ) {
-    Row(modifier = modifier
-        .padding(end = AppTheme.dimens.medium)
-    ) {
+    Row(modifier = modifier) {
         Box(Modifier.weight(1f))
         Box(
             Modifier
@@ -327,9 +326,6 @@ private fun Result(
                 false -> AppTheme.colors.backgroundSecondary
             }
         )
-        .padding(
-            end = AppTheme.dimens.medium
-        )
     ) {
         Column(
             Modifier.weight(1f)
@@ -368,10 +364,10 @@ private fun Result(
                     .fillMaxWidth()
                     .padding(top = AppTheme.dimens.xsmall)
             ) {
-                TextBody1(
+                TextBody2(
                     textAlign = TextAlign.Center,
                     modifier = Modifier.fillMaxWidth(),
-                    bold = true,
+                    bold = false,
                     text = model.qualified?.ordinalAbbreviation ?: "-"
                 )
                 if (!model.raceStatus.isStatusFinished()) {
@@ -395,6 +391,10 @@ private fun Result(
                     .padding(top = AppTheme.dimens.xsmall)
             ) {
                 TextBody1(
+                    textColor = when (model.finished == 1) {
+                        true -> AppTheme.colors.f1Championship
+                        false -> null
+                    },
                     textAlign = TextAlign.Center,
                     modifier = Modifier.fillMaxWidth(),
                     bold = true,

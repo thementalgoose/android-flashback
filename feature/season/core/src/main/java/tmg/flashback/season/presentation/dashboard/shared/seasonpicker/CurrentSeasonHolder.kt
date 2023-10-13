@@ -23,6 +23,9 @@ class CurrentSeasonHolder @Inject constructor(
     val supportedSeasons: List<Int>
         get() = _supportedSeasons.value
 
+    val defaultSeason: Int
+        get() = defaultSeasonUseCase.defaultSeason
+
     fun updateTo(season: Int) {
         if (supportedSeasons.contains(season)) {
             _currentSeason.value = season
