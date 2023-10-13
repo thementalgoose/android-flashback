@@ -7,17 +7,26 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.skip
 import kotlinx.coroutines.launch
 import tmg.flashback.domain.repo.SeasonRepository
 import tmg.flashback.domain.repo.usecases.FetchSeasonUseCase
 import tmg.flashback.drivers.contract.Driver
 import tmg.flashback.drivers.contract.DriverSeason
 import tmg.flashback.drivers.contract.with
+import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
 import tmg.flashback.formula1.model.SeasonDriverStandingSeason
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
+import tmg.flashback.season.presentation.dashboard.shared.seasonpicker.CurrentSeasonHolder
 import tmg.flashback.season.usecases.DefaultSeasonUseCase
+import tmg.utilities.extensions.combinePair
 import javax.inject.Inject
 
 data class DriverStandingsScreenState(
@@ -43,24 +52,28 @@ interface DriverStandingsViewModelOutputs {
 class DriverStandingsViewModel @Inject constructor(
     private val seasonRepository: SeasonRepository,
     private val fetchSeasonUseCase: FetchSeasonUseCase,
-    private val defaultSeasonUseCase: DefaultSeasonUseCase,
+    private val currentSeasonHolder: CurrentSeasonHolder,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), DriverStandingsViewModelInputs, DriverStandingsViewModelOutputs {
 
     val inputs: DriverStandingsViewModelInputs = this
     val outputs: DriverStandingsViewModelOutputs = this
 
-    private val season by lazy { defaultSeasonUseCase.defaultSeason } // savedStateHandle.get<Int>(SEASON)!! }
 
     override val uiState: MutableStateFlow<DriverStandingsScreenState> = MutableStateFlow(
-        DriverStandingsScreenState(
-            season = season
-        )
+        DriverStandingsScreenState(season = currentSeasonHolder.currentSeason)
     )
+    private val season: Int
+        get() = uiState.value.season
 
     init {
         viewModelScope.launch(ioDispatcher) {
-            populate()
+            currentSeasonHolder.currentSeasonFlow.collectLatest {
+                uiState.value = uiState.value.copy(season = it)
+                if (!populate()) {
+                    refresh()
+                }
+            }
         }
     }
 
@@ -83,7 +96,7 @@ class DriverStandingsViewModel @Inject constructor(
         }
     }
 
-    private suspend fun populate() {
+    private suspend fun populate(): Boolean {
         val currentStandings = seasonRepository.getDriverStandings(season).firstOrNull()?.standings ?: emptyList()
         val maxPoints = currentStandings.maxOfOrNull { it.points } ?: 850.0
 
@@ -93,6 +106,8 @@ class DriverStandingsViewModel @Inject constructor(
             inProgress = currentStandings.firstOrNull()?.inProgressContent,
             isLoading = false
         )
+
+        return currentStandings.isNotEmpty()
     }
 
     companion object {

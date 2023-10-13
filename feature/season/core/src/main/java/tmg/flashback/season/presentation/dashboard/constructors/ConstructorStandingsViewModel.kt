@@ -7,6 +7,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import tmg.flashback.constructors.contract.ConstructorSeason
@@ -18,6 +19,7 @@ import tmg.flashback.drivers.contract.with
 import tmg.flashback.formula1.model.SeasonConstructorStandingSeason
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
+import tmg.flashback.season.presentation.dashboard.shared.seasonpicker.CurrentSeasonHolder
 import tmg.flashback.season.usecases.DefaultSeasonUseCase
 import javax.inject.Inject
 
@@ -44,24 +46,28 @@ interface ConstructorStandingsViewModelOutputs {
 class ConstructorStandingsViewModel @Inject constructor(
     private val seasonRepository: SeasonRepository,
     private val fetchSeasonUseCase: FetchSeasonUseCase,
-    private val defaultSeasonUseCase: DefaultSeasonUseCase,
+    private val currentSeasonHolder: CurrentSeasonHolder,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), ConstructorStandingsViewModelInputs, ConstructorStandingsViewModelOutputs {
 
     val inputs: ConstructorStandingsViewModelInputs = this
     val outputs: ConstructorStandingsViewModelOutputs = this
 
-    private val season by lazy { defaultSeasonUseCase.defaultSeason } // savedStateHandle.get<Int>(SEASON)!! }
-
     override val uiState: MutableStateFlow<ConstructorStandingsScreenState> = MutableStateFlow(
-        ConstructorStandingsScreenState(
-            season = season
-        )
+        ConstructorStandingsScreenState(season = currentSeasonHolder.currentSeason)
     )
+    private val season: Int
+        get() = uiState.value.season
+
 
     init {
         viewModelScope.launch(ioDispatcher) {
-            populate()
+            currentSeasonHolder.currentSeasonFlow.collectLatest {
+                uiState.value = uiState.value.copy(season = it)
+                if (!populate()) {
+                    refresh()
+                }
+            }
         }
     }
 
@@ -84,7 +90,7 @@ class ConstructorStandingsViewModel @Inject constructor(
         }
     }
 
-    private suspend fun populate() {
+    private suspend fun populate(): Boolean {
         val currentStandings = seasonRepository.getConstructorStandings(season).firstOrNull()?.standings ?: emptyList()
         val maxPoints = currentStandings.maxOfOrNull { it.points } ?: 800.0
         uiState.value = uiState.value.copy(
@@ -93,6 +99,8 @@ class ConstructorStandingsViewModel @Inject constructor(
             inProgress = currentStandings.firstOrNull()?.inProgressContent,
             isLoading = false
         )
+
+        return currentStandings.isNotEmpty()
     }
 
     companion object {
