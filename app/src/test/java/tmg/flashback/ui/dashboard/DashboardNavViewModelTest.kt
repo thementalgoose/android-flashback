@@ -9,9 +9,11 @@ import io.mockk.mockk
 import io.mockk.slot
 import io.mockk.verify
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
@@ -49,6 +51,12 @@ internal class DashboardNavViewModelTest: BaseTest() {
             debugNavigationComponent = mockDebugNavigationComponent,
             ioDispatcher = Dispatchers.Unconfined
         )
+    }
+
+    @BeforeEach
+    fun setUp() {
+        every { mockNavigator.isSubNavigation() } returns false
+        every { mockNavigator.subNavigation } returns MutableStateFlow(false)
     }
 
     @Test
