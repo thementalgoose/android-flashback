@@ -11,13 +11,12 @@ import tmg.flashback.drivers.contract.Driver
 import tmg.flashback.drivers.contract.DriverSeason
 import tmg.flashback.drivers.contract.with
 import tmg.flashback.navigation.Screen
-import tmg.flashback.season.Calendar
-import tmg.flashback.season.Constructors
-import tmg.flashback.season.Drivers
-import tmg.flashback.season.with
 import tmg.flashback.rss.contract.RSS
 import tmg.flashback.rss.contract.RSSConfigure
 import tmg.flashback.search.contract.Search
+import tmg.flashback.season.contract.ConstructorsStandings
+import tmg.flashback.season.contract.DriverStandings
+import tmg.flashback.season.contract.Races
 import tmg.flashback.weekend.contract.Weekend
 import tmg.flashback.weekend.contract.model.ScreenWeekendData
 import tmg.flashback.weekend.contract.with
@@ -27,20 +26,17 @@ class ScreenPathTest {
 
     @Test
     fun `screen calendar`() {
-        assertEquals("results/calendar/{season}", Screen.Calendar.route)
-        assertEquals("results/calendar/2022", Screen.Calendar.with(2022).route)
+        assertEquals("results/races", Screen.Races.route)
     }
 
     @Test
     fun `screen constructors`() {
-        assertEquals("results/constructors/{season}", Screen.Constructors.route)
-        assertEquals("results/constructors/2022", Screen.Constructors.with(2022).route)
+        assertEquals("results/constructors", Screen.ConstructorsStandings.route)
     }
 
     @Test
     fun `screen drivers`() {
-        assertEquals("results/drivers/{season}", Screen.Drivers.route)
-        assertEquals("results/drivers/2022", Screen.Drivers.with(2022).route)
+        assertEquals("results/drivers", Screen.DriverStandings.route)
     }
 
     @Test

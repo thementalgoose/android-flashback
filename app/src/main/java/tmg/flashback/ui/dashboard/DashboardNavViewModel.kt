@@ -1,6 +1,7 @@
 package tmg.flashback.ui.dashboard
 
 import android.os.Bundle
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
@@ -11,6 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -29,6 +31,7 @@ import tmg.flashback.season.contract.DriverStandings
 import tmg.flashback.season.contract.Races
 import tmg.flashback.ui.settings.All
 import tmg.flashback.usecases.DashboardSyncUseCase
+import tmg.utilities.extensions.combinePair
 import javax.inject.Inject
 
 interface DashboardNavViewModelInputs {
@@ -81,11 +84,14 @@ class DashboardNavViewModel @Inject constructor(
         .stateIn(viewModelScope, SharingStarted.Lazily, MenuItem.Calendar)
 
     override val showMenu: StateFlow<Boolean> = currentDestination
-        .map { destination ->
+        .combinePair(navigator.subNavigation)
+        .map { (destination, isSubNavigation) ->
             if (destination == null) return@map null
 
+            Log.i("DashboardNav", "showMenu updating $destination with sub navigation $isSubNavigation")
+
             return@map when {
-                destination.startsWith("results/") -> true
+                destination.startsWith("results/") -> !isSubNavigation
                 destination == "settings" -> true
                 destination == "rss" -> true
                 destination == "search" -> true
@@ -96,9 +102,10 @@ class DashboardNavViewModel @Inject constructor(
         .stateIn(viewModelScope, SharingStarted.Lazily, false)
 
     override val showBottomBar: StateFlow<Boolean> = currentDestination
-        .map {
-            if (it == null) return@map false
-            return@map it.startsWith("results/")
+        .combinePair(navigator.subNavigation)
+        .map { (destination, _) ->
+            if (destination == null) return@map false
+            return@map destination.startsWith("results/")
         }
         .stateIn(viewModelScope, SharingStarted.Lazily, false)
 

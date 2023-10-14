@@ -47,6 +47,7 @@ class ConstructorStandingsViewModel @Inject constructor(
     private val seasonRepository: SeasonRepository,
     private val fetchSeasonUseCase: FetchSeasonUseCase,
     private val currentSeasonHolder: CurrentSeasonHolder,
+    private val navigator: Navigator,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), ConstructorStandingsViewModelInputs, ConstructorStandingsViewModelOutputs {
 
@@ -72,10 +73,12 @@ class ConstructorStandingsViewModel @Inject constructor(
     }
 
     override fun selectConstructor(constructor: SeasonConstructorStandingSeason) {
+        navigator.setSubNavigation()
         uiState.value = uiState.value.copy(currentlySelected = constructor)
     }
 
     override fun closeConstructor() {
+        navigator.clearSubNavigation()
         uiState.value = uiState.value.copy(currentlySelected = null)
     }
 

@@ -55,7 +55,7 @@ fun DriverStandingsScreenVM(
     actionUpClicked: () -> Unit,
     windowSizeClass: WindowSizeClass,
     viewModel: DriverStandingsViewModel = hiltViewModel(),
-    driverNavigationComponent: DriverNavigationComponent = requireDriverNavigationComponent()
+    driverNavigationComponent: DriverNavigationComponent = requireDriverNavigationComponent(),
 ) {
     val state = viewModel.outputs.uiState.collectAsState()
 

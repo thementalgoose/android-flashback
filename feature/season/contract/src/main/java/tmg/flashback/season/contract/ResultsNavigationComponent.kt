@@ -14,6 +14,4 @@ interface ResultsNavigationComponent {
     fun tyres(season: Int)
 
     fun preseasonEvents(season: Int)
-
-
 }
