@@ -70,7 +70,7 @@ class DriverStandingsViewModel @Inject constructor(
         viewModelScope.launch(ioDispatcher) {
             currentSeasonHolder.currentSeasonFlow.collectLatest {
                 uiState.value = uiState.value.copy(season = it)
-                if (!populate() || it == currentSeasonHolder.defaultSeason) {
+                if (!populate()) {
                     refresh()
                 }
             }

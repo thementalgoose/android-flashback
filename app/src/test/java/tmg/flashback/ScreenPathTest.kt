@@ -41,9 +41,9 @@ class ScreenPathTest {
 
     @Test
     fun driver() {
-        assertEquals("drivers/{data}", Screen.Driver.route)
+        assertEquals("driver/{data}", Screen.Driver.route)
         assertEquals(
-            """drivers/{"driverId":"id","driverName":"name"}""",
+            """driver/{"driverId":"id","driverName":"name"}""",
             Screen.Driver.with("id", "name").route
         )
     }
