@@ -104,7 +104,7 @@ fun AppGraph(
         composable(Screen.ConstructorsStandings.route) {
             ConstructorStandingsScreenVM(
                 actionUpClicked = openMenu,
-                windowSizeClass = windowSize
+                windowSizeClass = windowSize,
             )
         }
 

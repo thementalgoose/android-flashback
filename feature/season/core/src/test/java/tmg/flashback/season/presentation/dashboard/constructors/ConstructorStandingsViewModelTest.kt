@@ -27,6 +27,7 @@ internal class ConstructorStandingsViewModelTest: BaseTest() {
 
     private val mockSeasonRepository: SeasonRepository = mockk(relaxed = true)
     private val mockCurrentSeasonHolder: CurrentSeasonHolder = mockk(relaxed = true)
+    private val mockNavigator: Navigator = mockk(relaxed = true)
     private val mockFetchSeasonsUseCase: FetchSeasonUseCase = mockk(relaxed = true)
 
     private lateinit var underTest: ConstructorStandingsViewModel
@@ -36,6 +37,7 @@ internal class ConstructorStandingsViewModelTest: BaseTest() {
             seasonRepository = mockSeasonRepository,
             fetchSeasonUseCase = mockFetchSeasonsUseCase,
             currentSeasonHolder = mockCurrentSeasonHolder,
+            navigator = mockNavigator,
             ioDispatcher = coroutineScope.testDispatcher
         )
     }
@@ -116,6 +118,9 @@ internal class ConstructorStandingsViewModelTest: BaseTest() {
         underTest.outputs.uiState.test {
             assertEquals(standing1, awaitItem().currentlySelected)
         }
+        verify {
+            mockNavigator.setSubNavigation()
+        }
     }
 
     @Test
@@ -128,6 +133,9 @@ internal class ConstructorStandingsViewModelTest: BaseTest() {
             underTest.inputs.closeConstructor()
 
             assertEquals(null, awaitItem().currentlySelected)
+        }
+        verify {
+            mockNavigator.clearSubNavigation()
         }
     }
 }

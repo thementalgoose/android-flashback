@@ -12,8 +12,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
@@ -23,18 +21,8 @@ import tmg.flashback.debug.model.DebugMenuItem
 import tmg.flashback.navigation.ApplicationNavigationComponent
 import tmg.flashback.navigation.NavigationDestination
 import tmg.flashback.navigation.Navigator
-import tmg.flashback.navigation.Screen
-import tmg.flashback.season.Calendar
-import tmg.flashback.season.Constructors
-import tmg.flashback.season.Drivers
-import tmg.flashback.season.usecases.DefaultSeasonUseCase
-import tmg.flashback.season.with
 import tmg.flashback.rss.repo.RssRepository
-import tmg.flashback.ui.settings.All
 import tmg.flashback.usecases.DashboardSyncUseCase
-import tmg.flashback.usecases.GetSeasonsUseCase
-import tmg.flashback.usecases.IsFirst
-import tmg.flashback.usecases.IsLast
 import tmg.testutils.BaseTest
 import tmg.testutils.junit.toSealedClass
 
@@ -105,9 +93,9 @@ internal class DashboardNavViewModelTest: BaseTest() {
 
     @ParameterizedTest(name = "Route {0} means menu shown is {1}")
     @CsvSource(
-        "results/calendar/2022,true",
-        "results/drivers/2022,true",
-        "results/constructors/2022,true",
+        "results/races,true",
+        "results/drivers,true",
+        "results/constructors,true",
         "settings,true",
         "rss,true",
         "search,true",
@@ -128,9 +116,9 @@ internal class DashboardNavViewModelTest: BaseTest() {
 
     @ParameterizedTest(name = "Route {0} means showing bottom menu bar is {1}")
     @CsvSource(
-        "results/calendar/2022,true",
-        "results/drivers/2022,true",
-        "results/constructors/2022,true",
+        "results/races,true",
+        "results/drivers,true",
+        "results/constructors,true",
         "settings,false",
         "settings/rss,false",
         "rss,false",
@@ -150,9 +138,9 @@ internal class DashboardNavViewModelTest: BaseTest() {
 
     @ParameterizedTest(name = "Menu item {0} shows result {1}")
     @CsvSource(
-        "Calendar,results/calendar/2019",
-        "Constructors,results/constructors/2019",
-        "Drivers,results/drivers/2019",
+        "Calendar,results/races",
+        "Constructors,results/constructors",
+        "Drivers,results/drivers",
         "RSS,rss",
         "Settings,settings",
         "Search,search"
