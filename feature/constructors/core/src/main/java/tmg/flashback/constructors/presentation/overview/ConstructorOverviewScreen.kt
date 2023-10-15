@@ -7,6 +7,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
@@ -20,6 +22,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
@@ -57,9 +60,10 @@ private val positionWidth: Dp = 64.dp
 
 @Composable
 fun ConstructorOverviewScreenVM(
+    actionUpClicked: () -> Unit,
+    windowSizeClass: WindowSizeClass,
     constructorId: String,
     constructorName: String,
-    actionUpClicked: () -> Unit,
     viewModel: ConstructorOverviewViewModel = hiltViewModel()
 ) {
     ScreenView(screenName = "Constructor Overview", args = mapOf(
@@ -75,10 +79,11 @@ fun ConstructorOverviewScreenVM(
         onRefresh = viewModel.inputs::refresh
     ) {
         ConstructorOverviewScreen(
+            actionUpClicked = actionUpClicked,
+            windowSizeClass = windowSizeClass,
             list = list.value,
             constructorName = constructorName,
             seasonClicked = viewModel.inputs::openSeason,
-            actionUpClicked = actionUpClicked,
             linkClicked = viewModel.inputs::openUrl
         )
     }
@@ -86,11 +91,12 @@ fun ConstructorOverviewScreenVM(
 
 @Composable
 fun ConstructorOverviewScreen(
+    actionUpClicked: () -> Unit,
+    windowSizeClass: WindowSizeClass,
     list: List<ConstructorOverviewModel>,
     constructorName: String,
     seasonClicked: (Int) -> Unit,
     linkClicked: (String) -> Unit,
-    actionUpClicked: () -> Unit
 ) {
     LazyColumn(
         modifier = Modifier
@@ -383,6 +389,7 @@ private fun DriverPerSeason(
     }
 }
 
+@ExperimentalMaterial3WindowSizeClassApi
 @PreviewTheme
 @Composable
 private fun Preview(
@@ -391,6 +398,7 @@ private fun Preview(
     AppThemePreview {
         ConstructorOverviewScreen(
             actionUpClicked = { },
+            windowSizeClass = WindowSizeClass.calculateFromSize(DpSize.Unspecified),
             constructorName = "name",
             linkClicked = { },
             seasonClicked = { },

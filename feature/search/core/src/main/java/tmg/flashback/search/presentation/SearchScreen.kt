@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -55,12 +54,13 @@ import tmg.flashback.ui.components.drivers.DriverImage
 import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.header.HeaderAction
+import tmg.flashback.ui.components.layouts.MasterDetailsPane
 
 @Composable
 fun SearchScreenVM(
     actionUpClicked: () -> Unit,
     windowSizeClass: WindowSizeClass,
-    viewModel: SearchViewModel = hiltViewModel()
+    viewModel: SearchViewModel = hiltViewModel(),
 ) {
     val uiState = viewModel.outputs.uiState.collectAsState()
 
@@ -76,10 +76,19 @@ fun SearchScreenVM(
         clear = viewModel.inputs::searchClear,
         refresh = viewModel.inputs::refresh
     )
+//    MasterDetailsPane(
+//        windowSizeClass = windowSizeClass,
+//        master = {
+//        },
+//        detailsShow = uiState.value.selected != null,
+//        details = {
+//
+//        }
+//    )
 }
 
 @Composable
-private fun SearchScreen(
+internal fun SearchScreen(
     actionUpClicked: () -> Unit,
     windowSizeClass: WindowSizeClass,
     uiState: SearchScreenState,

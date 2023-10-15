@@ -12,13 +12,10 @@ import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.domain.repo.DriverRepository
 import tmg.flashback.drivers.R
 import tmg.flashback.drivers.contract.DriverNavigationComponent
-import tmg.flashback.drivers.contract.DriverSeason
 import tmg.flashback.drivers.contract.model.DriverStatHistoryType
-import tmg.flashback.drivers.contract.with
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.DriverHistory
 import tmg.flashback.navigation.Navigator
-import tmg.flashback.navigation.Screen
 import tmg.flashback.ui.components.navigation.PipeType
 import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.utilities.extensions.ordinalAbbreviation
@@ -28,6 +25,7 @@ import javax.inject.Inject
 
 interface DriverOverviewViewModelInputs {
     fun setup(driverId: String, driverName: String)
+    fun back()
     fun openUrl(url: String)
     fun openSeason(season: Int)
 
@@ -41,8 +39,7 @@ interface DriverOverviewViewModelInputs {
 //region Outputs
 
 interface DriverOverviewViewModelOutputs {
-    val list: StateFlow<List<DriverOverviewModel>>
-    val showLoading: StateFlow<Boolean>
+    val uiState: StateFlow<DriverOverviewScreenState>
 }
 
 //endregion
@@ -52,8 +49,6 @@ interface DriverOverviewViewModelOutputs {
 @HiltViewModel
 class DriverOverviewViewModel @Inject constructor(
     private val driverRepository: DriverRepository,
-    private val networkConnectivityManager: NetworkConnectivityManager,
-    private val navigator: Navigator,
     private val driverNavigationComponent: DriverNavigationComponent,
     private val openWebpageUseCase: OpenWebpageUseCase,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
@@ -62,109 +57,19 @@ class DriverOverviewViewModel @Inject constructor(
     var inputs: DriverOverviewViewModelInputs = this
     var outputs: DriverOverviewViewModelOutputs = this
 
-    private val isConnected: Boolean
-        get() = networkConnectivityManager.isConnected
-
-    private val driverIdAndName: MutableStateFlow<Pair<String,String>?> = MutableStateFlow(null)
-    private val driverIdWithRequest: Flow<String?> = driverIdAndName
-        .filterNotNull()
-        .map { it.first }
-        .flatMapLatest { id ->
-            return@flatMapLatest flow {
-                if (driverRepository.getDriverSeasonCount(id) == 0) {
-                    showLoading.value = true
-                    emit(null)
-                    driverRepository.fetchDriver(id)
-                    showLoading.value = false
-                    emit(id)
-                }
-                else {
-                    emit(id)
-                    showLoading.value = true
-                    driverRepository.fetchDriver(id)
-                    showLoading.value = false
-                }
-            }
-        }
-        .flowOn(ioDispatcher)
-
-    override val list: StateFlow<List<DriverOverviewModel>> = driverIdWithRequest
-        .flatMapLatest { id ->
-
-            if (id == null) {
-                return@flatMapLatest flow {
-                    emit(mutableListOf<DriverOverviewModel>(DriverOverviewModel.Loading))
-                }
-            }
-
-            return@flatMapLatest driverRepository.getDriverOverview(id)
-                .map {
-                    val list: MutableList<DriverOverviewModel> = mutableListOf()
-                    if (it != null) {
-                        list.add(
-                            DriverOverviewModel.Header(
-                                driverId = it.driver.id,
-                                driverName = it.driver.name,
-                                driverNumber = it.driver.number,
-                                driverImg = it.driver.photoUrl ?: "",
-                                driverCode = it.driver.code,
-                                driverBirthday = it.driver.dateOfBirth,
-                                driverWikiUrl = it.driver.wikiUrl ?: "",
-                                driverNationalityISO = it.driver.nationalityISO,
-                                driverNationality = it.driver.nationality,
-                                constructors = it.constructors.map { (_, constructor) -> constructor }
-                            )
-                        )
-                    }
-                    when {
-                        (it == null || it.standings.isEmpty()) && !isConnected -> list.add(
-                            DriverOverviewModel.NetworkError
-                        )
-                        (it == null || it.standings.isEmpty()) -> list.add(DriverOverviewModel.InternalError)
-                        else -> {
-                            if (it.hasChampionshipCurrentlyInProgress) {
-                                val latestRound = it.standings.maxByOrNull { it.season }?.raceOverview?.maxByOrNull { it.raceInfo.round }
-                                if (latestRound != null) {
-                                    list.add(
-                                        DriverOverviewModel.Message(
-                                            R.string.results_accurate_for_year,
-                                            listOf(
-                                                latestRound.raceInfo.season,
-                                                latestRound.raceInfo.name,
-                                                latestRound.raceInfo.round
-                                            )
-                                        )
-                                    )
-                                }
-                            }
-
-                            // Add general stats
-                            list.addAll(getAllStats(it))
-
-                            // Add constructor history
-                            list.addStat(
-                                icon = R.drawable.ic_team,
-                                label = R.string.driver_overview_stat_career_team_history,
-                                value = ""
-                            )
-                            list.addAll(getConstructorItemList(it))
-                        }
-                    }
-                    return@map list
-                }
-        }
-        .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
-
-    override val showLoading: MutableStateFlow<Boolean> = MutableStateFlow(false)
-
-    init {
-
-    }
-
-    //region Inputs
+    override val uiState: MutableStateFlow<DriverOverviewScreenState> = MutableStateFlow(DriverOverviewScreenState())
 
     override fun setup(driverId: String, driverName: String) {
-        this.driverIdAndName.value = Pair(driverId, driverName)
+        if (driverId == uiState.value.driverId) {
+            return
+        }
+        uiState.value = uiState.value.copy(
+            driverId = driverId,
+            driverName = driverName,
+            driver = null,
+            list = emptyList()
+        )
+        refresh()
     }
 
     override fun openUrl(url: String) {
@@ -172,40 +77,77 @@ class DriverOverviewViewModel @Inject constructor(
     }
 
     override fun openSeason(season: Int) {
-        driverIdAndName.value?.let {
-            val (id, name) = it
-            navigator.navigate(
-                Screen.DriverSeason.with(
-                driverId = id,
-                driverName = name,
-                season = season
-            ))
-        }
+        uiState.value = uiState.value.copy(selectedSeason = season)
+    }
+
+    override fun back() {
+        uiState.value = uiState.value.copy(selectedSeason = null)
     }
 
     override fun openStatHistory(type: DriverStatHistoryType) {
-        driverIdAndName.value?.let { (id, name) ->
-            driverNavigationComponent.driverStatHistory(id, name, type)
+        val driverId = uiState.value.driverId
+        val driverName = uiState.value.driverName
+        if (driverId.isNotEmpty() && driverName.isNotEmpty()) {
+            driverNavigationComponent.driverStatHistory(driverId, driverName, type)
         }
     }
 
     override fun refresh() {
-        this.refresh(driverIdAndName.value?.first)
-    }
-    private fun refresh(driverId: String? = this.driverIdAndName.value?.first) {
-        viewModelScope.launch(context = ioDispatcher) {
-            driverId?.let {
-                driverRepository.fetchDriver(driverId)
-                showLoading.value = false
+        viewModelScope.launch(ioDispatcher) {
+            val driverId = uiState.value.driverId
+            if (uiState.value.driverId.isEmpty()) {
+                populate()
             }
+            uiState.value = uiState.value.copy(isLoading = true, networkError = false)
+            driverRepository.fetchDriver(driverId)
+            populate()
         }
     }
 
+    private suspend fun populate() {
+        val driverId = uiState.value.driverId
+        val overview = driverRepository.getDriverOverview(driverId).firstOrNull()
+        val list = overview?.generateResultList()
+        uiState.value = uiState.value.copy(
+            driver = overview?.driver,
+            isLoading = false,
+            networkError = overview == null || list.isNullOrEmpty(),
+            list = list ?: emptyList()
+        )
+    }
+
     //endregion
 
-    //region Outputs
+    private fun DriverHistory.generateResultList(): List<DriverOverviewModel> {
+        val list = mutableListOf<DriverOverviewModel>()
+        if (this.hasChampionshipCurrentlyInProgress) {
+            val latestRound = this.standings.maxByOrNull { it.season }?.raceOverview?.maxByOrNull { it.raceInfo.round }
+            if (latestRound != null) {
+                list.add(
+                    DriverOverviewModel.Message(
+                        R.string.results_accurate_for_year,
+                        listOf(
+                            latestRound.raceInfo.season,
+                            latestRound.raceInfo.name,
+                            latestRound.raceInfo.round
+                        )
+                    )
+                )
+            }
+        }
 
-    //endregion
+        // Add general stats
+        list.addAll(getAllStats(this))
+
+        // Add constructor history
+        list.addStat(
+            icon = R.drawable.ic_team,
+            label = R.string.driver_overview_stat_career_team_history,
+            value = ""
+        )
+        list.addAll(getConstructorItemList(this))
+        return list
+    }
 
     /**
      * Add career stats for the driver across their career

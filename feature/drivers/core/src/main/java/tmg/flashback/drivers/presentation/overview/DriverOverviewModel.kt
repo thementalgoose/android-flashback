@@ -5,25 +5,12 @@ import androidx.annotation.StringRes
 import org.threeten.bp.LocalDate
 import tmg.flashback.drivers.contract.model.DriverStatHistoryType
 import tmg.flashback.formula1.model.Constructor
+import tmg.flashback.formula1.model.Driver
 import tmg.flashback.ui.components.navigation.PipeType
 
 sealed class DriverOverviewModel(
     val key: String
 ) {
-    data class Header(
-        val driverId: String,
-        val driverName: String,
-        val driverNumber: Int?,
-        val driverImg: String,
-        val driverCode: String?,
-        val driverBirthday: LocalDate,
-        val driverWikiUrl: String,
-        val driverNationalityISO: String,
-        val driverNationality: String,
-        val constructors: List<Constructor>
-    ): DriverOverviewModel(
-        key = driverId
-    )
 
     data class Message(
         @StringRes
@@ -52,17 +39,6 @@ sealed class DriverOverviewModel(
         val isChampionship: Boolean
     ): DriverOverviewModel(
         key = "raced-${season}"
-    )
-
-    object NetworkError: DriverOverviewModel(
-        key = "network-error"
-    )
-    object InternalError: DriverOverviewModel(
-        key = "internal-error"
-    )
-
-    object Loading: DriverOverviewModel(
-        key = "loading"
     )
 
     companion object

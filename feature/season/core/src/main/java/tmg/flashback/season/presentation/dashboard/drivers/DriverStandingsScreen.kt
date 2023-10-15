@@ -133,6 +133,9 @@ internal fun DriverStandingsScreen(
                 driverId = uiState.currentlySelected!!.driver.id,
                 driverName = uiState.currentlySelected.driver.name,
                 season = uiState.currentlySelected.season,
+                seasonClicked = { season: Int, round: Int, raceName: String, circuitId: String, circuitName: String, country: String, countryISO: String, dateString: String ->
+                    // Do something
+                }
             )
         }
     )

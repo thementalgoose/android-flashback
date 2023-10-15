@@ -8,25 +8,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.skip
 import kotlinx.coroutines.launch
 import tmg.flashback.domain.repo.SeasonRepository
 import tmg.flashback.domain.repo.usecases.FetchSeasonUseCase
-import tmg.flashback.drivers.contract.Driver
-import tmg.flashback.drivers.contract.DriverSeason
-import tmg.flashback.drivers.contract.with
-import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
 import tmg.flashback.formula1.model.SeasonDriverStandingSeason
-import tmg.flashback.navigation.Navigator
-import tmg.flashback.navigation.Screen
 import tmg.flashback.season.presentation.dashboard.shared.seasonpicker.CurrentSeasonHolder
-import tmg.flashback.season.usecases.DefaultSeasonUseCase
-import tmg.utilities.extensions.combinePair
 import javax.inject.Inject
 
 interface DriverStandingsViewModelInputs {

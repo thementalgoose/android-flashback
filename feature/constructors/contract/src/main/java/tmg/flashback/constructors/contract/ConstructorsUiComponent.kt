@@ -13,11 +13,11 @@ internal interface ConstructorsUiComponent {
     fun constructorsNav(): ConstructorsNavigationComponent
 }
 
-private lateinit var constructorUiComponent: ConstructorsUiComponent
+private lateinit var uiComponent: ConstructorsUiComponent
 @Composable
 fun requireConstructorsNavigationComponent(): ConstructorsNavigationComponent {
-    if (!::constructorUiComponent.isInitialized) {
-        constructorUiComponent = EntryPoints.get(LocalContext.current.applicationContext, ConstructorsUiComponent::class.java)
+    if (!::uiComponent.isInitialized) {
+        uiComponent = EntryPoints.get(LocalContext.current.applicationContext, ConstructorsUiComponent::class.java)
     }
-    return constructorUiComponent.constructorsNav()
+    return uiComponent.constructorsNav()
 }

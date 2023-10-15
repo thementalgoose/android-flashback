@@ -1,5 +1,7 @@
 package tmg.flashback.weekend.contract
 
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
+import androidx.compose.runtime.Composable
 import kotlinx.serialization.json.Json
 import org.threeten.bp.Year
 import tmg.flashback.navigation.NavigationDestination
@@ -28,4 +30,14 @@ private fun ScreenWeekendData.getTab(): ScreenWeekendNav {
         season < Year.now().value -> ScreenWeekendNav.RACE
         else -> ScreenWeekendNav.SCHEDULE
     }
+}
+
+interface WeekendNavigationComponent {
+
+    @Composable
+    fun Weekend(
+        actionUpClicked: () -> Unit,
+        windowSizeClass: WindowSizeClass,
+        weekendData: ScreenWeekendData,
+    )
 }

@@ -17,22 +17,30 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.ads.ads.repository.AdsRepository
+import tmg.flashback.circuits.contract.Circuit
+import tmg.flashback.circuits.contract.with
+import tmg.flashback.constructors.contract.Constructor
+import tmg.flashback.constructors.contract.with
 import tmg.flashback.domain.repo.CircuitRepository
 import tmg.flashback.domain.repo.ConstructorRepository
 import tmg.flashback.domain.repo.DriverRepository
 import tmg.flashback.domain.repo.OverviewRepository
+import tmg.flashback.drivers.contract.Driver
+import tmg.flashback.drivers.contract.with
 import tmg.flashback.formula1.model.Circuit
 import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.model.OverviewRace
+import tmg.flashback.navigation.Navigator
+import tmg.flashback.navigation.Screen
 import javax.inject.Inject
 
 interface SearchViewModelInputs {
     fun search(input: String)
     fun searchClear()
     fun refresh()
-    fun clickDriver(driver: Driver, season: Int? = null)
-    fun clickConstructor(constructor: Constructor, season: Int? = null)
+    fun clickDriver(driver: Driver)
+    fun clickConstructor(constructor: Constructor)
     fun clickCircuit(circuit: Circuit)
     fun clickRace(overviewRace: OverviewRace)
     fun back()
@@ -49,6 +57,7 @@ class SearchViewModel @Inject constructor(
     private val circuitRepository: CircuitRepository,
     private val overviewRepository: OverviewRepository,
     private val adsRepository: AdsRepository,
+    private val navigator: Navigator,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), SearchViewModelInputs, SearchViewModelOutputs {
 
@@ -56,7 +65,7 @@ class SearchViewModel @Inject constructor(
     val outputs: SearchViewModelOutputs = this
 
     private val search: MutableStateFlow<String> = MutableStateFlow("")
-    private val selected: MutableStateFlow<SearchScreenSubState?> = MutableStateFlow(null)
+    private val selected: MutableStateFlow<OverviewRace?> = MutableStateFlow(null)
 
     private val isAdsEnabled: Boolean by lazy {
         adsRepository.advertConfig.onSearch
@@ -102,7 +111,7 @@ class SearchViewModel @Inject constructor(
                 .map { it.first },
             searchTerm = searchTerm,
             showAdvert = isAdsEnabled,
-            selected = flows[5] as? SearchScreenSubState?
+            selected = flows[5] as? OverviewRace?
         )
     }.stateIn(viewModelScope, SharingStarted.Lazily, SearchScreenState())
 
@@ -132,41 +141,32 @@ class SearchViewModel @Inject constructor(
     }
 
     override fun clickCircuit(circuit: Circuit) {
-        selected.value = SearchScreenSubState.Circuit(circuit)
+        navigator.navigate(Screen.Circuit.with(
+            circuitId = circuit.id,
+            circuitName = circuit.name
+        ))
     }
 
-    override fun clickDriver(driver: Driver, season: Int?) {
-        selected.value = SearchScreenSubState.Driver(driver, season)
+    override fun clickDriver(driver: Driver) {
+        navigator.navigate(Screen.Driver.with(
+            driverId = driver.id,
+            driverName = driver.name
+        ))
     }
 
-    override fun clickConstructor(constructor: Constructor, season: Int?) {
-        selected.value = SearchScreenSubState.Constructor(constructor, season)
+    override fun clickConstructor(constructor: Constructor,) {
+        navigator.navigate(Screen.Constructor.with(
+            constructorId = constructor.id,
+            constructorName = constructor.name
+        ))
     }
 
     override fun clickRace(overviewRace: OverviewRace) {
-        selected.value = SearchScreenSubState.Race(overviewRace)
+        selected.value = overviewRace
     }
 
     override fun back() {
-        selected.value = when (val item = selected.value) {
-            is SearchScreenSubState.Circuit -> null
-            is SearchScreenSubState.Constructor -> {
-                if (item.season != null) {
-                    SearchScreenSubState.Constructor(item.constructor, null)
-                } else {
-                    null
-                }
-            }
-            is SearchScreenSubState.Driver -> {
-                if (item.season != null) {
-                    SearchScreenSubState.Driver(item.driver, null)
-                } else {
-                    null
-                }
-            }
-            is SearchScreenSubState.Race -> null
-            null -> null
-        }
+        selected.value = null
     }
 
     private val Driver.searchTerm: String
