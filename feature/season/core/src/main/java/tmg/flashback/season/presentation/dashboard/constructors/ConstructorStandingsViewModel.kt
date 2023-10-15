@@ -23,15 +23,6 @@ import tmg.flashback.season.presentation.dashboard.shared.seasonpicker.CurrentSe
 import tmg.flashback.season.usecases.DefaultSeasonUseCase
 import javax.inject.Inject
 
-data class ConstructorStandingsScreenState(
-    val season: Int,
-    val standings: List<SeasonConstructorStandingSeason> = emptyList(),
-    val inProgress: Pair<String, Int>? = null,
-    val isLoading: Boolean = true,
-    val maxPoints: Double = 0.0,
-    val currentlySelected: SeasonConstructorStandingSeason? = null
-)
-
 interface ConstructorStandingsViewModelInputs {
     fun selectConstructor(constructor: SeasonConstructorStandingSeason)
     fun closeConstructor()

@@ -31,16 +31,6 @@ import tmg.flashback.weekend.contract.model.ScreenWeekendNav
 import tmg.flashback.weekend.contract.with
 import javax.inject.Inject
 
-data class RacesScreenState(
-    val season: Int,
-    val items: List<RacesModel>? = listOf(RacesModel.Loading),
-    val isLoading: Boolean = false,
-    val currentRace: OverviewRace? = null,
-) {
-    val showTyres: Boolean
-        get() = SeasonTyres.getBySeason(season) != null
-}
-
 interface RacesViewModelInputs {
     fun refresh()
     fun clickTyre()
