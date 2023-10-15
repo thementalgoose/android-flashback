@@ -134,6 +134,7 @@ fun ConstructorStandingsScreen(
                 constructorId = uiState.currentlySelected!!.constructor.id,
                 constructorName = uiState.currentlySelected.constructor.name,
                 season = uiState.currentlySelected.season,
+                driverClicked = { id, name, season -> }
             )
         }
     )

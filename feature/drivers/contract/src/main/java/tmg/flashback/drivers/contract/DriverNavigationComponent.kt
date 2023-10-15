@@ -24,18 +24,15 @@ fun ScreenDriver.with(
     this@with.route.replace("{data}", Json.encodeToString(ScreenDriverData.serializer(), ScreenDriverData(driverId, driverName)))
 )
 
-@JvmInline
-value class ScreenDriverSeason(val route: String)
-val Screen.DriverSeason get() = ScreenDriverSeason("drivers-season/{data}")
-fun ScreenDriverSeason.with(
-    driverId: String,
-    driverName: String,
-    season: Int
-) = NavigationDestination(
-    this@with.route.replace("{data}", Json.encodeToString(ScreenDriverSeasonData.serializer(), ScreenDriverSeasonData(driverId, driverName, season)))
-)
-
 interface DriverNavigationComponent {
+
+    @Composable
+    fun DriverScreen(
+        actionUpClicked: () -> Unit,
+        windowSizeClass: WindowSizeClass,
+        driverId: String,
+        driverName: String
+    )
 
     @Composable
     fun DriverSeasonScreen(
@@ -44,6 +41,16 @@ interface DriverNavigationComponent {
         driverId: String,
         driverName: String,
         season: Int,
+        seasonClicked: (
+            season: Int,
+            round: Int,
+            raceName: String,
+            circuitId: String,
+            circuitName: String,
+            country: String,
+            countryISO: String,
+            dateString: String
+        ) -> Unit,
     )
 
     fun driverStatHistory(

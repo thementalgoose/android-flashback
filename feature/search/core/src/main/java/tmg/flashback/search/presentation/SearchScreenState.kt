@@ -13,22 +13,5 @@ data class SearchScreenState(
     val searchTerm: String = "",
     val isLoading: Boolean = false,
     val showAdvert: Boolean = false,
-    val selected: SearchScreenSubState? = null
+    val selected: OverviewRace? = null
 )
-
-sealed class SearchScreenSubState {
-    data class Driver(
-        val driver: tmg.flashback.formula1.model.Driver,
-        val season: Int? = null
-    ): SearchScreenSubState()
-    data class Constructor(
-        val constructor: tmg.flashback.formula1.model.Constructor,
-        val season: Int? = null
-    ): SearchScreenSubState()
-    data class Circuit(
-        val circuit: tmg.flashback.formula1.model.Circuit
-    ): SearchScreenSubState()
-    data class Race(
-        val races: OverviewRace
-    ): SearchScreenSubState()
-}

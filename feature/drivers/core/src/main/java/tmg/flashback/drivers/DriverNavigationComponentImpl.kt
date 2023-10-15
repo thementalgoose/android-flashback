@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import tmg.flashback.crashlytics.manager.CrashlyticsManager
 import tmg.flashback.drivers.contract.DriverNavigationComponent
 import tmg.flashback.drivers.contract.model.DriverStatHistoryType
+import tmg.flashback.drivers.presentation.overview.DriverOverviewScreenVM
 import tmg.flashback.drivers.presentation.season.DriverSeasonScreenVM
 import tmg.flashback.drivers.presentation.stathistory.DriverStatHistoryBottomSheetFragment
 import tmg.flashback.drivers.presentation.stathistory.analyticsKey
@@ -24,6 +25,7 @@ class DriverNavigationComponentImpl @Inject constructor(
         driverId: String,
         driverName: String,
         season: Int,
+        seasonClicked: (season: Int, round: Int, raceName: String, circuitId: String, circuitName: String, country: String, countryISO: String, dateString: String) -> Unit
     ) {
         DriverSeasonScreenVM(
             actionUpClicked = actionUpClicked,
@@ -31,6 +33,21 @@ class DriverNavigationComponentImpl @Inject constructor(
             driverId = driverId,
             driverName = driverName,
             season = season,
+        )
+    }
+
+    @Composable
+    override fun DriverScreen(
+        actionUpClicked: () -> Unit,
+        windowSizeClass: WindowSizeClass,
+        driverId: String,
+        driverName: String
+    ) {
+        DriverOverviewScreenVM(
+            actionUpClicked = actionUpClicked,
+            windowSizeClass = windowSizeClass,
+            driverId = driverId,
+            driverName = driverName
         )
     }
 

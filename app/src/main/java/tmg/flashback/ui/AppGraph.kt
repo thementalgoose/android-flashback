@@ -21,25 +21,16 @@ import tmg.flashback.circuits.contract.Circuit
 import tmg.flashback.circuits.contract.model.ScreenCircuitData
 import tmg.flashback.circuits.ui.CircuitScreenVM
 import tmg.flashback.constructors.contract.Constructor
-import tmg.flashback.constructors.contract.ConstructorSeason
 import tmg.flashback.constructors.contract.model.ScreenConstructorData
-import tmg.flashback.constructors.contract.model.ScreenConstructorSeasonData
 import tmg.flashback.constructors.presentation.overview.ConstructorOverviewScreenVM
-import tmg.flashback.constructors.presentation.season.ConstructorSeasonScreenVM
-import tmg.flashback.season.presentation.dashboard.constructors.ConstructorStandingsScreenVM
 import tmg.flashback.drivers.contract.Driver
-import tmg.flashback.drivers.contract.DriverSeason
 import tmg.flashback.drivers.contract.model.ScreenDriverData
-import tmg.flashback.drivers.contract.model.ScreenDriverSeasonData
 import tmg.flashback.drivers.presentation.overview.DriverOverviewScreenVM
-import tmg.flashback.drivers.presentation.season.DriverSeasonScreenVM
-import tmg.flashback.season.presentation.dashboard.drivers.DriverStandingsScreenVM
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.flashback.navigation.asNavigationDestination
 import tmg.flashback.privacypolicy.contract.PrivacyPolicy
 import tmg.flashback.privacypolicy.ui.PrivacyPolicyScreenVM
-import tmg.flashback.season.presentation.dashboard.races.RacesScreenVM
 import tmg.flashback.rss.contract.RSS
 import tmg.flashback.rss.contract.RSSConfigure
 import tmg.flashback.rss.ui.configure.ConfigureRSSScreenVM
@@ -49,6 +40,9 @@ import tmg.flashback.search.presentation.SearchScreenVM
 import tmg.flashback.season.contract.ConstructorsStandings
 import tmg.flashback.season.contract.DriverStandings
 import tmg.flashback.season.contract.Races
+import tmg.flashback.season.presentation.dashboard.constructors.ConstructorStandingsScreenVM
+import tmg.flashback.season.presentation.dashboard.drivers.DriverStandingsScreenVM
+import tmg.flashback.season.presentation.dashboard.races.RacesScreenVM
 import tmg.flashback.ui.settings.About
 import tmg.flashback.ui.settings.Ads
 import tmg.flashback.ui.settings.All
@@ -182,10 +176,12 @@ fun AppGraph(
         )) {
             val screenWeekendData = it.getArgument<ScreenWeekendData>("data")
             WeekendScreenVM(
+                actionUpClicked = { navController.popBackStack() },
+                windowSizeClass = windowSize,
                 weekendInfo = screenWeekendData,
-                actionUpClicked = { navController.popBackStack() }
             )
         }
+
         composable(
             Screen.Circuit.route, arguments = listOf(
                 navArgument("data") { type = ScreenCircuitData.NavType }
@@ -194,9 +190,11 @@ fun AppGraph(
             CircuitScreenVM(
                 circuitId = screenCircuitData.circuitId,
                 circuitName = screenCircuitData.circuitName,
-                actionUpClicked = { navController.popBackStack() }
+                actionUpClicked = { navController.popBackStack() },
+                windowSizeClass = windowSize,
             )
         }
+
         composable(
             Screen.Driver.route, arguments = listOf(
                 navArgument("data") { type = ScreenDriverData.NavType }
@@ -205,22 +203,11 @@ fun AppGraph(
             DriverOverviewScreenVM(
                 driverId = driverData.driverId,
                 driverName = driverData.driverName,
-                actionUpClicked = { navController.popBackStack() }
-            )
-        }
-        composable(
-            Screen.DriverSeason.route, arguments = listOf(
-                navArgument("data") { type = ScreenDriverSeasonData.NavType }
-        )) {
-            val driverData = it.getArgument<ScreenDriverSeasonData>("data")
-            DriverSeasonScreenVM(
-                windowSizeClass = windowSize,
                 actionUpClicked = { navController.popBackStack() },
-                driverId = driverData.driverId,
-                driverName = driverData.driverName,
-                season = driverData.season,
+                windowSizeClass = windowSize,
             )
         }
+
         composable(
             Screen.Constructor.route, arguments = listOf(
                 navArgument("data") { type = ScreenConstructorData.NavType }
@@ -229,21 +216,8 @@ fun AppGraph(
             ConstructorOverviewScreenVM(
                 constructorId = constructorData.constructorId,
                 constructorName = constructorData.constructorName,
-                actionUpClicked = { navController.popBackStack() }
-            )
-        }
-
-        composable(
-            Screen.ConstructorSeason.route, arguments = listOf(
-                navArgument("data") { type = ScreenConstructorSeasonData.NavType }
-        )) {
-            val constructorData = it.getArgument<ScreenConstructorSeasonData>("data")
-            ConstructorSeasonScreenVM(
                 actionUpClicked = { navController.popBackStack() },
                 windowSizeClass = windowSize,
-                constructorId = constructorData.constructorId,
-                constructorName = constructorData.constructorName,
-                season = constructorData.season,
             )
         }
 

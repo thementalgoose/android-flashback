@@ -18,17 +18,6 @@ fun ScreenConstructor.with(
     this@with.route.replace("{data}", Json.encodeToString(ScreenConstructorData.serializer(), ScreenConstructorData(constructorId, constructorName)))
 )
 
-@JvmInline
-value class ScreenConstructorSeason(val route: String)
-val Screen.ConstructorSeason get() = ScreenConstructorSeason("constructors-season/{data}")
-fun ScreenConstructorSeason.with(
-    constructorId: String,
-    constructorName: String,
-    season: Int
-) = NavigationDestination(
-    this@with.route.replace("{data}", Json.encodeToString(ScreenConstructorSeasonData.serializer(), ScreenConstructorSeasonData(constructorId, constructorName, season)))
-)
-
 interface ConstructorsNavigationComponent {
 
     @Composable
@@ -38,5 +27,14 @@ interface ConstructorsNavigationComponent {
         constructorId: String,
         constructorName: String,
         season: Int,
+        driverClicked: (driverId: String, driverName: String, season: Int) -> Unit,
+    )
+
+    @Composable
+    fun ConstructorScreen(
+        actionUpClicked: () -> Unit,
+        windowSizeClass: WindowSizeClass,
+        constructorId: String,
+        constructorName: String,
     )
 }

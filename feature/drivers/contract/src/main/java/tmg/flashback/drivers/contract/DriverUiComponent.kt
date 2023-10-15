@@ -13,11 +13,11 @@ internal interface DriverUiComponent {
     fun driversNav(): DriverNavigationComponent
 }
 
-private lateinit var driverUiComponent: DriverUiComponent
+private lateinit var uiComponent: DriverUiComponent
 @Composable
 fun requireDriverNavigationComponent(): DriverNavigationComponent {
-    if (!::driverUiComponent.isInitialized) {
-        driverUiComponent = EntryPoints.get(LocalContext.current.applicationContext, DriverUiComponent::class.java)
+    if (!::uiComponent.isInitialized) {
+        uiComponent = EntryPoints.get(LocalContext.current.applicationContext, DriverUiComponent::class.java)
     }
-    return driverUiComponent.driversNav()
+    return uiComponent.driversNav()
 }

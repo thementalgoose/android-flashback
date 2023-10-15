@@ -8,6 +8,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.Icon
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
@@ -18,11 +21,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.googleanalytics.constants.AnalyticsConstants.analyticsDriverId
 import tmg.flashback.drivers.R
 import tmg.flashback.drivers.contract.model.DriverStatHistoryType
+import tmg.flashback.drivers.presentation.season.DriverSeasonScreenVM
+import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.model.DriverEntry
 import tmg.flashback.providers.DriverConstructorProvider
 import tmg.flashback.style.AppTheme
@@ -37,6 +43,7 @@ import tmg.flashback.googleanalytics.presentation.ScreenView
 import tmg.flashback.ui.components.drivers.DriverIcon
 import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.header.HeaderAction
+import tmg.flashback.ui.components.layouts.MasterDetailsPane
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.messages.Message
 import tmg.flashback.ui.components.navigation.PipeType
@@ -50,9 +57,10 @@ private val headerImageSize: Dp = 120.dp
 
 @Composable
 fun DriverOverviewScreenVM(
+    actionUpClicked: () -> Unit,
+    windowSizeClass: WindowSizeClass,
     driverId: String,
     driverName: String,
-    actionUpClicked: () -> Unit,
     viewModel: DriverOverviewViewModel = hiltViewModel()
 ) {
     ScreenView(screenName = "Driver Overview", args = mapOf(
@@ -61,33 +69,49 @@ fun DriverOverviewScreenVM(
 
     viewModel.inputs.setup(driverId, driverName)
 
-    val list = viewModel.outputs.list.collectAsState(emptyList())
-    val isLoading = viewModel.outputs.showLoading.collectAsState(false)
-    SwipeRefresh(
-        isLoading = isLoading.value,
-        onRefresh = viewModel.inputs::refresh
-    ) {
-        DriverOverviewScreen(
-            list = list.value,
-            driverName = driverName,
-            linkClicked = viewModel.inputs::openUrl,
-            racedForClicked = {
-                viewModel.inputs.openSeason(it.season)
-            },
-            statHistoryClicked = viewModel.inputs::openStatHistory,
-            actionUpClicked = actionUpClicked,
-        )
-    }
+    val uiState = viewModel.outputs.uiState.collectAsState()
+    MasterDetailsPane(
+        windowSizeClass = windowSizeClass,
+        master = {
+            SwipeRefresh(
+                isLoading = uiState.value.isLoading,
+                onRefresh = viewModel.inputs::refresh
+            ) {
+                DriverOverviewScreen(
+                    actionUpClicked = actionUpClicked,
+                    windowSizeClass = windowSizeClass,
+                    uiState = uiState.value,
+                    linkClicked = viewModel.inputs::openUrl,
+                    racedForClicked = {
+                        viewModel.inputs.openSeason(it.season)
+                    },
+                    statHistoryClicked = viewModel.inputs::openStatHistory,
+                )
+            }
+        },
+        detailsShow = uiState.value.selectedSeason != null,
+        details = {
+            DriverSeasonScreenVM(
+                actionUpClicked = viewModel.inputs::back,
+                windowSizeClass = windowSizeClass,
+                driverId = driverId,
+                driverName = driverName,
+                showHeader = false,
+                season = uiState.value.selectedSeason!!
+            )
+        },
+        detailsActionUpClicked = viewModel.inputs::back
+    )
 }
 
 @Composable
 fun DriverOverviewScreen(
     actionUpClicked: () -> Unit,
+    windowSizeClass: WindowSizeClass,
     linkClicked: (String) -> Unit,
-    driverName: String,
+    uiState: DriverOverviewScreenState,
     statHistoryClicked: (DriverStatHistoryType) -> Unit,
     racedForClicked: (DriverOverviewModel.RacedFor) -> Unit,
-    list: List<DriverOverviewModel>
 ) {
     LazyColumn(
         modifier = Modifier
@@ -96,17 +120,22 @@ fun DriverOverviewScreen(
         content = {
             item("header") {
                 tmg.flashback.ui.components.header.Header(
-                    text = driverName,
-                    action = HeaderAction.BACK,
+                    text = uiState.driverName,
+                    action = when (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact) {
+                        true -> HeaderAction.BACK
+                        false -> null
+                    },
                     actionUpClicked = actionUpClicked
                 )
+                if (uiState.driver != null) {
+                   Header(
+                       model = uiState.driver,
+                       linkClicked = linkClicked
+                   )
+                }
             }
-            items(list, key = { it.key }) {
+            items(uiState.list, key = { it.key }) {
                 when (it) {
-                    is DriverOverviewModel.Header -> Header(
-                        model = it,
-                        linkClicked = linkClicked
-                    )
                     is DriverOverviewModel.Message -> {
                         Message(title = stringResource(id = it.label, *it.args.toTypedArray()))
                     }
@@ -122,15 +151,6 @@ fun DriverOverviewScreen(
                             statHistoryClicked = statHistoryClicked
                         )
                     }
-                    DriverOverviewModel.InternalError -> {
-                        NetworkError(error = NetworkError.INTERNAL_ERROR)
-                    }
-                    DriverOverviewModel.Loading -> {
-                        SkeletonViewList()
-                    }
-                    DriverOverviewModel.NetworkError -> {
-                        NetworkError(error = NetworkError.NETWORK_ERROR)
-                    }
                 }
             }
         }
@@ -139,7 +159,7 @@ fun DriverOverviewScreen(
 
 @Composable
 private fun Header(
-    model: DriverOverviewModel.Header,
+    model: Driver,
     linkClicked: (String) -> Unit,
     modifier: Modifier = Modifier
 ) { 
@@ -147,9 +167,9 @@ private fun Header(
         horizontal = AppTheme.dimens.medium
     )) {
         DriverIcon(
-            photoUrl = model.driverImg,
-            code = model.driverCode,
-            number = model.driverNumber,
+            photoUrl = model.photoUrl,
+            code = model.code,
+            number = model.number,
             size = headerImageSize
         )
         Row(
@@ -162,23 +182,23 @@ private fun Header(
             val context = LocalContext.current
             val resourceId = when (isInPreview()) {
                 true -> gb
-                false -> context.getFlagResourceAlpha3(model.driverNationalityISO)
+                false -> context.getFlagResourceAlpha3(model.nationalityISO)
             }
-            BadgeView(model = Badge(label = model.driverNationality, icon = resourceId), tintIcon = null)
+            BadgeView(model = Badge(label = model.nationality, icon = resourceId), tintIcon = null)
 
             Spacer(Modifier.width(AppTheme.dimens.small))
-            val birthday = model.driverBirthday.format("dd MMMM yyyy")!!
+            val birthday = model.dateOfBirth.format("dd MMMM yyyy")!!
             BadgeView(model = Badge(label = birthday, icon = R.drawable.ic_driver_birthday))
 
-            if (model.driverCode != null && model.driverNumber != null) {
+            if (model.code != null && model.number != null) {
                 Spacer(Modifier.width(AppTheme.dimens.small))
-                BadgeView(model = Badge(label = "${model.driverCode} ${model.driverNumber}", icon = R.drawable.ic_driver_code))
+                BadgeView(model = Badge(label = "${model.code} ${model.number}", icon = R.drawable.ic_driver_code))
             }
         }
-        if (model.driverWikiUrl.isNotEmpty()) {
+        if (model.wikiUrl?.isNotEmpty() == true) {
             ButtonSecondary(
                 text = stringResource(id = R.string.details_link_wikipedia),
-                onClick = { linkClicked(model.driverWikiUrl) },
+                onClick = { linkClicked(model.wikiUrl!!) },
             )
             Spacer(Modifier.height(AppTheme.dimens.xsmall))
         }
@@ -286,6 +306,7 @@ private fun History(
     }
 }
 
+@ExperimentalMaterial3WindowSizeClassApi
 @PreviewTheme
 @Composable
 private fun Preview(
@@ -294,17 +315,11 @@ private fun Preview(
     AppThemePreview {
         DriverOverviewScreen(
             actionUpClicked = { },
-            driverName = "firstName lastName",
+            windowSizeClass = WindowSizeClass.calculateFromSize(DpSize.Unspecified),
+            uiState = DriverOverviewScreenState(),
             racedForClicked = { },
             linkClicked = { },
             statHistoryClicked = { },
-            list = listOf(
-                driverConstructor.toHeader(),
-                fakeStat,
-                fakeStatWinning,
-                driverConstructor.racedFor(),
-                driverConstructor.racedFor2()
-            )
         )
     }
 }
@@ -337,25 +352,4 @@ private fun DriverEntry.racedFor2() = DriverOverviewModel.RacedFor(
         this.constructor.copy(id = "2", name = "Ferrari")
     ),
     isChampionship = false
-)
-private fun DriverEntry.toHeader(): DriverOverviewModel.Header = DriverOverviewModel.Header(
-    driverId = this.driver.id,
-    driverName = this.driver.name,
-    driverNumber = this.driver.number,
-    driverImg = this.driver.photoUrl ?: "",
-    driverCode = this.driver.code,
-    driverBirthday = this.driver.dateOfBirth,
-    driverWikiUrl = this.driver.wikiUrl ?: "",
-    driverNationalityISO = this.driver.nationalityISO,
-    driverNationality = this.driver.nationality,
-    constructors = listOf(
-        this.constructor,
-        this.constructor.copy(id = "constructor2", name = "Alpine"),
-        this.constructor.copy(id = "constructor3", name = "Toro Rosso"),
-        this.constructor.copy(id = "constructor4", name = "McLaren F1"),
-        this.constructor.copy(id = "constructor5", name = "Williams"),
-        this.constructor.copy(id = "constructor6", name = "Red Bull"),
-        this.constructor.copy(id = "constructor7", name = "Ferrari"),
-        this.constructor.copy(id = "constructor8", name = "Mercedes"),
-    )
 )

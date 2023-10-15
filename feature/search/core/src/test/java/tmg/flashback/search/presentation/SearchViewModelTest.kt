@@ -4,21 +4,30 @@ import app.cash.turbine.test
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.verify
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.ads.ads.repository.AdsRepository
+import tmg.flashback.circuits.contract.Circuit
+import tmg.flashback.circuits.contract.with
+import tmg.flashback.constructors.contract.Constructor
+import tmg.flashback.constructors.contract.with
 import tmg.flashback.domain.repo.CircuitRepository
 import tmg.flashback.domain.repo.ConstructorRepository
 import tmg.flashback.domain.repo.DriverRepository
 import tmg.flashback.domain.repo.OverviewRepository
+import tmg.flashback.drivers.contract.Driver
+import tmg.flashback.drivers.contract.with
 import tmg.flashback.formula1.model.Circuit
 import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.model.model
+import tmg.flashback.navigation.Navigator
+import tmg.flashback.navigation.Screen
 import tmg.testutils.BaseTest
 
 internal class SearchViewModelTest: BaseTest() {
@@ -28,6 +37,7 @@ internal class SearchViewModelTest: BaseTest() {
     private val mockCircuitRepository: CircuitRepository = mockk(relaxed = true)
     private val mockOverviewRepository: OverviewRepository = mockk(relaxed = true)
     private val mockAdsRepository: AdsRepository = mockk(relaxed = true)
+    private val mockNavigator: Navigator = mockk(relaxed = true)
 
     private lateinit var underTest: SearchViewModel
 
@@ -38,6 +48,7 @@ internal class SearchViewModelTest: BaseTest() {
             circuitRepository = mockCircuitRepository,
             overviewRepository = mockOverviewRepository,
             adsRepository = mockAdsRepository,
+            navigator = mockNavigator,
             ioDispatcher = testDispatcher,
         )
     }
@@ -181,11 +192,8 @@ internal class SearchViewModelTest: BaseTest() {
     fun `clicking circuit updates state to circuit, press back sets to null`() = runTest {
         initUnderTest()
         underTest.clickCircuit(circuit1)
-        underTest.uiState.test {
-            assertEquals(SearchScreenSubState.Circuit(circuit1), awaitItem().selected)
-
-            underTest.inputs.back()
-            assertEquals(null, awaitItem().selected)
+        verify {
+            mockNavigator.navigate(Screen.Circuit.with(circuit1.id, circuit1.name))
         }
     }
 
@@ -194,7 +202,7 @@ internal class SearchViewModelTest: BaseTest() {
         initUnderTest()
         underTest.clickRace(race1)
         underTest.uiState.test {
-            assertEquals(SearchScreenSubState.Race(race1), awaitItem().selected)
+            assertEquals(race1, awaitItem().selected)
 
             underTest.inputs.back()
             assertEquals(null, awaitItem().selected)
@@ -206,25 +214,7 @@ internal class SearchViewModelTest: BaseTest() {
         initUnderTest()
         underTest.clickDriver(driver1)
         underTest.uiState.test {
-            assertEquals(SearchScreenSubState.Driver(driver1), awaitItem().selected)
-
-            underTest.inputs.back()
-            assertEquals(null, awaitItem().selected)
-        }
-    }
-
-    @Test
-    fun `clicking driver season updates state to driver, press back sets to driver`() = runTest {
-        initUnderTest()
-        underTest.clickDriver(driver1, 2020)
-        underTest.uiState.test {
-            assertEquals(SearchScreenSubState.Driver(driver1, 2020), awaitItem().selected)
-
-            underTest.inputs.back()
-            assertEquals(SearchScreenSubState.Driver(driver1), awaitItem().selected)
-
-            underTest.inputs.back()
-            assertEquals(null, awaitItem().selected)
+            mockNavigator.navigate(Screen.Driver.with(driver1.id, driver1.name))
         }
     }
 
@@ -233,25 +223,7 @@ internal class SearchViewModelTest: BaseTest() {
         initUnderTest()
         underTest.clickConstructor(constructor1)
         underTest.uiState.test {
-            assertEquals(SearchScreenSubState.Constructor(constructor1), awaitItem().selected)
-
-            underTest.inputs.back()
-            assertEquals(null, awaitItem().selected)
-        }
-    }
-
-    @Test
-    fun `clicking constructor season updates state to constructor, press back sets to constructor`() = runTest {
-        initUnderTest()
-        underTest.clickConstructor(constructor1, 2020)
-        underTest.uiState.test {
-            assertEquals(SearchScreenSubState.Constructor(constructor1, 2020), awaitItem().selected)
-
-            underTest.inputs.back()
-            assertEquals(SearchScreenSubState.Constructor(constructor1), awaitItem().selected)
-
-            underTest.inputs.back()
-            assertEquals(null, awaitItem().selected)
+            mockNavigator.navigate(Screen.Constructor.with(constructor1.id, constructor1.name))
         }
     }
 }

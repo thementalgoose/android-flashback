@@ -9,13 +9,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import tmg.flashback.constructors.R
-import tmg.flashback.constructors.contract.ConstructorSeason
-import tmg.flashback.constructors.contract.with
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.domain.repo.ConstructorRepository
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.ConstructorHistory
-import tmg.flashback.navigation.Screen
 import tmg.flashback.ui.components.navigation.PipeType
 import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.utilities.extensions.ordinalAbbreviation
@@ -149,12 +146,12 @@ class ConstructorOverviewViewModel @Inject constructor(
 
     override fun openSeason(season: Int) {
         constructorIdAndName.value?.let { (id, name) ->
-            navigator.navigate(
-                Screen.ConstructorSeason.with(
-                constructorId = id,
-                constructorName = name,
-                season = season
-            ))
+//            navigator.navigate(
+//                Screen.ConstructorSeason.with(
+//                constructorId = id,
+//                constructorName = name,
+//                season = season
+//            ))
         }
     }
 

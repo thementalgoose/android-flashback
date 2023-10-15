@@ -48,6 +48,7 @@ dependencies {
     implementation libs.flagkit
     implementation libs.lottie
     implementation libs.skeletonlayout
+    implementation project(path: ':domain:persistence')
 
     testImplementation project(':test:models')
 }

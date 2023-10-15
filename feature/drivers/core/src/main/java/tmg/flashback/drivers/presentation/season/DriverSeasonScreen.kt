@@ -84,6 +84,7 @@ fun DriverSeasonScreenVM(
     driverId: String,
     driverName: String,
     season: Int,
+    showHeader: Boolean = true,
     viewModel: DriverSeasonViewModel = hiltViewModel()
 ) {
     ScreenView(screenName = "Driver Season", args = mapOf(
@@ -105,6 +106,7 @@ fun DriverSeasonScreenVM(
             list = list.value,
             driverName = driverName,
             season = season,
+            showHeader = showHeader,
             resultClicked = viewModel.inputs::clickSeasonRound
         )
     }
@@ -117,6 +119,7 @@ fun DriverSeasonScreen(
     list: List<DriverSeasonModel>,
     driverName: String,
     season: Int,
+    showHeader: Boolean,
     resultClicked: (DriverSeasonModel.Result) -> Unit,
 ) {
     LazyColumn(
@@ -126,7 +129,7 @@ fun DriverSeasonScreen(
         content = {
             item(key = "header") {
                 Header(
-                    text = "${season}\n${driverName}",
+                    text = "${driverName}\n${season}",
                     action = when (windowSizeClass.isWidthExpanded) {
                         false -> HeaderAction.BACK
                         true -> null
@@ -137,10 +140,12 @@ fun DriverSeasonScreen(
             items(list, key = { it.key }) {
                 when (it) {
                     is DriverSeasonModel.Header -> {
-                        Header(
-                            model = it,
-                            linkClicked = { }
-                        )
+                        if (showHeader) {
+                            Header(
+                                model = it,
+                                linkClicked = { }
+                            )
+                        }
                     }
                     is DriverSeasonModel.Message -> {
                         Message(title = stringResource(id = it.label, *it.args.toTypedArray()))
@@ -624,7 +629,8 @@ private fun Preview(
             season = 2020,
             actionUpClicked = { },
             windowSizeClass = WindowSizeClass.calculateFromSize(DpSize(400.dp, 400.dp)),
-            resultClicked = { }
+            resultClicked = { },
+            showHeader = false
         )
     }
 }

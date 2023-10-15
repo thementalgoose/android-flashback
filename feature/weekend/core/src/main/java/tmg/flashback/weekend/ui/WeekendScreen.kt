@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
@@ -50,8 +51,9 @@ data class WeekendScreenState(
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun WeekendScreenVM(
-    weekendInfo: ScreenWeekendData,
     actionUpClicked: () -> Unit,
+    windowSizeClass: WindowSizeClass,
+    weekendInfo: ScreenWeekendData,
     viewModel: WeekendViewModel = hiltViewModel()
 ) {
     ScreenView(screenName = "Weekend", args = mapOf(

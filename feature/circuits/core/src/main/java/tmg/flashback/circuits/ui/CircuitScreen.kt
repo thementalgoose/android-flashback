@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Icon
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
@@ -18,6 +20,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import org.threeten.bp.format.DateTimeFormatter
@@ -54,9 +57,10 @@ private val driverPodiumHeightP3 = 6.dp
 
 @Composable
 fun CircuitScreenVM(
+    actionUpClicked: () -> Unit,
+    windowSizeClass: WindowSizeClass,
     circuitId: String,
     circuitName: String,
-    actionUpClicked: () -> Unit,
     viewModel: CircuitViewModel = hiltViewModel()
 ) {
     ScreenView(screenName = "Circuit Overview", args = mapOf(
@@ -72,22 +76,24 @@ fun CircuitScreenVM(
         onRefresh = viewModel.inputs::refresh
     ) {
         CircuitScreen(
+            actionUpClicked = actionUpClicked,
+            windowSizeClass = windowSizeClass,
             circuitName = circuitName,
             list = list.value,
             itemClicked = viewModel.inputs::itemClicked,
             linkClicked = viewModel.inputs::linkClicked,
-            actionUpClicked = actionUpClicked
         )
     }
 }
 
 @Composable
 fun CircuitScreen(
+    actionUpClicked: () -> Unit,
+    windowSizeClass: WindowSizeClass,
     circuitName: String,
     list: List<CircuitModel>,
     itemClicked: (CircuitModel.Item) -> Unit,
-    linkClicked: (String) -> Unit,
-    actionUpClicked: () -> Unit
+    linkClicked: (String) -> Unit
 ) {
     LazyColumn(
         modifier = Modifier
@@ -396,6 +402,7 @@ private fun StandingResult(
     }
 }
 
+@ExperimentalMaterial3WindowSizeClassApi
 @PreviewTheme
 @Composable
 private fun Preview(
@@ -426,7 +433,8 @@ private fun Preview(
             ),
             itemClicked = { },
             linkClicked = { },
-            actionUpClicked = { }
+            actionUpClicked = { },
+            windowSizeClass = WindowSizeClass.calculateFromSize(DpSize.Unspecified)
         )
     }
 }
