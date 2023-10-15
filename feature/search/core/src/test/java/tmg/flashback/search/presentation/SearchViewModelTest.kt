@@ -19,7 +19,6 @@ import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.model.model
-import tmg.flashback.search.ui.model
 import tmg.testutils.BaseTest
 
 internal class SearchViewModelTest: BaseTest() {
