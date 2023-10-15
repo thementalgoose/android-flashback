@@ -62,17 +62,16 @@ fun SearchScreenVM(
     windowSizeClass: WindowSizeClass,
     viewModel: SearchViewModel = hiltViewModel()
 ) {
-
     val uiState = viewModel.outputs.uiState.collectAsState()
 
     SearchScreen(
         actionUpClicked = actionUpClicked,
         windowSizeClass = windowSizeClass,
         uiState = uiState.value,
-        driverClicked = { },
-        constructorClicked = { },
-        circuitClicked = { },
-        raceClicked = { },
+        driverClicked = viewModel.inputs::clickDriver,
+        constructorClicked = viewModel.inputs::clickConstructor,
+        circuitClicked = viewModel.inputs::clickCircuit,
+        raceClicked = viewModel.inputs::clickRace,
         searchTermUpdated = viewModel.inputs::search,
         clear = viewModel.inputs::searchClear,
         refresh = viewModel.inputs::refresh

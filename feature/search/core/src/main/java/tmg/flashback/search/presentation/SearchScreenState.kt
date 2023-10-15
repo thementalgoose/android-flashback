@@ -19,11 +19,11 @@ data class SearchScreenState(
 sealed class SearchScreenSubState {
     data class Driver(
         val driver: tmg.flashback.formula1.model.Driver,
-        val season: Int?
+        val season: Int? = null
     ): SearchScreenSubState()
     data class Constructor(
         val constructor: tmg.flashback.formula1.model.Constructor,
-        val season: Int?
+        val season: Int? = null
     ): SearchScreenSubState()
     data class Circuit(
         val circuit: tmg.flashback.formula1.model.Circuit
