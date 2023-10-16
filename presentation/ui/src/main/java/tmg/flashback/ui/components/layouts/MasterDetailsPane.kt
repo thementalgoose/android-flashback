@@ -32,7 +32,7 @@ fun MasterDetailsPane(
     master: @Composable () -> Unit,
     detailsShow: Boolean,
     details: @Composable () -> Unit,
-    detailsActionUpClicked: () -> Unit = { }
+    detailsActionUpClicked: () -> Unit
 ) {
     Row(
         Modifier
@@ -78,7 +78,8 @@ private fun PreviewPhoneNoDetails(
             windowSizeClass = WindowSizeClass.calculateFromSize(DpSize(500.dp, 600.dp)),
             master = { PreviewMaster() },
             detailsShow = false,
-            details = { PreviewDetails() }
+            details = { PreviewDetails() },
+            detailsActionUpClicked = { }
         )
     }
 }
@@ -93,7 +94,8 @@ private fun PreviewPhoneMasterDetails(
             windowSizeClass = WindowSizeClass.calculateFromSize(DpSize(500.dp, 600.dp)),
             master = { PreviewMaster() },
             detailsShow = true,
-            details = { PreviewDetails() }
+            details = { PreviewDetails() },
+            detailsActionUpClicked = { }
         )
     }
 }
@@ -108,7 +110,8 @@ private fun PreviewTabletNoDetails(
             windowSizeClass = WindowSizeClass.calculateFromSize(DpSize(1000.dp, 400.dp)),
             master = { PreviewMaster() },
             detailsShow = false,
-            details = { PreviewDetails() }
+            details = { PreviewDetails() },
+            detailsActionUpClicked = { }
         )
     }
 }
@@ -123,7 +126,8 @@ private fun PreviewTabletMasterDetails(
             windowSizeClass = WindowSizeClass.calculateFromSize(DpSize(1000.dp, 400.dp)),
             master = { PreviewMaster() },
             detailsShow = true,
-            details = { PreviewDetails() }
+            details = { PreviewDetails() },
+            detailsActionUpClicked = { }
         )
     }
 }

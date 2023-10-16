@@ -93,6 +93,7 @@ fun ConstructorOverviewScreenVM(
             }
         },
         detailsShow = uiState.value.selectedSeason != null,
+        detailsActionUpClicked = viewModel.inputs::back,
         details = {
             ConstructorSeasonScreenVM(
                 actionUpClicked = viewModel.inputs::back,
@@ -405,7 +406,7 @@ private fun DriverPerSeason(
     }
 }
 
-@ExperimentalMaterial3WindowSizeClassApi
+
 @PreviewTheme
 @Composable
 private fun Preview(

@@ -306,7 +306,7 @@ private fun History(
     }
 }
 
-@ExperimentalMaterial3WindowSizeClassApi
+
 @PreviewTheme
 @Composable
 private fun Preview(

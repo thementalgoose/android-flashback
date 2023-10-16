@@ -3,10 +3,13 @@ package tmg.flashback.ui.settings.web
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.DpSize
 import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.R
 import tmg.flashback.style.AppTheme
@@ -22,8 +25,8 @@ import tmg.flashback.ui.settings.Settings
 
 @Composable
 fun SettingsWebScreenVM(
-    showBack: Boolean = true,
     actionUpClicked: () -> Unit = { },
+    windowSizeClass: WindowSizeClass,
     viewModel: SettingsWebViewModel = hiltViewModel()
 ) {
     ScreenView(screenName = "Settings - Web")
@@ -32,8 +35,8 @@ fun SettingsWebScreenVM(
     val javascriptEnabled = viewModel.outputs.enableJavascript.collectAsState(false)
 
     SettingsWebScreen(
-        showBack = showBack,
         actionUpClicked = actionUpClicked,
+        windowSizeClass = windowSizeClass,
         prefClicked = viewModel.inputs::prefClicked,
         webBrowserEnabled = webBrowserEnabled.value,
         javascriptEnabled = javascriptEnabled.value
@@ -42,8 +45,8 @@ fun SettingsWebScreenVM(
 
 @Composable
 fun SettingsWebScreen(
-    showBack: Boolean,
     actionUpClicked: () -> Unit,
+    windowSizeClass: WindowSizeClass,
     prefClicked: (Setting) -> Unit,
     webBrowserEnabled: Boolean,
     javascriptEnabled: Boolean
@@ -56,7 +59,7 @@ fun SettingsWebScreen(
             item("header") {
                 tmg.flashback.ui.components.header.Header(
                     text = stringResource(id = R.string.settings_section_web_browser_title),
-                    action = if (showBack) HeaderAction.BACK else null,
+                    action = if (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact) HeaderAction.BACK else null,
                     actionUpClicked = actionUpClicked
                 )
             }
@@ -80,7 +83,7 @@ fun SettingsWebScreen(
 private fun Preview() {
     AppThemePreview {
         SettingsWebScreen(
-            showBack = true,
+            windowSizeClass = WindowSizeClass.calculateFromSize(DpSize.Unspecified),
             actionUpClicked = {},
             prefClicked = {},
             webBrowserEnabled = false,

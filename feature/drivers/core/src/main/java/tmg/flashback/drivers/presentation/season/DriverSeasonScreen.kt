@@ -608,7 +608,7 @@ private fun SprintInfo(
     }
 }
 
-@ExperimentalMaterial3WindowSizeClassApi
+
 @PreviewTheme
 @Composable
 private fun Preview(

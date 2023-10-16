@@ -30,7 +30,6 @@ import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.flashback.navigation.asNavigationDestination
 import tmg.flashback.privacypolicy.contract.PrivacyPolicy
-import tmg.flashback.privacypolicy.ui.PrivacyPolicyScreenVM
 import tmg.flashback.rss.contract.RSS
 import tmg.flashback.rss.contract.RSSConfigure
 import tmg.flashback.rss.ui.configure.ConfigureRSSScreenVM
@@ -43,26 +42,9 @@ import tmg.flashback.season.contract.Races
 import tmg.flashback.season.presentation.dashboard.constructors.ConstructorStandingsScreenVM
 import tmg.flashback.season.presentation.dashboard.drivers.DriverStandingsScreenVM
 import tmg.flashback.season.presentation.dashboard.races.RacesScreenVM
-import tmg.flashback.ui.settings.About
-import tmg.flashback.ui.settings.Ads
 import tmg.flashback.ui.settings.All
-import tmg.flashback.ui.settings.Home
-import tmg.flashback.ui.settings.NightMode
-import tmg.flashback.ui.settings.NotificationsUpcomingNotice
-import tmg.flashback.ui.settings.Privacy
 import tmg.flashback.ui.settings.SettingsAllScreenVM
-import tmg.flashback.ui.settings.Theme
-import tmg.flashback.ui.settings.Weather
-import tmg.flashback.ui.settings.Web
-import tmg.flashback.ui.settings.about.SettingsAboutScreenVM
 import tmg.flashback.ui.settings.about.SettingsPrivacyScreenVM
-import tmg.flashback.ui.settings.ads.SettingsAdsScreenVM
-import tmg.flashback.ui.settings.appearance.nightmode.SettingsNightModeScreenVM
-import tmg.flashback.ui.settings.appearance.theme.SettingsThemeScreenVM
-import tmg.flashback.ui.settings.data.SettingsLayoutScreenVM
-import tmg.flashback.ui.settings.data.SettingsWeatherScreenVM
-import tmg.flashback.ui.settings.notifications.SettingsNotificationUpcomingNoticeScreenVM
-import tmg.flashback.ui.settings.web.SettingsWebScreenVM
 import tmg.flashback.weekend.contract.Weekend
 import tmg.flashback.weekend.contract.model.ScreenWeekendData
 import tmg.flashback.weekend.ui.WeekendScreenVM
@@ -109,62 +91,16 @@ fun AppGraph(
             )
         }
 
-        // Privacy Policy
-        composable(Screen.Settings.PrivacyPolicy.route) {
-            PrivacyPolicyScreenVM(
-                actionUpClicked = { navController.popBackStack() }
+        composable(Screen.Settings.All.route) {
+            SettingsAllScreenVM(
+                actionUpClicked = openMenu,
+                windowSizeClass = windowSize
             )
         }
 
-        // Settings
-        composable(Screen.Settings.All.route) {
-            SettingsAllScreenVM(
-                showMenu = windowSize.widthSizeClass == WindowWidthSizeClass.Compact,
-                actionUpClicked = openMenu
-            )
-        }
-        composable(Screen.Settings.Theme.route) {
-            SettingsThemeScreenVM(
-                actionUpClicked = { navController.popBackStack() }
-            )
-        }
-        composable(Screen.Settings.NightMode.route) {
-            SettingsNightModeScreenVM(
-                actionUpClicked = { navController.popBackStack() }
-            )
-        }
-        composable(Screen.Settings.Home.route) {
-            SettingsLayoutScreenVM(
-                actionUpClicked = { navController.popBackStack() }
-            )
-        }
-        composable(Screen.Settings.Weather.route) {
-            SettingsWeatherScreenVM(
-                actionUpClicked = { navController.popBackStack() }
-            )
-        }
-        composable(Screen.Settings.Web.route) {
-            SettingsWebScreenVM(
-                actionUpClicked = { navController.popBackStack() }
-            )
-        }
-        composable(Screen.Settings.NotificationsUpcomingNotice.route) {
-            SettingsNotificationUpcomingNoticeScreenVM(
-                actionUpClicked = { navController.popBackStack() }
-            )
-        }
-        composable(Screen.Settings.Ads.route) {
-            SettingsAdsScreenVM(
-                actionUpClicked = { navController.popBackStack() }
-            )
-        }
-        composable(Screen.Settings.Privacy.route) {
+        composable(Screen.Settings.PrivacyPolicy.route) {
             SettingsPrivacyScreenVM(
-                actionUpClicked = { navController.popBackStack() }
-            )
-        }
-        composable(Screen.Settings.About.route) {
-            SettingsAboutScreenVM(
+                windowSizeClass = windowSize,
                 actionUpClicked = { navController.popBackStack() }
             )
         }
@@ -245,7 +181,8 @@ fun AppGraph(
         }
         composable(Screen.Settings.RSSConfigure.route) {
             ConfigureRSSScreenVM(
-                actionUpClicked = { navController.popBackStack() }
+                actionUpClicked = { navController.popBackStack() },
+                windowSizeClass = windowSize,
             )
         }
     }

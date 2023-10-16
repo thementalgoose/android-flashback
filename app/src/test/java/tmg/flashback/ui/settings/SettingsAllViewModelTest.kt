@@ -32,7 +32,6 @@ internal class SettingsAllViewModelTest: BaseTest() {
     private val mockPermissionRepository: PermissionRepository = mockk(relaxed = true)
     private val mockPermissionManager: PermissionManager = mockk(relaxed = true)
     private val mockApplicationNavigationComponent: ApplicationNavigationComponent = mockk(relaxed = true)
-    private val mockNavigator: Navigator = mockk(relaxed = true)
 
     private lateinit var underTest: SettingsAllViewModel
 
@@ -45,7 +44,6 @@ internal class SettingsAllViewModelTest: BaseTest() {
             permissionRepository = mockPermissionRepository,
             permissionManager = mockPermissionManager,
             applicationNavigationComponent = mockApplicationNavigationComponent,
-            navigator = mockNavigator,
         )
     }
 
@@ -123,94 +121,102 @@ internal class SettingsAllViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `clicking dark mode opens dark mode`() {
+    fun `clicking dark mode opens dark mode`() = runTest {
         initUnderTest()
         underTest.inputs.itemClicked(Settings.Theme.darkMode)
 
-        val slot = slot<NavigationDestination>()
-        verify {
-            mockNavigator.navigate(capture(slot))
+        underTest.outputs.uiState.test {
+            assertEquals(SettingsAllViewModel.SettingsScreen.DARK_MODE, awaitItem().selectedSubScreen)
+
+            underTest.inputs.back()
+            assertEquals(null, awaitItem().selectedSubScreen)
         }
-        assertEquals(Screen.Settings.NightMode.route, slot.captured.route)
     }
 
     @Test
-    fun `clicking theme pref opens theme`() {
+    fun `clicking theme pref opens theme`() = runTest {
         initUnderTest()
         underTest.inputs.itemClicked(Settings.Theme.theme)
 
-        val slot = slot<NavigationDestination>()
-        verify {
-            mockNavigator.navigate(capture(slot))
+
+        underTest.outputs.uiState.test {
+            assertEquals(SettingsAllViewModel.SettingsScreen.THEME, awaitItem().selectedSubScreen)
+
+            underTest.inputs.back()
+            assertEquals(null, awaitItem().selectedSubScreen)
         }
-        assertEquals(Screen.Settings.Theme.route, slot.captured.route)
     }
 
     @Test
-    fun `clicking layout opens layout`() {
+    fun `clicking layout opens layout`() = runTest {
         initUnderTest()
         underTest.inputs.itemClicked(Settings.Data.layout)
 
-        val slot = slot<NavigationDestination>()
-        verify {
-            mockNavigator.navigate(capture(slot))
+        underTest.outputs.uiState.test {
+            assertEquals(SettingsAllViewModel.SettingsScreen.LAYOUT, awaitItem().selectedSubScreen)
+
+            underTest.inputs.back()
+            assertEquals(null, awaitItem().selectedSubScreen)
         }
-        assertEquals(Screen.Settings.Home.route, slot.captured.route)
     }
 
     @Test
-    fun `clicking weather opens weather`() {
+    fun `clicking weather opens weather`() = runTest {
         initUnderTest()
         underTest.inputs.itemClicked(Settings.Data.weather)
 
-        val slot = slot<NavigationDestination>()
-        verify {
-            mockNavigator.navigate(capture(slot))
+        underTest.outputs.uiState.test {
+            assertEquals(SettingsAllViewModel.SettingsScreen.WEATHER, awaitItem().selectedSubScreen)
+
+            underTest.inputs.back()
+            assertEquals(null, awaitItem().selectedSubScreen)
         }
-        assertEquals(Screen.Settings.Weather.route, slot.captured.route)
     }
 
     @Test
-    fun `clicking configure opens configure`() {
+    fun `clicking configure opens configure`() = runTest {
         initUnderTest()
         underTest.inputs.itemClicked(Settings.RSS.rss)
 
-        val slot = slot<NavigationDestination>()
-        verify {
-            mockNavigator.navigate(capture(slot))
+        underTest.outputs.uiState.test {
+            assertEquals(SettingsAllViewModel.SettingsScreen.RSS_CONFIGURE, awaitItem().selectedSubScreen)
+
+            underTest.inputs.back()
+            assertEquals(null, awaitItem().selectedSubScreen)
         }
-        assertEquals(Screen.Settings.RSSConfigure.route, slot.captured.route)
     }
 
     @Test
-    fun `clicking in app browser opens in app browser`() {
+    fun `clicking in app browser opens in app browser`() = runTest {
         initUnderTest()
         underTest.inputs.itemClicked(Settings.Web.inAppBrowser)
 
-        val slot = slot<NavigationDestination>()
-        verify {
-            mockNavigator.navigate(capture(slot))
+        underTest.outputs.uiState.test {
+            assertEquals(SettingsAllViewModel.SettingsScreen.WEB_BROWSER, awaitItem().selectedSubScreen)
+
+            underTest.inputs.back()
+            assertEquals(null, awaitItem().selectedSubScreen)
         }
-        assertEquals(Screen.Settings.Web.route, slot.captured.route)
     }
 
 
     @Test
-    fun `clicking upcoming notifications opens upcoming notifications period`() {
+    fun `clicking upcoming notifications opens upcoming notifications period`() = runTest {
         initUnderTest()
         underTest.inputs.itemClicked(Settings.Notifications.notificationUpcomingNotice)
 
-        val slot = slot<NavigationDestination>()
-        verify {
-            mockNavigator.navigate(capture(slot))
+        underTest.outputs.uiState.test {
+            assertEquals(SettingsAllViewModel.SettingsScreen.NOTIFICATIONS_TIMER, awaitItem().selectedSubScreen)
+
+            underTest.inputs.back()
+            assertEquals(null, awaitItem().selectedSubScreen)
         }
-        assertEquals(Screen.Settings.NotificationsUpcomingNotice.route, slot.captured.route)
     }
 
 
 
     @Test
-    fun `clicking results available notifications runs permission dialog and opens settings`() {
+    fun `clicking results available notifications runs permission dialog and opens settings`() = runTest {
         val deferrable = CompletableDeferred<Map<String, Boolean>>()
         every { mockPermissionManager.requestPermission(any()) } returns deferrable
         initUnderTest()
@@ -227,7 +233,7 @@ internal class SettingsAllViewModelTest: BaseTest() {
 
 
     @Test
-    fun `clicking upcoming available notifications runs permission dialog and opens settings`() {
+    fun `clicking upcoming available notifications runs permission dialog and opens settings`() = runTest {
         val deferrable = CompletableDeferred<Map<String, Boolean>>()
         every { mockPermissionManager.requestPermission(any()) } returns deferrable
         initUnderTest()
@@ -244,38 +250,41 @@ internal class SettingsAllViewModelTest: BaseTest() {
 
 
     @Test
-    fun `clicking ads opens ads`() {
+    fun `clicking ads opens ads`() = runTest {
         initUnderTest()
         underTest.inputs.itemClicked(Settings.Ads.ads)
 
-        val slot = slot<NavigationDestination>()
-        verify {
-            mockNavigator.navigate(capture(slot))
+        underTest.outputs.uiState.test {
+            assertEquals(SettingsAllViewModel.SettingsScreen.ADS, awaitItem().selectedSubScreen)
+
+            underTest.inputs.back()
+            assertEquals(null, awaitItem().selectedSubScreen)
         }
-        assertEquals(Screen.Settings.Ads.route, slot.captured.route)
     }
 
     @Test
-    fun `clicking privacy opens privacy`() {
+    fun `clicking privacy opens privacy`() = runTest {
         initUnderTest()
         underTest.inputs.itemClicked(Settings.Other.privacy)
 
-        val slot = slot<NavigationDestination>()
-        verify {
-            mockNavigator.navigate(capture(slot))
+        underTest.outputs.uiState.test {
+            assertEquals(SettingsAllViewModel.SettingsScreen.PRIVACY, awaitItem().selectedSubScreen)
+
+            underTest.inputs.back()
+            assertEquals(null, awaitItem().selectedSubScreen)
         }
-        assertEquals(Screen.Settings.Privacy.route, slot.captured.route)
     }
 
     @Test
-    fun `clicking about opens about`() {
+    fun `clicking about opens about`() = runTest {
         initUnderTest()
         underTest.inputs.itemClicked(Settings.Other.about)
 
-        val slot = slot<NavigationDestination>()
-        verify {
-            mockNavigator.navigate(capture(slot))
+        underTest.outputs.uiState.test {
+            assertEquals(SettingsAllViewModel.SettingsScreen.ABOUT, awaitItem().selectedSubScreen)
+
+            underTest.inputs.back()
+            assertEquals(null, awaitItem().selectedSubScreen)
         }
-        assertEquals(Screen.Settings.About.route, slot.captured.route)
     }
 }
