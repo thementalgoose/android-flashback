@@ -175,7 +175,6 @@ fun AppGraph(
             RSSScreenVM(
                 windowSizeClass = windowSize,
                 advertProvider = advertProvider,
-                showMenu = windowSize.widthSizeClass == WindowWidthSizeClass.Compact,
                 actionUpClicked = openMenu
             )
         }

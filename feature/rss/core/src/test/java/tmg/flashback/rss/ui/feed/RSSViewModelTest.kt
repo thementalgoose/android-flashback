@@ -175,6 +175,24 @@ internal class RSSViewModelTest: BaseTest() {
     }
 
     @Test
+    fun `clicking article then going back`() = runTest(testDispatcher) {
+        initUnderTest()
+        underTest.uiState.test {
+            assertEquals(RSSViewModel.UiState.Data(
+                lastUpdated = "01:02:03",
+                showAdvert = true,
+                rssItems = listOf(mockArticle)
+            ), awaitItem())
+
+            underTest.clickArticle(mockArticle)
+            assertEquals(mockArticle, (awaitItem() as RSSViewModel.UiState.Data).articleSelected)
+
+            underTest.back()
+            assertEquals(null, (awaitItem() as RSSViewModel.UiState.Data).articleSelected)
+        }
+    }
+
+    @Test
     fun `clicking article sets selected article in data`() = runTest(testDispatcher) {
         initUnderTest()
         underTest.uiState.test {

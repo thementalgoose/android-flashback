@@ -25,6 +25,7 @@ import javax.inject.Inject
 interface RSSViewModelInputs {
     fun refresh()
     fun configure()
+    fun back()
     fun clickArticle(article: Article?)
 }
 
@@ -103,15 +104,18 @@ class RSSViewModel @Inject constructor(
         navigator.navigate(Screen.Settings.RSSConfigure)
     }
 
+    override fun back() {
+        if (uiState.value is UiState.Data) {
+            uiState.value = createOrUpdate { this.copy(articleSelected = null) }
+        }
+    }
+
     override fun clickArticle(article: Article?) {
         uiState.value = createOrUpdate {
             this.copy(
                 articleSelected = article
             )
         }
-
-        // TODO: Remove this when RSS supports split pane
-        article?.let { openWebpageUseCase.open(it.link, it.title) }
     }
 
     private fun createOrUpdate(callback: UiState.Data.() -> UiState.Data): UiState.Data {
