@@ -16,7 +16,6 @@ import org.junit.jupiter.api.Test
 import tmg.flashback.constructors.R
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.domain.repo.ConstructorRepository
-import tmg.flashback.drivers.contract.DriverSeason
 import tmg.flashback.drivers.contract.with
 import tmg.flashback.formula1.model.ConstructorHistory
 import tmg.flashback.formula1.model.ConstructorHistorySeason

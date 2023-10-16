@@ -11,15 +11,12 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
-import tmg.flashback.constructors.contract.ConstructorSeason
 import tmg.flashback.constructors.contract.with
 import tmg.flashback.domain.repo.RaceRepository
-import tmg.flashback.drivers.contract.DriverSeason
 import tmg.flashback.drivers.contract.with
 import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.DriverEntry
 import tmg.flashback.formula1.model.Race
-import tmg.flashback.formula1.model.RaceResult
 import tmg.flashback.formula1.model.model
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
