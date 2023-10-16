@@ -5,10 +5,8 @@ import org.junit.jupiter.api.Test
 import tmg.flashback.circuits.contract.Circuit
 import tmg.flashback.circuits.contract.with
 import tmg.flashback.constructors.contract.Constructor
-import tmg.flashback.constructors.contract.ConstructorSeason
 import tmg.flashback.constructors.contract.with
 import tmg.flashback.drivers.contract.Driver
-import tmg.flashback.drivers.contract.DriverSeason
 import tmg.flashback.drivers.contract.with
 import tmg.flashback.navigation.Screen
 import tmg.flashback.rss.contract.RSS
