@@ -316,7 +316,9 @@ private fun Preview(
         DriverOverviewScreen(
             actionUpClicked = { },
             windowSizeClass = WindowSizeClass.calculateFromSize(DpSize.Unspecified),
-            uiState = DriverOverviewScreenState(),
+            uiState = DriverOverviewScreenState(
+                list = listOf(fakeStat, fakeStatWinning, driverConstructor.racedFor(), driverConstructor.racedFor2())
+            ),
             racedForClicked = { },
             linkClicked = { },
             statHistoryClicked = { },

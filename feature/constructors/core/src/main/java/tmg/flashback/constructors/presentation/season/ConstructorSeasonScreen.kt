@@ -67,6 +67,7 @@ fun ConstructorSeasonScreenVM(
     constructorId: String,
     constructorName: String,
     season: Int,
+    showHeader: Boolean = true,
     viewModel: ConstructorSeasonViewModel = hiltViewModel()
 ) {
     ScreenView(screenName = "Constructor Season", args = mapOf(
@@ -88,6 +89,7 @@ fun ConstructorSeasonScreenVM(
             list = list.value,
             constructorName = constructorName,
             season = season,
+            showHeader = showHeader,
             driverClicked = viewModel.inputs::driverClicked,
             linkClicked = viewModel.inputs::openUrl
         )
@@ -101,6 +103,7 @@ fun ConstructorSeasonScreen(
     list: List<ConstructorSeasonModel>,
     constructorName: String,
     season: Int,
+    showHeader: Boolean,
     driverClicked: (ConstructorSeasonModel.Driver, Int) -> Unit,
     linkClicked: (String) -> Unit,
 ) {
@@ -122,10 +125,12 @@ fun ConstructorSeasonScreen(
             items(list, key = { it.key }) {
                 when (it) {
                     is ConstructorSeasonModel.Header -> {
-                        HeaderTop(
-                            model = it,
-                            wikipediaClicked = linkClicked
-                        )
+                        if (showHeader) {
+                            HeaderTop(
+                                model = it,
+                                wikipediaClicked = linkClicked
+                            )
+                        }
                     }
                     is ConstructorSeasonModel.Driver -> {
                         DriverSummary(
@@ -341,6 +346,7 @@ private fun Preview(
             linkClicked = { },
             driverClicked = { _, _ -> },
             windowSizeClass = WindowSizeClass.calculateFromSize(DpSize.Unspecified),
+            showHeader = true,
             list = listOf(
                 fakeStat,
                 fakeStatWinning,

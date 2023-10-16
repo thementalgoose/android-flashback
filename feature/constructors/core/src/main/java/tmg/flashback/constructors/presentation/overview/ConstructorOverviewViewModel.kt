@@ -27,6 +27,7 @@ interface ConstructorOverviewViewModelInputs {
     fun openSeason(season: Int)
 
     fun refresh()
+    fun back()
 }
 
 //endregion
@@ -34,9 +35,7 @@ interface ConstructorOverviewViewModelInputs {
 //region Outputs
 
 interface ConstructorOverviewViewModelOutputs {
-    val list: StateFlow<List<ConstructorOverviewModel>>
-
-    val showLoading: StateFlow<Boolean>
+    val uiState: StateFlow<ConstructorOverviewScreenState>
 }
 
 //endregion
@@ -45,99 +44,31 @@ interface ConstructorOverviewViewModelOutputs {
 @HiltViewModel
 class ConstructorOverviewViewModel @Inject constructor(
     private val constructorRepository: ConstructorRepository,
-    private val networkConnectivityManager: NetworkConnectivityManager,
     private val openWebpageUseCase: OpenWebpageUseCase,
-    private val navigator: tmg.flashback.navigation.Navigator,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), ConstructorOverviewViewModelInputs, ConstructorOverviewViewModelOutputs {
 
     var inputs: ConstructorOverviewViewModelInputs = this
     var outputs: ConstructorOverviewViewModelOutputs = this
 
-    private val constructorIdAndName: MutableStateFlow<Pair<String, String>?> = MutableStateFlow(null)
-    private val constructorIdWithRequest: Flow<Pair<String, String>?> = constructorIdAndName
-        .filterNotNull()
-        .flatMapLatest { id ->
-            return@flatMapLatest flow {
-                if (constructorRepository.getConstructorSeasonCount(id.first) == 0) {
-                    showLoading.value = true
-                    emit(null)
-                    constructorRepository.fetchConstructor(id.first)
-                    showLoading.value = false
-                    emit(id)
-                }
-                else {
-                    emit(id)
-                    showLoading.value = true
-                    constructorRepository.fetchConstructor(id.first)
-                    showLoading.value = false
-                }
-            }
-        }
-        .flowOn(ioDispatcher)
-
-    private val isConnected: Boolean
-        get() = networkConnectivityManager.isConnected
-
-    override val list: StateFlow<List<ConstructorOverviewModel>> = constructorIdWithRequest
-        .flatMapLatest { idAndName ->
-
-            if (idAndName == null) {
-                return@flatMapLatest flow {
-                    emit(mutableListOf<ConstructorOverviewModel>(ConstructorOverviewModel.Loading))
-                }
-            }
-
-            val (id, name) = idAndName
-            return@flatMapLatest constructorRepository.getConstructorOverview(id)
-                .map {
-                    val list: MutableList<ConstructorOverviewModel> = mutableListOf()
-                    if (it != null) {
-                        list.add(
-                            ConstructorOverviewModel.Header(
-                                constructorName = it.constructor.name,
-                                constructorPhotoUrl = it.constructor.photoUrl,
-                                constructorColor = it.constructor.color,
-                                constructorNationality = it.constructor.nationality,
-                                constructorNationalityISO = it.constructor.nationalityISO,
-                                constructorWikiUrl = it.constructor.wikiUrl
-                            )
-                        )
-                    }
-                    when {
-                        (it == null || it.standings.isEmpty()) && !isConnected -> list.add(
-                            ConstructorOverviewModel.NetworkError
-                        )
-                        (it == null || it.standings.isEmpty()) -> list.add(ConstructorOverviewModel.InternalError)
-                        else -> {
-                            if (it.hasChampionshipCurrentlyInProgress) {
-                                val lastStanding = it.standings.maxByOrNull { it.season }
-                                if (lastStanding != null) {
-                                    list.add(
-                                        ConstructorOverviewModel.Message(
-                                            R.string.results_accurate_for_round,
-                                            listOf(lastStanding.season, lastStanding.races)
-                                        )
-                                    )
-                                }
-                            }
-                            list.addAll(getAllStats(it))
-                            list.add(ConstructorOverviewModel.ListHeader)
-                            list.addAll(getHistory(it))
-                        }
-                    }
-                    return@map list
-                }
-        }
-        .stateIn(viewModelScope, SharingStarted.Lazily, listOf(ConstructorOverviewModel.Loading))
-
-    override val showLoading: MutableStateFlow<Boolean> = MutableStateFlow(false)
-
-
-    //region Inputs
+    override val uiState: MutableStateFlow<ConstructorOverviewScreenState> = MutableStateFlow(
+        ConstructorOverviewScreenState()
+    )
 
     override fun setup(constructorId: String, constructorName: String) {
-        this.constructorIdAndName.value = Pair(constructorId, constructorName)
+        if (constructorId == uiState.value.constructorId) {
+            return
+        }
+        uiState.value = uiState.value.copy(
+            constructorId = constructorId,
+            constructorName = constructorName,
+            constructor = null,
+            list = emptyList(),
+            isLoading = false,
+            networkError = false,
+            selectedSeason = null
+        )
+        refresh()
     }
 
     override fun openUrl(url: String) {
@@ -145,33 +76,55 @@ class ConstructorOverviewViewModel @Inject constructor(
     }
 
     override fun openSeason(season: Int) {
-        constructorIdAndName.value?.let { (id, name) ->
-//            navigator.navigate(
-//                Screen.ConstructorSeason.with(
-//                constructorId = id,
-//                constructorName = name,
-//                season = season
-//            ))
-        }
+        uiState.value = uiState.value.copy(selectedSeason = season)
+    }
+
+    override fun back() {
+        uiState.value = uiState.value.copy(selectedSeason = null)
     }
 
     override fun refresh() {
-        this.refresh(constructorIdAndName.value)
-    }
-    private fun refresh(constructorId: Pair<String, String>? = this.constructorIdAndName.value) {
-        viewModelScope.launch(context = ioDispatcher) {
-            constructorId?.let {
-                constructorRepository.fetchConstructor(it.first)
-                showLoading.value = false
+        viewModelScope.launch(ioDispatcher) {
+            val constructorId = uiState.value.constructorId
+            if (constructorId.isNotEmpty()) {
+                populate()
             }
+            uiState.value = uiState.value.copy(isLoading = true, networkError = false)
+            constructorRepository.fetchConstructor(constructorId)
+            populate()
         }
     }
 
-    //endregion
+    private suspend fun populate() {
+        val constructorId = uiState.value.constructorId
+        val overview = constructorRepository.getConstructorOverview(constructorId).firstOrNull()
+        val list = overview?.generateResultList()
+        uiState.value = uiState.value.copy(
+            constructor = overview?.constructor,
+            isLoading = false,
+            networkError = overview == null || list.isNullOrEmpty(),
+            list = list ?: emptyList()
+        )
+    }
 
-    //region Outputs
-
-    //endregion
+    private fun ConstructorHistory.generateResultList(): List<ConstructorOverviewModel> {
+        val list = mutableListOf<ConstructorOverviewModel>()
+        if (this.hasChampionshipCurrentlyInProgress) {
+            val lastStanding = this.standings.maxByOrNull { it.season }
+            if (lastStanding != null) {
+                list.add(
+                    ConstructorOverviewModel.Message(
+                        R.string.results_accurate_for_round,
+                        listOf(lastStanding.season, lastStanding.races)
+                    )
+                )
+            }
+        }
+        list.addAll(getAllStats(this))
+        list.add(ConstructorOverviewModel.ListHeader)
+        list.addAll(getHistory(this))
+        return list
+    }
 
     /**
      * Add career stats for the driver across their career
