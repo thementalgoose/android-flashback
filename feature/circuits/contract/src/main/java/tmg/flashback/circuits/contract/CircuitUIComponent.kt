@@ -14,6 +14,7 @@ internal interface CircuitUiComponent {
 }
 
 private lateinit var uiComponent: CircuitUiComponent
+
 @Composable
 fun requireCircuitNavigationComponent(): CircuitNavigationComponent {
     if (!::uiComponent.isInitialized) {

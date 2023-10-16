@@ -8,30 +8,6 @@ import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.model
 import tmg.flashback.ui.components.navigation.PipeType
 
-fun DriverOverviewModel.Companion.headerModel(
-    driverId: String = "driverId",
-    driverName: String = "firstName lastName",
-    driverNumber: Int = 23,
-    driverCode: String = "code",
-    driverImg: String = "photoUrl",
-    driverBirthday: LocalDate = LocalDate.of(1995, 10, 12),
-    driverWikiUrl: String = "wikiUrl",
-    driverNationalityISO: String = "nationalityISO",
-    driverNationality: String = "nationality",
-    constructors: List<Constructor> = listOf()
-): DriverOverviewModel.Header = DriverOverviewModel.Header(
-    driverId = driverId,
-    driverName = driverName,
-    driverNumber = driverNumber,
-    driverImg = driverImg,
-    driverCode = driverCode,
-    driverBirthday = driverBirthday,
-    driverWikiUrl = driverWikiUrl,
-    driverNationalityISO = driverNationalityISO,
-    driverNationality = driverNationality,
-    constructors = constructors
-)
-
 fun DriverOverviewModel.Companion.statModel(
     isWinning: Boolean = false,
     @DrawableRes

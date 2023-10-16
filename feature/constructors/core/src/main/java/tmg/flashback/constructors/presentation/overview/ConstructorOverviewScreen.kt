@@ -28,6 +28,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import tmg.flashback.googleanalytics.constants.AnalyticsConstants.analyticsConstructorId
 import tmg.flashback.constructors.R
+import tmg.flashback.constructors.presentation.season.ConstructorSeasonScreenVM
 import tmg.flashback.formula1.constants.Formula1
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.ConstructorHistorySeasonDriver
@@ -45,6 +46,7 @@ import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.header.HeaderAction
+import tmg.flashback.ui.components.layouts.MasterDetailsPane
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.navigation.PipeType
 import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
@@ -72,21 +74,35 @@ fun ConstructorOverviewScreenVM(
 
     viewModel.inputs.setup(constructorId, constructorName)
 
-    val list = viewModel.outputs.list.collectAsState(emptyList())
-    val isLoading = viewModel.outputs.showLoading.collectAsState(false)
-    SwipeRefresh(
-        isLoading = isLoading.value,
-        onRefresh = viewModel.inputs::refresh
-    ) {
-        ConstructorOverviewScreen(
-            actionUpClicked = actionUpClicked,
-            windowSizeClass = windowSizeClass,
-            list = list.value,
-            constructorName = constructorName,
-            seasonClicked = viewModel.inputs::openSeason,
-            linkClicked = viewModel.inputs::openUrl
-        )
-    }
+    val uiState = viewModel.outputs.uiState.collectAsState()
+    MasterDetailsPane(
+        windowSizeClass = windowSizeClass,
+        master = {
+            SwipeRefresh(
+                isLoading = uiState.value.isLoading,
+                onRefresh = viewModel.inputs::refresh
+            ) {
+                ConstructorOverviewScreen(
+                    actionUpClicked = actionUpClicked,
+                    windowSizeClass = windowSizeClass,
+                    list = uiState.value.list,
+                    constructorName = constructorName,
+                    seasonClicked = viewModel.inputs::openSeason,
+                    linkClicked = viewModel.inputs::openUrl
+                )
+            }
+        },
+        detailsShow = uiState.value.selectedSeason != null,
+        details = {
+            ConstructorSeasonScreenVM(
+                actionUpClicked = viewModel.inputs::back,
+                windowSizeClass = windowSizeClass,
+                constructorId = constructorId,
+                constructorName = constructorName,
+                showHeader = false,
+                season = uiState.value.selectedSeason!!
+            )
+        })
 }
 
 @Composable

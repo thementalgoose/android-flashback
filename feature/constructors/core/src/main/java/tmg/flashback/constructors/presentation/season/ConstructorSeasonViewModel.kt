@@ -155,7 +155,6 @@ class ConstructorSeasonViewModel @Inject constructor(
         navigator.navigate(Screen.Driver.with(
             driverId = model.data.driver.driver.id,
             driverName = model.data.driver.driver.name,
-//            season = season
         ))
     }
 

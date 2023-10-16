@@ -8,14 +8,12 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.domain.repo.DriverRepository
 import tmg.flashback.drivers.R
 import tmg.flashback.drivers.contract.DriverNavigationComponent
 import tmg.flashback.drivers.contract.model.DriverStatHistoryType
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.DriverHistory
-import tmg.flashback.navigation.Navigator
 import tmg.flashback.ui.components.navigation.PipeType
 import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.utilities.extensions.ordinalAbbreviation
@@ -67,7 +65,10 @@ class DriverOverviewViewModel @Inject constructor(
             driverId = driverId,
             driverName = driverName,
             driver = null,
-            list = emptyList()
+            list = emptyList(),
+            isLoading = false,
+            networkError = false,
+            selectedSeason = null
         )
         refresh()
     }
@@ -95,7 +96,7 @@ class DriverOverviewViewModel @Inject constructor(
     override fun refresh() {
         viewModelScope.launch(ioDispatcher) {
             val driverId = uiState.value.driverId
-            if (uiState.value.driverId.isEmpty()) {
+            if (driverId.isNotEmpty()) {
                 populate()
             }
             uiState.value = uiState.value.copy(isLoading = true, networkError = false)
@@ -115,8 +116,6 @@ class DriverOverviewViewModel @Inject constructor(
             list = list ?: emptyList()
         )
     }
-
-    //endregion
 
     private fun DriverHistory.generateResultList(): List<DriverOverviewModel> {
         val list = mutableListOf<DriverOverviewModel>()
