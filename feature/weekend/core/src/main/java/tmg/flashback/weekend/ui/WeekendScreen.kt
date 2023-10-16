@@ -180,24 +180,7 @@ fun WeekendScreenVM(
     )
 }
 
-@Composable
-private fun Links(
-    details: List<DetailsModel>,
-    linkClicked: (DetailsModel.Link) -> Unit
-) {
-    val links = details.firstNotNullOfOrNull { it as? DetailsModel.Links }
-    links?.links?.forEach { link ->
-        IconButton(onClick = { linkClicked(link) }) {
-            Icon(
-                painter = painterResource(id = link.icon),
-                contentDescription = stringResource(id = link.label),
-                tint = AppTheme.colors.contentPrimary
-            )
-        }
-    }
-}
-
-private fun List<WeekendScreenState>.toNavigationItems(): List<NavigationItem> {
+internal fun List<WeekendScreenState>.toNavigationItems(): List<NavigationItem> {
     return this
         .map {
             NavigationItem(
