@@ -1,5 +1,7 @@
 package tmg.flashback.web.ui.browser
 
+import android.util.Log
+import android.webkit.WebView
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,6 +17,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidViewBinding
+import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.googleanalytics.presentation.ScreenView
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.text.TextBody1
@@ -28,14 +31,14 @@ fun WebScreenVM(
     url: String,
     actionUpClicked: () -> Unit,
     shareClicked: (url: String) -> Unit,
-    openInBrowser: (url: String) -> Unit,
+    viewModel: WebViewModel = hiltViewModel()
 ) {
     WebScreen(
         title = title,
         url = url,
         actionUpClicked = actionUpClicked,
-        shareClicked = shareClicked,
-        openInBrowser = openInBrowser
+        shareClicked = viewModel.inputs::openShare,
+        openInBrowser = viewModel.inputs::openWebpage
     )
 }
 
@@ -109,18 +112,30 @@ fun WebScreen(
 
         AndroidViewBinding(
             factory = ActivityWebBinding::inflate,
-            modifier = Modifier.weight(1f)
-        ) {
-            val frag = container.getFragment<WebFragment>()
-            frag.load(pageTitle = title, url = url)
-            frag.callback = object : WebUpdated {
-                override fun domainChanged(domain: String) {
-                    urlValue.value = domain
-                }
-                override fun titleChanged(title: String) {
-                    titleValue.value = title
+            modifier = Modifier.weight(1f),
+            onReset = {
+                Log.i("WebView", "onReset")
+            },
+            onRelease = {
+                val frag = container.getFragment<WebFragment>()
+                urlValue.value = frag.pageUrl
+                titleValue.value = frag.pageTitle
+                Log.i("WebView", "onRelease")
+            },
+            update = {
+                Log.i("WebView", "onUpdate")
+                val frag = container.getFragment<WebFragment>()
+                Log.i("WebView", "Frag arguments ${urlValue}, ${titleValue}, $title, $url, ${frag.arguments}")
+                frag.load(pageTitle = title, url = url)
+                frag.callback = object : WebUpdated {
+                    override fun domainChanged(domain: String) {
+                        urlValue.value = domain
+                    }
+                    override fun titleChanged(title: String) {
+                        titleValue.value = title
+                    }
                 }
             }
-        }
+        )
     }
 }

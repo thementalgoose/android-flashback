@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +17,7 @@ import tmg.flashback.web.client.FlashbackWebChromeClient
 import tmg.flashback.web.client.FlashbackWebViewClient
 import tmg.flashback.web.databinding.FragmentWebBinding
 import tmg.flashback.web.repository.WebBrowserRepository
+import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.utilities.extensions.getColor
 import tmg.utilities.extensions.views.show
 import java.net.MalformedURLException
@@ -37,10 +39,17 @@ internal class WebFragment : Fragment() {
     @Inject
     protected lateinit var webBrowserRepository: WebBrowserRepository
 
-    private lateinit var pageTitle: String
-    private lateinit var pageUrl: String
+    internal lateinit var pageTitle: String
+    internal lateinit var pageUrl: String
 
     internal var callback: WebUpdated? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        if (savedInstanceState != null)
+            binding?.webview?.restoreState(savedInstanceState.getBundle("webViewState")!!);
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -103,19 +112,26 @@ internal class WebFragment : Fragment() {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        val bundle = Bundle()
+        binding?.webview?.saveState(bundle)
+        outState.putBundle("webViewState", bundle)
         binding?.let {
             outState.putString(keyTitle, it.webview.title.toString())
             outState.putString(keyUrl, it.webview.url)
         }
-        super.onSaveInstanceState(outState)
+        outState.putBoolean("hasRestored", true)
     }
 
     fun load(pageTitle: String, url: String) {
         this.pageTitle = pageTitle
         this.pageUrl = url
 
-        binding!!.apply {
-            webview.loadUrl(pageUrl)
+        Log.i("WebView", "Arguments ${arguments}")
+        if (arguments?.getBoolean("hasRestored") != true) {
+            binding!!.apply {
+                webview.loadUrl(pageUrl)
+            }
         }
     }
 
