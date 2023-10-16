@@ -402,7 +402,7 @@ private fun StandingResult(
     }
 }
 
-@ExperimentalMaterial3WindowSizeClassApi
+
 @PreviewTheme
 @Composable
 private fun Preview(

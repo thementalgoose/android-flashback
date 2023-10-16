@@ -332,7 +332,7 @@ private fun SummaryCell(
     }
 }
 
-@ExperimentalMaterial3WindowSizeClassApi
+
 @PreviewTheme
 @Composable
 private fun Preview(

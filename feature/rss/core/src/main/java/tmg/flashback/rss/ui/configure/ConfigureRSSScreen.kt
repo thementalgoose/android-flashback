@@ -16,6 +16,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Text
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
@@ -29,6 +31,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.toColorInt
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -55,6 +58,7 @@ private val badgeSize: Dp = 42.dp
 @Composable
 fun ConfigureRSSScreenVM(
     actionUpClicked: () -> Unit,
+    windowSizeClass: WindowSizeClass,
     viewModel: ConfigureRSSViewModel = hiltViewModel()
 ) {
     ScreenView(screenName = "RSS Configure")
@@ -65,6 +69,7 @@ fun ConfigureRSSScreenVM(
 
     ConfigureRSSScreen(
         actionUpClicked = actionUpClicked,
+        windowSizeClass = windowSizeClass,
         showDescriptionEnabled = showDescriptionEnabled.value,
         showDescriptionClicked = viewModel.inputs::clickShowDescription,
         sourceAdded = {
@@ -84,6 +89,7 @@ fun ConfigureRSSScreenVM(
 @Composable
 fun ConfigureRSSScreen(
     actionUpClicked: () -> Unit,
+    windowSizeClass: WindowSizeClass,
     showDescriptionEnabled: Boolean,
     showDescriptionClicked: (newState: Boolean) -> Unit,
     sourceAdded: (rssLink: String) -> Unit,
@@ -102,7 +108,7 @@ fun ConfigureRSSScreen(
             item(key = "header") {
                 tmg.flashback.ui.components.header.Header(
                     text = stringResource(id = R.string.settings_rss_configure_sources_title),
-                    action = HeaderAction.BACK,
+                    action = if (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact) HeaderAction.BACK else null,
                     actionUpClicked = actionUpClicked
                 )
             }
@@ -257,6 +263,7 @@ private fun Preview() {
     AppThemePreview {
         ConfigureRSSScreen(
             actionUpClicked = {},
+            windowSizeClass = WindowSizeClass.calculateFromSize(DpSize.Unspecified),
             showDescriptionEnabled = true,
             showDescriptionClicked = { },
             sourceAdded = { },

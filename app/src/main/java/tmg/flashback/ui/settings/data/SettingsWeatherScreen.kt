@@ -3,10 +3,13 @@ package tmg.flashback.ui.settings.data
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.DpSize
 import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.R
 import tmg.flashback.style.AppTheme
@@ -22,8 +25,8 @@ import tmg.flashback.ui.settings.Settings
 
 @Composable
 fun SettingsWeatherScreenVM(
-    showBack: Boolean = true,
     actionUpClicked: () -> Unit = { },
+    windowSizeClass: WindowSizeClass,
     viewModel: SettingsWeatherViewModel = hiltViewModel()
 ) {
     ScreenView(screenName = "Settings - Weather")
@@ -31,8 +34,8 @@ fun SettingsWeatherScreenVM(
     val temperatureMetric = viewModel.outputs.weatherTemperatureMetric.collectAsState(true)
     val windspeedMetric = viewModel.outputs.weatherWindspeedMetric.collectAsState(false)
     SettingsWeatherScreen(
-        showBack = showBack,
         actionUpClicked = actionUpClicked,
+        windowSizeClass = windowSizeClass,
         prefClicked = viewModel.inputs::prefClicked,
         temperatureMetric = temperatureMetric.value,
         windspeedMetric = windspeedMetric.value
@@ -41,8 +44,8 @@ fun SettingsWeatherScreenVM(
 
 @Composable
 fun SettingsWeatherScreen(
-    showBack: Boolean,
     actionUpClicked: () -> Unit,
+    windowSizeClass: WindowSizeClass,
     prefClicked: (Setting) -> Unit,
     temperatureMetric: Boolean,
     windspeedMetric: Boolean
@@ -55,7 +58,7 @@ fun SettingsWeatherScreen(
             item("header") {
                 tmg.flashback.ui.components.header.Header(
                     text = stringResource(id = R.string.settings_header_weather),
-                    action = if (showBack) HeaderAction.BACK else null,
+                    action = if (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact) HeaderAction.BACK else null,
                     actionUpClicked = actionUpClicked
                 )
             }
@@ -80,7 +83,7 @@ fun SettingsWeatherScreen(
 private fun Preview() {
     AppThemePreview {
         SettingsWeatherScreen(
-            showBack = true,
+            windowSizeClass = WindowSizeClass.calculateFromSize(DpSize.Unspecified),
             actionUpClicked = {},
             prefClicked = {},
             temperatureMetric = true,

@@ -3,10 +3,13 @@ package tmg.flashback.ui.settings.data
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.DpSize
 import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.R
 import tmg.flashback.style.AppTheme
@@ -22,8 +25,8 @@ import tmg.flashback.ui.settings.Settings
 
 @Composable
 fun SettingsLayoutScreenVM(
-    showBack: Boolean = true,
-    actionUpClicked: () -> Unit = { },
+    actionUpClicked: () -> Unit,
+    windowSizeClass: WindowSizeClass,
     viewModel: SettingsLayoutViewModel = hiltViewModel()
 ) {
     ScreenView(screenName = "Settings - Layout")
@@ -31,8 +34,8 @@ fun SettingsLayoutScreenVM(
     val collapsedList = viewModel.outputs.collapsedListEnabled.collectAsState(true)
     val emptyWeeksInSchedule = viewModel.outputs.emptyWeeksInSchedule.collectAsState(false)
     SettingsLayoutScreen(
-        showBack = showBack,
         actionUpClicked = actionUpClicked,
+        windowSizeClass = windowSizeClass,
         prefClicked = viewModel.inputs::prefClicked,
         collapsedListEnabled = collapsedList.value,
         showEmptyWeeksInSchedule = emptyWeeksInSchedule.value
@@ -41,8 +44,8 @@ fun SettingsLayoutScreenVM(
 
 @Composable
 fun SettingsLayoutScreen(
-    showBack: Boolean,
     actionUpClicked: () -> Unit,
+    windowSizeClass: WindowSizeClass,
     prefClicked: (Setting) -> Unit,
     collapsedListEnabled: Boolean,
     showEmptyWeeksInSchedule: Boolean
@@ -55,7 +58,7 @@ fun SettingsLayoutScreen(
             item("header") {
                 tmg.flashback.ui.components.header.Header(
                     text = stringResource(id = R.string.settings_section_home_title),
-                    action = if (showBack) HeaderAction.BACK else null,
+                    action = if (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact) HeaderAction.BACK else null,
                     actionUpClicked = actionUpClicked
                 )
             }
@@ -80,7 +83,7 @@ fun SettingsLayoutScreen(
 private fun Preview() {
     AppThemePreview {
         SettingsLayoutScreen(
-            showBack = true,
+            windowSizeClass = WindowSizeClass.calculateFromSize(DpSize.Unspecified),
             actionUpClicked = {},
             prefClicked = {},
             collapsedListEnabled = true,

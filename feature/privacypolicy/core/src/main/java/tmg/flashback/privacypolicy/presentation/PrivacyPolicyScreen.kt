@@ -1,4 +1,4 @@
-package tmg.flashback.privacypolicy.ui
+package tmg.flashback.privacypolicy.presentation
 
 import android.text.method.LinkMovementMethod
 import android.widget.TextView
@@ -7,9 +7,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.viewinterop.AndroidView
 import tmg.flashback.privacypolicy.R
 import tmg.flashback.style.AppTheme
@@ -23,7 +26,8 @@ import tmg.utilities.extensions.getColor
 
 @Composable
 fun PrivacyPolicyScreenVM(
-    actionUpClicked: () -> Unit
+    actionUpClicked: () -> Unit,
+    windowSizeClass: WindowSizeClass
 ) {
     ScreenView(screenName = "Privacy Policy")
 
@@ -34,7 +38,7 @@ fun PrivacyPolicyScreenVM(
     ) {
         Header(
             text = stringResource(id = R.string.privacy_policy_title),
-            action = HeaderAction.BACK,
+            action = if (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact) HeaderAction.BACK else null,
             actionUpClicked = actionUpClicked
         )
         AndroidView(
@@ -60,6 +64,7 @@ fun PrivacyPolicyScreenVM(
 private fun Preview() {
     AppThemePreview {
         PrivacyPolicyScreenVM(
+            windowSizeClass = WindowSizeClass.calculateFromSize(DpSize.Unspecified),
             actionUpClicked = {}
         )
     }

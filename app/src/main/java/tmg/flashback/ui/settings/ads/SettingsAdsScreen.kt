@@ -3,10 +3,13 @@ package tmg.flashback.ui.settings.ads
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.DpSize
 import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.R
 import tmg.flashback.style.AppTheme
@@ -22,16 +25,16 @@ import tmg.flashback.ui.settings.Settings
 
 @Composable
 fun SettingsAdsScreenVM(
-    showBack: Boolean = true,
     actionUpClicked: () -> Unit = { },
+    windowSizeClass: WindowSizeClass,
     viewModel: SettingsAdsViewModel = hiltViewModel()
 ) {
     ScreenView(screenName = "Settings - Ads")
 
     val adsEnabled = viewModel.outputs.adsEnabled.collectAsState(false)
     SettingsAdsScreen(
-        showBack = showBack,
         actionUpClicked = actionUpClicked,
+        windowSizeClass = windowSizeClass,
         prefClicked = viewModel.inputs::prefClicked,
         adsEnabled = adsEnabled.value
     )
@@ -39,8 +42,8 @@ fun SettingsAdsScreenVM(
 
 @Composable
 fun SettingsAdsScreen(
-    showBack: Boolean,
     actionUpClicked: () -> Unit,
+    windowSizeClass: WindowSizeClass,
     prefClicked: (Setting) -> Unit,
     adsEnabled: Boolean
 ) {
@@ -52,7 +55,7 @@ fun SettingsAdsScreen(
             item("header") {
                 tmg.flashback.ui.components.header.Header(
                     text = stringResource(id = R.string.settings_section_ads_title),
-                    action = if (showBack) HeaderAction.BACK else null,
+                    action = if (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact) HeaderAction.BACK else null,
                     actionUpClicked = actionUpClicked
                 )
             }
@@ -73,7 +76,7 @@ fun SettingsAdsScreen(
 private fun Preview() {
     AppThemePreview {
         SettingsAdsScreen(
-            showBack = true,
+            windowSizeClass = WindowSizeClass.calculateFromSize(DpSize.Unspecified),
             actionUpClicked = {},
             prefClicked = {},
             adsEnabled = false
