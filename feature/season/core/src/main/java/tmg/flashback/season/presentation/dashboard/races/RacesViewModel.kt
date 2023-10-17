@@ -35,6 +35,7 @@ interface RacesViewModelInputs {
     fun refresh()
     fun clickTyre()
     fun clickItem(model: RacesModel)
+    fun back()
 }
 
 interface RacesViewModelOutputs {
@@ -92,6 +93,7 @@ class RacesViewModel @Inject constructor(
         val events = eventsRepository.getEvents(season).firstOrNull()
 
         if (overview == null || overview.overviewRaces.isEmpty()) {
+            navigator.clearSubNavigation()
             uiState.value = uiState.value.copy(
                 items = null,
                 isLoading = false,
@@ -119,29 +121,37 @@ class RacesViewModel @Inject constructor(
         resultsNavigationComponent.tyres(uiState.value.season)
     }
 
+    override fun back() {
+        navigator.clearSubNavigation()
+        uiState.value = uiState.value.copy(
+            currentRace = null
+        )
+    }
+
     override fun clickItem(model: RacesModel) {
         when (model) {
             is RacesModel.EmptyWeek -> {}
             is RacesModel.RaceWeek -> {
+                navigator.setSubNavigation()
                 uiState.value = uiState.value.copy(
                     currentRace = model.model
                 )
 
-                navigator.navigate(
-                    Screen.Weekend.with(
-                        weekendInfo = ScreenWeekendData(
-                            season = model.model.season,
-                            round = model.model.round,
-                            raceName = model.model.raceName,
-                            circuitId = model.model.circuitId,
-                            circuitName = model.model.circuitName,
-                            country = model.model.country,
-                            countryISO = model.model.countryISO,
-                            date = model.model.date,
-                        ),
-                        tab = model.getScreenWeekendNav()
-                    )
-                )
+//                navigator.navigate(
+//                    Screen.Weekend.with(
+//                        weekendInfo = ScreenWeekendData(
+//                            season = model.model.season,
+//                            round = model.model.round,
+//                            raceName = model.model.raceName,
+//                            circuitId = model.model.circuitId,
+//                            circuitName = model.model.circuitName,
+//                            country = model.model.country,
+//                            countryISO = model.model.countryISO,
+//                            date = model.model.date,
+//                        ),
+//                        tab = model.getScreenWeekendNav()
+//                    )
+//                )
             }
             is RacesModel.GroupedCompletedRaces -> {
                 collapseRaces = false

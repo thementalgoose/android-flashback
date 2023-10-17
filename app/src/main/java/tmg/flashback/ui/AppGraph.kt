@@ -5,7 +5,6 @@ import android.os.Parcelable
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
-import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.Modifier
@@ -41,13 +40,13 @@ import tmg.flashback.season.contract.DriverStandings
 import tmg.flashback.season.contract.Races
 import tmg.flashback.season.presentation.dashboard.constructors.ConstructorStandingsScreenVM
 import tmg.flashback.season.presentation.dashboard.drivers.DriverStandingsScreenVM
-import tmg.flashback.season.presentation.dashboard.races.RacesScreenVM
+import tmg.flashback.season.presentation.dashboard.races.RacesScreen
 import tmg.flashback.ui.settings.All
 import tmg.flashback.ui.settings.SettingsAllScreenVM
 import tmg.flashback.ui.settings.about.SettingsPrivacyScreenVM
 import tmg.flashback.weekend.contract.Weekend
 import tmg.flashback.weekend.contract.model.ScreenWeekendData
-import tmg.flashback.weekend.ui.WeekendScreenVM
+import tmg.flashback.weekend.ui.WeekendScreen
 
 @Composable
 fun AppGraph(
@@ -61,8 +60,6 @@ fun AppGraph(
     advertProvider: AdvertProvider,
     modifier: Modifier = Modifier
 ) {
-    val isCompact = windowSize.widthSizeClass == WindowWidthSizeClass.Compact
-
     NavHost(
         navController = navController,
         startDestination = Screen.Races.route,
@@ -71,7 +68,7 @@ fun AppGraph(
             .navigationBarsPadding()
     ) {
         composable(Screen.Races.route) {
-            RacesScreenVM(
+            RacesScreen(
                 actionUpClicked = openMenu,
                 windowSizeClass = windowSize
             )
@@ -111,7 +108,7 @@ fun AppGraph(
                 navArgument("data") { type = ScreenWeekendData.NavType }
         )) {
             val screenWeekendData = it.getArgument<ScreenWeekendData>("data")
-            WeekendScreenVM(
+            WeekendScreen(
                 actionUpClicked = { navController.popBackStack() },
                 windowSizeClass = windowSize,
                 weekendInfo = screenWeekendData,

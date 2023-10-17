@@ -57,31 +57,35 @@ internal fun LazyListScope.race(
     raceResultType: RaceResultType,
     showRaceType: (RaceResultType) -> Unit,
     driverClicked: (DriverEntry) -> Unit,
-    constructorClicked: (Constructor) -> Unit
+    constructorClicked: (Constructor) -> Unit,
+    itemModifier: Modifier = Modifier,
 ) {
-    item {
-        ButtonSecondarySegments(
-            modifier = Modifier
-                .padding(horizontal = AppTheme.dimens.medium)
-                .fillMaxWidth(),
-            items = RaceResultType.values().map { it.label },
-            selected = raceResultType.label,
-            onClick = { label ->
-                showRaceType(RaceResultType.values().first { it.label == label })
-            },
-            showTick = true
-        )
+    if (list.isNotEmpty()) {
+        item {
+            ButtonSecondarySegments(
+                modifier = itemModifier
+                    .padding(horizontal = AppTheme.dimens.medium)
+                    .fillMaxWidth(),
+                items = RaceResultType.values().map { it.label },
+                selected = raceResultType.label,
+                onClick = { label ->
+                    showRaceType(RaceResultType.values().first { it.label == label })
+                },
+                showTick = true
+            )
+        }
+        item {
+            RaceHeader(
+                modifier = itemModifier,
+                showPoints = true,
+                showStatus = raceResultType == RaceResultType.DRIVERS
+            )
+        }
     }
-    item {
-        RaceHeader(
-            showPoints = true,
-            showStatus = raceResultType == RaceResultType.DRIVERS
-        )
-    }
-    items(list, key = { it.id }) {
+    items(list, key = { "race-${it.id}" }) {
         when (it) {
             is RaceModel.DriverPodium -> {
-                Column(Modifier.fillMaxWidth()) {
+                Column(itemModifier.fillMaxWidth()) {
                     Result(
                         model = it.p1,
                         season = season,
@@ -101,6 +105,7 @@ internal fun LazyListScope.race(
             }
             is RaceModel.DriverResult -> {
                 Result(
+                    modifier = itemModifier,
                     model = it.result,
                     season = season,
                     driverClicked = driverClicked
@@ -108,23 +113,27 @@ internal fun LazyListScope.race(
             }
             is RaceModel.ConstructorResult -> {
                 ConstructorResult(
+                    modifier = itemModifier,
                     model = it,
                     itemClicked = constructorClicked
                 )
             }
             RaceModel.Loading -> {
-                SkeletonViewList()
+                SkeletonViewList(
+                    modifier = itemModifier
+                )
             }
             RaceModel.NotAvailable -> {
-                NotAvailable()
+                NotAvailable(
+                    modifier = itemModifier
+                )
             }
             RaceModel.NotAvailableYet -> {
-                NotAvailableYet()
+                NotAvailableYet(
+                    modifier = itemModifier
+                )
             }
         }
-    }
-    item(key = "footer") {
-        Spacer(Modifier.height(appBarHeight))
     }
 }
 

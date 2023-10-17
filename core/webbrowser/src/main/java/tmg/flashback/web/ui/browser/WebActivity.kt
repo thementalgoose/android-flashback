@@ -26,15 +26,6 @@ internal class WebActivity: BaseActivity() {
                     url = url,
                     actionUpClicked = {
                         finish()
-                    },
-                    shareClicked = {
-                        val intent = Intent(Intent.ACTION_SEND)
-                        intent.type = "text/plain"
-                        intent.putExtra(Intent.EXTRA_TEXT, it)
-                        startActivity(Intent.createChooser(intent, getString(R.string.choose_share)))
-                    },
-                    openInBrowser = {
-                        viewUrl(it)
                     }
                 )
             }

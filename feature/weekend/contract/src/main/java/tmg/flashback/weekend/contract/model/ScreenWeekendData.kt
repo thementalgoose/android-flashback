@@ -8,6 +8,7 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
+import tmg.flashback.formula1.model.OverviewRace
 import tmg.utilities.extensions.toLocalDate
 
 @Parcelize
@@ -25,6 +26,19 @@ data class ScreenWeekendData(
 
     val date: LocalDate
         get() = dateString.toLocalDate("yyyy-MM-dd")!!
+
+    constructor(
+        overviewRace: OverviewRace
+    ): this(
+        season = overviewRace.season,
+        round = overviewRace.round,
+        raceName = overviewRace.raceName,
+        circuitId = overviewRace.circuitId,
+        circuitName = overviewRace.circuitName,
+        country = overviewRace.country,
+        countryISO = overviewRace.countryISO,
+        date = overviewRace.date
+    )
 
     constructor(
         season: Int,
