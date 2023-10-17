@@ -32,24 +32,27 @@ private val trackSizeSmall = 80.dp
 fun RaceInfoHeader(
     model: ScreenWeekendData,
     modifier: Modifier = Modifier,
+    showBack: Boolean = true,
     actionUpClicked: () -> Unit = { },
     icons: @Composable RowScope.() -> Unit = { }
 ) {
     Column(modifier = modifier.padding(
         bottom = AppTheme.dimens.small
     )) {
-        Row {
-            IconButton(
-                onClick = actionUpClicked
-            ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_back),
-                    contentDescription = stringResource(id = R.string.ab_back),
-                    tint = AppTheme.colors.contentPrimary
-                )
+        if (showBack) {
+            Row {
+                IconButton(
+                    onClick = actionUpClicked
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_back),
+                        contentDescription = stringResource(id = R.string.ab_back),
+                        tint = AppTheme.colors.contentPrimary
+                    )
+                }
+                Spacer(Modifier.weight(1f))
+                icons()
             }
-            Spacer(Modifier.weight(1f))
-            icons()
         }
         Column(modifier = Modifier.padding(
             start = AppTheme.dimens.medium,
@@ -119,6 +122,19 @@ private fun PreviewCompact(
 ) {
     AppThemePreview {
         RaceInfoHeader(
+            model = race.raceInfo.toWeekendInfo()
+        )
+    }
+}
+
+@PreviewTheme
+@Composable
+private fun PreviewExpanded(
+    @PreviewParameter(RaceProvider::class) race: Race
+) {
+    AppThemePreview {
+        RaceInfoHeader(
+            showBack = false,
             model = race.raceInfo.toWeekendInfo()
         )
     }

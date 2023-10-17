@@ -131,7 +131,7 @@ class WeekendViewModel @Inject constructor(
         }
     }
 
-    private fun load(season: Int, round: Int) {
+    fun load(season: Int, round: Int) {
         val existing = seasonRound.value
         if (existing?.first != season || existing.second != round) {
             seasonRound.value = Pair(season, round)

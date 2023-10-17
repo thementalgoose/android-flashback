@@ -30,7 +30,6 @@ fun WebScreenVM(
     title: String,
     url: String,
     actionUpClicked: () -> Unit,
-    shareClicked: (url: String) -> Unit,
     viewModel: WebViewModel = hiltViewModel()
 ) {
     WebScreen(

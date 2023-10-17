@@ -27,7 +27,7 @@ abstract class BaseActivity : AppCompatActivity(), RationaleBottomSheetFragmentC
     @Inject
     protected lateinit var permissionManager: PermissionManager
     @Inject
-    private lateinit var crashManager: CrashlyticsManager
+    protected lateinit var crashManager: CrashlyticsManager
 
     private lateinit var requestPermissionLauncher: ActivityResultLauncher<Array<String>>
 

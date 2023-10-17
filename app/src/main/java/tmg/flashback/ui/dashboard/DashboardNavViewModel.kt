@@ -103,9 +103,12 @@ class DashboardNavViewModel @Inject constructor(
 
     override val showBottomBar: StateFlow<Boolean> = currentDestination
         .combinePair(navigator.subNavigation)
-        .map { (destination, _) ->
-            if (destination == null) return@map false
-            return@map destination.startsWith("results/")
+        .map { (destination, isSubNavigation) ->
+            return@map when {
+                destination == null -> false
+                destination.startsWith("results/races") -> !isSubNavigation
+                else -> destination.startsWith("results/")
+            }
         }
         .stateIn(viewModelScope, SharingStarted.Lazily, false)
 

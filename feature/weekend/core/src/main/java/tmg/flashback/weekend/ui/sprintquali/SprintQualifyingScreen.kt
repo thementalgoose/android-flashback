@@ -39,34 +39,40 @@ import tmg.utilities.extensions.ordinalAbbreviation
 private val lapTimeWidth: Dp = 64.dp
 
 internal fun LazyListScope.sprintQualifying(
+    itemModifier: Modifier = Modifier,
     driverClicked: (Driver) -> Unit,
     list: List<SprintQualifyingModel>
 ) {
     if (list.any { it.isResult }) {
         item("qheader") {
-            Spacer(Modifier.height(AppTheme.dimens.medium))
-            Header()
+            Header(
+                modifier = itemModifier
+            )
         }
     }
-    items(list, key = { it.id }) {
+    items(list, key = { "sprintquali-${it.id}" }) {
         when (it) {
             is SprintQualifyingModel.Result-> SprintQualifying(
+                modifier = itemModifier,
                 model = it,
                 driverClicked = driverClicked
             )
             SprintQualifyingModel.Loading -> {
-                SkeletonViewList()
+                SkeletonViewList(
+                    modifier = itemModifier
+                )
             }
             SprintQualifyingModel.NotAvailable -> {
-                NotAvailable()
+                NotAvailable(
+                    modifier = itemModifier
+                )
             }
             SprintQualifyingModel.NotAvailableYet -> {
-                NotAvailableYet()
+                NotAvailableYet(
+                    modifier = itemModifier
+                )
             }
         }
-    }
-    item(key = "footer") {
-        Spacer(Modifier.height(appBarHeight))
     }
 }
 

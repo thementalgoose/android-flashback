@@ -178,6 +178,9 @@ internal class RacesViewModelTest: BaseTest() {
         underTest.clickItem(expectedRaceWeek1)
         underTest.outputs.uiState.test {
             assertEquals(overview1, awaitItem().currentRace)
+
+            underTest.back()
+            assertEquals(null, awaitItem().currentRace)
         }
     }
 

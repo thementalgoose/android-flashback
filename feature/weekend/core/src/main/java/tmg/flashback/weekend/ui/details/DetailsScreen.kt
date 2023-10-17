@@ -60,6 +60,7 @@ private val weatherMetadataIconSize: Dp = 20.dp
 internal fun LazyListScope.details(
     weekendInfo: ScreenWeekendData,
     items: List<DetailsModel>,
+    showTrack: Boolean = true,
     linkClicked: (DetailsModel.Link) -> Unit
 ) {
     items(items, key = { it.id }) {
@@ -74,12 +75,11 @@ internal fun LazyListScope.details(
                 Weekend(it)
             }
             is DetailsModel.Track -> {
-                Track(it)
+                if (showTrack) {
+                    Track(it)
+                }
             }
         }
-    }
-    item(key = "footer") {
-        Spacer(Modifier.height(appBarHeight))
     }
 }
 

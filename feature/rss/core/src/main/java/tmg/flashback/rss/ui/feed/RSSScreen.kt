@@ -97,8 +97,6 @@ fun RSSScreenVM(
                 title = data.title,
                 url = data.link,
                 actionUpClicked = viewModel.inputs::back,
-                shareClicked = { },
-                openInBrowser = { }
             )
         }
     )

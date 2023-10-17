@@ -44,9 +44,13 @@ import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.header.HeaderAction
+import tmg.flashback.ui.components.layouts.MasterDetailsPane
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.now.Now
 import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
+import tmg.flashback.weekend.contract.WeekendNavigationComponent
+import tmg.flashback.weekend.contract.model.ScreenWeekendData
+import tmg.flashback.weekend.contract.requireWeekendNavigationComponent
 import tmg.utilities.extensions.format
 import tmg.utilities.extensions.startOfWeek
 
@@ -54,20 +58,36 @@ private const val listAlpha = 0.6f
 private val expandIcon = 20.dp
 
 @Composable
-fun RacesScreenVM(
+fun RacesScreen(
     actionUpClicked: () -> Unit,
     windowSizeClass: WindowSizeClass,
-    viewModel: RacesViewModel = hiltViewModel()
+    viewModel: RacesViewModel = hiltViewModel(),
+    weekendNavigationComponent: WeekendNavigationComponent = requireWeekendNavigationComponent()
 ) {
     val uiState = viewModel.outputs.uiState.collectAsState()
 
-    ScheduleScreen(
-        actionUpClicked = actionUpClicked,
+    MasterDetailsPane(
         windowSizeClass = windowSizeClass,
-        uiState = uiState.value,
-        refresh = viewModel.inputs::refresh,
-        tyreClicked = viewModel.inputs::clickTyre,
-        itemClicked = viewModel.inputs::clickItem,
+        master = {
+            ScheduleScreen(
+                actionUpClicked = actionUpClicked,
+                windowSizeClass = windowSizeClass,
+                uiState = uiState.value,
+                refresh = viewModel.inputs::refresh,
+                tyreClicked = viewModel.inputs::clickTyre,
+                itemClicked = viewModel.inputs::clickItem,
+            )
+        },
+        detailsShow = uiState.value.currentRace != null,
+        detailsActionUpClicked = viewModel.inputs::back,
+        details = {
+            val race = uiState.value.currentRace!!
+            weekendNavigationComponent.Weekend(
+                actionUpClicked = viewModel.inputs::back,
+                windowSizeClass = windowSizeClass,
+                weekendData = ScreenWeekendData(race)
+            )
+        }
     )
 }
 

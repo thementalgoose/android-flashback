@@ -4,7 +4,7 @@ import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import tmg.flashback.weekend.contract.WeekendNavigationComponent
 import tmg.flashback.weekend.contract.model.ScreenWeekendData
-import tmg.flashback.weekend.ui.WeekendScreenVM
+import tmg.flashback.weekend.ui.WeekendScreen
 import javax.inject.Inject
 
 class WeekendNavigationComponentImpl @Inject constructor(): WeekendNavigationComponent {
@@ -14,7 +14,7 @@ class WeekendNavigationComponentImpl @Inject constructor(): WeekendNavigationCom
         windowSizeClass: WindowSizeClass,
         weekendData: ScreenWeekendData
     ) {
-        WeekendScreenVM(
+        WeekendScreen(
             actionUpClicked = actionUpClicked,
             windowSizeClass = windowSizeClass,
             weekendInfo = weekendData,
