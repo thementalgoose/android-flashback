@@ -4,6 +4,7 @@ import app.cash.turbine.test
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.verify
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
@@ -186,9 +187,15 @@ internal class RSSViewModelTest: BaseTest() {
 
             underTest.clickArticle(mockArticle)
             assertEquals(mockArticle, (awaitItem() as RSSViewModel.UiState.Data).articleSelected)
+            verify {
+                mockNavigator.setSubNavigation()
+            }
 
             underTest.back()
             assertEquals(null, (awaitItem() as RSSViewModel.UiState.Data).articleSelected)
+            verify {
+                mockNavigator.clearSubNavigation()
+            }
         }
     }
 

@@ -49,6 +49,7 @@ import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextCaption
 import tmg.flashback.googleanalytics.presentation.ScreenView
+import tmg.flashback.rss.ui.configure.ConfigureRSSScreenVM
 import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.header.HeaderAction
@@ -89,15 +90,24 @@ fun RSSScreenVM(
                 )
             }
         },
-        detailsShow = (uiState.value as? RSSViewModel.UiState.Data)?.articleSelected != null,
+        detailsShow = (uiState.value as? RSSViewModel.UiState.Data)?.opened != null,
         detailsActionUpClicked = viewModel.inputs::back,
         details = {
-            val data = (uiState.value as RSSViewModel.UiState.Data).articleSelected!!
-            WebScreenVM(
-                title = data.title,
-                url = data.link,
-                actionUpClicked = viewModel.inputs::back,
-            )
+            when (val state = (uiState.value as RSSViewModel.UiState.Data).opened!!) {
+                RSSViewModel.UiStateOpened.ConfigureSources -> {
+                    ConfigureRSSScreenVM(
+                        actionUpClicked = viewModel.inputs::back,
+                        windowSizeClass = windowSizeClass
+                    )
+                }
+                is RSSViewModel.UiStateOpened.WebArticle -> {
+                    WebScreenVM(
+                        title = state.article.title,
+                        url = state.article.link,
+                        actionUpClicked = viewModel.inputs::back,
+                    )
+                }
+            }
         }
     )
 }
@@ -296,7 +306,7 @@ private fun PreviewArticle() {
             advertProvider = fakeAdvertProvider,
             uiState = RSSViewModel.UiState.Data(
                 rssItems = listOf(fakeArticle),
-                articleSelected = fakeArticle
+                opened = RSSViewModel.UiStateOpened.WebArticle(fakeArticle)
             ),
             itemClicked = {},
             configureSources = {},
@@ -314,7 +324,7 @@ private fun PreviewArticleTablet() {
             advertProvider = fakeAdvertProvider,
             uiState = RSSViewModel.UiState.Data(
                 rssItems = listOf(fakeArticle),
-                articleSelected = fakeArticle
+                opened = RSSViewModel.UiStateOpened.WebArticle(fakeArticle)
             ),
             itemClicked = {},
             configureSources = {},

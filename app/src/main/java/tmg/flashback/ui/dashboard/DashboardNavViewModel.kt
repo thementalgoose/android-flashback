@@ -92,11 +92,18 @@ class DashboardNavViewModel @Inject constructor(
 
             return@map when {
                 destination.startsWith("results/") -> !isSubNavigation
-                destination == "settings" -> true
-                destination == "rss" -> true
-                destination == "search" -> true
+                destination == "settings" -> !isSubNavigation
+                destination == "rss" -> !isSubNavigation
+                destination == "search" -> !isSubNavigation
                 else -> false
             }
+//            return@map when {
+//                destination.startsWith("results/") -> !isSubNavigation
+//                destination == "settings" -> true
+//                destination == "rss" -> true
+//                destination == "search" -> true
+//                else -> false
+//            }
         }
         .filterNotNull()
         .stateIn(viewModelScope, SharingStarted.Lazily, false)
