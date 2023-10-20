@@ -182,11 +182,11 @@ private fun RowScope.IconRow(
                 .size(iconSize)
                 .align(Alignment.CenterVertically),
             painter = painterResource(id = R.drawable.ic_status_results_sprint),
-            contentDescription = when (hasQualifying) {
+            contentDescription = when (hasSprint) {
                 true -> stringResource(id = R.string.ab_has_sprint_results)
                 false -> stringResource(id = R.string.ab_no_sprint_results)
             },
-            tint = when (hasQualifying) {
+            tint = when (hasSprint) {
                 true -> AppTheme.colors.f1ResultsFull
                 false -> AppTheme.colors.backgroundTertiary
             }
