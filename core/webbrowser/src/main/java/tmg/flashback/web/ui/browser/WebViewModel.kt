@@ -3,6 +3,7 @@ package tmg.flashback.web.ui.browser
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import tmg.flashback.web.usecases.OpenWebpageUseCase
+import tmg.flashback.web.usecases.ShareUseCase
 import javax.inject.Inject
 
 interface WebViewModelInputs {
@@ -16,7 +17,8 @@ interface WebViewModelOutputs {
 
 @HiltViewModel
 class WebViewModel @Inject constructor(
-    private val openWebpageUseCase: OpenWebpageUseCase
+    private val openWebpageUseCase: OpenWebpageUseCase,
+    private val shareUseCase: ShareUseCase
 ): ViewModel(), WebViewModelInputs, WebViewModelOutputs {
 
     val inputs: WebViewModelInputs = this
@@ -27,6 +29,6 @@ class WebViewModel @Inject constructor(
     }
 
     override fun openShare(url: String) {
-        // TODO
+        shareUseCase.shareUrl(url)
     }
 }
