@@ -124,7 +124,7 @@ fun WeekendTabScreen(
                     content = {
                         item("header") {
                             RaceInfoHeader(
-                                model = dbWeekendInfo.value ?: weekendInfo,
+                                model = weekendInfo,
                                 actionUpClicked = actionUpClicked,
                             )
                         }

@@ -4,16 +4,19 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Test
 import tmg.flashback.web.usecases.OpenWebpageUseCase
+import tmg.flashback.web.usecases.ShareUseCase
 
 internal class WebViewModelTest {
 
     private val mockOpenWebpageUseCase: OpenWebpageUseCase = mockk(relaxed = true)
+    private val mockShareUseCase: ShareUseCase = mockk(relaxed = true)
 
     private lateinit var underTest: WebViewModel
 
     private fun initUnderTest() {
         underTest = WebViewModel(
-            openWebpageUseCase = mockOpenWebpageUseCase
+            openWebpageUseCase = mockOpenWebpageUseCase,
+            shareUseCase = mockShareUseCase,
         )
     }
 
@@ -30,6 +33,8 @@ internal class WebViewModelTest {
     fun `sharing webpage calls use case`() {
         initUnderTest()
         underTest.openShare("url")
-        TODO("Not implemented yet")
+        verify {
+            mockShareUseCase.shareUrl("url")
+        }
     }
 }

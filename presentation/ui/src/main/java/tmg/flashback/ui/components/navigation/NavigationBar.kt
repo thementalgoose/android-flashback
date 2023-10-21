@@ -2,14 +2,17 @@
 
 package tmg.flashback.ui.components.navigation
 
+import android.widget.Toast
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.MarqueeAnimationMode
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -31,6 +34,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -41,6 +45,7 @@ import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody1
+import tmg.flashback.ui.bottomsheet.clickableWithoutRipple
 
 private val selectedPillWidth: Dp = 64.dp
 private val pillHeight: Dp = 32.dp
@@ -90,9 +95,15 @@ private fun Item(
         false -> Color.Transparent
     }, label = "backgroundColor")
 
+    val context = LocalContext.current
     Column(
         modifier = modifier
-            .clickable(onClick = { itemClicked(item) }),
+            .combinedClickable(
+                onClick = { itemClicked(item) },
+                onLongClick = {
+                    Toast.makeText(context, context.getString(item.label), Toast.LENGTH_LONG).show()
+                }
+            ),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Box(modifier = modifier
@@ -125,7 +136,6 @@ private fun Item(
                 maxLines = 1,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .basicMarquee(1)
                     .padding(
                         bottom = 10.dp,
                         start = 4.dp,

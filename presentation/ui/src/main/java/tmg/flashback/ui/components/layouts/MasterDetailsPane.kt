@@ -3,21 +3,26 @@
 package tmg.flashback.ui.components.layouts
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import tmg.flashback.style.AppTheme
@@ -27,6 +32,60 @@ import tmg.flashback.ui.annotations.PreviewPhone
 import tmg.flashback.ui.annotations.PreviewTablet
 import tmg.flashback.ui.components.loading.Fade
 
+//private const val MASTER_WEIGHT = 9f
+//private const val DETAIL_WEIGHT = 10f
+//
+//@Composable
+//fun MasterDetailsPane(
+//    windowSizeClass: WindowSizeClass,
+//    master: @Composable () -> Unit,
+//    detailsShow: Boolean,
+//    details: @Composable () -> Unit,
+//    detailsActionUpClicked: () -> Unit
+//) {
+//    Row(
+//        Modifier
+//            .fillMaxSize()
+//            .background(AppTheme.colors.backgroundPrimary)
+//    ) {
+//        Box(
+//            Modifier
+//                .weight(MASTER_WEIGHT)
+//                .fillMaxHeight()
+//        ) {
+//            master()
+//            if (windowSizeClass.widthSizeClass != WindowWidthSizeClass.Expanded) {
+//                Fade(visible = detailsShow) {
+//                    Box(
+//                        Modifier
+//                            .fillMaxSize()
+//                            .background(AppTheme.colors.backgroundPrimary)
+//                    )
+//                    if (detailsShow) {
+//                        details()
+//                        BackHandler(onBack = detailsActionUpClicked)
+//                    }
+//                }
+//            }
+//        }
+//        if (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Expanded && detailsShow) {
+//            Box(
+//                modifier = Modifier
+//                    .weight(DETAIL_WEIGHT)
+//                    .fillMaxHeight()
+//                    .background(AppTheme.colors.backgroundTertiary),
+//                contentAlignment = Alignment.Center
+//            ) {
+//                details()
+//                BackHandler(onBack = detailsActionUpClicked)
+//            }
+//        }
+//    }
+//}
+
+private val detailsMinWidth = 320.dp
+private const val DETAILS_RATIO = 0.58f
+
 @Composable
 fun MasterDetailsPane(
     windowSizeClass: WindowSizeClass,
@@ -35,34 +94,57 @@ fun MasterDetailsPane(
     details: @Composable () -> Unit,
     detailsActionUpClicked: () -> Unit
 ) {
-    Row(
-        Modifier
-            .fillMaxSize()
-            .background(AppTheme.colors.backgroundPrimary)
-    ) {
+    BoxWithConstraints {
+        val detailsWidth = when {
+            maxWidth <= (detailsMinWidth * 2f) -> maxWidth * 0.5f
+            maxWidth >= ((maxWidth * DETAILS_RATIO) + detailsMinWidth) -> (maxWidth * DETAILS_RATIO).coerceAtLeast(detailsMinWidth)
+            else -> maxWidth - detailsMinWidth
+        }
+        val detailsOffset = animateDpAsState(targetValue = when (detailsShow) {
+            true -> maxWidth - detailsWidth
+            false -> maxWidth
+        }, label = "mdp_offset")
+
+        println("DetailsWidth = $detailsWidth")
         Box(
             Modifier
-                .weight(1f)
+                .width(if (windowSizeClass.widthSizeClass != WindowWidthSizeClass.Expanded) maxWidth else detailsOffset.value)
                 .fillMaxHeight()
         ) {
-            if (windowSizeClass.widthSizeClass != WindowWidthSizeClass.Expanded && detailsShow) {
-                details()
-                BackHandler(onBack = detailsActionUpClicked)
-            } else {
-                master()
+            master()
+            if (windowSizeClass.widthSizeClass != WindowWidthSizeClass.Expanded) {
+                Fade(visible = detailsShow) {
+                    Box(
+                        Modifier
+                            .fillMaxSize()
+                            .background(AppTheme.colors.backgroundPrimary)
+                    )
+                    if (detailsShow) {
+                        details()
+                        BackHandler(onBack = detailsActionUpClicked)
+                    }
+                }
             }
         }
         if (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Expanded) {
             Box(
-                Modifier
-                    .weight(1f)
+                modifier = Modifier
+                    .offset(detailsOffset.value)
+                    .width(detailsWidth)
                     .fillMaxHeight()
+                    .background(AppTheme.colors.backgroundPrimary),
+                contentAlignment = Alignment.Center
             ) {
-                if (detailsShow) {
-                    Fade(visible = detailsShow) {
+                Fade(visible = detailsShow) {
+                    Box(
+                        Modifier
+                            .fillMaxSize()
+                            .background(AppTheme.colors.backgroundPrimary)
+                    )
+                    if (detailsShow) {
                         details()
+                        BackHandler(onBack = detailsActionUpClicked)
                     }
-                    BackHandler(onBack = detailsActionUpClicked)
                 }
             }
         }
