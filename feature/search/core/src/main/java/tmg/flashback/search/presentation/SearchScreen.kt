@@ -1,4 +1,4 @@
-@file:OptIn(ExperimentalLayoutApi::class)
+@file:OptIn(ExperimentalLayoutApi::class, ExperimentalComposeUiApi::class)
 
 package tmg.flashback.search.presentation
 
@@ -29,8 +29,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -112,6 +114,7 @@ internal fun SearchScreen(
 ) {
     ScreenView(screenName = "Search")
 
+    val keyboardController = LocalSoftwareKeyboardController.current
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -160,7 +163,10 @@ internal fun SearchScreen(
                             items(uiState.drivers, key = { it.id }) {
                                 SearchDriver(
                                     driver = it,
-                                    itemClicked = driverClicked
+                                    itemClicked = {
+                                        keyboardController?.hide()
+                                        driverClicked(it)
+                                    }
                                 )
                             }
                             item(key = "suffix") { Spacer(Modifier.width(AppTheme.dimens.small)) }
@@ -179,7 +185,10 @@ internal fun SearchScreen(
                             items(uiState.constructors, key = { it.id }) {
                                 SearchConstructor(
                                     constructor = it,
-                                    itemClicked = constructorClicked
+                                    itemClicked = {
+                                        keyboardController?.hide()
+                                        constructorClicked(it)
+                                    }
                                 )
                             }
                             item(key = "suffix") { Spacer(Modifier.width(AppTheme.dimens.small)) }
@@ -198,7 +207,10 @@ internal fun SearchScreen(
                             items(uiState.circuits, key = { it.id }) {
                                 SearchCircuit(
                                     circuit = it,
-                                    itemClicked = circuitClicked
+                                    itemClicked = {
+                                        keyboardController?.hide()
+                                        circuitClicked(it)
+                                    }
                                 )
                             }
                             item(key = "suffix") { Spacer(Modifier.width(AppTheme.dimens.small)) }
@@ -217,7 +229,10 @@ internal fun SearchScreen(
                             items(uiState.races, key = { "${it.season}-${it.round}" }) {
                                 SearchRaces(
                                     races = it,
-                                    itemClicked = raceClicked
+                                    itemClicked = {
+                                        keyboardController?.hide()
+                                        raceClicked(it)
+                                    }
                                 )
                             }
                             item(key = "suffix") { Spacer(Modifier.width(AppTheme.dimens.small)) }

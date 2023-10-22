@@ -29,6 +29,7 @@ import tmg.flashback.weekend.ui.WeekendNavItem.RACE
 import tmg.flashback.weekend.ui.WeekendNavItem.SCHEDULE
 import tmg.utilities.extensions.combinePair
 import tmg.utilities.extensions.toEnum
+import java.lang.ClassCastException
 import javax.inject.Inject
 
 interface WeekendViewModelInputs {
@@ -54,7 +55,14 @@ class WeekendViewModel @Inject constructor(
     val outputs: WeekendViewModelOutputs = this
 
     private val screenWeekendData: ScreenWeekendData?
-        get() = savedStateHandle[ScreenWeekend.DATA]
+        get() {
+            return try {
+                savedStateHandle.get<ScreenWeekendData>(ScreenWeekend.DATA)
+            } catch (e: ClassCastException) {
+                /* Incorrect data param */
+                null
+            }
+        }
 
     private val defaultTab: WeekendNavItem
         get() = when (savedStateHandle.get<String>(ScreenWeekend.TAB)?.toEnum<ScreenWeekendNav>()) {

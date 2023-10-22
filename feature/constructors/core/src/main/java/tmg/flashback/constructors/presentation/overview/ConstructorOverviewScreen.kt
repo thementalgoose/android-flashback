@@ -73,8 +73,6 @@ fun ConstructorOverviewScreenVM(
         analyticsConstructorId to constructorId
     ))
 
-    viewModel.inputs.setup(constructorId, constructorName)
-
     val uiState = viewModel.outputs.uiState.collectAsState()
     MasterDetailsPane(
         windowSizeClass = windowSizeClass,
