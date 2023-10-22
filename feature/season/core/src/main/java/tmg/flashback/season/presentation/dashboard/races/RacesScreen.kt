@@ -136,9 +136,15 @@ fun ScheduleScreen(
                     DashboardQuickLinks(season = uiState.season)
                 }
 
-                if (uiState.items == null) {
-                    item(key = "network") {
-                        NetworkError()
+                if (uiState.items.isNullOrEmpty()) {
+                    if (!uiState.networkAvailable) {
+                        item(key = "network") {
+                            NetworkError()
+                        }
+                    } else if (uiState.isLoading) {
+                        item(key = "loading") {
+                            SkeletonViewList()
+                        }
                     }
                 }
 
@@ -162,10 +168,6 @@ fun ScheduleScreen(
                                 itemClicked = itemClicked
                             )
                             Spacer(Modifier.height(AppTheme.dimens.xsmall))
-                        }
-
-                        RacesModel.Loading -> {
-                            SkeletonViewList()
                         }
 
                         RacesModel.AllEvents -> {

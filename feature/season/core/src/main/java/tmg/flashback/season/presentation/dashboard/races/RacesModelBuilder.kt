@@ -97,7 +97,6 @@ internal object RacesModelBuilder {
                     is RacesModel.GroupedCompletedRaces -> it.first.date.format("yyyy-MM-dd")
                     is RacesModel.Event -> it.date.format("yyyy-MM-dd")
                     is RacesModel.RaceWeek -> it.date.format("yyyy-MM-dd")
-                    RacesModel.Loading -> "0000-00-00"
                     RacesModel.AllEvents -> "0000-00-00"
                 }
             }

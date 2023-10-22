@@ -52,8 +52,4 @@ sealed class RacesModel(
     }
 
     data object AllEvents: RacesModel("all-events")
-
-    data object Loading: RacesModel(
-        key = "loading"
-    )
 }

@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
+import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.domain.repo.EventsRepository
 import tmg.flashback.domain.repo.OverviewRepository
 import tmg.flashback.domain.repo.usecases.FetchSeasonUseCase
@@ -52,6 +53,7 @@ class RacesViewModel @Inject constructor(
     private val resultsNavigationComponent: ResultsNavigationComponent,
     private val eventsRepository: EventsRepository,
     private val navigator: Navigator,
+    private val networkConnectivityManager: NetworkConnectivityManager,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), RacesViewModelInputs, RacesViewModelOutputs {
 
@@ -82,7 +84,7 @@ class RacesViewModel @Inject constructor(
             if (uiState.value.items.isNullOrEmpty() || uiState.value.items?.none { it is RacesModel.RaceWeek } == true) {
                 populate(season)
             }
-            uiState.value = uiState.value.copy(isLoading = true)
+            uiState.value = uiState.value.copy(isLoading = true, networkAvailable = networkConnectivityManager.isConnected)
             fetchSeasonUseCase.fetchSeason(season)
             populate(season)
         }
@@ -97,6 +99,7 @@ class RacesViewModel @Inject constructor(
             uiState.value = uiState.value.copy(
                 items = null,
                 isLoading = false,
+                networkAvailable = networkConnectivityManager.isConnected,
                 currentRace = null
             )
             return false
@@ -112,7 +115,8 @@ class RacesViewModel @Inject constructor(
 
         uiState.value = uiState.value.copy(
             items = raceList,
-            isLoading = false
+            isLoading = false,
+            networkAvailable = networkConnectivityManager.isConnected
         )
         return true
     }
@@ -136,29 +140,12 @@ class RacesViewModel @Inject constructor(
                 uiState.value = uiState.value.copy(
                     currentRace = model.model
                 )
-
-//                navigator.navigate(
-//                    Screen.Weekend.with(
-//                        weekendInfo = ScreenWeekendData(
-//                            season = model.model.season,
-//                            round = model.model.round,
-//                            raceName = model.model.raceName,
-//                            circuitId = model.model.circuitId,
-//                            circuitName = model.model.circuitName,
-//                            country = model.model.country,
-//                            countryISO = model.model.countryISO,
-//                            date = model.model.date,
-//                        ),
-//                        tab = model.getScreenWeekendNav()
-//                    )
-//                )
             }
             is RacesModel.GroupedCompletedRaces -> {
                 collapseRaces = false
                 viewModelScope.launch(ioDispatcher) { populate(uiState.value.season) }
             }
             is RacesModel.Event -> {}
-            RacesModel.Loading -> {}
             RacesModel.AllEvents -> {
                 resultsNavigationComponent.preseasonEvents(uiState.value.season)
             }
