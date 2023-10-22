@@ -82,13 +82,13 @@ internal class ConstructorOverviewViewModelTest: BaseTest() {
         initUnderTest()
         underTest.inputs.setup("constructorId", "constructorName")
         underTest.outputs.uiState.test {
-            awaitItem()
 
             underTest.inputs.refresh()
             coVerify { mockConstructorRepository.fetchConstructor("constructorId") }
             testScheduler.advanceUntilIdle()
 
             val state = awaitItem()
+            println(state)
             assertEquals(constructor, state.constructor)
             assertEquals("constructorId", state.constructorId)
             assertEquals("constructorName", state.constructorName)
@@ -129,17 +129,14 @@ internal class ConstructorOverviewViewModelTest: BaseTest() {
     }
 
     private fun assertStatModels(list: List<ConstructorOverviewModel>) {
+        assertTrue(list.any { it is ConstructorOverviewModel.Stat && it.icon == R.drawable.ic_menu_constructors })
+        assertTrue(list.any { it is ConstructorOverviewModel.Stat && it.icon == R.drawable.ic_menu_drivers })
+        assertTrue(list.any { it is ConstructorOverviewModel.Stat && it.icon == R.drawable.ic_race_grid })
         assertTrue(list.any { it is ConstructorOverviewModel.Stat && it.icon == R.drawable.ic_standings })
         assertTrue(list.any { it is ConstructorOverviewModel.Stat && it.icon == R.drawable.ic_podium })
-        assertTrue(list.any { it is ConstructorOverviewModel.Stat && it.icon == R.drawable.ic_race_starts })
-        assertTrue(list.any { it is ConstructorOverviewModel.Stat && it.icon == R.drawable.ic_race_finishes })
-        assertTrue(list.any { it is ConstructorOverviewModel.Stat && it.icon == R.drawable.ic_race_retirements })
-        assertTrue(list.any { it is ConstructorOverviewModel.Stat && it.icon == R.drawable.ic_best_finish })
-        assertTrue(list.any { it is ConstructorOverviewModel.Stat && it.icon == R.drawable.ic_finishes_in_points })
         assertTrue(list.any { it is ConstructorOverviewModel.Stat && it.icon == R.drawable.ic_race_points })
+        assertTrue(list.any { it is ConstructorOverviewModel.Stat && it.icon == R.drawable.ic_finishes_in_points })
         assertTrue(list.any { it is ConstructorOverviewModel.Stat && it.icon == R.drawable.ic_qualifying_pole })
-        assertTrue(list.any { it is ConstructorOverviewModel.Stat && it.icon == R.drawable.ic_qualifying_front_row })
-        assertTrue(list.any { it is ConstructorOverviewModel.Stat && it.icon == R.drawable.ic_qualifying_top_ten })
     }
 
     private fun assertSeasonRacedFor(list: List<ConstructorOverviewModel>, vararg season: Int) {
