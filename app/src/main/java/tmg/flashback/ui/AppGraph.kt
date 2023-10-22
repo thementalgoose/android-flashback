@@ -29,6 +29,7 @@ import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.flashback.navigation.asNavigationDestination
 import tmg.flashback.privacypolicy.contract.PrivacyPolicy
+import tmg.flashback.privacypolicy.presentation.PrivacyPolicyScreenVM
 import tmg.flashback.rss.contract.RSS
 import tmg.flashback.rss.ui.configure.ConfigureRSSScreenVM
 import tmg.flashback.rss.ui.feed.RSSScreenVM
@@ -95,7 +96,7 @@ fun AppGraph(
         }
 
         composable(Screen.Settings.PrivacyPolicy.route) {
-            SettingsPrivacyScreenVM(
+            PrivacyPolicyScreenVM(
                 windowSizeClass = windowSize,
                 actionUpClicked = { navController.popBackStack() }
             )
