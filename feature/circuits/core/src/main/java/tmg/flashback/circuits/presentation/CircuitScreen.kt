@@ -40,6 +40,7 @@ import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.googleanalytics.presentation.ScreenView
 import tmg.flashback.ui.components.drivers.DriverNumber
+import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.errors.NotAvailable
 import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.ui.components.header.Header
@@ -86,7 +87,7 @@ fun CircuitScreenVM(
                     actionUpClicked = actionUpClicked,
                     windowSizeClass = windowSizeClass,
                     circuitName = circuitName,
-                    list = uiState.value.list,
+                    uiState = uiState.value,
                     itemClicked = viewModel.inputs::itemClicked,
                     linkClicked = viewModel.inputs::linkClicked,
                 )
@@ -121,7 +122,7 @@ fun CircuitScreen(
     actionUpClicked: () -> Unit,
     windowSizeClass: WindowSizeClass,
     circuitName: String,
-    list: List<CircuitModel>,
+    uiState: CircuitScreenState,
     itemClicked: (CircuitModel.Item) -> Unit,
     linkClicked: (String) -> Unit
 ) {
@@ -137,7 +138,18 @@ fun CircuitScreen(
                 actionUpClicked = actionUpClicked
             )
         }
-        items(list, key = { it.id }) {
+        if (uiState.list.isEmpty()) {
+            if (!uiState.networkAvailable) {
+                item(key = "network") {
+                    NetworkError()
+                }
+            } else if (uiState.isLoading) {
+                item(key = "loading") {
+                    SkeletonViewList()
+                }
+            }
+        }
+        items(uiState.list, key = { it.id }) {
             when (it) {
                 is CircuitModel.Item -> Item(
                     model = it,
@@ -389,24 +401,28 @@ private fun Preview(
     AppThemePreview {
         CircuitScreen(
             circuitName = "Circuit Name",
-            list = listOf(
-                CircuitModel.Stats(
-                    circuitId = "circuitId",
-                    name = "name",
-                    country = "England",
-                    countryISO = "GBR",
-                    numberOfGrandPrix = 2,
-                    startYear = 2019,
-                    endYear = 2020,
-                    wikipedia = "wikipediaUrl",
-                    location = null,
-                ),
-                CircuitModel.Item(
-                    circuitId = "circuitId",
-                    circuitName = "name",
-                    country = "country",
-                    countryISO = "countryISO",
-                    race
+            uiState = CircuitScreenState(
+                circuitId = "circuitId",
+                circuitName = "circuitName",
+                list = listOf(
+                    CircuitModel.Stats(
+                        circuitId = "circuitId",
+                        name = "name",
+                        country = "England",
+                        countryISO = "GBR",
+                        numberOfGrandPrix = 2,
+                        startYear = 2019,
+                        endYear = 2020,
+                        wikipedia = "wikipediaUrl",
+                        location = null,
+                    ),
+                    CircuitModel.Item(
+                        circuitId = "circuitId",
+                        circuitName = "name",
+                        country = "country",
+                        countryISO = "countryISO",
+                        race
+                    )
                 )
             ),
             itemClicked = { },
