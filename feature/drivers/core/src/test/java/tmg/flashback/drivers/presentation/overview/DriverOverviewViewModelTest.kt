@@ -96,7 +96,7 @@ internal class DriverOverviewViewModelTest: BaseTest() {
             assertEquals(driver, state.driver)
             assertEquals("driverId", state.driverId)
             assertEquals("driverName", state.driverName)
-            assertEquals(false, state.networkAvailable)
+            assertEquals(true, state.networkAvailable)
             assertEquals(false, state.isLoading)
             assertStatModels(state.list)
             assertSeasonRacedFor(state.list, 2020)
