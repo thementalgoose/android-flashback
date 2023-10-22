@@ -11,15 +11,14 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
-import tmg.flashback.constructors.contract.ConstructorSeason
+import tmg.flashback.constructors.contract.Constructor
 import tmg.flashback.constructors.contract.with
 import tmg.flashback.domain.repo.RaceRepository
-import tmg.flashback.drivers.contract.DriverSeason
+import tmg.flashback.drivers.contract.Driver
 import tmg.flashback.drivers.contract.with
 import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.DriverEntry
 import tmg.flashback.formula1.model.Race
-import tmg.flashback.formula1.model.RaceResult
 import tmg.flashback.formula1.model.model
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
@@ -134,10 +133,9 @@ internal class RaceViewModelTest: BaseTest() {
 
         verify {
             mockNavigator.navigate(
-                Screen.DriverSeason.with(
+                Screen.Driver.with(
                     driverId = input.driver.id,
-                    driverName = input.driver.name,
-                    season = 2020
+                    driverName = input.driver.name
                 ))
         }
     }
@@ -156,10 +154,9 @@ internal class RaceViewModelTest: BaseTest() {
 
         verify {
             mockNavigator.navigate(
-                Screen.ConstructorSeason.with(
+                Screen.Constructor.with(
                     constructorId = input.id,
-                    constructorName = input.name,
-                    season = 2020
+                    constructorName = input.name
                 ))
         }
     }

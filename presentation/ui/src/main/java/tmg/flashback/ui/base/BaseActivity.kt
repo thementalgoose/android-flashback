@@ -1,12 +1,14 @@
 package tmg.flashback.ui.base
 
 import android.content.pm.PackageManager.PERMISSION_GRANTED
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.StyleRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import tmg.flashback.crashlytics.manager.CrashlyticsManager
 import tmg.flashback.device.AppPermissions
 import tmg.flashback.navigation.ActivityProvider
 import tmg.flashback.ui.managers.PermissionManager
@@ -24,6 +26,8 @@ abstract class BaseActivity : AppCompatActivity(), RationaleBottomSheetFragmentC
     lateinit var activityProvider: ActivityProvider
     @Inject
     protected lateinit var permissionManager: PermissionManager
+    @Inject
+    protected lateinit var crashManager: CrashlyticsManager
 
     private lateinit var requestPermissionLauncher: ActivityResultLauncher<Array<String>>
 
@@ -78,5 +82,10 @@ abstract class BaseActivity : AppCompatActivity(), RationaleBottomSheetFragmentC
         if (hasFocus) {
             activityProvider.onWindowFocusObtained(this)
         }
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        crashManager.log("Configuration Change")
     }
 }

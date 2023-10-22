@@ -38,6 +38,6 @@ dependencies {
     implementation project(path: ':domain:repo')
 
     // Stats
-    implementation project(path: ':feature:results:core')
-    implementation project(path: ':feature:results:contract')
+    implementation project(path: ':feature:season:core')
+    implementation project(path: ':feature:season:contract')
 }

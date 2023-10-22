@@ -14,45 +14,6 @@ data class NavigationItem(
     val isSelected: Boolean? = false,
 )
 
-data class NavigationTimelineItem(
-    val id: String,
-    val pipeType: PipeType,
-    val label: String,
-    val color: Color,
-    val isSelected: Boolean = false
-) {
-    val isFirst: Boolean
-        get() = pipeType.showTop
-
-    val isLast: Boolean
-        get() = pipeType.showBottom
-
-}
-
-internal val fakeNavigationTimelineItems: List<NavigationTimelineItem> = listOf(
-    NavigationTimelineItem(
-        id = "2022",
-        pipeType = PipeType.START,
-        label = "2022",
-        color = Color.Magenta,
-        isSelected = false
-    ),
-    NavigationTimelineItem(
-        id = "2021",
-        pipeType = PipeType.START_END,
-        label = "2021",
-        color = Color.Magenta,
-        isSelected = true
-    ),
-    NavigationTimelineItem(
-        id = "2020",
-        pipeType = PipeType.END,
-        label = "2020",
-        color = Color.Magenta,
-        isSelected = false
-    )
-)
-
 internal val fakeNavigationItems: List<NavigationItem> = listOf(
     NavigationItem(
         id = "menu",

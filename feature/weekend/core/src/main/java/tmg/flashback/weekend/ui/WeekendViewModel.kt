@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.threeten.bp.LocalDate
 import tmg.flashback.domain.repo.RaceRepository
+import tmg.flashback.domain.repo.usecases.FetchSeasonUseCase
 import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
 import tmg.flashback.formula1.model.Race
 import tmg.flashback.weekend.contract.ScreenWeekend
@@ -28,6 +29,7 @@ import tmg.flashback.weekend.ui.WeekendNavItem.RACE
 import tmg.flashback.weekend.ui.WeekendNavItem.SCHEDULE
 import tmg.utilities.extensions.combinePair
 import tmg.utilities.extensions.toEnum
+import java.lang.ClassCastException
 import javax.inject.Inject
 
 interface WeekendViewModelInputs {
@@ -44,6 +46,7 @@ interface WeekendViewModelOutputs {
 @HiltViewModel
 class WeekendViewModel @Inject constructor(
     private val raceRepository: RaceRepository,
+    private val fetchSeasonUseCase: FetchSeasonUseCase,
     private val ioDispatcher: CoroutineDispatcher,
     private val savedStateHandle: SavedStateHandle
 ): ViewModel(), WeekendViewModelInputs, WeekendViewModelOutputs {
@@ -52,7 +55,14 @@ class WeekendViewModel @Inject constructor(
     val outputs: WeekendViewModelOutputs = this
 
     private val screenWeekendData: ScreenWeekendData?
-        get() = savedStateHandle[ScreenWeekend.DATA]
+        get() {
+            return try {
+                savedStateHandle.get<ScreenWeekendData>(ScreenWeekend.DATA)
+            } catch (e: ClassCastException) {
+                /* Incorrect data param */
+                null
+            }
+        }
 
     private val defaultTab: WeekendNavItem
         get() = when (savedStateHandle.get<String>(ScreenWeekend.TAB)?.toEnum<ScreenWeekendNav>()) {
@@ -71,14 +81,14 @@ class WeekendViewModel @Inject constructor(
                 if (!raceRepository.hasntPreviouslySynced(season)) {
                     isRefreshing.value = true
                     emit(null)
-                    raceRepository.fetchRaces(season)
+                    fetchSeasonUseCase.fetchSeason(season)
                     isRefreshing.value = false
                     emit(Pair(season, round))
                 }
                 else {
                     emit(Pair(season, round))
                     isRefreshing.value = true
-                    raceRepository.fetchRaces(season)
+                    fetchSeasonUseCase.fetchSeason(season)
                     isRefreshing.value = false
                 }
             }
@@ -129,7 +139,7 @@ class WeekendViewModel @Inject constructor(
         }
     }
 
-    private fun load(season: Int, round: Int) {
+    fun load(season: Int, round: Int) {
         val existing = seasonRound.value
         if (existing?.first != season || existing.second != round) {
             seasonRound.value = Pair(season, round)
@@ -140,7 +150,7 @@ class WeekendViewModel @Inject constructor(
         seasonRound.value?.first?.let { season ->
             isRefreshing.value = true
             viewModelScope.launch(ioDispatcher) {
-                raceRepository.fetchRaces(season)
+                fetchSeasonUseCase.fetchSeason(season)
                 isRefreshing.value = false
             }
         }

@@ -11,7 +11,6 @@ import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.device.managers.TimeManager
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
-import tmg.flashback.rss.contract.RSSConfigure
 import tmg.flashback.rss.network.RssService
 import tmg.flashback.rss.repo.RssRepository
 import tmg.flashback.rss.repo.model.Article
@@ -25,7 +24,8 @@ import javax.inject.Inject
 interface RSSViewModelInputs {
     fun refresh()
     fun configure()
-    fun clickArticle(article: Article?)
+    fun back()
+    fun clickArticle(article: Article)
 }
 
 //endregion
@@ -46,7 +46,6 @@ class RSSViewModel @Inject constructor(
     private val rssRepository: RssRepository,
     private val adsRepository: AdsRepository,
     private val navigator: Navigator,
-    private val openWebpageUseCase: OpenWebpageUseCase,
     private val connectivityManager: NetworkConnectivityManager,
     private val timeManager: TimeManager
 ): ViewModel(), RSSViewModelInputs, RSSViewModelOutputs {
@@ -100,18 +99,26 @@ class RSSViewModel @Inject constructor(
     }
 
     override fun configure() {
-        navigator.navigate(Screen.Settings.RSSConfigure)
+        uiState.value = createOrUpdate {
+            this.copy(opened = UiStateOpened.ConfigureSources)
+        }
+        navigator.setSubNavigation()
     }
 
-    override fun clickArticle(article: Article?) {
+    override fun back() {
+        if (uiState.value is UiState.Data) {
+            uiState.value = createOrUpdate { this.copy(opened = null) }
+            navigator.clearSubNavigation()
+        }
+    }
+
+    override fun clickArticle(article: Article) {
         uiState.value = createOrUpdate {
             this.copy(
-                articleSelected = article
+                opened = UiStateOpened.WebArticle(article)
             )
         }
-
-        // TODO: Remove this when RSS supports split pane
-        article?.let { openWebpageUseCase.open(it.link, it.title) }
+        navigator.setSubNavigation()
     }
 
     private fun createOrUpdate(callback: UiState.Data.() -> UiState.Data): UiState.Data {
@@ -128,10 +135,15 @@ class RSSViewModel @Inject constructor(
             val lastUpdated: String? = null,
             val showAdvert: Boolean = false,
             val rssItems: List<Article> = emptyList(),
-            val articleSelected: Article? = null
+            val opened: UiStateOpened? = null,
         ): UiState()
 
         data object SourcesDisabled: UiState()
         data object NoNetwork: UiState()
+    }
+
+    sealed class UiStateOpened {
+        data class WebArticle(val article: Article): UiStateOpened()
+        data object ConfigureSources: UiStateOpened()
     }
 }

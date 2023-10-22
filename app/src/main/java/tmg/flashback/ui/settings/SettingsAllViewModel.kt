@@ -10,7 +10,6 @@ import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.navigation.ApplicationNavigationComponent
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
-import tmg.flashback.rss.contract.RSSConfigure
 import tmg.flashback.rss.repo.RssRepository
 import tmg.flashback.device.AppPermissions
 import tmg.flashback.ui.managers.PermissionManager
@@ -20,6 +19,7 @@ import javax.inject.Inject
 
 interface SettingsAllViewModelInputs {
     fun itemClicked(pref: Setting)
+    fun back()
 }
 
 interface SettingsAllViewModelOutputs {
@@ -35,7 +35,6 @@ class SettingsAllViewModel @Inject constructor(
     private val permissionRepository: PermissionRepository,
     private val permissionManager: PermissionManager,
     private val applicationNavigationComponent: ApplicationNavigationComponent,
-    private val navigator: Navigator,
 ): ViewModel(), SettingsAllViewModelInputs, SettingsAllViewModelOutputs {
 
     val inputs: SettingsAllViewModelInputs = this
@@ -52,22 +51,22 @@ class SettingsAllViewModel @Inject constructor(
     override fun itemClicked(pref: Setting) {
         when (pref.key) {
             Settings.Theme.darkMode.key -> {
-                navigator.navigate(Screen.Settings.NightMode)
+                uiState.value = uiState.value.copy(selectedSubScreen = SettingsScreen.DARK_MODE)
             }
             Settings.Theme.theme.key -> {
-                navigator.navigate(Screen.Settings.Theme)
+                uiState.value = uiState.value.copy(selectedSubScreen = SettingsScreen.THEME)
             }
             Settings.Data.layout.key -> {
-                navigator.navigate(Screen.Settings.Home)
+                uiState.value = uiState.value.copy(selectedSubScreen = SettingsScreen.LAYOUT)
             }
             Settings.Data.weather.key -> {
-                navigator.navigate(Screen.Settings.Weather)
+                uiState.value = uiState.value.copy(selectedSubScreen = SettingsScreen.WEATHER)
             }
             Settings.RSS.rss.key -> {
-                navigator.navigate(Screen.Settings.RSSConfigure)
+                uiState.value = uiState.value.copy(selectedSubScreen = SettingsScreen.RSS_CONFIGURE)
             }
             Settings.Web.inAppBrowser.key -> {
-                navigator.navigate(Screen.Settings.Web)
+                uiState.value = uiState.value.copy(selectedSubScreen = SettingsScreen.WEB_BROWSER)
             }
             Settings.Notifications.notificationResults.key -> {
                 permissionManager
@@ -84,21 +83,25 @@ class SettingsAllViewModel @Inject constructor(
                     }
             }
             Settings.Notifications.notificationUpcomingNotice.key -> {
-                navigator.navigate(Screen.Settings.NotificationsUpcomingNotice)
+                uiState.value = uiState.value.copy(selectedSubScreen = SettingsScreen.NOTIFICATIONS_TIMER)
             }
             Settings.Ads.ads.key -> {
-                navigator.navigate(Screen.Settings.Ads)
+                uiState.value = uiState.value.copy(selectedSubScreen = SettingsScreen.ADS)
             }
             Settings.Other.privacy.key -> {
-                navigator.navigate(Screen.Settings.Privacy)
+                uiState.value = uiState.value.copy(selectedSubScreen = SettingsScreen.PRIVACY)
             }
             Settings.Other.about.key -> {
-                navigator.navigate(Screen.Settings.About)
+                uiState.value = uiState.value.copy(selectedSubScreen = SettingsScreen.ABOUT)
             }
             else -> if (BuildConfig.DEBUG) {
                 throw UnsupportedOperationException("Preference with key ${pref.key} is not handled")
             }
         }
+    }
+
+    override fun back() {
+        uiState.value = uiState.value.copy(selectedSubScreen = null)
     }
 
     private val isThemeEnabled: Boolean
@@ -130,8 +133,7 @@ class SettingsAllViewModel @Inject constructor(
         WEATHER,
         RSS_CONFIGURE,
         WEB_BROWSER,
-        NOTIFICATIONS_UPCOMING,
-        NOTIFICATIONS_RESULTS,
+        NOTIFICATIONS_TIMER,
         ADS,
         PRIVACY,
         ABOUT

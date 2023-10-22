@@ -8,7 +8,8 @@ buildscript {
             "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
             "-Xopt-in=kotlinx.coroutines.ObsoleteCoroutinesApi",
             "-Xopt-in=kotlinx.coroutines.FlowPreview",
-            "-Xopt-in=kotlinx.serialization.ExperimentalSerializationApi"
+            "-Xopt-in=kotlinx.serialization.ExperimentalSerializationApi",
+            "-Xopt-in=androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi"
     ]
 
     repositories {
@@ -38,7 +39,7 @@ buildscript {
 }
 
 plugins {
-    id 'com.google.devtools.ksp' version '1.9.0-1.0.12' apply false
+    alias(libs.plugins.ksp) apply false
 }
 
 apply from: rootDir.absolutePath + "/gradle/script-dependencyreport.gradle"

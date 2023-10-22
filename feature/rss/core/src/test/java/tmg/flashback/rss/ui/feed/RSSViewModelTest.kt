@@ -4,6 +4,7 @@ import app.cash.turbine.test
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.verify
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
@@ -72,8 +73,7 @@ internal class RSSViewModelTest: BaseTest() {
             adsRepository = mockAdsRepository,
             navigator = mockNavigator,
             connectivityManager = mockConnectivityManager,
-            timeManager = mockTimeManager,
-            openWebpageUseCase = mockk(relaxed = true)
+            timeManager = mockTimeManager
         )
         underTest.refresh()
     }
@@ -175,6 +175,30 @@ internal class RSSViewModelTest: BaseTest() {
     }
 
     @Test
+    fun `clicking article then going back`() = runTest(testDispatcher) {
+        initUnderTest()
+        underTest.uiState.test {
+            assertEquals(RSSViewModel.UiState.Data(
+                lastUpdated = "01:02:03",
+                showAdvert = true,
+                rssItems = listOf(mockArticle)
+            ), awaitItem())
+
+            underTest.clickArticle(mockArticle)
+            assertEquals(RSSViewModel.UiStateOpened.WebArticle(mockArticle), (awaitItem() as RSSViewModel.UiState.Data).opened)
+            verify {
+                mockNavigator.setSubNavigation()
+            }
+
+            underTest.back()
+            assertEquals(null, (awaitItem() as RSSViewModel.UiState.Data).opened)
+            verify {
+                mockNavigator.clearSubNavigation()
+            }
+        }
+    }
+
+    @Test
     fun `clicking article sets selected article in data`() = runTest(testDispatcher) {
         initUnderTest()
         underTest.uiState.test {
@@ -191,7 +215,7 @@ internal class RSSViewModelTest: BaseTest() {
                 lastUpdated = "01:02:03",
                 showAdvert = true,
                 rssItems = listOf(mockArticle),
-                articleSelected = mockArticle
+                opened = RSSViewModel.UiStateOpened.WebArticle(mockArticle)
             ), awaitItem())
         }
     }

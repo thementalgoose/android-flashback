@@ -27,7 +27,7 @@ import tmg.flashback.domain.repo.DriverRepository
 import tmg.flashback.domain.repo.OverviewRepository
 import tmg.flashback.domain.repo.repository.CacheRepository
 import tmg.flashback.maintenance.contract.usecases.ShouldForceUpgradeUseCase
-import tmg.flashback.results.usecases.ScheduleNotificationsUseCase
+import tmg.flashback.season.usecases.ScheduleNotificationsUseCase
 import tmg.flashback.ui.sync.SyncState.DONE
 import tmg.flashback.ui.sync.SyncState.FAILED
 import tmg.flashback.ui.sync.SyncState.LOADING

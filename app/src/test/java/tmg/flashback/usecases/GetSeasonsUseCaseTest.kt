@@ -4,7 +4,7 @@ import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import tmg.flashback.results.repository.HomeRepository
+import tmg.flashback.season.repository.HomeRepository
 
 
 internal class GetSeasonsUseCaseTest {
