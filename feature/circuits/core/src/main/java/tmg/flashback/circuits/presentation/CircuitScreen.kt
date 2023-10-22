@@ -44,8 +44,12 @@ import tmg.flashback.ui.components.errors.NotAvailable
 import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.header.HeaderAction
+import tmg.flashback.ui.components.layouts.MasterDetailsPane
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
+import tmg.flashback.weekend.contract.WeekendNavigationComponent
+import tmg.flashback.weekend.contract.model.ScreenWeekendData
+import tmg.flashback.weekend.contract.requireWeekendNavigationComponent
 import tmg.utilities.extensions.ordinalAbbreviation
 
 private val trackImageSize: Dp = 180.dp
@@ -62,26 +66,54 @@ fun CircuitScreenVM(
     windowSizeClass: WindowSizeClass,
     circuitId: String,
     circuitName: String,
-    viewModel: CircuitViewModel = hiltViewModel()
+    viewModel: CircuitViewModel = hiltViewModel(),
+    weekendNavigationComponent: WeekendNavigationComponent = requireWeekendNavigationComponent()
 ) {
     ScreenView(screenName = "Circuit Overview", args = mapOf(
         analyticsCircuitId to circuitId
     ))
 
     val uiState = viewModel.outputs.uiState.collectAsState()
-    SwipeRefresh(
-        isLoading = uiState.value.isLoading,
-        onRefresh = viewModel.inputs::refresh
-    ) {
-        CircuitScreen(
-            actionUpClicked = actionUpClicked,
-            windowSizeClass = windowSizeClass,
-            circuitName = circuitName,
-            list = uiState.value.list,
-            itemClicked = viewModel.inputs::itemClicked,
-            linkClicked = viewModel.inputs::linkClicked,
-        )
-    }
+
+    MasterDetailsPane(
+        windowSizeClass = windowSizeClass,
+        master = {
+            SwipeRefresh(
+                isLoading = uiState.value.isLoading,
+                onRefresh = viewModel.inputs::refresh
+            ) {
+                CircuitScreen(
+                    actionUpClicked = actionUpClicked,
+                    windowSizeClass = windowSizeClass,
+                    circuitName = circuitName,
+                    list = uiState.value.list,
+                    itemClicked = viewModel.inputs::itemClicked,
+                    linkClicked = viewModel.inputs::linkClicked,
+                )
+            }
+        },
+        detailsShow = uiState.value.selectedRace != null && uiState.value.circuit != null,
+        detailsActionUpClicked = viewModel.inputs::back,
+        details = {
+            val selectedRace = uiState.value.selectedRace!!
+            val circuit = uiState.value.circuit!!
+            weekendNavigationComponent.Weekend(
+                actionUpClicked = viewModel.inputs::back,
+                windowSizeClass = windowSizeClass,
+                weekendData = ScreenWeekendData(
+                    season = selectedRace.season,
+                    round = selectedRace.round,
+                    raceName = selectedRace.name,
+                    circuitId = circuit.id,
+                    circuitName = circuit.name,
+                    country = circuit.country,
+                    countryISO = circuit.countryISO,
+                    date = selectedRace.date
+                )
+            )
+        }
+    )
+
 }
 
 @Composable
@@ -115,12 +147,6 @@ fun CircuitScreen(
                     model = it,
                     linkClicked = linkClicked
                 )
-//                CircuitModel.Error -> {
-//                    NotAvailable()
-//                }
-//                CircuitModel.Loading -> {
-//                    SkeletonViewList()
-//                }
             }
         }
     })
@@ -249,52 +275,6 @@ private fun Stats(
             }
         }
 
-    }
-}
-
-@Composable
-private fun Link(
-    @DrawableRes
-    icon: Int,
-    @StringRes
-    label: Int,
-    url: String,
-    linkClicked: (String) -> Unit,
-    modifier: Modifier = Modifier
-) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier
-            .fillMaxWidth()
-            .clickable(
-                onClick = { linkClicked(url) }
-            )
-            .padding(
-                vertical = AppTheme.dimens.small,
-                horizontal = AppTheme.dimens.medium
-            )
-    ) {
-        Icon(
-            painter = painterResource(id = icon),
-            contentDescription = null,
-            modifier = Modifier.size(24.dp),
-            tint = AppTheme.colors.contentSecondary
-        )
-        Spacer(Modifier.width(AppTheme.dimens.small))
-        TextBody1(
-            bold = true,
-            modifier = Modifier.weight(1f),
-            text = stringResource(id = label)
-        )
-        Spacer(Modifier.width(AppTheme.dimens.small))
-        Icon(
-            painter = painterResource(id = R.drawable.arrow_more),
-            contentDescription = null,
-            modifier = Modifier
-                .size(24.dp)
-                .alpha(0.4f),
-            tint = AppTheme.colors.contentTertiary
-        )
     }
 }
 
