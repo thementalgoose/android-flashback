@@ -14,6 +14,8 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
+import tmg.flashback.ads.ads.repository.AdsRepository
+import tmg.flashback.ads.ads.repository.model.AdvertConfig
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.domain.repo.EventsRepository
 import tmg.flashback.domain.repo.OverviewRepository
@@ -39,6 +41,7 @@ internal class RacesViewModelTest: BaseTest() {
     private val mockResultsNavigationComponent: ResultsNavigationComponent = mockk(relaxed = true)
     private val mockHomeRepository: HomeRepository = mockk(relaxed = true)
     private val mockNavigator: Navigator = mockk(relaxed = true)
+    private val mockAdvertRepository: AdsRepository = mockk(relaxed = true)
     private val mockNetworkConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
 
     private lateinit var underTest: RacesViewModel
@@ -54,6 +57,7 @@ internal class RacesViewModelTest: BaseTest() {
             eventsRepository = mockEventsRepository,
             navigator = mockNavigator,
             networkConnectivityManager = mockNetworkConnectivityManager,
+            adsRepository = mockAdvertRepository,
             ioDispatcher = coroutineScope.testDispatcher
         )
     }
@@ -83,6 +87,7 @@ internal class RacesViewModelTest: BaseTest() {
                 overviewRaces = listOf(overview5)
             ))
         }
+        every { mockAdvertRepository.advertConfig } returns AdvertConfig(onHomeScreen = false)
         every { mockHomeRepository.collapseList } returns false
         every { mockEventsRepository.getEvents(any()) } returns flow { emit(emptyList()) }
         every { mockNotificationRepository.notificationSchedule } returns fakeNotificationSchedule

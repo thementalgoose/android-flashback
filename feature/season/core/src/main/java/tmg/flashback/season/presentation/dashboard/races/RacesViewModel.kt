@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
+import tmg.flashback.ads.ads.repository.AdsRepository
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.domain.repo.EventsRepository
 import tmg.flashback.domain.repo.OverviewRepository
@@ -54,6 +55,7 @@ class RacesViewModel @Inject constructor(
     private val eventsRepository: EventsRepository,
     private val navigator: Navigator,
     private val networkConnectivityManager: NetworkConnectivityManager,
+    private val adsRepository: AdsRepository,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), RacesViewModelInputs, RacesViewModelOutputs {
 
@@ -61,7 +63,8 @@ class RacesViewModel @Inject constructor(
     val outputs: RacesViewModelOutputs = this
 
     override val uiState: MutableStateFlow<RacesScreenState> = MutableStateFlow(RacesScreenState(
-        season = currentSeasonHolder.currentSeason
+        season = currentSeasonHolder.currentSeason,
+        showAdvert = adsRepository.areAdvertsEnabled && adsRepository.advertConfig.onHomeScreen
     ))
 
     private var collapseRaces: Boolean = homeRepository.collapseList
