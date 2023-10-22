@@ -254,13 +254,13 @@ fun DashboardScreen(
                             .weight(1f)
                             .background(AppTheme.colors.backgroundContainer)
                         ) {
-                            if (windowSize.widthSizeClass != WindowWidthSizeClass.Compact) {
-                                Box(
-                                    Modifier
-                                        .width(1.dp)
-                                        .fillMaxHeight()
-                                        .background(AppTheme.colors.backgroundSecondary.copy(alpha = 0.5f)))
-                            }
+//                            if (windowSize.widthSizeClass != WindowWidthSizeClass.Compact) {
+//                                Box(
+//                                    Modifier
+//                                        .width(1.dp)
+//                                        .fillMaxHeight()
+//                                        .background(AppTheme.colors.backgroundSecondary.copy(alpha = 0.5f)))
+//                            }
                             AppGraph(
                                 modifier = Modifier
                                     .weight(1f)

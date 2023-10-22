@@ -1,10 +1,12 @@
 package tmg.flashback.season.presentation.dashboard.drivers
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -90,6 +92,9 @@ internal fun DriverStandingsScreen(
                 onRefresh = refresh
             ) {
                 LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(AppTheme.colors.backgroundPrimary),
                     content = {
                         item(key = "header") {
                             Header(
@@ -131,7 +136,6 @@ internal fun DriverStandingsScreen(
                         }
                         item(key = "footer") {
                             ProvidedBy()
-//                            Spacer(Modifier.height(appBarHeight))
                         }
                     }
                 )

@@ -3,6 +3,7 @@ package tmg.flashback.style.badge
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -57,7 +58,12 @@ fun BadgeView(
 ) {
     Row(modifier = modifier
         .clip(RoundedCornerShape(AppTheme.dimens.radiusSmall))
-        .background(AppTheme.colors.backgroundTertiary)
+        .background(AppTheme.colors.backgroundSecondary)
+        .border(
+            1.dp,
+            color = AppTheme.colors.backgroundTertiary.copy(alpha = 0.35f),
+            shape = RoundedCornerShape(AppTheme.dimens.radiusSmall)
+        )
         .padding(
             horizontal = AppTheme.dimens.small,
             vertical = AppTheme.dimens.xsmall

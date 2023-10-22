@@ -5,6 +5,7 @@ import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.FlingBehavior
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -95,12 +96,10 @@ fun DashboardMenuExpandedScreen(
         .width(width.value)
         .fillMaxHeight()
         .shadow(8.dp)
-        .background(AppTheme.colors.backgroundContainer)
-        .padding(
-            vertical = AppTheme.dimens.small
-        )
+        .background(AppTheme.colors.backgroundPrimary)
         .snow(easterEggSnow)
     ) {
+        Spacer(Modifier.height(AppTheme.dimens.small))
         HeroItem(
             menuIcons = easterEggTitleIcon,
             onClick = when (lockExpanded) {
@@ -204,7 +203,7 @@ private fun NavigationItem(
 ) {
     val backgroundColor = animateColorAsState(targetValue = when (item.isSelected) {
         true -> AppTheme.colors.primary.copy(alpha = 0.2f)
-        else -> AppTheme.colors.backgroundContainer
+        else -> Color.Transparent
     }, label = "navItem-backgroundColor")
     val iconPadding = animateDpAsState(targetValue = when (isExpanded) {
         true -> AppTheme.dimens.medium
@@ -391,7 +390,7 @@ private fun HeroItem(
             .height(heroSize)
             .fillMaxWidth()
             .clip(RoundedCornerShape(AppTheme.dimens.radiusMedium))
-            .background(AppTheme.colors.backgroundContainer)
+            .background(Color.Transparent)
             .clickable(
                 enabled = onClick != null,
                 onClick = {
