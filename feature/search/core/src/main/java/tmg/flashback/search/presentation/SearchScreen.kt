@@ -55,36 +55,46 @@ import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.header.HeaderAction
 import tmg.flashback.ui.components.layouts.MasterDetailsPane
+import tmg.flashback.weekend.contract.WeekendNavigationComponent
+import tmg.flashback.weekend.contract.model.ScreenWeekendData
+import tmg.flashback.weekend.contract.requireWeekendNavigationComponent
 
 @Composable
 fun SearchScreenVM(
     actionUpClicked: () -> Unit,
     windowSizeClass: WindowSizeClass,
     viewModel: SearchViewModel = hiltViewModel(),
+    weekendNavigationComponent: WeekendNavigationComponent = requireWeekendNavigationComponent()
 ) {
     val uiState = viewModel.outputs.uiState.collectAsState()
 
-    SearchScreen(
-        actionUpClicked = actionUpClicked,
+    MasterDetailsPane(
         windowSizeClass = windowSizeClass,
-        uiState = uiState.value,
-        driverClicked = viewModel.inputs::clickDriver,
-        constructorClicked = viewModel.inputs::clickConstructor,
-        circuitClicked = viewModel.inputs::clickCircuit,
-        raceClicked = viewModel.inputs::clickRace,
-        searchTermUpdated = viewModel.inputs::search,
-        clear = viewModel.inputs::searchClear,
-        refresh = viewModel.inputs::refresh
+        master = {
+            SearchScreen(
+                actionUpClicked = actionUpClicked,
+                windowSizeClass = windowSizeClass,
+                uiState = uiState.value,
+                driverClicked = viewModel.inputs::clickDriver,
+                constructorClicked = viewModel.inputs::clickConstructor,
+                circuitClicked = viewModel.inputs::clickCircuit,
+                raceClicked = viewModel.inputs::clickRace,
+                searchTermUpdated = viewModel.inputs::search,
+                clear = viewModel.inputs::searchClear,
+                refresh = viewModel.inputs::refresh
+            )
+        },
+        detailsShow = uiState.value.selected != null,
+        detailsActionUpClicked = viewModel.inputs::back,
+        details = {
+            val race = uiState.value.selected!!
+            weekendNavigationComponent.Weekend(
+                actionUpClicked = viewModel.inputs::back,
+                windowSizeClass = windowSizeClass,
+                weekendData = ScreenWeekendData(race)
+            )
+        }
     )
-//    MasterDetailsPane(
-//        windowSizeClass = windowSizeClass,
-//        master = {
-//        },
-//        detailsShow = uiState.value.selected != null,
-//        details = {
-//
-//        }
-//    )
 }
 
 @Composable
