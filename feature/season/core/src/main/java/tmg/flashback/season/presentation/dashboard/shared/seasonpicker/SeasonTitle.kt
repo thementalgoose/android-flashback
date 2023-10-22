@@ -76,9 +76,7 @@ fun SeasonTitle(
             )
             DropdownMenu(
                 offset = DpOffset(AppTheme.dimens.medium, 0.dp),
-                modifier = Modifier
-                    .background(AppTheme.colors.backgroundContainer)
-                    .offset(y = AppTheme.dimens.large),
+                modifier = Modifier.background(AppTheme.colors.backgroundContainer),
                 expanded = expanded.value,
                 onDismissRequest = { expanded.value = false },
                 content = {
