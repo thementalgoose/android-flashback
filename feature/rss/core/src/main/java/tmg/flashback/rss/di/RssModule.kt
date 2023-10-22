@@ -4,6 +4,8 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import tmg.flashback.rss.RssNavigationComponentImpl
+import tmg.flashback.rss.contract.RSSNavigationComponent
 import tmg.flashback.rss.contract.usecases.RSSAppShortcutUseCase
 import tmg.flashback.rss.usecases.RSSAppShortcutUseCaseImpl
 
@@ -13,4 +15,7 @@ internal abstract class RssModule {
 
     @Binds
     abstract fun bindsRssAppShortcutUseCase(impl: RSSAppShortcutUseCaseImpl): RSSAppShortcutUseCase
+
+    @Binds
+    abstract fun bindRssNavigationComponent(impl: RssNavigationComponentImpl): RSSNavigationComponent
 }

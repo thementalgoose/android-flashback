@@ -57,8 +57,6 @@ fun NavigationColumn(
     list: List<NavigationItem>,
     itemClicked: (NavigationItem) -> Unit,
     modifier: Modifier = Modifier,
-    timelineItemClicked: (NavigationTimelineItem) -> Unit = {},
-    timelineList: List<NavigationTimelineItem> = emptyList(),
     lockExpanded: Boolean = false,
     contentHeader: @Composable ColumnScope.() -> Unit = {}
 ) {
@@ -66,7 +64,7 @@ fun NavigationColumn(
     val width = animateDpAsState(targetValue = when (expanded.value) {
         true -> columnWidthExpanded
         false -> columnWidthCollapsed
-    })
+    }, label = "width")
 
     Column(modifier = modifier
         .width(width.value)
@@ -95,25 +93,6 @@ fun NavigationColumn(
                         onClick = itemClicked,
                     )
                     Spacer(Modifier.height(AppTheme.dimens.small))
-                }
-                if (timelineList.isNotEmpty()) {
-                    item {
-                        Divider(
-                            modifier = Modifier.padding(horizontal = AppTheme.dimens.medium),
-                            color = AppTheme.colors.backgroundTertiary
-                        )
-                        Spacer(modifier = Modifier.height(AppTheme.dimens.small))
-                    }
-                    items(timelineList) {
-                        NavigationTimelineItem(
-                            item = it,
-                            isExpanded = expanded.value,
-                            onClick = timelineItemClicked
-                        )
-                    }
-                    item {
-                        Spacer(modifier = Modifier.height(AppTheme.dimens.medium))
-                    }
                 }
                 item {
                     Spacer(modifier = Modifier.height(AppTheme.dimens.small))
@@ -146,11 +125,11 @@ private fun NavigationItem(
     val backgroundColor = animateColorAsState(targetValue = when (item.isSelected) {
         true -> AppTheme.colors.primary.copy(alpha = 0.2f)
         else -> AppTheme.colors.backgroundNav
-    })
+    }, label = "backgroundColor")
     val iconPadding = animateDpAsState(targetValue = when (isExpanded) {
         true -> AppTheme.dimens.medium
         false -> (itemSize - iconSize) / 2
-    })
+    }, label = "iconPadding")
 
     Row(modifier = modifier
         .padding(
@@ -190,138 +169,6 @@ private fun NavigationItem(
     }
 }
 
-@Composable
-private fun NavigationTimelineItem(
-    item: NavigationTimelineItem,
-    isExpanded: Boolean,
-    onClick: ((NavigationTimelineItem) -> Unit)?,
-    modifier: Modifier = Modifier
-) {
-    val backgroundColor = animateColorAsState(targetValue = when (item.isSelected) {
-        true -> AppTheme.colors.primary.copy(alpha = 0.2f)
-        else -> AppTheme.colors.backgroundNav
-    })
-    val iconPadding = animateDpAsState(targetValue = when (isExpanded) {
-        true -> AppTheme.dimens.medium
-        false -> (itemSize - iconSize) / 2
-    })
-
-    Row(modifier = modifier
-        .padding(
-            horizontal = (columnWidthCollapsed - itemSize) / 2
-        )
-        .fillMaxWidth()
-        .height(itemSize)
-        .clip(RoundedCornerShape(AppTheme.dimens.radiusMedium))
-        .background(backgroundColor.value)
-        .clickable(
-            enabled = onClick != null,
-            onClick = {
-                onClick?.invoke(item)
-            }
-        )
-        .padding(
-            horizontal = iconPadding.value,
-        )
-    ) {
-        Box(Modifier.fillMaxHeight()) {
-            Column(
-                Modifier
-                    .fillMaxHeight()
-                    .width(8.dp)
-                    .align(Alignment.Center)
-            ) {
-                Box(
-                    Modifier
-                        .fillMaxWidth()
-                        .weight(1f)
-                        .padding(bottom = (iconSize / 2f) - 2.dp)
-                        .background(
-                            when (item.pipeType) {
-                                PipeType.SINGLE -> Color.Transparent
-                                PipeType.START -> Color.Transparent
-                                PipeType.START_END -> item.color
-                                PipeType.SINGLE_PIPE -> Color.Transparent
-                                PipeType.END -> item.color
-                            }
-                        )
-                )
-                Box(
-                    Modifier
-                        .fillMaxWidth()
-                        .weight(1f)
-                        .padding(top = (iconSize / 2f) - 2.dp)
-                        .background(
-                            when (item.pipeType) {
-                                PipeType.SINGLE -> Color.Transparent
-                                PipeType.START -> item.color
-                                PipeType.START_END -> item.color
-                                PipeType.SINGLE_PIPE -> Color.Transparent
-                                PipeType.END -> Color.Transparent
-                            }
-                        )
-                )
-            }
-            if (item.isSelected) {
-                Box(
-                    Modifier
-                        .size(iconSize)
-                        .align(Alignment.Center)
-                        .clip(CircleShape)
-                        .background(item.color)
-                )
-            } else {
-                Donut(
-                    color = item.color,
-                    modifier = Modifier
-                        .size(iconSize)
-                        .align(Alignment.Center)
-                )
-            }
-        }
-        if (isExpanded) {
-            TextBody1(
-                modifier = Modifier
-                    .padding(start = AppTheme.dimens.small)
-                    .align(Alignment.CenterVertically)
-                    .fillMaxWidth(),
-                text = item.label
-            )
-        }
-    }
-}
-
-@Composable
-fun Donut(
-    modifier: Modifier = Modifier,
-    color: Color,
-) {
-    Surface(modifier = modifier,
-        color = color,
-        shape = object : Shape {
-            override fun createOutline(
-                size: Size,
-                layoutDirection: LayoutDirection,
-                density: Density
-            ): Outline {
-                val thickness = size.height / 4
-                val p1 = Path().apply {
-                    addOval(Rect(0f, 0f, size.width - 1, size.height - 1))
-                }
-                val p2 = Path().apply {
-                    addOval(Rect(thickness,
-                        thickness,
-                        size.width - 1 - thickness,
-                        size.height - 1 - thickness))
-                }
-                val p3 = Path()
-                p3.op(p1, p2, PathOperation.Difference)
-                return Outline.Generic(p3)
-            }
-        }
-    ) {}
-}
-
 @PreviewTheme
 @Composable
 private fun PreviewCompact() {
@@ -336,37 +183,11 @@ private fun PreviewCompact() {
 
 @PreviewTheme
 @Composable
-private fun PreviewCompactTimeline() {
-    AppThemePreview {
-        NavigationColumn(
-            lockExpanded = false,
-            itemClicked = { },
-            timelineList = fakeNavigationTimelineItems,
-            list = fakeNavigationItems
-        )
-    }
-}
-
-@PreviewTheme
-@Composable
 private fun PreviewExpanded() {
     AppThemePreview {
         NavigationColumn(
             lockExpanded = true,
             itemClicked = { },
-            list = fakeNavigationItems
-        )
-    }
-}
-
-@PreviewTheme
-@Composable
-private fun PreviewExpandedTimeline() {
-    AppThemePreview {
-        NavigationColumn(
-            lockExpanded = true,
-            itemClicked = { },
-            timelineList = fakeNavigationTimelineItems,
             list = fakeNavigationItems
         )
     }

@@ -37,6 +37,15 @@ import kotlin.math.roundToInt
 
 @Composable
 fun ProgressBar(
+    points: Double,
+    maxPoints: Double,
+    barColor: Color,
+) {
+    TODO("Utilise this for progress bar wrapping and coercing")
+}
+
+@Composable
+fun ProgressBar(
     endProgress: Float,
     label: (Float) -> String,
     modifier: Modifier = Modifier,

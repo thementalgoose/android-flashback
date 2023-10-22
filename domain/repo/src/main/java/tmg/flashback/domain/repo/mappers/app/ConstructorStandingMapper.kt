@@ -15,9 +15,9 @@ class ConstructorStandingMapper @Inject constructor(
     fun mapConstructorStanding(list: List<ConstructorStandingWithDrivers>): SeasonConstructorStandings? {
         if (list.isEmpty()) return null
         return SeasonConstructorStandings(
-            standings = list.map {
-                mapConstructorStanding(it)
-            }
+            standings = list
+                .map { mapConstructorStanding(it) }
+                .sortedBy { it.championshipPosition ?: Int.MAX_VALUE }
         )
     }
 

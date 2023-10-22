@@ -1,7 +1,7 @@
 package tmg.flashback.ui.dashboard
 
 import android.os.Bundle
-import androidx.compose.ui.graphics.Color
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
@@ -12,6 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -19,28 +20,22 @@ import kotlinx.coroutines.launch
 import tmg.flashback.crashlytics.manager.CrashlyticsManager
 import tmg.flashback.debug.DebugNavigationComponent
 import tmg.flashback.debug.model.DebugMenuItem
-import tmg.flashback.formula1.constants.Formula1
 import tmg.flashback.navigation.ApplicationNavigationComponent
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
-import tmg.flashback.results.Calendar
-import tmg.flashback.results.Constructors
-import tmg.flashback.results.Drivers
-import tmg.flashback.results.usecases.DefaultSeasonUseCase
-import tmg.flashback.results.with
 import tmg.flashback.rss.contract.RSS
 import tmg.flashback.rss.repo.RssRepository
 import tmg.flashback.search.contract.Search
-import tmg.flashback.ui.components.navigation.NavigationTimelineItem
-import tmg.flashback.ui.components.navigation.PipeType
+import tmg.flashback.season.contract.ConstructorsStandings
+import tmg.flashback.season.contract.DriverStandings
+import tmg.flashback.season.contract.Races
 import tmg.flashback.ui.settings.All
 import tmg.flashback.usecases.DashboardSyncUseCase
-import tmg.flashback.usecases.GetSeasonsUseCase
+import tmg.utilities.extensions.combinePair
 import javax.inject.Inject
 
 interface DashboardNavViewModelInputs {
     fun clickItem(navigationItem: MenuItem)
-    fun clickSeason(season: Int)
     fun clickDebug(debugMenuItem: DebugMenuItem)
 }
 
@@ -52,31 +47,22 @@ interface DashboardNavViewModelOutputs {
 
     val showBottomBar: StateFlow<Boolean>
     val showMenu: StateFlow<Boolean>
-
-    val seasonsItemsList: StateFlow<List<NavigationTimelineItem>>
-    val currentlySelectedSeason: StateFlow<Int>
-
-    val defaultSeason: Int
 }
 
 @HiltViewModel
 class DashboardNavViewModel @Inject constructor(
     private val rssRepository: RssRepository,
-    private val defaultSeasonUseCase: DefaultSeasonUseCase,
     private val navigator: Navigator,
-    private val getSeasonUseCase: GetSeasonsUseCase,
     private val applicationNavigationComponent: ApplicationNavigationComponent,
     private val crashlyticsManager: CrashlyticsManager,
     private val dashboardSyncUseCase: DashboardSyncUseCase,
     private val debugNavigationComponent: DebugNavigationComponent,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+    ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), DashboardNavViewModelInputs, DashboardNavViewModelOutputs,
     NavController.OnDestinationChangedListener {
 
     val inputs: DashboardNavViewModelInputs = this
     val outputs: DashboardNavViewModelOutputs = this
-
-    override val defaultSeason: Int = defaultSeasonUseCase.defaultSeason
 
     private val currentDestination: MutableStateFlow<String?> = MutableStateFlow(null)
 
@@ -84,9 +70,9 @@ class DashboardNavViewModel @Inject constructor(
         .map { destination ->
             if (destination == null) return@map null
             val item: MenuItem? = when {
-                destination.startsWith("results/calendar/") -> MenuItem.Calendar
-                destination.startsWith("results/drivers/") -> MenuItem.Drivers
-                destination.startsWith("results/constructors/") -> MenuItem.Constructors
+                destination.startsWith("results/races") -> MenuItem.Calendar
+                destination.startsWith("results/drivers") -> MenuItem.Drivers
+                destination.startsWith("results/constructors") -> MenuItem.Constructors
                 destination.startsWith("settings") -> MenuItem.Settings
                 destination.startsWith("rss") -> MenuItem.RSS
                 destination.startsWith("search") -> MenuItem.Search
@@ -98,36 +84,44 @@ class DashboardNavViewModel @Inject constructor(
         .stateIn(viewModelScope, SharingStarted.Lazily, MenuItem.Calendar)
 
     override val showMenu: StateFlow<Boolean> = currentDestination
-        .map { destination ->
+        .combinePair(navigator.subNavigation)
+        .map { (destination, isSubNavigation) ->
             if (destination == null) return@map null
 
+            Log.i("DashboardNav", "showMenu updating $destination with sub navigation $isSubNavigation")
+
             return@map when {
-                destination.startsWith("results/") -> true
-                destination == "settings" -> true
-                destination == "rss" -> true
-                destination == "search" -> true
+                destination.startsWith("results/") -> !isSubNavigation
+                destination == "settings" -> !isSubNavigation
+                destination == "rss" -> !isSubNavigation
+                destination == "search" -> !isSubNavigation
                 else -> false
             }
+//            return@map when {
+//                destination.startsWith("results/") -> !isSubNavigation
+//                destination == "settings" -> true
+//                destination == "rss" -> true
+//                destination == "search" -> true
+//                else -> false
+//            }
         }
         .filterNotNull()
         .stateIn(viewModelScope, SharingStarted.Lazily, false)
 
     override val showBottomBar: StateFlow<Boolean> = currentDestination
-        .map {
-            if (it == null) return@map false
-            return@map it.startsWith("results/")
+        .combinePair(navigator.subNavigation)
+        .map { (destination, isSubNavigation) ->
+            return@map when {
+                destination == null -> false
+                destination.startsWith("results/races") -> !isSubNavigation
+                else -> destination.startsWith("results/")
+            }
         }
         .stateIn(viewModelScope, SharingStarted.Lazily, false)
 
     override val appFeatureItemsList: MutableStateFlow<List<MenuItem>> = MutableStateFlow(emptyList())
     override val seasonScreenItemsList: MutableStateFlow<List<MenuItem>> = MutableStateFlow(emptyList())
     override val debugMenuItems: MutableStateFlow<List<DebugMenuItem>> = MutableStateFlow(debugNavigationComponent.getDebugMenuItems())
-
-    override val currentlySelectedSeason: MutableStateFlow<Int> = MutableStateFlow(defaultSeasonUseCase.defaultSeason)
-
-    override val seasonsItemsList: StateFlow<List<NavigationTimelineItem>> = currentlySelectedSeason
-        .map { season -> getSeasons(season) }
-        .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
     init {
         initialiseItems()
@@ -152,54 +146,16 @@ class DashboardNavViewModel @Inject constructor(
         appFeatureItemsList.value = side
     }
 
-    override fun clickSeason(season: Int) {
-        currentlySelectedSeason.value = season
-        val current = currentlySelectedItem.value
-        when (current) {
-            MenuItem.Calendar -> navigator.navigate(Screen.Calendar.with(season))
-            MenuItem.Constructors -> navigator.navigate(Screen.Constructors.with(season))
-            MenuItem.Drivers -> navigator.navigate(Screen.Drivers.with(season))
-            else -> { /* Do nothing */ }
-        }
-
-    }
-
     override fun clickItem(navigationItem: MenuItem) {
-        val currentSeason = currentlySelectedSeason.value
-
         when (navigationItem) {
-            MenuItem.Calendar -> navigator.navigate(Screen.Calendar.with(currentSeason ?: defaultSeasonUseCase.defaultSeason))
-            MenuItem.Drivers -> navigator.navigate(Screen.Drivers.with(currentSeason ?: defaultSeasonUseCase.defaultSeason))
-            MenuItem.Constructors -> navigator.navigate(Screen.Constructors.with(currentSeason ?: defaultSeasonUseCase.defaultSeason))
+            MenuItem.Calendar -> navigator.navigate(Screen.Races)
+            MenuItem.Drivers -> navigator.navigate(Screen.DriverStandings)
+            MenuItem.Constructors -> navigator.navigate(Screen.ConstructorsStandings)
             MenuItem.Contact -> applicationNavigationComponent.aboutApp()
             MenuItem.RSS -> navigator.navigate(Screen.RSS)
             MenuItem.Search -> navigator.navigate(Screen.Search)
             MenuItem.Settings -> navigator.navigate(Screen.Settings.All)
         }
-    }
-
-    private fun getSeasons(selectedSeason: Int? = null): List<NavigationTimelineItem> {
-        val allSeasons = getSeasonUseCase.get()
-        val seasons = allSeasons
-            .keys
-            .sortedDescending()
-
-        return seasons
-            .mapIndexed { index, it ->
-                val (isFirst, isLast) = allSeasons[it]!!
-                NavigationTimelineItem(
-                    color = Formula1.decadeColours["${it.toString().substring(0, 3)}0"] ?: Color.Gray,
-                    label = it.toString(),
-                    id = it.toString(),
-                    isSelected = selectedSeason == it,
-                    pipeType = when {
-                        isFirst.value && isLast.value -> PipeType.SINGLE
-                        isFirst.value && !isLast.value -> PipeType.START
-                        !isFirst.value && isLast.value -> PipeType.END
-                        else -> PipeType.START_END
-                    }
-                )
-            }
     }
 
     override fun clickDebug(debugMenuItem: DebugMenuItem) {

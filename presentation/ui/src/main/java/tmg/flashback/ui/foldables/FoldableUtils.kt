@@ -1,5 +1,7 @@
 package tmg.flashback.ui.foldables
 
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
@@ -24,6 +26,9 @@ fun WindowLayoutInfo.getFoldingConfig(): FoldingConfig? {
         state = foldingFeature.state
     )
 }
+
+val WindowSizeClass.isWidthExpanded: Boolean
+    get() = this.widthSizeClass == WindowWidthSizeClass.Expanded
 
 data class FoldingConfig(
     val overrideWidth: Dp?,

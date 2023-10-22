@@ -23,13 +23,13 @@ class OpenWebpageUseCase @Inject constructor(
     private val firebaseAnalyticsManager: FirebaseAnalyticsManager,
     private val activityProvider: ActivityProvider,
 ) {
-    fun open(url: String, title: String) {
+    fun open(url: String, title: String, forceExternal: Boolean = false) {
         activityProvider.launch {
-            open(activity = it, url = url, title = title)
+            open(activity = it, url = url, title = title, forceExternal = forceExternal)
         }
     }
 
-    fun open(activity: Activity, url: String, title: String) {
+    fun open(activity: Activity, url: String, title: String, forceExternal: Boolean = false) {
         firebaseAnalyticsManager.logEvent("Opening URL", mapOf(
             "url" to url,
             "title" to title
@@ -50,7 +50,7 @@ class OpenWebpageUseCase @Inject constructor(
                     activity.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
                 }
             }
-            webBrowserRepository.openInExternal && URLUtil.isValidUrl(url) -> {
+            forceExternal || (webBrowserRepository.openInExternal && URLUtil.isValidUrl(url)) -> {
                 tryOpen(activity, url) {
                     activity.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
                 }

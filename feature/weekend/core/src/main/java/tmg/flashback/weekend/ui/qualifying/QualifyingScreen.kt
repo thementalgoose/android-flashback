@@ -42,102 +42,68 @@ import tmg.utilities.extensions.ordinalAbbreviation
 
 private val lapTimeWidth: Dp = 64.dp
 
-@Composable
-fun QualifyingScreenVM(
-    info: ScreenWeekendData,
-    actionUpClicked: () -> Unit,
-    viewModel: QualifyingViewModel = hiltViewModel()
-) {
-    viewModel.inputs.load(
-        season = info.season,
-        round = info.round
-    )
-
-    val qualifying = viewModel.outputs.list.collectAsState(listOf(QualifyingModel.Loading))
-    val qualifyingHeader = viewModel.outputs.headersToShow.collectAsState(
-        QualifyingHeader(
-            first = false,
-            second = false,
-            third = false
-        )
-    )
-    QualifyingScreen(
-        info = info,
-        actionUpClicked = actionUpClicked,
-        driverClicked = viewModel.inputs::clickDriver,
-        list = qualifying.value,
-        header = qualifyingHeader.value,
-    )
-}
-
-@Composable
-fun QualifyingScreen(
-    info: ScreenWeekendData,
-    actionUpClicked: () -> Unit,
-    driverClicked: (Driver) -> Unit,
-    list: List<QualifyingModel>,
-    header: QualifyingHeader
-) {
-    LazyColumn(
-        modifier = Modifier.fillMaxWidth(),
-        content = {
-            item("header") {
-                RaceInfoHeader(
-                    model = info,
-                    actionUpClicked = actionUpClicked
-                )
-            }
-            this.qualifying(
-                driverClicked = driverClicked,
-                list = list,
-                header = header,
-            )
-        }
-    )
-}
-
 internal fun LazyListScope.qualifying(
     driverClicked: (Driver) -> Unit,
     list: List<QualifyingModel>,
-    header: QualifyingHeader
+    header: QualifyingHeader,
+    itemModifier: Modifier = Modifier,
 ) {
     if (list.any { it.isResult }) {
         item("qheader") {
-            Spacer(Modifier.height(AppTheme.dimens.medium))
             Header(
+                modifier = itemModifier,
                 showQ1 = header.first,
                 showQ2 = header.second,
                 showQ3 = header.third,
             )
         }
     }
-    items(list, key = { it.id }) {
-        when (it) {
-            is QualifyingModel.Q1 -> Qualifying(
-                model = it,
-                driverClicked = driverClicked
-            )
-            is QualifyingModel.Q1Q2 -> Qualifying(
-                model = it,
-                driverClicked = driverClicked
-            )
-            is QualifyingModel.Q1Q2Q3 -> Qualifying(
-                model = it,
-                driverClicked = driverClicked
-            )
-            QualifyingModel.Loading -> {
-                SkeletonViewList()
-            }
-            QualifyingModel.NotAvailable -> {
-                NotAvailable()
-            }
-            QualifyingModel.NotAvailableYet -> {
-                NotAvailableYet()
-            }
-        }
+    items(list, key = { "qualifying-${it.id}" }) {
+        Render(
+            modifier = itemModifier,
+            model = it,
+            driverClicked = driverClicked
+        )
     }
-    item(key = "footer") {
-        Spacer(Modifier.height(appBarHeight))
+}
+
+@Composable
+private fun Render(
+    modifier: Modifier = Modifier,
+    model: QualifyingModel,
+    driverClicked: (Driver) -> Unit
+) {
+    when (model) {
+        is QualifyingModel.Q1 -> Qualifying(
+            modifier = modifier,
+            model = model,
+            driverClicked = driverClicked
+        )
+        is QualifyingModel.Q1Q2 -> Qualifying(
+            modifier = modifier,
+            model = model,
+            driverClicked = driverClicked
+        )
+        is QualifyingModel.Q1Q2Q3 -> Qualifying(
+            modifier = modifier,
+            model = model,
+            driverClicked = driverClicked
+        )
+        QualifyingModel.Loading -> {
+            SkeletonViewList(
+                modifier = modifier
+            )
+        }
+        QualifyingModel.NotAvailable -> {
+            NotAvailable(
+                modifier = modifier
+            )
+        }
+        QualifyingModel.NotAvailableYet -> {
+            NotAvailableYet(
+                modifier = modifier
+            )
+        }
     }
 }
 
@@ -377,33 +343,5 @@ private fun Time(
         )
     }
 }
-
-@PreviewTheme
-@Composable
-private fun Preview(
-    @PreviewParameter(DriverConstructorProvider::class) driverConstructor: DriverEntry
-) {
-    AppThemePreview {
-        QualifyingScreen(
-            info = fakeWeekendInfo,
-            actionUpClicked = { },
-            driverClicked = { },
-            list = listOf(
-                fakeQualifyingModel(driverConstructor)
-            ),
-            header = QualifyingHeader(true, true, true)
-        )
-    }
-}
-
-private fun fakeQualifyingModel(driverConstructor: DriverEntry) = QualifyingModel.Q1Q2Q3(
-    driver = driverConstructor,
-    finalQualifyingPosition = 1,
-    q1 = QualifyingResult(driverConstructor, lapTime = LapTime(92382), position = 1),
-    q2 = QualifyingResult(driverConstructor, lapTime = LapTime(92293), position = 1),
-    q3 = QualifyingResult(driverConstructor, lapTime = LapTime(91934), position = 1),
-    grid = 1,
-    sprintRaceGrid = null
-)
 
 private enum class QualifyingColumn { Q1, Q2, Q3 }

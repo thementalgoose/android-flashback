@@ -29,9 +29,9 @@ import tmg.flashback.notifications.managers.SystemNotificationManager
 import tmg.flashback.notifications.usecases.RemoteNotificationSubscribeUseCase
 import tmg.flashback.notifications.usecases.RemoteNotificationUnsubscribeUseCase
 import tmg.flashback.repositories.ContactRepository
-import tmg.flashback.results.contract.repository.NotificationsRepository
-import tmg.flashback.results.contract.repository.models.NotificationResultsAvailable
-import tmg.flashback.results.contract.repository.models.NotificationUpcoming
+import tmg.flashback.season.contract.repository.NotificationsRepository
+import tmg.flashback.season.contract.repository.models.NotificationResultsAvailable
+import tmg.flashback.season.contract.repository.models.NotificationUpcoming
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.SupportedTheme
 import tmg.flashback.ui.model.NightMode

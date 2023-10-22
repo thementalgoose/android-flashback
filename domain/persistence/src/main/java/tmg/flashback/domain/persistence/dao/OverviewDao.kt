@@ -14,7 +14,7 @@ interface OverviewDao {
 
     @Transaction
     @Query("SELECT * FROM overview WHERE season = :season")
-    fun getOverview(season: Int): Flow<List<OverviewWithCircuit?>>
+    fun getOverview(season: Int): Flow<List<OverviewWithCircuit>>
 
     @Transaction
     @Query("SELECT * FROM overview")

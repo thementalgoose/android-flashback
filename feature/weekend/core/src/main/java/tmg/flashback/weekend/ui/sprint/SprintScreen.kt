@@ -66,30 +66,35 @@ internal fun LazyListScope.sprint(
     showSprintType: (SprintResultType) -> Unit,
     driverClicked: (DriverEntry) -> Unit,
     constructorClicked: (Constructor) -> Unit,
+    itemModifier: Modifier = Modifier
 ) {
-    item {
-        ButtonSecondarySegments(
-            modifier = Modifier
-                .padding(horizontal = AppTheme.dimens.medium)
-                .fillMaxWidth(),
-            items = SprintResultType.values().map { it.label },
-            selected = sprintResultType.label,
-            onClick = { label ->
-                showSprintType(SprintResultType.values().first { it.label == label })
-            },
-            showTick = true
-        )
+    if (list.isNotEmpty()) {
+        item {
+            ButtonSecondarySegments(
+                modifier = itemModifier
+                    .padding(horizontal = AppTheme.dimens.medium)
+                    .fillMaxWidth(),
+                items = SprintResultType.values().map { it.label },
+                selected = sprintResultType.label,
+                onClick = { label ->
+                    showSprintType(SprintResultType.values().first { it.label == label })
+                },
+                showTick = true
+            )
+        }
+        item {
+            RaceHeader(
+                modifier = itemModifier,
+                showPoints = true,
+                showStatus = sprintResultType == SprintResultType.DRIVERS
+            )
+        }
     }
-    item {
-        RaceHeader(
-            showPoints = true,
-            showStatus = sprintResultType == SprintResultType.DRIVERS
-        )
-    }
-    items(list, key = { it.id }) {
+    items(list, key = { "sprint-${it.id}" }) {
         when (it) {
             is SprintModel.DriverResult -> {
                 DriverResult(
+                    modifier = itemModifier,
                     model = it.result,
                     season = season,
                     driverClicked = driverClicked
@@ -97,24 +102,27 @@ internal fun LazyListScope.sprint(
             }
             is SprintModel.ConstructorResult -> {
                 ConstructorResult(
+                    modifier = itemModifier,
                     model = it,
                     constructorClicked = constructorClicked
                 )
             }
             SprintModel.Loading -> {
-                SkeletonViewList()
+                SkeletonViewList(
+                    modifier = itemModifier
+                )
             }
             SprintModel.NotAvailable -> {
-                NotAvailable()
+                NotAvailable(
+                    modifier = itemModifier
+                )
             }
             SprintModel.NotAvailableYet -> {
-                NotAvailableYet()
+                NotAvailableYet(
+                    modifier = itemModifier
+                )
             }
-
         }
-    }
-    item(key = "footer") {
-        Spacer(Modifier.height(appBarHeight))
     }
 }
 

@@ -52,12 +52,12 @@ fun BadgesView(
 @Composable
 fun BadgeView(
     model: Badge,
+    modifier: Modifier = Modifier,
     tintIcon: Color? = AppTheme.colors.contentPrimary,
-    modifier: Modifier = Modifier
 ) {
     Row(modifier = modifier
         .clip(RoundedCornerShape(AppTheme.dimens.radiusSmall))
-        .background(AppTheme.colors.backgroundSecondary)
+        .background(AppTheme.colors.backgroundTertiary)
         .padding(
             horizontal = AppTheme.dimens.small,
             vertical = AppTheme.dimens.xsmall

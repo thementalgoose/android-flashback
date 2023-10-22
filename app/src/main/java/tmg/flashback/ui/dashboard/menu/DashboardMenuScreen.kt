@@ -5,10 +5,8 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -32,7 +30,6 @@ import tmg.flashback.R
 import tmg.flashback.debug.model.DebugMenuItem
 import tmg.flashback.eastereggs.model.MenuIcons
 import tmg.flashback.eastereggs.ui.snow
-import tmg.flashback.formula1.constants.Formula1
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
@@ -40,10 +37,6 @@ import tmg.flashback.style.input.InputSwitch
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextSection
-import tmg.flashback.ui.components.navigation.NavigationTimelineItem
-import tmg.flashback.ui.components.navigation.PipeType
-import tmg.flashback.ui.components.now.Now
-import tmg.flashback.ui.components.timeline.Timeline
 import tmg.flashback.ui.dashboard.FeaturePrompt
 import tmg.flashback.ui.dashboard.MenuItem
 
@@ -60,8 +53,6 @@ fun DashboardMenuScreen(
     darkModeClicked: (Boolean) -> Unit,
     featurePromptList: List<FeaturePrompt>,
     featurePromptClicked: (FeaturePrompt) -> Unit,
-    seasonItemsList: List<NavigationTimelineItem>,
-    seasonClicked: (Int) -> Unit,
     appVersion: String,
     easterEggSnow: Boolean,
     easterEggTitleIcon: MenuIcons?,
@@ -155,59 +146,12 @@ fun DashboardMenuScreen(
                     Divider()
                 }
             }
-            item(key = "label2") { SubHeader(text = stringResource(id = R.string.dashboard_all_title)) }
-            items(seasonItemsList, key = { "season-$it" }) {
-                TimelineItem(
-                    model = it,
-                    seasonClicked = { season ->
-                        seasonClicked(season)
-                        closeMenu()
-                    }
-                )
-            }
             item(key = "appversion") {
                 Label(msg = stringResource(id = R.string.app_version_placeholder, appVersion))
             }
         }
     )
 }
-
-@Composable
-private fun TimelineItem(
-    model: NavigationTimelineItem,
-    seasonClicked: (Int) -> Unit,
-) {
-    val season = model.id.toInt()
-    Row(modifier = Modifier
-        .height(IntrinsicSize.Min)
-        .clickable(onClick = {
-            seasonClicked(season)
-        })
-    ) {
-        Box(modifier = Modifier
-            .width(AppTheme.dimens.medium)
-            .fillMaxHeight()
-        ) {
-            if (season == Formula1.currentSeasonYear) {
-                Now(Modifier.align(Alignment.Center))
-            }
-        }
-        Timeline(
-            timelineColor = model.color,
-            isEnabled = model.isSelected,
-            showTop = model.isFirst,
-            showBottom = model.isLast,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(
-                    end = AppTheme.dimens.medium
-                )
-        ) {
-            TextBody1(text = model.label, bold = true)
-        }
-    }
-}
-
 
 @Composable
 private fun SubHeader(
@@ -376,8 +320,6 @@ private fun Preview() {
             darkModeClicked = { },
             featurePromptList = listOf(FeaturePrompt.RuntimeNotifications),
             featurePromptClicked = { },
-            seasonItemsList = fakeNavigationTimelineItems,
-            seasonClicked = { },
             appVersion = "version",
             easterEggSnow = false,
             easterEggTitleIcon = null,
@@ -385,27 +327,3 @@ private fun Preview() {
         )
     }
 }
-
-private val fakeNavigationTimelineItems: List<NavigationTimelineItem> = listOf(
-    NavigationTimelineItem(
-        id = "2022",
-        pipeType = PipeType.START,
-        label = "2022",
-        color = Color.Magenta,
-        isSelected = false
-    ),
-    NavigationTimelineItem(
-        id = "2021",
-        pipeType = PipeType.START_END,
-        label = "2021",
-        color = Color.Magenta,
-        isSelected = true
-    ),
-    NavigationTimelineItem(
-        id = "2020",
-        pipeType = PipeType.END,
-        label = "2020",
-        color = Color.Magenta,
-        isSelected = false
-    )
-)

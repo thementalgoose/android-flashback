@@ -43,7 +43,7 @@ import tmg.flashback.style.buttons.ButtonSecondary
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextTitle
-import tmg.flashback.ui.components.navigation.appBarHeight
+import tmg.flashback.ui.components.layouts.edgeFade
 import tmg.flashback.weekend.R
 import tmg.flashback.weekend.contract.model.ScreenWeekendData
 import tmg.flashback.weekend.ui.toWeekendInfo
@@ -60,6 +60,7 @@ private val weatherMetadataIconSize: Dp = 20.dp
 internal fun LazyListScope.details(
     weekendInfo: ScreenWeekendData,
     items: List<DetailsModel>,
+    showTrack: Boolean = true,
     linkClicked: (DetailsModel.Link) -> Unit
 ) {
     items(items, key = { it.id }) {
@@ -74,12 +75,11 @@ internal fun LazyListScope.details(
                 Weekend(it)
             }
             is DetailsModel.Track -> {
-                Track(it)
+                if (showTrack) {
+                    Track(it)
+                }
             }
         }
-    }
-    item(key = "footer") {
-        Spacer(Modifier.height(appBarHeight))
     }
 }
 
@@ -131,6 +131,7 @@ private fun Links(
     modifier: Modifier = Modifier
 ) {
     Row(modifier = modifier
+        .edgeFade()
         .horizontalScroll(rememberScrollState())
         .padding(horizontal = AppTheme.dimens.medium)
     ) {
@@ -189,7 +190,9 @@ private fun Weekend(
         )
 
         LazyRow(
-            modifier = modifier.padding(bottom = AppTheme.dimens.small),
+            modifier = modifier
+                .padding(bottom = AppTheme.dimens.small)
+                .edgeFade(),
             state = scrollState,
             content = {
                 items(model.days) { (date, list) ->
@@ -216,7 +219,6 @@ private fun Weekend(
                             }
                         }
                     }
-
                 }
             }
         )

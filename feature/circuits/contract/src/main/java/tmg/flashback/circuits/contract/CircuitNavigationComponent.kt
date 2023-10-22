@@ -1,5 +1,7 @@
 package tmg.flashback.circuits.contract
 
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
+import androidx.compose.runtime.Composable
 import kotlinx.serialization.json.Json
 import tmg.flashback.circuits.contract.model.ScreenCircuitData
 import tmg.flashback.navigation.NavigationDestination
@@ -15,3 +17,14 @@ fun ScreenCircuit.with(
     this@with.route
         .replace("{data}", Json.encodeToString(ScreenCircuitData.serializer(), ScreenCircuitData(circuitId, circuitName)))
 )
+
+interface CircuitNavigationComponent {
+
+    @Composable
+    fun CircuitScreen(
+        actionUpClicked: () -> Unit,
+        windowSizeClass: WindowSizeClass,
+        circuitId: String,
+        circuitName: String
+    )
+}

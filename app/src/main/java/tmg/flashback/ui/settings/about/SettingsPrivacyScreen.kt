@@ -3,10 +3,13 @@ package tmg.flashback.ui.settings.about
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.DpSize
 import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.R
 import tmg.flashback.style.AppTheme
@@ -23,8 +26,8 @@ import tmg.flashback.ui.settings.Settings
 
 @Composable
 fun SettingsPrivacyScreenVM(
-    showBack: Boolean = true,
     actionUpClicked: () -> Unit = { },
+    windowSizeClass: WindowSizeClass,
     viewModel: SettingsPrivacyViewModel = hiltViewModel()
 ) {
     ScreenView(screenName = "Settings - Privacy")
@@ -33,8 +36,8 @@ fun SettingsPrivacyScreenVM(
     val analyticsEnabled = viewModel.outputs.analyticsEnabled.collectAsState(false)
 
     SettingsPrivacyScreen(
-        showBack = showBack,
         actionUpClicked = actionUpClicked,
+        windowSizeClass = windowSizeClass,
         prefClicked = viewModel.inputs::prefClicked,
         crashReportingEnabled = crashReportingEnabled.value,
         analyticsEnabled = analyticsEnabled.value
@@ -43,8 +46,8 @@ fun SettingsPrivacyScreenVM(
 
 @Composable
 fun SettingsPrivacyScreen(
-    showBack: Boolean,
     actionUpClicked: () -> Unit,
+    windowSizeClass: WindowSizeClass,
     prefClicked: (Setting) -> Unit,
     crashReportingEnabled: Boolean,
     analyticsEnabled: Boolean
@@ -57,7 +60,7 @@ fun SettingsPrivacyScreen(
             item("header") {
                 tmg.flashback.ui.components.header.Header(
                     text = stringResource(id = R.string.settings_section_privacy_title),
-                    action = if (showBack) HeaderAction.BACK else null,
+                    action = if (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact) HeaderAction.BACK else null,
                     actionUpClicked = actionUpClicked
                 )
             }
@@ -87,7 +90,7 @@ fun SettingsPrivacyScreen(
 private fun Preview() {
     AppThemePreview {
         SettingsPrivacyScreen(
-            showBack = true,
+            windowSizeClass = WindowSizeClass.calculateFromSize(DpSize.Unspecified),
             actionUpClicked = {},
             prefClicked = {},
             crashReportingEnabled = true,

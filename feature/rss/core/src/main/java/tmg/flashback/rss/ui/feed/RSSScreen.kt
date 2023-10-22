@@ -20,6 +20,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
@@ -30,6 +31,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.graphics.toColorInt
@@ -47,21 +49,23 @@ import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextCaption
 import tmg.flashback.googleanalytics.presentation.ScreenView
+import tmg.flashback.rss.ui.configure.ConfigureRSSScreenVM
 import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.header.HeaderAction
+import tmg.flashback.ui.components.layouts.MasterDetailsPane
 import tmg.flashback.ui.components.messages.Message
 import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
+import tmg.flashback.web.ui.browser.WebScreenVM
 import tmg.utilities.extensions.fromHtml
 
 private val badgeSize: Dp = 40.dp
 
 @Composable
 fun RSSScreenVM(
-    windowSizeClass: WindowSizeClass,
-    showMenu: Boolean = true,
-    advertProvider: AdvertProvider,
     actionUpClicked: () -> Unit,
+    windowSizeClass: WindowSizeClass,
+    advertProvider: AdvertProvider,
     viewModel: RSSViewModel = hiltViewModel()
 ) {
     ScreenView(screenName = "RSS")
@@ -69,29 +73,53 @@ fun RSSScreenVM(
     val uiState = viewModel.outputs.uiState.collectAsState()
     val isLoading = viewModel.outputs.isLoading.collectAsState(false)
 
-    SwipeRefresh(
-        isLoading = isLoading.value,
-        onRefresh = viewModel.inputs::refresh
-    ) {
-        RSSScreen(
-            showMenu = showMenu,
-            advertProvider = advertProvider,
-            uiState = uiState.value,
-            itemClicked = viewModel.inputs::clickArticle,
-            configureSources = viewModel.inputs::configure,
-            actionUpClicked = actionUpClicked
-        )
-    }
+    MasterDetailsPane(
+        windowSizeClass = windowSizeClass,
+        master = {
+            SwipeRefresh(
+                isLoading = isLoading.value,
+                onRefresh = viewModel.inputs::refresh
+            ) {
+                RSSScreen(
+                    actionUpClicked = actionUpClicked,
+                    windowSizeClass = windowSizeClass,
+                    advertProvider = advertProvider,
+                    uiState = uiState.value,
+                    itemClicked = viewModel.inputs::clickArticle,
+                    configureSources = viewModel.inputs::configure,
+                )
+            }
+        },
+        detailsShow = (uiState.value as? RSSViewModel.UiState.Data)?.opened != null,
+        detailsActionUpClicked = viewModel.inputs::back,
+        details = {
+            when (val state = (uiState.value as RSSViewModel.UiState.Data).opened!!) {
+                RSSViewModel.UiStateOpened.ConfigureSources -> {
+                    ConfigureRSSScreenVM(
+                        actionUpClicked = viewModel.inputs::back,
+                        windowSizeClass = windowSizeClass
+                    )
+                }
+                is RSSViewModel.UiStateOpened.WebArticle -> {
+                    WebScreenVM(
+                        title = state.article.title,
+                        url = state.article.link,
+                        actionUpClicked = viewModel.inputs::back,
+                    )
+                }
+            }
+        }
+    )
 }
 
 @Composable
 fun RSSScreen(
-    showMenu: Boolean,
+    actionUpClicked: () -> Unit,
+    windowSizeClass: WindowSizeClass,
     advertProvider: AdvertProvider,
     uiState: RSSViewModel.UiState,
     itemClicked: (Article) -> Unit,
     configureSources: () -> Unit,
-    actionUpClicked: () -> Unit
 ) {
     LazyColumn(
         modifier = Modifier
@@ -101,7 +129,7 @@ fun RSSScreen(
             item("header") {
                 Header(
                     text = stringResource(id = R.string.title_rss),
-                    action = if (showMenu) HeaderAction.MENU else null,
+                    action = if (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact) HeaderAction.MENU else null,
                     overrideIcons = {
                         IconButton(onClick = configureSources) {
                             Icon(
@@ -257,7 +285,7 @@ private fun SourcesDisabled(
 private fun Preview() {
     AppThemePreview {
         RSSScreen(
-            showMenu = true,
+            windowSizeClass = WindowSizeClass.calculateFromSize(DpSize.Unspecified),
             advertProvider = fakeAdvertProvider,
             uiState = RSSViewModel.UiState.Data(
                 rssItems = listOf(fakeArticle)
@@ -274,11 +302,11 @@ private fun Preview() {
 private fun PreviewArticle() {
     AppThemePreview {
         RSSScreen(
-            showMenu = true,
+            windowSizeClass = WindowSizeClass.calculateFromSize(DpSize.Unspecified),
             advertProvider = fakeAdvertProvider,
             uiState = RSSViewModel.UiState.Data(
                 rssItems = listOf(fakeArticle),
-                articleSelected = fakeArticle
+                opened = RSSViewModel.UiStateOpened.WebArticle(fakeArticle)
             ),
             itemClicked = {},
             configureSources = {},
@@ -292,11 +320,11 @@ private fun PreviewArticle() {
 private fun PreviewArticleTablet() {
     AppThemePreview {
         RSSScreen(
-            showMenu = false,
+            windowSizeClass = WindowSizeClass.calculateFromSize(DpSize.Unspecified),
             advertProvider = fakeAdvertProvider,
             uiState = RSSViewModel.UiState.Data(
                 rssItems = listOf(fakeArticle),
-                articleSelected = fakeArticle
+                opened = RSSViewModel.UiStateOpened.WebArticle(fakeArticle)
             ),
             itemClicked = {},
             configureSources = {},
