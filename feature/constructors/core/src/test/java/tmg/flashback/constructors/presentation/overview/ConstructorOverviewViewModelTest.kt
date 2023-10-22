@@ -82,6 +82,7 @@ internal class ConstructorOverviewViewModelTest: BaseTest() {
         initUnderTest()
         underTest.inputs.setup("constructorId", "constructorName")
         underTest.outputs.uiState.test {
+            awaitItem()
 
             underTest.inputs.refresh()
             coVerify { mockConstructorRepository.fetchConstructor("constructorId") }
