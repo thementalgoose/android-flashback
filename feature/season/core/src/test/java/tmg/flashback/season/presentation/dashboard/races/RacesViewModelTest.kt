@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
+import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.domain.repo.EventsRepository
 import tmg.flashback.domain.repo.OverviewRepository
 import tmg.flashback.domain.repo.usecases.FetchSeasonUseCase
@@ -38,6 +39,7 @@ internal class RacesViewModelTest: BaseTest() {
     private val mockResultsNavigationComponent: ResultsNavigationComponent = mockk(relaxed = true)
     private val mockHomeRepository: HomeRepository = mockk(relaxed = true)
     private val mockNavigator: Navigator = mockk(relaxed = true)
+    private val mockNetworkConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
 
     private lateinit var underTest: RacesViewModel
 
@@ -51,6 +53,7 @@ internal class RacesViewModelTest: BaseTest() {
             resultsNavigationComponent = mockResultsNavigationComponent,
             eventsRepository = mockEventsRepository,
             navigator = mockNavigator,
+            networkConnectivityManager = mockNetworkConnectivityManager,
             ioDispatcher = coroutineScope.testDispatcher
         )
     }

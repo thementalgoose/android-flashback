@@ -40,10 +40,12 @@ import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextTitle
 import tmg.flashback.ui.components.constructorIndicator
 import tmg.flashback.ui.components.drivers.DriverIcon
+import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.header.HeaderAction
 import tmg.flashback.ui.components.layouts.MasterDetailsPane
+import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.navigation.appBarHeight
 import tmg.flashback.ui.components.progressbar.ProgressBar
 import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
@@ -107,6 +109,17 @@ internal fun DriverStandingsScreen(
                                     message = stringResource(id = R.string.results_accurate_for, raceName, round),
                                     showLink = false
                                 )
+                            }
+                        }
+                        if (uiState.standings.isNullOrEmpty()) {
+                            if (!uiState.networkAvailable) {
+                                item(key = "network") {
+                                    NetworkError()
+                                }
+                            } else if (uiState.isLoading) {
+                                item(key = "loading") {
+                                    SkeletonViewList()
+                                }
                             }
                         }
                         items(uiState.standings, key = { "driver=${it.driver.id}" }) {

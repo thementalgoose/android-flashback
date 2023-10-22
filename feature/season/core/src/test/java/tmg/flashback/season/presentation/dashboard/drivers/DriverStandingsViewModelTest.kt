@@ -14,6 +14,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.domain.repo.SeasonRepository
 import tmg.flashback.domain.repo.usecases.FetchSeasonUseCase
 import tmg.flashback.formula1.model.Driver
@@ -30,6 +31,7 @@ internal class DriverStandingsViewModelTest: BaseTest() {
     private val mockSeasonRepository: SeasonRepository = mockk(relaxed = true)
     private val mockCurrentSeasonHolder: CurrentSeasonHolder = mockk(relaxed = true)
     private val mockFetchSeasonsUseCase: FetchSeasonUseCase = mockk(relaxed = true)
+    private val mockNetworkConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
 
     private lateinit var underTest: DriverStandingsViewModel
 
@@ -38,6 +40,7 @@ internal class DriverStandingsViewModelTest: BaseTest() {
             seasonRepository = mockSeasonRepository,
             fetchSeasonUseCase = mockFetchSeasonsUseCase,
             currentSeasonHolder = mockCurrentSeasonHolder,
+            networkConnectivityManager = mockNetworkConnectivityManager,
             ioDispatcher = coroutineScope.testDispatcher
         )
     }

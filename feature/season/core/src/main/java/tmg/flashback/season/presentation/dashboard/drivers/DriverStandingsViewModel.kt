@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
+import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.domain.repo.SeasonRepository
 import tmg.flashback.domain.repo.usecases.FetchSeasonUseCase
 import tmg.flashback.formula1.model.SeasonDriverStandingSeason
@@ -31,6 +32,7 @@ class DriverStandingsViewModel @Inject constructor(
     private val seasonRepository: SeasonRepository,
     private val fetchSeasonUseCase: FetchSeasonUseCase,
     private val currentSeasonHolder: CurrentSeasonHolder,
+    private val networkConnectivityManager: NetworkConnectivityManager,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), DriverStandingsViewModelInputs, DriverStandingsViewModelOutputs {
 
@@ -68,7 +70,7 @@ class DriverStandingsViewModel @Inject constructor(
             if (uiState.value.standings.isEmpty()) {
                 populate()
             }
-            uiState.value = uiState.value.copy(isLoading = true)
+            uiState.value = uiState.value.copy(isLoading = true, networkAvailable = networkConnectivityManager.isConnected)
             fetchSeasonUseCase.fetchSeason(season)
             populate()
         }
@@ -82,7 +84,8 @@ class DriverStandingsViewModel @Inject constructor(
             standings = currentStandings,
             maxPoints = maxPoints,
             inProgress = currentStandings.firstOrNull()?.inProgressContent,
-            isLoading = false
+            isLoading = false,
+            networkAvailable = networkConnectivityManager.isConnected
         )
 
         return currentStandings.isNotEmpty()

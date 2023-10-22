@@ -7,8 +7,9 @@ import tmg.flashback.formula1.model.OverviewRace
 
 data class RacesScreenState(
     val season: Int,
-    val items: List<RacesModel>? = listOf(RacesModel.Loading),
+    val items: List<RacesModel>? = listOf(),
     val isLoading: Boolean = false,
+    val networkAvailable: Boolean = true,
     val currentRace: OverviewRace? = null,
 ) {
     val showTyres: Boolean
