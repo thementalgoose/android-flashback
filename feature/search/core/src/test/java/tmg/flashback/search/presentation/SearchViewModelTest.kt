@@ -181,7 +181,9 @@ internal class SearchViewModelTest: BaseTest() {
     fun `uistate shows ad state from search config`() = runTest {
         every { mockAdsRepository.advertConfig } returns mockk(relaxed = true) {
             every { onSearch } returns true
+            every { allowUserConfig } returns true
         }
+        every { mockAdsRepository.areAdvertsEnabled } returns true
         initUnderTest()
         underTest.uiState.test {
             assertEquals(true, awaitItem().showAdvert)
