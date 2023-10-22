@@ -132,6 +132,17 @@ fun DriverOverviewScreen(
                    )
                 }
             }
+            if (uiState.list.isEmpty()) {
+                if (!uiState.networkAvailable) {
+                    item(key = "network") {
+                        NetworkError()
+                    }
+                } else if (uiState.isLoading) {
+                    item(key = "loading") {
+                        SkeletonViewList()
+                    }
+                }
+            }
             items(uiState.list, key = { it.key }) {
                 when (it) {
                     is DriverOverviewModel.Message -> {

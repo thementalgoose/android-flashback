@@ -84,7 +84,7 @@ fun ConstructorOverviewScreenVM(
                 ConstructorOverviewScreen(
                     actionUpClicked = actionUpClicked,
                     windowSizeClass = windowSizeClass,
-                    list = uiState.value.list,
+                    uiState = uiState.value,
                     constructorName = constructorName,
                     seasonClicked = viewModel.inputs::openSeason,
                     linkClicked = viewModel.inputs::openUrl
@@ -109,7 +109,7 @@ fun ConstructorOverviewScreenVM(
 fun ConstructorOverviewScreen(
     actionUpClicked: () -> Unit,
     windowSizeClass: WindowSizeClass,
-    list: List<ConstructorOverviewModel>,
+    uiState: ConstructorOverviewScreenState,
     constructorName: String,
     seasonClicked: (Int) -> Unit,
     linkClicked: (String) -> Unit,
@@ -126,7 +126,18 @@ fun ConstructorOverviewScreen(
                     actionUpClicked = actionUpClicked
                 )
             }
-            items(list, key = { it.key }) {
+            if (uiState.list.isEmpty()) {
+                if (!uiState.networkAvailable) {
+                    item(key = "network") {
+                        NetworkError()
+                    }
+                } else if (uiState.isLoading) {
+                    item(key = "loading") {
+                        SkeletonViewList()
+                    }
+                }
+            }
+            items(uiState.list, key = { it.key }) {
                 when (it) {
                     is ConstructorOverviewModel.Header -> {
                         HeaderTop(
@@ -143,17 +154,8 @@ fun ConstructorOverviewScreen(
                     is ConstructorOverviewModel.Stat -> {
                         Stat(model = it)
                     }
-                    ConstructorOverviewModel.InternalError -> {
-                        NetworkError(error = NetworkError.INTERNAL_ERROR)
-                    }
                     ConstructorOverviewModel.ListHeader -> {
                         HistoryHeader()
-                    }
-                    ConstructorOverviewModel.Loading -> {
-                        SkeletonViewList()
-                    }
-                    ConstructorOverviewModel.NetworkError -> {
-                        NetworkError(error = NetworkError.NETWORK_ERROR)
                     }
                 }
             }
@@ -418,13 +420,17 @@ private fun Preview(
             constructorName = "name",
             linkClicked = { },
             seasonClicked = { },
-            list = listOf(
-                fakeStat,
-                fakeStatWinning,
-                ConstructorOverviewModel.ListHeader,
-                driverConstructor.history1(),
-                driverConstructor.history2(),
-                driverConstructor.history3(),
+            uiState = ConstructorOverviewScreenState(
+                constructorId = "constructorId",
+                constructorName = "name",
+                list = listOf(
+                    fakeStat,
+                    fakeStatWinning,
+                    ConstructorOverviewModel.ListHeader,
+                    driverConstructor.history1(),
+                    driverConstructor.history2(),
+                    driverConstructor.history3(),
+                )
             )
         )
     }

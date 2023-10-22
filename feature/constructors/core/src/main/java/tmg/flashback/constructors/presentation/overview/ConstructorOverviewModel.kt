@@ -49,17 +49,6 @@ sealed class ConstructorOverviewModel(
         key = "history-$season"
     )
 
-    object NetworkError: ConstructorOverviewModel(
-        key = "network-error"
-    )
-    object InternalError: ConstructorOverviewModel(
-        key = "internal-error"
-    )
-
-    object Loading: ConstructorOverviewModel(
-        key = "loading"
-    )
-
     object ListHeader: ConstructorOverviewModel(
         key = "list-header"
     )
