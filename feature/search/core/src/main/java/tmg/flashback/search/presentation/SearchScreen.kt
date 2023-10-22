@@ -41,6 +41,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import tmg.flashback.ads.ads.components.AdvertProvider
 import tmg.flashback.formula1.enums.TrackLayout
 import tmg.flashback.formula1.model.Circuit
 import tmg.flashback.formula1.model.Constructor
@@ -66,6 +67,7 @@ fun SearchScreenVM(
     actionUpClicked: () -> Unit,
     windowSizeClass: WindowSizeClass,
     viewModel: SearchViewModel = hiltViewModel(),
+    advertProvider: AdvertProvider,
     weekendNavigationComponent: WeekendNavigationComponent = requireWeekendNavigationComponent()
 ) {
     val uiState = viewModel.outputs.uiState.collectAsState()
@@ -76,6 +78,7 @@ fun SearchScreenVM(
             SearchScreen(
                 actionUpClicked = actionUpClicked,
                 windowSizeClass = windowSizeClass,
+                advertProvider = advertProvider,
                 uiState = uiState.value,
                 driverClicked = viewModel.inputs::clickDriver,
                 constructorClicked = viewModel.inputs::clickConstructor,
@@ -104,6 +107,7 @@ internal fun SearchScreen(
     actionUpClicked: () -> Unit,
     windowSizeClass: WindowSizeClass,
     uiState: SearchScreenState,
+    advertProvider: AdvertProvider,
     driverClicked: (Driver) -> Unit,
     constructorClicked: (Constructor) -> Unit,
     circuitClicked: (Circuit) -> Unit,
@@ -238,6 +242,15 @@ internal fun SearchScreen(
                             item(key = "suffix") { Spacer(Modifier.width(AppTheme.dimens.small)) }
                         },
                         horizontalArrangement = Arrangement.spacedBy(AppTheme.dimens.small)
+                    )
+                }
+            }
+
+            if (uiState.showAdvert) {
+                item("ad") {
+                    advertProvider.NativeBanner(
+                        horizontalPadding = true,
+                        badgeOffset = false
                     )
                 }
             }

@@ -25,6 +25,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import org.threeten.bp.LocalDate
+import tmg.flashback.ads.ads.components.AdvertProvider
 import tmg.flashback.formula1.extensions.icon
 import tmg.flashback.formula1.extensions.label
 import tmg.flashback.formula1.model.OverviewRace
@@ -61,6 +62,7 @@ private val expandIcon = 20.dp
 fun RacesScreen(
     actionUpClicked: () -> Unit,
     windowSizeClass: WindowSizeClass,
+    advertProvider: AdvertProvider,
     viewModel: RacesViewModel = hiltViewModel(),
     weekendNavigationComponent: WeekendNavigationComponent = requireWeekendNavigationComponent()
 ) {
@@ -72,6 +74,7 @@ fun RacesScreen(
             ScheduleScreen(
                 actionUpClicked = actionUpClicked,
                 windowSizeClass = windowSizeClass,
+                advertProvider = advertProvider,
                 uiState = uiState.value,
                 refresh = viewModel.inputs::refresh,
                 tyreClicked = viewModel.inputs::clickTyre,
@@ -95,6 +98,7 @@ fun RacesScreen(
 fun ScheduleScreen(
     actionUpClicked: () -> Unit,
     windowSizeClass: WindowSizeClass,
+    advertProvider: AdvertProvider,
     uiState: RacesScreenState,
     refresh: () -> Unit,
     tyreClicked: () -> Unit,
@@ -132,6 +136,7 @@ fun ScheduleScreen(
                         }
                     )
                 }
+
                 item(key = "info") {
                     DashboardQuickLinks(season = uiState.season)
                 }
@@ -182,9 +187,18 @@ fun ScheduleScreen(
                         }
                     }
                 }
+
+                if (uiState.showAdvert) {
+                    item(key = "advert") {
+                        advertProvider.NativeBanner(
+                            horizontalPadding = true,
+                            badgeOffset = true
+                        )
+                    }
+                }
+
                 item(key = "footer") {
                     ProvidedBy()
-//                    Spacer(Modifier.height(appBarHeight))
                 }
             }
         )

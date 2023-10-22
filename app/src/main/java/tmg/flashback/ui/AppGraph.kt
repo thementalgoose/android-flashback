@@ -70,7 +70,8 @@ fun AppGraph(
         composable(Screen.Races.route) {
             RacesScreen(
                 actionUpClicked = openMenu,
-                windowSizeClass = windowSize
+                windowSizeClass = windowSize,
+                advertProvider = advertProvider
             )
         }
 
@@ -160,7 +161,8 @@ fun AppGraph(
         ) {
             SearchScreenVM(
                 actionUpClicked = openMenu,
-                windowSizeClass = windowSize
+                windowSizeClass = windowSize,
+                advertProvider = advertProvider
             )
         }
 
