@@ -91,7 +91,7 @@ internal class CircuitViewModelTest: BaseTest() {
             assertEquals(circuit, state.circuit)
             assertEquals("circuitId", state.circuitId)
             assertEquals("circuitName", state.circuitName)
-            assertEquals(false, state.networkAvailable)
+            assertEquals(true, state.networkAvailable)
             assertEquals(false, state.isLoading)
             assertStatModels(state.list)
             assertRaces(state.list)

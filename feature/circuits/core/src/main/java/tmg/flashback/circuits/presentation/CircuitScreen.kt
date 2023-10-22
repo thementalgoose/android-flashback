@@ -115,12 +115,12 @@ fun CircuitScreen(
                     model = it,
                     linkClicked = linkClicked
                 )
-                CircuitModel.Error -> {
-                    NotAvailable()
-                }
-                CircuitModel.Loading -> {
-                    SkeletonViewList()
-                }
+//                CircuitModel.Error -> {
+//                    NotAvailable()
+//                }
+//                CircuitModel.Loading -> {
+//                    SkeletonViewList()
+//                }
             }
         }
     })

@@ -94,7 +94,7 @@ internal class ConstructorOverviewViewModelTest: BaseTest() {
             assertEquals(constructor, state.constructor)
             assertEquals("constructorId", state.constructorId)
             assertEquals("constructorName", state.constructorName)
-            assertEquals(false, state.networkAvailable)
+            assertEquals(true, state.networkAvailable)
             assertEquals(false, state.isLoading)
             assertStatModels(state.list)
             assertSeasonRacedFor(state.list, 2020)
