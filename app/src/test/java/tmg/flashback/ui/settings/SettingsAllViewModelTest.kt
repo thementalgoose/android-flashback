@@ -3,23 +3,18 @@ package tmg.flashback.ui.settings
 import app.cash.turbine.test
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.slot
 import io.mockk.verify
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import tmg.flashback.ads.ads.repository.AdsRepository
-import tmg.flashback.device.managers.BuildConfigManager
-import tmg.flashback.navigation.ApplicationNavigationComponent
-import tmg.flashback.navigation.NavigationDestination
-import tmg.flashback.navigation.Navigator
-import tmg.flashback.navigation.Screen
-import tmg.flashback.rss.contract.RSSConfigure
-import tmg.flashback.rss.repo.RssRepository
 import tmg.flashback.device.AppPermissions
-import tmg.flashback.ui.managers.PermissionManager
+import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.device.repository.PermissionRepository
+import tmg.flashback.navigation.ApplicationNavigationComponent
+import tmg.flashback.rss.repo.RssRepository
+import tmg.flashback.ui.managers.PermissionManager
 import tmg.flashback.ui.repository.ThemeRepository
 import tmg.testutils.BaseTest
 

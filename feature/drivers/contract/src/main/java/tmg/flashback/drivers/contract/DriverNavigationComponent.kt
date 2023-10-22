@@ -2,15 +2,9 @@ package tmg.flashback.drivers.contract
 
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
-import dagger.hilt.EntryPoint
-import dagger.hilt.EntryPoints
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.json.Json
 import tmg.flashback.drivers.contract.model.DriverStatHistoryType
 import tmg.flashback.drivers.contract.model.ScreenDriverData
-import tmg.flashback.drivers.contract.model.ScreenDriverSeasonData
 import tmg.flashback.navigation.NavigationDestination
 import tmg.flashback.navigation.Screen
 

@@ -15,6 +15,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import tmg.flashback.domain.repo.RaceRepository
+import tmg.flashback.domain.repo.usecases.FetchSeasonUseCase
 import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
 import tmg.flashback.formula1.model.Race
 import tmg.flashback.formula1.model.RaceInfo
@@ -27,6 +28,7 @@ import tmg.testutils.BaseTest
 internal class WeekendViewModelTest: BaseTest() {
 
     private val mockRaceRepository: RaceRepository = mockk(relaxed = true)
+    private val mockFetchSeasonUseCase: FetchSeasonUseCase = mockk(relaxed = true)
 
     private lateinit var underTest: WeekendViewModel
 
@@ -37,6 +39,7 @@ internal class WeekendViewModelTest: BaseTest() {
                 "data" to screenWeekendData,
                 "tab" to (tab?.name ?: "")
             )),
+            fetchSeasonUseCase = mockFetchSeasonUseCase,
             ioDispatcher = coroutineScope.testDispatcher
         )
     }
@@ -179,7 +182,7 @@ internal class WeekendViewModelTest: BaseTest() {
         }
 
         coVerify {
-            mockRaceRepository.fetchRaces(2020)
+            mockFetchSeasonUseCase.fetchSeason(2020)
         }
         underTest.outputs.isRefreshing.test {
             assertEquals(false, awaitItem())

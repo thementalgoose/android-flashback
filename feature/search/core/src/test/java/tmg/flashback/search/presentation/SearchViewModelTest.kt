@@ -213,7 +213,7 @@ internal class SearchViewModelTest: BaseTest() {
     fun `clicking driver updates state to driver, press back sets to null`() = runTest {
         initUnderTest()
         underTest.clickDriver(driver1)
-        underTest.uiState.test {
+        verify {
             mockNavigator.navigate(Screen.Driver.with(driver1.id, driver1.name))
         }
     }
@@ -222,7 +222,7 @@ internal class SearchViewModelTest: BaseTest() {
     fun `clicking constructor updates state to constructor, press back sets to null`() = runTest {
         initUnderTest()
         underTest.clickConstructor(constructor1)
-        underTest.uiState.test {
+        verify {
             mockNavigator.navigate(Screen.Constructor.with(constructor1.id, constructor1.name))
         }
     }

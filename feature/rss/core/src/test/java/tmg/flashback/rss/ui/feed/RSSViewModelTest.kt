@@ -73,8 +73,7 @@ internal class RSSViewModelTest: BaseTest() {
             adsRepository = mockAdsRepository,
             navigator = mockNavigator,
             connectivityManager = mockConnectivityManager,
-            timeManager = mockTimeManager,
-            openWebpageUseCase = mockk(relaxed = true)
+            timeManager = mockTimeManager
         )
         underTest.refresh()
     }
@@ -186,13 +185,13 @@ internal class RSSViewModelTest: BaseTest() {
             ), awaitItem())
 
             underTest.clickArticle(mockArticle)
-            assertEquals(mockArticle, (awaitItem() as RSSViewModel.UiState.Data).articleSelected)
+            assertEquals(RSSViewModel.UiStateOpened.WebArticle(mockArticle), (awaitItem() as RSSViewModel.UiState.Data).opened)
             verify {
                 mockNavigator.setSubNavigation()
             }
 
             underTest.back()
-            assertEquals(null, (awaitItem() as RSSViewModel.UiState.Data).articleSelected)
+            assertEquals(null, (awaitItem() as RSSViewModel.UiState.Data).opened)
             verify {
                 mockNavigator.clearSubNavigation()
             }
@@ -216,7 +215,7 @@ internal class RSSViewModelTest: BaseTest() {
                 lastUpdated = "01:02:03",
                 showAdvert = true,
                 rssItems = listOf(mockArticle),
-                articleSelected = mockArticle
+                opened = RSSViewModel.UiStateOpened.WebArticle(mockArticle)
             ), awaitItem())
         }
     }
