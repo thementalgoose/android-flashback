@@ -306,21 +306,12 @@ private fun DateCard(
             end = AppTheme.dimens.nsmall
         )
     ) {
-        if (showWeather && schedule.weather != null) {
-            Spacer(Modifier.height(AppTheme.dimens.small))
-
-            val summary = schedule.weather!!.summary.firstOrNull()
-            Image(
-                painter = painterResource(id = summary?.icon ?: R.drawable.weather_unknown),
-                contentDescription = stringResource(id = summary?.label ?: R.string.empty),
-                modifier = Modifier.size(weatherIconSize)
-            )
-        } else {
-            Spacer(Modifier.height(AppTheme.dimens.nsmall))
-        }
         Row(modifier = Modifier
             .fillMaxWidth()
-            .padding(bottom = AppTheme.dimens.small),
+            .padding(
+                top = AppTheme.dimens.nsmall,
+                bottom = AppTheme.dimens.small
+            ),
             verticalAlignment = Alignment.CenterVertically
         ) {
             TextBody1(
@@ -343,6 +334,18 @@ private fun DateCard(
             text = time,
             bold = true
         )
+        if (showWeather && schedule.weather != null) {
+            Spacer(Modifier.height(AppTheme.dimens.small))
+
+            val summary = schedule.weather!!.summary.firstOrNull()
+            Image(
+                painter = painterResource(id = summary?.icon ?: R.drawable.weather_unknown),
+                contentDescription = stringResource(id = summary?.label ?: R.string.empty),
+                modifier = Modifier.size(weatherIconSize)
+            )
+        } else {
+            Spacer(Modifier.height(AppTheme.dimens.nsmall))
+        }
     }
 }
 
