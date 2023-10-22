@@ -9,6 +9,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import tmg.flashback.constructors.R
+import tmg.flashback.constructors.contract.model.ScreenConstructorData
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.domain.repo.ConstructorRepository
 import tmg.flashback.formula1.extensions.pointsDisplay
@@ -22,7 +23,6 @@ import javax.inject.Inject
 //region Inputs
 
 interface ConstructorOverviewViewModelInputs {
-    fun setup(constructorId: String, constructorName: String)
     fun openUrl(url: String)
     fun openSeason(season: Int)
 
@@ -45,29 +45,22 @@ interface ConstructorOverviewViewModelOutputs {
 class ConstructorOverviewViewModel @Inject constructor(
     private val constructorRepository: ConstructorRepository,
     private val openWebpageUseCase: OpenWebpageUseCase,
+    private val networkConnectivityManager: NetworkConnectivityManager,
+    savedStateHandle: SavedStateHandle,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), ConstructorOverviewViewModelInputs, ConstructorOverviewViewModelOutputs {
 
     var inputs: ConstructorOverviewViewModelInputs = this
     var outputs: ConstructorOverviewViewModelOutputs = this
 
-    override val uiState: MutableStateFlow<ConstructorOverviewScreenState> = MutableStateFlow(
-        ConstructorOverviewScreenState()
-    )
+    override val uiState: MutableStateFlow<ConstructorOverviewScreenState>
 
-    override fun setup(constructorId: String, constructorName: String) {
-        if (constructorId == uiState.value.constructorId) {
-            return
-        }
-        uiState.value = uiState.value.copy(
-            constructorId = constructorId,
-            constructorName = constructorName,
-            constructor = null,
-            list = emptyList(),
-            isLoading = false,
-            networkError = false,
-            selectedSeason = null
-        )
+    init {
+        val state = savedStateHandle.get<ScreenConstructorData>("data")!!
+        uiState = MutableStateFlow(ConstructorOverviewScreenState(
+            constructorId = state.constructorId,
+            constructorName = state.constructorName
+        ))
         refresh()
     }
 
@@ -89,7 +82,7 @@ class ConstructorOverviewViewModel @Inject constructor(
             if (constructorId.isNotEmpty()) {
                 populate()
             }
-            uiState.value = uiState.value.copy(isLoading = true, networkError = false)
+            uiState.value = uiState.value.copy(isLoading = true, networkAvailable = networkConnectivityManager.isConnected)
             constructorRepository.fetchConstructor(constructorId)
             populate()
         }
@@ -102,7 +95,7 @@ class ConstructorOverviewViewModel @Inject constructor(
         uiState.value = uiState.value.copy(
             constructor = overview?.constructor,
             isLoading = false,
-            networkError = overview == null || list.isNullOrEmpty(),
+            networkAvailable = networkConnectivityManager.isConnected,
             list = list ?: emptyList()
         )
     }

@@ -67,8 +67,6 @@ fun DriverOverviewScreenVM(
         analyticsDriverId to driverId
     ))
 
-    viewModel.inputs.setup(driverId, driverName)
-
     val uiState = viewModel.outputs.uiState.collectAsState()
     MasterDetailsPane(
         windowSizeClass = windowSizeClass,
@@ -317,6 +315,8 @@ private fun Preview(
             actionUpClicked = { },
             windowSizeClass = WindowSizeClass.calculateFromSize(DpSize.Unspecified),
             uiState = DriverOverviewScreenState(
+                driverId = "driverId",
+                driverName = "driverName",
                 list = listOf(fakeStat, fakeStatWinning, driverConstructor.racedFor(), driverConstructor.racedFor2())
             ),
             racedForClicked = { },

@@ -1,4 +1,4 @@
-package tmg.flashback.circuits.ui
+package tmg.flashback.circuits.presentation
 
 import tmg.flashback.formula1.model.CircuitHistoryRace
 import tmg.flashback.formula1.model.Location
@@ -33,12 +33,4 @@ sealed class CircuitModel(
     ) {
         companion object
     }
-
-    object Loading: CircuitModel(
-        id = "loading"
-    )
-
-    object Error: CircuitModel(
-        id = "error"
-    )
 }
