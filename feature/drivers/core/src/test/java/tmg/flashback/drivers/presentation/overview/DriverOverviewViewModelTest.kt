@@ -125,7 +125,7 @@ internal class DriverOverviewViewModelTest: BaseTest() {
         underTest.inputs.openStatHistory(DriverStatHistoryType.POLES)
 
         verify {
-            mockDriverNavigationComponent.driverStatHistory("driverId", "firstName lastName", DriverStatHistoryType.POLES)
+            mockDriverNavigationComponent.driverStatHistory("driverId", "driverName", DriverStatHistoryType.POLES)
         }
     }
 

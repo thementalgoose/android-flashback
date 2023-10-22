@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
 import tmg.flashback.domain.repo.RaceRepository
+import tmg.flashback.drivers.contract.Driver
 import tmg.flashback.drivers.contract.with
 import tmg.flashback.formula1.model.LapTime
 import tmg.flashback.formula1.model.QualifyingResult
@@ -143,11 +144,11 @@ internal class QualifyingViewModelTest: BaseTest() {
 
         verify {
             mockNavigator.navigate(
-                Screen.DriverSeason.with(
-                driverId = input.entry.driver.id,
-                driverName = input.entry.driver.name,
-                season = 2020
-            ))
+                Screen.Driver.with(
+                    driverId = input.entry.driver.id,
+                    driverName = input.entry.driver.name,
+                )
+            )
         }
     }
 }

@@ -11,7 +11,6 @@ import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.device.managers.TimeManager
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
-import tmg.flashback.rss.contract.RSSConfigure
 import tmg.flashback.rss.network.RssService
 import tmg.flashback.rss.repo.RssRepository
 import tmg.flashback.rss.repo.model.Article

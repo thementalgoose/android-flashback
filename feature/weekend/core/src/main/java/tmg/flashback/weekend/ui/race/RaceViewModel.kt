@@ -129,24 +129,21 @@ class RaceViewModel @Inject constructor(
     }
 
     override fun clickConstructor(constructor: Constructor) {
-        val season = seasonRound.value?.first ?: return
         navigator.navigate(
             Screen.Constructor.with(
                 constructorId = constructor.id,
                 constructorName = constructor.name,
-//                season = season
             )
         )
     }
 
     override fun clickDriver(result: DriverEntry) {
-        val season = seasonRound.value?.first ?: return
         navigator.navigate(
             Screen.Driver.with(
-            driverId = result.driver.id,
-            driverName = result.driver.name,
-//            season = season
-        ))
+                driverId = result.driver.id,
+                driverName = result.driver.name,
+            )
+        )
     }
 
     private fun getDriverFromConstructor(race: Race, constructorId: String): List<Pair<Driver, Double>> {

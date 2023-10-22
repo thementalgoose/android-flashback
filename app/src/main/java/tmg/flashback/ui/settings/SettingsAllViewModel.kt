@@ -10,7 +10,6 @@ import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.navigation.ApplicationNavigationComponent
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
-import tmg.flashback.rss.contract.RSSConfigure
 import tmg.flashback.rss.repo.RssRepository
 import tmg.flashback.device.AppPermissions
 import tmg.flashback.ui.managers.PermissionManager

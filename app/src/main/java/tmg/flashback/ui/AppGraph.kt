@@ -30,7 +30,6 @@ import tmg.flashback.navigation.Screen
 import tmg.flashback.navigation.asNavigationDestination
 import tmg.flashback.privacypolicy.contract.PrivacyPolicy
 import tmg.flashback.rss.contract.RSS
-import tmg.flashback.rss.contract.RSSConfigure
 import tmg.flashback.rss.ui.configure.ConfigureRSSScreenVM
 import tmg.flashback.rss.ui.feed.RSSScreenVM
 import tmg.flashback.search.contract.Search
@@ -173,12 +172,6 @@ fun AppGraph(
                 windowSizeClass = windowSize,
                 advertProvider = advertProvider,
                 actionUpClicked = openMenu
-            )
-        }
-        composable(Screen.Settings.RSSConfigure.route) {
-            ConfigureRSSScreenVM(
-                actionUpClicked = { navController.popBackStack() },
-                windowSizeClass = windowSize,
             )
         }
     }

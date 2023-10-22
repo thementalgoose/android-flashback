@@ -10,7 +10,6 @@ import tmg.flashback.drivers.contract.Driver
 import tmg.flashback.drivers.contract.with
 import tmg.flashback.navigation.Screen
 import tmg.flashback.rss.contract.RSS
-import tmg.flashback.rss.contract.RSSConfigure
 import tmg.flashback.search.contract.Search
 import tmg.flashback.season.contract.ConstructorsStandings
 import tmg.flashback.season.contract.DriverStandings
@@ -47,18 +46,6 @@ class ScreenPathTest {
     }
 
     @Test
-    fun `driver season`() {
-        assertEquals(
-            "drivers-season/{data}",
-            Screen.DriverSeason.route
-        )
-        assertEquals(
-            """drivers-season/{"driverId":"id","driverName":"name","season":2022}""",
-            Screen.DriverSeason.with("id", "name", 2022).route
-        )
-    }
-
-    @Test
     fun constructor() {
         assertEquals(
             "constructors/{data}",
@@ -67,18 +54,6 @@ class ScreenPathTest {
         assertEquals(
             """constructors/{"constructorId":"id","constructorName":"name"}""",
             Screen.Constructor.with("id", "name").route
-        )
-    }
-
-    @Test
-    fun `constructor season`() {
-        assertEquals(
-            "constructors-season/{data}",
-            Screen.ConstructorSeason.route
-        )
-        assertEquals(
-            """constructors-season/{"constructorId":"id","constructorName":"name","season":2022}""",
-            Screen.ConstructorSeason.with("id", "name", 2022).route
         )
     }
 
@@ -119,17 +94,6 @@ class ScreenPathTest {
                 )
             ).route
         )
-    }
-
-
-    @Test
-    fun `settings rss`() {
-        assertEquals("settings/rss", Screen.Settings.RSS.route)
-    }
-
-    @Test
-    fun `settings rss configure`() {
-        assertEquals("settings/rss/configure", Screen.Settings.RSSConfigure.route)
     }
 
     @Test
