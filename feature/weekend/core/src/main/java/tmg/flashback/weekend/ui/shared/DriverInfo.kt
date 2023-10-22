@@ -118,7 +118,7 @@ fun DriverInfoWithIcon(
                         label = stringResource(id = tmg.flashback.weekend.R.string.ab_fastest_lap),
                         icon = R.drawable.ic_fastest_lap
                     ),
-                    tintIcon = AppTheme.colors.f1FastestSector
+                    tintIcon = AppTheme.colors.contentSecondary
                 )
             }
         }
