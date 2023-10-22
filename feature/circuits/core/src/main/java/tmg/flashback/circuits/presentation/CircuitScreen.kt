@@ -1,4 +1,4 @@
-package tmg.flashback.circuits.ui
+package tmg.flashback.circuits.presentation
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Icon
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
@@ -67,19 +68,16 @@ fun CircuitScreenVM(
         analyticsCircuitId to circuitId
     ))
 
-    viewModel.inputs.load(circuitId)
-
-    val list = viewModel.outputs.list.collectAsState(listOf(CircuitModel.Loading))
-    val isLoading = viewModel.outputs.showLoading.collectAsState(false)
+    val uiState = viewModel.outputs.uiState.collectAsState()
     SwipeRefresh(
-        isLoading = isLoading.value,
+        isLoading = uiState.value.isLoading,
         onRefresh = viewModel.inputs::refresh
     ) {
         CircuitScreen(
             actionUpClicked = actionUpClicked,
             windowSizeClass = windowSizeClass,
             circuitName = circuitName,
-            list = list.value,
+            list = uiState.value.list,
             itemClicked = viewModel.inputs::itemClicked,
             linkClicked = viewModel.inputs::linkClicked,
         )
@@ -103,7 +101,7 @@ fun CircuitScreen(
         item(key = "header") {
             Header(
                 text = circuitName,
-                action = HeaderAction.BACK,
+                action = if (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact) HeaderAction.BACK else null,
                 actionUpClicked = actionUpClicked
             )
         }

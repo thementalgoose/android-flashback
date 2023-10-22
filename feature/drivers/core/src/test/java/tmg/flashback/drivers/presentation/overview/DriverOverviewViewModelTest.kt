@@ -1,5 +1,6 @@
 package tmg.flashback.drivers.presentation.overview
 
+import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -17,6 +18,7 @@ import tmg.flashback.domain.repo.DriverRepository
 import tmg.flashback.drivers.R
 import tmg.flashback.drivers.contract.DriverNavigationComponent
 import tmg.flashback.drivers.contract.model.DriverStatHistoryType
+import tmg.flashback.drivers.contract.model.ScreenDriverData
 import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.model.DriverHistory
 import tmg.flashback.formula1.model.DriverHistorySeason
@@ -34,10 +36,13 @@ internal class DriverOverviewViewModelTest: BaseTest() {
     private lateinit var underTest: DriverOverviewViewModel
 
     private fun initUnderTest() {
+        val savedStateHandle = SavedStateHandle(mapOf("data" to ScreenDriverData("driverId", "driverName")))
         underTest = DriverOverviewViewModel(
             driverRepository = mockDriverRepository,
             driverNavigationComponent = mockDriverNavigationComponent,
             openWebpageUseCase = mockOpenWebpageUseCase,
+            networkConnectivityManager = mockNetworkConnectivityManager,
+            savedStateHandle = savedStateHandle,
             ioDispatcher = coroutineScope.testDispatcher
         )
     }
@@ -60,12 +65,12 @@ internal class DriverOverviewViewModelTest: BaseTest() {
     @Test
     fun `setup adds driver id and name to state, calls refresh`() = runTest {
         initUnderTest()
-        underTest.inputs.setup("driverId", "driverName")
         underTest.uiState.test {
             val item = awaitItem()
             assertEquals("driverId", item.driverId)
             assertEquals("driverName", item.driverName)
             assertEquals(driver, item.driver)
+            assertEquals(true, item.networkAvailable)
         }
     }
 
@@ -81,7 +86,6 @@ internal class DriverOverviewViewModelTest: BaseTest() {
     @Test
     fun `refresh calls populate, fetch driver and populate`() = runTest {
         initUnderTest()
-        underTest.inputs.setup("driverId", "driverName")
         underTest.outputs.uiState.test {
 
             underTest.inputs.refresh()
@@ -92,7 +96,7 @@ internal class DriverOverviewViewModelTest: BaseTest() {
             assertEquals(driver, state.driver)
             assertEquals("driverId", state.driverId)
             assertEquals("driverName", state.driverName)
-            assertEquals(false, state.networkError)
+            assertEquals(false, state.networkAvailable)
             assertEquals(false, state.isLoading)
             assertStatModels(state.list)
             assertSeasonRacedFor(state.list, 2020)
@@ -102,7 +106,6 @@ internal class DriverOverviewViewModelTest: BaseTest() {
     @Test
     fun `open stat history calls navigation component`() = runTest {
         initUnderTest()
-        underTest.inputs.setup("driverId", "driverName")
         underTest.outputs.uiState.test {
             val currentState = awaitItem()
 
@@ -111,14 +114,13 @@ internal class DriverOverviewViewModelTest: BaseTest() {
 
             coVerify { mockDriverRepository.fetchDriver("driverId") }
             val state = awaitItem()
-            assertTrue(state.networkError)
+            assertTrue(state.networkAvailable)
         }
     }
 
     @Test
     fun `opening driver stat history launches stats navigation component`() = runTest(testDispatcher) {
         initUnderTest()
-        underTest.inputs.setup("driverId", "firstName lastName")
 
         underTest.inputs.openStatHistory(DriverStatHistoryType.POLES)
 
@@ -130,7 +132,6 @@ internal class DriverOverviewViewModelTest: BaseTest() {
     @Test
     fun `opening driver season updates selected season, back clears selected season`() = runTest {
         initUnderTest()
-        underTest.inputs.setup("driverId", "driverName")
         underTest.inputs.openSeason(2020)
         underTest.outputs.uiState.test {
             assertEquals(2020, awaitItem().selectedSeason)

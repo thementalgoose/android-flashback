@@ -1,5 +1,6 @@
 package tmg.flashback.constructors.presentation.overview
 
+import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -13,6 +14,7 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.constructors.R
+import tmg.flashback.constructors.contract.model.ScreenConstructorData
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.domain.repo.ConstructorRepository
 import tmg.flashback.formula1.model.Constructor
@@ -29,14 +31,16 @@ internal class ConstructorOverviewViewModelTest: BaseTest() {
     private val mockConstructorRepository: ConstructorRepository = mockk(relaxed = true)
     private val mockNetworkConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
     private val mockOpenWebpageUseCase: OpenWebpageUseCase = mockk(relaxed = true)
-    private val mockNavigator: Navigator = mockk(relaxed = true)
 
     private lateinit var underTest: ConstructorOverviewViewModel
 
     private fun initUnderTest() {
+        val state = SavedStateHandle(mapOf("data" to ScreenConstructorData("constructorId", "constructorName")))
         underTest = ConstructorOverviewViewModel(
             constructorRepository = mockConstructorRepository,
             openWebpageUseCase = mockOpenWebpageUseCase,
+            networkConnectivityManager = mockNetworkConnectivityManager,
+            savedStateHandle = state,
             ioDispatcher = coroutineScope.testDispatcher
         )
     }
@@ -59,7 +63,6 @@ internal class ConstructorOverviewViewModelTest: BaseTest() {
     @Test
     fun `setup adds constructor id and name to state, calls refresh`() = runTest {
         initUnderTest()
-        underTest.inputs.setup("constructorId", "constructorName")
         underTest.uiState.test {
             val item = awaitItem()
             assertEquals("constructorId", item.constructorId)
@@ -80,7 +83,6 @@ internal class ConstructorOverviewViewModelTest: BaseTest() {
     @Test
     fun `refresh calls populate, fetch constructor and populate`() = runTest {
         initUnderTest()
-        underTest.inputs.setup("constructorId", "constructorName")
         underTest.outputs.uiState.test {
 
             underTest.inputs.refresh()
@@ -92,7 +94,7 @@ internal class ConstructorOverviewViewModelTest: BaseTest() {
             assertEquals(constructor, state.constructor)
             assertEquals("constructorId", state.constructorId)
             assertEquals("constructorName", state.constructorName)
-            assertEquals(false, state.networkError)
+            assertEquals(false, state.networkAvailable)
             assertEquals(false, state.isLoading)
             assertStatModels(state.list)
             assertSeasonRacedFor(state.list, 2020)
@@ -102,7 +104,6 @@ internal class ConstructorOverviewViewModelTest: BaseTest() {
     @Test
     fun `open stat history calls navigation component`() = runTest {
         initUnderTest()
-        underTest.inputs.setup("constructorId", "constructorName")
         underTest.outputs.uiState.test {
             val currentState = awaitItem()
 
@@ -111,14 +112,13 @@ internal class ConstructorOverviewViewModelTest: BaseTest() {
 
             coVerify { mockConstructorRepository.fetchConstructor("constructorId") }
             val state = awaitItem()
-            assertTrue(state.networkError)
+            assertTrue(state.networkAvailable)
         }
     }
 
     @Test
     fun `opening constructor season updates selected season, back clears selected season`() = runTest {
         initUnderTest()
-        underTest.inputs.setup("constructorId", "constructorName")
         underTest.inputs.openSeason(2020)
         underTest.outputs.uiState.test {
             assertEquals(2020, awaitItem().selectedSeason)

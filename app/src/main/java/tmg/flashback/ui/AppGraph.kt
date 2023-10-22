@@ -18,7 +18,7 @@ import androidx.window.layout.WindowLayoutInfo
 import tmg.flashback.ads.ads.components.AdvertProvider
 import tmg.flashback.circuits.contract.Circuit
 import tmg.flashback.circuits.contract.model.ScreenCircuitData
-import tmg.flashback.circuits.ui.CircuitScreenVM
+import tmg.flashback.circuits.presentation.CircuitScreenVM
 import tmg.flashback.constructors.contract.Constructor
 import tmg.flashback.constructors.contract.model.ScreenConstructorData
 import tmg.flashback.constructors.presentation.overview.ConstructorOverviewScreenVM

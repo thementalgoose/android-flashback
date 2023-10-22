@@ -8,10 +8,12 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.domain.repo.DriverRepository
 import tmg.flashback.drivers.R
 import tmg.flashback.drivers.contract.DriverNavigationComponent
 import tmg.flashback.drivers.contract.model.DriverStatHistoryType
+import tmg.flashback.drivers.contract.model.ScreenDriverData
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.DriverHistory
 import tmg.flashback.ui.components.navigation.PipeType
@@ -22,7 +24,6 @@ import javax.inject.Inject
 //region Inputs
 
 interface DriverOverviewViewModelInputs {
-    fun setup(driverId: String, driverName: String)
     fun back()
     fun openUrl(url: String)
     fun openSeason(season: Int)
@@ -49,27 +50,22 @@ class DriverOverviewViewModel @Inject constructor(
     private val driverRepository: DriverRepository,
     private val driverNavigationComponent: DriverNavigationComponent,
     private val openWebpageUseCase: OpenWebpageUseCase,
+    private val networkConnectivityManager: NetworkConnectivityManager,
+    savedStateHandle: SavedStateHandle,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), DriverOverviewViewModelInputs, DriverOverviewViewModelOutputs {
 
     var inputs: DriverOverviewViewModelInputs = this
     var outputs: DriverOverviewViewModelOutputs = this
 
-    override val uiState: MutableStateFlow<DriverOverviewScreenState> = MutableStateFlow(DriverOverviewScreenState())
+    override val uiState: MutableStateFlow<DriverOverviewScreenState>
 
-    override fun setup(driverId: String, driverName: String) {
-        if (driverId == uiState.value.driverId) {
-            return
-        }
-        uiState.value = uiState.value.copy(
-            driverId = driverId,
-            driverName = driverName,
-            driver = null,
-            list = emptyList(),
-            isLoading = false,
-            networkError = false,
-            selectedSeason = null
-        )
+    init {
+        val state = savedStateHandle.get<ScreenDriverData>("data")!!
+        uiState = MutableStateFlow(DriverOverviewScreenState(
+            driverId = state.driverId,
+            driverName = state.driverName
+        ))
         refresh()
     }
 
@@ -97,22 +93,21 @@ class DriverOverviewViewModel @Inject constructor(
         viewModelScope.launch(ioDispatcher) {
             val driverId = uiState.value.driverId
             if (driverId.isNotEmpty()) {
-                populate()
+                populate(driverId)
             }
-            uiState.value = uiState.value.copy(isLoading = true, networkError = false)
+            uiState.value = uiState.value.copy(isLoading = true, networkAvailable = networkConnectivityManager.isConnected)
             driverRepository.fetchDriver(driverId)
-            populate()
+            populate(driverId)
         }
     }
 
-    private suspend fun populate() {
-        val driverId = uiState.value.driverId
+    private suspend fun populate(driverId: String) {
         val overview = driverRepository.getDriverOverview(driverId).firstOrNull()
         val list = overview?.generateResultList()
         uiState.value = uiState.value.copy(
             driver = overview?.driver,
             isLoading = false,
-            networkError = overview == null || list.isNullOrEmpty(),
+            networkAvailable = networkConnectivityManager.isConnected,
             list = list ?: emptyList()
         )
     }

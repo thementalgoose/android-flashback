@@ -1,4 +1,4 @@
-package tmg.flashback.circuits.ui
+package tmg.flashback.circuits.presentation
 
 import tmg.flashback.formula1.model.CircuitHistoryRace
 import tmg.flashback.formula1.model.Location
