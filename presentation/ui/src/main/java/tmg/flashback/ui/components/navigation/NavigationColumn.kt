@@ -47,9 +47,9 @@ import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.ui.R
 
-val columnWidthCollapsed: Dp = 56.dp
-private val itemSize: Dp = 38.dp
-private val iconSize: Dp = 20.dp
+val columnWidthCollapsed: Dp = 64.dp
+private val itemSize: Dp = 48.dp
+private val iconSize: Dp = 24.dp
 val columnWidthExpanded: Dp = 240.dp
 
 @Composable
@@ -82,8 +82,6 @@ fun NavigationColumn(
                 item {
                     Column(Modifier.fillMaxWidth()) {
                         Spacer(modifier = Modifier.height(AppTheme.dimens.small))
-//                        contentHeader()
-//                        Spacer(modifier = Modifier.height(AppTheme.dimens.small))
                     }
                 }
                 items(list) {
