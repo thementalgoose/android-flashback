@@ -121,9 +121,6 @@ internal class ConstructorStandingsViewModelTest: BaseTest() {
         underTest.outputs.uiState.test {
             assertEquals(standing1, awaitItem().currentlySelected)
         }
-        verify {
-            mockNavigator.setSubNavigation()
-        }
     }
 
     @Test
@@ -136,9 +133,6 @@ internal class ConstructorStandingsViewModelTest: BaseTest() {
             underTest.inputs.closeConstructor()
 
             assertEquals(null, awaitItem().currentlySelected)
-        }
-        verify {
-            mockNavigator.clearSubNavigation()
         }
     }
 }

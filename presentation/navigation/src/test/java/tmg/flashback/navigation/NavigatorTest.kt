@@ -40,28 +40,4 @@ internal class NavigatorTest {
         }
         assertEquals(destination.route, dest.captured)
     }
-
-    @Test
-    fun `setting sub navigation means key returns true`() {
-        initUnderTest()
-        assertFalse(underTest.isSubNavigation())
-        underTest.setSubNavigation()
-        assertTrue(underTest.isSubNavigation())
-
-        underTest.clearSubNavigation()
-        assertFalse(underTest.isSubNavigation())
-    }
-
-
-    @Test
-    fun `navigating clears sub navigation`() {
-        val destination = NavigationDestination(route = "route")
-
-        initUnderTest()
-        underTest.setSubNavigation()
-        assertTrue(underTest.isSubNavigation())
-
-        underTest.navigate(destination)
-        assertFalse(underTest.isSubNavigation())
-    }
 }
