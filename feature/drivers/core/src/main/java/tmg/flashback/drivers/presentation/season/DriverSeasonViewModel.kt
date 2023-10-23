@@ -16,6 +16,7 @@ import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.DriverHistorySeason
 import tmg.flashback.ui.components.navigation.PipeType
 import tmg.flashback.ui.repository.ThemeRepository
+import tmg.utilities.extensions.combinePair
 import tmg.utilities.extensions.ordinalAbbreviation
 import javax.inject.Inject
 
@@ -126,39 +127,27 @@ class DriverSeasonViewModel @Inject constructor(
                         )
                     }
                     else {
-                        if (standing.constructors.size == 1) {
+                        for (x in standing.constructors.indices) {
+                            val const = standing.constructors[(standing.constructors.size - 1) - x]
+                            val dotType: PipeType = when (x) {
+                                0 -> {
+                                    PipeType.START
+                                }
+                                standing.constructors.size - 1 -> {
+                                    PipeType.END
+                                }
+                                else -> {
+                                    PipeType.SINGLE
+                                }
+                            }
                             list.add(
                                 DriverSeasonModel.RacedFor(
                                     null,
-                                    standing.constructors.first(),
-                                    PipeType.SINGLE,
+                                    const,
+                                    dotType,
                                     false
                                 )
                             )
-                        }
-                        else {
-                            for (x in standing.constructors.indices) {
-                                val const = standing.constructors[(standing.constructors.size - 1) - x]
-                                val dotType: PipeType = when (x) {
-                                    0 -> {
-                                        PipeType.START
-                                    }
-                                    standing.constructors.size - 1 -> {
-                                        PipeType.END
-                                    }
-                                    else -> {
-                                        PipeType.SINGLE
-                                    }
-                                }
-                                list.add(
-                                    DriverSeasonModel.RacedFor(
-                                        null,
-                                        const,
-                                        dotType,
-                                        false
-                                    )
-                                )
-                            }
                         }
                     }
 
@@ -200,9 +189,10 @@ class DriverSeasonViewModel @Inject constructor(
     //region Inputs
 
     override fun setup(driverId: String, season: Int) {
-        if (driverId != this.driverId.value) {
+        if (driverId != this.driverId.value || season != this.season) {
             this.season = season
             this.driverId.value = driverId
+            refresh()
         }
     }
 
