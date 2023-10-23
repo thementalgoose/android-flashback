@@ -170,6 +170,7 @@ fun DashboardMenuExpandedScreen(
                     if (expanded.value) {
                         Fade(visible = expanded.value) {
                             TextBody2(
+                                maxLines = 2,
                                 text = stringResource(id = R.string.app_version_placeholder, appVersion),
                                 modifier = Modifier.padding(
                                     horizontal = AppTheme.dimens.medium,
@@ -178,7 +179,10 @@ fun DashboardMenuExpandedScreen(
                             )
                         }
                     } else {
-                        TextBody2(text = "")
+                        TextBody2(
+                            text = " \n ",
+                            maxLines = 2
+                        )
                     }
                 }
                 item {
@@ -294,6 +298,7 @@ private fun DarkModeToggle(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 TextBody1(
+                    maxLines = 1,
                     text = stringResource(id = R.string.dashboard_links_dark_mode),
                     modifier = Modifier
                         .weight(1f)
