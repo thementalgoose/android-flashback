@@ -84,36 +84,27 @@ class DashboardNavViewModel @Inject constructor(
         .stateIn(viewModelScope, SharingStarted.Lazily, MenuItem.Calendar)
 
     override val showMenu: StateFlow<Boolean> = currentDestination
-        .combinePair(navigator.subNavigation)
-        .map { (destination, isSubNavigation) ->
+        .map { destination ->
             if (destination == null) return@map null
 
-            Log.i("DashboardNav", "showMenu updating $destination with sub navigation $isSubNavigation")
+            Log.i("DashboardNav", "showMenu updating $destination")
 
             return@map when {
-                destination.startsWith("results/") -> !isSubNavigation
-                destination == "settings" -> !isSubNavigation
-                destination == "rss" -> !isSubNavigation
-                destination == "search" -> !isSubNavigation
+                destination.startsWith("results/") -> true
+                destination == "settings" -> true
+                destination == "rss" -> true
+                destination == "search" -> true
                 else -> false
             }
-//            return@map when {
-//                destination.startsWith("results/") -> !isSubNavigation
-//                destination == "settings" -> true
-//                destination == "rss" -> true
-//                destination == "search" -> true
-//                else -> false
-//            }
         }
         .filterNotNull()
         .stateIn(viewModelScope, SharingStarted.Lazily, false)
 
     override val showBottomBar: StateFlow<Boolean> = currentDestination
-        .combinePair(navigator.subNavigation)
-        .map { (destination, isSubNavigation) ->
+        .map { destination ->
             return@map when {
                 destination == null -> false
-                destination.startsWith("results/races") -> !isSubNavigation
+                destination.startsWith("results/races") -> true
                 else -> destination.startsWith("results/")
             }
         }

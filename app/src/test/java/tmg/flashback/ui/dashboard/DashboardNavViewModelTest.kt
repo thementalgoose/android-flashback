@@ -52,13 +52,6 @@ internal class DashboardNavViewModelTest: BaseTest() {
             ioDispatcher = Dispatchers.Unconfined
         )
     }
-
-    @BeforeEach
-    fun setUp() {
-        every { mockNavigator.isSubNavigation() } returns false
-        every { mockNavigator.subNavigation } returns MutableStateFlow(false)
-    }
-
     @Test
     fun `initial load of vm runs dashboard use case`() {
         every { mockNavigator.navController } returns mockNavController
