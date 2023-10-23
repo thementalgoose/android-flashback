@@ -1,6 +1,7 @@
 package tmg.flashback.ui.dashboard
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.background
@@ -18,6 +19,7 @@ import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -55,6 +57,15 @@ fun DashboardScreen(
     viewModel: DashboardViewModel = hiltViewModel(),
     deeplink: String?
 ) {
+    val navController = rememberNavController()
+    DisposableEffect(key1 = navController, effect = {
+        Log.i("Dashboard", "Configuring navController to viewmodel")
+        navigator.navController = navController
+        navController.setViewModelStore(viewModelStore)
+        navController.addOnDestinationChangedListener(navViewModel)
+        return@DisposableEffect onDispose {  }
+    })
+
     val currentlySelectedItem = navViewModel.outputs.currentlySelectedItem.collectAsState(MenuItem.Calendar)
     val seasonScreenItemsList = navViewModel.outputs.seasonScreenItemsList.collectAsState(emptyList())
     val appFeatureItemsList = navViewModel.outputs.appFeatureItemsList.collectAsState(emptyList())
@@ -71,11 +82,6 @@ fun DashboardScreen(
     val titleIcon = viewModel.outputs.titleIcon.collectAsState(null)
     val ukraine = viewModel.outputs.ukraine.collectAsState(false)
 
-    val navController = rememberNavController()
-    navigator.navController = navController
-    navController.setViewModelStore(viewModelStore)
-    navController.addOnDestinationChangedListener(navViewModel)
-
     DashboardScreen(
         windowSize = windowSize,
         windowLayoutInfo = windowLayoutInfo,
@@ -89,6 +95,7 @@ fun DashboardScreen(
         debugMenuItems = debugMenuItems.value,
         debugMenuItemClicked = navViewModel.inputs::clickDebug,
         menuItemClicked = navViewModel.inputs::clickItem,
+        isRoot = navViewModel.inputs::navigationInRoot,
         showBottomBar = showBottomBar.value,
         showMenu = showMenu.value,
         darkMode = darkMode.value,
@@ -117,6 +124,7 @@ fun DashboardScreen(
     debugMenuItems: List<DebugMenuItem>,
     debugMenuItemClicked: (DebugMenuItem) -> Unit,
     menuItemClicked: (MenuItem) -> Unit,
+    isRoot: (String, Boolean) -> Unit,
     showBottomBar: Boolean,
     showMenu: Boolean,
     darkMode: Boolean,
@@ -136,17 +144,15 @@ fun DashboardScreen(
     val foldingConfig = windowLayoutInfo.getFoldingConfig()
 
     // Close panel if window size is changes via. configuration change
-    DisposableEffect(windowSize, effect = {
-        coroutineScope.launch { panelsState.closePanels() }
-        return@DisposableEffect this.onDispose {  }
+    LaunchedEffect(windowSize, block = {
+        panelsState.closePanels()
     })
 
     // Close the menu if we shouldn't be showing it
-    DisposableEffect(showMenu, effect = {
+    LaunchedEffect(showMenu, block = {
         if (!showMenu) {
-            coroutineScope.launch { panelsState.closePanels() }
+            panelsState.closePanels()
         }
-        return@DisposableEffect this.onDispose {  }
     })
 
     val openMenu: () -> Unit = {
@@ -254,22 +260,18 @@ fun DashboardScreen(
                             .weight(1f)
                             .background(AppTheme.colors.backgroundContainer)
                         ) {
-//                            if (windowSize.widthSizeClass != WindowWidthSizeClass.Compact) {
-//                                Box(
-//                                    Modifier
-//                                        .width(1.dp)
-//                                        .fillMaxHeight()
-//                                        .background(AppTheme.colors.backgroundSecondary.copy(alpha = 0.5f)))
-//                            }
                             AppGraph(
                                 modifier = Modifier
                                     .weight(1f)
-                                    .padding(bottom = when (windowSize.widthSizeClass == WindowWidthSizeClass.Compact) {
-                                        true -> appBarHeight - navigationBarPosition.value
-                                        false -> 0.dp
-                                    }),
+                                    .padding(
+                                        bottom = when (windowSize.widthSizeClass == WindowWidthSizeClass.Compact) {
+                                            true -> appBarHeight - navigationBarPosition.value
+                                            false -> 0.dp
+                                        }
+                                    ),
                                 advertProvider = advertProvider,
                                 deeplink = deeplink,
+                                isRoot = isRoot,
                                 navController = navigator.navController,
                                 openMenu = openMenu,
                                 windowSize = windowSize,

@@ -11,6 +11,9 @@ import androidx.compose.material.IconButton
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -62,11 +65,15 @@ private val expandIcon = 20.dp
 fun RacesScreen(
     actionUpClicked: () -> Unit,
     windowSizeClass: WindowSizeClass,
+    isRoot: (Boolean) -> Unit,
     advertProvider: AdvertProvider,
     viewModel: RacesViewModel = hiltViewModel(),
     weekendNavigationComponent: WeekendNavigationComponent = requireWeekendNavigationComponent()
 ) {
     val uiState = viewModel.outputs.uiState.collectAsState()
+    LaunchedEffect(uiState.value.currentRace != null, block = {
+        isRoot(uiState.value.currentRace != null)
+    })
 
     MasterDetailsPane(
         windowSizeClass = windowSizeClass,

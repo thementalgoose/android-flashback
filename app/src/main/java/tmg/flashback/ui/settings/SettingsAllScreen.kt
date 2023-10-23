@@ -43,12 +43,16 @@ import tmg.flashback.ui.settings.web.SettingsWebScreenVM
 fun SettingsAllScreenVM(
     actionUpClicked: () -> Unit = { },
     windowSizeClass: WindowSizeClass,
+    isRoot: (Boolean) -> Unit,
     viewModel: SettingsAllViewModel = hiltViewModel(),
     rssNavigationComponent: RSSNavigationComponent = requireRSSNavigationComponent()
 ) {
     ScreenView(screenName = "Settings")
 
     val uiState = viewModel.outputs.uiState.collectAsState()
+    LaunchedEffect(uiState.value.selectedSubScreen != null, block = {
+        isRoot(uiState.value.selectedSubScreen != null)
+    })
     OnLifecycleEvent { _, event ->
         when (event) {
             Lifecycle.Event.ON_RESUME -> viewModel.refresh()

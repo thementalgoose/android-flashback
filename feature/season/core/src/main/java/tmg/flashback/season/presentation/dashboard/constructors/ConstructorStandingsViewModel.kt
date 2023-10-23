@@ -60,12 +60,10 @@ class ConstructorStandingsViewModel @Inject constructor(
     }
 
     override fun selectConstructor(constructor: SeasonConstructorStandingSeason) {
-        navigator.setSubNavigation()
         uiState.value = uiState.value.copy(currentlySelected = constructor)
     }
 
     override fun closeConstructor() {
-        navigator.clearSubNavigation()
         uiState.value = uiState.value.copy(currentlySelected = null)
     }
 

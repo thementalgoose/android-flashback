@@ -17,6 +17,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
+import org.junit.runners.Parameterized.Parameter
 import tmg.flashback.crashlytics.manager.CrashlyticsManager
 import tmg.flashback.debug.DebugNavigationComponent
 import tmg.flashback.debug.model.DebugMenuItem
@@ -52,13 +53,6 @@ internal class DashboardNavViewModelTest: BaseTest() {
             ioDispatcher = Dispatchers.Unconfined
         )
     }
-
-    @BeforeEach
-    fun setUp() {
-        every { mockNavigator.isSubNavigation() } returns false
-        every { mockNavigator.subNavigation } returns MutableStateFlow(false)
-    }
-
     @Test
     fun `initial load of vm runs dashboard use case`() {
         every { mockNavigator.navController } returns mockNavController
@@ -73,9 +67,9 @@ internal class DashboardNavViewModelTest: BaseTest() {
 
     @ParameterizedTest(name = "Route {0} means currently selected menu item is updated to {1}")
     @CsvSource(
-        "results/calendar/2022,Calendar",
-        "results/drivers/2022,Drivers",
-        "results/constructors/2022,Constructors",
+        "results/calendar,Calendar",
+        "results/drivers,Drivers",
+        "results/constructors,Constructors",
         "settings,Settings",
         "settings/rss,Settings",
         "rss,RSS",
@@ -165,6 +159,32 @@ internal class DashboardNavViewModelTest: BaseTest() {
             mockNavigator.navigate(capture(destination))
         }
         assertEquals(route, destination.captured.route)
+    }
+
+    @ParameterizedTest(name = "Navigation in root locks {0} route showMenu to {1} ")
+    @CsvSource(
+        "results/races",
+        "results/constructors",
+        "results/drivers",
+        "rss",
+        "settings",
+        "search"
+    )
+    fun `navigation in root applies properly to route`(route: String) = runTest(testDispatcher) {
+
+        initUnderTest()
+
+        underTest.onDestinationChanged(mockNavController, mockNavDestination(route), null)
+        underTest.showMenu.test {
+            assertEquals(true, awaitItem())
+
+            underTest.navigationInRoot(route, false)
+            assertEquals(false, awaitItem())
+
+            underTest.navigationInRoot(route, true)
+            assertEquals(true, awaitItem())
+        }
+
     }
 
     @Test
