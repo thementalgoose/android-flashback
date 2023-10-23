@@ -72,6 +72,7 @@ fun AppGraph(
             RacesScreen(
                 actionUpClicked = openMenu,
                 windowSizeClass = windowSize,
+                deeplink = deeplink,
                 isRoot = { isRoot(Screen.Races.route, !it) },
                 advertProvider = advertProvider
             )
@@ -187,14 +188,15 @@ fun AppGraph(
     }
 
     DisposableEffect(Unit) {
-        deeplink?.let {
-            if (it.isNotEmpty()) {
-                navigator.navigate(it.asNavigationDestination())
-            }
+        when (deeplink) {
+            Screen.RSS.route -> navigator.navigate(deeplink.asNavigationDestination())
+            Screen.Search.route -> navigator.navigate(deeplink.asNavigationDestination())
         }
         this.onDispose { }
     }
 }
+
+
 
 private inline fun <reified T: Parcelable> NavBackStackEntry.getArgument(key: String): T {
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
