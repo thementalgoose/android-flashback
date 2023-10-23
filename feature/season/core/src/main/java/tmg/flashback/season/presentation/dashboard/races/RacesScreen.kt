@@ -11,9 +11,7 @@ import androidx.compose.material.IconButton
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,6 +25,7 @@ import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import kotlinx.serialization.json.Json
 import org.threeten.bp.LocalDate
 import tmg.flashback.ads.ads.components.AdvertProvider
 import tmg.flashback.formula1.extensions.icon
@@ -55,8 +54,10 @@ import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
 import tmg.flashback.weekend.contract.WeekendNavigationComponent
 import tmg.flashback.weekend.contract.model.ScreenWeekendData
 import tmg.flashback.weekend.contract.requireWeekendNavigationComponent
+import tmg.flashback.weekend.contract.stripWeekendJsonData
 import tmg.utilities.extensions.format
 import tmg.utilities.extensions.startOfWeek
+import java.lang.RuntimeException
 
 private const val listAlpha = 0.6f
 private val expandIcon = 20.dp
@@ -65,6 +66,7 @@ private val expandIcon = 20.dp
 fun RacesScreen(
     actionUpClicked: () -> Unit,
     windowSizeClass: WindowSizeClass,
+    deeplink: String?,
     isRoot: (Boolean) -> Unit,
     advertProvider: AdvertProvider,
     viewModel: RacesViewModel = hiltViewModel(),
@@ -73,6 +75,16 @@ fun RacesScreen(
     val uiState = viewModel.outputs.uiState.collectAsState()
     LaunchedEffect(uiState.value.currentRace != null, block = {
         isRoot(uiState.value.currentRace != null)
+    })
+
+    LaunchedEffect(Unit, block = {
+        try {
+            if (deeplink?.startsWith("weekend/") == true) {
+                val json = deeplink.stripWeekendJsonData()
+                val model = Json.decodeFromString(ScreenWeekendData.serializer(), json)
+                viewModel.inputs.deeplinkToo(model)
+            }
+        } catch (e: RuntimeException) { /* Do nothing */ }
     })
 
     MasterDetailsPane(
@@ -95,7 +107,7 @@ fun RacesScreen(
             weekendNavigationComponent.Weekend(
                 actionUpClicked = viewModel.inputs::back,
                 windowSizeClass = windowSizeClass,
-                weekendData = ScreenWeekendData(race)
+                weekendData = race
             )
         }
     )
