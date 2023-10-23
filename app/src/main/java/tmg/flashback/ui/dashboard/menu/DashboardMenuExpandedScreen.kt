@@ -50,10 +50,10 @@ import tmg.flashback.ui.dashboard.FeaturePrompt
 import tmg.flashback.ui.dashboard.MenuItem
 import tmg.flashback.ui.foldables.FoldingConfig
 
-val columnWidthCollapsed: Dp = 56.dp
+val columnWidthCollapsed: Dp = 72.dp
 private val heroSize: Dp = 48.dp
-private val itemSize: Dp = 38.dp
-private val iconSize: Dp = 20.dp
+private val itemSize: Dp = 42.dp
+private val iconSize: Dp = 24.dp
 val columnWidthExpanded: Dp = 240.dp
 val columnWidthExpandedLocked: Dp = 260.dp
 
@@ -205,7 +205,7 @@ private fun NavigationItem(
         else -> Color.Transparent
     }, label = "navItem-backgroundColor")
     val iconPadding = animateDpAsState(targetValue = when (isExpanded) {
-        true -> AppTheme.dimens.medium
+        true -> AppTheme.dimens.nsmall
         false -> (itemSize - iconSize) / 2
     }, label = "navItem-iconPadding")
 
@@ -256,7 +256,7 @@ private fun DarkModeToggle(
     modifier: Modifier = Modifier
 ) {
     val iconPadding = animateDpAsState(targetValue = when (isExpanded) {
-        true -> AppTheme.dimens.medium
+        true -> AppTheme.dimens.nsmall
         false -> (itemSize - iconSize) / 2
     }, label = "navItem-iconPadding")
     val switchScale = animateFloatAsState(targetValue = when (isExpanded) {
@@ -380,7 +380,7 @@ private fun HeroItem(
     onClick: (() -> Unit)?,
 ) {
     val iconPadding = animateDpAsState(targetValue = when (isExpanded) {
-        true -> AppTheme.dimens.medium
+        true -> AppTheme.dimens.nsmall
         false -> (itemSize - iconSize) / 2
     }, label = "iconPadding")
 
