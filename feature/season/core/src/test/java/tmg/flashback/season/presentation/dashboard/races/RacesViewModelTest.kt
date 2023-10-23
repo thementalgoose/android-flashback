@@ -29,6 +29,7 @@ import tmg.flashback.season.contract.repository.NotificationsRepository
 import tmg.flashback.season.presentation.dashboard.shared.seasonpicker.CurrentSeasonHolder
 import tmg.flashback.season.repository.HomeRepository
 import tmg.flashback.season.usecases.DefaultSeasonUseCase
+import tmg.flashback.weekend.contract.model.ScreenWeekendData
 import tmg.testutils.BaseTest
 
 internal class RacesViewModelTest: BaseTest() {
@@ -185,7 +186,7 @@ internal class RacesViewModelTest: BaseTest() {
 
         underTest.clickItem(expectedRaceWeek1)
         underTest.outputs.uiState.test {
-            assertEquals(overview1, awaitItem().currentRace)
+            assertEquals(ScreenWeekendData(overview1), awaitItem().currentRace)
 
             underTest.back()
             assertEquals(null, awaitItem().currentRace)
@@ -234,6 +235,23 @@ internal class RacesViewModelTest: BaseTest() {
         underTest.inputs.clickItem(RacesModel.AllEvents)
         verify {
             mockResultsNavigationComponent.preseasonEvents(2020)
+        }
+    }
+
+    @Test
+    fun `injecting deeplink updates state`() = runTest {
+        val screenWeekendData = mockk<ScreenWeekendData>(relaxed = true)
+        initUnderTest()
+        underTest.inputs.deeplinkToo(screenWeekendData)
+
+        underTest.outputs.uiState.test {
+            assertEquals(screenWeekendData, awaitItem().currentRace)
+
+            underTest.inputs.back()
+            assertEquals(null, awaitItem().currentRace)
+
+            underTest.inputs.deeplinkToo(screenWeekendData)
+            this.ensureAllEventsConsumed()
         }
     }
 }
