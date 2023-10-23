@@ -50,10 +50,10 @@ import tmg.flashback.ui.dashboard.FeaturePrompt
 import tmg.flashback.ui.dashboard.MenuItem
 import tmg.flashback.ui.foldables.FoldingConfig
 
-val columnWidthCollapsed: Dp = 56.dp
+val columnWidthCollapsed: Dp = 72.dp
 private val heroSize: Dp = 48.dp
-private val itemSize: Dp = 38.dp
-private val iconSize: Dp = 20.dp
+private val itemSize: Dp = 42.dp
+private val iconSize: Dp = 24.dp
 val columnWidthExpanded: Dp = 240.dp
 val columnWidthExpandedLocked: Dp = 260.dp
 
