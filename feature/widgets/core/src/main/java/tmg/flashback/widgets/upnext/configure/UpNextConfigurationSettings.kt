@@ -24,7 +24,7 @@ object UpNextConfigurationSettings {
         title = R.string.widget_settings_click_to_event_title,
         subtitle = R.string.widget_settings_click_to_event_description,
         isChecked = isChecked,
-        isBeta = false
+        isBeta = true
     )
 
     fun showWeather(show: Boolean) = Setting.Switch(
