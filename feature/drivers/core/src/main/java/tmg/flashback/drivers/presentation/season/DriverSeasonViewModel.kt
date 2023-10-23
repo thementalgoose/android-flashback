@@ -16,7 +16,6 @@ import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.DriverHistorySeason
 import tmg.flashback.ui.components.navigation.PipeType
 import tmg.flashback.ui.repository.ThemeRepository
-import tmg.utilities.extensions.combinePair
 import tmg.utilities.extensions.ordinalAbbreviation
 import javax.inject.Inject
 
@@ -56,24 +55,22 @@ class DriverSeasonViewModel @Inject constructor(
 
     override val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
-    private var season: Int = -1
-
-    private val driverId: MutableStateFlow<String?> = MutableStateFlow(null)
-    private val driverIdWithRequest: Flow<String?> = driverId
+    private val driverIdAndSeason: MutableStateFlow<Pair<String, Int>?> = MutableStateFlow(null)
+    private val driverIdWithRequest: Flow<Pair<String, Int>?> = driverIdAndSeason
         .filterNotNull()
         .flatMapLatest { id ->
             return@flatMapLatest flow {
-                if (driverRepository.getDriverSeasonCount(id) == 0) {
+                if (driverRepository.getDriverSeasonCount(id.first) == 0) {
                     isLoading.value = true
                     emit(null)
-                    driverRepository.fetchDriver(id)
+                    driverRepository.fetchDriver(id.first)
                     isLoading.value = false
                     emit(id)
                 }
                 else {
                     emit(id)
                     isLoading.value = true
-                    driverRepository.fetchDriver(id)
+                    driverRepository.fetchDriver(id.first)
                     isLoading.value = false
                 }
             }
@@ -81,119 +78,123 @@ class DriverSeasonViewModel @Inject constructor(
         .flowOn(ioDispatcher)
 
     override val list: StateFlow<List<DriverSeasonModel>> = driverIdWithRequest
-        .filterNotNull()
-        .flatMapLatest { driverRepository.getDriverOverview(it) }
-        .map { overview ->
-            val list: MutableList<DriverSeasonModel> = mutableListOf()
-            val standing = overview?.standings?.firstOrNull { it.season == season }
-            when {
-                overview == null || standing == null -> {
-                    if (overview != null) {
-                        list.add(DriverSeasonModel.Header(overview.driver))
-                    }
-                    when {
-                        !connectivityManager.isConnected -> list.add(DriverSeasonModel.NetworkError)
-                        else -> list.add(DriverSeasonModel.InternalError)
-                    }
-                }
-                else -> {
-                    list.add(DriverSeasonModel.Header(overview.driver))
-
-                    if (standing.isInProgress) {
-                        standing.raceOverview.maxByOrNull { it.raceInfo.round }?.let {
-                            list.add(
-                                DriverSeasonModel.Message(
-                                    R.string.results_accurate_for,
-                                    listOf(it.raceInfo.name, it.raceInfo.round)
-                                )
-                            )
-                        }
-                    }
-
-                    list.addStat(
-                        icon = R.drawable.ic_team,
-                        label = R.string.driver_overview_stat_career_team,
-                        value = ""
-                    )
-                    if (standing.constructors.size == 1) {
-                        val const = standing.constructors.first()
-                        list.add(
-                            DriverSeasonModel.RacedFor(
-                                null,
-                                const,
-                                PipeType.SINGLE,
-                                false
-                            )
-                        )
-                    }
-                    else {
-                        for (x in standing.constructors.indices) {
-                            val const = standing.constructors[(standing.constructors.size - 1) - x]
-                            val dotType: PipeType = when (x) {
-                                0 -> {
-                                    PipeType.START
-                                }
-                                standing.constructors.size - 1 -> {
-                                    PipeType.END
-                                }
-                                else -> {
-                                    PipeType.SINGLE
-                                }
-                            }
-                            list.add(
-                                DriverSeasonModel.RacedFor(
-                                    null,
-                                    const,
-                                    dotType,
-                                    false
-                                )
-                            )
-                        }
-                    }
-
-                    list.addAll(getAllStats(standing))
-
-                    list.add(DriverSeasonModel.ResultHeader)
-
-                    list.addAll(standing
-                        .raceOverview
-                        .map {
-                            DriverSeasonModel.Result(
-                                isSprint = it.isSprint,
-                                season = it.raceInfo.season,
-                                round = it.raceInfo.round,
-                                raceName = it.raceInfo.name,
-                                circuitName = it.raceInfo.circuit.name,
-                                circuitId = it.raceInfo.circuit.id,
-                                raceCountry = it.raceInfo.circuit.country,
-                                raceCountryISO = it.raceInfo.circuit.countryISO,
-                                showConstructorLabel = standing.constructors.size > 1,
-                                constructor = it.constructor ?: standing.constructors.last(),
-                                date = it.raceInfo.date,
-                                qualified = it.qualified,
-                                finished = it.finished,
-                                raceStatus = it.status,
-                                points = it.points,
-                                maxPoints = Formula1.maxDriverPointsBySeason(it.raceInfo.season)
-                            )
-                        }
-                        .sortedBy { it.isSprint }
-                        .sortedBy { it.round }
-                    )
+        .flatMapLatest { idAndSeason ->
+            if (idAndSeason == null) {
+                return@flatMapLatest flow {
+                    emit(mutableListOf<DriverSeasonModel>(DriverSeasonModel.Loading))
                 }
             }
-            return@map list
+
+            val (id, season) = idAndSeason
+            return@flatMapLatest driverRepository.getDriverOverview(id)
+                .map { overview ->
+                    val list: MutableList<DriverSeasonModel> = mutableListOf()
+                    val standing = overview?.standings?.firstOrNull { it.season == season }
+                    when {
+                        overview == null || standing == null -> {
+                            if (overview != null) {
+                                list.add(DriverSeasonModel.Header(overview.driver))
+                            }
+                            when {
+                                !connectivityManager.isConnected -> list.add(DriverSeasonModel.NetworkError)
+                                else -> list.add(DriverSeasonModel.InternalError)
+                            }
+                        }
+                        else -> {
+                            list.add(DriverSeasonModel.Header(overview.driver))
+
+                            if (standing.isInProgress) {
+                                standing.raceOverview.maxByOrNull { it.raceInfo.round }?.let {
+                                    list.add(
+                                        DriverSeasonModel.Message(
+                                            R.string.results_accurate_for,
+                                            listOf(it.raceInfo.name, it.raceInfo.round)
+                                        )
+                                    )
+                                }
+                            }
+
+                            list.addStat(
+                                icon = R.drawable.ic_team,
+                                label = R.string.driver_overview_stat_career_team,
+                                value = ""
+                            )
+                            if (standing.constructors.size == 1) {
+                                val const = standing.constructors.first()
+                                list.add(
+                                    DriverSeasonModel.RacedFor(
+                                        null,
+                                        const,
+                                        PipeType.SINGLE,
+                                        false
+                                    )
+                                )
+                            }
+                            else {
+                                for (x in standing.constructors.indices) {
+                                    val const = standing.constructors[(standing.constructors.size - 1) - x]
+                                    val dotType: PipeType = when (x) {
+                                        0 -> {
+                                            PipeType.START
+                                        }
+                                        standing.constructors.size - 1 -> {
+                                            PipeType.END
+                                        }
+                                        else -> {
+                                            PipeType.SINGLE
+                                        }
+                                    }
+                                    list.add(
+                                        DriverSeasonModel.RacedFor(
+                                            null,
+                                            const,
+                                            dotType,
+                                            false
+                                        )
+                                    )
+                                }
+                            }
+
+                            list.addAll(getAllStats(standing))
+
+                            list.add(DriverSeasonModel.ResultHeader)
+
+                            list.addAll(standing
+                                .raceOverview
+                                .map {
+                                    DriverSeasonModel.Result(
+                                        isSprint = it.isSprint,
+                                        season = it.raceInfo.season,
+                                        round = it.raceInfo.round,
+                                        raceName = it.raceInfo.name,
+                                        circuitName = it.raceInfo.circuit.name,
+                                        circuitId = it.raceInfo.circuit.id,
+                                        raceCountry = it.raceInfo.circuit.country,
+                                        raceCountryISO = it.raceInfo.circuit.countryISO,
+                                        showConstructorLabel = standing.constructors.size > 1,
+                                        constructor = it.constructor ?: standing.constructors.last(),
+                                        date = it.raceInfo.date,
+                                        qualified = it.qualified,
+                                        finished = it.finished,
+                                        raceStatus = it.status,
+                                        points = it.points,
+                                        maxPoints = Formula1.maxDriverPointsBySeason(it.raceInfo.season)
+                                    )
+                                }
+                                .sortedBy { it.isSprint }
+                                .sortedBy { it.round }
+                            )
+                        }
+                    }
+                    return@map list
+                }
         }
         .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
     //region Inputs
 
     override fun setup(driverId: String, season: Int) {
-        if (driverId != this.driverId.value || season != this.season) {
-            this.season = season
-            this.driverId.value = driverId
-            refresh()
-        }
+        this.driverIdAndSeason.value = Pair(driverId, season)
     }
 
     override fun clickSeasonRound(result: DriverSeasonModel.Result) {
@@ -203,8 +204,8 @@ class DriverSeasonViewModel @Inject constructor(
     override fun refresh() {
         isLoading.value = true
         viewModelScope.launch(context = ioDispatcher) {
-            driverId.value?.let {
-                val result = driverRepository.fetchDriver(it)
+            driverIdAndSeason.value?.let {
+                val result = driverRepository.fetchDriver(it.first)
                 isLoading.value = false
             }
         }
