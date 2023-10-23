@@ -25,6 +25,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -66,11 +67,15 @@ import tmg.flashback.weekend.contract.requireWeekendNavigationComponent
 fun SearchScreenVM(
     actionUpClicked: () -> Unit,
     windowSizeClass: WindowSizeClass,
+    isRoot: (Boolean) -> Unit,
     viewModel: SearchViewModel = hiltViewModel(),
     advertProvider: AdvertProvider,
     weekendNavigationComponent: WeekendNavigationComponent = requireWeekendNavigationComponent()
 ) {
     val uiState = viewModel.outputs.uiState.collectAsState()
+    LaunchedEffect(uiState.value.selected != null, block = {
+        isRoot(uiState.value.selected != null)
+    })
 
     MasterDetailsPane(
         windowSizeClass = windowSizeClass,

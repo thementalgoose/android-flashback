@@ -32,57 +32,6 @@ import tmg.flashback.ui.annotations.PreviewPhone
 import tmg.flashback.ui.annotations.PreviewTablet
 import tmg.flashback.ui.components.loading.Fade
 
-//private const val MASTER_WEIGHT = 9f
-//private const val DETAIL_WEIGHT = 10f
-//
-//@Composable
-//fun MasterDetailsPane(
-//    windowSizeClass: WindowSizeClass,
-//    master: @Composable () -> Unit,
-//    detailsShow: Boolean,
-//    details: @Composable () -> Unit,
-//    detailsActionUpClicked: () -> Unit
-//) {
-//    Row(
-//        Modifier
-//            .fillMaxSize()
-//            .background(AppTheme.colors.backgroundPrimary)
-//    ) {
-//        Box(
-//            Modifier
-//                .weight(MASTER_WEIGHT)
-//                .fillMaxHeight()
-//        ) {
-//            master()
-//            if (windowSizeClass.widthSizeClass != WindowWidthSizeClass.Expanded) {
-//                Fade(visible = detailsShow) {
-//                    Box(
-//                        Modifier
-//                            .fillMaxSize()
-//                            .background(AppTheme.colors.backgroundPrimary)
-//                    )
-//                    if (detailsShow) {
-//                        details()
-//                        BackHandler(onBack = detailsActionUpClicked)
-//                    }
-//                }
-//            }
-//        }
-//        if (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Expanded && detailsShow) {
-//            Box(
-//                modifier = Modifier
-//                    .weight(DETAIL_WEIGHT)
-//                    .fillMaxHeight()
-//                    .background(AppTheme.colors.backgroundTertiary),
-//                contentAlignment = Alignment.Center
-//            ) {
-//                details()
-//                BackHandler(onBack = detailsActionUpClicked)
-//            }
-//        }
-//    }
-//}
-
 private val detailsMinWidth = 320.dp
 private const val DETAILS_RATIO = 0.58f
 
@@ -105,7 +54,6 @@ fun MasterDetailsPane(
             false -> maxWidth
         }, label = "mdp_offset")
 
-        println("DetailsWidth = $detailsWidth")
         Box(
             Modifier
                 .width(if (windowSizeClass.widthSizeClass != WindowWidthSizeClass.Expanded) maxWidth else detailsOffset.value)

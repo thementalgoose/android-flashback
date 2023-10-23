@@ -186,15 +186,9 @@ internal class RSSViewModelTest: BaseTest() {
 
             underTest.clickArticle(mockArticle)
             assertEquals(RSSViewModel.UiStateOpened.WebArticle(mockArticle), (awaitItem() as RSSViewModel.UiState.Data).opened)
-            verify {
-                mockNavigator.setSubNavigation()
-            }
 
             underTest.back()
             assertEquals(null, (awaitItem() as RSSViewModel.UiState.Data).opened)
-            verify {
-                mockNavigator.clearSubNavigation()
-            }
         }
     }
 

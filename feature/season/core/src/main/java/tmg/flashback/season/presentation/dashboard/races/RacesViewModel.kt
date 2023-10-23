@@ -98,7 +98,6 @@ class RacesViewModel @Inject constructor(
         val events = eventsRepository.getEvents(season).firstOrNull()
 
         if (overview == null || overview.overviewRaces.isEmpty()) {
-            navigator.clearSubNavigation()
             uiState.value = uiState.value.copy(
                 items = null,
                 isLoading = false,
@@ -129,7 +128,6 @@ class RacesViewModel @Inject constructor(
     }
 
     override fun back() {
-        navigator.clearSubNavigation()
         uiState.value = uiState.value.copy(
             currentRace = null
         )
@@ -139,7 +137,6 @@ class RacesViewModel @Inject constructor(
         when (model) {
             is RacesModel.EmptyWeek -> {}
             is RacesModel.RaceWeek -> {
-                navigator.setSubNavigation()
                 uiState.value = uiState.value.copy(
                     currentRace = model.model
                 )

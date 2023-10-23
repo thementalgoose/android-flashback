@@ -186,15 +186,9 @@ internal class RacesViewModelTest: BaseTest() {
         underTest.clickItem(expectedRaceWeek1)
         underTest.outputs.uiState.test {
             assertEquals(overview1, awaitItem().currentRace)
-            verify {
-                mockNavigator.setSubNavigation()
-            }
 
             underTest.back()
             assertEquals(null, awaitItem().currentRace)
-            verify {
-                mockNavigator.clearSubNavigation()
-            }
         }
     }
 

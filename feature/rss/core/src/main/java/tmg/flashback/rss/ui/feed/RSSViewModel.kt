@@ -102,13 +102,11 @@ class RSSViewModel @Inject constructor(
         uiState.value = createOrUpdate {
             this.copy(opened = UiStateOpened.ConfigureSources)
         }
-        navigator.setSubNavigation()
     }
 
     override fun back() {
         if (uiState.value is UiState.Data) {
             uiState.value = createOrUpdate { this.copy(opened = null) }
-            navigator.clearSubNavigation()
         }
     }
 
@@ -118,7 +116,6 @@ class RSSViewModel @Inject constructor(
                 opened = UiStateOpened.WebArticle(article)
             )
         }
-        navigator.setSubNavigation()
     }
 
     private fun createOrUpdate(callback: UiState.Data.() -> UiState.Data): UiState.Data {

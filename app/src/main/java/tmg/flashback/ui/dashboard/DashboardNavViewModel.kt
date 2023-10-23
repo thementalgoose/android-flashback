@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -37,6 +38,7 @@ import javax.inject.Inject
 interface DashboardNavViewModelInputs {
     fun clickItem(navigationItem: MenuItem)
     fun clickDebug(debugMenuItem: DebugMenuItem)
+    fun navigationInRoot(destination: String, inRoot: Boolean)
 }
 
 interface DashboardNavViewModelOutputs {
@@ -65,14 +67,17 @@ class DashboardNavViewModel @Inject constructor(
     val outputs: DashboardNavViewModelOutputs = this
 
     private val currentDestination: MutableStateFlow<String?> = MutableStateFlow(null)
+    private val currentDestinationInRoot: MutableStateFlow<Map<String, Boolean>> = MutableStateFlow(mapOf())
 
     override val currentlySelectedItem: StateFlow<MenuItem> = currentDestination
-        .map { destination ->
+        .combinePair(currentDestinationInRoot)
+        .distinctUntilChanged()
+        .map { (destination, inRoot) ->
             if (destination == null) return@map null
             val item: MenuItem? = when {
-                destination.startsWith("results/races") -> MenuItem.Calendar
-                destination.startsWith("results/drivers") -> MenuItem.Drivers
-                destination.startsWith("results/constructors") -> MenuItem.Constructors
+                destination == Screen.Races.route -> MenuItem.Calendar
+                destination == Screen.DriverStandings.route -> MenuItem.Drivers
+                destination == Screen.ConstructorsStandings.route -> MenuItem.Constructors
                 destination.startsWith("settings") -> MenuItem.Settings
                 destination.startsWith("rss") -> MenuItem.RSS
                 destination.startsWith("search") -> MenuItem.Search
@@ -84,37 +89,33 @@ class DashboardNavViewModel @Inject constructor(
         .stateIn(viewModelScope, SharingStarted.Lazily, MenuItem.Calendar)
 
     override val showMenu: StateFlow<Boolean> = currentDestination
-        .combinePair(navigator.subNavigation)
-        .map { (destination, isSubNavigation) ->
+        .combinePair(currentDestinationInRoot)
+        .distinctUntilChanged()
+        .map { (destination, destinationInRoot) ->
             if (destination == null) return@map null
-
-            Log.i("DashboardNav", "showMenu updating $destination with sub navigation $isSubNavigation")
-
+            Log.i("Nav", "showMenu $destination")
             return@map when {
-                destination.startsWith("results/") -> !isSubNavigation
-                destination == "settings" -> !isSubNavigation
-                destination == "rss" -> !isSubNavigation
-                destination == "search" -> !isSubNavigation
+                destination.startsWith("results/") -> destinationInRoot.includes(destination)
+                destination == "settings" -> destinationInRoot.includes(destination)
+                destination == "rss" -> destinationInRoot.includes(destination)
+                destination == "search" -> destinationInRoot.includes(destination)
                 else -> false
             }
-//            return@map when {
-//                destination.startsWith("results/") -> !isSubNavigation
-//                destination == "settings" -> true
-//                destination == "rss" -> true
-//                destination == "search" -> true
-//                else -> false
-//            }
         }
         .filterNotNull()
         .stateIn(viewModelScope, SharingStarted.Lazily, false)
 
     override val showBottomBar: StateFlow<Boolean> = currentDestination
-        .combinePair(navigator.subNavigation)
-        .map { (destination, isSubNavigation) ->
-            return@map when {
-                destination == null -> false
-                destination.startsWith("results/races") -> !isSubNavigation
-                else -> destination.startsWith("results/")
+        .combinePair(currentDestinationInRoot)
+        .distinctUntilChanged()
+        .map { (destination, destinationInRoot) ->
+            Log.i("Nav", "showBottomBar $destination")
+            return@map when (destination) {
+                Screen.Races.route -> destinationInRoot.includes(destination)
+                Screen.ConstructorsStandings.route -> destinationInRoot.includes(destination)
+                Screen.DriverStandings.route -> destinationInRoot.includes(destination)
+                null -> false
+                else -> false
             }
         }
         .stateIn(viewModelScope, SharingStarted.Lazily, false)
@@ -162,11 +163,22 @@ class DashboardNavViewModel @Inject constructor(
         debugNavigationComponent.navigateTo(debugMenuItem.id)
     }
 
+    private fun Map<String, Boolean>.includes(destination: String) =
+        this[destination] ?: true
+
+    override fun navigationInRoot(destination: String, inRoot: Boolean) {
+        Log.i("DashboardNav", "navigationInRoot => $destination [$inRoot]")
+        val set = currentDestinationInRoot.value.toMutableMap()
+        set[destination] = inRoot
+        currentDestinationInRoot.value = set.toMap()
+    }
+
     override fun onDestinationChanged(
         controller: NavController,
         destination: NavDestination,
         arguments: Bundle?
     ) {
+        Log.i("DashboardNav", "Destination changed => ${destination.route}")
         currentDestination.value = destination.route
     }
 }
