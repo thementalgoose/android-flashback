@@ -53,6 +53,7 @@ fun AppGraph(
     openMenu: () -> Unit,
     navController: NavHostController,
     deeplink: String?,
+    isRoot: (String, Boolean) -> Unit,
     windowSize: WindowSizeClass,
     windowInfo: WindowLayoutInfo,
     navigator: Navigator,
@@ -71,6 +72,7 @@ fun AppGraph(
             RacesScreen(
                 actionUpClicked = openMenu,
                 windowSizeClass = windowSize,
+                isRoot = { isRoot(Screen.Races.route, it) },
                 advertProvider = advertProvider
             )
         }
@@ -79,20 +81,23 @@ fun AppGraph(
             ConstructorStandingsScreenVM(
                 actionUpClicked = openMenu,
                 windowSizeClass = windowSize,
+                isRoot = { isRoot(Screen.ConstructorsStandings.route, it) }
             )
         }
 
         composable(Screen.DriverStandings.route) {
             DriverStandingsScreenVM(
                 actionUpClicked = openMenu,
-                windowSizeClass = windowSize
+                windowSizeClass = windowSize,
+                isRoot = { isRoot(Screen.DriverStandings.route, it) }
             )
         }
 
         composable(Screen.Settings.All.route) {
             SettingsAllScreenVM(
                 actionUpClicked = openMenu,
-                windowSizeClass = windowSize
+                windowSizeClass = windowSize,
+                isRoot = { isRoot(Screen.Settings.All.route, it) },
             )
         }
 
@@ -103,7 +108,7 @@ fun AppGraph(
             )
         }
 
-        // Stats
+        // TODO: Remove?
         composable(
             Screen.Weekend.route, arguments = listOf(
                 navArgument("data") { type = ScreenWeekendData.NavType }
@@ -162,6 +167,7 @@ fun AppGraph(
             SearchScreenVM(
                 actionUpClicked = openMenu,
                 windowSizeClass = windowSize,
+                isRoot = { isRoot(Screen.Search.route, it) },
                 advertProvider = advertProvider
             )
         }
@@ -173,6 +179,7 @@ fun AppGraph(
         ) {
             RSSScreenVM(
                 windowSizeClass = windowSize,
+                isRoot = { isRoot(Screen.RSS.route, it) },
                 advertProvider = advertProvider,
                 actionUpClicked = openMenu
             )

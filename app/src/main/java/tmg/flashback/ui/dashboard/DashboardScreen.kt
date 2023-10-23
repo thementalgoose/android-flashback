@@ -1,6 +1,7 @@
 package tmg.flashback.ui.dashboard
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.background
@@ -254,13 +255,6 @@ fun DashboardScreen(
                             .weight(1f)
                             .background(AppTheme.colors.backgroundContainer)
                         ) {
-//                            if (windowSize.widthSizeClass != WindowWidthSizeClass.Compact) {
-//                                Box(
-//                                    Modifier
-//                                        .width(1.dp)
-//                                        .fillMaxHeight()
-//                                        .background(AppTheme.colors.backgroundSecondary.copy(alpha = 0.5f)))
-//                            }
                             AppGraph(
                                 modifier = Modifier
                                     .weight(1f)
@@ -270,6 +264,9 @@ fun DashboardScreen(
                                     }),
                                 advertProvider = advertProvider,
                                 deeplink = deeplink,
+                                isRoot = { route, isNotRoot ->
+                                    Log.i("AppGraph", "Route $route --> $isNotRoot")
+                                },
                                 navController = navigator.navController,
                                 openMenu = openMenu,
                                 windowSize = windowSize,
