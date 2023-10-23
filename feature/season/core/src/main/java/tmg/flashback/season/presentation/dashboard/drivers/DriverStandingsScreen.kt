@@ -18,6 +18,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -58,10 +59,14 @@ import kotlin.math.roundToInt
 fun DriverStandingsScreenVM(
     actionUpClicked: () -> Unit,
     windowSizeClass: WindowSizeClass,
+    isRoot: (Boolean) -> Unit,
     viewModel: DriverStandingsViewModel = hiltViewModel(),
     driverNavigationComponent: DriverNavigationComponent = requireDriverNavigationComponent(),
 ) {
     val state = viewModel.outputs.uiState.collectAsState()
+    LaunchedEffect(state.value.currentlySelected, block = {
+        isRoot(state.value.currentlySelected != null)
+    })
 
     DriverStandingsScreen(
         actionUpClicked = actionUpClicked,

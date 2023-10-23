@@ -22,6 +22,7 @@ import androidx.compose.material.Text
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -66,12 +67,17 @@ fun RSSScreenVM(
     actionUpClicked: () -> Unit,
     windowSizeClass: WindowSizeClass,
     advertProvider: AdvertProvider,
+    isRoot: (Boolean) -> Unit,
     viewModel: RSSViewModel = hiltViewModel()
 ) {
     ScreenView(screenName = "RSS")
 
     val uiState = viewModel.outputs.uiState.collectAsState()
     val isLoading = viewModel.outputs.isLoading.collectAsState(false)
+
+    LaunchedEffect((uiState.value as? RSSViewModel.UiState.Data)?.opened != null, block = {
+        isRoot((uiState.value as? RSSViewModel.UiState.Data)?.opened != null)
+    })
 
     MasterDetailsPane(
         windowSizeClass = windowSizeClass,
