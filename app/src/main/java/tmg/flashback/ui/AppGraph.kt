@@ -72,7 +72,7 @@ fun AppGraph(
             RacesScreen(
                 actionUpClicked = openMenu,
                 windowSizeClass = windowSize,
-                isRoot = { isRoot(Screen.Races.route, it) },
+                isRoot = { isRoot(Screen.Races.route, !it) },
                 advertProvider = advertProvider
             )
         }
@@ -81,7 +81,7 @@ fun AppGraph(
             ConstructorStandingsScreenVM(
                 actionUpClicked = openMenu,
                 windowSizeClass = windowSize,
-                isRoot = { isRoot(Screen.ConstructorsStandings.route, it) }
+                isRoot = { isRoot(Screen.ConstructorsStandings.route, !it) }
             )
         }
 
@@ -89,7 +89,7 @@ fun AppGraph(
             DriverStandingsScreenVM(
                 actionUpClicked = openMenu,
                 windowSizeClass = windowSize,
-                isRoot = { isRoot(Screen.DriverStandings.route, it) }
+                isRoot = { isRoot(Screen.DriverStandings.route, !it) }
             )
         }
 
@@ -97,7 +97,7 @@ fun AppGraph(
             SettingsAllScreenVM(
                 actionUpClicked = openMenu,
                 windowSizeClass = windowSize,
-                isRoot = { isRoot(Screen.Settings.All.route, it) },
+                isRoot = { isRoot(Screen.Settings.All.route, !it) },
             )
         }
 
@@ -167,7 +167,7 @@ fun AppGraph(
             SearchScreenVM(
                 actionUpClicked = openMenu,
                 windowSizeClass = windowSize,
-                isRoot = { isRoot(Screen.Search.route, it) },
+                isRoot = { isRoot(Screen.Search.route, !it) },
                 advertProvider = advertProvider
             )
         }
@@ -179,7 +179,7 @@ fun AppGraph(
         ) {
             RSSScreenVM(
                 windowSizeClass = windowSize,
-                isRoot = { isRoot(Screen.RSS.route, it) },
+                isRoot = { isRoot(Screen.RSS.route, !it) },
                 advertProvider = advertProvider,
                 actionUpClicked = openMenu
             )

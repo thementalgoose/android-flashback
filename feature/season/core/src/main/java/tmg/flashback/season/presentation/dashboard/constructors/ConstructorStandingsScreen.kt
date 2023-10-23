@@ -64,102 +64,98 @@ fun ConstructorStandingsScreenVM(
     constructorsNavigationComponent: ConstructorsNavigationComponent = requireConstructorsNavigationComponent()
 ) {
     val state = viewModel.outputs.uiState.collectAsState()
-    LaunchedEffect(state.value.currentlySelected, block = {
+    LaunchedEffect(state.value.currentlySelected != null, block = {
         isRoot(state.value.currentlySelected != null)
     })
 
-    ConstructorStandingsScreen(
-        actionUpClicked = actionUpClicked,
-        constructorsNavigationComponent = constructorsNavigationComponent,
+    MasterDetailsPane(
         windowSizeClass = windowSizeClass,
-        uiState = state.value,
-        constructorClicked = viewModel.inputs::selectConstructor,
-        closeDriverDetails = viewModel.inputs::closeConstructor,
-        refresh = viewModel.inputs::refresh
+        master = {
+            ConstructorStandingsScreen(
+                actionUpClicked = actionUpClicked,
+                windowSizeClass = windowSizeClass,
+                uiState = state.value,
+                constructorClicked = viewModel.inputs::selectConstructor,
+                refresh = viewModel.inputs::refresh
+            )
+        },
+        detailsShow = state.value.currentlySelected != null,
+        detailsActionUpClicked = viewModel.inputs::closeConstructor,
+        details = {
+            val selected = state.value.currentlySelected!!
+            constructorsNavigationComponent.ConstructorSeasonScreen(
+                actionUpClicked = viewModel.inputs::closeConstructor,
+                windowSizeClass = windowSizeClass,
+                constructorId = selected.constructor.id,
+                constructorName = selected.constructor.name,
+                season = selected.season,
+                driverClicked = { id, name, season -> }
+            )
+        }
     )
 }
 
 @Composable
 fun ConstructorStandingsScreen(
     actionUpClicked: () -> Unit,
-    constructorsNavigationComponent: ConstructorsNavigationComponent,
     windowSizeClass: WindowSizeClass,
     uiState: ConstructorStandingsScreenState,
     constructorClicked: (SeasonConstructorStandingSeason) -> Unit,
-    closeDriverDetails: () -> Unit,
     refresh: () -> Unit
 ) {
-
-    MasterDetailsPane(
-        windowSizeClass = windowSizeClass,
-        master = {
-            SwipeRefresh(
-                isLoading = uiState.isLoading,
-                onRefresh = refresh
-            ) {
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(AppTheme.colors.backgroundPrimary),
-                    content = {
-                        item(key = "header") {
-                            Header(
-                                content = {
-                                    SeasonTitleVM(subtitle = stringResource(id = R.string.season_standings_constructor))
-                                },
-                                action = when (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact) {
-                                    true -> HeaderAction.MENU
-                                    false -> null
-                                },
-                                actionUpClicked = actionUpClicked
-                            )
+    SwipeRefresh(
+        isLoading = uiState.isLoading,
+        onRefresh = refresh
+    ) {
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(AppTheme.colors.backgroundPrimary),
+            content = {
+                item(key = "header") {
+                    Header(
+                        content = {
+                            SeasonTitleVM(subtitle = stringResource(id = R.string.season_standings_constructor))
+                        },
+                        action = when (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact) {
+                            true -> HeaderAction.MENU
+                            false -> null
+                        },
+                        actionUpClicked = actionUpClicked
+                    )
+                }
+                uiState.inProgress?.let { (raceName, round) ->
+                    item(key = "banner") {
+                        Banner(
+                            message = stringResource(id = R.string.results_accurate_for, raceName, round),
+                            showLink = false
+                        )
+                    }
+                }
+                if (uiState.standings.isNullOrEmpty()) {
+                    if (!uiState.networkAvailable) {
+                        item(key = "network") {
+                            NetworkError()
                         }
-                        uiState.inProgress?.let { (raceName, round) ->
-                            item(key = "banner") {
-                                Banner(
-                                    message = stringResource(id = R.string.results_accurate_for, raceName, round),
-                                    showLink = false
-                                )
-                            }
-                        }
-                        if (uiState.standings.isNullOrEmpty()) {
-                            if (!uiState.networkAvailable) {
-                                item(key = "network") {
-                                    NetworkError()
-                                }
-                            } else if (uiState.isLoading) {
-                                item(key = "loading") {
-                                    SkeletonViewList()
-                                }
-                            }
-                        }
-                        items(uiState.standings, key = { "constructor=${it.constructor.id}" }) {
-                            ConstructorStandings(
-                                model = it,
-                                itemClicked = constructorClicked,
-                                maxPoints = uiState.maxPoints
-                            )
-                        }
-                        item(key = "footer") {
-                            ProvidedBy()
+                    } else if (uiState.isLoading) {
+                        item(key = "loading") {
+                            SkeletonViewList()
                         }
                     }
-                )
+                }
+                items(uiState.standings, key = { "constructor=${it.constructor.id}" }) {
+                    ConstructorStandings(
+                        model = it,
+                        itemClicked = constructorClicked,
+                        maxPoints = uiState.maxPoints
+                    )
+                }
+                item(key = "footer") {
+                    ProvidedBy()
+                }
             }
-        },
-        detailsActionUpClicked = closeDriverDetails,
-        detailsShow = uiState.currentlySelected != null,
-        details = {
-            constructorsNavigationComponent.ConstructorSeasonScreen(
-                actionUpClicked = closeDriverDetails,
-                windowSizeClass = windowSizeClass,
-                constructorId = uiState.currentlySelected!!.constructor.id,
-                constructorName = uiState.currentlySelected.constructor.name,
-                season = uiState.currentlySelected.season,
-                driverClicked = { id, name, season -> }
-            )
-        }
-    )
+        )
+    }
 }
 
 @Composable

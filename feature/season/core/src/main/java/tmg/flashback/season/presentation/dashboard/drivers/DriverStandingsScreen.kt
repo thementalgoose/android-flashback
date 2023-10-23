@@ -49,10 +49,8 @@ import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.header.HeaderAction
 import tmg.flashback.ui.components.layouts.MasterDetailsPane
 import tmg.flashback.ui.components.loading.SkeletonViewList
-import tmg.flashback.ui.components.navigation.appBarHeight
 import tmg.flashback.ui.components.progressbar.ProgressBar
 import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
-import tmg.flashback.ui.foldables.isWidthExpanded
 import kotlin.math.roundToInt
 
 @Composable
@@ -64,103 +62,105 @@ fun DriverStandingsScreenVM(
     driverNavigationComponent: DriverNavigationComponent = requireDriverNavigationComponent(),
 ) {
     val state = viewModel.outputs.uiState.collectAsState()
-    LaunchedEffect(state.value.currentlySelected, block = {
+    LaunchedEffect(state.value.currentlySelected != null, block = {
         isRoot(state.value.currentlySelected != null)
     })
 
-    DriverStandingsScreen(
-        actionUpClicked = actionUpClicked,
-        driverNavigationComponent = driverNavigationComponent,
-        uiState = state.value,
-        windowSizeClass = windowSizeClass,
-        driverClicked = viewModel.inputs::selectDriver,
-        closeConstructorDetails = viewModel.inputs::closeDriverDetails,
-        refresh = viewModel.inputs::refresh
-    )
-}
-
-@Composable
-internal fun DriverStandingsScreen(
-    actionUpClicked: () -> Unit,
-    driverNavigationComponent: DriverNavigationComponent,
-    windowSizeClass: WindowSizeClass,
-    uiState: DriverStandingsScreenState,
-    driverClicked: (SeasonDriverStandingSeason) -> Unit,
-    closeConstructorDetails: () -> Unit,
-    refresh: () -> Unit
-) {
     MasterDetailsPane(
         windowSizeClass = windowSizeClass,
         master = {
-            SwipeRefresh(
-                isLoading = uiState.isLoading,
-                onRefresh = refresh
-            ) {
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(AppTheme.colors.backgroundPrimary),
-                    content = {
-                        item(key = "header") {
-                            Header(
-                                content = {
-                                    SeasonTitleVM(subtitle = stringResource(id = R.string.season_standings_driver))
-                                },
-                                action = when (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact) {
-                                    true -> HeaderAction.MENU
-                                    false -> null
-                                },
-                                actionUpClicked = actionUpClicked
-                            )
-                        }
-                        uiState.inProgress?.let { (raceName, round) ->
-                            item(key = "banner") {
-                                Banner(
-                                    message = stringResource(id = R.string.results_accurate_for, raceName, round),
-                                    showLink = false
-                                )
-                            }
-                        }
-                        if (uiState.standings.isNullOrEmpty()) {
-                            if (!uiState.networkAvailable) {
-                                item(key = "network") {
-                                    NetworkError()
-                                }
-                            } else if (uiState.isLoading) {
-                                item(key = "loading") {
-                                    SkeletonViewList()
-                                }
-                            }
-                        }
-                        items(uiState.standings, key = { "driver=${it.driver.id}" }) {
-                            DriverStandings(
-                                model = it,
-                                itemClicked = driverClicked,
-                                maxPoints = uiState.maxPoints
-                            )
-                        }
-                        item(key = "footer") {
-                            ProvidedBy()
-                        }
-                    }
-                )
-            }
+            DriverStandingsScreen(
+                actionUpClicked = actionUpClicked,
+                uiState = state.value,
+                windowSizeClass = windowSizeClass,
+                driverClicked = viewModel.inputs::selectDriver,
+                refresh = viewModel.inputs::refresh
+            )
         },
-        detailsActionUpClicked = closeConstructorDetails,
-        detailsShow = uiState.currentlySelected != null,
+        detailsShow = state.value.currentlySelected != null,
+        detailsActionUpClicked = viewModel.inputs::closeDriverDetails,
         details = {
+            val selected = state.value.currentlySelected!!
             driverNavigationComponent.DriverSeasonScreen(
                 windowSizeClass = windowSizeClass,
-                actionUpClicked = closeConstructorDetails,
-                driverId = uiState.currentlySelected!!.driver.id,
-                driverName = uiState.currentlySelected.driver.name,
-                season = uiState.currentlySelected.season,
+                actionUpClicked = viewModel.inputs::closeDriverDetails,
+                driverId = selected.driver.id,
+                driverName = selected.driver.name,
+                season = selected.season,
                 seasonClicked = { season: Int, round: Int, raceName: String, circuitId: String, circuitName: String, country: String, countryISO: String, dateString: String ->
                     // Do something
                 }
             )
         }
     )
+
+}
+
+@Composable
+internal fun DriverStandingsScreen(
+    actionUpClicked: () -> Unit,
+    windowSizeClass: WindowSizeClass,
+    uiState: DriverStandingsScreenState,
+    driverClicked: (SeasonDriverStandingSeason) -> Unit,
+    refresh: () -> Unit
+) {
+    SwipeRefresh(
+        isLoading = uiState.isLoading,
+        onRefresh = refresh
+    ) {
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(AppTheme.colors.backgroundPrimary),
+            content = {
+                item(key = "header") {
+                    Header(
+                        content = {
+                            SeasonTitleVM(subtitle = stringResource(id = R.string.season_standings_driver))
+                        },
+                        action = when (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact) {
+                            true -> HeaderAction.MENU
+                            false -> null
+                        },
+                        actionUpClicked = actionUpClicked
+                    )
+                }
+                uiState.inProgress?.let { (raceName, round) ->
+                    item(key = "banner") {
+                        Banner(
+                            message = stringResource(
+                                id = R.string.results_accurate_for,
+                                raceName,
+                                round
+                            ),
+                            showLink = false
+                        )
+                    }
+                }
+                if (uiState.standings.isEmpty()) {
+                    if (!uiState.networkAvailable) {
+                        item(key = "network") {
+                            NetworkError()
+                        }
+                    } else if (uiState.isLoading) {
+                        item(key = "loading") {
+                            SkeletonViewList()
+                        }
+                    }
+                }
+                items(uiState.standings, key = { "driver=${it.driver.id}" }) {
+                    DriverStandings(
+                        model = it,
+                        itemClicked = driverClicked,
+                        maxPoints = uiState.maxPoints
+                    )
+                }
+                item(key = "footer") {
+                    ProvidedBy()
+                }
+            }
+        )
+    }
 }
 
 
@@ -171,7 +171,8 @@ private fun DriverStandings(
     maxPoints: Double,
     modifier: Modifier = Modifier,
 ) {
-    val constructorColor = model.constructors.lastOrNull()?.constructor?.colour ?: AppTheme.colors.backgroundTertiary
+    val constructorColor =
+        model.constructors.lastOrNull()?.constructor?.colour ?: AppTheme.colors.backgroundTertiary
     Row(
         modifier = modifier
             .constructorIndicator(constructorColor)
@@ -191,14 +192,15 @@ private fun DriverStandings(
             constructorColor = constructorColor,
             size = 40.dp
         )
-        Row(modifier = Modifier
-            .padding(
-                top = AppTheme.dimens.small,
-                start = AppTheme.dimens.small,
-                end = AppTheme.dimens.medium,
-                bottom = AppTheme.dimens.small
-            )
-            .wrapContentHeight()
+        Row(
+            modifier = Modifier
+                .padding(
+                    top = AppTheme.dimens.small,
+                    start = AppTheme.dimens.small,
+                    end = AppTheme.dimens.medium,
+                    bottom = AppTheme.dimens.small
+                )
+                .wrapContentHeight()
         ) {
             Column(modifier = Modifier.weight(2f)) {
                 TextTitle(
@@ -207,11 +209,12 @@ private fun DriverStandings(
                     modifier = Modifier.fillMaxWidth()
                 )
                 Spacer(modifier = Modifier.height(2.dp))
-                Row(modifier = Modifier
-                    .fillMaxHeight()
-                    .padding(
-                        vertical = AppTheme.dimens.xxsmall,
-                    )
+                Row(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .padding(
+                            vertical = AppTheme.dimens.xxsmall,
+                        )
                 ) {
                     Flag(
                         iso = model.driver.nationalityISO,
@@ -233,12 +236,14 @@ private fun DriverStandings(
                     .height(48.dp)
                     .fillMaxHeight(),
                 endProgress = progress,
-                barColor = model.constructors.lastOrNull()?.constructor?.colour ?: AppTheme.colors.primary,
+                barColor = model.constructors.lastOrNull()?.constructor?.colour
+                    ?: AppTheme.colors.primary,
                 label = {
                     when (it) {
                         0f -> "0"
                         progress -> model.points.pointsDisplay()
-                        else -> (it * maxPoints).takeIf { !it.isNaN() }?.roundToInt()?.toString() ?: model.points.pointsDisplay()
+                        else -> (it * maxPoints).takeIf { !it.isNaN() }?.roundToInt()?.toString()
+                            ?: model.points.pointsDisplay()
                     }
                 }
             )

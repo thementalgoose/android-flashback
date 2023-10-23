@@ -83,12 +83,7 @@ fun DashboardMenuExpandedScreen(
     val expanded = remember { mutableStateOf(initialExpandedState) }
     val width = animateDpAsState(targetValue = when {
         lockExpanded -> columnWidthExpandedLocked
-        expanded.value -> {
-            when (foldingConfig?.state) {
-                HALF_OPENED -> foldingConfig.overrideWidth ?: columnWidthExpanded
-                else -> columnWidthExpanded
-            }
-        }
+        expanded.value -> columnWidthExpanded
         else -> columnWidthCollapsed
     }, label = "MenuWidthDp")
 
