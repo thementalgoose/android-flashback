@@ -11,6 +11,7 @@ data class RacesScreenState(
     val isLoading: Boolean = false,
     val networkAvailable: Boolean = true,
     val currentRace: OverviewRace? = null,
+    val showAdvert: Boolean = false
 ) {
     val showTyres: Boolean
         get() = SeasonTyres.getBySeason(season) != null

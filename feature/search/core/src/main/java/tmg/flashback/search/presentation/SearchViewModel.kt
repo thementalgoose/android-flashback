@@ -68,7 +68,7 @@ class SearchViewModel @Inject constructor(
     private val selected: MutableStateFlow<OverviewRace?> = MutableStateFlow(null)
 
     private val isAdsEnabled: Boolean by lazy {
-        adsRepository.advertConfig.onSearch
+        adsRepository.areAdvertsEnabled && adsRepository.advertConfig.onSearch
     }
 
     @Suppress("UNCHECKED_CAST")
