@@ -37,6 +37,7 @@ interface RacesViewModelInputs {
     fun refresh()
     fun clickTyre()
     fun clickItem(model: RacesModel)
+    fun deeplinkToo(screenWeekendData: ScreenWeekendData)
     fun back()
 }
 
@@ -101,8 +102,7 @@ class RacesViewModel @Inject constructor(
             uiState.value = uiState.value.copy(
                 items = null,
                 isLoading = false,
-                networkAvailable = networkConnectivityManager.isConnected,
-                currentRace = null
+                networkAvailable = networkConnectivityManager.isConnected
             )
             return false
         }
@@ -133,12 +133,20 @@ class RacesViewModel @Inject constructor(
         )
     }
 
+    private var hasProcessedBefore: Boolean = false
+    override fun deeplinkToo(screenWeekendData: ScreenWeekendData) {
+        if (!hasProcessedBefore) {
+            uiState.value = uiState.value.copy(currentRace = screenWeekendData)
+        }
+        hasProcessedBefore = true
+    }
+
     override fun clickItem(model: RacesModel) {
         when (model) {
             is RacesModel.EmptyWeek -> {}
             is RacesModel.RaceWeek -> {
                 uiState.value = uiState.value.copy(
-                    currentRace = model.model
+                    currentRace = ScreenWeekendData(model.model)
                 )
             }
             is RacesModel.GroupedCompletedRaces -> {
