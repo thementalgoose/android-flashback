@@ -50,7 +50,7 @@ fun SettingsAllScreenVM(
     ScreenView(screenName = "Settings")
 
     val uiState = viewModel.outputs.uiState.collectAsState()
-    LaunchedEffect(uiState.value.selectedSubScreen, block = {
+    LaunchedEffect(uiState.value.selectedSubScreen != null, block = {
         isRoot(uiState.value.selectedSubScreen != null)
     })
     OnLifecycleEvent { _, event ->

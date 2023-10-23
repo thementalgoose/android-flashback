@@ -73,7 +73,7 @@ fun SearchScreenVM(
     weekendNavigationComponent: WeekendNavigationComponent = requireWeekendNavigationComponent()
 ) {
     val uiState = viewModel.outputs.uiState.collectAsState()
-    LaunchedEffect(uiState.value.selected, block = {
+    LaunchedEffect(uiState.value.selected != null, block = {
         isRoot(uiState.value.selected != null)
     })
 

@@ -11,7 +11,9 @@ import androidx.compose.material.IconButton
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -69,7 +71,7 @@ fun RacesScreen(
     weekendNavigationComponent: WeekendNavigationComponent = requireWeekendNavigationComponent()
 ) {
     val uiState = viewModel.outputs.uiState.collectAsState()
-    LaunchedEffect(uiState.value.currentRace, block = {
+    LaunchedEffect(uiState.value.currentRace != null, block = {
         isRoot(uiState.value.currentRace != null)
     })
 
