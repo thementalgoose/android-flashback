@@ -49,6 +49,7 @@ class SettingsThemeViewModel @Inject constructor(
             toastManager.displayToast(R.string.settings_restart_app_required)
         }
         themeRepository.theme = theme
+        currentlySelected.value = themeRepository.theme
     }
 
     //endregion
