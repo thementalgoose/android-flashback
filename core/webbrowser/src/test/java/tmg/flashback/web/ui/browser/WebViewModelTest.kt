@@ -3,6 +3,7 @@ package tmg.flashback.web.ui.browser
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Test
+import tmg.flashback.web.presentation.browser.WebViewModel
 import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.flashback.web.usecases.ShareUseCase
 

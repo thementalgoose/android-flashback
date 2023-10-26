@@ -1,7 +1,7 @@
 package tmg.flashback.di.navigation
 
 import tmg.flashback.appshortcuts.provider.HomeClassProvider
-import tmg.flashback.ui.HomeActivity
+import tmg.flashback.presentation.HomeActivity
 import javax.inject.Inject
 
 class AppHomeClassProvider @Inject constructor(): HomeClassProvider {

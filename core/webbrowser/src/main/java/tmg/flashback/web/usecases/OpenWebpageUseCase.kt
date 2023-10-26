@@ -14,7 +14,7 @@ import tmg.flashback.googleanalytics.manager.FirebaseAnalyticsManager
 import tmg.flashback.navigation.ActivityProvider
 import tmg.flashback.web.R
 import tmg.flashback.web.repository.WebBrowserRepository
-import tmg.flashback.web.ui.browser.WebActivity
+import tmg.flashback.web.presentation.browser.WebActivity
 import tmg.utilities.extensions.managerClipboard
 import javax.inject.Inject
 

@@ -3,7 +3,7 @@
 
     <application>
 
-        <activity android:name=".ui.forceupgrade.ForceUpgradeActivity"
+        <activity android:name=".presentation.forceupgrade.ForceUpgradeActivity"
             android:exported="false" />
 
     </application>

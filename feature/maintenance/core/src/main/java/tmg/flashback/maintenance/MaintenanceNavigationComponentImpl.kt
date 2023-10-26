@@ -3,7 +3,7 @@ package tmg.flashback.maintenance
 import android.content.Context
 import android.content.Intent
 import tmg.flashback.maintenance.contract.MaintenanceNavigationComponent
-import tmg.flashback.maintenance.ui.forceupgrade.ForceUpgradeActivity
+import tmg.flashback.maintenance.presentation.forceupgrade.ForceUpgradeActivity
 import tmg.flashback.navigation.ActivityProvider
 import javax.inject.Inject
 

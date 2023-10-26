@@ -9,7 +9,7 @@ import tmg.flashback.googleanalytics.constants.AnalyticsConstants.analyticsSeaso
 import tmg.flashback.googleanalytics.manager.FirebaseAnalyticsManager
 import tmg.flashback.navigation.Deeplink.SCREEN_PARAM
 import tmg.flashback.navigation.Screen
-import tmg.flashback.ui.HomeActivity
+import tmg.flashback.presentation.HomeActivity
 import tmg.flashback.weekend.contract.Weekend
 import tmg.flashback.weekend.contract.model.ScreenWeekendData
 import tmg.flashback.weekend.contract.with

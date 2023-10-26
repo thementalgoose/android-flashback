@@ -3,7 +3,7 @@
 
     <application>
 
-        <activity android:name=".ui.browser.WebActivity"
+        <activity android:name=".presentation.browser.WebActivity"
             android:exported="false" />
 
     </application>
