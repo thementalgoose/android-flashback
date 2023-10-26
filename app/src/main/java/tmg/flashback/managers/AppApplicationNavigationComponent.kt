@@ -16,9 +16,9 @@ import tmg.flashback.navigation.Navigator
 import tmg.flashback.notifications.navigation.NotificationNavigationProvider
 import tmg.flashback.repositories.ContactRepository
 import tmg.flashback.rss.usecases.AllSupportedSourcesUseCase
-import tmg.flashback.ui.HomeActivity
-import tmg.flashback.ui.settings.All
-import tmg.flashback.ui.sync.SyncActivity
+import tmg.flashback.presentation.HomeActivity
+import tmg.flashback.presentation.settings.All
+import tmg.flashback.presentation.sync.SyncActivity
 import javax.inject.Inject
 
 class AppApplicationNavigationComponent @Inject constructor(

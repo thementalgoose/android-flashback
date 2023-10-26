@@ -20,7 +20,7 @@
             android:value="false" />
 
         <activity
-            android:name=".ui.HomeActivity"
+            android:name=".presentation.HomeActivity"
             android:exported="true"
             android:launchMode="singleInstance"
             android:windowSoftInputMode="adjustResize"
@@ -44,7 +44,7 @@
         </activity>
 
         <activity
-            android:name=".ui.sync.SyncActivity"
+            android:name=".presentation.sync.SyncActivity"
             android:exported="false"
             android:label=""
             android:theme="@style/FlashbackAppTheme.Sync" />
