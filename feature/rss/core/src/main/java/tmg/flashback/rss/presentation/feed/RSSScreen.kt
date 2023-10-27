@@ -149,18 +149,17 @@ fun RSSScreen(
                 )
             }
             when (uiState) {
-                is RSSViewModel.UiState.SourcesDisabled -> {
-                    item(key = "sourcedisabled") {
-                        SourcesDisabled(sourceClicked = configureSources)
-                    }
-                }
                 is RSSViewModel.UiState.NoNetwork -> {
                     item(key = "nonetwork") {
                         NetworkError(error = NetworkError.NETWORK_ERROR)
                     }
                 }
                 is RSSViewModel.UiState.Data -> {
-                    if (uiState.lastUpdated != null) {
+                    if (!uiState.hasSources) {
+                        item(key = "sources-disabled") {
+                            SourcesDisabled(sourceClicked = configureSources)
+                        }
+                    } else if (uiState.lastUpdated != null) {
                         item(key = "updated") {
                             Message(stringResource(id = R.string.home_last_updated, uiState.lastUpdated))
                         }
