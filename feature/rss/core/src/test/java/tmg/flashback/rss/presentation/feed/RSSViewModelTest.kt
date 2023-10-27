@@ -236,6 +236,7 @@ internal class RSSViewModelTest: BaseTest() {
             assertEquals(RSSViewModel.UiState.Data(
                 lastUpdated = "01:02:03",
                 showAdvert = true,
+                hasSources = true,
                 rssItems = listOf(mockArticle)
             ), awaitItem())
 
