@@ -55,11 +55,12 @@ class RSSViewModel @Inject constructor(
     init {
         val initialState = when {
             !connectivityManager.isConnected -> UiState.NoNetwork
-            rssRepository.rssUrls.isEmpty() -> UiState.SourcesDisabled
-            else -> UiState.Data()
+            else -> UiState.Data(
+                hasSources = rssRepository.rssUrls.isNotEmpty()
+            )
         }
         uiState = MutableStateFlow(initialState)
-        if (initialState is UiState.Data) {
+        if (initialState is UiState.Data && initialState.hasSources) {
             refresh()
         }
     }
@@ -75,7 +76,6 @@ class RSSViewModel @Inject constructor(
         viewModelScope.launch {
             uiState.value = when {
                 !connectivityManager.isConnected -> UiState.NoNetwork
-                rssRepository.rssUrls.isEmpty() -> UiState.SourcesDisabled
                 else -> {
                     isLoading.value = true
                     val response = rssService.getNews()
@@ -87,6 +87,7 @@ class RSSViewModel @Inject constructor(
                             this.copy(
                                 lastUpdated = timeManager.now.format(DateTimeFormatter.ofPattern("HH:mm:ss")),
                                 showAdvert = adsRepository.advertConfig.onRss,
+                                hasSources = rssRepository.rssUrls.isNotEmpty(),
                                 rssItems = response.result,
                             )
                         }
@@ -103,8 +104,15 @@ class RSSViewModel @Inject constructor(
     }
 
     override fun back() {
+        val previousLocation = (uiState.value as? UiState.Data)?.opened
         if (uiState.value is UiState.Data) {
-            uiState.value = createOrUpdate { this.copy(opened = null) }
+            uiState.value = createOrUpdate { this.copy(
+                hasSources = rssRepository.rssUrls.isNotEmpty(),
+                opened = null
+            ) }
+        }
+        if (previousLocation is UiStateOpened.ConfigureSources) {
+            refresh()
         }
     }
 
@@ -123,7 +131,9 @@ class RSSViewModel @Inject constructor(
     private fun createOrUpdate(callback: UiState.Data.() -> UiState.Data): UiState.Data {
         return when (val x = uiState.value) {
             is UiState.Data -> callback(x)
-            else -> callback(UiState.Data())
+            else -> callback(UiState.Data(
+                hasSources = rssRepository.rssUrls.isNotEmpty()
+            ))
         }
     }
 
@@ -134,10 +144,10 @@ class RSSViewModel @Inject constructor(
             val lastUpdated: String? = null,
             val showAdvert: Boolean = false,
             val rssItems: List<Article> = emptyList(),
+            val hasSources: Boolean = false,
             val opened: UiStateOpened? = null,
         ): UiState()
 
-        data object SourcesDisabled: UiState()
         data object NoNetwork: UiState()
     }
 
