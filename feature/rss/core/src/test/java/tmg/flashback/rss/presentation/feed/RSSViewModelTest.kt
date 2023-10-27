@@ -4,6 +4,7 @@ import app.cash.turbine.test
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.verify
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
@@ -19,6 +20,8 @@ import tmg.flashback.rss.repo.RssRepository
 import tmg.flashback.rss.repo.model.Article
 import tmg.flashback.rss.repo.model.ArticleSource
 import tmg.flashback.rss.repo.model.Response
+import tmg.flashback.web.repository.WebBrowserRepository
+import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.testutils.BaseTest
 
 internal class RSSViewModelTest: BaseTest() {
@@ -28,7 +31,8 @@ internal class RSSViewModelTest: BaseTest() {
     private val mockRssService: RssService = mockk(relaxed = true)
     private val mockRssRepository: RssRepository = mockk(relaxed = true)
     private val mockAdsRepository: AdsRepository = mockk(relaxed = true)
-    private val mockNavigator: Navigator = mockk(relaxed = true)
+    private val mockWebBrowserRepository: WebBrowserRepository = mockk(relaxed = true)
+    private val mockOpenWebpageUseCase: OpenWebpageUseCase = mockk(relaxed = true)
     private val mockConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
     private val mockTimeManager: TimeManager = mockk(relaxed = true)
 
@@ -70,7 +74,8 @@ internal class RSSViewModelTest: BaseTest() {
             rssService = mockRssService,
             rssRepository = mockRssRepository,
             adsRepository = mockAdsRepository,
-            navigator = mockNavigator,
+            openWebpageUseCase = mockOpenWebpageUseCase,
+            browserRepository = mockWebBrowserRepository,
             connectivityManager = mockConnectivityManager,
             timeManager = mockTimeManager
         )
@@ -188,6 +193,26 @@ internal class RSSViewModelTest: BaseTest() {
 
             underTest.back()
             assertEquals(null, (awaitItem() as RSSViewModel.UiState.Data).opened)
+        }
+    }
+
+
+    @Test
+    fun `clicking article with open in external browser opens in external browser`() = runTest(testDispatcher) {
+        every { mockWebBrowserRepository.openInExternal } returns true
+        initUnderTest()
+        underTest.uiState.test {
+            assertEquals(RSSViewModel.UiState.Data(
+                lastUpdated = "01:02:03",
+                showAdvert = true,
+                rssItems = listOf(mockArticle)
+            ), awaitItem())
+
+            underTest.clickArticle(mockArticle)
+
+            verify {
+                mockOpenWebpageUseCase.open(mockArticle.link, mockArticle.title, true)
+            }
         }
     }
 
