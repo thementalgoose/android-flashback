@@ -2,6 +2,7 @@ package tmg.flashback.rss.presentation.feed
 
 import app.cash.turbine.test
 import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -98,7 +99,7 @@ internal class RSSViewModelTest: BaseTest() {
 
         initUnderTest()
         underTest.uiState.test {
-            assertEquals(RSSViewModel.UiState.SourcesDisabled, awaitItem())
+            assertEquals(false, (awaitItem() as RSSViewModel.UiState.Data).hasSources)
         }
     }
 
@@ -118,6 +119,7 @@ internal class RSSViewModelTest: BaseTest() {
             assertEquals(RSSViewModel.UiState.Data(
                 lastUpdated = "01:02:03",
                 showAdvert = true,
+                hasSources = true,
                 rssItems = listOf(mockArticle)
             ), awaitItem())
         }
@@ -130,6 +132,7 @@ internal class RSSViewModelTest: BaseTest() {
             assertEquals(RSSViewModel.UiState.Data(
                 lastUpdated = "01:02:03",
                 showAdvert = true,
+                hasSources = true,
                 rssItems = listOf(mockArticle)
             ), awaitItem())
         }
@@ -148,6 +151,7 @@ internal class RSSViewModelTest: BaseTest() {
             assertEquals(RSSViewModel.UiState.Data(
                 lastUpdated = "01:02:03",
                 showAdvert = true,
+                hasSources = true,
                 rssItems = listOf(mockArticle)
             ), awaitItem())
         }
@@ -155,7 +159,7 @@ internal class RSSViewModelTest: BaseTest() {
         every { mockRssRepository.rssUrls } returns emptySet()
         underTest.refresh()
         underTest.uiState.test {
-            assertEquals(RSSViewModel.UiState.SourcesDisabled, awaitItem())
+            assertEquals(false, (awaitItem() as RSSViewModel.UiState.Data).hasSources)
         }
     }
 
@@ -173,6 +177,7 @@ internal class RSSViewModelTest: BaseTest() {
             assertEquals(RSSViewModel.UiState.Data(
                 lastUpdated = "01:02:03",
                 showAdvert = true,
+                hasSources = true,
                 rssItems = listOf(mockArticle)
             ), awaitItem())
         }
@@ -185,6 +190,7 @@ internal class RSSViewModelTest: BaseTest() {
             assertEquals(RSSViewModel.UiState.Data(
                 lastUpdated = "01:02:03",
                 showAdvert = true,
+                hasSources = true,
                 rssItems = listOf(mockArticle)
             ), awaitItem())
 
@@ -193,6 +199,31 @@ internal class RSSViewModelTest: BaseTest() {
 
             underTest.back()
             assertEquals(null, (awaitItem() as RSSViewModel.UiState.Data).opened)
+        }
+    }
+
+    @Test
+    fun `clicking configure sources then going back`() = runTest(testDispatcher) {
+        initUnderTest()
+        underTest.uiState.test {
+            assertEquals(RSSViewModel.UiState.Data(
+                lastUpdated = "01:02:03",
+                showAdvert = true,
+                hasSources = true,
+                rssItems = listOf(mockArticle)
+            ), awaitItem())
+            coVerify(exactly = 2) {
+                mockRssService.getNews()
+            }
+
+            underTest.configure()
+            assertEquals(RSSViewModel.UiStateOpened.ConfigureSources, (awaitItem() as RSSViewModel.UiState.Data).opened)
+
+            underTest.back()
+            assertEquals(null, (awaitItem() as RSSViewModel.UiState.Data).opened)
+            coVerify(exactly = 3) {
+                mockRssService.getNews()
+            }
         }
     }
 
@@ -205,6 +236,7 @@ internal class RSSViewModelTest: BaseTest() {
             assertEquals(RSSViewModel.UiState.Data(
                 lastUpdated = "01:02:03",
                 showAdvert = true,
+                hasSources = true,
                 rssItems = listOf(mockArticle)
             ), awaitItem())
 
@@ -223,6 +255,7 @@ internal class RSSViewModelTest: BaseTest() {
             assertEquals(RSSViewModel.UiState.Data(
                 lastUpdated = "01:02:03",
                 showAdvert = true,
+                hasSources = true,
                 rssItems = listOf(mockArticle)
             ), awaitItem())
         }
@@ -232,6 +265,7 @@ internal class RSSViewModelTest: BaseTest() {
             assertEquals(RSSViewModel.UiState.Data(
                 lastUpdated = "01:02:03",
                 showAdvert = true,
+                hasSources = true,
                 rssItems = listOf(mockArticle),
                 opened = RSSViewModel.UiStateOpened.WebArticle(mockArticle)
             ), awaitItem())
