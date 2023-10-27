@@ -1,5 +1,6 @@
 package tmg.flashback.presentation.dashboard.menu
 
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -16,6 +17,7 @@ import tmg.flashback.eastereggs.model.MenuIcons
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
+import tmg.flashback.style.text.ColourType
 import tmg.flashback.style.text.TextCaption
 import tmg.flashback.style.text.TextHeadline2WithIcon
 
@@ -26,6 +28,7 @@ private val MenuIcons.drawable: Int get() = when (this) {
     MenuIcons.BONFIRE -> R.drawable.ic_easteregg_bonfire
     MenuIcons.CHRISTMAS -> R.drawable.ic_easteregg_christmas
     MenuIcons.NEW_YEARS -> R.drawable.ic_easteregg_newyears
+    MenuIcons.DIWALI -> R.drawable.ic_easteregg_diwali
     MenuIcons.CHINESE_NEW_YEAR -> R.drawable.ic_easteregg_newyears
     MenuIcons.NEW_YEARS_EVE -> R.drawable.ic_easteregg_newyears
 }
@@ -34,6 +37,7 @@ private val MenuIcons.drawable: Int get() = when (this) {
 internal fun DashboardHero(
     menuIcons: MenuIcons?,
     showUkraine: Boolean,
+    pride: Boolean = false,
     modifier: Modifier = Modifier
 ) {
     Column(modifier.padding(
@@ -46,7 +50,11 @@ internal fun DashboardHero(
             icon = menuIcons?.let { painterResource(id = it.drawable) },
             iconModifier = Modifier
                 .rotate(20f)
-                .size(18.dp)
+                .size(18.dp),
+            colourType = when (pride) {
+                true -> ColourType.RAINBOW
+                false -> ColourType.DEFAULT
+            }
         )
         if (showUkraine) {
             TextCaption(
@@ -73,11 +81,23 @@ private fun Preview(
 
 @Composable
 @PreviewTheme
-private fun PreviewTheme() {
+private fun PreviewUkraine() {
     AppThemePreview {
         DashboardHero(
             menuIcons = null,
             showUkraine = true
+        )
+    }
+}
+
+@Composable
+@PreviewTheme
+private fun PreviewPride() {
+    AppThemePreview {
+        DashboardHero(
+            menuIcons = null,
+            showUkraine = false,
+            pride = true
         )
     }
 }
