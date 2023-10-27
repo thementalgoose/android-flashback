@@ -39,6 +39,11 @@ enum class MenuIcons(
         startResolver = { LocalDate.of(year, 11, 4) },
         endResolver = { LocalDate.of(year, 11, 5) }
     ),
+    DIWALI(
+        key = "diwali",
+        startResolver = { LocalDate.of(2023, 11, 10) },
+        endResolver = { LocalDate.of(2023, 11, 14) }
+    ),
     CHRISTMAS(
         key = "christmas",
         startResolver = { LocalDate.of(year, 12, 19) },
