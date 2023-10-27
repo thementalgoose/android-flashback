@@ -23,7 +23,8 @@ val Screen.Weekend get() = ScreenWeekend("weekend/{data}?tab={tab}")
 fun ScreenWeekend.with(weekendInfo: ScreenWeekendData, tab: ScreenWeekendNav? = weekendInfo.getTab()) = NavigationDestination(
     this@with.route
         .replace("{data}", Json.encodeToString(ScreenWeekendData.serializer(), weekendInfo))
-        .replace("{tab}", tab?.name ?: "")
+        .replace("{tab}", tab?.name ?: ""),
+    popUpTo = "results/races"
 )
 
 // TODO: This is only around for purposes of deeplinking from widgets. Look at removing
