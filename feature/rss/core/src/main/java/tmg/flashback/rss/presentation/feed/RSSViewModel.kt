@@ -12,6 +12,8 @@ import tmg.flashback.navigation.Navigator
 import tmg.flashback.rss.network.RssService
 import tmg.flashback.rss.repo.RssRepository
 import tmg.flashback.rss.repo.model.Article
+import tmg.flashback.web.repository.WebBrowserRepository
+import tmg.flashback.web.usecases.OpenWebpageUseCase
 import javax.inject.Inject
 
 //region Inputs
@@ -40,7 +42,8 @@ class RSSViewModel @Inject constructor(
     private val rssService: RssService,
     private val rssRepository: RssRepository,
     private val adsRepository: AdsRepository,
-    private val navigator: Navigator,
+    private val openWebpageUseCase: OpenWebpageUseCase,
+    private val browserRepository: WebBrowserRepository,
     private val connectivityManager: NetworkConnectivityManager,
     private val timeManager: TimeManager
 ): ViewModel(), RSSViewModelInputs, RSSViewModelOutputs {
@@ -106,10 +109,14 @@ class RSSViewModel @Inject constructor(
     }
 
     override fun clickArticle(article: Article) {
-        uiState.value = createOrUpdate {
-            this.copy(
-                opened = UiStateOpened.WebArticle(article)
-            )
+        if (browserRepository.openInExternal) {
+            openWebpageUseCase.open(article.link, article.title, forceExternal = true)
+        } else {
+            uiState.value = createOrUpdate {
+                this.copy(
+                    opened = UiStateOpened.WebArticle(article)
+                )
+            }
         }
     }
 
