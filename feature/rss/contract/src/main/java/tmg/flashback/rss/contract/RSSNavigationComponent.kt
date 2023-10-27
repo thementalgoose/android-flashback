@@ -6,7 +6,7 @@ import tmg.flashback.navigation.NavigationDestination
 import tmg.flashback.navigation.Screen
 
 val Screen.RSS: NavigationDestination
-    get() = NavigationDestination("rss", launchSingleTop = true)
+    get() = NavigationDestination("rss", launchSingleTop = true, popUpTo = "results/races")
 
 interface RSSNavigationComponent {
 
