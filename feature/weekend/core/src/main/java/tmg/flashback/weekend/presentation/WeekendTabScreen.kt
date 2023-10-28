@@ -129,7 +129,7 @@ fun WeekendTabScreen(
                             )
                         }
 
-                        when (tabState.value.first { it.isSelected }.tab) {
+                        when (tabState.value.firstOrNull { it.isSelected }?.tab) {
                             WeekendNavItem.SCHEDULE -> {
                                 details(
                                     weekendInfo = weekendInfo,
@@ -170,6 +170,7 @@ fun WeekendTabScreen(
                                     constructorClicked = raceVM.inputs::clickConstructor
                                 )
                             }
+                            null -> { }
                         }
 
                         item(key = "footer") {

@@ -23,12 +23,20 @@ Flashback provides race results and statistics from every race in the history of
 | <img src="res/screenshots/phone/screenshot1.png" width="160" /> | <img src="res/screenshots/phone/screenshot2.png" width="160" /> | <img src="res/screenshots/phone/screenshot3.png" width="160" /> | <img src="res/screenshots/phone/screenshot4.png" width="160" /> |
 | <img src="res/screenshots/phone/screenshot5.png" width="160" /> | <img src="res/screenshots/phone/screenshot6.png" width="160" /> | <img src="res/screenshots/phone/screenshot7.png" width="160" /> | <img src="res/screenshots/phone/screenshot8.png" width="160" /> |
 
-#### Tablet
+#### Tablet 7
 
-|                                                                  |                                                                  |                                                                  |                                                                  |
-|------------------------------------------------------------------|------------------------------------------------------------------|------------------------------------------------------------------|------------------------------------------------------------------|
-| <img src="res/screenshots/tablet/screenshot1.png" width="160" /> | <img src="res/screenshots/tablet/screenshot2.png" width="160" /> | <img src="res/screenshots/tablet/screenshot3.png" width="160" /> | <img src="res/screenshots/tablet/screenshot4.png" width="160" /> |
-| <img src="res/screenshots/tablet/screenshot5.png" width="160" /> | <img src="res/screenshots/tablet/screenshot6.png" width="160" /> | <img src="res/screenshots/tablet/screenshot7.png" width="160" /> | <img src="res/screenshots/tablet/screenshot8.png" width="160" /> |
+|                                                                    |                                                                    |                                                                    |                                                                    |
+|--------------------------------------------------------------------|--------------------------------------------------------------------|--------------------------------------------------------------------|--------------------------------------------------------------------|
+| <img src="res/screenshots/tablet-7/screenshot1.png" width="160" /> | <img src="res/screenshots/tablet-7/screenshot2.png" width="160" /> | <img src="res/screenshots/tablet-7/screenshot3.png" width="160" /> | <img src="res/screenshots/tablet-7/screenshot4.png" width="160" /> |
+| <img src="res/screenshots/tablet-7/screenshot5.png" width="160" /> | <img src="res/screenshots/tablet-7/screenshot6.png" width="160" /> | <img src="res/screenshots/tablet-7/screenshot7.png" width="160" /> | <img src="res/screenshots/tablet-7/screenshot8.png" width="160" /> |
+
+#### Tablet 10
+
+|                                                                     |                                                                     |                                                                     |                                                                     |
+|---------------------------------------------------------------------|---------------------------------------------------------------------|---------------------------------------------------------------------|---------------------------------------------------------------------|
+| <img src="res/screenshots/tablet-10/screenshot1.png" width="160" /> | <img src="res/screenshots/tablet-10/screenshot2.png" width="160" /> | <img src="res/screenshots/tablet-10/screenshot3.png" width="160" /> | <img src="res/screenshots/tablet-10/screenshot4.png" width="160" /> |
+| <img src="res/screenshots/tablet-10/screenshot5.png" width="160" /> | <img src="res/screenshots/tablet-10/screenshot6.png" width="160" /> | <img src="res/screenshots/tablet-10/screenshot1.png" width="160" /> | <img src="res/screenshots/tablet-10/screenshot2.png" width="160" /> |
+
 
 ---
 
