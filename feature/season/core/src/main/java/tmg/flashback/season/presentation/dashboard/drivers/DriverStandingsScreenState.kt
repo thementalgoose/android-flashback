@@ -1,7 +1,9 @@
 package tmg.flashback.season.presentation.dashboard.drivers
 
 import tmg.flashback.formula1.model.SeasonDriverStandingSeason
+import javax.annotation.concurrent.Immutable
 
+@Immutable
 data class DriverStandingsScreenState(
     val season: Int,
     val standings: List<SeasonDriverStandingSeason> = emptyList(),

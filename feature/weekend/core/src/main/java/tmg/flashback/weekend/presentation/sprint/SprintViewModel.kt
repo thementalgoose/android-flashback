@@ -4,6 +4,9 @@ import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -36,7 +39,7 @@ interface SprintViewModelInputs {
 }
 
 interface SprintViewModelOutputs {
-    val list: StateFlow<List<SprintModel>>
+    val list: StateFlow<ImmutableList<SprintModel>>
     val sprintResultType: StateFlow<SprintResultType>
 }
 
@@ -53,7 +56,7 @@ class SprintViewModel @Inject constructor(
     override val sprintResultType: MutableStateFlow<SprintResultType> = MutableStateFlow(SprintResultType.DRIVERS)
 
     private val seasonRound: MutableStateFlow<Pair<Int, Int>?> = MutableStateFlow(null)
-    override val list: StateFlow<List<SprintModel>> = seasonRound
+    override val list: StateFlow<ImmutableList<SprintModel>> = seasonRound
         .filterNotNull()
         .flatMapLatest { (season, round) -> raceRepository.getRace(season, round) }
         .combine(sprintResultType.asStateFlow()) { a, b -> a to b }
@@ -67,7 +70,7 @@ class SprintViewModel @Inject constructor(
                         add(SprintModel.NotAvailable)
                     }
                 }
-                return@map list
+                return@map list.toImmutableList()
             }
 
             val list: MutableList<SprintModel> = mutableListOf()
@@ -106,9 +109,9 @@ class SprintViewModel @Inject constructor(
                     }
                 )
             }
-            return@map list
+            return@map list.toImmutableList()
         }
-        .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+        .stateIn(viewModelScope, SharingStarted.Lazily, persistentListOf())
 
     override fun load(season: Int, round: Int) {
         seasonRound.value = Pair(season, round)

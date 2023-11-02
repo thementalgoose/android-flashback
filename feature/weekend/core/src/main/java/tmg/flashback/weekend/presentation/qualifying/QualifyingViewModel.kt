@@ -3,6 +3,9 @@ package tmg.flashback.weekend.presentation.qualifying
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -19,6 +22,7 @@ import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
 import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.model.QualifyingType
 import tmg.flashback.formula1.model.Race
+import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import javax.inject.Inject
 
@@ -28,7 +32,7 @@ interface QualifyingViewModelInputs {
 }
 
 interface QualifyingViewModelOutputs {
-    val list: StateFlow<List<QualifyingModel>>
+    val list: StateFlow<ImmutableList<QualifyingModel>>
     val headersToShow: StateFlow<QualifyingHeader>
 }
 
@@ -37,7 +41,7 @@ typealias QualifyingHeader = Triple<Boolean, Boolean, Boolean>
 @HiltViewModel
 class QualifyingViewModel @Inject constructor(
     private val raceRepository: RaceRepository,
-    private val navigator: tmg.flashback.navigation.Navigator,
+    private val navigator: Navigator,
     private val ioDispatcher: CoroutineDispatcher
 ): ViewModel(), QualifyingViewModelInputs, QualifyingViewModelOutputs {
 
@@ -45,7 +49,7 @@ class QualifyingViewModel @Inject constructor(
     val outputs: QualifyingViewModelOutputs = this
 
     private val seasonRound: MutableStateFlow<Pair<Int, Int>?> = MutableStateFlow(null)
-    override val list: StateFlow<List<QualifyingModel>> = seasonRound
+    override val list: StateFlow<ImmutableList<QualifyingModel>> = seasonRound
         .filterNotNull()
         .flatMapLatest { (season, round) -> raceRepository.getRace(season, round) }
         .flowOn(ioDispatcher)
@@ -58,7 +62,7 @@ class QualifyingViewModel @Inject constructor(
                         add(QualifyingModel.NotAvailable)
                     }
                 }
-                return@map list
+                return@map list.toImmutableList()
             }
 
             when {
@@ -80,13 +84,13 @@ class QualifyingViewModel @Inject constructor(
             }
 
             return@map when {
-                race.has(QualifyingType.Q3) -> race.getQ1Q2Q3QualifyingList(QualifyingType.Q3)
-                race.has(QualifyingType.Q2) -> race.getQ1Q2QualifyingList()
-                race.has(QualifyingType.Q1) -> race.getQ1QualifyingList()
-                else -> listOf(QualifyingModel.NotAvailable)
+                race.has(QualifyingType.Q3) -> race.getQ1Q2Q3QualifyingList(QualifyingType.Q3).toImmutableList()
+                race.has(QualifyingType.Q2) -> race.getQ1Q2QualifyingList().toImmutableList()
+                race.has(QualifyingType.Q1) -> race.getQ1QualifyingList().toImmutableList()
+                else -> persistentListOf(QualifyingModel.NotAvailable)
             }
         }
-        .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+        .stateIn(viewModelScope, SharingStarted.Lazily, persistentListOf())
 
     override val headersToShow: MutableStateFlow<QualifyingHeader> = MutableStateFlow(QualifyingHeader(true, true, true))
 

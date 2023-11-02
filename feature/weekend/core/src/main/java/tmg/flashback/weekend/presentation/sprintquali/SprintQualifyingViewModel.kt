@@ -4,6 +4,9 @@ package tmg.flashback.weekend.presentation.sprintquali
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -13,6 +16,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import okhttp3.internal.immutableListOf
 import tmg.flashback.domain.repo.RaceRepository
 import tmg.flashback.drivers.contract.Driver
 import tmg.flashback.drivers.contract.with
@@ -21,6 +25,7 @@ import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.model.Race
 import tmg.flashback.formula1.model.SprintQualifyingType
 import tmg.flashback.navigation.Screen
+import javax.annotation.concurrent.Immutable
 import javax.inject.Inject
 
 interface SprintQualifyingViewModelInputs {
@@ -29,7 +34,7 @@ interface SprintQualifyingViewModelInputs {
 }
 
 interface SprintQualifyingViewModelOutputs {
-    val list: StateFlow<List<SprintQualifyingModel>>
+    val list: StateFlow<ImmutableList<SprintQualifyingModel>>
 }
 
 @HiltViewModel
@@ -43,7 +48,7 @@ class SprintQualifyingViewModel @Inject constructor(
     val outputs: SprintQualifyingViewModelOutputs = this
 
     private val seasonRound: MutableStateFlow<Pair<Int, Int>?> = MutableStateFlow(null)
-    override val list: StateFlow<List<SprintQualifyingModel>> = seasonRound
+    override val list: StateFlow<ImmutableList<SprintQualifyingModel>> = seasonRound
         .filterNotNull()
         .flatMapLatest { (season, round) -> raceRepository.getRace(season, round) }
         .flowOn(ioDispatcher)
@@ -56,12 +61,12 @@ class SprintQualifyingViewModel @Inject constructor(
                         add(SprintQualifyingModel.NotAvailable)
                     }
                 }
-                return@map list
+                return@map list.toImmutableList()
             }
 
-            return@map race.getSprintShootout()
+            return@map race.getSprintShootout().toImmutableList()
         }
-        .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+        .stateIn(viewModelScope, SharingStarted.Lazily, persistentListOf())
 
     override fun load(season: Int, round: Int) {
         seasonRound.value = Pair(season, round)

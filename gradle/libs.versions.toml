@@ -59,6 +59,7 @@ material = "com.google.android.material:material:1.10.0"
 kotlin_stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
 kotlin_reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
 kotlinx_coroutines_core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
+kotlinx_immutable = "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.6"
 kotlinx_coroutines_android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
 kotlinx_coroutines_play_services = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services", version.ref = "coroutines" }
 kotlinx_serialization_json = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1"
@@ -185,6 +186,7 @@ androidx_glance = [
 kotlin = [
     "kotlin_stdlib",
     "kotlin_reflect",
+    "kotlinx_immutable",
     "kotlinx_coroutines_core",
     "kotlinx_coroutines_android",
     "kotlinx_coroutines_play_services",
