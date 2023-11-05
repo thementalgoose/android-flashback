@@ -395,16 +395,25 @@ private fun Result(
                     .fillMaxWidth()
                     .padding(top = AppTheme.dimens.xsmall)
             ) {
-                TextBody1(
-                    textColor = when (model.finished == 1) {
-                        true -> AppTheme.colors.f1Championship
-                        false -> null
-                    },
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth(),
-                    bold = true,
-                    text = model.finished?.ordinalAbbreviation ?: "-"
-                )
+                if (model.isSprint) {
+                    TextBody2(
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.fillMaxWidth(),
+                        bold = true,
+                        text = model.finished?.ordinalAbbreviation ?: "-"
+                    )
+                } else {
+                    TextBody1(
+                        textColor = when (model.finished == 1) {
+                            true -> AppTheme.colors.f1Championship
+                            false -> null
+                        },
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.fillMaxWidth(),
+                        bold = true,
+                        text = model.finished?.ordinalAbbreviation ?: "-"
+                    )
+                }
                 if (!model.raceStatus.isStatusFinished()) {
                     TextCaption(
                         textAlign = TextAlign.Center,
@@ -590,7 +599,11 @@ private fun SprintInfo(
                 bottom = AppTheme.dimens.medium
             )
         ) {
-            BadgeView(model = Badge(label = stringResource(id = R.string.nav_sprint)))
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                BadgeView(model = Badge(label = stringResource(id = R.string.nav_sprint)))
+            }
             if (showConstructorLabel) {
                 Spacer(Modifier.height(AppTheme.dimens.xsmall))
                 TextCaption(
