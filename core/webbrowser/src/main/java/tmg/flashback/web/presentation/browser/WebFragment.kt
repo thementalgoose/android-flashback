@@ -68,7 +68,8 @@ internal class WebFragment : Fragment() {
 
         binding?.apply {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                progressBar.progressDrawable.colorFilter = BlendModeColorFilter(Color.RED, BlendMode.SRC_IN)
+                val colour = context?.theme?.getColor(R.attr.colorPrimary) ?: Color.BLUE
+                progressBar.progressDrawable.colorFilter = BlendModeColorFilter(colour, BlendMode.SRC_IN)
             }
             progressBar.max = 100
         }
