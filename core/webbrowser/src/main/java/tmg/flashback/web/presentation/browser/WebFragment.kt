@@ -1,8 +1,11 @@
 package tmg.flashback.web.presentation.browser
 
 import android.annotation.SuppressLint
+import android.graphics.BlendMode
+import android.graphics.BlendModeColorFilter
 import android.graphics.Color
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -64,8 +67,10 @@ internal class WebFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding?.apply {
-            progressBar.progressColour = context?.theme?.getColor(R.attr.colorPrimary) ?: Color.BLUE
-            progressBar.timeLimit = 100
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                progressBar.progressDrawable.colorFilter = BlendModeColorFilter(Color.RED, BlendMode.SRC_IN)
+            }
+            progressBar.max = 100
         }
 
         val webViewClient = FlashbackWebViewClient(
@@ -75,7 +80,7 @@ internal class WebFragment : Fragment() {
         val webChromeClient = FlashbackWebChromeClient(
             updateProgressToo = {
                 val result = it.toFloat() / 100f
-                binding?.progressBar?.animateProgress(result, false) { "" }
+                binding?.progressBar?.progress = it.coerceIn(0, 100)
                 binding?.progressBar?.show(result != 1.0f)
             }
         )

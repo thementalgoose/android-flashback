@@ -44,7 +44,6 @@ dependencies {
     implementation project(path: ':feature:season:contract')
 
     implementation libs.bundles.androidx.workmanager
-    implementation libs.tmg.labelledprogressbar
     implementation libs.flagkit
     implementation libs.lottie
     implementation libs.skeletonlayout
