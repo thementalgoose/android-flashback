@@ -41,7 +41,6 @@ dependencies {
 
     implementation libs.bundles.retrofit
     implementation libs.bundles.okhttp
-    implementation libs.tmg.labelledprogressbar
     implementation libs.lottie
 
     testImplementation project(path: ':test:models')

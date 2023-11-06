@@ -4,13 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <tmg.labelledprogressbar.LabelledProgressBar
+    <ProgressBar
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:indeterminate="false"
         android:id="@+id/progressBar"
         android:layout_width="match_parent"
         android:layout_height="4dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:lpb_backgroundColour="?attr/backgroundPrimary"
-        app:lpb_progressColour="?attr/colorPrimary" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <WebView
         android:id="@+id/webview"
