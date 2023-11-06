@@ -166,7 +166,6 @@ dependencies {
 
     implementation libs.tmg.aboutthisapp
     implementation libs.tmg.utils
-    implementation libs.tmg.labelledprogressbar
 
     implementation libs.falcon
     implementation libs.shakey
