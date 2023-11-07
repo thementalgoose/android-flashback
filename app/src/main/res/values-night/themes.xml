@@ -19,18 +19,4 @@
 
     </style>
 
-    <style name="FlashbackAppTheme.AboutThisApp" parent="FlashbackAppTheme">
-
-        <item name="android:statusBarColor">?attr/colorAccent</item>
-
-        <!-- About This App Activity -->
-        <item name="aboutThisApp_header">?attr/colorAccent</item>
-        <item name="aboutThisApp_textPrimary">#f8f8f8</item>
-        <item name="aboutThisApp_textSecondary">#e8e8e8</item>
-        <item name="aboutThisApp_textToolbar">#f8f8f8</item>
-        <item name="aboutThisApp_iconPrimary">?attr/aboutThisApp_textPrimary</item>
-        <item name="aboutThisApp_backgroundPrimary">?attr/backgroundPrimary</item>
-        <item name="aboutThisApp_backgroundSecondary">?attr/backgroundSecondary</item>
-    </style>
-
 </resources>
