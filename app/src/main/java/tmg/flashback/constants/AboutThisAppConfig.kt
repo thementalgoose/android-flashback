@@ -143,12 +143,6 @@ object AboutThisAppConfig {
                         author = "Faltenreich",
                         url = "https://github.com/Faltenreich/SkeletonLayout",
                         icon = DependencyIcon.Image(url = "https://avatars3.githubusercontent.com/u/7239950")
-                ),
-                Dependency(
-                        dependencyName = "Labelled Progress Bar",
-                        author = "Jordan Fisher",
-                        url = "https://github.com/thementalgoose/android-labelled-progress-bar",
-                        icon = DependencyIcon.Image(url = "https://avatars1.githubusercontent.com/u/5982159")
                 )
         )
     }
@@ -160,7 +154,7 @@ object AboutThisAppConfig {
                     author = supportedSource.title,
                     url = supportedSource.contactLink,
                     icon = DependencyIcon.Icon(
-                            icon = R.drawable.about_this_app_dependency_rss,
+                            icon = R.drawable.about_this_app_dependency_rss_icon,
                             backgroundColor = (supportedSource.colour.toColorInt() and 0x00FFFFFF) or 0x79000000
                     )
             )
