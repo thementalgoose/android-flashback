@@ -90,6 +90,7 @@ fun CircuitScreenVM(
                     uiState = uiState.value,
                     itemClicked = viewModel.inputs::itemClicked,
                     linkClicked = viewModel.inputs::linkClicked,
+                    locationClicked = viewModel.inputs::locationClicked
                 )
             }
         },
@@ -124,7 +125,8 @@ fun CircuitScreen(
     circuitName: String,
     uiState: CircuitScreenState,
     itemClicked: (CircuitModel.Item) -> Unit,
-    linkClicked: (String) -> Unit
+    linkClicked: (String) -> Unit,
+    locationClicked: (Double, Double, String) -> Unit,
 ) {
     LazyColumn(
         modifier = Modifier
@@ -157,7 +159,8 @@ fun CircuitScreen(
                 )
                 is CircuitModel.Stats -> Stats(
                     model = it,
-                    linkClicked = linkClicked
+                    linkClicked = linkClicked,
+                    locationClicked = locationClicked
                 )
             }
         }
@@ -206,6 +209,7 @@ private fun Item(
 private fun Stats(
     model: CircuitModel.Stats,
     linkClicked: (String) -> Unit,
+    locationClicked: (Double, Double, String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier) {
@@ -280,7 +284,9 @@ private fun Stats(
             model.location?.let { location ->
                 ButtonSecondary(
                     text = stringResource(id = R.string.details_link_map),
-                    onClick = { linkClicked("geo:0,0?q=${location.lat},${location.lng} (${model.name})") },
+                    onClick = {
+                        locationClicked(location.lat, location.lng, model.name)
+                    },
 //                    icon = R.drawable.ic_details_maps
                 )
                 Spacer(Modifier.width(AppTheme.dimens.medium))
@@ -427,6 +433,7 @@ private fun Preview(
             ),
             itemClicked = { },
             linkClicked = { },
+            locationClicked = { lat, lng, name -> },
             actionUpClicked = { },
             windowSizeClass = WindowSizeClass.calculateFromSize(DpSize.Unspecified)
         )

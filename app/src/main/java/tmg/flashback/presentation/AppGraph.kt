@@ -5,9 +5,11 @@ import android.os.Parcelable
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -15,10 +17,15 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
 import androidx.window.layout.WindowLayoutInfo
+import tmg.aboutthisapp.AboutThisAppTheme
+import tmg.aboutthisapp.configuration.Link
+import tmg.aboutthisapp.presentation.AboutThisAppScreen
+import tmg.flashback.R
 import tmg.flashback.ads.ads.components.AdvertProvider
 import tmg.flashback.circuits.contract.Circuit
 import tmg.flashback.circuits.contract.model.ScreenCircuitData
 import tmg.flashback.circuits.presentation.CircuitScreenVM
+import tmg.flashback.constants.AboutThisAppConfig
 import tmg.flashback.constructors.contract.Constructor
 import tmg.flashback.constructors.contract.model.ScreenConstructorData
 import tmg.flashback.constructors.presentation.overview.ConstructorOverviewScreenVM
@@ -27,7 +34,9 @@ import tmg.flashback.drivers.contract.model.ScreenDriverData
 import tmg.flashback.drivers.presentation.overview.DriverOverviewScreenVM
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
+import tmg.flashback.navigation.Screen.AboutThisApp
 import tmg.flashback.navigation.asNavigationDestination
+import tmg.flashback.presentation.aboutthisapp.AboutThisApp
 import tmg.flashback.privacypolicy.contract.PrivacyPolicy
 import tmg.flashback.privacypolicy.presentation.PrivacyPolicyScreenVM
 import tmg.flashback.rss.contract.RSS
@@ -181,6 +190,15 @@ fun AppGraph(
                 isRoot = { isRoot(Screen.RSS.route, !it) },
                 advertProvider = advertProvider,
                 actionUpClicked = openMenu
+            )
+        }
+
+        composable(
+            Screen.AboutThisApp.route
+        ) {
+            AboutThisApp(
+                windowSizeClass = windowSize,
+                backClicked = { navController.popBackStack() }
             )
         }
     }

@@ -1,7 +1,7 @@
 package tmg.flashback.managers.deviceconfig
 
 import tmg.flashback.device.managers.DeviceConfigManager
-import tmg.flashback.navigation.ActivityProvider
+import tmg.flashback.device.ActivityProvider
 import tmg.utilities.models.DeviceStatus
 import javax.inject.Inject
 import javax.inject.Singleton

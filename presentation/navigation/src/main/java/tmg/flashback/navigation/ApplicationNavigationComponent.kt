@@ -11,7 +11,6 @@ interface ApplicationNavigationComponent {
     fun relaunchAppIntent(context: Context): Intent
 
     fun aboutApp()
-    fun aboutAppIntent(context: Context): Intent
 
     fun syncActivity()
     fun syncActivityIntent(context: Context): Intent

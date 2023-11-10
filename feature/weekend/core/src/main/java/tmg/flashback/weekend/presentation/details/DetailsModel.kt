@@ -27,17 +27,32 @@ sealed class DetailsModel(
         id = "links"
     )
 
-    data class Link(
+    sealed class Link(
         @StringRes
         val label: Int,
         @DrawableRes
         val icon: Int,
-        val url: String,
     ) {
+        class Url(
+            @StringRes
+            label: Int,
+            @DrawableRes
+            icon: Int,
+            val url: String,
+        ): Link(label, icon)
+
+        class Location(
+            @StringRes
+            label: Int,
+            @DrawableRes
+            icon: Int,
+            val lat: Double,
+            val lng: Double,
+            val name: String
+        ): Link(label, icon)
+
         companion object
     }
-
-
 
     data class Track(
         val circuit: Circuit,

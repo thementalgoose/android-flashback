@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.StateFlow
 import tmg.flashback.R
 import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.device.repository.PrivacyRepository
+import tmg.flashback.device.usecases.OpenPlayStoreUseCase
 import tmg.flashback.navigation.ApplicationNavigationComponent
 import tmg.flashback.ui.managers.ToastManager
 import tmg.flashback.ui.settings.Setting
@@ -26,12 +27,10 @@ interface SettingsAboutViewModelOutputs {
 class SettingsAboutViewModel @Inject constructor(
     private val privacyRepository: PrivacyRepository,
     private val applicationNavigationComponent: ApplicationNavigationComponent,
-    private val openWebpageUseCase: OpenWebpageUseCase,
+    private val openPlayStoreUseCase: OpenPlayStoreUseCase,
     private val toastManager: ToastManager,
-    private val buildConfigManager: BuildConfigManager
 ): ViewModel(), SettingsAboutViewModelInputs, SettingsAboutViewModelOutputs {
 
-    private val reviewUrl: String get() = "https://play.google.com/store/apps/details?id=${buildConfigManager.applicationId}"
 
     val inputs: SettingsAboutViewModelInputs = this
     val outputs: SettingsAboutViewModelOutputs = this
@@ -44,7 +43,7 @@ class SettingsAboutViewModel @Inject constructor(
                 applicationNavigationComponent.aboutApp()
             }
             Settings.Other.review.key -> {
-                openWebpageUseCase.open(url = reviewUrl, title = "")
+                openPlayStoreUseCase.openPlaystore()
             }
             Settings.Other.shakeToReport -> {
                 privacyRepository.shakeToReport = !privacyRepository.shakeToReport
