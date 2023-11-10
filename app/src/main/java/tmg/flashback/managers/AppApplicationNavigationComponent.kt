@@ -17,16 +17,15 @@ import tmg.flashback.notifications.navigation.NotificationNavigationProvider
 import tmg.flashback.repositories.ContactRepository
 import tmg.flashback.rss.usecases.AllSupportedSourcesUseCase
 import tmg.flashback.presentation.HomeActivity
+import tmg.flashback.presentation.aboutthisapp.AboutThisAppConfigProvider
 import tmg.flashback.presentation.settings.All
 import tmg.flashback.presentation.sync.SyncActivity
 import javax.inject.Inject
 
 class AppApplicationNavigationComponent @Inject constructor(
     private val buildConfigManager: BuildConfigManager,
-    private val deviceRepository: DeviceRepository,
-    private val contactRepository: ContactRepository,
     private val firebaseAnalyticsManager: FirebaseAnalyticsManager,
-    private val allSupportedSourcesUseCase: AllSupportedSourcesUseCase,
+    private val aboutThisAppConfigProvider: AboutThisAppConfigProvider,
     private val activityProvider: ActivityProvider,
     private val navigator: Navigator,
 ): ApplicationNavigationComponent, NotificationNavigationProvider {
@@ -47,7 +46,11 @@ class AppApplicationNavigationComponent @Inject constructor(
             "version" to buildConfigManager.versionName
         ), AboutThisAppActivity::class.java)
 
-        navigator.navigate(Screen.AboutThisApp)
+        activityProvider.launch {
+            val config = aboutThisAppConfigProvider.getConfig()
+            it.startActivity(AboutThisAppActivity.intent(it, config))
+        }
+//        navigator.navigate(Screen.AboutThisApp)
     }
 
 
@@ -60,7 +63,7 @@ class AppApplicationNavigationComponent @Inject constructor(
     }
 
     override fun settings() {
-        navigator.navigate(tmg.flashback.navigation.Screen.Settings.All)
+        navigator.navigate(Screen.Settings.All)
     }
 
 
