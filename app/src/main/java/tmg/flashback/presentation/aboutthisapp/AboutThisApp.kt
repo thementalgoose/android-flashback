@@ -32,8 +32,8 @@ fun AboutThisApp(
     val config = viewModel.config.collectAsState()
 
     AboutThisAppTheme(
-//        lightColors = Colours(config.value.lightColors),
-//        darkColors = Colours(config.value.darkColors),
+        lightColors = Colours(config.value.lightColors),
+        darkColors = Colours(config.value.darkColors),
     ) {
         AboutThisApp(
             windowSizeClass = windowSizeClass,
