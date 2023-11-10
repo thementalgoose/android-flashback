@@ -2,7 +2,6 @@ package tmg.flashback.presentation.aboutthisapp
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -11,6 +10,7 @@ import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -20,10 +20,6 @@ import tmg.aboutthisapp.configuration.Dependency
 import tmg.aboutthisapp.configuration.Link
 import tmg.aboutthisapp.presentation.AboutThisAppScreen
 import tmg.flashback.R
-import tmg.flashback.presentation.aboutthisapp.AboutThisAppViewModel.Companion.GITHUB
-import tmg.flashback.style.AppTheme
-import tmg.flashback.style.darkColours
-import tmg.flashback.style.lightColours
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 
@@ -33,40 +29,26 @@ fun AboutThisApp(
     backClicked: () -> Unit,
     viewModel: AboutThisAppViewModel = hiltViewModel(),
 ) {
-    val dependencies = viewModel.dependencies.collectAsState()
-    val guids = viewModel.guid.collectAsState()
-    val applicationId = viewModel.applicationId.collectAsState()
-    val contactEmail = viewModel.contactEmail.collectAsState()
+    val config = viewModel.config.collectAsState()
 
     AboutThisAppTheme(
-        lightColors = Colours(
-            colorPrimary = lightColours.primary,
-            background = lightColours.backgroundPrimary,
-            surface = lightColours.backgroundSecondary,
-            primary = lightColours.backgroundTertiary,
-            onBackground = lightColours.contentPrimary,
-            onSurface = lightColours.contentSecondary,
-            onPrimary = lightColours.contentTertiary,
-        ),
-        darkColors = Colours(
-            colorPrimary = darkColours.primary,
-            background = darkColours.backgroundPrimary,
-            surface = darkColours.backgroundSecondary,
-            primary = darkColours.backgroundTertiary,
-            onBackground = darkColours.contentPrimary,
-            onSurface = darkColours.contentSecondary,
-            onPrimary = darkColours.contentTertiary,
-        ),
+//        lightColors = Colours(config.value.lightColors),
+//        darkColors = Colours(config.value.darkColors),
     ) {
         AboutThisApp(
             windowSizeClass = windowSizeClass,
             backClicked = backClicked,
-            dependencies = dependencies.value,
-            guids = "${guids.value.first}\n${guids.value.second}",
-            applicationId = applicationId.value,
-            contactEmail = contactEmail.value,
+            dependencies = config.value.dependencies,
+            guids = config.value.debugInfo ?: "",
+            applicationId = config.value.appPackageName,
+            contactEmail = config.value.email ?: "",
             copyToClipboard = viewModel::copyToClipboard,
             openUrl = viewModel::openUrl,
+            openGithub = {
+                config.value.github?.let {
+                    viewModel.openUrl(it)
+                }
+            },
             openPlaystore = viewModel::openPlaystore,
             openEmail = viewModel::openEmail
         )
@@ -83,6 +65,7 @@ fun AboutThisApp(
     contactEmail: String,
     copyToClipboard: (String) -> Unit,
     openUrl: (String) -> Unit,
+    openGithub: () -> Unit,
     openPlaystore: () -> Unit,
     openEmail: () -> Unit
 ) {
@@ -108,7 +91,7 @@ fun AboutThisApp(
         contactEmail = contactEmail,
         appVersion = applicationId,
         links = listOf(
-            Link.github { openUrl(GITHUB) },
+            Link.github { openGithub() },
             Link.play { openPlaystore() },
             Link.email { openEmail() }
         )
@@ -140,11 +123,12 @@ private fun ColumnScope.Footer(
     TextBody2(
         text = debugGuid,
         modifier = Modifier
+            .alpha(0.7f)
             .fillMaxWidth()
             .combinedClickable(
                 onClick = { },
                 onLongClick = { copyToClipboard(debugGuid) }
             )
-            .padding(horizontal = 16.dp, vertical = 12.dp),
+            .padding(horizontal = 16.dp, vertical = 18.dp),
     )
 }
