@@ -185,6 +185,7 @@ fun OverlappingPanels(
                 centerPanelAlpha.sidesOpened()
             else
                 centerPanelAlpha.sidesClosed(),
+            label = "animatedCenterPanelAlpha",
         )
 
         val anchors = mapOf(

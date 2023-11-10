@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
 import dagger.hilt.android.HiltAndroidApp
-import tmg.flashback.navigation.ActivityProvider
+import tmg.flashback.device.ActivityProvider
 import javax.inject.Inject
 
 @HiltAndroidApp

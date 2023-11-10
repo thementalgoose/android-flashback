@@ -6,13 +6,13 @@ import android.os.Build
 import android.provider.Settings
 import androidx.annotation.RequiresApi
 import tmg.aboutthisapp.AboutThisAppActivity
-import tmg.flashback.constants.AboutThisAppConfig
 import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.device.repository.DeviceRepository
 import tmg.flashback.googleanalytics.manager.FirebaseAnalyticsManager
-import tmg.flashback.navigation.ActivityProvider
+import tmg.flashback.device.ActivityProvider
 import tmg.flashback.navigation.ApplicationNavigationComponent
 import tmg.flashback.navigation.Navigator
+import tmg.flashback.navigation.Screen
 import tmg.flashback.notifications.navigation.NotificationNavigationProvider
 import tmg.flashback.repositories.ContactRepository
 import tmg.flashback.rss.usecases.AllSupportedSourcesUseCase
@@ -42,23 +42,13 @@ class AppApplicationNavigationComponent @Inject constructor(
 
 
 
-    override fun aboutApp() = activityProvider.launch {
-        it.startActivity(aboutAppIntent(it))
-    }
-
-    override fun aboutAppIntent(context: Context): Intent {
+    override fun aboutApp() {
         firebaseAnalyticsManager.viewScreen("About This App", mapOf(
             "version" to buildConfigManager.versionName
         ), AboutThisAppActivity::class.java)
 
-        return AboutThisAppActivity.intent(context, AboutThisAppConfig.configuration(context,
-            appVersion = buildConfigManager.versionName,
-            contactEmail = contactRepository.contactEmail,
-            deviceUdid = "${deviceRepository.deviceUdid}\n${deviceRepository.installationId}",
-            rssSources = allSupportedSourcesUseCase.getSources()
-        ))
+        navigator.navigate(Screen.AboutThisApp)
     }
-
 
 
     override fun syncActivity() = activityProvider.launch {

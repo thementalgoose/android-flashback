@@ -2,8 +2,7 @@ package tmg.flashback.season
 
 import androidx.appcompat.app.AppCompatActivity
 import tmg.flashback.crashlytics.manager.CrashlyticsManager
-import tmg.flashback.navigation.NavigationDestination
-import tmg.flashback.navigation.Screen
+import tmg.flashback.device.ActivityProvider
 import tmg.flashback.season.contract.ResultsNavigationComponent
 import tmg.flashback.season.presentation.events.EventsBottomSheetFragment
 import tmg.flashback.season.presentation.tyres.TyreBottomSheetFragment
@@ -43,7 +42,7 @@ import javax.inject.Inject
 
 internal class ResultsNavigationComponentImpl @Inject constructor(
     private val crashlyticsManager: CrashlyticsManager,
-    private val activityProvider: tmg.flashback.navigation.ActivityProvider
+    private val activityProvider: ActivityProvider
 ): ResultsNavigationComponent {
 
     override fun tyres(season: Int) = activityProvider.launch {

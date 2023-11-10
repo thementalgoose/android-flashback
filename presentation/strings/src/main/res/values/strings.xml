@@ -536,6 +536,11 @@
     <string name="dashboard_up_next_date_previous">%s days ago</string>
 
 
+    <string name="intent_chooser_open_maps">Open location</string>
+    <string name="intent_chooser_open_website">Open website</string>
+    <string name="intent_chooser_share">Share</string>
+
+
     <!-- Web Browser -->
     <string name="choose_browser">Open in browser</string>
     <string name="choose_share">Share with</string>

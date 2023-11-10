@@ -3,7 +3,6 @@ package tmg.flashback.managers.buildconfig
 import android.os.Build
 import tmg.flashback.BuildConfig
 import tmg.flashback.device.managers.BuildConfigManager
-import tmg.flashback.navigation.ActivityProvider
 import javax.inject.Inject
 import javax.inject.Singleton
 

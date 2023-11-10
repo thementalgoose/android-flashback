@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test
 import tmg.flashback.R
 import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.device.repository.PrivacyRepository
+import tmg.flashback.device.usecases.OpenPlayStoreUseCase
 import tmg.flashback.navigation.ApplicationNavigationComponent
 import tmg.flashback.ui.managers.ToastManager
 import tmg.flashback.presentation.settings.Settings
@@ -20,7 +21,7 @@ internal class SettingsAboutViewModelTest: BaseTest() {
 
     private val mockPrivacyRepository: PrivacyRepository = mockk(relaxed = true)
     private val mockApplicationNavigationComponent: ApplicationNavigationComponent = mockk(relaxed = true)
-    private val mockOpenWebpageUseCase: OpenWebpageUseCase = mockk(relaxed = true)
+    private val mockOpenPlaystoreUseCase: OpenPlayStoreUseCase = mockk(relaxed = true)
     private val mockToastManager: ToastManager = mockk(relaxed = true)
     private val mockBuildConfigManager: BuildConfigManager = mockk(relaxed = true)
 
@@ -30,9 +31,8 @@ internal class SettingsAboutViewModelTest: BaseTest() {
         underTest = SettingsAboutViewModel(
             privacyRepository = mockPrivacyRepository,
             applicationNavigationComponent = mockApplicationNavigationComponent,
-            openWebpageUseCase = mockOpenWebpageUseCase,
-            toastManager = mockToastManager,
-            buildConfigManager = mockBuildConfigManager,
+            openPlayStoreUseCase = mockOpenPlaystoreUseCase,
+            toastManager = mockToastManager
         )
     }
 
@@ -68,12 +68,11 @@ internal class SettingsAboutViewModelTest: BaseTest() {
 
     @Test
     fun `click review launches review screen`() {
-        every { mockBuildConfigManager.applicationId } returns APPLICATION_ID
         initUnderTest()
         underTest.inputs.prefClicked(Settings.Other.review)
 
         verify {
-            mockOpenWebpageUseCase.open(url = REVIEW_URL, title = "")
+            mockOpenPlaystoreUseCase.openPlaystore()
         }
     }
 
