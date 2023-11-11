@@ -191,7 +191,7 @@ internal class SearchViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `clicking circuit updates state to circuit, press back sets to null`() = runTest {
+    fun `clicking circuit updates state to circuit, press back sets to null`() {
         initUnderTest()
         underTest.clickCircuit(circuit1)
         verify {
@@ -212,7 +212,7 @@ internal class SearchViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `clicking driver updates state to driver, press back sets to null`() = runTest {
+    fun `clicking driver updates state to driver, press back sets to null`() {
         initUnderTest()
         underTest.clickDriver(driver1)
         verify {
@@ -221,7 +221,7 @@ internal class SearchViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `clicking constructor updates state to constructor, press back sets to null`() = runTest {
+    fun `clicking constructor updates state to constructor, press back sets to null`() {
         initUnderTest()
         underTest.clickConstructor(constructor1)
         verify {
