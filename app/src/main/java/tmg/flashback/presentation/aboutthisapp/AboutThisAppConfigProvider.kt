@@ -1,6 +1,10 @@
 package tmg.flashback.presentation.aboutthisapp
 
 import android.content.Context
+import android.graphics.Color
+import android.os.Build
+import androidx.compose.material3.dynamicDarkColorScheme
+import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.ui.graphics.toArgb
 import androidx.core.graphics.toColorInt
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -14,7 +18,10 @@ import tmg.flashback.device.repository.DeviceRepository
 import tmg.flashback.repositories.ContactRepository
 import tmg.flashback.rss.usecases.AllSupportedSourcesUseCase
 import tmg.flashback.style.darkColours
+import tmg.flashback.style.dynamic
 import tmg.flashback.style.lightColours
+import tmg.flashback.ui.model.Theme
+import tmg.flashback.ui.repository.ThemeRepository
 import javax.inject.Inject
 
 class AboutThisAppConfigProvider @Inject constructor(
@@ -23,9 +30,18 @@ class AboutThisAppConfigProvider @Inject constructor(
     private val buildConfigManager: BuildConfigManager,
     private val deviceRepository: DeviceRepository,
     private val contactRepository: ContactRepository,
+    private val themeRepository: ThemeRepository,
     private val allSupportedSourcesUseCase: AllSupportedSourcesUseCase,
 ) {
     fun getConfig(): Configuration {
+        val lightColours = when (themeRepository.theme == Theme.MATERIAL_YOU) {
+            true -> dynamicColors(isLight = true) ?: lightColors
+            false -> lightColors
+        }
+        val darkColours = when (themeRepository.theme == Theme.MATERIAL_YOU) {
+            true -> dynamicColors(isLight = false) ?: darkColors
+            false -> darkColors
+        }
         return Configuration(
             imageRes = R.mipmap.ic_launcher,
             appName = context.getString(R.string.app_name),
@@ -37,12 +53,31 @@ class AboutThisAppConfigProvider @Inject constructor(
             email = contactRepository.contactEmail,
             github = "https://www.github.com/thementalgoose",
             debugInfo = "${deviceRepository.deviceUdid}\n${deviceRepository.installationId}",
-            lightColors = lightColors,
-            darkColors = darkColors
+            lightColors = lightColours,
+            darkColors = darkColours
         )
     }
 
     //region Colours
+
+    private fun dynamicColors(isLight: Boolean): ConfigurationColours? {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
+            return null
+        }
+        val colours = when (isLight) {
+            true -> lightColours.dynamic(dynamicLightColorScheme(context), isLightMode = true)
+            false -> darkColours.dynamic(dynamicDarkColorScheme(context), isLightMode = false)
+        }
+        return ConfigurationColours(
+            colorPrimary = colours.primary.toArgb(),
+            background = colours.backgroundPrimary.toArgb(),
+            surface = colours.backgroundSecondary.toArgb(),
+            primary = colours.backgroundTertiary.toArgb(),
+            onBackground = colours.contentPrimary.toArgb(),
+            onSurface = colours.contentSecondary.toArgb(),
+            onPrimary = colours.contentTertiary.toArgb(),
+        )
+    }
 
     private val lightColors = ConfigurationColours(
         colorPrimary = lightColours.primary.toArgb(),
@@ -73,79 +108,79 @@ class AboutThisAppConfigProvider @Inject constructor(
                 dependencyName = "Ergast API",
                 author = "Ergast",
                 url = "https://ergast.com/mrd/",
-                icon = DependencyIcon.Image(url = "https://pbs.twimg.com/profile_images/204468195/logo_400x400.png")
+                icon = DependencyIcon.Image(url = "https://pbs.twimg.com/profile_images/204468195/logo_400x400.png", backgroundColor = Color.WHITE)
             ),
             Dependency(
                 dependencyName = "Jetpack",
                 author = "Google",
                 url = "https://developer.android.com/jetpack",
-                icon = DependencyIcon.Image(url = "https://avatars.githubusercontent.com/u/6955922?s=200&v=4")
+                icon = DependencyIcon.Image(url = "https://avatars.githubusercontent.com/u/6955922?s=200&v=4", backgroundColor = Color.WHITE)
             ),
             Dependency(
                 dependencyName = "Firebase",
                 author = "Google",
                 url = "https://firebase.google.com/",
-                icon = DependencyIcon.Image(url = "https://avatars2.githubusercontent.com/u/1335026")
+                icon = DependencyIcon.Image(url = "https://avatars2.githubusercontent.com/u/1335026", backgroundColor = Color.WHITE)
             ),
             Dependency(
                 dependencyName = "Retrofit",
                 author = "Square",
                 url = "https://square.github.io/retrofit/",
-                icon = DependencyIcon.Image(url = "https://avatars.githubusercontent.com/u/82592")
+                icon = DependencyIcon.Image(url = "https://avatars.githubusercontent.com/u/82592", backgroundColor = Color.WHITE)
             ),
             Dependency(
                 dependencyName = "OkHttp",
                 author = "Square",
                 url = "https://square.github.io/okhttp/",
-                icon = DependencyIcon.Image(url = "https://avatars.githubusercontent.com/u/82592")
+                icon = DependencyIcon.Image(url = "https://avatars.githubusercontent.com/u/82592", backgroundColor = Color.WHITE)
             ),
             Dependency(
                 dependencyName = "Glide",
                 author = "Bump Technologies",
                 url = "https://github.com/bumptech/glide",
-                icon = DependencyIcon.Image(url = "https://lh3.googleusercontent.com/OOjYcooPxIC4PHWxKGg5tfVm5qbJB4m2IMvhmXCOMl9Ps4T6dvmcA66UscrkML0lU6WR0IfswAL9QNpEL63mpLvrtDMiLnOMYCT8rhkC-eIXjhDNk6wGlx-nMJeZzyrvairQOD48KnxhY9vc-tahh7rgKoJeR1mwfoJIVfBNRwlNTSrLkrDZFAU15fvGofmKCrrvlUgUka6tpD80A1-Dm3KRE9knS0m1UHssQ6-KOFdGSndZ70ayGV5pY-n-zDsMYAzDNQMwvb2AhUddiO6VOViXztUqiYuVX5eqCnL7z-bndTcDAqfyohvw8txH5bvc1VR0XcQPjGzJ6EVkdZso2T4b5NoFufzlIP3DPjoFE37VKEGmnI-QMhz9m_IwuJ2U0WXBP9Q4pJkVPqwbIZzm-g338ZETis17D3r52v4hDsq5mN7vzV5KcRHs5l1uivdS5Wj5SQ0t96xmndOEOUISyIxGWeeDGIVSImnK6GuLEfrO4Vsi9gc4Qi8KU5aDBZ0rsbTM-hgNObqBTs-AebwR9gspWCqW7Cigfnezbf1bHAyvPjoLaJ_2IxjoF9KZxjPieYRuXMoDpdhvT5_0cfEsUQF8HjR1qBPku_asce3UtQGvIhMikw=s0")
+                icon = DependencyIcon.Image(url = "https://lh3.googleusercontent.com/OOjYcooPxIC4PHWxKGg5tfVm5qbJB4m2IMvhmXCOMl9Ps4T6dvmcA66UscrkML0lU6WR0IfswAL9QNpEL63mpLvrtDMiLnOMYCT8rhkC-eIXjhDNk6wGlx-nMJeZzyrvairQOD48KnxhY9vc-tahh7rgKoJeR1mwfoJIVfBNRwlNTSrLkrDZFAU15fvGofmKCrrvlUgUka6tpD80A1-Dm3KRE9knS0m1UHssQ6-KOFdGSndZ70ayGV5pY-n-zDsMYAzDNQMwvb2AhUddiO6VOViXztUqiYuVX5eqCnL7z-bndTcDAqfyohvw8txH5bvc1VR0XcQPjGzJ6EVkdZso2T4b5NoFufzlIP3DPjoFE37VKEGmnI-QMhz9m_IwuJ2U0WXBP9Q4pJkVPqwbIZzm-g338ZETis17D3r52v4hDsq5mN7vzV5KcRHs5l1uivdS5Wj5SQ0t96xmndOEOUISyIxGWeeDGIVSImnK6GuLEfrO4Vsi9gc4Qi8KU5aDBZ0rsbTM-hgNObqBTs-AebwR9gspWCqW7Cigfnezbf1bHAyvPjoLaJ_2IxjoF9KZxjPieYRuXMoDpdhvT5_0cfEsUQF8HjR1qBPku_asce3UtQGvIhMikw=s0", backgroundColor = Color.WHITE)
             ),
             Dependency(
                 dependencyName = "Coil",
                 author = "Coil",
                 url = "https://github.com/coil-kt/coil",
-                icon = DependencyIcon.Image(url = "https://avatars.githubusercontent.com/u/52722434")
+                icon = DependencyIcon.Image(url = "https://avatars.githubusercontent.com/u/52722434", backgroundColor = Color.WHITE)
             ),
             Dependency(
                 dependencyName = "FlagKit",
                 author = "WANG Jie",
                 url = "https://github.com/wangjiejacques/flagkit",
-                icon = DependencyIcon.Image(url = "https://avatars3.githubusercontent.com/u/2981971")
+                icon = DependencyIcon.Image(url = "https://avatars3.githubusercontent.com/u/2981971", backgroundColor = Color.WHITE)
             ),
             Dependency(
                 dependencyName = "Shakey",
                 author = "LinkedIn",
                 url = "https://github.com/linkedin/shaky-android",
-                icon = DependencyIcon.Image(url = "https://avatars.githubusercontent.com/u/357098?s=200")
+                icon = DependencyIcon.Image(url = "https://avatars.githubusercontent.com/u/357098?s=200", backgroundColor = Color.WHITE)
             ),
             Dependency(
                 dependencyName = "Accompanist",
                 author = "Google",
                 url = "https://google.github.io/accompanist/",
-                icon = DependencyIcon.Image(url = "https://avatars.githubusercontent.com/u/1342004?s=200&v=4")
+                icon = DependencyIcon.Image(url = "https://avatars.githubusercontent.com/u/1342004?s=200&v=4", backgroundColor = Color.WHITE)
             ),
             Dependency(
                 dependencyName = "Lottie",
                 author = "AirBnB",
                 url = "https://github.com/airbnb/lottie-android",
-                icon = DependencyIcon.Image(url = "https://avatars2.githubusercontent.com/u/698437")
+                icon = DependencyIcon.Image(url = "https://avatars2.githubusercontent.com/u/698437", backgroundColor = Color.WHITE)
             ),
             Dependency(
                 dependencyName = "ThreeTen",
                 author = "Jake Wharton",
                 url = "https://github.com/JakeWharton/ThreeTenABP",
-                icon = DependencyIcon.Image(url = "https://avatars0.githubusercontent.com/u/66577")
+                icon = DependencyIcon.Image(url = "https://avatars0.githubusercontent.com/u/66577", backgroundColor = Color.WHITE)
             ),
             Dependency(
                 dependencyName = "SkeletonLayout",
                 author = "Faltenreich",
                 url = "https://github.com/Faltenreich/SkeletonLayout",
-                icon = DependencyIcon.Image(url = "https://avatars3.githubusercontent.com/u/7239950")
+                icon = DependencyIcon.Image(url = "https://avatars3.githubusercontent.com/u/7239950", backgroundColor = Color.WHITE)
             )
         )
 
@@ -180,13 +215,13 @@ class AboutThisAppConfigProvider @Inject constructor(
             Dependency(
                 dependencyName = "FlatIcon: Freepik",
                 author = "Freepik",
-                icon = DependencyIcon.Image("https://img-authors.flaticon.com/freepik.jpg"),
+                icon = DependencyIcon.Image("https://cdn-teams-slug.flaticon.com/freepik.jpg", backgroundColor = Color.WHITE),
                 url = "https://www.flaticon.com/authors/freepik"
             ),
             Dependency(
                 dependencyName = "IconFinder: Weatherful Icon Pack",
                 author = "Rasmus Neilson",
-                icon = DependencyIcon.Image("https://www.iconfinder.com/static/img/favicons/favicon-194x194.png"),
+                icon = DependencyIcon.Image("https://www.iconfinder.com/static/img/favicons/favicon-194x194.png", backgroundColor = Color.WHITE),
                 url = "https://www.iconfinder.com/iconsets/weatherful"
             )
         )
