@@ -49,11 +49,6 @@
             android:label=""
             android:theme="@style/FlashbackAppTheme.Sync" />
 
-        <activity
-            android:name="tmg.aboutthisapp.AboutThisAppActivity"
-            android:exported="false"
-            android:label="" />
-
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"
