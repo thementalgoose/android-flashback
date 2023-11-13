@@ -10,7 +10,7 @@ import tmg.flashback.drivers.presentation.overview.DriverOverviewScreenVM
 import tmg.flashback.drivers.presentation.season.DriverSeasonScreenVM
 import tmg.flashback.drivers.presentation.stathistory.DriverStatHistoryBottomSheetFragment
 import tmg.flashback.drivers.presentation.stathistory.analyticsKey
-import tmg.flashback.navigation.ActivityProvider
+import tmg.flashback.device.ActivityProvider
 import javax.inject.Inject
 
 class DriverNavigationComponentImpl @Inject constructor(

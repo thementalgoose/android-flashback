@@ -1,7 +1,7 @@
 package tmg.flashback.web.usecases
 
 import android.content.Intent
-import tmg.flashback.navigation.ActivityProvider
+import tmg.flashback.device.ActivityProvider
 import javax.inject.Inject
 
 class ShareUseCase @Inject constructor(

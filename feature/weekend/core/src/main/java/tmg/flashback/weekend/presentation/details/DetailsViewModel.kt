@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import tmg.flashback.circuits.contract.Circuit
 import tmg.flashback.circuits.contract.with
+import tmg.flashback.device.usecases.OpenLocationUseCase
 import tmg.flashback.domain.repo.RaceRepository
 import tmg.flashback.formula1.enums.RaceWeekend
 import tmg.flashback.formula1.model.Schedule
@@ -47,7 +48,8 @@ class DetailsViewModel @Inject constructor(
     private val notificationRepository: NotificationsRepository,
     private val navigator: Navigator,
     private val weatherRepository: WeatherRepository,
-    private val openWebpageUseCase: OpenWebpageUseCase
+    private val openWebpageUseCase: OpenWebpageUseCase,
+    private val openLocationUseCase: OpenLocationUseCase,
 ): ViewModel(), DetailsViewModelInputs, DetailsViewModelOutputs {
 
     val inputs: DetailsViewModelInputs = this
@@ -63,7 +65,7 @@ class DetailsViewModel @Inject constructor(
             val list = mutableListOf<DetailsModel>()
             val links = mutableListOf<DetailsModel.Link>()
 
-            links.add(DetailsModel.Link(
+            links.add(DetailsModel.Link.Url(
                 label = R.string.details_link_circuit,
                 icon = R.drawable.ic_details_track,
                 url = getCircuitUrl(it.raceInfo.circuit.id, it.raceInfo.circuit.name)
@@ -71,7 +73,7 @@ class DetailsViewModel @Inject constructor(
 
             if (it.raceInfo.youtube != null && URLUtil.isValidUrl(it.raceInfo.youtube)) {
                 links.add(
-                    DetailsModel.Link(
+                    DetailsModel.Link.Url(
                         label = R.string.details_link_youtube,
                         icon = R.drawable.ic_details_youtube,
                         url = it.raceInfo.youtube!!
@@ -81,16 +83,18 @@ class DetailsViewModel @Inject constructor(
 
             it.raceInfo.circuit.location?.let { location ->
                 links.add(
-                    DetailsModel.Link(
+                    DetailsModel.Link.Location(
                         label = R.string.details_link_map,
                         icon = R.drawable.ic_details_maps,
-                        url = "geo:${location.lat},${location.lng}?q=${Uri.encode(it.raceInfo.circuit.name)}"
+                        lat = location.lat,
+                        lng = location.lng,
+                        name = it.raceInfo.circuit.name
                     )
                 )
             }
             if (it.raceInfo.wikipediaUrl != null && URLUtil.isValidUrl(it.raceInfo.wikipediaUrl)) {
                 links.add(
-                    DetailsModel.Link(
+                    DetailsModel.Link.Url(
                         label = R.string.details_link_wikipedia,
                         icon = R.drawable.ic_details_wikipedia,
                         url = it.raceInfo.wikipediaUrl!!
@@ -117,15 +121,26 @@ class DetailsViewModel @Inject constructor(
     }
 
     override fun linkClicked(model: DetailsModel.Link) {
-        if (model.url.startsWith(URL_CIRCUIT_HISTORY)) {
-            val parts = model.url.split("/")
-            val circuitId = parts.getOrNull(parts.size - 2)
-            val circuitName = parts.getOrNull(parts.size - 1)
-            if (circuitId != null && circuitName != null) {
-                navigator.navigate(Screen.Circuit.with(circuitId = circuitId, circuitName = circuitName))
+        when (model) {
+            is DetailsModel.Link.Location -> {
+                openLocationUseCase.openLocation(
+                    model.lat,
+                    model.lng,
+                    model.name
+                )
             }
-        } else {
-            openWebpageUseCase.open(model.url, title = "")
+            is DetailsModel.Link.Url -> {
+                if (model.url.startsWith(URL_CIRCUIT_HISTORY)) {
+                    val parts = model.url.split("/")
+                    val circuitId = parts.getOrNull(parts.size - 2)
+                    val circuitName = parts.getOrNull(parts.size - 1)
+                    if (circuitId != null && circuitName != null) {
+                        navigator.navigate(Screen.Circuit.with(circuitId = circuitId, circuitName = circuitName))
+                    }
+                } else {
+                    openWebpageUseCase.open(model.url, title = "")
+                }
+            }
         }
     }
 

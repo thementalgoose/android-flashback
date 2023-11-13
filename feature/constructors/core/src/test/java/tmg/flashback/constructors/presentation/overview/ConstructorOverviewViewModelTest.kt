@@ -21,7 +21,6 @@ import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.ConstructorHistory
 import tmg.flashback.formula1.model.ConstructorHistorySeason
 import tmg.flashback.formula1.model.model
-import tmg.flashback.navigation.Navigator
 import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.testutils.BaseTest
 

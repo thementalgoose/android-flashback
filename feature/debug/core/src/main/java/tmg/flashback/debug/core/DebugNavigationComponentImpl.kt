@@ -7,7 +7,7 @@ import tmg.flashback.debug.DebugNavigationComponent
 import tmg.flashback.debug.core.adverts.AdvertsActivity
 import tmg.flashback.debug.core.styleguide.StyleGuideComposeActivity
 import tmg.flashback.debug.model.DebugMenuItem
-import tmg.flashback.navigation.ActivityProvider
+import tmg.flashback.device.ActivityProvider
 import tmg.flashback.navigation.ApplicationNavigationComponent
 import javax.inject.Inject
 

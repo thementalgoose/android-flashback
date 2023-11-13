@@ -3,7 +3,7 @@ package tmg.flashback.ui.managers
 import android.widget.Toast
 import androidx.activity.result.ActivityResultCallback
 import kotlinx.coroutines.CompletableDeferred
-import tmg.flashback.navigation.ActivityProvider
+import tmg.flashback.device.ActivityProvider
 import tmg.flashback.device.AppPermissions
 import tmg.flashback.ui.R
 import tmg.flashback.ui.base.BaseActivity

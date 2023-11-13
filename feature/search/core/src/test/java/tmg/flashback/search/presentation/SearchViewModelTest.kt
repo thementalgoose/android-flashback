@@ -74,7 +74,7 @@ internal class SearchViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `uistate lists all options and empty search term`() = runTest {
+    fun `uistate lists all options and empty search term`() = runTest(testDispatcher) {
 
         initUnderTest()
         underTest.uiState.test {
@@ -89,7 +89,7 @@ internal class SearchViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `initial state sets no selected item`() = runTest {
+    fun `initial state sets no selected item`() = runTest(testDispatcher) {
         initUnderTest()
         underTest.uiState.test {
             assertEquals(null, awaitItem().selected)
@@ -97,7 +97,7 @@ internal class SearchViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `updating search term filters out drivers`() = runTest {
+    fun `updating search term filters out drivers`() = runTest(testDispatcher) {
         initUnderTest()
         underTest.uiState.test {
             assertEquals(listOf(driver1, driver2), awaitItem().drivers)
@@ -114,7 +114,7 @@ internal class SearchViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `updating search term filters out constructors`() = runTest {
+    fun `updating search term filters out constructors`() = runTest(testDispatcher) {
         initUnderTest()
         underTest.uiState.test {
             assertEquals(listOf(constructor1, constructor2), awaitItem().constructors)
@@ -131,7 +131,7 @@ internal class SearchViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `updating search term filters out circuits`() = runTest {
+    fun `updating search term filters out circuits`() = runTest(testDispatcher) {
         initUnderTest()
         underTest.uiState.test {
             assertEquals(listOf(circuit1, circuit2), awaitItem().circuits)
@@ -148,7 +148,7 @@ internal class SearchViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `updating search term filters out races`() = runTest {
+    fun `updating search term filters out races`() = runTest(testDispatcher) {
         initUnderTest()
         underTest.uiState.test {
             assertEquals(listOf(race2, race1), awaitItem().races)
@@ -165,7 +165,7 @@ internal class SearchViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `refresh syncs all api calls`() = runTest {
+    fun `refresh syncs all api calls`() = runTest(testDispatcher) {
         initUnderTest()
         underTest.refresh()
 
@@ -178,7 +178,7 @@ internal class SearchViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `uistate shows ad state from search config`() = runTest {
+    fun `uistate shows ad state from search config`() = runTest(testDispatcher) {
         every { mockAdsRepository.advertConfig } returns mockk(relaxed = true) {
             every { onSearch } returns true
             every { allowUserConfig } returns true
@@ -191,7 +191,7 @@ internal class SearchViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `clicking circuit updates state to circuit, press back sets to null`() = runTest {
+    fun `clicking circuit updates state to circuit, press back sets to null`() {
         initUnderTest()
         underTest.clickCircuit(circuit1)
         verify {
@@ -200,7 +200,7 @@ internal class SearchViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `clicking race updates state to race, press back sets to null`() = runTest {
+    fun `clicking race updates state to race, press back sets to null`() = runTest(testDispatcher) {
         initUnderTest()
         underTest.clickRace(race1)
         underTest.uiState.test {
@@ -212,7 +212,7 @@ internal class SearchViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `clicking driver updates state to driver, press back sets to null`() = runTest {
+    fun `clicking driver updates state to driver, press back sets to null`() {
         initUnderTest()
         underTest.clickDriver(driver1)
         verify {
@@ -221,7 +221,7 @@ internal class SearchViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `clicking constructor updates state to constructor, press back sets to null`() = runTest {
+    fun `clicking constructor updates state to constructor, press back sets to null`() {
         initUnderTest()
         underTest.clickConstructor(constructor1)
         verify {

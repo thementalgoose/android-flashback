@@ -6,27 +6,26 @@ import android.os.Build
 import android.provider.Settings
 import androidx.annotation.RequiresApi
 import tmg.aboutthisapp.AboutThisAppActivity
-import tmg.flashback.constants.AboutThisAppConfig
 import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.device.repository.DeviceRepository
 import tmg.flashback.googleanalytics.manager.FirebaseAnalyticsManager
-import tmg.flashback.navigation.ActivityProvider
+import tmg.flashback.device.ActivityProvider
 import tmg.flashback.navigation.ApplicationNavigationComponent
 import tmg.flashback.navigation.Navigator
+import tmg.flashback.navigation.Screen
 import tmg.flashback.notifications.navigation.NotificationNavigationProvider
 import tmg.flashback.repositories.ContactRepository
 import tmg.flashback.rss.usecases.AllSupportedSourcesUseCase
 import tmg.flashback.presentation.HomeActivity
+import tmg.flashback.presentation.aboutthisapp.AboutThisAppConfigProvider
 import tmg.flashback.presentation.settings.All
 import tmg.flashback.presentation.sync.SyncActivity
 import javax.inject.Inject
 
 class AppApplicationNavigationComponent @Inject constructor(
     private val buildConfigManager: BuildConfigManager,
-    private val deviceRepository: DeviceRepository,
-    private val contactRepository: ContactRepository,
     private val firebaseAnalyticsManager: FirebaseAnalyticsManager,
-    private val allSupportedSourcesUseCase: AllSupportedSourcesUseCase,
+    private val aboutThisAppConfigProvider: AboutThisAppConfigProvider,
     private val activityProvider: ActivityProvider,
     private val navigator: Navigator,
 ): ApplicationNavigationComponent, NotificationNavigationProvider {
@@ -42,23 +41,17 @@ class AppApplicationNavigationComponent @Inject constructor(
 
 
 
-    override fun aboutApp() = activityProvider.launch {
-        it.startActivity(aboutAppIntent(it))
-    }
-
-    override fun aboutAppIntent(context: Context): Intent {
+    override fun aboutApp() {
         firebaseAnalyticsManager.viewScreen("About This App", mapOf(
             "version" to buildConfigManager.versionName
         ), AboutThisAppActivity::class.java)
 
-        return AboutThisAppActivity.intent(context, AboutThisAppConfig.configuration(context,
-            appVersion = buildConfigManager.versionName,
-            contactEmail = contactRepository.contactEmail,
-            deviceUdid = "${deviceRepository.deviceUdid}\n${deviceRepository.installationId}",
-            rssSources = allSupportedSourcesUseCase.getSources()
-        ))
+        activityProvider.launch {
+            val config = aboutThisAppConfigProvider.getConfig()
+            it.startActivity(AboutThisAppActivity.intent(it, config))
+        }
+//        navigator.navigate(Screen.AboutThisApp)
     }
-
 
 
     override fun syncActivity() = activityProvider.launch {
@@ -70,7 +63,7 @@ class AppApplicationNavigationComponent @Inject constructor(
     }
 
     override fun settings() {
-        navigator.navigate(tmg.flashback.navigation.Screen.Settings.All)
+        navigator.navigate(Screen.Settings.All)
     }
 
 

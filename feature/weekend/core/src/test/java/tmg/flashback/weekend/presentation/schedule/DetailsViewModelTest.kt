@@ -15,6 +15,7 @@ import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
 import tmg.flashback.circuits.contract.Circuit
 import tmg.flashback.circuits.contract.with
+import tmg.flashback.device.usecases.OpenLocationUseCase
 import tmg.flashback.domain.repo.RaceRepository
 import tmg.flashback.formula1.model.Race
 import tmg.flashback.formula1.model.Schedule
@@ -26,7 +27,6 @@ import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.flashback.weekend.R
 import tmg.flashback.weekend.repository.WeatherRepository
 import tmg.flashback.weekend.presentation.details.DetailsModel
-import tmg.flashback.weekend.presentation.details.DetailsModel.Links
 import tmg.flashback.weekend.presentation.details.DetailsViewModel
 import tmg.testutils.BaseTest
 
@@ -35,6 +35,7 @@ internal class DetailsViewModelTest: BaseTest() {
     private val mockRaceRepository: RaceRepository = mockk(relaxed = true)
     private val mockNotificationRepository: NotificationsRepository = mockk(relaxed = true)
     private val mockOpenWebpageUseCase: OpenWebpageUseCase = mockk(relaxed = true)
+    private val mockOpenLocationUseCase: OpenLocationUseCase = mockk(relaxed = true)
     private val mockNavigator: Navigator = mockk(relaxed = true)
     private val mockWeatherRepository: WeatherRepository = mockk(relaxed = true)
 
@@ -45,6 +46,7 @@ internal class DetailsViewModelTest: BaseTest() {
             raceRepository = mockRaceRepository,
             notificationRepository = mockNotificationRepository,
             openWebpageUseCase = mockOpenWebpageUseCase,
+            openLocationUseCase = mockOpenLocationUseCase,
             navigator = mockNavigator,
             weatherRepository = mockWeatherRepository
         )
@@ -88,7 +90,7 @@ internal class DetailsViewModelTest: BaseTest() {
 
     @Test
     fun `click link opens webpage`() = runTest(testDispatcher) {
-        val link = DetailsModel.Link(0, 0, "https://url.com")
+        val link = DetailsModel.Link.Url(0, 0, "https://url.com")
         initUnderTest()
 
         underTest.inputs.linkClicked(link)
@@ -100,7 +102,7 @@ internal class DetailsViewModelTest: BaseTest() {
 
     @Test
     fun `click link with circuit history url navigates to circuit`() = runTest(testDispatcher) {
-        val link = DetailsModel.Link(0, 0, "flashback://circuit-history/circuitId/circuitName")
+        val link = DetailsModel.Link.Url(0, 0, "flashback://circuit-history/circuitId/circuitName")
         initUnderTest()
 
         underTest.inputs.linkClicked(link)
@@ -140,18 +142,21 @@ internal class DetailsViewModelTest: BaseTest() {
         }
     }
 
-    private val links: Links get() = Links(
-        listOf(
-            DetailsModel.Link(
-                label = R.string.details_link_circuit,
-                icon = R.drawable.ic_details_track,
-                url = "flashback://circuit-history/circuitId/circuitName"
-            ),
-            DetailsModel.Link(
-                label = R.string.details_link_map,
-                icon = R.drawable.ic_details_maps,
-                url = "geo:51.101,-1.101?q=${Uri.encode("circuitName")}"
+    private val links: DetailsModel.Links
+        get() = DetailsModel.Links(
+            listOf(
+                DetailsModel.Link.Url(
+                    label = R.string.details_link_circuit,
+                    icon = R.drawable.ic_details_track,
+                    url = "flashback://circuit-history/circuitId/circuitName"
+                ),
+                DetailsModel.Link.Location(
+                    label = R.string.details_link_map,
+                    icon = R.drawable.ic_details_maps,
+                    lat = 51.101,
+                    lng = -1.101,
+                    name = "circuitName"
+                )
             )
         )
-    )
 }

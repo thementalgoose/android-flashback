@@ -15,6 +15,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.circuits.contract.model.ScreenCircuitData
 import tmg.flashback.device.managers.NetworkConnectivityManager
+import tmg.flashback.device.usecases.OpenLocationUseCase
 import tmg.flashback.domain.repo.CircuitRepository
 import tmg.flashback.formula1.model.Circuit
 import tmg.flashback.formula1.model.CircuitHistory
@@ -30,6 +31,7 @@ internal class CircuitViewModelTest: BaseTest() {
     private val mockCircuitRepository: CircuitRepository = mockk(relaxed = true)
     private val mockConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
     private val mockOpenWebpageUseCase: OpenWebpageUseCase = mockk(relaxed = true)
+    private val mockOpenLocationUseCase: OpenLocationUseCase = mockk(relaxed = true)
 
     private val circuit: Circuit = Circuit.model()
     private val circuitHistoryRace: CircuitHistoryRace = CircuitHistoryRace.model()
@@ -51,6 +53,7 @@ internal class CircuitViewModelTest: BaseTest() {
         underTest = CircuitViewModel(
             circuitRepository = mockCircuitRepository,
             openWebpageUseCase = mockOpenWebpageUseCase,
+            openLocationUseCase = mockOpenLocationUseCase,
             networkConnectivityManager = mockConnectivityManager,
             savedStateHandle = savedStateHandle,
             ioDispatcher = coroutineScope.testDispatcher
@@ -75,6 +78,15 @@ internal class CircuitViewModelTest: BaseTest() {
         underTest.inputs.linkClicked("url")
         verify {
             mockOpenWebpageUseCase.open(url = "url", title = "")
+        }
+    }
+
+    @Test
+    fun `open location fies open location event`() {
+        initUnderTest()
+        underTest.inputs.locationClicked(1.0, 2.0, "name")
+        verify {
+            mockOpenLocationUseCase.openLocation(1.0, 2.0, "name")
         }
     }
 

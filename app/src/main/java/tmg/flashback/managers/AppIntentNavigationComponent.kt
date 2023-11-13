@@ -1,7 +1,7 @@
 package tmg.flashback.managers
 
 import android.content.Intent
-import tmg.flashback.navigation.ActivityProvider
+import tmg.flashback.device.ActivityProvider
 import tmg.flashback.navigation.IntentNavigationComponent
 import javax.inject.Inject
 
