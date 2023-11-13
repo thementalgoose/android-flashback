@@ -23,11 +23,11 @@ fun DetailsModel.ScheduleWeekend.Companion.model(
     windspeedMetric = windspeedMetric
 )
 
-fun DetailsModel.Link.Companion.model(
+fun DetailsModel.Link.Companion.url(
     label: Int = 0,
     icon: Int = 1,
     url: String = "https://link.com"
-): DetailsModel.Link = DetailsModel.Link(
+): DetailsModel.Link = DetailsModel.Link.Url(
     label = label,
     icon = icon,
     url = url

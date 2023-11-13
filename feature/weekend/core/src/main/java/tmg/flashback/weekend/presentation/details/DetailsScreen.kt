@@ -388,12 +388,12 @@ private fun Preview(
                 weekendInfo = race.raceInfo.toWeekendInfo(),
                 items = listOf(
                     DetailsModel.Links(listOf(
-                        DetailsModel.Link(
+                        DetailsModel.Link.Url(
                             label = R.string.details_link_youtube,
                             icon = R.drawable.ic_details_youtube,
                             url = "https://www.youtube.com"
                         ),
-                        DetailsModel.Link(
+                        DetailsModel.Link.Url(
                             label = R.string.details_link_wikipedia,
                             icon = R.drawable.ic_details_wikipedia,
                             url = "https://www.wiki.com"

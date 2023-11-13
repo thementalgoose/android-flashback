@@ -1,4 +1,4 @@
-package tmg.flashback.navigation
+package tmg.flashback.device
 
 import android.app.Activity
 import android.app.Application
@@ -6,15 +6,12 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import tmg.flashback.crashlytics.manager.CrashlyticsManager
 import java.lang.ref.WeakReference
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ActivityProvider @Inject constructor(
-    private val crashController: CrashlyticsManager
-): Application.ActivityLifecycleCallbacks {
+class ActivityProvider @Inject constructor(): Application.ActivityLifecycleCallbacks {
 
     private var _activity: WeakReference<Activity>? = null
     private var startCount = 0
@@ -76,7 +73,6 @@ class ActivityProvider @Inject constructor(
     @Synchronized
     private fun update(activity: Activity, lifecycleState: String) {
         this._activity = WeakReference(activity)
-        Log.i("Activity", "Top Activity updated to ${activity.javaClass.simpleName}")
-        crashController.log("Activity ${activity.javaClass.simpleName}@${Integer.toHexString(activity.hashCode())} (event=${lifecycleState})")
+        Log.i("Activity", "Top Activity updated to ${activity.javaClass.simpleName} - $lifecycleState")
     }
 }

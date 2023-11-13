@@ -4,7 +4,7 @@ import android.content.Context
 import android.widget.Toast
 import androidx.annotation.StringRes
 import dagger.hilt.android.qualifiers.ApplicationContext
-import tmg.flashback.navigation.ActivityProvider
+import tmg.flashback.device.ActivityProvider
 import javax.inject.Inject
 import javax.inject.Singleton
 

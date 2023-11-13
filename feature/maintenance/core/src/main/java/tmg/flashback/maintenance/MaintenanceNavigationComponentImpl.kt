@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.Intent
 import tmg.flashback.maintenance.contract.MaintenanceNavigationComponent
 import tmg.flashback.maintenance.presentation.forceupgrade.ForceUpgradeActivity
-import tmg.flashback.navigation.ActivityProvider
+import tmg.flashback.device.ActivityProvider
 import javax.inject.Inject
 
 internal class MaintenanceNavigationComponentImpl @Inject constructor(

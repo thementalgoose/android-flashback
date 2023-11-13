@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import tmg.flashback.circuits.contract.model.ScreenCircuitData
 import tmg.flashback.device.managers.NetworkConnectivityManager
+import tmg.flashback.device.usecases.OpenLocationUseCase
 import tmg.flashback.domain.repo.CircuitRepository
 import tmg.flashback.formula1.model.CircuitHistory
 import tmg.flashback.web.usecases.OpenWebpageUseCase
@@ -19,6 +20,7 @@ import javax.inject.Inject
 
 interface CircuitViewModelInputs {
     fun linkClicked(link: String)
+    fun locationClicked(lat: Double, lng: Double, name: String)
     fun itemClicked(model: CircuitModel.Item)
     fun refresh()
     fun back()
@@ -32,6 +34,7 @@ interface CircuitViewModelOutputs {
 class CircuitViewModel @Inject constructor(
     private val circuitRepository: CircuitRepository,
     private val openWebpageUseCase: OpenWebpageUseCase,
+    private val openLocationUseCase: OpenLocationUseCase,
     private val networkConnectivityManager: NetworkConnectivityManager,
     savedStateHandle: SavedStateHandle,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
@@ -47,9 +50,9 @@ class CircuitViewModel @Inject constructor(
 
         uiState = MutableStateFlow(
             CircuitScreenState(
-            circuitId = circuit.circuitId,
-            circuitName = circuit.circuitName
-        )
+                circuitId = circuit.circuitId,
+                circuitName = circuit.circuitName
+            )
         )
         refresh()
     }
@@ -92,6 +95,10 @@ class CircuitViewModel @Inject constructor(
 
     override fun linkClicked(link: String) {
         openWebpageUseCase.open(url = link, title = "")
+    }
+
+    override fun locationClicked(lat: Double, lng: Double, name: String) {
+        openLocationUseCase.openLocation(lat, lng, name)
     }
 
     override fun itemClicked(model: CircuitModel.Item) {

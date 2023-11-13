@@ -28,6 +28,9 @@ import tmg.flashback.drivers.presentation.overview.DriverOverviewScreenVM
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.flashback.navigation.asNavigationDestination
+import tmg.flashback.presentation.aboutthisapp.AboutThisApp
+import tmg.flashback.presentation.settings.All
+import tmg.flashback.presentation.settings.SettingsAllScreenVM
 import tmg.flashback.privacypolicy.contract.PrivacyPolicy
 import tmg.flashback.privacypolicy.presentation.PrivacyPolicyScreenVM
 import tmg.flashback.rss.contract.RSS
@@ -40,8 +43,6 @@ import tmg.flashback.season.contract.Races
 import tmg.flashback.season.presentation.dashboard.constructors.ConstructorStandingsScreenVM
 import tmg.flashback.season.presentation.dashboard.drivers.DriverStandingsScreenVM
 import tmg.flashback.season.presentation.dashboard.races.RacesScreen
-import tmg.flashback.presentation.settings.All
-import tmg.flashback.presentation.settings.SettingsAllScreenVM
 import tmg.flashback.weekend.contract.Weekend
 import tmg.flashback.weekend.contract.model.ScreenWeekendData
 import tmg.flashback.weekend.presentation.WeekendScreen
@@ -181,6 +182,15 @@ fun AppGraph(
                 isRoot = { isRoot(Screen.RSS.route, !it) },
                 advertProvider = advertProvider,
                 actionUpClicked = openMenu
+            )
+        }
+
+        composable(
+            Screen.AboutThisApp.route
+        ) {
+            AboutThisApp(
+                windowSizeClass = windowSize,
+                backClicked = { navController.popBackStack() }
             )
         }
     }

@@ -81,6 +81,7 @@ class DashboardNavViewModel @Inject constructor(
                 destination.startsWith("settings") -> MenuItem.Settings
                 destination.startsWith("rss") -> MenuItem.RSS
                 destination.startsWith("search") -> MenuItem.Search
+                destination == Screen.AboutThisApp.route -> MenuItem.Contact
                 else -> null
             }
             return@map item
