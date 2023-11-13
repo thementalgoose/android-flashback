@@ -150,10 +150,12 @@ internal class DetailsViewModelTest: BaseTest() {
                     icon = R.drawable.ic_details_track,
                     url = "flashback://circuit-history/circuitId/circuitName"
                 ),
-                DetailsModel.Link.Url(
+                DetailsModel.Link.Location(
                     label = R.string.details_link_map,
                     icon = R.drawable.ic_details_maps,
-                    url = "geo:51.101,-1.101?q=${Uri.encode("circuitName")}"
+                    lat = 51.101,
+                    lng = -1.101,
+                    name = "circuitName"
                 )
             )
         )

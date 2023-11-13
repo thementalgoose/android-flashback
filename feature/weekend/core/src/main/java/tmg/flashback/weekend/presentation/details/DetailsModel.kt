@@ -39,7 +39,20 @@ sealed class DetailsModel(
             @DrawableRes
             icon: Int,
             val url: String,
-        ): Link(label, icon)
+        ): Link(label, icon) {
+            override fun equals(other: Any?): Boolean {
+                if (this === other) return true
+                if (javaClass != other?.javaClass) return false
+
+                other as Url
+
+                return url == other.url
+            }
+
+            override fun hashCode(): Int {
+                return url.hashCode()
+            }
+        }
 
         class Location(
             @StringRes
@@ -49,7 +62,25 @@ sealed class DetailsModel(
             val lat: Double,
             val lng: Double,
             val name: String
-        ): Link(label, icon)
+        ): Link(label, icon) {
+            override fun equals(other: Any?): Boolean {
+                if (this === other) return true
+                if (javaClass != other?.javaClass) return false
+
+                other as Location
+
+                if (lat != other.lat) return false
+                if (lng != other.lng) return false
+                return name == other.name
+            }
+
+            override fun hashCode(): Int {
+                var result = lat.hashCode()
+                result = 31 * result + lng.hashCode()
+                result = 31 * result + name.hashCode()
+                return result
+            }
+        }
 
         companion object
     }
