@@ -111,7 +111,7 @@ retrofit_core = { module = "com.squareup.retrofit2:retrofit", version.ref = "ret
 retrofit_converter_simplexml = { module = "com.squareup.retrofit2:converter-simplexml", version.ref = "retrofit" }
 retrofit_converter_jaxb = { module = "com.squareup.retrofit2:converter-jaxb", version.ref = "retrofit" }
 retrofit_converter_gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
-retrofit_converter_serialization = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0"
+retrofit_converter_serialization = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:1.0.0"
 okhttp_core = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
 okhttp_logging = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp" }
 
