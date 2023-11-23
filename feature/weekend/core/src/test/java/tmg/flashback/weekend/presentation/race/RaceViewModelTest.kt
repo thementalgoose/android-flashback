@@ -106,17 +106,15 @@ internal class RaceViewModelTest: BaseTest() {
     fun `race result type updates when item is changed`() = runTest(testDispatcher) {
         initUnderTest()
 
-        val observer = underTest.raceResultType.testIn(this)
+        underTest.raceResultType.test {
+            assertEquals(RaceResultType.DRIVERS, awaitItem())
 
-        underTest.show(RaceResultType.CONSTRUCTORS)
+            underTest.show(RaceResultType.CONSTRUCTORS)
+            assertEquals(RaceResultType.CONSTRUCTORS, awaitItem())
 
-        underTest.show(RaceResultType.DRIVERS)
-
-        val list = observer.cancelAndConsumeRemainingEvents()
-        assertEquals(RaceResultType.DRIVERS, (list[0] as Event.Item<RaceResultType>).value)
-        assertEquals(RaceResultType.CONSTRUCTORS, (list[1] as Event.Item<RaceResultType>).value)
-        assertEquals(RaceResultType.DRIVERS, (list[2] as Event.Item<RaceResultType>).value)
-        assertEquals(3, list.size)
+            underTest.show(RaceResultType.DRIVERS)
+            assertEquals(RaceResultType.DRIVERS, awaitItem())
+        }
     }
 
     @Test
