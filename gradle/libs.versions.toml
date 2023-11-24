@@ -25,7 +25,7 @@ gradle_agp = "com.android.tools.build:gradle:8.1.4"
 gradle_crashlytics = "com.google.firebase:firebase-crashlytics-gradle:2.9.9"
 gradle_dep_report = "com.github.ben-manes:gradle-versions-plugin:0.46.0"
 gradle_hilt = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hilt" }
-gradle_junit5 = "de.mannodermaus.gradle.plugins:android-junit5:1.9.3.0"
+gradle_junit5 = "de.mannodermaus.gradle.plugins:android-junit5:1.10.0.0"
 gradle_kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 gradle_newrelic = { module = "com.newrelic.agent.android:agent-gradle-plugin", version.ref = "newrelic" }
 google_services = "com.google.gms:google-services:4.4.0"
