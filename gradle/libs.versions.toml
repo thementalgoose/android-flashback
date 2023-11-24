@@ -125,7 +125,7 @@ falcon = "com.jraska:falcon:2.2.0"
 
 playservicesads = "com.google.android.gms:play-services-ads:22.5.0"
 
-skeletonlayout = "com.faltenreich:skeletonlayout:4.0.0"
+skeletonlayout = "com.faltenreich:skeletonlayout:5.0.0"
 
 threeten = "org.threeten:threetenbp:1.6.8"
 threetenabp = "com.jakewharton.threetenabp:threetenabp:1.4.6"
