@@ -31,7 +31,7 @@ gradle_newrelic = { module = "com.newrelic.agent.android:agent-gradle-plugin", v
 google_services = "com.google.gms:google-services:4.4.0"
 kotlinx_serialization_core = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin" }
 firebase_perf_plugin = "com.google.firebase:perf-plugin:1.4.2"
-play_publisher = "com.github.triplet.gradle:play-publisher:3.8.4"
+play_publisher = "com.github.triplet.gradle:play-publisher:3.8.6"
 r8 = "com.android.tools:r8:8.1.72"
 
 ## App Dependencies
