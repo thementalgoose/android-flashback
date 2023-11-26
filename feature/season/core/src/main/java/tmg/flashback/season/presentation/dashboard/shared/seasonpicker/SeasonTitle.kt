@@ -38,6 +38,7 @@ import tmg.flashback.style.badge.BadgeView
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextHeadline1
 import tmg.flashback.style.text.TextHeadline1Inline
+import tmg.flashback.style.text.TextTitle
 
 @Composable
 fun SeasonTitleVM(
@@ -97,7 +98,10 @@ fun SeasonTitle(
                     supportedSeasons.forEach { season ->
                         DropdownMenuItem(
                             text = {
-                                TextBody1(text = season.toString())
+                                TextTitle(
+                                    text = season.toString(),
+                                    bold = true
+                                )
                             },
                             onClick = {
                                 currentSeasonUpdated(season)
@@ -119,13 +123,27 @@ fun SeasonTitle(
 
 @PreviewTheme
 @Composable
-private fun Preview() {
+private fun PreviewWithNewSeason() {
     AppThemePreview {
         SeasonTitle(
             subtitle = "Subtitle",
             currentSeason = 2023,
             supportedSeasons = listOf(2023, 2024),
             newSeasonAvailable = true,
+            currentSeasonUpdated = { }
+        )
+    }
+}
+
+@PreviewTheme
+@Composable
+private fun Preview() {
+    AppThemePreview {
+        SeasonTitle(
+            subtitle = "Subtitle",
+            currentSeason = 2023,
+            supportedSeasons = listOf(2023, 2024),
+            newSeasonAvailable = false,
             currentSeasonUpdated = { }
         )
     }
