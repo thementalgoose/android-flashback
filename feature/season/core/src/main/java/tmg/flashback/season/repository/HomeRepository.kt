@@ -29,6 +29,7 @@ class HomeRepository @Inject constructor(
 
         // Prefs
         private const val keyEmptyWeeksInSchedule: String = "empty_weeks_in_schedule"
+        private const val keySeenSeasons: String = "SEASONS_VIEWED"
         private const val keyDashboardCollapseList: String = "DASHBOARD_COLLAPSE_LIST"
         private const val keyProvidedByAtTop: String = "PROVIDED_BY_AT_TOP"
 
@@ -64,6 +65,15 @@ class HomeRepository @Inject constructor(
                 .getJson(keySupportedSeasons, AllSeasonsJson.serializer())
                 ?.convert()
                 ?: emptySet()
+
+    /**
+     * All the seasons the user has viewed
+     */
+    var viewedSeasons: Set<Int>
+        get() = preferenceManager.getSet(keySeenSeasons, emptySet())
+            .mapNotNull { it.toIntOrNull() }
+            .toSet()
+        set(value) = preferenceManager.save(keySeenSeasons, value.map { it.toString() }.toSet())
 
     /**
      * Is the searching of the statistics functionality enabled server side

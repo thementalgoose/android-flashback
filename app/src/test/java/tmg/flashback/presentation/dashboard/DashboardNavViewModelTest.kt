@@ -25,6 +25,7 @@ import tmg.flashback.navigation.ApplicationNavigationComponent
 import tmg.flashback.navigation.NavigationDestination
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.rss.repo.RssRepository
+import tmg.flashback.season.presentation.dashboard.shared.seasonpicker.CurrentSeasonHolder
 import tmg.flashback.usecases.DashboardSyncUseCase
 import tmg.testutils.BaseTest
 import tmg.testutils.junit.toSealedClass
@@ -36,6 +37,7 @@ internal class DashboardNavViewModelTest: BaseTest() {
     private val mockCrashlyticsManager: CrashlyticsManager = mockk(relaxed = true)
     private val mockDashboardSyncUseCase: DashboardSyncUseCase = mockk(relaxed = true)
     private val mockDebugNavigationComponent: DebugNavigationComponent = mockk(relaxed = true)
+    private val mockCurrentSeasonHolder: CurrentSeasonHolder = mockk(relaxed = true)
 
     private val mockNavigator: Navigator = mockk(relaxed = true)
     private val mockNavController: NavHostController = mockk(relaxed = true)
@@ -50,6 +52,7 @@ internal class DashboardNavViewModelTest: BaseTest() {
             crashlyticsManager = mockCrashlyticsManager,
             dashboardSyncUseCase = mockDashboardSyncUseCase,
             debugNavigationComponent = mockDebugNavigationComponent,
+            currentSeasonHolder = mockCurrentSeasonHolder,
             ioDispatcher = Dispatchers.Unconfined
         )
     }
@@ -59,6 +62,7 @@ internal class DashboardNavViewModelTest: BaseTest() {
         initUnderTest()
         coVerify {
             mockDashboardSyncUseCase.sync()
+            mockCurrentSeasonHolder.refresh()
         }
         verify {
             mockCrashlyticsManager.log(any())

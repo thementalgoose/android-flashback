@@ -36,6 +36,14 @@ internal class SeasonTitleViewModelTest {
         initUnderTest()
         assertEquals(flow, underTest.outputs.currentSeason)
     }
+    @Test
+    fun `new season available returns flow from holder`() {
+        val flow: StateFlow<Boolean> = mockk(relaxed = true)
+        every { mockCurrentSeasonHolder.newSeasonAvailableFlow } returns flow
+
+        initUnderTest()
+        assertEquals(flow, underTest.outputs.newSeasonAvailable)
+    }
 
     @Test
     fun `update season calls update in holder`() {
@@ -45,5 +53,4 @@ internal class SeasonTitleViewModelTest {
             mockCurrentSeasonHolder.updateTo(2023)
         }
     }
-
 }
