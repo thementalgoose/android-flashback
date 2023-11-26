@@ -208,6 +208,28 @@ internal class HomeRepositoryTest {
         }
     }
 
+
+    @Test
+    fun `seasons seen reads value from preferences repository`() {
+        every { mockPreferenceManager.getSet(keySeenSeasons, any()) } returns mutableSetOf("1234")
+        initSUT()
+
+        assertEquals(setOf(1234), sut.viewedSeasons)
+        verify {
+            mockPreferenceManager.getSet(keySeenSeasons, emptySet())
+        }
+    }
+
+    @Test
+    fun `seasons seen saves value to shared prefs repository`() {
+        initSUT()
+
+        sut.viewedSeasons = setOf(1234)
+        verify {
+            mockPreferenceManager.save(keySeenSeasons, setOf("1234"))
+        }
+    }
+
     //endregion
 
     //region Season Onboarding prompt
@@ -270,6 +292,7 @@ internal class HomeRepositoryTest {
 
         // Prefs
         private const val keyEmptyWeeksInSchedule: String = "empty_weeks_in_schedule"
+        private const val keySeenSeasons: String = "SEASONS_VIEWED"
         private const val keyDashboardCollapseList: String = "DASHBOARD_COLLAPSE_LIST"
         private const val keyProvidedByAtTop: String = "PROVIDED_BY_AT_TOP"
         private const val keySeasonOnboarding: String = "ONBOARDING_SEASON"

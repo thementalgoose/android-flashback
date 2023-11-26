@@ -1,7 +1,12 @@
 package tmg.flashback.season.presentation.dashboard.shared.seasonpicker
 
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
+import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
 import tmg.flashback.season.repository.HomeRepository
 import tmg.flashback.season.usecases.DefaultSeasonUseCase
 import javax.inject.Inject
@@ -23,21 +28,32 @@ class CurrentSeasonHolder @Inject constructor(
     val supportedSeasons: List<Int>
         get() = _supportedSeasons.value
 
+    private val _newSeasonAvailable: MutableStateFlow<Boolean> = MutableStateFlow(newSeasonAvailable())
+    val newSeasonAvailableFlow: StateFlow<Boolean> = _newSeasonAvailable
+
     val defaultSeason: Int
         get() = defaultSeasonUseCase.defaultSeason
 
     fun updateTo(season: Int) {
+        homeRepository.viewedSeasons = (homeRepository.viewedSeasons + season)
         if (supportedSeasons.contains(season)) {
             _currentSeason.value = season
         }
-        update()
+        refresh()
     }
 
-    private fun update() {
+    fun refresh() {
         val seasons = homeRepository.supportedSeasons.sortedByDescending { it }
         _supportedSeasons.value = seasons
+        _newSeasonAvailable.value = newSeasonAvailable()
         if (!seasons.contains(currentSeason)) {
             _currentSeason.value = defaultSeasonUseCase.defaultSeason
         }
+    }
+
+    private fun newSeasonAvailable(): Boolean {
+        val viewedSeasons = homeRepository.viewedSeasons
+        val newSeasons = supportedSeasons.filter { it > currentSeason }
+        return newSeasons.any { season -> season !in viewedSeasons }
     }
 }
