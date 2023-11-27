@@ -7,6 +7,8 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 import tmg.flashback.season.repository.HomeRepository
 import tmg.flashback.season.usecases.DefaultSeasonUseCase
 import tmg.testutils.BaseTest
@@ -53,6 +55,40 @@ internal class CurrentSeasonHolderTest: BaseTest() {
         }
     }
 
+    @ParameterizedTest(name = "supported = {0}, viewed = {1}, current = {2} results in new season available {3}")
+    @CsvSource(
+        "2022|2023|2024,,2023,true",
+        "2022|2023|2024,2024,2023,false",
+        "2022|2023|2024,,2024,false",
+        "2022|2023|2024|2025,2024,2023,true",
+        "2022|2023|2024|2025,2024,2024,true",
+        "2022|2023|2024|2025,2024,2025,false",
+        "2022|2023|2024|2025,2024|2025,2023,false",
+        "2022|2023|2024|2025,2024|2025,2024,false",
+        "2022|2023|2024|2025,2024|2025,2025,false",
+        "2022|2023|2024|2025,2025,2023,true",
+    )
+    fun `initial value of new season available`(
+        supportedSeasonString: String?,
+        viewedSeasonString: String?,
+        currentSeason: Int,
+        expectedNewSeasonValue: Boolean
+    ) = runTest {
+
+        val supportedSeasons = supportedSeasonString?.split("|")?.map { it.toInt() }?.toSet() ?: emptySet()
+        val viewedSeasons = viewedSeasonString?.split("|")?.map { it.toInt() }?.toSet() ?: emptySet()
+
+        every { mockDefaultSeasonUseCase.defaultSeason } returns currentSeason
+        every { mockHomeRepository.supportedSeasons } returns supportedSeasons
+        every { mockHomeRepository.viewedSeasons } returns viewedSeasons
+
+        initUnderTest()
+
+        underTest.newSeasonAvailableFlow.test {
+            assertEquals(expectedNewSeasonValue, awaitItem())
+        }
+    }
+
     @Test
     fun `updating season sets current value if in supported seasons`() {
         initUnderTest()
@@ -64,7 +100,6 @@ internal class CurrentSeasonHolderTest: BaseTest() {
 
         assertEquals(2022, underTest.currentSeason)
         assertEquals(listOf(2022, 2021), underTest.supportedSeasons)
-
     }
 
     @Test
