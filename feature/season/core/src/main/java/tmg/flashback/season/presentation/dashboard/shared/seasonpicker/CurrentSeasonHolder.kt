@@ -34,6 +34,10 @@ class CurrentSeasonHolder @Inject constructor(
     val defaultSeason: Int
         get() = defaultSeasonUseCase.defaultSeason
 
+    init {
+        homeRepository.viewedSeasons = homeRepository.viewedSeasons + currentSeason
+    }
+
     fun updateTo(season: Int) {
         homeRepository.viewedSeasons = (homeRepository.viewedSeasons + season)
         if (supportedSeasons.contains(season)) {
