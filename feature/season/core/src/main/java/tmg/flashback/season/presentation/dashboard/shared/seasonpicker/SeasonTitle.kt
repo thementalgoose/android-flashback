@@ -23,14 +23,22 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.PopupProperties
 import androidx.hilt.navigation.compose.hiltViewModel
+import tmg.flashback.season.R
 import tmg.flashback.style.AppTheme
+import tmg.flashback.style.AppThemePreview
+import tmg.flashback.style.annotations.PreviewTheme
+import tmg.flashback.style.badge.Badge
+import tmg.flashback.style.badge.BadgeView
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextHeadline1
 import tmg.flashback.style.text.TextHeadline1Inline
+import tmg.flashback.style.text.TextTitle
 
 @Composable
 fun SeasonTitleVM(
@@ -39,10 +47,12 @@ fun SeasonTitleVM(
 ) {
     val seasons = viewModel.outputs.supportedSeasons.collectAsState()
     val currentSeason = viewModel.outputs.currentSeason.collectAsState()
+    val newSeasonAvailable = viewModel.outputs.newSeasonAvailable.collectAsState()
     SeasonTitle(
         subtitle = subtitle,
         currentSeason = currentSeason.value,
         supportedSeasons = seasons.value,
+        newSeasonAvailable = newSeasonAvailable.value,
         currentSeasonUpdated = viewModel.inputs::currentSeasonUpdate
     )
 }
@@ -52,6 +62,7 @@ fun SeasonTitle(
     subtitle: String?,
     currentSeason: Int,
     supportedSeasons: List<Int>,
+    newSeasonAvailable: Boolean,
     currentSeasonUpdated: (season: Int) -> Unit
 ) {
     val expanded = remember { mutableStateOf(false)  }
@@ -74,6 +85,10 @@ fun SeasonTitle(
                 contentDescription = null,
                 tint = AppTheme.colors.contentTertiary
             )
+            if (newSeasonAvailable) {
+                Spacer(Modifier.width(AppTheme.dimens.small))
+                BadgeView(model = Badge(label = stringResource(id = R.string.dashboard_new_season_available)))
+            }
             DropdownMenu(
                 offset = DpOffset(AppTheme.dimens.medium, 0.dp),
                 modifier = Modifier.background(AppTheme.colors.backgroundContainer),
@@ -83,7 +98,10 @@ fun SeasonTitle(
                     supportedSeasons.forEach { season ->
                         DropdownMenuItem(
                             text = {
-                                TextBody1(text = season.toString())
+                                TextTitle(
+                                    text = season.toString(),
+                                    bold = true
+                                )
                             },
                             onClick = {
                                 currentSeasonUpdated(season)
@@ -100,5 +118,33 @@ fun SeasonTitle(
                 modifier = Modifier.padding(horizontal = AppTheme.dimens.medium)
             )
         }
+    }
+}
+
+@PreviewTheme
+@Composable
+private fun PreviewWithNewSeason() {
+    AppThemePreview {
+        SeasonTitle(
+            subtitle = "Subtitle",
+            currentSeason = 2023,
+            supportedSeasons = listOf(2023, 2024),
+            newSeasonAvailable = true,
+            currentSeasonUpdated = { }
+        )
+    }
+}
+
+@PreviewTheme
+@Composable
+private fun Preview() {
+    AppThemePreview {
+        SeasonTitle(
+            subtitle = "Subtitle",
+            currentSeason = 2023,
+            supportedSeasons = listOf(2023, 2024),
+            newSeasonAvailable = false,
+            currentSeasonUpdated = { }
+        )
     }
 }

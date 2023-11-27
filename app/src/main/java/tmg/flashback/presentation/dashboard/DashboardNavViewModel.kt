@@ -31,6 +31,7 @@ import tmg.flashback.season.contract.ConstructorsStandings
 import tmg.flashback.season.contract.DriverStandings
 import tmg.flashback.season.contract.Races
 import tmg.flashback.presentation.settings.All
+import tmg.flashback.season.presentation.dashboard.shared.seasonpicker.CurrentSeasonHolder
 import tmg.flashback.usecases.DashboardSyncUseCase
 import tmg.utilities.extensions.combinePair
 import javax.inject.Inject
@@ -59,6 +60,7 @@ class DashboardNavViewModel @Inject constructor(
     private val crashlyticsManager: CrashlyticsManager,
     private val dashboardSyncUseCase: DashboardSyncUseCase,
     private val debugNavigationComponent: DebugNavigationComponent,
+    private val currentSeasonHolder: CurrentSeasonHolder,
     ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), DashboardNavViewModelInputs, DashboardNavViewModelOutputs,
     NavController.OnDestinationChangedListener {
@@ -130,6 +132,7 @@ class DashboardNavViewModel @Inject constructor(
 
         viewModelScope.launch(ioDispatcher) {
             val result = dashboardSyncUseCase.sync()
+            currentSeasonHolder.refresh()
             crashlyticsManager.log("Dashboard synchronisation complete $result")
         }
     }
