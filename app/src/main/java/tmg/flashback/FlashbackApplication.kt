@@ -29,7 +29,7 @@ class FlashbackApplication: Application(), Configuration.Provider {
         startup.startup(this)
     }
 
-    override fun getWorkManagerConfiguration() = Configuration
+    override val workManagerConfiguration = Configuration
         .Builder()
         .setWorkerFactory(workerFactory)
         .build()
