@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.R
+import tmg.flashback.strings.R.string
 import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.device.repository.DeviceRepository
 import tmg.flashback.repositories.ContactRepository
@@ -47,8 +48,8 @@ internal class AboutThisAppConfigProviderTest {
         every { mockThemeRepository.theme } returns Theme.DEFAULT
 
         every { mockContext.getString(R.string.app_name) } returns "app_name"
-        every { mockContext.getString(R.string.dependency_thank_you) } returns "header"
-        every { mockContext.getString(R.string.about_additional) } returns "footer"
+        every { mockContext.getString(string.dependency_thank_you) } returns "header"
+        every { mockContext.getString(string.about_additional) } returns "footer"
     }
 
     @Test

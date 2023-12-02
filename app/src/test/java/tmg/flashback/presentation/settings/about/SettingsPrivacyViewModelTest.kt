@@ -8,6 +8,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import tmg.flashback.R
+import tmg.flashback.strings.R.string
 import tmg.flashback.device.repository.PrivacyRepository
 import tmg.flashback.privacypolicy.contract.PrivacyPolicy
 import tmg.flashback.ui.managers.ToastManager
@@ -90,7 +91,7 @@ internal class SettingsPrivacyViewModelTest: BaseTest() {
 
         verify {
             mockPrivacyRepository.crashReporting = true
-            mockToastManager.displayToast(R.string.settings_restart_app_required)
+            mockToastManager.displayToast(string.settings_restart_app_required)
         }
         underTest.outputs.crashReportingEnabled.test { awaitItem() }
     }
@@ -105,7 +106,7 @@ internal class SettingsPrivacyViewModelTest: BaseTest() {
 
         verify {
             mockPrivacyRepository.analytics = true
-            mockToastManager.displayToast(R.string.settings_restart_app_required)
+            mockToastManager.displayToast(string.settings_restart_app_required)
         }
         underTest.outputs.analyticsEnabled.test { awaitItem() }
     }

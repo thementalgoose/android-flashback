@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.constructors.R
+import tmg.flashback.formula1.R.drawable
 import tmg.flashback.constructors.contract.model.ScreenConstructorData
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.domain.repo.ConstructorRepository
@@ -128,14 +129,14 @@ internal class ConstructorOverviewViewModelTest: BaseTest() {
     }
 
     private fun assertStatModels(list: List<ConstructorOverviewModel>) {
-        assertTrue(list.any { it is ConstructorOverviewModel.Stat && it.icon == R.drawable.ic_menu_constructors })
-        assertTrue(list.any { it is ConstructorOverviewModel.Stat && it.icon == R.drawable.ic_menu_drivers })
-        assertTrue(list.any { it is ConstructorOverviewModel.Stat && it.icon == R.drawable.ic_race_grid })
-        assertTrue(list.any { it is ConstructorOverviewModel.Stat && it.icon == R.drawable.ic_standings })
-        assertTrue(list.any { it is ConstructorOverviewModel.Stat && it.icon == R.drawable.ic_podium })
-        assertTrue(list.any { it is ConstructorOverviewModel.Stat && it.icon == R.drawable.ic_race_points })
-        assertTrue(list.any { it is ConstructorOverviewModel.Stat && it.icon == R.drawable.ic_finishes_in_points })
-        assertTrue(list.any { it is ConstructorOverviewModel.Stat && it.icon == R.drawable.ic_qualifying_pole })
+        assertTrue(list.any { it is ConstructorOverviewModel.Stat && it.icon == tmg.flashback.ui.R.drawable.ic_menu_constructors })
+        assertTrue(list.any { it is ConstructorOverviewModel.Stat && it.icon == tmg.flashback.ui.R.drawable.ic_menu_drivers })
+        assertTrue(list.any { it is ConstructorOverviewModel.Stat && it.icon == drawable.ic_race_grid })
+        assertTrue(list.any { it is ConstructorOverviewModel.Stat && it.icon == drawable.ic_standings })
+        assertTrue(list.any { it is ConstructorOverviewModel.Stat && it.icon == drawable.ic_podium })
+        assertTrue(list.any { it is ConstructorOverviewModel.Stat && it.icon == drawable.ic_race_points })
+        assertTrue(list.any { it is ConstructorOverviewModel.Stat && it.icon == drawable.ic_finishes_in_points })
+        assertTrue(list.any { it is ConstructorOverviewModel.Stat && it.icon == drawable.ic_qualifying_pole })
     }
 
     private fun assertSeasonRacedFor(list: List<ConstructorOverviewModel>, vararg season: Int) {

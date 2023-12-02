@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.domain.repo.DriverRepository
 import tmg.flashback.drivers.R
+import tmg.flashback.formula1.R.drawable
 import tmg.flashback.formula1.model.DriverHistory
 import tmg.flashback.formula1.model.DriverHistorySeason
 import tmg.flashback.formula1.model.model
@@ -112,17 +113,17 @@ internal class DriverSeasonViewModelTest: BaseTest() {
             val item = awaitItem()
             assertTrue(item.any { it is DriverSeasonModel.Result && it.round == 1 })
 
-            assertTrue(item.any { it is DriverSeasonModel.Stat && it.icon == R.drawable.ic_standings })
-            assertTrue(item.any { it is DriverSeasonModel.Stat && it.icon == R.drawable.ic_podium })
-            assertTrue(item.any { it is DriverSeasonModel.Stat && it.icon == R.drawable.ic_race_starts })
-            assertTrue(item.any { it is DriverSeasonModel.Stat && it.icon == R.drawable.ic_race_finishes })
-            assertTrue(item.any { it is DriverSeasonModel.Stat && it.icon == R.drawable.ic_race_retirements })
-            assertTrue(item.any { it is DriverSeasonModel.Stat && it.icon == R.drawable.ic_best_finish })
-            assertTrue(item.any { it is DriverSeasonModel.Stat && it.icon == R.drawable.ic_finishes_in_points })
-            assertTrue(item.any { it is DriverSeasonModel.Stat && it.icon == R.drawable.ic_race_points })
-            assertTrue(item.any { it is DriverSeasonModel.Stat && it.icon == R.drawable.ic_qualifying_pole })
-            assertTrue(item.any { it is DriverSeasonModel.Stat && it.icon == R.drawable.ic_qualifying_front_row })
-            assertTrue(item.any { it is DriverSeasonModel.Stat && it.icon == R.drawable.ic_qualifying_top_ten })
+            assertTrue(item.any { it is DriverSeasonModel.Stat && it.icon == drawable.ic_standings })
+            assertTrue(item.any { it is DriverSeasonModel.Stat && it.icon == drawable.ic_podium })
+            assertTrue(item.any { it is DriverSeasonModel.Stat && it.icon == drawable.ic_race_starts })
+            assertTrue(item.any { it is DriverSeasonModel.Stat && it.icon == drawable.ic_race_finishes })
+            assertTrue(item.any { it is DriverSeasonModel.Stat && it.icon == drawable.ic_race_retirements })
+            assertTrue(item.any { it is DriverSeasonModel.Stat && it.icon == drawable.ic_best_finish })
+            assertTrue(item.any { it is DriverSeasonModel.Stat && it.icon == drawable.ic_finishes_in_points })
+            assertTrue(item.any { it is DriverSeasonModel.Stat && it.icon == drawable.ic_race_points })
+            assertTrue(item.any { it is DriverSeasonModel.Stat && it.icon == drawable.ic_qualifying_pole })
+            assertTrue(item.any { it is DriverSeasonModel.Stat && it.icon == drawable.ic_qualifying_front_row })
+            assertTrue(item.any { it is DriverSeasonModel.Stat && it.icon == drawable.ic_qualifying_top_ten })
         }
     }
 
@@ -156,17 +157,17 @@ internal class DriverSeasonViewModelTest: BaseTest() {
             val item = awaitItem()
             assertTrue(item.any { it is DriverSeasonModel.Result && it.round == 1 })
 
-            assertTrue(item.any { it is DriverSeasonModel.Stat && it.icon == R.drawable.ic_standings })
-            assertTrue(item.any { it is DriverSeasonModel.Stat && it.icon == R.drawable.ic_podium })
-            assertTrue(item.any { it is DriverSeasonModel.Stat && it.icon == R.drawable.ic_race_starts })
-            assertTrue(item.any { it is DriverSeasonModel.Stat && it.icon == R.drawable.ic_race_finishes })
-            assertTrue(item.any { it is DriverSeasonModel.Stat && it.icon == R.drawable.ic_race_retirements })
-            assertTrue(item.any { it is DriverSeasonModel.Stat && it.icon == R.drawable.ic_best_finish })
-            assertTrue(item.any { it is DriverSeasonModel.Stat && it.icon == R.drawable.ic_finishes_in_points })
-            assertTrue(item.any { it is DriverSeasonModel.Stat && it.icon == R.drawable.ic_race_points })
-            assertTrue(item.any { it is DriverSeasonModel.Stat && it.icon == R.drawable.ic_qualifying_pole })
-            assertTrue(item.any { it is DriverSeasonModel.Stat && it.icon == R.drawable.ic_qualifying_front_row })
-            assertTrue(item.any { it is DriverSeasonModel.Stat && it.icon == R.drawable.ic_qualifying_top_ten })
+            assertTrue(item.any { it is DriverSeasonModel.Stat && it.icon == drawable.ic_standings })
+            assertTrue(item.any { it is DriverSeasonModel.Stat && it.icon == drawable.ic_podium })
+            assertTrue(item.any { it is DriverSeasonModel.Stat && it.icon == drawable.ic_race_starts })
+            assertTrue(item.any { it is DriverSeasonModel.Stat && it.icon == drawable.ic_race_finishes })
+            assertTrue(item.any { it is DriverSeasonModel.Stat && it.icon == drawable.ic_race_retirements })
+            assertTrue(item.any { it is DriverSeasonModel.Stat && it.icon == drawable.ic_best_finish })
+            assertTrue(item.any { it is DriverSeasonModel.Stat && it.icon == drawable.ic_finishes_in_points })
+            assertTrue(item.any { it is DriverSeasonModel.Stat && it.icon == drawable.ic_race_points })
+            assertTrue(item.any { it is DriverSeasonModel.Stat && it.icon == drawable.ic_qualifying_pole })
+            assertTrue(item.any { it is DriverSeasonModel.Stat && it.icon == drawable.ic_qualifying_front_row })
+            assertTrue(item.any { it is DriverSeasonModel.Stat && it.icon == drawable.ic_qualifying_top_ten })
         }
     }
 

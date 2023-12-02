@@ -8,6 +8,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import tmg.flashback.R
+import tmg.flashback.strings.R.string
 import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.device.repository.PrivacyRepository
 import tmg.flashback.device.usecases.OpenPlayStoreUseCase
@@ -85,7 +86,7 @@ internal class SettingsAboutViewModelTest: BaseTest() {
 
         verify {
             mockPrivacyRepository.shakeToReport = true
-            mockToastManager.displayToast(R.string.settings_restart_app_required)
+            mockToastManager.displayToast(string.settings_restart_app_required)
         }
         underTest.outputs.shakeToReportEnabled.test { awaitItem() }
     }

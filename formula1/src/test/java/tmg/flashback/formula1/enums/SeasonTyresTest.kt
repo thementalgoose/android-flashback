@@ -7,6 +7,7 @@ import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.EnumSource
 import org.threeten.bp.Year
 import tmg.flashback.formula1.R
+import tmg.flashback.strings.R.string
 
 internal class SeasonTyresTest {
 
@@ -42,13 +43,13 @@ internal class SeasonTyresTest {
     @EnumSource(SeasonTyres::class)
     fun `all dry compound labels are in an order`(tyres: SeasonTyres) {
         val order = mapOf(
-            R.string.tyre_hyper_soft to 1,
-            R.string.tyre_ultra_soft to 2,
-            R.string.tyre_super_soft to 3,
-            R.string.tyre_soft to 4,
-            R.string.tyre_medium to 5,
-            R.string.tyre_hard to 6,
-            R.string.tyre_super_hard to 7
+            string.tyre_hyper_soft to 1,
+            string.tyre_ultra_soft to 2,
+            string.tyre_super_soft to 3,
+            string.tyre_soft to 4,
+            string.tyre_medium to 5,
+            string.tyre_hard to 6,
+            string.tyre_super_hard to 7
         )
 
         var ref = 0
@@ -67,8 +68,8 @@ internal class SeasonTyresTest {
     @EnumSource(SeasonTyres::class)
     fun `all wet compound labels are in an order`(tyres: SeasonTyres) {
         val order = mapOf(
-            R.string.tyre_intermediate to 1,
-            R.string.tyre_wet to 2
+            string.tyre_intermediate to 1,
+            string.tyre_wet to 2
         )
 
         var ref = 0
