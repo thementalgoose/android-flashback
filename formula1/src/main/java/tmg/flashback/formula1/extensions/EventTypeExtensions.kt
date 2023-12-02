@@ -3,6 +3,7 @@ package tmg.flashback.formula1.extensions
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import tmg.flashback.formula1.R
+import tmg.flashback.strings.R.string
 import tmg.flashback.formula1.enums.EventType
 
 val EventType.icon: Int
@@ -17,8 +18,8 @@ val EventType.icon: Int
 val EventType.label: Int
     @StringRes
     get() = when (this) {
-        EventType.TESTING -> R.string.event_type_testing
-        EventType.CAR_LAUNCH -> R.string.event_type_car_launch
-        EventType.NETFLIX -> R.string.event_type_netflix
-        EventType.OTHER -> R.string.event_type_other
+        EventType.TESTING -> string.event_type_testing
+        EventType.CAR_LAUNCH -> string.event_type_car_launch
+        EventType.NETFLIX -> string.event_type_netflix
+        EventType.OTHER -> string.event_type_other
     }

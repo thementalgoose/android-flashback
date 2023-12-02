@@ -5,6 +5,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import tmg.flashback.R
+import tmg.flashback.strings.R.string
 import tmg.flashback.ui.managers.ToastManager
 import tmg.flashback.ui.model.Theme
 import tmg.flashback.ui.repository.ThemeRepository
@@ -46,7 +47,7 @@ class SettingsThemeViewModel @Inject constructor(
     override fun selectTheme(theme: Theme) {
         val existing = theme == themeRepository.theme
         if (!existing) {
-            toastManager.displayToast(R.string.settings_restart_app_required)
+            toastManager.displayToast(string.settings_restart_app_required)
         }
         themeRepository.theme = theme
         currentlySelected.value = themeRepository.theme

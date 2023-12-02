@@ -33,6 +33,7 @@ import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextSection
 import tmg.flashback.style.text.TextTitle
 import tmg.flashback.ui.R
+import tmg.flashback.strings.R.string
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.header.HeaderAction
 import tmg.flashback.ui.settings.Setting
@@ -435,7 +436,7 @@ private fun Setting.Heading.Companion.get(
     isBeta: Boolean = false,
 ) = Setting.Heading(
     _key = "key",
-    title = R.string.settings_theme_title,
+    title = string.settings_theme_title,
     isBeta = isBeta
 )
 
@@ -446,8 +447,8 @@ private fun Setting.Pref.Companion.get(
     isEnabled: Boolean = true
 ) = Setting.Pref(
     _key = "key",
-    title = R.string.settings_theme_theme_title,
-    subtitle = R.string.settings_theme_theme_description,
+    title = string.settings_theme_theme_title,
+    subtitle = string.settings_theme_theme_description,
     icon = icon,
     isEnabled = isEnabled,
     isBeta = isBeta
@@ -462,8 +463,8 @@ private fun Setting.Switch.Companion.get(
 ) = Setting.Switch(
     _key = "key",
     isChecked = isChecked,
-    title = R.string.settings_theme_theme_title,
-    subtitle = R.string.settings_theme_theme_description,
+    title = string.settings_theme_theme_title,
+    subtitle = string.settings_theme_theme_description,
     icon = icon,
     isEnabled = isEnabled,
     isBeta = isBeta
@@ -475,8 +476,8 @@ private fun Setting.Section.Companion.get(
 ) = Setting.Section(
     _key = "key",
     icon = R.drawable.ic_menu,
-    title = R.string.settings_theme_theme_title,
-    subtitle = R.string.settings_theme_theme_description,
+    title = string.settings_theme_theme_title,
+    subtitle = string.settings_theme_theme_description,
     isEnabled = isEnabled,
     isBeta = isBeta
 )

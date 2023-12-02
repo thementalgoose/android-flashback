@@ -80,7 +80,7 @@ fun CollapsibleBox(
             }
             Icon(
                 modifier = Modifier.rotate(degrees.value),
-                painter = painterResource(id = R.drawable.arrow_down),
+                painter = painterResource(id = tmg.flashback.ui.R.drawable.arrow_down),
                 contentDescription = null,
                 tint = AppTheme.colors.contentSecondary
             )

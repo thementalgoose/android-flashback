@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.DpSize
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import tmg.flashback.R
+import tmg.flashback.strings.R.string
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
@@ -73,13 +74,13 @@ fun SettingsNotificationUpcomingNoticeScreen(
         content = {
             item("header") {
                 tmg.flashback.ui.components.header.Header(
-                    text = stringResource(id = R.string.notification_onboarding_title),
+                    text = stringResource(id = string.notification_onboarding_title),
                     action = if (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact) HeaderAction.BACK else null,
                     actionUpClicked = actionUpClicked
                 )
             }
 
-            Header(title = R.string.notification_onboarding_title_howlong)
+            Header(title = string.notification_onboarding_title_howlong)
 
             if (!permissions.runtimePermission) {
                 Pref(

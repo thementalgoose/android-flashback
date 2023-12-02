@@ -6,6 +6,8 @@ import kotlinx.coroutines.CompletableDeferred
 import tmg.flashback.device.ActivityProvider
 import tmg.flashback.device.AppPermissions
 import tmg.flashback.ui.R
+import tmg.flashback.strings.R.string
+import tmg.flashback.strings.R.plurals
 import tmg.flashback.ui.base.BaseActivity
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -25,9 +27,9 @@ class PermissionManager @Inject constructor(
         val numberGranted = isGranted.count { it.value }
         if (numberGranted != isGranted.size) {
             val numberDenied = isGranted.size - numberGranted
-            when (val string = baseActivity?.resources?.getQuantityString(R.plurals.permissions_rationale_permissions_denied, numberDenied, numberDenied)) {
-                null -> Toast.makeText(baseActivity, R.string.permissions_rationale_permission_denied, Toast.LENGTH_LONG).show()
-                else -> Toast.makeText(baseActivity, string, Toast.LENGTH_LONG).show()
+            when (val msg = baseActivity?.resources?.getQuantityString(plurals.permissions_rationale_permissions_denied, numberDenied, numberDenied)) {
+                null -> Toast.makeText(baseActivity, string.permissions_rationale_permission_denied, Toast.LENGTH_LONG).show()
+                else -> Toast.makeText(baseActivity, msg, Toast.LENGTH_LONG).show()
             }
         }
     }

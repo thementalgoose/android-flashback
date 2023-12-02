@@ -42,6 +42,9 @@ import tmg.flashback.style.text.TextTitle
 import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.ui.utils.pluralResource
 import tmg.flashback.weekend.R
+import tmg.flashback.strings.R.plurals
+import tmg.flashback.strings.R.string
+import tmg.flashback.formula1.R.drawable
 import tmg.flashback.weekend.presentation.race.RaceModel
 import tmg.utilities.extensions.ordinalAbbreviation
 
@@ -158,7 +161,7 @@ private fun PodiumBar(
             TextBody1(
                 textAlign = TextAlign.Center,
                 textColor = lightColours.contentPrimary,
-                text = pluralResource(resId = R.plurals.race_points, quantity = points.toInt(), points.pointsDisplay()),
+                text = pluralResource(resId = plurals.race_points, quantity = points.toInt(), points.pointsDisplay()),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = AppTheme.dimens.xsmall)
@@ -173,8 +176,8 @@ internal fun FastestLap(
     modifier: Modifier = Modifier
 ) {
     Icon(
-        painter = painterResource(id = R.drawable.ic_fastest_lap),
-        contentDescription = stringResource(id = R.string.ab_fastest_lap),
+        painter = painterResource(id = drawable.ic_fastest_lap),
+        contentDescription = stringResource(id = string.ab_fastest_lap),
         modifier = modifier
             .padding(top = 4.dp)
             .size(14.dp),
@@ -207,7 +210,7 @@ private fun PodiumResult(
                 contentScale = ContentScale.Crop,
                 model = model.entry.driver.photoUrl,
                 contentDescription = null,
-                error = painterResource(id = R.drawable.unknown_avatar)
+                error = painterResource(id = tmg.flashback.ui.R.drawable.unknown_avatar)
             )
         }
         TextTitle(

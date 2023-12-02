@@ -12,6 +12,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.DpSize
 import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.R
+import tmg.flashback.strings.R.string
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
@@ -58,13 +59,13 @@ fun SettingsWebScreen(
         content = {
             item("header") {
                 tmg.flashback.ui.components.header.Header(
-                    text = stringResource(id = R.string.settings_section_web_browser_title),
+                    text = stringResource(id = string.settings_section_web_browser_title),
                     action = if (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact) HeaderAction.BACK else null,
                     actionUpClicked = actionUpClicked
                 )
             }
 
-            Header(title = R.string.settings_header_in_app_browser)
+            Header(title = string.settings_header_in_app_browser)
             Switch(
                 model = Settings.Web.enable(webBrowserEnabled),
                 onClick = prefClicked

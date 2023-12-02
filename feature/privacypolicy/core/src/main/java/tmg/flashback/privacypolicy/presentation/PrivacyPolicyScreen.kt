@@ -1,5 +1,6 @@
 package tmg.flashback.privacypolicy.presentation
 
+import android.graphics.Color
 import android.text.method.LinkMovementMethod
 import android.widget.TextView
 import androidx.compose.foundation.background
@@ -19,6 +20,7 @@ import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.googleanalytics.presentation.ScreenView
+import tmg.flashback.strings.R.string
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.header.HeaderAction
 import tmg.utilities.extensions.fromHtml
@@ -37,7 +39,7 @@ fun PrivacyPolicyScreenVM(
             .verticalScroll(rememberScrollState())
     ) {
         Header(
-            text = stringResource(id = R.string.privacy_policy_title),
+            text = stringResource(id = string.privacy_policy_title),
             action = if (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact) HeaderAction.BACK else null,
             actionUpClicked = actionUpClicked
         )
@@ -50,8 +52,8 @@ fun PrivacyPolicyScreenVM(
             ),
             factory = {
                 TextView(it).apply {
-                    setTextColor(it.theme.getColor(R.attr.contentPrimary))
-                    text = it.getString(R.string.privacy_policy_data).fromHtml()
+                    setTextColor(Color.GRAY)
+                    text = it.getString(string.privacy_policy_data).fromHtml()
                     movementMethod = LinkMovementMethod.getInstance()
                 }
             }

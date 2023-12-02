@@ -50,6 +50,7 @@ import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextCaption
 import tmg.flashback.googleanalytics.presentation.ScreenView
+import tmg.flashback.strings.R.string
 import tmg.flashback.rss.presentation.configure.ConfigureRSSScreenVM
 import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.header.Header
@@ -134,13 +135,13 @@ fun RSSScreen(
         content = {
             item("header") {
                 Header(
-                    text = stringResource(id = R.string.title_rss),
+                    text = stringResource(id = string.title_rss),
                     action = if (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact) HeaderAction.MENU else null,
                     overrideIcons = {
                         IconButton(onClick = configureSources) {
                             Icon(
                                 painter = painterResource(id = R.drawable.ic_rss_settings),
-                                contentDescription = stringResource(id = R.string.ab_rss_settings),
+                                contentDescription = stringResource(id = string.ab_rss_settings),
                                 tint = AppTheme.colors.contentPrimary
                             )
                         }
@@ -161,7 +162,7 @@ fun RSSScreen(
                         }
                     } else if (uiState.lastUpdated != null) {
                         item(key = "updated") {
-                            Message(stringResource(id = R.string.home_last_updated, uiState.lastUpdated))
+                            Message(stringResource(id = string.home_last_updated, uiState.lastUpdated))
                         }
                     }
                     if (uiState.showAdvert) {
@@ -280,7 +281,7 @@ private fun SourcesDisabled(
         )
         Spacer(Modifier.width(16.dp))
         TextBody1(
-            text = stringResource(id = R.string.rss_no_articles)
+            text = stringResource(id = string.rss_no_articles)
         )
     }
 }

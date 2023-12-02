@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.constructors.R
+import tmg.flashback.formula1.R.drawable
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.domain.repo.ConstructorRepository
 import tmg.flashback.drivers.contract.Driver
@@ -141,13 +142,13 @@ internal class ConstructorSeasonViewModelTest: BaseTest() {
                 val item = awaitItem()
                 assertTrue(item.any { it is ConstructorSeasonModel.Driver && it.data.driver.driver.id == Driver.model().id })
 
-                assertTrue(item.any { it is ConstructorSeasonModel.Stat && it.icon == R.drawable.ic_menu_constructors })
-                assertTrue(item.any { it is ConstructorSeasonModel.Stat && it.icon == R.drawable.ic_race_grid })
-                assertTrue(item.any { it is ConstructorSeasonModel.Stat && it.icon == R.drawable.ic_standings })
-                assertTrue(item.any { it is ConstructorSeasonModel.Stat && it.icon == R.drawable.ic_podium })
-                assertTrue(item.any { it is ConstructorSeasonModel.Stat && it.icon == R.drawable.ic_race_points })
-                assertTrue(item.any { it is ConstructorSeasonModel.Stat && it.icon == R.drawable.ic_finishes_in_points })
-                assertTrue(item.any { it is ConstructorSeasonModel.Stat && it.icon == R.drawable.ic_qualifying_pole })
+                assertTrue(item.any { it is ConstructorSeasonModel.Stat && it.icon == tmg.flashback.ui.R.drawable.ic_menu_constructors })
+                assertTrue(item.any { it is ConstructorSeasonModel.Stat && it.icon == drawable.ic_race_grid })
+                assertTrue(item.any { it is ConstructorSeasonModel.Stat && it.icon == drawable.ic_standings })
+                assertTrue(item.any { it is ConstructorSeasonModel.Stat && it.icon == drawable.ic_podium })
+                assertTrue(item.any { it is ConstructorSeasonModel.Stat && it.icon == drawable.ic_race_points })
+                assertTrue(item.any { it is ConstructorSeasonModel.Stat && it.icon == drawable.ic_finishes_in_points })
+                assertTrue(item.any { it is ConstructorSeasonModel.Stat && it.icon == drawable.ic_qualifying_pole })
             }
         }
 
@@ -181,13 +182,13 @@ internal class ConstructorSeasonViewModelTest: BaseTest() {
             val item = awaitItem()
             assertTrue(item.any { it is ConstructorSeasonModel.Driver && it.data.driver.driver.id == Driver.model().id })
 
-            assertTrue(item.any { it is ConstructorSeasonModel.Stat && it.icon == R.drawable.ic_menu_constructors })
-            assertTrue(item.any { it is ConstructorSeasonModel.Stat && it.icon == R.drawable.ic_race_grid })
-            assertTrue(item.any { it is ConstructorSeasonModel.Stat && it.icon == R.drawable.ic_standings })
-            assertTrue(item.any { it is ConstructorSeasonModel.Stat && it.icon == R.drawable.ic_podium })
-            assertTrue(item.any { it is ConstructorSeasonModel.Stat && it.icon == R.drawable.ic_race_points })
-            assertTrue(item.any { it is ConstructorSeasonModel.Stat && it.icon == R.drawable.ic_finishes_in_points })
-            assertTrue(item.any { it is ConstructorSeasonModel.Stat && it.icon == R.drawable.ic_qualifying_pole })
+            assertTrue(item.any { it is ConstructorSeasonModel.Stat && it.icon == tmg.flashback.ui.R.drawable.ic_menu_constructors })
+            assertTrue(item.any { it is ConstructorSeasonModel.Stat && it.icon == drawable.ic_race_grid })
+            assertTrue(item.any { it is ConstructorSeasonModel.Stat && it.icon == drawable.ic_standings })
+            assertTrue(item.any { it is ConstructorSeasonModel.Stat && it.icon == drawable.ic_podium })
+            assertTrue(item.any { it is ConstructorSeasonModel.Stat && it.icon == drawable.ic_race_points })
+            assertTrue(item.any { it is ConstructorSeasonModel.Stat && it.icon == drawable.ic_finishes_in_points })
+            assertTrue(item.any { it is ConstructorSeasonModel.Stat && it.icon == drawable.ic_qualifying_pole })
         }
     }
 

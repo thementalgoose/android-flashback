@@ -16,6 +16,7 @@ import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextCaption
 import tmg.flashback.weekend.R
+import tmg.flashback.strings.R.string
 
 internal val timeWidth = 70.dp
 
@@ -26,9 +27,9 @@ internal fun Time(
     modifier: Modifier = Modifier
 ) {
     val contentDescription = when {
-        lapTime?.noTime == false -> stringResource(id = R.string.ab_result_finish_time, "+${lapTime.contentDescription}")
+        lapTime?.noTime == false -> stringResource(id = string.ab_result_finish_time, "+${lapTime.contentDescription}")
         status.isStatusFinished() -> status.label
-        else -> stringResource(id = R.string.ab_result_finish_dnf, status.label)
+        else -> stringResource(id = string.ab_result_finish_dnf, status.label)
     }
     TextCaption(
         modifier = modifier
@@ -41,7 +42,7 @@ internal fun Time(
         text = when {
             lapTime?.noTime == false -> "+${lapTime.time}"
             status.isStatusFinished() -> status.label
-            else -> "${stringResource(id = R.string.race_status_retired)}\n${status.label}"
+            else -> "${stringResource(id = string.race_status_retired)}\n${status.label}"
         },
     )
 }

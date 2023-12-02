@@ -12,6 +12,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.DpSize
 import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.R
+import tmg.flashback.strings.R.string
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
@@ -59,18 +60,18 @@ fun SettingsPrivacyScreen(
         content = {
             item("header") {
                 tmg.flashback.ui.components.header.Header(
-                    text = stringResource(id = R.string.settings_section_privacy_title),
+                    text = stringResource(id = string.settings_section_privacy_title),
                     action = if (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact) HeaderAction.BACK else null,
                     actionUpClicked = actionUpClicked
                 )
             }
 
-            Header(title = R.string.settings_header_legal)
+            Header(title = string.settings_header_legal)
             Pref(
                 model = Settings.Other.privacyPolicy,
                 onClick = prefClicked
             )
-            Header(title = R.string.settings_header_device_info)
+            Header(title = string.settings_header_device_info)
             Switch(
                 model = Settings.Other.crashReporting(crashReportingEnabled),
                 onClick = prefClicked

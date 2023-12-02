@@ -25,6 +25,8 @@ import tmg.flashback.navigation.Screen
 import tmg.flashback.season.contract.repository.NotificationsRepository
 import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.flashback.weekend.R
+import tmg.flashback.ui.R.drawable
+import tmg.flashback.strings.R.string
 import tmg.flashback.weekend.repository.WeatherRepository
 import tmg.flashback.weekend.presentation.details.DetailsModel
 import tmg.flashback.weekend.presentation.details.DetailsViewModel
@@ -146,13 +148,13 @@ internal class DetailsViewModelTest: BaseTest() {
         get() = DetailsModel.Links(
             listOf(
                 DetailsModel.Link.Url(
-                    label = R.string.details_link_circuit,
-                    icon = R.drawable.ic_details_track,
+                    label = string.details_link_circuit,
+                    icon = drawable.ic_details_track,
                     url = "flashback://circuit-history/circuitId/circuitName"
                 ),
                 DetailsModel.Link.Location(
-                    label = R.string.details_link_map,
-                    icon = R.drawable.ic_details_maps,
+                    label = string.details_link_map,
+                    icon = drawable.ic_details_maps,
                     lat = 51.101,
                     lng = -1.101,
                     name = "circuitName"

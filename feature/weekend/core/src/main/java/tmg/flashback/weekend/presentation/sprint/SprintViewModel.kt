@@ -26,6 +26,7 @@ import tmg.flashback.formula1.model.DriverEntry
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.flashback.weekend.R
+import tmg.flashback.strings.R.string
 import javax.inject.Inject
 
 interface SprintViewModelInputs {
@@ -143,6 +144,6 @@ enum class SprintResultType(
     @StringRes
     val label: Int
 ) {
-    DRIVERS(R.string.dashboard_tab_drivers),
-    CONSTRUCTORS(R.string.dashboard_tab_constructors)
+    DRIVERS(string.dashboard_tab_drivers),
+    CONSTRUCTORS(string.dashboard_tab_constructors)
 }

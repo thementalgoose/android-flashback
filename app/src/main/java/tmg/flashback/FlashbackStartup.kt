@@ -12,6 +12,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
+import tmg.flashback.strings.R.string
 import tmg.flashback.ads.ads.usecases.InitialiseAdsUseCase
 import tmg.flashback.googleanalytics.UserProperty.APP_VERSION
 import tmg.flashback.googleanalytics.UserProperty.DEVICE_MODEL
@@ -131,7 +132,7 @@ class FlashbackStartup @Inject constructor(
 
         // Notifications
         val notificationUpcoming = "upcoming"
-        systemNotificationManager.createGroup(notificationUpcoming, application.getString(R.string.notification_channel_title_upcoming))
+        systemNotificationManager.createGroup(notificationUpcoming, application.getString(string.notification_channel_title_upcoming))
         NotificationUpcoming.values().filter { it != NotificationUpcoming.OTHER }.forEach {
             systemNotificationManager.createChannel(
                 it.channelId,
@@ -147,7 +148,7 @@ class FlashbackStartup @Inject constructor(
         )
 
         val notificationResultIds = "results"
-        systemNotificationManager.createGroup(notificationResultIds, application.getString(R.string.notification_channel_title_results))
+        systemNotificationManager.createGroup(notificationResultIds, application.getString(string.notification_channel_title_results))
         NotificationResultsAvailable.values().forEach { results ->
             systemNotificationManager.createChannel(
                 results.channelId,

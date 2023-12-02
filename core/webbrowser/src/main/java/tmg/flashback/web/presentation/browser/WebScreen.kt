@@ -1,7 +1,6 @@
 package tmg.flashback.web.presentation.browser
 
 import android.util.Log
-import android.webkit.WebView
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -23,6 +22,7 @@ import tmg.flashback.style.AppTheme
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.web.R
+import tmg.flashback.strings.R.string
 import tmg.flashback.web.databinding.ActivityWebBinding
 
 @Composable
@@ -70,7 +70,7 @@ fun WebScreen(
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_web_close),
-                    contentDescription = stringResource(id = R.string.ab_close),
+                    contentDescription = stringResource(id = string.ab_close),
                     tint = AppTheme.colors.contentPrimary
                 )
             }
@@ -95,7 +95,7 @@ fun WebScreen(
             IconButton(onClick = { shareClicked(urlValue.value) }) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_share),
-                    contentDescription = stringResource(id = R.string.ab_rss_share),
+                    contentDescription = stringResource(id = string.ab_rss_share),
                     tint = AppTheme.colors.contentPrimary
                 )
             }
@@ -103,7 +103,7 @@ fun WebScreen(
             IconButton(onClick = { openInBrowser(urlValue.value) }) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_open_browser),
-                    contentDescription = stringResource(id = R.string.ab_rss_open_in_browser),
+                    contentDescription = stringResource(id = string.ab_rss_open_in_browser),
                     tint = AppTheme.colors.contentPrimary
                 )
             }

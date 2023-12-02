@@ -28,6 +28,7 @@ import tmg.flashback.formula1.model.Race
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.flashback.weekend.R
+import tmg.flashback.strings.R.string
 import javax.inject.Inject
 
 interface RaceViewModelInputs {
@@ -47,12 +48,13 @@ class RaceViewModel @Inject constructor(
     private val raceRepository: RaceRepository,
     private val navigator: Navigator,
     private val ioDispatcher: CoroutineDispatcher
-): ViewModel(), RaceViewModelInputs, RaceViewModelOutputs {
+) : ViewModel(), RaceViewModelInputs, RaceViewModelOutputs {
 
     val inputs: RaceViewModelInputs = this
     val outputs: RaceViewModelOutputs = this
 
-    override val raceResultType: MutableStateFlow<RaceResultType> = MutableStateFlow(RaceResultType.DRIVERS)
+    override val raceResultType: MutableStateFlow<RaceResultType> =
+        MutableStateFlow(RaceResultType.DRIVERS)
 
     private val seasonRound: MutableStateFlow<Pair<Int, Int>?> = MutableStateFlow(null)
     override val list: StateFlow<List<RaceModel>> = seasonRound
@@ -64,7 +66,9 @@ class RaceViewModel @Inject constructor(
             val raceResults = race?.race ?: emptyList()
             if (race == null || race.race.isEmpty()) {
                 val list = mutableListOf<RaceModel>().apply {
-                    if ((seasonRound.value?.first ?: Formula1.currentSeasonYear) >= Formula1.currentSeasonYear) {
+                    if ((seasonRound.value?.first
+                            ?: Formula1.currentSeasonYear) >= Formula1.currentSeasonYear
+                    ) {
                         add(RaceModel.NotAvailableYet)
                     } else {
                         add(RaceModel.NotAvailable)
@@ -145,7 +149,10 @@ class RaceViewModel @Inject constructor(
         )
     }
 
-    private fun getDriverFromConstructor(race: Race, constructorId: String): List<Pair<Driver, Double>> {
+    private fun getDriverFromConstructor(
+        race: Race,
+        constructorId: String
+    ): List<Pair<Driver, Double>> {
         return race.race
             .mapNotNull { raceResult ->
                 if (raceResult.entry.constructor.id != constructorId) return@mapNotNull null
@@ -159,6 +166,6 @@ enum class RaceResultType(
     @StringRes
     val label: Int
 ) {
-    DRIVERS(R.string.dashboard_tab_drivers),
-    CONSTRUCTORS(R.string.dashboard_tab_constructors)
+    DRIVERS(string.dashboard_tab_drivers),
+    CONSTRUCTORS(string.dashboard_tab_constructors)
 }

@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.R
+import tmg.flashback.strings.R.string
 import tmg.flashback.ui.managers.ToastManager
 import tmg.flashback.ui.model.Theme
 import tmg.flashback.ui.repository.ThemeRepository
@@ -50,7 +51,7 @@ internal class ThemeViewModelTest: BaseTest() {
         initUnderTest()
         underTest.inputs.selectTheme(Theme.MATERIAL_YOU)
         verify {
-            mockToastManager.displayToast(R.string.settings_restart_app_required)
+            mockToastManager.displayToast(string.settings_restart_app_required)
             mockThemeRepository.theme = Theme.MATERIAL_YOU
         }
     }

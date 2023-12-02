@@ -13,6 +13,7 @@ import tmg.aboutthisapp.configuration.Configuration
 import tmg.aboutthisapp.configuration.Dependency
 import tmg.aboutthisapp.configuration.DependencyIcon
 import tmg.flashback.R
+import tmg.flashback.strings.R.string
 import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.device.repository.DeviceRepository
 import tmg.flashback.repositories.ContactRepository
@@ -48,8 +49,8 @@ class AboutThisAppConfigProvider @Inject constructor(
             appVersion = buildConfigManager.versionName,
             appPackageName = buildConfigManager.applicationId,
             dependencies = staticDependencies + rssDependencies + assetDependencies,
-            header = context.getString(R.string.dependency_thank_you),
-            footnote = context.getString(R.string.about_additional),
+            header = context.getString(string.dependency_thank_you),
+            footnote = context.getString(string.about_additional),
             email = contactRepository.contactEmail,
             github = "https://www.github.com/thementalgoose",
             debugInfo = "${deviceRepository.deviceUdid}\n${deviceRepository.installationId}",

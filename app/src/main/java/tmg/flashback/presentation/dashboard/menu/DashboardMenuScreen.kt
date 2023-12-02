@@ -27,6 +27,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import tmg.flashback.R
+import tmg.flashback.strings.R.string
 import tmg.flashback.debug.model.DebugMenuItem
 import tmg.flashback.eastereggs.model.MenuIcons
 import tmg.flashback.eastereggs.ui.snow
@@ -73,14 +74,14 @@ fun DashboardMenuScreen(
                 )
             } }
             item(key = "div1") { Divider() }
-            item(key = "label1") { SubHeader(text = stringResource(id = R.string.dashboard_all_title)) }
+            item(key = "label1") { SubHeader(text = stringResource(id = string.dashboard_all_title)) }
             item(key = "button-results") {
                 // Add "results" button for phone layout only to signify that we're on the results tab
                 //  Actual menu options are on bottom navigation bar and not in this composable
                 //  Not needed usually as menu items are exposed on tablet
                 val isSelected = currentlySelectedItem in listOf(MenuItem.Constructors, MenuItem.Drivers, MenuItem.Calendar)
                 Button(
-                    label = R.string.dashboard_tab_results,
+                    label = string.dashboard_tab_results,
                     icon = R.drawable.dashboard_nav_results,
                     isSelected = isSelected,
                     onClick = {
@@ -107,7 +108,7 @@ fun DashboardMenuScreen(
             item(key = "div2") { Divider() }
             item(key = "dark") { 
                 Toggle(
-                    label = R.string.dashboard_links_dark_mode, 
+                    label = string.dashboard_links_dark_mode,
                     icon = R.drawable.ic_settings_dark_mode,
                     isEnabled = darkMode,
                     modifier = Modifier.clickable {
@@ -147,7 +148,7 @@ fun DashboardMenuScreen(
                 }
             }
             item(key = "appversion") {
-                Label(msg = stringResource(id = R.string.app_version_placeholder, appVersion))
+                Label(msg = stringResource(id = string.app_version_placeholder, appVersion))
             }
         }
     )

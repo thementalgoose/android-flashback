@@ -41,6 +41,7 @@ import tmg.flashback.ui.components.errors.NotAvailable
 import tmg.flashback.ui.components.errors.NotAvailableYet
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.weekend.R
+import tmg.flashback.strings.R.string
 import tmg.flashback.weekend.presentation.shared.DriverInfoWithIcon
 import tmg.flashback.weekend.presentation.shared.DriverPoints
 import tmg.flashback.weekend.presentation.shared.PointsBox
@@ -159,10 +160,10 @@ private fun ConstructorResult(
     constructorClicked: (Constructor) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val contentDescription = stringResource(R.string.ab_scored, model.constructor.name, model.points.pointsDisplay())
+    val contentDescription = stringResource(string.ab_scored, model.constructor.name, model.points.pointsDisplay())
     val drivers = model.drivers
         .map {
-            stringResource(id = R.string.ab_scored, it.first.name, it.second.pointsDisplay())
+            stringResource(id = string.ab_scored, it.first.name, it.second.pointsDisplay())
         }
         .joinToString(separator = ",")
 
