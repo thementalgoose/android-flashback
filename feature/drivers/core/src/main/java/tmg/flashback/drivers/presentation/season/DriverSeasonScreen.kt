@@ -33,6 +33,8 @@ import org.threeten.bp.LocalDate
 import tmg.flashback.googleanalytics.constants.AnalyticsConstants.analyticsDriverId
 import tmg.flashback.googleanalytics.constants.AnalyticsConstants.analyticsSeason
 import tmg.flashback.drivers.R
+import tmg.flashback.strings.R.string
+import tmg.flashback.formula1.R.drawable
 import tmg.flashback.drivers.presentation.Delta
 import tmg.flashback.formula1.enums.RaceStatus
 import tmg.flashback.formula1.enums.isStatusFinished
@@ -87,10 +89,12 @@ fun DriverSeasonScreenVM(
     showHeader: Boolean = true,
     viewModel: DriverSeasonViewModel = hiltViewModel()
 ) {
-    ScreenView(screenName = "Driver Season", args = mapOf(
-        analyticsDriverId to driverId,
-        analyticsSeason to season.toString()
-    ))
+    ScreenView(
+        screenName = "Driver Season", args = mapOf(
+            analyticsDriverId to driverId,
+            analyticsSeason to season.toString()
+        )
+    )
 
     viewModel.inputs.setup(driverId, season)
 
@@ -147,30 +151,38 @@ fun DriverSeasonScreen(
                             )
                         }
                     }
+
                     is DriverSeasonModel.Message -> {
                         Message(title = stringResource(id = it.label, *it.args.toTypedArray()))
                     }
+
                     is DriverSeasonModel.RacedFor -> {
                         History(model = it)
                     }
+
                     is DriverSeasonModel.Stat -> {
                         Stat(model = it)
                     }
+
                     is DriverSeasonModel.Result -> {
                         Result(
                             model = it,
                             clickResult = resultClicked
                         )
                     }
+
                     DriverSeasonModel.InternalError -> {
                         NetworkError(error = NetworkError.INTERNAL_ERROR)
                     }
+
                     DriverSeasonModel.Loading -> {
                         SkeletonViewList()
                     }
+
                     DriverSeasonModel.NetworkError -> {
                         NetworkError(error = NetworkError.NETWORK_ERROR)
                     }
+
                     DriverSeasonModel.ResultHeader -> {
                         ResultHeader()
                     }
@@ -221,8 +233,9 @@ private fun History(
     model: DriverSeasonModel.RacedFor,
     modifier: Modifier = Modifier
 ) {
-    Row(modifier = modifier
-        .padding(horizontal = AppTheme.dimens.medium)
+    Row(
+        modifier = modifier
+            .padding(horizontal = AppTheme.dimens.medium)
     ) {
         Timeline(
             timelineColor = AppTheme.colors.contentSecondary,
@@ -255,10 +268,11 @@ private fun History(
                                 bottom = 2.dp
                             )
                     )
-                    Box(modifier = Modifier
-                        .width(8.dp)
-                        .fillMaxHeight()
-                        .background(model.constructors.colour)
+                    Box(
+                        modifier = Modifier
+                            .width(8.dp)
+                            .fillMaxHeight()
+                            .background(model.constructors.colour)
                     )
                 }
             }
@@ -279,7 +293,7 @@ private fun ResultHeader(
         ) {
             Icon(
                 modifier = Modifier.align(Alignment.Center),
-                painter = painterResource(id = R.drawable.ic_status_results_qualifying),
+                painter = painterResource(id = drawable.ic_status_results_qualifying),
                 contentDescription = null,
                 tint = AppTheme.colors.contentSecondary
             )
@@ -291,7 +305,7 @@ private fun ResultHeader(
         ) {
             Icon(
                 modifier = Modifier.align(Alignment.Center),
-                painter = painterResource(id = R.drawable.ic_status_finished),
+                painter = painterResource(id = drawable.ic_status_finished),
                 contentDescription = null,
                 tint = AppTheme.colors.contentSecondary
             )
@@ -303,7 +317,7 @@ private fun ResultHeader(
         ) {
             Icon(
                 modifier = Modifier.align(Alignment.Center),
-                painter = painterResource(id = R.drawable.ic_race_points),
+                painter = painterResource(id = drawable.ic_race_points),
                 contentDescription = null,
                 tint = AppTheme.colors.contentSecondary
             )
@@ -317,20 +331,21 @@ private fun Result(
     clickResult: (DriverSeasonModel.Result) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Row(modifier = modifier
-        .clickable(onClick = { clickResult(model) })
-        .alpha(
-            when (model.raceStatus.isStatusFinished()) {
-                true -> 1.0f
-                false -> 0.7f
-            }
-        )
-        .background(
-            when (model.raceStatus.isStatusFinished()) {
-                true -> AppTheme.colors.backgroundPrimary
-                false -> AppTheme.colors.backgroundSecondary
-            }
-        )
+    Row(
+        modifier = modifier
+            .clickable(onClick = { clickResult(model) })
+            .alpha(
+                when (model.raceStatus.isStatusFinished()) {
+                    true -> 1.0f
+                    false -> 0.7f
+                }
+            )
+            .background(
+                when (model.raceStatus.isStatusFinished()) {
+                    true -> AppTheme.colors.backgroundPrimary
+                    false -> AppTheme.colors.backgroundSecondary
+                }
+            )
     ) {
         Column(
             Modifier.weight(1f)
@@ -444,9 +459,11 @@ private fun Header(
     linkClicked: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Column(modifier = modifier.padding(
-        horizontal = AppTheme.dimens.medium
-    )) {
+    Column(
+        modifier = modifier.padding(
+            horizontal = AppTheme.dimens.medium
+        )
+    ) {
         DriverIcon(
             photoUrl = model.driver.photoUrl,
             number = model.driver.number,
@@ -462,23 +479,31 @@ private fun Header(
         ) {
             val context = LocalContext.current
             val resourceId = when (isInPreview()) {
-                true -> tmg.flashback.ui.R.drawable.gb
+                true -> com.murgupluoglu.flagkit.R.drawable.gb
                 false -> context.getFlagResourceAlpha3(model.driver.nationalityISO)
             }
-            BadgeView(model = Badge(label = model.driver.nationality, icon = resourceId), tintIcon = null)
+            BadgeView(
+                model = Badge(label = model.driver.nationality, icon = resourceId),
+                tintIcon = null
+            )
 
             Spacer(Modifier.width(AppTheme.dimens.small))
             val birthday = model.driver.dateOfBirth.format("dd MMMM yyyy")!!
-            BadgeView(model = Badge(label = birthday, icon = R.drawable.ic_driver_birthday))
+            BadgeView(model = Badge(label = birthday, icon = drawable.ic_driver_birthday))
 
             if (model.driver.code != null && model.driver.number != null) {
                 Spacer(Modifier.width(AppTheme.dimens.small))
-                BadgeView(model = Badge(label = "${model.driver.code} ${model.driver.number}", icon = R.drawable.ic_driver_code))
+                BadgeView(
+                    model = Badge(
+                        label = "${model.driver.code} ${model.driver.number}",
+                        icon = drawable.ic_driver_code
+                    )
+                )
             }
         }
         if (!model.driver.wikiUrl.isNullOrEmpty()) {
             ButtonSecondary(
-                text = stringResource(id = R.string.details_link_wikipedia),
+                text = stringResource(id = string.details_link_wikipedia),
                 onClick = { linkClicked(model.driver.wikiUrl!!) },
             )
             Spacer(Modifier.height(AppTheme.dimens.xsmall))
@@ -500,13 +525,15 @@ private fun RaceInfo(
     modifier: Modifier = Modifier,
 ) {
 
-    Row(modifier = modifier
-        .height(IntrinsicSize.Min)
+    Row(
+        modifier = modifier
+            .height(IntrinsicSize.Min)
     ) {
-        Box(modifier = Modifier
-            .fillMaxHeight()
-            .width(colorIndicator)
-            .background(constructorColor)
+        Box(
+            modifier = Modifier
+                .fillMaxHeight()
+                .width(colorIndicator)
+                .background(constructorColor)
         )
         if (round != null) {
             TextTitle(
@@ -521,12 +548,13 @@ private fun RaceInfo(
         } else {
             Spacer(Modifier.width(AppTheme.dimens.medium - colorIndicator))
         }
-        Column(modifier = Modifier
-            .weight(1f)
-            .padding(
-                top = 3.dp,
-                bottom = AppTheme.dimens.small
-            )
+        Column(
+            modifier = Modifier
+                .weight(1f)
+                .padding(
+                    top = 3.dp,
+                    bottom = AppTheme.dimens.small
+                )
         ) {
             Row(modifier = Modifier.height(IntrinsicSize.Min)) {
                 TextTitle(
@@ -576,8 +604,9 @@ private fun SprintInfo(
     modifier: Modifier = Modifier,
 ) {
 
-    Row(modifier = modifier
-        .constructorIndicator(constructorColor)
+    Row(
+        modifier = modifier
+            .constructorIndicator(constructorColor)
     ) {
         if (round != null) {
             TextTitle(
@@ -592,17 +621,18 @@ private fun SprintInfo(
         } else {
             Spacer(Modifier.width(AppTheme.dimens.medium - colorIndicator))
         }
-        Column(modifier = Modifier
-            .weight(1f)
-            .padding(
-                top = 6.dp,
-                bottom = AppTheme.dimens.medium
-            )
+        Column(
+            modifier = Modifier
+                .weight(1f)
+                .padding(
+                    top = 6.dp,
+                    bottom = AppTheme.dimens.medium
+                )
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                BadgeView(model = Badge(label = stringResource(id = R.string.nav_sprint)))
+                BadgeView(model = Badge(label = stringResource(id = string.nav_sprint)))
             }
             if (showConstructorLabel) {
                 Spacer(Modifier.height(AppTheme.dimens.xsmall))
@@ -647,24 +677,27 @@ private fun Preview(
         )
     }
 }
+
 private val fakeStatWinning = DriverSeasonModel.Stat(
     isWinning = true,
-    icon = R.drawable.ic_status_front_wing,
-    label = R.string.driver_overview_stat_career_points_finishes,
+    icon = drawable.ic_status_front_wing,
+    label = string.driver_overview_stat_career_points_finishes,
     value = "12"
 )
 private val fakeStat = DriverSeasonModel.Stat(
     isWinning = false,
-    icon = R.drawable.ic_status_battery,
-    label = R.string.driver_overview_stat_career_points,
+    icon = drawable.ic_status_battery,
+    label = string.driver_overview_stat_career_points,
     value = "4"
 )
+
 private fun DriverEntry.racedFor() = DriverSeasonModel.RacedFor(
     season = 2022,
     type = PipeType.START,
     constructors = constructor,
     isChampionship = false
 )
+
 private fun DriverEntry.result(
     isSprint: Boolean = false,
     round: Int = 1,

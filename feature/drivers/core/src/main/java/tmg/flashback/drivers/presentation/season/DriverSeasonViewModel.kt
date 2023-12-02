@@ -11,6 +11,8 @@ import kotlinx.coroutines.launch
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.domain.repo.DriverRepository
 import tmg.flashback.drivers.R
+import tmg.flashback.formula1.R.drawable
+import tmg.flashback.strings.R.string
 import tmg.flashback.formula1.constants.Formula1
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.DriverHistorySeason
@@ -66,8 +68,7 @@ class DriverSeasonViewModel @Inject constructor(
                     driverRepository.fetchDriver(id.first)
                     isLoading.value = false
                     emit(id)
-                }
-                else {
+                } else {
                     emit(id)
                     isLoading.value = true
                     driverRepository.fetchDriver(id.first)
@@ -100,6 +101,7 @@ class DriverSeasonViewModel @Inject constructor(
                                 else -> list.add(DriverSeasonModel.InternalError)
                             }
                         }
+
                         else -> {
                             list.add(DriverSeasonModel.Header(overview.driver))
 
@@ -107,7 +109,7 @@ class DriverSeasonViewModel @Inject constructor(
                                 standing.raceOverview.maxByOrNull { it.raceInfo.round }?.let {
                                     list.add(
                                         DriverSeasonModel.Message(
-                                            R.string.results_accurate_for,
+                                            string.results_accurate_for,
                                             listOf(it.raceInfo.name, it.raceInfo.round)
                                         )
                                     )
@@ -115,8 +117,8 @@ class DriverSeasonViewModel @Inject constructor(
                             }
 
                             list.addStat(
-                                icon = R.drawable.ic_team,
-                                label = R.string.driver_overview_stat_career_team,
+                                icon = drawable.ic_team,
+                                label = string.driver_overview_stat_career_team,
                                 value = ""
                             )
                             if (standing.constructors.size == 1) {
@@ -129,17 +131,19 @@ class DriverSeasonViewModel @Inject constructor(
                                         false
                                     )
                                 )
-                            }
-                            else {
+                            } else {
                                 for (x in standing.constructors.indices) {
-                                    val const = standing.constructors[(standing.constructors.size - 1) - x]
+                                    val const =
+                                        standing.constructors[(standing.constructors.size - 1) - x]
                                     val dotType: PipeType = when (x) {
                                         0 -> {
                                             PipeType.START
                                         }
+
                                         standing.constructors.size - 1 -> {
                                             PipeType.END
                                         }
+
                                         else -> {
                                             PipeType.SINGLE
                                         }
@@ -172,7 +176,8 @@ class DriverSeasonViewModel @Inject constructor(
                                         raceCountry = it.raceInfo.circuit.country,
                                         raceCountryISO = it.raceInfo.circuit.countryISO,
                                         showConstructorLabel = standing.constructors.size > 1,
-                                        constructor = it.constructor ?: standing.constructors.last(),
+                                        constructor = it.constructor
+                                            ?: standing.constructors.last(),
                                         date = it.raceInfo.date,
                                         qualified = it.qualified,
                                         finished = it.finished,
@@ -222,69 +227,74 @@ class DriverSeasonViewModel @Inject constructor(
 
         list.addStat(
             isWinning = !overview.isInProgress && overview.championshipStanding == 1,
-            icon = if (!overview.isInProgress && overview.championshipStanding == 1) R.drawable.ic_star_filled_coloured else R.drawable.ic_championship_order,
-            label = if (overview.isInProgress) R.string.driver_overview_stat_career_championship_standing_so_far else R.string.driver_overview_stat_career_championship_standing,
+            icon = if (!overview.isInProgress && overview.championshipStanding == 1) drawable.ic_star_filled_coloured else drawable.ic_championship_order,
+            label = if (overview.isInProgress) string.driver_overview_stat_career_championship_standing_so_far else string.driver_overview_stat_career_championship_standing,
             value = overview.championshipStanding?.ordinalAbbreviation ?: "N/A"
         )
         list.addStat(
-            icon = R.drawable.ic_standings,
-            label = R.string.driver_overview_stat_career_wins,
+            icon = drawable.ic_standings,
+            label = string.driver_overview_stat_career_wins,
             value = overview.wins.toString()
         )
         list.addStat(
-            icon = R.drawable.ic_podium,
-            label = R.string.driver_overview_stat_career_podiums,
+            icon = drawable.ic_podium,
+            label = string.driver_overview_stat_career_podiums,
             value = overview.podiums.toString()
         )
         list.addStat(
-            icon = R.drawable.ic_race_starts,
-            label = R.string.driver_overview_stat_race_starts,
+            icon = drawable.ic_race_starts,
+            label = string.driver_overview_stat_race_starts,
             value = overview.raceStarts.toString()
         )
         list.addStat(
-            icon = R.drawable.ic_race_finishes,
-            label = R.string.driver_overview_stat_race_finishes,
+            icon = drawable.ic_race_finishes,
+            label = string.driver_overview_stat_race_finishes,
             value = overview.raceFinishes.toString()
         )
         list.addStat(
-            icon = R.drawable.ic_race_retirements,
-            label = R.string.driver_overview_stat_race_retirements,
+            icon = drawable.ic_race_retirements,
+            label = string.driver_overview_stat_race_retirements,
             value = overview.raceRetirements.toString()
         )
         list.addStat(
-            icon = R.drawable.ic_best_finish,
-            label = R.string.driver_overview_stat_career_best_finish,
+            icon = drawable.ic_best_finish,
+            label = string.driver_overview_stat_career_best_finish,
             value = overview.bestFinish?.ordinalAbbreviation ?: "N/A"
         )
         list.addStat(
-            icon = R.drawable.ic_finishes_in_points,
-            label = R.string.driver_overview_stat_career_points_finishes,
+            icon = drawable.ic_finishes_in_points,
+            label = string.driver_overview_stat_career_points_finishes,
             value = overview.finishesInPoints.toString()
         )
         list.addStat(
-            icon = R.drawable.ic_race_points,
-            label = R.string.driver_overview_stat_career_points,
+            icon = drawable.ic_race_points,
+            label = string.driver_overview_stat_career_points,
             value = overview.points.pointsDisplay()
         )
         list.addStat(
-            icon = R.drawable.ic_qualifying_pole,
-            label = R.string.driver_overview_stat_career_qualifying_pole,
+            icon = drawable.ic_qualifying_pole,
+            label = string.driver_overview_stat_career_qualifying_pole,
             value = overview.qualifyingPoles.toString()
         )
         list.addStat(
-            icon = R.drawable.ic_qualifying_front_row,
-            label = R.string.driver_overview_stat_career_qualifying_top_3,
+            icon = drawable.ic_qualifying_front_row,
+            label = string.driver_overview_stat_career_qualifying_top_3,
             value = overview.qualifyingTop3.toString()
         )
         list.addStat(
-            icon = R.drawable.ic_qualifying_top_ten,
-            label = R.string.driver_overview_stat_career_qualifying_top_10,
+            icon = drawable.ic_qualifying_top_ten,
+            label = string.driver_overview_stat_career_qualifying_top_10,
             value = overview.totalQualifyingAbove(10).toString()
         )
         return list
     }
 
-    private fun MutableList<DriverSeasonModel>.addStat(isWinning: Boolean = false, @DrawableRes icon: Int, @StringRes label: Int, value: String) {
+    private fun MutableList<DriverSeasonModel>.addStat(
+        isWinning: Boolean = false,
+        @DrawableRes icon: Int,
+        @StringRes label: Int,
+        value: String
+    ) {
         this.add(
             DriverSeasonModel.Stat(
                 isWinning = isWinning,

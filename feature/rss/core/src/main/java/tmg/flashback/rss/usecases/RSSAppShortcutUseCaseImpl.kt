@@ -7,6 +7,7 @@ import tmg.flashback.appshortcuts.models.ShortcutInfo
 import tmg.flashback.navigation.Deeplink.SCREEN_PARAM
 import tmg.flashback.navigation.Screen
 import tmg.flashback.rss.R
+import tmg.flashback.strings.R.string
 import tmg.flashback.rss.contract.RSS
 import tmg.flashback.rss.contract.usecases.RSSAppShortcutUseCase
 import tmg.flashback.rss.repo.RssRepository
@@ -28,10 +29,10 @@ internal class RSSAppShortcutUseCaseImpl @Inject constructor(
     companion object {
         private val rssShortcutInfo: ShortcutInfo = ShortcutInfo(
             id = "rss",
-            shortLabel = R.string.app_shortcut_rss_shorttitle,
-            longLabel = R.string.app_shortcut_rss_longtitle,
+            shortLabel = string.app_shortcut_rss_shorttitle,
+            longLabel = string.app_shortcut_rss_longtitle,
             icon = R.drawable.app_shortcut_rss,
-            unavailableMessage = R.string.app_shortcut_rss_disabled,
+            unavailableMessage = string.app_shortcut_rss_disabled,
             intentResolver = { context, homeClass ->
                 val intent = Intent(Intent.ACTION_MAIN, Uri.EMPTY, context, homeClass)
                 intent.putExtra(SCREEN_PARAM, Screen.RSS.route)

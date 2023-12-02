@@ -50,6 +50,7 @@ import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.googleanalytics.presentation.ScreenView
 import tmg.flashback.search.R
+import tmg.flashback.strings.R.string
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.input.InputPrimary
 import tmg.flashback.style.text.TextBody1
@@ -132,7 +133,7 @@ internal fun SearchScreen(
             item("header") {
                 Column(modifier = Modifier.fillMaxWidth()) {
                     Header(
-                        text = stringResource(id = R.string.search_title),
+                        text = stringResource(id = string.search_title),
                         actionUpClicked = actionUpClicked,
                         action = when (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact) {
                             true -> HeaderAction.MENU
@@ -155,7 +156,7 @@ internal fun SearchScreen(
                             searchTermUpdated(it.text)
                         },
                         imeAction = ImeAction.Done,
-                        placeholder = stringResource(id = R.string.search_title),
+                        placeholder = stringResource(id = string.search_title),
                         clear = {
                             clear()
                         }
@@ -165,7 +166,7 @@ internal fun SearchScreen(
 
             if (uiState.drivers.isNotEmpty()) {
                 item("drivers") {
-                    Title(R.string.search_category_driver)
+                    Title(string.search_category_driver)
                     LazyRow(
                         content = {
                             item(key = "prefix") { Spacer(Modifier.width(AppTheme.dimens.small)) }
@@ -187,7 +188,7 @@ internal fun SearchScreen(
 
             if (uiState.constructors.isNotEmpty()) {
                 item("constructors") {
-                    Title(R.string.search_category_constructors)
+                    Title(string.search_category_constructors)
                     LazyRow(
                         content = {
                             item(key = "prefix") { Spacer(Modifier.width(AppTheme.dimens.small)) }
@@ -209,7 +210,7 @@ internal fun SearchScreen(
 
             if (uiState.circuits.isNotEmpty()) {
                 item("circuits") {
-                    Title(R.string.search_category_circuits)
+                    Title(string.search_category_circuits)
                     LazyRow(
                         content = {
                             item(key = "prefix") { Spacer(Modifier.width(AppTheme.dimens.small)) }
@@ -231,7 +232,7 @@ internal fun SearchScreen(
 
             if (uiState.races.isNotEmpty()) {
                 item("races") {
-                    Title(R.string.search_category_races)
+                    Title(string.search_category_races)
                     LazyRow(
                         content = {
                             item(key = "prefix") { Spacer(Modifier.width(AppTheme.dimens.small)) }
@@ -328,6 +329,7 @@ private fun SearchConstructor(
 }
 
 private val circuitIconSize: Dp = 80.dp
+
 @Composable
 private fun SearchCircuit(
     circuit: Circuit,
@@ -369,6 +371,7 @@ private fun SearchCircuit(
 }
 
 private val racesTrackIcon: Dp = 80.dp
+
 @Composable
 private fun SearchRaces(
     races: OverviewRace,

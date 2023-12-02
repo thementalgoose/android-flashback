@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.DpSize
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import tmg.flashback.R
+import tmg.flashback.strings.R.string
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
@@ -158,13 +159,13 @@ fun SettingsAllScreen(
         content = {
             item("header") {
                 Header(
-                    text = stringResource(id = R.string.settings_title),
+                    text = stringResource(id = string.settings_title),
                     action = if (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact) HeaderAction.MENU else null,
                     actionUpClicked = actionUpClicked
                 )
             }
 
-            Header(title = R.string.settings_header_appearance)
+            Header(title = string.settings_header_appearance)
             Section(
                 model = Settings.Theme.darkMode,
                 onClick = prefClicked
@@ -175,7 +176,7 @@ fun SettingsAllScreen(
                     onClick = prefClicked
                 )
             }
-            Header(title = R.string.settings_header_data)
+            Header(title = string.settings_header_data)
             Section(
                 model = Settings.Data.layout,
                 onClick = prefClicked
@@ -185,18 +186,18 @@ fun SettingsAllScreen(
                 onClick = prefClicked
             )
             if (uiState.rssEnabled) {
-                Header(title = R.string.settings_header_rss_feed)
+                Header(title = string.settings_header_rss_feed)
                 Section(
                     model = Settings.RSS.rss,
                     onClick = prefClicked
                 )
             }
-            Header(title = R.string.settings_header_web_browser)
+            Header(title = string.settings_header_web_browser)
             Section(
                 model = Settings.Web.inAppBrowser,
                 onClick = prefClicked
             )
-            Header(title = R.string.settings_header_notifications)
+            Header(title = string.settings_header_notifications)
             Section(
                 model = Settings.Notifications.notificationResults,
                 onClick = prefClicked
@@ -210,13 +211,13 @@ fun SettingsAllScreen(
                 onClick = prefClicked
             )
             if (uiState.adsEnabled) {
-                Header(title = R.string.settings_header_ads)
+                Header(title = string.settings_header_ads)
                 Section(
                     model = Settings.Ads.ads,
                     onClick = prefClicked
                 )
             }
-            Header(title = R.string.settings_header_other)
+            Header(title = string.settings_header_other)
             Section(
                 model = Settings.Other.privacy,
                 onClick = prefClicked

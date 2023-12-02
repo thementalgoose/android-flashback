@@ -17,7 +17,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
-import tmg.flashback.strings.R.string
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
@@ -27,6 +26,7 @@ import tmg.flashback.ui.components.header.HeaderAction
 import tmg.flashback.ui.components.settings.SettingHeader
 import tmg.flashback.ui.components.settings.SettingSwitch
 import tmg.flashback.widgets.R
+import tmg.flashback.strings.R.string
 
 @Composable
 internal fun UpNextConfigurationScreenVM(
@@ -77,7 +77,7 @@ private fun UpNextConfigurationScreen(
                 content = {
                     item {
                         Header(
-                            text = stringResource(id = R.string.widget_up_next_title),
+                            text = stringResource(id = string.widget_up_next_title),
                             action = HeaderAction.CLOSE,
                             actionUpClicked = { actionUpClicked() }
                         )
@@ -107,18 +107,19 @@ private fun UpNextConfigurationScreen(
                     }
                 }
             )
-            Box(modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .height(AppTheme.dimens.large)
-                .fillMaxWidth()
-                .background(
-                    Brush.verticalGradient(
-                        listOf(
-                            Color.Transparent,
-                            AppTheme.colors.backgroundPrimary
+            Box(
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .height(AppTheme.dimens.large)
+                    .fillMaxWidth()
+                    .background(
+                        Brush.verticalGradient(
+                            listOf(
+                                Color.Transparent,
+                                AppTheme.colors.backgroundPrimary
+                            )
                         )
                     )
-                )
             )
         }
         Column(Modifier.fillMaxWidth()) {

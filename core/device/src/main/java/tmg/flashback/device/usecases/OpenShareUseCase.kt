@@ -3,7 +3,7 @@ package tmg.flashback.device.usecases
 import android.content.Context
 import android.content.Intent
 import dagger.hilt.android.qualifiers.ApplicationContext
-import tmg.flashback.device.R
+import tmg.flashback.strings.R
 import tmg.flashback.device.ActivityProvider
 import javax.inject.Inject
 

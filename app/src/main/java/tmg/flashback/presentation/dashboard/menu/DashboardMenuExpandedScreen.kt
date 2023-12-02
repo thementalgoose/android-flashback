@@ -33,6 +33,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import tmg.flashback.R
+import tmg.flashback.strings.R.string
 import tmg.flashback.debug.model.DebugMenuItem
 import tmg.flashback.eastereggs.model.MenuIcons
 import tmg.flashback.eastereggs.ui.snow
@@ -169,7 +170,7 @@ fun DashboardMenuExpandedScreen(
                         Fade(visible = expanded.value) {
                             TextBody2(
                                 maxLines = 2,
-                                text = stringResource(id = R.string.app_version_placeholder, appVersion),
+                                text = stringResource(id = string.app_version_placeholder, appVersion),
                                 modifier = Modifier.padding(
                                     horizontal = AppTheme.dimens.medium,
                                     vertical = AppTheme.dimens.xsmall
@@ -297,7 +298,7 @@ private fun DarkModeToggle(
             ) {
                 TextBody1(
                     maxLines = 1,
-                    text = stringResource(id = R.string.dashboard_links_dark_mode),
+                    text = stringResource(id = string.dashboard_links_dark_mode),
                     modifier = Modifier
                         .weight(1f)
                         .align(Alignment.CenterVertically)
@@ -403,7 +404,7 @@ private fun HeroItem(
                 modifier = Modifier
                     .size(iconSize)
                     .align(Alignment.CenterVertically),
-                painter = painterResource(id = R.drawable.ic_menu_expanded),
+                painter = painterResource(id = tmg.flashback.ui.R.drawable.ic_menu_expanded),
                 tint = AppTheme.colors.contentPrimary,
                 contentDescription = stringResource(id = R.string.app_name)
             )

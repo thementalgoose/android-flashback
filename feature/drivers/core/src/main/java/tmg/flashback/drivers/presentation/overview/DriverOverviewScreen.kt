@@ -26,6 +26,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.googleanalytics.constants.AnalyticsConstants.analyticsDriverId
 import tmg.flashback.drivers.R
+import tmg.flashback.formula1.R.drawable
+import tmg.flashback.strings.R.string
 import tmg.flashback.drivers.contract.model.DriverStatHistoryType
 import tmg.flashback.drivers.presentation.season.DriverSeasonScreenVM
 import tmg.flashback.formula1.model.Driver
@@ -38,7 +40,6 @@ import tmg.flashback.style.badge.Badge
 import tmg.flashback.style.badge.BadgeView
 import tmg.flashback.style.buttons.ButtonSecondary
 import tmg.flashback.style.text.TextBody1
-import tmg.flashback.ui.R.drawable.gb
 import tmg.flashback.googleanalytics.presentation.ScreenView
 import tmg.flashback.ui.components.drivers.DriverIcon
 import tmg.flashback.ui.components.errors.NetworkError
@@ -63,9 +64,11 @@ fun DriverOverviewScreenVM(
     driverName: String,
     viewModel: DriverOverviewViewModel = hiltViewModel()
 ) {
-    ScreenView(screenName = "Driver Overview", args = mapOf(
-        analyticsDriverId to driverId
-    ))
+    ScreenView(
+        screenName = "Driver Overview", args = mapOf(
+            analyticsDriverId to driverId
+        )
+    )
 
     val uiState = viewModel.outputs.uiState.collectAsState()
     MasterDetailsPane(
@@ -126,10 +129,10 @@ fun DriverOverviewScreen(
                     actionUpClicked = actionUpClicked
                 )
                 if (uiState.driver != null) {
-                   Header(
-                       model = uiState.driver,
-                       linkClicked = linkClicked
-                   )
+                    Header(
+                        model = uiState.driver,
+                        linkClicked = linkClicked
+                    )
                 }
             }
             if (uiState.list.isEmpty()) {
@@ -148,12 +151,14 @@ fun DriverOverviewScreen(
                     is DriverOverviewModel.Message -> {
                         Message(title = stringResource(id = it.label, *it.args.toTypedArray()))
                     }
+
                     is DriverOverviewModel.RacedFor -> {
                         History(
                             model = it,
                             clicked = racedForClicked
                         )
                     }
+
                     is DriverOverviewModel.Stat -> {
                         Stat(
                             model = it,
@@ -171,10 +176,12 @@ private fun Header(
     model: Driver,
     linkClicked: (String) -> Unit,
     modifier: Modifier = Modifier
-) { 
-    Column(modifier = modifier.padding(
-        horizontal = AppTheme.dimens.medium
-    )) {
+) {
+    Column(
+        modifier = modifier.padding(
+            horizontal = AppTheme.dimens.medium
+        )
+    ) {
         DriverIcon(
             photoUrl = model.photoUrl,
             code = model.code,
@@ -190,23 +197,28 @@ private fun Header(
         ) {
             val context = LocalContext.current
             val resourceId = when (isInPreview()) {
-                true -> gb
+                true -> com.murgupluoglu.flagkit.R.drawable.gb
                 false -> context.getFlagResourceAlpha3(model.nationalityISO)
             }
             BadgeView(model = Badge(label = model.nationality, icon = resourceId), tintIcon = null)
 
             Spacer(Modifier.width(AppTheme.dimens.small))
             val birthday = model.dateOfBirth.format("dd MMMM yyyy")!!
-            BadgeView(model = Badge(label = birthday, icon = R.drawable.ic_driver_birthday))
+            BadgeView(model = Badge(label = birthday, icon = drawable.ic_driver_birthday))
 
             if (model.code != null && model.number != null) {
                 Spacer(Modifier.width(AppTheme.dimens.small))
-                BadgeView(model = Badge(label = "${model.code} ${model.number}", icon = R.drawable.ic_driver_code))
+                BadgeView(
+                    model = Badge(
+                        label = "${model.code} ${model.number}",
+                        icon = drawable.ic_driver_code
+                    )
+                )
             }
         }
         if (model.wikiUrl?.isNotEmpty() == true) {
             ButtonSecondary(
-                text = stringResource(id = R.string.details_link_wikipedia),
+                text = stringResource(id = string.details_link_wikipedia),
                 onClick = { linkClicked(model.wikiUrl!!) },
             )
             Spacer(Modifier.height(AppTheme.dimens.xsmall))
@@ -224,6 +236,7 @@ private fun Stat(
         true -> modifier.clickable(onClick = {
             statHistoryClicked(model.driverStatHistoryType)
         })
+
         false -> modifier
     }
     Row(
@@ -263,9 +276,10 @@ private fun History(
     clicked: (DriverOverviewModel.RacedFor) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Row(modifier = modifier
-        .clickable(onClick = { clicked(model) })
-        .padding(horizontal = AppTheme.dimens.medium)
+    Row(
+        modifier = modifier
+            .clickable(onClick = { clicked(model) })
+            .padding(horizontal = AppTheme.dimens.medium)
     ) {
         Timeline(
             timelineColor = AppTheme.colors.contentSecondary,
@@ -303,10 +317,11 @@ private fun History(
                                     bottom = 2.dp
                                 )
                         )
-                        Box(modifier = Modifier
-                            .width(8.dp)
-                            .fillMaxHeight()
-                            .background(constructor.colour)
+                        Box(
+                            modifier = Modifier
+                                .width(8.dp)
+                                .fillMaxHeight()
+                                .background(constructor.colour)
                         )
                     }
                 }
@@ -328,7 +343,12 @@ private fun Preview(
             uiState = DriverOverviewScreenState(
                 driverId = "driverId",
                 driverName = "driverName",
-                list = listOf(fakeStat, fakeStatWinning, driverConstructor.racedFor(), driverConstructor.racedFor2())
+                list = listOf(
+                    fakeStat,
+                    fakeStatWinning,
+                    driverConstructor.racedFor(),
+                    driverConstructor.racedFor2()
+                )
             ),
             racedForClicked = { },
             linkClicked = { },
@@ -339,16 +359,17 @@ private fun Preview(
 
 private val fakeStatWinning = DriverOverviewModel.Stat(
     isWinning = true,
-    icon = R.drawable.ic_status_front_wing,
-    label = R.string.driver_overview_stat_career_points_finishes,
+    icon = drawable.ic_status_front_wing,
+    label = string.driver_overview_stat_career_points_finishes,
     value = "12"
 )
 private val fakeStat = DriverOverviewModel.Stat(
     isWinning = false,
-    icon = R.drawable.ic_status_battery,
-    label = R.string.driver_overview_stat_career_points,
+    icon = drawable.ic_status_battery,
+    label = string.driver_overview_stat_career_points,
     value = "4"
 )
+
 private fun DriverEntry.racedFor() = DriverOverviewModel.RacedFor(
     season = 2022,
     type = PipeType.START,
@@ -357,6 +378,7 @@ private fun DriverEntry.racedFor() = DriverOverviewModel.RacedFor(
     ),
     isChampionship = false
 )
+
 private fun DriverEntry.racedFor2() = DriverOverviewModel.RacedFor(
     season = 2021,
     type = PipeType.END,

@@ -7,6 +7,7 @@ import org.threeten.bp.ZoneOffset
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.formula1.model.Timestamp
 import tmg.flashback.season.contract.R
+import tmg.flashback.strings.R.string
 import tmg.flashback.season.contract.repository.models.NotificationReminder
 import java.util.Locale
 
@@ -29,13 +30,13 @@ object NotificationUtils {
      */
     fun getNotificationTitleText(context: Context, title: String, label: String, timestamp: Timestamp, notificationReminder: NotificationReminder): Pair<String, String> {
         val reminderString = context.getString(notificationReminder.label)
-        val notificationTitle = context.getString(R.string.notification_content_title, label, reminderString)
+        val notificationTitle = context.getString(string.notification_content_title, label, reminderString)
 
         val deviceDateTime: LocalDateTime = timestamp.deviceLocalDateTime
 
         val timeString = deviceDateTime.format(DateTimeFormatter.ofPattern("HH:mm", Locale.UK))
-        val deviceTimeString = context.getString(R.string.notification_content_text_device_time, timeString, ZoneId.systemDefault().id)
-        val notificationText = context.getString(R.string.notification_content_text, title, label, reminderString, deviceTimeString)
+        val deviceTimeString = context.getString(string.notification_content_text_device_time, timeString, ZoneId.systemDefault().id)
+        val notificationText = context.getString(string.notification_content_text, title, label, reminderString, deviceTimeString)
 
         return Pair(notificationTitle, notificationText)
     }
@@ -49,9 +50,9 @@ object NotificationUtils {
         val deviceDateTime: LocalDateTime = timestamp.deviceLocalDateTime
         val timeString = deviceDateTime.format(DateTimeFormatter.ofPattern("HH:mm", Locale.UK))
 
-        val notificationTitle = context.getString(R.string.notification_content_title_inexact, label, timeString)
-        val deviceTimeString = context.getString(R.string.notification_content_text_device_time, timeString, ZoneId.systemDefault().id)
-        val notificationText = context.getString(R.string.notification_content_text_inexact, title, label, deviceTimeString)
+        val notificationTitle = context.getString(string.notification_content_title_inexact, label, timeString)
+        val deviceTimeString = context.getString(string.notification_content_text_device_time, timeString, ZoneId.systemDefault().id)
+        val notificationText = context.getString(string.notification_content_text_inexact, title, label, deviceTimeString)
 
         return Pair(notificationTitle, notificationText)
     }

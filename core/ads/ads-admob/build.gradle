@@ -21,6 +21,7 @@ dependencies {
     implementation project(path: ':core:preferences')
     implementation project(path: ':presentation:style')
     implementation project(path: ':presentation:ui')
+    implementation project(path: ':presentation:strings')
 
     implementation libs.playservicesads
     implementation libs.bundles.androidx.workmanager

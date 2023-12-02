@@ -12,6 +12,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import tmg.flashback.rss.R
+import tmg.flashback.strings.R.string
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
@@ -28,8 +29,8 @@ internal fun AddRSSScreen(
     BottomSheet(
         modifier = Modifier
             .imePadding(),
-        title = stringResource(id = R.string.settings_rss_add_title),
-        subtitle = stringResource(id = R.string.settings_rss_add_description),
+        title = stringResource(id = string.settings_rss_add_title),
+        subtitle = stringResource(id = string.settings_rss_add_description),
         backClicked = closeSheet
     ) {
         InputPrimary(
@@ -47,7 +48,7 @@ internal fun AddRSSScreen(
                 horizontal = AppTheme.dimens.medium,
                 vertical = AppTheme.dimens.nsmall
             ),
-            text = stringResource(id = R.string.settings_rss_add_confirm),
+            text = stringResource(id = string.settings_rss_add_confirm),
             onClick = {
                 sourceAdded(input.value.text.trim())
             }

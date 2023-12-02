@@ -5,6 +5,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import tmg.flashback.R
+import tmg.flashback.strings.R.string
 import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.device.repository.PrivacyRepository
 import tmg.flashback.device.usecases.OpenPlayStoreUseCase
@@ -48,7 +49,7 @@ class SettingsAboutViewModel @Inject constructor(
             Settings.Other.shakeToReport -> {
                 privacyRepository.shakeToReport = !privacyRepository.shakeToReport
                 shakeToReportEnabled.value = privacyRepository.shakeToReport
-                toastManager.displayToast(R.string.settings_restart_app_required)
+                toastManager.displayToast(string.settings_restart_app_required)
             }
         }
     }

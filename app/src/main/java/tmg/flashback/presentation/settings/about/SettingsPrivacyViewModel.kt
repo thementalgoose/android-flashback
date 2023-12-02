@@ -5,6 +5,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import tmg.flashback.R
+import tmg.flashback.strings.R.string
 import tmg.flashback.device.repository.PrivacyRepository
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.privacypolicy.contract.PrivacyPolicy
@@ -43,12 +44,12 @@ class SettingsPrivacyViewModel @Inject constructor(
             Settings.Other.crashReporting -> {
                 privacyRepository.crashReporting = !privacyRepository.crashReporting
                 crashReportingEnabled.value = privacyRepository.crashReporting
-                toastManager.displayToast(R.string.settings_restart_app_required)
+                toastManager.displayToast(string.settings_restart_app_required)
             }
             Settings.Other.analytics -> {
                 privacyRepository.analytics = !privacyRepository.analytics
                 analyticsEnabled.value = privacyRepository.analytics
-                toastManager.displayToast(R.string.settings_restart_app_required)
+                toastManager.displayToast(string.settings_restart_app_required)
             }
         }
     }
