@@ -15,6 +15,7 @@ import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextCaption
 import tmg.flashback.ui.R
+import tmg.flashback.strings.R.plurals
 import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.ui.utils.pluralResource
 import tmg.flashback.ui.utils.pointsDisplay
@@ -47,7 +48,7 @@ fun DriverPoints(
             text = name,
             modifier = Modifier.padding(horizontal = AppTheme.dimens.xsmall)
         )
-        val points = pluralResource(R.plurals.race_points, points.takeIf { !it.isNaN() }?.roundToInt() ?: 0, points.pointsDisplay())
+        val points = pluralResource(plurals.race_points, points.takeIf { !it.isNaN() }?.roundToInt() ?: 0, points.pointsDisplay())
         TextCaption(text = "- $points")
     }
 }

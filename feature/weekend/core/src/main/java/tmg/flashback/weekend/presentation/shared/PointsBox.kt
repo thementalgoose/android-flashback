@@ -16,6 +16,7 @@ import tmg.flashback.style.AppTheme
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.ui.utils.pluralResource
 import tmg.flashback.weekend.R
+import tmg.flashback.strings.R.plurals
 import kotlin.math.roundToInt
 
 
@@ -28,7 +29,7 @@ fun PointsBox(
     modifier: Modifier = Modifier,
     maxPoints: Double = 60.0
 ) {
-    val pointsLabel = pluralResource(resId = R.plurals.race_points, quantity = points.roundToInt(), points.pointsDisplay())
+    val pointsLabel = pluralResource(resId = plurals.race_points, quantity = points.roundToInt(), points.pointsDisplay())
     Box(modifier = modifier
         .width(pointsWidth)
         .padding(top = AppTheme.dimens.medium)

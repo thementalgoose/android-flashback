@@ -32,6 +32,7 @@ import tmg.flashback.ui.components.errors.NotAvailable
 import tmg.flashback.ui.components.errors.NotAvailableYet
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.weekend.R
+import tmg.flashback.strings.R.string
 import tmg.flashback.weekend.presentation.shared.Position
 import tmg.utilities.extensions.ordinalAbbreviation
 
@@ -85,17 +86,17 @@ private fun Header(
         Box(Modifier.weight(1f))
         TextSection(
             modifier = Modifier.width(lapTimeWidth),
-            text = stringResource(id = R.string.sprint_qualifying_header_q1),
+            text = stringResource(id = string.sprint_qualifying_header_q1),
             textAlign = TextAlign.Center
         )
         TextSection(
             modifier = Modifier.width(lapTimeWidth),
-            text = stringResource(id = R.string.sprint_qualifying_header_q2),
+            text = stringResource(id = string.sprint_qualifying_header_q2),
             textAlign = TextAlign.Center
         )
         TextSection(
             modifier = Modifier.width(lapTimeWidth),
-            text = stringResource(id = R.string.sprint_qualifying_header_q3),
+            text = stringResource(id = string.sprint_qualifying_header_q3),
             textAlign = TextAlign.Center
         )
         Spacer(Modifier.width(AppTheme.dimens.medium))
@@ -150,13 +151,13 @@ private fun DriverLabel(
 ) {
     val contentDescription = if (qualifyingPosition == null) {
         stringResource(
-            R.string.ab_result_qualifying_overview_dnq,
+            string.ab_result_qualifying_overview_dnq,
             driver.driver.name,
             driver.constructor.name
         )
     } else {
         stringResource(
-            R.string.ab_result_qualifying_overview,
+            string.ab_result_qualifying_overview,
             driver.driver.name,
             driver.driver.name,
             qualifyingPosition.ordinalAbbreviation
@@ -183,12 +184,12 @@ private fun DriverLabel(
                 if (grid > qualifyingPosition) {
                     BadgeView(
                         modifier = Modifier.padding(bottom = AppTheme.dimens.xsmall),
-                        model = Badge(stringResource(id = R.string.qualifying_penalty_starts_sprint, grid.ordinalAbbreviation))
+                        model = Badge(stringResource(id = string.qualifying_penalty_starts_sprint, grid.ordinalAbbreviation))
                     )
                 } else if (grid == 0) {
                     BadgeView(
                         modifier = Modifier.padding(bottom = AppTheme.dimens.xsmall),
-                        model = Badge(stringResource(id = R.string.qualifying_penalty, grid.ordinalAbbreviation))
+                        model = Badge(stringResource(id = string.qualifying_penalty, grid.ordinalAbbreviation))
                     )
                 }
             }
@@ -203,9 +204,9 @@ private fun Time(
     modifier: Modifier = Modifier
 ) {
     val contentDescription = when (column) {
-        SprintQualifyingColumn.Q1 -> stringResource(id = R.string.sprint_qualifying_header_q1)
-        SprintQualifyingColumn.Q2 -> stringResource(id = R.string.sprint_qualifying_header_q2)
-        SprintQualifyingColumn.Q3 -> stringResource(id = R.string.sprint_qualifying_header_q3)
+        SprintQualifyingColumn.Q1 -> stringResource(id = string.sprint_qualifying_header_q1)
+        SprintQualifyingColumn.Q2 -> stringResource(id = string.sprint_qualifying_header_q2)
+        SprintQualifyingColumn.Q3 -> stringResource(id = string.sprint_qualifying_header_q3)
     }
     Box(modifier = modifier
         .width(lapTimeWidth)

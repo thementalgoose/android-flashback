@@ -45,6 +45,7 @@ import tmg.flashback.formula1.model.Schedule
 import tmg.flashback.formula1.model.Timestamp
 import tmg.flashback.ui.utils.DrawableUtils.getFlagResourceAlpha3
 import tmg.flashback.widgets.R
+import tmg.flashback.strings.R.string
 import tmg.flashback.widgets.di.WidgetsEntryPoints
 import tmg.flashback.widgets.presentation.TextBody
 import tmg.flashback.widgets.presentation.TextFeature
@@ -311,7 +312,7 @@ internal fun RaceOnly(
                     Image(
                         modifier = GlanceModifier.clickable(actionRunCallback<UpNextWidgetRefreshWidget>()),
                         provider = ImageProvider(R.drawable.ic_widget_refresh),
-                        contentDescription = context.getString(R.string.ab_refresh),
+                        contentDescription = context.getString(string.ab_refresh),
 //                        colorFilter = ColorFilter.tint(ColorProvider(widgetData.contentColour))
                     )
                 }
@@ -357,7 +358,7 @@ internal fun RaceScheduleFullListLargeRace(
             Image(
                 modifier = GlanceModifier.clickable(actionRunCallback<UpNextWidgetRefreshWidget>()),
                 provider = ImageProvider(R.drawable.ic_widget_refresh),
-                contentDescription = context.getString(R.string.ab_refresh),
+                contentDescription = context.getString(string.ab_refresh),
             )
         }
 
@@ -481,13 +482,13 @@ private fun NoRace(
                         top = 4.dp,
                         bottom = 4.dp
                     ),
-                    text = context.getString(R.string.widget_up_next_nothing_title),
+                    text = context.getString(string.widget_up_next_nothing_title),
                     color = widgetData.contentColour
                 )
             }
 
             TextBody(
-                text = context.getString(R.string.widget_up_next_nothing_subtitle)
+                text = context.getString(string.widget_up_next_nothing_subtitle)
             )
         }
     }

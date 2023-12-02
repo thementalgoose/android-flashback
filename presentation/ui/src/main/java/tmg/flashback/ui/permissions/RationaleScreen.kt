@@ -20,6 +20,7 @@ import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextHeadline2
 import tmg.flashback.device.AppPermissions
 import tmg.flashback.ui.R
+import tmg.flashback.strings.R.string
 
 @Composable
 internal fun RationaleScreen(
@@ -31,7 +32,7 @@ internal fun RationaleScreen(
         horizontal = AppTheme.dimens.medium,
         vertical = AppTheme.dimens.medium
     )) {
-        TextHeadline2(text = stringResource(id = R.string.permissions_rationale_title))
+        TextHeadline2(text = stringResource(id = string.permissions_rationale_title))
 
         type.forEach { rationale ->
             Row(modifier = Modifier
@@ -60,13 +61,13 @@ internal fun RationaleScreen(
             ButtonTertiary(
                 modifier = Modifier.weight(1f),
                 narrow = false,
-                text = stringResource(id = R.string.permissions_rationale_cancel),
+                text = stringResource(id = string.permissions_rationale_cancel),
                 onClick = cancelClicked
             )
             Spacer(Modifier.width(AppTheme.dimens.medium))
             ButtonPrimary(
                 modifier = Modifier.weight(1f),
-                text = stringResource(id = R.string.permissions_rationale_confirm),
+                text = stringResource(id = string.permissions_rationale_confirm),
                 onClick = confirmClicked
             )
         }

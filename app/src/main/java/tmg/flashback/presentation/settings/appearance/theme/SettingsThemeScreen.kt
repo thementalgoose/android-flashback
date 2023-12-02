@@ -11,6 +11,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.DpSize
 import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.R
+import tmg.flashback.strings.R.string
 import tmg.flashback.googleanalytics.presentation.ScreenView
 import tmg.flashback.presentation.settings.Settings
 import tmg.flashback.style.AppTheme
@@ -59,13 +60,13 @@ fun SettingsThemeScreen(
         content = {
             item("header") {
                 tmg.flashback.ui.components.header.Header(
-                    text = stringResource(id = R.string.settings_theme_theme_title),
+                    text = stringResource(id = string.settings_theme_theme_title),
                     action = HeaderAction.BACK,
                     actionUpClicked = actionUpClicked
                 )
             }
 
-            Header(title = R.string.settings_theme_theme_title)
+            Header(title = string.settings_theme_theme_title)
             Option(
                 model = Settings.Theme.themeOption(type = Theme.DEFAULT, isChecked = selected == Theme.DEFAULT),
                 onClick = prefClicked

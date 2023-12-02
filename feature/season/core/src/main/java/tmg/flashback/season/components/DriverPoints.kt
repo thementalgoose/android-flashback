@@ -13,6 +13,7 @@ import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.Driver
 import tmg.flashback.providers.DriverProvider
 import tmg.flashback.season.R
+import tmg.flashback.strings.R.plurals
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextCaption
@@ -51,7 +52,7 @@ fun DriverPoints(
             modifier = Modifier.padding(2.dp)
         )
         val pointsLabel = points.takeIf { !it.isNaN() }?.pointsDisplay() ?: ""
-        val points = pluralResource(resId = R.plurals.race_points, quantity = points.roundToInt(), pointsLabel)
+        val points = pluralResource(resId = plurals.race_points, quantity = points.roundToInt(), pointsLabel)
         TextCaption("- $points")
     }
 }

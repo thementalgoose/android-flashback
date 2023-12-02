@@ -12,6 +12,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import tmg.flashback.drivers.R
+import tmg.flashback.strings.R.string
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.text.TextBody2
 import kotlin.math.abs
@@ -30,7 +31,7 @@ internal fun Delta(
                 diff = diff,
                 color = AppTheme.colors.f1DeltaNeutral,
                 icon = R.drawable.ic_pos_neutral,
-                contentDescription = stringResource(id = R.string.ab_positions_neutral, grid ?: "unknown", finish)
+                contentDescription = stringResource(id = string.ab_positions_neutral, grid ?: "unknown", finish)
             )
         }
         diff > 0 -> { // Gained
@@ -39,7 +40,7 @@ internal fun Delta(
                 diff = diff,
                 color = AppTheme.colors.f1DeltaNegative,
                 icon = R.drawable.ic_pos_up,
-                contentDescription = stringResource(id = R.string.ab_positions_gained, grid, finish, abs(diff))
+                contentDescription = stringResource(id = string.ab_positions_gained, grid, finish, abs(diff))
             )
         }
         else -> { // Lost
@@ -48,7 +49,7 @@ internal fun Delta(
                 diff = diff,
                 color = AppTheme.colors.f1DeltaPositive,
                 icon = R.drawable.ic_pos_down,
-                contentDescription = stringResource(id = R.string.ab_positions_lost, grid, finish, abs(diff))
+                contentDescription = stringResource(id = string.ab_positions_lost, grid, finish, abs(diff))
             )
         }
     }

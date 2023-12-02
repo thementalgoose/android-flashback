@@ -29,6 +29,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import tmg.flashback.googleanalytics.constants.AnalyticsConstants.analyticsConstructorId
 import tmg.flashback.constructors.R
+import tmg.flashback.formula1.R.drawable
+import tmg.flashback.strings.R.string
 import tmg.flashback.constructors.presentation.season.ConstructorSeasonScreenVM
 import tmg.flashback.formula1.constants.Formula1
 import tmg.flashback.formula1.extensions.pointsDisplay
@@ -187,7 +189,7 @@ private fun HeaderTop(
             ) {
                 AsyncImage(
                     model = model.constructorPhotoUrl,
-                    contentDescription = stringResource(id = R.string.ab_constructor_logo, model.constructorName),
+                    contentDescription = stringResource(id = string.ab_constructor_logo, model.constructorName),
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.Crop
                 )
@@ -200,7 +202,7 @@ private fun HeaderTop(
         ) {
             model.constructorWikiUrl?.let { wiki ->
                 ButtonSecondary(
-                    text = stringResource(id = R.string.details_link_wikipedia),
+                    text = stringResource(id = string.details_link_wikipedia),
                     onClick = { wikipediaClicked(wiki) },
 //                    icon = R.drawable.ic_details_wikipedia
                 )
@@ -267,7 +269,7 @@ private fun HistoryHeader(
         Box(modifier = Modifier.width(pointsWidth)) {
             Icon(
                 modifier = Modifier.align(Alignment.Center),
-                painter = painterResource(id = R.drawable.ic_race_points),
+                painter = painterResource(id = drawable.ic_race_points),
                 contentDescription = null,
                 tint = AppTheme.colors.contentSecondary
             )
@@ -275,7 +277,7 @@ private fun HistoryHeader(
         Box(modifier = Modifier.width(positionWidth)) {
             Icon(
                 modifier = Modifier.align(Alignment.Center),
-                painter = painterResource(id = R.drawable.ic_race_finishes),
+                painter = painterResource(id = drawable.ic_race_finishes),
                 contentDescription = null,
                 tint = AppTheme.colors.contentSecondary
             )
@@ -305,7 +307,7 @@ private fun History(
                     modifier = Modifier
                         .align(Alignment.Center)
                         .alpha(0.4f),
-                    painter = painterResource(id = R.drawable.ic_current_indicator),
+                    painter = painterResource(id = tmg.flashback.ui.R.drawable.ic_current_indicator),
                     contentDescription = null,
                     tint = AppTheme.colors.contentPrimary
                 )
@@ -335,7 +337,7 @@ private fun History(
                         if (model.isInProgress) {
                             TextCaption(
                                 modifier = Modifier.padding(bottom = 2.dp),
-                                text = stringResource(id = R.string.constructor_overview_in_progress)
+                                text = stringResource(id = string.constructor_overview_in_progress)
                             )
                         }
                     }
@@ -438,14 +440,14 @@ private fun Preview(
 
 private val fakeStatWinning = ConstructorOverviewModel.Stat(
     isWinning = true,
-    icon = R.drawable.ic_status_front_wing,
-    label = R.string.driver_overview_stat_career_points_finishes,
+    icon = drawable.ic_status_front_wing,
+    label = string.driver_overview_stat_career_points_finishes,
     value = "12"
 )
 private val fakeStat = ConstructorOverviewModel.Stat(
     isWinning = false,
-    icon = R.drawable.ic_status_battery,
-    label = R.string.driver_overview_stat_career_points,
+    icon = drawable.ic_status_battery,
+    label = string.driver_overview_stat_career_points,
     value = "4"
 )
 private fun DriverEntry.history1() =

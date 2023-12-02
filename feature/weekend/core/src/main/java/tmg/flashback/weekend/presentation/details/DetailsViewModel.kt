@@ -30,6 +30,8 @@ import tmg.flashback.season.contract.repository.models.NotificationUpcoming.SPRI
 import tmg.flashback.season.contract.repository.models.NotificationUpcoming.SPRINT_QUALIFYING
 import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.flashback.weekend.R
+import tmg.flashback.strings.R.string
+import tmg.flashback.ui.R.drawable
 import tmg.flashback.weekend.repository.WeatherRepository
 import javax.inject.Inject
 
@@ -50,7 +52,7 @@ class DetailsViewModel @Inject constructor(
     private val weatherRepository: WeatherRepository,
     private val openWebpageUseCase: OpenWebpageUseCase,
     private val openLocationUseCase: OpenLocationUseCase,
-): ViewModel(), DetailsViewModelInputs, DetailsViewModelOutputs {
+) : ViewModel(), DetailsViewModelInputs, DetailsViewModelOutputs {
 
     val inputs: DetailsViewModelInputs = this
     val outputs: DetailsViewModelOutputs = this
@@ -65,17 +67,19 @@ class DetailsViewModel @Inject constructor(
             val list = mutableListOf<DetailsModel>()
             val links = mutableListOf<DetailsModel.Link>()
 
-            links.add(DetailsModel.Link.Url(
-                label = R.string.details_link_circuit,
-                icon = R.drawable.ic_details_track,
-                url = getCircuitUrl(it.raceInfo.circuit.id, it.raceInfo.circuit.name)
-            ))
+            links.add(
+                DetailsModel.Link.Url(
+                    label = string.details_link_circuit,
+                    icon = drawable.ic_details_track,
+                    url = getCircuitUrl(it.raceInfo.circuit.id, it.raceInfo.circuit.name)
+                )
+            )
 
             if (it.raceInfo.youtube != null && URLUtil.isValidUrl(it.raceInfo.youtube)) {
                 links.add(
                     DetailsModel.Link.Url(
-                        label = R.string.details_link_youtube,
-                        icon = R.drawable.ic_details_youtube,
+                        label = string.details_link_youtube,
+                        icon = drawable.ic_details_youtube,
                         url = it.raceInfo.youtube!!
                     )
                 )
@@ -84,8 +88,8 @@ class DetailsViewModel @Inject constructor(
             it.raceInfo.circuit.location?.let { location ->
                 links.add(
                     DetailsModel.Link.Location(
-                        label = R.string.details_link_map,
-                        icon = R.drawable.ic_details_maps,
+                        label = string.details_link_map,
+                        icon = drawable.ic_details_maps,
                         lat = location.lat,
                         lng = location.lng,
                         name = it.raceInfo.circuit.name
@@ -95,8 +99,8 @@ class DetailsViewModel @Inject constructor(
             if (it.raceInfo.wikipediaUrl != null && URLUtil.isValidUrl(it.raceInfo.wikipediaUrl)) {
                 links.add(
                     DetailsModel.Link.Url(
-                        label = R.string.details_link_wikipedia,
-                        icon = R.drawable.ic_details_wikipedia,
+                        label = string.details_link_wikipedia,
+                        icon = drawable.ic_details_wikipedia,
                         url = it.raceInfo.wikipediaUrl!!
                     )
                 )
@@ -105,12 +109,14 @@ class DetailsViewModel @Inject constructor(
 
             list.addAll(initialSchedule(it.schedule))
 
-            list.add(DetailsModel.Track(
-                circuit = it.raceInfo.circuit,
-                raceName = it.raceInfo.name,
-                season = it.raceInfo.season,
-                laps = it.raceInfo.laps
-            ))
+            list.add(
+                DetailsModel.Track(
+                    circuit = it.raceInfo.circuit,
+                    raceName = it.raceInfo.name,
+                    season = it.raceInfo.season,
+                    laps = it.raceInfo.laps
+                )
+            )
 
             return@map list
         }
@@ -129,13 +135,19 @@ class DetailsViewModel @Inject constructor(
                     model.name
                 )
             }
+
             is DetailsModel.Link.Url -> {
                 if (model.url.startsWith(URL_CIRCUIT_HISTORY)) {
                     val parts = model.url.split("/")
                     val circuitId = parts.getOrNull(parts.size - 2)
                     val circuitName = parts.getOrNull(parts.size - 1)
                     if (circuitId != null && circuitName != null) {
-                        navigator.navigate(Screen.Circuit.with(circuitId = circuitId, circuitName = circuitName))
+                        navigator.navigate(
+                            Screen.Circuit.with(
+                                circuitId = circuitId,
+                                circuitName = circuitName
+                            )
+                        )
                     }
                 } else {
                     openWebpageUseCase.open(model.url, title = "")
@@ -151,28 +163,45 @@ class DetailsViewModel @Inject constructor(
         if (dayGroupings.isEmpty()) {
             return emptyList()
         }
-        return listOf(DetailsModel.ScheduleWeekend(
-            days = dayGroupings.map { (date, schedules) ->
-                date to schedules
-                    .sortedBy { it.timestamp.utcLocalDateTime }
-                    .map {
-                        val notificationsEnabled =
-                            when (NotificationUtils.getCategoryBasedOnLabel(
-                                it.label
-                            )) {
-                                RaceWeekend.FREE_PRACTICE -> notificationRepository.isUpcomingEnabled(FREE_PRACTICE)
-                                RaceWeekend.QUALIFYING -> notificationRepository.isUpcomingEnabled(QUALIFYING)
-                                RaceWeekend.SPRINT -> notificationRepository.isUpcomingEnabled(SPRINT)
-                                RaceWeekend.SPRINT_QUALIFYING -> notificationRepository.isUpcomingEnabled(SPRINT_QUALIFYING)
-                                RaceWeekend.RACE -> notificationRepository.isUpcomingEnabled(RACE)
-                                null -> notificationRepository.isUpcomingEnabled(OTHER)
-                            }
-                        Pair(it, notificationsEnabled)
-                    }
-            },
-            temperatureMetric = weatherRepository.weatherTemperatureMetric,
-            windspeedMetric = weatherRepository.weatherWindspeedMetric
-        ))
+        return listOf(
+            DetailsModel.ScheduleWeekend(
+                days = dayGroupings.map { (date, schedules) ->
+                    date to schedules
+                        .sortedBy { it.timestamp.utcLocalDateTime }
+                        .map {
+                            val notificationsEnabled =
+                                when (NotificationUtils.getCategoryBasedOnLabel(
+                                    it.label
+                                )) {
+                                    RaceWeekend.FREE_PRACTICE -> notificationRepository.isUpcomingEnabled(
+                                        FREE_PRACTICE
+                                    )
+
+                                    RaceWeekend.QUALIFYING -> notificationRepository.isUpcomingEnabled(
+                                        QUALIFYING
+                                    )
+
+                                    RaceWeekend.SPRINT -> notificationRepository.isUpcomingEnabled(
+                                        SPRINT
+                                    )
+
+                                    RaceWeekend.SPRINT_QUALIFYING -> notificationRepository.isUpcomingEnabled(
+                                        SPRINT_QUALIFYING
+                                    )
+
+                                    RaceWeekend.RACE -> notificationRepository.isUpcomingEnabled(
+                                        RACE
+                                    )
+
+                                    null -> notificationRepository.isUpcomingEnabled(OTHER)
+                                }
+                            Pair(it, notificationsEnabled)
+                        }
+                },
+                temperatureMetric = weatherRepository.weatherTemperatureMetric,
+                windspeedMetric = weatherRepository.weatherWindspeedMetric
+            )
+        )
     }
 
     companion object {

@@ -13,6 +13,8 @@ import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.weekend.R
+import tmg.flashback.strings.R.string
+import tmg.flashback.formula1.R.drawable
 
 @Composable
 fun RaceHeader(
@@ -30,8 +32,8 @@ fun RaceHeader(
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
-                    painter = painterResource(id = R.drawable.ic_race_finishes),
-                    contentDescription = stringResource(id = R.string.ab_status),
+                    painter = painterResource(id = drawable.ic_race_finishes),
+                    contentDescription = stringResource(id = string.ab_status),
                     tint = AppTheme.colors.contentSecondary
                 )
             }
@@ -43,8 +45,8 @@ fun RaceHeader(
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
-                    painter = painterResource(id = R.drawable.ic_race_points),
-                    contentDescription = stringResource(id = R.string.ab_points),
+                    painter = painterResource(id = drawable.ic_race_points),
+                    contentDescription = stringResource(id = string.ab_points),
                     tint = AppTheme.colors.contentSecondary
                 )
             }

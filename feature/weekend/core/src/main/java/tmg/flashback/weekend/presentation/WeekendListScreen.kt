@@ -22,6 +22,7 @@ import tmg.flashback.style.AppTheme
 import tmg.flashback.ui.components.navigation.appBarHeight
 import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
 import tmg.flashback.weekend.R
+import tmg.flashback.strings.R.string
 import tmg.flashback.weekend.contract.model.ScreenWeekendData
 import tmg.flashback.weekend.presentation.details.DetailsViewModel
 import tmg.flashback.weekend.presentation.details.details
@@ -121,7 +122,7 @@ fun WeekendListScreen(
                 CollapsibleBox(
                     showCheckmark = qualifyingList.value.size > 1,
                     isExpanded = qualifyingExpanded,
-                    title = stringResource(id = R.string.nav_qualifying)
+                    title = stringResource(id = string.nav_qualifying)
                 )
             }
             qualifying(
@@ -139,7 +140,7 @@ fun WeekendListScreen(
                     CollapsibleBox(
                         showCheckmark = sprintQualifyingList.value.size > 1,
                         isExpanded = sprintQualifyingExpanded,
-                        title = stringResource(id = R.string.nav_sprint_qualifying)
+                        title = stringResource(id = string.nav_sprint_qualifying)
                     )
                 }
                 sprintQualifying(
@@ -156,7 +157,7 @@ fun WeekendListScreen(
                     CollapsibleBox(
                         showCheckmark = sprintList.value.size > 1,
                         isExpanded = sprintRaceExpanded,
-                        title = stringResource(id = R.string.nav_sprint)
+                        title = stringResource(id = string.nav_sprint)
                     )
                 }
                 sprint(
@@ -176,7 +177,7 @@ fun WeekendListScreen(
                 CollapsibleBox(
                     showCheckmark = raceList.value.size > 1,
                     isExpanded = raceExpanded,
-                    title = stringResource(id = R.string.nav_race)
+                    title = stringResource(id = string.nav_race)
                 )
             }
             race(

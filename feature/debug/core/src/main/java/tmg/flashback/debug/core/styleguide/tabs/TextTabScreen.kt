@@ -9,7 +9,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import tmg.flashback.debug.core.R
+import tmg.flashback.ui.R.drawable
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
@@ -52,16 +52,18 @@ internal fun TextTabScreen() {
         TextCaption(
             text = "Section"
         )
-        BadgesView(list = listOf(
-            Badge(
-                label = "Mon",
-                icon = R.drawable.ic_cal_mon
-            ),
-            Badge(
-                label = "Tue",
-                icon = R.drawable.ic_cal_tue
+        BadgesView(
+            list = listOf(
+                Badge(
+                    label = "Mon",
+                    icon = drawable.ic_details_maps
+                ),
+                Badge(
+                    label = "Tue",
+                    icon = drawable.ic_close
+                )
             )
-        ))
+        )
     }
 }
 

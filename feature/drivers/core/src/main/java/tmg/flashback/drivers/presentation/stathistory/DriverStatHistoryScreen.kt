@@ -23,6 +23,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.googleanalytics.constants.AnalyticsConstants.analyticsDriverId
 import tmg.flashback.drivers.R
+import tmg.flashback.formula1.R.drawable
+import tmg.flashback.strings.R.string
 import tmg.flashback.drivers.contract.model.DriverStatHistoryType
 import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.Race
@@ -113,7 +115,7 @@ private fun Empty() {
             bottom = AppTheme.dimens.xlarge
         )
     ) {
-        TextBody1(text = stringResource(id = R.string.stat_history_empty))
+        TextBody1(text = stringResource(id = string.stat_history_empty))
     }
 }
 
@@ -257,8 +259,8 @@ private fun Year(
         )
     ) {
         Icon(
-            painter = painterResource(id = R.drawable.ic_trophy),
-            contentDescription = stringResource(id = R.string.world_champion),
+            painter = painterResource(id = drawable.ic_trophy),
+            contentDescription = stringResource(id = string.world_champion),
             tint = AppTheme.colors.f1Championship,
             modifier = Modifier.size(32.dp)
         )

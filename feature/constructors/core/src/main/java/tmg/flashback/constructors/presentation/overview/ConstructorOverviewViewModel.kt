@@ -9,6 +9,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import tmg.flashback.constructors.R
+import tmg.flashback.formula1.R.drawable
+import tmg.flashback.strings.R.string
 import tmg.flashback.constructors.contract.model.ScreenConstructorData
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.device.usecases.OpenUrlUseCase
@@ -108,7 +110,7 @@ class ConstructorOverviewViewModel @Inject constructor(
             if (lastStanding != null) {
                 list.add(
                     ConstructorOverviewModel.Message(
-                        R.string.results_accurate_for_round,
+                        string.results_accurate_for_round,
                         listOf(lastStanding.season, lastStanding.races)
                     )
                 )
@@ -128,16 +130,16 @@ class ConstructorOverviewViewModel @Inject constructor(
 
         list.addStat(
             isWinning = history.championshipWins > 0,
-            icon = R.drawable.ic_menu_constructors,
-            label = R.string.constructor_overview_stat_titles,
+            icon = tmg.flashback.ui.R.drawable.ic_menu_constructors,
+            label = string.constructor_overview_stat_titles,
             value = history.championshipWins.toString()
         )
 
         history.bestChampionship?.let {
             if (it != 1) {
                 list.addStat(
-                    icon = R.drawable.ic_championship_order,
-                    label = R.string.constructor_overview_stat_best_championship_position,
+                    icon = drawable.ic_championship_order,
+                    label = string.constructor_overview_stat_best_championship_position,
                     value = it.ordinalAbbreviation
                 )
             }
@@ -145,39 +147,39 @@ class ConstructorOverviewViewModel @Inject constructor(
 
         list.addStat(
             isWinning = history.driversChampionships > 0,
-            icon = R.drawable.ic_menu_drivers,
-            label = R.string.constructor_overview_stat_drivers_titles,
+            icon = tmg.flashback.ui.R.drawable.ic_menu_drivers,
+            label = string.constructor_overview_stat_drivers_titles,
             value = history.driversChampionships.toString()
         )
 
         list.addStat(
-            icon = R.drawable.ic_race_grid,
-            label = R.string.constructor_overview_stat_races,
+            icon = drawable.ic_race_grid,
+            label = string.constructor_overview_stat_races,
             value = history.races.toString()
         )
         list.addStat(
-            icon = R.drawable.ic_standings,
-            label = R.string.constructor_overview_stat_race_wins,
+            icon = drawable.ic_standings,
+            label = string.constructor_overview_stat_race_wins,
             value = history.totalWins.toString()
         )
         list.addStat(
-            icon = R.drawable.ic_podium,
-            label = R.string.constructor_overview_stat_race_podiums,
+            icon = drawable.ic_podium,
+            label = string.constructor_overview_stat_race_podiums,
             value = history.totalPodiums.toString()
         )
         list.addStat(
-            icon = R.drawable.ic_race_points,
-            label = R.string.constructor_overview_stat_points,
+            icon = drawable.ic_race_points,
+            label = string.constructor_overview_stat_points,
             value = history.totalPoints.pointsDisplay()
         )
         list.addStat(
-            icon = R.drawable.ic_finishes_in_points,
-            label = R.string.constructor_overview_stat_points_finishes,
+            icon = drawable.ic_finishes_in_points,
+            label = string.constructor_overview_stat_points_finishes,
             value = history.finishesInPoints.toString()
         )
         list.addStat(
-            icon = R.drawable.ic_qualifying_pole,
-            label = R.string.constructor_overview_stat_qualifying_poles,
+            icon = drawable.ic_qualifying_pole,
+            label = string.constructor_overview_stat_qualifying_poles,
             value = history.totalQualifyingPoles.toString()
         )
 

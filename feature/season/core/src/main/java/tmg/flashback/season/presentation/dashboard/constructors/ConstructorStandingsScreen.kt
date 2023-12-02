@@ -35,6 +35,7 @@ import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.SeasonConstructorStandingSeason
 import tmg.flashback.providers.SeasonConstructorStandingSeasonProvider
 import tmg.flashback.season.R
+import tmg.flashback.strings.R.string
 import tmg.flashback.season.presentation.dashboard.shared.seasonpicker.SeasonTitleVM
 import tmg.flashback.season.presentation.messaging.Banner
 import tmg.flashback.season.presentation.messaging.ProvidedBy
@@ -115,7 +116,7 @@ fun ConstructorStandingsScreen(
                 item(key = "header") {
                     Header(
                         content = {
-                            SeasonTitleVM(subtitle = stringResource(id = R.string.season_standings_constructor))
+                            SeasonTitleVM(subtitle = stringResource(id = string.season_standings_constructor))
                         },
                         action = when (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact) {
                             true -> HeaderAction.MENU
@@ -127,7 +128,7 @@ fun ConstructorStandingsScreen(
                 uiState.inProgress?.let { (raceName, round) ->
                     item(key = "banner") {
                         Banner(
-                            message = stringResource(id = R.string.results_accurate_for, raceName, round),
+                            message = stringResource(id = string.results_accurate_for, raceName, round),
                             showLink = false
                         )
                     }

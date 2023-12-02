@@ -12,12 +12,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
-import androidx.hilt.navigation.compose.hiltViewModel
+import com.murgupluoglu.flagkit.R.drawable
 import tmg.flashback.crashlytics.di.CrashModule
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
-import tmg.flashback.ui.R
 import tmg.flashback.ui.utils.DrawableUtils.getFlagResourceAlpha3
 import tmg.flashback.ui.utils.isInPreview
 
@@ -29,7 +28,7 @@ fun Flag(
 ) {
     val context = LocalContext.current
     val resourceId = when (isInPreview()) {
-        true -> R.drawable.gb
+        true ->  drawable.gb
         false -> context.getFlagResourceAlpha3(iso)
     }
 

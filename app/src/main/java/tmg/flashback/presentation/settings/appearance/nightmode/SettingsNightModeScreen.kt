@@ -13,6 +13,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.DpSize
 import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.R
+import tmg.flashback.strings.R.string
 import tmg.flashback.googleanalytics.presentation.ScreenView
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
@@ -61,13 +62,13 @@ fun SettingsNightModeScreen(
         content = {
             item("header") {
                 tmg.flashback.ui.components.header.Header(
-                    text = stringResource(id = R.string.settings_theme_nightmode_title),
+                    text = stringResource(id = string.settings_theme_nightmode_title),
                     action = if (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact) HeaderAction.BACK else null,
                     actionUpClicked = actionUpClicked
                 )
             }
 
-            Header(title = R.string.settings_theme_nightmode_title)
+            Header(title = string.settings_theme_nightmode_title)
             Option(
                 model = Settings.Theme.darkModeOption(type = NightMode.DEFAULT, isChecked = selected == NightMode.DEFAULT),
                 onClick = prefClicked

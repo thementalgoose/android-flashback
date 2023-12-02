@@ -11,6 +11,8 @@ import kotlinx.coroutines.launch
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.domain.repo.DriverRepository
 import tmg.flashback.drivers.R
+import tmg.flashback.formula1.R.drawable
+import tmg.flashback.strings.R.string
 import tmg.flashback.drivers.contract.DriverNavigationComponent
 import tmg.flashback.drivers.contract.model.DriverStatHistoryType
 import tmg.flashback.drivers.contract.model.ScreenDriverData
@@ -119,7 +121,7 @@ class DriverOverviewViewModel @Inject constructor(
             if (latestRound != null) {
                 list.add(
                     DriverOverviewModel.Message(
-                        R.string.results_accurate_for_year,
+                        string.results_accurate_for_year,
                         listOf(
                             latestRound.raceInfo.season,
                             latestRound.raceInfo.name,
@@ -135,8 +137,8 @@ class DriverOverviewViewModel @Inject constructor(
 
         // Add constructor history
         list.addStat(
-            icon = R.drawable.ic_team,
-            label = R.string.driver_overview_stat_career_team_history,
+            icon = drawable.ic_team,
+            label = string.driver_overview_stat_career_team_history,
             value = ""
         )
         list.addAll(getConstructorItemList(this))
@@ -150,76 +152,76 @@ class DriverOverviewViewModel @Inject constructor(
         val list: MutableList<DriverOverviewModel> = mutableListOf()
         list.addStat(
             isWinning = history.championshipWins >= 1,
-            icon = R.drawable.ic_driver,
-            label = R.string.driver_overview_stat_career_drivers_title,
+            icon = drawable.ic_driver,
+            label = string.driver_overview_stat_career_drivers_title,
             value = history.championshipWins.toString(),
             driverStatHistoryType = if (history.championshipWins >= 1) DriverStatHistoryType.CHAMPIONSHIPS else null
         )
 
         history.careerBestChampionship?.let {
             list.addStat(
-                icon = R.drawable.ic_championship_order,
-                label = R.string.driver_overview_stat_career_best_championship_position,
+                icon = drawable.ic_championship_order,
+                label = string.driver_overview_stat_career_best_championship_position,
                 value = it.ordinalAbbreviation
             )
         }
 
         list.addStat(
-            icon = R.drawable.ic_standings,
-            label = R.string.driver_overview_stat_career_wins,
+            icon = drawable.ic_standings,
+            label = string.driver_overview_stat_career_wins,
             value = history.careerWins.toString(),
             driverStatHistoryType = if (history.careerWins >= 1) DriverStatHistoryType.WINS else null
         )
         list.addStat(
-            icon = R.drawable.ic_podium,
-            label = R.string.driver_overview_stat_career_podiums,
+            icon = drawable.ic_podium,
+            label = string.driver_overview_stat_career_podiums,
             value = history.careerPodiums.toString(),
             driverStatHistoryType = if (history.careerPodiums >= 1) DriverStatHistoryType.PODIUMS else null
         )
         list.addStat(
-            icon = R.drawable.ic_race_starts,
-            label = R.string.driver_overview_stat_race_starts,
+            icon = drawable.ic_race_starts,
+            label = string.driver_overview_stat_race_starts,
             value = history.raceStarts.toString()
         )
         list.addStat(
-            icon = R.drawable.ic_race_finishes,
-            label = R.string.driver_overview_stat_race_finishes,
+            icon = drawable.ic_race_finishes,
+            label = string.driver_overview_stat_race_finishes,
             value = history.raceFinishes.toString()
         )
         list.addStat(
-            icon = R.drawable.ic_race_retirements,
-            label = R.string.driver_overview_stat_race_retirements,
+            icon = drawable.ic_race_retirements,
+            label = string.driver_overview_stat_race_retirements,
             value = history.raceRetirements.toString()
         )
         list.addStat(
-            icon = R.drawable.ic_best_finish,
-            label = R.string.driver_overview_stat_career_best_finish,
+            icon = drawable.ic_best_finish,
+            label = string.driver_overview_stat_career_best_finish,
             value = history.careerBestFinish.ordinalAbbreviation
         )
         list.addStat(
-            icon = R.drawable.ic_finishes_in_points,
-            label = R.string.driver_overview_stat_career_points_finishes,
+            icon = drawable.ic_finishes_in_points,
+            label = string.driver_overview_stat_career_points_finishes,
             value = history.careerFinishesInPoints.toString()
         )
         list.addStat(
-            icon = R.drawable.ic_race_points,
-            label = R.string.driver_overview_stat_career_points,
+            icon = drawable.ic_race_points,
+            label = string.driver_overview_stat_career_points,
             value = history.careerPoints.pointsDisplay()
         )
         list.addStat(
-            icon = R.drawable.ic_qualifying_pole,
-            label = R.string.driver_overview_stat_career_qualifying_pole,
+            icon = drawable.ic_qualifying_pole,
+            label = string.driver_overview_stat_career_qualifying_pole,
             value = history.careerQualifyingPoles.toString(),
             driverStatHistoryType = if (history.careerQualifyingPoles >= 1) DriverStatHistoryType.POLES else null
         )
         list.addStat(
-            icon = R.drawable.ic_qualifying_front_row,
-            label = R.string.driver_overview_stat_career_qualifying_top_3,
+            icon = drawable.ic_qualifying_front_row,
+            label = string.driver_overview_stat_career_qualifying_top_3,
             value = history.careerQualifyingTop3.toString()
         )
         list.addStat(
-            icon = R.drawable.ic_qualifying_top_ten,
-            label = R.string.driver_overview_stat_career_qualifying_top_10,
+            icon = drawable.ic_qualifying_top_ten,
+            label = string.driver_overview_stat_career_qualifying_top_10,
             value = history.totalQualifyingAbove(10).toString()
         )
 

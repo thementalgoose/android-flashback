@@ -33,6 +33,7 @@ import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.SeasonDriverStandingSeason
 import tmg.flashback.providers.SeasonDriverStandingSeasonProvider
 import tmg.flashback.season.R
+import tmg.flashback.strings.R.string
 import tmg.flashback.season.presentation.dashboard.shared.seasonpicker.SeasonTitleVM
 import tmg.flashback.season.presentation.messaging.Banner
 import tmg.flashback.season.presentation.messaging.ProvidedBy
@@ -116,7 +117,7 @@ internal fun DriverStandingsScreen(
                 item(key = "header") {
                     Header(
                         content = {
-                            SeasonTitleVM(subtitle = stringResource(id = R.string.season_standings_driver))
+                            SeasonTitleVM(subtitle = stringResource(id = string.season_standings_driver))
                         },
                         action = when (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact) {
                             true -> HeaderAction.MENU
@@ -129,7 +130,7 @@ internal fun DriverStandingsScreen(
                     item(key = "banner") {
                         Banner(
                             message = stringResource(
-                                id = R.string.results_accurate_for,
+                                id = string.results_accurate_for,
                                 raceName,
                                 round
                             ),

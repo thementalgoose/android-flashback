@@ -33,6 +33,7 @@ import tmg.flashback.formula1.extensions.label
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.providers.OverviewRaceProvider
 import tmg.flashback.season.R
+import tmg.flashback.strings.R.string
 import tmg.flashback.season.contract.repository.models.NotificationSchedule
 import tmg.flashback.season.presentation.dashboard.DashboardQuickLinks
 import tmg.flashback.season.presentation.dashboard.shared.seasonpicker.SeasonTitleVM
@@ -146,8 +147,8 @@ fun ScheduleScreen(
                             if (uiState.showTyres) {
                                 IconButton(onClick = tyreClicked) {
                                     Icon(
-                                        painter = painterResource(id = R.drawable.ic_tyre),
-                                        contentDescription = stringResource(id = R.string.tyres_label),
+                                        painter = painterResource(id = tmg.flashback.formula1.R.drawable.ic_tyre),
+                                        contentDescription = stringResource(id = string.tyres_label),
                                         tint = AppTheme.colors.contentSecondary
                                     )
                                 }
@@ -230,7 +231,7 @@ private fun CollapsableList(
     itemClicked: (RacesModel.GroupedCompletedRaces) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val contentDescription = stringResource(id = R.string.ab_collapsed_section,
+    val contentDescription = stringResource(id = string.ab_collapsed_section,
         model.first.raceName,
         model.first.round,
         model.last?.raceName ?: model.first.raceName,
@@ -311,7 +312,7 @@ private fun PreseasonEvents(
         )
     ) {
         ButtonSecondary(
-            text = stringResource(id = R.string.ab_preseason_events),
+            text = stringResource(id = string.ab_preseason_events),
             onClick = { itemClicked(model) }
         )
     }

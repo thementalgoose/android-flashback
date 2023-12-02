@@ -17,6 +17,7 @@ import tmg.flashback.style.text.TextCaption
 import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.ui.utils.pluralResource
 import tmg.flashback.weekend.R
+import tmg.flashback.strings.R.plurals
 import kotlin.math.roundToInt
 
 @Deprecated(
@@ -54,7 +55,7 @@ fun DriverPoints(
             text = driver.name,
             modifier = Modifier.padding(horizontal = AppTheme.dimens.xsmall)
         )
-        val points = pluralResource(R.plurals.race_points, points.takeIf { !it.isNaN() }?.roundToInt() ?: 0, points.pointsDisplay())
+        val points = pluralResource(plurals.race_points, points.takeIf { !it.isNaN() }?.roundToInt() ?: 0, points.pointsDisplay())
         TextCaption(text = "- $points")
     }
 }

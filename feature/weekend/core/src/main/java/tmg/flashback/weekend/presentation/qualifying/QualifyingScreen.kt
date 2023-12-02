@@ -26,6 +26,7 @@ import tmg.flashback.ui.components.errors.NotAvailable
 import tmg.flashback.ui.components.errors.NotAvailableYet
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.weekend.R
+import tmg.flashback.strings.R.string
 import tmg.flashback.weekend.presentation.shared.Position
 import tmg.utilities.extensions.ordinalAbbreviation
 
@@ -111,21 +112,21 @@ private fun Header(
         if (showQ1) {
             TextSection(
                 modifier = Modifier.width(lapTimeWidth),
-                text = stringResource(id = R.string.qualifying_header_q1),
+                text = stringResource(id = string.qualifying_header_q1),
                 textAlign = TextAlign.Center
             )
         }
         if (showQ2) {
             TextSection(
                 modifier = Modifier.width(lapTimeWidth),
-                text = stringResource(id = R.string.qualifying_header_q2),
+                text = stringResource(id = string.qualifying_header_q2),
                 textAlign = TextAlign.Center
             )
         }
         if (showQ3) {
             TextSection(
                 modifier = Modifier.width(lapTimeWidth),
-                text = stringResource(id = R.string.qualifying_header_q3),
+                text = stringResource(id = string.qualifying_header_q3),
                 textAlign = TextAlign.Center
             )
         }
@@ -242,13 +243,13 @@ private fun DriverLabel(
 ) {
     val contentDescription = if (qualifyingPosition == null) {
         stringResource(
-            tmg.flashback.formula1.R.string.ab_result_qualifying_overview_dnq,
+            string.ab_result_qualifying_overview_dnq,
             driver.driver.name,
             driver.constructor.name
         )
     } else {
         stringResource(
-            tmg.flashback.formula1.R.string.ab_result_qualifying_overview,
+            string.ab_result_qualifying_overview,
             driver.driver.name,
             driver.driver.name,
             qualifyingPosition.ordinalAbbreviation
@@ -276,24 +277,24 @@ private fun DriverLabel(
                     if (sprintQualifyingGrid > qualifyingPosition) {
                         BadgeView(
                             modifier = Modifier.padding(bottom = AppTheme.dimens.xsmall),
-                            model = Badge(stringResource(id = R.string.qualifying_penalty_starts_sprint, sprintQualifyingGrid.ordinalAbbreviation))
+                            model = Badge(stringResource(id = string.qualifying_penalty_starts_sprint, sprintQualifyingGrid.ordinalAbbreviation))
                         )
                     } else if (sprintQualifyingGrid == 0) {
                         BadgeView(
                             modifier = Modifier.padding(bottom = AppTheme.dimens.xsmall),
-                            model = Badge(stringResource(id = R.string.qualifying_penalty, sprintQualifyingGrid.ordinalAbbreviation))
+                            model = Badge(stringResource(id = string.qualifying_penalty, sprintQualifyingGrid.ordinalAbbreviation))
                         )
                     }
                 } else if (grid != null) {
                     if (grid > qualifyingPosition) {
                         BadgeView(
                             modifier = Modifier.padding(bottom = AppTheme.dimens.xsmall),
-                            model = Badge(stringResource(id = R.string.qualifying_penalty_starts, grid.ordinalAbbreviation))
+                            model = Badge(stringResource(id = string.qualifying_penalty_starts, grid.ordinalAbbreviation))
                         )
                     } else if (grid == 0) {
                         BadgeView(
                             modifier = Modifier.padding(bottom = AppTheme.dimens.xsmall),
-                            model = Badge(stringResource(id = R.string.qualifying_penalty, grid.ordinalAbbreviation))
+                            model = Badge(stringResource(id = string.qualifying_penalty, grid.ordinalAbbreviation))
                         )
                     }
                 }
@@ -309,9 +310,9 @@ private fun Time(
     modifier: Modifier = Modifier
 ) {
     val contentDescription = when (column) {
-        QualifyingColumn.Q1 -> stringResource(id = R.string.qualifying_header_q1)
-        QualifyingColumn.Q2 -> stringResource(id = R.string.qualifying_header_q2)
-        QualifyingColumn.Q3 -> stringResource(id = R.string.qualifying_header_q3)
+        QualifyingColumn.Q1 -> stringResource(id = string.qualifying_header_q1)
+        QualifyingColumn.Q2 -> stringResource(id = string.qualifying_header_q2)
+        QualifyingColumn.Q3 -> stringResource(id = string.qualifying_header_q3)
     }
     Box(modifier = modifier
         .width(lapTimeWidth)

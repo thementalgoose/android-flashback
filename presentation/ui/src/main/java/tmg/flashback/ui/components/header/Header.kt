@@ -22,6 +22,7 @@ import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextHeadline1
 import tmg.flashback.ui.R
+import tmg.flashback.strings.R.string
 
 @Composable
 fun Header(
@@ -102,15 +103,15 @@ enum class HeaderAction(
 ) {
     MENU(
         icon = R.drawable.ic_menu,
-        contentDescription = R.string.ab_menu
+        contentDescription = string.ab_menu
     ),
     BACK(
         icon = R.drawable.ic_back,
-        contentDescription = R.string.ab_back
+        contentDescription = string.ab_back
     ),
     CLOSE(
         icon = R.drawable.ic_close,
-        contentDescription = R.string.ab_close
+        contentDescription = string.ab_close
     )
 }
 
@@ -138,7 +139,7 @@ private fun PreviewWithOverride() {
                 IconButton(onClick = { }) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_close),
-                        contentDescription = stringResource(id = R.string.tyres_label),
+                        contentDescription = stringResource(id = string.tyres_label),
                         tint = AppTheme.colors.contentSecondary
                     )
                 }
@@ -171,7 +172,7 @@ private fun PreviewNoIconWithOverride() {
                 IconButton(onClick = { }) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_close),
-                        contentDescription = stringResource(id = R.string.tyres_label),
+                        contentDescription = stringResource(id = string.tyres_label),
                         tint = AppTheme.colors.contentSecondary
                     )
                 }

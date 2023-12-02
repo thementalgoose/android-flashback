@@ -13,6 +13,7 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import tmg.flashback.R
+import tmg.flashback.strings.R.string
 import tmg.flashback.eastereggs.model.MenuIcons
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
@@ -59,7 +60,7 @@ internal fun DashboardHero(
         if (showUkraine) {
             TextCaption(
                 fontStyle = FontStyle.Italic,
-                text = stringResource(id = R.string.easter_egg_slava_ukraine),
+                text = stringResource(id = string.easter_egg_slava_ukraine),
                 maxLines = 1
             )
         }
