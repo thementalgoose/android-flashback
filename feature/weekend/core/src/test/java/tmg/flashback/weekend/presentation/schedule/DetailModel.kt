@@ -6,6 +6,8 @@ import tmg.flashback.formula1.model.RaceInfo
 import tmg.flashback.formula1.model.Schedule
 import tmg.flashback.formula1.model.model
 import tmg.flashback.weekend.R
+import tmg.flashback.ui.R.drawable
+import tmg.flashback.strings.R.string
 import tmg.flashback.weekend.presentation.details.DetailsModel
 import tmg.utilities.models.StringHolder
 
@@ -46,8 +48,8 @@ fun DetailsModel.Track.Companion.model(
 )
 
 fun DetailsModel.Label.Companion.model(
-    label: StringHolder = StringHolder(R.string.details_link_laps, RaceInfo.model().laps ?: ""),
-    icon: Int = R.drawable.ic_details_laps,
+    label: StringHolder = StringHolder(string.details_link_laps, RaceInfo.model().laps ?: ""),
+    icon: Int = drawable.ic_details_laps,
 ): DetailsModel.Label = DetailsModel.Label(
     label = label,
     icon = icon
