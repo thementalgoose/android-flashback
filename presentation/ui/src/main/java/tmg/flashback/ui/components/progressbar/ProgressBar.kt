@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.ui.R
+import tmg.flashback.strings.R.plurals
 import tmg.flashback.ui.utils.MeasureTextWidth
 import tmg.flashback.ui.utils.pointsDisplay
 import tmg.utilities.utils.ColorUtils.Companion.contrastTextLight
@@ -62,7 +63,7 @@ fun ProgressBar(
 ) {
     val endProgress = if (endProgress.isNaN()) { 0f } else { endProgress }
 
-    val contentDescription = pluralStringResource(id = R.plurals.race_points, count = endProgress.roundToInt(), endProgress.toDouble().pointsDisplay())
+    val contentDescription = pluralStringResource(id = plurals.race_points, count = endProgress.roundToInt(), endProgress.toDouble().pointsDisplay())
     BoxWithConstraints(
         modifier = modifier
             .defaultMinSize(minHeight = 48.dp)

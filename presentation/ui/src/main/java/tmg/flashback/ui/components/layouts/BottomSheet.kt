@@ -25,6 +25,7 @@ import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextHeadline2
 import tmg.flashback.ui.R
+import tmg.flashback.strings.R.string
 
 @Composable
 fun BottomSheet(
@@ -64,7 +65,7 @@ fun BottomSheet(
                 IconButton(onClick = backClicked) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_close),
-                        contentDescription = stringResource(id = R.string.ab_back),
+                        contentDescription = stringResource(id = string.ab_back),
                         tint = AppTheme.colors.contentPrimary
                     )
                 }

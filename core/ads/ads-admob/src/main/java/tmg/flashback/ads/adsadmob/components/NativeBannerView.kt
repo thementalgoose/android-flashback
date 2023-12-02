@@ -11,6 +11,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.ads.adsadmob.R
+import tmg.flashback.strings.R.string
 import tmg.flashback.ads.adsadmob.views.NativeBanner
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
@@ -67,7 +68,7 @@ private fun NativeBannerView(
             Row(modifier = Modifier.padding(start = startPadding)) {
                 BadgeView(
                     model = Badge(
-                        label = stringResource(id = R.string.admob_advertisement)
+                        label = stringResource(id = string.admob_advertisement)
                     )
                 )
             }

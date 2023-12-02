@@ -45,6 +45,8 @@ import tmg.utilities.extensions.format
 import tmg.utilities.extensions.ordinalAbbreviation
 import tmg.utilities.extensions.startOfWeek
 import tmg.flashback.season.R
+import tmg.flashback.formula1.R.drawable
+import tmg.flashback.strings.R.string
 
 private val countryBadgeSize = 32.dp
 private const val listAlpha = 0.6f
@@ -165,10 +167,10 @@ private fun RowScope.IconRow(
         modifier = Modifier
             .size(iconSize)
             .align(Alignment.CenterVertically),
-        painter = painterResource(id = R.drawable.ic_status_results_qualifying),
+        painter = painterResource(id = drawable.ic_status_results_qualifying),
         contentDescription = when (hasQualifying) {
-            true -> stringResource(id = R.string.ab_has_qualifying_results)
-            false -> stringResource(id = R.string.ab_no_qualifying_results)
+            true -> stringResource(id = string.ab_has_qualifying_results)
+            false -> stringResource(id = string.ab_no_qualifying_results)
         },
         tint = when (hasQualifying) {
             true -> AppTheme.colors.f1ResultsFull
@@ -181,10 +183,10 @@ private fun RowScope.IconRow(
             modifier = Modifier
                 .size(iconSize)
                 .align(Alignment.CenterVertically),
-            painter = painterResource(id = R.drawable.ic_status_results_sprint),
+            painter = painterResource(id = drawable.ic_status_results_sprint),
             contentDescription = when (hasSprint) {
-                true -> stringResource(id = R.string.ab_has_sprint_results)
-                false -> stringResource(id = R.string.ab_no_sprint_results)
+                true -> stringResource(id = string.ab_has_sprint_results)
+                false -> stringResource(id = string.ab_no_sprint_results)
             },
             tint = when (hasSprint) {
                 true -> AppTheme.colors.f1ResultsFull
@@ -197,10 +199,10 @@ private fun RowScope.IconRow(
         modifier = Modifier
             .size(iconSize)
             .align(Alignment.CenterVertically),
-        painter = painterResource(id = R.drawable.ic_status_results_race),
+        painter = painterResource(id = drawable.ic_status_results_race),
         contentDescription = when (hasRace) {
-            true -> stringResource(id = R.string.ab_has_race_results)
-            false -> stringResource(id = R.string.ab_no_race_results)
+            true -> stringResource(id = string.ab_has_race_results)
+            false -> stringResource(id = string.ab_no_race_results)
         },
         tint = when (hasRace) {
             true -> AppTheme.colors.f1ResultsFull
@@ -270,7 +272,7 @@ private fun Dates(
 internal fun Round(
     round: Int
 ) {
-    val contentDescription = stringResource(id = R.string.weekend_race_round, round)
+    val contentDescription = stringResource(id = string.weekend_race_round, round)
     TextSection(
         modifier = Modifier.semantics {
             this.contentDescription = contentDescription
@@ -290,8 +292,8 @@ private fun DateCard(
 
     val time = schedule.timestamp.deviceLocalDateTime.toLocalTime().format("HH:mm")
     val contentDescription = when (showNotificationBadge) {
-        true -> stringResource(id = R.string.ab_schedule_date_card_notifications_enabled, schedule.label, time)
-        false -> stringResource(id = R.string.ab_schedule_date_card, schedule.label, time)
+        true -> stringResource(id = string.ab_schedule_date_card_notifications_enabled, schedule.label, time)
+        false -> stringResource(id = string.ab_schedule_date_card, schedule.label, time)
     }
     Column(modifier = modifier
         .semantics(mergeDescendants = true) { }
@@ -323,8 +325,8 @@ private fun DateCard(
                 Icon(
                     modifier = Modifier.size(16.dp),
                     tint = AppTheme.colors.contentSecondary,
-                    painter = painterResource(id = R.drawable.ic_notification_indicator_bell),
-                    contentDescription = stringResource(id = R.string.ab_notifications_enabled)
+                    painter = painterResource(id = tmg.flashback.notifications.R.drawable.ic_notification_indicator_bell),
+                    contentDescription = stringResource(id = string.ab_notifications_enabled)
                 )
             }
         }
@@ -339,8 +341,8 @@ private fun DateCard(
 
             val summary = schedule.weather!!.summary.firstOrNull()
             Image(
-                painter = painterResource(id = summary?.icon ?: R.drawable.weather_unknown),
-                contentDescription = stringResource(id = summary?.label ?: R.string.empty),
+                painter = painterResource(id = summary?.icon ?: drawable.weather_unknown),
+                contentDescription = stringResource(id = summary?.label ?: string.empty),
                 modifier = Modifier.size(weatherIconSize)
             )
         } else {

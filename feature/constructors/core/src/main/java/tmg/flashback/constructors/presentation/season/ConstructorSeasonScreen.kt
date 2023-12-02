@@ -37,6 +37,8 @@ import coil.compose.AsyncImage
 import tmg.flashback.googleanalytics.constants.AnalyticsConstants.analyticsConstructorId
 import tmg.flashback.googleanalytics.constants.AnalyticsConstants.analyticsSeason
 import tmg.flashback.constructors.R
+import tmg.flashback.formula1.R.drawable
+import tmg.flashback.strings.R.string
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.ConstructorHistorySeasonDriver
 import tmg.flashback.formula1.model.DriverEntry
@@ -185,7 +187,7 @@ private fun HeaderTop(
             ) {
                 AsyncImage(
                     model = model.constructorPhotoUrl,
-                    contentDescription = stringResource(id = R.string.ab_constructor_logo, model.constructorName),
+                    contentDescription = stringResource(id = string.ab_constructor_logo, model.constructorName),
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.Crop
                 )
@@ -195,7 +197,7 @@ private fun HeaderTop(
         Row(modifier = Modifier.height(IntrinsicSize.Min)) {
             model.constructorWikiUrl?.let { wiki ->
                 ButtonSecondary(
-                    text = stringResource(id = R.string.details_link_wikipedia),
+                    text = stringResource(id = string.details_link_wikipedia),
                     onClick = { wikipediaClicked(wiki) },
 //                    icon = R.drawable.ic_details_wikipedia
                 )
@@ -289,27 +291,27 @@ private fun DriverSummary(
             }
             Spacer(Modifier.height(8.dp))
             SummaryCell(
-                label = R.string.constructor_overview_stat_championship_standing,
+                label = string.constructor_overview_stat_championship_standing,
                 value = model.data.championshipStanding?.ordinalAbbreviation ?: ""
             )
             SummaryCell(
-                label = R.string.constructor_overview_stat_race_wins,
+                label = string.constructor_overview_stat_race_wins,
                 value = model.data.wins.toString()
             )
             SummaryCell(
-                label = R.string.constructor_overview_stat_race_podiums,
+                label = string.constructor_overview_stat_race_podiums,
                 value = model.data.podiums.toString()
             )
             SummaryCell(
-                label = R.string.constructor_overview_stat_qualifying_poles,
+                label = string.constructor_overview_stat_qualifying_poles,
                 value = model.data.polePosition.toString()
             )
             SummaryCell(
-                label = R.string.constructor_overview_stat_points,
+                label = string.constructor_overview_stat_points,
                 value = model.data.points.pointsDisplay()
             )
             SummaryCell(
-                label = R.string.constructor_overview_stat_points_finishes,
+                label = string.constructor_overview_stat_points_finishes,
                 value = model.data.finishesInPoints.toString()
             )
         }
@@ -358,14 +360,14 @@ private fun Preview(
 
 private val fakeStatWinning = ConstructorSeasonModel.Stat(
     isWinning = true,
-    icon = R.drawable.ic_status_front_wing,
-    label = R.string.driver_overview_stat_career_points_finishes,
+    icon = drawable.ic_status_front_wing,
+    label = string.driver_overview_stat_career_points_finishes,
     value = "12"
 )
 private val fakeStat = ConstructorSeasonModel.Stat(
     isWinning = false,
-    icon = R.drawable.ic_status_battery,
-    label = R.string.driver_overview_stat_career_points,
+    icon = drawable.ic_status_battery,
+    label = string.driver_overview_stat_career_points,
     value = "4"
 )
 

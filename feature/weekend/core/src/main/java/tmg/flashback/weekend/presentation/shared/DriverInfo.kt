@@ -15,6 +15,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import tmg.flashback.formula1.R
+import tmg.flashback.strings.R.string
 import tmg.flashback.formula1.model.DriverEntry
 import tmg.flashback.providers.DriverConstructorProvider
 import tmg.flashback.style.AppTheme
@@ -54,13 +55,13 @@ fun DriverInfoWithIcon(
     modifier: Modifier = Modifier
 ) {
     val fastestLapString = if (fastestLap) {
-        ". ${stringResource(R.string.ab_result_fastest_lap)}"
+        ". ${stringResource(string.ab_result_fastest_lap)}"
     } else {
         "."
     }
 
     val contentDescription = stringResource(
-        R.string.ab_result_race_overview,
+        string.ab_result_race_overview,
         position.ordinalAbbreviation,
         entry.driver.name,
         entry.constructor.name
@@ -114,7 +115,7 @@ fun DriverInfoWithIcon(
             if (fastestLap) {
                 BadgeView(
                     model = Badge(
-                        label = stringResource(id = tmg.flashback.weekend.R.string.ab_fastest_lap),
+                        label = stringResource(id = string.ab_fastest_lap),
                         icon = R.drawable.ic_fastest_lap
                     ),
                     tintIcon = AppTheme.colors.contentSecondary

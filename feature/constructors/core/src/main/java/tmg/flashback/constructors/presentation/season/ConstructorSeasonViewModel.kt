@@ -19,6 +19,8 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import tmg.flashback.constructors.R
+import tmg.flashback.formula1.R.drawable
+import tmg.flashback.strings.R.string
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.domain.repo.ConstructorRepository
 import tmg.flashback.drivers.contract.Driver
@@ -116,7 +118,7 @@ class ConstructorSeasonViewModel @Inject constructor(
                                 if (lastStanding != null) {
                                     list.add(
                                         ConstructorSeasonModel.Message(
-                                            R.string.results_accurate_for_round,
+                                            string.results_accurate_for_round,
                                             listOf(lastStanding.season, lastStanding.races)
                                         )
                                     )
@@ -167,47 +169,47 @@ class ConstructorSeasonViewModel @Inject constructor(
         if (history.isInProgress) {
             list.addStat(
                 isWinning = false,
-                icon = R.drawable.ic_menu_constructors,
-                label = R.string.constructor_overview_stat_championship_standing_so_far,
+                icon = tmg.flashback.ui.R.drawable.ic_menu_constructors,
+                label = string.constructor_overview_stat_championship_standing_so_far,
                 value = history.championshipStanding?.ordinalAbbreviation ?: ""
             )
         } else {
             list.addStat(
                 isWinning = history.championshipStanding == 1,
-                icon = R.drawable.ic_menu_constructors,
-                label = R.string.constructor_overview_stat_championship_standing,
+                icon = tmg.flashback.ui.R.drawable.ic_menu_constructors,
+                label = string.constructor_overview_stat_championship_standing,
                 value = history.championshipStanding?.ordinalAbbreviation ?: ""
             )
         }
 
         list.addStat(
-            icon = R.drawable.ic_race_grid,
-            label = R.string.constructor_overview_stat_races,
+            icon = drawable.ic_race_grid,
+            label = string.constructor_overview_stat_races,
             value = history.races.toString()
         )
         list.addStat(
-            icon = R.drawable.ic_standings,
-            label = R.string.constructor_overview_stat_race_wins,
+            icon = drawable.ic_standings,
+            label = string.constructor_overview_stat_race_wins,
             value = history.wins.toString()
         )
         list.addStat(
-            icon = R.drawable.ic_podium,
-            label = R.string.constructor_overview_stat_race_podiums,
+            icon = drawable.ic_podium,
+            label = string.constructor_overview_stat_race_podiums,
             value = history.podiums.toString()
         )
         list.addStat(
-            icon = R.drawable.ic_race_points,
-            label = R.string.constructor_overview_stat_points,
+            icon = drawable.ic_race_points,
+            label = string.constructor_overview_stat_points,
             value = history.points.pointsDisplay()
         )
         list.addStat(
-            icon = R.drawable.ic_finishes_in_points,
-            label = R.string.constructor_overview_stat_points_finishes,
+            icon = drawable.ic_finishes_in_points,
+            label = string.constructor_overview_stat_points_finishes,
             value = history.finishInPoints.toString()
         )
         list.addStat(
-            icon = R.drawable.ic_qualifying_pole,
-            label = R.string.constructor_overview_stat_qualifying_poles,
+            icon = drawable.ic_qualifying_pole,
+            label = string.constructor_overview_stat_qualifying_poles,
             value = history.qualifyingPole.toString()
         )
 

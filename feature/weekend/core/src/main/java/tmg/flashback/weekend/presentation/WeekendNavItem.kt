@@ -3,6 +3,7 @@ package tmg.flashback.weekend.presentation
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import tmg.flashback.weekend.R
+import tmg.flashback.strings.R.string
 
 enum class WeekendNavItem(
     @StringRes
@@ -11,23 +12,23 @@ enum class WeekendNavItem(
     val icon: Int
 ) {
     SCHEDULE(
-        label = R.string.nav_details,
+        label = string.nav_details,
         icon = R.drawable.nav_details
     ),
     QUALIFYING(
-        label = R.string.nav_qualifying,
+        label = string.nav_qualifying,
         icon = R.drawable.nav_qualifying
     ),
     SPRINT_QUALIFYING(
-        label = R.string.nav_sprint_qualifying,
+        label = string.nav_sprint_qualifying,
         icon = R.drawable.nav_sprint_qualifying
     ),
     SPRINT(
-        label = R.string.nav_sprint,
+        label = string.nav_sprint,
         icon = R.drawable.nav_sprint
     ),
     RACE(
-        label = R.string.nav_race,
+        label = string.nav_race,
         icon = R.drawable.nav_race
     ),
 }

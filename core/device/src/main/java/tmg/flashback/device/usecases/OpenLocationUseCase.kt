@@ -5,7 +5,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import dagger.hilt.android.qualifiers.ApplicationContext
-import tmg.flashback.device.R
+import tmg.flashback.strings.R.string
 import tmg.flashback.device.ActivityProvider
 import java.lang.RuntimeException
 import javax.inject.Inject
@@ -24,13 +24,13 @@ class OpenLocationUseCase @Inject constructor(
             isPackageInstalled(PACKAGE_GOOGLE_MAPS) -> {
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(geoIntent))
                     .apply { setPackage(PACKAGE_GOOGLE_MAPS) }
-                val chooser = Intent.createChooser(intent, context.getString(R.string.intent_chooser_open_maps))
+                val chooser = Intent.createChooser(intent, context.getString(string.intent_chooser_open_maps))
                 topActivityProvider.activity?.startActivity(chooser)
             }
             isPackageInstalled(PACKAGE_WAZE) -> {
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(geoIntent))
                     .apply { setPackage(PACKAGE_WAZE) }
-                val chooser = Intent.createChooser(intent, context.getString(R.string.intent_chooser_open_maps))
+                val chooser = Intent.createChooser(intent, context.getString(string.intent_chooser_open_maps))
                 topActivityProvider.activity?.startActivity(chooser)
             }
             else -> openUrlUseCase.openUrl(googleMapsLink)

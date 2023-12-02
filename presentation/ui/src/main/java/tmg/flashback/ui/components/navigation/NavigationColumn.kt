@@ -46,6 +46,7 @@ import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.ui.R
+import tmg.flashback.strings.R.string
 
 val columnWidthCollapsed: Dp = 64.dp
 private val itemSize: Dp = 48.dp
@@ -101,7 +102,7 @@ fun NavigationColumn(
             NavigationItem(
                 item = NavigationItem(
                     id = "menu",
-                    label = R.string.empty,
+                    label = string.empty,
                     icon = R.drawable.ic_menu_expanded
                 ),
                 onClick = {

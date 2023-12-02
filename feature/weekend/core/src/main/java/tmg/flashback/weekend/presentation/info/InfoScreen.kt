@@ -20,6 +20,8 @@ import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextHeadline1
 import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.weekend.R
+import tmg.flashback.strings.R.string
+import tmg.flashback.ui.R.drawable
 import tmg.flashback.weekend.contract.model.ScreenWeekendData
 import tmg.flashback.weekend.presentation.toWeekendInfo
 import tmg.utilities.extensions.format
@@ -45,8 +47,8 @@ fun RaceInfoHeader(
                     onClick = actionUpClicked
                 ) {
                     Icon(
-                        painter = painterResource(id = R.drawable.ic_back),
-                        contentDescription = stringResource(id = R.string.ab_back),
+                        painter = painterResource(id = drawable.ic_back),
+                        contentDescription = stringResource(id = string.ab_back),
                         tint = AppTheme.colors.contentPrimary
                     )
                 }
@@ -107,7 +109,7 @@ private fun RaceDetails(
                 modifier = Modifier.size(48.dp),
             )
             TextBody2(
-                text = stringResource(id = R.string.weekend_race_round, model.round),
+                text = stringResource(id = string.weekend_race_round, model.round),
                 bold = true,
                 modifier = Modifier.padding(vertical = 2.dp)
             )

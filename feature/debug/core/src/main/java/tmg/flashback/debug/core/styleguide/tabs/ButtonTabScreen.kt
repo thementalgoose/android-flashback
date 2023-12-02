@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import tmg.flashback.debug.core.R
+import tmg.flashback.strings.R.string
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
@@ -51,21 +52,21 @@ internal fun ButtonTabScreen() {
 
         TextBody1(text = "Secondary Button Segmented", modifier = Modifier.fillMaxWidth())
         TextBody2(text = "Secondary button in a segmented style in line with Material3", modifier = Modifier.fillMaxWidth())
-        val selection = remember { mutableStateOf(R.string.ab_menu) }
+        val selection = remember { mutableStateOf(string.ab_menu) }
         ButtonSecondarySegments(
-            items = listOf(R.string.ab_menu, R.string.ab_back, R.string.ab_close),
+            items = listOf(string.ab_menu, string.ab_back, string.ab_close),
             selected = selection.value,
             onClick = { selection.value = it },
             showTick = true
         )
         ButtonSecondarySegments(
-            items = listOf(R.string.ab_menu, R.string.ab_back, R.string.ab_close, R.string.ab_rss_settings),
+            items = listOf(string.ab_menu, string.ab_back, string.ab_close, string.ab_rss_settings),
             selected = selection.value,
             onClick = { selection.value = it },
             showTick = false
         )
         ButtonSecondarySegments(
-            items = listOf(R.string.ab_menu, R.string.ab_back, R.string.ab_close, R.string.ab_rss_settings),
+            items = listOf(string.ab_menu, string.ab_back, string.ab_close, string.ab_rss_settings),
             selected = selection.value,
             onClick = { selection.value = it },
             showTick = true

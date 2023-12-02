@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.PopupProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.season.R
+import tmg.flashback.strings.R.string
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
@@ -87,7 +88,7 @@ fun SeasonTitle(
             )
             if (newSeasonAvailable) {
                 Spacer(Modifier.width(AppTheme.dimens.small))
-                BadgeView(model = Badge(label = stringResource(id = R.string.dashboard_new_season_available)))
+                BadgeView(model = Badge(label = stringResource(id = string.dashboard_new_season_available)))
             }
             DropdownMenu(
                 offset = DpOffset(AppTheme.dimens.medium, 0.dp),

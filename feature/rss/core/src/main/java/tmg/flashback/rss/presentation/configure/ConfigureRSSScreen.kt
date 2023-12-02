@@ -46,6 +46,7 @@ import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextTitle
 import tmg.flashback.ui.bottomsheet.ModalSheet
 import tmg.flashback.googleanalytics.presentation.ScreenView
+import tmg.flashback.strings.R.string
 import tmg.flashback.ui.components.header.HeaderAction
 import tmg.flashback.ui.components.settings.Footer
 import tmg.flashback.ui.components.settings.Header
@@ -107,17 +108,17 @@ fun ConfigureRSSScreen(
         content = {
             item(key = "header") {
                 tmg.flashback.ui.components.header.Header(
-                    text = stringResource(id = R.string.settings_rss_configure_sources_title),
+                    text = stringResource(id = string.settings_rss_configure_sources_title),
                     action = if (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact) HeaderAction.BACK else null,
                     actionUpClicked = actionUpClicked
                 )
             }
-            Header(title = R.string.settings_rss_appearance_title)
+            Header(title = string.settings_rss_appearance_title)
             Switch(
                 model = Setting.Switch(
                     _key = "show_description",
-                    title = R.string.settings_rss_show_description_title,
-                    subtitle = R.string.settings_rss_show_description_description,
+                    title = string.settings_rss_show_description_title,
+                    subtitle = string.settings_rss_show_description_description,
                     isChecked = showDescriptionEnabled
                 ),
                 onClick = {
@@ -126,12 +127,12 @@ fun ConfigureRSSScreen(
             )
 
             if (showCustomAdd) {
-                Header(title = R.string.settings_rss_add_custom)
+                Header(title = string.settings_rss_add_custom)
                 Pref(
                     model = Setting.Pref(
                         _key = "add_custom",
-                        title = R.string.settings_rss_add_title,
-                        subtitle = R.string.settings_rss_add_description,
+                        title = string.settings_rss_add_title,
+                        subtitle = string.settings_rss_add_description,
                     ),
                     onClick = {
                         customRssBox.value = true
@@ -139,7 +140,7 @@ fun ConfigureRSSScreen(
                 )
             }
 
-            Header(title = R.string.settings_rss_configure)
+            Header(title = string.settings_rss_configure)
             items(sources, key = { it.url }) {
                 Source(
                     model = it,
@@ -222,7 +223,7 @@ private fun Source(
             model.supportedArticleSource?.let {
                 ButtonSecondary(
                     modifier = Modifier.padding(top = 4.dp),
-                    text = stringResource(id = R.string.settings_rss_contact_link),
+                    text = stringResource(id = string.settings_rss_contact_link),
                     onClick = {
                         contactLink(model)
                     }

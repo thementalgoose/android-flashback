@@ -13,13 +13,14 @@ import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextCaption
 import tmg.flashback.ui.R
+import tmg.flashback.strings.R.string
 
 @Composable
 fun ExperimentalLabel(
     modifier: Modifier = Modifier
 ) {
     TextCaption(
-        text = stringResource(id = R.string.settings_experimental),
+        text = stringResource(id = string.settings_experimental),
         modifier = modifier
             .clip(RoundedCornerShape(AppTheme.dimens.radiusLarge))
             .background(AppTheme.colors.backgroundSecondary)

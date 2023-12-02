@@ -27,6 +27,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.googleanalytics.constants.AnalyticsConstants.analyticsCircuitId
 import tmg.flashback.circuits.R
+import tmg.flashback.formula1.R.drawable
+import tmg.flashback.strings.R.string
 import tmg.flashback.formula1.enums.TrackLayout
 import tmg.flashback.formula1.extensions.positionIcon
 import tmg.flashback.formula1.model.CircuitHistoryRace
@@ -70,9 +72,11 @@ fun CircuitScreenVM(
     viewModel: CircuitViewModel = hiltViewModel(),
     weekendNavigationComponent: WeekendNavigationComponent = requireWeekendNavigationComponent()
 ) {
-    ScreenView(screenName = "Circuit Overview", args = mapOf(
-        analyticsCircuitId to circuitId
-    ))
+    ScreenView(
+        screenName = "Circuit Overview", args = mapOf(
+            analyticsCircuitId to circuitId
+        )
+    )
 
     val uiState = viewModel.outputs.uiState.collectAsState()
 
@@ -133,38 +137,39 @@ fun CircuitScreen(
             .fillMaxSize()
             .background(AppTheme.colors.backgroundPrimary),
         content = {
-        item(key = "header") {
-            Header(
-                text = circuitName,
-                action = if (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact) HeaderAction.BACK else null,
-                actionUpClicked = actionUpClicked
-            )
-        }
-        if (uiState.list.isEmpty()) {
-            if (!uiState.networkAvailable) {
-                item(key = "network") {
-                    NetworkError()
-                }
-            } else if (uiState.isLoading) {
-                item(key = "loading") {
-                    SkeletonViewList()
-                }
-            }
-        }
-        items(uiState.list, key = { it.id }) {
-            when (it) {
-                is CircuitModel.Item -> Item(
-                    model = it,
-                    itemClicked = itemClicked
-                )
-                is CircuitModel.Stats -> Stats(
-                    model = it,
-                    linkClicked = linkClicked,
-                    locationClicked = locationClicked
+            item(key = "header") {
+                Header(
+                    text = circuitName,
+                    action = if (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact) HeaderAction.BACK else null,
+                    actionUpClicked = actionUpClicked
                 )
             }
-        }
-    })
+            if (uiState.list.isEmpty()) {
+                if (!uiState.networkAvailable) {
+                    item(key = "network") {
+                        NetworkError()
+                    }
+                } else if (uiState.isLoading) {
+                    item(key = "loading") {
+                        SkeletonViewList()
+                    }
+                }
+            }
+            items(uiState.list, key = { it.id }) {
+                when (it) {
+                    is CircuitModel.Item -> Item(
+                        model = it,
+                        itemClicked = itemClicked
+                    )
+
+                    is CircuitModel.Stats -> Stats(
+                        model = it,
+                        linkClicked = linkClicked,
+                        locationClicked = locationClicked
+                    )
+                }
+            }
+        })
 }
 
 @Composable
@@ -193,7 +198,11 @@ private fun Item(
                     .padding(bottom = 4.dp)
             )
             TextBody2(
-                text = stringResource(id = R.string.circuit_race_round,model.data.date.format(DateTimeFormatter.ofPattern("'${model.data.date.dayOfMonth.ordinalAbbreviation}' MMMM yyyy")), model.data.round),
+                text = stringResource(
+                    id = string.circuit_race_round,
+                    model.data.date.format(DateTimeFormatter.ofPattern("'${model.data.date.dayOfMonth.ordinalAbbreviation}' MMMM yyyy")),
+                    model.data.round
+                ),
                 modifier = Modifier
                     .fillMaxWidth()
             )
@@ -213,7 +222,8 @@ private fun Stats(
     modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier) {
-        val trackIcon = TrackLayout.getTrack(circuitId = model.circuitId)?.getDefaultIcon() ?: R.drawable.circuit_unknown
+        val trackIcon = TrackLayout.getTrack(circuitId = model.circuitId)?.getDefaultIcon()
+            ?: drawable.circuit_unknown
         Row(modifier = Modifier.padding(horizontal = AppTheme.dimens.medium)) {
             Icon(
                 painter = painterResource(id = trackIcon),
@@ -257,25 +267,34 @@ private fun Stats(
                 )
                 if (model.startYear != null && model.endYear != null) {
                     TextBody2(
-                        text = stringResource(id = R.string.circuit_hosted_grand_prix_from, model.numberOfGrandPrix, model.startYear, model.endYear),
+                        text = stringResource(
+                            id = string.circuit_hosted_grand_prix_from,
+                            model.numberOfGrandPrix,
+                            model.startYear,
+                            model.endYear
+                        ),
                         modifier = Modifier.fillMaxWidth()
                     )
                 } else {
                     TextBody2(
-                        text = stringResource(id = R.string.circuit_hosted_grand_prix, model.numberOfGrandPrix),
+                        text = stringResource(
+                            id = string.circuit_hosted_grand_prix,
+                            model.numberOfGrandPrix
+                        ),
                         modifier = Modifier.fillMaxWidth()
                     )
                 }
             }
         }
 
-        Row(modifier = Modifier
-            .horizontalScroll(rememberScrollState())
-            .padding(horizontal = AppTheme.dimens.medium)
+        Row(
+            modifier = Modifier
+                .horizontalScroll(rememberScrollState())
+                .padding(horizontal = AppTheme.dimens.medium)
         ) {
             model.wikipedia?.let { wiki ->
                 ButtonSecondary(
-                    text = stringResource(id = R.string.details_link_wikipedia),
+                    text = stringResource(id = string.details_link_wikipedia),
                     onClick = { linkClicked(wiki) },
 //                    icon = R.drawable.ic_details_wikipedia
                 )
@@ -283,7 +302,7 @@ private fun Stats(
             }
             model.location?.let { location ->
                 ButtonSecondary(
-                    text = stringResource(id = R.string.details_link_map),
+                    text = stringResource(id = string.details_link_map),
                     onClick = {
                         locationClicked(location.lat, location.lng, model.name)
                     },
@@ -314,30 +333,36 @@ private fun Standings(
                 code = second.driver.code ?: second.driver.lastName.substring(0..2),
                 colour = second.constructor.colour
             )
-            Box(modifier = Modifier
-                .fillMaxWidth()
-                .height(driverPodiumHeightP2)
-                .background(AppTheme.colors.f1Podium2))
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(driverPodiumHeightP2)
+                    .background(AppTheme.colors.f1Podium2)
+            )
         }
         Column(modifier = Modifier.weight(1f)) {
             DriverCode(
                 code = first.driver.code ?: first.driver.lastName.substring(0..2),
                 colour = first.constructor.colour
             )
-            Box(modifier = Modifier
-                .fillMaxWidth()
-                .height(driverPodiumHeightP1)
-                .background(AppTheme.colors.f1Podium1))
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(driverPodiumHeightP1)
+                    .background(AppTheme.colors.f1Podium1)
+            )
         }
         Column(modifier = Modifier.weight(1f)) {
             DriverCode(
                 code = third.driver.code ?: third.driver.lastName.substring(0..2),
                 colour = third.constructor.colour
             )
-            Box(modifier = Modifier
-                .fillMaxWidth()
-                .height(driverPodiumHeightP3)
-                .background(AppTheme.colors.f1Podium3))
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(driverPodiumHeightP3)
+                    .background(AppTheme.colors.f1Podium3)
+            )
         }
     }
 }
@@ -352,20 +377,24 @@ private fun DriverCode(
             .height(IntrinsicSize.Min)
             .padding(2.dp)
     ) {
-        Box(modifier = Modifier
-            .fillMaxHeight()
-            .width(4.dp)
-            .background(colour))
+        Box(
+            modifier = Modifier
+                .fillMaxHeight()
+                .width(4.dp)
+                .background(colour)
+        )
         DriverNumber(
             textAlign = TextAlign.Center,
             small = true,
             modifier = Modifier.weight(1f),
             number = code
         )
-        Box(modifier = Modifier
-            .fillMaxHeight()
-            .width(4.dp)
-            .background(Color.Transparent))
+        Box(
+            modifier = Modifier
+                .fillMaxHeight()
+                .width(4.dp)
+                .background(Color.Transparent)
+        )
     }
 }
 
@@ -375,9 +404,10 @@ private fun StandingResult(
     modifier: Modifier = Modifier
 ) {
     val icon = model.position.positionIcon
-    Row(modifier = modifier
-        .height(IntrinsicSize.Min)
-    ){
+    Row(
+        modifier = modifier
+            .height(IntrinsicSize.Min)
+    ) {
         Icon(
             modifier = Modifier.size(resultIconSize),
             painter = painterResource(id = icon),
@@ -385,10 +415,12 @@ private fun StandingResult(
             tint = if (model.position == 1) AppTheme.colors.f1Championship else AppTheme.colors.contentSecondary
         )
         Spacer(Modifier.width(AppTheme.dimens.xsmall))
-        Box(modifier = Modifier
-            .fillMaxHeight()
-            .width(6.dp)
-            .background(model.constructor.colour))
+        Box(
+            modifier = Modifier
+                .fillMaxHeight()
+                .width(6.dp)
+                .background(model.constructor.colour)
+        )
         Spacer(Modifier.width(AppTheme.dimens.xsmall))
         DriverNumber(
             modifier = Modifier.width(resultIconSize * 3),

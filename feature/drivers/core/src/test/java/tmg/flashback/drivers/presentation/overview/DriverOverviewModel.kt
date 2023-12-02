@@ -4,6 +4,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import org.threeten.bp.LocalDate
 import tmg.flashback.drivers.R
+import tmg.flashback.strings.R.string
 import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.model
 import tmg.flashback.ui.components.navigation.PipeType
@@ -38,7 +39,7 @@ fun DriverOverviewModel.Companion.racedForModel(
 
 fun DriverOverviewModel.Companion.messageModel(
     @StringRes
-    label: Int = R.string.results_accurate_for_year,
+    label: Int = string.results_accurate_for_year,
     args: List<Any> = listOf(2020, "raceName", 1)
 ): DriverOverviewModel.Message = DriverOverviewModel.Message(
     label = label,

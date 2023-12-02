@@ -23,6 +23,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import tmg.flashback.R
+import tmg.flashback.strings.R.string
 import tmg.flashback.googleanalytics.presentation.ScreenView
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
@@ -71,33 +72,33 @@ fun SyncScreen(
             TextHeadline1(text = stringResource(id = R.string.app_name))
             TextBody2(
                 modifier = Modifier.padding(top = AppTheme.dimens.nsmall),
-                text = stringResource(id = R.string.splash_sync_info)
+                text = stringResource(id = string.splash_sync_info)
             )
             Box(Modifier.weight(1f))
             Breakdown(
-                label = R.string.splash_sync_drivers,
+                label = string.splash_sync_drivers,
                 syncState = drivers
             )
             Breakdown(
-                label = R.string.splash_sync_constructors,
+                label = string.splash_sync_constructors,
                 syncState = constructors
             )
             Breakdown(
-                label = R.string.splash_sync_circuits,
+                label = string.splash_sync_circuits,
                 syncState = circuits
             )
             Breakdown(
-                label = R.string.splash_sync_races,
+                label = string.splash_sync_races,
                 syncState = races
             )
             Breakdown(
-                label = R.string.splash_sync_config,
+                label = string.splash_sync_config,
                 syncState = config
             )
             Box(Modifier.height(60.dp)) {
                 if (showTryAgain) {
                     ButtonSecondary(
-                        text = stringResource(id = R.string.splash_sync_try_again),
+                        text = stringResource(id = string.splash_sync_try_again),
                         onClick = tryAgainClicked
                     )
                 }

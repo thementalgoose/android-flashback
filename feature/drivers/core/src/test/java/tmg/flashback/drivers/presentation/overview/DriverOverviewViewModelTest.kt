@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Test
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.domain.repo.DriverRepository
 import tmg.flashback.drivers.R
+import tmg.flashback.formula1.R.drawable
 import tmg.flashback.drivers.contract.DriverNavigationComponent
 import tmg.flashback.drivers.contract.model.DriverStatHistoryType
 import tmg.flashback.drivers.contract.model.ScreenDriverData
@@ -142,18 +143,18 @@ internal class DriverOverviewViewModelTest: BaseTest() {
     }
 
     private fun assertStatModels(list: List<DriverOverviewModel>) {
-        assertTrue(list.any { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_driver })
-        assertTrue(list.any { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_standings })
-        assertTrue(list.any { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_podium })
-        assertTrue(list.any { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_race_starts })
-        assertTrue(list.any { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_race_finishes })
-        assertTrue(list.any { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_race_retirements })
-        assertTrue(list.any { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_best_finish })
-        assertTrue(list.any { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_finishes_in_points })
-        assertTrue(list.any { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_race_points })
-        assertTrue(list.any { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_qualifying_pole })
-        assertTrue(list.any { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_qualifying_front_row })
-        assertTrue(list.any { it is DriverOverviewModel.Stat && it.icon == R.drawable.ic_qualifying_top_ten })
+        assertTrue(list.any { it is DriverOverviewModel.Stat && it.icon == drawable.ic_driver })
+        assertTrue(list.any { it is DriverOverviewModel.Stat && it.icon == drawable.ic_standings })
+        assertTrue(list.any { it is DriverOverviewModel.Stat && it.icon == drawable.ic_podium })
+        assertTrue(list.any { it is DriverOverviewModel.Stat && it.icon == drawable.ic_race_starts })
+        assertTrue(list.any { it is DriverOverviewModel.Stat && it.icon == drawable.ic_race_finishes })
+        assertTrue(list.any { it is DriverOverviewModel.Stat && it.icon == drawable.ic_race_retirements })
+        assertTrue(list.any { it is DriverOverviewModel.Stat && it.icon == drawable.ic_best_finish })
+        assertTrue(list.any { it is DriverOverviewModel.Stat && it.icon == drawable.ic_finishes_in_points })
+        assertTrue(list.any { it is DriverOverviewModel.Stat && it.icon == drawable.ic_race_points })
+        assertTrue(list.any { it is DriverOverviewModel.Stat && it.icon == drawable.ic_qualifying_pole })
+        assertTrue(list.any { it is DriverOverviewModel.Stat && it.icon == drawable.ic_qualifying_front_row })
+        assertTrue(list.any { it is DriverOverviewModel.Stat && it.icon == drawable.ic_qualifying_top_ten })
     }
 
     private fun assertSeasonRacedFor(list: List<DriverOverviewModel>, vararg season: Int) {

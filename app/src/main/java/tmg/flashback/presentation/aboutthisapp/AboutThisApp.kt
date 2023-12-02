@@ -20,6 +20,7 @@ import tmg.aboutthisapp.configuration.Dependency
 import tmg.aboutthisapp.configuration.Link
 import tmg.aboutthisapp.presentation.AboutThisAppScreen
 import tmg.flashback.R
+import tmg.flashback.strings.R.string
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 
@@ -101,7 +102,7 @@ fun AboutThisApp(
 @Composable
 private fun ColumnScope.Header() {
     TextBody1(
-        text = stringResource(id = R.string.dependency_thank_you),
+        text = stringResource(id = string.dependency_thank_you),
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 12.dp)
@@ -118,7 +119,7 @@ private fun ColumnScope.Footer(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 12.dp),
-        text = stringResource(id = R.string.about_additional)
+        text = stringResource(id = string.about_additional)
     )
     TextBody2(
         text = debugGuid,

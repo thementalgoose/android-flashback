@@ -12,6 +12,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.DpSize
 import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.R
+import tmg.flashback.strings.R.string
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
@@ -57,13 +58,13 @@ fun SettingsWeatherScreen(
         content = {
             item("header") {
                 tmg.flashback.ui.components.header.Header(
-                    text = stringResource(id = R.string.settings_header_weather),
+                    text = stringResource(id = string.settings_header_weather),
                     action = if (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact) HeaderAction.BACK else null,
                     actionUpClicked = actionUpClicked
                 )
             }
 
-            Header(title = R.string.settings_header_weather_metrics)
+            Header(title = string.settings_header_weather_metrics)
             Switch(
                 model = Settings.Data.temperatureUnits(temperatureMetric),
                 onClick = prefClicked

@@ -23,6 +23,7 @@ import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextHeadline2
 import tmg.flashback.googleanalytics.presentation.ScreenView
+import tmg.flashback.strings.R.string
 import tmg.flashback.ui.components.layouts.BottomSheet
 
 @Composable
@@ -38,13 +39,13 @@ fun TyreCompounds(
     val tyres = SeasonTyres.getBySeason(season)
     BottomSheet(
         modifier = modifier.background(AppTheme.colors.backgroundPrimary),
-        title = stringResource(id = R.string.tyres_list_title, season.toString()),
-        subtitle = stringResource(id = R.string.tyres_list_subtitle),
+        title = stringResource(id = string.tyres_list_title, season.toString()),
+        subtitle = stringResource(id = string.tyres_list_subtitle),
         backClicked = actionUpClicked
     ) {
         val dry = tyres?.tyres?.filter { it.tyre.isDry } ?: emptyList()
         if (dry.isNotEmpty()) {
-            Header(stringResource(id = R.string.tyres_dry_compounds))
+            Header(stringResource(id = string.tyres_dry_compounds))
             dry.forEach {
                 TyreRow(tyreLabel = it)
             }
@@ -52,7 +53,7 @@ fun TyreCompounds(
 
         val wet = tyres?.tyres?.filter { !it.tyre.isDry } ?: emptyList()
         if (wet.isNotEmpty()) {
-            Header(stringResource(id = R.string.tyres_wet_compounds))
+            Header(stringResource(id = string.tyres_wet_compounds))
             wet.forEach {
                 TyreRow(tyreLabel = it)
             }
@@ -98,7 +99,7 @@ private fun TyreRow(
             )
         ) {
             TextHeadline2(text = stringResource(id = tyreLabel.label))
-            TextBody1(text = stringResource(id = R.string.tyres_size, tyreLabel.tyre.size))
+            TextBody1(text = stringResource(id = string.tyres_size, tyreLabel.tyre.size))
         }
     }
 }

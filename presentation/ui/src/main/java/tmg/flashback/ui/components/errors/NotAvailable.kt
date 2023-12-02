@@ -16,6 +16,7 @@ import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.ui.R
+import tmg.flashback.strings.R.string
 
 @Composable
 fun TryAgain(
@@ -33,7 +34,7 @@ fun TryAgain(
         )
         Spacer(Modifier.width(16.dp))
         TextBody1(
-            text = stringResource(id = R.string.error_data_not_available_try_again)
+            text = stringResource(id = string.error_data_not_available_try_again)
         )
     }
 }
@@ -54,7 +55,7 @@ fun NotAvailable(
         )
         Spacer(Modifier.width(16.dp))
         TextBody1(
-            text = stringResource(id = R.string.error_weekend_not_available)
+            text = stringResource(id = string.error_weekend_not_available)
         )
     }
 }
@@ -75,7 +76,7 @@ fun NotAvailableYet(
         )
         Spacer(Modifier.width(16.dp))
         TextBody1(
-            text = stringResource(id = R.string.error_weekend_not_available_yet)
+            text = stringResource(id = string.error_weekend_not_available_yet)
         )
     }
 }

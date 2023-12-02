@@ -45,6 +45,8 @@ import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextTitle
 import tmg.flashback.ui.components.layouts.edgeFade
 import tmg.flashback.weekend.R
+import tmg.flashback.strings.R.string
+import tmg.flashback.formula1.R.drawable
 import tmg.flashback.weekend.contract.model.ScreenWeekendData
 import tmg.flashback.weekend.presentation.toWeekendInfo
 import tmg.utilities.extensions.format
@@ -103,7 +105,7 @@ private fun CornerLink(
 private fun Track(
     model: DetailsModel.Track
 ) {
-    val track = TrackLayout.getTrack(model.circuit.id)?.getIcon(model.season, model.raceName) ?: R.drawable.circuit_unknown
+    val track = TrackLayout.getTrack(model.circuit.id)?.getIcon(model.season, model.raceName) ?: drawable.circuit_unknown
     Column(Modifier.padding(
         start = AppTheme.dimens.medium,
         top = AppTheme.dimens.xsmall,
@@ -112,7 +114,7 @@ private fun Track(
     )) {
         model.laps?.toIntOrNull()?.let { laps ->
             BadgeView(
-                model = Badge(stringResource(id = R.string.weekend_info_laps, laps))
+                model = Badge(stringResource(id = string.weekend_info_laps, laps))
             )
         }
         Icon(
@@ -255,8 +257,8 @@ private fun EventItem(
         .padding(vertical = AppTheme.dimens.xsmall)
     ) {
         val contentDescription = when (showNotificationBell) {
-            true -> stringResource(id = R.string.ab_schedule_date_card_notifications_enabled, item.label, timestamp)
-            false -> stringResource(id = R.string.ab_schedule_date_card, item.label, timestamp)
+            true -> stringResource(id = string.ab_schedule_date_card_notifications_enabled, item.label, timestamp)
+            false -> stringResource(id = string.ab_schedule_date_card, item.label, timestamp)
         }
         Column(
             modifier = Modifier
@@ -278,8 +280,8 @@ private fun EventItem(
                 if (showNotificationBell) {
                     Spacer(Modifier.width(AppTheme.dimens.small))
                     Icon(
-                        painter = painterResource(id = R.drawable.ic_notification_indicator_bell),
-                        contentDescription = stringResource(id = R.string.ab_notifications_enabled),
+                        painter = painterResource(id = tmg.flashback.notifications.R.drawable.ic_notification_indicator_bell),
+                        contentDescription = stringResource(id = string.ab_notifications_enabled),
                         tint = AppTheme.colors.contentSecondary,
                         modifier = Modifier
                             .size(16.dp)
@@ -306,8 +308,8 @@ private fun EventItem(
             ) {
                 val summary = weather.summary.firstOrNull()
                 Image(
-                    painter = painterResource(id = summary?.icon ?: R.drawable.weather_unknown),
-                    contentDescription = stringResource(id = summary?.label ?: R.string.empty),
+                    painter = painterResource(id = summary?.icon ?: drawable.weather_unknown),
+                    contentDescription = stringResource(id = summary?.label ?: string.empty),
                     modifier = Modifier.size(weatherIconSize)
                 )
 
@@ -316,15 +318,15 @@ private fun EventItem(
                 Row {
                     Image(
                         modifier = Modifier.size(weatherMetadataIconSize),
-                        painter = painterResource(id = R.drawable.weather_indicator_rain),
-                        contentDescription = stringResource(id = R.string.ab_change_of_rain)
+                        painter = painterResource(id = drawable.weather_indicator_rain),
+                        contentDescription = stringResource(id = string.ab_change_of_rain)
                     )
                     TextBody2(
                         textColor = AppTheme.colors.contentTertiary,
                         modifier = Modifier
                             .align(Alignment.CenterVertically)
                             .padding(start = 2.dp),
-                        text = stringResource(id = R.string.weather_rain_percent, rainPercent.toString())
+                        text = stringResource(id = string.weather_rain_percent, rainPercent.toString())
                     )
                 }
 
@@ -332,7 +334,7 @@ private fun EventItem(
                 Row(Modifier.fillMaxWidth()) {
                     Image(
                         modifier = Modifier.size(weatherMetadataIconSize),
-                        painter = painterResource(id = R.drawable.weather_indicator_temp),
+                        painter = painterResource(id = drawable.weather_indicator_temp),
                         contentDescription = null
                     )
                     TextBody2(
@@ -349,7 +351,7 @@ private fun EventItem(
                 Row(Modifier.fillMaxWidth()) {
                     Image(
                         modifier = Modifier.size(weatherMetadataIconSize),
-                        painter = painterResource(id = R.drawable.weather_indicator_wind),
+                        painter = painterResource(id = drawable.weather_indicator_wind),
                         contentDescription = null
                     )
                     TextBody2(
@@ -367,14 +369,14 @@ private fun EventItem(
 
 @Composable
 private fun ScheduleWeather.getAverageTemp(metric: Boolean): String = when (metric) {
-    true -> stringResource(id = R.string.weather_temp_degrees_c, this.tempAverageC.toFloat().roundToInt().toString())
-    false -> stringResource(id = R.string.weather_temp_degrees_f, this.tempAverageF.toFloat().roundToInt().toString())
+    true -> stringResource(id = string.weather_temp_degrees_c, this.tempAverageC.toFloat().roundToInt().toString())
+    false -> stringResource(id = string.weather_temp_degrees_f, this.tempAverageF.toFloat().roundToInt().toString())
 }
 
 @Composable
 private fun ScheduleWeather.getWindspeed(metric: Boolean): String = when (metric) {
-    true -> stringResource(id = R.string.weather_wind_kph, this.windKph.toFloat().toDecimalPlacesString(1))
-    false -> stringResource(id = R.string.weather_wind_mph, this.windMph.toFloat().toDecimalPlacesString(1))
+    true -> stringResource(id = string.weather_wind_kph, this.windKph.toFloat().toDecimalPlacesString(1))
+    false -> stringResource(id = string.weather_wind_mph, this.windMph.toFloat().toDecimalPlacesString(1))
 }
 
 @PreviewTheme
@@ -389,13 +391,13 @@ private fun Preview(
                 items = listOf(
                     DetailsModel.Links(listOf(
                         DetailsModel.Link.Url(
-                            label = R.string.details_link_youtube,
-                            icon = R.drawable.ic_details_youtube,
+                            label = string.details_link_youtube,
+                            icon = tmg.flashback.ui.R.drawable.ic_details_youtube,
                             url = "https://www.youtube.com"
                         ),
                         DetailsModel.Link.Url(
-                            label = R.string.details_link_wikipedia,
-                            icon = R.drawable.ic_details_wikipedia,
+                            label = string.details_link_wikipedia,
+                            icon = tmg.flashback.ui.R.drawable.ic_details_wikipedia,
                             url = "https://www.wiki.com"
                         )
                     )),
