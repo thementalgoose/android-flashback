@@ -26,6 +26,7 @@ import tmg.flashback.device.repository.DeviceRepository
 import tmg.flashback.device.repository.PrivacyRepository
 import tmg.flashback.device.usecases.AppOpenedUseCase
 import tmg.flashback.device.usecases.GetDeviceInfoUseCase
+import tmg.flashback.formula1.constants.Formula1
 import tmg.flashback.notifications.managers.SystemNotificationManager
 import tmg.flashback.notifications.usecases.RemoteNotificationSubscribeUseCase
 import tmg.flashback.notifications.usecases.RemoteNotificationUnsubscribeUseCase
@@ -33,6 +34,7 @@ import tmg.flashback.repositories.ContactRepository
 import tmg.flashback.season.contract.repository.NotificationsRepository
 import tmg.flashback.season.contract.repository.models.NotificationResultsAvailable
 import tmg.flashback.season.contract.repository.models.NotificationUpcoming
+import tmg.flashback.season.repository.HomeRepository
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.SupportedTheme
 import tmg.flashback.ui.model.NightMode
@@ -66,6 +68,7 @@ class FlashbackStartup @Inject constructor(
     private val getDeviceInfoUseCase: GetDeviceInfoUseCase,
     private val initialiseAdsUseCase: InitialiseAdsUseCase,
     private val updateWidgetsUseCase: UpdateWidgetsUseCase,
+    private val homeRepository: HomeRepository,
     private val hasWidgetsUseCase: HasWidgetsUseCase,
 ) {
     fun startup(application: FlashbackApplication) {
@@ -164,6 +167,11 @@ class FlashbackStartup @Inject constructor(
                 }
             }
         }
+
+        // Set viewed seasons
+        val currentYear = Formula1.currentSeasonYear - 1
+        val supportedSeasons = homeRepository.supportedSeasons.filter { it <= currentYear }
+        homeRepository.viewedSeasons += supportedSeasons
 
         // Initialise user properties
         firebaseAnalyticsManager.initialise(userId = deviceRepository.deviceUdid)
