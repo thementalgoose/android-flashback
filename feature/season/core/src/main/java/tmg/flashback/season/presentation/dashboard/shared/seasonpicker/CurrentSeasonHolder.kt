@@ -57,7 +57,7 @@ class CurrentSeasonHolder @Inject constructor(
 
     private fun newSeasonAvailable(): Boolean {
         val viewedSeasons = homeRepository.viewedSeasons
-        val newSeasons = supportedSeasons.filter { it > currentSeason }
+        val newSeasons = supportedSeasons
         return newSeasons.any { season -> season !in viewedSeasons }
     }
 }
