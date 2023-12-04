@@ -58,14 +58,11 @@ internal class CurrentSeasonHolderTest: BaseTest() {
     @ParameterizedTest(name = "supported = {0}, viewed = {1}, current = {2} results in new season available {3}")
     @CsvSource(
         "2022|2023|2024,,2023,true",
-        "2022|2023|2024,2024,2023,false",
-        "2022|2023|2024,,2024,false",
+        "2022|2023|2024,2024|2023|2022,2023,false",
+        "2022|2023|2024,2024|2023|2022,2024,false",
         "2022|2023|2024|2025,2024,2023,true",
         "2022|2023|2024|2025,2024,2024,true",
-        "2022|2023|2024|2025,2024,2025,false",
-        "2022|2023|2024|2025,2024|2025,2023,false",
-        "2022|2023|2024|2025,2024|2025,2024,false",
-        "2022|2023|2024|2025,2024|2025,2025,false",
+        "2022|2023|2024|2025,2022|2023|2024|2025,2023,false",
         "2022|2023|2024|2025,2025,2023,true",
     )
     fun `initial value of new season available`(
