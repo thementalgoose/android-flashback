@@ -1,5 +1,5 @@
 [versions]  # ===========================================================================
-kotlin = "1.9.21"
+kotlin = "1.9.22"
 ksp = "1.9.21-1.0.15" # Update with kotlin https://github.com/google/ksp/releases
 hilt = "2.50"
 androidx_activity = "1.8.2"
