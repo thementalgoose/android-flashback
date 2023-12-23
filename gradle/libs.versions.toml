@@ -1,7 +1,7 @@
 [versions]  # ===========================================================================
 kotlin = "1.9.21"
 ksp = "1.9.21-1.0.15" # Update with kotlin https://github.com/google/ksp/releases
-hilt = "2.49"
+hilt = "2.50"
 androidx_activity = "1.8.2"
 androidx_navigation = "2.7.6"
 androidx_lifecycle = "2.6.2"
