@@ -23,6 +23,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModelStore
@@ -43,6 +44,7 @@ import tmg.flashback.ui.components.navigation.NavigationBar
 import tmg.flashback.ui.components.navigation.appBarHeight
 import tmg.flashback.presentation.dashboard.menu.DashboardMenuExpandedScreen
 import tmg.flashback.presentation.dashboard.menu.DashboardMenuScreen
+import tmg.flashback.ui.components.layouts.OverlappingPanelsState
 import tmg.flashback.ui.foldables.getFoldingConfig
 
 @Composable
@@ -140,30 +142,9 @@ fun DashboardScreen(
 
     val panelsState = rememberOverlappingPanelsState(OverlappingPanelsValue.Closed)
     val coroutineScope = rememberCoroutineScope()
-
     val foldingConfig = windowLayoutInfo.getFoldingConfig()
-
-    // Close panel if window size is changes via. configuration change
-    LaunchedEffect(windowSize, block = {
-        panelsState.closePanels()
-    })
-
-    // Close the menu if we shouldn't be showing it
-    LaunchedEffect(showMenu, block = {
-        if (!showMenu) {
-            panelsState.closePanels()
-        }
-    })
-
     val openMenu: () -> Unit = {
         coroutineScope.launch { panelsState.openStartPanel() }
-    }
-
-    // Close the menu if bck is pressed on the menu
-    BackHandler(panelsState.isStartPanelOpen) {
-        coroutineScope.launch {
-            panelsState.closePanels()
-        }
     }
 
     val navigationBarPosition = animateDpAsState(
@@ -177,7 +158,6 @@ fun DashboardScreen(
             .statusBarsPadding(),
         bottomBar = {
             if (windowSize.widthSizeClass == WindowWidthSizeClass.Compact) {
-
                 NavigationBar(
                     modifier = Modifier.offset(y = navigationBarPosition.value),
                     list = seasonScreenItemsList.map { it.toNavigationItem(currentlySelectedItem == it) },
@@ -190,7 +170,10 @@ fun DashboardScreen(
         content = {
             OverlappingPanels(
                 modifier = Modifier.background(AppTheme.colors.backgroundContainer),
-                panelsState = panelsState,
+                panelsState = when (windowSize.widthSizeClass == WindowWidthSizeClass.Compact) {
+                    true -> panelsState
+                    false -> OverlappingPanelsState(OverlappingPanelsValue.Closed)
+                },
                 gesturesEnabled = windowSize.widthSizeClass == WindowWidthSizeClass.Compact && showMenu,
                 panelStart = {
                     DashboardMenuScreen(
@@ -285,5 +268,26 @@ fun DashboardScreen(
             )
         }
     )
+
+    // Close panel if window size is changes via. configuration change
+    DisposableEffect(windowSize) {
+        println("Orientation change - Close panels")
+        coroutineScope.launch { panelsState.closePanels() }
+        return@DisposableEffect onDispose { }
+    }
+
+    // Close the menu if we shouldn't be showing it
+    LaunchedEffect(showMenu, block = {
+        if (!showMenu) {
+            panelsState.closePanels()
+        }
+    })
+
+    // Close the menu if bck is pressed on the menu
+    BackHandler(panelsState.isStartPanelOpen) {
+        coroutineScope.launch {
+            panelsState.closePanels()
+        }
+    }
 }
 
