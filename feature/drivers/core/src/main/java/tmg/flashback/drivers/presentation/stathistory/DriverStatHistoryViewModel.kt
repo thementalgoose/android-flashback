@@ -77,6 +77,7 @@ class DriverStatHistoryViewModel @Inject constructor(
             .sortedByDescending { it.season }
             .map { it.raceOverview.filter { it.finished == 1 } }
             .flatten()
+            .filter { !it.isSprint }
             .groupBy { it.raceInfo.season }
             .map {
                 val list = mutableListOf<DriverStatHistoryModel>()
@@ -101,6 +102,7 @@ class DriverStatHistoryViewModel @Inject constructor(
             .sortedByDescending { it.season }
             .map { it.raceOverview.filter { it.finished == 1 || it.finished == 2 || it.finished == 3 } }
             .flatten()
+            .filter { !it.isSprint }
             .groupBy { it.raceInfo.season }
             .map {
                 val list = mutableListOf<DriverStatHistoryModel>()
@@ -125,6 +127,7 @@ class DriverStatHistoryViewModel @Inject constructor(
             .sortedByDescending { it.season }
             .map { it.raceOverview.filter { it.qualified == 1 } }
             .flatten()
+            .filter { !it.isSprint }
             .groupBy { it.raceInfo.season }
             .map {
                 val list = mutableListOf<DriverStatHistoryModel>()
