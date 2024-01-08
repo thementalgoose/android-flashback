@@ -65,14 +65,17 @@ internal class DriverStatHistoryViewModelTest: BaseTest() {
                         raceOverview = listOf(
                             DriverHistorySeasonRace.model(
                                 finished = 1,
+                                isSprint = false,
                                 raceInfo = RaceInfo.model(season = 2021, round = 3)
                             ),
                             DriverHistorySeasonRace.model(
                                 finished = 2,
+                                isSprint = false,
                                 raceInfo = RaceInfo.model(season = 2021, round = 2)
                             ),
                             DriverHistorySeasonRace.model(
                                 finished = 1,
+                                isSprint = false,
                                 raceInfo = RaceInfo.model(season = 2021, round = 1)
                             )
                         )
@@ -84,14 +87,17 @@ internal class DriverStatHistoryViewModelTest: BaseTest() {
                         raceOverview = listOf(
                             DriverHistorySeasonRace.model(
                                 finished = 3,
+                                isSprint = false,
                                 raceInfo = RaceInfo.model(season = 2020, round = 3)
                             ),
                             DriverHistorySeasonRace.model(
                                 finished = 1,
+                                isSprint = false,
                                 raceInfo = RaceInfo.model(season = 2020, round = 2)
                             ),
                             DriverHistorySeasonRace.model(
                                 finished = 3,
+                                isSprint = false,
                                 raceInfo = RaceInfo.model(season = 2020, round = 1)
                             ),
                         )
@@ -134,14 +140,17 @@ internal class DriverStatHistoryViewModelTest: BaseTest() {
                         raceOverview = listOf(
                             DriverHistorySeasonRace.model(
                                 finished = 1,
+                                isSprint = false,
                                 raceInfo = RaceInfo.model(season = 2021, round = 1)
                             ),
                             DriverHistorySeasonRace.model(
                                 finished = 2,
+                                isSprint = false,
                                 raceInfo = RaceInfo.model(season = 2021, round = 2)
                             ),
                             DriverHistorySeasonRace.model(
                                 finished = 1,
+                                isSprint = false,
                                 raceInfo = RaceInfo.model(season = 2021, round = 3)
                             )
                         )
@@ -153,14 +162,17 @@ internal class DriverStatHistoryViewModelTest: BaseTest() {
                         raceOverview = listOf(
                             DriverHistorySeasonRace.model(
                                 finished = 3,
+                                isSprint = false,
                                 raceInfo = RaceInfo.model(season = 2020, round = 1)
                             ),
                             DriverHistorySeasonRace.model(
                                 finished = 1,
+                                isSprint = false,
                                 raceInfo = RaceInfo.model(season = 2020, round = 2)
                             ),
                             DriverHistorySeasonRace.model(
                                 finished = 3,
+                                isSprint = false,
                                 raceInfo = RaceInfo.model(season = 2020, round = 3)
                             )
                         )
@@ -216,14 +228,17 @@ internal class DriverStatHistoryViewModelTest: BaseTest() {
                         raceOverview = listOf(
                             DriverHistorySeasonRace.model(
                                 qualified = 1,
+                                isSprint = false,
                                 raceInfo = RaceInfo.model(season = 2021, round = 1)
                             ),
                             DriverHistorySeasonRace.model(
                                 qualified = 2,
+                                isSprint = false,
                                 raceInfo = RaceInfo.model(season = 2021, round = 2)
                             ),
                             DriverHistorySeasonRace.model(
                                 qualified = 1,
+                                isSprint = false,
                                 raceInfo = RaceInfo.model(season = 2021, round = 3)
                             )
                         )
@@ -235,14 +250,17 @@ internal class DriverStatHistoryViewModelTest: BaseTest() {
                         raceOverview = listOf(
                             DriverHistorySeasonRace.model(
                                 qualified = 3,
+                                isSprint = false,
                                 raceInfo = RaceInfo.model(season = 2020, round = 1)
                             ),
                             DriverHistorySeasonRace.model(
                                 qualified = 1,
+                                isSprint = false,
                                 raceInfo = RaceInfo.model(season = 2020, round = 2)
                             ),
                             DriverHistorySeasonRace.model(
                                 qualified = 3,
+                                isSprint = false,
                                 raceInfo = RaceInfo.model(season = 2020, round = 3)
                             )
                         )
