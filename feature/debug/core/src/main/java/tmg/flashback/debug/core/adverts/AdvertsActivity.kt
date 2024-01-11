@@ -39,12 +39,20 @@ class AdvertsActivity: AppCompatActivity() {
                         text = "Native Banner",
                         modifier = Modifier.padding(vertical = AppTheme.dimens.medium)
                     )
-                    advertProvider.NativeBanner()
+                    advertProvider.NativeBanner(
+                        horizontalPadding = false,
+                        badgeOffset = false,
+                        adIndex = 0
+                    )
                     TextTitle(
                         text = "Native Banner (offset)",
                         modifier = Modifier.padding(vertical = AppTheme.dimens.medium)
                     )
-                    advertProvider.NativeBanner(badgeOffset = true)
+                    advertProvider.NativeBanner(
+                        horizontalPadding = true,
+                        badgeOffset = true,
+                        adIndex = 0
+                    )
                 }
             }
         }
