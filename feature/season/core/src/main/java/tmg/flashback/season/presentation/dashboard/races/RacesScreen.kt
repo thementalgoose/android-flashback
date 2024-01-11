@@ -212,7 +212,8 @@ fun ScheduleScreen(
                     item(key = "advert") {
                         advertProvider.NativeBanner(
                             horizontalPadding = true,
-                            badgeOffset = true
+                            badgeOffset = true,
+                            adIndex = 0
                         )
                     }
                 }
