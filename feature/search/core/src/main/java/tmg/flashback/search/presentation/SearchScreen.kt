@@ -256,7 +256,8 @@ internal fun SearchScreen(
                 item("ad") {
                     advertProvider.NativeBanner(
                         horizontalPadding = true,
-                        badgeOffset = false
+                        badgeOffset = false,
+                        adIndex = 0
                     )
                 }
             }
