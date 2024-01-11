@@ -18,14 +18,14 @@ interface AdvertProvider {
 
     @Composable
     fun NativeBanner(
-        horizontalPadding: Boolean = false,
-        badgeOffset: Boolean = true,
-        adIndex: Int = 0
+        horizontalPadding: Boolean,
+        badgeOffset: Boolean,
+        adIndex: Int
     ) {
         NativeBannerImpl(
             horizontalPadding = horizontalPadding,
             badgeOffset = badgeOffset,
-            adIndex = 0
+            adIndex = adIndex
         )
     }
 }
