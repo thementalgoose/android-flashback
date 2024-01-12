@@ -12,6 +12,10 @@ jobs:
       JVM_OPTS: -Xmx3072m
       GRADLE_OPTS: -Dorg.gradle.jvmargs="-XX:MaxMetaspaceSize=2g"
     steps:
+      - run: 
+          name: Running skip check
+          command: |
+            echo "Running skip check"
       - when: 
           condition:
             not: 
