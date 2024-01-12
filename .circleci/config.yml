@@ -11,6 +11,12 @@ jobs:
     environment:
       JVM_OPTS: -Xmx3072m
       GRADLE_OPTS: -Dorg.gradle.jvmargs="-XX:MaxMetaspaceSize=2g"
+    when: 
+      condition:
+        not: 
+          matches: 
+            pattern: ^versions\/.+$
+            value: << pipeline.git.branch >>
     steps:
       - checkout
       - run:
@@ -43,13 +49,5 @@ jobs:
 
 workflows:
   unit-tests:
-    when: 
-      and:
-        - not: 
-            matches: 
-              pattern: ^versions\/.+$
-              value: << pipeline.git.branch >>
-        - or: 
-            equal: [ test, << pipeline.git.tag >> ]
     jobs:
       - unit-test
