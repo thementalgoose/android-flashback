@@ -43,5 +43,13 @@ jobs:
 
 workflows:
   unit-tests:
+    when: 
+      and:
+        - not: 
+            matches: 
+              pattern: "^versions\/.+$" 
+              value: << pipeline.git.branch >>
+        - or: 
+            equal: [ test, << pipeline.git.tag >> ]
     jobs:
       - unit-test
