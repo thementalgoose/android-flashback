@@ -47,7 +47,7 @@ workflows:
       and:
         - not: 
             matches: 
-              pattern: "^versions\/.+$" 
+              pattern: ^versions\/.+$
               value: << pipeline.git.branch >>
         - or: 
             equal: [ test, << pipeline.git.tag >> ]
