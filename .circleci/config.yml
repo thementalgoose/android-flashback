@@ -19,34 +19,34 @@ jobs:
                 pattern: ^versions\/.+$
                 value: << pipeline.git.branch >>
           steps:
-          - checkout
-          - run:
-              name: Install OpenJDK 17
-              command: |
-                sudo apt-get update && sudo apt-get install openjdk-17-jdk
-                sudo update-alternatives --set java /usr/lib/jvm/java-17-openjdk-amd64/bin/java
-                sudo update-alternatives --set javac /usr/lib/jvm/java-17-openjdk-amd64/bin/javac
-                java -version
-          - restore_cache:
-              key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
-          - run:
-              name: Unit Test
-              command: ./gradlew testDebugUnitTest :app:testSandDebugUnitTest --no-daemon
-              no_output_timeout: 20m
-          - save_cache:
-              paths:
-                - ~/.gradle
-              key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
-          - run:
-              name: Save test results
-              command: |
-                mkdir -p ~/test-results/junit/
-                find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} ~/test-results/junit/ \;
-              when: always
-          - store_test_results:
-              path: ~/test-results
-          - store_artifacts:
-              path: ~/test-results/junit
+            - checkout
+            - run:
+                name: Install OpenJDK 17
+                command: |
+                  sudo apt-get update && sudo apt-get install openjdk-17-jdk
+                  sudo update-alternatives --set java /usr/lib/jvm/java-17-openjdk-amd64/bin/java
+                  sudo update-alternatives --set javac /usr/lib/jvm/java-17-openjdk-amd64/bin/javac
+                  java -version
+            - restore_cache:
+                key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+            - run:
+                name: Unit Test
+                command: ./gradlew testDebugUnitTest :app:testSandDebugUnitTest --no-daemon
+                no_output_timeout: 20m
+            - save_cache:
+                paths:
+                  - ~/.gradle
+                key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+            - run:
+                name: Save test results
+                command: |
+                  mkdir -p ~/test-results/junit/
+                  find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} ~/test-results/junit/ \;
+                when: always
+            - store_test_results:
+                path: ~/test-results
+            - store_artifacts:
+                path: ~/test-results/junit
 
 workflows:
   unit-tests:
