@@ -147,8 +147,9 @@ jobs:
       # Create pull request
       - name: Create Pull Request
         id: createpr
-        uses: peter-evans/create-pull-request@v4
+        uses: peter-evans/create-pull-request@v5
         with:
+          base: main
           token: ${{ secrets.PAT }}
           commit-message: Updates version to ${{ steps.get_version_name.outputs.VERSION }} (${{ steps.get_version_code.outputs.VERSION }})
           branch: versions/update-${{ steps.time.outputs.date }}
