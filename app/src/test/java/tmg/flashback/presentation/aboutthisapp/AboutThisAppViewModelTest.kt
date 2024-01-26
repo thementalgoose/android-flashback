@@ -53,7 +53,7 @@ internal class AboutThisAppViewModelTest {
     }
 
     @Test
-    fun `open url calls open webpage use case`() = runTest {
+    fun `open url calls open webpage use case`() {
         initUnderTest()
         underTest.openUrl("url")
 
@@ -63,7 +63,7 @@ internal class AboutThisAppViewModelTest {
     }
 
     @Test
-    fun `open playstore calls open playstore use case`() = runTest {
+    fun `open playstore calls open playstore use case`() {
         initUnderTest()
         underTest.openPlaystore()
 
@@ -73,7 +73,7 @@ internal class AboutThisAppViewModelTest {
     }
 
     @Test
-    fun `open email calls open email use case`() = runTest {
+    fun `open email calls open email use case`() {
         every { mockContactRepository.contactEmail } returns "email"
         initUnderTest()
         underTest.openEmail()
@@ -83,7 +83,7 @@ internal class AboutThisAppViewModelTest {
     }
 
     @Test
-    fun `copy to clipboard calls copy to clipboard use case`() = runTest {
+    fun `copy to clipboard calls copy to clipboard use case`() {
         initUnderTest()
         underTest.copyToClipboard("content")
         verify {
