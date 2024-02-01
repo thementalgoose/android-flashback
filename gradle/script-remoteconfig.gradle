@@ -5,7 +5,7 @@ import groovy.xml.MarkupBuilder
  * Generate the standard remote config file shipped with the
  *  application
  */
-tasks.register('generateRemoteConfigDefaults') {
+task generateRemoteConfigDefaults {
 
     println("Remote Config - Generating...")
 
