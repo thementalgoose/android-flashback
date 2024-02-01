@@ -106,7 +106,7 @@ class SettingsAllViewModel @Inject constructor(
     }
 
     private val isThemeEnabled: Boolean
-        get() = themeRepository.enableThemePicker && buildConfig.isMonetThemeSupported
+        get() = buildConfig.isMonetThemeSupported
 
     fun refresh() {
         uiState.value = uiState.value.copy(

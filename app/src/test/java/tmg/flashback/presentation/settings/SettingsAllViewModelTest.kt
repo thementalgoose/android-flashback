@@ -43,19 +43,7 @@ internal class SettingsAllViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `theme is disabled if theme picker is disabled`() = runTest(testDispatcher) {
-        every { mockThemeRepository.enableThemePicker } returns false
-        every { mockBuildConfigManager.isMonetThemeSupported } returns true
-
-        initUnderTest()
-        underTest.outputs.uiState.test {
-            assertEquals(false, awaitItem().themeEnabled)
-        }
-    }
-
-    @Test
     fun `theme is disabled if less than android 12`() = runTest(testDispatcher) {
-        every { mockThemeRepository.enableThemePicker } returns true
         every { mockBuildConfigManager.isMonetThemeSupported } returns false
 
         initUnderTest()
@@ -66,7 +54,6 @@ internal class SettingsAllViewModelTest: BaseTest() {
 
     @Test
     fun `theme is enabled if enabled in config and android 12 or more`() = runTest(testDispatcher) {
-        every { mockThemeRepository.enableThemePicker } returns true
         every { mockBuildConfigManager.isMonetThemeSupported } returns true
 
         initUnderTest()

@@ -85,8 +85,6 @@ internal class AppStyleManagerTest {
         every { mockThemeRepository.nightMode } returns nightMode
         every { mockThemeRepository.theme } returns theme
 
-        every { mockThemeRepository.enableThemePicker } returns true
-
         val expected = when (theme) {
             Theme.DEFAULT -> R.style.FlashbackAppTheme_Default
             Theme.MATERIAL_YOU -> R.style.FlashbackAppTheme_MaterialYou
