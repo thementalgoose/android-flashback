@@ -17,15 +17,11 @@ import tmg.flashback.ui.model.Theme
 internal class ThemeRepositoryTest {
 
     private val mockPreferenceManager: PreferenceManager = mockk(relaxed = true)
-    private val mockConfigManager: ConfigManager = mockk(relaxed = true)
 
     private lateinit var underTest: ThemeRepository
 
     private fun initUnderTest() {
-        underTest = ThemeRepository(
-            mockPreferenceManager,
-            mockConfigManager
-        )
+        underTest = ThemeRepository(mockPreferenceManager)
     }
 
     //region Night Mode
@@ -66,7 +62,6 @@ internal class ThemeRepositoryTest {
 
     @Test
     fun `saving theme writes correct value to preference manager`() {
-        every { mockConfigManager.getBoolean(keyMaterialYou) } returns true
         initUnderTest()
         underTest.theme = Theme.MATERIAL_YOU
         verify {
@@ -77,7 +72,6 @@ internal class ThemeRepositoryTest {
     @Test
     fun `retrieving theme queries preference manager`() {
         every { mockPreferenceManager.getString(any()) } returns Theme.MATERIAL_YOU.key
-        every { mockConfigManager.getBoolean(keyMaterialYou) } returns true
         initUnderTest()
         assertEquals(Theme.MATERIAL_YOU, underTest.theme)
         verify {
@@ -88,7 +82,6 @@ internal class ThemeRepositoryTest {
     @Test
     fun `retrieving theme defaults to DEFAULT when no value found in shared preferences`() {
         every { mockPreferenceManager.getString(any()) } returns null
-        every { mockConfigManager.getBoolean(keyMaterialYou) } returns true
         initUnderTest()
         assertEquals(Theme.DEFAULT, underTest.theme)
         verify {
@@ -96,47 +89,11 @@ internal class ThemeRepositoryTest {
         }
     }
 
-    @Test
-    fun `retrieving theme with theme picker disabled just returns default`() {
-        every { mockConfigManager.getBoolean(keyMaterialYou) } returns false
-        initUnderTest()
-        assertEquals(Theme.DEFAULT, underTest.theme)
-        verify(exactly = 0) {
-            mockPreferenceManager.getString(any())
-        }
-    }
-
-    //endregion
-
-    //region Theme Style
-
-    @Test
-    fun `enable material you comes from theme picker`() {
-        every { mockConfigManager.getBoolean(keyMaterialYou) } returns true
-        initUnderTest()
-        assertTrue(underTest.enableThemePicker)
-        verify {
-            mockConfigManager.getBoolean(keyMaterialYou)
-        }
-    }
-
-    @Test
-    fun `disable material you comes from theme picker`() {
-        every { mockConfigManager.getBoolean(keyMaterialYou) } returns false
-        initUnderTest()
-        assertFalse(underTest.enableThemePicker)
-        verify {
-            mockConfigManager.getBoolean(keyMaterialYou)
-        }
-    }
-    
     //endregion
 
     companion object {
         private const val keyNightMode: String = "THEME" // Used to be theme pref
         private const val keyTheme: String = "THEME_CHOICE" //
         private const val keyAnimationSpeed: String = "BAR_ANIMATION"
-
-        private const val keyMaterialYou: String = "material_you"
     }
 }
