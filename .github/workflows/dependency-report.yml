@@ -8,10 +8,10 @@ jobs:
     timeout-minutes: 7
     steps:
       # Checkout
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       # Caching gradle
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         with:
           path: |
             ~/.gradle/caches
