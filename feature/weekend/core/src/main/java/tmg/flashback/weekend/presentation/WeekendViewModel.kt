@@ -25,9 +25,11 @@ import tmg.flashback.weekend.contract.model.ScreenWeekendNav
 import tmg.flashback.weekend.presentation.WeekendNavItem.QUALIFYING
 import tmg.flashback.weekend.presentation.WeekendNavItem.RACE
 import tmg.flashback.weekend.presentation.WeekendNavItem.SCHEDULE
+import tmg.flashback.weekend.utils.getWeekendEventOrder
 import tmg.utilities.extensions.combinePair
 import tmg.utilities.extensions.toEnum
 import java.lang.ClassCastException
+import java.time.Year
 import javax.inject.Inject
 
 interface WeekendViewModelInputs {
@@ -107,17 +109,12 @@ class WeekendViewModel @Inject constructor(
         .flatMapLatest { (season, round) -> raceRepository.getRace(season, round) }
         .combinePair(selectedTab)
         .map { (race, navItem) ->
-            val list = mutableListOf<WeekendScreenState>()
-            list.add(WeekendScreenState(SCHEDULE, isSelected = navItem == SCHEDULE))
-            list.add(WeekendScreenState(QUALIFYING, isSelected = navItem == QUALIFYING))
-            if (race?.hasSprintQualifying == true) {
-                list.add(WeekendScreenState(WeekendNavItem.SPRINT_QUALIFYING, isSelected = navItem == WeekendNavItem.SPRINT_QUALIFYING))
-            }
-            if (race?.hasSprintRace == true) {
-                list.add(WeekendScreenState(WeekendNavItem.SPRINT, isSelected = navItem == WeekendNavItem.SPRINT))
-            }
-            list.add(WeekendScreenState(RACE, isSelected = navItem == RACE))
-            return@map list
+            getWeekendEventOrder(
+                navItem = navItem,
+                hasSprintQualifying = race?.hasSprintQualifying == true,
+                hasSprintRace = race?.hasSprintRace == true,
+                season = race?.raceInfo?.season ?: Year.now().value
+            )
         }
         .stateIn(viewModelScope, SharingStarted.Lazily, listOf(
             WeekendScreenState(SCHEDULE, defaultTab == SCHEDULE),
