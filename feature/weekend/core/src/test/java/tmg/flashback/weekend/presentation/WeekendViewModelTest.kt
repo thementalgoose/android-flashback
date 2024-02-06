@@ -45,7 +45,7 @@ internal class WeekendViewModelTest: BaseTest() {
 
     @BeforeEach
     internal fun setUp() {
-        every { mockRaceRepository.getRace(season = 2020, round = 1) } returns flow { emit(Race.model()) }
+        every { mockRaceRepository.getRace(season = 2022, round = 1) } returns flow { emit(Race.model(raceInfo = RaceInfo.model(season = 2022))) }
     }
 
     @Test
@@ -53,7 +53,7 @@ internal class WeekendViewModelTest: BaseTest() {
         underTest()
 
         underTest.outputs.weekendInfo.test {
-            assertEquals(RaceInfo.model().toWeekendInfo(), awaitItem())
+            assertEquals(RaceInfo.model(season = 2022).toWeekendInfo(), awaitItem())
         }
     }
 
@@ -157,6 +157,7 @@ internal class WeekendViewModelTest: BaseTest() {
         underTest.inputs.clickTab(WeekendNavItem.SPRINT)
         underTest.outputs.tabs.test {
             val item = awaitItem()
+            println(item)
             assertTrue(item.any { it.isSelected && it.tab == WeekendNavItem.SPRINT })
         }
     }
@@ -181,7 +182,7 @@ internal class WeekendViewModelTest: BaseTest() {
         }
 
         coVerify {
-            mockFetchSeasonUseCase.fetchSeason(2020)
+            mockFetchSeasonUseCase.fetchSeason(2022)
         }
         underTest.outputs.isRefreshing.test {
             assertEquals(false, awaitItem())
@@ -189,13 +190,13 @@ internal class WeekendViewModelTest: BaseTest() {
     }
 
     private val fakeScreenWeekendData = ScreenWeekendData(
-        season = 2020,
+        season = 2022,
         round = 1,
         raceName = "raceName",
         circuitId = "circuitId",
         circuitName = "circuitName",
         country = "country",
         countryISO = "countryISO",
-        date = LocalDate.of(2020, 1, 1)
+        date = LocalDate.of(2022, 1, 1)
     )
 }
