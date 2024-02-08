@@ -84,13 +84,11 @@ internal class NewsViewModelTest {
     private fun fakeNews(
         message: String = "Message",
         url: String? = "https://www.url.com",
-        season: Int? = 2024,
         dateAdded: String = "2024-02-02",
         image: String? = null
     ): News = News(
         message = message,
         url = url,
-        season = season,
         image = image,
         dateAdded = dateAdded
     )

@@ -8,12 +8,12 @@ import tmg.flashback.style.text.TextBody1
 
 @Composable
 fun News(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: NewsViewModel = hiltViewModel<NewsViewModel>()
 ) {
-    val viewModel = hiltViewModel<NewsViewModel>()
 
-    val state = viewModel.outputs.uiState.collectAsState()
-    when (val state = state.value) {
+    val uiState = viewModel.outputs.uiState.collectAsState()
+    when (val state = uiState.value) {
         NewsUiState.Loading -> {
             TextBody1(text = "Loading")
         }

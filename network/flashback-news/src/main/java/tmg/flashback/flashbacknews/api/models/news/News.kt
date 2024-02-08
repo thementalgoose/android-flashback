@@ -8,7 +8,6 @@ import kotlinx.serialization.Serializable
 data class News(
     val message: String,
     val url: String? = null,
-    val season: Int? = null,
     val image: String? = null,
     val dateAdded: String
 )

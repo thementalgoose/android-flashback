@@ -2,7 +2,7 @@ package tmg.flashback.managers
 
 import tmg.flashback.BuildConfig
 import tmg.flashback.flashbackapi.api.NetworkConfigManager
-import tmg.flashback.flashbacknews.api.ApiNetworkConfigManager
+import tmg.flashback.flashbacknews.api.NewsNetworkConfigManager
 import tmg.flashback.repositories.NetworkConfigRepository
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -10,7 +10,7 @@ import javax.inject.Singleton
 @Singleton
 class AppNetworkConfigManager @Inject constructor(
     private val networkConfigRepository: NetworkConfigRepository
-): NetworkConfigManager, ApiNetworkConfigManager {
+): NetworkConfigManager, NewsNetworkConfigManager {
 
     override val baseUrl: String
         get() = networkConfigRepository.configUrl

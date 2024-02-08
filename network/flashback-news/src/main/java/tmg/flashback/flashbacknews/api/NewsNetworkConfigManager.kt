@@ -1,6 +1,6 @@
 package tmg.flashback.flashbacknews.api
 
-interface ApiNetworkConfigManager {
+interface NewsNetworkConfigManager {
     val isDebug: Boolean
 
     val defaultBaseUrl: String
