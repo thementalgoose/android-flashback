@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import org.threeten.bp.LocalDate
+import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.flashbacknews.api.usecases.GetNewsUseCase
 import tmg.flashback.season.BuildConfig
 import tmg.flashback.web.usecases.OpenWebpageUseCase
@@ -29,32 +30,35 @@ interface NewsViewModelOutputs {
 class NewsViewModel @Inject constructor(
     private val getNewsUseCase: GetNewsUseCase,
     private val openWebpageUseCase: OpenWebpageUseCase,
-    private val ioDispatcher: CoroutineDispatcher
+    private val ioDispatcher: CoroutineDispatcher,
+    private val networkConnectivityManager: NetworkConnectivityManager
 ): ViewModel(), NewsViewModelInputs, NewsViewModelOutputs {
 
     val inputs: NewsViewModelInputs = this
     val outputs: NewsViewModelOutputs = this
 
-    override val uiState: MutableStateFlow<NewsUiState> = MutableStateFlow(NewsUiState.Loading)
+    override val uiState: MutableStateFlow<NewsUiState> = MutableStateFlow(if (networkConnectivityManager.isConnected) NewsUiState.Loading else NewsUiState.NoNews)
 
     init {
         refresh(background = false)
     }
 
     override fun refresh(background: Boolean) {
-        viewModelScope.launch(ioDispatcher) {
-            if (!background) {
-                uiState.value = NewsUiState.Loading
-            }
-            val news = getNewsUseCase.getNews()
-            uiState.value = when {
-                background && news.isNullOrEmpty() -> uiState.value
-                !background && news.isNullOrEmpty() -> NewsUiState.NoNews
-                else -> {
-                    val items = news.orEmpty()
-                        .groupBy { it.dateAdded.toLocalDate("yyyy-MM-dd") ?: LocalDate.now() }
-                        .toList()
-                    NewsUiState.News(items)
+        if (networkConnectivityManager.isConnected) {
+            viewModelScope.launch(ioDispatcher) {
+                if (!background) {
+                    uiState.value = NewsUiState.Loading
+                }
+                val news = getNewsUseCase.getNews()
+                uiState.value = when {
+                    background && news.isNullOrEmpty() -> uiState.value
+                    !background && news.isNullOrEmpty() -> NewsUiState.NoNews
+                    else -> {
+                        val items = news.orEmpty()
+                            .groupBy { it.dateAdded.toLocalDate("yyyy-MM-dd") ?: LocalDate.now() }
+                            .toList()
+                        NewsUiState.News(items)
+                    }
                 }
             }
         }

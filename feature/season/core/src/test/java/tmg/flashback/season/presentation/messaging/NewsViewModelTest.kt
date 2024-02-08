@@ -3,13 +3,16 @@ package tmg.flashback.season.presentation.messaging
 import app.cash.turbine.test
 import io.mockk.coEvery
 import io.mockk.coVerify
+import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Test
 import org.threeten.bp.LocalDate
+import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.flashbacknews.api.models.news.News
 import tmg.flashback.flashbacknews.api.usecases.GetNewsUseCase
 import tmg.flashback.web.usecases.OpenWebpageUseCase
@@ -18,6 +21,7 @@ internal class NewsViewModelTest {
 
     private val mockGetNewsUseCase: GetNewsUseCase = mockk(relaxed = true)
     private val mockOpenWebpageUseCase: OpenWebpageUseCase = mockk(relaxed = true)
+    private val mockNetworkConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
 
     private lateinit var underTest: NewsViewModel
 
@@ -25,8 +29,14 @@ internal class NewsViewModelTest {
         underTest = NewsViewModel(
             getNewsUseCase = mockGetNewsUseCase,
             openWebpageUseCase = mockOpenWebpageUseCase,
+            networkConnectivityManager = mockNetworkConnectivityManager,
             ioDispatcher = Dispatchers.Unconfined
         )
+    }
+
+    @Before
+    fun setUp() {
+        every { mockNetworkConnectivityManager.isConnected } returns true
     }
 
     @Test
