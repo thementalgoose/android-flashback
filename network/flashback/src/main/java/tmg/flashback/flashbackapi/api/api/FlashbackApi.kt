@@ -20,9 +20,6 @@ import tmg.flashback.flashbackapi.api.models.races.Season
 @Keep
 interface FlashbackApi {
 
-    @GET("news.json")
-    suspend fun getNews(): Response<MetadataWrapper<List<News>>>
-
     @GET("overview.json")
     suspend fun getOverview(): Response<MetadataWrapper<Overview>>
 
