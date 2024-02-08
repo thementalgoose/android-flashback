@@ -29,6 +29,7 @@ include ':feature:debug:core'
 include ':feature:debug:noop'
 
 include ':network:flashback'
+include ':network:flashback-news'
 include ':network:rss'
 
 include ':domain:repo'
