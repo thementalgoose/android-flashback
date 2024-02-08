@@ -94,7 +94,7 @@ private fun News(
                                 start = AppTheme.dimens.medium,
                                 end = AppTheme.dimens.medium,
                                 top = AppTheme.dimens.small,
-                                bottom = AppTheme.dimens.xsmall
+                                bottom = AppTheme.dimens.small
                             )
                         )
 
