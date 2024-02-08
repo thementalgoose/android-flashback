@@ -37,6 +37,8 @@ import tmg.flashback.flashbacknews.api.models.news.News
 import tmg.flashback.season.R
 import tmg.flashback.strings.R.string
 import tmg.flashback.style.AppTheme
+import tmg.flashback.style.AppThemePreview
+import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.ui.components.layouts.Container
@@ -59,9 +61,22 @@ fun News(
         }
     }
 
+    News(
+        modifier = modifier,
+        uiState = uiState.value,
+        itemClicked = viewModel::itemClicked
+    )
+}
+
+@Composable
+private fun News(
+    modifier: Modifier = Modifier,
+    uiState: NewsUiState,
+    itemClicked: (String) -> Unit
+) {
     AnimatedContent(
-        modifier = Modifier.fillMaxWidth(),
-        targetState = uiState.value,
+        modifier = modifier.fillMaxWidth(),
+        targetState = uiState,
         label = "news",
         content = {
             if (it !is NewsUiState.NoNews) {
@@ -86,10 +101,10 @@ fun News(
                         val scrollState = rememberScrollState()
                         NewsRow(
                             scrollState = scrollState,
-                            itemClicked = viewModel.inputs::itemClicked,
+                            itemClicked = itemClicked,
                             list = (it as? NewsUiState.News)?.items ?: emptyList()
                         )
-                        Spacer(Modifier.height(AppTheme.dimens.xsmall))
+                        Spacer(Modifier.height(AppTheme.dimens.small))
                     }
                 }
             }
@@ -202,3 +217,53 @@ private fun Item(
         }
     }
 }
+
+@PreviewTheme
+@Composable
+private fun PreviewNoNews() {
+    AppThemePreview {
+        News(
+            uiState = NewsUiState.NoNews,
+            itemClicked = { }
+        )
+    }
+}
+
+@PreviewTheme
+@Composable
+private fun PreviewLoading() {
+    AppThemePreview {
+        News(
+            uiState = NewsUiState.Loading,
+            itemClicked = { }
+        )
+    }
+}
+
+@PreviewTheme
+@Composable
+private fun PreviewNews() {
+    AppThemePreview {
+        News(
+            uiState = NewsUiState.News(
+                items = listOf(
+                    LocalDate.of(2024, 2, 2) to listOf(
+                        fakeNews(),
+                        fakeNews(url = null)
+                    )
+                )
+            ),
+            itemClicked = { }
+        )
+    }
+}
+private fun fakeNews(
+    message: String = "News article",
+    url: String? = "https://www.google.com",
+    image: String? = null
+): News = News(
+    message = message,
+    url = url,
+    image = image,
+    dateAdded = "2024-02-02"
+)
