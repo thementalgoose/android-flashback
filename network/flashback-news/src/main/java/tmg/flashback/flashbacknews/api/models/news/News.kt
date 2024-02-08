@@ -1,4 +1,4 @@
-package tmg.flashback.flashbackapi.api.models.news
+package tmg.flashback.flashbacknews.api.models.news
 
 import androidx.annotation.Keep
 import kotlinx.serialization.Serializable
@@ -8,7 +8,6 @@ import kotlinx.serialization.Serializable
 data class News(
     val message: String,
     val url: String? = null,
-    val highlight: Boolean = false,
     val season: Int? = null,
     val image: String? = null,
     val dateAdded: String
