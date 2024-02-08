@@ -39,10 +39,10 @@ class NewsViewModel @Inject constructor(
                 uiState.value = NewsUiState.Loading
             }
             val news = getNewsUseCase.getNews()
-            if (news.isNullOrEmpty()) {
-                uiState.value = NewsUiState.NoNews
-            } else {
-                uiState.value = NewsUiState.News(news)
+            uiState.value = when {
+                background && news.isNullOrEmpty() -> uiState.value
+                !background && news.isNullOrEmpty() -> NewsUiState.NoNews
+                else -> NewsUiState.News(news ?: emptyList())
             }
         }
     }

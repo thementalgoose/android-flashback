@@ -13,10 +13,8 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import tmg.flashback.flashbacknews.api.ApiNetworkConfigManager
+import tmg.flashback.flashbacknews.api.NewsNetworkConfigManager
 import tmg.flashback.flashbacknews.api.api.FlashbackNewsApi
-import tmg.flashback.flashbacknews.api.interceptors.CacheInterceptor
-import tmg.flashback.flashbacknews.api.interceptors.ForceCacheInterceptor
 import tmg.flashback.flashbacknews.api.usecases.GetNewsUseCase
 import tmg.flashback.flashbacknews.api.usecases.GetNewsUseCaseImpl
 import java.io.File
@@ -45,7 +43,7 @@ internal class NetworkModule {
     fun providesRetrofit(
         @ApplicationContext
         context: Context,
-        baseUrlManager: ApiNetworkConfigManager,
+        baseUrlManager: NewsNetworkConfigManager,
     ): Retrofit {
         val json = Json {
             ignoreUnknownKeys = true
@@ -56,7 +54,6 @@ internal class NetworkModule {
             .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
 
         val client = OkHttpClient.Builder()
-            .cache(Cache(File(context.cacheDir, "news-cache"), 512L * 1024L))
         client.callTimeout(10L, TimeUnit.SECONDS)
 
         // Debug
@@ -65,8 +62,6 @@ internal class NetworkModule {
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
             client.addInterceptor(interceptor)
         }
-        client.addNetworkInterceptor(CacheInterceptor())
-        client.addInterceptor(ForceCacheInterceptor())
 
         builder.client(client.build())
         return builder.build()
