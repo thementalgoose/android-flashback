@@ -137,6 +137,7 @@ dependencies {
     implementation project(path: ':domain:repo')
     implementation project(path: ':domain:persistence')
     implementation project(path: ':network:flashback')
+    implementation project(path: ':network:flashback-news')
     implementation project(path: ":formula1")
 
     // Core modules

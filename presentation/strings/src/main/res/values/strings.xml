@@ -73,6 +73,7 @@
 
 
     <!-- Dashboard -->
+    <string name="dashboard_now">Recent highlights…</string>
     <string name="dashboard_search">Search</string>
     <string name="dashboard_links_title">Links</string>
     <string name="dashboard_links_rss">RSS feed</string>
