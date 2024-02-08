@@ -11,7 +11,7 @@ android {
         minSdkVersion project.ext.minSdkVersion
         targetSdkVersion project.ext.targetSdkVersion
     }
-    namespace 'tmg.flashback.flashbackapi.api'
+    namespace 'tmg.flashback.flashbacknews.api'
 }
 
 dependencies {

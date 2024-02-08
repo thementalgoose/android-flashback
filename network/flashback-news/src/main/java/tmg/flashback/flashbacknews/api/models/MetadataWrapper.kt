@@ -1,11 +1,11 @@
-package tmg.flashback.flashbackapi.api.models
+package tmg.flashback.flashbacknews.api.models
 
 import androidx.annotation.Keep
 import kotlinx.serialization.Serializable
 
 @Keep
 @Serializable
-data class MetadataWrapper<T>(
+internal data class MetadataWrapper<T>(
     val lastUpdated: Long,
     val data: T
 )

@@ -1,25 +1,35 @@
-package tmg.flashback.flashbackapi.api.di
+package tmg.flashback.flashbacknews.api.di
 
+import android.content.Context
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.json.Json
+import okhttp3.Cache
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import tmg.flashback.flashbackapi.api.NetworkConfigManager
-import tmg.flashback.flashbackapi.api.api.FlashbackNewsApi
-import tmg.flashback.flashbackapi.api.interceptor.ConfigUrlInterceptor
+import tmg.flashback.flashbacknews.api.ApiNetworkConfigManager
+import tmg.flashback.flashbacknews.api.api.FlashbackNewsApi
+import tmg.flashback.flashbacknews.api.interceptors.CacheInterceptor
+import tmg.flashback.flashbacknews.api.interceptors.ForceCacheInterceptor
+import tmg.flashback.flashbacknews.api.usecases.GetNewsUseCase
+import tmg.flashback.flashbacknews.api.usecases.GetNewsUseCaseImpl
+import java.io.File
 import java.util.concurrent.TimeUnit
 import javax.inject.Qualifier
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class NetworkModule {
+internal class NetworkModule {
+
+    @Provides
+    fun provideGetNewsUseCase(impl: GetNewsUseCaseImpl): GetNewsUseCase = impl
 
     @Provides
     fun provideFlashbackNewsApi(
@@ -33,8 +43,9 @@ class NetworkModule {
     @Singleton
     @FlashbackNewsRetrofit
     fun providesRetrofit(
-        baseUrlManager: NetworkConfigManager,
-        configUrlInterceptor: ConfigUrlInterceptor
+        @ApplicationContext
+        context: Context,
+        baseUrlManager: ApiNetworkConfigManager,
     ): Retrofit {
         val json = Json {
             ignoreUnknownKeys = true
@@ -45,6 +56,7 @@ class NetworkModule {
             .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
 
         val client = OkHttpClient.Builder()
+            .cache(Cache(File(context.cacheDir, "news-cache"), 512L * 1024L))
         client.callTimeout(10L, TimeUnit.SECONDS)
 
         // Debug
@@ -53,9 +65,8 @@ class NetworkModule {
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
             client.addInterceptor(interceptor)
         }
-
-        // Config URL Intercept
-        client.addInterceptor(configUrlInterceptor)
+        client.addNetworkInterceptor(CacheInterceptor())
+        client.addInterceptor(ForceCacheInterceptor())
 
         builder.client(client.build())
         return builder.build()
