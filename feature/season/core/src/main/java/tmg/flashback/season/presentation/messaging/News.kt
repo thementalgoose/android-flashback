@@ -21,12 +21,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
+import coil.compose.AsyncImage
 import com.google.accompanist.placeholder.PlaceholderHighlight
 import com.google.accompanist.placeholder.placeholder
 import com.google.accompanist.placeholder.shimmer
@@ -160,7 +162,7 @@ private fun Item(
     itemClicked: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Row(
+    Column(
         modifier = modifier
             .clip(RoundedCornerShape(4.dp))
             .clickable(
@@ -172,16 +174,30 @@ private fun Item(
             .background(AppTheme.colors.backgroundTertiary)
             .padding(AppTheme.dimens.nsmall)
     ) {
-        TextBody1(
-            modifier = Modifier.weight(1f),
-            text = news.message,
-        )
-        if (news.url != null) {
-            Icon(
-                modifier = Modifier.size(16.dp),
-                painter = painterResource(id = R.drawable.ic_banner_link),
-                tint = AppTheme.colors.contentTertiary,
-                contentDescription = null
+        Row(modifier = Modifier.fillMaxWidth()) {
+            TextBody1(
+                modifier = Modifier.weight(1f),
+                text = news.message,
+            )
+            if (news.url != null) {
+                Icon(
+                    modifier = Modifier.size(16.dp),
+                    painter = painterResource(id = R.drawable.ic_banner_link),
+                    tint = AppTheme.colors.contentTertiary,
+                    contentDescription = null
+                )
+            }
+        }
+        if (news.image != null) {
+            Spacer(Modifier.height(4.dp))
+            AsyncImage(
+                model = news.image,
+                contentDescription = null,
+                contentScale = ContentScale.FillBounds,
+                modifier = Modifier
+                    .height(150.dp)
+                    .clip(RoundedCornerShape(4.dp))
+                    .background(AppTheme.colors.backgroundTertiaryInverse)
             )
         }
     }
