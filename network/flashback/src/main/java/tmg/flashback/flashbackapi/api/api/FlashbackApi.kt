@@ -11,6 +11,7 @@ import tmg.flashback.flashbackapi.api.models.constructors.AllConstructors
 import tmg.flashback.flashbackapi.api.models.constructors.ConstructorHistory
 import tmg.flashback.flashbackapi.api.models.drivers.AllDrivers
 import tmg.flashback.flashbackapi.api.models.drivers.DriverHistory
+import tmg.flashback.flashbackapi.api.models.news.News
 import tmg.flashback.flashbackapi.api.models.overview.Event
 import tmg.flashback.flashbackapi.api.models.overview.Overview
 import tmg.flashback.flashbackapi.api.models.races.Round
@@ -18,6 +19,9 @@ import tmg.flashback.flashbackapi.api.models.races.Season
 
 @Keep
 interface FlashbackApi {
+
+    @GET("news.json")
+    suspend fun getNews(): Response<MetadataWrapper<List<News>>>
 
     @GET("overview.json")
     suspend fun getOverview(): Response<MetadataWrapper<Overview>>
