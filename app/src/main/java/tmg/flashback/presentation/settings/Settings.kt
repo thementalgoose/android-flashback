@@ -74,7 +74,7 @@ object Settings {
             _key = recentHighlights,
             title = string.settings_pref_recent_highlights_title,
             subtitle = string.settings_pref_recent_highlights_description,
-            isBeta = true,
+            isBeta = false,
             isChecked = isChecked,
             isEnabled = isEnabled
         )
