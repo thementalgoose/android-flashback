@@ -208,6 +208,26 @@ internal class HomeRepositoryTest {
         }
     }
 
+    @Test
+    fun `recent highlights in schedule reads value from preferences repository`() {
+        every { mockPreferenceManager.getBoolean(keyRecentHighlights, false) } returns true
+        initSUT()
+
+        assertTrue(sut.recentHighlights)
+        verify {
+            mockPreferenceManager.getBoolean(keyRecentHighlights, false)
+        }
+    }
+
+    @Test
+    fun `recent highlights in schedule saves value to shared prefs repository`() {
+        initSUT()
+
+        sut.recentHighlights = true
+        verify {
+            mockPreferenceManager.save(keyRecentHighlights, true)
+        }
+    }
 
     @Test
     fun `seasons seen reads value from preferences repository`() {
@@ -292,6 +312,7 @@ internal class HomeRepositoryTest {
 
         // Prefs
         private const val keyEmptyWeeksInSchedule: String = "empty_weeks_in_schedule"
+        private const val keyRecentHighlights: String = "RECENT_HIGHLIGHTS"
         private const val keySeenSeasons: String = "SEASONS_VIEWED"
         private const val keyDashboardCollapseList: String = "DASHBOARD_COLLAPSE_LIST"
         private const val keyProvidedByAtTop: String = "PROVIDED_BY_AT_TOP"

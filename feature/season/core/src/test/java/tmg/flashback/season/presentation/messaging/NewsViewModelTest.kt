@@ -7,20 +7,25 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.test.advanceTimeBy
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
-import org.junit.Test
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.flashbacknews.api.models.news.News
 import tmg.flashback.flashbacknews.api.usecases.GetNewsUseCase
+import tmg.flashback.season.repository.HomeRepository
 import tmg.flashback.web.usecases.OpenWebpageUseCase
+import tmg.testutils.BaseTest
 
-internal class NewsViewModelTest {
+internal class NewsViewModelTest: BaseTest() {
 
     private val mockGetNewsUseCase: GetNewsUseCase = mockk(relaxed = true)
     private val mockOpenWebpageUseCase: OpenWebpageUseCase = mockk(relaxed = true)
+    private val mockHomeRepository: HomeRepository = mockk(relaxed = true)
     private val mockNetworkConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
 
     private lateinit var underTest: NewsViewModel
@@ -30,12 +35,14 @@ internal class NewsViewModelTest {
             getNewsUseCase = mockGetNewsUseCase,
             openWebpageUseCase = mockOpenWebpageUseCase,
             networkConnectivityManager = mockNetworkConnectivityManager,
-            ioDispatcher = Dispatchers.Unconfined
+            homeRepository = mockHomeRepository,
+            ioDispatcher = testDispatcher
         )
     }
 
-    @Before
+    @BeforeEach
     fun setUp() {
+        every { mockHomeRepository.recentHighlights } returns true
         every { mockNetworkConnectivityManager.isConnected } returns true
     }
 
@@ -48,7 +55,7 @@ internal class NewsViewModelTest {
     }
 
     @Test
-    fun `state updated from loading to news when successful response with items returned`() = runTest {
+    fun `state updated from loading to news when successful response with items returned`() = runTest(testDispatcher) {
         coEvery { mockGetNewsUseCase.getNews() } returns emptyList()
         initUnderTest()
 
@@ -58,7 +65,7 @@ internal class NewsViewModelTest {
     }
 
     @Test
-    fun `state updated from loading to no news when successful response with no items`() = runTest {
+    fun `state updated from loading to no news when successful response with no items`() = runTest(testDispatcher) {
         coEvery { mockGetNewsUseCase.getNews() } returns listOf(fakeNews())
         initUnderTest()
 
@@ -68,31 +75,49 @@ internal class NewsViewModelTest {
     }
 
     @Test
-    fun `refresh with background true does not show loading state`() = runTest {
+    fun `state stays no news if toggle disabled`() = runTest(testDispatcher) {
+        every { mockHomeRepository.recentHighlights } returns false
         coEvery { mockGetNewsUseCase.getNews() } returns listOf(fakeNews())
         initUnderTest()
 
         underTest.outputs.uiState.test {
-            assertEquals(NewsUiState.News(listOf(fakeDate to listOf(fakeNews()))), awaitItem())
-
-            underTest.refresh(true)
-
-            assertEquals(NewsUiState.Loading, awaitItem())
-            assertEquals(NewsUiState.News(listOf(fakeDate to listOf(fakeNews()))), awaitItem())
-        }
-    }
-
-    @Test
-    fun `refresh with background false shows loading state`() = runTest {
-        coEvery { mockGetNewsUseCase.getNews() } returns listOf(fakeNews())
-        initUnderTest()
-
-        underTest.outputs.uiState.test {
-            assertEquals(NewsUiState.News(listOf(fakeDate to listOf(fakeNews()))), awaitItem())
+            assertEquals(NewsUiState.NoNews, awaitItem())
 
             underTest.refresh(false)
 
+            coVerify(exactly = 0) { mockGetNewsUseCase.getNews() }
+        }
+    }
+
+    @Test
+    fun `refresh with background true does not show loading state`() = runTest(testDispatcher) {
+        coEvery { mockGetNewsUseCase.getNews() } returns listOf(fakeNews())
+        initUnderTest()
+
+        underTest.outputs.uiState.test {
             assertEquals(NewsUiState.News(listOf(fakeDate to listOf(fakeNews()))), awaitItem())
+
+            coEvery { mockGetNewsUseCase.getNews() } returns listOf(fakeNews(), fakeNews())
+            underTest.refresh(true)
+            advanceTimeBy(100L)
+
+            assertEquals(NewsUiState.News(listOf(fakeDate to listOf(fakeNews(), fakeNews()))), awaitItem())
+        }
+    }
+
+    @Test
+    fun `refresh with background false shows loading state`() = runTest(testDispatcher) {
+        coEvery { mockGetNewsUseCase.getNews() } returns listOf(fakeNews())
+        initUnderTest()
+
+        underTest.outputs.uiState.test {
+            assertEquals(NewsUiState.News(listOf(fakeDate to listOf(fakeNews()))), awaitItem())
+
+            coEvery { mockGetNewsUseCase.getNews() } returns listOf(fakeNews(), fakeNews())
+            underTest.refresh(false)
+            advanceTimeBy(100L)
+
+            assertEquals(NewsUiState.News(listOf(fakeDate to listOf(fakeNews(), fakeNews()))), awaitItem())
         }
     }
 
