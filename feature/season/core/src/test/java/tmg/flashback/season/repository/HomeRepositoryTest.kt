@@ -210,12 +210,12 @@ internal class HomeRepositoryTest {
 
     @Test
     fun `recent highlights in schedule reads value from preferences repository`() {
-        every { mockPreferenceManager.getBoolean(keyRecentHighlights, false) } returns true
+        every { mockPreferenceManager.getBoolean(keyRecentHighlights, true) } returns true
         initSUT()
 
         assertTrue(sut.recentHighlights)
         verify {
-            mockPreferenceManager.getBoolean(keyRecentHighlights, false)
+            mockPreferenceManager.getBoolean(keyRecentHighlights, true)
         }
     }
 
