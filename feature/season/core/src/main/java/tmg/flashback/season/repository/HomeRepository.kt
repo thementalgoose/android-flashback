@@ -29,6 +29,7 @@ class HomeRepository @Inject constructor(
 
         // Prefs
         private const val keyEmptyWeeksInSchedule: String = "empty_weeks_in_schedule"
+        private const val keyRecentHighlights: String = "RECENT_HIGHLIGHTS"
         private const val keySeenSeasons: String = "SEASONS_VIEWED"
         private const val keyDashboardCollapseList: String = "DASHBOARD_COLLAPSE_LIST"
         private const val keyProvidedByAtTop: String = "PROVIDED_BY_AT_TOP"
@@ -87,6 +88,13 @@ class HomeRepository @Inject constructor(
     var emptyWeeksInSchedule: Boolean
         get() = preferenceManager.getBoolean(keyEmptyWeeksInSchedule, false)
         set(value) = preferenceManager.save(keyEmptyWeeksInSchedule, value)
+
+    /**
+     * Recent highlights "ie. news"
+     */
+    var recentHighlights: Boolean
+        get() = preferenceManager.getBoolean(keyRecentHighlights, false)
+        set(value) = preferenceManager.save(keyRecentHighlights, value)
 
 
     /**
