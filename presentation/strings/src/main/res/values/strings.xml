@@ -259,6 +259,8 @@
     <string name="settings_pref_collapsed_list_description">Hide all but one of the completed races for the current season, showing the upcoming events higher in the feed</string>
     <string name="settings_pref_empty_week_title">Show empty weeks</string>
     <string name="settings_pref_empty_week_description">Show a little spacing indicator between races to highlight double and triple headers in the upcoming season</string>
+    <string name="settings_pref_recent_highlights_title">Recent highlights</string>
+    <string name="settings_pref_recent_highlights_description">Show the recent highlights banner on the home page if connected to the internet. This usually contains links to significant stores within the past week or so</string>
 
     <string name="settings_section_rss_configure_title">Configure</string>
     <string name="settings_section_rss_configure_description">Setup RSS sources or customise appearance</string>

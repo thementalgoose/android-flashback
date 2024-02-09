@@ -13,6 +13,7 @@ import org.threeten.bp.LocalDate
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.flashbacknews.api.usecases.GetNewsUseCase
 import tmg.flashback.season.BuildConfig
+import tmg.flashback.season.repository.HomeRepository
 import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.utilities.extensions.toLocalDate
 import javax.inject.Inject
@@ -31,19 +32,33 @@ class NewsViewModel @Inject constructor(
     private val getNewsUseCase: GetNewsUseCase,
     private val openWebpageUseCase: OpenWebpageUseCase,
     private val ioDispatcher: CoroutineDispatcher,
+    private val homeRepository: HomeRepository,
     private val networkConnectivityManager: NetworkConnectivityManager
 ): ViewModel(), NewsViewModelInputs, NewsViewModelOutputs {
 
     val inputs: NewsViewModelInputs = this
     val outputs: NewsViewModelOutputs = this
 
-    override val uiState: MutableStateFlow<NewsUiState> = MutableStateFlow(if (networkConnectivityManager.isConnected) NewsUiState.Loading else NewsUiState.NoNews)
+    private val initialState: NewsUiState by lazy {
+        return@lazy when {
+            !homeRepository.recentHighlights -> NewsUiState.NoNews
+            !networkConnectivityManager.isConnected -> NewsUiState.NoNews
+            else -> NewsUiState.Loading
+        }
+    }
+
+    override val uiState: MutableStateFlow<NewsUiState> = MutableStateFlow(initialState)
+
 
     init {
         refresh(background = false)
     }
 
     override fun refresh(background: Boolean) {
+        if (!homeRepository.recentHighlights) {
+            uiState.value = NewsUiState.NoNews
+            return
+        }
         if (networkConnectivityManager.isConnected) {
             viewModelScope.launch(ioDispatcher) {
                 if (!background) {

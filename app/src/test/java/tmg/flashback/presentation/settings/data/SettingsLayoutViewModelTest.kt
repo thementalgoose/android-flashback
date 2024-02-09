@@ -90,4 +90,38 @@ internal class SettingsLayoutViewModelTest: BaseTest() {
         }
         underTest.outputs.emptyWeeksInSchedule.test { awaitItem() }
     }
+
+    @Test
+    fun `recent highlights in schedule is true when pref is true`() = runTest(testDispatcher) {
+        every { mockHomeRepository.recentHighlights } returns true
+
+        initUnderTest()
+        underTest.outputs.recentHighlights.test {
+            assertEquals(true, awaitItem())
+        }
+    }
+
+    @Test
+    fun `recent highlights in schedule is false when pref is false`() = runTest(testDispatcher) {
+        every { mockHomeRepository.recentHighlights } returns false
+
+        initUnderTest()
+        underTest.outputs.recentHighlights.test {
+            assertEquals(false, awaitItem())
+        }
+    }
+
+    @Test
+    fun `click show recent highlights in schedule updates pref and updates value`() = runTest(testDispatcher) {
+        every { mockHomeRepository.recentHighlights } returns false
+
+        initUnderTest()
+        underTest.outputs.recentHighlights.test { awaitItem() }
+        underTest.inputs.prefClicked(Settings.Data.showRecentHighlights(true))
+
+        verify {
+            mockHomeRepository.recentHighlights = true
+        }
+        underTest.outputs.recentHighlights.test { awaitItem() }
+    }
 }
