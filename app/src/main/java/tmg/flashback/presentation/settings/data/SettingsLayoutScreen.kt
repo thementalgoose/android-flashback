@@ -32,14 +32,16 @@ fun SettingsLayoutScreenVM(
 ) {
     ScreenView(screenName = "Settings - Layout")
 
-    val collapsedList = viewModel.outputs.collapsedListEnabled.collectAsState(true)
-    val emptyWeeksInSchedule = viewModel.outputs.emptyWeeksInSchedule.collectAsState(false)
+    val collapsedList = viewModel.outputs.collapsedListEnabled.collectAsState()
+    val emptyWeeksInSchedule = viewModel.outputs.emptyWeeksInSchedule.collectAsState()
+    val showRecentHighlights = viewModel.outputs.recentHighlights.collectAsState()
     SettingsLayoutScreen(
         actionUpClicked = actionUpClicked,
         windowSizeClass = windowSizeClass,
         prefClicked = viewModel.inputs::prefClicked,
         collapsedListEnabled = collapsedList.value,
-        showEmptyWeeksInSchedule = emptyWeeksInSchedule.value
+        showEmptyWeeksInSchedule = emptyWeeksInSchedule.value,
+        showRecentHighlights = showRecentHighlights.value
     )
 }
 
@@ -49,7 +51,8 @@ fun SettingsLayoutScreen(
     windowSizeClass: WindowSizeClass,
     prefClicked: (Setting) -> Unit,
     collapsedListEnabled: Boolean,
-    showEmptyWeeksInSchedule: Boolean
+    showEmptyWeeksInSchedule: Boolean,
+    showRecentHighlights: Boolean
 ) {
     LazyColumn(
         modifier = Modifier
@@ -65,6 +68,10 @@ fun SettingsLayoutScreen(
             }
 
             Header(title = string.settings_header_home)
+            Switch(
+                model = Settings.Data.showRecentHighlights(showRecentHighlights),
+                onClick = prefClicked
+            )
             Switch(
                 model = Settings.Data.collapseList(collapsedListEnabled),
                 onClick = prefClicked
@@ -88,7 +95,8 @@ private fun Preview() {
             actionUpClicked = {},
             prefClicked = {},
             collapsedListEnabled = true,
-            showEmptyWeeksInSchedule = false
+            showEmptyWeeksInSchedule = false,
+            showRecentHighlights = true
         )
     }
 }

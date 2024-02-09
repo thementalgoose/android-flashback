@@ -69,6 +69,16 @@ object Settings {
             isEnabled = isEnabled
         )
 
+        const val recentHighlights = "recent_highlights"
+        fun showRecentHighlights(isChecked: Boolean, isEnabled: Boolean = true) = Setting.Switch(
+            _key = recentHighlights,
+            title = string.settings_pref_recent_highlights_title,
+            subtitle = string.settings_pref_recent_highlights_description,
+            isBeta = true,
+            isChecked = isChecked,
+            isEnabled = isEnabled
+        )
+
         val weather = Setting.Section(
             _key = "weather",
             title = string.settings_section_weather_title,
