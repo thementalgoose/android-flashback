@@ -55,6 +55,7 @@ class NewsViewModel @Inject constructor(
                     !background && news.isNullOrEmpty() -> NewsUiState.NoNews
                     else -> {
                         val items = news.orEmpty()
+                            .sortedByDescending { it.dateAdded }
                             .groupBy { it.dateAdded.toLocalDate("yyyy-MM-dd") ?: LocalDate.now() }
                             .toList()
                         NewsUiState.News(items)
