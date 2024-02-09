@@ -208,9 +208,9 @@ private fun Item(
             AsyncImage(
                 model = news.image,
                 contentDescription = null,
-                contentScale = ContentScale.FillBounds,
+                contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .height(150.dp)
+                    .height(120.dp)
                     .clip(RoundedCornerShape(4.dp))
                     .background(AppTheme.colors.backgroundTertiaryInverse)
             )
