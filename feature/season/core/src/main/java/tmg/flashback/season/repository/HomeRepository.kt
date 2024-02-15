@@ -93,7 +93,7 @@ class HomeRepository @Inject constructor(
      * Recent highlights "ie. news"
      */
     var recentHighlights: Boolean
-        get() = preferenceManager.getBoolean(keyRecentHighlights, false)
+        get() = preferenceManager.getBoolean(keyRecentHighlights, true)
         set(value) = preferenceManager.save(keyRecentHighlights, value)
 
 
