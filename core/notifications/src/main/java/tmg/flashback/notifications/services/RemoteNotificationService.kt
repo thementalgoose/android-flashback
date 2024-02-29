@@ -19,10 +19,10 @@ import javax.inject.Inject
 class RemoteNotificationService : FirebaseMessagingService() {
 
     @Inject
-    protected lateinit var navigationProvider: NotificationNavigationProvider
+    lateinit var navigationProvider: NotificationNavigationProvider
 
     @Inject
-    protected lateinit var notificationRepository: NotificationRepository
+    lateinit var notificationRepository: NotificationRepository
 
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)
