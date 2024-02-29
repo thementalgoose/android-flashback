@@ -12,7 +12,7 @@ import javax.inject.Inject
 class UpNextNotificationBootReceiver: BroadcastReceiver() {
 
     @Inject
-    protected lateinit var upNextNotificationBootReceiver: UpNextNotification
+    lateinit var upNextNotificationBootReceiver: UpNextNotification
 
     override fun onReceive(context: Context?, intent: Intent?) {
 

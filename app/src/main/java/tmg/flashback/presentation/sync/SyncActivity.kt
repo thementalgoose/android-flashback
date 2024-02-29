@@ -28,7 +28,7 @@ class SyncActivity: BaseActivity() {
     private val viewModel: SyncViewModel by viewModels()
 
     @Inject
-    protected lateinit var maintenanceNavigationComponent: MaintenanceNavigationComponent
+    lateinit var maintenanceNavigationComponent: MaintenanceNavigationComponent
 
     @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
