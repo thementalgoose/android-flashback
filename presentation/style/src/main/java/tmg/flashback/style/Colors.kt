@@ -174,19 +174,19 @@ fun AppColors.dynamic(colorScheme: ColorScheme, isLightMode: Boolean) = copy(
 
     backgroundContainer = when (isLightMode) {
         true -> colorScheme.surface
-        false -> colorScheme.surface.copy(
-            alpha = colorScheme.surface.alpha,
-            red = colorScheme.surface.red * 0.8f,
-            green = colorScheme.surface.green * 0.8f,
-            blue = colorScheme.surface.blue * 0.8f
-        )
+        false -> colorScheme.surface //.copy(
+//            alpha = colorScheme.surface.alpha,
+//            red = colorScheme.surface.red * 0.8f,
+//            green = colorScheme.surface.green * 0.8f,
+//            blue = colorScheme.surface.blue * 0.8f
+//        )
     },
     backgroundPrimary = colorScheme.background,
-    backgroundSecondary = colorScheme.surfaceColorAtElevation(3.dp),
-    backgroundTertiary = colorScheme.primaryContainer,
-    backgroundPrimaryInverse = colorScheme.inverseSurface,
-    backgroundSecondaryInverse = colorScheme.inversePrimary,
-    backgroundTertiaryInverse = colorScheme.inversePrimary,
+    backgroundSecondary = colorScheme.surfaceContainer,
+    backgroundTertiary = colorScheme.surfaceContainerHighest,
+    backgroundPrimaryInverse = colorScheme.onBackground,
+    backgroundSecondaryInverse = colorScheme.onSurface,
+    backgroundTertiaryInverse = colorScheme.onSurface,
     backgroundNav = colorScheme.surfaceColorAtElevation(6.dp),
     backgroundSplash = colorScheme.primary,
 
