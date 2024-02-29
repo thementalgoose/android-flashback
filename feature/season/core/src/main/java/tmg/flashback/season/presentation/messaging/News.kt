@@ -7,6 +7,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -140,34 +141,49 @@ private fun NewsRow(
     itemClicked: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Row(
-        modifier = modifier
-            .horizontalScroll(scrollState),
-        horizontalArrangement = Arrangement.spacedBy(AppTheme.dimens.medium)
-    ) {
-        Spacer(Modifier.width(0.dp))
-        if (list.isEmpty()) {
-            Placeholder(modifier = Modifier.width(newsItemWidth))
+    if (list.size == 1 && list.firstOrNull()?.second?.size == 1) {
+        val (date, articles) = list.first()
+        Column(Modifier.padding(horizontal = AppTheme.dimens.medium)) {
+            TextBody2(
+                text = date.format("EEE '${date.dayOfMonth.ordinalAbbreviation}' MMMM") ?: "",
+                modifier = Modifier.padding(bottom = AppTheme.dimens.xsmall)
+            )
+            Item(
+                modifier = Modifier.fillMaxWidth(),
+                itemClicked = itemClicked,
+                news = articles.first(),
+            )
         }
-        for ((date, newsArticles) in list) {
-            Column {
-                TextBody2(
-                    text = date.format("EEE '${date.dayOfMonth.ordinalAbbreviation}' MMMM") ?: "",
-                    modifier = Modifier.padding(bottom = AppTheme.dimens.xsmall)
-                )
-                Row {
-                    newsArticles.forEach {
-                        Item(
-                            modifier = Modifier.width(newsItemWidth),
-                            itemClicked = itemClicked,
-                            news = it,
-                        )
-                        Spacer(Modifier.width(AppTheme.dimens.small))
+    } else {
+        Row(
+            modifier = modifier
+                .horizontalScroll(scrollState),
+            horizontalArrangement = Arrangement.spacedBy(AppTheme.dimens.medium)
+        ) {
+            Spacer(Modifier.width(0.dp))
+            if (list.isEmpty()) {
+                Placeholder(modifier = Modifier.width(newsItemWidth))
+            }
+            for ((date, newsArticles) in list) {
+                Column {
+                    TextBody2(
+                        text = date.format("EEE '${date.dayOfMonth.ordinalAbbreviation}' MMMM") ?: "",
+                        modifier = Modifier.padding(bottom = AppTheme.dimens.xsmall)
+                    )
+                    Row {
+                        newsArticles.forEach {
+                            Item(
+                                modifier = Modifier.width(newsItemWidth),
+                                itemClicked = itemClicked,
+                                news = it,
+                            )
+                            Spacer(Modifier.width(AppTheme.dimens.small))
+                        }
                     }
                 }
             }
+            Spacer(Modifier.width(0.dp))
         }
-        Spacer(Modifier.width(0.dp))
     }
 }
 
@@ -242,7 +258,24 @@ private fun PreviewLoading() {
 
 @PreviewTheme
 @Composable
-private fun PreviewNews() {
+private fun PreviewNewsSingle() {
+    AppThemePreview {
+        News(
+            uiState = NewsUiState.News(
+                items = listOf(
+                    LocalDate.of(2024, 2, 2) to listOf(
+                        fakeNews()
+                    )
+                )
+            ),
+            itemClicked = { }
+        )
+    }
+}
+
+@PreviewTheme
+@Composable
+private fun PreviewNewsDouble() {
     AppThemePreview {
         News(
             uiState = NewsUiState.News(
