@@ -15,10 +15,10 @@ import javax.inject.Inject
 class LocalNotificationBroadcastReceiver @Inject constructor(): BroadcastReceiver() {
 
     @Inject
-    protected lateinit var notificationManager: SystemNotificationManager
+    lateinit var notificationManager: SystemNotificationManager
 
     @Inject
-    protected lateinit var crashController: CrashlyticsManager
+    lateinit var crashController: CrashlyticsManager
 
     override fun onReceive(context: Context?, intent: Intent?) {
         if (BuildConfig.DEBUG) {

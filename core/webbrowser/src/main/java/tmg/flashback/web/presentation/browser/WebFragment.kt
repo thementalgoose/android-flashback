@@ -35,12 +35,12 @@ internal class WebFragment : Fragment() {
     private var binding: FragmentWebBinding? = null
 
     @Inject
-    protected lateinit var firebaseAnalyticsManager: FirebaseAnalyticsManager
+    lateinit var firebaseAnalyticsManager: FirebaseAnalyticsManager
     @Inject
-    protected lateinit var crashController: CrashlyticsManager
+    lateinit var crashController: CrashlyticsManager
 
     @Inject
-    protected lateinit var webBrowserRepository: WebBrowserRepository
+    lateinit var webBrowserRepository: WebBrowserRepository
 
     internal lateinit var pageTitle: String
     internal lateinit var pageUrl: String

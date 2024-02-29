@@ -21,9 +21,9 @@ import javax.inject.Inject
 internal class NativeBanner: FrameLayout {
 
     @Inject
-    protected lateinit var adsRepository: AdsRepository
+    lateinit var adsRepository: AdsRepository
     @Inject
-    protected lateinit var getAdUseCase: GetAdUseCase
+    lateinit var getAdUseCase: GetAdUseCase
 
     private var binding: AdmobNativeBannerBinding? = null
 
