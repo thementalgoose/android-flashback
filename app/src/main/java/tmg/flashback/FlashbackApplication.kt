@@ -11,13 +11,13 @@ import javax.inject.Inject
 class FlashbackApplication: Application(), Configuration.Provider {
 
     @Inject
-    protected lateinit var startup: FlashbackStartup
+    lateinit var startup: FlashbackStartup
 
     @Inject
-    protected lateinit var activityProvider: ActivityProvider
+    lateinit var activityProvider: ActivityProvider
 
     @Inject
-    protected lateinit var workerFactory: HiltWorkerFactory
+    lateinit var workerFactory: HiltWorkerFactory
 
     override fun onCreate() {
         super.onCreate()
