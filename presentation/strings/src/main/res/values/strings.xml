@@ -181,6 +181,7 @@
     <string name="event_type_car_launch">Car Launch</string>
     <string name="event_type_netflix">Netflix</string>
     <string name="event_type_other">Other</string>
+    <string name="events_title">Preseason events</string>
     <string name="events_list_title">%s events</string>
     <string name="events_list_subtitle">Pre-season events for this season</string>
 

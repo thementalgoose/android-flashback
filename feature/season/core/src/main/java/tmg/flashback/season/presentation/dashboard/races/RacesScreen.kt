@@ -1,5 +1,6 @@
 package tmg.flashback.season.presentation.dashboard.races
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -49,6 +50,7 @@ import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.header.HeaderAction
 import tmg.flashback.ui.components.layouts.MasterDetailsPane
+import tmg.flashback.ui.components.loading.Fade
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.now.Now
 import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
@@ -144,7 +146,20 @@ fun ScheduleScreen(
                         },
                         actionUpClicked = actionUpClicked,
                         overrideIcons = {
-                            if (uiState.showTyres) {
+                            Fade(
+                                visible = uiState.showEvents
+                            ) {
+                                IconButton(onClick = { itemClicked(RacesModel.AllEvents) }) {
+                                    Icon(
+                                        painter = painterResource(id = tmg.flashback.formula1.R.drawable.ic_event_type_other),
+                                        contentDescription = stringResource(id = string.events_title),
+                                        tint = AppTheme.colors.contentSecondary
+                                    )
+                                }
+                            }
+                            Fade(
+                                visible = uiState.showTyres
+                            ) {
                                 IconButton(onClick = tyreClicked) {
                                     Icon(
                                         painter = painterResource(id = tmg.flashback.formula1.R.drawable.ic_tyre),
