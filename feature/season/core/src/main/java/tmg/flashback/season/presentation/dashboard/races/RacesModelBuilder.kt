@@ -20,8 +20,9 @@ internal object RacesModelBuilder {
     ): List<RacesModel> {
         val list = mutableListOf<RacesModel>()
         val next = overview.overviewRaces.getLatestUpcoming()
+        val now = LocalDate.now()
 
-        if (overview.completed == 0) {
+        if (events.any() && overview.completed == 0 && events.any { it.date >= now }) {
             list.addAll(events.map {
                 RacesModel.Event(it)
             })
@@ -70,9 +71,6 @@ internal object RacesModelBuilder {
             }
             .sortedBy { it.round }
             .forEachIndexed { index, overviewRace ->
-                if (index == 0 && events.any() && list.none { it is RacesModel.GroupedCompletedRaces } && overview.completed != 0) {
-                    list.add(RacesModel.AllEvents)
-                }
                 list.add(
                     RacesModel.RaceWeek(
                         model = overviewRace,
