@@ -88,7 +88,7 @@ class RacesViewModel @Inject constructor(
             if (uiState.value.items.isNullOrEmpty() || uiState.value.items?.none { it is RacesModel.RaceWeek } == true) {
                 populate(season)
             }
-            uiState.value = uiState.value.copy(isLoading = true, networkAvailable = networkConnectivityManager.isConnected)
+            uiState.value = uiState.value.copy(isLoading = true, networkAvailable = networkConnectivityManager.isConnected, showEvents = false)
             fetchSeasonUseCase.fetchSeason(season)
             populate(season)
         }
@@ -102,7 +102,8 @@ class RacesViewModel @Inject constructor(
             uiState.value = uiState.value.copy(
                 items = null,
                 isLoading = false,
-                networkAvailable = networkConnectivityManager.isConnected
+                networkAvailable = networkConnectivityManager.isConnected,
+                showEvents = events?.isNotEmpty() ?: false
             )
             return false
         }
@@ -118,7 +119,8 @@ class RacesViewModel @Inject constructor(
         uiState.value = uiState.value.copy(
             items = raceList,
             isLoading = false,
-            networkAvailable = networkConnectivityManager.isConnected
+            networkAvailable = networkConnectivityManager.isConnected,
+            showEvents = events?.isNotEmpty() ?: false
         )
         return true
     }

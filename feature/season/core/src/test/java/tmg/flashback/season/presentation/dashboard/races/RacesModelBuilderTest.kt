@@ -40,23 +40,49 @@ internal class RacesModelBuilderTest {
         empty: Boolean = false
     ): List<RacesModel> {
         return RacesModelBuilder.generateScheduleModel(overview.copy(
-            overviewRaces = overview.overviewRaces.sortedBy { it.date }.mapIndexed { index, it ->
-                it.copy(round = index + 1)
-            }
-        ), events, fakeNotificationSchedule, collapse, empty)
+            overviewRaces = overview.overviewRaces
+                .sortedBy { it.date }
+                .mapIndexed { index, it ->
+                    it.copy(round = index + 1)
+                }
+            ),
+            events = events,
+            notificationSchedule = fakeNotificationSchedule,
+            showCollapsePreviousRaces = collapse,
+            showEmptyWeeks = empty
+        )
     }
 
     @Test
-    fun `events then races displayed when completed races is 0`() {
+    fun `events then races displayed when completed races is 0 and event is in future`() {
         val overview = Overview.model(
-            overviewRaces = listOf(raceNextWeek1)
+            overviewRaces = listOf(raceNextWeek1),
         )
+        val event = event.copy(date = LocalDate.now().plusDays(3))
 
-        val result = initResult(overview)
+        val result = initResult(
+            overview = overview,
+            events = listOf(event)
+        )
 
         assertEquals(2, result.size)
         assertEquals(RacesModel.Event(event), result[0])
         assertEquals(RacesModel.RaceWeek(raceNextWeek1.atRound(1), true, fakeNotificationSchedule), result[1])
+    }
+
+    @Test
+    fun `events not displayed when completed races is 0 and event is in past`() {
+        val overview = Overview.model(
+            overviewRaces = listOf(raceNextWeek1),
+        )
+
+        val result = initResult(
+            overview = overview,
+            events = listOf(event.copy(date = LocalDate.now().minusDays(3)))
+        )
+
+        assertEquals(1, result.size)
+        assertEquals(RacesModel.RaceWeek(raceNextWeek1.atRound(1), true, fakeNotificationSchedule), result[0])
     }
 
     @Test
