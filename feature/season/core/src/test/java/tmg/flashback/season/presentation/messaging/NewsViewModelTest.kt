@@ -130,6 +130,26 @@ internal class NewsViewModelTest: BaseTest() {
         }
     }
 
+    @Test
+    fun `clicking hide sets state to no news calls open webpage use case`() = runTest(testDispatcher) {
+        coEvery { mockGetNewsUseCase.getNews() } returns listOf(fakeNews())
+        initUnderTest()
+
+        underTest.outputs.uiState.test {
+            assertEquals(NewsUiState.News(listOf(fakeDate to listOf(fakeNews()))), awaitItem())
+
+            coEvery { mockGetNewsUseCase.getNews() } returns listOf(fakeNews(), fakeNews())
+            underTest.refresh(false)
+            advanceTimeBy(100L)
+
+            assertEquals(NewsUiState.News(listOf(fakeDate to listOf(fakeNews(), fakeNews()))), awaitItem())
+
+            underTest.hide()
+
+            assertEquals(NewsUiState.NoNews, awaitItem())
+        }
+    }
+
     private val fakeDate = LocalDate.of(2024, 2, 2)
     private fun fakeNews(
         message: String = "Message",
