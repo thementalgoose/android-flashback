@@ -21,6 +21,7 @@ import javax.inject.Inject
 interface NewsViewModelInputs {
     fun refresh(background: Boolean)
     fun itemClicked(url: String)
+    fun hide()
 }
 
 interface NewsViewModelOutputs {
@@ -48,6 +49,7 @@ class NewsViewModel @Inject constructor(
     }
 
     override val uiState: MutableStateFlow<NewsUiState> = MutableStateFlow(initialState)
+    var userHidden: Boolean = false
 
 
     init {
@@ -59,7 +61,7 @@ class NewsViewModel @Inject constructor(
             uiState.value = NewsUiState.NoNews
             return
         }
-        if (networkConnectivityManager.isConnected) {
+        if (networkConnectivityManager.isConnected && !userHidden) {
             viewModelScope.launch(ioDispatcher) {
                 if (!background) {
                     uiState.value = NewsUiState.Loading
@@ -78,6 +80,11 @@ class NewsViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    override fun hide() {
+        userHidden = true
+        uiState.value = NewsUiState.NoNews
     }
 
     override fun itemClicked(url: String) {

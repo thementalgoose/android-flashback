@@ -18,8 +18,10 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
@@ -43,6 +45,7 @@ import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.ui.components.layouts.Container
+import tmg.flashback.ui.components.loading.Fade
 import tmg.flashback.ui.lifecycle.OnLifecycleEvent
 import tmg.utilities.extensions.format
 import tmg.utilities.extensions.ordinalAbbreviation
@@ -65,7 +68,8 @@ fun News(
     News(
         modifier = modifier,
         uiState = uiState.value,
-        itemClicked = viewModel::itemClicked
+        itemClicked = viewModel::itemClicked,
+        hideClicked = viewModel::hide
     )
 }
 
@@ -73,7 +77,8 @@ fun News(
 private fun News(
     modifier: Modifier = Modifier,
     uiState: NewsUiState,
-    itemClicked: (String) -> Unit
+    itemClicked: (String) -> Unit,
+    hideClicked: () -> Unit
 ) {
     AnimatedContent(
         modifier = modifier.fillMaxWidth(),
@@ -88,16 +93,34 @@ private fun News(
                     isOutlined = true
                 ) {
                     Column(Modifier.fillMaxWidth()) {
-                        TextBody1(
-                            text = stringResource(id = string.dashboard_now),
-                            bold = true,
-                            modifier = Modifier.padding(
-                                start = AppTheme.dimens.medium,
-                                end = AppTheme.dimens.medium,
-                                top = AppTheme.dimens.small,
-                                bottom = AppTheme.dimens.small
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(
+                                    start = AppTheme.dimens.medium,
+                                    end = AppTheme.dimens.medium,
+                                    top = AppTheme.dimens.small,
+                                    bottom = AppTheme.dimens.small
+                                ),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            TextBody1(
+                                text = stringResource(id = string.dashboard_now),
+                                bold = true,
+                                modifier = Modifier
+                                    .weight(1f)
                             )
-                        )
+                            Fade(visible = it is NewsUiState.News) {
+                                Icon(
+                                    modifier = Modifier
+                                        .size(16.dp)
+                                        .clickable(onClick = hideClicked),
+                                    painter = painterResource(id = R.drawable.ic_news_hide),
+                                    contentDescription = stringResource(id = string.ab_hide),
+                                    tint = AppTheme.colors.contentTertiary
+                                )
+                            }
+                        }
 
                         val scrollState = rememberScrollState()
                         NewsRow(
@@ -240,7 +263,8 @@ private fun PreviewNoNews() {
     AppThemePreview {
         News(
             uiState = NewsUiState.NoNews,
-            itemClicked = { }
+            itemClicked = { },
+            hideClicked = { }
         )
     }
 }
@@ -251,7 +275,8 @@ private fun PreviewLoading() {
     AppThemePreview {
         News(
             uiState = NewsUiState.Loading,
-            itemClicked = { }
+            itemClicked = { },
+            hideClicked = { }
         )
     }
 }
@@ -268,7 +293,8 @@ private fun PreviewNewsSingle() {
                     )
                 )
             ),
-            itemClicked = { }
+            itemClicked = { },
+            hideClicked = { }
         )
     }
 }
@@ -286,7 +312,8 @@ private fun PreviewNewsDouble() {
                     )
                 )
             ),
-            itemClicked = { }
+            itemClicked = { },
+            hideClicked = { }
         )
     }
 }
