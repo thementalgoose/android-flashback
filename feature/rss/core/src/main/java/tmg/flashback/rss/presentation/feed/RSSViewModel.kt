@@ -88,7 +88,7 @@ class RSSViewModel @Inject constructor(
                                 lastUpdated = timeManager.now.format(DateTimeFormatter.ofPattern("HH:mm:ss")),
                                 showAdvert = adsRepository.advertConfig.onRss,
                                 hasSources = rssRepository.rssUrls.isNotEmpty(),
-                                rssItems = response.result,
+                                rssItems = response.result.distinctBy { it.link },
                             )
                         }
                     }
