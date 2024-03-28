@@ -127,7 +127,7 @@ playservicesads = "com.google.android.gms:play-services-ads:23.0.0"
 
 skeletonlayout = "com.faltenreich:skeletonlayout:5.0.0"
 
-threeten = "org.threeten:threetenbp:1.6.8"
+threeten = "org.threeten:threetenbp:1.6.9"
 threetenabp = "com.jakewharton.threetenabp:threetenabp:1.4.6"
 
 tmg_utils = "com.github.thementalgoose:android-utilities:2.5.0"
