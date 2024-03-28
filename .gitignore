@@ -1,12 +1,16 @@
 *.iml
 .gradle
-/.idea
 /local.properties
 /.idea/caches
 /.idea/libraries
 /.idea/modules.xml
 /.idea/misc.xml
 /.idea/workspace.xml
+/.idea/androidTestResultsUserPreferences.xml
+/.idea/deploymentTargetDropDown.xml
+/.idea/kotlinc.xml
+/.idea/inspectionProfiles/Project_Default.xml
+/.idea/migrations.xml
 /.idea/navEditor.xml
 /.idea/assetWizardSettings.xml
 .DS_Store
