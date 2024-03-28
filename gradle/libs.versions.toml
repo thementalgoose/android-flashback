@@ -130,8 +130,8 @@ skeletonlayout = "com.faltenreich:skeletonlayout:5.0.0"
 threeten = "org.threeten:threetenbp:1.6.9"
 threetenabp = "com.jakewharton.threetenabp:threetenabp:1.4.7"
 
-tmg_utils = "com.github.thementalgoose:android-utilities:2.5.0"
-tmg_aboutthisapp = "com.github.thementalgoose:android-about-this-app:6.0.1"
+tmg_utils = "com.github.thementalgoose:android-utilities:2.6.0"
+tmg_aboutthisapp = "com.github.thementalgoose:android-about-this-app:6.0.2"
 
 ## Test
 test_androidx_core = "androidx.test:core:1.5.0"
