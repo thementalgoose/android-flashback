@@ -22,6 +22,9 @@ task generateRemoteConfigDefaults {
     def jsonBuilder = new JsonBuilder()
     jsonBuilder(supportedSeasonsModel)
     def supportedSeasons = jsonBuilder.toString()
+    if (supportedSeasons.startsWith("[") && supportedSeasons.endsWith("]")) {
+        supportedSeasons = supportedSeasons.substring(1, supportedSeasons.length() - 1)
+    }
 
     // Generate file
     def filePath = project.projectDir.absolutePath + "/../core/configuration/src/main/res/xml/remote_config_defaults.xml"
