@@ -21,7 +21,7 @@ newrelic = "7.3.0"
 
 [libraries]  # ===========================================================================
 ## Root build.gradle dependencies
-gradle_agp = "com.android.tools.build:gradle:8.2.2"
+gradle_agp = "com.android.tools.build:gradle:8.3.2"
 gradle_crashlytics = "com.google.firebase:firebase-crashlytics-gradle:2.9.9"
 gradle_dep_report = "com.github.ben-manes:gradle-versions-plugin:0.51.0"
 gradle_hilt = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hilt" }
@@ -123,6 +123,8 @@ room_testing = { module = "androidx.room:room-testing", version.ref = "androidx_
 shakey = "com.linkedin.shaky:shaky:3.0.5"
 falcon = "com.jraska:falcon:2.2.0"
 
+# f2394e3196d40e14389344af0006ffabe98d4346
+# Look at removing manifest entry for value override in :core:ads:ads-admob when this is updated!
 playservicesads = "com.google.android.gms:play-services-ads:23.0.0"
 
 skeletonlayout = "com.faltenreich:skeletonlayout:5.0.0"
