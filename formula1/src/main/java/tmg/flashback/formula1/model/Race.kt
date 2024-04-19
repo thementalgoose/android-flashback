@@ -31,6 +31,16 @@ data class Race(
             constructorSet.add(it.entry.constructor)
             driverSet.add(it.entry)
         }
+        sprint.qualifying.forEach {
+            it.results.forEach {
+                constructorSet.add(it.entry.constructor)
+                driverSet.add(it.entry)
+            }
+        }
+        sprint.race.forEach {
+            constructorSet.add(it.entry.constructor)
+            driverSet.add(it.entry)
+        }
         this.entries = driverSet.toList()
         this.constructors = constructorSet.toList()
     }
