@@ -15,7 +15,8 @@ internal class SeasonTest {
                 race = listOf(
                     RaceResult.model(driver = DriverEntry.model(driver = driver1))
                 ),
-                qualifying = emptyList()
+                qualifying = emptyList(),
+                sprint = SprintResult(emptyList(), emptyList())
             ),
             Race.model(
                 raceInfo = RaceInfo.model(round = 2),
@@ -23,7 +24,8 @@ internal class SeasonTest {
                     RaceResult.model(driver = DriverEntry.model(driver = driver2)),
                     RaceResult.model(driver = DriverEntry.model(driver = driver1))
                 ),
-                qualifying = emptyList()
+                qualifying = emptyList(),
+                sprint = SprintResult(emptyList(), emptyList())
             )
         ))
 
@@ -40,7 +42,8 @@ internal class SeasonTest {
                 race = listOf(
                     RaceResult.model(driver = DriverEntry.model(constructor = constructor1))
                 ),
-                qualifying = emptyList()
+                qualifying = emptyList(),
+                sprint = SprintResult(emptyList(), emptyList())
             ),
             Race.model(
                 raceInfo = RaceInfo.model(round = 2),
@@ -48,7 +51,8 @@ internal class SeasonTest {
                     RaceResult.model(driver = DriverEntry.model(constructor = constructor2)),
                     RaceResult.model(driver = DriverEntry.model(constructor = constructor1))
                 ),
-                qualifying = emptyList()
+                qualifying = emptyList(),
+                sprint = SprintResult(emptyList(), emptyList())
             )
         ))
 

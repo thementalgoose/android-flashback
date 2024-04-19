@@ -43,7 +43,8 @@ internal class RaceTest {
             ))),
             race = listOf(RaceResult.model(
                 driver = driver4
-            ))
+            )),
+            sprint = SprintResult(emptyList(), emptyList())
         )
 
         assertEquals(listOf(constructor1, constructor2), model.constructors)
@@ -425,7 +426,8 @@ internal class RaceTest {
                     driver = DriverEntry.model(constructor = constructor2),
                     points = 9.0
                 )
-            )
+            ),
+            sprint = SprintResult(emptyList(), emptyList())
         )
         val expected = listOf(
             RaceConstructorStandings.model(points = 13.0, constructor = constructor2),
@@ -449,7 +451,8 @@ internal class RaceTest {
                         driver = DriverEntry.model(constructor = constructor1),
                         points = 2.0
                     )
-                )
+                ),
+                qualifying = emptyList()
             ),
             race = listOf(
                 RaceResult.model(
