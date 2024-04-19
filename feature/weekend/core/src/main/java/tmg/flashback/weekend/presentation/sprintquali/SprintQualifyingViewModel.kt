@@ -48,7 +48,7 @@ class SprintQualifyingViewModel @Inject constructor(
         .flatMapLatest { (season, round) -> raceRepository.getRace(season, round) }
         .flowOn(ioDispatcher)
         .map { race ->
-            if (race == null || race.qualifying.isEmpty()) {
+            if (race == null || race.sprint.qualifying.isEmpty()) {
                 val list = mutableListOf<SprintQualifyingModel>().apply {
                     if ((seasonRound.value?.first ?: currentSeasonYear) >= currentSeasonYear) {
                         add(SprintQualifyingModel.NotAvailableYet)
