@@ -21,7 +21,7 @@ newrelic = "7.3.1"
 
 [libraries]  # ===========================================================================
 ## Root build.gradle dependencies
-gradle_agp = "com.android.tools.build:gradle:8.3.2"
+gradle_agp = "com.android.tools.build:gradle:8.4.0"
 gradle_crashlytics = "com.google.firebase:firebase-crashlytics-gradle:2.9.9"
 gradle_dep_report = "com.github.ben-manes:gradle-versions-plugin:0.51.0"
 gradle_hilt = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hilt" }
