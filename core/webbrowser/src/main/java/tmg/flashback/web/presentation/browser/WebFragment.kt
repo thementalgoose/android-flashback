@@ -23,16 +23,17 @@ import tmg.flashback.web.repository.WebBrowserRepository
 import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.utilities.extensions.getColor
 import tmg.utilities.extensions.views.show
+import tmg.utilities.lifecycle.viewBinding
 import java.net.MalformedURLException
 import javax.inject.Inject
 
 @SuppressLint("SetJavaScriptEnabled")
 @AndroidEntryPoint
-internal class WebFragment : Fragment() {
+internal class WebFragment : Fragment(R.layout.fragment_web) {
 
     // Binding stripped out and nullable due to loading of webpages and fragment lifecycle causing
     // binding to throw NPE
-    private var binding: FragmentWebBinding? = null
+    private val binding: FragmentWebBinding by viewBinding(FragmentWebBinding::bind)
 
     @Inject
     lateinit var firebaseAnalyticsManager: FirebaseAnalyticsManager
@@ -51,22 +52,13 @@ internal class WebFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         if (savedInstanceState != null)
-            binding?.webview?.restoreState(savedInstanceState.getBundle("webViewState")!!);
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentWebBinding.inflate(inflater, container, false)
-        return binding!!.root
+            binding.webview.restoreState(savedInstanceState.getBundle("webViewState")!!);
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding?.apply {
+        binding.apply {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 val colour = try {
                     Color.parseColor("#0274D1")
@@ -85,12 +77,12 @@ internal class WebFragment : Fragment() {
         val webChromeClient = FlashbackWebChromeClient(
             updateProgressToo = {
                 val result = it.toFloat() / 100f
-                binding?.progressBar?.progress = it.coerceIn(0, 100)
-                binding?.progressBar?.show(result != 1.0f)
+                binding.progressBar.progress = it.coerceIn(0, 100)
+                binding.progressBar.show(result != 1.0f)
             }
         )
 
-        binding?.apply {
+        binding.apply {
             webview.webChromeClient = webChromeClient
             webview.webViewClient = webViewClient
             webview.settings.loadsImagesAutomatically = true
@@ -116,17 +108,12 @@ internal class WebFragment : Fragment() {
         }
     }
 
-    override fun onDestroyView() {
-        binding = null
-        super.onDestroyView()
-    }
-
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         val bundle = Bundle()
-        binding?.webview?.saveState(bundle)
+        binding.webview?.saveState(bundle)
         outState.putBundle("webViewState", bundle)
-        binding?.let {
+        binding.let {
             outState.putString(keyTitle, it.webview.title.toString())
             outState.putString(keyUrl, it.webview.url)
         }
@@ -147,14 +134,14 @@ internal class WebFragment : Fragment() {
 
     override fun onPause() {
         super.onPause()
-        binding?.apply {
+        binding.apply {
             webview.onPause()
         }
     }
 
     override fun onResume() {
         super.onResume()
-        binding?.apply {
+        binding.apply {
             webview.onResume()
         }
     }
