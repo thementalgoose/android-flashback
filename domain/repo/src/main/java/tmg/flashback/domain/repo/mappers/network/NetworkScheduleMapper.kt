@@ -9,16 +9,20 @@ class NetworkScheduleMapper @Inject constructor() {
 
     @Throws
     fun mapSchedules(race: OverviewRace): List<Schedule> {
-        return race.schedule?.map {
-            mapSchedule(race.season, race.round, it)
-        } ?: emptyList()
+        return race.schedule
+            ?.map { mapSchedule(race.season, race.round, it) }
+            ?.sortedBy { it.time }
+            ?.sortedBy { it.date }
+            ?: emptyList()
     }
 
     @Throws(RuntimeException::class)
     fun mapSchedules(race: Race): List<Schedule> {
-        return race.schedule?.map {
-            mapSchedule(race.data.season, race.data.round, it)
-        } ?: emptyList()
+        return race.schedule
+            ?.map { mapSchedule(race.data.season, race.data.round, it) }
+            ?.sortedBy { it.time }
+            ?.sortedBy { it.date }
+            ?: emptyList()
     }
 
     @Throws(RuntimeException::class)
