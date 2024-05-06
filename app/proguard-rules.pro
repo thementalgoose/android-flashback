@@ -105,6 +105,9 @@
 -dontwarn androidx.appcompat.view.ContextThemeWrapper
 -dontwarn javax.xml.stream.XMLStreamException
 
+-dontwarn tmg.flashback.ui.base.BaseActivity
+-dontwarn tmg.flashback.crashlytics.manager.CrashlyticsManager
+
 -keep class com.newrelic.** { *; }
 -dontwarn com.newrelic.**
 -keepattributes Exceptions, Signature, InnerClasses, LineNumberTable
