@@ -9,7 +9,8 @@ buildscript {
             "-Xopt-in=kotlinx.coroutines.ObsoleteCoroutinesApi",
             "-Xopt-in=kotlinx.coroutines.FlowPreview",
             "-Xopt-in=kotlinx.serialization.ExperimentalSerializationApi",
-            "-Xopt-in=androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi"
+            "-Xopt-in=androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi",
+            "-Xstring-concat=inline"
     ]
 
     repositories {
