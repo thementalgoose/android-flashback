@@ -16,6 +16,6 @@ android {
 }
 
 dependencies {
-    implementation project(':core:ads:ads')
+    implementation(projects.core.ads.ads)
 }
 

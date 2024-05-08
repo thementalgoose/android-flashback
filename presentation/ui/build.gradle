@@ -16,14 +16,14 @@ android {
 }
 
 dependencies {
-    implementation project(path: ':core:preferences')
-//    implementation project(path: ':core:metrics:googleanalytics')
-    implementation project(path: ':core:configuration')
-    implementation project(path: ':core:metrics:crashlytics')
+    implementation(projects.core.preferences)
+//    implementation(projects.core.metrics.googleanalytics)
+    implementation(projects.core.configuration)
+    implementation(projects.core.metrics.crashlytics)
 
-    api project(path: ':presentation:style')
-    implementation project(path: ':presentation:navigation')
-    implementation project(path: ':presentation:strings')
+    api(projects.presentation.style)
+    implementation(projects.presentation.navigation)
+    implementation(projects.presentation.strings)
 
     implementation libs.bundles.androidx
     implementation libs.material
@@ -31,5 +31,5 @@ dependencies {
     implementation libs.lottie
 
     api libs.flagkit
-    implementation project(path: ':core:device')
+    implementation(projects.core.device)
 }

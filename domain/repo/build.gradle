@@ -17,16 +17,16 @@ android {
 
 dependencies {
 
-    implementation project(path: ':domain:persistence')
-    implementation project(path: ':network:flashback')
-    implementation project(path: ':formula1')
-    implementation project(path: ':core:metrics:crashlytics')
-    implementation project(path: ':core:preferences')
-    implementation project(path: ':core:device')
+    implementation(projects.domain.persistence)
+    implementation(projects.network.flashback)
+    implementation(projects.formula1)
+    implementation(projects.core.metrics.crashlytics)
+    implementation(projects.core.preferences)
+    implementation(projects.core.device)
 
     implementation libs.bundles.retrofit
     implementation libs.bundles.androidx.workmanager
 
-    testImplementation project(':test:models')
+    testImplementation(projects.test.models)
 
 }
