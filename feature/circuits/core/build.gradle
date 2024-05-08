@@ -18,24 +18,24 @@ android {
 
 dependencies {
     // Core modules
-    implementation project(path: ':core:metrics:googleanalytics')
-    implementation project(path: ':core:metrics:crashlytics')
-    implementation project(path: ':core:device')
-    implementation project(path: ':core:webbrowser')
+    implementation(projects.core.metrics.googleanalytics)
+    implementation(projects.core.metrics.crashlytics)
+    implementation(projects.core.device)
+    implementation(projects.core.webbrowser)
 
-    implementation project(path: ':presentation:ui')
-    implementation project(path: ":presentation:strings")
-    implementation project(path: ":presentation:navigation")
+    implementation(projects.presentation.ui)
+    implementation(projects.presentation.strings)
+    implementation(projects.presentation.navigation)
 
-    implementation project(path: ':formula1')
-    implementation project(path: ':domain:repo')
-    implementation project(path: ':feature:circuits:contract')
+    implementation(projects.formula1)
+    implementation(projects.domain.repo)
+    implementation(projects.feature.circuits.contract)
 
-    implementation project(path: ':feature:weekend:contract')
+    implementation(projects.feature.weekend.contract)
 
     implementation libs.bundles.retrofit
     implementation libs.bundles.okhttp
     implementation libs.lottie
 
-    testImplementation project(path: ':test:models')
+    testImplementation(projects.test.models)
 }

@@ -17,8 +17,8 @@ android {
 dependencies {
 
     // Preferences library
-    implementation project(path: ':core:preferences')
-    implementation project(path: ':presentation:strings')
+    implementation(projects.core.preferences)
+    implementation(projects.presentation.strings)
 
     implementation platform(libs.firebase.bom)
     implementation libs.firebase.common

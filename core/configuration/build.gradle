@@ -17,8 +17,8 @@ android {
 dependencies {
 
     // Preferences library
-    implementation project(path: ':core:preferences')
-    implementation project(path: ':core:metrics:crashlytics')
+    implementation(projects.core.preferences)
+    implementation(projects.core.metrics.crashlytics)
 
     // Firebase Remote Config
     implementation platform(libs.firebase.bom)

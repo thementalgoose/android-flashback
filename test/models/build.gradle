@@ -15,9 +15,9 @@ android {
 
 dependencies {
 
-    implementation project(path: ':formula1')
-    implementation project(path: ':domain:persistence')
-    implementation project(path: ':network:flashback')
+    implementation(projects.formula1)
+    implementation(projects.domain.persistence)
+    implementation(projects.network.flashback)
 
     implementation libs.junit5.api
 }

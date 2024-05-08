@@ -18,6 +18,6 @@ android {
 
 dependencies {
 
-    implementation project(path: ':formula1')
-    implementation project(path: ':test:models')
+    implementation(projects.formula1)
+    implementation(projects.test.models)
 }

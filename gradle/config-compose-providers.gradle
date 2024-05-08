@@ -1,4 +1,4 @@
 dependencies {
-    debugImplementation project(path: ':test:providers')
-    releaseImplementation project(path: ':test:providers-noop')
+    debugImplementation(projects.test.providers)
+    releaseImplementation(projects.test.providersNoop)
 }
