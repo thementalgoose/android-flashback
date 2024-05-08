@@ -17,14 +17,14 @@ android {
 dependencies {
 
     // Preferences library
-    implementation project(path: ':core:preferences')
+    implementation(projects.core.preferences)
 
     // Crash reporting
-    implementation project(path: ':core:metrics:crashlytics')
+    implementation(projects.core.metrics.crashlytics)
 
     // Cloud messaging support
     implementation platform(libs.firebase.bom)
     implementation libs.firebase.common
     implementation libs.firebase.messaging
-    implementation project(path: ':core:device')
+    implementation(projects.core.device)
 }

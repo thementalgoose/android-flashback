@@ -16,7 +16,7 @@ android {
 
 dependencies {
 
-    implementation project(path: ':core:metrics:crashlytics')
+    implementation(projects.core.metrics.crashlytics)
 
     // Retrofit
     api libs.bundles.retrofit

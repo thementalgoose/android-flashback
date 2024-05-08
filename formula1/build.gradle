@@ -15,6 +15,6 @@ android {
 }
 
 dependencies {
-    implementation project(path: ":presentation:strings")
-    testImplementation project(path: ':test:models')
+    implementation(projects.presentation.strings)
+    testImplementation(projects.test.models)
 }

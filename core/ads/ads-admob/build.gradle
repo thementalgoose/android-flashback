@@ -16,12 +16,12 @@ android {
 }
 
 dependencies {
-    implementation project(':core:ads:ads')
-    implementation project(path: ':core:configuration')
-    implementation project(path: ':core:preferences')
-    implementation project(path: ':presentation:style')
-    implementation project(path: ':presentation:ui')
-    implementation project(path: ':presentation:strings')
+    implementation(projects.core.ads.ads)
+    implementation(projects.core.configuration)
+    implementation(projects.core.preferences)
+    implementation(projects.presentation.style)
+    implementation(projects.presentation.ui)
+    implementation(projects.presentation.strings)
 
     implementation libs.playservicesads
     implementation libs.bundles.androidx.workmanager
@@ -29,5 +29,5 @@ dependencies {
     // Skeleton Layout
     implementation libs.skeletonlayout
 
-    testImplementation project(path: ':test:models')
+    testImplementation projects.test.models
 }

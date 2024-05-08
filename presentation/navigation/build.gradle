@@ -16,6 +16,6 @@ android {
     dependencies {
         implementation libs.bundles.androidx
 
-        implementation project(":core:metrics:crashlytics")
+        implementation(projects.core.metrics.crashlytics)
     }
 }

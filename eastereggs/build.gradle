@@ -17,9 +17,9 @@ android {
 
 dependencies {
 
-    implementation project(":core:configuration")
-    implementation project(":core:preferences")
-    implementation project(":core:device")
+    implementation(projects.core.configuration)
+    implementation(projects.core.preferences)
+    implementation(projects.core.device)
 
-    implementation project(path: ":presentation:strings")
+    implementation(projects.presentation.strings)
 }
