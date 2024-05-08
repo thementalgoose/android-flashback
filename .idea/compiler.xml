@@ -1,66 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel target="11">
-      <module name="android-flashback.app" target="17" />
-      <module name="android-flashback.core.ads.ads" target="17" />
-      <module name="android-flashback.core.ads.ads-admob" target="17" />
-      <module name="android-flashback.core.ads.ads-noop" target="17" />
-      <module name="android-flashback.core.appshortcuts" target="17" />
-      <module name="android-flashback.core.configuration" target="17" />
-      <module name="android-flashback.core.device" target="17" />
-      <module name="android-flashback.core.metrics.crashlytics" target="17" />
-      <module name="android-flashback.core.metrics.googleanalytics" target="17" />
-      <module name="android-flashback.core.metrics.newrelic" target="17" />
-      <module name="android-flashback.core.notifications" target="17" />
-      <module name="android-flashback.core.preferences" target="17" />
-      <module name="android-flashback.core.webbrowser" target="17" />
+    <bytecodeTargetLevel target="17">
       <module name="android-flashback.data.network" target="17" />
       <module name="android-flashback.data.repo" target="17" />
       <module name="android-flashback.data.room" target="17" />
-      <module name="android-flashback.domain.persistence" target="17" />
-      <module name="android-flashback.domain.repo" target="17" />
-      <module name="android-flashback.eastereggs" target="17" />
-      <module name="android-flashback.feature.announcements.contract" target="17" />
-      <module name="android-flashback.feature.announcements.core" target="17" />
-      <module name="android-flashback.feature.circuits.contract" target="17" />
-      <module name="android-flashback.feature.circuits.core" target="17" />
-      <module name="android-flashback.feature.constructors.contract" target="17" />
-      <module name="android-flashback.feature.constructors.core" target="17" />
-      <module name="android-flashback.feature.debug.contract" target="17" />
-      <module name="android-flashback.feature.debug.core" target="17" />
-      <module name="android-flashback.feature.debug.noop" target="17" />
-      <module name="android-flashback.feature.drivers.contract" target="17" />
-      <module name="android-flashback.feature.drivers.core" target="17" />
-      <module name="android-flashback.feature.maintenance.contract" target="17" />
-      <module name="android-flashback.feature.maintenance.core" target="17" />
-      <module name="android-flashback.feature.privacypolicy.contract" target="17" />
-      <module name="android-flashback.feature.privacypolicy.core" target="17" />
       <module name="android-flashback.feature.races.contract" target="17" />
       <module name="android-flashback.feature.races.core" target="17" />
       <module name="android-flashback.feature.results.contract" target="17" />
       <module name="android-flashback.feature.results.core" target="17" />
-      <module name="android-flashback.feature.rss.contract" target="17" />
-      <module name="android-flashback.feature.rss.core" target="17" />
-      <module name="android-flashback.feature.search.contract" target="17" />
-      <module name="android-flashback.feature.search.core" target="17" />
-      <module name="android-flashback.feature.season.contract" target="17" />
-      <module name="android-flashback.feature.season.core" target="17" />
-      <module name="android-flashback.feature.weekend.contract" target="17" />
-      <module name="android-flashback.feature.weekend.core" target="17" />
-      <module name="android-flashback.feature.widgets.contract" target="17" />
-      <module name="android-flashback.feature.widgets.core" target="17" />
-      <module name="android-flashback.formula1" target="17" />
-      <module name="android-flashback.network.flashback" target="17" />
-      <module name="android-flashback.network.flashback-news" target="17" />
-      <module name="android-flashback.network.rss" target="17" />
-      <module name="android-flashback.presentation.navigation" target="17" />
-      <module name="android-flashback.presentation.strings" target="17" />
-      <module name="android-flashback.presentation.style" target="17" />
-      <module name="android-flashback.presentation.ui" target="17" />
-      <module name="android-flashback.test.models" target="17" />
-      <module name="android-flashback.test.providers" target="17" />
-      <module name="android-flashback.test.providers-noop" target="17" />
     </bytecodeTargetLevel>
   </component>
 </project>
