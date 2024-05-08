@@ -15,6 +15,6 @@ android {
 }
 
 dependencies {
-    implementation project(path: ":presentation:navigation")
-    implementation project(path: ":formula1")
+    implementation(projects.presentation.navigation)
+    implementation(projects.formula1)
 }

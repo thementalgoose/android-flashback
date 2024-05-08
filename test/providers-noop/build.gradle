@@ -16,5 +16,5 @@ android {
 
 dependencies {
 
-    implementation project(path: ':formula1')
+    implementation(projects.formula1)
 }

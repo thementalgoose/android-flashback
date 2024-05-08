@@ -17,27 +17,27 @@ android {
 }
 
 dependencies {
-    implementation project(path: ':core:ads:ads')
+    implementation(projects.core.ads.ads)
     // Core modules
-    implementation project(path: ':core:metrics:googleanalytics')
-    implementation project(path: ':core:appshortcuts')
-    implementation project(path: ':core:configuration')
-    implementation project(path: ':core:metrics:crashlytics')
-    implementation project(path: ':core:device')
-    implementation project(path: ':core:preferences')
-    implementation project(path: ':core:webbrowser')
+    implementation(projects.core.metrics.googleanalytics)
+    implementation(projects.core.appshortcuts)
+    implementation(projects.core.configuration)
+    implementation(projects.core.metrics.crashlytics)
+    implementation(projects.core.device)
+    implementation(projects.core.preferences)
+    implementation(projects.core.webbrowser)
 
-    implementation project(path: ':presentation:ui')
-    implementation project(path: ":presentation:strings")
-    implementation project(path: ":presentation:navigation")
+    implementation(projects.presentation.ui)
+    implementation(projects.presentation.strings)
+    implementation(projects.presentation.navigation)
 
-    implementation project(path: ":feature:rss:contract")
+    implementation(projects.feature.rss.contract)
 
-    implementation project(path: ":network:rss")
+    implementation(projects.network.rss)
 
     implementation libs.bundles.retrofit
     implementation libs.bundles.okhttp
     implementation libs.lottie
 
-    testImplementation project(path: ':test:models')
+    testImplementation(projects.test.models)
 }

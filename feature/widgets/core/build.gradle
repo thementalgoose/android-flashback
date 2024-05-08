@@ -19,20 +19,20 @@ dependencies {
 
     implementation libs.bundles.androidx.glance
 
-    implementation project(path: ':formula1')
-    implementation project(path: ':domain:repo')
+    implementation(projects.formula1)
+    implementation(projects.domain.repo)
 
-    implementation project(path: ':presentation:style')
-    implementation project(path: ':presentation:ui')
-    implementation project(path: ":presentation:strings")
+    implementation(projects.presentation.style)
+    implementation(projects.presentation.ui)
+    implementation(projects.presentation.strings)
 
     // Core modules
-    implementation project(path: ':core:metrics:googleanalytics')
-    implementation project(path: ':core:configuration')
-    implementation project(path: ':core:metrics:crashlytics')
-    implementation project(path: ':core:device')
-    implementation project(path: ':core:notifications')
-    implementation project(path: ':core:preferences')
+    implementation(projects.core.metrics.googleanalytics)
+    implementation(projects.core.configuration)
+    implementation(projects.core.metrics.crashlytics)
+    implementation(projects.core.device)
+    implementation(projects.core.notifications)
+    implementation(projects.core.preferences)
 
-    implementation project(path: ':feature:widgets:contract')
+    implementation(projects.feature.widgets.contract)
 }

@@ -17,5 +17,5 @@ android {
 dependencies {
 
     // Dependencies
-    implementation project(":core:device")
+    implementation(projects.core.device)
 }
