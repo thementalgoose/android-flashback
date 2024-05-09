@@ -79,7 +79,10 @@ class SearchViewModel @Inject constructor(
                 .sortedBy { it.first.lastName.lowercase() }
              },
         constructorRepository.getConstructors()
-            .map { it.map { item -> item to item.searchTerm } },
+            .map { it
+                .map { item -> item to item.searchTerm }
+                .sortedBy { it.first.name.lowercase() }
+             },
         circuitRepository.getCircuits()
             .map { it
                 .map { item -> item to item.searchTerm }
