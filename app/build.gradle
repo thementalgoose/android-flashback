@@ -1,7 +1,6 @@
 import com.github.triplet.gradle.androidpublisher.ResolutionStrategy
 
 apply plugin: 'com.android.application'
-apply plugin: getNewRelicPlugin()
 
 apply from: rootDir.absolutePath + "/gradle/config-android.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-util.gradle"
@@ -146,7 +145,6 @@ dependencies {
     releaseImplementation(projects.core.ads.adsNoop)
     implementation(projects.core.metrics.googleanalytics)
     implementation(projects.core.metrics.crashlytics)
-    implementation(projects.core.metrics.newrelic) // TODO: Remove this
     implementation(projects.core.appshortcuts)
     implementation(projects.core.configuration)
     implementation(projects.core.device)
@@ -184,8 +182,6 @@ dependencies {
     implementation libs.firebase.messaging
     implementation libs.firebase.perf
 
-    implementation libs.newrelic.agent
-
     // Test Utils
     testImplementation(projects.test.models)
     testImplementation(projects.feature.debug.core)
@@ -204,14 +200,4 @@ apply plugin: 'com.google.gms.google-services'
 
 def isDebug() {
     return gradle.startParameter.taskNames.any { it.toLowerCase().contains("debug") }
-}
-
-def getNewRelicPlugin() {
-    if (isDebug()) {
-        logger.warn("[NEWRELIC] Plugin disabled")
-        return 'com.android.application'
-    } else {
-        logger.warn("[NEWRELIC] Plugin enabled")
-        return 'newrelic'
-    }
 }

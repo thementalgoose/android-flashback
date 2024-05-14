@@ -30,7 +30,6 @@ buildscript {
         classpath libs.gradle.hilt
         classpath libs.gradle.junit5
         classpath libs.gradle.kotlin
-        classpath libs.gradle.newrelic
         classpath libs.play.publisher
         classpath libs.r8
         classpath libs.kotlinx.serialization.core

@@ -17,7 +17,6 @@ firebase = "33.0.0"
 junit = "5.10.2"
 okhttp = "4.12.0"
 retrofit = "2.11.0"
-newrelic = "7.3.1"
 
 [libraries]  # ===========================================================================
 ## Root build.gradle dependencies
@@ -27,7 +26,6 @@ gradle_dep_report = "com.github.ben-manes:gradle-versions-plugin:0.51.0"
 gradle_hilt = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hilt" }
 gradle_junit5 = "de.mannodermaus.gradle.plugins:android-junit5:1.10.0.0"
 gradle_kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
-gradle_newrelic = { module = "com.newrelic.agent.android:agent-gradle-plugin", version.ref = "newrelic" }
 google_services = "com.google.gms:google-services:4.4.1"
 kotlinx_serialization_core = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin" }
 firebase_perf_plugin = "com.google.firebase:perf-plugin:1.4.2"
@@ -104,8 +102,6 @@ hilt_kapt_compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "an
 hilt_workmanager = { module = "androidx.hilt:hilt-work", version.ref = "androidx_hilt" }
 
 lottie = "com.airbnb.android:lottie-compose:6.4.0"
-
-newrelic_agent = { module = "com.newrelic.agent.android:android-agent", version.ref = "newrelic" }
 
 retrofit_core = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit_converter_simplexml = { module = "com.squareup.retrofit2:converter-simplexml", version.ref = "retrofit" }

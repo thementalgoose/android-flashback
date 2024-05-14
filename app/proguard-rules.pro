@@ -110,6 +110,4 @@
 -dontwarn androidx.appcompat.view.ContextThemeWrapper
 -dontwarn javax.xml.stream.XMLStreamException
 
--keep class com.newrelic.** { *; }
--dontwarn com.newrelic.**
 -keepattributes Exceptions, Signature, InnerClasses, LineNumberTable
