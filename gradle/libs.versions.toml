@@ -154,7 +154,7 @@ junit5_params = { module = "org.junit.jupiter:junit-jupiter-params", version.ref
 
 turbine = "app.cash.turbine:turbine:1.1.0"
 
-mockk = "io.mockk:mockk:1.13.10"
+mockk = "io.mockk:mockk:1.13.11"
 
 tmg_testutils = "com.github.thementalgoose:android-test-utilities:1.2.2"
 
