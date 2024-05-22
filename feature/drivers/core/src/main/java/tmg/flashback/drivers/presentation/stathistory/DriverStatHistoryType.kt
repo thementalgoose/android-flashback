@@ -6,7 +6,7 @@ import tmg.flashback.strings.R.string
 import tmg.flashback.drivers.contract.model.DriverStatHistoryType
 
 val DriverStatHistoryType.label: Int
-    @get:StringRes
+    @StringRes
     get() = when (this) {
         DriverStatHistoryType.CHAMPIONSHIPS -> string.stat_history_championships
         DriverStatHistoryType.WINS -> string.stat_history_wins
