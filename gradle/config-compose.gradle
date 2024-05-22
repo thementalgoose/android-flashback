@@ -1,11 +1,8 @@
-android {
+this.pluginManager.apply(libs.plugins.composecompiler.get().pluginId)
 
+android {
     buildFeatures {
         compose true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion libs.versions.composecompiler.get()
     }
 }
 
