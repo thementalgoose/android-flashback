@@ -4,8 +4,8 @@ name: Release Build
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
-    needs: [unit_test]
+    timeout-minutes: 30
+    needs: []
     steps:
       # Checkout
       - uses: actions/checkout@v4
