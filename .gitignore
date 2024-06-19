@@ -4,10 +4,12 @@
 /.idea/caches
 /.idea/libraries
 /.idea/modules.xml
+/.idea/gradle.xml
 /.idea/misc.xml
 /.idea/workspace.xml
 /.idea/androidTestResultsUserPreferences.xml
 /.idea/deploymentTargetDropDown.xml
+/.idea/deploymentTargetSelector.xml
 /.idea/kotlinc.xml
 /.idea/inspectionProfiles/Project_Default.xml
 /.idea/migrations.xml
