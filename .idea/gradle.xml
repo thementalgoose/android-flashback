@@ -5,7 +5,7 @@
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="gradleJvm" value="jbr-17" />
+        <option name="gradleJvm" value="11" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
@@ -21,7 +21,6 @@
             <option value="$PROJECT_DIR$/core/metrics" />
             <option value="$PROJECT_DIR$/core/metrics/crashlytics" />
             <option value="$PROJECT_DIR$/core/metrics/googleanalytics" />
-            <option value="$PROJECT_DIR$/core/metrics/newrelic" />
             <option value="$PROJECT_DIR$/core/notifications" />
             <option value="$PROJECT_DIR$/core/preferences" />
             <option value="$PROJECT_DIR$/core/webbrowser" />
