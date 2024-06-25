@@ -131,7 +131,7 @@ tmg_utils = "com.github.thementalgoose:android-utilities:2.6.0"
 tmg_aboutthisapp = "com.github.thementalgoose:android-about-this-app:6.0.2"
 
 ## Test
-test_androidx_core = "androidx.test:core:1.5.0"
+test_androidx_core = "androidx.test:core:1.6.0"
 test_androidx_arch = "androidx.arch.core:core-testing:2.2.0"
 test_androidx_lifecycle = { module = "androidx.lifecycle:lifecycle-compiler", version.ref = "androidx_lifecycle" }
 
