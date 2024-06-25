@@ -140,7 +140,7 @@ test_androidx_runner = "androidx.test:runner:1.5.2"
 test_androidx_junit_ktx = "androidx.test.ext:junit-ktx:1.1.5"
 test_androidx_junit = "androidx.test.ext:junit:1.1.5"
 test_androidx_junit_api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit" }
-test_espresso_core = "androidx.test.espresso:espresso-core:3.5.1"
+test_espresso_core = "androidx.test.espresso:espresso-core:3.6.0"
 
 test_junit5_core = "de.mannodermaus.junit5:android-test-core:1.4.0"
 test_junit5_runner = "de.mannodermaus.junit5:android-test-runner:1.4.0"
