@@ -5,7 +5,7 @@ fun DriverSeasonRace.Companion.model(
     season: Int = 2020,
     round: Int = 1,
     constructorId: String = "constructorId",
-    sprintQualifying: Boolean = true,
+    sprintQualifying: Boolean = false,
     sprintRace: Boolean = false,
     qualified: Int? = 1,
     gridPos: Int? = 1,
