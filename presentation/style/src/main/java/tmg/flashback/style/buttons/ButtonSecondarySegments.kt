@@ -3,10 +3,12 @@ package tmg.flashback.style.buttons
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.focusable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -93,6 +95,7 @@ fun ButtonSecondarySegments(
                         modifier = Modifier
                     )
                     if (showTick) {
+                        Box(Modifier.height(16.dp).width(0.dp))
                         AnimatedVisibility(visible = selected) {
                             Row {
                                 Spacer(Modifier.width(AppTheme.dimens.small))
