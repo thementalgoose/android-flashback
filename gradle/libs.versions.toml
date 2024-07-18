@@ -64,7 +64,7 @@ accompanist_horizontalpager = { module = "com.google.accompanist:accompanist-pag
 accompanist_systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "compose_accompanist" }
 accompanist_placeholder = { module = "com.google.accompanist:accompanist-placeholder-material", version.ref = "compose_accompanist" }
 
-coil = "io.coil-kt:coil-compose:2.6.0"
+coil = "io.coil-kt:coil-compose:2.7.0"
 circleimageview = "de.hdodenhof:circleimageview:3.1.0"
 
 compose_activity = { module = "androidx.activity:activity-compose", version.ref = "androidx_activity" }
