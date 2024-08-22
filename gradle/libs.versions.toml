@@ -136,7 +136,7 @@ test_androidx_arch = "androidx.arch.core:core-testing:2.2.0"
 test_androidx_lifecycle = { module = "androidx.lifecycle:lifecycle-compiler", version.ref = "androidx_lifecycle" }
 
 test_androidx_rules = "androidx.test:rules:1.6.1"
-test_androidx_runner = "androidx.test:runner:1.6.1"
+test_androidx_runner = "androidx.test:runner:1.6.2"
 test_androidx_junit_ktx = "androidx.test.ext:junit-ktx:1.2.1"
 test_androidx_junit = "androidx.test.ext:junit:1.2.1"
 test_androidx_junit_api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit" }
