@@ -63,9 +63,10 @@ class UpNextWidget : GlanceAppWidget() {
         private val configIcon = DpSize(48.dp, 48.dp)
         private val configRaceOnlyCompressed = DpSize(90.dp, 48.dp)
         private val configRaceOnly = DpSize(180.dp, 48.dp)
-        private val configRaceScheduleFullList = DpSize(140.dp, 180.dp)
+        private val configRaceScheduleFullList = DpSize(140.dp, 150.dp)
+        private val configRaceScheduleFullListTrackIcon = DpSize(260.dp, 150.dp)
         private val configRaceScheduleFullListLargeRace = DpSize(200.dp, 180.dp)
-        private val configRaceScheduleFullListLargeRaceTrackIcon = DpSize(280.dp, 180.dp)
+        private val configRaceScheduleFullListLargeRaceTrackIcon = DpSize(260.dp, 180.dp)
     }
 
     override val sizeMode = SizeMode.Responsive(
@@ -74,6 +75,7 @@ class UpNextWidget : GlanceAppWidget() {
             configRaceOnlyCompressed,
             configRaceOnly,
             configRaceScheduleFullList,
+            configRaceScheduleFullListTrackIcon,
             configRaceScheduleFullListLargeRace,
             configRaceScheduleFullListLargeRaceTrackIcon
         )
@@ -144,6 +146,15 @@ class UpNextWidget : GlanceAppWidget() {
                     widgetData,
                     overviewRace,
                     modifier = modifier,
+                    showTrackIcon = false
+                )
+
+                configRaceScheduleFullListTrackIcon -> RaceScheduleFullList(
+                    context,
+                    widgetData,
+                    overviewRace,
+                    modifier = modifier,
+                    showTrackIcon = true
                 )
 
                 configRaceScheduleFullListLargeRace -> RaceScheduleFullListLargeRace(
@@ -398,7 +409,9 @@ internal fun RaceScheduleFullList(
     widgetData: WidgetConfigurationData,
     overviewRace: OverviewRace,
     modifier: GlanceModifier = GlanceModifier,
+    showTrackIcon: Boolean
 ) {
+    println("Race schedule full list - $showTrackIcon")
     Column(
         modifier = modifier
             .padding(vertical = 16.dp, horizontal = 16.dp)
@@ -444,7 +457,8 @@ internal fun RaceScheduleFullList(
         } else {
             Row(modifier = GlanceModifier.defaultWeight()) { }
             Row(
-                modifier = GlanceModifier.fillMaxWidth(),
+                modifier = GlanceModifier
+                    .fillMaxWidth(),
                 verticalAlignment = Alignment.Bottom
             ) {
                 Column(modifier = GlanceModifier.defaultWeight()) {
@@ -456,6 +470,13 @@ internal fun RaceScheduleFullList(
                                 widgetData = widgetData
                             )
                         }
+                }
+                if (showTrackIcon) {
+                    TrackIcon(
+                        context = context,
+                        overviewRace = overviewRace,
+                        trackColour = widgetData.contentColour
+                    )
                 }
             }
         }
@@ -572,7 +593,7 @@ private fun Schedule(
     val deviceLocaleTime = model.timestamp.deviceLocalDateTime
     val alpha = if (deviceLocaleTime.isBefore(LocalDateTime.now())) 0.5f else 1f
     val (day, time) = model.labels()
-    Row(modifier = modifier.padding(top = 6.dp)) {
+    Row(modifier = modifier.padding(top = 3.dp)) {
         TextBody(
             modifier = GlanceModifier,
             color = widgetData.contentColour.copy(alpha = alpha),
