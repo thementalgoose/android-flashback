@@ -1,4 +1,4 @@
-package tmg.flashback.widgets.upnext.configure
+package tmg.flashback.widgets.presentation.upnext.configure
 
 import tmg.flashback.strings.R
 import tmg.flashback.ui.settings.Setting

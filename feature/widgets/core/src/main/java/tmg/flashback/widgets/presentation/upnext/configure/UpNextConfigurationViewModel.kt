@@ -1,4 +1,4 @@
-package tmg.flashback.widgets.upnext.configure
+package tmg.flashback.widgets.presentation.upnext.configure
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
