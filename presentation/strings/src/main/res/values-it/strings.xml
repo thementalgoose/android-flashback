@@ -270,6 +270,15 @@
     <string name="settings_switch_notification_results_sprint_qualifying_title">Sprint Shootout</string>
     <string name="settings_switch_notification_results_sprint_title">Sprint</string>
     <string name="settings_switch_notification_results_race_title">Gara</string>
+
+    <string name="settings_header_widgets">Widgets</string>
+    <string name="settings_section_widgets_title">Widgets</string>
+    <string name="settings_section_widgets_description">Personalizzazioni dei widget</string>
+    <string name="settings_section_widgets_show_background_title">Mostra lo sfondo?</string>
+    <string name="settings_section_widgets_show_background_description">Mostra uno sfondo solido anziché trasparente</string>
+    <string name="settings_section_widgets_deeplink_event_title">Collegamento all\'evento?</string>
+    <string name="settings_section_widgets_deeplink_event_description">Facendo clic sul widget verrai indirizzato alla gara specifica, anziché alla pagina iniziale</string>
+
     <string name="settings_section_ads_title">Annunci</string>
     <string name="settings_section_ads_description">Impostazioni degli annunci</string>
     <string name="settings_header_ads">Annunci</string>
@@ -467,14 +476,6 @@
         <item quantity="many">Mancano %d giorni</item>
         <item quantity="other">Mancano %d giorni</item>
     </plurals>
-    <string name="widget_configure">Personalizza</string>
-    <string name="widget_settings_background_title">Mostra sfondo</string>
-    <string name="widget_settings_background_description">Fai in modo che questo widget abbia un colore di sfondo uniforme</string>
-    <string name="widget_settings_click_to_event_title">Deeplink all\'evento</string>
-    <string name="widget_settings_click_to_event_description">Facendo clic sul widget si accede direttamente all\'evento mostrato</string>
-    <string name="widget_settings_weather_title">Mostra meteo</string>
-    <string name="widget_settings_weather_description">Mostra un\'icona che simboleggia il meteo per l\'evento, se disponibile</string>
-    <string name="widget_up_next_save">Salva</string>
     <string name="dashboard_up_next_your_time">Ora del dispositivo</string>
     <string name="dashboard_up_next_shown_in_device_time">Tutti gli orari mostrati nel tuo fuso orario</string>
     <plurals name="dashboard_up_next_starts_in">

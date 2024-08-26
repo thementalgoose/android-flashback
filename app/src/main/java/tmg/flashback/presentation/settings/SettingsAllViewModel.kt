@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.cancel
 import tmg.flashback.BuildConfig
 import tmg.flashback.ads.ads.repository.AdsRepository
 import tmg.flashback.device.managers.BuildConfigManager
@@ -86,6 +87,9 @@ class SettingsAllViewModel @Inject constructor(
             Settings.Notifications.notificationUpcomingNotice.key -> {
                 uiState.value = uiState.value.copy(selectedSubScreen = SettingsScreen.NOTIFICATIONS_TIMER)
             }
+            Settings.Widgets.widgets.key -> {
+                uiState.value = uiState.value.copy(selectedSubScreen = SettingsScreen.WIDGETS)
+            }
             Settings.Ads.ads.key -> {
                 uiState.value = uiState.value.copy(selectedSubScreen = SettingsScreen.ADS)
             }
@@ -135,6 +139,7 @@ class SettingsAllViewModel @Inject constructor(
         RSS_CONFIGURE,
         WEB_BROWSER,
         NOTIFICATIONS_TIMER,
+        WIDGETS,
         ADS,
         PRIVACY,
         ABOUT

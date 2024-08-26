@@ -1,13 +1,14 @@
 package tmg.flashback.widgets.presentation.components
 
+//noinspection SuspiciousImport
 import android.R
 import android.content.Context
 import android.os.Build
 import androidx.compose.ui.graphics.Color
 import androidx.core.content.ContextCompat
 
-fun getWidgetColourData(context: Context, showBackground: Boolean, isDarkMode: Boolean): WidgetConfigurationData {
-    return WidgetConfigurationData(
+fun getWidgetColourData(context: Context, showBackground: Boolean, isDarkMode: Boolean): WidgetColourData {
+    return WidgetColourData(
         contentColour = when {
             showBackground && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && isDarkMode ->
                 Color(ContextCompat.getColor(context, R.color.system_neutral1_50))
@@ -31,7 +32,7 @@ fun getWidgetColourData(context: Context, showBackground: Boolean, isDarkMode: B
     )
 }
 
-data class WidgetConfigurationData(
+data class WidgetColourData(
     val contentColour: Color,
     val backgroundColor: Color
 )

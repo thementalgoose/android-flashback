@@ -230,6 +230,18 @@ internal class SettingsAllViewModelTest: BaseTest() {
         }
     }
 
+    @Test
+    fun `clicking widgets opens widgets`() = runTest {
+        initUnderTest()
+        underTest.inputs.itemClicked(Settings.Widgets.widgets)
+
+        underTest.outputs.uiState.test {
+            assertEquals(SettingsAllViewModel.SettingsScreen.WIDGETS, awaitItem().selectedSubScreen)
+
+            underTest.inputs.back()
+            assertEquals(null, awaitItem().selectedSubScreen)
+        }
+    }
 
     @Test
     fun `clicking ads opens ads`() = runTest {
