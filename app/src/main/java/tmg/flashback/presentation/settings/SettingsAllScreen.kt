@@ -39,6 +39,7 @@ import tmg.flashback.presentation.settings.data.SettingsLayoutScreenVM
 import tmg.flashback.presentation.settings.data.SettingsWeatherScreenVM
 import tmg.flashback.presentation.settings.notifications.SettingsNotificationUpcomingNoticeScreenVM
 import tmg.flashback.presentation.settings.web.SettingsWebScreenVM
+import tmg.flashback.presentation.settings.widgets.SettingsWidgetScreenVM
 import tmg.flashback.ui.settings.Setting
 
 @Composable
@@ -118,6 +119,12 @@ fun SettingsAllScreenVM(
                 }
                 SettingsAllViewModel.SettingsScreen.NOTIFICATIONS_TIMER -> {
                     SettingsNotificationUpcomingNoticeScreenVM(
+                        actionUpClicked = viewModel.inputs::back,
+                        windowSizeClass = windowSizeClass,
+                    )
+                }
+                SettingsAllViewModel.SettingsScreen.WIDGETS -> {
+                    SettingsWidgetScreenVM(
                         actionUpClicked = viewModel.inputs::back,
                         windowSizeClass = windowSizeClass,
                     )
@@ -208,6 +215,11 @@ fun SettingsAllScreen(
             )
             Pref(
                 model = Settings.Notifications.notificationUpcomingNotice,
+                onClick = prefClicked
+            )
+            Header(title = string.settings_header_widgets)
+            Section(
+                model = Settings.Widgets.widgets,
                 onClick = prefClicked
             )
             if (uiState.adsEnabled) {

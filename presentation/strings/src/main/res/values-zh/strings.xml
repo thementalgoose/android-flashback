@@ -267,6 +267,15 @@
     <string name="settings_switch_notification_results_sprint_qualifying_title">冲刺排位赛</string>
     <string name="settings_switch_notification_results_sprint_title">冲刺赛</string>
     <string name="settings_switch_notification_results_race_title">比赛</string>
+
+    <string name="settings_header_widgets">小部件</string>
+    <string name="settings_section_widgets_title">小部件</string>
+    <string name="settings_section_widgets_description">小部件定制</string>
+    <string name="settings_section_widgets_show_background_title">显示背景？</string>
+    <string name="settings_section_widgets_show_background_description">显示纯色背景而不是透明背景</string>
+    <string name="settings_section_widgets_deeplink_event_title">活动链接？</string>
+    <string name="settings_section_widgets_deeplink_event_description">单击小部件将带您进入特定比赛，而不是主页</string>
+
     <string name="settings_section_ads_title">广告</string>
     <string name="settings_section_ads_description">广告设置</string>
     <string name="settings_header_ads">广告</string>
@@ -463,14 +472,6 @@
     <plurals name="dashboard_up_next_suffix_days">
         <item quantity="other">还有 %d 天</item>
     </plurals>
-    <string name="widget_configure">自定义</string>
-    <string name="widget_settings_background_title">显示背景</string>
-    <string name="widget_settings_background_description">使此小部件具有纯色背景</string>
-    <string name="widget_settings_click_to_event_title">深层链接到事件</string>
-    <string name="widget_settings_click_to_event_description">点击小部件会将您深层链接到正在显示的事件</string>
-    <string name="widget_settings_weather_title">显示天气</string>
-    <string name="widget_settings_weather_description">如果可用，显示一个象征事件天气的图标</string>
-    <string name="widget_up_next_save">保存</string>
     <string name="dashboard_up_next_your_time">设备时间</string>
     <string name="dashboard_up_next_shown_in_device_time">所有时间均显示在您的时区</string>
     <plurals name="dashboard_up_next_starts_in">

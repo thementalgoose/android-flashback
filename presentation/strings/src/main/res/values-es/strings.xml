@@ -271,6 +271,15 @@
     <string name="settings_switch_notification_results_sprint_qualifying_title">Clasificación de sprint</string>
     <string name="settings_switch_notification_results_sprint_title">Sprint</string>
     <string name="settings_switch_notification_results_race_title">Carrera</string>
+
+    <string name="settings_header_widgets">Widgets</string>
+    <string name="settings_section_widgets_title">Widgets</string>
+    <string name="settings_section_widgets_description">Personalizaciones de widgets</string>
+    <string name="settings_section_widgets_show_background_title">¿Mostrar fondo?</string>
+    <string name="settings_section_widgets_show_background_description">Mostrar un fondo sólido en lugar de uno transparente</string>
+    <string name="settings_section_widgets_deeplink_event_title">Enlace al evento?</string>
+    <string name="settings_section_widgets_deeplink_event_description">Al hacer clic en el widget, accederá a la carrera específica, en lugar de a la página de inicio.</string>
+
     <string name="settings_section_ads_title">Anuncios</string>
     <string name="settings_section_ads_description">Configuración de anuncios</string>
     <string name="settings_header_ads">Anuncios</string>
@@ -468,14 +477,6 @@
         <item quantity="many">Faltan %d días</item>
         <item quantity="other">Faltan %d días</item>
     </plurals>
-    <string name="widget_configure">Personalizar</string>
-    <string name="widget_settings_background_title">Mostrar fondo</string>
-    <string name="widget_settings_background_description">Haz que este widget tenga un color de fondo sólido</string>
-    <string name="widget_settings_click_to_event_title">Enlace profundo al evento</string>
-    <string name="widget_settings_click_to_event_description">Al hacer clic en el widget, se crea un enlace profundo al evento que se muestra</string>
-    <string name="widget_settings_weather_title">Mostrar el clima</string>
-    <string name="widget_settings_weather_description">Muestra un icono que simboliza el clima del evento, si está disponible</string>
-    <string name="widget_up_next_save">Guardar</string>
     <string name="dashboard_up_next_your_time">Hora del dispositivo</string>
     <string name="dashboard_up_next_shown_in_device_time">Todas las horas se muestran en tu zona horaria</string>
     <plurals name="dashboard_up_next_starts_in">

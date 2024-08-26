@@ -140,6 +140,7 @@ object Settings {
             isEnabled = isEnabled
         )
     }
+
     object Notifications {
         val notificationUpcoming = Setting.Section(
             _key = "notification_upcoming",
@@ -197,8 +198,34 @@ object Settings {
             isChecked = isChecked,
             isEnabled = isEnabled
         )
-
     }
+
+    object Widgets {
+        val widgets = Setting.Section(
+            _key = "widgets",
+            title = string.settings_section_widgets_title,
+            subtitle = string.settings_section_widgets_description,
+            icon = R.drawable.ic_settings_widgets
+        )
+        const val showBackground = "widgets_show_background"
+        fun showBackground(isChecked: Boolean, isEnabled: Boolean = true) = Setting.Switch(
+            _key = showBackground,
+            title = string.settings_section_widgets_show_background_title,
+            subtitle = string.settings_section_widgets_show_background_description,
+            isChecked = isChecked,
+            isEnabled = isEnabled
+        )
+        const val deeplinkToEvent = "widgets_deeplink_to_event"
+        fun deeplinkToEvent(isChecked: Boolean, isEnabled: Boolean = true) = Setting.Switch(
+            _key = deeplinkToEvent,
+            title = string.settings_section_widgets_deeplink_event_title,
+            subtitle = string.settings_section_widgets_deeplink_event_description,
+            isChecked = isChecked,
+            isEnabled = isEnabled,
+            isBeta = true
+        )
+    }
+
     object Ads {
         val ads = Setting.Section(
             _key = "ads",
