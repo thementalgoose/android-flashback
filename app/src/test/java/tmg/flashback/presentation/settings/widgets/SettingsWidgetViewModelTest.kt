@@ -24,7 +24,7 @@ class SettingsWidgetViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `temperature is true when pref is true`() = runTest(testDispatcher) {
+    fun `show background is true when pref is true`() = runTest(testDispatcher) {
         every { mockWidgetRepository.showBackground } returns true
 
         initUnderTest()
@@ -34,7 +34,7 @@ class SettingsWidgetViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `temperature is false when pref is false`() = runTest(testDispatcher) {
+    fun `show background is false when pref is false`() = runTest(testDispatcher) {
         every { mockWidgetRepository.showBackground } returns false
 
         initUnderTest()
@@ -44,12 +44,12 @@ class SettingsWidgetViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `click show temperature updates pref and updates value`() = runTest(testDispatcher) {
+    fun `click show background updates pref and updates value`() = runTest(testDispatcher) {
         every { mockWidgetRepository.showBackground } returns false
 
         initUnderTest()
         underTest.outputs.showBackground.test { awaitItem() }
-        underTest.inputs.prefClicked(Settings.Data.temperatureUnits(true))
+        underTest.inputs.prefClicked(Settings.Widgets.showBackground(true))
 
         verify {
             mockWidgetRepository.showBackground = true
@@ -58,7 +58,7 @@ class SettingsWidgetViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `windspeed metric is true when pref is true`() = runTest(testDispatcher) {
+    fun `deeplink event is true when pref is true`() = runTest(testDispatcher) {
         every { mockWidgetRepository.deeplinkToEvent } returns true
 
         initUnderTest()
@@ -68,7 +68,7 @@ class SettingsWidgetViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `windspeed metric is false when pref is false`() = runTest(testDispatcher) {
+    fun `deeplink event is false when pref is false`() = runTest(testDispatcher) {
         every { mockWidgetRepository.deeplinkToEvent } returns false
 
         initUnderTest()
@@ -78,12 +78,12 @@ class SettingsWidgetViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `click show windspeed metric updates pref and updates value`() = runTest(testDispatcher) {
+    fun `click show deeplink event updates pref and updates value`() = runTest(testDispatcher) {
         every { mockWidgetRepository.deeplinkToEvent } returns false
 
         initUnderTest()
         underTest.outputs.deeplinkToEvent.test { awaitItem() }
-        underTest.inputs.prefClicked(Settings.Data.windSpeedUnits(true))
+        underTest.inputs.prefClicked(Settings.Widgets.deeplinkToEvent(true))
 
         verify {
             mockWidgetRepository.deeplinkToEvent = true
