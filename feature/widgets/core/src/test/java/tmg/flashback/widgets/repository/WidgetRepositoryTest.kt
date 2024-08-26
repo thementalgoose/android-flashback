@@ -31,20 +31,20 @@ internal class WidgetRepositoryTest {
 
     @Test
     fun `up next - get show background`() {
-        every { mockPreferenceManager.getBoolean(keyWidgetShowBackground, false) } returns true
+        every { mockPreferenceManager.getBoolean(keyWidgetShowBackground, true) } returns true
 
         initUnderTest()
         assertTrue(underTest.showBackground)
 
         verify {
-            mockPreferenceManager.getBoolean(keyWidgetShowBackground, false)
+            mockPreferenceManager.getBoolean(keyWidgetShowBackground, true)
         }
     }
 
     @Test
     fun `up next - saving deeplink to event`() {
         initUnderTest()
-        underTest.showBackground = true
+        underTest.deeplinkToEvent = true
 
         verify {
             mockPreferenceManager.save(keyWidgetDeeplinkToEvent, true)
@@ -56,7 +56,7 @@ internal class WidgetRepositoryTest {
         every { mockPreferenceManager.getBoolean(keyWidgetDeeplinkToEvent, false) } returns true
 
         initUnderTest()
-        assertTrue(underTest.showBackground)
+        assertTrue(underTest.deeplinkToEvent)
 
         verify {
             mockPreferenceManager.getBoolean(keyWidgetDeeplinkToEvent, false)
