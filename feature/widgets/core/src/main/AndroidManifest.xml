@@ -4,11 +4,11 @@
     <application>
 
         <activity
-            android:name=".upnext.configure.UpNextConfigurationActivity"
+            android:name=".presentation.upnext.configure.UpNextConfigurationActivity"
             android:exported="true" />
 
         <receiver
-            android:name=".upnext.UpNextWidgetReceiver"
+            android:name=".presentation.upnext.UpNextWidgetReceiver"
             android:exported="true"
             android:label="@string/widget_up_next_title">
 

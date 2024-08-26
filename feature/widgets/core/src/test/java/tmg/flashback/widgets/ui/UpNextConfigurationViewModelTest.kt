@@ -8,7 +8,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import tmg.flashback.widgets.repository.WidgetRepository
-import tmg.flashback.widgets.upnext.configure.UpNextConfigurationViewModel
+import tmg.flashback.widgets.presentation.upnext.configure.UpNextConfigurationViewModel
 import tmg.flashback.widgets.usecases.UpdateWidgetsUseCaseImpl
 import tmg.testutils.BaseTest
 

@@ -5,7 +5,7 @@ import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import tmg.flashback.widgets.upnext.UpNextWidgetReceiver
+import tmg.flashback.widgets.presentation.upnext.UpNextWidgetReceiver
 
 internal fun Context.updateAllWidgets() {
     updateWidgets(UpNextWidgetReceiver::class.java)

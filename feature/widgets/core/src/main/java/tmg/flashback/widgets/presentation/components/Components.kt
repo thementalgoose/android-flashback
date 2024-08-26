@@ -1,4 +1,4 @@
-package tmg.flashback.widgets.presentation
+package tmg.flashback.widgets.presentation.components
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color

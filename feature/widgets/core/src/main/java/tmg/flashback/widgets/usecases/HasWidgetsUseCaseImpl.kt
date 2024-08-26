@@ -5,7 +5,7 @@ import android.content.ComponentName
 import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
 import tmg.flashback.widgets.contract.usecases.HasWidgetsUseCase
-import tmg.flashback.widgets.upnext.UpNextWidgetReceiver
+import tmg.flashback.widgets.presentation.upnext.UpNextWidgetReceiver
 import javax.inject.Inject
 
 internal class HasWidgetsUseCaseImpl @Inject constructor(

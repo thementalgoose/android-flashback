@@ -1,4 +1,4 @@
-package tmg.flashback.widgets.upnext.configure
+package tmg.flashback.widgets.presentation.upnext.configure
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
