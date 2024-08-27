@@ -5,6 +5,7 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
+import tmg.flashback.crashlytics.model.FirebaseKey
 import tmg.flashback.crashlytics.services.FirebaseCrashService
 import tmg.flashback.device.repository.PrivacyRepository
 
@@ -24,48 +25,42 @@ internal class InitialiseCrashReportingUseCaseTest {
 
     @Test
     fun `initialise sends metrics to crash service with feature enabled`() {
-        val deviceUdid = "deviceUdid"
-        val appOpenedCount = 1
-        val appOpenedFirst = LocalDate.of(2021, 1, 1)
+        val deviceUuid = "deviceUuid"
+        val keys = mapOf(FirebaseKey.AppFirstOpen to "X")
         every { mockPrivacyRepository.crashReporting } returns true
 
         initUnderTest()
         underTest.initialise(
-            deviceUdid = deviceUdid,
-            appOpenedCount = appOpenedCount,
-            appFirstOpened = appOpenedFirst
+            deviceUuid = deviceUuid,
+            extraKeys = keys,
         )
 
         verify {
             mockFirebaseCrashService.initialise(
                 enableCrashReporting = true,
-                deviceUdid = deviceUdid,
-                appFirstOpened = "01 Jan 2021",
-                appOpenedCount = appOpenedCount
+                deviceUuid = deviceUuid,
+                extraKeys = keys
             )
         }
     }
 
     @Test
     fun `initialise sends metrics to crash service with feature disabled`() {
-        val deviceUdid = "deviceUdid"
-        val appOpenedCount = 1
-        val appOpenedFirst = LocalDate.of(2021, 1, 1)
+        val deviceUuid = "deviceUuid"
+        val keys = mapOf(FirebaseKey.AppFirstOpen to "X")
         every { mockPrivacyRepository.crashReporting } returns false
 
         initUnderTest()
         underTest.initialise(
-            deviceUdid = deviceUdid,
-            appOpenedCount = appOpenedCount,
-            appFirstOpened = appOpenedFirst
+            deviceUuid = deviceUuid,
+            extraKeys = keys,
         )
 
         verify {
             mockFirebaseCrashService.initialise(
                 enableCrashReporting = false,
-                deviceUdid = deviceUdid,
-                appFirstOpened = "01 Jan 2021",
-                appOpenedCount = appOpenedCount
+                deviceUuid = deviceUuid,
+                extraKeys = keys
             )
         }
     }
