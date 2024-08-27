@@ -133,7 +133,7 @@ class DashboardNavViewModel @Inject constructor(
         viewModelScope.launch(ioDispatcher) {
             val result = dashboardSyncUseCase.sync()
             currentSeasonHolder.refresh()
-            crashlyticsManager.log("Dashboard synchronisation complete $result")
+            crashlyticsManager.log("Dashboard synchronisation complete. Changes found = $result")
         }
     }
 
