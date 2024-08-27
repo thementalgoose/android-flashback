@@ -20,53 +20,76 @@ internal class WidgetRepositoryTest {
     }
 
     @Test
-    fun `up next - saving show background to app widget id`() {
+    fun `up next - saving show background`() {
         initUnderTest()
-        underTest.setShowBackground(1, true)
+        underTest.showBackground = true
 
         verify {
-            mockPreferenceManager.save("${WIDGET_UP_NEXT_SHOW_BACKGROUND}_1", true)
+            mockPreferenceManager.save(keyWidgetShowBackground, true)
         }
     }
 
     @Test
-    fun `up next - get show background to app widget id`() {
-        every { mockPreferenceManager.getBoolean("${WIDGET_UP_NEXT_SHOW_BACKGROUND}_1", false) } returns true
+    fun `up next - get show background`() {
+        every { mockPreferenceManager.getBoolean(keyWidgetShowBackground, true) } returns true
 
         initUnderTest()
-        assertTrue(underTest.getShowBackground(1))
+        assertTrue(underTest.showBackground)
 
         verify {
-            mockPreferenceManager.getBoolean("${WIDGET_UP_NEXT_SHOW_BACKGROUND}_1", false)
+            mockPreferenceManager.getBoolean(keyWidgetShowBackground, true)
+        }
+    }
+
+    @Test
+    fun `up next - saving deeplink to event`() {
+        initUnderTest()
+        underTest.deeplinkToEvent = true
+
+        verify {
+            mockPreferenceManager.save(keyWidgetDeeplinkToEvent, true)
+        }
+    }
+
+    @Test
+    fun `up next - get deeplink to event`() {
+        every { mockPreferenceManager.getBoolean(keyWidgetDeeplinkToEvent, false) } returns true
+
+        initUnderTest()
+        assertTrue(underTest.deeplinkToEvent)
+
+        verify {
+            mockPreferenceManager.getBoolean(keyWidgetDeeplinkToEvent, false)
         }
     }
 
 
 
     @Test
-    fun `up next - saving show weather to app widget id`() {
+    fun `up next - saving show weather`() {
         initUnderTest()
-        underTest.setShowWeather(1, true)
+        underTest.showWeather = true
 
         verify {
-            mockPreferenceManager.save("${WIDGET_UP_NEXT_SHOW_WEATHER}_1", true)
+            mockPreferenceManager.save(keyWidgetShowWeather, true)
         }
     }
 
     @Test
-    fun `up next - get show weather to app widget id`() {
-        every { mockPreferenceManager.getBoolean("${WIDGET_UP_NEXT_SHOW_WEATHER}_1", false) } returns true
+    fun `up next - get show weather`() {
+        every { mockPreferenceManager.getBoolean(keyWidgetShowWeather, false) } returns true
 
         initUnderTest()
-        assertTrue(underTest.getShowWeather(1))
+        assertTrue(underTest.showWeather)
 
         verify {
-            mockPreferenceManager.getBoolean("${WIDGET_UP_NEXT_SHOW_WEATHER}_1", false)
+            mockPreferenceManager.getBoolean(keyWidgetShowWeather, false)
         }
     }
 
     companion object {
-        private const val WIDGET_UP_NEXT_SHOW_BACKGROUND = "widget_upnext_show_background"
-        private const val WIDGET_UP_NEXT_SHOW_WEATHER = "widget_upnext_show_weather"
+        private const val keyWidgetShowBackground: String = "WIDGET_SHOW_BACKGROUND"
+        private const val keyWidgetDeeplinkToEvent: String = "WIDGET_DEEPLINK_EVENT"
+        private const val keyWidgetShowWeather: String = "WIDGET_SHOW_WEATHER"
     }
 }

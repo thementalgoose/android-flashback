@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:configure="tmg.flashback.widgets.upnext.configure.UpNextConfigurationActivity"
     android:minWidth="90dp"
     android:minHeight="90dp"
     android:minResizeWidth="48dp"
@@ -14,6 +13,5 @@
     android:targetCellHeight="2"
     android:updatePeriodMillis="7200000"
     android:widgetCategory="home_screen|keyguard"
-    android:widgetFeatures="reconfigurable|configuration_optional"
     tools:ignore="UnusedAttribute" />
 <!--    android:initialLayout="@layout/widget_up_next"-->

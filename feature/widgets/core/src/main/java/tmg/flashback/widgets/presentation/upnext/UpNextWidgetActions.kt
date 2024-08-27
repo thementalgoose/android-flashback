@@ -1,4 +1,4 @@
-package tmg.flashback.widgets.upnext
+package tmg.flashback.widgets.presentation.upnext
 
 import android.appwidget.AppWidgetManager
 import android.content.Context
@@ -16,7 +16,7 @@ import java.util.UUID
 
 internal class UpNextWidgetOpenAll: ActionCallback {
 
-    override suspend fun onRun(
+    override suspend fun onAction(
         context: Context,
         glanceId: GlanceId,
         parameters: ActionParameters
@@ -31,7 +31,7 @@ internal class UpNextWidgetOpenEvent: ActionCallback {
     companion object {
         val PARAM_DATA = ActionParameters.Key<OverviewRace>("data")
     }
-    override suspend fun onRun(
+    override suspend fun onAction(
         context: Context,
         glanceId: GlanceId,
         parameters: ActionParameters
@@ -60,7 +60,7 @@ internal class UpNextWidgetOpenEvent: ActionCallback {
 }
 
 internal class UpNextWidgetRefreshWidget: ActionCallback {
-    override suspend fun onRun(
+    override suspend fun onAction(
         context: Context,
         glanceId: GlanceId,
         parameters: ActionParameters
