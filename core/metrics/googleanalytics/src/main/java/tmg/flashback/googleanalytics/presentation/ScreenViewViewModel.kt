@@ -13,7 +13,7 @@ interface ScreenViewViewModelOutputs
 
 @HiltViewModel
 class ScreenViewViewModel @Inject constructor(
-    private val firebaseAnalyticsManager: FirebaseAnalyticsManager
+    private val firebaseAnalyticsManager: FirebaseAnalyticsManager,
 ): ViewModel(), ScreenViewViewModelInputs, ScreenViewViewModelOutputs {
 
     val inputs: ScreenViewViewModelInputs = this
