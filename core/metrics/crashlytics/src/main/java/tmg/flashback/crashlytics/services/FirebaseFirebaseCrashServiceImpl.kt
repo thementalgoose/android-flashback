@@ -53,6 +53,10 @@ internal class FirebaseFirebaseCrashServiceImpl @Inject constructor(
         }
     }
 
+    override fun setCustomKey(key: FirebaseKey, value: String) {
+        FirebaseCrashlytics.getInstance().setCustomKey(key, value)
+    }
+
     override fun logError(msg: String) {
         FirebaseCrashlytics.getInstance().log(msg)
         if (BuildConfig.DEBUG) {
@@ -81,7 +85,7 @@ internal class FirebaseFirebaseCrashServiceImpl @Inject constructor(
 
     private fun FirebaseCrashlytics.setCustomKey(key: FirebaseKey, value: String) {
         if (BuildConfig.DEBUG) {
-            Log.d(TAG, "Setting ${key.label} = $value")
+            Log.d(TAG, "Custom Key: ${key.label} = $value")
         }
         this.setCustomKey(key.label, value)
     }

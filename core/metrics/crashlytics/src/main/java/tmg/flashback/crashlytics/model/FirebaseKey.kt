@@ -17,4 +17,5 @@ enum class FirebaseKey(
     AppFirstOpen("appFirstOpen"),
     AppOpenCount("appOpenCount"),
     WidgetCount("widgetCount"),
+    InstallationId("installationId"),
 }
