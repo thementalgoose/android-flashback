@@ -1,4 +1,4 @@
-package tmg.flashback.widgets.upnext
+package tmg.flashback.widgets.presentation.upnext
 
 import android.content.Context
 import android.util.Log
@@ -9,6 +9,8 @@ import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.datastore.core.DataStore
+import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
 import androidx.glance.Image
 import androidx.glance.ImageProvider
@@ -20,7 +22,10 @@ import androidx.glance.action.clickable
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.SizeMode
 import androidx.glance.appwidget.action.actionRunCallback
+import androidx.glance.appwidget.provideContent
+import androidx.glance.appwidget.updateIf
 import androidx.glance.background
+import androidx.glance.currentState
 import androidx.glance.layout.Alignment
 import androidx.glance.layout.Column
 import androidx.glance.layout.ColumnScope
@@ -32,6 +37,8 @@ import androidx.glance.layout.padding
 import androidx.glance.layout.size
 import androidx.glance.layout.width
 import androidx.glance.layout.wrapContentHeight
+import androidx.glance.state.GlanceStateDefinition
+import androidx.glance.state.PreferencesGlanceStateDefinition
 import androidx.glance.text.FontWeight
 import androidx.glance.text.TextAlign
 import kotlinx.coroutines.runBlocking
@@ -47,15 +54,16 @@ import tmg.flashback.ui.utils.DrawableUtils.getFlagResourceAlpha3
 import tmg.flashback.widgets.R
 import tmg.flashback.strings.R.string
 import tmg.flashback.widgets.di.WidgetsEntryPoints
-import tmg.flashback.widgets.presentation.TextBody
-import tmg.flashback.widgets.presentation.TextFeature
-import tmg.flashback.widgets.presentation.TextTitle
-import tmg.flashback.widgets.presentation.WidgetConfigurationData
-import tmg.flashback.widgets.presentation.getWidgetColourData
+import tmg.flashback.widgets.presentation.components.TextBody
+import tmg.flashback.widgets.presentation.components.TextFeature
+import tmg.flashback.widgets.presentation.components.TextTitle
+import tmg.flashback.widgets.presentation.components.WidgetColourData
+import tmg.flashback.widgets.presentation.components.getWidgetColourData
 import tmg.flashback.widgets.utils.BitmapUtils.getBitmapFromVectorDrawable
 import tmg.flashback.widgets.utils.appWidgetId
 import tmg.utilities.extensions.isInNightMode
 import tmg.utilities.extensions.startOfWeek
+import java.io.File
 
 class UpNextWidget : GlanceAppWidget() {
 
@@ -81,33 +89,46 @@ class UpNextWidget : GlanceAppWidget() {
         )
     )
 
+    override val stateDefinition: GlanceStateDefinition<UpNextConfiguration>
+        get() = object : GlanceStateDefinition<UpNextConfiguration> {
+            override suspend fun getDataStore(
+                context: Context,
+                fileKey: String
+            ): DataStore<UpNextConfiguration> {
+                return UpNextConfigurationDataStore(
+                    context = context,
+                    widgetRepository = WidgetsEntryPoints.get(context).widgetsRepository(),
+                    scheduleRepository = WidgetsEntryPoints.get(context).scheduleRepository(),
+                )
+            }
+
+            override fun getLocation(context: Context, fileKey: String): File {
+                throw NotImplementedError("Not implemented")
+            }
+        }
+
+
+    override suspend fun provideGlance(context: Context, id: GlanceId) {
+        Log.d("UpNextWidget", "provideGlance $id")
+        provideContent {
+            Log.d("UpNextWidget", "provideGlance -> provideContent $id")
+            val upNextConfiguration: UpNextConfiguration = currentState()
+            Content(upNextConfiguration)
+        }
+    }
+
     @Composable
-    override fun Content() {
+    private fun Content(
+        upNextConfiguration: UpNextConfiguration
+    ) {
         val context = LocalContext.current
-
-        Log.i("UpNextWidget", "provideGlance")
-
-        val overviewRace = getNextOverviewRace(context)
-        val widgetsRepository = WidgetsEntryPoints.get(context).widgetsRepository()
-
-        Log.i("UpNextWidget", "Next race found $overviewRace")
-
-        val appWidgetId = LocalGlanceId.current.appWidgetId
-        val widgetData = getWidgetColourData(
-            context,
-            showBackground = widgetsRepository.getShowBackground(appWidgetId),
-            isDarkMode = context.isInNightMode()
-        )
-        if (overviewRace != null) {
-
+        if (upNextConfiguration.scheduleData != null) {
             val config = LocalSize.current
-            Log.i("UpNextWidget", "Loading config $config")
-
-            val modifier = when (widgetsRepository.getClickToEvent(appWidgetId)) {
+            val modifier = when (upNextConfiguration.deeplinkToEvent) {
                 true -> GlanceModifier.clickable(
                     actionRunCallback<UpNextWidgetOpenEvent>(
                         actionParametersOf(
-                            UpNextWidgetOpenEvent.PARAM_DATA to overviewRace,
+                            UpNextWidgetOpenEvent.PARAM_DATA to upNextConfiguration.scheduleData,
                         )
                     )
                 )
@@ -115,18 +136,20 @@ class UpNextWidget : GlanceAppWidget() {
                 false -> GlanceModifier.clickable(actionRunCallback<UpNextWidgetOpenAll>())
             }
 
+            Log.d("UpNextWidget", "Rendering widget ${LocalGlanceId.current.appWidgetId} with $upNextConfiguration")
+
             when (config) {
                 configIcon -> Icon(
                     context,
-                    widgetData,
-                    overviewRace,
+                    upNextConfiguration.widgetColourData,
+                    upNextConfiguration.scheduleData,
                     modifier = modifier,
                 )
 
                 configRaceOnlyCompressed -> RaceOnly(
                     context,
-                    widgetData,
-                    overviewRace,
+                    upNextConfiguration.widgetColourData,
+                    upNextConfiguration.scheduleData,
                     timeSize = 22.sp,
                     showRefresh = false,
                     modifier = modifier,
@@ -134,8 +157,8 @@ class UpNextWidget : GlanceAppWidget() {
 
                 configRaceOnly -> RaceOnly(
                     context,
-                    widgetData,
-                    overviewRace,
+                    upNextConfiguration.widgetColourData,
+                    upNextConfiguration.scheduleData,
                     timeSize = 30.sp,
                     showRefresh = true,
                     modifier = modifier,
@@ -143,32 +166,32 @@ class UpNextWidget : GlanceAppWidget() {
 
                 configRaceScheduleFullList -> RaceScheduleFullList(
                     context,
-                    widgetData,
-                    overviewRace,
+                    upNextConfiguration.widgetColourData,
+                    upNextConfiguration.scheduleData,
                     modifier = modifier,
                     showTrackIcon = false
                 )
 
                 configRaceScheduleFullListTrackIcon -> RaceScheduleFullList(
                     context,
-                    widgetData,
-                    overviewRace,
+                    upNextConfiguration.widgetColourData,
+                    upNextConfiguration.scheduleData,
                     modifier = modifier,
                     showTrackIcon = true
                 )
 
                 configRaceScheduleFullListLargeRace -> RaceScheduleFullListLargeRace(
                     context,
-                    widgetData,
-                    overviewRace,
+                    upNextConfiguration.widgetColourData,
+                    upNextConfiguration.scheduleData,
                     modifier = modifier,
                     showTrackIcon = false
                 )
 
                 configRaceScheduleFullListLargeRaceTrackIcon -> RaceScheduleFullListLargeRace(
                     context,
-                    widgetData,
-                    overviewRace,
+                    upNextConfiguration.widgetColourData,
+                    upNextConfiguration.scheduleData,
                     modifier = modifier,
                     showTrackIcon = true
                 )
@@ -182,7 +205,7 @@ class UpNextWidget : GlanceAppWidget() {
             Log.i("UpNextWidget", "No race found, showing fallback")
             NoRace(
                 context,
-                widgetData,
+                upNextConfiguration.widgetColourData,
                 modifier = GlanceModifier.clickable(actionRunCallback<UpNextWidgetRefreshWidget>()),
             )
         }
@@ -242,7 +265,7 @@ private fun OverviewRace.labels(): Pair<String, String> {
 @Composable
 internal fun Icon(
     context: Context,
-    widgetData: WidgetConfigurationData,
+    widgetData: WidgetColourData,
     overviewRace: OverviewRace,
     modifier: GlanceModifier = GlanceModifier,
 ) {
@@ -286,7 +309,7 @@ internal fun Icon(
 @Composable
 internal fun RaceOnly(
     context: Context,
-    widgetData: WidgetConfigurationData,
+    widgetData: WidgetColourData,
     overviewRace: OverviewRace,
     timeSize: TextUnit = 28.sp,
     showRefresh: Boolean = false,
@@ -341,7 +364,7 @@ internal fun RaceOnly(
 @Composable
 internal fun RaceScheduleFullListLargeRace(
     context: Context,
-    widgetData: WidgetConfigurationData,
+    widgetData: WidgetColourData,
     overviewRace: OverviewRace,
     showTrackIcon: Boolean,
     modifier: GlanceModifier = GlanceModifier,
@@ -406,7 +429,7 @@ internal fun RaceScheduleFullListLargeRace(
 @Composable
 internal fun RaceScheduleFullList(
     context: Context,
-    widgetData: WidgetConfigurationData,
+    widgetData: WidgetColourData,
     overviewRace: OverviewRace,
     modifier: GlanceModifier = GlanceModifier,
     showTrackIcon: Boolean
@@ -487,7 +510,7 @@ internal fun RaceScheduleFullList(
 @Composable
 private fun NoRace(
     context: Context,
-    widgetData: WidgetConfigurationData,
+    widgetData: WidgetColourData,
     modifier: GlanceModifier = GlanceModifier
 ) {
     Column(
@@ -519,7 +542,7 @@ private fun NoRace(
 private fun ColumnScope.FeatureDate(
     featureTextSize: TextUnit = 32.sp,
     overviewRace: OverviewRace,
-    widgetData: WidgetConfigurationData
+    widgetData: WidgetColourData
 ) {
     val raceSchedule = overviewRace.raceSchedule()
     if (raceSchedule != null) {
@@ -587,7 +610,7 @@ private fun TrackIcon(
 private fun Schedule(
     model: Schedule,
     compressed: Boolean,
-    widgetData: WidgetConfigurationData,
+    widgetData: WidgetColourData,
     modifier: GlanceModifier = GlanceModifier
 ) {
     val deviceLocaleTime = model.timestamp.deviceLocalDateTime
