@@ -1,5 +1,6 @@
 package tmg.flashback
 
+import android.appwidget.AppWidgetManager
 import android.content.Intent
 import android.os.Build
 import android.util.Log
@@ -14,19 +15,25 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import tmg.flashback.strings.R.string
 import tmg.flashback.ads.ads.usecases.InitialiseAdsUseCase
-import tmg.flashback.googleanalytics.UserProperty.APP_VERSION
 import tmg.flashback.googleanalytics.UserProperty.DEVICE_MODEL
 import tmg.flashback.googleanalytics.UserProperty.DEVICE_THEME
 import tmg.flashback.googleanalytics.UserProperty.OS_VERSION
 import tmg.flashback.googleanalytics.UserProperty.WIDGET_USAGE
 import tmg.flashback.googleanalytics.manager.FirebaseAnalyticsManager
 import tmg.flashback.configuration.usecases.InitialiseConfigUseCase
+import tmg.flashback.crashlytics.model.FirebaseKey
+import tmg.flashback.crashlytics.services.FirebaseCrashService
 import tmg.flashback.crashlytics.usecases.InitialiseCrashReportingUseCase
+import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.device.repository.DeviceRepository
 import tmg.flashback.device.repository.PrivacyRepository
 import tmg.flashback.device.usecases.AppOpenedUseCase
 import tmg.flashback.device.usecases.GetDeviceInfoUseCase
 import tmg.flashback.formula1.constants.Formula1
+import tmg.flashback.googleanalytics.UserProperty.APP_VERSION
+import tmg.flashback.googleanalytics.UserProperty.DEVICE_BOARD
+import tmg.flashback.googleanalytics.UserProperty.DEVICE_BRAND
+import tmg.flashback.googleanalytics.UserProperty.DEVICE_MANUFACTURER
 import tmg.flashback.notifications.managers.SystemNotificationManager
 import tmg.flashback.notifications.usecases.RemoteNotificationSubscribeUseCase
 import tmg.flashback.notifications.usecases.RemoteNotificationUnsubscribeUseCase
@@ -42,6 +49,7 @@ import tmg.flashback.ui.model.Theme
 import tmg.flashback.ui.repository.ThemeRepository
 import tmg.flashback.widgets.contract.usecases.HasWidgetsUseCase
 import tmg.flashback.widgets.contract.usecases.UpdateWidgetsUseCase
+import tmg.utilities.extensions.format
 import tmg.utilities.extensions.isInDayMode
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -59,7 +67,9 @@ class FlashbackStartup @Inject constructor(
     private val initialiseCrashReportingUseCase: InitialiseCrashReportingUseCase,
     private val notificationRepository: NotificationsRepository,
     private val themeRepository: ThemeRepository,
+    private val buildConfigManager: BuildConfigManager,
     private val firebaseAnalyticsManager: FirebaseAnalyticsManager,
+    private val firebaseCrashService: FirebaseCrashService,
     private val initialiseConfigUseCase: InitialiseConfigUseCase,
     private val systemNotificationManager: SystemNotificationManager,
     private val remoteNotificationSubscribeUseCase: RemoteNotificationSubscribeUseCase,
@@ -114,15 +124,15 @@ class FlashbackStartup @Inject constructor(
 
         // App Startup
         appOpenedUseCase.run()
-        applicationScope.launch(Dispatchers.IO) {
-            appOpenedUseCase.preload()
-        }
 
         // Crash Reporting
         initialiseCrashReportingUseCase.initialise(
-            deviceUdid = deviceRepository.deviceUdid,
-            appOpenedCount = deviceRepository.appOpenedCount,
-            appFirstOpened = deviceRepository.appFirstOpened
+            deviceUuid = deviceRepository.deviceUdid,
+            extraKeys = mapOf(
+                FirebaseKey.AppOpenCount to deviceRepository.appOpenedCount.toString(),
+                FirebaseKey.AppFirstOpen to (deviceRepository.appFirstOpened.format("dd MMM yyyy") ?: "-"),
+                FirebaseKey.WidgetCount to if (hasWidgetsUseCase.hasWidgets()) "true" else "false",
+            )
         )
 
         // Adverts
@@ -136,7 +146,7 @@ class FlashbackStartup @Inject constructor(
         // Notifications
         val notificationUpcoming = "upcoming"
         systemNotificationManager.createGroup(notificationUpcoming, application.getString(string.notification_channel_title_upcoming))
-        NotificationUpcoming.values().filter { it != NotificationUpcoming.OTHER }.forEach {
+        NotificationUpcoming.entries.filter { it != NotificationUpcoming.OTHER }.forEach {
             systemNotificationManager.createChannel(
                 it.channelId,
                 it.channelLabel,
@@ -152,7 +162,7 @@ class FlashbackStartup @Inject constructor(
 
         val notificationResultIds = "results"
         systemNotificationManager.createGroup(notificationResultIds, application.getString(string.notification_channel_title_results))
-        NotificationResultsAvailable.values().forEach { results ->
+        NotificationResultsAvailable.entries.forEach { results ->
             systemNotificationManager.createChannel(
                 results.channelId,
                 results.channelLabel,
@@ -160,7 +170,7 @@ class FlashbackStartup @Inject constructor(
             )
         }
         applicationScope.launch(Dispatchers.IO) {
-            NotificationResultsAvailable.values().forEach { result ->
+            NotificationResultsAvailable.entries.forEach { result ->
                 when (notificationRepository.isEnabled(result)) {
                     true -> remoteNotificationSubscribeUseCase.subscribe(result.remoteSubscriptionTopic)
                     false -> remoteNotificationUnsubscribeUseCase.unsubscribe(result.remoteSubscriptionTopic)
@@ -175,9 +185,12 @@ class FlashbackStartup @Inject constructor(
 
         // Initialise user properties
         firebaseAnalyticsManager.initialise(userId = deviceRepository.deviceUdid)
-        firebaseAnalyticsManager.setUserProperty(DEVICE_MODEL, Build.MODEL)
+        firebaseAnalyticsManager.setUserProperty(APP_VERSION, buildConfigManager.versionName)
         firebaseAnalyticsManager.setUserProperty(OS_VERSION, Build.VERSION.SDK_INT.toString())
-        firebaseAnalyticsManager.setUserProperty(APP_VERSION, BuildConfig.VERSION_NAME)
+        firebaseAnalyticsManager.setUserProperty(DEVICE_BOARD, Build.BOARD)
+        firebaseAnalyticsManager.setUserProperty(DEVICE_MODEL, Build.MODEL)
+        firebaseAnalyticsManager.setUserProperty(DEVICE_BRAND, Build.BRAND)
+        firebaseAnalyticsManager.setUserProperty(DEVICE_MANUFACTURER, Build.MANUFACTURER)
         firebaseAnalyticsManager.setUserProperty(WIDGET_USAGE, if (hasWidgetsUseCase.hasWidgets()) "true" else "false")
         firebaseAnalyticsManager.setUserProperty(
             DEVICE_THEME, when (themeRepository.nightMode) {
@@ -186,6 +199,11 @@ class FlashbackStartup @Inject constructor(
                 NightMode.DEFAULT -> if (application.isInDayMode()) "day (default)" else "night (default)"
             }
         )
+
+        applicationScope.launch(Dispatchers.IO) {
+            appOpenedUseCase.preload()
+            firebaseCrashService.setCustomKey(FirebaseKey.InstallationId, deviceRepository.installationId)
+        }
 
         // Update Widgets
         updateWidgetsUseCase.update()
