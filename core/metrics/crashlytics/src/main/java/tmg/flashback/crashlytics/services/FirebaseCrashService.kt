@@ -12,6 +12,7 @@ interface FirebaseCrashService {
         deviceUuid: String,
         extraKeys: Map<FirebaseKey, String>
     )
+    fun setCustomKey(key: FirebaseKey, value: String)
     fun logInfo(msg: String)
     fun logError(msg: String)
     fun logException(error: Exception, context: String)
