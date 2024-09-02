@@ -3,13 +3,14 @@ package tmg.flashback.web.ui.browser
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Test
+import tmg.flashback.device.usecases.OpenUrlUseCase
 import tmg.flashback.web.presentation.browser.WebViewModel
 import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.flashback.web.usecases.ShareUseCase
 
 internal class WebViewModelTest {
 
-    private val mockOpenWebpageUseCase: OpenWebpageUseCase = mockk(relaxed = true)
+    private val mockOpenWebpageUseCase: OpenUrlUseCase = mockk(relaxed = true)
     private val mockShareUseCase: ShareUseCase = mockk(relaxed = true)
 
     private lateinit var underTest: WebViewModel
@@ -26,7 +27,7 @@ internal class WebViewModelTest {
         initUnderTest()
         underTest.openWebpage("url")
         verify {
-            mockOpenWebpageUseCase.open("url", "", true)
+            mockOpenWebpageUseCase.openUrl("url")
         }
     }
 
