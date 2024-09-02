@@ -19,21 +19,14 @@ class OpenUrlUseCase @Inject constructor(
     private val context: Context,
     private val topActivityProvider: ActivityProvider,
 ) {
-    fun openUrl(url: String) {
+    fun openUrl(url: String): Boolean {
         try {
-            when {
-                url.isPlayStore() || url.isYoutube() -> {
-                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-                    topActivityProvider.activity?.startActivity(intent)
-                }
-
-                else -> {
-                    val intent = webpageIntent(url)
-                    topActivityProvider.activity?.startActivity(intent)
-                }
-            }
+            val intent = webpageIntent(url)
+            topActivityProvider.activity?.startActivity(intent)
+            return true
         } catch (e: ActivityNotFoundException) {
             copyToClipboard(context, url)
+            return false
         }
     }
 
@@ -66,13 +59,5 @@ class OpenUrlUseCase @Inject constructor(
         targetIntent.selector = browserSelectorIntent
 
         return targetIntent
-    }
-
-    private fun String.isPlayStore(): Boolean {
-        return this.startsWith("https://play.google.com")
-    }
-    private fun String.isYoutube(): Boolean {
-        return this.startsWith("https://youtube.com") || this.startsWith("https://www.youtube.com") ||
-                this.startsWith("https://youtu.be") || this.startsWith(("https://www.youtu.be"))
     }
 }
