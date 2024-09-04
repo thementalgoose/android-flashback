@@ -25,6 +25,9 @@ class OpenWebpageUseCase @Inject constructor(
     fun open(activity: Activity, url: String, title: String, forceExternal: Boolean = false) {
         firebaseAnalyticsManager.logEvent("Opening URL", mapOf("url" to url, "title" to title))
         when {
+            url.isPlayStore() || url.isYoutube() -> {
+                openUrlUseCase.openUrl(url)
+            }
             forceExternal || (webBrowserRepository.openInExternal && URLUtil.isValidUrl(url)) -> {
                 openUrlUseCase.openUrl(url)
             }
@@ -37,6 +40,16 @@ class OpenWebpageUseCase @Inject constructor(
                     )
                 )
             }
+        }
+    }
+
+    companion object {
+        private fun String.isPlayStore(): Boolean {
+            return this.startsWith("https://play.google.com")
+        }
+        private fun String.isYoutube(): Boolean {
+            return this.startsWith("https://youtube.com") || this.startsWith("https://www.youtube.com") ||
+                    this.startsWith("https://youtu.be") || this.startsWith(("https://www.youtu.be"))
         }
     }
 }
