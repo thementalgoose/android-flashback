@@ -1,6 +1,7 @@
 package tmg.flashback.navigation
 
 import androidx.navigation.NavHostController
+import androidx.navigation.NavOptions
 import androidx.navigation.NavOptionsBuilder
 import io.mockk.mockk
 import io.mockk.slot
@@ -33,11 +34,11 @@ internal class NavigatorTest {
         initUnderTest()
         underTest.navigate(destination)
 
-        val dest = slot<String>()
+        val dest = slot<NavigationDestination>()
         verify {
-            mockNavController.navigate(capture(dest), any<NavOptionsBuilder.() -> Unit>())
+            mockNavController.navigate(capture(dest), any<NavOptions>(), any<androidx.navigation.Navigator.Extras>())
             mockCrashlyticsManager.log(any())
         }
-        assertEquals(destination.route, dest.captured)
+        assertEquals("route", dest.captured.route)
     }
 }
