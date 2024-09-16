@@ -4,10 +4,6 @@ import app.cash.turbine.test
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.verify
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
@@ -21,9 +17,7 @@ import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.model.SeasonDriverStandingSeason
 import tmg.flashback.formula1.model.SeasonDriverStandings
 import tmg.flashback.formula1.model.model
-import tmg.flashback.navigation.Navigator
 import tmg.flashback.season.presentation.dashboard.shared.seasonpicker.CurrentSeasonHolder
-import tmg.flashback.season.usecases.DefaultSeasonUseCase
 import tmg.testutils.BaseTest
 
 internal class DriverStandingsViewModelTest: BaseTest() {
@@ -117,7 +111,16 @@ internal class DriverStandingsViewModelTest: BaseTest() {
         initUnderTest()
         underTest.inputs.selectDriver(standing1)
         underTest.outputs.uiState.test {
-            assertEquals(standing1, awaitItem().currentlySelected)
+            assertEquals(standing1, (awaitItem().currentlySelected as Selected.Driver).driver)
+        }
+    }
+
+    @Test
+    fun `selecting comparison updates state`() = runTest {
+        initUnderTest()
+        underTest.inputs.selectComparison()
+        underTest.outputs.uiState.test {
+            assertEquals(Selected.Comparison, awaitItem().currentlySelected)
         }
     }
 
@@ -126,7 +129,7 @@ internal class DriverStandingsViewModelTest: BaseTest() {
         initUnderTest()
         underTest.inputs.selectDriver(standing1)
         underTest.outputs.uiState.test {
-            assertEquals(standing1, awaitItem().currentlySelected)
+            assertEquals(standing1, (awaitItem().currentlySelected as Selected.Driver).driver)
 
             underTest.inputs.closeDriverDetails()
 
