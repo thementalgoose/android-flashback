@@ -19,6 +19,7 @@ import javax.inject.Inject
 
 interface DriverStandingsViewModelInputs {
     fun selectDriver(driver: SeasonDriverStandingSeason)
+    fun selectComparison()
     fun closeDriverDetails()
     fun refresh()
 }
@@ -58,7 +59,11 @@ class DriverStandingsViewModel @Inject constructor(
     }
 
     override fun selectDriver(driver: SeasonDriverStandingSeason) {
-        uiState.value = uiState.value.copy(currentlySelected = driver)
+        uiState.value = uiState.value.copy(currentlySelected = Selected.Driver(driver))
+    }
+
+    override fun selectComparison() {
+        uiState.value = uiState.value.copy(currentlySelected = Selected.Comparison)
     }
 
     override fun closeDriverDetails() {

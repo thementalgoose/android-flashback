@@ -9,5 +9,12 @@ data class DriverStandingsScreenState(
     val isLoading: Boolean = true,
     val networkAvailable: Boolean = true,
     val maxPoints: Double = 0.0,
-    val currentlySelected: SeasonDriverStandingSeason? = null
+    val currentlySelected: Selected? = null
 )
+
+sealed class Selected {
+    data class Driver(
+        val driver: SeasonDriverStandingSeason
+    ): Selected()
+    data object Comparison: Selected()
+}
