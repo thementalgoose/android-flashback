@@ -50,8 +50,10 @@ fun ProgressBar(
     endProgress: Float,
     label: (Float) -> String,
     modifier: Modifier = Modifier,
+    reverse: Boolean = false,
     initialValue: Float = 0f,
     animationDuration: Int = 400,
+    radius: Dp = AppTheme.dimens.radiusSmall,
     textPadding: Dp = AppTheme.dimens.small,
     barColor: Color = AppTheme.colors.primary,
     barOnColor: Color =  when (contrastTextLight(barColor.toArgb())) {
@@ -71,7 +73,7 @@ fun ProgressBar(
             .clearAndSetSemantics {
                 this.contentDescription = contentDescription
             }
-            .clip(RoundedCornerShape(AppTheme.dimens.radiusSmall))
+            .clip(RoundedCornerShape(radius))
     ) {
         val progressState = remember { mutableStateOf(initialValue) }
         val progress = animateFloatAsState(
@@ -93,43 +95,78 @@ fun ProgressBar(
                 .background(backgroundColor)
         )
 
-        Box(
-            modifier = Modifier
+        if (!reverse) {
+            Box(modifier = Modifier
                 .size(
                     width = maxWidth * progress,
                     height = maxHeight
                 )
-                .clip(RoundedCornerShape(AppTheme.dimens.radiusSmall))
+                .clip(RoundedCornerShape(radius))
                 .background(barColor)
-        )
-
-        MeasureTextWidth(
-            text = label(endProgress.coerceIn(0f, 1f)),
-            modifier = Modifier
-                .align(Alignment.CenterStart)
-        ) { textWidth ->
-
-            val onBar = when {
-                maxWidth * progress > ((textPadding * 2) + textWidth) -> true
-                else -> false
-            }
-
-            Text(
-                text = label(progress),
-                style = AppTheme.typography.body1.copy(
-                    color = when (onBar) {
-                        true -> barOnColor
-                        false -> backgroundOnColor
+            )
+            MeasureTextWidth(
+                text = label(endProgress.coerceIn(0f, 1f)),
+                modifier = Modifier.align(Alignment.CenterStart),
+                content = { textWidth ->
+                    val onBar = when {
+                        maxWidth * progress > ((textPadding * 2) + textWidth) -> true
+                        else -> false
                     }
-                ),
-                modifier = Modifier
-                    .align(Alignment.CenterStart)
-                    .offset(
-                        x = when (onBar) {
-                            true -> (maxWidth * progress) - (textWidth + textPadding)
-                            false -> (maxWidth * progress) + textPadding
-                        }
+                    Text(
+                        text = label(progress),
+                        style = AppTheme.typography.body1.copy(
+                            color = when (onBar) {
+                                true -> barOnColor
+                                false -> backgroundOnColor
+                            }
+                        ),
+                        modifier = Modifier
+                            .align(Alignment.CenterStart)
+                            .offset(
+                                x = when (onBar) {
+                                    true -> (maxWidth * progress) - (textWidth + textPadding)
+                                    false -> (maxWidth * progress) + textPadding
+                                }
+                            )
                     )
+                }
+            )
+        } else {
+            Box(modifier = Modifier
+                .size(
+                    width = (maxWidth * progress),
+                    height = maxHeight
+                )
+                .offset(x = (maxWidth * (1 - progress)))
+                .clip(RoundedCornerShape(radius))
+                .background(barColor)
+            )
+            MeasureTextWidth(
+                text = label(endProgress.coerceIn(0f, 1f)),
+                modifier = Modifier.align(Alignment.CenterStart),
+                content = { textWidth ->
+                    val onBar = when {
+                        maxWidth * (1 - progress) > ((textPadding * 2) + textWidth) -> true
+                        else -> false
+                    }
+                    Text(
+                        text = label(progress),
+                        style = AppTheme.typography.body1.copy(
+                            color = when (onBar) {
+                                true -> backgroundOnColor
+                                false -> barOnColor
+                            }
+                        ),
+                        modifier = Modifier
+                            .align(Alignment.CenterStart)
+                            .offset(
+                                x = when (onBar) {
+                                    true -> (maxWidth * (1 - progress)) - (textWidth + textPadding)
+                                    false -> (maxWidth * (1 - progress)) + textPadding
+                                }
+                            )
+                    )
+                }
             )
         }
 
@@ -174,6 +211,52 @@ private fun Preview95() {
     AppThemePreview(isLight = true) {
         Box(modifier = Modifier.size(width = 100.dp, height = 30.dp)) {
             ProgressBar(
+                endProgress = 0.95f,
+                initialValue = 0.95f,
+                label = { "$it" }
+            )
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun Preview10Reverse() {
+    AppThemePreview(isLight = true) {
+        Box(modifier = Modifier.size(width = 180.dp, height = 40.dp)) {
+            ProgressBar(
+                reverse = true,
+                endProgress = 0.1f,
+                initialValue = 0.1f,
+                label = { "$it" }
+            )
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun Preview50Reverse() {
+    AppThemePreview(isLight = true) {
+        Box(modifier = Modifier.size(width = 100.dp, height = 50.dp)) {
+            ProgressBar(
+                reverse = true,
+                endProgress = 0.5f,
+                initialValue = 0.5f,
+                label = { "$it" }
+            )
+        }
+    }
+}
+
+
+@Preview
+@Composable
+private fun Preview95Reverse() {
+    AppThemePreview(isLight = true) {
+        Box(modifier = Modifier.size(width = 100.dp, height = 30.dp)) {
+            ProgressBar(
+                reverse = true,
                 endProgress = 0.95f,
                 initialValue = 0.95f,
                 label = { "$it" }
