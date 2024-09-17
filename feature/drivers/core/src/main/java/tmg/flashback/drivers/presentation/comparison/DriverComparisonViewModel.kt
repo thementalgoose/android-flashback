@@ -57,8 +57,15 @@ class DriverComparisonViewModel @Inject constructor(
     )
 
     override fun setup(season: Int) {
-        this.seasonValue = season
-        refresh()
+        if (this.seasonValue != season) {
+            this.seasonValue = season
+            this.uiState.value = DriverComparisonScreenState(
+                isLoading = true,
+                networkAvailable = networkConnectivityManager.isConnected,
+                driverList = emptyList(),
+            )
+            refresh()
+        }
     }
 
     override fun selectDriverLeft(driverId: String?) {
@@ -194,6 +201,19 @@ class DriverComparisonViewModel @Inject constructor(
             }
             .collapseInts()
 
+        val leftConstructors = season
+            .racesForDriver(driverLeft, driverRight)
+            .map { (left, _) ->
+                left.entry.constructor
+            }
+            .distinct()
+        val rightConstructors = season
+            .racesForDriver(driverLeft, driverRight)
+            .map { (_, right) ->
+                right.entry.constructor
+            }
+            .distinct()
+
         return Comparison(
             left = ComparisonValue(
                 racesHeadToHead = driverLeftFinishes,
@@ -204,6 +224,7 @@ class DriverComparisonViewModel @Inject constructor(
                 wins = driverLeftWins,
                 dnfs = driverLeftDNFs
             ),
+            leftConstructors = leftConstructors,
             right = ComparisonValue(
                 racesHeadToHead = driverRightFinishes,
                 qualifyingHeadToHead = driverRightQualifying,
@@ -212,7 +233,8 @@ class DriverComparisonViewModel @Inject constructor(
                 podiums = driverRightPodiums,
                 wins = driverRightWins,
                 dnfs = driverRightDNFs
-            )
+            ),
+            rightConstructors = rightConstructors
         )
     }
 
