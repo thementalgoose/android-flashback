@@ -301,11 +301,10 @@ private fun ItemComparison(
         ) {
             Row(Modifier.weight(1f)) {
                 ProgressBar(
-                    radius = 0.dp,
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(48.dp),
-                    backgroundColor = AppTheme.colors.backgroundTertiary,
+                    backgroundColor = AppTheme.colors.backgroundSecondary,
                     barColor = leftColour,
                     endProgress = leftPercentage,
                     label = { left },
@@ -315,68 +314,12 @@ private fun ItemComparison(
             Box(Modifier.width(2.dp))
             Row(Modifier.weight(1f)) {
                 ProgressBar(
-                    radius = 0.dp,
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(48.dp),
-                    backgroundColor = AppTheme.colors.backgroundTertiary,
+                    backgroundColor = AppTheme.colors.backgroundSecondary,
                     barColor = rightColour,
                     endProgress = rightPercentage,
-                    label = { right },
-                    reverse = false,
-                )
-            }
-        }
-    }
-}
-
-@Composable
-private fun ItemComparison(
-    label: String,
-    left: String,
-    leftProgress: Float,
-    right: String,
-    rightProgress: Float,
-    modifier: Modifier = Modifier,
-) {
-    Column(modifier = modifier.padding(top = AppTheme.dimens.small)) {
-        TextTitle(
-            text = label,
-            bold = true,
-            textAlign = TextAlign.Center,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(
-                    horizontal = AppTheme.dimens.medium,
-                    vertical = AppTheme.dimens.small
-                )
-        )
-        Row(modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = AppTheme.dimens.medium)
-        ) {
-            Row(Modifier.weight(1f)) {
-                ProgressBar(
-                    radius = 0.dp,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(48.dp),
-                    backgroundColor = AppTheme.colors.backgroundTertiary,
-                    barColor = AppTheme.colors.primary,
-                    endProgress = leftProgress,
-                    label = { left },
-                    reverse = true,
-                )
-            }
-            Row(Modifier.weight(1f)) {
-                ProgressBar(
-                    radius = 0.dp,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(48.dp),
-                    backgroundColor = AppTheme.colors.backgroundTertiary,
-                    barColor = AppTheme.colors.primary,
-                    endProgress = rightProgress,
                     label = { right },
                     reverse = false,
                 )
