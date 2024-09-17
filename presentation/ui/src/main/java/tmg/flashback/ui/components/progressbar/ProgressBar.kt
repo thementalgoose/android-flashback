@@ -6,10 +6,15 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -24,6 +29,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -56,7 +62,7 @@ fun ProgressBar(
     radius: Dp = AppTheme.dimens.radiusSmall,
     textPadding: Dp = AppTheme.dimens.small,
     barColor: Color = AppTheme.colors.primary,
-    barOnColor: Color =  when (contrastTextLight(barColor.toArgb())) {
+    barOnColor: Color =  when (contrastTextLight(barColor.toArgb(), threshold = 140)) {
         true -> Color.White
         false -> Color.Black
     },
@@ -114,7 +120,8 @@ fun ProgressBar(
                     }
                     Text(
                         text = label(progress),
-                        style = AppTheme.typography.body1.copy(
+                        style = AppTheme.typography.title.copy(
+                            fontWeight = FontWeight.Bold,
                             color = when (onBar) {
                                 true -> barOnColor
                                 false -> backgroundOnColor
@@ -151,7 +158,8 @@ fun ProgressBar(
                     }
                     Text(
                         text = label(progress),
-                        style = AppTheme.typography.body1.copy(
+                        style = AppTheme.typography.title.copy(
+                            fontWeight = FontWeight.Bold,
                             color = when (onBar) {
                                 true -> backgroundOnColor
                                 false -> barOnColor
@@ -176,12 +184,15 @@ fun ProgressBar(
     }
 }
 
+private val PREVIEW_COLOUR = Color(0xFF00D2BE)
+
 @Preview
 @Composable
 private fun Preview10() {
     AppThemePreview(isLight = true) {
         Box(modifier = Modifier.size(width = 180.dp, height = 40.dp)) {
             ProgressBar(
+                barColor = PREVIEW_COLOUR,
                 endProgress = 0.1f,
                 initialValue = 0.1f,
                 label = { "$it" }
@@ -196,6 +207,7 @@ private fun Preview50() {
     AppThemePreview(isLight = true) {
         Box(modifier = Modifier.size(width = 100.dp, height = 50.dp)) {
             ProgressBar(
+                barColor = PREVIEW_COLOUR,
                 endProgress = 0.5f,
                 initialValue = 0.5f,
                 label = { "$it" }
@@ -211,6 +223,7 @@ private fun Preview95() {
     AppThemePreview(isLight = true) {
         Box(modifier = Modifier.size(width = 100.dp, height = 30.dp)) {
             ProgressBar(
+                barColor = PREVIEW_COLOUR,
                 endProgress = 0.95f,
                 initialValue = 0.95f,
                 label = { "$it" }
@@ -225,6 +238,7 @@ private fun Preview10Reverse() {
     AppThemePreview(isLight = true) {
         Box(modifier = Modifier.size(width = 180.dp, height = 40.dp)) {
             ProgressBar(
+                barColor = PREVIEW_COLOUR,
                 reverse = true,
                 endProgress = 0.1f,
                 initialValue = 0.1f,
@@ -240,6 +254,7 @@ private fun Preview50Reverse() {
     AppThemePreview(isLight = true) {
         Box(modifier = Modifier.size(width = 100.dp, height = 50.dp)) {
             ProgressBar(
+                barColor = PREVIEW_COLOUR,
                 reverse = true,
                 endProgress = 0.5f,
                 initialValue = 0.5f,
@@ -256,6 +271,7 @@ private fun Preview95Reverse() {
     AppThemePreview(isLight = true) {
         Box(modifier = Modifier.size(width = 100.dp, height = 30.dp)) {
             ProgressBar(
+                barColor = PREVIEW_COLOUR,
                 reverse = true,
                 endProgress = 0.95f,
                 initialValue = 0.95f,
@@ -264,3 +280,35 @@ private fun Preview95Reverse() {
         }
     }
 }
+
+@Preview
+@Composable
+private fun PreviewContractColor() {
+    AppThemePreview(isLight = true) {
+        Column(modifier = Modifier.width(100.dp)) {
+            listOf(
+                PREVIEW_COLOUR,
+                Color(0xFF5CC73E), // Stake,
+                Color(0xFF1E34C5), // VCARB,
+                Color(0xFF0090FF), // Alpine,
+                Color(0xFF006F62), // Aston,
+                Color(0xFFDC0000), // Ferrari,
+                Color(0xFFd9d9d9), // Haas,
+                Color(0xFFFF8700), // McLaren,
+                Color(0xFF00D2BE), // Mercedes,
+                Color(0xFF0600EF), // Red Bull,
+                Color(0xFF005AFF), // Williams,
+                Color(0xFFF50501), // Audi,
+            ).forEach {
+                ProgressBar(
+                    modifier = Modifier.height(24.dp),
+                    barColor = it,
+                    endProgress = 0.95f,
+                    initialValue = 0.95f,
+                    label = { "$it" }
+                )
+            }
+        }
+    }
+}
+
