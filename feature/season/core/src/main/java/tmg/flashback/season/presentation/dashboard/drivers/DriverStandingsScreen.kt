@@ -35,6 +35,7 @@ import tmg.flashback.drivers.contract.requireDriverNavigationComponent
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.SeasonDriverStandingSeason
 import tmg.flashback.providers.SeasonDriverStandingSeasonProvider
+import tmg.flashback.season.BuildConfig
 import tmg.flashback.season.R
 import tmg.flashback.season.presentation.dashboard.races.RacesModel
 import tmg.flashback.strings.R.string
@@ -141,12 +142,14 @@ internal fun DriverStandingsScreen(
                             false -> null
                         },
                         overrideIcons = {
-                            IconButton(onClick = comparisonClicked) {
-                                Icon(
-                                    painter = painterResource(id = R.drawable.ic_menu_comparison),
-                                    contentDescription = stringResource(id = string.driver_comparison_title),
-                                    tint = AppTheme.colors.contentSecondary
-                                )
+                            if (BuildConfig.DEBUG) {
+                                IconButton(onClick = comparisonClicked) {
+                                    Icon(
+                                        painter = painterResource(id = R.drawable.ic_menu_comparison),
+                                        contentDescription = stringResource(id = string.driver_comparison_title),
+                                        tint = AppTheme.colors.contentSecondary
+                                    )
+                                }
                             }
                         },
                         actionUpClicked = actionUpClicked
