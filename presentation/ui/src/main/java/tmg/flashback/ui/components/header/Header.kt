@@ -2,6 +2,7 @@ package tmg.flashback.ui.components.header
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
@@ -54,7 +55,9 @@ fun Header(
         Row(
             verticalAlignment = Alignment.Top
         ) {
-            content()
+            Row(Modifier.weight(1f)) {
+                content()
+            }
             if (action == null) {
                 Row(
                     modifier = Modifier.align(Alignment.CenterVertically)
