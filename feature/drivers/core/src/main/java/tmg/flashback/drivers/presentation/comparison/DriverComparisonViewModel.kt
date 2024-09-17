@@ -132,6 +132,9 @@ class DriverComparisonViewModel @Inject constructor(
         if (season == null || driverLeft == null || driverRight == null) {
             return null
         }
+        if (season.races.all { it.race.isEmpty() }) {
+            return null
+        }
 
         // Race head to head
         val (driverLeftFinishes, driverRightFinishes) = season
