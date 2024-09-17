@@ -4,7 +4,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -23,16 +26,23 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.drivers.R
+import tmg.flashback.drivers.presentation.common.DriverBadges
 import tmg.flashback.formula1.extensions.pointsDisplay
+import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.Driver
 import tmg.flashback.googleanalytics.constants.AnalyticsConstants.analyticsSeason
 import tmg.flashback.googleanalytics.presentation.ScreenView
@@ -44,10 +54,19 @@ import tmg.flashback.ui.components.header.HeaderAction
 import tmg.flashback.ui.components.progressbar.ProgressBar
 import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
 import tmg.flashback.strings.R.string
+import tmg.flashback.style.badge.Badge
+import tmg.flashback.style.badge.BadgeView
 import tmg.flashback.style.buttons.ButtonPrimary
 import tmg.flashback.style.buttons.ButtonSecondary
 import tmg.flashback.style.buttons.ButtonSecondarySegments
 import tmg.flashback.ui.components.drivers.DriverIcon
+import tmg.flashback.ui.components.drivers.driverIconImageSize
+import tmg.flashback.ui.utils.DrawableUtils.getFlagResourceAlpha3
+import tmg.flashback.ui.utils.isInPreview
+import tmg.utilities.extensions.format
+import kotlin.math.roundToInt
+
+private val headerImageSize: Dp = 120.dp
 
 @Composable
 fun DriverComparisonScreenVM(
@@ -107,7 +126,7 @@ private fun DriverComparisonScreen(
         content = {
             item("header") {
                 tmg.flashback.ui.components.header.Header(
-                    text = season.toString(),
+                    text = season.toString() + "\n" + stringResource(string.driver_comparison_title),
                     action = when (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact) {
                         true -> HeaderAction.BACK
                         false -> null
@@ -135,6 +154,18 @@ private fun DriverComparisonScreen(
                             expanded = driverLeftExpanded,
                             driverClicked = { selectDriverLeft(it.id) }
                         )
+                        if (driverLeft != null && driverRight != null) {
+                            DriverIcon(
+                                modifier = Modifier.align(Alignment.Start),
+                                photoUrl = driverLeft.photoUrl,
+                                size = headerImageSize
+                            )
+                            DriverBadges(
+                                driver = driverLeft,
+                                horizontalAlignment = Alignment.Start,
+                                constructors = comparison?.leftConstructors ?: emptyList()
+                            )
+                        }
                     }
                     IconButton(
                         onClick = swapDriver,
@@ -159,99 +190,144 @@ private fun DriverComparisonScreen(
                             expanded = driverRightExpanded,
                             driverClicked = { selectDriverRight(it.id) }
                         )
-                    }
-                }
-            }
-            if (driverLeft != null && driverRight != null) {
-                item("driver-details") {
-                    Row(modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = AppTheme.dimens.medium)
-                    ) {
-                        Row(Modifier.weight(1f)) {
-                            DriverIcon(driverLeft.photoUrl)
-                        }
-                        Box(Modifier.width(2.dp))
-                        Row(Modifier.weight(1f)) {
-                            DriverIcon(driverRight.photoUrl)
+                        if (driverLeft != null && driverRight != null) {
+                            DriverIcon(
+                                modifier = Modifier.align(Alignment.End),
+                                photoUrl = driverRight.photoUrl,
+                                size = headerImageSize
+                            )
+                            DriverBadges(
+                                driver = driverRight,
+                                horizontalAlignment = Alignment.End,
+                                constructors = comparison?.rightConstructors ?: emptyList()
+                            )
                         }
                     }
                 }
             }
             if (comparison != null) {
                 item("comparison-races") {
-                    val (leftPercentage, rightPercentage) = comparison.getPercentages(value = { it.racesHeadToHead.toFloat() })
                     ItemComparison(
                         label = stringResource(string.driver_comparison_stat_races),
-                        left = comparison.left.racesHeadToHead.toString(),
-                        leftProgress = leftPercentage,
-                        right = comparison.right.racesHeadToHead.toString(),
-                        rightProgress = rightPercentage
+                        comparison = comparison,
+                        percentageResolver = { it.racesHeadToHead.toFloat() },
+                        valueResolver = { it.racesHeadToHead.toString() },
                     )
                 }
                 item("comparison-qualifying") {
-                    val (leftPercentage, rightPercentage) = comparison.getPercentages(value = { it.qualifyingHeadToHead.toFloat() })
                     ItemComparison(
                         label = stringResource(string.driver_comparison_stat_qualifying),
-                        left = comparison.left.qualifyingHeadToHead.toString(),
-                        leftProgress = leftPercentage,
-                        right = comparison.right.qualifyingHeadToHead.toString(),
-                        rightProgress = rightPercentage
+                        comparison = comparison,
+                        percentageResolver = { it.qualifyingHeadToHead.toFloat() },
+                        valueResolver = { it.qualifyingHeadToHead.toString() },
                     )
                 }
                 item("comparison-points") {
-                    val (leftPercentage, rightPercentage) = comparison.getPercentages(value = { it.points?.toFloat() ?: 0f })
                     ItemComparison(
                         label = stringResource(string.driver_comparison_stat_points),
-                        left = comparison.left.points?.pointsDisplay() ?: "",
-                        leftProgress = leftPercentage,
-                        right = comparison.right.points?.pointsDisplay() ?: "",
-                        rightProgress = rightPercentage
+                        comparison = comparison,
+                        percentageResolver = { it.points?.toFloat() ?: 0f },
+                        valueResolver = { it.points?.pointsDisplay() ?: "" },
                     )
                 }
                 item("comparison-points-finishes") {
-                    val (leftPercentage, rightPercentage) = comparison.getPercentages(value = { it.pointsFinishes.toFloat() })
                     ItemComparison(
                         label = stringResource(string.driver_comparison_stat_points_finishes),
-                        left = comparison.left.pointsFinishes.toString(),
-                        leftProgress = leftPercentage,
-                        right = comparison.right.pointsFinishes.toString(),
-                        rightProgress = rightPercentage
+                        comparison = comparison,
+                        percentageResolver = { it.pointsFinishes.toFloat() },
+                        valueResolver = { it.pointsFinishes.toString() },
                     )
                 }
                 item("comparison-podiums") {
-                    val (leftPercentage, rightPercentage) = comparison.getPercentages(value = { it.podiums.toFloat() })
                     ItemComparison(
                         label = stringResource(string.driver_comparison_stat_podiums),
-                        left = comparison.left.podiums.toString(),
-                        leftProgress = leftPercentage,
-                        right = comparison.right.podiums.toString(),
-                        rightProgress = rightPercentage
+                        comparison = comparison,
+                        percentageResolver = { it.podiums.toFloat() },
+                        valueResolver = { it.podiums.toString() },
                     )
                 }
                 item("comparison-wins") {
-                    val (leftPercentage, rightPercentage) = comparison.getPercentages(value = { it.wins.toFloat() })
                     ItemComparison(
                         label = stringResource(string.driver_comparison_stat_wins),
-                        left = comparison.left.wins.toString(),
-                        leftProgress = leftPercentage,
-                        right = comparison.right.wins.toString(),
-                        rightProgress = rightPercentage
+                        comparison = comparison,
+                        percentageResolver = { it.wins.toFloat() },
+                        valueResolver = { it.wins.toString() },
                     )
                 }
                 item("comparison-dnfs") {
-                    val (leftPercentage, rightPercentage) = comparison.getPercentages(value = { it.dnfs.toFloat() })
                     ItemComparison(
                         label = stringResource(string.driver_comparison_stat_dnfs),
-                        left = comparison.left.dnfs.toString(),
-                        leftProgress = leftPercentage,
-                        right = comparison.right.dnfs.toString(),
-                        rightProgress = rightPercentage
+                        comparison = comparison,
+                        percentageResolver = { it.dnfs.toFloat() },
+                        valueResolver = { it.dnfs.toString() },
                     )
                 }
             }
+            item("footer") {
+                Spacer(Modifier.height(AppTheme.dimens.large))
+            }
         }
     )
+}
+
+@Composable
+private fun ItemComparison(
+    label: String,
+    comparison: Comparison,
+    percentageResolver: (ComparisonValue) -> Float,
+    valueResolver: (ComparisonValue) -> String,
+    modifier: Modifier = Modifier,
+) {
+    val (leftPercentage, rightPercentage) = comparison.getPercentages(value = percentageResolver)
+    val left = valueResolver(comparison.left)
+    val leftColour = comparison.leftConstructors.lastOrNull()?.colour ?: Color.Gray
+    val right = valueResolver(comparison.right)
+    val rightColour = comparison.rightConstructors.lastOrNull()?.colour ?: Color.Gray
+    Column(modifier = modifier.padding(top = AppTheme.dimens.small)) {
+        TextTitle(
+            text = label,
+            bold = true,
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(
+                    horizontal = AppTheme.dimens.medium,
+                    vertical = AppTheme.dimens.small
+                )
+        )
+        Row(modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = AppTheme.dimens.medium)
+        ) {
+            Row(Modifier.weight(1f)) {
+                ProgressBar(
+                    radius = 0.dp,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(48.dp),
+                    backgroundColor = AppTheme.colors.backgroundTertiary,
+                    barColor = leftColour,
+                    endProgress = leftPercentage,
+                    label = { left },
+                    reverse = true,
+                )
+            }
+            Box(Modifier.width(2.dp))
+            Row(Modifier.weight(1f)) {
+                ProgressBar(
+                    radius = 0.dp,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(48.dp),
+                    backgroundColor = AppTheme.colors.backgroundTertiary,
+                    barColor = rightColour,
+                    endProgress = rightPercentage,
+                    label = { right },
+                    reverse = false,
+                )
+            }
+        }
+    }
 }
 
 @Composable
@@ -284,8 +360,7 @@ private fun ItemComparison(
                     radius = 0.dp,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(48.dp)
-                        .border(2.dp, AppTheme.colors.contentTertiary),
+                        .height(48.dp),
                     backgroundColor = AppTheme.colors.backgroundTertiary,
                     barColor = AppTheme.colors.primary,
                     endProgress = leftProgress,
@@ -293,14 +368,12 @@ private fun ItemComparison(
                     reverse = true,
                 )
             }
-            Box(Modifier.width(2.dp))
             Row(Modifier.weight(1f)) {
                 ProgressBar(
                     radius = 0.dp,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(48.dp)
-                        .border(2.dp, AppTheme.colors.contentTertiary),
+                        .height(48.dp),
                     backgroundColor = AppTheme.colors.backgroundTertiary,
                     barColor = AppTheme.colors.primary,
                     endProgress = rightProgress,
@@ -372,6 +445,7 @@ private val fakeComparison = Comparison(
         wins = 1,
         dnfs = 1,
     ),
+    leftConstructors = listOf(),
     right = ComparisonValue(
         racesHeadToHead = 2,
         qualifyingHeadToHead = 10,
@@ -380,5 +454,6 @@ private val fakeComparison = Comparison(
         podiums = 0,
         wins = 1,
         dnfs = 3
-    )
+    ),
+    rightConstructors = listOf()
 )

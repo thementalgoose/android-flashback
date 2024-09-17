@@ -1,5 +1,6 @@
 package tmg.flashback.drivers.presentation.comparison
 
+import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.Driver
 
 data class DriverComparisonScreenState(
@@ -13,7 +14,9 @@ data class DriverComparisonScreenState(
 
 data class Comparison(
     val left: ComparisonValue,
+    val leftConstructors: List<Constructor>,
     val right: ComparisonValue,
+    val rightConstructors: List<Constructor>,
 ) {
     fun getPercentages(value: (ComparisonValue) -> Float, highIsBest: Boolean = true): Pair<Float, Float> {
         return getPercentages(
@@ -31,13 +34,13 @@ data class Comparison(
             when {
                 a > b -> 1f to (b / a)
                 a == b -> 1f to 1f
-                else -> (a / b) to 1f
+                else /* a > b */ -> (a / b) to 1f
             }
         } else {
             when {
-                a < b -> 1f to (b / a)
+                a < b -> 1f to (if (a != 0f) (a / b) else 0f)
                 a == b -> 1f to 1f
-                else -> (b / a) to 1f
+                else /* a > b */ -> (if (b != 0f) (b / a) else 0f) to 1f
             }
         }
     }
@@ -50,5 +53,5 @@ data class ComparisonValue(
     val pointsFinishes: Int,
     val podiums: Int,
     val wins: Int,
-    val dnfs: Int
+    val dnfs: Int,
 )

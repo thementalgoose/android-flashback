@@ -18,6 +18,7 @@ import org.junit.jupiter.api.Test
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.domain.repo.SeasonRepository
 import tmg.flashback.formula1.enums.RaceStatus
+import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.model.DriverEntry
 import tmg.flashback.formula1.model.Race
@@ -161,6 +162,8 @@ internal class DriverComparisonViewModelTest: BaseTest() {
 
             assertEquals(expectedLeft, result.comparison?.left)
             assertEquals(expectedRight, result.comparison?.right)
+            assertEquals(listOf(Constructor.model()), result.comparison?.leftConstructors)
+            assertEquals(listOf(Constructor.model()), result.comparison?.rightConstructors)
 
             underTest.swapDrivers()
 
