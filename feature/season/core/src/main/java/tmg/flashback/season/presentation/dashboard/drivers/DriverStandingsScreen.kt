@@ -143,7 +143,7 @@ internal fun DriverStandingsScreen(
                             false -> null
                         },
                         overrideIcons = {
-                            if (BuildConfig.DEBUG) {
+                            if (uiState.maxPoints != 0.0) {
                                 IconButton(onClick = comparisonClicked) {
                                     Icon(
                                         painter = painterResource(id = R.drawable.ic_menu_comparison),
