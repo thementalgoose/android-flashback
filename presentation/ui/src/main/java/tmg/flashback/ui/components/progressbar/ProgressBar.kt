@@ -46,9 +46,25 @@ import kotlin.math.roundToInt
 fun ProgressBar(
     points: Double,
     maxPoints: Double,
-    barColor: Color,
+    barColor: Color?,
+    modifier: Modifier = Modifier,
 ) {
-    TODO("Utilise this for progress bar wrapping and coercing")
+    val progress = (points / maxPoints).toFloat().coerceIn(0f, 1f)
+    ProgressBar(
+        modifier = modifier
+            .height(48.dp)
+            .fillMaxHeight(),
+        endProgress = progress,
+        barColor = barColor ?: AppTheme.colors.primary,
+        label = {
+            when (it) {
+                0f -> "0"
+                progress -> points.pointsDisplay()
+                else -> (it * maxPoints).takeIf { !it.isNaN() }?.roundToInt()?.toString()
+                    ?: points.pointsDisplay()
+            }
+        }
+    )
 }
 
 @Composable
