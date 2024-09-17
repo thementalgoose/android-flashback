@@ -58,6 +58,7 @@ import tmg.flashback.ui.components.loading.Fade
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.progressbar.ProgressBar
 import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
+import kotlin.math.max
 import kotlin.math.roundToInt
 
 @Composable
@@ -259,23 +260,15 @@ private fun DriverStandings(
                 }
             }
             Spacer(Modifier.width(AppTheme.dimens.small))
-            val progress = (model.points / maxPoints).toFloat().coerceIn(0f, 1f)
             ProgressBar(
                 modifier = Modifier
                     .weight(2f)
                     .height(48.dp)
                     .fillMaxHeight(),
-                endProgress = progress,
+                points = model.points,
+                maxPoints = maxPoints,
                 barColor = model.constructors.lastOrNull()?.constructor?.colour
-                    ?: AppTheme.colors.primary,
-                label = {
-                    when (it) {
-                        0f -> "0"
-                        progress -> model.points.pointsDisplay()
-                        else -> (it * maxPoints).takeIf { !it.isNaN() }?.roundToInt()?.toString()
-                            ?: model.points.pointsDisplay()
-                    }
-                }
+                    ?: AppTheme.colors.primary
             )
         }
     }
