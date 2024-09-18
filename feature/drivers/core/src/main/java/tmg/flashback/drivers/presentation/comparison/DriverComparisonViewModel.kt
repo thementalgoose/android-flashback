@@ -69,12 +69,18 @@ class DriverComparisonViewModel @Inject constructor(
     }
 
     override fun selectDriverLeft(driverId: String?) {
+        if (driverId != null && uiState.value.driverRight?.id == driverId) {
+            return
+        }
         populate(
             driverLeft = uiState.value.driverList.firstOrNull { it.id == driverId }
         )
     }
 
     override fun selectDriverRight(driverId: String?) {
+        if (driverId != null && uiState.value.driverLeft?.id == driverId) {
+            return
+        }
         populate(
             driverRight = uiState.value.driverList.firstOrNull { it.id == driverId }
         )
