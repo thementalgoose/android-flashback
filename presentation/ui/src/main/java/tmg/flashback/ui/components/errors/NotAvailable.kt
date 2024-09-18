@@ -1,5 +1,7 @@
 package tmg.flashback.ui.components.errors
 
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
@@ -22,61 +24,56 @@ import tmg.flashback.strings.R.string
 fun TryAgain(
     modifier: Modifier = Modifier
 ) {
-    Row(modifier = modifier.padding(
-        vertical = AppTheme.dimens.nsmall,
-        horizontal = AppTheme.dimens.medium
-    )) {
-        Icon(
-            painter = painterResource(id = R.drawable.ic_error_not_available),
-            contentDescription = null,
-            tint = AppTheme.colors.contentSecondary,
-            modifier = Modifier.size(36.dp)
-        )
-        Spacer(Modifier.width(16.dp))
-        TextBody1(
-            text = stringResource(id = string.error_data_not_available_try_again)
-        )
-    }
+    ErrorMessage(
+        modifier = modifier,
+        icon = R.drawable.ic_error_not_available,
+        label = string.error_data_not_available_try_again
+    )
 }
 
 @Composable
 fun NotAvailable(
     modifier: Modifier = Modifier
 ) {
-    Row(modifier = modifier.padding(
-        vertical = AppTheme.dimens.nsmall,
-        horizontal = AppTheme.dimens.medium
-    )) {
-        Icon(
-            painter = painterResource(id = R.drawable.ic_error_not_available),
-            contentDescription = null,
-            tint = AppTheme.colors.contentSecondary,
-            modifier = Modifier.size(36.dp)
-        )
-        Spacer(Modifier.width(16.dp))
-        TextBody1(
-            text = stringResource(id = string.error_weekend_not_available)
-        )
-    }
+    ErrorMessage(
+        modifier = modifier,
+        icon = R.drawable.ic_error_not_available,
+        label = string.error_weekend_not_available
+    )
 }
 
 @Composable
 fun NotAvailableYet(
     modifier: Modifier = Modifier
 ) {
+    ErrorMessage(
+        modifier = modifier,
+        icon = R.drawable.ic_error_not_available_yet,
+        label = string.error_weekend_not_available_yet
+    )
+}
+
+@Composable
+fun ErrorMessage(
+    modifier: Modifier = Modifier,
+    @DrawableRes
+    icon: Int = R.drawable.ic_error_not_available,
+    @StringRes
+    label: Int
+) {
     Row(modifier = modifier.padding(
         vertical = AppTheme.dimens.nsmall,
         horizontal = AppTheme.dimens.medium
     )) {
         Icon(
-            painter = painterResource(id = R.drawable.ic_error_not_available_yet),
+            painter = painterResource(id = icon),
             contentDescription = null,
             tint = AppTheme.colors.contentSecondary,
             modifier = Modifier.size(36.dp)
         )
         Spacer(Modifier.width(16.dp))
         TextBody1(
-            text = stringResource(id = string.error_weekend_not_available_yet)
+            text = stringResource(id = label)
         )
     }
 }

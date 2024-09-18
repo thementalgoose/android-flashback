@@ -113,6 +113,7 @@
 
 
     <!-- Driver Comparison -->
+    <string name="driver_comparison_no_races_in_common">There are no races during the season where these two drivers both participated in the same race.</string>
     <string name="driver_comparison_title">Compare drivers</string>
     <string name="driver_comparison_swap_drivers">Swap drivers</string>
     <string name="driver_comparison_stat_races">Races head to head</string>

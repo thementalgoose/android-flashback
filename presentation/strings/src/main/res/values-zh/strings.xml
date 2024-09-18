@@ -101,6 +101,7 @@
     <string name="driver_overview_stat_birthday">出生于 %s</string>
 
     <!-- Driver Comparison -->
+    <string name="driver_comparison_no_races_in_common">本赛季中，没有哪场比赛是这两位车手同时参加的。</string>
     <string name="driver_comparison_title">比较驱动程序</string>
     <string name="driver_comparison_swap_drivers">互换选择</string>
     <string name="driver_comparison_stat_races">比赛</string>
