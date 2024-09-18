@@ -29,6 +29,7 @@ import tmg.flashback.drivers.R
 import tmg.flashback.formula1.R.drawable
 import tmg.flashback.strings.R.string
 import tmg.flashback.drivers.contract.model.DriverStatHistoryType
+import tmg.flashback.drivers.presentation.common.DriverBadges
 import tmg.flashback.drivers.presentation.season.DriverSeasonScreenVM
 import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.model.DriverEntry
@@ -188,34 +189,9 @@ private fun Header(
             number = model.number,
             size = headerImageSize
         )
-        Row(
-            modifier = Modifier
-                .padding(top = 4.dp)
-                .horizontalScroll(rememberScrollState())
-                .fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            val context = LocalContext.current
-            val resourceId = when (isInPreview()) {
-                true -> com.murgupluoglu.flagkit.R.drawable.gb
-                false -> context.getFlagResourceAlpha3(model.nationalityISO)
-            }
-            BadgeView(model = Badge(label = model.nationality, icon = resourceId), tintIcon = null)
-
-            Spacer(Modifier.width(AppTheme.dimens.small))
-            val birthday = model.dateOfBirth.format("dd MMMM yyyy")!!
-            BadgeView(model = Badge(label = birthday, icon = drawable.ic_driver_birthday))
-
-            if (model.code != null && model.number != null) {
-                Spacer(Modifier.width(AppTheme.dimens.small))
-                BadgeView(
-                    model = Badge(
-                        label = "${model.code} ${model.number}",
-                        icon = drawable.ic_driver_code
-                    )
-                )
-            }
-        }
+        DriverBadges(
+            driver = model
+        )
         if (model.wikiUrl?.isNotEmpty() == true) {
             ButtonSecondary(
                 text = stringResource(id = string.details_link_wikipedia),

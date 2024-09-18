@@ -102,6 +102,18 @@
     <string name="driver_overview_constructor">Team: %s</string>
     <string name="driver_overview_stat_birthday">Nato il %s</string>
 
+    <!-- Driver Comparison -->
+    <string name="driver_comparison_title">Confronta i driver</string>
+    <string name="driver_comparison_swap_drivers">Selezione di scambio</string>
+    <string name="driver_comparison_stat_races">Gare testa a testa</string>
+    <string name="driver_comparison_stat_qualifying">Qualifiche testa a testa</string>
+    <string name="driver_comparison_stat_points">Punti</string>
+    <string name="driver_comparison_stat_points_finishes">Finiti con punti</string>
+    <string name="driver_comparison_stat_podiums">Podi</string>
+    <string name="driver_comparison_stat_wins">Vittorie</string>
+    <string name="driver_comparison_stat_highest_finish">Miglior risultato in gara</string>
+    <string name="driver_comparison_stat_dnfs">DNFs</string>
+
     <!-- Constructor Overview -->
     <string name="constructor_overview_stat_titles">Campionati team</string>
     <string name="constructor_overview_stat_drivers_titles">Campionati piloti</string>
