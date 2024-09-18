@@ -11,6 +11,7 @@ import tmg.flashback.drivers.presentation.season.DriverSeasonScreenVM
 import tmg.flashback.drivers.presentation.stathistory.DriverStatHistoryBottomSheetFragment
 import tmg.flashback.drivers.presentation.stathistory.analyticsKey
 import tmg.flashback.device.ActivityProvider
+import tmg.flashback.drivers.presentation.comparison.DriverComparisonScreenVM
 import javax.inject.Inject
 
 class DriverNavigationComponentImpl @Inject constructor(
@@ -33,6 +34,19 @@ class DriverNavigationComponentImpl @Inject constructor(
             driverId = driverId,
             driverName = driverName,
             season = season,
+        )
+    }
+
+    @Composable
+    override fun DriverComparison(
+        actionUpClicked: () -> Unit,
+        windowSizeClass: WindowSizeClass,
+        season: Int
+    ) {
+        DriverComparisonScreenVM(
+            actionUpClicked = actionUpClicked,
+            windowSizeClass = windowSizeClass,
+            season = season
         )
     }
 

@@ -15,6 +15,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
@@ -22,6 +24,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -32,7 +35,9 @@ import tmg.flashback.drivers.contract.requireDriverNavigationComponent
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.SeasonDriverStandingSeason
 import tmg.flashback.providers.SeasonDriverStandingSeasonProvider
+import tmg.flashback.season.BuildConfig
 import tmg.flashback.season.R
+import tmg.flashback.season.presentation.dashboard.races.RacesModel
 import tmg.flashback.strings.R.string
 import tmg.flashback.season.presentation.dashboard.shared.seasonpicker.SeasonTitleVM
 import tmg.flashback.season.presentation.messaging.Banner
@@ -49,9 +54,11 @@ import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.header.HeaderAction
 import tmg.flashback.ui.components.layouts.MasterDetailsPane
+import tmg.flashback.ui.components.loading.Fade
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.progressbar.ProgressBar
 import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
+import kotlin.math.max
 import kotlin.math.roundToInt
 
 @Composable
@@ -75,23 +82,34 @@ fun DriverStandingsScreenVM(
                 uiState = state.value,
                 windowSizeClass = windowSizeClass,
                 driverClicked = viewModel.inputs::selectDriver,
-                refresh = viewModel.inputs::refresh
+                refresh = viewModel.inputs::refresh,
+                comparisonClicked = viewModel.inputs::selectComparison
             )
         },
         detailsShow = state.value.currentlySelected != null,
         detailsActionUpClicked = viewModel.inputs::closeDriverDetails,
         details = {
-            val selected = state.value.currentlySelected!!
-            driverNavigationComponent.DriverSeasonScreen(
-                windowSizeClass = windowSizeClass,
-                actionUpClicked = viewModel.inputs::closeDriverDetails,
-                driverId = selected.driver.id,
-                driverName = selected.driver.name,
-                season = selected.season,
-                seasonClicked = { season: Int, round: Int, raceName: String, circuitId: String, circuitName: String, country: String, countryISO: String, dateString: String ->
-                    // Do something
+            when (val selected = state.value.currentlySelected!!) {
+                is Selected.Comparison -> {
+                    driverNavigationComponent.DriverComparison(
+                        windowSizeClass = windowSizeClass,
+                        actionUpClicked = viewModel.inputs::closeDriverDetails,
+                        season = state.value.season
+                    )
                 }
-            )
+                is Selected.Driver -> {
+                    driverNavigationComponent.DriverSeasonScreen(
+                        windowSizeClass = windowSizeClass,
+                        actionUpClicked = viewModel.inputs::closeDriverDetails,
+                        driverId = selected.driver.driver.id,
+                        driverName = selected.driver.driver.name,
+                        season = selected.driver.season,
+                        seasonClicked = { season: Int, round: Int, raceName: String, circuitId: String, circuitName: String, country: String, countryISO: String, dateString: String ->
+                            // Do something
+                        }
+                    )
+                }
+            }
         }
     )
 
@@ -103,6 +121,7 @@ internal fun DriverStandingsScreen(
     windowSizeClass: WindowSizeClass,
     uiState: DriverStandingsScreenState,
     driverClicked: (SeasonDriverStandingSeason) -> Unit,
+    comparisonClicked: () -> Unit,
     refresh: () -> Unit
 ) {
     SwipeRefresh(
@@ -122,6 +141,17 @@ internal fun DriverStandingsScreen(
                         action = when (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact) {
                             true -> HeaderAction.MENU
                             false -> null
+                        },
+                        overrideIcons = {
+                            if (uiState.maxPoints != 0.0) {
+                                IconButton(onClick = comparisonClicked) {
+                                    Icon(
+                                        painter = painterResource(id = R.drawable.ic_menu_comparison),
+                                        contentDescription = stringResource(id = string.driver_comparison_title),
+                                        tint = AppTheme.colors.contentSecondary
+                                    )
+                                }
+                            }
                         },
                         actionUpClicked = actionUpClicked
                     )
@@ -230,23 +260,15 @@ private fun DriverStandings(
                 }
             }
             Spacer(Modifier.width(AppTheme.dimens.small))
-            val progress = (model.points / maxPoints).toFloat().coerceIn(0f, 1f)
             ProgressBar(
                 modifier = Modifier
                     .weight(2f)
                     .height(48.dp)
                     .fillMaxHeight(),
-                endProgress = progress,
+                points = model.points,
+                maxPoints = maxPoints,
                 barColor = model.constructors.lastOrNull()?.constructor?.colour
-                    ?: AppTheme.colors.primary,
-                label = {
-                    when (it) {
-                        0f -> "0"
-                        progress -> model.points.pointsDisplay()
-                        else -> (it * maxPoints).takeIf { !it.isNaN() }?.roundToInt()?.toString()
-                            ?: model.points.pointsDisplay()
-                    }
-                }
+                    ?: AppTheme.colors.primary
             )
         }
     }

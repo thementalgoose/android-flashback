@@ -36,6 +36,7 @@ import tmg.flashback.drivers.R
 import tmg.flashback.strings.R.string
 import tmg.flashback.formula1.R.drawable
 import tmg.flashback.drivers.presentation.Delta
+import tmg.flashback.drivers.presentation.common.DriverBadges
 import tmg.flashback.formula1.enums.RaceStatus
 import tmg.flashback.formula1.enums.isStatusFinished
 import tmg.flashback.formula1.extensions.pointsDisplay
@@ -62,7 +63,6 @@ import tmg.flashback.ui.components.header.HeaderAction
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.messages.Message
 import tmg.flashback.ui.components.navigation.PipeType
-import tmg.flashback.ui.components.progressbar.ProgressBar
 import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
 import tmg.flashback.ui.components.timeline.Timeline
 import tmg.flashback.ui.foldables.isWidthExpanded
@@ -470,37 +470,9 @@ private fun Header(
             code = model.driver.code,
             size = headerImageSize
         )
-        Row(
-            modifier = Modifier
-                .padding(top = 4.dp)
-                .horizontalScroll(rememberScrollState())
-                .fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            val context = LocalContext.current
-            val resourceId = when (isInPreview()) {
-                true -> com.murgupluoglu.flagkit.R.drawable.gb
-                false -> context.getFlagResourceAlpha3(model.driver.nationalityISO)
-            }
-            BadgeView(
-                model = Badge(label = model.driver.nationality, icon = resourceId),
-                tintIcon = null
-            )
-
-            Spacer(Modifier.width(AppTheme.dimens.small))
-            val birthday = model.driver.dateOfBirth.format("dd MMMM yyyy")!!
-            BadgeView(model = Badge(label = birthday, icon = drawable.ic_driver_birthday))
-
-            if (model.driver.code != null && model.driver.number != null) {
-                Spacer(Modifier.width(AppTheme.dimens.small))
-                BadgeView(
-                    model = Badge(
-                        label = "${model.driver.code} ${model.driver.number}",
-                        icon = drawable.ic_driver_code
-                    )
-                )
-            }
-        }
+        DriverBadges(
+            driver = model.driver
+        )
         if (!model.driver.wikiUrl.isNullOrEmpty()) {
             ButtonSecondary(
                 text = stringResource(id = string.details_link_wikipedia),

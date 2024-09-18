@@ -203,21 +203,14 @@ private fun ConstructorStandings(
                 }
             }
             Spacer(Modifier.width(AppTheme.dimens.small))
-            val progress = (model.points / maxPoints).toFloat().coerceIn(0f, 1f)
             ProgressBar(
                 modifier = Modifier
                     .weight(2f)
                     .height(48.dp)
                     .fillMaxHeight(),
-                endProgress = progress,
-                barColor = model.constructor.colour,
-                label = {
-                    when (it) {
-                        0f -> "0"
-                        progress -> model.points.pointsDisplay()
-                        else -> (it * maxPoints).takeIf { !it.isNaN() }?.roundToInt()?.toString() ?: model.points.pointsDisplay()
-                    }
-                }
+                points = model.points,
+                maxPoints = maxPoints,
+                barColor = model.constructor.colour
             )
         }
     }

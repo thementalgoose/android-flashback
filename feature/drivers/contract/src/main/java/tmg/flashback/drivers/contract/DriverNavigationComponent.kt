@@ -47,6 +47,13 @@ interface DriverNavigationComponent {
         ) -> Unit,
     )
 
+    @Composable
+    fun DriverComparison(
+        actionUpClicked: () -> Unit,
+        windowSizeClass: WindowSizeClass,
+        season: Int
+    )
+
     fun driverStatHistory(
         driverId: String,
         driverName: String,
