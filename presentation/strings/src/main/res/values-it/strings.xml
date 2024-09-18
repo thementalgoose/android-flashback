@@ -103,6 +103,7 @@
     <string name="driver_overview_stat_birthday">Nato il %s</string>
 
     <!-- Driver Comparison -->
+    <string name="driver_comparison_no_races_in_common">Non ci sono gare durante la stagione in cui questi due piloti abbiano partecipato entrambi alla stessa gara.</string>
     <string name="driver_comparison_title">Confronta i driver</string>
     <string name="driver_comparison_swap_drivers">Selezione di scambio</string>
     <string name="driver_comparison_stat_races">Gare testa a testa</string>

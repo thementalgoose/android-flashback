@@ -174,11 +174,30 @@ internal class DriverComparisonViewModelTest: BaseTest() {
         }
     }
 
+    @Test
+    fun `drivers with nothing in common will have no comparison data`() = runTest {
+        initUnderTest()
+
+        underTest.inputs.setup(2024)
+        underTest.inputs.selectDriverRight("driverId")
+        underTest.inputs.selectDriverLeft(driverLeft.id)
+
+        advanceUntilIdle()
+
+        underTest.outputs.uiState.test {
+
+            val result = awaitItem()
+
+            assertEquals(null, result.comparison)
+        }
+    }
+
     companion object {
 
         private val driverLeft: Driver = Driver.model(id = "1")
         private val driverRight: Driver = Driver.model(id = "2")
         private val races = listOf(
+            Race.model(),
             Race.model(
                 raceInfo = RaceInfo.model(round = 1),
                 race = listOf(
