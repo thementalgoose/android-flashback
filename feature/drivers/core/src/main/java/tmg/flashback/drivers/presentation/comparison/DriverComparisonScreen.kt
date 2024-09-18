@@ -61,6 +61,9 @@ import tmg.flashback.style.buttons.ButtonSecondary
 import tmg.flashback.style.buttons.ButtonSecondarySegments
 import tmg.flashback.ui.components.drivers.DriverIcon
 import tmg.flashback.ui.components.drivers.driverIconImageSize
+import tmg.flashback.ui.components.errors.ErrorMessage
+import tmg.flashback.ui.components.errors.NotAvailable
+import tmg.flashback.ui.components.messages.Message
 import tmg.flashback.ui.utils.DrawableUtils.getFlagResourceAlpha3
 import tmg.flashback.ui.utils.isInPreview
 import tmg.utilities.extensions.format
@@ -261,6 +264,18 @@ private fun DriverComparisonScreen(
                         percentageResolver = { it.dnfs.toFloat() },
                         valueResolver = { it.dnfs.toString() },
                     )
+                }
+            } else {
+                if (driverLeft != null && driverRight != null) {
+                    item("no-common-races") {
+                        ErrorMessage(
+                            label = string.driver_comparison_no_races_in_common
+                        )
+                    }
+                } else {
+                    item("get-started") {
+                        // TODO: Put something here
+                    }
                 }
             }
             item("footer") {

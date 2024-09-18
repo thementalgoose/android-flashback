@@ -69,12 +69,18 @@ class DriverComparisonViewModel @Inject constructor(
     }
 
     override fun selectDriverLeft(driverId: String?) {
+        if (driverId != null && uiState.value.driverRight?.id == driverId) {
+            return
+        }
         populate(
             driverLeft = uiState.value.driverList.firstOrNull { it.id == driverId }
         )
     }
 
     override fun selectDriverRight(driverId: String?) {
+        if (driverId != null && uiState.value.driverLeft?.id == driverId) {
+            return
+        }
         populate(
             driverRight = uiState.value.driverList.firstOrNull { it.id == driverId }
         )
@@ -133,6 +139,13 @@ class DriverComparisonViewModel @Inject constructor(
             return null
         }
         if (season.races.all { it.race.isEmpty() }) {
+            return null
+        }
+        if (season.races.none {
+            val driverLeftInRace = it.race.firstOrNull { race -> race.entry.driver.id == driverLeft.id }
+            val driverRightInRace = it.race.firstOrNull { race -> race.entry.driver.id == driverRight.id }
+            driverLeftInRace != null && driverRightInRace != null
+        }) {
             return null
         }
 
