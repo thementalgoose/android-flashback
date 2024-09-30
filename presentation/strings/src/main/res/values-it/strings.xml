@@ -514,4 +514,13 @@
 
     <!-- Informativa sulla privacy -->
     <string name="privacy_policy_title">Informativa sulla privacy</string>
+
+    <!-- Easter Eggs -->
+    <string name="easter_egg_menu_new_years">Felice anno nuovo!</string>
+    <string name="easter_egg_menu_chinese_new_year">Felice anno nuovo cinese!</string>
+    <string name="easter_egg_menu_valentines">Buon San Valentino!</string>
+    <string name="easter_egg_menu_easter">Buona Pasqua!</string>
+    <string name="easter_egg_menu_halloween">Buon Halloween!</string>
+    <string name="easter_egg_menu_diwali">Buon Diwali!</string>
+    <string name="easter_egg_menu_christmas">Buon Natale!</string>
 </resources>
