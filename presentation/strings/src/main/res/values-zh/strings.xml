@@ -508,4 +508,13 @@
 
     <!-- 隐私政策 -->
     <string name="privacy_policy_title">隐私政策</string>
+
+    <!-- Easter Eggs -->
+    <string name="easter_egg_menu_new_years">新年快乐！</string>
+    <string name="easter_egg_menu_chinese_new_year">春节快乐！</string>
+    <string name="easter_egg_menu_valentines">情人节快乐！</string>
+    <string name="easter_egg_menu_easter">复活节快乐！</string>
+    <string name="easter_egg_menu_halloween">万圣节快乐！</string>
+    <string name="easter_egg_menu_diwali">排灯节快乐！</string>
+    <string name="easter_egg_menu_christmas">圣诞快乐！</string>
 </resources>
