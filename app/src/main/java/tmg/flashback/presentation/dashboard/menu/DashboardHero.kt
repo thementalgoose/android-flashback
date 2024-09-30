@@ -1,5 +1,7 @@
 package tmg.flashback.presentation.dashboard.menu
 
+import android.widget.Toast
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -7,6 +9,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
@@ -41,6 +44,7 @@ internal fun DashboardHero(
     pride: Boolean = false,
     modifier: Modifier = Modifier
 ) {
+    val context = LocalContext.current
     Column(modifier.padding(
         top = AppTheme.dimens.xsmall,
         bottom = AppTheme.dimens.xsmall,
@@ -51,7 +55,13 @@ internal fun DashboardHero(
             icon = menuIcons?.let { painterResource(id = it.drawable) },
             iconModifier = Modifier
                 .rotate(20f)
-                .size(18.dp),
+                .size(18.dp)
+                .clickable(
+                    enabled = menuIcons?.label != null,
+                    onClick = {
+                        Toast.makeText(context, menuIcons?.label ?: R.string.app_name, Toast.LENGTH_LONG).show()
+                    }
+                ),
             colourType = when (pride) {
                 true -> ColourType.RAINBOW
                 false -> ColourType.DEFAULT

@@ -1,11 +1,8 @@
 package tmg.flashback.drivers.presentation.comparison
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -28,9 +25,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -42,32 +37,19 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.drivers.R
 import tmg.flashback.drivers.presentation.common.DriverBadges
 import tmg.flashback.formula1.extensions.pointsDisplay
-import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.Driver
 import tmg.flashback.googleanalytics.constants.AnalyticsConstants.analyticsSeason
 import tmg.flashback.googleanalytics.presentation.ScreenView
+import tmg.flashback.strings.R.string
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.annotations.PreviewTheme
-import tmg.flashback.style.text.TextBody1
+import tmg.flashback.style.buttons.ButtonSecondary
 import tmg.flashback.style.text.TextTitle
+import tmg.flashback.ui.components.drivers.DriverIcon
+import tmg.flashback.ui.components.errors.ErrorMessage
 import tmg.flashback.ui.components.header.HeaderAction
 import tmg.flashback.ui.components.progressbar.ProgressBar
 import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
-import tmg.flashback.strings.R.string
-import tmg.flashback.style.badge.Badge
-import tmg.flashback.style.badge.BadgeView
-import tmg.flashback.style.buttons.ButtonPrimary
-import tmg.flashback.style.buttons.ButtonSecondary
-import tmg.flashback.style.buttons.ButtonSecondarySegments
-import tmg.flashback.ui.components.drivers.DriverIcon
-import tmg.flashback.ui.components.drivers.driverIconImageSize
-import tmg.flashback.ui.components.errors.ErrorMessage
-import tmg.flashback.ui.components.errors.NotAvailable
-import tmg.flashback.ui.components.messages.Message
-import tmg.flashback.ui.utils.DrawableUtils.getFlagResourceAlpha3
-import tmg.flashback.ui.utils.isInPreview
-import tmg.utilities.extensions.format
-import kotlin.math.roundToInt
 
 private val headerImageSize: Dp = 120.dp
 
