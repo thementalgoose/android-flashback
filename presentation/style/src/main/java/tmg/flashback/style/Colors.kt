@@ -53,6 +53,9 @@ data class AppColors(
     val f1FavouriteSeason: Color,
     val f1Championship: Color,
     val f1PipeColor: Color = contentTertiary,
+    val f1StartLightGreen: Color,
+    val f1StartLightAmber: Color,
+    val f1StartLightRed: Color,
     // RSS
     val rssAdd: Color,
     val rssRemove: Color,
@@ -117,9 +120,13 @@ val lightColours = AppColors(
     f1FastestSector = Color(0xFF673AB7),
     f1FavouriteSeason = Color(0xFFA38B21),
     f1Championship = Color(0xFFA38B21),
+    f1StartLightGreen = Color(0xFF4CAF50),
+    f1StartLightAmber = Color(0xFFFFA000),
+    f1StartLightRed = Color(0xFFF44336),
 //    f1PipeColor = ,
     rssAdd = Color(0xFF4CAF50),
     rssRemove = Color(0xFFF44336),
+
 //    rssNewsBar =
     isLight = true
 )
@@ -159,6 +166,9 @@ val darkColours = AppColors(
     f1FastestSector = Color(0xFF673AB7),
     f1FavouriteSeason = Color(0xFFE6CA4F),
     f1Championship = Color(0xFFE6CA4F),
+    f1StartLightGreen = Color(0xFF4CAF50),
+    f1StartLightAmber = Color(0xFFFFA000),
+    f1StartLightRed = Color(0xFFF44336),
 //    f1PipeColor = ,
     rssAdd = Color(0xFF4CAF50),
     rssRemove = Color(0xFFF44336),
