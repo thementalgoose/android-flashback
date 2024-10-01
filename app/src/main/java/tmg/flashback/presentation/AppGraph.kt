@@ -33,6 +33,8 @@ import tmg.flashback.presentation.settings.All
 import tmg.flashback.presentation.settings.SettingsAllScreenVM
 import tmg.flashback.privacypolicy.contract.PrivacyPolicy
 import tmg.flashback.privacypolicy.presentation.PrivacyPolicyScreenVM
+import tmg.flashback.reactiongame.contract.ReactionGame
+import tmg.flashback.reactiongame.presentation.ReactionScreenVM
 import tmg.flashback.rss.contract.RSS
 import tmg.flashback.rss.presentation.feed.RSSScreenVM
 import tmg.flashback.search.contract.Search
@@ -182,6 +184,15 @@ fun AppGraph(
                 isRoot = { isRoot(Screen.RSS.route, !it) },
                 advertProvider = advertProvider,
                 actionUpClicked = openMenu
+            )
+        }
+
+        composable(
+            Screen.ReactionGame.route,
+        ) {
+            ReactionScreenVM(
+                actionUpClicked = openMenu,
+                windowSizeClass = windowSize,
             )
         }
 

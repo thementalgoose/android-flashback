@@ -19,7 +19,7 @@ internal class ReactionViewModelTest: BaseTest() {
     private companion object {
         private const val LIGHTS_OUT_DELAY = 2000L
         private const val TIME_BETWEEN_LIGHTS = 1000L
-        private const val TEST_TIMEOUT = 5000L
+        private const val TEST_TIMEOUT = 2500L
     }
 
     private val mockLightsOutDelayProvider: LightsOutDelayProvider = mockk(relaxed = true)

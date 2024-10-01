@@ -616,6 +616,14 @@
     <string name="easter_egg_menu_diwali">Happy Diwali!!</string>
     <string name="easter_egg_menu_christmas">Merry Christmas!</string>
 
+    <!-- Reaction screen -->
+    <string name="reaction_screen_title">Reaction time</string>
+    <string name="reaction_screen_subtitle">How do you think your reaction times compare to F1 drivers! Tap the screen when the lights go out</string>
+    <string name="reaction_screen_start">Tap anywhere on the screen to start</string>
+    <string name="reaction_screen_jump_start">Jump start!</string>
+    <string name="reaction_screen_tap_start">Start the lights!</string>
+    <string name="reaction_screen_tap_input">Tap anywhere when the lights go out…</string>
+    <string name="reaction_screen_tap_reset">Reset</string>
 
     <string name="percentage" translatable="false">%s%</string>
 

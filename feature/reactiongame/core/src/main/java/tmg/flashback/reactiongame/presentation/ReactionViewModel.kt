@@ -26,7 +26,7 @@ class ReactionViewModel @Inject constructor(
     private companion object {
         const val TIME_BETWEEN_LIGHTS = 1000L
         const val LIGHTS = 5
-        const val TEST_TIMEOUT = 5000L
+        const val TEST_TIMEOUT = 2500L
     }
 
     private var job = SupervisorJob() + ioDispatcher
@@ -36,8 +36,13 @@ class ReactionViewModel @Inject constructor(
     private val _uiState: MutableStateFlow<ReactionUiState> = MutableStateFlow(ReactionUiState.Start)
     val uiState: StateFlow<ReactionUiState> = _uiState
 
+    fun reset() {
+        _uiState.value = ReactionUiState.Start
+    }
+
     fun start() {
 
+        lightsOutTime = 0L
         val lightsOutDelay = lightsOutDelayProvider.getDelay()
         job = viewModelScope.launch(ioDispatcher) {
             // Count lights in

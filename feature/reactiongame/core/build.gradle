@@ -17,6 +17,8 @@ android {
 
 dependencies {
 
+    implementation(projects.core.metrics.googleanalytics)
+    implementation(projects.core.metrics.crashlytics)
     implementation(projects.core.configuration)
     implementation(projects.core.preferences)
     implementation(projects.core.device)
