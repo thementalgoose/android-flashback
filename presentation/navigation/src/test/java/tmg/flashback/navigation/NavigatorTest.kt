@@ -34,11 +34,12 @@ internal class NavigatorTest {
         initUnderTest()
         underTest.navigate(destination)
 
-        val dest = slot<NavigationDestination>()
+        val dest = slot<String>()
+        val lambda = slot<NavOptionsBuilder.() -> Unit>()
         verify {
-            mockNavController.navigate(capture(dest), null, null)
+            mockNavController.navigate(capture(dest), capture(lambda))
             mockCrashlyticsManager.log(any())
         }
-        assertEquals("route", dest.captured.route)
+        assertEquals("route", dest.captured)
     }
 }
