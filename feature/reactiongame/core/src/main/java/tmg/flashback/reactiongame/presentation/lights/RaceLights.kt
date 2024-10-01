@@ -3,6 +3,7 @@ package tmg.flashback.reactiongame.presentation.lights
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
@@ -20,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
@@ -43,15 +45,22 @@ sealed class StartLightState {
     ): StartLightState()
 }
 
+enum class LightPanel {
+    FULL_HEIGHT,
+    FULL_HEIGHT_SINGLE_RED,
+    HALF_HEIGHT
+}
+
 @Composable
 internal fun RaceStartLights(
     modifier: Modifier = Modifier,
-    state: StartLightState
+    state: StartLightState,
+    panelType: LightPanel = LightPanel.FULL_HEIGHT
 ) {
     Box(
         modifier = modifier
             .padding(8.dp)
-            .aspectRatio(1.4f),
+            .aspectRatio(if (panelType == LightPanel.HALF_HEIGHT) 2.4f else 1.4f),
     ) {
         Column(modifier = Modifier.fillMaxSize()) {
             Spacer(Modifier.weight(2f))
@@ -70,48 +79,114 @@ internal fun RaceStartLights(
             )
             Spacer(Modifier.weight(1f))
         }
-        Row(
-            modifier = Modifier.fillMaxSize(),
-            horizontalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            LightColumn(
-                modifier = Modifier.weight(1f),
-                green = state is StartLightState.Ready,
-                amber = state is StartLightState.AbortedStart,
-                red = ((state as? StartLightState.StartSequence)?.redLights ?: -1) >= 1
-            )
-            LightColumn(
-                modifier = Modifier.weight(1f),
-                green = state is StartLightState.Ready,
-                amber = false,
-                red = ((state as? StartLightState.StartSequence)?.redLights ?: -1) >= 2
-            )
-            LightColumn(
-                modifier = Modifier.weight(1f),
-                green = state is StartLightState.Ready,
-                amber = state is StartLightState.AbortedStart,
-                red = ((state as? StartLightState.StartSequence)?.redLights ?: -1) >= 3
-            )
-            LightColumn(
-                modifier = Modifier.weight(1f),
-                green = state is StartLightState.Ready,
-                amber = false,
-                red = ((state as? StartLightState.StartSequence)?.redLights ?: -1) >= 4
-            )
-            LightColumn(
-                modifier = Modifier.weight(1f),
-                green = state is StartLightState.Ready,
-                amber = state is StartLightState.AbortedStart,
-                red = ((state as? StartLightState.StartSequence)?.redLights ?: -1) >= 5
+        if (panelType == LightPanel.HALF_HEIGHT) {
+            Lights10(state = state)
+        } else {
+            Lights20(
+                state = state,
+                dualRedLights = panelType == LightPanel.FULL_HEIGHT_SINGLE_RED
             )
         }
-
     }
 }
 
 @Composable
-private fun RowScope.LightColumn(
+private fun BoxScope.Lights20(
+    state: StartLightState,
+    dualRedLights: Boolean,
+) {
+    Row(
+        modifier = Modifier.fillMaxSize(),
+        horizontalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        LightFourColumn(
+            modifier = Modifier.weight(1f),
+            dualRedLights = dualRedLights,
+            green = state is StartLightState.Ready,
+            amber = state is StartLightState.AbortedStart,
+            red = ((state as? StartLightState.StartSequence)?.redLights ?: -1) >= 1
+        )
+        LightFourColumn(
+            modifier = Modifier.weight(1f),
+            dualRedLights = dualRedLights,
+            green = state is StartLightState.Ready,
+            amber = false,
+            red = ((state as? StartLightState.StartSequence)?.redLights ?: -1) >= 2
+        )
+        LightFourColumn(
+            modifier = Modifier.weight(1f),
+            dualRedLights = dualRedLights,
+            green = state is StartLightState.Ready,
+            amber = state is StartLightState.AbortedStart,
+            red = ((state as? StartLightState.StartSequence)?.redLights ?: -1) >= 3
+        )
+        LightFourColumn(
+            modifier = Modifier.weight(1f),
+            dualRedLights = dualRedLights,
+            green = state is StartLightState.Ready,
+            amber = false,
+            red = ((state as? StartLightState.StartSequence)?.redLights ?: -1) >= 4
+        )
+        LightFourColumn(
+            modifier = Modifier.weight(1f),
+            dualRedLights = dualRedLights,
+            green = state is StartLightState.Ready,
+            amber = state is StartLightState.AbortedStart,
+            red = ((state as? StartLightState.StartSequence)?.redLights ?: -1) >= 5
+        )
+    }
+}
+
+@Composable
+private fun BoxScope.Lights10(
+    state: StartLightState
+) {
+    Row(
+        modifier = Modifier.fillMaxSize(),
+        horizontalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        LightTwoColumn(
+            modifier = Modifier.weight(1f),
+            isGreen = false,
+            green = state is StartLightState.Ready,
+            amber = state is StartLightState.AbortedStart,
+            red = ((state as? StartLightState.StartSequence)?.redLights ?: -1) >= 1
+        )
+        LightTwoColumn(
+            modifier = Modifier.weight(1f),
+            isGreen = true,
+            green = state is StartLightState.Ready,
+            amber = false,
+            red = ((state as? StartLightState.StartSequence)?.redLights ?: -1) >= 2
+        )
+        LightTwoColumn(
+            modifier = Modifier.weight(1f),
+            isGreen = false,
+            green = state is StartLightState.Ready,
+            amber = state is StartLightState.AbortedStart,
+            red = ((state as? StartLightState.StartSequence)?.redLights ?: -1) >= 3
+        )
+        LightTwoColumn(
+            modifier = Modifier.weight(1f),
+            isGreen = true,
+            green = state is StartLightState.Ready,
+            amber = false,
+            red = ((state as? StartLightState.StartSequence)?.redLights ?: -1) >= 4
+        )
+        LightTwoColumn(
+            modifier = Modifier.weight(1f),
+            isGreen = false,
+            green = state is StartLightState.Ready,
+            amber = state is StartLightState.AbortedStart,
+            red = ((state as? StartLightState.StartSequence)?.redLights ?: -1) >= 5
+        )
+    }
+}
+
+@Composable
+private fun RowScope.LightFourColumn(
     modifier: Modifier = Modifier,
+    dualRedLights: Boolean = true,
     green: Boolean = false,
     amber: Boolean = false,
     red: Boolean = false
@@ -134,14 +209,45 @@ private fun RowScope.LightColumn(
         Light(
             modifier = Modifier.weight(1f).fillMaxWidth(),
             lightOnColor = AppTheme.colors.f1StartLightRed,
-            lit = red
+            lit = red && dualRedLights
         )
         Light(
             modifier = Modifier.weight(1f).fillMaxWidth(),
             lightOnColor = AppTheme.colors.f1StartLightRed,
             lit = red
         )
+    }
+}
 
+@Composable
+private fun RowScope.LightTwoColumn(
+    modifier: Modifier = Modifier,
+    isGreen: Boolean = false,
+    green: Boolean = false,
+    amber: Boolean = false,
+    red: Boolean = false
+) {
+    Column(modifier = modifier
+        .clip(RoundedCornerShape(8.dp))
+        .background(columnColor)
+        .padding(8.dp)
+    ) {
+        Light(
+            modifier = Modifier.weight(1f).fillMaxWidth(),
+            lightOnColor = when (isGreen) {
+                true -> AppTheme.colors.f1StartLightGreen
+                false -> AppTheme.colors.f1StartLightAmber
+            },
+            lit = when (isGreen) {
+                true -> green
+                else -> amber
+            }
+        )
+        Light(
+            modifier = Modifier.weight(1f).fillMaxWidth(),
+            lightOnColor = AppTheme.colors.f1StartLightRed,
+            lit = red
+        )
     }
 }
 
@@ -173,13 +279,42 @@ private fun ColumnScope.Light(
     }
 }
 
-@PreviewTheme
+@Preview(backgroundColor = 0xFF000000)
 @Composable
-private fun Preview(
+private fun Preview10(
     @PreviewParameter(StartLightStateProvider::class) state: StartLightState
 ) {
     AppThemePreview {
-        RaceStartLights(state = state)
+        RaceStartLights(
+            state = state,
+            panelType = LightPanel.HALF_HEIGHT
+        )
+    }
+}
+
+@Preview(backgroundColor = 0xFF000000)
+@Composable
+private fun Preview20(
+    @PreviewParameter(StartLightStateProvider::class) state: StartLightState
+) {
+    AppThemePreview {
+        RaceStartLights(
+            state = state,
+            panelType = LightPanel.FULL_HEIGHT
+        )
+    }
+}
+
+@Preview(backgroundColor = 0xFF000000)
+@Composable
+private fun Preview20HalfHeight(
+    @PreviewParameter(StartLightStateProvider::class) state: StartLightState
+) {
+    AppThemePreview {
+        RaceStartLights(
+            state = state,
+            panelType = LightPanel.FULL_HEIGHT_SINGLE_RED
+        )
     }
 }
 
