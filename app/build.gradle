@@ -138,6 +138,8 @@ dependencies {
     implementation(projects.feature.search.core)
     implementation(projects.feature.weekend.contract)
     implementation(projects.feature.weekend.core)
+    implementation(projects.feature.reactiongame.contract)
+    implementation(projects.feature.reactiongame.core)
     implementation(projects.feature.debug.contract)
     debugImplementation(projects.feature.debug.core)
     releaseImplementation(projects.feature.debug.noop)

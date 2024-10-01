@@ -9,10 +9,14 @@ import tmg.flashback.debug.core.styleguide.StyleGuideComposeActivity
 import tmg.flashback.debug.model.DebugMenuItem
 import tmg.flashback.device.ActivityProvider
 import tmg.flashback.navigation.ApplicationNavigationComponent
+import tmg.flashback.navigation.Navigator
+import tmg.flashback.navigation.Screen
+import tmg.flashback.reactiongame.contract.ReactionGame
 import javax.inject.Inject
 
 internal class DebugNavigationComponentImpl @Inject constructor(
     private val activityProvider: ActivityProvider,
+    private val navigator: Navigator,
     private val navComponent: ApplicationNavigationComponent
 ): DebugNavigationComponent {
     override fun navigateTo(id: String) {
@@ -28,6 +32,9 @@ internal class DebugNavigationComponentImpl @Inject constructor(
             }
             MENU_SYNC -> activityProvider.launch {
                 navComponent.syncActivity()
+            }
+            MENU_REACTIONS -> {
+                navigator.navigate(Screen.ReactionGame)
             }
             MENU_F1_RESULTS -> activityProvider.launch {
                 val currentYear = Year.now().value
@@ -53,6 +60,7 @@ internal class DebugNavigationComponentImpl @Inject constructor(
         DebugMenuItem(R.string.debug_menu_styleguide, R.drawable.debug_list_styleguide, MENU_STYLEGUIDE),
         DebugMenuItem(R.string.debug_menu_ads_config, R.drawable.debug_list_adverts, MENU_ADVERTS),
         DebugMenuItem(R.string.debug_menu_sync, R.drawable.debug_list_sync, MENU_SYNC),
+        DebugMenuItem(tmg.flashback.strings.R.string.reaction_screen_title, R.drawable.debug_list_reactions, MENU_REACTIONS),
         DebugMenuItem(R.string.debug_menu_f1_race, R.drawable.debug_list_formula1, MENU_F1_RESULTS),
         DebugMenuItem(R.string.debug_menu_f1_drivers, R.drawable.debug_list_formula1, MENU_F1_DRIVERS),
         DebugMenuItem(R.string.debug_menu_f1_constructors, R.drawable.debug_list_formula1, MENU_F1_CONSTRUCTORS),
@@ -68,5 +76,6 @@ internal class DebugNavigationComponentImpl @Inject constructor(
         internal const val MENU_STYLEGUIDE = "styleguide"
         internal const val MENU_ADVERTS = "adverts"
         internal const val MENU_SYNC = "sync"
+        internal const val MENU_REACTIONS = "reactions"
     }
 }

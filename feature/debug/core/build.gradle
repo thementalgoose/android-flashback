@@ -18,6 +18,8 @@ android {
 
 dependencies {
 
+    implementation(projects.feature.reactiongame.contract)
+
     implementation(projects.feature.debug.contract)
     implementation(projects.core.ads.ads)
 
