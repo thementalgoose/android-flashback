@@ -1,19 +1,17 @@
-package tmg.flashback.eastereggs.ui.reaction
+package tmg.flashback.reactiongame.presentation
 
 import app.cash.turbine.test
-import app.cash.turbine.testIn
-import app.cash.turbine.turbineScope
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.test.advanceTimeBy
 import kotlinx.coroutines.test.runTest
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import tmg.flashback.device.managers.TimeManager
-import tmg.flashback.eastereggs.domain.LightsOutDelayProvider
+import tmg.flashback.reactiongame.LightsOutDelayProvider
 import tmg.testutils.BaseTest
 
 internal class ReactionViewModelTest: BaseTest() {

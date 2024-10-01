@@ -1,4 +1,4 @@
-package tmg.flashback.eastereggs.ui.reaction
+package tmg.flashback.reactiongame.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import tmg.flashback.device.managers.TimeManager
-import tmg.flashback.eastereggs.domain.LightsOutDelayProvider
+import tmg.flashback.reactiongame.LightsOutDelayProvider
 import javax.inject.Inject
 
 @HiltViewModel

@@ -51,6 +51,9 @@
             <option value="$PROJECT_DIR$/feature/privacypolicy" />
             <option value="$PROJECT_DIR$/feature/privacypolicy/contract" />
             <option value="$PROJECT_DIR$/feature/privacypolicy/core" />
+            <option value="$PROJECT_DIR$/feature/reactiongame" />
+            <option value="$PROJECT_DIR$/feature/reactiongame/contract" />
+            <option value="$PROJECT_DIR$/feature/reactiongame/core" />
             <option value="$PROJECT_DIR$/feature/rss" />
             <option value="$PROJECT_DIR$/feature/rss/contract" />
             <option value="$PROJECT_DIR$/feature/rss/core" />

@@ -1,4 +1,4 @@
-package tmg.flashback.eastereggs.domain
+package tmg.flashback.reactiongame
 
 import javax.inject.Inject
 import kotlin.random.Random

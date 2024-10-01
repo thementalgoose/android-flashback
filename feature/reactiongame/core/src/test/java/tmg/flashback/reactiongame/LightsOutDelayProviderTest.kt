@@ -1,4 +1,4 @@
-package tmg.flashback.eastereggs.domain
+package tmg.flashback.reactiongame
 
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.params.ParameterizedTest

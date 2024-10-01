@@ -1,4 +1,4 @@
-package tmg.flashback.eastereggs.ui.reaction
+package tmg.flashback.reactiongame.presentation
 
 sealed class ReactionUiState {
 
