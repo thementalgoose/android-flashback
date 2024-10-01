@@ -29,14 +29,3 @@ private fun ReactionScreen(
 ) {
 
 }
-
-@Composable
-private fun RaceStartLights() {
-
-}
-
-@Preview
-@Composable
-private fun PreviewLights() {
-
-}
