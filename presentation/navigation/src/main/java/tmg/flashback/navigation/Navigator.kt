@@ -16,6 +16,6 @@ class Navigator @Inject constructor(
 
     fun navigate(destination: NavigationDestination) {
         crashlyticsManager.log("Navigating to ${destination.route}")
-        navController.navigate(destination)
+        navController.navigateTo(destination)
     }
 }
