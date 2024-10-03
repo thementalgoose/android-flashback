@@ -12,12 +12,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import tmg.flashback.BuildConfig
 import tmg.flashback.crashlytics.manager.CrashlyticsManager
 import tmg.flashback.debug.DebugNavigationComponent
 import tmg.flashback.debug.model.DebugMenuItem
@@ -31,6 +31,7 @@ import tmg.flashback.season.contract.ConstructorsStandings
 import tmg.flashback.season.contract.DriverStandings
 import tmg.flashback.season.contract.Races
 import tmg.flashback.presentation.settings.All
+import tmg.flashback.reactiongame.contract.Reaction
 import tmg.flashback.season.presentation.dashboard.shared.seasonpicker.CurrentSeasonHolder
 import tmg.flashback.usecases.DashboardSyncUseCase
 import tmg.utilities.extensions.combinePair
@@ -83,6 +84,7 @@ class DashboardNavViewModel @Inject constructor(
                 destination.startsWith("settings") -> MenuItem.Settings
                 destination.startsWith("rss") -> MenuItem.RSS
                 destination.startsWith("search") -> MenuItem.Search
+                destination == Screen.Reaction.route -> MenuItem.Reaction
                 destination == Screen.AboutThisApp.route -> MenuItem.Contact
                 else -> null
             }
@@ -102,6 +104,7 @@ class DashboardNavViewModel @Inject constructor(
                 destination == "settings" -> destinationInRoot.includes(destination)
                 destination == "rss" -> destinationInRoot.includes(destination)
                 destination == "search" -> destinationInRoot.includes(destination)
+                destination == "reaction" -> true
                 else -> false
             }
         }
@@ -144,6 +147,9 @@ class DashboardNavViewModel @Inject constructor(
             if (rssRepository.enabled) {
                 add(MenuItem.RSS)
             }
+            if (BuildConfig.DEBUG) {
+                add(MenuItem.Reaction)
+            }
             add(MenuItem.Settings)
             add(MenuItem.Contact)
         }
@@ -158,6 +164,7 @@ class DashboardNavViewModel @Inject constructor(
             MenuItem.Constructors -> navigator.navigate(Screen.ConstructorsStandings)
             MenuItem.Contact -> applicationNavigationComponent.aboutApp()
             MenuItem.RSS -> navigator.navigate(Screen.RSS)
+            MenuItem.Reaction -> navigator.navigate(Screen.Reaction)
             MenuItem.Search -> navigator.navigate(Screen.Search)
             MenuItem.Settings -> navigator.navigate(Screen.Settings.All)
         }

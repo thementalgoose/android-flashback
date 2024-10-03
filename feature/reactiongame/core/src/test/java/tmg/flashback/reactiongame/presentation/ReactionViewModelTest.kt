@@ -74,7 +74,8 @@ internal class ReactionViewModelTest: BaseTest() {
 
             val expected = ReactionUiState.Results(
                 timeMillis = 250,
-                tier = ReactionResultTier.AVERAGE
+                tier = ReactionResultTier.AVERAGE,
+                percentage = 0.5f
             )
             assertEquals(expected, awaitItem())
 
@@ -150,7 +151,8 @@ internal class ReactionViewModelTest: BaseTest() {
 
             val expected = ReactionUiState.Results(
                 timeMillis = millis.toLong(),
-                tier = expectedTier
+                tier = expectedTier,
+                percentage = (millis / 500f).coerceIn(0f, 1f)
             )
             assertEquals(expected, awaitItem())
         }

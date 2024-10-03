@@ -27,7 +27,6 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
-import tmg.flashback.style.annotations.PreviewTheme
 
 
 private val columnColor: Color = Color(0xFF202020)
@@ -47,7 +46,7 @@ sealed class StartLightState {
 
 enum class LightPanel {
     FULL_HEIGHT,
-    FULL_HEIGHT_SINGLE_RED,
+    FULL_HEIGHT_DOUBLE_HEIGHT_RED,
     HALF_HEIGHT
 }
 
@@ -60,7 +59,7 @@ internal fun RaceStartLights(
     Box(
         modifier = modifier
             .padding(8.dp)
-            .aspectRatio(if (panelType == LightPanel.HALF_HEIGHT) 2.4f else 1.4f),
+            .aspectRatio(if (panelType == LightPanel.HALF_HEIGHT) 2.2f else 1.4f),
     ) {
         Column(modifier = Modifier.fillMaxSize()) {
             Spacer(Modifier.weight(2f))
@@ -84,7 +83,7 @@ internal fun RaceStartLights(
         } else {
             Lights20(
                 state = state,
-                dualRedLights = panelType == LightPanel.FULL_HEIGHT_SINGLE_RED
+                dualRedLights = panelType == LightPanel.FULL_HEIGHT_DOUBLE_HEIGHT_RED
             )
         }
     }
@@ -313,7 +312,7 @@ private fun Preview20HalfHeight(
     AppThemePreview {
         RaceStartLights(
             state = state,
-            panelType = LightPanel.FULL_HEIGHT_SINGLE_RED
+            panelType = LightPanel.FULL_HEIGHT_DOUBLE_HEIGHT_RED
         )
     }
 }
