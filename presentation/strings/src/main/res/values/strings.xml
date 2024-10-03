@@ -77,6 +77,7 @@
     <string name="dashboard_search">Search</string>
     <string name="dashboard_links_title">Links</string>
     <string name="dashboard_links_rss">RSS feed</string>
+    <string name="dashboard_links_reaction">Reaction test</string>
     <string name="dashboard_links_search">Search</string>
     <string name="dashboard_links_settings">Settings</string>
     <string name="dashboard_links_contact">Contact</string>
@@ -617,13 +618,32 @@
     <string name="easter_egg_menu_christmas">Merry Christmas!</string>
 
     <!-- Reaction screen -->
-    <string name="reaction_screen_title">Reaction time</string>
-    <string name="reaction_screen_subtitle">How do you think your reaction times compare to F1 drivers! Tap the screen when the lights go out</string>
-    <string name="reaction_screen_start">Tap anywhere on the screen to start</string>
-    <string name="reaction_screen_jump_start">Jump start!</string>
-    <string name="reaction_screen_tap_start">Start the lights!</string>
-    <string name="reaction_screen_tap_input">Tap anywhere when the lights go out…</string>
-    <string name="reaction_screen_tap_reset">Reset</string>
+    <string name="reaction_screen_title">Reaction test</string>
+    <string name="reaction_screen_heading">Test your reactions</string>
+    <string name="reaction_screen_subtitle">Do you think you could match the reaction times of a F1 driver when the lights go out?\n\nStart the game below, and then tap the screen anywhere when you see the lights go out to get a score</string>
+    <string name="reaction_screen_action_start">Start the game</string>
+    <string name="reaction_screen_action_reset">Reset</string>
+    <string name="reaction_screen_action_again">Play again?</string>
+    <string name="reaction_screen_action_react">React</string>
+    <string name="reaction_screen_instructions">Tap anywhere when the lights go out…</string>
+
+    <string name="reaction_screen_miss_title">Missed!</string>
+    <string name="reaction_screen_miss_subtitle">Remember to tap on the screen anywhere when you notice the lights go out</string>
+    <string name="reaction_screen_jump_title">Jump start!</string>
+    <string name="reaction_screen_jump_subtitle">You reacted before the lights went out, and would have been given a time penalty for a jump start. Try again and make sure not to react too early</string>
+
+    <string name="reaction_tier_superhuman">Superhuman</string>
+    <string name="reaction_tier_superhuman_desc">Your reaction time was superhuman!</string>
+    <string name="reaction_tier_great">Great</string>
+    <string name="reaction_tier_great_desc">Your reaction time was faster than the average reaction time of an F1 driver, congratulations!</string>
+    <string name="reaction_tier_good">Good</string>
+    <string name="reaction_tier_good_desc">Your reaction time was similar to the average reaction time of an F1 driver, congratulations!</string>
+    <string name="reaction_tier_average">Average</string>
+    <string name="reaction_tier_average_desc">Your reaction time was similar to the average reaction time of an F1 driver, congratulations!</string>
+    <string name="reaction_tier_not_good">Over average</string>
+    <string name="reaction_tier_not_good_desc">Your reaction time is slightly slower than the average reaction time of an F1 driver. The average reaction time is around 235ms, be sure to practice some more</string>
+    <string name="reaction_tier_poor">Slow</string>
+    <string name="reaction_tier_poor_desc">Your reaction time is slower than average. The average reaction time is around 235ms, be sure to get some more practice in before you start your career as an F1 driver</string>
 
     <string name="percentage" translatable="false">%s%</string>
 
