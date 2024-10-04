@@ -81,6 +81,8 @@ android {
             buildConfigField "String", "BASE_URL", '"' + project.ext.baseUrl + '"'
             buildConfigField "String", "CONTACT_EMAIL", '"' + project.ext.contactEmail + '"'
 
+            resValue "string", "app_version_name", project.ext.versionName
+
             firebaseCrashlytics {
                 mappingFileUploadEnabled false
             }
@@ -92,6 +94,8 @@ android {
             buildConfigField "int", "ENVIRONMENT", '0'
             buildConfigField "String", "BASE_URL", '"' + project.ext.baseUrl + '"'
             buildConfigField "String", "CONTACT_EMAIL", '"' + project.ext.contactEmail + '"'
+
+            resValue "string", "app_version_name", project.ext.versionName
 
             firebaseCrashlytics {
                 mappingFileUploadEnabled true
@@ -138,6 +142,8 @@ dependencies {
     implementation(projects.feature.search.core)
     implementation(projects.feature.weekend.contract)
     implementation(projects.feature.weekend.core)
+    implementation(projects.feature.reactiongame.contract)
+    implementation(projects.feature.reactiongame.core)
     implementation(projects.feature.debug.contract)
     debugImplementation(projects.feature.debug.core)
     releaseImplementation(projects.feature.debug.noop)

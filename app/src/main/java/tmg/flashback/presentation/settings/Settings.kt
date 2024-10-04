@@ -288,6 +288,11 @@ object Settings {
             title = string.settings_switch_review_title,
             subtitle = string.settings_switch_review_description
         )
+        val buildVersion = Setting.Pref(
+            _key = "build_version",
+            title = string.settings_build_version,
+            subtitle = R.string.app_version_name
+        )
         const val shakeToReport = "shake_to_report"
         fun shakeToReport(isChecked: Boolean, isEnabled: Boolean = true) = Setting.Switch(
             _key = shakeToReport,

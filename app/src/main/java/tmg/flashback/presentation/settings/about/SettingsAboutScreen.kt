@@ -76,6 +76,10 @@ fun SettingsAboutScreen(
                 model = Settings.Other.shakeToReport(shakeToReportEnabled),
                 onClick = prefClicked
             )
+            Pref(
+                model = Settings.Other.buildVersion,
+                onClick = prefClicked
+            )
 
             Footer()
         }

@@ -78,6 +78,7 @@ internal class DashboardNavViewModelTest: BaseTest() {
         "settings/rss,Settings",
         "rss,RSS",
         "search,Search",
+        "reaction,Reaction",
         "drivers/,",
         "constructors/,",
         "circuits/,"
@@ -105,6 +106,7 @@ internal class DashboardNavViewModelTest: BaseTest() {
         "settings,true",
         "rss,true",
         "search,true",
+        "reaction,true",
         "drivers/,false",
         "settings/rss,false",
         "constructors/,false",
@@ -129,6 +131,7 @@ internal class DashboardNavViewModelTest: BaseTest() {
         "settings/rss,false",
         "rss,false",
         "search,false",
+        "reaction,false",
         "drivers/,false",
         "constructors/,false",
         "circuits/,false"
@@ -148,6 +151,7 @@ internal class DashboardNavViewModelTest: BaseTest() {
         "Constructors,results/constructors",
         "Drivers,results/drivers",
         "RSS,rss",
+        "Reaction,reaction",
         "Settings,settings",
         "Search,search"
 
@@ -197,6 +201,7 @@ internal class DashboardNavViewModelTest: BaseTest() {
 
         underTest.appFeatureItemsList.test {
             val item = awaitItem()
+//            assertTrue(item.any { it == MenuItem.Reaction })
             assertTrue(item.any { it == MenuItem.Search })
             assertTrue(item.any { it == MenuItem.Settings })
             assertTrue(item.any { it == MenuItem.Contact })

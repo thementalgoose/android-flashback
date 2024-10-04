@@ -4,7 +4,6 @@ apply from: rootDir.absolutePath + "/gradle/config-util.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-junit5.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-hilt.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-compose.gradle"
-apply from: rootDir.absolutePath + "/gradle/config-compose-providers.gradle"
 
 android {
     compileSdk project.ext.compileSdk
@@ -13,33 +12,19 @@ android {
         minSdkVersion project.ext.minSdkVersion
         targetSdkVersion project.ext.targetSdkVersion
     }
-    namespace 'tmg.flashback.debug.core'
+    namespace 'tmg.flashback.reactiongame'
 }
 
 dependencies {
 
-    implementation(projects.feature.reactiongame.contract)
-
-    implementation(projects.feature.debug.contract)
-    implementation(projects.core.ads.ads)
-
-    // Core modules
     implementation(projects.core.metrics.googleanalytics)
-    implementation(projects.core.configuration)
     implementation(projects.core.metrics.crashlytics)
-    implementation(projects.core.device)
-    implementation(projects.core.notifications)
+    implementation(projects.core.configuration)
     implementation(projects.core.preferences)
+    implementation(projects.core.device)
 
-    implementation(projects.presentation.ui)
     implementation(projects.presentation.strings)
-    implementation(projects.presentation.navigation)
+    implementation(projects.presentation.ui)
 
-    // Feature
-    implementation(projects.network.flashback)
-    implementation(projects.domain.repo)
-
-    // Stats
-    implementation(projects.feature.season.core)
-    implementation(projects.feature.season.contract)
+    implementation(projects.feature.reactiongame.contract)
 }
