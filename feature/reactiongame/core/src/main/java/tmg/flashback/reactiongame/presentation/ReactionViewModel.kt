@@ -71,7 +71,6 @@ class ReactionViewModel @Inject constructor(
 
     fun setLightsOutTime() {
         this.lightsOutTime = timeManager.nowMillis
-        println("Lights out time set at ${this.lightsOutTime}")
     }
 
     fun react() {
@@ -87,14 +86,7 @@ class ReactionViewModel @Inject constructor(
 
         _uiState.value = ReactionUiState.Results(
             timeMillis = reactionTime,
-            tier = when (reactionTime) {
-                in 0..150 -> ReactionResultTier.SUPERHUMAN
-                in 150..180 -> ReactionResultTier.EXCEPTIONAL
-                in 180..230 -> ReactionResultTier.GOOD
-                in 230..270 -> ReactionResultTier.AVERAGE
-                in 270..320 -> ReactionResultTier.NOT_GOOD
-                else -> ReactionResultTier.POOR
-            },
+            tier = ReactionResultTier.toTier(reactionTime),
             percentage = (reactionTime / 500f).coerceIn(0f, 1f)
         )
         this.lightsOutTime = 0L
