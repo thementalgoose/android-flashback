@@ -12,6 +12,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -32,6 +33,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.input.pointer.pointerInteropFilter
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -96,6 +98,14 @@ private fun ReactionScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .pointerInput(state is ReactionUiState.Game) {
+                detectTapGestures {
+                    when (state) {
+                        is ReactionUiState.Game -> react()
+                        else -> {}
+                    }
+                }
+            }
             .background(AppTheme.colors.backgroundPrimary),
     ) {
         Header(
@@ -109,27 +119,27 @@ private fun ReactionScreen(
         Box(modifier = Modifier
             .weight(1f)
             .background(AppTheme.colors.backgroundPrimary)
-            .pointerInteropFilter {
-                // TODO: Move this somewhere / fix reaction bullshit with this
-                when (it.action) {
-                    MotionEvent.ACTION_DOWN -> {
-                        when (state) {
-                            ReactionUiState.Start -> {
-                                start()
-                                return@pointerInteropFilter true
-                            }
-                            ReactionUiState.JumpStart -> { }
-                            ReactionUiState.Missed -> { }
-                            is ReactionUiState.Game -> {
-                                react()
-                                return@pointerInteropFilter true
-                            }
-                            is ReactionUiState.Results -> { }
-                        }
-                    }
-                }
-                return@pointerInteropFilter false
-            }
+//            .pointerInteropFilter {
+//                // TODO: Move this somewhere / fix reaction bullshit with this
+//                when (it.action) {
+//                    MotionEvent.ACTION_DOWN -> {
+//                        when (state) {
+//                            ReactionUiState.Start -> {
+//                                start()
+//                                return@pointerInteropFilter true
+//                            }
+//                            ReactionUiState.JumpStart -> { }
+//                            ReactionUiState.Missed -> { }
+//                            is ReactionUiState.Game -> {
+//                                react()
+//                                return@pointerInteropFilter true
+//                            }
+//                            is ReactionUiState.Results -> { }
+//                        }
+//                    }
+//                }
+//                return@pointerInteropFilter false
+//            }
         ) {
 
             if (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact) {
@@ -168,16 +178,11 @@ private fun ReactionScreen(
                                 ReactionUiState.Start -> Start()
                             }
                         }
-                        ButtonPrimary(
+                        Action(
                             modifier = Modifier.fillMaxWidth(),
-                            onClick = { reset() },
-                            text = when (state) {
-                                is ReactionUiState.Game -> stringResource(string.reaction_screen_action_react)
-                                is ReactionUiState.Results -> stringResource(string.reaction_screen_action_again)
-                                ReactionUiState.JumpStart -> stringResource(string.reaction_screen_action_reset)
-                                ReactionUiState.Missed -> stringResource(string.reaction_screen_action_reset)
-                                ReactionUiState.Start -> stringResource(string.reaction_screen_action_start)
-                            }
+                            state = state,
+                            reset = reset,
+                            start = start,
                         )
                     }
                 }
@@ -211,22 +216,45 @@ private fun ReactionScreen(
                             is ReactionUiState.Results -> Results(state, Modifier.weight(1f))
                             ReactionUiState.Start -> Start(Modifier.weight(1f))
                         }
-                        ButtonPrimary(
+                        Action(
                             modifier = Modifier.fillMaxWidth(),
-                            onClick = { reset() },
-                            text = when (state) {
-                                is ReactionUiState.Game -> stringResource(string.reaction_screen_action_react)
-                                is ReactionUiState.Results -> stringResource(string.reaction_screen_action_again)
-                                ReactionUiState.JumpStart -> stringResource(string.reaction_screen_action_reset)
-                                ReactionUiState.Missed -> stringResource(string.reaction_screen_action_reset)
-                                ReactionUiState.Start -> stringResource(string.reaction_screen_action_start)
-                            }
+                            state = state,
+                            reset = reset,
+                            start = start,
                         )
                     }
                 }
             }
         }
     }
+}
+
+@Composable
+private fun Action(
+    state: ReactionUiState,
+    reset: () -> Unit,
+    start: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    ButtonPrimary(
+        modifier = modifier,
+        onClick = {
+            when (state) {
+                ReactionUiState.Start -> start()
+                is ReactionUiState.Game -> {}
+                ReactionUiState.JumpStart,
+                ReactionUiState.Missed,
+                is ReactionUiState.Results -> reset()
+            }
+        },
+        text = when (state) {
+            is ReactionUiState.Game -> stringResource(string.reaction_screen_action_react)
+            is ReactionUiState.Results -> stringResource(string.reaction_screen_action_again)
+            ReactionUiState.JumpStart -> stringResource(string.reaction_screen_action_reset)
+            ReactionUiState.Missed -> stringResource(string.reaction_screen_action_reset)
+            ReactionUiState.Start -> stringResource(string.reaction_screen_action_start)
+        }
+    )
 }
 
 @Composable
