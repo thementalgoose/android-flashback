@@ -13,8 +13,11 @@ import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.device.repository.PrivacyRepository
 import tmg.flashback.device.usecases.OpenPlayStoreUseCase
 import tmg.flashback.navigation.ApplicationNavigationComponent
+import tmg.flashback.navigation.Navigator
+import tmg.flashback.navigation.Screen
 import tmg.flashback.ui.managers.ToastManager
 import tmg.flashback.presentation.settings.Settings
+import tmg.flashback.reactiongame.contract.Reaction
 import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.testutils.BaseTest
 
@@ -22,9 +25,9 @@ internal class SettingsAboutViewModelTest: BaseTest() {
 
     private val mockPrivacyRepository: PrivacyRepository = mockk(relaxed = true)
     private val mockApplicationNavigationComponent: ApplicationNavigationComponent = mockk(relaxed = true)
+    private val mockNavigator: Navigator = mockk(relaxed = true)
     private val mockOpenPlaystoreUseCase: OpenPlayStoreUseCase = mockk(relaxed = true)
     private val mockToastManager: ToastManager = mockk(relaxed = true)
-    private val mockBuildConfigManager: BuildConfigManager = mockk(relaxed = true)
 
     private lateinit var underTest: SettingsAboutViewModel
 
@@ -32,6 +35,7 @@ internal class SettingsAboutViewModelTest: BaseTest() {
         underTest = SettingsAboutViewModel(
             privacyRepository = mockPrivacyRepository,
             applicationNavigationComponent = mockApplicationNavigationComponent,
+            navigator = mockNavigator,
             openPlayStoreUseCase = mockOpenPlaystoreUseCase,
             toastManager = mockToastManager
         )
@@ -74,6 +78,35 @@ internal class SettingsAboutViewModelTest: BaseTest() {
 
         verify {
             mockOpenPlaystoreUseCase.openPlaystore()
+        }
+    }
+
+    @Test
+    fun `click build number does nothing`() {
+        initUnderTest()
+        underTest.inputs.prefClicked(Settings.Other.buildVersion)
+
+        verify(exactly = 0) {
+            mockNavigator.navigate(any())
+        }
+    }
+
+    @Test
+    fun `click build number 5 times does nothing`() {
+        initUnderTest()
+        underTest.inputs.prefClicked(Settings.Other.buildVersion)
+        underTest.inputs.prefClicked(Settings.Other.buildVersion)
+        underTest.inputs.prefClicked(Settings.Other.buildVersion)
+        underTest.inputs.prefClicked(Settings.Other.buildVersion)
+
+        verify(exactly = 0) {
+            mockNavigator.navigate(any())
+        }
+
+        underTest.inputs.prefClicked(Settings.Other.buildVersion)
+
+        verify(exactly = 1) {
+            mockNavigator.navigate(Screen.Reaction)
         }
     }
 

@@ -190,7 +190,6 @@ fun AppGraph(
         composable(
             Screen.Reaction.route,
         ) {
-
             ReactionScreenVM(
                 actionUpClicked = openMenu,
                 windowSizeClass = windowSize,
