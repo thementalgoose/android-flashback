@@ -70,6 +70,7 @@
     <string name="dashboard_links_title">Enlaces</string>
     <string name="dashboard_links_rss">Fuente RSS</string>
     <string name="dashboard_links_search">Buscar</string>
+    <string name="dashboard_links_reaction">Juego de reacción</string>
     <string name="dashboard_links_settings">Ajustes</string>
     <string name="dashboard_links_contact">Contacto</string>
     <string name="dashboard_links_dark_mode">Modo oscuro</string>
@@ -296,6 +297,7 @@
     <string name="settings_section_ads_title">Anuncios</string>
     <string name="settings_section_ads_description">Configuración de anuncios</string>
     <string name="settings_header_ads">Anuncios</string>
+    <string name="settings_build_version">Versión de compilación</string>
     <string name="settings_switch_ads_enable_title">¿Mostrar anuncios?</string>
     <string name="settings_switch_ads_enable_description">¿Quieres que se muestren anuncios? Todos los desarrolladores aprecian tu apoyo dejando los anuncios habilitados</string>
     <string name="settings_section_privacy_title">Privacidad</string>
@@ -513,6 +515,34 @@
     <string name="home_last_updated">Última actualización %s</string>
     <!-- Política de privacidad -->
     <string name="privacy_policy_title">Política de privacidad</string>
+
+    <!-- Reaction screen -->
+    <string name="reaction_screen_title">Prueba de reacción</string>
+    <string name="reaction_screen_heading">Pon a prueba tus reacciones</string>
+    <string name="reaction_screen_subtitle">¿Crees que podrías igualar los tiempos de reacción de un piloto de F1 cuando se apagan las luces?\n\nComienza el juego a continuación y luego toca la pantalla en cualquier lugar cuando veas que las luces se apagan para obtener una puntuación</string>
+    <string name="reaction_screen_action_start">Empezar el juego</string>
+    <string name="reaction_screen_action_reset">Reiniciar</string>
+    <string name="reaction_screen_action_again">¿Jugar de nuevo?</string>
+    <string name="reaction_screen_action_react">Reaccionar</string>
+    <string name="reaction_screen_instructions">Toca en cualquier lugar cuando se apaguen las luces…</string>
+
+    <string name="reaction_screen_miss_title">¡Perdido!</string>
+    <string name="reaction_screen_miss_subtitle">Recuerda tocar la pantalla en cualquier lugar cuando notes que las luces se apagan</string>
+    <string name="reaction_screen_jump_title">¡Salida en falso!</string>
+    <string name="reaction_screen_jump_subtitle">Reaccionaste antes de que se apagaran las luces y se te habría penalizado con tiempo por una salida en falso. Inténtalo de nuevo y asegúrate de no reaccionar demasiado pronto</string>
+
+    <string name="reaction_tier_superhuman">Superhumano</string>
+    <string name="reaction_tier_superhuman_desc">¡Tu tiempo de reacción fue sobrehumano!</string>
+    <string name="reaction_tier_great">Genial</string>
+    <string name="reaction_tier_great_desc">Tu tiempo de reacción fue más rápido que el tiempo de reacción promedio de un piloto de F1, ¡felicidades!</string>
+    <string name="reaction_tier_good">Bueno</string>
+    <string name="reaction_tier_good_desc">Tu tiempo de reacción fue similar al tiempo de reacción promedio de un piloto de F1, ¡felicidades!</string>
+    <string name="reaction_tier_average">Promedio</string>
+    <string name="reaction_tier_average_desc">Tu tiempo de reacción fue similar al tiempo de reacción promedio de un piloto de F1, ¡felicidades!</string>
+    <string name="reaction_tier_not_good">Sobre el promedio</string>
+    <string name="reaction_tier_not_good_desc">Tu tiempo de reacción es un poco más lento que el tiempo de reacción promedio de un piloto de F1. El tiempo de reacción promedio es de alrededor de 250 ms, asegúrate de practicar un poco más</string>
+    <string name="reaction_tier_poor">Lento</string>
+    <string name="reaction_tier_poor_desc">Tu tiempo de reacción es más lento que el promedio. El tiempo de reacción promedio es de alrededor de 250 ms, asegúrate de practicar más antes de comenzar tu carrera como piloto de F1</string>
 
     <!-- Easter eggs -->
     <string name="easter_egg_menu_new_years">¡Feliz Año Nuevo!</string>

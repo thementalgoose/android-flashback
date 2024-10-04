@@ -8,4 +8,7 @@ import javax.inject.Singleton
 class TimeManager @Inject constructor() {
     val now: LocalDateTime
         get() = LocalDateTime.now()
+
+    val nowMillis: Long
+        get() = System.currentTimeMillis()
 }

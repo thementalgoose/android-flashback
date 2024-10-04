@@ -40,6 +40,11 @@ sealed class MenuItem(
         label = string.dashboard_links_rss,
         icon = R.drawable.dashboard_rss
     )
+    object Reaction: MenuItem(
+        id = "reaction",
+        label = string.dashboard_links_reaction,
+        icon = R.drawable.dashboard_reaction
+    )
     object Settings: MenuItem(
         id = "settings",
         label = string.dashboard_links_settings,

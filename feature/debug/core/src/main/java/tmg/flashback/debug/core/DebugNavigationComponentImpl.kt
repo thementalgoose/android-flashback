@@ -9,10 +9,14 @@ import tmg.flashback.debug.core.styleguide.StyleGuideComposeActivity
 import tmg.flashback.debug.model.DebugMenuItem
 import tmg.flashback.device.ActivityProvider
 import tmg.flashback.navigation.ApplicationNavigationComponent
+import tmg.flashback.navigation.Navigator
+import tmg.flashback.navigation.Screen
+import tmg.flashback.reactiongame.contract.Reaction
 import javax.inject.Inject
 
 internal class DebugNavigationComponentImpl @Inject constructor(
     private val activityProvider: ActivityProvider,
+    private val navigator: Navigator,
     private val navComponent: ApplicationNavigationComponent
 ): DebugNavigationComponent {
     override fun navigateTo(id: String) {

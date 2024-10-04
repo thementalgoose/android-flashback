@@ -14,7 +14,8 @@ class ToastManager @Inject constructor(
     private val applicationContext: Context,
     private val activityProvider: ActivityProvider
 ) {
-    fun displayToast(@StringRes msg: Int) {
-        Toast.makeText(activityProvider.activity ?: applicationContext, msg, Toast.LENGTH_LONG).show()
+    fun displayToast(@StringRes msg: Int, vararg formatArgs: Any) {
+        val context = activityProvider.activity ?: applicationContext
+        Toast.makeText(context, context.getString(msg, formatArgs), Toast.LENGTH_LONG).show()
     }
 }
