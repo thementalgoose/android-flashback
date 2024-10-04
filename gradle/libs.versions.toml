@@ -16,6 +16,7 @@ firebase = "33.4.0"
 junit = "5.11.1"
 okhttp = "4.12.0"
 retrofit = "2.11.0"
+aboutlibraries = "11.2.3"
 
 [libraries]  # ===========================================================================
 ## Root build.gradle dependencies
@@ -49,6 +50,8 @@ androidx_glance_appwidget = { module = "androidx.glance:glance-appwidget", versi
 
 androidx_workmanager_runtime = { module = "androidx.work:work-runtime", version.ref = "androidx_workmanager" }
 androidx_workmanager_ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "androidx_workmanager" }
+
+aboutlib = { module = "com.mikepenz:aboutlibraries-core", version.ref = "aboutlibraries" }
 
 material = "com.google.android.material:material:1.12.0"
 
@@ -212,5 +215,16 @@ androidxtest = [
 ]
 
 [plugins]
+application = { id = "com.android.application" }
+crashlytics = { id = "com.google.firebase.crashlytics" }
+junit5 = { id = "de.mannodermaus.android-junit5" }
+play_publisher = { id = "com.github.triplet.play" }
+firebase_perf = { id = "com.google.firebase.firebase-perf" }
+
+kotlin_android = { id = "kotlin-android" }
+kotlin_parcelize = { id = "kotlin-parcelize" }
+kotlinx_serializable = { id = "kotlinx-serialization" }
+
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 composecompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin"}
+aboutlibraries = { id = "com.mikepenz.aboutlibraries.plugin", version.ref = "aboutlibraries" }

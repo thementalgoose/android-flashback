@@ -40,6 +40,7 @@ buildscript {
 plugins {
     alias(libs.plugins.ksp) apply false
     alias(libs.plugins.composecompiler) apply false
+    alias(libs.plugins.aboutlibraries) apply false
 }
 
 apply from: rootDir.absolutePath + "/gradle/script-dependencyreport.gradle"
