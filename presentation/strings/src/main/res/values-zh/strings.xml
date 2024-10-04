@@ -69,6 +69,7 @@
     <string name="dashboard_links_rss">RSS 订阅</string>
     <string name="dashboard_links_search">搜索</string>
     <string name="dashboard_links_settings">设置</string>
+    <string name="dashboard_links_reaction">反应游戏</string>
     <string name="dashboard_links_contact">联系</string>
     <string name="dashboard_links_dark_mode">深色模式</string>
     <string name="dashboard_all_title">全部</string>
@@ -508,6 +509,34 @@
 
     <!-- 隐私政策 -->
     <string name="privacy_policy_title">隐私政策</string>
+
+    <!-- Reaction screen -->
+    <string name="reaction_screen_title">反应测试</string>
+    <string name="reaction_screen_heading">测试你的反应</string>
+    <string name="reaction_screen_subtitle">你认为你能在熄灯时与 F1 车手的反应时间相匹敌吗？\n\n在下方开始游戏，然后在看到灯熄灭时点击屏幕上的任意位置即可获得分数</string>
+    <string name="reaction_screen_action_start">开始游戏</string>
+    <string name="reaction_screen_action_reset">重置</string>
+    <string name="reaction_screen_action_again">再玩一次？</string>
+    <string name="reaction_screen_action_react">反应</string>
+    <string name="reaction_screen_instructions">灯熄灭时点击任意位置…</string>
+
+    <string name="reaction_screen_miss_title">错过了！</string>
+    <string name="reaction_screen_miss_subtitle">记住，当你注意到灯熄灭时，点击屏幕上的任意位置</string>
+    <string name="reaction_screen_jump_title">抢跑！</string>
+    <string name="reaction_screen_jump_subtitle">你在灯熄灭前就做出了反应，并且会因为抢跑而被罚时。再试一次，确保不要反应太快</string>
+
+    <string name="reaction_tier_superhuman">超人</string>
+    <string name="reaction_tier_superhuman_desc">你的反应时间是超人的！</string>
+    <string name="reaction_tier_great">很棒</string>
+    <string name="reaction_tier_great_desc">你的反应时间比 F1 车手的平均反应时间快，恭喜！</string>
+    <string name="reaction_tier_good">良好</string>
+    <string name="reaction_tier_good_desc">你的反应时间与 F1 车手的平均反应时间相似，恭喜！</string>
+    <string name="reaction_tier_average">平均</string>
+    <string name="reaction_tier_average_desc">你的反应时间与 F1 车手的平均反应时间相似，恭喜！</string>
+    <string name="reaction_tier_not_good">高于平均水平</string>
+    <string name="reaction_tier_not_good_desc">你的反应时间比 F1 车手的平均反应时间稍慢。平均反应时间约为 250 毫秒，请务必多加练习</string>
+    <string name="reaction_tier_poor">慢</string>
+    <string name="reaction_tier_poor_desc">你的反应时间比平均水平慢。平均反应时间约为 250 毫秒，在你开始你的 F1 车手生涯之前，请务必多加练习</string>
 
     <!-- Easter Eggs -->
     <string name="easter_egg_menu_new_years">新年快乐！</string>
