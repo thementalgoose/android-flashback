@@ -641,9 +641,9 @@
     <string name="reaction_tier_average">Average</string>
     <string name="reaction_tier_average_desc">Your reaction time was similar to the average reaction time of an F1 driver, congratulations!</string>
     <string name="reaction_tier_not_good">Over average</string>
-    <string name="reaction_tier_not_good_desc">Your reaction time is slightly slower than the average reaction time of an F1 driver. The average reaction time is around 235ms, be sure to practice some more</string>
+    <string name="reaction_tier_not_good_desc">Your reaction time is slightly slower than the average reaction time of an F1 driver. The average reaction time is around 250ms, be sure to practice some more</string>
     <string name="reaction_tier_poor">Slow</string>
-    <string name="reaction_tier_poor_desc">Your reaction time is slower than average. The average reaction time is around 235ms, be sure to get some more practice in before you start your career as an F1 driver</string>
+    <string name="reaction_tier_poor_desc">Your reaction time is slower than average. The average reaction time is around 250ms, be sure to get some more practice in before you start your career as an F1 driver</string>
 
     <string name="percentage" translatable="false">%s%</string>
 

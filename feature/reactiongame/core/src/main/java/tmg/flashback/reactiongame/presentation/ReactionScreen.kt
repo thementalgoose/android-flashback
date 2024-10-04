@@ -99,12 +99,14 @@ private fun ReactionScreen(
         modifier = Modifier
             .fillMaxSize()
             .pointerInput(state is ReactionUiState.Game) {
-                detectTapGestures {
-                    when (state) {
-                        is ReactionUiState.Game -> react()
-                        else -> {}
+                detectTapGestures(
+                    onPress = {
+                        when (state) {
+                            is ReactionUiState.Game -> react()
+                            else -> {}
+                        }
                     }
-                }
+                )
             }
             .background(AppTheme.colors.backgroundPrimary),
     ) {
@@ -119,27 +121,6 @@ private fun ReactionScreen(
         Box(modifier = Modifier
             .weight(1f)
             .background(AppTheme.colors.backgroundPrimary)
-//            .pointerInteropFilter {
-//                // TODO: Move this somewhere / fix reaction bullshit with this
-//                when (it.action) {
-//                    MotionEvent.ACTION_DOWN -> {
-//                        when (state) {
-//                            ReactionUiState.Start -> {
-//                                start()
-//                                return@pointerInteropFilter true
-//                            }
-//                            ReactionUiState.JumpStart -> { }
-//                            ReactionUiState.Missed -> { }
-//                            is ReactionUiState.Game -> {
-//                                react()
-//                                return@pointerInteropFilter true
-//                            }
-//                            is ReactionUiState.Results -> { }
-//                        }
-//                    }
-//                }
-//                return@pointerInteropFilter false
-//            }
         ) {
 
             if (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact) {
@@ -182,6 +163,7 @@ private fun ReactionScreen(
                             modifier = Modifier.fillMaxWidth(),
                             state = state,
                             reset = reset,
+                            react = react,
                             start = start,
                         )
                     }
@@ -220,6 +202,7 @@ private fun ReactionScreen(
                             modifier = Modifier.fillMaxWidth(),
                             state = state,
                             reset = reset,
+                            react = react,
                             start = start,
                         )
                     }
@@ -234,6 +217,7 @@ private fun Action(
     state: ReactionUiState,
     reset: () -> Unit,
     start: () -> Unit,
+    react: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     ButtonPrimary(
@@ -241,7 +225,7 @@ private fun Action(
         onClick = {
             when (state) {
                 ReactionUiState.Start -> start()
-                is ReactionUiState.Game -> {}
+                is ReactionUiState.Game -> react()
                 ReactionUiState.JumpStart,
                 ReactionUiState.Missed,
                 is ReactionUiState.Results -> reset()
