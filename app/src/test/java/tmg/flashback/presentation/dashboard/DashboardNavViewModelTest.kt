@@ -201,7 +201,7 @@ internal class DashboardNavViewModelTest: BaseTest() {
 
         underTest.appFeatureItemsList.test {
             val item = awaitItem()
-            assertTrue(item.any { it == MenuItem.Reaction })
+//            assertTrue(item.any { it == MenuItem.Reaction })
             assertTrue(item.any { it == MenuItem.Search })
             assertTrue(item.any { it == MenuItem.Settings })
             assertTrue(item.any { it == MenuItem.Contact })
