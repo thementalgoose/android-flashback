@@ -112,16 +112,16 @@ internal class ReactionViewModelTest: BaseTest() {
     @ParameterizedTest(name = "reacting to sequence in {0} millis results in {1} tier")
     @CsvSource(
         "10,SUPERHUMAN",
-        "150,SUPERHUMAN",
-        "160,GREAT",
-        "180,GREAT",
+        "149,SUPERHUMAN",
+        "150,EXCEPTIONAL",
+        "179,EXCEPTIONAL",
         "181,GOOD",
-        "230,GOOD",
+        "229,GOOD",
         "240,AVERAGE",
-        "270,AVERAGE",
+        "279,AVERAGE",
         "280,NOT_GOOD",
-        "320,NOT_GOOD",
         "400,POOR",
+        "401,POOR",
         "1000,POOR",
     )
     fun `reacting to sequence after millis results in tier`(millis: Int, expectedTier: ReactionResultTier) = runTest {
