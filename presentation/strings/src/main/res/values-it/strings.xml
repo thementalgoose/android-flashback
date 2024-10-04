@@ -71,6 +71,7 @@
     <string name="dashboard_links_rss">Feed RSS</string>
     <string name="dashboard_links_search">Cerca</string>
     <string name="dashboard_links_settings">Impostazioni</string>
+    <string name="dashboard_links_reaction">Gioco di reazion</string>
     <string name="dashboard_links_contact">Contatti</string>
     <string name="dashboard_links_dark_mode">Modalità scura</string>
     <string name="dashboard_all_title">Tutti</string>
@@ -514,6 +515,34 @@
 
     <!-- Informativa sulla privacy -->
     <string name="privacy_policy_title">Informativa sulla privacy</string>
+
+    <!-- Reaction screen -->
+    <string name="reaction_screen_title">Test di reazione</string>
+    <string name="reaction_screen_heading">Metti alla prova i tuoi riflessi</string>
+    <string name="reaction_screen_subtitle">Pensi di poter eguagliare i tempi di reazione di un pilota di F1 allo spegnimento dei semafori?\n\nInizia il gioco qui sotto e tocca lo schermo in qualsiasi punto quando vedi che le luci si spengono per ottenere un punteggio</string>
+    <string name="reaction_screen_action_start">Inizia il gioco</string>
+    <string name="reaction_screen_action_reset">Ripristina</string>
+    <string name="reaction_screen_action_again">Giocare di nuovo?</string>
+    <string name="reaction_screen_action_react">Reagisci</string>
+    <string name="reaction_screen_instructions">Tocca ovunque quando le luci si spengono…</string>
+
+    <string name="reaction_screen_miss_title">Mancato!</string>
+    <string name="reaction_screen_miss_subtitle">Ricordati di toccare lo schermo in qualsiasi punto quando noti che le luci si spengono</string>
+    <string name="reaction_screen_jump_title">Falsa partenza!</string>
+    <string name="reaction_screen_jump_subtitle">Hai reagito prima che le luci si spegnessero e ti sarebbe stata inflitta una penalità di tempo per una falsa partenza. Riprova e assicurati di non reagire troppo presto</string>
+
+    <string name="reaction_tier_superhuman">Sovrumano</string>
+    <string name="reaction_tier_superhuman_desc">Il tuo tempo di reazione è stato sovrumano!</string>
+    <string name="reaction_tier_great">Fantastico</string>
+    <string name="reaction_tier_great_desc">Il tuo tempo di reazione è stato più veloce del tempo di reazione medio di un pilota di F1, congratulazioni!</string>
+    <string name="reaction_tier_good">Buono</string>
+    <string name="reaction_tier_good_desc">Il tuo tempo di reazione è stato simile al tempo di reazione medio di un pilota di F1, congratulazioni!</string>
+    <string name="reaction_tier_average">Medio</string>
+    <string name="reaction_tier_average_desc">Il tuo tempo di reazione è stato simile al tempo di reazione medio di un pilota di F1, congratulazioni!</string>
+    <string name="reaction_tier_not_good">Sopra la media</string>
+    <string name="reaction_tier_not_good_desc">Il tuo tempo di reazione è leggermente più lento del tempo di reazione medio di un pilota di F1. Il tempo di reazione medio è di circa 250 ms, assicurati di esercitarti ancora un po’</string>
+    <string name="reaction_tier_poor">Lento</string>
+    <string name="reaction_tier_poor_desc">Il tuo tempo di reazione è più lento della media. Il tempo di reazione medio è di circa 250 ms, assicurati di fare più pratica prima di iniziare la tua carriera come pilota di F1</string>
 
     <!-- Easter Eggs -->
     <string name="easter_egg_menu_new_years">Felice anno nuovo!</string>
