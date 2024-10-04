@@ -147,9 +147,9 @@ class DashboardNavViewModel @Inject constructor(
             if (rssRepository.enabled) {
                 add(MenuItem.RSS)
             }
-            if (BuildConfig.DEBUG) {
-                add(MenuItem.Reaction)
-            }
+//            if (BuildConfig.DEBUG) {
+//                add(MenuItem.Reaction)
+//            }
             add(MenuItem.Settings)
             add(MenuItem.Contact)
         }

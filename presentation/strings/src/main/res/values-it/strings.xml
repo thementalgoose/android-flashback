@@ -229,6 +229,7 @@
     <string name="settings_header_notifications_upcoming">Notifiche (imminenti)</string>
     <string name="settings_header_notifications_results_available">Notifiche (risultati disponibili)</string>
     <string name="settings_header_other">Altro</string>
+    <string name="settings_build_version">Versione build</string>
     <string name="settings_section_dark_mode_title">Modalità scura</string>
     <string name="settings_section_dark_mode_description">Forza la modalità scura o la modalità chiara</string>
     <string name="settings_section_theme_title">Tema</string>

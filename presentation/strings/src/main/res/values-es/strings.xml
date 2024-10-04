@@ -297,6 +297,7 @@
     <string name="settings_section_ads_title">Anuncios</string>
     <string name="settings_section_ads_description">Configuración de anuncios</string>
     <string name="settings_header_ads">Anuncios</string>
+    <string name="settings_build_version">Versión de compilación</string>
     <string name="settings_switch_ads_enable_title">¿Mostrar anuncios?</string>
     <string name="settings_switch_ads_enable_description">¿Quieres que se muestren anuncios? Todos los desarrolladores aprecian tu apoyo dejando los anuncios habilitados</string>
     <string name="settings_section_privacy_title">Privacidad</string>
