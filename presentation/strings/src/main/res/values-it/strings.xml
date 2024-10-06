@@ -314,6 +314,8 @@
     <string name="settings_header_about">Informazioni</string>
     <string name="settings_switch_about_this_app_title">Informazioni su questa app</string>
     <string name="settings_switch_about_this_app_description">Informazioni sull\'app, sugli sviluppatori e sulle dipendenze</string>
+    <string name="settings_switch_license_title">Licenze</string>
+    <string name="settings_switch_license_description">Licenze per l\'app e le sue dipendenze</string>
     <string name="settings_switch_review_title">Recensione</string>
     <string name="settings_switch_review_description">Recensisci l\'app sul Play Store</string>
     <string name="settings_pref_shake_to_report_title">Scuoti per segnalare</string>

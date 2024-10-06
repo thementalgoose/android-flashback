@@ -1,6 +1,7 @@
 package tmg.flashback.presentation.settings.about
 
 import androidx.lifecycle.ViewModel
+import com.mikepenz.aboutlibraries.Libs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -27,8 +28,6 @@ interface SettingsAboutViewModelOutputs {
     val shakeToReportEnabled: StateFlow<Boolean>
 }
 
-
-
 @HiltViewModel
 class SettingsAboutViewModel @Inject constructor(
     private val privacyRepository: PrivacyRepository,
@@ -49,6 +48,9 @@ class SettingsAboutViewModel @Inject constructor(
         when (pref.key) {
             Settings.Other.aboutThisApp.key -> {
                 applicationNavigationComponent.aboutApp()
+            }
+            Settings.Other.licenses.key -> {
+                applicationNavigationComponent.licenses()
             }
             Settings.Other.review.key -> {
                 openPlayStoreUseCase.openPlaystore()

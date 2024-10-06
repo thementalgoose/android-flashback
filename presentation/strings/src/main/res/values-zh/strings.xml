@@ -311,6 +311,8 @@
     <string name="settings_header_about">关于</string>
     <string name="settings_switch_about_this_app_title">关于此应用</string>
     <string name="settings_switch_about_this_app_description">关于应用、开发人员和依赖项</string>
+    <string name="settings_switch_license_title">许可证</string>
+    <string name="settings_switch_license_description">应用及其依赖项的许可证</string>
     <string name="settings_switch_review_title">评论</string>
     <string name="settings_switch_review_description">在 Play 商店中评论应用</string>
     <string name="settings_pref_shake_to_report_title">摇一摇报告</string>

@@ -190,6 +190,8 @@ dependencies {
     implementation libs.skeletonlayout
     implementation libs.circleimageview
 
+    implementation libs.aboutlib
+
     // Notifications + Config
     implementation platform(libs.firebase.bom)
     implementation libs.firebase.auth

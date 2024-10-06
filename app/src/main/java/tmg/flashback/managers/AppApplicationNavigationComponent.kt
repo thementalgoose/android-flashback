@@ -53,6 +53,17 @@ class AppApplicationNavigationComponent @Inject constructor(
 //        navigator.navigate(Screen.AboutThisApp)
     }
 
+    override fun licenses() {
+        firebaseAnalyticsManager.viewScreen("Licenses", clazz = AboutThisAppActivity::class.java)
+        activityProvider.launch {
+            it.startActivity(licensesIntent(it))
+        }
+    }
+
+    override fun licensesIntent(context: Context): Intent {
+        return Intent(context, LicenseActivity::class)
+    }
+
 
     override fun syncActivity() = activityProvider.launch {
         it.startActivity(syncActivityIntent(it))

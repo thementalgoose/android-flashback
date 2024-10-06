@@ -12,6 +12,9 @@ interface ApplicationNavigationComponent {
 
     fun aboutApp()
 
+    fun licenses()
+    fun licensesIntent(context: Context): Intent
+
     fun syncActivity()
     fun syncActivityIntent(context: Context): Intent
 

@@ -49,6 +49,12 @@
             android:label=""
             android:theme="@style/FlashbackAppTheme.Sync" />
 
+        <activity
+            android:name=".presentation.settings.licenses.LicenseActivity"
+            android:exported="false"
+            android:label=""
+            android:theme="@style/FlashbackAppTheme" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"

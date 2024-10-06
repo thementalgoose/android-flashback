@@ -65,15 +65,19 @@ fun SettingsAboutScreen(
 
             Header(title = string.settings_header_about)
             Pref(
-                model = Settings.Other.aboutThisApp,
-                onClick = prefClicked
-            )
-            Pref(
                 model = Settings.Other.review,
                 onClick = prefClicked
             )
             Switch(
                 model = Settings.Other.shakeToReport(shakeToReportEnabled),
+                onClick = prefClicked
+            )
+            Pref(
+                model = Settings.Other.aboutThisApp,
+                onClick = prefClicked
+            )
+            Pref(
+                model = Settings.Other.licenses,
                 onClick = prefClicked
             )
             Pref(

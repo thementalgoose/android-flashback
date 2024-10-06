@@ -283,6 +283,11 @@ object Settings {
             title = string.settings_switch_about_this_app_title,
             subtitle = string.settings_switch_about_this_app_description
         )
+        val licenses = Setting.Pref(
+            _key = "licenses",
+            title = string.settings_switch_license_title,
+            subtitle = string.settings_switch_license_description
+        )
         val review = Setting.Pref(
             _key = "review",
             title = string.settings_switch_review_title,
