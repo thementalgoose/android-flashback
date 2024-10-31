@@ -184,7 +184,6 @@ dependencies {
 
     implementation libs.falcon
     implementation libs.shakey
-    implementation libs.lottie
     implementation libs.skeletonlayout
     implementation libs.circleimageview
 

@@ -36,7 +36,6 @@ dependencies {
 
     implementation libs.bundles.retrofit
     implementation libs.bundles.okhttp
-    implementation libs.lottie
 
     testImplementation(projects.test.models)
 }
