@@ -28,8 +28,6 @@ dependencies {
     implementation libs.bundles.androidx
     implementation libs.material
 
-    implementation libs.lottie
-
     api libs.flagkit
     implementation(projects.core.device)
 }

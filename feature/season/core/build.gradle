@@ -49,7 +49,6 @@ dependencies {
 
     implementation libs.bundles.androidx.workmanager
     implementation libs.flagkit
-    implementation libs.lottie
     implementation libs.skeletonlayout
     implementation(projects.domain.persistence)
 
