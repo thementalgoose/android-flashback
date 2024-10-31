@@ -166,12 +166,6 @@ class AboutThisAppConfigProvider @Inject constructor(
                 icon = DependencyIcon.Image(url = "https://avatars.githubusercontent.com/u/1342004?s=200&v=4", backgroundColor = Color.WHITE)
             ),
             Dependency(
-                dependencyName = "Lottie",
-                author = "AirBnB",
-                url = "https://github.com/airbnb/lottie-android",
-                icon = DependencyIcon.Image(url = "https://avatars2.githubusercontent.com/u/698437", backgroundColor = Color.WHITE)
-            ),
-            Dependency(
                 dependencyName = "ThreeTen",
                 author = "Jake Wharton",
                 url = "https://github.com/JakeWharton/ThreeTenABP",
@@ -201,18 +195,6 @@ class AboutThisAppConfigProvider @Inject constructor(
 
     private val assetDependencies: List<Dependency>
         get() = listOf(
-            Dependency(
-                dependencyName = "Lottie: LottieFiles",
-                author = "LottieFiles",
-                icon = DependencyIcon.Image("https://assets4.lottiefiles.com/avatars/300_8243-998405194.jpg"),
-                url = "https://lottiefiles.com/LottieFiles"
-            ),
-            Dependency(
-                dependencyName = "Lottie: Baback Jafari",
-                author = "Baback Jafari",
-                icon = DependencyIcon.Image("https://assets4.lottiefiles.com/avatars/300_8243-998405194.jpg"),
-                url = "https://lottiefiles.com/LottieFiles"
-            ),
             Dependency(
                 dependencyName = "FlatIcon: Freepik",
                 author = "Freepik",
