@@ -44,7 +44,9 @@ class SystemNotificationManager @Inject constructor(
         title: String,
         text: String,
         priority: NotificationPriority = NotificationPriority.DEFAULT,
-        @DrawableRes icon: Int = R.drawable.ic_notification
+        @DrawableRes
+        icon: Int = R.drawable.ic_notification,
+        expireAfterMillis: Long = 1000 * 60 * 60 * 3
     ): Notification {
         val contextToUse = context ?: applicationContext
         val intent = navigationProvider.relaunchAppIntent(contextToUse)
@@ -64,6 +66,7 @@ class SystemNotificationManager @Inject constructor(
             .setContentTitle(title)
             .setContentText(text)
             .setSound(defaultAlarmSound)
+            .setTimeoutAfter(expireAfterMillis)
             .setPriority(when (priority) {
                 NotificationPriority.HIGH -> NotificationCompat.PRIORITY_HIGH
                 NotificationPriority.DEFAULT -> NotificationCompat.PRIORITY_DEFAULT
