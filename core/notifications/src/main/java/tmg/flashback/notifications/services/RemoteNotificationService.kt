@@ -30,7 +30,7 @@ class RemoteNotificationService : FirebaseMessagingService() {
         message.notification?.let {
             if (it.title != null) {
                 sendNotification(
-                    channelId = it.channelId ?: "misc",
+                    channelId = it.channelId ?: "flashback_info",
                     title = it.title!!,
                     text = it.body
                 )
