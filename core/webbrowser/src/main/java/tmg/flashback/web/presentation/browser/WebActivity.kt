@@ -4,6 +4,10 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
+import androidx.compose.ui.Modifier
 import dagger.hilt.android.AndroidEntryPoint
 import tmg.flashback.style.AppTheme
 import tmg.flashback.ui.base.BaseActivity
@@ -21,11 +25,17 @@ internal class WebActivity: BaseActivity() {
 
         setContent {
             AppTheme {
-                WebScreenVM(
-                    title = title,
-                    url = url,
-                    actionUpClicked = {
-                        finish()
+                Scaffold(
+                    content = {
+                        Box(modifier = Modifier.padding(it)) {
+                            WebScreenVM(
+                                title = title,
+                                url = url,
+                                actionUpClicked = {
+                                    finish()
+                                }
+                            )
+                        }
                     }
                 )
             }

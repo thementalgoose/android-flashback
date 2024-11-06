@@ -65,9 +65,11 @@ fun AppTheme(
         if (changeSystemUi) {
             val systemUiController = rememberSystemUiController()
             systemUiController.setStatusBarColor(
+                darkIcons = AppTheme.colors.isLight,
                 color = AppTheme.colors.systemStatusBarColor
             )
             systemUiController.setNavigationBarColor(
+                darkIcons = !AppTheme.colors.isLight,
                 color = AppTheme.colors.systemNavigationBarColor
             )
         }
