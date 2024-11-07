@@ -72,7 +72,8 @@ internal class WebFragment : Fragment(R.layout.fragment_web) {
 
         val webViewClient = FlashbackWebViewClient(
             domainChanged = { callback?.domainChanged(it) },
-            titleChanged = { callback?.titleChanged(it) }
+            titleChanged = { callback?.titleChanged(it) },
+            urlChanged = { callback?.urlChanged(it) }
         )
         val webChromeClient = FlashbackWebChromeClient(
             updateProgressToo = {
@@ -161,4 +162,5 @@ internal class WebFragment : Fragment(R.layout.fragment_web) {
 internal interface WebUpdated {
     fun domainChanged(domain: String)
     fun titleChanged(title: String)
+    fun urlChanged(url: String)
 }

@@ -60,6 +60,7 @@ fun WebScreen(
             .fillMaxSize()
     ) {
         val titleValue = remember { mutableStateOf(title) }
+        val domainValue = remember { mutableStateOf(url) }
         val urlValue = remember { mutableStateOf(url) }
 
         Row(Modifier.padding(
@@ -86,7 +87,7 @@ fun WebScreen(
                     maxLines = 1
                 )
                 TextBody2(
-                    text = urlValue.value,
+                    text = domainValue.value,
                     maxLines = 1,
                     modifier = Modifier.padding(top = 4.dp)
                 )
@@ -117,21 +118,24 @@ fun WebScreen(
             },
             onRelease = {
                 val frag = container.getFragment<WebFragment>()
-                urlValue.value = frag.pageUrl
+                domainValue.value = frag.pageUrl
                 titleValue.value = frag.pageTitle
                 Log.i("WebView", "onRelease")
             },
             update = {
                 Log.i("WebView", "onUpdate")
                 val frag = container.getFragment<WebFragment>()
-                Log.i("WebView", "Frag arguments ${urlValue}, ${titleValue}, $title, $url, ${frag.arguments}")
+                Log.i("WebView", "Frag arguments ${domainValue}, ${titleValue}, $title, $url, ${frag.arguments}")
                 frag.load(pageTitle = title, url = url)
                 frag.callback = object : WebUpdated {
                     override fun domainChanged(domain: String) {
-                        urlValue.value = domain
+                        domainValue.value = domain
                     }
                     override fun titleChanged(title: String) {
                         titleValue.value = title
+                    }
+                    override fun urlChanged(url: String) {
+                        urlValue.value = url
                     }
                 }
             }
