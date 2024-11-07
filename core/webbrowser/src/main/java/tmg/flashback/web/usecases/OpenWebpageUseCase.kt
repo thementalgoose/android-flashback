@@ -1,7 +1,9 @@
 package tmg.flashback.web.usecases
 
 import android.app.Activity
+import android.net.Uri
 import android.webkit.URLUtil
+import androidx.browser.customtabs.CustomTabsIntent
 import tmg.flashback.device.usecases.OpenUrlUseCase
 import tmg.flashback.googleanalytics.manager.FirebaseAnalyticsManager
 import tmg.flashback.device.ActivityProvider
@@ -25,11 +27,16 @@ class OpenWebpageUseCase @Inject constructor(
     fun open(activity: Activity, url: String, title: String, forceExternal: Boolean = false) {
         firebaseAnalyticsManager.logEvent("Opening URL", mapOf("url" to url, "title" to title))
         when {
-            url.isPlayStore() || url.isYoutube() -> {
+            url.isPlayStore() || url.isYoutube() || url.isLocation() -> {
                 openUrlUseCase.openUrl(url)
             }
             forceExternal || (webBrowserRepository.openInExternal && URLUtil.isValidUrl(url)) -> {
-                openUrlUseCase.openUrl(url)
+                val intent = CustomTabsIntent.Builder()
+                    .setShowTitle(true)
+                    .setShareState(CustomTabsIntent.SHARE_STATE_ON)
+                    .setDownloadButtonEnabled(false)
+                    .build()
+                intent.launchUrl(activity, Uri.parse(url))
             }
             else -> {
                 activity.startActivity(
@@ -41,6 +48,7 @@ class OpenWebpageUseCase @Inject constructor(
                 )
             }
         }
+
     }
 
     companion object {
@@ -50,6 +58,10 @@ class OpenWebpageUseCase @Inject constructor(
         private fun String.isYoutube(): Boolean {
             return this.startsWith("https://youtube.com") || this.startsWith("https://www.youtube.com") ||
                     this.startsWith("https://youtu.be") || this.startsWith(("https://www.youtu.be"))
+        }
+        private fun String.isLocation(): Boolean {
+            return this.startsWith("https://google.com/maps/search/") ||
+                    this.startsWith("geo:0,0")
         }
     }
 }
