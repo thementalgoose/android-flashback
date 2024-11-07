@@ -19,12 +19,14 @@ internal class FlashbackWebChromeClient(
 
 internal class FlashbackWebViewClient(
     val domainChanged: (domain: String) -> Unit,
-    val titleChanged: (title: String) -> Unit
+    val titleChanged: (title: String) -> Unit,
+    val urlChanged: (url: String) -> Unit
 ): WebViewClient() {
 
     override fun shouldOverrideUrlLoading(view: WebView?, url: String): Boolean {
         view?.loadUrl(url)
         val uri = Uri.parse(url)
+        urlChanged(url)
         domainChanged(uri.host ?: "")
         return true
     }
