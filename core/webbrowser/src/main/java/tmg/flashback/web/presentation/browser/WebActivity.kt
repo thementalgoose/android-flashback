@@ -4,10 +4,12 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
+import androidx.core.view.WindowCompat
 import dagger.hilt.android.AndroidEntryPoint
 import tmg.flashback.style.AppTheme
 import tmg.flashback.ui.base.BaseActivity
@@ -20,6 +22,8 @@ internal class WebActivity: BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
         val title: String = intent.extras!!.getString(keyTitle)!!
         val url: String = intent.extras!!.getString(keyUrl)!!
 
@@ -27,7 +31,10 @@ internal class WebActivity: BaseActivity() {
             AppTheme {
                 Scaffold(
                     content = {
-                        Box(modifier = Modifier.padding(it)) {
+                        Box(modifier = Modifier
+                            .background(AppTheme.colors.backgroundPrimary)
+                            .padding(it)
+                        ) {
                             WebScreenVM(
                                 title = title,
                                 url = url,
