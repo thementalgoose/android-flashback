@@ -122,7 +122,7 @@ internal class DashboardViewModelTest: BaseTest() {
         every { mockIsSummerEnabledUseCase.invoke() } returns true
 
         initUnderTest()
-        underTest.outputs.snow.test {
+        underTest.outputs.summer.test {
             assertEquals(true, awaitItem())
         }
     }
