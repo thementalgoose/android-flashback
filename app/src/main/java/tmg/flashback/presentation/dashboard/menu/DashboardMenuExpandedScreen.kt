@@ -37,6 +37,7 @@ import tmg.flashback.strings.R.string
 import tmg.flashback.debug.model.DebugMenuItem
 import tmg.flashback.eastereggs.model.MenuIcons
 import tmg.flashback.eastereggs.ui.snow
+import tmg.flashback.eastereggs.ui.summer
 import tmg.flashback.presentation.dashboard.FeaturePrompt
 import tmg.flashback.presentation.dashboard.MenuItem
 import tmg.flashback.style.AppTheme
@@ -74,6 +75,7 @@ fun DashboardMenuExpandedScreen(
     featurePromptClicked: (FeaturePrompt) -> Unit,
     appVersion: String,
     easterEggSnow: Boolean,
+    easterEggSummer: Boolean,
     easterEggTitleIcon: MenuIcons?,
     easterEggUkraine: Boolean,
     lockExpanded: Boolean,
@@ -92,6 +94,7 @@ fun DashboardMenuExpandedScreen(
         .shadow(8.dp)
         .background(AppTheme.colors.backgroundPrimary)
         .snow(easterEggSnow)
+        .summer(easterEggSummer)
     ) {
         Spacer(Modifier.height(AppTheme.dimens.small))
         HeroItem(
@@ -449,6 +452,7 @@ private fun PreviewCompactTimeline() {
             featurePromptClicked = { },
             appVersion = "version",
             easterEggSnow = false,
+            easterEggSummer = false,
             easterEggTitleIcon = null,
             easterEggUkraine = false,
             lockExpanded = false,

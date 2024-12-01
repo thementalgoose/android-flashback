@@ -18,6 +18,7 @@ import tmg.flashback.ui.managers.PermissionManager
 import tmg.flashback.ui.managers.StyleManager
 import tmg.flashback.ui.model.NightMode
 import tmg.flashback.device.repository.PermissionRepository
+import tmg.flashback.eastereggs.usecases.IsSummerEnabledUseCase
 import tmg.flashback.ui.usecases.ChangeNightModeUseCase
 import javax.inject.Inject
 
@@ -34,6 +35,7 @@ interface DashboardViewModelOutputs {
 
     // Easter eggs
     val snow: StateFlow<Boolean>
+    val summer: StateFlow<Boolean>
     val titleIcon: StateFlow<MenuIcons?>
     val ukraine: StateFlow<Boolean>
 }
@@ -48,6 +50,7 @@ class DashboardViewModel @Inject constructor(
     private val notificationRepository: NotificationsRepository,
     private val permissionRepository: PermissionRepository,
     isSnowEnabledUseCase: IsSnowEnabledUseCase,
+    isSummerEnabledUseCase: IsSummerEnabledUseCase,
     isMenuIconEnabledUseCase: IsMenuIconEnabledUseCase,
     isUkraineEnabledUseCase: IsUkraineEnabledUseCase
 ): ViewModel(), DashboardViewModelInputs, DashboardViewModelOutputs {
@@ -61,6 +64,7 @@ class DashboardViewModel @Inject constructor(
     override val featurePromptsList: MutableStateFlow<List<FeaturePrompt>> = MutableStateFlow(emptyList())
 
     override val snow: MutableStateFlow<Boolean> = MutableStateFlow(isSnowEnabledUseCase())
+    override val summer: MutableStateFlow<Boolean> = MutableStateFlow(isSummerEnabledUseCase())
     override val titleIcon: MutableStateFlow<MenuIcons?> = MutableStateFlow(isMenuIconEnabledUseCase())
     override val ukraine: MutableStateFlow<Boolean> = MutableStateFlow(isUkraineEnabledUseCase())
 
