@@ -16,6 +16,6 @@ class AccessibilityRepository @Inject constructor(
         get() = Settings.Global.getFloat(
             applicationContext.contentResolver,
             Settings.Global.ANIMATOR_DURATION_SCALE,
-            0f
+            1f
         )
 }
