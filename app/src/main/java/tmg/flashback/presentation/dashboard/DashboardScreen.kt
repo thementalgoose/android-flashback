@@ -81,6 +81,7 @@ fun DashboardScreen(
     val appVersion = viewModel.outputs.appVersion.collectAsState("")
 
     val snow = viewModel.outputs.snow.collectAsState(false)
+    val summer = viewModel.outputs.summer.collectAsState(false)
     val titleIcon = viewModel.outputs.titleIcon.collectAsState(null)
     val ukraine = viewModel.outputs.ukraine.collectAsState(false)
 
@@ -106,6 +107,7 @@ fun DashboardScreen(
         featurePromptClicked = viewModel.inputs::clickFeaturePrompt,
         appVersion = appVersion.value,
         easterEggSnow = snow.value,
+        easterEggSummer = summer.value,
         easterEggTitleIcon = titleIcon.value,
         easterEggUkraine = ukraine.value
     )
@@ -135,6 +137,7 @@ fun DashboardScreen(
     featurePromptClicked: (FeaturePrompt) -> Unit,
     appVersion: String,
     easterEggSnow: Boolean,
+    easterEggSummer: Boolean,
     easterEggTitleIcon: MenuIcons?,
     easterEggUkraine: Boolean,
 ) {
@@ -191,6 +194,7 @@ fun DashboardScreen(
                         featurePromptClicked = featurePromptClicked,
                         appVersion = appVersion,
                         easterEggSnow = easterEggSnow,
+                        easterEggSummer = easterEggSummer,
                         easterEggTitleIcon = easterEggTitleIcon,
                         easterEggUkraine = easterEggUkraine
                     )
@@ -212,6 +216,7 @@ fun DashboardScreen(
                                 featurePromptClicked = featurePromptClicked,
                                 appVersion = appVersion,
                                 easterEggSnow = easterEggSnow,
+                                easterEggSummer = easterEggSummer,
                                 easterEggTitleIcon = easterEggTitleIcon,
                                 easterEggUkraine = easterEggUkraine,
                                 lockExpanded = false,
@@ -233,6 +238,7 @@ fun DashboardScreen(
                                 featurePromptClicked = featurePromptClicked,
                                 appVersion = appVersion,
                                 easterEggSnow = easterEggSnow,
+                                easterEggSummer = easterEggSummer,
                                 easterEggTitleIcon = easterEggTitleIcon,
                                 easterEggUkraine = easterEggUkraine,
                                 lockExpanded = false,
