@@ -37,7 +37,7 @@ internal class IsSummerEnabledUseCaseTest {
 
     @Test
     fun `summer is disabled if config value is disabled`() {
-        every { mockAccessibilityRepository.isAnimationsEnabled } returns false
+        every { mockAccessibilityRepository.isAnimationsEnabled } returns true
         every { mockEasterEggsRepository.isSummerEnabled } returns false
 
         initUnderTest()
@@ -46,7 +46,7 @@ internal class IsSummerEnabledUseCaseTest {
 
     @Test
     fun `summer is enabled if config value is enabled`() {
-        every { mockAccessibilityRepository.isAnimationsEnabled } returns false
+        every { mockAccessibilityRepository.isAnimationsEnabled } returns true
         every { mockEasterEggsRepository.isSummerEnabled } returns true
 
         initUnderTest()
