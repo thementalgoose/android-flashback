@@ -17,7 +17,7 @@ class EasterEggsRepository @Inject constructor(
         get() = configManager.getBoolean(keySnow)
 
     internal val isSummerEnabled: Boolean
-        get() = true // configManager.getBoolean(keySummer)
+        get() = configManager.getBoolean(keySummer)
 
     internal val isUkraineEnabled: Boolean
         get() = configManager.getBoolean(keyUkraine)

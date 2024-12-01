@@ -60,6 +60,10 @@ task generateRemoteConfigDefaults {
                 value('false')
             }
             entry {
+                key('easteregg_summer')
+                value('false')
+            }
+            entry {
                 key('easteregg_ukraine')
                 value('false')
             }
