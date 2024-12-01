@@ -25,6 +25,7 @@ import tmg.flashback.ui.managers.PermissionManager
 import tmg.flashback.ui.managers.StyleManager
 import tmg.flashback.ui.model.NightMode
 import tmg.flashback.device.repository.PermissionRepository
+import tmg.flashback.eastereggs.usecases.IsSummerEnabledUseCase
 import tmg.flashback.ui.usecases.ChangeNightModeUseCase
 import tmg.testutils.BaseTest
 
@@ -38,6 +39,7 @@ internal class DashboardViewModelTest: BaseTest() {
     private val mockApplicationNavigationComponent: ApplicationNavigationComponent = mockk(relaxed = true)
     private val mockPermissionManager: PermissionManager = mockk(relaxed = true)
     private val mockIsSnowEnabledUseCase: IsSnowEnabledUseCase = mockk(relaxed = true)
+    private val mockIsSummerEnabledUseCase: IsSummerEnabledUseCase = mockk(relaxed = true)
     private val mockIsMenuIconEnabledUseCase: IsMenuIconEnabledUseCase = mockk(relaxed = true)
     private val mockIsUkraineEnabledUseCase: IsUkraineEnabledUseCase = mockk(relaxed = true)
 
@@ -53,6 +55,7 @@ internal class DashboardViewModelTest: BaseTest() {
             applicationNavigationComponent = mockApplicationNavigationComponent,
             permissionManager = mockPermissionManager,
             isSnowEnabledUseCase = mockIsSnowEnabledUseCase,
+            isSummerEnabledUseCase = mockIsSummerEnabledUseCase,
             isMenuIconEnabledUseCase = mockIsMenuIconEnabledUseCase,
             isUkraineEnabledUseCase = mockIsUkraineEnabledUseCase
         )
@@ -107,6 +110,16 @@ internal class DashboardViewModelTest: BaseTest() {
     @Test
     fun `snow easter egg is emitted from use case`() = runTest(testDispatcher) {
         every { mockIsSnowEnabledUseCase.invoke() } returns true
+
+        initUnderTest()
+        underTest.outputs.snow.test {
+            assertEquals(true, awaitItem())
+        }
+    }
+
+    @Test
+    fun `summer easter egg is emitted from use case`() = runTest(testDispatcher) {
+        every { mockIsSummerEnabledUseCase.invoke() } returns true
 
         initUnderTest()
         underTest.outputs.snow.test {

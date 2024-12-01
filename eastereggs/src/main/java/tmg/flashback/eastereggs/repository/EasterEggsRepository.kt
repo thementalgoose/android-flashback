@@ -9,11 +9,15 @@ class EasterEggsRepository @Inject constructor(
 
     companion object {
         private const val keySnow = "easteregg_snow"
+        private const val keySummer = "easteregg_summer"
         private const val keyUkraine = "easteregg_ukraine"
     }
 
     internal val isSnowEnabled: Boolean
         get() = configManager.getBoolean(keySnow)
+
+    internal val isSummerEnabled: Boolean
+        get() = true // configManager.getBoolean(keySummer)
 
     internal val isUkraineEnabled: Boolean
         get() = configManager.getBoolean(keyUkraine)

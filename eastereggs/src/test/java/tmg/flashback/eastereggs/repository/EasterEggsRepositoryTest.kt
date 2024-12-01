@@ -31,6 +31,19 @@ internal class EasterEggsRepositoryTest {
         }
     }
 
+
+    @Test
+    fun `is summer enabled gets from config`() {
+        every { mockConfigManager.getBoolean(keySummer) } returns true
+
+        initUnderTest()
+        assertTrue(underTest.isSummerEnabled)
+
+        verify {
+            mockConfigManager.getBoolean(keySummer)
+        }
+    }
+
     @Test
     fun `is ukraine enabled gets from config`() {
         every { mockConfigManager.getBoolean(keyUkraine) } returns true
@@ -45,6 +58,7 @@ internal class EasterEggsRepositoryTest {
 
     companion object {
         private const val keySnow = "easteregg_snow"
+        private const val keySummer = "easteregg_summer"
         private const val keyUkraine = "easteregg_ukraine"
     }
 }
