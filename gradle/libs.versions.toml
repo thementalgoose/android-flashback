@@ -100,7 +100,7 @@ hilt_compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref =
 hilt_kapt_compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "androidx_hilt" }
 hilt_workmanager = { module = "androidx.hilt:hilt-work", version.ref = "androidx_hilt" }
 
-lottie = "com.airbnb.android:lottie-compose:6.6.0"
+lottie = "com.airbnb.android:lottie-compose:6.6.1"
 
 retrofit_core = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit_converter_simplexml = { module = "com.squareup.retrofit2:converter-simplexml", version.ref = "retrofit" }
