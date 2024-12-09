@@ -116,7 +116,7 @@ fun ConstructorSeasonScreen(
         content = {
             item(key = "header") {
                 Header(
-                    text = "${constructorName}\n${season}",
+                    text = "${season}\n${constructorName}",
                     action = when (windowSizeClass.isWidthExpanded) {
                         false -> HeaderAction.BACK
                         true -> null
