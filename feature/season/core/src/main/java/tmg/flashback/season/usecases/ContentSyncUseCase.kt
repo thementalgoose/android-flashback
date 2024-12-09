@@ -4,7 +4,9 @@ import android.content.Context
 import android.util.Log
 import androidx.work.Constraints
 import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.ExistingWorkPolicy
 import androidx.work.NetworkType
+import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -18,7 +20,6 @@ class ContentSyncUseCase @Inject constructor(
     @ApplicationContext
     private val applicationContext: Context
 ) {
-
     fun schedule() {
         val delaySeconds = delayUntilEndOfDay()
 
@@ -36,6 +37,17 @@ class ContentSyncUseCase @Inject constructor(
         WorkManager
             .getInstance(applicationContext)
             .enqueueUniquePeriodicWork("CONTENT_SYNC", ExistingPeriodicWorkPolicy.UPDATE, request)
+    }
+
+
+    fun scheduleNow(delaySeconds: Long = 0L) {
+        val request = OneTimeWorkRequestBuilder<ContentSyncJob>()
+            .setInitialDelay(delaySeconds, TimeUnit.SECONDS)
+            .build()
+
+        WorkManager
+            .getInstance(applicationContext)
+            .enqueueUniqueWork("CONTENT_SYNC_SINGLE", ExistingWorkPolicy.REPLACE, request)
     }
 
     private fun delayUntilEndOfDay(): Long {
