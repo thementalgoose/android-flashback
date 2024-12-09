@@ -1,6 +1,7 @@
 package tmg.flashback
 
 import android.app.Application
+import android.util.Log
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
 import dagger.hilt.android.HiltAndroidApp
@@ -29,8 +30,12 @@ class FlashbackApplication: Application(), Configuration.Provider {
         startup.startup(this)
     }
 
-    override fun getWorkManagerConfiguration() = Configuration
+    override val workManagerConfiguration: Configuration = Configuration
         .Builder()
+        .setMinimumLoggingLevel(when (BuildConfig.DEBUG) {
+            true -> Log.DEBUG
+            false -> Log.INFO
+        })
         .setWorkerFactory(workerFactory)
         .build()
 }
