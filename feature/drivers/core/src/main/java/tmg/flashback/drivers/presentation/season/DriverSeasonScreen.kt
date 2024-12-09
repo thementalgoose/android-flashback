@@ -133,7 +133,7 @@ fun DriverSeasonScreen(
         content = {
             item(key = "header") {
                 Header(
-                    text = "${driverName}\n${season}",
+                    text = "${season}\n${driverName}",
                     action = when (windowSizeClass.isWidthExpanded) {
                         false -> HeaderAction.BACK
                         true -> null
