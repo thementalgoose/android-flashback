@@ -48,6 +48,8 @@ import tmg.flashback.ui.base.BaseActivity
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.header.HeaderAction
 import tmg.flashback.device.repository.PermissionRepository
+import tmg.flashback.season.usecases.ContentSyncUseCase
+import tmg.flashback.season.usecases.ScheduleNotificationsUseCase
 import tmg.utilities.extensions.copyToClipboard
 import javax.inject.Inject
 
@@ -73,6 +75,11 @@ class DebugActivity: BaseActivity() {
     lateinit var adsRepository: AdsRepository
     @Inject
     lateinit var notificationRepository: NotificationRepository
+
+    @Inject
+    lateinit var scheduleNotificationsUseCase: ScheduleNotificationsUseCase
+    @Inject
+    lateinit var contentSyncUseCase: ContentSyncUseCase
 
     @Inject
     lateinit var preferenceManager: PreferenceManager
@@ -105,6 +112,9 @@ class DebugActivity: BaseActivity() {
 
                     Div()
                     this.Notifications()
+
+                    Div()
+                    this.Scheduling()
 
                     Div()
                     TextSection(text = "Sync")
@@ -240,6 +250,23 @@ class DebugActivity: BaseActivity() {
                     description = "This is a long description inside the notification"
                 )
                 sendBroadcast(intent)
+            }
+        )
+    }
+
+    @Composable
+    private fun ColumnScope.Scheduling() {
+        TextSection(text = "Scheduling")
+        ButtonPrimary(
+            text = "Schedule content sync",
+            onClick = {
+                contentSyncUseCase.scheduleOnceAt(5L)
+            }
+        )
+        ButtonPrimary(
+            text = "Schedule alarms",
+            onClick = {
+                scheduleNotificationsUseCase.schedule()
             }
         )
     }
