@@ -40,7 +40,7 @@ class ContentSyncUseCase @Inject constructor(
     }
 
 
-    fun scheduleOnceAt(delaySeconds: Long) {
+    fun scheduleNow(delaySeconds: Long = 0L) {
         val request = OneTimeWorkRequestBuilder<ContentSyncJob>()
             .setInitialDelay(delaySeconds, TimeUnit.SECONDS)
             .build()
