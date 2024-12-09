@@ -260,7 +260,7 @@ class DebugActivity: BaseActivity() {
         ButtonPrimary(
             text = "Schedule content sync",
             onClick = {
-                contentSyncUseCase.scheduleOnceAt(5L)
+                contentSyncUseCase.scheduleNow(5L)
             }
         )
         ButtonPrimary(
