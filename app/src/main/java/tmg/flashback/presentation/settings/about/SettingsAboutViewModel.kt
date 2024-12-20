@@ -65,6 +65,9 @@ class SettingsAboutViewModel @Inject constructor(
                     return
                 }
             }
+            Settings.Other.resetFirstTimeSync.key -> {
+                applicationNavigationComponent.syncActivity()
+            }
         }
     }
 }

@@ -92,6 +92,16 @@ internal class SettingsAboutViewModelTest: BaseTest() {
     }
 
     @Test
+    fun `click reset first time opens sync activity`() {
+        initUnderTest()
+        underTest.inputs.prefClicked(Settings.Other.resetFirstTimeSync)
+
+        verify {
+            mockApplicationNavigationComponent.syncActivity()
+        }
+    }
+
+    @Test
     fun `click build number 5 times does nothing`() {
         initUnderTest()
         underTest.inputs.prefClicked(Settings.Other.buildVersion)
