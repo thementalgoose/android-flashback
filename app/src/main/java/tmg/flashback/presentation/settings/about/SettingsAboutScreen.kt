@@ -81,6 +81,12 @@ fun SettingsAboutScreen(
                 onClick = prefClicked
             )
 
+            Header(title = string.settings_header_reset)
+            Pref(
+                model = Settings.Other.resetFirstTimeSync,
+                onClick = prefClicked
+            )
+
             Footer()
         }
     )
