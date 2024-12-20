@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
@@ -16,6 +17,7 @@ import tmg.flashback.ads.adsadmob.usecases.GetAdUseCase
 import tmg.utilities.extensions.dpToPx
 import tmg.utilities.extensions.views.gone
 import javax.inject.Inject
+import kotlin.math.roundToInt
 
 @AndroidEntryPoint
 internal class NativeBanner: FrameLayout {
@@ -28,7 +30,6 @@ internal class NativeBanner: FrameLayout {
     private var binding: AdmobNativeBannerBinding? = null
 
     var adIndex: Int = 0
-    var offsetCard: Boolean = true
 
     constructor(context: Context) : super(context) {
         initView(null, null)
@@ -70,10 +71,6 @@ internal class NativeBanner: FrameLayout {
                 binding.adView.iconView = binding.adAppIcon
                 binding.adView.bodyView = binding.adBody
                 binding.adMedia.setImageScaleType(ImageView.ScaleType.CENTER_CROP)
-
-                if (!offsetCard) {
-                    binding.adSpacer.gone()
-                }
             }
         }
     }
@@ -82,6 +79,15 @@ internal class NativeBanner: FrameLayout {
         val px = horizontalDp.dpToPx(context.resources)
         val verticalPx = 4.dpToPx(context.resources)
         binding?.adView?.setPadding(px.toInt(), verticalPx.toInt(), px.toInt(), verticalPx.toInt())
+    }
+
+    fun setAdAppIconSpacingWidth(widthDp: Int) {
+        binding?.adSpacer?.layoutParams?.width = widthDp.dpToPx(context.resources).roundToInt()
+    }
+
+    fun setAdAppIconSize(sizeDp: Int) {
+        val px = sizeDp.dpToPx(context.resources).roundToInt()
+        binding?.adAppIcon?.layoutParams = ConstraintLayout.LayoutParams(px, px)
     }
 
     override fun onAttachedToWindow() {

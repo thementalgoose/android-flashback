@@ -168,8 +168,9 @@ fun RSSScreen(
                     if (uiState.showAdvert) {
                         item(key = "advert") {
                             advertProvider.NativeBanner(
-                                horizontalPadding = true,
-                                badgeOffset = true,
+                                horizontalPadding = 16.dp,
+                                adIconSpacing = 12.dp,
+                                adIconSize = 42.dp,
                                 adIndex = 0
                             )
                         }
