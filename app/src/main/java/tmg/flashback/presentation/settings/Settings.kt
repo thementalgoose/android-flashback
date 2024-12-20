@@ -301,5 +301,12 @@ object Settings {
             isChecked = isChecked,
             isEnabled = isEnabled
         )
+
+
+        val resetFirstTimeSync = Setting.Pref(
+            _key = "first_time_sync",
+            title = string.settings_pref_reset_title,
+            subtitle = string.settings_pref_reset_description
+        )
     }
 }
