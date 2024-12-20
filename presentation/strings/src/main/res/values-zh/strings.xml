@@ -315,6 +315,9 @@
     <string name="settings_switch_review_description">在 Play 商店中评论应用</string>
     <string name="settings_pref_shake_to_report_title">摇一摇报告</string>
     <string name="settings_pref_shake_to_report_description">摇动屏幕以向开发人员提供反馈或错误报告</string>
+    <string name="settings_header_reset">重置</string>
+    <string name="settings_pref_reset_title">首次同步</string>
+    <string name="settings_pref_reset_description">重新运行首次同步。这将刷新所有车手、车队、比赛和赛道。</string>
     <string name="settings_theme_title">自定义</string>
     <string name="settings_theme_nightmode_title">深色模式</string>
     <string name="settings_theme_nightmode_description">选择您的应用主题深色模式偏好</string>
