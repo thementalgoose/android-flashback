@@ -26,13 +26,13 @@
             android:layout_height="wrap_content">
 
             <FrameLayout
-                android:id="@+id/adSpacer"
-                android:layout_width="@dimen/admobAdvertisementLabelOffset"
+                android:id="@+id/ad_spacer"
+                android:layout_width="16dp"
                 android:layout_height="0dp"
                 android:alpha="0.0"
                 app:layout_constraintBottom_toBottomOf="@id/card_view"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/card_view" />
+                app:layout_constraintStart_toEndOf="@id/ad_app_icon"
+                app:layout_constraintTop_toTopOf="parent"/>
 
             <ImageView
                 android:id="@+id/ad_app_icon"
@@ -51,10 +51,9 @@
                 android:textSize="14sp"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/paddingMedium"
                 android:background="?attr/backgroundSecondary"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/ad_app_icon"
+                app:layout_constraintStart_toEndOf="@id/ad_spacer"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:background="#429479"
                 tools:text="Heyu" />
@@ -73,11 +72,10 @@
                 android:textSize="12sp"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/paddingMedium"
                 android:layout_marginTop="4dp"
                 android:background="?attr/backgroundSecondary"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/ad_app_icon"
+                app:layout_constraintStart_toEndOf="@id/ad_spacer"
                 app:layout_constraintTop_toBottomOf="@id/ad_headline"
                 tools:background="#826284"
                 tools:text="Hey" />
@@ -90,7 +88,7 @@
                 app:cardBackgroundColor="?attr/backgroundSecondary"
                 app:cardCornerRadius="@dimen/radiusSmall"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/adSpacer"
+                app:layout_constraintStart_toEndOf="@id/ad_spacer"
                 app:layout_constraintTop_toBottomOf="@id/barrier">
 
                 <com.google.android.gms.ads.nativead.MediaView
