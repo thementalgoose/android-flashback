@@ -254,11 +254,15 @@ internal fun SearchScreen(
 
             if (uiState.showAdvert) {
                 item("ad") {
-                    advertProvider.NativeBanner(
-                        horizontalPadding = true,
-                        badgeOffset = false,
-                        adIndex = 0
-                    )
+                    Column(Modifier.fillMaxWidth()) {
+                        Spacer(Modifier.height(12.dp))
+                        advertProvider.NativeBanner(
+                            horizontalPadding = 16.dp,
+                            adIconSpacing = 16.dp,
+                            adIconSize = 36.dp,
+                            adIndex = 0
+                        )
+                    }
                 }
             }
 

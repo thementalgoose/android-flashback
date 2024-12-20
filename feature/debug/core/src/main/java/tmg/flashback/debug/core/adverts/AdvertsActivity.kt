@@ -40,8 +40,9 @@ class AdvertsActivity: AppCompatActivity() {
                         modifier = Modifier.padding(vertical = AppTheme.dimens.medium)
                     )
                     advertProvider.NativeBanner(
-                        horizontalPadding = false,
-                        badgeOffset = false,
+                        horizontalPadding = 0.dp,
+                        adIconSpacing = null,
+                        adIconSize = null,
                         adIndex = 0
                     )
                     TextTitle(
@@ -49,8 +50,9 @@ class AdvertsActivity: AppCompatActivity() {
                         modifier = Modifier.padding(vertical = AppTheme.dimens.medium)
                     )
                     advertProvider.NativeBanner(
-                        horizontalPadding = true,
-                        badgeOffset = true,
+                        horizontalPadding = 16.dp,
+                        adIconSpacing = null,
+                        adIconSize = null,
                         adIndex = 0
                     )
                 }
