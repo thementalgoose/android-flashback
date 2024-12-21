@@ -56,7 +56,8 @@ import tmg.flashback.domain.persistence.models.standings.DriverStandingConstruct
         ConstructorStanding::class,
         ConstructorStandingDriver::class,
         Event::class
-    ]
+    ],
+    exportSchema = false
 )
 abstract class FlashbackDatabase: RoomDatabase() {
     abstract fun overviewDao(): OverviewDao
