@@ -1,6 +1,6 @@
 [versions]  # ===========================================================================
-kotlin = "2.0.21"
-ksp = "2.0.21-1.0.28" # Update with kotlin https://github.com/google/ksp/releases
+kotlin = "2.1.0"
+ksp = "2.1.0-1.0.29" # Update with kotlin https://github.com/google/ksp/releases
 hilt = "2.54"
 androidx_activity = "1.9.3"
 androidx_navigation = "2.8.5"
@@ -8,7 +8,7 @@ androidx_lifecycle = "2.8.7"
 androidx_hilt = "1.2.0"
 androidx_room = "2.7.0-alpha12"
 androidx_workmanager = "2.10.0"
-androidx_glance = "1.1.1" #beta01 has update frequency issues!
+androidx_glance = "1.1.1"
 compose = "2024.12.01"
 compose_accompanist = "0.36.0"
 coroutines = "1.9.0"
@@ -125,8 +125,8 @@ skeletonlayout = "com.faltenreich:skeletonlayout:5.0.0"
 threeten = "org.threeten:threetenbp:1.7.0"
 threetenabp = "com.jakewharton.threetenabp:threetenabp:1.4.8"
 
-tmg_utils = "com.github.thementalgoose:android-utilities:2.6.0"
-tmg_aboutthisapp = "com.github.thementalgoose:android-about-this-app:6.0.3"
+tmg_utils = "com.github.thementalgoose:android-utilities:2.6.2"
+tmg_aboutthisapp = "com.github.thementalgoose:android-about-this-app:6.0.4"
 
 ## Test
 test_androidx_core = "androidx.test:core:1.6.1"
