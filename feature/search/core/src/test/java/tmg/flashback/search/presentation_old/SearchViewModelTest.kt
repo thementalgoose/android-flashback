@@ -1,4 +1,4 @@
-package tmg.flashback.search.presentation
+package tmg.flashback.search.presentation_old
 
 import app.cash.turbine.test
 import io.mockk.coVerify

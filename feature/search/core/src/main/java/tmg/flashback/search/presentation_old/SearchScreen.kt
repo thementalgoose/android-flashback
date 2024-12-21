@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalLayoutApi::class, ExperimentalComposeUiApi::class)
 
-package tmg.flashback.search.presentation
+package tmg.flashback.search.presentation_old
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
