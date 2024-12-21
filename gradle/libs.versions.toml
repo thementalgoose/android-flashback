@@ -1,12 +1,12 @@
 [versions]  # ===========================================================================
 kotlin = "2.0.21"
 ksp = "2.0.21-1.0.28" # Update with kotlin https://github.com/google/ksp/releases
-hilt = "2.51"
+hilt = "2.54"
 androidx_activity = "1.9.3"
 androidx_navigation = "2.8.5"
 androidx_lifecycle = "2.8.7"
 androidx_hilt = "1.2.0"
-androidx_room = "2.6.1"
+androidx_room = "2.7.0-alpha12"
 androidx_workmanager = "2.10.0"
 androidx_glance = "1.1.1" #beta01 has update frequency issues!
 compose = "2024.12.01"
