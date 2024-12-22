@@ -27,7 +27,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
@@ -51,6 +55,7 @@ fun InputPrimary(
     keyboardActions: KeyboardActions = KeyboardActions(),
     imeAction: ImeAction = ImeAction.Default,
     onValueChange: (TextFieldValue) -> Unit = { text.value = it },
+    singleLine: Boolean = true,
     showBorder: Boolean = true,
     clear: (() -> Unit)? = null,
     maxLines: Int = 1,
@@ -83,13 +88,13 @@ fun InputPrimary(
                     Spacer(Modifier.width(AppTheme.dimens.small))
                 }
                 TextTitle(
-                    placeholder,
+                    modifier = Modifier.padding(start = 1.dp),
+                    text = placeholder,
                     bold = true,
                     textColor = AppTheme.colors.contentTertiary.copy(alpha = 0.5f)
                 )
             }
         }
-
 
         val keyboardController = LocalSoftwareKeyboardController.current
         BasicTextField(
@@ -98,12 +103,15 @@ fun InputPrimary(
                     horizontal = AppTheme.dimens.medlarge,
                     vertical = AppTheme.dimens.medium
                 )
-                .fillMaxWidth()
-                .clip(RoundedCornerShape(50)),
+                .fillMaxWidth(),
             value = text.value,
             onValueChange = onValueChange,
             maxLines = maxLines,
-            textStyle = AppTheme.typography.title,
+            singleLine = singleLine,
+            cursorBrush = SolidColor(AppTheme.colors.contentPrimary),
+            textStyle = AppTheme.typography.title.copy(
+                color = AppTheme.colors.contentPrimary
+            ),
             keyboardActions = keyboardActions,
             keyboardOptions = KeyboardOptions.Default.copy(
                 keyboardType = keyboardType,
