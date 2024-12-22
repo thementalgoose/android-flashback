@@ -1,6 +1,5 @@
 package tmg.flashback.search.presentation
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -51,14 +50,12 @@ fun SearchScreenTab(
     actionUpClicked: () -> Unit,
     isRoot: (Boolean) -> Unit,
     viewModel: SearchViewModel,
-    advertProvider: AdvertProvider
 ) {
     val uiState = viewModel.outputs.uiState.collectAsState()
 
     SearchScreenTab(
         actionUpClicked = actionUpClicked,
         isRoot = isRoot,
-        advertProvider = advertProvider,
         tabClicked = viewModel.inputs::selectType,
         searchTermUpdated = viewModel.inputs::searchTermUpdated,
         searchTermClear = viewModel.inputs::searchTermClear,
@@ -70,7 +67,6 @@ fun SearchScreenTab(
 fun SearchScreenTab(
     actionUpClicked: () -> Unit,
     isRoot: (Boolean) -> Unit,
-    advertProvider: AdvertProvider,
     tabClicked: (SearchScreenStateCategory) -> Unit,
     searchTermUpdated: (String) -> Unit,
     searchTermClear: () -> Unit,
@@ -84,7 +80,6 @@ fun SearchScreenTab(
     val circuitsUIState = circuitsVM.uiState.collectAsState()
 
     LaunchedEffect(uiState.searchTerm) {
-        Log.i("Search", "Launched effect '${uiState.searchTerm}'")
         circuitsVM.searchTerm(uiState.searchTerm)
         driversVM.searchTerm(uiState.searchTerm)
         constructorsVM.searchTerm(uiState.searchTerm)
