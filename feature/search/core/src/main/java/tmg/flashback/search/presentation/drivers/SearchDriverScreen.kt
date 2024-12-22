@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.lazy.grid.LazyGridScope
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -21,7 +23,22 @@ import tmg.flashback.style.text.TextBody2
 import tmg.flashback.ui.components.drivers.DriverIcon
 import tmg.flashback.ui.components.flag.Flag
 
+private val driverIconSize = 42.dp
+
 fun LazyListScope.Drivers(
+    driverClicked: (Driver) -> Unit,
+    drivers: List<Driver>,
+) {
+    items(drivers, key = { it.id }) {
+        DriverRecord(
+            driverClicked = driverClicked,
+            driver = it,
+            modifier = Modifier
+        )
+    }
+}
+
+fun LazyGridScope.Drivers(
     driverClicked: (Driver) -> Unit,
     drivers: List<Driver>,
 ) {
@@ -54,7 +71,7 @@ private fun DriverRecord(
             modifier = Modifier,
             number = driver.number,
             code = driver.code,
-            size = 48.dp
+            size = driverIconSize,
         )
         Column(
             modifier = Modifier.padding(
