@@ -20,3 +20,19 @@ import androidx.compose.ui.tooling.preview.Preview
     device = Devices.PIXEL_4
 )
 annotation class PreviewTheme
+
+@Preview(
+    showBackground = true,
+    name = "Light",
+    backgroundColor = 4294506744,
+    uiMode = UI_MODE_NIGHT_NO,
+    device = Devices.NEXUS_10
+)
+@Preview(
+    showBackground = true,
+    name = "Dark",
+    backgroundColor = 4279769112,
+    uiMode = UI_MODE_NIGHT_YES,
+    device = Devices.NEXUS_10
+)
+annotation class PreviewThemeExpanded
