@@ -4,6 +4,7 @@ package tmg.flashback.style.input
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -12,11 +13,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
-import androidx.compose.material.TextField
-import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.runtime.Composable
@@ -30,7 +30,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
@@ -38,7 +37,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
-import tmg.flashback.style.R
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextTitle
 
@@ -56,27 +54,24 @@ fun InputPrimary(
     clear: (() -> Unit)? = null,
     maxLines: Int = 1,
 ) {
-
-    val keyboardController = LocalSoftwareKeyboardController.current
-    TextField(
+    Box(
         modifier = modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(50)),
-        colors = TextFieldDefaults.textFieldColors(
-            textColor = AppTheme.colors.contentPrimary,
-            disabledTextColor = Color.Transparent,
-            backgroundColor = AppTheme.colors.backgroundTertiary,
-            focusedIndicatorColor = Color.Transparent,
-            unfocusedIndicatorColor = Color.Transparent,
-            disabledIndicatorColor = Color.Transparent
-        ),
-        value = text.value,
-        onValueChange = onValueChange,
-        maxLines = maxLines,
-        placeholder = {
+            .clip(RoundedCornerShape(50.dp))
+            .border(
+                width = 1.dp,
+                color = AppTheme.colors.backgroundSecondary,
+                shape = RoundedCornerShape(50.dp)
+            )
+            .background(AppTheme.colors.backgroundTertiary)
+    ) {
+        if (text.value.text.isEmpty()) {
             Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
+                modifier = Modifier
+                    .padding(
+                        horizontal = AppTheme.dimens.medlarge,
+                        vertical = AppTheme.dimens.medium
+                    ),
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 icon?.let {
                     Icon(
@@ -92,28 +87,44 @@ fun InputPrimary(
                     textColor = AppTheme.colors.contentTertiary.copy(alpha = 0.5f)
                 )
             }
-        },
-        trailingIcon = {
-            if (clear != null) {
-                Icon(
-                    Icons.Default.Clear,
-                    contentDescription = "X",
-                    modifier = Modifier
-                        .clickable {
-                            text.value = TextFieldValue("")
-                            clear()
-                            keyboardController?.hide()
-                        }
+        }
+
+
+        val keyboardController = LocalSoftwareKeyboardController.current
+        BasicTextField(
+            modifier = Modifier
+                .padding(
+                    horizontal = AppTheme.dimens.medlarge,
+                    vertical = AppTheme.dimens.medium
                 )
-            }
-        },
-        textStyle = AppTheme.typography.body1,
-        keyboardActions = keyboardActions,
-        keyboardOptions = KeyboardOptions.Default.copy(
-            keyboardType = keyboardType,
-            imeAction = imeAction
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(50)),
+            value = text.value,
+            onValueChange = onValueChange,
+            maxLines = maxLines,
+            textStyle = AppTheme.typography.title,
+            keyboardActions = keyboardActions,
+            keyboardOptions = KeyboardOptions.Default.copy(
+                keyboardType = keyboardType,
+                imeAction = imeAction
+            ),
         )
-    )
+
+        if (clear != null && text.value.text.isNotEmpty()) {
+            Icon(
+                Icons.Default.Clear,
+                contentDescription = null,
+                modifier = Modifier
+                    .align(Alignment.CenterEnd)
+                    .padding(end = AppTheme.dimens.medium)
+                    .clickable {
+                        text.value = TextFieldValue("")
+                        clear()
+                        keyboardController?.hide()
+                    }
+            )
+        }
+    }
 }
 
 @PreviewTheme
