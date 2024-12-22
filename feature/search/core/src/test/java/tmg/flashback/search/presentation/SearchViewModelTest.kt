@@ -1,231 +1,93 @@
 package tmg.flashback.search.presentation
 
 import app.cash.turbine.test
-import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.verify
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.ads.ads.repository.AdsRepository
-import tmg.flashback.circuits.contract.Circuit
-import tmg.flashback.circuits.contract.with
-import tmg.flashback.constructors.contract.Constructor
-import tmg.flashback.constructors.contract.with
-import tmg.flashback.domain.repo.CircuitRepository
-import tmg.flashback.domain.repo.ConstructorRepository
-import tmg.flashback.domain.repo.DriverRepository
-import tmg.flashback.domain.repo.OverviewRepository
-import tmg.flashback.drivers.contract.Driver
-import tmg.flashback.drivers.contract.with
-import tmg.flashback.formula1.model.Circuit
-import tmg.flashback.formula1.model.Constructor
-import tmg.flashback.formula1.model.Driver
-import tmg.flashback.formula1.model.OverviewRace
-import tmg.flashback.formula1.model.model
-import tmg.flashback.navigation.Navigator
-import tmg.flashback.navigation.Screen
+import tmg.flashback.ads.ads.repository.model.AdvertConfig
 import tmg.testutils.BaseTest
 
 internal class SearchViewModelTest: BaseTest() {
 
-    private val mockDriverRepository: DriverRepository = mockk(relaxed = true)
-    private val mockConstructorRepository: ConstructorRepository = mockk(relaxed = true)
-    private val mockCircuitRepository: CircuitRepository = mockk(relaxed = true)
-    private val mockOverviewRepository: OverviewRepository = mockk(relaxed = true)
     private val mockAdsRepository: AdsRepository = mockk(relaxed = true)
-    private val mockNavigator: Navigator = mockk(relaxed = true)
 
     private lateinit var underTest: SearchViewModel
 
     private fun initUnderTest() {
         underTest = SearchViewModel(
-            driverRepository = mockDriverRepository,
-            constructorRepository = mockConstructorRepository,
-            circuitRepository = mockCircuitRepository,
-            overviewRepository = mockOverviewRepository,
-            adsRepository = mockAdsRepository,
-            navigator = mockNavigator,
-            ioDispatcher = testDispatcher,
+            adsRepository = mockAdsRepository
         )
     }
 
-    private val driver1 = Driver.model(id = "1")
-    private val driver2 = Driver.model(id = "2", lastName = "x")
-    private val constructor1 = Constructor.model(id = "1")
-    private val constructor2 = Constructor.model(id = "2", name = "x")
-    private val circuit1 = Circuit.model(id = "1")
-    private val circuit2 = Circuit.model(id = "2", name = "x")
-    private val race1 = OverviewRace.model(season = 2020, round = 1)
-    private val race2 = OverviewRace.model(season = 2020, round = 2, raceName = "x")
-
     @BeforeEach
     fun setUp() {
-        every { mockDriverRepository.getDrivers() } returns flow { emit(listOf(driver1, driver2)) }
-        every { mockConstructorRepository.getConstructors() } returns flow { emit(listOf(constructor1, constructor2)) }
-        every { mockCircuitRepository.getCircuits() } returns flow { emit(listOf(circuit1, circuit2)) }
-        every { mockOverviewRepository.getOverview() } returns flow { emit(listOf(race1, race2)) }
-        every { mockAdsRepository.advertConfig } returns mockk(relaxed = true) {
-            every { onSearch } returns false
-        }
+        every { mockAdsRepository.areAdvertsEnabled } returns false
     }
 
     @Test
-    fun `uistate lists all options and empty search term`() = runTest(testDispatcher) {
-
-        initUnderTest()
-        underTest.uiState.test {
-            val item = awaitItem()
-
-            assertEquals(listOf(driver1, driver2), item.drivers)
-            assertEquals(listOf(constructor1, constructor2), item.constructors)
-            assertEquals(listOf(circuit1, circuit2), item.circuits)
-            assertEquals(listOf(race2, race1), item.races)
-            assertEquals("", item.searchTerm)
-        }
-    }
-
-    @Test
-    fun `initial state sets no selected item`() = runTest(testDispatcher) {
-        initUnderTest()
-        underTest.uiState.test {
-            assertEquals(null, awaitItem().selected)
-        }
-    }
-
-    @Test
-    fun `updating search term filters out drivers`() = runTest(testDispatcher) {
-        initUnderTest()
-        underTest.uiState.test {
-            assertEquals(listOf(driver1, driver2), awaitItem().drivers)
-
-            underTest.search("x")
-            assertEquals(listOf(driver2), awaitItem().drivers)
-
-            underTest.search("xx")
-            assertEquals(emptyList<Driver>(), awaitItem().drivers)
-
-            underTest.searchClear()
-            assertEquals(listOf(driver1, driver2), awaitItem().drivers)
-        }
-    }
-
-    @Test
-    fun `updating search term filters out constructors`() = runTest(testDispatcher) {
-        initUnderTest()
-        underTest.uiState.test {
-            assertEquals(listOf(constructor1, constructor2), awaitItem().constructors)
-
-            underTest.search("x")
-            assertEquals(listOf(constructor2), awaitItem().constructors)
-
-            underTest.search("xx")
-            assertEquals(emptyList<Constructor>(), awaitItem().constructors)
-
-            underTest.searchClear()
-            assertEquals(listOf(constructor1, constructor2), awaitItem().constructors)
-        }
-    }
-
-    @Test
-    fun `updating search term filters out circuits`() = runTest(testDispatcher) {
-        initUnderTest()
-        underTest.uiState.test {
-            assertEquals(listOf(circuit1, circuit2), awaitItem().circuits)
-
-            underTest.search("x")
-            assertEquals(listOf(circuit2), awaitItem().circuits)
-
-            underTest.search("xx")
-            assertEquals(emptyList<Circuit>(), awaitItem().circuits)
-
-            underTest.searchClear()
-            assertEquals(listOf(circuit1, circuit2), awaitItem().circuits)
-        }
-    }
-
-    @Test
-    fun `updating search term filters out races`() = runTest(testDispatcher) {
-        initUnderTest()
-        underTest.uiState.test {
-            assertEquals(listOf(race2, race1), awaitItem().races)
-
-            underTest.search("x")
-            assertEquals(listOf(race2), awaitItem().races)
-
-            underTest.search("xx")
-            assertEquals(emptyList<OverviewRace>(), awaitItem().races)
-
-            underTest.searchClear()
-            assertEquals(listOf(race2, race1), awaitItem().races)
-        }
-    }
-
-    @Test
-    fun `refresh syncs all api calls`() = runTest(testDispatcher) {
-        initUnderTest()
-        underTest.refresh()
-
-        coVerify {
-            mockDriverRepository.fetchDrivers()
-            mockConstructorRepository.fetchConstructors()
-            mockCircuitRepository.fetchCircuits()
-            mockOverviewRepository.fetchOverview()
-        }
-    }
-
-    @Test
-    fun `uistate shows ad state from search config`() = runTest(testDispatcher) {
-        every { mockAdsRepository.advertConfig } returns mockk(relaxed = true) {
-            every { onSearch } returns true
-            every { allowUserConfig } returns true
-        }
+    fun `initialise will show ads settings from repo`() = runTest {
         every { mockAdsRepository.areAdvertsEnabled } returns true
+        every { mockAdsRepository.advertConfig } returns AdvertConfig(onSearch = true)
+
         initUnderTest()
-        underTest.uiState.test {
-            assertEquals(true, awaitItem().showAdvert)
+
+        underTest.outputs.uiState.test {
+            assertTrue(awaitItem().showAdvert)
         }
     }
 
     @Test
-    fun `clicking circuit updates state to circuit, press back sets to null`() {
+    fun `initialise will not show ads from repo if config isnt enabled`() = runTest {
+        every { mockAdsRepository.areAdvertsEnabled } returns false
+        every { mockAdsRepository.advertConfig } returns AdvertConfig(onSearch = true)
+
         initUnderTest()
-        underTest.clickCircuit(circuit1)
-        verify {
-            mockNavigator.navigate(Screen.Circuit.with(circuit1.id, circuit1.name))
+
+        underTest.outputs.uiState.test {
+            assertFalse(awaitItem().showAdvert)
         }
     }
 
     @Test
-    fun `clicking race updates state to race, press back sets to null`() = runTest(testDispatcher) {
+    fun `selecting type will update state`() = runTest {
         initUnderTest()
-        underTest.clickRace(race1)
-        underTest.uiState.test {
-            assertEquals(race1, awaitItem().selected)
 
-            underTest.inputs.back()
-            assertEquals(null, awaitItem().selected)
+        underTest.inputs.selectType(SearchScreenStateCategory.CIRCUITS)
+
+        underTest.outputs.uiState.test {
+            assertEquals(SearchScreenStateCategory.CIRCUITS, awaitItem().category)
         }
     }
 
     @Test
-    fun `clicking driver updates state to driver, press back sets to null`() {
+    fun `search term updated will update state`() = runTest {
         initUnderTest()
-        underTest.clickDriver(driver1)
-        verify {
-            mockNavigator.navigate(Screen.Driver.with(driver1.id, driver1.name))
+
+        underTest.inputs.searchTermUpdated("test")
+
+        underTest.outputs.uiState.test {
+            assertEquals("test", awaitItem().searchTerm)
         }
     }
 
     @Test
-    fun `clicking constructor updates state to constructor, press back sets to null`() {
+    fun `search term clear will update state`() = runTest {
         initUnderTest()
-        underTest.clickConstructor(constructor1)
-        verify {
-            mockNavigator.navigate(Screen.Constructor.with(constructor1.id, constructor1.name))
+
+        underTest.inputs.searchTermUpdated("test")
+
+        underTest.outputs.uiState.test {
+            assertEquals("test", awaitItem().searchTerm)
+
+            underTest.inputs.searchTermClear()
+
+            assertEquals("", awaitItem().searchTerm)
         }
     }
 }

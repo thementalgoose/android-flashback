@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Refresh
@@ -41,73 +42,79 @@ internal fun StyleGuideComposeLayout(
     changeNightMode: () -> Unit,
 ) {
     val currentTab: MutableState<StyleGuideTabs?> = rememberSaveable { mutableStateOf(startingTab) }
-
-    Column(modifier = modifier.fillMaxSize()) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            IconButton(
-                onClick = {
-                    if (currentTab.value != null) {
-                        currentTab.value = null
-                    } else {
-                        actionUpClicked()
-                    }
-                },
-                content = {
-                    Icon(
-                        imageVector = Icons.Default.ArrowBack,
-                        contentDescription = "Back",
-                        tint = AppTheme.colors.contentPrimary
-                    )
-                }
-            )
-            IconButton(
-                onClick = {
-                    changeNightMode()
-                },
-                content = {
-                    Icon(
-                        imageVector = Icons.Default.Refresh,
-                        contentDescription = "Theme",
-                        tint = AppTheme.colors.contentPrimary
-                    )
-                }
-            )
-        }
-        when (currentTab.value) {
-            StyleGuideTabs.TEXT -> {
-                TextTabScreen()
-            }
-            StyleGuideTabs.INPUT -> {
-                InputTabScreen()
-            }
-            StyleGuideTabs.BUTTON -> {
-                ButtonTabScreen()
-            }
-            StyleGuideTabs.COLOURS -> {
-                ColourTabScreen()
-            }
-            null -> {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(AppTheme.dimens.medium),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(16.dp)
+    Scaffold(
+        content = {
+            Column(modifier = modifier
+                .fillMaxSize()
+                .padding(it)
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    StyleGuideTabs.values().forEach { tab ->
-                        ButtonPrimary(
-                            text = tab.label,
-                            onClick = { currentTab.value = tab }
-                        )
+                    IconButton(
+                        onClick = {
+                            if (currentTab.value != null) {
+                                currentTab.value = null
+                            } else {
+                                actionUpClicked()
+                            }
+                        },
+                        content = {
+                            Icon(
+                                imageVector = Icons.Default.ArrowBack,
+                                contentDescription = "Back",
+                                tint = AppTheme.colors.contentPrimary
+                            )
+                        }
+                    )
+                    IconButton(
+                        onClick = {
+                            changeNightMode()
+                        },
+                        content = {
+                            Icon(
+                                imageVector = Icons.Default.Refresh,
+                                contentDescription = "Theme",
+                                tint = AppTheme.colors.contentPrimary
+                            )
+                        }
+                    )
+                }
+                when (currentTab.value) {
+                    StyleGuideTabs.TEXT -> {
+                        TextTabScreen()
                     }
+                    StyleGuideTabs.INPUT -> {
+                        InputTabScreen()
+                    }
+                    StyleGuideTabs.BUTTON -> {
+                        ButtonTabScreen()
+                    }
+                    StyleGuideTabs.COLOURS -> {
+                        ColourTabScreen()
+                    }
+                    null -> {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(AppTheme.dimens.medium),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.spacedBy(16.dp)
+                        ) {
+                            StyleGuideTabs.values().forEach { tab ->
+                                ButtonPrimary(
+                                    text = tab.label,
+                                    onClick = { currentTab.value = tab }
+                                )
+                            }
+                        }
+                    }
+
                 }
             }
-
         }
-    }
+    )
 }
 
 @PreviewTheme
