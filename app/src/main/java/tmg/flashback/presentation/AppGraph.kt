@@ -38,6 +38,7 @@ import tmg.flashback.reactiongame.presentation.ReactionScreenVM
 import tmg.flashback.rss.contract.RSS
 import tmg.flashback.rss.presentation.feed.RSSScreenVM
 import tmg.flashback.search.contract.Search
+import tmg.flashback.search.presentation.SearchScreenVM
 import tmg.flashback.search.presentation_old.SearchScreenVM
 import tmg.flashback.season.contract.ConstructorsStandings
 import tmg.flashback.season.contract.DriverStandings
