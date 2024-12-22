@@ -99,7 +99,11 @@ private fun Item(
     Column(
         modifier = modifier
             .combinedClickable(
-                onClick = { itemClicked(item) },
+                onClick = {
+                    if (item.isSelected != true) {
+                        itemClicked(item)
+                    }
+                },
                 onLongClick = {
                     Toast.makeText(context, context.getString(item.label), Toast.LENGTH_LONG).show()
                 }
