@@ -51,6 +51,7 @@ fun InputPrimary(
     keyboardActions: KeyboardActions = KeyboardActions(),
     imeAction: ImeAction = ImeAction.Default,
     onValueChange: (TextFieldValue) -> Unit = { text.value = it },
+    showBorder: Boolean = true,
     clear: (() -> Unit)? = null,
     maxLines: Int = 1,
 ) {
@@ -58,7 +59,7 @@ fun InputPrimary(
         modifier = modifier
             .clip(RoundedCornerShape(50.dp))
             .border(
-                width = 1.dp,
+                width = if (showBorder) 1.dp else 0.dp,
                 color = AppTheme.colors.backgroundSecondary,
                 shape = RoundedCornerShape(50.dp)
             )
