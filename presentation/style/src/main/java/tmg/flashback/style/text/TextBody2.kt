@@ -4,6 +4,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -20,8 +21,27 @@ fun TextBody2(
     textColor: Color? = null,
     maxLines: Int? = null
 ) {
+    TextBody2(
+        annotatedString = AnnotatedString(text),
+        modifier = modifier,
+        textAlign = textAlign,
+        bold = bold,
+        textColor = textColor,
+        maxLines = maxLines
+    )
+}
+
+@Composable
+fun TextBody2(
+    annotatedString: AnnotatedString,
+    modifier: Modifier = Modifier,
+    textAlign: TextAlign = TextAlign.Start,
+    bold: Boolean = false,
+    textColor: Color? = null,
+    maxLines: Int? = null
+) {
     Text(
-        text,
+        annotatedString,
         modifier = modifier,
         textAlign = textAlign,
         maxLines = maxLines ?: Int.MAX_VALUE,
