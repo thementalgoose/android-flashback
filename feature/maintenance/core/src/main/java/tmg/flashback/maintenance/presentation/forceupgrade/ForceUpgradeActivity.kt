@@ -6,8 +6,12 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.material.Scaffold
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Modifier
 import dagger.hilt.android.AndroidEntryPoint
 import tmg.flashback.googleanalytics.presentation.ScreenView
 import tmg.flashback.style.AppTheme
@@ -36,6 +40,10 @@ internal class ForceUpgradeActivity: BaseActivity() {
                         ScreenView(screenName = "Force upgrade")
 
                         ForceUpgradeScreen(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(AppTheme.colors.backgroundContainer)
+                                .padding(it),
                             title = title.value,
                             description = message.value,
                             link = showLink.value,
