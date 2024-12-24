@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.LinearProgressIndicator
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -48,63 +49,68 @@ fun SyncScreen(
 ) {
     ScreenView(screenName = "Sync")
 
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .background(AppTheme.colors.backgroundSplash)
-    ) {
-        Box(Modifier.height(headerHeight))
+    Scaffold(
+        content = {
+            Column(modifier = Modifier
+                .fillMaxSize()
+                .padding(it)
+                .background(AppTheme.colors.backgroundSplash)
+            ) {
+                Box(Modifier.height(headerHeight))
 
-        Column(modifier = Modifier
-            .fillMaxHeight()
-            .fillMaxWidth()
-            .clip(
-                RoundedCornerShape(
-                    topStart = AppTheme.dimens.radiusLarge,
-                    topEnd = AppTheme.dimens.radiusLarge
-                )
-            )
-            .background(AppTheme.colors.backgroundPrimary)
-            .padding(
-                vertical = AppTheme.dimens.medium,
-                horizontal = AppTheme.dimens.medium
-            )
-        ) {
-            TextHeadline1(text = stringResource(id = R.string.app_name))
-            TextBody2(
-                modifier = Modifier.padding(top = AppTheme.dimens.nsmall),
-                text = stringResource(id = string.splash_sync_info)
-            )
-            Box(Modifier.weight(1f))
-            Breakdown(
-                label = string.splash_sync_drivers,
-                syncState = drivers
-            )
-            Breakdown(
-                label = string.splash_sync_constructors,
-                syncState = constructors
-            )
-            Breakdown(
-                label = string.splash_sync_circuits,
-                syncState = circuits
-            )
-            Breakdown(
-                label = string.splash_sync_races,
-                syncState = races
-            )
-            Breakdown(
-                label = string.splash_sync_config,
-                syncState = config
-            )
-            Box(Modifier.height(60.dp)) {
-                if (showTryAgain) {
-                    ButtonSecondary(
-                        text = stringResource(id = string.splash_sync_try_again),
-                        onClick = tryAgainClicked
+                Column(modifier = Modifier
+                    .fillMaxHeight()
+                    .fillMaxWidth()
+                    .clip(
+                        RoundedCornerShape(
+                            topStart = AppTheme.dimens.radiusLarge,
+                            topEnd = AppTheme.dimens.radiusLarge
+                        )
                     )
+                    .background(AppTheme.colors.backgroundPrimary)
+                    .padding(
+                        vertical = AppTheme.dimens.medium,
+                        horizontal = AppTheme.dimens.medium
+                    )
+                ) {
+                    TextHeadline1(text = stringResource(id = R.string.app_name))
+                    TextBody2(
+                        modifier = Modifier.padding(top = AppTheme.dimens.nsmall),
+                        text = stringResource(id = string.splash_sync_info)
+                    )
+                    Box(Modifier.weight(1f))
+                    Breakdown(
+                        label = string.splash_sync_drivers,
+                        syncState = drivers
+                    )
+                    Breakdown(
+                        label = string.splash_sync_constructors,
+                        syncState = constructors
+                    )
+                    Breakdown(
+                        label = string.splash_sync_circuits,
+                        syncState = circuits
+                    )
+                    Breakdown(
+                        label = string.splash_sync_races,
+                        syncState = races
+                    )
+                    Breakdown(
+                        label = string.splash_sync_config,
+                        syncState = config
+                    )
+                    Box(Modifier.height(60.dp)) {
+                        if (showTryAgain) {
+                            ButtonSecondary(
+                                text = stringResource(id = string.splash_sync_try_again),
+                                onClick = tryAgainClicked
+                            )
+                        }
+                    }
                 }
             }
         }
-    }
+    )
 }
 
 @Composable
