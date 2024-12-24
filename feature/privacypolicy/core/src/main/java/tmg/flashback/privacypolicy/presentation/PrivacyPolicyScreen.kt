@@ -23,6 +23,7 @@ import tmg.flashback.googleanalytics.presentation.ScreenView
 import tmg.flashback.strings.R.string
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.header.HeaderAction
+import tmg.flashback.ui.components.htmltext.HtmlText
 import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.getColor
 
@@ -43,20 +44,10 @@ fun PrivacyPolicyScreenVM(
             action = if (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact) HeaderAction.BACK else null,
             actionUpClicked = actionUpClicked
         )
-        AndroidView(
-            modifier = Modifier.padding(
-                top = AppTheme.dimens.small,
-                start = AppTheme.dimens.medium,
-                end = AppTheme.dimens.medium,
-                bottom = AppTheme.dimens.medium
-            ),
-            factory = {
-                TextView(it).apply {
-                    setTextColor(Color.GRAY)
-                    text = it.getString(string.privacy_policy_data).fromHtml()
-                    movementMethod = LinkMovementMethod.getInstance()
-                }
-            }
+        HtmlText(
+            modifier = Modifier.padding(horizontal = AppTheme.dimens.medium),
+            html = stringResource(string.privacy_policy_data),
+            linkColor = AppTheme.colors.primary
         )
     }
 }
