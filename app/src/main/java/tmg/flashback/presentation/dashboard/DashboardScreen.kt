@@ -5,15 +5,12 @@ import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
@@ -23,7 +20,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModelStore
@@ -35,16 +31,16 @@ import tmg.flashback.debug.model.DebugMenuItem
 import tmg.flashback.eastereggs.model.MenuIcons
 import tmg.flashback.googleanalytics.presentation.ScreenView
 import tmg.flashback.navigation.Navigator
-import tmg.flashback.style.AppTheme
 import tmg.flashback.presentation.AppGraph
+import tmg.flashback.presentation.dashboard.menu.DashboardMenuExpandedScreen
+import tmg.flashback.presentation.dashboard.menu.DashboardMenuScreen
+import tmg.flashback.style.AppTheme
 import tmg.flashback.ui.components.layouts.OverlappingPanels
+import tmg.flashback.ui.components.layouts.OverlappingPanelsState
 import tmg.flashback.ui.components.layouts.OverlappingPanelsValue
 import tmg.flashback.ui.components.layouts.rememberOverlappingPanelsState
 import tmg.flashback.ui.components.navigation.NavigationBar
 import tmg.flashback.ui.components.navigation.appBarHeight
-import tmg.flashback.presentation.dashboard.menu.DashboardMenuExpandedScreen
-import tmg.flashback.presentation.dashboard.menu.DashboardMenuScreen
-import tmg.flashback.ui.components.layouts.OverlappingPanelsState
 import tmg.flashback.ui.foldables.getFoldingConfig
 
 @Composable
