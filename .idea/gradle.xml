@@ -24,6 +24,7 @@
             <option value="$PROJECT_DIR$/core/metrics/googleanalytics" />
             <option value="$PROJECT_DIR$/core/notifications" />
             <option value="$PROJECT_DIR$/core/preferences" />
+            <option value="$PROJECT_DIR$/core/reviews" />
             <option value="$PROJECT_DIR$/core/webbrowser" />
             <option value="$PROJECT_DIR$/domain" />
             <option value="$PROJECT_DIR$/domain/persistence" />
