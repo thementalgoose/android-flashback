@@ -11,7 +11,6 @@ import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.crashlytics.manager.CrashlyticsManager
@@ -74,7 +73,7 @@ internal class StartReviewUseCaseTest: BaseTest() {
     @Test
     fun `if all sections havent been seen, do nothing`() = runTest {
         every { mockAppReviewRepository.hasPromptedForReview } returns false
-        every { mockAppReviewRepository.sectionsSeen } returns setOf(AppSection.HOME)
+        every { mockAppReviewRepository.sectionsSeen } returns setOf(AppSection.HOME_CALENDAR)
 
         initUnderTest()
 
