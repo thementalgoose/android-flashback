@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 import tmg.flashback.prefs.manager.PreferenceManager
 import tmg.flashback.reviews.usecases.AppSection
 import tmg.flashback.reviews.usecases.AppSection.DETAILS_RACE
-import tmg.flashback.reviews.usecases.AppSection.HOME
+import tmg.flashback.reviews.usecases.AppSection.HOME_CALENDAR
 
 internal class AppReviewRepositoryTest {
 
@@ -51,22 +51,22 @@ internal class AppReviewRepositoryTest {
 
     @Test
     fun `sections returns mapped value for valid entries`() {
-        every { mockPreferenceManager.getSet(KEY_SECTIONS, emptySet()) } returns mutableSetOf(HOME.key, DETAILS_RACE.key)
+        every { mockPreferenceManager.getSet(KEY_SECTIONS, emptySet()) } returns mutableSetOf(HOME_CALENDAR.key, DETAILS_RACE.key)
 
         initUnderTest()
-        assertEquals(setOf(HOME, DETAILS_RACE), underTest.sectionsSeen)
+        assertEquals(setOf(HOME_CALENDAR, DETAILS_RACE), underTest.sectionsSeen)
     }
 
     @Test
     fun `sections save values`() {
-        every { mockPreferenceManager.getSet(KEY_SECTIONS, emptySet()) } returns mutableSetOf(HOME.key)
+        every { mockPreferenceManager.getSet(KEY_SECTIONS, emptySet()) } returns mutableSetOf(HOME_CALENDAR.key)
 
         initUnderTest()
-        underTest.sectionsSeen += HOME
-        verify { mockPreferenceManager.save(KEY_SECTIONS, setOf(HOME.key)) }
+        underTest.sectionsSeen += HOME_CALENDAR
+        verify { mockPreferenceManager.save(KEY_SECTIONS, setOf(HOME_CALENDAR.key)) }
 
         underTest.sectionsSeen += DETAILS_RACE
-        verify { mockPreferenceManager.save(KEY_SECTIONS, setOf(HOME.key, DETAILS_RACE.key)) }
+        verify { mockPreferenceManager.save(KEY_SECTIONS, setOf(HOME_CALENDAR.key, DETAILS_RACE.key)) }
     }
 
 

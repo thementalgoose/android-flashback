@@ -5,6 +5,7 @@ import app.cash.turbine.test
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.verify
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
@@ -20,6 +21,8 @@ import tmg.flashback.formula1.model.Race
 import tmg.flashback.formula1.model.RaceInfo
 import tmg.flashback.formula1.model.SprintResult
 import tmg.flashback.formula1.model.model
+import tmg.flashback.reviews.usecases.AppSection
+import tmg.flashback.reviews.usecases.ReviewSectionSeenUseCase
 import tmg.flashback.weekend.contract.model.ScreenWeekendData
 import tmg.flashback.weekend.contract.model.ScreenWeekendNav
 import tmg.testutils.BaseTest
@@ -27,6 +30,7 @@ import tmg.testutils.BaseTest
 internal class WeekendViewModelTest: BaseTest() {
 
     private val mockRaceRepository: RaceRepository = mockk(relaxed = true)
+    private val mockReviewSectionSeenUseCase: ReviewSectionSeenUseCase = mockk(relaxed = true)
     private val mockFetchSeasonUseCase: FetchSeasonUseCase = mockk(relaxed = true)
 
     private lateinit var underTest: WeekendViewModel
@@ -39,6 +43,7 @@ internal class WeekendViewModelTest: BaseTest() {
                 "tab" to (tab?.name ?: "")
             )),
             fetchSeasonUseCase = mockFetchSeasonUseCase,
+            reviewSectionSeenUseCase = mockReviewSectionSeenUseCase,
             ioDispatcher = coroutineScope.testDispatcher
         )
     }
@@ -148,6 +153,9 @@ internal class WeekendViewModelTest: BaseTest() {
             val item = awaitItem()
             assertTrue(item.any { it.isSelected && it.tab == WeekendNavItem.QUALIFYING })
         }
+        verify {
+            mockReviewSectionSeenUseCase.invoke(AppSection.DETAILS_QUALIFYING)
+        }
     }
 
     @Test
@@ -170,6 +178,9 @@ internal class WeekendViewModelTest: BaseTest() {
         underTest.outputs.tabs.test {
             val item = awaitItem()
             assertTrue(item.any { it.isSelected && it.tab == WeekendNavItem.RACE })
+        }
+        verify {
+            mockReviewSectionSeenUseCase.invoke(AppSection.DETAILS_RACE)
         }
     }
 

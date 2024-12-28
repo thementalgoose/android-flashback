@@ -14,6 +14,9 @@ import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.domain.repo.SeasonRepository
 import tmg.flashback.domain.repo.usecases.FetchSeasonUseCase
 import tmg.flashback.formula1.model.SeasonDriverStandingSeason
+import tmg.flashback.reviews.usecases.AppSection
+import tmg.flashback.reviews.usecases.AppSection.HOME_STANDINGS
+import tmg.flashback.reviews.usecases.ReviewSectionSeenUseCase
 import tmg.flashback.season.presentation.dashboard.shared.seasonpicker.CurrentSeasonHolder
 import javax.inject.Inject
 
@@ -34,6 +37,7 @@ class DriverStandingsViewModel @Inject constructor(
     private val fetchSeasonUseCase: FetchSeasonUseCase,
     private val currentSeasonHolder: CurrentSeasonHolder,
     private val networkConnectivityManager: NetworkConnectivityManager,
+    private val reviewSectionSeenUseCase: ReviewSectionSeenUseCase,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), DriverStandingsViewModelInputs, DriverStandingsViewModelOutputs {
 
@@ -56,6 +60,7 @@ class DriverStandingsViewModel @Inject constructor(
                 }
             }
         }
+        reviewSectionSeenUseCase.invoke(HOME_STANDINGS)
     }
 
     override fun selectDriver(driver: SeasonDriverStandingSeason) {

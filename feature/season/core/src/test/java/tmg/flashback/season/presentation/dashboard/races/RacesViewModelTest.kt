@@ -24,6 +24,8 @@ import tmg.flashback.formula1.model.Overview
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.model.model
 import tmg.flashback.navigation.Navigator
+import tmg.flashback.reviews.usecases.AppSection
+import tmg.flashback.reviews.usecases.ReviewSectionSeenUseCase
 import tmg.flashback.season.contract.ResultsNavigationComponent
 import tmg.flashback.season.contract.repository.NotificationsRepository
 import tmg.flashback.season.presentation.dashboard.shared.seasonpicker.CurrentSeasonHolder
@@ -43,6 +45,7 @@ internal class RacesViewModelTest: BaseTest() {
     private val mockHomeRepository: HomeRepository = mockk(relaxed = true)
     private val mockNavigator: Navigator = mockk(relaxed = true)
     private val mockAdvertRepository: AdsRepository = mockk(relaxed = true)
+    private val mockReviewSectionSeenUseCase: ReviewSectionSeenUseCase = mockk(relaxed = true)
     private val mockNetworkConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
 
     private lateinit var underTest: RacesViewModel
@@ -59,6 +62,7 @@ internal class RacesViewModelTest: BaseTest() {
             navigator = mockNavigator,
             networkConnectivityManager = mockNetworkConnectivityManager,
             adsRepository = mockAdvertRepository,
+            reviewSectionSeenUseCase = mockReviewSectionSeenUseCase,
             ioDispatcher = coroutineScope.testDispatcher
         )
     }
@@ -108,6 +112,12 @@ internal class RacesViewModelTest: BaseTest() {
             assertEquals(listOf(expectedRaceWeek5), item.items)
             assertEquals(2021, item.season)
         }
+    }
+
+    @Test
+    fun `initial load marks review section seen`() = runTest {
+        initUnderTest()
+        mockReviewSectionSeenUseCase.invoke(AppSection.HOME_CALENDAR)
     }
 
     @Test
