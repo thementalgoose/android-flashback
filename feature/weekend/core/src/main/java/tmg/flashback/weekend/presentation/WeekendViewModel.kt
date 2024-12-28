@@ -19,6 +19,10 @@ import kotlinx.coroutines.launch
 import tmg.flashback.domain.repo.RaceRepository
 import tmg.flashback.domain.repo.usecases.FetchSeasonUseCase
 import tmg.flashback.formula1.model.Race
+import tmg.flashback.reviews.usecases.AppSection
+import tmg.flashback.reviews.usecases.AppSection.DETAILS_QUALIFYING
+import tmg.flashback.reviews.usecases.AppSection.DETAILS_RACE
+import tmg.flashback.reviews.usecases.ReviewSectionSeenUseCase
 import tmg.flashback.weekend.contract.ScreenWeekend
 import tmg.flashback.weekend.contract.model.ScreenWeekendData
 import tmg.flashback.weekend.contract.model.ScreenWeekendNav
@@ -48,6 +52,7 @@ class WeekendViewModel @Inject constructor(
     private val raceRepository: RaceRepository,
     private val fetchSeasonUseCase: FetchSeasonUseCase,
     private val ioDispatcher: CoroutineDispatcher,
+    private val reviewSectionSeenUseCase: ReviewSectionSeenUseCase,
     private val savedStateHandle: SavedStateHandle
 ): ViewModel(), WeekendViewModelInputs, WeekendViewModelOutputs {
 
@@ -126,6 +131,12 @@ class WeekendViewModel @Inject constructor(
 
     override fun clickTab(state: WeekendNavItem) {
         selectedTab.value = state
+        if (state == RACE) {
+            reviewSectionSeenUseCase(DETAILS_RACE)
+        }
+        if (state == QUALIFYING) {
+            reviewSectionSeenUseCase(DETAILS_QUALIFYING)
+        }
     }
 
     init {
