@@ -6,6 +6,9 @@ import io.mockk.verify
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import tmg.flashback.prefs.manager.PreferenceManager
+import tmg.flashback.reviews.usecases.AppSection
+import tmg.flashback.reviews.usecases.AppSection.DETAILS_RACE
+import tmg.flashback.reviews.usecases.AppSection.HOME
 
 internal class AppReviewRepositoryTest {
 
@@ -38,8 +41,37 @@ internal class AppReviewRepositoryTest {
         assertEquals(true, mockPreferenceManager.getBoolean(KEY_PROMPTED_REVIEW, false))
     }
 
+    @Test
+    fun `sections returns empty value for invalid entries`() {
+        every { mockPreferenceManager.getSet(KEY_SECTIONS, emptySet()) } returns mutableSetOf("random", "info")
+
+        initUnderTest()
+        assertEquals(emptySet<AppSection>(), underTest.sectionsSeen)
+    }
+
+    @Test
+    fun `sections returns mapped value for valid entries`() {
+        every { mockPreferenceManager.getSet(KEY_SECTIONS, emptySet()) } returns mutableSetOf(HOME.key, DETAILS_RACE.key)
+
+        initUnderTest()
+        assertEquals(setOf(HOME, DETAILS_RACE), underTest.sectionsSeen)
+    }
+
+    @Test
+    fun `sections save values`() {
+        every { mockPreferenceManager.getSet(KEY_SECTIONS, emptySet()) } returns mutableSetOf(HOME.key)
+
+        initUnderTest()
+        underTest.sectionsSeen += HOME
+        verify { mockPreferenceManager.save(KEY_SECTIONS, setOf(HOME.key)) }
+
+        underTest.sectionsSeen += DETAILS_RACE
+        verify { mockPreferenceManager.save(KEY_SECTIONS, setOf(HOME.key, DETAILS_RACE.key)) }
+    }
+
 
     companion object {
-        private const val KEY_PROMPTED_REVIEW = "prompted_review"
+        private const val KEY_PROMPTED_REVIEW = "review_prompted"
+        private const val KEY_SECTIONS = "review_sections"
     }
 }
