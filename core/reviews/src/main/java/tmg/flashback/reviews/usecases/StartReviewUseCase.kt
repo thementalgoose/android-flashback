@@ -1,9 +1,5 @@
 package tmg.flashback.reviews.usecases
 
-import com.google.android.gms.common.api.Status
-import com.google.android.play.core.ktx.launchReview
-import com.google.android.play.core.ktx.requestReview
-import com.google.android.play.core.review.ReviewException
 import tmg.flashback.crashlytics.manager.CrashlyticsManager
 import tmg.flashback.device.ActivityProvider
 import tmg.flashback.googleanalytics.manager.FirebaseAnalyticsManager
