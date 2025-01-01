@@ -13,6 +13,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.core.splashscreen.SplashScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
+import androidx.lifecycle.viewModelScope
 import androidx.window.layout.WindowInfoTracker
 import androidx.window.layout.WindowLayoutInfo
 import dagger.hilt.android.AndroidEntryPoint
@@ -122,6 +123,13 @@ class HomeActivity: BaseActivity(), SplashScreen.KeepOnScreenCondition {
                 e.printStackTrace()
             }
         }
+
+        viewModel.loadAppReview()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        viewModel.cancelAppReview()
     }
 
     override fun shouldKeepOnScreen(): Boolean = viewModel.appliedChanges
