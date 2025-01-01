@@ -51,8 +51,8 @@ enum class MenuIcons(
     ),
     DIWALI(
         key = "diwali",
-        startResolver = { LocalDate.of(2024, 11, 1) },
-        endResolver = { LocalDate.of(2024, 11, 2) },
+        startResolver = { LocalDate.of(2025, 10, 19) },
+        endResolver = { LocalDate.of(2025, 10, 21) },
         label = string.easter_egg_menu_diwali
     ),
     CHRISTMAS(
