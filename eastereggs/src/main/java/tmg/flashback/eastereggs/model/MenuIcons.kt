@@ -17,7 +17,7 @@ enum class MenuIcons(
         key = "new_year",
         startResolver = { LocalDate.of(year, 1, 1) },
         endResolver = { LocalDate.of(year, 1, 1) },
-        label = string.easter_egg_slava_ukraine
+        label = string.easter_egg_menu_new_years
     ),
     CHINESE_NEW_YEAR(
         key = "new_year",
