@@ -5,6 +5,7 @@ import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
+import kotlinx.coroutines.Dispatchers
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
@@ -14,6 +15,7 @@ import tmg.flashback.configuration.usecases.ApplyConfigUseCase
 import tmg.flashback.crashlytics.manager.CrashlyticsManager
 import tmg.flashback.domain.repo.repository.CacheRepository
 import tmg.flashback.maintenance.contract.usecases.ShouldForceUpgradeUseCase
+import tmg.flashback.reviews.usecases.StartReviewUseCase
 import tmg.flashback.season.usecases.ScheduleNotificationsUseCase
 import tmg.flashback.usecases.SetupAppShortcutUseCase
 import tmg.testutils.BaseTest
@@ -27,6 +29,7 @@ internal class HomeViewModelTest: BaseTest() {
     private var mockCacheRepository: CacheRepository = mockk(relaxed = true)
     private var mockScheduleNotificationsUseCase: ScheduleNotificationsUseCase = mockk(relaxed = true)
     private var mockSetupAppShortcutUseCase: SetupAppShortcutUseCase = mockk(relaxed = true)
+    private var mockStartReviewUseCase: StartReviewUseCase = mockk(relaxed = true)
 
     private lateinit var sut: HomeViewModel
 
@@ -40,13 +43,15 @@ internal class HomeViewModelTest: BaseTest() {
 
     private fun initSUT() {
         sut = HomeViewModel(
-            mockConfigRepository,
-            mockApplyConfigUseCase,
-            mockCrashController,
-            mockShouldForceUpgradeUseCase,
-            mockCacheRepository,
-            mockSetupAppShortcutUseCase,
-            mockScheduleNotificationsUseCase,
+            configRepository = mockConfigRepository,
+            applyConfigUseCase = mockApplyConfigUseCase,
+            crashlyticsManager = mockCrashController,
+            shouldForceUpgradeUseCase = mockShouldForceUpgradeUseCase,
+            cacheRepository = mockCacheRepository,
+            setupAppShortcutUseCase = mockSetupAppShortcutUseCase,
+            scheduleNotificationsUseCase = mockScheduleNotificationsUseCase,
+            startReviewUseCase = mockStartReviewUseCase,
+            ioDispatcher = testDispatcher
         )
     }
 
@@ -99,5 +104,42 @@ internal class HomeViewModelTest: BaseTest() {
         assertFalse(sut.requiresSync)
         assertFalse(sut.forceUpgrade)
         assertFalse(sut.appliedChanges)
+    }
+
+    @Test
+    fun `loading app store review doesnt launch for x seconds`() = coroutineTest {
+        initSUT()
+        sut.loadAppReview()
+
+        testDispatcher.scheduler.advanceTimeBy(EXPECTED_DELAY_MILLIS - 1L)
+        coVerify(exactly = 0) {
+            mockStartReviewUseCase.start()
+        }
+
+        testDispatcher.scheduler.advanceTimeBy(2L)
+        coVerify {
+            mockStartReviewUseCase.start()
+        }
+    }
+
+    @Test
+    fun `loading app store review cancelling job in onStop cancels job`() = coroutineTest {
+        initSUT()
+        sut.loadAppReview()
+
+        testDispatcher.scheduler.advanceTimeBy(EXPECTED_DELAY_MILLIS - 1L)
+        coVerify(exactly = 0) {
+            mockStartReviewUseCase.start()
+        }
+
+        sut.cancelAppReview()
+        testDispatcher.scheduler.advanceTimeBy(EXPECTED_DELAY_MILLIS * 2L)
+        coVerify(exactly = 0) {
+            mockStartReviewUseCase.start()
+        }
+    }
+
+    companion object {
+        private const val EXPECTED_DELAY_MILLIS = 4_000L
     }
 }
