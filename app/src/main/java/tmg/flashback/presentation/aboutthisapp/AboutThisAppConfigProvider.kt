@@ -109,7 +109,7 @@ class AboutThisAppConfigProvider @Inject constructor(
                 dependencyName = "Ergast API",
                 author = "Ergast",
                 url = "https://ergast.com/mrd/",
-                icon = DependencyIcon.Image(url = "https://pbs.twimg.com/profile_images/204468195/logo_400x400.png", backgroundColor = Color.WHITE)
+                icon = DependencyIcon.Image(url = "https://i.imgur.com/mWzkikf.png", backgroundColor = Color.WHITE)
             ),
             Dependency(
                 dependencyName = "Jetpack",
@@ -139,7 +139,7 @@ class AboutThisAppConfigProvider @Inject constructor(
                 dependencyName = "Glide",
                 author = "Bump Technologies",
                 url = "https://github.com/bumptech/glide",
-                icon = DependencyIcon.Image(url = "https://lh3.googleusercontent.com/OOjYcooPxIC4PHWxKGg5tfVm5qbJB4m2IMvhmXCOMl9Ps4T6dvmcA66UscrkML0lU6WR0IfswAL9QNpEL63mpLvrtDMiLnOMYCT8rhkC-eIXjhDNk6wGlx-nMJeZzyrvairQOD48KnxhY9vc-tahh7rgKoJeR1mwfoJIVfBNRwlNTSrLkrDZFAU15fvGofmKCrrvlUgUka6tpD80A1-Dm3KRE9knS0m1UHssQ6-KOFdGSndZ70ayGV5pY-n-zDsMYAzDNQMwvb2AhUddiO6VOViXztUqiYuVX5eqCnL7z-bndTcDAqfyohvw8txH5bvc1VR0XcQPjGzJ6EVkdZso2T4b5NoFufzlIP3DPjoFE37VKEGmnI-QMhz9m_IwuJ2U0WXBP9Q4pJkVPqwbIZzm-g338ZETis17D3r52v4hDsq5mN7vzV5KcRHs5l1uivdS5Wj5SQ0t96xmndOEOUISyIxGWeeDGIVSImnK6GuLEfrO4Vsi9gc4Qi8KU5aDBZ0rsbTM-hgNObqBTs-AebwR9gspWCqW7Cigfnezbf1bHAyvPjoLaJ_2IxjoF9KZxjPieYRuXMoDpdhvT5_0cfEsUQF8HjR1qBPku_asce3UtQGvIhMikw=s0", backgroundColor = Color.WHITE)
+                icon = DependencyIcon.Image(url = "https://avatars.githubusercontent.com/u/423539", backgroundColor = Color.WHITE)
             ),
             Dependency(
                 dependencyName = "Coil",
