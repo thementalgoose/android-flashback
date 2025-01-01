@@ -21,7 +21,7 @@ jobs:
 
       # Check JSON
       - name: json-syntax-check
-        uses: limitusus/json-syntax-check@v2.0.0
+        uses: limitusus/json-syntax-check@v2
         with:
           pattern: "\\.json$"
 
