@@ -116,6 +116,9 @@ room_testing = { module = "androidx.room:room-testing", version.ref = "androidx_
 shakey = "com.linkedin.shaky:shaky:3.0.7"
 falcon = "com.jraska:falcon:2.2.0"
 
+play_review = "com.google.android.play:review:2.0.2"
+play_review_ktx = "com.google.android.play:review-ktx:2.0.2"
+
 # f2394e3196d40e14389344af0006ffabe98d4346
 # Look at removing manifest entry for value override in :core:ads:ads-admob when this is updated!
 playservicesads = "com.google.android.gms:play-services-ads:23.6.0"
@@ -199,6 +202,11 @@ retrofit = [
 okhttp = [
     "okhttp_core",
     "okhttp_logging"
+]
+
+play_reviews = [
+    "play_review",
+    "play_review_ktx"
 ]
 
 androidxtest = [

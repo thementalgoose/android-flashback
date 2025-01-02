@@ -1,0 +1,26 @@
+apply plugin:  'com.android.library'
+apply from: rootDir.absolutePath + "/gradle/config-android.gradle"
+apply from: rootDir.absolutePath + "/gradle/config-util.gradle"
+apply from: rootDir.absolutePath + "/gradle/config-junit5.gradle"
+apply from: rootDir.absolutePath + "/gradle/config-hilt.gradle"
+
+android {
+    compileSdk project.ext.compileSdk
+
+    defaultConfig {
+        minSdkVersion project.ext.minSdkVersion
+        targetSdkVersion project.ext.targetSdkVersion
+    }
+    namespace 'tmg.flashback.reviews'
+}
+
+dependencies {
+
+    // Dependencies
+    implementation(projects.core.device)
+    implementation(projects.core.preferences)
+    implementation(projects.core.metrics.googleanalytics)
+    implementation(projects.core.metrics.crashlytics)
+
+    implementation(libs.bundles.play.reviews)
+}

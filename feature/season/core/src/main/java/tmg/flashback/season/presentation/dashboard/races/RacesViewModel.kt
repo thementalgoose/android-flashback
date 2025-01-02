@@ -21,6 +21,9 @@ import tmg.flashback.formula1.enums.getBySeason
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
+import tmg.flashback.reviews.usecases.AppSection
+import tmg.flashback.reviews.usecases.AppSection.HOME_CALENDAR
+import tmg.flashback.reviews.usecases.ReviewSectionSeenUseCase
 import tmg.flashback.season.contract.ResultsNavigationComponent
 import tmg.flashback.season.contract.repository.NotificationsRepository
 import tmg.flashback.season.presentation.dashboard.races.RacesModelBuilder.generateScheduleModel
@@ -57,6 +60,7 @@ class RacesViewModel @Inject constructor(
     private val navigator: Navigator,
     private val networkConnectivityManager: NetworkConnectivityManager,
     private val adsRepository: AdsRepository,
+    private val reviewSectionSeenUseCase: ReviewSectionSeenUseCase,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), RacesViewModelInputs, RacesViewModelOutputs {
 
@@ -80,6 +84,7 @@ class RacesViewModel @Inject constructor(
                 }
             }
         }
+        reviewSectionSeenUseCase.invoke(HOME_CALENDAR)
     }
 
     override fun refresh() {
