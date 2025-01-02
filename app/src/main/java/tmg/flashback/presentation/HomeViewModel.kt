@@ -4,6 +4,10 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import tmg.flashback.BuildConfig
 import tmg.flashback.configuration.repository.ConfigRepository
@@ -11,6 +15,7 @@ import tmg.flashback.configuration.usecases.ApplyConfigUseCase
 import tmg.flashback.crashlytics.manager.CrashlyticsManager
 import tmg.flashback.domain.repo.repository.CacheRepository
 import tmg.flashback.maintenance.contract.usecases.ShouldForceUpgradeUseCase
+import tmg.flashback.reviews.usecases.StartReviewUseCase
 import tmg.flashback.season.usecases.ScheduleNotificationsUseCase
 import tmg.flashback.usecases.SetupAppShortcutUseCase
 import javax.inject.Inject
@@ -19,6 +24,8 @@ import javax.inject.Inject
 
 interface HomeViewModelInputs {
     fun initialise()
+    fun loadAppReview()
+    fun cancelAppReview()
 }
 
 //endregion
@@ -42,8 +49,12 @@ class HomeViewModel @Inject constructor(
     private val shouldForceUpgradeUseCase: ShouldForceUpgradeUseCase,
     private val cacheRepository: CacheRepository,
     private val setupAppShortcutUseCase: SetupAppShortcutUseCase,
-    private val scheduleNotificationsUseCase: ScheduleNotificationsUseCase
+    private val scheduleNotificationsUseCase: ScheduleNotificationsUseCase,
+    private val startReviewUseCase: StartReviewUseCase,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), HomeViewModelInputs, HomeViewModelOutputs {
+
+    private var reviewJob: Job? = null
 
     override var requiresSync: Boolean = false
     override var forceUpgrade: Boolean = false
@@ -74,6 +85,18 @@ class HomeViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    override fun loadAppReview() {
+        reviewJob = viewModelScope.launch(ioDispatcher) {
+            delay(4000L)
+            startReviewUseCase.start()
+        }
+    }
+
+    override fun cancelAppReview() {
+        reviewJob?.cancel()
+        reviewJob = null
     }
 
     private fun performConfigUpdates() {

@@ -17,6 +17,9 @@ import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.model.SeasonDriverStandingSeason
 import tmg.flashback.formula1.model.SeasonDriverStandings
 import tmg.flashback.formula1.model.model
+import tmg.flashback.reviews.usecases.AppSection
+import tmg.flashback.reviews.usecases.AppSection.HOME_STANDINGS
+import tmg.flashback.reviews.usecases.ReviewSectionSeenUseCase
 import tmg.flashback.season.presentation.dashboard.shared.seasonpicker.CurrentSeasonHolder
 import tmg.testutils.BaseTest
 
@@ -25,6 +28,7 @@ internal class DriverStandingsViewModelTest: BaseTest() {
     private val mockSeasonRepository: SeasonRepository = mockk(relaxed = true)
     private val mockCurrentSeasonHolder: CurrentSeasonHolder = mockk(relaxed = true)
     private val mockFetchSeasonsUseCase: FetchSeasonUseCase = mockk(relaxed = true)
+    private val mockReviewSectionSeenUseCase: ReviewSectionSeenUseCase = mockk(relaxed = true)
     private val mockNetworkConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
 
     private lateinit var underTest: DriverStandingsViewModel
@@ -35,6 +39,7 @@ internal class DriverStandingsViewModelTest: BaseTest() {
             fetchSeasonUseCase = mockFetchSeasonsUseCase,
             currentSeasonHolder = mockCurrentSeasonHolder,
             networkConnectivityManager = mockNetworkConnectivityManager,
+            reviewSectionSeenUseCase = mockReviewSectionSeenUseCase,
             ioDispatcher = coroutineScope.testDispatcher
         )
     }
@@ -67,6 +72,12 @@ internal class DriverStandingsViewModelTest: BaseTest() {
             assertEquals(2021, item.season)
             assertEquals(listOf(standing2), item.standings)
         }
+    }
+
+    @Test
+    fun `initial load marks review section seen`() = runTest {
+        initUnderTest()
+        mockReviewSectionSeenUseCase.invoke(HOME_STANDINGS)
     }
 
     @Test

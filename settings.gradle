@@ -51,6 +51,7 @@ include ':core:metrics:googleanalytics'
 include ':core:metrics:crashlytics'
 include ':core:notifications'
 include ':core:preferences'
+include ':core:reviews'
 include ':core:webbrowser'
 
 include ':presentation:ui'

@@ -32,6 +32,7 @@ dependencies {
     implementation(projects.core.device)
     implementation(projects.core.notifications)
     implementation(projects.core.webbrowser)
+    implementation(projects.core.reviews)
     implementation(projects.core.preferences)
     implementation(projects.core.ads.ads)
 
