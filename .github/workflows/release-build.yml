@@ -1,6 +1,15 @@
 name: Release Build
 'on':
   workflow_dispatch:
+    inputs:
+      variant:
+        type: choice
+        description: Build variant
+        default: assembleLiveRelease
+        options:
+          - assembleLiveRelease
+          - assembleSandRelease
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -59,4 +68,18 @@ jobs:
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
           VERSION_CODE: ${{ steps.get_version_code.outputs.VERSION }}
           VERSION_NAME: ${{ steps.get_version_name.outputs.VERSION }}
-        run: ./gradlew assembleLiveRelease
+        run: ./gradlew ${{ inputs.variant }}
+
+      # Artifacting the APK
+      - name: Making build available
+        id: artifact-upload-step
+        uses: actions/upload-artifact@v4
+        with:
+          name: APK
+          path: app/build/outputs/apk/**/*.apk
+          retention-days: 7
+
+      # Printing out download a
+      - name: Artifact info
+        run: |
+          echo "::notice::URL: ${{ steps.artifact-upload-step.outputs.artifact-url }} (${{ steps.artifact-upload-step.outputs.artifact-id }})"
