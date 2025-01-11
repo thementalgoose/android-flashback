@@ -116,7 +116,14 @@ jobs:
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
           VERSION_CODE: ${{ steps.get_version_code.outputs.VERSION }}
           VERSION_NAME: ${{ steps.get_version_name.outputs.VERSION }}
-        run: ./gradlew publishLiveReleaseBundle uploadCrashlyticsMappingFileLiveRelease
+        run: ./gradlew assembleLiveRelease publishLiveReleaseBundle uploadCrashlyticsMappingFileLiveRelease
+
+      # Add artifact to tag
+      - name: Upload file to github tag
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: app/build/outputs/apk/live/release/app-live-release.apk
 
   update_versions:
     runs-on: ubuntu-latest
