@@ -1,13 +1,14 @@
 name: Release Build
 'on':
   workflow_dispatch:
-    variant:
-      type: choice
-      description: Build variant
-      default: assembleLiveRelease
-      options:
-        - assembleLiveRelease
-        - assembleSandRelease
+    inputs:
+      variant:
+        type: choice
+        description: Build variant
+        default: assembleLiveRelease
+        options:
+          - assembleLiveRelease
+          - assembleSandRelease
 
 jobs:
   build:
