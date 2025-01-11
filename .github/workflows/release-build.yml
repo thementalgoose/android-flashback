@@ -59,16 +59,16 @@ jobs:
           echo "NAME: ${{ steps.get_version_name.outputs.VERSION }}"
           echo "CODE: ${{ steps.get_version_code.outputs.VERSION }}"
 
-#      # Release
-#      - name: Run build
-#        env:
-#          KEYSTORE: ${{ github.workspace }}/flashback.keystore
-#          PRIVATE_KEY: ${{ github.workspace }}/deployment_private_key.json
-#          KEYSTORE_ALIAS: ${{ secrets.KEYSTORE_ALIAS }}
-#          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
-#          VERSION_CODE: ${{ steps.get_version_code.outputs.VERSION }}
-#          VERSION_NAME: ${{ steps.get_version_name.outputs.VERSION }}
-#        run: ./gradlew ${{ inputs.variant }}
+      # Release
+      - name: Run build
+        env:
+          KEYSTORE: ${{ github.workspace }}/flashback.keystore
+          PRIVATE_KEY: ${{ github.workspace }}/deployment_private_key.json
+          KEYSTORE_ALIAS: ${{ secrets.KEYSTORE_ALIAS }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          VERSION_CODE: ${{ steps.get_version_code.outputs.VERSION }}
+          VERSION_NAME: ${{ steps.get_version_name.outputs.VERSION }}
+        run: ./gradlew ${{ inputs.variant }}
 
       # Artifacting the APK
       - name: Making build available
@@ -76,12 +76,10 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: APK
-          path: app/src/live/**/*.xml
-#          path: app/build/outputs/apk/**/*.apk
-          retention-days: 1
+          path: app/build/outputs/apk/**/*.apk
+          retention-days: 7
 
       # Printing out download a
-      - name: Output artifact ID and URL
+      - name: Artifact info
         run: |
-          echo "::notice::Artifact ID: ${{ steps.artifact-upload-step.outputs.artifact-id }}"
-          echo "::notice::Artifact URL: ${{ steps.artifact-upload-step.outputs.artifact-url }}"
+          echo "::notice::URL: ${{ steps.artifact-upload-step.outputs.artifact-url }} (${{ steps.artifact-upload-step.outputs.artifact-id }})"
