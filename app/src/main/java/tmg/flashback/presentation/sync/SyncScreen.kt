@@ -8,18 +8,21 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.calculateEndPadding
+import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.LinearProgressIndicator
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -51,12 +54,16 @@ fun SyncScreen(
 
     Scaffold(
         content = {
+            val layoutDirection = LocalLayoutDirection.current
             Column(modifier = Modifier
                 .fillMaxSize()
-                .padding(it)
                 .background(AppTheme.colors.backgroundSplash)
+                .padding(
+                    start = it.calculateStartPadding(layoutDirection),
+                    end = it.calculateEndPadding(layoutDirection)
+                )
             ) {
-                Box(Modifier.height(headerHeight))
+                Box(Modifier.height(headerHeight + it.calculateTopPadding()))
 
                 Column(modifier = Modifier
                     .fillMaxHeight()
@@ -69,8 +76,10 @@ fun SyncScreen(
                     )
                     .background(AppTheme.colors.backgroundPrimary)
                     .padding(
-                        vertical = AppTheme.dimens.medium,
-                        horizontal = AppTheme.dimens.medium
+                        top = AppTheme.dimens.medium,
+                        bottom = AppTheme.dimens.medium + it.calculateBottomPadding(),
+                        start = AppTheme.dimens.medium,
+                        end = AppTheme.dimens.medium
                     )
                 ) {
                     TextHeadline1(text = stringResource(id = R.string.app_name))
