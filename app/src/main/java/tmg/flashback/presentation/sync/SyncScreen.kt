@@ -5,8 +5,11 @@ import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
@@ -18,13 +21,18 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.windowsizeclass.WindowHeightSizeClass
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import tmg.flashback.R
 import tmg.flashback.strings.R.string
@@ -38,10 +46,10 @@ import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextHeadline1
 
 private val progressHeight: Dp = 8.dp
-private val headerHeight: Dp = 150.dp
 
 @Composable
 fun SyncScreen(
+    windowSizeClass: WindowSizeClass,
     drivers: SyncState,
     circuits: SyncState,
     config: SyncState,
@@ -52,10 +60,17 @@ fun SyncScreen(
 ) {
     ScreenView(screenName = "Sync")
 
+    val headerHeight = when (windowSizeClass.heightSizeClass) {
+        WindowHeightSizeClass.Compact -> 30.dp
+        WindowHeightSizeClass.Medium -> 60.dp
+        WindowHeightSizeClass.Expanded -> 120.dp
+        else -> 30.dp
+    }
+
     Scaffold(
         content = {
             val layoutDirection = LocalLayoutDirection.current
-            Column(modifier = Modifier
+            Box(modifier = Modifier
                 .fillMaxSize()
                 .background(AppTheme.colors.backgroundSplash)
                 .padding(
@@ -63,11 +78,9 @@ fun SyncScreen(
                     end = it.calculateEndPadding(layoutDirection)
                 )
             ) {
-                Box(Modifier.height(headerHeight + it.calculateTopPadding()))
-
                 Column(modifier = Modifier
-                    .fillMaxHeight()
-                    .fillMaxWidth()
+                    .fillMaxSize()
+                    .padding(top = headerHeight + it.calculateTopPadding())
                     .clip(
                         RoundedCornerShape(
                             topStart = AppTheme.dimens.radiusLarge,
@@ -82,44 +95,140 @@ fun SyncScreen(
                         end = AppTheme.dimens.medium
                     )
                 ) {
-                    TextHeadline1(text = stringResource(id = R.string.app_name))
-                    TextBody2(
-                        modifier = Modifier.padding(top = AppTheme.dimens.nsmall),
-                        text = stringResource(id = string.splash_sync_info)
-                    )
-                    Box(Modifier.weight(1f))
-                    Breakdown(
-                        label = string.splash_sync_drivers,
-                        syncState = drivers
-                    )
-                    Breakdown(
-                        label = string.splash_sync_constructors,
-                        syncState = constructors
-                    )
-                    Breakdown(
-                        label = string.splash_sync_circuits,
-                        syncState = circuits
-                    )
-                    Breakdown(
-                        label = string.splash_sync_races,
-                        syncState = races
-                    )
-                    Breakdown(
-                        label = string.splash_sync_config,
-                        syncState = config
-                    )
-                    Box(Modifier.height(60.dp)) {
-                        if (showTryAgain) {
-                            ButtonSecondary(
-                                text = stringResource(id = string.splash_sync_try_again),
-                                onClick = tryAgainClicked
-                            )
-                        }
+                    if (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact) {
+                        SyncScreenCompact(
+                            drivers = drivers,
+                            circuits = circuits,
+                            config = config,
+                            constructors = constructors,
+                            races = races,
+                            showTryAgain = showTryAgain,
+                            tryAgainClicked = tryAgainClicked
+                        )
+                    } else {
+                        SyncScreenExpanded(
+                            drivers = drivers,
+                            circuits = circuits,
+                            config = config,
+                            constructors = constructors,
+                            races = races,
+                            showTryAgain = showTryAgain,
+                            tryAgainClicked = tryAgainClicked
+                        )
                     }
                 }
             }
         }
     )
+}
+
+@Composable
+private fun ColumnScope.SyncScreenCompact(
+    drivers: SyncState,
+    circuits: SyncState,
+    config: SyncState,
+    constructors: SyncState,
+    races: SyncState,
+    showTryAgain: Boolean,
+    tryAgainClicked: () -> Unit
+) {
+    TextHeadline1(text = stringResource(id = R.string.app_name))
+    TextBody2(
+        modifier = Modifier.padding(top = AppTheme.dimens.nsmall),
+        text = stringResource(id = string.splash_sync_info)
+    )
+    if (showTryAgain) {
+        TextBody2(
+            modifier = Modifier.padding(top = AppTheme.dimens.nsmall),
+            text = stringResource(id = string.splash_sync_required_failed)
+        )
+    }
+    Box(Modifier.weight(1f))
+    Breakdown(
+        label = string.splash_sync_drivers,
+        syncState = drivers
+    )
+    Breakdown(
+        label = string.splash_sync_constructors,
+        syncState = constructors
+    )
+    Breakdown(
+        label = string.splash_sync_circuits,
+        syncState = circuits
+    )
+    Breakdown(
+        label = string.splash_sync_races,
+        syncState = races
+    )
+    Breakdown(
+        label = string.splash_sync_config,
+        syncState = config
+    )
+    Box(Modifier.height(70.dp)) {
+        if (showTryAgain) {
+            ButtonSecondary(
+                modifier = Modifier.align(Alignment.Center).fillMaxWidth(),
+                text = stringResource(id = string.splash_sync_try_again),
+                onClick = tryAgainClicked
+            )
+        }
+    }
+}
+
+@Composable
+private fun ColumnScope.SyncScreenExpanded(
+    drivers: SyncState,
+    circuits: SyncState,
+    config: SyncState,
+    constructors: SyncState,
+    races: SyncState,
+    showTryAgain: Boolean,
+    tryAgainClicked: () -> Unit
+) {
+    Row(
+        modifier = Modifier.fillMaxSize(),
+        horizontalArrangement = Arrangement.spacedBy(AppTheme.dimens.medium)
+    ) {
+        Column(Modifier.weight(1f).fillMaxHeight()) {
+            TextHeadline1(text = stringResource(id = R.string.app_name))
+            TextBody2(
+                modifier = Modifier.padding(top = AppTheme.dimens.nsmall),
+                text = stringResource(id = string.splash_sync_info)
+            )
+            if (showTryAgain) {
+                TextBody2(
+                    modifier = Modifier.padding(top = AppTheme.dimens.nsmall),
+                    text = stringResource(id = string.splash_sync_required_failed)
+                )
+                ButtonSecondary(
+                    text = stringResource(id = string.splash_sync_try_again),
+                    onClick = tryAgainClicked
+                )
+            }
+        }
+        Column(Modifier.weight(1f).fillMaxHeight()) {
+            Breakdown(
+                label = string.splash_sync_drivers,
+                syncState = drivers
+            )
+            Breakdown(
+                label = string.splash_sync_constructors,
+                syncState = constructors
+            )
+            Breakdown(
+                label = string.splash_sync_circuits,
+                syncState = circuits
+            )
+            Breakdown(
+                label = string.splash_sync_races,
+                syncState = races
+            )
+            Breakdown(
+                label = string.splash_sync_config,
+                syncState = config
+            )
+        }
+    }
 }
 
 @Composable
@@ -187,7 +296,8 @@ private fun PreviewLoading() {
             constructors = SyncState.DONE,
             races = SyncState.LOADING,
             showTryAgain = false,
-            tryAgainClicked = { }
+            tryAgainClicked = { },
+            windowSizeClass = WindowSizeClass.calculateFromSize(DpSize.Unspecified)
         )
     }
 }
@@ -203,7 +313,8 @@ private fun PreviewFailed() {
             constructors = SyncState.LOADING,
             races = SyncState.LOADING,
             showTryAgain = true,
-            tryAgainClicked = { }
+            tryAgainClicked = { },
+            windowSizeClass = WindowSizeClass.calculateFromSize(DpSize.Unspecified)
         )
     }
 }
