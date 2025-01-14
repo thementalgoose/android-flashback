@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.collectAsState
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
@@ -44,6 +45,7 @@ class SyncActivity: BaseActivity() {
                 val showTryAgain = viewModel.outputs.showRetry.collectAsState(false)
 
                 SyncScreen(
+                    windowSizeClass = calculateWindowSizeClass(activity = this),
                     drivers = drivers.value,
                     circuits = circuits.value,
                     config = config.value,
