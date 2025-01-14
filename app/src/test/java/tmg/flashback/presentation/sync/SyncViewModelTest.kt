@@ -77,6 +77,8 @@ internal class SyncViewModelTest: BaseTest() {
         initSUT()
         sut.inputs.startLoading()
 
+        testDispatcher.scheduler.advanceTimeBy(EXPECTED_SYNC_DELAY_MS)
+
         coVerify {
             mockResetConfigUseCase.ensureReset()
             mockFetchConfigUseCase.fetchAndApply()
@@ -109,6 +111,8 @@ internal class SyncViewModelTest: BaseTest() {
         initSUT()
         sut.inputs.startLoading()
 
+        testDispatcher.scheduler.advanceTimeBy(EXPECTED_SYNC_DELAY_MS)
+
         coVerify {
             mockResetConfigUseCase.ensureReset()
             mockFetchConfigUseCase.fetchAndApply()
@@ -139,6 +143,8 @@ internal class SyncViewModelTest: BaseTest() {
 
         initSUT()
         sut.inputs.startLoading()
+
+        testDispatcher.scheduler.advanceTimeBy(EXPECTED_SYNC_DELAY_MS)
 
         coVerify(exactly = 0) {
             mockResetConfigUseCase.ensureReset()
@@ -178,6 +184,8 @@ internal class SyncViewModelTest: BaseTest() {
         initSUT()
         sut.inputs.startLoading()
 
+        testDispatcher.scheduler.advanceTimeBy(EXPECTED_SYNC_DELAY_MS)
+
         coVerify {
             mockResetConfigUseCase.ensureReset()
             mockFetchConfigUseCase.fetchAndApply()
@@ -211,6 +219,8 @@ internal class SyncViewModelTest: BaseTest() {
         initSUT()
         sut.inputs.startLoading()
 
+        testDispatcher.scheduler.advanceTimeBy(EXPECTED_SYNC_DELAY_MS)
+
         coVerify(exactly = 0) {
             mockResetConfigUseCase.ensureReset()
             mockFetchConfigUseCase.fetchAndApply()
@@ -240,6 +250,8 @@ internal class SyncViewModelTest: BaseTest() {
 
         initSUT()
         sut.inputs.startLoading()
+
+        testDispatcher.scheduler.advanceTimeBy(EXPECTED_SYNC_DELAY_MS)
 
         coVerify(exactly = 0) {
             mockResetConfigUseCase.ensureReset()
@@ -271,6 +283,8 @@ internal class SyncViewModelTest: BaseTest() {
         initSUT()
         sut.inputs.startLoading()
 
+        testDispatcher.scheduler.advanceTimeBy(EXPECTED_SYNC_DELAY_MS)
+
         coVerify(exactly = 0) {
             mockResetConfigUseCase.ensureReset()
             mockFetchConfigUseCase.fetchAndApply()
@@ -301,6 +315,8 @@ internal class SyncViewModelTest: BaseTest() {
         initSUT()
         sut.inputs.startLoading()
 
+        testDispatcher.scheduler.advanceTimeBy(EXPECTED_SYNC_DELAY_MS)
+
         coVerify(exactly = 0) {
             mockResetConfigUseCase.ensureReset()
             mockFetchConfigUseCase.fetchAndApply()
@@ -321,5 +337,9 @@ internal class SyncViewModelTest: BaseTest() {
         verify(exactly = 0) {
             mockCacheRepository.initialSync = true
         }
+    }
+
+    companion object {
+        private const val EXPECTED_SYNC_DELAY_MS = 301L
     }
 }

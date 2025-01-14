@@ -162,6 +162,7 @@ class SyncViewModel @Inject constructor(
         if (driversState.value != DONE) {
             driversState.value = LOADING
             viewModelScope.launch(ioDispatcher) {
+                delay(DELAY_SYNC_MS)
                 when (driverRepository.fetchDrivers()) {
                     true -> driversState.value = DONE
                     false -> driversState.value = FAILED
@@ -174,6 +175,7 @@ class SyncViewModel @Inject constructor(
         if (constructorsState.value != DONE) {
             constructorsState.value = LOADING
             viewModelScope.launch(ioDispatcher) {
+                delay(DELAY_SYNC_MS)
                 when (constructorRepository.fetchConstructors()) {
                     true -> constructorsState.value = DONE
                     false -> constructorsState.value = FAILED
@@ -186,6 +188,7 @@ class SyncViewModel @Inject constructor(
         if (circuitsState.value != DONE) {
             circuitsState.value = LOADING
             viewModelScope.launch(ioDispatcher) {
+                delay(DELAY_SYNC_MS)
                 when (circuitRepository.fetchCircuits()) {
                     true -> circuitsState.value = DONE
                     false -> circuitsState.value = FAILED
@@ -198,6 +201,7 @@ class SyncViewModel @Inject constructor(
         if (racesState.value != DONE) {
             racesState.value = LOADING
             viewModelScope.launch(ioDispatcher) {
+                delay(DELAY_SYNC_MS)
                 when (overviewRepository.fetchOverview()) {
                     true -> racesState.value = DONE
                     false -> racesState.value = FAILED
@@ -215,5 +219,10 @@ class SyncViewModel @Inject constructor(
         setupAppShortcutUseCase.setup()
         // Schedule notifications
         scheduleNotificationsUseCase.schedule()
+    }
+
+    companion object {
+
+        private val DELAY_SYNC_MS = 300L
     }
 }
