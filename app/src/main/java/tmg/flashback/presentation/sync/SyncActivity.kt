@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.collectAsState
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
@@ -36,24 +35,23 @@ class SyncActivity: BaseActivity() {
 
         setContent {
             AppTheme {
-                Scaffold(content = {
-                    val drivers = viewModel.outputs.driversState.collectAsState(initial = LOADING)
-                    val circuits = viewModel.outputs.circuitsState.collectAsState(initial = LOADING)
-                    val constructors = viewModel.outputs.constructorsState.collectAsState(initial = LOADING)
-                    val races = viewModel.outputs.racesState.collectAsState(initial = LOADING)
-                    val config = viewModel.outputs.configState.collectAsState(initial = LOADING)
-                    val showTryAgain = viewModel.outputs.showRetry.collectAsState(false)
+                val drivers = viewModel.outputs.driversState.collectAsState(initial = LOADING)
+                val circuits = viewModel.outputs.circuitsState.collectAsState(initial = LOADING)
+                val constructors =
+                    viewModel.outputs.constructorsState.collectAsState(initial = LOADING)
+                val races = viewModel.outputs.racesState.collectAsState(initial = LOADING)
+                val config = viewModel.outputs.configState.collectAsState(initial = LOADING)
+                val showTryAgain = viewModel.outputs.showRetry.collectAsState(false)
 
-                    SyncScreen(
-                        drivers = drivers.value,
-                        circuits = circuits.value,
-                        config = config.value,
-                        constructors = constructors.value,
-                        races = races.value,
-                        showTryAgain = showTryAgain.value,
-                        tryAgainClicked = viewModel.inputs::startLoading
-                    )
-                })
+                SyncScreen(
+                    drivers = drivers.value,
+                    circuits = circuits.value,
+                    config = config.value,
+                    constructors = constructors.value,
+                    races = races.value,
+                    showTryAgain = showTryAgain.value,
+                    tryAgainClicked = viewModel.inputs::startLoading
+                )
             }
         }
 
