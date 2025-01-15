@@ -93,7 +93,7 @@ firebase_installations = { module = "com.google.firebase:firebase-installations"
 firebase_messaging = { module = "com.google.firebase:firebase-messaging" }
 firebase_perf = { module = "com.google.firebase:firebase-perf" }
 
-flagkit = "com.github.murgupluoglu:flagkit-android:1.0.2"
+flagkit = "com.github.murgupluoglu:flagkit-android:1.0.5"
 
 hilt_android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 hilt_compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
