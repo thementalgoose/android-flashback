@@ -54,7 +54,7 @@ jobs:
 
       # Publish test report
       - name: Publish Test Report
-        uses: mikepenz/action-junit-report@v4
+        uses: mikepenz/action-junit-report@v5
         if: always()
         with:
           report_paths: '**/build/test-results/**/TEST-*.xml'
