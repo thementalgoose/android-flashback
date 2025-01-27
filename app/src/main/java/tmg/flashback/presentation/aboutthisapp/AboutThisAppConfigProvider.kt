@@ -8,7 +8,7 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.ui.graphics.toArgb
 import androidx.core.graphics.toColorInt
 import dagger.hilt.android.qualifiers.ApplicationContext
-import tmg.aboutthisapp.ConfigurationColours
+import tmg.aboutthisapp.configuration.Colours
 import tmg.aboutthisapp.configuration.Configuration
 import tmg.aboutthisapp.configuration.Dependency
 import tmg.aboutthisapp.configuration.DependencyIcon
@@ -61,7 +61,7 @@ class AboutThisAppConfigProvider @Inject constructor(
 
     //region Colours
 
-    private fun dynamicColors(isLight: Boolean): ConfigurationColours? {
+    private fun dynamicColors(isLight: Boolean): Colours? {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
             return null
         }
@@ -69,7 +69,7 @@ class AboutThisAppConfigProvider @Inject constructor(
             true -> lightColours.dynamic(dynamicLightColorScheme(context), isLightMode = true)
             false -> darkColours.dynamic(dynamicDarkColorScheme(context), isLightMode = false)
         }
-        return ConfigurationColours(
+        return Colours(
             colorPrimary = colours.primary.toArgb(),
             background = colours.backgroundPrimary.toArgb(),
             surface = colours.backgroundSecondary.toArgb(),
@@ -80,7 +80,7 @@ class AboutThisAppConfigProvider @Inject constructor(
         )
     }
 
-    private val lightColors = ConfigurationColours(
+    private val lightColors = Colours(
         colorPrimary = lightColours.primary.toArgb(),
         background = lightColours.backgroundPrimary.toArgb(),
         surface = lightColours.backgroundSecondary.toArgb(),
@@ -89,7 +89,7 @@ class AboutThisAppConfigProvider @Inject constructor(
         onSurface = lightColours.contentSecondary.toArgb(),
         onPrimary = lightColours.contentTertiary.toArgb(),
     )
-    private val darkColors = ConfigurationColours(
+    private val darkColors = Colours(
         colorPrimary = darkColours.primary.toArgb(),
         background = darkColours.backgroundPrimary.toArgb(),
         surface = darkColours.backgroundSecondary.toArgb(),
