@@ -9,7 +9,7 @@ jobs:
     docker:
       - image: cimg/android:2025.01
     environment:
-      JVM_OPTS: -Xmx3072m
+      JVM_OPTS: -Xmx3584m
       GRADLE_OPTS: -Dorg.gradle.jvmargs="-XX:MaxMetaspaceSize=2g"
     steps:
       - run: 
