@@ -34,7 +34,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import tmg.flashback.R
 import tmg.flashback.strings.R.string
-import tmg.flashback.debug.model.DebugMenuItem
+import tmg.flashback.sandbox.model.DebugMenuItem
 import tmg.flashback.eastereggs.model.MenuIcons
 import tmg.flashback.eastereggs.ui.snow
 import tmg.flashback.eastereggs.ui.summer

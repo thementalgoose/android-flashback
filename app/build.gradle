@@ -145,9 +145,9 @@ dependencies {
     implementation(projects.feature.weekend.core)
     implementation(projects.feature.reactiongame.contract)
     implementation(projects.feature.reactiongame.core)
-    implementation(projects.feature.debug.contract)
-    debugImplementation(projects.feature.debug.core)
-    releaseImplementation(projects.feature.debug.noop)
+    implementation(projects.feature.sandbox.contract)
+    sandImplementation(projects.feature.sandbox.core)
+    liveImplementation(projects.feature.sandbox.noop)
 
     // Data
     implementation(projects.domain.repo)
@@ -201,7 +201,7 @@ dependencies {
 
     // Test Utils
     testImplementation(projects.test.models)
-    testImplementation(projects.feature.debug.core)
+    testImplementation(projects.feature.sandbox.core)
 
     // Android Test
     androidTestImplementation libs.bundles.androidxtest

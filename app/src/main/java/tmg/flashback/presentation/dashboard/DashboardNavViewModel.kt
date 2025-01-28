@@ -19,8 +19,8 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import tmg.flashback.BuildConfig
 import tmg.flashback.crashlytics.manager.CrashlyticsManager
-import tmg.flashback.debug.DebugNavigationComponent
-import tmg.flashback.debug.model.DebugMenuItem
+import tmg.flashback.sandbox.DebugNavigationComponent
+import tmg.flashback.sandbox.model.DebugMenuItem
 import tmg.flashback.navigation.ApplicationNavigationComponent
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen

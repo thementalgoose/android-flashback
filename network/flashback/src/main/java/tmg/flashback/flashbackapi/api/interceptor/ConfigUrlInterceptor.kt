@@ -5,7 +5,7 @@ import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
-import tmg.flashback.debug.manager.BaseUrlLocalOverrideManager
+import tmg.flashback.sandbox.manager.BaseUrlLocalOverrideManager
 import tmg.flashback.flashbackapi.api.BuildConfig
 import tmg.flashback.flashbackapi.api.NetworkConfigManager
 import javax.inject.Inject
