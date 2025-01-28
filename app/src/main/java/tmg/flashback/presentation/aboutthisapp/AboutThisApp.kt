@@ -15,7 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.aboutthisapp.AboutThisAppTheme
-import tmg.aboutthisapp.Colours
+import tmg.aboutthisapp.configuration.AboutThisAppColors
 import tmg.aboutthisapp.configuration.Dependency
 import tmg.aboutthisapp.configuration.Link
 import tmg.aboutthisapp.presentation.AboutThisAppScreen
@@ -33,8 +33,8 @@ fun AboutThisApp(
     val config = viewModel.config.collectAsState()
 
     AboutThisAppTheme(
-        lightColors = Colours(config.value.lightColors!!),
-        darkColors = Colours(config.value.darkColors!!),
+        lightColors = AboutThisAppColors(config.value.lightColors!!),
+        darkColors = AboutThisAppColors(config.value.darkColors!!),
     ) {
         AboutThisApp(
             windowSizeClass = windowSizeClass,
