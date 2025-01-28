@@ -38,7 +38,7 @@ import javax.inject.Inject
 
 interface DashboardNavViewModelInputs {
     fun clickItem(navigationItem: MenuItem)
-    fun clickDebug(sandboxMenuItem: SandboxMenuItem)
+    fun clickSandboxOption(sandboxMenuItem: SandboxMenuItem)
     fun navigationInRoot(destination: String, inRoot: Boolean)
 }
 
@@ -169,7 +169,7 @@ class DashboardNavViewModel @Inject constructor(
         }
     }
 
-    override fun clickDebug(sandboxMenuItem: SandboxMenuItem) {
+    override fun clickSandboxOption(sandboxMenuItem: SandboxMenuItem) {
         sandboxNavigationComponent.navigateTo(sandboxMenuItem.id)
     }
 
