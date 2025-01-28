@@ -11,7 +11,7 @@ import tmg.flashback.sandbox.noop.manager.NoopBaseUrlLocalOverrideManager
 
 @Module
 @InstallIn(SingletonComponent::class)
-internal abstract class DebugModule {
+internal abstract class SandboxModule {
 
     @Binds
     abstract fun bindsBaseUrlLocalOverrideManager(impl: NoopBaseUrlLocalOverrideManager): BaseUrlLocalOverrideManager
