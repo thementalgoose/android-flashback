@@ -244,7 +244,7 @@ internal class DashboardNavViewModelTest: BaseTest() {
         val item = SandboxMenuItem(0, 0, "id")
 
         initUnderTest()
-        underTest.inputs.clickDebug(item)
+        underTest.inputs.clickSandboxOption(item)
         verify {
             mockSandboxNavigationComponent.navigateTo("id")
         }

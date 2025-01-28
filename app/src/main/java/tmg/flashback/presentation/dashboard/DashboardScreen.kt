@@ -92,7 +92,7 @@ fun DashboardScreen(
         appFeatureItemsList = appFeatureItemsList.value,
         seasonScreenItemsList = seasonScreenItemsList.value,
         sandboxMenuItems = debugMenuItems.value,
-        debugMenuItemClicked = navViewModel.inputs::clickDebug,
+        debugMenuItemClicked = navViewModel.inputs::clickSandboxOption,
         menuItemClicked = navViewModel.inputs::clickItem,
         isRoot = navViewModel.inputs::navigationInRoot,
         showBottomBar = showBottomBar.value,
