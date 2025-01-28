@@ -40,10 +40,6 @@
             <option value="$PROJECT_DIR$/feature/constructors" />
             <option value="$PROJECT_DIR$/feature/constructors/contract" />
             <option value="$PROJECT_DIR$/feature/constructors/core" />
-            <option value="$PROJECT_DIR$/feature/debug" />
-            <option value="$PROJECT_DIR$/feature/debug/contract" />
-            <option value="$PROJECT_DIR$/feature/debug/core" />
-            <option value="$PROJECT_DIR$/feature/debug/noop" />
             <option value="$PROJECT_DIR$/feature/drivers" />
             <option value="$PROJECT_DIR$/feature/drivers/contract" />
             <option value="$PROJECT_DIR$/feature/drivers/core" />
@@ -59,6 +55,10 @@
             <option value="$PROJECT_DIR$/feature/rss" />
             <option value="$PROJECT_DIR$/feature/rss/contract" />
             <option value="$PROJECT_DIR$/feature/rss/core" />
+            <option value="$PROJECT_DIR$/feature/sandbox" />
+            <option value="$PROJECT_DIR$/feature/sandbox/contract" />
+            <option value="$PROJECT_DIR$/feature/sandbox/core" />
+            <option value="$PROJECT_DIR$/feature/sandbox/noop" />
             <option value="$PROJECT_DIR$/feature/search" />
             <option value="$PROJECT_DIR$/feature/search/contract" />
             <option value="$PROJECT_DIR$/feature/search/core" />

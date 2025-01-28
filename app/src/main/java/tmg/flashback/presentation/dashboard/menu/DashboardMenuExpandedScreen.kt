@@ -34,7 +34,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import tmg.flashback.R
 import tmg.flashback.strings.R.string
-import tmg.flashback.debug.model.DebugMenuItem
+import tmg.flashback.sandbox.model.SandboxMenuItem
 import tmg.flashback.eastereggs.model.MenuIcons
 import tmg.flashback.eastereggs.ui.snow
 import tmg.flashback.eastereggs.ui.summer
@@ -66,9 +66,9 @@ fun DashboardMenuExpandedScreen(
     currentlySelectedItem: MenuItem,
     appFeatureItemsList: List<MenuItem>,
     seasonScreenItemsList: List<MenuItem>,
-    debugMenuItems: List<DebugMenuItem>,
+    sandboxMenuItems: List<SandboxMenuItem>,
     menuItemClicked: (MenuItem) -> Unit,
-    debugMenuItemClicked: (DebugMenuItem) -> Unit,
+    debugMenuItemClicked: (SandboxMenuItem) -> Unit,
     darkMode: Boolean,
     darkModeClicked: (Boolean) -> Unit,
     featurePromptList: List<FeaturePrompt>,
@@ -152,8 +152,8 @@ fun DashboardMenuExpandedScreen(
                     }
                     item { Div() }
                 }
-                if (debugMenuItems.isNotEmpty()) {
-                    items(debugMenuItems, key = { "menudebug-$it" }) { menuItem ->
+                if (sandboxMenuItems.isNotEmpty()) {
+                    items(sandboxMenuItems, key = { "menudebug-$it" }) { menuItem ->
                         NavigationItem(
                             item = NavigationItem(
                                 id = menuItem.id,
@@ -443,7 +443,7 @@ private fun PreviewCompactTimeline() {
             currentlySelectedItem = MenuItem.Calendar,
             appFeatureItemsList = listOf(MenuItem.Settings, MenuItem.RSS),
             seasonScreenItemsList = listOf(MenuItem.Calendar, MenuItem.Drivers),
-            debugMenuItems = emptyList(),
+            sandboxMenuItems = emptyList(),
             debugMenuItemClicked = { },
             menuItemClicked = { },
             darkMode = false,
