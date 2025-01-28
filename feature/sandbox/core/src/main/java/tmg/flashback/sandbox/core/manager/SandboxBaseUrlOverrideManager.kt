@@ -6,7 +6,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-internal class DebugBaseUrlOverrideManager @Inject constructor(
+internal class SandboxBaseUrlOverrideManager @Inject constructor(
     private val preferenceManager: PreferenceManager
 ) : BaseUrlLocalOverrideManager {
 
