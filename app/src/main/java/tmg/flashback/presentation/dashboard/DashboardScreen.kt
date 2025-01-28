@@ -27,7 +27,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.window.layout.WindowLayoutInfo
 import kotlinx.coroutines.launch
 import tmg.flashback.ads.ads.components.AdvertProvider
-import tmg.flashback.sandbox.model.DebugMenuItem
+import tmg.flashback.sandbox.model.SandboxMenuItem
 import tmg.flashback.eastereggs.model.MenuIcons
 import tmg.flashback.googleanalytics.presentation.ScreenView
 import tmg.flashback.navigation.Navigator
@@ -67,7 +67,7 @@ fun DashboardScreen(
     val currentlySelectedItem = navViewModel.outputs.currentlySelectedItem.collectAsState(MenuItem.Calendar)
     val seasonScreenItemsList = navViewModel.outputs.seasonScreenItemsList.collectAsState(emptyList())
     val appFeatureItemsList = navViewModel.outputs.appFeatureItemsList.collectAsState(emptyList())
-    val debugMenuItems = navViewModel.outputs.debugMenuItems.collectAsState(emptyList())
+    val debugMenuItems = navViewModel.outputs.sandboxMenuItems.collectAsState(emptyList())
 
     val showBottomBar = navViewModel.outputs.showBottomBar.collectAsState(true)
     val showMenu = navViewModel.outputs.showMenu.collectAsState(false)
@@ -91,7 +91,7 @@ fun DashboardScreen(
         currentlySelectedItem = currentlySelectedItem.value,
         appFeatureItemsList = appFeatureItemsList.value,
         seasonScreenItemsList = seasonScreenItemsList.value,
-        debugMenuItems = debugMenuItems.value,
+        sandboxMenuItems = debugMenuItems.value,
         debugMenuItemClicked = navViewModel.inputs::clickDebug,
         menuItemClicked = navViewModel.inputs::clickItem,
         isRoot = navViewModel.inputs::navigationInRoot,
@@ -121,8 +121,8 @@ fun DashboardScreen(
     currentlySelectedItem: MenuItem,
     appFeatureItemsList: List<MenuItem>,
     seasonScreenItemsList: List<MenuItem>,
-    debugMenuItems: List<DebugMenuItem>,
-    debugMenuItemClicked: (DebugMenuItem) -> Unit,
+    sandboxMenuItems: List<SandboxMenuItem>,
+    debugMenuItemClicked: (SandboxMenuItem) -> Unit,
     menuItemClicked: (MenuItem) -> Unit,
     isRoot: (String, Boolean) -> Unit,
     showBottomBar: Boolean,
@@ -181,7 +181,7 @@ fun DashboardScreen(
                         },
                         currentlySelectedItem = currentlySelectedItem,
                         appFeatureItemsList = appFeatureItemsList,
-                        debugMenuItems = debugMenuItems,
+                        sandboxMenuItems = sandboxMenuItems,
                         debugMenuItemClicked = debugMenuItemClicked,
                         menuItemClicked = menuItemClicked,
                         darkMode = darkMode,
@@ -203,7 +203,7 @@ fun DashboardScreen(
                                 currentlySelectedItem = currentlySelectedItem,
                                 appFeatureItemsList = appFeatureItemsList,
                                 seasonScreenItemsList = seasonScreenItemsList,
-                                debugMenuItems = debugMenuItems,
+                                sandboxMenuItems = sandboxMenuItems,
                                 debugMenuItemClicked = debugMenuItemClicked,
                                 menuItemClicked = menuItemClicked,
                                 darkMode = darkMode,
@@ -225,7 +225,7 @@ fun DashboardScreen(
                                 currentlySelectedItem = currentlySelectedItem,
                                 appFeatureItemsList = appFeatureItemsList,
                                 seasonScreenItemsList = seasonScreenItemsList,
-                                debugMenuItems = debugMenuItems,
+                                sandboxMenuItems = sandboxMenuItems,
                                 debugMenuItemClicked = debugMenuItemClicked,
                                 menuItemClicked = menuItemClicked,
                                 darkMode = darkMode,

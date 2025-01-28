@@ -28,7 +28,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import tmg.flashback.R
 import tmg.flashback.strings.R.string
-import tmg.flashback.sandbox.model.DebugMenuItem
+import tmg.flashback.sandbox.model.SandboxMenuItem
 import tmg.flashback.eastereggs.model.MenuIcons
 import tmg.flashback.eastereggs.ui.snow
 import tmg.flashback.eastereggs.ui.summer
@@ -48,9 +48,9 @@ fun DashboardMenuScreen(
     closeMenu: () -> Unit,
     currentlySelectedItem: MenuItem,
     appFeatureItemsList: List<MenuItem>,
-    debugMenuItems: List<DebugMenuItem>,
+    sandboxMenuItems: List<SandboxMenuItem>,
     menuItemClicked: (MenuItem) -> Unit,
-    debugMenuItemClicked: (DebugMenuItem) -> Unit,
+    debugMenuItemClicked: (SandboxMenuItem) -> Unit,
     darkMode: Boolean,
     darkModeClicked: (Boolean) -> Unit,
     featurePromptList: List<FeaturePrompt>,
@@ -133,10 +133,10 @@ fun DashboardMenuScreen(
                     Divider()
                 }
             }
-            if (debugMenuItems.isNotEmpty()) {
+            if (sandboxMenuItems.isNotEmpty()) {
                 item(key = "debug") {
                     SubHeader(text = "Debug")
-                    debugMenuItems.forEach { debugItem ->
+                    sandboxMenuItems.forEach { debugItem ->
                         Button(
                             label = debugItem.label,
                             icon = debugItem.icon,
@@ -317,7 +317,7 @@ private fun Preview() {
             closeMenu = { },
             currentlySelectedItem = MenuItem.Calendar,
             appFeatureItemsList = listOf(MenuItem.Search, MenuItem.Settings, MenuItem.Contact),
-            debugMenuItems = emptyList(),
+            sandboxMenuItems = emptyList(),
             menuItemClicked = { },
             debugMenuItemClicked = { },
             darkMode = false,

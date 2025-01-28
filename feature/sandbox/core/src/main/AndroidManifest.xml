@@ -2,7 +2,7 @@
 
     <application>
 
-        <activity android:name=".DebugActivity"
+        <activity android:name=".SandboxActivity"
             android:exported="false" />
 
         <activity android:name=".styleguide.StyleGuideComposeActivity"

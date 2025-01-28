@@ -55,7 +55,7 @@ import javax.inject.Inject
 
 @SuppressLint("SetTextI18n")
 @AndroidEntryPoint
-class DebugActivity: BaseActivity() {
+class SandboxActivity: BaseActivity() {
 
     @Inject
     lateinit var overviewRepository: OverviewRepository
@@ -119,7 +119,7 @@ class DebugActivity: BaseActivity() {
                     Div()
                     TextSection(text = "Sync")
                     ButtonPrimary(text = "App startup activity", onClick = {
-                        startActivity(applicationNavigationComponent.syncActivityIntent(this@DebugActivity))
+                        startActivity(applicationNavigationComponent.syncActivityIntent(this@SandboxActivity))
                     })
 
                     Div()
@@ -350,6 +350,6 @@ class DebugActivity: BaseActivity() {
     }
 
     private fun toast(msg: String) {
-        Toast.makeText(this@DebugActivity, msg, Toast.LENGTH_LONG).show()
+        Toast.makeText(this@SandboxActivity, msg, Toast.LENGTH_LONG).show()
     }
 }

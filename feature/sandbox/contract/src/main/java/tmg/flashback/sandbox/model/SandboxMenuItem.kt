@@ -3,7 +3,7 @@ package tmg.flashback.sandbox.model
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 
-data class DebugMenuItem(
+data class SandboxMenuItem(
     @StringRes
     val label: Int,
     @DrawableRes
