@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="debug_list_item">Debug screen</string>
+    <string name="debug_list_item">Sandbox screen</string>
 
     <string name="debug_menu_styleguide">Style Guide</string>
     <string name="debug_menu_sync">Sync</string>
-    <string name="debug_menu_debug">Debug</string>
+    <string name="debug_menu_debug">Sandbox</string>
     <string name="debug_menu_ads_config">Ads Config</string>
     <string name="debug_menu_f1_race">Web: F1 Race</string>
     <string name="debug_menu_f1_drivers">Web: F1 Drivers</string>
