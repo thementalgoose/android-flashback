@@ -1,15 +1,15 @@
 version: 2.1
 
 orbs:
-  android: circleci/android@2.5.0
+  android: circleci/android@2.3.0
 
 jobs:
   unit-test:
     resource_class: medium
     docker:
-      - image: cimg/android:2025.01
+      - image: cimg/android:2023.12
     environment:
-      JVM_OPTS: -Xmx3072m
+      JVM_OPTS: -Xmx3584m
       GRADLE_OPTS: -Dorg.gradle.jvmargs="-XX:MaxMetaspaceSize=2g"
     steps:
       - run: 
