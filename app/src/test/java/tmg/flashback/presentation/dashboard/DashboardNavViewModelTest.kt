@@ -9,18 +9,15 @@ import io.mockk.mockk
 import io.mockk.slot
 import io.mockk.verify
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
-import org.junit.runners.Parameterized.Parameter
 import tmg.flashback.crashlytics.manager.CrashlyticsManager
-import tmg.flashback.debug.DebugNavigationComponent
-import tmg.flashback.debug.model.DebugMenuItem
+import tmg.flashback.sandbox.SandboxNavigationComponent
+import tmg.flashback.sandbox.model.SandboxMenuItem
 import tmg.flashback.navigation.ApplicationNavigationComponent
 import tmg.flashback.navigation.NavigationDestination
 import tmg.flashback.navigation.Navigator
@@ -36,7 +33,7 @@ internal class DashboardNavViewModelTest: BaseTest() {
     private val mockApplicationNavigationComponent: ApplicationNavigationComponent = mockk(relaxed = true)
     private val mockCrashlyticsManager: CrashlyticsManager = mockk(relaxed = true)
     private val mockDashboardSyncUseCase: DashboardSyncUseCase = mockk(relaxed = true)
-    private val mockDebugNavigationComponent: DebugNavigationComponent = mockk(relaxed = true)
+    private val mockSandboxNavigationComponent: SandboxNavigationComponent = mockk(relaxed = true)
     private val mockCurrentSeasonHolder: CurrentSeasonHolder = mockk(relaxed = true)
 
     private val mockNavigator: Navigator = mockk(relaxed = true)
@@ -51,7 +48,7 @@ internal class DashboardNavViewModelTest: BaseTest() {
             applicationNavigationComponent = mockApplicationNavigationComponent,
             crashlyticsManager = mockCrashlyticsManager,
             dashboardSyncUseCase = mockDashboardSyncUseCase,
-            debugNavigationComponent = mockDebugNavigationComponent,
+            sandboxNavigationComponent = mockSandboxNavigationComponent,
             currentSeasonHolder = mockCurrentSeasonHolder,
             ioDispatcher = Dispatchers.Unconfined
         )
@@ -233,23 +230,23 @@ internal class DashboardNavViewModelTest: BaseTest() {
 
     @Test
     fun `debug items come from debug nav component`() = runTest(testDispatcher) {
-        val list: List<DebugMenuItem> = listOf(mockk())
-        every { mockDebugNavigationComponent.getDebugMenuItems() } returns list
+        val list: List<SandboxMenuItem> = listOf(mockk())
+        every { mockSandboxNavigationComponent.getDebugMenuItems() } returns list
 
         initUnderTest()
-        underTest.outputs.debugMenuItems.test {
+        underTest.outputs.sandboxMenuItems.test {
             assertEquals(list, awaitItem())
         }
     }
 
     @Test
     fun `debug item click forwards call to debug nav component`() {
-        val item = DebugMenuItem(0, 0, "id")
+        val item = SandboxMenuItem(0, 0, "id")
 
         initUnderTest()
-        underTest.inputs.clickDebug(item)
+        underTest.inputs.clickSandboxOption(item)
         verify {
-            mockDebugNavigationComponent.navigateTo("id")
+            mockSandboxNavigationComponent.navigateTo("id")
         }
     }
 
