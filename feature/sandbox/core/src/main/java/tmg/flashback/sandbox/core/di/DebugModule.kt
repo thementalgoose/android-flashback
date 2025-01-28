@@ -4,8 +4,8 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import tmg.flashback.sandbox.DebugNavigationComponent
-import tmg.flashback.sandbox.core.DebugNavigationComponentImpl
+import tmg.flashback.sandbox.SandboxNavigationComponent
+import tmg.flashback.sandbox.core.SandboxNavigationComponentImpl
 import tmg.flashback.sandbox.core.manager.DebugBaseUrlOverrideManager
 import tmg.flashback.sandbox.manager.BaseUrlLocalOverrideManager
 
@@ -17,5 +17,5 @@ internal abstract class DebugModule {
     abstract fun bindsBaseUrlLocalOverrideManager(impl: DebugBaseUrlOverrideManager): BaseUrlLocalOverrideManager
 
     @Binds
-    abstract fun bindsDebugNavigationComponent(impl: DebugNavigationComponentImpl): DebugNavigationComponent
+    abstract fun bindsDebugNavigationComponent(impl: SandboxNavigationComponentImpl): SandboxNavigationComponent
 }

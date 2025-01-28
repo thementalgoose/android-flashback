@@ -17,10 +17,9 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import tmg.flashback.BuildConfig
 import tmg.flashback.crashlytics.manager.CrashlyticsManager
-import tmg.flashback.sandbox.DebugNavigationComponent
-import tmg.flashback.sandbox.model.DebugMenuItem
+import tmg.flashback.sandbox.SandboxNavigationComponent
+import tmg.flashback.sandbox.model.SandboxMenuItem
 import tmg.flashback.navigation.ApplicationNavigationComponent
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
@@ -39,13 +38,13 @@ import javax.inject.Inject
 
 interface DashboardNavViewModelInputs {
     fun clickItem(navigationItem: MenuItem)
-    fun clickDebug(debugMenuItem: DebugMenuItem)
+    fun clickDebug(sandboxMenuItem: SandboxMenuItem)
     fun navigationInRoot(destination: String, inRoot: Boolean)
 }
 
 interface DashboardNavViewModelOutputs {
     val currentlySelectedItem: StateFlow<MenuItem>
-    val debugMenuItems: StateFlow<List<DebugMenuItem>>
+    val sandboxMenuItems: StateFlow<List<SandboxMenuItem>>
     val appFeatureItemsList: StateFlow<List<MenuItem>>
     val seasonScreenItemsList: StateFlow<List<MenuItem>>
 
@@ -60,7 +59,7 @@ class DashboardNavViewModel @Inject constructor(
     private val applicationNavigationComponent: ApplicationNavigationComponent,
     private val crashlyticsManager: CrashlyticsManager,
     private val dashboardSyncUseCase: DashboardSyncUseCase,
-    private val debugNavigationComponent: DebugNavigationComponent,
+    private val sandboxNavigationComponent: SandboxNavigationComponent,
     private val currentSeasonHolder: CurrentSeasonHolder,
     ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), DashboardNavViewModelInputs, DashboardNavViewModelOutputs,
@@ -128,7 +127,7 @@ class DashboardNavViewModel @Inject constructor(
 
     override val appFeatureItemsList: MutableStateFlow<List<MenuItem>> = MutableStateFlow(emptyList())
     override val seasonScreenItemsList: MutableStateFlow<List<MenuItem>> = MutableStateFlow(emptyList())
-    override val debugMenuItems: MutableStateFlow<List<DebugMenuItem>> = MutableStateFlow(debugNavigationComponent.getDebugMenuItems())
+    override val sandboxMenuItems: MutableStateFlow<List<SandboxMenuItem>> = MutableStateFlow(sandboxNavigationComponent.getDebugMenuItems())
 
     init {
         initialiseItems()
@@ -170,8 +169,8 @@ class DashboardNavViewModel @Inject constructor(
         }
     }
 
-    override fun clickDebug(debugMenuItem: DebugMenuItem) {
-        debugNavigationComponent.navigateTo(debugMenuItem.id)
+    override fun clickDebug(sandboxMenuItem: SandboxMenuItem) {
+        sandboxNavigationComponent.navigateTo(sandboxMenuItem.id)
     }
 
     private fun Map<String, Boolean>.includes(destination: String) =

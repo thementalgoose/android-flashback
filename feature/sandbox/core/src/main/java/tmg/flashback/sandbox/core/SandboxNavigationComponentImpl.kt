@@ -3,27 +3,27 @@ package tmg.flashback.sandbox.core
 import android.content.Intent
 import android.net.Uri
 import org.threeten.bp.Year
-import tmg.flashback.sandbox.DebugNavigationComponent
+import tmg.flashback.sandbox.SandboxNavigationComponent
 import tmg.flashback.sandbox.core.adverts.AdvertsActivity
 import tmg.flashback.sandbox.core.styleguide.StyleGuideComposeActivity
-import tmg.flashback.sandbox.model.DebugMenuItem
+import tmg.flashback.sandbox.model.SandboxMenuItem
 import tmg.flashback.device.ActivityProvider
 import tmg.flashback.navigation.ApplicationNavigationComponent
 import tmg.flashback.navigation.Navigator
 import javax.inject.Inject
 
-internal class DebugNavigationComponentImpl @Inject constructor(
+internal class SandboxNavigationComponentImpl @Inject constructor(
     private val activityProvider: ActivityProvider,
     private val navigator: Navigator,
     private val navComponent: ApplicationNavigationComponent
-): DebugNavigationComponent {
+): SandboxNavigationComponent {
     override fun navigateTo(id: String) {
         when (id) {
             MENU_STYLEGUIDE -> activityProvider.launch {
                 it.startActivity(Intent(it, StyleGuideComposeActivity::class.java))
             }
             MENU_DEBUG -> activityProvider.launch {
-                it.startActivity(Intent(it, DebugActivity::class.java))
+                it.startActivity(Intent(it, SandboxActivity::class.java))
             }
             MENU_ADVERTS -> activityProvider.launch {
                 it.startActivity(Intent(it, AdvertsActivity::class.java))
@@ -50,15 +50,15 @@ internal class DebugNavigationComponentImpl @Inject constructor(
         }
     }
 
-    override fun getDebugMenuItems(): List<DebugMenuItem> = listOf(
-        DebugMenuItem(R.string.debug_menu_debug, R.drawable.debug_list_debug, MENU_DEBUG),
-        DebugMenuItem(R.string.debug_menu_styleguide, R.drawable.debug_list_styleguide, MENU_STYLEGUIDE),
-        DebugMenuItem(R.string.debug_menu_ads_config, R.drawable.debug_list_adverts, MENU_ADVERTS),
-        DebugMenuItem(R.string.debug_menu_sync, R.drawable.debug_list_sync, MENU_SYNC),
-        DebugMenuItem(R.string.debug_menu_f1_race, R.drawable.debug_list_formula1, MENU_F1_RESULTS),
-        DebugMenuItem(R.string.debug_menu_f1_drivers, R.drawable.debug_list_formula1, MENU_F1_DRIVERS),
-        DebugMenuItem(R.string.debug_menu_f1_constructors, R.drawable.debug_list_formula1, MENU_F1_CONSTRUCTORS),
-        DebugMenuItem(R.string.debug_menu_github_actions, R.drawable.debug_list_github, MENU_GITHUB_ACTIONS)
+    override fun getDebugMenuItems(): List<SandboxMenuItem> = listOf(
+        SandboxMenuItem(R.string.debug_menu_debug, R.drawable.debug_list_debug, MENU_DEBUG),
+        SandboxMenuItem(R.string.debug_menu_styleguide, R.drawable.debug_list_styleguide, MENU_STYLEGUIDE),
+        SandboxMenuItem(R.string.debug_menu_ads_config, R.drawable.debug_list_adverts, MENU_ADVERTS),
+        SandboxMenuItem(R.string.debug_menu_sync, R.drawable.debug_list_sync, MENU_SYNC),
+        SandboxMenuItem(R.string.debug_menu_f1_race, R.drawable.debug_list_formula1, MENU_F1_RESULTS),
+        SandboxMenuItem(R.string.debug_menu_f1_drivers, R.drawable.debug_list_formula1, MENU_F1_DRIVERS),
+        SandboxMenuItem(R.string.debug_menu_f1_constructors, R.drawable.debug_list_formula1, MENU_F1_CONSTRUCTORS),
+        SandboxMenuItem(R.string.debug_menu_github_actions, R.drawable.debug_list_github, MENU_GITHUB_ACTIONS)
     )
 
     companion object {
