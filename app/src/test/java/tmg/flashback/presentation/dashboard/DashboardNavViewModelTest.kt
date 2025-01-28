@@ -19,8 +19,8 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import org.junit.runners.Parameterized.Parameter
 import tmg.flashback.crashlytics.manager.CrashlyticsManager
-import tmg.flashback.debug.DebugNavigationComponent
-import tmg.flashback.debug.model.DebugMenuItem
+import tmg.flashback.sandbox.DebugNavigationComponent
+import tmg.flashback.sandbox.model.DebugMenuItem
 import tmg.flashback.navigation.ApplicationNavigationComponent
 import tmg.flashback.navigation.NavigationDestination
 import tmg.flashback.navigation.Navigator

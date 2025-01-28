@@ -27,7 +27,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.window.layout.WindowLayoutInfo
 import kotlinx.coroutines.launch
 import tmg.flashback.ads.ads.components.AdvertProvider
-import tmg.flashback.debug.model.DebugMenuItem
+import tmg.flashback.sandbox.model.DebugMenuItem
 import tmg.flashback.eastereggs.model.MenuIcons
 import tmg.flashback.googleanalytics.presentation.ScreenView
 import tmg.flashback.navigation.Navigator
