@@ -186,7 +186,6 @@ dependencies {
 
     implementation libs.falcon
     implementation libs.shakey
-    implementation libs.skeletonlayout
     implementation libs.circleimageview
 
     // Notifications + Config
