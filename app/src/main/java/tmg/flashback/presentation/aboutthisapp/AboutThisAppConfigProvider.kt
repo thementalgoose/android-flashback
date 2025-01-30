@@ -170,12 +170,6 @@ class AboutThisAppConfigProvider @Inject constructor(
                 author = "Jake Wharton",
                 url = "https://github.com/JakeWharton/ThreeTenABP",
                 icon = DependencyIcon.Image(url = "https://avatars0.githubusercontent.com/u/66577", backgroundColor = Color.WHITE)
-            ),
-            Dependency(
-                dependencyName = "SkeletonLayout",
-                author = "Faltenreich",
-                url = "https://github.com/Faltenreich/SkeletonLayout",
-                icon = DependencyIcon.Image(url = "https://avatars3.githubusercontent.com/u/7239950", backgroundColor = Color.WHITE)
             )
         )
 
