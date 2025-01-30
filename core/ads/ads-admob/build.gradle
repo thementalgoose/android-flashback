@@ -26,8 +26,5 @@ dependencies {
     implementation libs.playservicesads
     implementation libs.bundles.androidx.workmanager
 
-    // Skeleton Layout
-    implementation libs.skeletonlayout
-
     testImplementation projects.test.models
 }
