@@ -50,7 +50,6 @@ dependencies {
 
     implementation libs.bundles.androidx.workmanager
     implementation libs.flagkit
-    implementation libs.skeletonlayout
     implementation(projects.domain.persistence)
 
     testImplementation(projects.test.models)
