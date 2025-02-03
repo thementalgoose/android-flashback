@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalComposeUiApi::class)
-
 package tmg.flashback.style.input
 
 import androidx.annotation.DrawableRes
@@ -16,20 +14,16 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.onFocusChanged
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -121,7 +115,8 @@ fun InputPrimary(
 
         if (clear != null && text.value.text.isNotEmpty()) {
             Icon(
-                Icons.Default.Clear,
+                imageVector = Icons.Default.Clear,
+                tint = AppTheme.colors.contentTertiary,
                 contentDescription = null,
                 modifier = Modifier
                     .align(Alignment.CenterEnd)
@@ -140,11 +135,7 @@ fun InputPrimary(
 @Composable
 private fun Preview() {
     AppThemePreview {
-        Box(
-            modifier = Modifier
-                .padding(16.dp)
-                .background(Color.White)
-        ) {
+        Box(modifier = Modifier.padding(16.dp)) {
             val textState = remember { mutableStateOf(TextFieldValue("Input Field")) }
             InputPrimary(
                 text = textState,
@@ -154,15 +145,26 @@ private fun Preview() {
     }
 }
 
-@Preview
+@PreviewTheme
+@Composable
+private fun PreviewClear() {
+    AppThemePreview {
+        Box(modifier = Modifier.padding(16.dp)) {
+            val textState = remember { mutableStateOf(TextFieldValue("Input Field")) }
+            InputPrimary(
+                text = textState,
+                clear = { },
+                placeholder = "https://flashback.pages.dev"
+            )
+        }
+    }
+}
+
+@PreviewTheme
 @Composable
 private fun PreviewEmpty() {
-    AppThemePreview(isLight = true) {
-        Box(
-            modifier = Modifier
-                .padding(16.dp)
-                .background(Color.White)
-        ) {
+    AppThemePreview {
+        Box(modifier = Modifier.padding(16.dp)) {
             val textState = remember { mutableStateOf(TextFieldValue("")) }
             InputPrimary(
                 text = textState,
