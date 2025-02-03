@@ -135,11 +135,7 @@ fun InputPrimary(
 @Composable
 private fun Preview() {
     AppThemePreview {
-        Box(
-            modifier = Modifier
-                .padding(16.dp)
-                .background(Color.White)
-        ) {
+        Box(modifier = Modifier.padding(16.dp)) {
             val textState = remember { mutableStateOf(TextFieldValue("Input Field")) }
             InputPrimary(
                 text = textState,
@@ -149,15 +145,26 @@ private fun Preview() {
     }
 }
 
-@Preview
+@PreviewTheme
+@Composable
+private fun PreviewClear() {
+    AppThemePreview {
+        Box(modifier = Modifier.padding(16.dp)) {
+            val textState = remember { mutableStateOf(TextFieldValue("Input Field")) }
+            InputPrimary(
+                text = textState,
+                clear = { },
+                placeholder = "https://flashback.pages.dev"
+            )
+        }
+    }
+}
+
+@PreviewTheme
 @Composable
 private fun PreviewEmpty() {
-    AppThemePreview(isLight = true) {
-        Box(
-            modifier = Modifier
-                .padding(16.dp)
-                .background(Color.White)
-        ) {
+    AppThemePreview {
+        Box(modifier = Modifier.padding(16.dp)) {
             val textState = remember { mutableStateOf(TextFieldValue("")) }
             InputPrimary(
                 text = textState,
