@@ -52,5 +52,6 @@ dependencies {
     implementation libs.flagkit
     implementation(projects.domain.persistence)
 
-    testImplementation(projects.test.models)
+    testFixturesCompileOnly(libs.kotlin.stdlib)
+    testImplementation testFixtures(projects.formula1)
 }

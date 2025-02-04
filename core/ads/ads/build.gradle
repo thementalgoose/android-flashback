@@ -23,5 +23,6 @@ dependencies {
     implementation(projects.presentation.ui)
     implementation(projects.presentation.navigation)
 
-    testImplementation(projects.test.models)
+    testFixturesCompileOnly(libs.kotlin.stdlib)
+    testImplementation testFixtures(projects.formula1)
 }

@@ -16,5 +16,7 @@ android {
 
 dependencies {
     implementation(projects.presentation.strings)
-    testImplementation(projects.test.models)
+
+    testFixturesCompileOnly libs.kotlin.stdlib
+    testImplementation testFixtures(projects.formula1)
 }

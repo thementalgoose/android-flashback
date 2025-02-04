@@ -17,7 +17,5 @@ android {
 }
 
 dependencies {
-
     implementation(projects.formula1)
-    implementation(projects.test.models)
 }

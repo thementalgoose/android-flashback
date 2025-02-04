@@ -25,6 +25,4 @@ dependencies {
 
     implementation libs.playservicesads
     implementation libs.bundles.androidx.workmanager
-
-    testImplementation projects.test.models
 }

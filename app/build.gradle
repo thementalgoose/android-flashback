@@ -199,7 +199,8 @@ dependencies {
     implementation libs.firebase.perf
 
     // Test Utils
-    testImplementation(projects.test.models)
+    testFixturesCompileOnly(libs.kotlin.stdlib)
+    testImplementation testFixtures(projects.formula1)
     testImplementation(projects.feature.sandbox.core)
 
     // Android Test

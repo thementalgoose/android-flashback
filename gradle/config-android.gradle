@@ -21,6 +21,10 @@ android {
         buildConfig = true
     }
 
+    testFixtures {
+        enable = true
+    }
+
     buildTypes {
         debug {
             minifyEnabled false

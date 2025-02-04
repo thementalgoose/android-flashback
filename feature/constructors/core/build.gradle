@@ -37,5 +37,6 @@ dependencies {
     implementation libs.bundles.retrofit
     implementation libs.bundles.okhttp
 
-    testImplementation(projects.test.models)
+    testFixturesCompileOnly(libs.kotlin.stdlib)
+    testImplementation testFixtures(projects.formula1)
 }

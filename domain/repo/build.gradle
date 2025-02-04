@@ -27,6 +27,9 @@ dependencies {
     implementation libs.bundles.retrofit
     implementation libs.bundles.androidx.workmanager
 
-    testImplementation(projects.test.models)
+    testFixturesCompileOnly(libs.kotlin.stdlib)
+    testImplementation testFixtures(projects.formula1)
+    testImplementation testFixtures(projects.domain.persistence)
+    testImplementation testFixtures(projects.network.flashback)
 
 }
