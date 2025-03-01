@@ -22,7 +22,7 @@ import tmg.flashback.constructors.R
 import tmg.flashback.formula1.R.drawable
 import tmg.flashback.strings.R.string
 import tmg.flashback.device.managers.NetworkConnectivityManager
-import tmg.flashback.domain.repo.ConstructorRepository
+import tmg.flashback.data.repo.ConstructorRepository
 import tmg.flashback.drivers.contract.Driver
 import tmg.flashback.drivers.contract.with
 import tmg.flashback.formula1.extensions.pointsDisplay

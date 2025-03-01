@@ -1,4 +1,4 @@
-package tmg.flashback.domain.persistence.models.constructors
+package tmg.flashback.data.persistence.models.constructors
 
 fun ConstructorSeason.Companion.model(
     constructorId: String = "constructorId",

@@ -1,9 +1,9 @@
-package tmg.flashback.domain.persistence.models.circuit
+package tmg.flashback.data.persistence.models.circuit
 
-import tmg.flashback.domain.persistence.models.constructors.Constructor
-import tmg.flashback.domain.persistence.models.constructors.model
-import tmg.flashback.domain.persistence.models.drivers.Driver
-import tmg.flashback.domain.persistence.models.drivers.model
+import tmg.flashback.data.persistence.models.constructors.Constructor
+import tmg.flashback.data.persistence.models.constructors.model
+import tmg.flashback.data.persistence.models.drivers.Driver
+import tmg.flashback.data.persistence.models.drivers.model
 
 fun CircuitRoundResultWithDriverConstructor.Companion.model(
     result: CircuitRoundResult = CircuitRoundResult.model(),

@@ -1,4 +1,4 @@
-package tmg.flashback.domain.persistence.models.drivers
+package tmg.flashback.data.persistence.models.drivers
 
 fun DriverHistory.Companion.model(
     driver: Driver = Driver.model(),

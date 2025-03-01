@@ -16,7 +16,7 @@ import org.threeten.bp.LocalTime
 import tmg.flashback.circuits.contract.Circuit
 import tmg.flashback.circuits.contract.with
 import tmg.flashback.device.usecases.OpenLocationUseCase
-import tmg.flashback.domain.repo.RaceRepository
+import tmg.flashback.data.repo.RaceRepository
 import tmg.flashback.formula1.model.Race
 import tmg.flashback.formula1.model.Schedule
 import tmg.flashback.formula1.model.model

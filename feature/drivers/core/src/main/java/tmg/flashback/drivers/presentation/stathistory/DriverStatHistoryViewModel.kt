@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import tmg.flashback.domain.repo.DriverRepository
+import tmg.flashback.data.repo.DriverRepository
 import tmg.flashback.drivers.contract.model.DriverStatHistoryType
 import tmg.flashback.formula1.model.DriverHistory
 import tmg.utilities.extensions.combinePair

@@ -1,7 +1,7 @@
-package tmg.flashback.domain.persistence.models.overview
+package tmg.flashback.data.persistence.models.overview
 
-import tmg.flashback.domain.persistence.models.circuit.Circuit
-import tmg.flashback.domain.persistence.models.circuit.model
+import tmg.flashback.data.persistence.models.circuit.Circuit
+import tmg.flashback.data.persistence.models.circuit.model
 
 fun OverviewWithCircuit.Companion.model(
     overview: Overview = Overview.model(),

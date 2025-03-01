@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 import tmg.flashback.circuits.contract.model.ScreenCircuitData
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.device.usecases.OpenLocationUseCase
-import tmg.flashback.domain.repo.CircuitRepository
+import tmg.flashback.data.repo.CircuitRepository
 import tmg.flashback.formula1.model.CircuitHistory
 import tmg.flashback.web.usecases.OpenWebpageUseCase
 import javax.inject.Inject

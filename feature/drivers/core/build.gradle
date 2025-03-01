@@ -25,7 +25,7 @@ dependencies {
     implementation(projects.core.preferences)
 
     implementation(projects.formula1)
-    implementation(projects.domain.repo)
+    implementation(projects.data.repo)
 
     implementation(projects.presentation.ui)
     implementation(projects.presentation.strings)

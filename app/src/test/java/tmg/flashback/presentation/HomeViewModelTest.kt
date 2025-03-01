@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test
 import tmg.flashback.configuration.repository.ConfigRepository
 import tmg.flashback.configuration.usecases.ApplyConfigUseCase
 import tmg.flashback.crashlytics.manager.CrashlyticsManager
-import tmg.flashback.domain.repo.repository.CacheRepository
+import tmg.flashback.data.repo.repository.CacheRepository
 import tmg.flashback.maintenance.contract.usecases.ShouldForceUpgradeUseCase
 import tmg.flashback.reviews.usecases.StartReviewUseCase
 import tmg.flashback.season.usecases.ScheduleNotificationsUseCase

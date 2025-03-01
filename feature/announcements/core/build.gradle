@@ -18,7 +18,7 @@ android {
 dependencies {
 
     implementation(projects.formula1)
-    implementation(projects.domain.repo)
+    implementation(projects.data.repo)
 
     implementation(projects.presentation.style)
     implementation(projects.presentation.ui)

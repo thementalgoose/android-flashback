@@ -37,7 +37,7 @@ dependencies {
 
     // Feature
     implementation(projects.network.flashback)
-    implementation(projects.domain.repo)
+    implementation(projects.data.repo)
 
     // Stats
     implementation(projects.feature.season.core)

@@ -12,7 +12,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.circuits.contract.Circuit
 import tmg.flashback.circuits.contract.with
-import tmg.flashback.domain.repo.CircuitRepository
+import tmg.flashback.data.repo.CircuitRepository
 import tmg.flashback.formula1.model.Circuit
 import tmg.flashback.formula1.model.model
 import tmg.flashback.navigation.Navigator

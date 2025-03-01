@@ -17,9 +17,9 @@ import org.threeten.bp.LocalDate
 import tmg.flashback.ads.ads.repository.AdsRepository
 import tmg.flashback.ads.ads.repository.model.AdvertConfig
 import tmg.flashback.device.managers.NetworkConnectivityManager
-import tmg.flashback.domain.repo.EventsRepository
-import tmg.flashback.domain.repo.OverviewRepository
-import tmg.flashback.domain.repo.usecases.FetchSeasonUseCase
+import tmg.flashback.data.repo.EventsRepository
+import tmg.flashback.data.repo.OverviewRepository
+import tmg.flashback.data.repo.usecases.FetchSeasonUseCase
 import tmg.flashback.formula1.model.Overview
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.model.model

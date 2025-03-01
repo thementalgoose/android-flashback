@@ -34,8 +34,8 @@ include ':network:flashback'
 include ':network:flashback-news'
 include ':network:rss'
 
-include ':domain:repo'
-include ':domain:persistence'
+include ':data:repo'
+include ':data:persistence'
 
 include ':formula1'
 
