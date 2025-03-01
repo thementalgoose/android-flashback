@@ -14,6 +14,7 @@ compose_accompanist = "0.36.0"
 coroutines = "1.10.1"
 firebase = "33.10.0"
 junit = "5.12.0"
+junit5 = "1.7.0"
 okhttp = "4.12.0"
 retrofit = "2.11.0"
 google_playreview = "2.0.2"
@@ -142,8 +143,8 @@ test_androidx_junit = "androidx.test.ext:junit:1.2.1"
 test_androidx_junit_api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit" }
 test_espresso_core = "androidx.test.espresso:espresso-core:3.6.1"
 
-test_junit5_core = "de.mannodermaus.junit5:android-test-core:1.6.0"
-test_junit5_runner = "de.mannodermaus.junit5:android-test-runner:1.6.0"
+test_junit5_core = { module = "de.mannodermaus.junit5:android-test-core", version.ref = "junit5" }
+test_junit5_runner = { module = "de.mannodermaus.junit5:android-test-runner", version.ref = "junit5" }
 
 kotlinx_coroutines_test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
 
