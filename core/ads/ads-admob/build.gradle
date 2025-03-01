@@ -27,4 +27,5 @@ dependencies {
     implementation libs.bundles.androidx.workmanager
 
     testImplementation projects.test.models
+    testImplementation(testFixtures(projects.formula1))
 }

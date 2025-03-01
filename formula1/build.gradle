@@ -12,9 +12,20 @@ android {
         targetSdkVersion project.ext.targetSdkVersion
     }
     namespace 'tmg.flashback.formula1'
+
+    sourceSets {
+        test {
+            java.srcDirs += ["src/testFixtures/java"]
+        }
+    }
+
+    testFixtures {
+        enable = true
+    }
 }
 
 dependencies {
     implementation(projects.presentation.strings)
-    testImplementation(projects.test.models)
+
+    testFixturesImplementation(libs.threeten)
 }
