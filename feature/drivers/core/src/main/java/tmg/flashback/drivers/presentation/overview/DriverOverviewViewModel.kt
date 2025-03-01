@@ -9,7 +9,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import tmg.flashback.device.managers.NetworkConnectivityManager
-import tmg.flashback.domain.repo.DriverRepository
+import tmg.flashback.data.repo.DriverRepository
 import tmg.flashback.drivers.R
 import tmg.flashback.formula1.R.drawable
 import tmg.flashback.strings.R.string

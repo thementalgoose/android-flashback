@@ -60,7 +60,7 @@
 #-keepattributes InnerClasses # Needed for `getDeclaredClasses`.
 #-if @kotlinx.serialization.Serializable class
 #com.example.myapplication.HasNamedCompanion, # <-- List serializable classes with named companions.
-#com.example.myapplication.HasNamedCompanion2
+#com.example.myapplication.HasNamedCompanion2gi
 #{
 #    static **$* *;
 #}
@@ -70,10 +70,10 @@
 
 -keep class tmg.flashback.flashbackapi.api.models.**
 
--keep class tmg.flashback.domain.persistence.models.**
+-keep class tmg.flashback.data.persistence.models.**
 
--keep class tmg.flashback.domain.repo.json.*
--keep class tmg.flashback.domain.repo.models.*
+-keep class tmg.flashback.data.repo.json.*
+-keep class tmg.flashback.data.repo.models.*
 
 -keep class tmg.flashback.rss.network.apis.model.*
 -keep class tmg.flashback.rss.network.apis.*

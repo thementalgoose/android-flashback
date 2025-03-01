@@ -8,7 +8,7 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import tmg.flashback.domain.repo.usecases.FetchSeasonUseCase
+import tmg.flashback.data.repo.usecases.FetchSeasonUseCase
 import tmg.flashback.season.usecases.DefaultSeasonUseCase
 import tmg.flashback.season.usecases.ScheduleNotificationsUseCase
 

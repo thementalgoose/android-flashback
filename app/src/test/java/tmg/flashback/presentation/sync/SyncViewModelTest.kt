@@ -14,11 +14,11 @@ import org.junit.jupiter.api.Test
 import tmg.flashback.configuration.repository.ConfigRepository
 import tmg.flashback.configuration.usecases.FetchConfigUseCase
 import tmg.flashback.configuration.usecases.ResetConfigUseCase
-import tmg.flashback.domain.repo.CircuitRepository
-import tmg.flashback.domain.repo.ConstructorRepository
-import tmg.flashback.domain.repo.DriverRepository
-import tmg.flashback.domain.repo.OverviewRepository
-import tmg.flashback.domain.repo.repository.CacheRepository
+import tmg.flashback.data.repo.CircuitRepository
+import tmg.flashback.data.repo.ConstructorRepository
+import tmg.flashback.data.repo.DriverRepository
+import tmg.flashback.data.repo.OverviewRepository
+import tmg.flashback.data.repo.repository.CacheRepository
 import tmg.flashback.maintenance.contract.usecases.ShouldForceUpgradeUseCase
 import tmg.flashback.season.usecases.ScheduleNotificationsUseCase
 import tmg.flashback.presentation.sync.SyncNavTarget.DASHBOARD

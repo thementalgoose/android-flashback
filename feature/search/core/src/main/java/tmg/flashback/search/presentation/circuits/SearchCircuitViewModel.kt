@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import tmg.flashback.circuits.contract.Circuit
 import tmg.flashback.circuits.contract.with
-import tmg.flashback.domain.repo.CircuitRepository
+import tmg.flashback.data.repo.CircuitRepository
 import tmg.flashback.formula1.model.Circuit
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen

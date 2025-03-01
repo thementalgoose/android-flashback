@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import tmg.flashback.domain.repo.EventsRepository
+import tmg.flashback.data.repo.EventsRepository
 import tmg.flashback.formula1.model.Event
 import javax.inject.Inject
 

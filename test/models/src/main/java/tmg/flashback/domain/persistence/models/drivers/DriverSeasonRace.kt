@@ -1,4 +1,4 @@
-package tmg.flashback.domain.persistence.models.drivers
+package tmg.flashback.data.persistence.models.drivers
 
 fun DriverSeasonRace.Companion.model(
     driverId: String = "driverId",

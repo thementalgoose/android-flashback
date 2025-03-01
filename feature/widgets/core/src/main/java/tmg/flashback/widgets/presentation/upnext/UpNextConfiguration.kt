@@ -5,7 +5,7 @@ import android.util.Log
 import androidx.datastore.core.DataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import tmg.flashback.domain.repo.ScheduleRepository
+import tmg.flashback.data.repo.ScheduleRepository
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.widgets.presentation.components.WidgetColourData
 import tmg.flashback.widgets.presentation.components.getWidgetColourData

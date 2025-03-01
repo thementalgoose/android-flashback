@@ -20,7 +20,7 @@ dependencies {
 
     // Formula 1 base data
     implementation(projects.formula1)
-    implementation(projects.domain.repo)
+    implementation(projects.data.repo)
 
     // Network modules
     implementation(projects.network.flashbackNews)
@@ -50,7 +50,7 @@ dependencies {
 
     implementation libs.bundles.androidx.workmanager
     implementation libs.flagkit
-    implementation(projects.domain.persistence)
+    implementation(projects.data.persistence)
 
     testImplementation(projects.test.models)
 }

@@ -1,4 +1,4 @@
-package tmg.flashback.domain.persistence.models.constructors
+package tmg.flashback.data.persistence.models.constructors
 
 fun ConstructorHistory.Companion.model(
     constructor: Constructor = Constructor.model(),

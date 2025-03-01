@@ -12,7 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.threeten.bp.LocalDateTime
 import tmg.flashback.device.repository.PermissionRepository
-import tmg.flashback.domain.repo.ScheduleRepository
+import tmg.flashback.data.repo.ScheduleRepository
 import tmg.flashback.formula1.enums.RaceWeekend
 import tmg.flashback.formula1.model.Timestamp
 import tmg.flashback.formula1.utils.NotificationUtils
