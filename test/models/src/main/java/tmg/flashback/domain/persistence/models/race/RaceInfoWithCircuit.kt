@@ -1,7 +1,7 @@
-package tmg.flashback.domain.persistence.models.race
+package tmg.flashback.data.persistence.models.race
 
-import tmg.flashback.domain.persistence.models.circuit.Circuit
-import tmg.flashback.domain.persistence.models.circuit.model
+import tmg.flashback.data.persistence.models.circuit.Circuit
+import tmg.flashback.data.persistence.models.circuit.model
 
 fun RaceInfoWithCircuit.Companion.model(
     raceInfo: RaceInfo = RaceInfo.model(),

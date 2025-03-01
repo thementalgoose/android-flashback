@@ -1,4 +1,4 @@
-package tmg.flashback.domain.persistence.models.race
+package tmg.flashback.data.persistence.models.race
 
 fun FastestLap.Companion.model(
     position: Int = 1,

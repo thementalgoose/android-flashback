@@ -1,7 +1,7 @@
-package tmg.flashback.domain.persistence.models.constructors
+package tmg.flashback.data.persistence.models.constructors
 
-import tmg.flashback.domain.persistence.models.drivers.Driver
-import tmg.flashback.domain.persistence.models.drivers.model
+import tmg.flashback.data.persistence.models.drivers.Driver
+import tmg.flashback.data.persistence.models.drivers.model
 
 fun ConstructorSeasonDriverWithDriver.Companion.model(
     results: ConstructorSeasonDriver = ConstructorSeasonDriver.model(),

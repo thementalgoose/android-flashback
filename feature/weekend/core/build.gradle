@@ -31,7 +31,7 @@ dependencies {
     implementation(projects.presentation.strings)
     implementation(projects.presentation.navigation)
 
-    implementation(projects.domain.repo)
+    implementation(projects.data.repo)
     implementation(projects.formula1)
     implementation(projects.feature.weekend.contract)
 

@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.device.managers.NetworkConnectivityManager
-import tmg.flashback.domain.repo.DriverRepository
+import tmg.flashback.data.repo.DriverRepository
 import tmg.flashback.drivers.R
 import tmg.flashback.formula1.R.drawable
 import tmg.flashback.formula1.model.DriverHistory

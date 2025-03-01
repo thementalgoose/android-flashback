@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import tmg.flashback.constructors.contract.Constructor
 import tmg.flashback.constructors.contract.with
-import tmg.flashback.domain.repo.ConstructorRepository
+import tmg.flashback.data.repo.ConstructorRepository
 import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen

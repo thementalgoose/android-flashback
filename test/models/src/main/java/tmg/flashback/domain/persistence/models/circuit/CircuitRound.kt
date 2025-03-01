@@ -1,4 +1,4 @@
-package tmg.flashback.domain.persistence.models.circuit
+package tmg.flashback.data.persistence.models.circuit
 
 fun CircuitRound.Companion.model(
     circuitId: String = "circuitId",

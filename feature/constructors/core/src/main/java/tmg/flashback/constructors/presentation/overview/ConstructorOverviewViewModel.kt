@@ -14,7 +14,7 @@ import tmg.flashback.strings.R.string
 import tmg.flashback.constructors.contract.model.ScreenConstructorData
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.device.usecases.OpenUrlUseCase
-import tmg.flashback.domain.repo.ConstructorRepository
+import tmg.flashback.data.repo.ConstructorRepository
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.ConstructorHistory
 import tmg.flashback.ui.components.navigation.PipeType

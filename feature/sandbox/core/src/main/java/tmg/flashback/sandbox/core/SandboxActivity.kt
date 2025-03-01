@@ -27,10 +27,10 @@ import kotlinx.coroutines.launch
 import tmg.flashback.ads.ads.repository.AdsRepository
 import tmg.flashback.sandbox.manager.BaseUrlLocalOverrideManager
 import tmg.flashback.device.repository.DeviceRepository
-import tmg.flashback.domain.repo.CircuitRepository
-import tmg.flashback.domain.repo.ConstructorRepository
-import tmg.flashback.domain.repo.DriverRepository
-import tmg.flashback.domain.repo.OverviewRepository
+import tmg.flashback.data.repo.CircuitRepository
+import tmg.flashback.data.repo.ConstructorRepository
+import tmg.flashback.data.repo.DriverRepository
+import tmg.flashback.data.repo.OverviewRepository
 import tmg.flashback.navigation.ApplicationNavigationComponent
 import tmg.flashback.notifications.receiver.LocalNotificationBroadcastReceiver
 import tmg.flashback.notifications.repository.NotificationRepository

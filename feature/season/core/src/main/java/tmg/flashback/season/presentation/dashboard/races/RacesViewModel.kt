@@ -12,9 +12,9 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import tmg.flashback.ads.ads.repository.AdsRepository
 import tmg.flashback.device.managers.NetworkConnectivityManager
-import tmg.flashback.domain.repo.EventsRepository
-import tmg.flashback.domain.repo.OverviewRepository
-import tmg.flashback.domain.repo.usecases.FetchSeasonUseCase
+import tmg.flashback.data.repo.EventsRepository
+import tmg.flashback.data.repo.OverviewRepository
+import tmg.flashback.data.repo.usecases.FetchSeasonUseCase
 import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
 import tmg.flashback.formula1.enums.SeasonTyres
 import tmg.flashback.formula1.enums.getBySeason

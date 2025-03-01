@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.device.managers.NetworkConnectivityManager
-import tmg.flashback.domain.repo.SeasonRepository
+import tmg.flashback.data.repo.SeasonRepository
 import tmg.flashback.formula1.enums.RaceStatus
 import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.Driver
