@@ -2,21 +2,21 @@ package tmg.flashback
 
 //region Room
 
-typealias RoomConstructor = tmg.flashback.domain.persistence.models.constructors.Constructor
+typealias RoomConstructor = tmg.flashback.data.persistence.models.constructors.Constructor
 
-typealias RoomConstructorHistory = tmg.flashback.domain.persistence.models.constructors.ConstructorHistory
+typealias RoomConstructorHistory = tmg.flashback.data.persistence.models.constructors.ConstructorHistory
 
-typealias RoomDriver = tmg.flashback.domain.persistence.models.drivers.Driver
+typealias RoomDriver = tmg.flashback.data.persistence.models.drivers.Driver
 
-typealias RoomDriverHistory = tmg.flashback.domain.persistence.models.drivers.DriverHistory
+typealias RoomDriverHistory = tmg.flashback.data.persistence.models.drivers.DriverHistory
 
-typealias RoomRace = tmg.flashback.domain.persistence.models.race.Race
+typealias RoomRace = tmg.flashback.data.persistence.models.race.Race
 
-typealias RoomRaceInfo = tmg.flashback.domain.persistence.models.race.RaceInfo
+typealias RoomRaceInfo = tmg.flashback.data.persistence.models.race.RaceInfo
 
-typealias RoomRaceInfoWithCircuit = tmg.flashback.domain.persistence.models.race.RaceInfoWithCircuit
+typealias RoomRaceInfoWithCircuit = tmg.flashback.data.persistence.models.race.RaceInfoWithCircuit
 
-typealias RoomSchedule = tmg.flashback.domain.persistence.models.overview.Schedule
+typealias RoomSchedule = tmg.flashback.data.persistence.models.overview.Schedule
 
 //endregion
 

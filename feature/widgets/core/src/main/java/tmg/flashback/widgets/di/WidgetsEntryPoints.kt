@@ -5,7 +5,7 @@ import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
-import tmg.flashback.domain.repo.ScheduleRepository
+import tmg.flashback.data.repo.ScheduleRepository
 import tmg.flashback.widgets.contract.WidgetNavigationComponent
 import tmg.flashback.widgets.repository.WidgetRepository
 

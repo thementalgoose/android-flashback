@@ -29,7 +29,7 @@ dependencies {
     implementation(projects.presentation.navigation)
 
     implementation(projects.formula1)
-    implementation(projects.domain.repo)
+    implementation(projects.data.repo)
     implementation(projects.feature.constructors.contract)
 
     implementation(projects.feature.drivers.contract)

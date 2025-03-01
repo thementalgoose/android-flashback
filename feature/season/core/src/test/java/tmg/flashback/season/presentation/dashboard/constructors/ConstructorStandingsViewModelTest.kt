@@ -12,8 +12,8 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.device.managers.NetworkConnectivityManager
-import tmg.flashback.domain.repo.SeasonRepository
-import tmg.flashback.domain.repo.usecases.FetchSeasonUseCase
+import tmg.flashback.data.repo.SeasonRepository
+import tmg.flashback.data.repo.usecases.FetchSeasonUseCase
 import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.SeasonConstructorStandingSeason
 import tmg.flashback.formula1.model.SeasonConstructorStandings

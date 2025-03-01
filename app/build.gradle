@@ -150,8 +150,8 @@ dependencies {
     liveImplementation(projects.feature.sandbox.noop)
 
     // Data
-    implementation(projects.domain.repo)
-    implementation(projects.domain.persistence)
+    implementation(projects.data.repo)
+    implementation(projects.data.persistence)
     implementation(projects.network.flashback)
     implementation(projects.network.flashbackNews)
     implementation(projects.formula1)

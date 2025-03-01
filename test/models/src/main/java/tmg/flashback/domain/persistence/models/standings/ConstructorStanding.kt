@@ -1,4 +1,4 @@
-package tmg.flashback.domain.persistence.models.standings
+package tmg.flashback.data.persistence.models.standings
 
 fun ConstructorStanding.Companion.model(
     constructorId: String = "constructorId",

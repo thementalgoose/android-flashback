@@ -10,7 +10,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.flashback.domain.repo.DriverRepository
+import tmg.flashback.data.repo.DriverRepository
 import tmg.flashback.drivers.contract.Driver
 import tmg.flashback.drivers.contract.with
 import tmg.flashback.formula1.model.Driver

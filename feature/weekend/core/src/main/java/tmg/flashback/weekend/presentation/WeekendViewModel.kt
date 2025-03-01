@@ -16,8 +16,8 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import tmg.flashback.domain.repo.RaceRepository
-import tmg.flashback.domain.repo.usecases.FetchSeasonUseCase
+import tmg.flashback.data.repo.RaceRepository
+import tmg.flashback.data.repo.usecases.FetchSeasonUseCase
 import tmg.flashback.formula1.model.Race
 import tmg.flashback.reviews.usecases.AppSection
 import tmg.flashback.reviews.usecases.AppSection.DETAILS_QUALIFYING

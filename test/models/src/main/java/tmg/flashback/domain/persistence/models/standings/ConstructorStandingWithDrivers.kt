@@ -1,7 +1,7 @@
-package tmg.flashback.domain.persistence.models.standings
+package tmg.flashback.data.persistence.models.standings
 
-import tmg.flashback.domain.persistence.models.constructors.Constructor
-import tmg.flashback.domain.persistence.models.constructors.model
+import tmg.flashback.data.persistence.models.constructors.Constructor
+import tmg.flashback.data.persistence.models.constructors.model
 
 fun ConstructorStandingWithDrivers.Companion.model(
     standing: ConstructorStanding = ConstructorStanding.model(),

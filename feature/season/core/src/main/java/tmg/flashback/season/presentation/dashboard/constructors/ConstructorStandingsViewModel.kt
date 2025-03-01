@@ -11,8 +11,8 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import tmg.flashback.device.managers.NetworkConnectivityManager
-import tmg.flashback.domain.repo.SeasonRepository
-import tmg.flashback.domain.repo.usecases.FetchSeasonUseCase
+import tmg.flashback.data.repo.SeasonRepository
+import tmg.flashback.data.repo.usecases.FetchSeasonUseCase
 import tmg.flashback.formula1.model.SeasonConstructorStandingSeason
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.season.presentation.dashboard.shared.seasonpicker.CurrentSeasonHolder

@@ -10,8 +10,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import tmg.flashback.device.managers.NetworkConnectivityManager
-import tmg.flashback.domain.repo.OverviewRepository
-import tmg.flashback.domain.repo.SeasonRepository
+import tmg.flashback.data.repo.OverviewRepository
+import tmg.flashback.data.repo.SeasonRepository
 import tmg.flashback.formula1.enums.isStatusFinished
 import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.model.RaceResult

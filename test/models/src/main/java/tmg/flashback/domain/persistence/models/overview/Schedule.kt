@@ -1,4 +1,4 @@
-package tmg.flashback.domain.persistence.models.overview
+package tmg.flashback.data.persistence.models.overview
 
 fun Schedule.Companion.model(
     season: Int = 2020,
