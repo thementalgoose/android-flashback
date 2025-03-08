@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
 import tmg.flashback.configuration.manager.ConfigManager
-import tmg.flashback.maintenance.repository.json.ForceUpgradeJson
+import tmg.flashback.maintenance.data.models.ForceUpgradeDto
 
 internal class MaintenanceRepositoryTest {
 
@@ -15,7 +15,7 @@ internal class MaintenanceRepositoryTest {
 
     private lateinit var sut: MaintenanceRepository
 
-    private fun initSUT() {
+    private fun initUnderTest() {
         sut = MaintenanceRepository(mockConfigManager)
     }
 
@@ -23,23 +23,37 @@ internal class MaintenanceRepositoryTest {
 
     @Test
     fun `force upgrade is null if config returns null`() {
-        every { mockConfigManager.getJson(keyForceUpgrade, ForceUpgradeJson.serializer()) } returns null
-        initSUT()
+        every { mockConfigManager.getJson(keyForceUpgrade, ForceUpgradeDto.serializer()) } returns null
+        initUnderTest()
         assertNull(sut.forceUpgrade)
         verify {
-            mockConfigManager.getJson(keyForceUpgrade, ForceUpgradeJson.serializer())
+            mockConfigManager.getJson(keyForceUpgrade, ForceUpgradeDto.serializer())
         }
     }
 
     @Test
     fun `force upgrade is successful if config returns model`() {
-        every { mockConfigManager.getJson(keyForceUpgrade, ForceUpgradeJson.serializer()) } returns ForceUpgradeJson(title = "hey", message = "hey")
-        initSUT()
+        every { mockConfigManager.getJson(keyForceUpgrade, ForceUpgradeDto.serializer()) } returns ForceUpgradeDto(title = "hey", message = "hey")
+        initUnderTest()
         val model = sut.forceUpgrade!!
         assertEquals("hey", model.title)
         assertEquals("hey", model.message)
         verify {
-            mockConfigManager.getJson(keyForceUpgrade, ForceUpgradeJson.serializer())
+            mockConfigManager.getJson(keyForceUpgrade, ForceUpgradeDto.serializer())
+        }
+    }
+
+    //endregion
+
+    //region Soft upgrade model
+
+    @Test
+    fun `soft upgrade returns value from config manager`() {
+        every { mockConfigManager.getBoolean(keySoftUpgrade) } returns true
+        initUnderTest()
+        assertEquals(true, sut.softUpgrade)
+        verify {
+            mockConfigManager.getBoolean(keySoftUpgrade)
         }
     }
 
@@ -47,5 +61,6 @@ internal class MaintenanceRepositoryTest {
 
     companion object {
         private const val keyForceUpgrade: String = "force_upgrade"
+        private const val keySoftUpgrade: String = "soft_upgrade"
     }
 }

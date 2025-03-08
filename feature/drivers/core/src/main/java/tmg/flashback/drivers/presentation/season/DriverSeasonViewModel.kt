@@ -48,7 +48,6 @@ interface DriverSeasonViewModelOutputs {
 class DriverSeasonViewModel @Inject constructor(
     private val driverRepository: DriverRepository,
     private val connectivityManager: NetworkConnectivityManager,
-    private val themeRepository: ThemeRepository,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : ViewModel(), DriverSeasonViewModelInputs, DriverSeasonViewModelOutputs {
 
