@@ -12,6 +12,7 @@ import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.device.repository.DeviceRepository
 import tmg.flashback.repositories.ContactRepository
 import tmg.flashback.rss.usecases.AllSupportedSourcesUseCase
+import tmg.flashback.ui.managers.StyleManager
 import tmg.flashback.ui.model.Theme
 import tmg.flashback.ui.repository.ThemeRepository
 
@@ -22,6 +23,7 @@ internal class AboutThisAppConfigProviderTest {
     private val mockDeviceRepository: DeviceRepository = mockk(relaxed = true)
     private val mockContactRepository: ContactRepository = mockk(relaxed = true)
     private val mockThemeRepository: ThemeRepository = mockk(relaxed = true)
+    private val mockStyleManager: StyleManager = mockk(relaxed = true)
     private val mockAllSupportedSourcesUseCase: AllSupportedSourcesUseCase = mockk(relaxed = true)
 
     private lateinit var underTest: AboutThisAppConfigProvider
@@ -33,7 +35,8 @@ internal class AboutThisAppConfigProviderTest {
             deviceRepository = mockDeviceRepository,
             contactRepository = mockContactRepository,
             themeRepository = mockThemeRepository,
-            allSupportedSourcesUseCase = mockAllSupportedSourcesUseCase
+            allSupportedSourcesUseCase = mockAllSupportedSourcesUseCase,
+            styleManager = mockStyleManager
         )
     }
 
@@ -46,6 +49,7 @@ internal class AboutThisAppConfigProviderTest {
         every { mockContactRepository.contactEmail } returns "email"
 
         every { mockThemeRepository.theme } returns Theme.DEFAULT
+        every { mockStyleManager.isDayMode } returns true
 
         every { mockContext.getString(R.string.app_name) } returns "app_name"
         every { mockContext.getString(string.dependency_thank_you) } returns "header"

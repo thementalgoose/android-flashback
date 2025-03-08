@@ -1,14 +1,20 @@
 package tmg.flashback.season.presentation.events
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.rememberNestedScrollInteropConnection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -67,9 +73,14 @@ private fun EventsScreen(
         subtitle = stringResource(id = string.events_list_subtitle),
         backClicked = null
     ) {
-        events.forEach { event ->
-            Event(event)
-        }
+        LazyColumn(
+            modifier = Modifier.nestedScroll(rememberNestedScrollInteropConnection()),
+            content = {
+                items(events) {
+                    Event(it)
+                }
+            }
+        )
     }
 }
 
