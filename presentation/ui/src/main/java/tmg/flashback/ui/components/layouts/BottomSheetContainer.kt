@@ -28,7 +28,7 @@ import tmg.flashback.ui.R
 import tmg.flashback.strings.R.string
 
 @Composable
-fun BottomSheet(
+fun BottomSheetContainer(
     title: String,
     subtitle: String,
     modifier: Modifier = Modifier,
@@ -80,7 +80,7 @@ fun BottomSheet(
 @Composable
 private fun Preview() {
     AppThemePreview {
-        BottomSheet(
+        BottomSheetContainer(
             title = "Bottom Sheet",
             subtitle = "See your bottom sheet content here",
             backClicked = { },

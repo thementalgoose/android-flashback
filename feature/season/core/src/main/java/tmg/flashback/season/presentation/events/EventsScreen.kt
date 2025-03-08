@@ -20,7 +20,6 @@ import tmg.flashback.formula1.extensions.icon
 import tmg.flashback.formula1.extensions.label
 import tmg.flashback.formula1.model.Event
 import tmg.flashback.providers.EventProvider
-import tmg.flashback.season.R
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
@@ -28,7 +27,7 @@ import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.googleanalytics.presentation.ScreenView
 import tmg.flashback.strings.R.string
-import tmg.flashback.ui.components.layouts.BottomSheet
+import tmg.flashback.ui.components.layouts.BottomSheetContainer
 import tmg.utilities.extensions.format
 
 @Composable
@@ -60,7 +59,7 @@ private fun EventsScreen(
         analyticsSeason to season.toString()
     ))
 
-    BottomSheet(
+    BottomSheetContainer(
         modifier = modifier
             .background(AppTheme.colors.backgroundPrimary)
             .defaultMinSize(
