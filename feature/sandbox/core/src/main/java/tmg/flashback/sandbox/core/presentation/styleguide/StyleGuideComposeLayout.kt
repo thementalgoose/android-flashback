@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalPagerApi::class, ExperimentalPagerApi::class)
 
-package tmg.flashback.sandbox.core.styleguide
+package tmg.flashback.sandbox.core.presentation.styleguide
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -24,10 +24,10 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.pager.ExperimentalPagerApi
-import tmg.flashback.sandbox.core.styleguide.tabs.ButtonTabScreen
-import tmg.flashback.sandbox.core.styleguide.tabs.ColourTabScreen
-import tmg.flashback.sandbox.core.styleguide.tabs.InputTabScreen
-import tmg.flashback.sandbox.core.styleguide.tabs.TextTabScreen
+import tmg.flashback.sandbox.core.presentation.styleguide.tabs.ButtonTabScreen
+import tmg.flashback.sandbox.core.presentation.styleguide.tabs.ColourTabScreen
+import tmg.flashback.sandbox.core.presentation.styleguide.tabs.InputTabScreen
+import tmg.flashback.sandbox.core.presentation.styleguide.tabs.TextTabScreen
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
