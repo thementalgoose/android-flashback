@@ -1,6 +1,5 @@
 package tmg.flashback.presentation
 
-import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -13,7 +12,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.core.splashscreen.SplashScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
-import androidx.lifecycle.viewModelScope
 import androidx.window.layout.WindowInfoTracker
 import androidx.window.layout.WindowLayoutInfo
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,14 +20,13 @@ import tmg.flashback.ads.ads.components.AdvertProvider
 import tmg.flashback.configuration.usecases.ConfigSyncUseCase
 import tmg.flashback.crashlytics.manager.CrashlyticsManager
 import tmg.flashback.maintenance.contract.MaintenanceNavigationComponent
-import tmg.flashback.navigation.Deeplink
 import tmg.flashback.navigation.Deeplink.SCREEN_PARAM
 import tmg.flashback.navigation.Navigator
+import tmg.flashback.presentation.dashboard.DashboardScreen
+import tmg.flashback.presentation.sync.SyncActivity
 import tmg.flashback.season.usecases.ContentSyncUseCase
 import tmg.flashback.style.AppTheme
 import tmg.flashback.ui.base.BaseActivity
-import tmg.flashback.presentation.dashboard.DashboardScreen
-import tmg.flashback.presentation.sync.SyncActivity
 import javax.inject.Inject
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)

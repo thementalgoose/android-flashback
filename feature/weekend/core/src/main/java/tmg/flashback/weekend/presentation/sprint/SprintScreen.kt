@@ -30,20 +30,19 @@ import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.DriverEntry
 import tmg.flashback.formula1.model.SprintRaceResult
 import tmg.flashback.providers.DriverConstructorProvider
+import tmg.flashback.strings.R.string
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.buttons.ButtonSecondarySegments
 import tmg.flashback.style.text.TextTitle
 import tmg.flashback.ui.components.constructorIndicator
+import tmg.flashback.ui.components.drivers.DriverPoints
 import tmg.flashback.ui.components.drivers.driverIconSize
 import tmg.flashback.ui.components.errors.NotAvailable
 import tmg.flashback.ui.components.errors.NotAvailableYet
 import tmg.flashback.ui.components.loading.SkeletonViewList
-import tmg.flashback.weekend.R
-import tmg.flashback.strings.R.string
 import tmg.flashback.weekend.presentation.shared.DriverInfoWithIcon
-import tmg.flashback.weekend.presentation.shared.DriverPoints
 import tmg.flashback.weekend.presentation.shared.PointsBox
 import tmg.flashback.weekend.presentation.shared.RaceHeader
 import tmg.flashback.weekend.presentation.shared.Time
@@ -207,8 +206,10 @@ private fun ConstructorResult(
                 Spacer(Modifier.height(2.dp))
                 model.drivers.forEach { (driver, points) ->
                     DriverPoints(
-                        driver = driver,
-                        points = points
+                        name = driver.name,
+                        nationality = driver.nationality,
+                        nationalityISO = driver.nationalityISO,
+                        points = points,
                     )
                 }
             }

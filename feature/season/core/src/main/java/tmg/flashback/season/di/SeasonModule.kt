@@ -4,9 +4,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import tmg.flashback.season.contract.ResultsNavigationComponent
 import tmg.flashback.season.contract.repository.NotificationsRepository
-import tmg.flashback.season.ResultsNavigationComponentImpl
 import tmg.flashback.season.repository.NotificationsRepositoryImpl
 
 @Module
@@ -15,7 +13,4 @@ internal class SeasonModule {
 
     @Provides
     fun provideNotificationsRepository(impl: NotificationsRepositoryImpl): NotificationsRepository = impl
-
-    @Provides
-    fun provideResultsNavigationComponent(impl: ResultsNavigationComponentImpl): ResultsNavigationComponent = impl
 }
