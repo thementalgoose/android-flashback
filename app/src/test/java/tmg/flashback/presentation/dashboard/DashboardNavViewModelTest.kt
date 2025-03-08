@@ -21,6 +21,7 @@ import tmg.flashback.sandbox.model.SandboxMenuItem
 import tmg.flashback.navigation.ApplicationNavigationComponent
 import tmg.flashback.navigation.NavigationDestination
 import tmg.flashback.navigation.Navigator
+import tmg.flashback.reactiongame.contract.usecases.IsReactionGameEnabledUseCase
 import tmg.flashback.rss.repo.RssRepository
 import tmg.flashback.season.presentation.dashboard.shared.seasonpicker.CurrentSeasonHolder
 import tmg.flashback.usecases.DashboardSyncUseCase
@@ -30,6 +31,7 @@ import tmg.testutils.junit.toSealedClass
 internal class DashboardNavViewModelTest: BaseTest() {
 
     private val mockRssRepository: RssRepository = mockk(relaxed = true)
+    private val mockIsReactionGameEnabledUseCase: IsReactionGameEnabledUseCase = mockk(relaxed = true)
     private val mockApplicationNavigationComponent: ApplicationNavigationComponent = mockk(relaxed = true)
     private val mockCrashlyticsManager: CrashlyticsManager = mockk(relaxed = true)
     private val mockDashboardSyncUseCase: DashboardSyncUseCase = mockk(relaxed = true)
@@ -44,6 +46,7 @@ internal class DashboardNavViewModelTest: BaseTest() {
     private fun initUnderTest() {
         underTest = DashboardNavViewModel(
             rssRepository = mockRssRepository,
+            isReactionGameEnabledUseCase = mockIsReactionGameEnabledUseCase,
             navigator = mockNavigator,
             applicationNavigationComponent = mockApplicationNavigationComponent,
             crashlyticsManager = mockCrashlyticsManager,
@@ -198,10 +201,20 @@ internal class DashboardNavViewModelTest: BaseTest() {
 
         underTest.appFeatureItemsList.test {
             val item = awaitItem()
-//            assertTrue(item.any { it == MenuItem.Reaction })
             assertTrue(item.any { it == MenuItem.Search })
             assertTrue(item.any { it == MenuItem.Settings })
             assertTrue(item.any { it == MenuItem.Contact })
+        }
+    }
+
+    @Test
+    fun `app feature list contains reaction game when enabled`() = runTest(testDispatcher) {
+        every { mockIsReactionGameEnabledUseCase.invoke() } returns true
+        initUnderTest()
+
+        underTest.appFeatureItemsList.test {
+            val item = awaitItem()
+            assertTrue(item.any { it == MenuItem.Reaction })
         }
     }
 
