@@ -31,6 +31,7 @@ import tmg.flashback.season.contract.DriverStandings
 import tmg.flashback.season.contract.Races
 import tmg.flashback.presentation.settings.All
 import tmg.flashback.reactiongame.contract.Reaction
+import tmg.flashback.reactiongame.contract.usecases.IsReactionGameEnabledUseCase
 import tmg.flashback.season.presentation.dashboard.shared.seasonpicker.CurrentSeasonHolder
 import tmg.flashback.usecases.DashboardSyncUseCase
 import tmg.utilities.extensions.combinePair
@@ -55,6 +56,7 @@ interface DashboardNavViewModelOutputs {
 @HiltViewModel
 class DashboardNavViewModel @Inject constructor(
     private val rssRepository: RssRepository,
+    private val isReactionGameEnabledUseCase: IsReactionGameEnabledUseCase,
     private val navigator: Navigator,
     private val applicationNavigationComponent: ApplicationNavigationComponent,
     private val crashlyticsManager: CrashlyticsManager,
@@ -146,9 +148,9 @@ class DashboardNavViewModel @Inject constructor(
             if (rssRepository.enabled) {
                 add(MenuItem.RSS)
             }
-//            if (BuildConfig.DEBUG) {
-//                add(MenuItem.Reaction)
-//            }
+            if (isReactionGameEnabledUseCase()) {
+                add(MenuItem.Reaction)
+            }
             add(MenuItem.Settings)
             add(MenuItem.Contact)
         }
