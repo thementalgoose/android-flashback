@@ -13,6 +13,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -23,7 +24,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.windowsizeclass.WindowHeightSizeClass
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
@@ -191,12 +194,13 @@ private fun ReactionScreen(
                             .padding(AppTheme.dimens.medium),
                         verticalArrangement = Arrangement.spacedBy(AppTheme.dimens.medium)
                     ) {
+                        val modifier = Modifier.weight(1f).verticalScroll(rememberScrollState())
                         when (state) {
-                            is ReactionUiState.Game -> Game(Modifier.weight(1f))
-                            ReactionUiState.JumpStart -> JumpStart(Modifier.weight(1f))
-                            ReactionUiState.Missed -> Missed(Modifier.weight(1f))
-                            is ReactionUiState.Results -> Results(state, Modifier.weight(1f))
-                            ReactionUiState.Start -> Start(Modifier.weight(1f))
+                            is ReactionUiState.Game -> Game(modifier)
+                            ReactionUiState.JumpStart -> JumpStart(modifier)
+                            ReactionUiState.Missed -> Missed(modifier)
+                            is ReactionUiState.Results -> Results(state, modifier)
+                            ReactionUiState.Start -> Start(modifier)
                         }
                         Action(
                             modifier = Modifier.fillMaxWidth(),

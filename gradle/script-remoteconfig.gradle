@@ -76,6 +76,10 @@ task generateRemoteConfigDefaults {
                 value(supportedSeasons)
             }
             entry {
+                key('reaction_game')
+                value('false')
+            }
+            entry {
                 key('rss')
                 value('false')
             }
