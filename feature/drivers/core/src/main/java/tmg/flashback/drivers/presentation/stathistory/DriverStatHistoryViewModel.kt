@@ -29,7 +29,7 @@ interface DriverStatHistoryViewModelOutputs {
 @HiltViewModel
 class DriverStatHistoryViewModel @Inject constructor(
     private val driverRepository: DriverRepository,
-    private val ioDispatcher: CoroutineDispatcher
+    ioDispatcher: CoroutineDispatcher
 ): ViewModel(), DriverStatHistoryViewModelInputs, DriverStatHistoryViewModelOutputs {
 
     val inputs: DriverStatHistoryViewModelInputs = this

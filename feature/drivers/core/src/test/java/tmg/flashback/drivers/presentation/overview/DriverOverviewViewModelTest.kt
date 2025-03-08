@@ -31,7 +31,6 @@ internal class DriverOverviewViewModelTest: BaseTest() {
 
     private val mockDriverRepository: DriverRepository = mockk(relaxed = true)
     private val mockNetworkConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
-    private val mockDriverNavigationComponent: DriverNavigationComponent = mockk(relaxed = true)
     private val mockOpenWebpageUseCase: OpenWebpageUseCase = mockk(relaxed = true)
 
     private lateinit var underTest: DriverOverviewViewModel
@@ -40,7 +39,6 @@ internal class DriverOverviewViewModelTest: BaseTest() {
         val savedStateHandle = SavedStateHandle(mapOf("data" to ScreenDriverData("driverId", "driverName")))
         underTest = DriverOverviewViewModel(
             driverRepository = mockDriverRepository,
-            driverNavigationComponent = mockDriverNavigationComponent,
             openWebpageUseCase = mockOpenWebpageUseCase,
             networkConnectivityManager = mockNetworkConnectivityManager,
             savedStateHandle = savedStateHandle,

@@ -72,6 +72,10 @@ task generateRemoteConfigDefaults {
                 value('Data provided by the Flashback Team')
             }
             entry {
+                key('soft_upgrade')
+                value('false')
+            }
+            entry {
                 key('supported_seasons')
                 value(supportedSeasons)
             }

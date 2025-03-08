@@ -18,7 +18,9 @@ import tmg.flashback.ui.managers.PermissionManager
 import tmg.flashback.ui.managers.StyleManager
 import tmg.flashback.ui.model.NightMode
 import tmg.flashback.device.repository.PermissionRepository
+import tmg.flashback.device.usecases.OpenPlayStoreUseCase
 import tmg.flashback.eastereggs.usecases.IsSummerEnabledUseCase
+import tmg.flashback.maintenance.contract.usecases.ShouldSoftUpgradeUseCase
 import tmg.flashback.ui.usecases.ChangeNightModeUseCase
 import javax.inject.Inject
 
@@ -44,11 +46,13 @@ interface DashboardViewModelOutputs {
 class DashboardViewModel @Inject constructor(
     private val styleManager: StyleManager,
     private val changeNightModeUseCase: ChangeNightModeUseCase,
+    private val getSoftUpgradeUseCase: ShouldSoftUpgradeUseCase,
     private val buildConfigManager: BuildConfigManager,
     private val applicationNavigationComponent: ApplicationNavigationComponent,
     private val permissionManager: PermissionManager,
     private val notificationRepository: NotificationsRepository,
     private val permissionRepository: PermissionRepository,
+    private val openPlayStoreUseCase: OpenPlayStoreUseCase,
     isSnowEnabledUseCase: IsSnowEnabledUseCase,
     isSummerEnabledUseCase: IsSummerEnabledUseCase,
     isMenuIconEnabledUseCase: IsMenuIconEnabledUseCase,
@@ -81,6 +85,10 @@ class DashboardViewModel @Inject constructor(
             ) {
                 add(FeaturePrompt.RuntimeNotifications)
             }
+
+            if (getSoftUpgradeUseCase.shouldSoftUpgrade()) {
+                add(FeaturePrompt.SoftUpgrade)
+            }
         }
         featurePromptsList.value = list
     }
@@ -111,6 +119,9 @@ class DashboardViewModel @Inject constructor(
                             initialiseFeatureList()
                         }
                 }
+            }
+            FeaturePrompt.SoftUpgrade -> {
+                openPlayStoreUseCase.openPlaystore()
             }
         }
     }
