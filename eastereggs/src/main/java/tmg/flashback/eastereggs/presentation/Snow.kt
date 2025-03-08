@@ -1,4 +1,4 @@
-package tmg.flashback.eastereggs.ui
+package tmg.flashback.eastereggs.presentation
 
 
 import androidx.compose.foundation.isSystemInDarkTheme
