@@ -23,30 +23,30 @@ internal fun getWeekendEventOrder(
             )
         }
         season in 2021..2022 -> {
-            return listOf(
+            return listOfNotNull(
                 WeekendScreenState(SCHEDULE, isSelected = navItem == SCHEDULE),
                 WeekendScreenState(QUALIFYING, isSelected = navItem == QUALIFYING),
                 WeekendScreenState(SPRINT, isSelected = navItem == SPRINT).takeIf { hasSprintRace },
                 WeekendScreenState(RACE, isSelected = navItem == RACE)
-            ).filterNotNull()
+            )
         }
         season == 2023 -> {
-            return listOf(
+            return listOfNotNull(
                 WeekendScreenState(SCHEDULE, isSelected = navItem == SCHEDULE),
                 WeekendScreenState(QUALIFYING, isSelected = navItem == QUALIFYING),
                 WeekendScreenState(SPRINT_QUALIFYING, isSelected = navItem == SPRINT_QUALIFYING).takeIf { hasSprintQualifying },
                 WeekendScreenState(SPRINT, isSelected = navItem == SPRINT).takeIf { hasSprintRace },
                 WeekendScreenState(RACE, isSelected = navItem == RACE)
-            ).filterNotNull()
+            )
         }
         else -> {
-            return listOf(
+            return listOfNotNull(
                 WeekendScreenState(SCHEDULE, isSelected = navItem == SCHEDULE),
                 WeekendScreenState(SPRINT_QUALIFYING, isSelected = navItem == SPRINT_QUALIFYING).takeIf { hasSprintQualifying },
                 WeekendScreenState(SPRINT, isSelected = navItem == SPRINT).takeIf { hasSprintRace },
                 WeekendScreenState(QUALIFYING, isSelected = navItem == QUALIFYING),
                 WeekendScreenState(RACE, isSelected = navItem == RACE)
-            ).filterNotNull()
+            )
         }
     }
 }
