@@ -1,4 +1,4 @@
-package tmg.flashback.sandbox.core.styleguide
+package tmg.flashback.sandbox.core.presentation.styleguide
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
