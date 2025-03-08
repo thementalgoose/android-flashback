@@ -1,4 +1,4 @@
-package tmg.flashback.sandbox.core.styleguide
+package tmg.flashback.sandbox.core.presentation.styleguide
 
 internal enum class StyleGuideTabs(
     val label: String

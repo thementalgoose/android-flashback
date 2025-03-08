@@ -31,6 +31,7 @@ import tmg.flashback.season.contract.DriverStandings
 import tmg.flashback.season.contract.Races
 import tmg.flashback.presentation.settings.All
 import tmg.flashback.reactiongame.contract.Reaction
+import tmg.flashback.sandbox.usecases.GetSandboxMenuItemsUseCase
 import tmg.flashback.reactiongame.contract.usecases.IsReactionGameEnabledUseCase
 import tmg.flashback.season.presentation.dashboard.shared.seasonpicker.CurrentSeasonHolder
 import tmg.flashback.usecases.DashboardSyncUseCase
@@ -61,6 +62,7 @@ class DashboardNavViewModel @Inject constructor(
     private val applicationNavigationComponent: ApplicationNavigationComponent,
     private val crashlyticsManager: CrashlyticsManager,
     private val dashboardSyncUseCase: DashboardSyncUseCase,
+    private val getSandboxMenuItemsUseCase: GetSandboxMenuItemsUseCase,
     private val sandboxNavigationComponent: SandboxNavigationComponent,
     private val currentSeasonHolder: CurrentSeasonHolder,
     ioDispatcher: CoroutineDispatcher = Dispatchers.IO
@@ -129,7 +131,7 @@ class DashboardNavViewModel @Inject constructor(
 
     override val appFeatureItemsList: MutableStateFlow<List<MenuItem>> = MutableStateFlow(emptyList())
     override val seasonScreenItemsList: MutableStateFlow<List<MenuItem>> = MutableStateFlow(emptyList())
-    override val sandboxMenuItems: MutableStateFlow<List<SandboxMenuItem>> = MutableStateFlow(sandboxNavigationComponent.getDebugMenuItems())
+    override val sandboxMenuItems: MutableStateFlow<List<SandboxMenuItem>> = MutableStateFlow(getSandboxMenuItemsUseCase())
 
     init {
         initialiseItems()

@@ -2,13 +2,13 @@
 
     <application>
 
-        <activity android:name=".SandboxActivity"
+        <activity android:name=".presentation.SandboxActivity"
             android:exported="false" />
 
-        <activity android:name=".styleguide.StyleGuideComposeActivity"
+        <activity android:name=".presentation.styleguide.StyleGuideComposeActivity"
             android:exported="false" />
 
-        <activity android:name=".adverts.AdvertsActivity"
+        <activity android:name=".presentation.adverts.AdvertsActivity"
             android:exported="false" />
 
     </application>
