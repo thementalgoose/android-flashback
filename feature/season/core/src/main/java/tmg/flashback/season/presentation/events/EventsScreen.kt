@@ -34,8 +34,7 @@ import tmg.utilities.extensions.format
 fun EventsScreenVM(
     season: Int,
     modifier: Modifier = Modifier,
-    viewModel: EventsViewModel = hiltViewModel(),
-    actionUpClicked: () -> Unit,
+    viewModel: EventsViewModel = hiltViewModel()
 ) {
     val events = viewModel.outputs.events.collectAsState(emptyList())
     viewModel.inputs.setup(season)
@@ -43,7 +42,6 @@ fun EventsScreenVM(
     EventsScreen(
         season = season,
         events = events.value,
-        actionUpClicked = actionUpClicked,
         modifier = modifier
     )
 }
@@ -52,7 +50,6 @@ fun EventsScreenVM(
 private fun EventsScreen(
     season: Int,
     events: List<Event>,
-    actionUpClicked: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     ScreenView(screenName = "Events", args = mapOf(
@@ -68,7 +65,7 @@ private fun EventsScreen(
             ),
         title = stringResource(id = string.events_list_title, season.toString()),
         subtitle = stringResource(id = string.events_list_subtitle),
-        backClicked = actionUpClicked
+        backClicked = null
     ) {
         events.forEach { event ->
             Event(event)
@@ -114,8 +111,7 @@ private fun Preview(
     AppThemePreview {
         EventsScreen(
             season = 2021,
-            events = listOf(event),
-            actionUpClicked = { }
+            events = listOf(event)
         )
     }
 }

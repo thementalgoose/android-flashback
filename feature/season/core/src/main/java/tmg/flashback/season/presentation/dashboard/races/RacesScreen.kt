@@ -149,8 +149,7 @@ fun ScheduleScreen(
             },
             content = {
                 EventsScreenVM(
-                    season = uiState.season,
-                    actionUpClicked = { showEvents.value = false }
+                    season = uiState.season
                 )
             }
         )
@@ -165,8 +164,7 @@ fun ScheduleScreen(
             },
             content = {
                 TyreCompounds(
-                    season = uiState.season,
-                    actionUpClicked = { showTyres.value = false }
+                    season = uiState.season
                 )
             }
         )

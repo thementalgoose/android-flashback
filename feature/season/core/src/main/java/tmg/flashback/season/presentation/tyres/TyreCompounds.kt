@@ -28,8 +28,8 @@ import tmg.flashback.ui.components.layouts.BottomSheetContainer
 @Composable
 fun TyreCompounds(
     season: Int,
-    actionUpClicked: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    actionUpClicked: (() -> Unit)? = null,
 ) {
     ScreenView(screenName = "Tyre Compounds", args = mapOf(
         analyticsSeason to season.toString()

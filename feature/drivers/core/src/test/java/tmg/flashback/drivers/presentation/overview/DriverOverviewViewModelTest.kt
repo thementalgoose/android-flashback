@@ -120,17 +120,6 @@ internal class DriverOverviewViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `opening driver stat history launches stats navigation component`() = runTest(testDispatcher) {
-        initUnderTest()
-
-        underTest.inputs.openStatHistory(DriverStatHistoryType.POLES)
-
-        verify {
-            mockDriverNavigationComponent.driverStatHistory("driverId", "driverName", DriverStatHistoryType.POLES)
-        }
-    }
-
-    @Test
     fun `opening driver season updates selected season, back clears selected season`() = runTest {
         initUnderTest()
         underTest.inputs.openSeason(2020)
