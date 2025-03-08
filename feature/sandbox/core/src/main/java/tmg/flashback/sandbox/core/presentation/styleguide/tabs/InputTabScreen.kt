@@ -1,4 +1,4 @@
-package tmg.flashback.sandbox.core.styleguide.tabs
+package tmg.flashback.sandbox.core.presentation.styleguide.tabs
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

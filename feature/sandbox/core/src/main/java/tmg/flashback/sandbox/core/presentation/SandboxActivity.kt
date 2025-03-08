@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalFoundationApi::class)
 
-package tmg.flashback.sandbox.core
+package tmg.flashback.sandbox.core.presentation
 
 import android.annotation.SuppressLint
 import android.os.Bundle

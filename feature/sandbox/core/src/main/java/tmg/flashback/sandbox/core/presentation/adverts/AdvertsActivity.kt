@@ -1,4 +1,4 @@
-package tmg.flashback.sandbox.core.adverts
+package tmg.flashback.sandbox.core.presentation.adverts
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
