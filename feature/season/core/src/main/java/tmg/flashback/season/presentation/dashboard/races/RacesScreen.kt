@@ -1,19 +1,34 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package tmg.flashback.season.presentation.dashboard.races
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -34,11 +49,13 @@ import tmg.flashback.formula1.extensions.label
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.providers.OverviewRaceProvider
 import tmg.flashback.season.R
-import tmg.flashback.strings.R.string
 import tmg.flashback.season.contract.repository.models.NotificationSchedule
 import tmg.flashback.season.presentation.dashboard.DashboardQuickLinks
 import tmg.flashback.season.presentation.dashboard.shared.seasonpicker.SeasonTitleVM
+import tmg.flashback.season.presentation.events.EventsScreenVM
 import tmg.flashback.season.presentation.messaging.ProvidedBy
+import tmg.flashback.season.presentation.tyres.TyreCompounds
+import tmg.flashback.strings.R.string
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
@@ -60,7 +77,6 @@ import tmg.flashback.weekend.contract.requireWeekendNavigationComponent
 import tmg.flashback.weekend.contract.stripWeekendJsonData
 import tmg.utilities.extensions.format
 import tmg.utilities.extensions.startOfWeek
-import java.lang.RuntimeException
 
 private const val listAlpha = 0.6f
 private val expandIcon = 20.dp
@@ -99,7 +115,6 @@ fun RacesScreen(
                 advertProvider = advertProvider,
                 uiState = uiState.value,
                 refresh = viewModel.inputs::refresh,
-                tyreClicked = viewModel.inputs::clickTyre,
                 itemClicked = viewModel.inputs::clickItem,
             )
         },
@@ -123,9 +138,40 @@ fun ScheduleScreen(
     advertProvider: AdvertProvider,
     uiState: RacesScreenState,
     refresh: () -> Unit,
-    tyreClicked: () -> Unit,
     itemClicked: (RacesModel) -> Unit,
 ) {
+    var showEvents = rememberSaveable { mutableStateOf(false) }
+    if (showEvents.value && uiState.showEvents) {
+        ModalBottomSheet(
+            containerColor = AppTheme.colors.backgroundContainer,
+            onDismissRequest = {
+                showEvents.value = false
+            },
+            content = {
+                EventsScreenVM(
+                    season = uiState.season,
+                    actionUpClicked = { showEvents.value = false }
+                )
+            }
+        )
+    }
+
+    var showTyres = rememberSaveable { mutableStateOf(false) }
+    if (showTyres.value && uiState.showTyres) {
+        ModalBottomSheet(
+            containerColor = AppTheme.colors.backgroundContainer,
+            onDismissRequest = {
+                showTyres.value = false
+            },
+            content = {
+                TyreCompounds(
+                    season = uiState.season,
+                    actionUpClicked = { showTyres.value = false }
+                )
+            }
+        )
+    }
+
     SwipeRefresh(
         isLoading = uiState.isLoading,
         onRefresh = refresh
@@ -149,7 +195,7 @@ fun ScheduleScreen(
                             Fade(
                                 visible = uiState.showEvents
                             ) {
-                                IconButton(onClick = { itemClicked(RacesModel.AllEvents) }) {
+                                IconButton(onClick = { showEvents.value = true }) {
                                     Icon(
                                         painter = painterResource(id = tmg.flashback.formula1.R.drawable.ic_event_type_other),
                                         contentDescription = stringResource(id = string.events_title),
@@ -160,7 +206,7 @@ fun ScheduleScreen(
                             Fade(
                                 visible = uiState.showTyres
                             ) {
-                                IconButton(onClick = tyreClicked) {
+                                IconButton(onClick = { showTyres.value = true }) {
                                     Icon(
                                         painter = painterResource(id = tmg.flashback.formula1.R.drawable.ic_tyre),
                                         contentDescription = stringResource(id = string.tyres_label),

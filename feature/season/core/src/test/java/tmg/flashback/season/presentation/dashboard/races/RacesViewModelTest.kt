@@ -4,9 +4,7 @@ import app.cash.turbine.test
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.verify
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -16,21 +14,19 @@ import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import tmg.flashback.ads.ads.repository.AdsRepository
 import tmg.flashback.ads.ads.repository.model.AdvertConfig
-import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.data.repo.EventsRepository
 import tmg.flashback.data.repo.OverviewRepository
 import tmg.flashback.data.repo.usecases.FetchSeasonUseCase
+import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.formula1.model.Overview
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.model.model
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.reviews.usecases.AppSection
 import tmg.flashback.reviews.usecases.ReviewSectionSeenUseCase
-import tmg.flashback.season.contract.ResultsNavigationComponent
 import tmg.flashback.season.contract.repository.NotificationsRepository
 import tmg.flashback.season.presentation.dashboard.shared.seasonpicker.CurrentSeasonHolder
 import tmg.flashback.season.repository.HomeRepository
-import tmg.flashback.season.usecases.DefaultSeasonUseCase
 import tmg.flashback.weekend.contract.model.ScreenWeekendData
 import tmg.testutils.BaseTest
 
@@ -41,7 +37,6 @@ internal class RacesViewModelTest: BaseTest() {
     private val mockFetchSeasonUseCase: FetchSeasonUseCase = mockk(relaxed = true)
     private val mockNotificationRepository: NotificationsRepository = mockk(relaxed = true)
     private val mockCurrentSeasonHolder: CurrentSeasonHolder = mockk(relaxed = true)
-    private val mockResultsNavigationComponent: ResultsNavigationComponent = mockk(relaxed = true)
     private val mockHomeRepository: HomeRepository = mockk(relaxed = true)
     private val mockNavigator: Navigator = mockk(relaxed = true)
     private val mockAdvertRepository: AdsRepository = mockk(relaxed = true)
@@ -57,7 +52,6 @@ internal class RacesViewModelTest: BaseTest() {
             currentSeasonHolder = mockCurrentSeasonHolder,
             notificationRepository = mockNotificationRepository,
             homeRepository = mockHomeRepository,
-            resultsNavigationComponent = mockResultsNavigationComponent,
             eventsRepository = mockEventsRepository,
             navigator = mockNavigator,
             networkConnectivityManager = mockNetworkConnectivityManager,
@@ -204,16 +198,6 @@ internal class RacesViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `clicking tyre opens navigation component`() = runTest {
-        initUnderTest()
-        underTest.clickTyre()
-
-        verify {
-            mockResultsNavigationComponent.tyres(2020)
-        }
-    }
-
-    @Test
     fun `clicking grouped races uncollapses races`() = runTest {
         every { mockOverviewRepository.getOverview(2020) } returns flow { emit(
             Overview.model(
@@ -236,15 +220,6 @@ internal class RacesViewModelTest: BaseTest() {
             testScheduler.advanceUntilIdle()
 
             assertTrue(awaitItem().items?.none { it is RacesModel.GroupedCompletedRaces } == true)
-        }
-    }
-
-    @Test
-    fun `clicking all events loads preseason events`() = runTest {
-        initUnderTest()
-        underTest.inputs.clickItem(RacesModel.AllEvents)
-        verify {
-            mockResultsNavigationComponent.preseasonEvents(2020)
         }
     }
 

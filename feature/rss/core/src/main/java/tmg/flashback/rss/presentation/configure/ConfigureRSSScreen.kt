@@ -16,12 +16,14 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Text
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -35,7 +37,6 @@ import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.toColorInt
 import androidx.hilt.navigation.compose.hiltViewModel
-import tmg.flashback.rss.R
 import tmg.flashback.rss.repo.model.SupportedArticleSource
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
@@ -44,7 +45,6 @@ import tmg.flashback.style.buttons.ButtonSecondary
 import tmg.flashback.style.input.InputSwitch
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextTitle
-import tmg.flashback.ui.bottomsheet.ModalSheet
 import tmg.flashback.googleanalytics.presentation.ScreenView
 import tmg.flashback.strings.R.string
 import tmg.flashback.ui.components.header.HeaderAction
@@ -157,24 +157,23 @@ fun ConfigureRSSScreen(
     )
 
     val keyboardController = LocalSoftwareKeyboardController.current
-    ModalSheet(
-        visible = customRssBox.value,
-        onVisibleChange = {
-            if (!it) {
-                keyboardController?.hide()
+    if (customRssBox.value) {
+        ModalBottomSheet(
+            containerColor = AppTheme.colors.backgroundContainer,
+            onDismissRequest = {
                 customRssBox.value = false
-            }
-        },
-        cancelable = true
-    ) {
-        AddRSSScreen(
-            sourceAdded = {
-                keyboardController?.hide()
-                sourceAdded(it)
             },
-            closeSheet = {
-                keyboardController?.hide()
-                customRssBox.value = false
+            content = {
+                AddRSSScreen(
+                    sourceAdded = {
+                        keyboardController?.hide()
+                        sourceAdded(it)
+                    },
+                    closeSheet = {
+                        keyboardController?.hide()
+                        customRssBox.value = false
+                    }
+                )
             }
         )
     }

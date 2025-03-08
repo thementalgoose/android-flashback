@@ -35,7 +35,6 @@ import tmg.flashback.navigation.ApplicationNavigationComponent
 import tmg.flashback.notifications.receiver.LocalNotificationBroadcastReceiver
 import tmg.flashback.notifications.repository.NotificationRepository
 import tmg.flashback.prefs.manager.PreferenceManager
-import tmg.flashback.season.contract.ResultsNavigationComponent
 import tmg.flashback.season.contract.repository.models.NotificationUpcoming
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.buttons.ButtonPrimary
@@ -86,9 +85,6 @@ class SandboxActivity: BaseActivity() {
 
     @Inject
     lateinit var applicationNavigationComponent: ApplicationNavigationComponent
-
-    @Inject
-    lateinit var resultsNavigationComponent: ResultsNavigationComponent
 
     @Inject
     lateinit var permissionRepository: PermissionRepository
