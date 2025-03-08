@@ -30,8 +30,8 @@ import tmg.flashback.R
 import tmg.flashback.strings.R.string
 import tmg.flashback.sandbox.model.SandboxMenuItem
 import tmg.flashback.eastereggs.model.MenuIcons
-import tmg.flashback.eastereggs.ui.snow
-import tmg.flashback.eastereggs.ui.summer
+import tmg.flashback.eastereggs.presentation.snow
+import tmg.flashback.eastereggs.presentation.summer
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
