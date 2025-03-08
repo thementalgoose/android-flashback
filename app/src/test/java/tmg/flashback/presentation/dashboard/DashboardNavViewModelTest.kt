@@ -23,6 +23,7 @@ import tmg.flashback.navigation.NavigationDestination
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.reactiongame.contract.usecases.IsReactionGameEnabledUseCase
 import tmg.flashback.rss.repo.RssRepository
+import tmg.flashback.sandbox.usecases.GetSandboxMenuItemsUseCase
 import tmg.flashback.season.presentation.dashboard.shared.seasonpicker.CurrentSeasonHolder
 import tmg.flashback.usecases.DashboardSyncUseCase
 import tmg.testutils.BaseTest
@@ -35,6 +36,7 @@ internal class DashboardNavViewModelTest: BaseTest() {
     private val mockApplicationNavigationComponent: ApplicationNavigationComponent = mockk(relaxed = true)
     private val mockCrashlyticsManager: CrashlyticsManager = mockk(relaxed = true)
     private val mockDashboardSyncUseCase: DashboardSyncUseCase = mockk(relaxed = true)
+    private val mockGetSandboxMenuItemsUseCase: GetSandboxMenuItemsUseCase = mockk(relaxed = true)
     private val mockSandboxNavigationComponent: SandboxNavigationComponent = mockk(relaxed = true)
     private val mockCurrentSeasonHolder: CurrentSeasonHolder = mockk(relaxed = true)
 
@@ -52,6 +54,7 @@ internal class DashboardNavViewModelTest: BaseTest() {
             crashlyticsManager = mockCrashlyticsManager,
             dashboardSyncUseCase = mockDashboardSyncUseCase,
             sandboxNavigationComponent = mockSandboxNavigationComponent,
+            getSandboxMenuItemsUseCase = mockGetSandboxMenuItemsUseCase,
             currentSeasonHolder = mockCurrentSeasonHolder,
             ioDispatcher = Dispatchers.Unconfined
         )
@@ -244,7 +247,7 @@ internal class DashboardNavViewModelTest: BaseTest() {
     @Test
     fun `debug items come from debug nav component`() = runTest(testDispatcher) {
         val list: List<SandboxMenuItem> = listOf(mockk())
-        every { mockSandboxNavigationComponent.getDebugMenuItems() } returns list
+        every { mockGetSandboxMenuItemsUseCase.invoke() } returns list
 
         initUnderTest()
         underTest.outputs.sandboxMenuItems.test {
