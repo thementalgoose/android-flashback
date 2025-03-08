@@ -1,10 +1,10 @@
-package tmg.flashback.maintenance.repository.converters
+package tmg.flashback.maintenance.data
 
-import tmg.flashback.maintenance.repository.json.ForceUpgradeJson
+import tmg.flashback.maintenance.data.models.ForceUpgradeDto
 import tmg.flashback.maintenance.repository.model.ForceUpgrade
 
 
-internal fun ForceUpgradeJson.convert(): ForceUpgrade? {
+internal fun ForceUpgradeDto.convert(): ForceUpgrade? {
     if (title.isNullOrEmpty() || message.isNullOrEmpty()) {
         return null
     }

@@ -13,4 +13,9 @@ sealed class FeaturePrompt(
         id = "feature-runtime",
         label = string.feature_banner_runtime_notifications
     )
+
+    data object SoftUpgrade: FeaturePrompt(
+        id = "feature-soft-upgrade",
+        label = string.feature_banner_soft_upgrade
+    )
 }

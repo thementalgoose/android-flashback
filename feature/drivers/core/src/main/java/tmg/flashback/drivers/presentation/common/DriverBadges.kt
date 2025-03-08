@@ -9,12 +9,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import tmg.flashback.formula1.R
 import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.Driver
+import tmg.flashback.formula1.model.DriverEntry
+import tmg.flashback.providers.DriverConstructorProvider
 import tmg.flashback.style.AppTheme
+import tmg.flashback.style.AppThemePreview
+import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.badge.Badge
 import tmg.flashback.style.badge.BadgeView
 import tmg.flashback.ui.utils.DrawableUtils.getFlagResourceAlpha3
@@ -65,5 +70,18 @@ fun DriverBadges(
                 tintIcon = it.colour
             )
         }
+    }
+}
+
+@PreviewTheme
+@Composable
+private fun Preview(
+    @PreviewParameter(DriverConstructorProvider::class) entry: DriverEntry
+) {
+    AppThemePreview {
+        DriverBadges(
+            driver = entry.driver,
+            constructors = listOf(entry.constructor)
+        )
     }
 }
