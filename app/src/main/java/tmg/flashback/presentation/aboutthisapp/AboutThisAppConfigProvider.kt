@@ -21,6 +21,7 @@ import tmg.flashback.rss.usecases.AllSupportedSourcesUseCase
 import tmg.flashback.style.darkColours
 import tmg.flashback.style.dynamic
 import tmg.flashback.style.lightColours
+import tmg.flashback.ui.managers.StyleManager
 import tmg.flashback.ui.model.Theme
 import tmg.flashback.ui.repository.ThemeRepository
 import javax.inject.Inject
@@ -32,6 +33,7 @@ class AboutThisAppConfigProvider @Inject constructor(
     private val deviceRepository: DeviceRepository,
     private val contactRepository: ContactRepository,
     private val themeRepository: ThemeRepository,
+    private val styleManager: StyleManager,
     private val allSupportedSourcesUseCase: AllSupportedSourcesUseCase,
 ) {
     fun getConfig(): Configuration {
@@ -54,6 +56,7 @@ class AboutThisAppConfigProvider @Inject constructor(
             email = contactRepository.contactEmail,
             github = "https://www.github.com/thementalgoose",
             debugInfo = "${deviceRepository.deviceUdid}\n${deviceRepository.installationId}",
+            setIsDarkMode = !styleManager.isDayMode,
             lightColors = lightColours,
             darkColors = darkColours
         )

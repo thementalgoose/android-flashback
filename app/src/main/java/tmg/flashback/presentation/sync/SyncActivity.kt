@@ -7,19 +7,16 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.collectAsState
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import tmg.flashback.R
 import tmg.flashback.maintenance.contract.MaintenanceNavigationComponent
-import tmg.flashback.style.AppTheme
 import tmg.flashback.presentation.HomeActivity
-import tmg.flashback.ui.base.BaseActivity
 import tmg.flashback.presentation.sync.SyncState.LOADING
-import tmg.utilities.extensions.setStatusBarColor
+import tmg.flashback.style.AppTheme
+import tmg.flashback.ui.base.BaseActivity
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -56,8 +53,6 @@ class SyncActivity: BaseActivity() {
                 )
             }
         }
-
-        setStatusBarColor(ContextCompat.getColor(this, R.color.splash_screen))
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
