@@ -26,15 +26,13 @@ internal class DriverSeasonViewModelTest: BaseTest() {
 
     private val mockDriverRepository: DriverRepository = mockk(relaxed = true)
     private val mockNetworkConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
-    private val mockThemeRepository: ThemeRepository = mockk(relaxed = true)
 
     private lateinit var sut: DriverSeasonViewModel
 
     private fun initSUT() {
         sut = DriverSeasonViewModel(
-            mockDriverRepository,
-            mockNetworkConnectivityManager,
-            mockThemeRepository,
+            driverRepository = mockDriverRepository,
+            connectivityManager = mockNetworkConnectivityManager,
             ioDispatcher = coroutineScope.testDispatcher
         )
     }

@@ -1,11 +1,11 @@
-package tmg.flashback.maintenance.repository.json
+package tmg.flashback.maintenance.data.models
 
 import androidx.annotation.Keep
 import kotlinx.serialization.Serializable
 
 @Keep
 @Serializable
-internal data class ForceUpgradeJson(
+internal data class ForceUpgradeDto(
     val title: String? = null,
     val message: String? = null,
     val link: String? = null,

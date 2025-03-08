@@ -48,7 +48,6 @@ interface DriverOverviewViewModelOutputs {
 @HiltViewModel
 class DriverOverviewViewModel @Inject constructor(
     private val driverRepository: DriverRepository,
-    private val driverNavigationComponent: DriverNavigationComponent,
     private val openWebpageUseCase: OpenWebpageUseCase,
     private val networkConnectivityManager: NetworkConnectivityManager,
     savedStateHandle: SavedStateHandle,

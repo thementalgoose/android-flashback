@@ -25,7 +25,9 @@ import tmg.flashback.ui.managers.PermissionManager
 import tmg.flashback.ui.managers.StyleManager
 import tmg.flashback.ui.model.NightMode
 import tmg.flashback.device.repository.PermissionRepository
+import tmg.flashback.device.usecases.OpenPlayStoreUseCase
 import tmg.flashback.eastereggs.usecases.IsSummerEnabledUseCase
+import tmg.flashback.maintenance.contract.usecases.ShouldSoftUpgradeUseCase
 import tmg.flashback.ui.usecases.ChangeNightModeUseCase
 import tmg.testutils.BaseTest
 
@@ -35,9 +37,11 @@ internal class DashboardViewModelTest: BaseTest() {
     private val mockChangeNightModeUseCase: ChangeNightModeUseCase = mockk(relaxed = true)
     private val mockBuildConfigManager: BuildConfigManager = mockk(relaxed = true)
     private val mockNotificationRepository: NotificationsRepository = mockk(relaxed = true)
+    private val mockGetSoftUpgradeUseCase: ShouldSoftUpgradeUseCase = mockk(relaxed = true)
     private val mockPermissionRepository: PermissionRepository = mockk(relaxed = true)
     private val mockApplicationNavigationComponent: ApplicationNavigationComponent = mockk(relaxed = true)
     private val mockPermissionManager: PermissionManager = mockk(relaxed = true)
+    private val mockOpenPlayStoreUseCase: OpenPlayStoreUseCase = mockk(relaxed = true)
     private val mockIsSnowEnabledUseCase: IsSnowEnabledUseCase = mockk(relaxed = true)
     private val mockIsSummerEnabledUseCase: IsSummerEnabledUseCase = mockk(relaxed = true)
     private val mockIsMenuIconEnabledUseCase: IsMenuIconEnabledUseCase = mockk(relaxed = true)
@@ -51,13 +55,15 @@ internal class DashboardViewModelTest: BaseTest() {
             changeNightModeUseCase = mockChangeNightModeUseCase,
             buildConfigManager = mockBuildConfigManager,
             notificationRepository = mockNotificationRepository,
+            getSoftUpgradeUseCase = mockGetSoftUpgradeUseCase,
             permissionRepository = mockPermissionRepository,
             applicationNavigationComponent = mockApplicationNavigationComponent,
             permissionManager = mockPermissionManager,
+            openPlayStoreUseCase = mockOpenPlayStoreUseCase,
             isSnowEnabledUseCase = mockIsSnowEnabledUseCase,
             isSummerEnabledUseCase = mockIsSummerEnabledUseCase,
             isMenuIconEnabledUseCase = mockIsMenuIconEnabledUseCase,
-            isUkraineEnabledUseCase = mockIsUkraineEnabledUseCase
+            isUkraineEnabledUseCase = mockIsUkraineEnabledUseCase,
         )
     }
 
@@ -179,6 +185,29 @@ internal class DashboardViewModelTest: BaseTest() {
                 } else {
                     assertTrue(item.none { it is FeaturePrompt.RuntimeNotifications  })
                 }
+            }
+        }
+
+        @Test
+        fun `soft upgrade`() = runTest(testDispatcher) {
+            every { mockGetSoftUpgradeUseCase.shouldSoftUpgrade() } returns true
+
+            initUnderTest()
+            underTest.featurePromptsList.test {
+                val item = awaitItem()
+                assertTrue(item.any { it is FeaturePrompt.SoftUpgrade })
+            }
+        }
+
+        @Test
+        fun `clicking soft upgrade`() = runTest(testDispatcher) {
+            every { mockGetSoftUpgradeUseCase.shouldSoftUpgrade() } returns true
+
+            initUnderTest()
+            underTest.inputs.clickFeaturePrompt(FeaturePrompt.SoftUpgrade)
+
+            verify {
+                mockOpenPlayStoreUseCase.openPlaystore()
             }
         }
 
