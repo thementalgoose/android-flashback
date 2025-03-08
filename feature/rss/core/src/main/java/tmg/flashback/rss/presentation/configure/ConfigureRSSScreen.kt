@@ -20,6 +20,7 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -157,6 +158,11 @@ fun ConfigureRSSScreen(
     )
 
     val keyboardController = LocalSoftwareKeyboardController.current
+    LaunchedEffect(customRssBox.value) {
+        if (customRssBox.value == false) {
+            keyboardController?.hide()
+        }
+    }
     if (customRssBox.value) {
         ModalBottomSheet(
             containerColor = AppTheme.colors.backgroundContainer,
@@ -168,10 +174,6 @@ fun ConfigureRSSScreen(
                     sourceAdded = {
                         keyboardController?.hide()
                         sourceAdded(it)
-                    },
-                    closeSheet = {
-                        keyboardController?.hide()
-                        customRssBox.value = false
                     }
                 )
             }

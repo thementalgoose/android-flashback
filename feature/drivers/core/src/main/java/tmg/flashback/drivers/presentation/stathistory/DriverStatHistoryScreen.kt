@@ -53,7 +53,6 @@ fun DriverStatHistoryScreenVM(
     driverId: String,
     driverName: String,
     driverStatHistoryType: DriverStatHistoryType,
-    actionUpClicked: () -> Unit,
     viewModel: DriverStatHistoryViewModel = hiltViewModel()
 ) {
     viewModel.inputs.load(driverId, driverStatHistoryType)
@@ -67,8 +66,7 @@ fun DriverStatHistoryScreenVM(
     DriverStatHistoryScreen(
         driverName = driverName,
         list = list.value,
-        driverStatHistoryType = driverStatHistoryType,
-        actionUpClicked = actionUpClicked
+        driverStatHistoryType = driverStatHistoryType
     )
 }
 
@@ -78,12 +76,11 @@ private fun DriverStatHistoryScreen(
     driverName: String,
     list: List<DriverStatHistoryModel>,
     driverStatHistoryType: DriverStatHistoryType,
-    actionUpClicked: () -> Unit,
 ) {
     BottomSheetContainer(
-        title = "$driverName\n${stringResource(driverStatHistoryType.label)}",
-        subtitle = null,
-        backClicked = actionUpClicked,
+        title = driverName,
+        subtitle = stringResource(driverStatHistoryType.label),
+        backClicked = null,
         content = {
             LazyColumn(
                 modifier = Modifier.nestedScroll(rememberNestedScrollInteropConnection())
@@ -318,8 +315,7 @@ private fun Preview(
                 )
             ),
             driverName = "firstName lastName",
-            driverStatHistoryType = DriverStatHistoryType.CHAMPIONSHIPS,
-            actionUpClicked = { }
+            driverStatHistoryType = DriverStatHistoryType.CHAMPIONSHIPS
         )
     }
 }

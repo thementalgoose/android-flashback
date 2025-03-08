@@ -30,8 +30,6 @@ interface DriverOverviewViewModelInputs {
     fun openUrl(url: String)
     fun openSeason(season: Int)
 
-    fun openStatHistory(type: DriverStatHistoryType)
-
     fun refresh()
 }
 
@@ -81,14 +79,6 @@ class DriverOverviewViewModel @Inject constructor(
 
     override fun back() {
         uiState.value = uiState.value.copy(selectedSeason = null)
-    }
-
-    override fun openStatHistory(type: DriverStatHistoryType) {
-        val driverId = uiState.value.driverId
-        val driverName = uiState.value.driverName
-        if (driverId.isNotEmpty() && driverName.isNotEmpty()) {
-            driverNavigationComponent.driverStatHistory(driverId, driverName, type)
-        }
     }
 
     override fun refresh() {

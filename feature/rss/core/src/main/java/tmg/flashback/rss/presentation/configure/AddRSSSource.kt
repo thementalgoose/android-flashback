@@ -22,7 +22,6 @@ import tmg.flashback.ui.components.layouts.BottomSheetContainer
 @Composable
 internal fun AddRSSScreen(
     sourceAdded: (rssLink: String) -> Unit,
-    closeSheet: () -> Unit,
 ) {
     val input = remember { mutableStateOf(TextFieldValue("")) }
     BottomSheetContainer(
@@ -30,7 +29,7 @@ internal fun AddRSSScreen(
             .imePadding(),
         title = stringResource(id = string.settings_rss_add_title),
         subtitle = stringResource(id = string.settings_rss_add_description),
-        backClicked = closeSheet
+        backClicked = null
     ) {
         InputPrimary(
             modifier = Modifier.padding(
@@ -63,7 +62,6 @@ private fun Preview() {
     AppThemePreview {
         AddRSSScreen(
             sourceAdded = { },
-            closeSheet = { }
         )
     }
 }

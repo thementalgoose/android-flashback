@@ -139,10 +139,7 @@ fun DriverOverviewScreen(
                 DriverStatHistoryScreenVM(
                     driverId = uiState.driverId,
                     driverName = uiState.driverName,
-                    driverStatHistoryType = showDriverStatHistoryType.value!!,
-                    actionUpClicked = {
-                        showDriverStatHistoryType.value = null
-                    }
+                    driverStatHistoryType = showDriverStatHistoryType.value!!
                 )
             }
         )
