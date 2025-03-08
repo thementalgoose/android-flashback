@@ -11,34 +11,24 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import tmg.flashback.ads.ads.repository.AdsRepository
-import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.data.repo.EventsRepository
 import tmg.flashback.data.repo.OverviewRepository
 import tmg.flashback.data.repo.usecases.FetchSeasonUseCase
+import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
-import tmg.flashback.formula1.enums.SeasonTyres
-import tmg.flashback.formula1.enums.getBySeason
-import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.navigation.Navigator
-import tmg.flashback.navigation.Screen
-import tmg.flashback.reviews.usecases.AppSection
 import tmg.flashback.reviews.usecases.AppSection.HOME_CALENDAR
 import tmg.flashback.reviews.usecases.ReviewSectionSeenUseCase
-import tmg.flashback.season.contract.ResultsNavigationComponent
 import tmg.flashback.season.contract.repository.NotificationsRepository
 import tmg.flashback.season.presentation.dashboard.races.RacesModelBuilder.generateScheduleModel
 import tmg.flashback.season.presentation.dashboard.shared.seasonpicker.CurrentSeasonHolder
 import tmg.flashback.season.repository.HomeRepository
-import tmg.flashback.season.usecases.DefaultSeasonUseCase
-import tmg.flashback.weekend.contract.Weekend
 import tmg.flashback.weekend.contract.model.ScreenWeekendData
 import tmg.flashback.weekend.contract.model.ScreenWeekendNav
-import tmg.flashback.weekend.contract.with
 import javax.inject.Inject
 
 interface RacesViewModelInputs {
     fun refresh()
-    fun clickTyre()
     fun clickItem(model: RacesModel)
     fun deeplinkToo(screenWeekendData: ScreenWeekendData)
     fun back()
@@ -55,7 +45,6 @@ class RacesViewModel @Inject constructor(
     private val currentSeasonHolder: CurrentSeasonHolder,
     private val notificationRepository: NotificationsRepository,
     private val homeRepository: HomeRepository,
-    private val resultsNavigationComponent: ResultsNavigationComponent,
     private val eventsRepository: EventsRepository,
     private val navigator: Navigator,
     private val networkConnectivityManager: NetworkConnectivityManager,
@@ -130,10 +119,6 @@ class RacesViewModel @Inject constructor(
         return true
     }
 
-    override fun clickTyre() {
-        resultsNavigationComponent.tyres(uiState.value.season)
-    }
-
     override fun back() {
         uiState.value = uiState.value.copy(
             currentRace = null
@@ -160,10 +145,8 @@ class RacesViewModel @Inject constructor(
                 collapseRaces = false
                 viewModelScope.launch(ioDispatcher) { populate(uiState.value.season) }
             }
-            is RacesModel.Event -> {}
-            RacesModel.AllEvents -> {
-                resultsNavigationComponent.preseasonEvents(uiState.value.season)
-            }
+            is RacesModel.Event -> { }
+            RacesModel.AllEvents -> { }
         }
     }
 

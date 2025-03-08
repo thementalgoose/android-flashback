@@ -53,10 +53,4 @@ interface DriverNavigationComponent {
         windowSizeClass: WindowSizeClass,
         season: Int
     )
-
-    fun driverStatHistory(
-        driverId: String,
-        driverName: String,
-        driverStatHistoryType: DriverStatHistoryType
-    )
 }

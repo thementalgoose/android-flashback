@@ -20,7 +20,6 @@ import tmg.flashback.formula1.extensions.icon
 import tmg.flashback.formula1.extensions.label
 import tmg.flashback.formula1.model.Event
 import tmg.flashback.providers.EventProvider
-import tmg.flashback.season.R
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
@@ -28,15 +27,14 @@ import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.googleanalytics.presentation.ScreenView
 import tmg.flashback.strings.R.string
-import tmg.flashback.ui.components.layouts.BottomSheet
+import tmg.flashback.ui.components.layouts.BottomSheetContainer
 import tmg.utilities.extensions.format
 
 @Composable
 fun EventsScreenVM(
     season: Int,
     modifier: Modifier = Modifier,
-    viewModel: EventsViewModel = hiltViewModel(),
-    actionUpClicked: () -> Unit,
+    viewModel: EventsViewModel = hiltViewModel()
 ) {
     val events = viewModel.outputs.events.collectAsState(emptyList())
     viewModel.inputs.setup(season)
@@ -44,7 +42,6 @@ fun EventsScreenVM(
     EventsScreen(
         season = season,
         events = events.value,
-        actionUpClicked = actionUpClicked,
         modifier = modifier
     )
 }
@@ -53,14 +50,13 @@ fun EventsScreenVM(
 private fun EventsScreen(
     season: Int,
     events: List<Event>,
-    actionUpClicked: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     ScreenView(screenName = "Events", args = mapOf(
         analyticsSeason to season.toString()
     ))
 
-    BottomSheet(
+    BottomSheetContainer(
         modifier = modifier
             .background(AppTheme.colors.backgroundPrimary)
             .defaultMinSize(
@@ -69,7 +65,7 @@ private fun EventsScreen(
             ),
         title = stringResource(id = string.events_list_title, season.toString()),
         subtitle = stringResource(id = string.events_list_subtitle),
-        backClicked = actionUpClicked
+        backClicked = null
     ) {
         events.forEach { event ->
             Event(event)
@@ -115,8 +111,7 @@ private fun Preview(
     AppThemePreview {
         EventsScreen(
             season = 2021,
-            events = listOf(event),
-            actionUpClicked = { }
+            events = listOf(event)
         )
     }
 }

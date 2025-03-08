@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package tmg.flashback.drivers.presentation.overview
 
 import androidx.compose.foundation.background
@@ -6,13 +8,23 @@ import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.material.BottomSheetValue
 import androidx.compose.material.Icon
+import androidx.compose.material.rememberBottomSheetState
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -31,6 +43,7 @@ import tmg.flashback.strings.R.string
 import tmg.flashback.drivers.contract.model.DriverStatHistoryType
 import tmg.flashback.drivers.presentation.common.DriverBadges
 import tmg.flashback.drivers.presentation.season.DriverSeasonScreenVM
+import tmg.flashback.drivers.presentation.stathistory.DriverStatHistoryScreenVM
 import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.model.DriverEntry
 import tmg.flashback.providers.DriverConstructorProvider
@@ -86,8 +99,7 @@ fun DriverOverviewScreenVM(
                     linkClicked = viewModel.inputs::openUrl,
                     racedForClicked = {
                         viewModel.inputs.openSeason(it.season)
-                    },
-                    statHistoryClicked = viewModel.inputs::openStatHistory,
+                    }
                 )
             }
         },
@@ -112,9 +124,27 @@ fun DriverOverviewScreen(
     windowSizeClass: WindowSizeClass,
     linkClicked: (String) -> Unit,
     uiState: DriverOverviewScreenState,
-    statHistoryClicked: (DriverStatHistoryType) -> Unit,
     racedForClicked: (DriverOverviewModel.RacedFor) -> Unit,
 ) {
+    var showDriverStatHistoryType = rememberSaveable { mutableStateOf<DriverStatHistoryType?>(null) }
+    val bottomSheetState = rememberModalBottomSheetState()
+    if (showDriverStatHistoryType.value != null) {
+        ModalBottomSheet(
+            containerColor = AppTheme.colors.backgroundContainer,
+            onDismissRequest = {
+                showDriverStatHistoryType.value = null
+            },
+            sheetState = bottomSheetState,
+            content = {
+                DriverStatHistoryScreenVM(
+                    driverId = uiState.driverId,
+                    driverName = uiState.driverName,
+                    driverStatHistoryType = showDriverStatHistoryType.value!!
+                )
+            }
+        )
+    }
+
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -163,7 +193,9 @@ fun DriverOverviewScreen(
                     is DriverOverviewModel.Stat -> {
                         Stat(
                             model = it,
-                            statHistoryClicked = statHistoryClicked
+                            statHistoryClicked = {
+                                showDriverStatHistoryType.value = it
+                            }
                         )
                     }
                 }
@@ -327,8 +359,7 @@ private fun Preview(
                 )
             ),
             racedForClicked = { },
-            linkClicked = { },
-            statHistoryClicked = { },
+            linkClicked = { }
         )
     }
 }
