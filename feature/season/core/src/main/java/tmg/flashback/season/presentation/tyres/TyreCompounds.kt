@@ -16,7 +16,6 @@ import tmg.flashback.googleanalytics.constants.AnalyticsConstants.analyticsSeaso
 import tmg.flashback.formula1.enums.SeasonTyres
 import tmg.flashback.formula1.enums.TyreLabel
 import tmg.flashback.formula1.enums.getBySeason
-import tmg.flashback.season.R
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
@@ -24,7 +23,7 @@ import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextHeadline2
 import tmg.flashback.googleanalytics.presentation.ScreenView
 import tmg.flashback.strings.R.string
-import tmg.flashback.ui.components.layouts.BottomSheet
+import tmg.flashback.ui.components.layouts.BottomSheetContainer
 
 @Composable
 fun TyreCompounds(
@@ -37,7 +36,7 @@ fun TyreCompounds(
     ))
 
     val tyres = SeasonTyres.getBySeason(season)
-    BottomSheet(
+    BottomSheetContainer(
         modifier = modifier.background(AppTheme.colors.backgroundPrimary),
         title = stringResource(id = string.tyres_list_title, season.toString()),
         subtitle = stringResource(id = string.tyres_list_subtitle),
