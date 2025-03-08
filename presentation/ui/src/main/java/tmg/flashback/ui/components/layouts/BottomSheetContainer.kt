@@ -30,7 +30,7 @@ import tmg.flashback.strings.R.string
 @Composable
 fun BottomSheetContainer(
     title: String,
-    subtitle: String,
+    subtitle: String?,
     modifier: Modifier = Modifier,
     backClicked: (() -> Unit)?,
     content: @Composable ColumnScope.() -> Unit
@@ -51,15 +51,17 @@ fun BottomSheetContainer(
                             top = AppTheme.dimens.nsmall
                         )
                 )
-                TextBody2(
-                    text = subtitle,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(
-                            vertical = AppTheme.dimens.small,
-                            horizontal = AppTheme.dimens.medium
-                        )
-                )
+                subtitle?.let {
+                    TextBody2(
+                        text = it,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(
+                                vertical = AppTheme.dimens.small,
+                                horizontal = AppTheme.dimens.medium
+                            )
+                    )
+                }
             }
             if (backClicked != null) {
                 IconButton(onClick = backClicked) {

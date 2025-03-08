@@ -1,14 +1,22 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package tmg.flashback.drivers.presentation.stathistory
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.Divider
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.SheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -38,6 +46,7 @@ import tmg.flashback.googleanalytics.presentation.ScreenView
 import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.header.HeaderAction
+import tmg.flashback.ui.components.layouts.BottomSheetContainer
 
 @Composable
 fun DriverStatHistoryScreenVM(
@@ -71,35 +80,34 @@ private fun DriverStatHistoryScreen(
     driverStatHistoryType: DriverStatHistoryType,
     actionUpClicked: () -> Unit,
 ) {
-    LazyColumn(
-        modifier = Modifier.nestedScroll(rememberNestedScrollInteropConnection()),
+    BottomSheetContainer(
+        title = "$driverName\n${stringResource(driverStatHistoryType.label)}",
+        subtitle = null,
+        backClicked = actionUpClicked,
         content = {
-            item(key = "header") {
-                Header(
-                    text = "$driverName\n${stringResource(id = driverStatHistoryType.label)}",
-                    action = HeaderAction.CLOSE,
-                    actionUpClicked = actionUpClicked
-                )
-            }
-            items(list, key = { it.key }) {
-                when (it) {
-                    DriverStatHistoryModel.Empty -> Empty()
-                    is DriverStatHistoryModel.Label -> Label(
-                        model = it
-                    )
-                    is DriverStatHistoryModel.Race -> Race(
-                        model = it
-                    )
-                    is DriverStatHistoryModel.Year -> Year(
-                        model = it
-                    )
-                    is DriverStatHistoryModel.RacePosition -> Race(
-                        model = it
-                    )
+            LazyColumn(
+                modifier = Modifier.nestedScroll(rememberNestedScrollInteropConnection())
+            ) {
+                items(list, key = { it.key }) {
+                    when (it) {
+                        DriverStatHistoryModel.Empty -> Empty()
+                        is DriverStatHistoryModel.Label -> Label(
+                            model = it
+                        )
+                        is DriverStatHistoryModel.Race -> Race(
+                            model = it
+                        )
+                        is DriverStatHistoryModel.Year -> Year(
+                            model = it
+                        )
+                        is DriverStatHistoryModel.RacePosition -> Race(
+                            model = it
+                        )
+                    }
                 }
-            }
-            item(key = "footer") {
-                Spacer(Modifier.height(AppTheme.dimens.xlarge))
+                item(key = "footer") {
+                    Spacer(Modifier.height(AppTheme.dimens.xlarge))
+                }
             }
         }
     )
@@ -110,6 +118,7 @@ private fun Empty() {
     Column(modifier = Modifier
         .fillMaxWidth()
         .padding(
+            top = AppTheme.dimens.medium,
             start = AppTheme.dimens.medium,
             end = AppTheme.dimens.medium,
             bottom = AppTheme.dimens.xlarge

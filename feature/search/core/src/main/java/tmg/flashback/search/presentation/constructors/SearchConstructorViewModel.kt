@@ -74,7 +74,9 @@ class SearchConstructorViewModel @Inject constructor(
         if (searchTerm.isEmpty()) {
             return this
         }
-        return this.filter { it.searchTerm.split(" ").any { term -> term.contains(searchTerm.lowercase()) } }
+        return this.filter {
+            it.searchTerm.contains(searchTerm.lowercase())
+        }
     }
     private fun List<Constructor>?.sortByName(): List<Constructor> {
         return this?.sortedBy { it.name.lowercase() } ?: emptyList()
