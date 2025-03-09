@@ -28,11 +28,10 @@ fun ButtonPrimary(
             .focusable(true)
             .fillMaxWidth(),
         colors = ButtonDefaults.textButtonColors(
-            containerColor = when (enabled) {
-                true -> FlashbackTheme.colors.primary
-                false -> FlashbackTheme.colors.primary.copy(alpha = 0.4f)
-            },
-            contentColor = FlashbackTheme.colors.contentPrimaryInverse
+            containerColor = FlashbackTheme.colors.primary,
+            disabledContainerColor = FlashbackTheme.colors.primary.copy(alpha = 0.4f),
+            disabledContentColor = FlashbackTheme.colors.contentPrimaryInverse,
+            contentColor = FlashbackTheme.colors.contentTertiaryInverse
         ),
         enabled = enabled,
         shape = CircleShape,
