@@ -169,7 +169,7 @@ private fun SearchHeader(
                 .fillMaxWidth()
                 .padding(horizontal = AppTheme.dimens.medium)
                 .clip(RoundedCornerShape(50.dp))
-                .background(AppTheme.colors.backgroundTertiary),
+                .background(AppTheme.colors.backgroundSecondary),
             verticalAlignment = Alignment.CenterVertically
         ) {
             val text = remember { mutableStateOf(TextFieldValue(searchTerm)) }
@@ -182,6 +182,7 @@ private fun SearchHeader(
                     text.value = it
                     searchTermUpdated(it.text)
                 },
+                showBorder = false,
                 imeAction = ImeAction.Done,
                 placeholder = stringResource(id = string.search_title),
                 clear = searchTermClear
