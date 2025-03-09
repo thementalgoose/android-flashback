@@ -2,7 +2,6 @@ package tmg.flashback.presentation.dashboard.menu
 
 import android.widget.Toast
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -41,8 +40,8 @@ private val MenuIcons.drawable: Int get() = when (this) {
 internal fun DashboardHero(
     menuIcons: MenuIcons?,
     showUkraine: Boolean,
-    pride: Boolean = false,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    rainbow: Boolean = false,
 ) {
     val context = LocalContext.current
     Column(modifier.padding(
@@ -62,7 +61,7 @@ internal fun DashboardHero(
                         Toast.makeText(context, menuIcons?.label ?: R.string.app_name, Toast.LENGTH_LONG).show()
                     }
                 ),
-            colourType = when (pride) {
+            colourType = when (rainbow) {
                 true -> ColourType.RAINBOW
                 false -> ColourType.DEFAULT
             }
@@ -108,7 +107,7 @@ private fun PreviewPride() {
         DashboardHero(
             menuIcons = null,
             showUkraine = false,
-            pride = true
+            rainbow = true
         )
     }
 }

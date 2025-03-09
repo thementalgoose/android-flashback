@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Divider
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -89,39 +90,41 @@ class SandboxActivity: BaseActivity() {
     @Inject
     lateinit var permissionRepository: PermissionRepository
 
-    companion object {
-        private const val keyReleaseNotesSeenVersion: String = "RELEASE_NOTES_SEEN_VERSION"
-    }
 
     @Suppress("EXPERIMENTAL_API_USAGE")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             AppTheme {
-                DebugScreen(actionUpClicked = { finish() }) {
+                Scaffold { paddingValues ->
+                    DebugScreen(
+                        paddingValues = paddingValues,
+                        actionUpClicked = { finish() }
+                    ) {
 
-                    Div()
-                    this.DeviceInfo()
+                        Div()
+                        this.DeviceInfo()
 
-                    Div()
-                    this.ConfigUrl()
+                        Div()
+                        this.ConfigUrl()
 
-                    Div()
-                    this.Notifications()
+                        Div()
+                        this.Notifications()
 
-                    Div()
-                    this.Scheduling()
+                        Div()
+                        this.Scheduling()
 
-                    Div()
-                    TextSection(text = "Sync")
-                    ButtonPrimary(text = "App startup activity", onClick = {
-                        startActivity(applicationNavigationComponent.syncActivityIntent(this@SandboxActivity))
-                    })
+                        Div()
+                        TextSection(text = "Sync")
+                        ButtonPrimary(text = "App startup activity", onClick = {
+                            startActivity(applicationNavigationComponent.syncActivityIntent(this@SandboxActivity))
+                        })
 
-                    Div()
-                    this.NetworkRequests()
+                        Div()
+                        this.NetworkRequests()
 
-                    Div()
+                        Div()
+                    }
                 }
             }
         }
@@ -130,11 +133,13 @@ class SandboxActivity: BaseActivity() {
     @Composable
     private fun DebugScreen(
         actionUpClicked: () -> Unit,
+        paddingValues: PaddingValues,
         content: @Composable ColumnScope.() -> Unit,
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
+                .padding(paddingValues)
                 .verticalScroll(rememberScrollState())
         ) {
             Header(

@@ -1,5 +1,6 @@
 package tmg.flashback.ui.repository
 
+import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.prefs.manager.PreferenceManager
 import tmg.flashback.ui.model.NightMode
 import tmg.flashback.ui.model.Theme
@@ -9,7 +10,8 @@ import javax.inject.Singleton
 
 @Singleton
 class ThemeRepository @Inject constructor(
-    private val preferenceManager: PreferenceManager
+    private val preferenceManager: PreferenceManager,
+    private val buildConfigManager: BuildConfigManager,
 ) {
     companion object {
         private const val keyNightMode: String = "THEME" // Used to be theme pref
@@ -31,6 +33,11 @@ class ThemeRepository @Inject constructor(
      * Theme preference
      */
     var theme: Theme
-        get() = preferenceManager.getString(keyTheme)?.toEnum<Theme> { it.key } ?: Theme.DEFAULT
+        get() = preferenceManager.getString(keyTheme)?.toEnum<Theme> { it.key } ?: getDefaultTheme()
         set(value) = preferenceManager.save(keyTheme, value.key)
+
+    private fun getDefaultTheme() = when (buildConfigManager.isMonetThemeSupported) {
+        true -> Theme.MATERIAL_YOU
+        false -> Theme.DEFAULT
+    }
 }

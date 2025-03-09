@@ -15,8 +15,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
@@ -32,16 +32,13 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.drivers.contract.DriverNavigationComponent
 import tmg.flashback.drivers.contract.requireDriverNavigationComponent
-import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.SeasonDriverStandingSeason
 import tmg.flashback.providers.SeasonDriverStandingSeasonProvider
-import tmg.flashback.season.BuildConfig
 import tmg.flashback.season.R
-import tmg.flashback.season.presentation.dashboard.races.RacesModel
-import tmg.flashback.strings.R.string
 import tmg.flashback.season.presentation.dashboard.shared.seasonpicker.SeasonTitleVM
 import tmg.flashback.season.presentation.messaging.Banner
 import tmg.flashback.season.presentation.messaging.ProvidedBy
+import tmg.flashback.strings.R.string
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
@@ -54,12 +51,9 @@ import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.header.HeaderAction
 import tmg.flashback.ui.components.layouts.MasterDetailsPane
-import tmg.flashback.ui.components.loading.Fade
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.progressbar.ProgressBar
 import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
-import kotlin.math.max
-import kotlin.math.roundToInt
 
 @Composable
 fun DriverStandingsScreenVM(

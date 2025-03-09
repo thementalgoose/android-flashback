@@ -32,10 +32,10 @@ fun InputSelection(
     label: String,
     @DrawableRes
     icon: Int,
+    modifier: Modifier = Modifier,
     isSelected: Boolean = false,
     isChecked: Boolean? = null,
     itemClicked: (() -> Unit)? = null,
-    modifier: Modifier = Modifier
 ) {
     Row(
         modifier = modifier

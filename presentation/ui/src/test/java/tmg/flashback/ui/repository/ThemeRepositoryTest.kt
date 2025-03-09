@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import tmg.flashback.configuration.manager.ConfigManager
+import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.prefs.manager.PreferenceManager
 import tmg.flashback.ui.model.NightMode
 import tmg.flashback.ui.model.Theme
@@ -17,11 +18,15 @@ import tmg.flashback.ui.model.Theme
 internal class ThemeRepositoryTest {
 
     private val mockPreferenceManager: PreferenceManager = mockk(relaxed = true)
+    private val mockBuildConfigManager: BuildConfigManager = mockk(relaxed = true)
 
     private lateinit var underTest: ThemeRepository
 
     private fun initUnderTest() {
-        underTest = ThemeRepository(mockPreferenceManager)
+        underTest = ThemeRepository(
+            buildConfigManager = mockBuildConfigManager,
+            preferenceManager = mockPreferenceManager
+        )
     }
 
     //region Night Mode
@@ -80,10 +85,22 @@ internal class ThemeRepositoryTest {
     }
 
     @Test
-    fun `retrieving theme defaults to DEFAULT when no value found in shared preferences`() {
+    fun `retrieving theme defaults to DEFAULT when no value found in shared preferences and no monet theme`() {
+        every { mockBuildConfigManager.isMonetThemeSupported } returns false
         every { mockPreferenceManager.getString(any()) } returns null
         initUnderTest()
         assertEquals(Theme.DEFAULT, underTest.theme)
+        verify {
+            mockPreferenceManager.getString(keyTheme, null)
+        }
+    }
+
+    @Test
+    fun `retrieving theme defaults to MATERIAL_YOU when no value found in shared preferences and monet theme`() {
+        every { mockBuildConfigManager.isMonetThemeSupported } returns true
+        every { mockPreferenceManager.getString(any()) } returns null
+        initUnderTest()
+        assertEquals(Theme.MATERIAL_YOU, underTest.theme)
         verify {
             mockPreferenceManager.getString(keyTheme, null)
         }
