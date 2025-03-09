@@ -22,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.launch
 import tmg.flashback.ads.ads.components.AdvertProvider
@@ -50,6 +51,7 @@ fun SearchScreenTab(
     actionUpClicked: () -> Unit,
     isRoot: (Boolean) -> Unit,
     viewModel: SearchViewModel,
+    advertProvider: AdvertProvider
 ) {
     val uiState = viewModel.outputs.uiState.collectAsState()
 
@@ -59,7 +61,8 @@ fun SearchScreenTab(
         tabClicked = viewModel.inputs::selectType,
         searchTermUpdated = viewModel.inputs::searchTermUpdated,
         searchTermClear = viewModel.inputs::searchTermClear,
-        uiState = uiState.value
+        uiState = uiState.value,
+        advertProvider = advertProvider
     )
 }
 
@@ -70,7 +73,8 @@ fun SearchScreenTab(
     tabClicked: (SearchScreenStateCategory) -> Unit,
     searchTermUpdated: (String) -> Unit,
     searchTermClear: () -> Unit,
-    uiState: SearchScreenState
+    uiState: SearchScreenState,
+    advertProvider: AdvertProvider
 ) {
     val driversVM: SearchDriverViewModel = hiltViewModel()
     val driversUIState = driversVM.uiState.collectAsState()
@@ -135,6 +139,16 @@ fun SearchScreenTab(
                             searchTermUpdated = searchTermUpdated,
                             searchTermClear = searchTermClear
                         )
+                    }
+                    if (uiState.showAdvert && uiState.searchTerm.isBlank()) {
+                        item("advert") {
+                            advertProvider.NativeBanner(
+                                horizontalPadding = 16.dp,
+                                adIconSpacing = 16.dp,
+                                adIconSize = 42.dp,
+                                adIndex = 1
+                            )
+                        }
                     }
                     when (uiState.category) {
                         DRIVERS -> {
