@@ -1,26 +1,20 @@
 package tmg.flashback.search.presentation
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imeNestedScroll
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -47,22 +41,17 @@ import tmg.flashback.search.presentation.drivers.SearchDriverViewModel
 import tmg.flashback.strings.R.string
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
-import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.annotations.PreviewThemeExpanded
 import tmg.flashback.style.buttons.ButtonSecondarySegments
 import tmg.flashback.style.input.InputPrimary
-import tmg.flashback.style.input.InputSelection
 import tmg.flashback.ui.components.header.Header
-import tmg.flashback.ui.components.header.HeaderAction
-import tmg.flashback.ui.components.navigation.NavigationBar
-import tmg.flashback.ui.components.navigation.NavigationItem
-import tmg.utilities.extensions.toEnum
 
 @Composable
 fun SearchScreenList(
     actionUpClicked: () -> Unit,
     isRoot: (Boolean) -> Unit,
-    viewModel: SearchViewModel
+    viewModel: SearchViewModel,
+    advertProvider: AdvertProvider
 ) {
     val uiState = viewModel.outputs.uiState.collectAsState()
 
@@ -72,8 +61,8 @@ fun SearchScreenList(
         tabClicked = viewModel.inputs::selectType,
         searchTermUpdated = viewModel.inputs::searchTermUpdated,
         searchTermClear = viewModel.inputs::searchTermClear,
-        uiState = uiState.value
-
+        uiState = uiState.value,
+        advertProvider = advertProvider
     )
 }
 
@@ -84,7 +73,8 @@ fun SearchScreenList(
     tabClicked: (SearchScreenStateCategory) -> Unit,
     searchTermUpdated: (String) -> Unit,
     searchTermClear: () -> Unit,
-    uiState: SearchScreenState
+    uiState: SearchScreenState,
+    advertProvider: AdvertProvider
 ) {
 
     val driversVM: SearchDriverViewModel = hiltViewModel()
@@ -117,6 +107,16 @@ fun SearchScreenList(
                         tab = uiState.category,
                         tabClicked = tabClicked
                     )
+                }
+                if (uiState.showAdvert && uiState.searchTerm.isBlank()) {
+                    item("advert") {
+                        advertProvider.NativeBanner(
+                            horizontalPadding = 16.dp,
+                            adIconSpacing = 16.dp,
+                            adIconSize = 42.dp,
+                            adIndex = 1
+                        )
+                    }
                 }
                 when (uiState.category) {
                     DRIVERS -> {

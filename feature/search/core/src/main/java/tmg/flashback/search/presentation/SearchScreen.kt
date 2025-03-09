@@ -18,13 +18,15 @@ fun SearchScreenVM(
         SearchScreenList(
             actionUpClicked = actionUpClicked,
             isRoot = isRoot,
-            viewModel = viewModel
+            viewModel = viewModel,
+            advertProvider = advertProvider,
         )
     } else {
         SearchScreenTab(
             actionUpClicked = actionUpClicked,
             isRoot = isRoot,
-            viewModel = viewModel
+            viewModel = viewModel,
+            advertProvider = advertProvider,
         )
     }
 }
