@@ -2,11 +2,15 @@ package tmg.flashback.ui.base
 
 import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.content.res.Configuration
+import android.graphics.Color
 import android.os.Bundle
+import androidx.activity.SystemBarStyle
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.StyleRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.core.content.ContextCompat
 import tmg.flashback.crashlytics.manager.CrashlyticsManager
 import tmg.flashback.device.AppPermissions
@@ -14,8 +18,11 @@ import tmg.flashback.device.ActivityProvider
 import tmg.flashback.ui.managers.PermissionManager
 import tmg.flashback.ui.managers.StyleManager
 import tmg.flashback.ui.model.DisplayType
+import tmg.flashback.ui.model.NightMode
 import tmg.flashback.ui.permissions.RationaleBottomSheetFragment
 import tmg.flashback.ui.permissions.RationaleBottomSheetFragmentCallback
+import tmg.flashback.ui.repository.ThemeRepository
+import tmg.utilities.extensions.isInDayMode
 import javax.inject.Inject
 
 abstract class BaseActivity : AppCompatActivity(), RationaleBottomSheetFragmentCallback {
@@ -28,6 +35,8 @@ abstract class BaseActivity : AppCompatActivity(), RationaleBottomSheetFragmentC
     lateinit var permissionManager: PermissionManager
     @Inject
     lateinit var crashManager: CrashlyticsManager
+    @Inject
+    lateinit var themeRepository: ThemeRepository
 
     private lateinit var requestPermissionLauncher: ActivityResultLauncher<Array<String>>
 
@@ -40,6 +49,19 @@ abstract class BaseActivity : AppCompatActivity(), RationaleBottomSheetFragmentC
         super.onCreate(savedInstanceState)
         requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions(), permissionManager.activityContract)
         setTheme(themeRes)
+
+        this.enableEdgeToEdge(
+            statusBarStyle = when (themeRepository.nightMode) {
+                NightMode.DEFAULT -> SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT)
+                NightMode.DAY -> SystemBarStyle.light(Color.TRANSPARENT, Color.TRANSPARENT)
+                NightMode.NIGHT -> SystemBarStyle.dark(Color.TRANSPARENT)
+            },
+            navigationBarStyle = when (themeRepository.nightMode) {
+                NightMode.DEFAULT -> SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT)
+                NightMode.DAY -> SystemBarStyle.light(Color.TRANSPARENT, Color.TRANSPARENT)
+                NightMode.NIGHT -> SystemBarStyle.dark(Color.TRANSPARENT)
+            },
+        )
     }
 
     protected val themeRes: Int

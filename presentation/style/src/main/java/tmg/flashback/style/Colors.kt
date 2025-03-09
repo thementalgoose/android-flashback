@@ -2,8 +2,9 @@ package tmg.flashback.style
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.compose.material.Colors
 import androidx.compose.material3.ColorScheme
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
@@ -63,22 +64,34 @@ data class AppColors(
     val isLight: Boolean
 ) {
 
-    val appColors: Colors by lazy {
-        Colors(
-            primary = primary,
-            primaryVariant = primary,
-            secondary = accent,
-            secondaryVariant = accent,
-            background = backgroundContainer,
-            surface = backgroundSecondary,
-            error = Color(0xFFCC0000),
-            onPrimary = Color(0xFFF8F8F8),
-            onSecondary = Color(0xFFF8F8F8),
-            onBackground = contentPrimary,
-            onSurface = contentSecondary,
-            onError = Color(0xFFF8F8F8),
-            isLight = isLight
-        )
+    val appColors: ColorScheme by lazy {
+        if (isLight) {
+            lightColorScheme(
+                primary = primary,
+                secondary = accent,
+                background = backgroundContainer,
+                surface = backgroundSecondary,
+                error = Color(0xFFCC0000),
+                onPrimary = Color(0xFFF8F8F8),
+                onSecondary = Color(0xFFF8F8F8),
+                onBackground = contentPrimary,
+                onSurface = contentSecondary,
+                onError = Color(0xFFF8F8F8)
+            )
+        } else {
+            darkColorScheme(
+                primary = primary,
+                secondary = accent,
+                background = backgroundContainer,
+                surface = backgroundSecondary,
+                error = Color(0xFFCC0000),
+                onPrimary = Color(0xFFF8F8F8),
+                onSecondary = Color(0xFFF8F8F8),
+                onBackground = contentPrimary,
+                onSurface = contentSecondary,
+                onError = Color(0xFFF8F8F8)
+            )
+        }
     }
 }
 

@@ -181,6 +181,8 @@ dependencies {
 
     implementation libs.androidx.splashscreen
 
+    implementation libs.material
+
     implementation libs.tmg.aboutthisapp
     implementation libs.tmg.utils
 

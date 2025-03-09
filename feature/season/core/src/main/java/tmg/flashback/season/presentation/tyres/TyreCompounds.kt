@@ -7,8 +7,12 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.rememberNestedScrollInteropConnection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -43,20 +47,28 @@ fun TyreCompounds(
         backClicked = actionUpClicked
     ) {
         val dry = tyres?.tyres?.filter { it.tyre.isDry } ?: emptyList()
-        if (dry.isNotEmpty()) {
-            Header(stringResource(id = string.tyres_dry_compounds))
-            dry.forEach {
-                TyreRow(tyreLabel = it)
-            }
-        }
-
         val wet = tyres?.tyres?.filter { !it.tyre.isDry } ?: emptyList()
-        if (wet.isNotEmpty()) {
-            Header(stringResource(id = string.tyres_wet_compounds))
-            wet.forEach {
-                TyreRow(tyreLabel = it)
+        LazyColumn(
+            modifier = Modifier.nestedScroll(rememberNestedScrollInteropConnection()),
+            content = {
+                if (dry.isNotEmpty()) {
+                    item(key = "title_dry") {
+                        Header(stringResource(id = string.tyres_dry_compounds))
+                    }
+                }
+                items(dry, key = { it.tyre.name }) {
+                    TyreRow(tyreLabel = it)
+                }
+                if (wet.isNotEmpty()) {
+                    item(key = "title_wet") {
+                        Header(stringResource(id = string.tyres_wet_compounds))
+                    }
+                }
+                items(wet, key = { it.tyre.name }) {
+                    TyreRow(tyreLabel = it)
+                }
             }
-        }
+        )
     }
 }
 

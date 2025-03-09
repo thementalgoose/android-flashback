@@ -4,14 +4,13 @@ import android.content.Context
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.ui.platform.LocalContext
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.jakewharton.threetenabp.AndroidThreeTen
 
 object AppTheme {
@@ -35,7 +34,6 @@ val Dimens = AppTheme.dimens
 fun AppTheme(
     isLight: Boolean = !isSystemInDarkTheme(),
     theme: SupportedTheme = AppTheme.appTheme,
-    changeSystemUi: Boolean = true,
     content: @Composable () -> Unit
 ) {
     AppTheme.appTheme = theme
@@ -62,20 +60,8 @@ fun AppTheme(
     CompositionLocalProvider(
         LocalColors provides colors
     ) {
-        if (changeSystemUi) {
-            val systemUiController = rememberSystemUiController()
-            systemUiController.setStatusBarColor(
-                darkIcons = AppTheme.colors.isLight,
-                color = AppTheme.colors.systemStatusBarColor
-            )
-            systemUiController.setNavigationBarColor(
-                darkIcons = !AppTheme.colors.isLight,
-                color = AppTheme.colors.systemNavigationBarColor
-            )
-        }
-
         MaterialTheme(
-            colors = colors.appColors
+            colorScheme = colors.appColors
         ) {
             content()
         }
@@ -92,7 +78,6 @@ fun AppThemePreview(
     return AppTheme(
         isLight = isLight,
         theme = theme,
-        changeSystemUi = false,
         content = {
             content()
         }
