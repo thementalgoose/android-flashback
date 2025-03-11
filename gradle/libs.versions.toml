@@ -125,7 +125,7 @@ play_review_ktx = { module = "com.google.android.play:review-ktx", version.ref =
 # Look at removing manifest entry for value override in :core:ads:ads-admob when this is updated!
 playservicesads = "com.google.android.gms:play-services-ads:24.0.0"
 
-threeten = "org.threeten:threetenbp:1.7.0"
+threeten = "org.threeten:threetenbp:1.7.1"
 threetenabp = "com.jakewharton.threetenabp:threetenabp:1.4.8"
 
 tmg_utils = "com.github.thementalgoose:android-utilities:2.6.2"
