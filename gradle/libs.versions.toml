@@ -33,7 +33,6 @@ firebase_perf_plugin = "com.google.firebase:perf-plugin:1.4.2"
 play_publisher = "com.github.triplet.gradle:play-publisher:3.12.1"
 
 ## App Dependencies
-androidx_activity = { module = "androidx.activity:activity", version.ref = "androidx_activity" }
 androidx_core = "androidx.core:core-ktx:1.15.0"
 androidx_appcompat = "androidx.appcompat:appcompat:1.7.0"
 androidx_browser = "androidx.browser:browser:1.8.0"
@@ -128,7 +127,7 @@ playservicesads = "com.google.android.gms:play-services-ads:24.0.0"
 threeten = "org.threeten:threetenbp:1.7.1"
 threetenabp = "com.jakewharton.threetenabp:threetenabp:1.4.8"
 
-tmg_utils = "com.github.thementalgoose:android-utilities:2.6.2"
+tmg_utils = "com.github.thementalgoose:android-utilities:2.7.0"
 tmg_aboutthisapp = "com.github.thementalgoose:android-about-this-app:6.0.7"
 
 ## Test
