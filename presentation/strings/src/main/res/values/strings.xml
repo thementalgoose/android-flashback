@@ -77,7 +77,7 @@
     <string name="dashboard_search">Search</string>
     <string name="dashboard_links_title">Links</string>
     <string name="dashboard_links_rss">RSS feed</string>
-    <string name="dashboard_links_reaction">Reaction test</string>
+    <string name="dashboard_links_reaction">Reaction game</string>
     <string name="dashboard_links_search">Search</string>
     <string name="dashboard_links_settings">Settings</string>
     <string name="dashboard_links_contact">Contact</string>
@@ -623,7 +623,7 @@
     <string name="easter_egg_menu_christmas">Merry Christmas!</string>
 
     <!-- Reaction screen -->
-    <string name="reaction_screen_title">Reaction test</string>
+    <string name="reaction_screen_title">Reaction game</string>
     <string name="reaction_screen_heading">Test your reactions</string>
     <string name="reaction_screen_subtitle">Do you think you could match the reaction times of a F1 driver when the lights go out?\n\nStart the game below, and then tap the screen anywhere when you see the lights go out to get a score</string>
     <string name="reaction_screen_action_start">Start the game</string>
