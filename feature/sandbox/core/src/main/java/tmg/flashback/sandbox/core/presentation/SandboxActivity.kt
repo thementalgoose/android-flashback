@@ -17,6 +17,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -48,8 +49,10 @@ import tmg.flashback.ui.base.BaseActivity
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.header.HeaderAction
 import tmg.flashback.device.repository.PermissionRepository
+import tmg.flashback.flashbackapi.api.NetworkConfigManager
 import tmg.flashback.season.usecases.ContentSyncUseCase
 import tmg.flashback.season.usecases.ScheduleNotificationsUseCase
+import tmg.flashback.style.buttons.ButtonSecondary
 import tmg.utilities.extensions.copyToClipboard
 import javax.inject.Inject
 
@@ -68,6 +71,8 @@ class SandboxActivity: BaseActivity() {
 
     @Inject
     lateinit var baseUrlLocalOverrideManager: BaseUrlLocalOverrideManager
+    @Inject
+    lateinit var networkConfigManager: NetworkConfigManager
 
     @Inject
     lateinit var deviceRepository: DeviceRepository
@@ -205,9 +210,10 @@ class SandboxActivity: BaseActivity() {
     private fun ColumnScope.ConfigUrl() {
         val configUrl = remember { mutableStateOf(TextFieldValue(baseUrlLocalOverrideManager.localBaseUrl ?: "")) }
         TextSection(text = "Config URL")
+        TextBody2(text = "Input full config URL, or 8 digit hex code from cloudflare deployment")
         InputPrimary(text = configUrl, placeholder = "https://flashback.pages.dev")
         Row(
-            horizontalArrangement = Arrangement.SpaceEvenly,
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
             modifier = Modifier.fillMaxWidth()
         ) {
             ButtonPrimary(
@@ -215,21 +221,49 @@ class SandboxActivity: BaseActivity() {
                 modifier = Modifier.weight(1f),
                 onClick = {
                     val url = configUrl.value.text
-                    baseUrlLocalOverrideManager.localBaseUrl = url
-                    toast("Set '${url}' to override")
+                    if (url.length == 8 && url.matches(Regex("[a-f0-9A-F]{8}"))) {
+                        configUrl.applyConfigUrl("https://${url}.flashback.pages.dev")
+                    } else {
+                        configUrl.applyConfigUrl(url)
+                    }
                 }
             )
-            Spacer(modifier = Modifier.width(16.dp))
             ButtonPrimary(
                 text = "Clear",
                 modifier = Modifier.weight(1f),
                 onClick = {
-                    baseUrlLocalOverrideManager.localBaseUrl = null
-                    configUrl.value = TextFieldValue("")
-                    toast("Cleared URL")
+                    configUrl.applyConfigUrl(null)
                 }
             )
         }
+        Column(
+            verticalArrangement = Arrangement.spacedBy(4.dp),
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            ButtonSecondary(
+                text = networkConfigManager.defaultBaseUrl,
+                modifier = Modifier.fillMaxWidth(),
+                onClick = {
+                    configUrl.applyConfigUrl(null)
+                }
+            )
+            ButtonSecondary(
+                text = "https://sand.flashback.pages.dev",
+                modifier = Modifier.fillMaxWidth(),
+                onClick = {
+                    configUrl.applyConfigUrl("https://sand.flashback.pages.dev")
+                }
+            )
+        }
+    }
+
+    private fun MutableState<TextFieldValue>.applyConfigUrl(
+        url: String?,
+        showAs: String = url ?: networkConfigManager.defaultBaseUrl
+    ) {
+        baseUrlLocalOverrideManager.localBaseUrl = url
+        this.value = TextFieldValue(url ?: "")
+        toast("Applying url: '$showAs'")
     }
 
     @Composable
