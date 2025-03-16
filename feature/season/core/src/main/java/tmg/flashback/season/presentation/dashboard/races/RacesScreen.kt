@@ -17,9 +17,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
@@ -143,6 +143,7 @@ fun ScheduleScreen(
     var showEvents = rememberSaveable { mutableStateOf(false) }
     if (showEvents.value && uiState.showEvents) {
         ModalBottomSheet(
+            sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
             containerColor = AppTheme.colors.backgroundContainer,
             onDismissRequest = {
                 showEvents.value = false
@@ -158,6 +159,7 @@ fun ScheduleScreen(
     var showTyres = rememberSaveable { mutableStateOf(false) }
     if (showTyres.value && uiState.showTyres) {
         ModalBottomSheet(
+            sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
             containerColor = AppTheme.colors.backgroundContainer,
             onDismissRequest = {
                 showTyres.value = false
