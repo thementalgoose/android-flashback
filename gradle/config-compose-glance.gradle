@@ -1,0 +1,23 @@
+this.pluginManager.apply(libs.plugins.composecompiler.get().pluginId)
+
+android {
+    buildFeatures {
+        compose true
+    }
+}
+
+dependencies {
+    implementation platform(libs.compose.bom)
+
+    implementation libs.compose.windowsize
+    implementation libs.compose.animation
+    debugImplementation libs.compose.ui.tooling
+    implementation libs.compose.ui.toolingpreview
+    implementation libs.compose.ui.viewbinding
+
+    implementation libs.bundles.androidx.glance
+    debugImplementation libs.androidx.glance.preview
+    debugImplementation libs.androidx.glance.appwidgetpreview
+
+    implementation libs.flagkit
+}
