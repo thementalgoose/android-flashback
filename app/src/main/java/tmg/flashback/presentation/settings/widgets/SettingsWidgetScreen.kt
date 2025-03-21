@@ -24,8 +24,6 @@ import tmg.flashback.ui.components.settings.Footer
 import tmg.flashback.ui.components.settings.Header
 import tmg.flashback.ui.components.settings.Switch
 import tmg.flashback.ui.settings.Setting
-import tmg.flashback.widgets.updateAllWidgets
-import tmg.utilities.extensions.updateWidgets
 
 @Composable
 fun SettingsWidgetScreenVM(
@@ -43,13 +41,15 @@ fun SettingsWidgetScreenVM(
         windowSizeClass = windowSizeClass,
         prefClicked = viewModel.inputs::prefClicked,
         showBackground = showBackground.value,
-        deeplinkToEvent = deeplinkToEvent.value
+        deeplinkToEvent = deeplinkToEvent.value,
+        refreshWidgets = viewModel.inputs::refreshWidgets
     )
 }
 
 @Composable
 fun SettingsWidgetScreen(
     actionUpClicked: () -> Unit,
+    refreshWidgets: () -> Unit,
     windowSizeClass: WindowSizeClass,
     prefClicked: (Setting) -> Unit,
     showBackground: Boolean,
@@ -85,7 +85,7 @@ fun SettingsWidgetScreen(
         key1 = showBackground,
         key2 = deeplinkToEvent
     ) {
-        context.updateAllWidgets()
+        refreshWidgets()
     }
 }
 
@@ -99,6 +99,7 @@ private fun Preview() {
             prefClicked = {},
             showBackground = true,
             deeplinkToEvent = false,
+            refreshWidgets = { }
         )
     }
 }

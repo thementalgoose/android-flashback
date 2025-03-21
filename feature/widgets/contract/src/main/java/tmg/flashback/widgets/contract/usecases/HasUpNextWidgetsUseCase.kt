@@ -1,5 +1,5 @@
 package tmg.flashback.widgets.contract.usecases
 
-interface HasWidgetsUseCase {
+interface HasUpNextWidgetsUseCase {
     fun hasWidgets(): Boolean
 }

@@ -11,7 +11,6 @@ import tmg.flashback.data.repo.OverviewRepository
 import tmg.flashback.data.repo.RaceRepository
 import tmg.flashback.season.usecases.DefaultSeasonUseCase
 import tmg.flashback.season.usecases.ScheduleNotificationsUseCase
-import tmg.flashback.widgets.contract.usecases.UpdateWidgetsUseCase
 import javax.inject.Inject
 
 class DashboardSyncUseCase @Inject constructor(
@@ -21,7 +20,7 @@ class DashboardSyncUseCase @Inject constructor(
     private val applyConfigUseCase: ApplyConfigUseCase,
     private val raceRepository: RaceRepository,
     private val overviewRepository: OverviewRepository,
-    private val updateWidgetsUseCase: UpdateWidgetsUseCase
+    private val refreshWidgetsUseCase: RefreshWidgetsUseCase
 ) {
     suspend fun sync(): Boolean = coroutineScope {
         val all = awaitAll(
@@ -40,7 +39,7 @@ class DashboardSyncUseCase @Inject constructor(
         }
         if (activate) {
             scheduleNotificationsUseCase.schedule()
-            updateWidgetsUseCase.update()
+            refreshWidgetsUseCase.update()
             return true
         }
         return false
