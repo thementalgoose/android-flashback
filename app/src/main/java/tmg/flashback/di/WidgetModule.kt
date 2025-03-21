@@ -5,7 +5,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import tmg.flashback.di.navigation.AppWidgetNavigationComponent
-import tmg.flashback.widgets.contract.WidgetNavigationComponent
+import tmg.flashback.widgets.upnext.contract.WidgetNavigationComponent
 
 
 @Module

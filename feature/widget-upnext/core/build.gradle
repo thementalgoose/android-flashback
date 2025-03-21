@@ -12,7 +12,7 @@ android {
         minSdkVersion project.ext.minSdkVersion
         targetSdkVersion project.ext.targetSdkVersion
     }
-    namespace 'tmg.flashback.widgets'
+    namespace 'tmg.flashback.widgets.upnext'
 }
 
 dependencies {

@@ -47,7 +47,7 @@ import tmg.flashback.ui.model.NightMode
 import tmg.flashback.ui.model.Theme
 import tmg.flashback.ui.repository.ThemeRepository
 import tmg.flashback.usecases.RefreshWidgetsUseCase
-import tmg.flashback.widgets.contract.usecases.HasUpNextWidgetsUseCase
+import tmg.flashback.widgets.upnext.contract.usecases.HasUpNextWidgetsUseCase
 import tmg.utilities.extensions.format
 import tmg.utilities.extensions.isInDayMode
 import javax.inject.Inject
