@@ -8,21 +8,24 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import tmg.flashback.presentation.settings.Settings
+import tmg.flashback.ui.managers.ToastManager
 import tmg.flashback.usecases.RefreshWidgetsUseCase
-import tmg.flashback.widgets.repository.UpNextWidgetRepository
+import tmg.flashback.widgets.upnext.repository.UpNextWidgetRepository
 import tmg.testutils.BaseTest
 
 class SettingsWidgetViewModelTest: BaseTest() {
 
     private val mockUpNextWidgetRepository: UpNextWidgetRepository = mockk(relaxed = true)
     private val mockRefreshWidgetsUseCase: RefreshWidgetsUseCase = mockk(relaxed = true)
+    private val mockToastManager: ToastManager = mockk(relaxed = true)
 
     private lateinit var underTest: SettingsWidgetViewModel
 
     private fun initUnderTest() {
         underTest = SettingsWidgetViewModel(
             upNextWidgetRepository = mockUpNextWidgetRepository,
-            refreshWidgetsUseCase = mockRefreshWidgetsUseCase
+            refreshWidgetsUseCase = mockRefreshWidgetsUseCase,
+            toastManager = mockToastManager
         )
     }
 
@@ -103,5 +106,17 @@ class SettingsWidgetViewModelTest: BaseTest() {
             mockUpNextWidgetRepository.deeplinkToEvent = true
         }
         underTest.outputs.deeplinkToEvent.test { awaitItem() }
+    }
+
+    @Test
+    fun `click refresh widgets`() = runTest(testDispatcher) {
+        initUnderTest()
+
+        underTest.inputs.prefClicked(Settings.Widgets.refreshWidgets)
+
+        verify {
+            mockRefreshWidgetsUseCase.update()
+            mockToastManager.displayToast(any())
+        }
     }
 }

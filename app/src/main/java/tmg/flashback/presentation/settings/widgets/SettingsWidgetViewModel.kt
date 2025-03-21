@@ -5,9 +5,11 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import tmg.flashback.presentation.settings.Settings
+import tmg.flashback.ui.managers.ToastManager
 import tmg.flashback.ui.settings.Setting
 import tmg.flashback.usecases.RefreshWidgetsUseCase
 import tmg.flashback.widgets.upnext.repository.UpNextWidgetRepository
+import tmg.flashback.strings.R.string
 import javax.inject.Inject
 
 interface SettingsWidgetViewModelInputs {
@@ -24,6 +26,7 @@ interface SettingsWidgetViewModelOutputs {
 class SettingsWidgetViewModel @Inject constructor(
     private val upNextWidgetRepository: UpNextWidgetRepository,
     private val refreshWidgetsUseCase: RefreshWidgetsUseCase,
+    private val toastManager: ToastManager
 ): ViewModel(), SettingsWidgetViewModelInputs, SettingsWidgetViewModelOutputs {
 
     val inputs: SettingsWidgetViewModelInputs = this
@@ -45,6 +48,10 @@ class SettingsWidgetViewModel @Inject constructor(
             Settings.Widgets.deeplinkToEvent -> {
                 upNextWidgetRepository.deeplinkToEvent = !upNextWidgetRepository.deeplinkToEvent
                 deeplinkToEvent.value = upNextWidgetRepository.deeplinkToEvent
+            }
+            Settings.Widgets.refreshWidgets.key -> {
+                refreshWidgets()
+                toastManager.displayToast(string.settings_section_refresh_widget_message)
             }
         }
     }
