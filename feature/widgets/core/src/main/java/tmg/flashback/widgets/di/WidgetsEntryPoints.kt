@@ -7,12 +7,12 @@ import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
 import tmg.flashback.data.repo.ScheduleRepository
 import tmg.flashback.widgets.contract.WidgetNavigationComponent
-import tmg.flashback.widgets.repository.WidgetRepository
+import tmg.flashback.widgets.repository.UpNextWidgetRepository
 
 @EntryPoint
 @InstallIn(SingletonComponent::class)
 internal interface WidgetsEntryPoints {
-    fun widgetsRepository(): WidgetRepository
+    fun widgetsRepository(): UpNextWidgetRepository
     fun widgetsNavigationComponent(): WidgetNavigationComponent
     fun scheduleRepository(): ScheduleRepository
 

@@ -1,11 +1,11 @@
-package tmg.flashback.widgets.utils
+package tmg.flashback.widgets.presentation.preview
 
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.model.Schedule
 
-private val fakeOverviewRace = OverviewRace(
+val fakeOverviewRace = OverviewRace(
     date = LocalDate.of(2020, 1, 3),
     time = LocalTime.of(15, 0, 0),
     season = 2020,
@@ -15,7 +15,7 @@ private val fakeOverviewRace = OverviewRace(
     circuitName = "Imola Circuit",
     laps = "66",
     country = "Italy",
-    countryISO = "IT",
+    countryISO = "ITA",
     hasQualifying = false,
     hasSprint = false,
     hasResults = false,
