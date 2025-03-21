@@ -1,9 +1,9 @@
-package tmg.flashback.widgets.repository
+package tmg.flashback.widgets.upnext.repository
 
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import tmg.flashback.prefs.manager.PreferenceManager
 
@@ -34,7 +34,7 @@ internal class WidgetRepositoryTest {
         every { mockPreferenceManager.getBoolean(keyWidgetShowBackground, true) } returns true
 
         initUnderTest()
-        assertTrue(underTest.showBackground)
+        Assertions.assertTrue(underTest.showBackground)
 
         verify {
             mockPreferenceManager.getBoolean(keyWidgetShowBackground, true)
@@ -56,14 +56,12 @@ internal class WidgetRepositoryTest {
         every { mockPreferenceManager.getBoolean(keyWidgetDeeplinkToEvent, false) } returns true
 
         initUnderTest()
-        assertTrue(underTest.deeplinkToEvent)
+        Assertions.assertTrue(underTest.deeplinkToEvent)
 
         verify {
             mockPreferenceManager.getBoolean(keyWidgetDeeplinkToEvent, false)
         }
     }
-
-
 
     @Test
     fun `up next - saving show weather`() {
@@ -80,7 +78,7 @@ internal class WidgetRepositoryTest {
         every { mockPreferenceManager.getBoolean(keyWidgetShowWeather, false) } returns true
 
         initUnderTest()
-        assertTrue(underTest.showWeather)
+        Assertions.assertTrue(underTest.showWeather)
 
         verify {
             mockPreferenceManager.getBoolean(keyWidgetShowWeather, false)
