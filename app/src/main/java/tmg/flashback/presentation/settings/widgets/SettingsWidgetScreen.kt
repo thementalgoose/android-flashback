@@ -22,10 +22,10 @@ import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.ui.components.header.HeaderAction
 import tmg.flashback.ui.components.settings.Footer
 import tmg.flashback.ui.components.settings.Header
+import tmg.flashback.ui.components.settings.Pref
 import tmg.flashback.ui.components.settings.Switch
 import tmg.flashback.ui.settings.Setting
-import tmg.flashback.widgets.updateAllWidgets
-import tmg.utilities.extensions.updateWidgets
+import tmg.flashback.ui.settings.Setting.Pref
 
 @Composable
 fun SettingsWidgetScreenVM(
@@ -43,13 +43,15 @@ fun SettingsWidgetScreenVM(
         windowSizeClass = windowSizeClass,
         prefClicked = viewModel.inputs::prefClicked,
         showBackground = showBackground.value,
-        deeplinkToEvent = deeplinkToEvent.value
+        deeplinkToEvent = deeplinkToEvent.value,
+        refreshWidgets = viewModel.inputs::refreshWidgets
     )
 }
 
 @Composable
 fun SettingsWidgetScreen(
     actionUpClicked: () -> Unit,
+    refreshWidgets: () -> Unit,
     windowSizeClass: WindowSizeClass,
     prefClicked: (Setting) -> Unit,
     showBackground: Boolean,
@@ -68,13 +70,18 @@ fun SettingsWidgetScreen(
                 )
             }
 
-            Header(title = R.string.settings_header_home)
+            Header(title = R.string.settings_section_widgets_title)
             Switch(
                 model = Settings.Widgets.showBackground(showBackground),
                 onClick = prefClicked
             )
             Switch(
                 model = Settings.Widgets.deeplinkToEvent(deeplinkToEvent),
+                onClick = prefClicked
+            )
+            Header(title = R.string.settings_section_refresh_title)
+            Pref(
+                model = Settings.Widgets.refreshWidgets,
                 onClick = prefClicked
             )
             Footer()
@@ -85,7 +92,7 @@ fun SettingsWidgetScreen(
         key1 = showBackground,
         key2 = deeplinkToEvent
     ) {
-        context.updateAllWidgets()
+        refreshWidgets()
     }
 }
 
@@ -99,6 +106,7 @@ private fun Preview() {
             prefClicked = {},
             showBackground = true,
             deeplinkToEvent = false,
+            refreshWidgets = { }
         )
     }
 }

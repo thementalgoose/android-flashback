@@ -1,6 +1,5 @@
 package tmg.flashback
 
-import android.appwidget.AppWidgetManager
 import android.content.Intent
 import android.os.Build
 import android.util.Log
@@ -47,8 +46,8 @@ import tmg.flashback.style.SupportedTheme
 import tmg.flashback.ui.model.NightMode
 import tmg.flashback.ui.model.Theme
 import tmg.flashback.ui.repository.ThemeRepository
-import tmg.flashback.widgets.contract.usecases.HasWidgetsUseCase
-import tmg.flashback.widgets.contract.usecases.UpdateWidgetsUseCase
+import tmg.flashback.usecases.RefreshWidgetsUseCase
+import tmg.flashback.widgets.upnext.contract.usecases.HasUpNextWidgetsUseCase
 import tmg.utilities.extensions.format
 import tmg.utilities.extensions.isInDayMode
 import javax.inject.Inject
@@ -77,9 +76,9 @@ class FlashbackStartup @Inject constructor(
     private val appOpenedUseCase: AppOpenedUseCase,
     private val getDeviceInfoUseCase: GetDeviceInfoUseCase,
     private val initialiseAdsUseCase: InitialiseAdsUseCase,
-    private val updateWidgetsUseCase: UpdateWidgetsUseCase,
+    private val refreshWidgetsUseCase: RefreshWidgetsUseCase,
     private val homeRepository: HomeRepository,
-    private val hasWidgetsUseCase: HasWidgetsUseCase,
+    private val hasUpNextWidgetsUseCase: HasUpNextWidgetsUseCase,
 ) {
     fun startup(application: FlashbackApplication) {
 
@@ -131,7 +130,7 @@ class FlashbackStartup @Inject constructor(
             extraKeys = mapOf(
                 FirebaseKey.AppOpenCount to deviceRepository.appOpenedCount.toString(),
                 FirebaseKey.AppFirstOpen to (deviceRepository.appFirstOpened.format("dd MMM yyyy") ?: "-"),
-                FirebaseKey.WidgetCount to if (hasWidgetsUseCase.hasWidgets()) "true" else "false",
+                FirebaseKey.WidgetCount to if (hasUpNextWidgetsUseCase.hasWidgets()) "true" else "false",
             )
         )
 
@@ -191,7 +190,7 @@ class FlashbackStartup @Inject constructor(
         firebaseAnalyticsManager.setUserProperty(DEVICE_MODEL, Build.MODEL)
         firebaseAnalyticsManager.setUserProperty(DEVICE_BRAND, Build.BRAND)
         firebaseAnalyticsManager.setUserProperty(DEVICE_MANUFACTURER, Build.MANUFACTURER)
-        firebaseAnalyticsManager.setUserProperty(WIDGET_USAGE, if (hasWidgetsUseCase.hasWidgets()) "true" else "false")
+        firebaseAnalyticsManager.setUserProperty(WIDGET_USAGE, if (hasUpNextWidgetsUseCase.hasWidgets()) "true" else "false")
         firebaseAnalyticsManager.setUserProperty(
             DEVICE_THEME, when (themeRepository.nightMode) {
                 NightMode.DAY -> "day"
@@ -206,7 +205,7 @@ class FlashbackStartup @Inject constructor(
         }
 
         // Update Widgets
-        updateWidgetsUseCase.update()
+        refreshWidgetsUseCase.update()
     }
 
     private fun onFirstRun() {
