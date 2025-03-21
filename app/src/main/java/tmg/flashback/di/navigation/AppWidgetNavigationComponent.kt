@@ -13,7 +13,7 @@ import tmg.flashback.presentation.HomeActivity
 import tmg.flashback.weekend.contract.Weekend
 import tmg.flashback.weekend.contract.model.ScreenWeekendData
 import tmg.flashback.weekend.contract.with
-import tmg.flashback.widgets.contract.WidgetNavigationComponent
+import tmg.flashback.widgets.upnext.contract.WidgetNavigationComponent
 import javax.inject.Inject
 
 class AppWidgetNavigationComponent @Inject constructor(
