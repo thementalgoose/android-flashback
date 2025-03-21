@@ -47,7 +47,9 @@ androidx_splashscreen = "androidx.core:core-splashscreen:1.0.1"
 androidx_window = "androidx.window:window:1.3.0"
 
 androidx_glance_core = { module = "androidx.glance:glance", version.ref = "androidx_glance" }
+androidx_glance_preview = { module = "androidx.glance:glance-preview", version.ref = "androidx_glance" }
 androidx_glance_appwidget = { module = "androidx.glance:glance-appwidget", version.ref = "androidx_glance" }
+androidx_glance_appwidgetpreview = { module = "androidx.glance:glance-appwidget-preview", version.ref = "androidx_glance" }
 
 androidx_workmanager_runtime = { module = "androidx.work:work-runtime", version.ref = "androidx_workmanager" }
 androidx_workmanager_ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "androidx_workmanager" }
