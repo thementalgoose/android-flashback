@@ -80,6 +80,7 @@
             <option value="$PROJECT_DIR$/presentation/navigation" />
             <option value="$PROJECT_DIR$/presentation/strings" />
             <option value="$PROJECT_DIR$/presentation/style" />
+            <option value="$PROJECT_DIR$/presentation/style-widgets" />
             <option value="$PROJECT_DIR$/presentation/ui" />
             <option value="$PROJECT_DIR$/test" />
             <option value="$PROJECT_DIR$/test/models" />
@@ -87,7 +88,6 @@
             <option value="$PROJECT_DIR$/test/providers-noop" />
           </set>
         </option>
-        <option name="resolveExternalAnnotations" value="false" />
       </GradleProjectSettings>
     </option>
   </component>
