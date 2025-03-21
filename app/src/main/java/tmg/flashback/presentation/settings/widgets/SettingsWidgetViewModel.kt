@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.StateFlow
 import tmg.flashback.presentation.settings.Settings
 import tmg.flashback.ui.settings.Setting
 import tmg.flashback.usecases.RefreshWidgetsUseCase
-import tmg.flashback.widgets.repository.UpNextWidgetRepository
+import tmg.flashback.widgets.upnext.repository.UpNextWidgetRepository
 import javax.inject.Inject
 
 interface SettingsWidgetViewModelInputs {

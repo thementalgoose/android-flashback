@@ -17,7 +17,7 @@ import org.threeten.bp.LocalDateTime
 import tmg.flashback.formula1.model.Schedule
 import tmg.flashback.style.widgets.WidgetThemePreview
 import tmg.flashback.style.widgets.text.TextBody
-import tmg.flashback.widgets.presentation.preview.fakeOverviewRace
+import tmg.flashback.widgets.upnext.presentation.preview.fakeOverviewRace
 import tmg.flashback.widgets.upnext.utils.labels
 import tmg.flashback.widgets.upnext.utils.raceSchedule
 

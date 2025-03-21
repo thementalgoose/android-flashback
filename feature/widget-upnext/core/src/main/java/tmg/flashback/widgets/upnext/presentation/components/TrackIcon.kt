@@ -16,7 +16,7 @@ import androidx.glance.preview.Preview
 import tmg.flashback.formula1.enums.TrackLayout
 import tmg.flashback.style.widgets.WidgetThemePreview
 import tmg.flashback.style.widgets.utils.BitmapUtils.getBitmapFromVectorDrawable
-import tmg.flashback.widgets.R
+import tmg.flashback.widgets.upnext.R
 
 @Composable
 internal fun TrackIcon(

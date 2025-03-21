@@ -1,7 +1,7 @@
 package tmg.flashback.usecases
 
 import tmg.flashback.device.usecases.RefreshWidgetUseCase
-import tmg.flashback.widgets.presentation.UpNextWidgetReceiver
+import tmg.flashback.widgets.upnext.presentation.UpNextWidgetReceiver
 import javax.inject.Inject
 
 class RefreshWidgetsUseCase @Inject constructor(
