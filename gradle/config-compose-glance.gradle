@@ -16,8 +16,8 @@ dependencies {
     implementation libs.compose.ui.viewbinding
 
     implementation libs.bundles.androidx.glance
-    debugImplementation libs.androidx.glance.preview
-    debugImplementation libs.androidx.glance.appwidgetpreview
+    implementation libs.androidx.glance.preview
+    implementation libs.androidx.glance.appwidgetpreview
 
     implementation libs.flagkit
 }
