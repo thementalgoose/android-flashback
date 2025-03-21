@@ -28,14 +28,14 @@ import tmg.flashback.style.widgets.WidgetThemePreview
 import tmg.flashback.style.widgets.preview.Preview1x1
 import tmg.flashback.style.widgets.text.TextBody
 import tmg.flashback.style.widgets.utils.appWidgetId
-import tmg.flashback.widgets.di.WidgetsEntryPoints
-import tmg.flashback.widgets.presentation.layout.NoRace
-import tmg.flashback.widgets.presentation.layout.RaceLarge
-import tmg.flashback.widgets.presentation.layout.RaceIcon
-import tmg.flashback.widgets.presentation.layout.RaceName
-import tmg.flashback.widgets.presentation.layout.RaceSmall
-import tmg.flashback.widgets.presentation.layout.ScheduleList
-import tmg.flashback.widgets.presentation.layout.ScheduleListRace
+import tmg.flashback.widgets.upnext.di.WidgetsEntryPoints
+import tmg.flashback.widgets.upnext.presentation.layout.NoRace
+import tmg.flashback.widgets.upnext.presentation.layout.RaceLarge
+import tmg.flashback.widgets.upnext.presentation.layout.RaceIcon
+import tmg.flashback.widgets.upnext.presentation.layout.RaceName
+import tmg.flashback.widgets.upnext.presentation.layout.RaceSmall
+import tmg.flashback.widgets.upnext.presentation.layout.ScheduleList
+import tmg.flashback.widgets.upnext.presentation.layout.ScheduleListRace
 import java.io.File
 
 class UpNextWidget : GlanceAppWidget() {

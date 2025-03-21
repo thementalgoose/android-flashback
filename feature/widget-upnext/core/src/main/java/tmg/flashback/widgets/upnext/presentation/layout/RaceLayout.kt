@@ -24,11 +24,11 @@ import tmg.flashback.strings.R.string
 import tmg.flashback.style.widgets.WidgetThemePreview
 import tmg.flashback.style.widgets.modifiers.surface
 import tmg.flashback.style.widgets.text.TextBody
-import tmg.flashback.widgets.R
-import tmg.flashback.widgets.presentation.UpNextWidgetRefreshWidget
-import tmg.flashback.widgets.presentation.components.CountryIcon
-import tmg.flashback.widgets.presentation.components.FeatureDate
-import tmg.flashback.widgets.presentation.preview.fakeOverviewRace
+import tmg.flashback.widgets.upnext.R
+import tmg.flashback.widgets.upnext.presentation.UpNextWidgetRefreshWidget
+import tmg.flashback.widgets.upnext.presentation.components.CountryIcon
+import tmg.flashback.widgets.upnext.presentation.components.FeatureDate
+import tmg.flashback.widgets.upnext.presentation.preview.fakeOverviewRace
 
 private const val raceSmallWidth = 260
 private const val raceSmallHeight = 90

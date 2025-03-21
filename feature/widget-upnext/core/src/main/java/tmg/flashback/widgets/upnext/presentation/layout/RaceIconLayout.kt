@@ -17,8 +17,8 @@ import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.style.widgets.WidgetThemePreview
 import tmg.flashback.style.widgets.modifiers.surface
 import tmg.flashback.style.widgets.text.TextBody
-import tmg.flashback.widgets.presentation.components.CountryIcon
-import tmg.flashback.widgets.presentation.preview.fakeOverviewRace
+import tmg.flashback.widgets.upnext.presentation.components.CountryIcon
+import tmg.flashback.widgets.upnext.presentation.preview.fakeOverviewRace
 import tmg.flashback.widgets.upnext.utils.labels
 import tmg.flashback.widgets.upnext.utils.raceSchedule
 

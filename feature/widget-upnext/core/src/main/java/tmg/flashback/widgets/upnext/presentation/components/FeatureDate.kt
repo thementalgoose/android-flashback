@@ -14,7 +14,7 @@ import androidx.glance.preview.Preview
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.style.widgets.WidgetThemePreview
 import tmg.flashback.style.widgets.text.TextFeature
-import tmg.flashback.widgets.presentation.preview.fakeOverviewRace
+import tmg.flashback.widgets.upnext.presentation.preview.fakeOverviewRace
 import tmg.flashback.widgets.upnext.utils.labels
 import tmg.flashback.widgets.upnext.utils.raceSchedule
 
