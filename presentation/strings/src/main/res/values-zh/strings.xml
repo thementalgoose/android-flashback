@@ -291,6 +291,10 @@
     <string name="settings_section_widgets_show_background_description">显示纯色背景而不是透明背景</string>
     <string name="settings_section_widgets_deeplink_event_title">活动链接？</string>
     <string name="settings_section_widgets_deeplink_event_description">单击小部件将带您进入特定比赛，而不是主页</string>
+    <string name="settings_section_refresh_title">刷新</string>
+    <string name="settings_section_refresh_widget_title">刷新小部件</string>
+    <string name="settings_section_refresh_widget_description">强制刷新当前活动的小部件</string>
+    <string name="settings_section_refresh_widget_message">小工具已刷新</string>
 
     <string name="settings_section_ads_title">广告</string>
     <string name="settings_section_ads_description">广告设置</string>
