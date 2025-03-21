@@ -68,9 +68,9 @@
             <option value="$PROJECT_DIR$/feature/weekend" />
             <option value="$PROJECT_DIR$/feature/weekend/contract" />
             <option value="$PROJECT_DIR$/feature/weekend/core" />
-            <option value="$PROJECT_DIR$/feature/widgets" />
-            <option value="$PROJECT_DIR$/feature/widgets/contract" />
-            <option value="$PROJECT_DIR$/feature/widgets/core" />
+            <option value="$PROJECT_DIR$/feature/widget-upnext" />
+            <option value="$PROJECT_DIR$/feature/widget-upnext/contract" />
+            <option value="$PROJECT_DIR$/feature/widget-upnext/core" />
             <option value="$PROJECT_DIR$/formula1" />
             <option value="$PROJECT_DIR$/network" />
             <option value="$PROJECT_DIR$/network/flashback" />

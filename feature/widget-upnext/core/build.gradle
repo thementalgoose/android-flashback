@@ -30,5 +30,5 @@ dependencies {
     implementation(projects.core.notifications)
     implementation(projects.core.preferences)
 
-    implementation(projects.feature.widgets.contract)
+    implementation(projects.feature.widgetUpnext.contract)
 }
