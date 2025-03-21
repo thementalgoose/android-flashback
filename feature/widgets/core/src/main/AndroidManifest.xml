@@ -3,12 +3,8 @@
 
     <application>
 
-        <activity
-            android:name=".presentation.upnext.configure.UpNextConfigurationActivity"
-            android:exported="true" />
-
         <receiver
-            android:name=".presentation.UpNextWidgetReceiver"
+            android:name="tmg.flashback.widgets.presentation.UpNextWidgetReceiver"
             android:exported="true"
             android:label="@string/widget_up_next_title">
 
