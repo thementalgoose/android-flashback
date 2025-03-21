@@ -4,7 +4,7 @@
     <application>
 
         <receiver
-            android:name="tmg.flashback.widgets.presentation.UpNextWidgetReceiver"
+            android:name="tmg.flashback.widgets.upnext.presentation.UpNextWidgetReceiver"
             android:exported="true"
             android:label="@string/widget_up_next_title">
 
