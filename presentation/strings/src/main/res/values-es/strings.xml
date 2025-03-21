@@ -294,6 +294,10 @@
     <string name="settings_section_widgets_show_background_description">Mostrar un fondo sólido en lugar de uno transparente</string>
     <string name="settings_section_widgets_deeplink_event_title">Enlace al evento?</string>
     <string name="settings_section_widgets_deeplink_event_description">Al hacer clic en el widget, accederá a la carrera específica, en lugar de a la página de inicio.</string>
+    <string name="settings_section_refresh_title">Refrescar</string>
+    <string name="settings_section_refresh_widget_title">Actualizar widgets</string>
+    <string name="settings_section_refresh_widget_description">Forzar una actualización de los widgets actualmente activos</string>
+    <string name="settings_section_refresh_widget_message">Widgets actualizados</string>
 
     <string name="settings_section_ads_title">Anuncios</string>
     <string name="settings_section_ads_description">Configuración de anuncios</string>
@@ -488,6 +492,7 @@
     <string name="widget_up_next_title">Próximo</string>
     <string name="widget_up_next_description">Obtén el calendario de la próxima carrera</string>
     <string name="widget_up_next_nothing_title">No hay nada próximo</string>
+    <string name="widget_up_next_nothing_title_compact">N/A</string>
     <string name="widget_up_next_nothing_subtitle">Obtendremos esta información tan pronto como esté disponible. Haz clic aquí para buscar actualizaciones</string>
     <string name="dashboard_up_next_title">Próximo</string>
     <string name="dashboard_new_season_available">Nueva temporada\ndisponible</string>

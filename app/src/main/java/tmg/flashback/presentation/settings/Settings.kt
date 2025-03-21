@@ -224,6 +224,12 @@ object Settings {
             isEnabled = isEnabled,
             isBeta = true
         )
+
+        val refreshWidgets = Setting.Pref(
+            _key = "refresh",
+            title = string.settings_section_refresh_widget_title,
+            subtitle = string.settings_section_refresh_widget_description,
+        )
     }
 
     object Ads {

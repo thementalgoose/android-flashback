@@ -8,24 +8,30 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import tmg.flashback.presentation.settings.Settings
-import tmg.flashback.widgets.repository.WidgetRepository
+import tmg.flashback.ui.managers.ToastManager
+import tmg.flashback.usecases.RefreshWidgetsUseCase
+import tmg.flashback.widgets.upnext.repository.UpNextWidgetRepository
 import tmg.testutils.BaseTest
 
 class SettingsWidgetViewModelTest: BaseTest() {
 
-    private val mockWidgetRepository: WidgetRepository = mockk(relaxed = true)
+    private val mockUpNextWidgetRepository: UpNextWidgetRepository = mockk(relaxed = true)
+    private val mockRefreshWidgetsUseCase: RefreshWidgetsUseCase = mockk(relaxed = true)
+    private val mockToastManager: ToastManager = mockk(relaxed = true)
 
     private lateinit var underTest: SettingsWidgetViewModel
 
     private fun initUnderTest() {
         underTest = SettingsWidgetViewModel(
-            widgetRepository = mockWidgetRepository
+            upNextWidgetRepository = mockUpNextWidgetRepository,
+            refreshWidgetsUseCase = mockRefreshWidgetsUseCase,
+            toastManager = mockToastManager
         )
     }
 
     @Test
     fun `show background is true when pref is true`() = runTest(testDispatcher) {
-        every { mockWidgetRepository.showBackground } returns true
+        every { mockUpNextWidgetRepository.showBackground } returns true
 
         initUnderTest()
         underTest.outputs.showBackground.test {
@@ -35,7 +41,7 @@ class SettingsWidgetViewModelTest: BaseTest() {
 
     @Test
     fun `show background is false when pref is false`() = runTest(testDispatcher) {
-        every { mockWidgetRepository.showBackground } returns false
+        every { mockUpNextWidgetRepository.showBackground } returns false
 
         initUnderTest()
         underTest.outputs.showBackground.test {
@@ -44,22 +50,33 @@ class SettingsWidgetViewModelTest: BaseTest() {
     }
 
     @Test
+    fun `refreshing widgets calls use case`() {
+        initUnderTest()
+
+        underTest.refreshWidgets()
+
+        verify {
+            mockRefreshWidgetsUseCase.update()
+        }
+    }
+
+    @Test
     fun `click show background updates pref and updates value`() = runTest(testDispatcher) {
-        every { mockWidgetRepository.showBackground } returns false
+        every { mockUpNextWidgetRepository.showBackground } returns false
 
         initUnderTest()
         underTest.outputs.showBackground.test { awaitItem() }
         underTest.inputs.prefClicked(Settings.Widgets.showBackground(true))
 
         verify {
-            mockWidgetRepository.showBackground = true
+            mockUpNextWidgetRepository.showBackground = true
         }
         underTest.outputs.showBackground.test { awaitItem() }
     }
 
     @Test
     fun `deeplink event is true when pref is true`() = runTest(testDispatcher) {
-        every { mockWidgetRepository.deeplinkToEvent } returns true
+        every { mockUpNextWidgetRepository.deeplinkToEvent } returns true
 
         initUnderTest()
         underTest.outputs.deeplinkToEvent.test {
@@ -69,7 +86,7 @@ class SettingsWidgetViewModelTest: BaseTest() {
 
     @Test
     fun `deeplink event is false when pref is false`() = runTest(testDispatcher) {
-        every { mockWidgetRepository.deeplinkToEvent } returns false
+        every { mockUpNextWidgetRepository.deeplinkToEvent } returns false
 
         initUnderTest()
         underTest.outputs.deeplinkToEvent.test {
@@ -79,15 +96,27 @@ class SettingsWidgetViewModelTest: BaseTest() {
 
     @Test
     fun `click show deeplink event updates pref and updates value`() = runTest(testDispatcher) {
-        every { mockWidgetRepository.deeplinkToEvent } returns false
+        every { mockUpNextWidgetRepository.deeplinkToEvent } returns false
 
         initUnderTest()
         underTest.outputs.deeplinkToEvent.test { awaitItem() }
         underTest.inputs.prefClicked(Settings.Widgets.deeplinkToEvent(true))
 
         verify {
-            mockWidgetRepository.deeplinkToEvent = true
+            mockUpNextWidgetRepository.deeplinkToEvent = true
         }
         underTest.outputs.deeplinkToEvent.test { awaitItem() }
+    }
+
+    @Test
+    fun `click refresh widgets`() = runTest(testDispatcher) {
+        initUnderTest()
+
+        underTest.inputs.prefClicked(Settings.Widgets.refreshWidgets)
+
+        verify {
+            mockRefreshWidgetsUseCase.update()
+            mockToastManager.displayToast(any())
+        }
     }
 }
