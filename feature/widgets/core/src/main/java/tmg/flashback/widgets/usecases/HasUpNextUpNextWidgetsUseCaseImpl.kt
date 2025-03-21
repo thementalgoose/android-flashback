@@ -4,14 +4,14 @@ import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
-import tmg.flashback.widgets.contract.usecases.HasWidgetsUseCase
-import tmg.flashback.widgets.presentation.upnext.UpNextWidgetReceiver
+import tmg.flashback.widgets.contract.usecases.HasUpNextWidgetsUseCase
+import tmg.flashback.widgets.presentation.UpNextWidgetReceiver
 import javax.inject.Inject
 
-internal class HasWidgetsUseCaseImpl @Inject constructor(
+internal class HasUpNextUpNextWidgetsUseCaseImpl @Inject constructor(
     @ApplicationContext
     private val applicationContext: Context
-): HasWidgetsUseCase {
+): HasUpNextWidgetsUseCase {
 
     private val appWidgetManager: AppWidgetManager
         get() = AppWidgetManager.getInstance(applicationContext)

@@ -1,4 +1,4 @@
-package tmg.flashback.widgets.presentation.upnext
+package tmg.flashback.widgets.presentation
 
 import android.content.Context
 import androidx.datastore.core.DataStore
@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import tmg.flashback.data.repo.ScheduleRepository
 import tmg.flashback.formula1.model.OverviewRace
-import tmg.flashback.widgets.repository.WidgetRepository
+import tmg.flashback.widgets.repository.UpNextWidgetRepository
 
 data class UpNextConfiguration(
     val scheduleData: OverviewRace?,
@@ -25,7 +25,7 @@ data class UpNextConfiguration(
 
 class UpNextConfigurationDataStore(
     private val context: Context,
-    private val widgetRepository: WidgetRepository,
+    private val upNextWidgetRepository: UpNextWidgetRepository,
     private val scheduleRepository: ScheduleRepository,
 ): DataStore<UpNextConfiguration> {
 
@@ -33,8 +33,8 @@ class UpNextConfigurationDataStore(
         val nextRace = scheduleRepository.getUpcomingEvents().minByOrNull { it.date }
         return UpNextConfiguration(
             scheduleData = nextRace,
-            showBackground = widgetRepository.showBackground,
-            deeplinkToEvent = widgetRepository.deeplinkToEvent,
+            showBackground = upNextWidgetRepository.showBackground,
+            deeplinkToEvent = upNextWidgetRepository.deeplinkToEvent,
             context = context
         )
     }

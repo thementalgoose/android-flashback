@@ -1,4 +1,4 @@
-package tmg.flashback.widgets.presentation.upnext
+package tmg.flashback.widgets.presentation
 
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_IDS

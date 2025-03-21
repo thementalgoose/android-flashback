@@ -3,7 +3,7 @@ apply from: rootDir.absolutePath + "/gradle/config-android.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-util.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-junit5.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-hilt.gradle"
-apply from: rootDir.absolutePath + "/gradle/config-compose.gradle"
+apply from: rootDir.absolutePath + "/gradle/config-compose-glance.gradle"
 
 android {
     compileSdk project.ext.compileSdk
@@ -16,15 +16,11 @@ android {
 }
 
 dependencies {
-
-    implementation libs.bundles.androidx.glance
-
     implementation(projects.formula1)
     implementation(projects.data.repo)
 
-    implementation(projects.presentation.style)
-    implementation(projects.presentation.ui)
     implementation(projects.presentation.strings)
+    implementation(projects.presentation.styleWidgets)
 
     // Core modules
     implementation(projects.core.metrics.googleanalytics)

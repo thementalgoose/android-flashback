@@ -5,7 +5,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class WidgetRepository @Inject constructor(
+class UpNextWidgetRepository @Inject constructor(
     private val preferenceManager: PreferenceManager
 ) {
     var showBackground: Boolean

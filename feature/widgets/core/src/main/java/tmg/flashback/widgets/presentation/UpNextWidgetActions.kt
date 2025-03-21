@@ -1,4 +1,4 @@
-package tmg.flashback.widgets.presentation.upnext
+package tmg.flashback.widgets.presentation
 
 import android.appwidget.AppWidgetManager
 import android.content.Context
@@ -10,8 +10,8 @@ import androidx.glance.action.ActionParameters
 import androidx.glance.appwidget.action.ActionCallback
 import androidx.glance.appwidget.state.updateAppWidgetState
 import tmg.flashback.formula1.model.OverviewRace
+import tmg.flashback.style.widgets.utils.appWidgetId
 import tmg.flashback.widgets.di.WidgetsEntryPoints
-import tmg.flashback.widgets.utils.appWidgetId
 import java.util.UUID
 
 internal class UpNextWidgetOpenAll: ActionCallback {

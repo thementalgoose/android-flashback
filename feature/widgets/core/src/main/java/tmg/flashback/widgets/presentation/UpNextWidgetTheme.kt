@@ -1,8 +1,4 @@
-package tmg.flashback.widgets.presentation.upnext
-
-import androidx.glance.color.ColorProvider
-import androidx.glance.color.ColorProviders
-import androidx.glance.unit.ColorProvider
+package tmg.flashback.widgets.presentation
 
 object UpNextWidgetTheme {
 
