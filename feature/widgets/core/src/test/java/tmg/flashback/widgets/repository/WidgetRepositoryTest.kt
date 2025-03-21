@@ -11,10 +11,10 @@ internal class WidgetRepositoryTest {
 
     private val mockPreferenceManager: PreferenceManager = mockk(relaxed = true)
 
-    private lateinit var underTest: WidgetRepository
+    private lateinit var underTest: UpNextWidgetRepository
 
     private fun initUnderTest() {
-        underTest = WidgetRepository(
+        underTest = UpNextWidgetRepository(
             preferenceManager = mockPreferenceManager
         )
     }
