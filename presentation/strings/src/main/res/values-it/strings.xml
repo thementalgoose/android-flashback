@@ -34,7 +34,7 @@
     <string name="nav_details">Dettagli</string>
     <string name="nav_qualifying">Qualifiche</string>
     <string name="nav_race">Gara</string>
-    <string name="nav_sprint_qualifying">Sprint Shootout</string>
+    <string name="nav_sprint_qualifying">Sprint Qualifiche</string>
     <string name="nav_sprint">Sprint</string>
 
     <!-- Race -->
@@ -279,11 +279,11 @@
     <string name="settings_switch_notification_upcoming_fp_title">Prove libere</string>
     <string name="settings_switch_notification_upcoming_qualifying_title">Qualifiche</string>
     <string name="settings_switch_notification_upcoming_sprint_title">Sprint</string>
-    <string name="settings_switch_notification_upcoming_sprint_qualifying_title">Sprint Shootout</string>
+    <string name="settings_switch_notification_upcoming_sprint_qualifying_title">Sprint Qualifiche</string>
     <string name="settings_switch_notification_upcoming_race_title">Gara</string>
     <string name="settings_switch_notification_upcoming_other_title">Altro</string>
     <string name="settings_switch_notification_results_qualifying_title">Qualifiche</string>
-    <string name="settings_switch_notification_results_sprint_qualifying_title">Sprint Shootout</string>
+    <string name="settings_switch_notification_results_sprint_qualifying_title">Sprint Qualifiche</string>
     <string name="settings_switch_notification_results_sprint_title">Sprint</string>
     <string name="settings_switch_notification_results_race_title">Gara</string>
 
@@ -462,12 +462,12 @@
     <string name="notification_channel_title_results">Risultati disponibili</string>
     <string name="notification_channel_race">Gara</string>
     <string name="notification_channel_sprint">Sprint</string>
-    <string name="notification_channel_sprint_qualifying">Sprint Shootout</string>
+    <string name="notification_channel_sprint_qualifying">Sprint Qualifiche</string>
     <string name="notification_channel_qualifying">Qualifiche</string>
     <string name="notification_channel_free_practice">Prove libere</string>
     <string name="notification_channel_race_notify">Gara</string>
     <string name="notification_channel_sprint_notify">Sprint</string>
-    <string name="notification_channel_sprint_qualifying_notify">Sprint Shootout</string>
+    <string name="notification_channel_sprint_qualifying_notify">Sprint Qualifiche</string>
     <string name="notification_channel_qualifying_notify">Qualifiche</string>
     <string name="notification_channel_info">Informazioni sulla stagione</string>
 

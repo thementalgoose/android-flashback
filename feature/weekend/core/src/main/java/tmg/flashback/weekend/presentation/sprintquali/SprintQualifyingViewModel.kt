@@ -59,7 +59,7 @@ class SprintQualifyingViewModel @Inject constructor(
                 return@map list
             }
 
-            return@map race.getSprintShootout()
+            return@map race.getSprintQualifying()
         }
         .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
@@ -67,7 +67,7 @@ class SprintQualifyingViewModel @Inject constructor(
         seasonRound.value = Pair(season, round)
     }
 
-    private fun Race.getSprintShootout(): List<SprintQualifyingModel> {
+    private fun Race.getSprintQualifying(): List<SprintQualifyingModel> {
         val list = this.sprint.qualifying.firstOrNull { it.label == SprintQualifyingType.SQ3 } ?: return emptyList()
 
         return list.results

@@ -38,7 +38,7 @@
     <string name="nav_details">Details</string>
     <string name="nav_qualifying">Qualifying</string>
     <string name="nav_race">Race</string>
-    <string name="nav_sprint_qualifying">Sprint Shootout</string>
+    <string name="nav_sprint_qualifying">Sprint Qualifying</string>
     <string name="nav_sprint">Sprint</string>
 
 
@@ -309,11 +309,11 @@
     <string name="settings_switch_notification_upcoming_fp_title">Free Practice</string>
     <string name="settings_switch_notification_upcoming_qualifying_title">Qualifying</string>
     <string name="settings_switch_notification_upcoming_sprint_title">Sprint</string>
-    <string name="settings_switch_notification_upcoming_sprint_qualifying_title">Sprint Shootout</string>
+    <string name="settings_switch_notification_upcoming_sprint_qualifying_title">Sprint Qualifying</string>
     <string name="settings_switch_notification_upcoming_race_title">Race</string>
     <string name="settings_switch_notification_upcoming_other_title">Other</string>
     <string name="settings_switch_notification_results_qualifying_title">Qualifying</string>
-    <string name="settings_switch_notification_results_sprint_qualifying_title">Sprint Shootout</string>
+    <string name="settings_switch_notification_results_sprint_qualifying_title">Sprint Qualifying</string>
     <string name="settings_switch_notification_results_sprint_title">Sprint</string>
     <string name="settings_switch_notification_results_race_title">Race</string>
 
@@ -510,12 +510,12 @@
     <string name="notification_channel_title_results">Results available</string>
     <string name="notification_channel_race">Race</string>
     <string name="notification_channel_sprint">Sprint</string>
-    <string name="notification_channel_sprint_qualifying">Sprint Shootout</string>
+    <string name="notification_channel_sprint_qualifying">Sprint Qualifying</string>
     <string name="notification_channel_qualifying">Qualifying</string>
     <string name="notification_channel_free_practice">Free Practice</string>
     <string name="notification_channel_race_notify">Race</string>
     <string name="notification_channel_sprint_notify">Sprint</string>
-    <string name="notification_channel_sprint_qualifying_notify">Sprint Shootout</string>
+    <string name="notification_channel_sprint_qualifying_notify">Sprint Qualifying</string>
     <string name="notification_channel_qualifying_notify">Qualifying</string>
     <string name="notification_channel_info">Season information</string>
 
