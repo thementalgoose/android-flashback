@@ -11,7 +11,7 @@ internal class RefreshWidgetUseCaseTest {
 
     private lateinit var underTest: RefreshWidgetUseCase
 
-    object Test { }
+    object TestObject { }
 
     private fun initUnderTest() {
         underTest = RefreshWidgetUseCase(
@@ -21,7 +21,7 @@ internal class RefreshWidgetUseCaseTest {
 
     @Test
     fun `updating widget calls manager`() {
-        val clazz = Test::class.java
+        val clazz = TestObject::class.java
         initUnderTest()
 
         underTest.update(clazz)
