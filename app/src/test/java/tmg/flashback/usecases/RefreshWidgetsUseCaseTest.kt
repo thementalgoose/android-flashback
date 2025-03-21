@@ -4,7 +4,7 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Test
 import tmg.flashback.device.usecases.RefreshWidgetUseCase
-import tmg.flashback.widgets.presentation.UpNextWidgetReceiver
+import tmg.flashback.widgets.upnext.presentation.UpNextWidgetReceiver
 
 internal class RefreshWidgetsUseCaseTest {
 

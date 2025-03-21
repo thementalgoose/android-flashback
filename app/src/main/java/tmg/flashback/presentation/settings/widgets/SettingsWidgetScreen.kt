@@ -22,8 +22,10 @@ import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.ui.components.header.HeaderAction
 import tmg.flashback.ui.components.settings.Footer
 import tmg.flashback.ui.components.settings.Header
+import tmg.flashback.ui.components.settings.Pref
 import tmg.flashback.ui.components.settings.Switch
 import tmg.flashback.ui.settings.Setting
+import tmg.flashback.ui.settings.Setting.Pref
 
 @Composable
 fun SettingsWidgetScreenVM(
@@ -68,13 +70,18 @@ fun SettingsWidgetScreen(
                 )
             }
 
-            Header(title = R.string.settings_header_home)
+            Header(title = R.string.settings_section_widgets_title)
             Switch(
                 model = Settings.Widgets.showBackground(showBackground),
                 onClick = prefClicked
             )
             Switch(
                 model = Settings.Widgets.deeplinkToEvent(deeplinkToEvent),
+                onClick = prefClicked
+            )
+            Header(title = R.string.settings_section_refresh_title)
+            Pref(
+                model = Settings.Widgets.refreshWidgets,
                 onClick = prefClicked
             )
             Footer()
