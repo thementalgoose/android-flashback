@@ -182,12 +182,12 @@ class UpNextWidget : GlanceAppWidget() {
                     throw IllegalArgumentException("Invalid size not matching the provided ones")
                 }
             }
-            if (BuildConfig.DEBUG) {
-                TextBody(
-                    text = "$config",
-                    color = GlanceTheme.colors.onBackground.getColor(context)
-                )
-            }
+//            if (BuildConfig.DEBUG) {
+//                TextBody(
+//                    text = "$config",
+//                    color = GlanceTheme.colors.onBackground.getColor(context)
+//                )
+//            }
         } else {
             Log.i("UpNextWidget", "No race found, showing fallback")
             NoRace(
