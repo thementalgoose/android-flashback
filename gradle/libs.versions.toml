@@ -116,7 +116,7 @@ room_compiler = { module = "androidx.room:room-compiler", version.ref = "android
 room_ktx = { module = "androidx.room:room-ktx", version.ref = "androidx_room" }
 room_testing = { module = "androidx.room:room-testing", version.ref = "androidx_room" }
 
-shakey = "com.linkedin.shaky:shaky:3.0.7"
+shakey = "com.linkedin.shaky:shaky:3.0.8"
 falcon = "com.jraska:falcon:2.2.0"
 
 play_review = { module = "com.google.android.play:review", version.ref = "google_playreview" }
