@@ -12,6 +12,10 @@ android {
         targetSdkVersion project.ext.targetSdkVersion
     }
     namespace 'tmg.flashback.formula1'
+
+    buildFeatures {
+        testFixtures.enable = true
+    }
 }
 
 dependencies {
