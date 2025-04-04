@@ -60,6 +60,5 @@ include ':presentation:style-widgets'
 include ':presentation:strings'
 include ':presentation:navigation'
 
-include ':test:models'
 include ':test:providers'
 include ':test:providers-noop'
