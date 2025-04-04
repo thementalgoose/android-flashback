@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.flashbackapi.NetworkSchedule
-import tmg.flashback.RoomSchedule
+import tmg.flashback.data.persistence.RoomSchedule
 import tmg.flashback.data.persistence.models.overview.Schedule
 import tmg.flashback.data.persistence.models.overview.model
 import tmg.flashback.flashbackapi.api.models.overview.OverviewRace

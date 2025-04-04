@@ -5,7 +5,7 @@ import io.mockk.mockk
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.flashback.RoomRace
+import tmg.flashback.data.persistence.RoomRace
 import tmg.flashback.data.persistence.models.overview.model
 import tmg.flashback.data.persistence.models.race.model
 import tmg.flashback.formula1.model.Event

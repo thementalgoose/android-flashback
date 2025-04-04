@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.flashback.RoomDriverHistory
+import tmg.flashback.data.persistence.RoomDriverHistory
 import tmg.flashback.data.persistence.models.drivers.model
 import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.Driver
