@@ -52,5 +52,5 @@ dependencies {
     implementation libs.flagkit
     implementation(projects.data.persistence)
 
-    testImplementation(projects.test.models)
+    testImplementation(testFixtures(projects.formula1))
 }
