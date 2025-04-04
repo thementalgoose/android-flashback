@@ -83,7 +83,6 @@
             <option value="$PROJECT_DIR$/presentation/style-widgets" />
             <option value="$PROJECT_DIR$/presentation/ui" />
             <option value="$PROJECT_DIR$/test" />
-            <option value="$PROJECT_DIR$/test/models" />
             <option value="$PROJECT_DIR$/test/providers" />
             <option value="$PROJECT_DIR$/test/providers-noop" />
           </set>
