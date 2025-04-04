@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.flashback.NetworkDriver
+import tmg.flashback.flashbackapi.NetworkDriver
 import tmg.flashback.data.persistence.models.drivers.Driver
 import tmg.flashback.data.persistence.models.drivers.model
 import tmg.flashback.flashbackapi.api.models.drivers.model

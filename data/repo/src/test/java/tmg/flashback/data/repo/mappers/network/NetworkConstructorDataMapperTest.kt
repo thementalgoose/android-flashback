@@ -3,7 +3,7 @@ package tmg.flashback.data.repo.mappers.network
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.flashback.NetworkConstructor
+import tmg.flashback.flashbackapi.NetworkConstructor
 import tmg.flashback.data.persistence.models.constructors.Constructor
 import tmg.flashback.data.persistence.models.constructors.model
 import tmg.flashback.flashbackapi.api.models.constructors.model
