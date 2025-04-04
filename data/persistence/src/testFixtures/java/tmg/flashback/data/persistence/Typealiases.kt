@@ -1,4 +1,4 @@
-package tmg.flashback
+package tmg.flashback.data.persistence
 
 //region Room
 
