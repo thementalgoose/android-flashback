@@ -4,9 +4,9 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.flashback.NetworkQualifyingResult
-import tmg.flashback.NetworkRaceResult
-import tmg.flashback.NetworkSprintResult
+import tmg.flashback.flashbackapi.NetworkQualifyingResult
+import tmg.flashback.flashbackapi.NetworkRaceResult
+import tmg.flashback.flashbackapi.NetworkSprintResult
 import tmg.flashback.data.persistence.models.race.QualifyingResult
 import tmg.flashback.data.persistence.models.race.RaceResult
 import tmg.flashback.data.persistence.models.race.model
