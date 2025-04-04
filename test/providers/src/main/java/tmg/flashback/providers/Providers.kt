@@ -17,7 +17,7 @@ import tmg.flashback.formula1.model.SeasonConstructorStandingSeason
 import tmg.flashback.formula1.model.SeasonConstructorStandings
 import tmg.flashback.formula1.model.SeasonDriverStandingSeason
 import tmg.flashback.formula1.model.SeasonDriverStandings
-import tmg.flashback.formula1.model.model
+import tmg.flashback.providers.model.model
 
 class DriverProvider: PreviewParameterProvider<Driver> {
     override val values: Sequence<Driver> = sequenceOf(Driver.model())
