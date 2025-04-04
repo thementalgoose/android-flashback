@@ -8,9 +8,9 @@ import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.format.DateTimeParseException
-import tmg.flashback.RoomRace
-import tmg.flashback.RoomRaceInfo
-import tmg.flashback.RoomRaceInfoWithCircuit
+import tmg.flashback.data.persistence.RoomRace
+import tmg.flashback.data.persistence.RoomRaceInfo
+import tmg.flashback.data.persistence.RoomRaceInfoWithCircuit
 import tmg.flashback.data.persistence.models.race.model
 import tmg.flashback.formula1.model.Circuit
 import tmg.flashback.formula1.model.Constructor

@@ -3,7 +3,7 @@ package tmg.flashback.data.repo.mappers.app
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.flashback.RoomDriver
+import tmg.flashback.data.persistence.RoomDriver
 import tmg.flashback.data.persistence.models.drivers.model
 import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.model.model
