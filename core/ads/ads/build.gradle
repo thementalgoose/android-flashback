@@ -23,5 +23,5 @@ dependencies {
     implementation(projects.presentation.ui)
     implementation(projects.presentation.navigation)
 
-    testImplementation(projects.test.models)
+    testImplementation(testFixtures(projects.formula1))
 }

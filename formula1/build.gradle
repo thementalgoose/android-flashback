@@ -12,9 +12,15 @@ android {
         targetSdkVersion project.ext.targetSdkVersion
     }
     namespace 'tmg.flashback.formula1'
+
+    buildFeatures {
+        testFixtures.enable = true
+    }
 }
 
 dependencies {
     implementation(projects.presentation.strings)
-    testImplementation(projects.test.models)
+    testFixturesImplementation (libs.threeten) {
+        exclude group:'com.jakewharton.threetenabp', module:'threetenabp'
+    }
 }

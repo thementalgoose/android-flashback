@@ -42,5 +42,5 @@ dependencies {
     implementation libs.bundles.retrofit
     implementation libs.bundles.okhttp
 
-    testImplementation(projects.test.models)
+    testImplementation(testFixtures(projects.formula1))
 }

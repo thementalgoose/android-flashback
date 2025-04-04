@@ -2,8 +2,6 @@ apply plugin:  'com.android.library'
 apply from: rootDir.absolutePath + "/gradle/config-android.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-util.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-junit5.gradle"
-
-ext.no_providers = true
 apply from: rootDir.absolutePath + "/gradle/config-compose.gradle"
 
 android {
@@ -19,5 +17,4 @@ android {
 dependencies {
 
     implementation(projects.formula1)
-    implementation(projects.test.models)
 }
