@@ -28,6 +28,7 @@ dependencies {
     implementation libs.bundles.androidx.workmanager
 
     testImplementation(projects.test.models)
+    testImplementation(testFixtures(projects.formula1))
     testImplementation(testFixtures(projects.network.flashback))
     testImplementation(testFixtures(projects.data.persistence))
 
