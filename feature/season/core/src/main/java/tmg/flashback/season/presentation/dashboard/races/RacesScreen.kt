@@ -42,7 +42,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.serialization.json.Json
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 import tmg.flashback.ads.ads.components.AdvertProvider
 import tmg.flashback.formula1.extensions.icon
 import tmg.flashback.formula1.extensions.label

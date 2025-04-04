@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.threeten.bp.format.DateTimeParseException
+import java.time.format.DateTimeParseException
 import tmg.flashback.data.persistence.RoomRace
 import tmg.flashback.data.persistence.RoomRaceInfo
 import tmg.flashback.data.persistence.RoomRaceInfoWithCircuit

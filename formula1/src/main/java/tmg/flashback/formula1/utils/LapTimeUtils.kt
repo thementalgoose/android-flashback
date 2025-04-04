@@ -1,6 +1,6 @@
 package tmg.flashback.formula1.utils
 
-import org.threeten.bp.LocalTime
+import java.time.LocalTime
 import tmg.flashback.formula1.model.LapTime
 
 fun LapTime.addDelta(hours: Int = 0, mins: Int = 0, seconds: Int = 0, millis: Int = 0): LapTime {

@@ -13,7 +13,7 @@ import androidx.glance.layout.width
 import androidx.glance.preview.ExperimentalGlancePreviewApi
 import androidx.glance.preview.Preview
 import androidx.glance.text.FontWeight
-import org.threeten.bp.LocalDateTime
+import java.time.LocalDateTime
 import tmg.flashback.formula1.model.Schedule
 import tmg.flashback.style.widgets.WidgetThemePreview
 import tmg.flashback.style.widgets.text.TextBody

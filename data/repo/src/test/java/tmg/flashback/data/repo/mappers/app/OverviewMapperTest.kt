@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.threeten.bp.format.DateTimeParseException
+import java.time.format.DateTimeParseException
 import tmg.flashback.data.persistence.models.overview.Overview
 import tmg.flashback.data.persistence.models.overview.OverviewWithCircuit
 import tmg.flashback.data.persistence.models.overview.model

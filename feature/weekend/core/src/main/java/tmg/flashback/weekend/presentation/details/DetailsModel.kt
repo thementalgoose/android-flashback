@@ -2,7 +2,7 @@ package tmg.flashback.weekend.presentation.details
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 import tmg.flashback.formula1.model.Circuit
 import tmg.flashback.formula1.model.Schedule
 import tmg.utilities.models.StringHolder

@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 import tmg.flashback.googleanalytics.constants.AnalyticsConstants.analyticsDriverId
 import tmg.flashback.googleanalytics.constants.AnalyticsConstants.analyticsSeason
 import tmg.flashback.drivers.R

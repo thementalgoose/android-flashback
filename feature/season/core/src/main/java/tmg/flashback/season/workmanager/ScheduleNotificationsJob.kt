@@ -10,7 +10,7 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.threeten.bp.LocalDateTime
+import java.time.LocalDateTime
 import tmg.flashback.device.repository.PermissionRepository
 import tmg.flashback.data.repo.ScheduleRepository
 import tmg.flashback.formula1.enums.RaceWeekend

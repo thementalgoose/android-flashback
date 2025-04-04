@@ -5,8 +5,8 @@ import io.mockk.mockk
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
-import org.threeten.bp.LocalDateTime
-import org.threeten.bp.format.DateTimeParseException
+import java.time.LocalDateTime
+import java.time.format.DateTimeParseException
 import tmg.flashback.rss.network.apis.convert
 import tmg.flashback.rss.network.model.RssXMLModel
 import tmg.flashback.rss.network.model.RssXMLModelChannel

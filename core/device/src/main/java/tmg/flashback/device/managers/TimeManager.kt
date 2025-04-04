@@ -1,6 +1,6 @@
 package tmg.flashback.device.managers
 
-import org.threeten.bp.LocalDateTime
+import java.time.LocalDateTime
 import javax.inject.Inject
 import javax.inject.Singleton
 

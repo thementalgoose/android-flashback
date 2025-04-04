@@ -1,8 +1,8 @@
 package tmg.flashback.eastereggs.model
 
 import androidx.annotation.StringRes
-import org.threeten.bp.LocalDate
-import org.threeten.bp.Year
+import java.time.LocalDate
+import java.time.Year
 import tmg.flashback.strings.R.string
 
 private val year: Int by lazy { Year.now().value }

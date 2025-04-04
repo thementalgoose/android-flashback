@@ -1,8 +1,8 @@
 package tmg.flashback.providers
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import org.threeten.bp.LocalDate
-import org.threeten.bp.LocalTime
+import java.time.LocalDate
+import java.time.LocalTime
 import tmg.flashback.formula1.model.CircuitHistoryRace
 import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.Driver

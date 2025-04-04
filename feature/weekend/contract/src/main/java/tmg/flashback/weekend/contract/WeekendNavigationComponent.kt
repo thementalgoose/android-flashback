@@ -3,7 +3,7 @@ package tmg.flashback.weekend.contract
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import kotlinx.serialization.json.Json
-import org.threeten.bp.Year
+import java.time.Year
 import tmg.flashback.navigation.NavigationDestination
 import tmg.flashback.navigation.Screen
 import tmg.flashback.weekend.contract.model.ScreenWeekendData
