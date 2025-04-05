@@ -1,6 +1,6 @@
 package tmg.flashback.formula1.model
 
-import org.threeten.bp.LocalTime
+import java.time.LocalTime
 import tmg.utilities.extensions.extend
 import kotlin.math.abs
 

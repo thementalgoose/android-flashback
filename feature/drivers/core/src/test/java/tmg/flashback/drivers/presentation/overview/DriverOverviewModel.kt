@@ -2,7 +2,7 @@ package tmg.flashback.drivers.presentation.overview
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 import tmg.flashback.drivers.R
 import tmg.flashback.strings.R.string
 import tmg.flashback.formula1.model.Constructor

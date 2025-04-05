@@ -1,7 +1,7 @@
 package tmg.flashback.widgets.upnext.presentation.preview
 
-import org.threeten.bp.LocalDate
-import org.threeten.bp.LocalTime
+import java.time.LocalDate
+import java.time.LocalTime
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.model.Schedule
 

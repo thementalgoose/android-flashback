@@ -8,7 +8,7 @@ import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import dagger.hilt.android.qualifiers.ApplicationContext
-import org.threeten.bp.LocalTime
+import java.time.LocalTime
 import tmg.flashback.configuration.workmanager.ConfigSyncJob
 import tmg.utilities.extensions.secondsToHHmm
 import java.util.concurrent.TimeUnit

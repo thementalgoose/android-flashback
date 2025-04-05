@@ -11,8 +11,8 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.threeten.bp.LocalDate
-import org.threeten.bp.LocalTime
+import java.time.LocalDate
+import java.time.LocalTime
 import tmg.flashback.circuits.contract.Circuit
 import tmg.flashback.circuits.contract.with
 import tmg.flashback.device.usecases.OpenLocationUseCase

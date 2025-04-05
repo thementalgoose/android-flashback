@@ -1,6 +1,6 @@
 package tmg.flashback.season.repository
 
-import org.threeten.bp.Year
+import java.time.Year
 import tmg.flashback.configuration.manager.ConfigManager
 import tmg.flashback.crashlytics.manager.CrashlyticsManager
 import tmg.flashback.prefs.manager.PreferenceManager

@@ -3,7 +3,7 @@ package tmg.flashback.season.presentation.dashboard.races
 import io.mockk.mockk
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.model.model
 

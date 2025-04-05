@@ -1,6 +1,6 @@
 package tmg.flashback.data.repo
 
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 import tmg.flashback.crashlytics.manager.CrashlyticsManager
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.data.persistence.FlashbackDatabase

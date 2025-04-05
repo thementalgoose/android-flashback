@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
-import org.threeten.bp.Year
+import java.time.Year
 import tmg.flashback.formula1.R
 
 internal class TrackLayoutTest {

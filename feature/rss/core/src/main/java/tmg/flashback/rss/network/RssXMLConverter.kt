@@ -1,8 +1,8 @@
 package tmg.flashback.rss.network.apis
 
 import android.util.Log
-import org.threeten.bp.LocalDateTime
-import org.threeten.bp.format.DateTimeFormatter
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import tmg.flashback.rss.network.model.RssXMLModel
 import tmg.flashback.rss.network.model.RssXMLModelItem
 import tmg.flashback.rss.repo.model.Article

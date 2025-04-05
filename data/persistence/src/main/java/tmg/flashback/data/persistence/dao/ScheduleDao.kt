@@ -1,7 +1,7 @@
 package tmg.flashback.data.persistence.dao
 
 import androidx.room.*
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 import tmg.flashback.data.persistence.models.overview.OverviewWithCircuit
 import tmg.flashback.data.persistence.models.overview.Schedule
 import tmg.utilities.extensions.format

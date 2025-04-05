@@ -9,7 +9,7 @@ import io.mockk.verify
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.device.managers.FirebaseInstallationManager
 import tmg.flashback.device.repository.DeviceRepository

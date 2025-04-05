@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Build
 import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
-import com.jakewharton.threetenabp.AndroidThreeTen
 import com.linkedin.android.shaky.EmailShakeDelegate
 import com.linkedin.android.shaky.Result
 import com.linkedin.android.shaky.Shaky
@@ -50,6 +49,8 @@ import tmg.flashback.usecases.RefreshWidgetsUseCase
 import tmg.flashback.widgets.upnext.contract.usecases.HasUpNextWidgetsUseCase
 import tmg.utilities.extensions.format
 import tmg.utilities.extensions.isInDayMode
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -83,9 +84,6 @@ class FlashbackStartup @Inject constructor(
     fun startup(application: FlashbackApplication) {
 
         val applicationScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
-
-        // ThreeTen
-        AndroidThreeTen.init(application)
 
         // Theming
         AppTheme.appTheme = when (themeRepository.theme) {
@@ -129,7 +127,7 @@ class FlashbackStartup @Inject constructor(
             deviceUuid = deviceRepository.deviceUdid,
             extraKeys = mapOf(
                 FirebaseKey.AppOpenCount to deviceRepository.appOpenedCount.toString(),
-                FirebaseKey.AppFirstOpen to (deviceRepository.appFirstOpened.format("dd MMM yyyy") ?: "-"),
+                FirebaseKey.AppFirstOpen to (deviceRepository.appFirstOpened.format(DateTimeFormatter.ofPattern("dd MMM yyyy", Locale.ENGLISH)) ?: "-"),
                 FirebaseKey.WidgetCount to if (hasUpNextWidgetsUseCase.hasWidgets()) "true" else "false",
             )
         )

@@ -1,6 +1,6 @@
 package tmg.flashback.season.presentation.dashboard.races
 
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.season.contract.repository.models.NotificationSchedule
 

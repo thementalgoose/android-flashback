@@ -2,7 +2,7 @@ package tmg.flashback.drivers.presentation.season
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 import tmg.flashback.formula1.enums.RaceStatus
 import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.Driver

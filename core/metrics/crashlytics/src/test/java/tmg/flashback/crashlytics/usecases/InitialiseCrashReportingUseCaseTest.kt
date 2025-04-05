@@ -4,7 +4,7 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Test
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 import tmg.flashback.crashlytics.model.FirebaseKey
 import tmg.flashback.crashlytics.services.FirebaseCrashService
 import tmg.flashback.device.repository.PrivacyRepository

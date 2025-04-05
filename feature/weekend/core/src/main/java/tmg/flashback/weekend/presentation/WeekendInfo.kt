@@ -1,6 +1,6 @@
 package tmg.flashback.weekend.presentation
 
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 import tmg.flashback.formula1.model.RaceInfo
 import tmg.flashback.weekend.contract.model.ScreenWeekendData
 
