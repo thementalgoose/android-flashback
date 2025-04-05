@@ -9,7 +9,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
-import org.threeten.bp.LocalDateTime
+import java.time.LocalDateTime
 import tmg.flashback.device.managers.TimeManager
 import tmg.flashback.device.repository.AccessibilityRepository
 import tmg.flashback.eastereggs.repository.EasterEggsRepository

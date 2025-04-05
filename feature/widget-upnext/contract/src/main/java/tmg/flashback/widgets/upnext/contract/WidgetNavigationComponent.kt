@@ -2,7 +2,7 @@ package tmg.flashback.widgets.upnext.contract
 
 import android.content.Context
 import android.content.Intent
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 
 interface WidgetNavigationComponent {
     fun getLaunchAppIntent(context: Context): Intent

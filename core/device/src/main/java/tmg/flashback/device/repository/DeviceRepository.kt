@@ -1,8 +1,8 @@
 package tmg.flashback.device.repository
 
-import org.threeten.bp.LocalDate
-import org.threeten.bp.format.DateTimeFormatter
-import org.threeten.bp.format.DateTimeParseException
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeParseException
 import tmg.flashback.prefs.manager.PreferenceManager
 import java.util.Locale
 import java.util.UUID

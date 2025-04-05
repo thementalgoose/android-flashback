@@ -2,7 +2,7 @@ package tmg.flashback.formula1.model
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 
 internal class OverviewTest {
 

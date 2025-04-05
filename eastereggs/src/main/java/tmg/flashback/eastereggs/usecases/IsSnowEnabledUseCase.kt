@@ -1,6 +1,6 @@
 package tmg.flashback.eastereggs.usecases
 
-import org.threeten.bp.format.DateTimeFormatter
+import java.time.format.DateTimeFormatter
 import tmg.flashback.device.managers.TimeManager
 import tmg.flashback.device.repository.AccessibilityRepository
 import tmg.flashback.eastereggs.repository.EasterEggsRepository

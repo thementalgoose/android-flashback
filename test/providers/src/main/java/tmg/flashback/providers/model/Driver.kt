@@ -1,6 +1,6 @@
 package tmg.flashback.providers.model
 
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 import tmg.flashback.formula1.model.Driver
 
 fun Driver.Companion.model(

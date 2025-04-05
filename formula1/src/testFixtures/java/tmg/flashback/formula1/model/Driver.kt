@@ -1,6 +1,6 @@
 package tmg.flashback.formula1.model
 
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 
 fun Driver.Companion.model(
     id: String = "driverId",

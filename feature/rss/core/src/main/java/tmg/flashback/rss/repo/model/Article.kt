@@ -1,6 +1,6 @@
 package tmg.flashback.rss.repo.model
 
-import org.threeten.bp.LocalDateTime
+import java.time.LocalDateTime
 
 data class Article(
         val id: String,

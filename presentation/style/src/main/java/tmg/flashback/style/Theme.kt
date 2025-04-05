@@ -11,7 +11,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.ui.platform.LocalContext
-import com.jakewharton.threetenabp.AndroidThreeTen
 
 object AppTheme {
     val colors: AppColors
@@ -74,7 +73,6 @@ fun AppThemePreview(
     theme: SupportedTheme = SupportedTheme.Default,
     content: @Composable () -> Unit
 ) {
-    AndroidThreeTen.init(LocalContext.current)
     return AppTheme(
         isLight = isLight,
         theme = theme,

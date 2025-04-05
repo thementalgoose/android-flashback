@@ -7,8 +7,8 @@ import android.os.Build
 import android.util.Log
 import androidx.core.app.AlarmManagerCompat
 import dagger.hilt.android.qualifiers.ApplicationContext
-import org.threeten.bp.LocalDateTime
-import org.threeten.bp.ZoneOffset
+import java.time.LocalDateTime
+import java.time.ZoneOffset
 import tmg.flashback.crashlytics.manager.CrashlyticsManager
 import tmg.flashback.device.repository.PermissionRepository
 import tmg.flashback.notifications.receiver.LocalNotificationBroadcastReceiver

@@ -24,7 +24,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 import tmg.flashback.formula1.constants.Formula1.qualifyingDataAvailableFrom
 import tmg.flashback.formula1.constants.Formula1.sprintsIntroducedIn
 import tmg.flashback.formula1.model.OverviewRace

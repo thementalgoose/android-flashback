@@ -20,7 +20,4 @@ android {
 
 dependencies {
     implementation(projects.presentation.strings)
-    testFixturesImplementation (libs.threeten) {
-        exclude group:'com.jakewharton.threetenabp', module:'threetenabp'
-    }
 }

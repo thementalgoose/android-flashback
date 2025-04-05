@@ -1,6 +1,6 @@
 package tmg.flashback.formula1.model
 
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 import tmg.flashback.formula1.enums.EventType
 
 fun Event.Companion.model(

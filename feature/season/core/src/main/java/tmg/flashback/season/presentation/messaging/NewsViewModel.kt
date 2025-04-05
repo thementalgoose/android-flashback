@@ -9,7 +9,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.flashbacknews.api.usecases.GetNewsUseCase
 import tmg.flashback.season.BuildConfig

@@ -1,7 +1,7 @@
 package tmg.flashback.device.usecases
 
 import android.util.Log
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.device.managers.FirebaseInstallationManager
 import tmg.flashback.device.repository.DeviceRepository

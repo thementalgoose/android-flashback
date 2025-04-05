@@ -1,7 +1,7 @@
 package tmg.flashback.formula1.model
 
-import org.threeten.bp.LocalDate
-import org.threeten.bp.LocalTime
+import java.time.LocalDate
+import java.time.LocalTime
 
 fun OverviewRace.Companion.model(
     date: LocalDate = LocalDate.of(2020, 10, 12),

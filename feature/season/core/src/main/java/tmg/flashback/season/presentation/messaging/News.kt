@@ -35,7 +35,7 @@ import coil.compose.AsyncImage
 import com.google.accompanist.placeholder.PlaceholderHighlight
 import com.google.accompanist.placeholder.placeholder
 import com.google.accompanist.placeholder.shimmer
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 import tmg.flashback.flashbacknews.api.models.news.News
 import tmg.flashback.season.R
 import tmg.flashback.strings.R.string

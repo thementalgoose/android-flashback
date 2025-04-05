@@ -13,7 +13,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.flashbacknews.api.models.news.News
 import tmg.flashback.flashbacknews.api.usecases.GetNewsUseCase
