@@ -144,7 +144,7 @@ fun ScheduleScreen(
     if (showEvents.value && uiState.showEvents) {
         ModalBottomSheet(
             sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
-            containerColor = AppTheme.colors.backgroundContainer,
+            containerColor = AppTheme.colors.backgroundPrimary,
             onDismissRequest = {
                 showEvents.value = false
             },
@@ -160,7 +160,7 @@ fun ScheduleScreen(
     if (showTyres.value && uiState.showTyres) {
         ModalBottomSheet(
             sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
-            containerColor = AppTheme.colors.backgroundContainer,
+            containerColor = AppTheme.colors.backgroundPrimary,
             onDismissRequest = {
                 showTyres.value = false
             },
