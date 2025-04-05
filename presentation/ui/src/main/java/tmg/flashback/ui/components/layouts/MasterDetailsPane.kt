@@ -185,3 +185,7 @@ private fun PreviewMaster() {
         TextBody1(text = "Master")
     }
 }
+
+private class BooleanParamProvider: PreviewParameterProvider<Boolean> {
+    override val values: Sequence<Boolean> = sequenceOf(true, false)
+}
