@@ -126,7 +126,7 @@ fun DriverOverviewScreen(
     val bottomSheetState = rememberModalBottomSheetState()
     if (showDriverStatHistoryType.value != null) {
         ModalBottomSheet(
-            containerColor = AppTheme.colors.backgroundContainer,
+            containerColor = AppTheme.colors.backgroundPrimary,
             onDismissRequest = {
                 showDriverStatHistoryType.value = null
             },
