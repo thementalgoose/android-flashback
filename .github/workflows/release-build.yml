@@ -40,6 +40,7 @@ jobs:
       # Environment
       - name: Environment variables.env
         run: |
+          echo ${{ secrets.ENCODED_GOOGLE_SERVICES_SAND }} | base64 --decode >> app/src/sand/google-services.json
           echo ${{ secrets.ENCODED_GOOGLE_SERVICES_LIVE }} | base64 --decode >> app/src/live/google-services.json
           echo ${{ secrets.ENCODED_KEYSTORE }} | base64 --decode >> flashback.keystore
           echo ${{ secrets.ENCODED_DEPLOYMENT_KEY }} | base64 --decode >> deployment_private_key.json
