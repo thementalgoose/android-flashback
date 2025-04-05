@@ -3,6 +3,9 @@ name: Pull Request
   pull_request:
     branches:
       - main
+    paths-ignore:
+      - '**.md'
+      - '**.png'
 jobs:
   unit_test:
     runs-on: ubuntu-latest

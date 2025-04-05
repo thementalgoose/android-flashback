@@ -6,6 +6,8 @@ name: Main
     paths-ignore:
       - '**.md'
       - '**.yml'
+      - '**.png'
+      - '**.sketch'
 jobs:
   unit_test:
     runs-on: ubuntu-latest
