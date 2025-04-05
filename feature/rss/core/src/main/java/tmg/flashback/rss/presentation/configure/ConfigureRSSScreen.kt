@@ -165,7 +165,7 @@ fun ConfigureRSSScreen(
     }
     if (customRssBox.value) {
         ModalBottomSheet(
-            containerColor = AppTheme.colors.backgroundContainer,
+            containerColor = AppTheme.colors.backgroundPrimary,
             onDismissRequest = {
                 customRssBox.value = false
             },
