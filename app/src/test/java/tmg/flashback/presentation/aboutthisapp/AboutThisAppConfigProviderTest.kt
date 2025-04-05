@@ -73,6 +73,6 @@ internal class AboutThisAppConfigProviderTest {
 
         assertEquals("deviceUdid\ninstallationId", config.debugInfo)
 
-        assertEquals(13, config.dependencies.size)
+        assertEquals(12, config.dependencies.size)
     }
 }
