@@ -41,4 +41,31 @@ class AppBuildConfigManager @Inject constructor() : BuildConfigManager {
                 || Build.PRODUCT.contains("vbox86p")
                 || Build.PRODUCT.contains("emulator")
                 || Build.PRODUCT.contains("simulator")
+
+    override val isDebug: Boolean
+        get() = BuildConfig.DEBUG
+
+    override val brand: String
+        get() = Build.BRAND
+
+    override val hardware: String
+        get() = Build.HARDWARE
+
+    override val board: String
+        get() = Build.BOARD
+
+    override val fingerprint: String
+        get() = Build.FINGERPRINT
+
+    override val model: String
+        get() = Build.MODEL
+
+    override val manufacturer: String
+        get() = Build.MANUFACTURER
+
+    override val product: String
+        get() = Build.PRODUCT
+
+    override val device: String
+        get() = Build.DEVICE
 }

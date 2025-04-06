@@ -1,79 +1,56 @@
 package tmg.flashback.crashlytics.services
 
-import android.os.Build
 import android.util.Log
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import tmg.flashback.crashlytics.BuildConfig
 import tmg.flashback.crashlytics.model.FirebaseKey
-import tmg.flashback.device.managers.BuildConfigManager
 import javax.inject.Inject
 
-internal class FirebaseCrashServiceImpl @Inject constructor(
-    private val buildConfigManager: BuildConfigManager
-): FirebaseCrashService {
+internal class FirebaseCrashServiceImpl @Inject constructor(): FirebaseCrashService {
 
     companion object {
         private const val TAG = "Crashlytics"
     }
 
-    private val isDebug: Boolean
-        get() = BuildConfig.DEBUG
+    private val instance: FirebaseCrashlytics
+        get() = FirebaseCrashlytics.getInstance()
 
-    override fun initialise(
-        enableCrashReporting: Boolean,
-        deviceUuid: String,
-        extraKeys: Map<FirebaseKey, String>
-    ) {
-        val instance = FirebaseCrashlytics.getInstance()
-
-        instance.isCrashlyticsCollectionEnabled = enableCrashReporting
-        if (enableCrashReporting) {
-            Log.i("Crashlytics", "Enabling crashlytics")
-        }
-        else {
-            Log.i("Crashlytics", "Disabling crashlytics")
-        }
-
-        instance.setCustomKey(FirebaseKey.Emulator, buildConfigManager.isEmulator)
-        instance.setCustomKey(FirebaseKey.Debug, isDebug)
-
-        instance.setUserId(deviceUuid)
-        instance.setCustomKey(FirebaseKey.DeviceUuid, deviceUuid)
-        instance.setCustomKey(FirebaseKey.Brand, Build.BRAND)
-        instance.setCustomKey(FirebaseKey.Hardware, Build.HARDWARE)
-        instance.setCustomKey(FirebaseKey.Board, Build.BOARD)
-        instance.setCustomKey(FirebaseKey.Fingerprint, Build.FINGERPRINT)
-        instance.setCustomKey(FirebaseKey.Model, Build.MODEL)
-        instance.setCustomKey(FirebaseKey.Manufacturer, Build.MANUFACTURER)
-        instance.setCustomKey(FirebaseKey.Product, Build.PRODUCT)
-        instance.setCustomKey(FirebaseKey.Device, Build.DEVICE)
-
-        extraKeys.forEach { (key, value) ->
-            instance.setCustomKey(key, value)
-        }
+    override fun setCrashlyticsCollectionEnabled(enabled: Boolean) {
+        instance.isCrashlyticsCollectionEnabled = enabled
     }
 
     override fun setCustomKey(key: FirebaseKey, value: String) {
-        FirebaseCrashlytics.getInstance().setCustomKey(key, value)
+        instance.setCustomKey(key, value)
+    }
+
+    override fun setCustomKey(key: FirebaseKey, value: Boolean) {
+        instance.setCustomKey(key, value)
+    }
+
+    override fun setUserId(userId: String) {
+        instance.setUserId(userId)
+        if (BuildConfig.DEBUG) {
+            Log.e(TAG, "User id set to '$userId'")
+        }
     }
 
     override fun logError(msg: String) {
-        FirebaseCrashlytics.getInstance().log(msg)
+        instance.log(msg)
         if (BuildConfig.DEBUG) {
             Log.e(TAG, "Log error '$msg'")
         }
     }
 
     override fun logInfo(msg: String) {
-        FirebaseCrashlytics.getInstance().log(msg)
+        instance.log(msg)
         if (BuildConfig.DEBUG) {
             Log.i(TAG, "Log info '$msg'")
         }
     }
 
     override fun logException(error: Exception, context: String) {
-        FirebaseCrashlytics.getInstance().log(error.message ?: "Exception error $error")
-        FirebaseCrashlytics.getInstance().recordException(error)
+        instance.log(error.message ?: "Exception error $error")
+        instance.recordException(error)
         if (BuildConfig.DEBUG) {
             Log.e(TAG, "Log Exception '${error.message}'")
             error.printStackTrace()
