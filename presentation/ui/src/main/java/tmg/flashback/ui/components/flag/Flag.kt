@@ -1,11 +1,9 @@
 package tmg.flashback.ui.components.flag
 
-import android.content.res.Resources.NotFoundException
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -13,7 +11,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import com.murgupluoglu.flagkit.R.drawable
-import tmg.flashback.crashlytics.di.CrashModule
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
@@ -47,10 +44,6 @@ fun Flag(
                     this.contentDescription = nationality ?: iso
                 }
         )
-        DisposableEffect(key1 = Unit, effect = {
-            CrashModule.entryPoints(context).crashManager().logException(NotFoundException("Flag resource for '$iso' ($nationality) not found!"))
-            return@DisposableEffect onDispose {  }
-        })
     }
 }
 
