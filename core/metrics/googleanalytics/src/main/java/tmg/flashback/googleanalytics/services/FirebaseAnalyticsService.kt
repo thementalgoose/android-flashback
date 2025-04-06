@@ -6,7 +6,7 @@ import android.os.Bundle
  * Wrapper around the Firebase Analytics package that we use
  * Abstracted for testing
  */
-interface FireabseAnalyticsService {
+interface FirebaseAnalyticsService {
 
     fun setProperty(key: String, value: String)
 

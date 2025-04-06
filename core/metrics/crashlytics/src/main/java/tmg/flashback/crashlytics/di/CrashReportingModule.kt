@@ -16,7 +16,6 @@ import tmg.flashback.crashlytics.services.FirebaseFirebaseCrashServiceImpl
 internal abstract class CrashReportingModule {
 
     @Binds
-    abstract fun bindCrashService(impl: FirebaseFirebaseCrashServiceImpl): FirebaseCrashService
 }
 
 @EntryPoint
@@ -29,4 +28,5 @@ interface CrashModule {
             return EntryPoints.get(context.applicationContext, CrashModule::class.java)
         }
     }
+    abstract fun bindCrashService(impl: FirebaseCrashServiceImpl): FirebaseCrashService
 }

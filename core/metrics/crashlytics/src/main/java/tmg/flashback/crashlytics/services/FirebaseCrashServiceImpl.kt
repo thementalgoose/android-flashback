@@ -8,7 +8,7 @@ import tmg.flashback.crashlytics.model.FirebaseKey
 import tmg.flashback.device.managers.BuildConfigManager
 import javax.inject.Inject
 
-internal class FirebaseFirebaseCrashServiceImpl @Inject constructor(
+internal class FirebaseCrashServiceImpl @Inject constructor(
     private val buildConfigManager: BuildConfigManager
 ): FirebaseCrashService {
 
@@ -26,7 +26,7 @@ internal class FirebaseFirebaseCrashServiceImpl @Inject constructor(
     ) {
         val instance = FirebaseCrashlytics.getInstance()
 
-        instance.setCrashlyticsCollectionEnabled(enableCrashReporting)
+        instance.isCrashlyticsCollectionEnabled = enableCrashReporting
         if (enableCrashReporting) {
             Log.i("Crashlytics", "Enabling crashlytics")
         }
