@@ -21,8 +21,8 @@ enum class MenuIcons(
     ),
     CHINESE_NEW_YEAR(
         key = "new_year",
-        startResolver = { LocalDate.of(2025, 1, 29) },
-        endResolver = { LocalDate.of(2025, 1, 30) },
+        startResolver = { LocalDate.of(2026, 2, 17) },
+        endResolver = { LocalDate.of(2026, 3, 3) },
         label = string.easter_egg_menu_chinese_new_year
     ),
     VALENTINES_DAY(
