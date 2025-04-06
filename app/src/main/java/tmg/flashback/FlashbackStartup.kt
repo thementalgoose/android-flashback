@@ -21,6 +21,7 @@ import tmg.flashback.googleanalytics.manager.FirebaseAnalyticsManager
 import tmg.flashback.configuration.usecases.InitialiseConfigUseCase
 import tmg.flashback.crashlytics.model.FirebaseKey
 import tmg.flashback.crashlytics.services.FirebaseCrashService
+import tmg.flashback.crashlytics.usecases.AddCustomKeyUseCase
 import tmg.flashback.crashlytics.usecases.InitialiseCrashReportingUseCase
 import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.device.repository.DeviceRepository
@@ -69,7 +70,7 @@ class FlashbackStartup @Inject constructor(
     private val themeRepository: ThemeRepository,
     private val buildConfigManager: BuildConfigManager,
     private val firebaseAnalyticsManager: FirebaseAnalyticsManager,
-    private val firebaseCrashService: FirebaseCrashService,
+    private val addCustomKeyUseCase: AddCustomKeyUseCase,
     private val initialiseConfigUseCase: InitialiseConfigUseCase,
     private val systemNotificationManager: SystemNotificationManager,
     private val remoteNotificationSubscribeUseCase: RemoteNotificationSubscribeUseCase,
@@ -199,7 +200,7 @@ class FlashbackStartup @Inject constructor(
 
         applicationScope.launch(Dispatchers.IO) {
             appOpenedUseCase.preload()
-            firebaseCrashService.setCustomKey(FirebaseKey.InstallationId, deviceRepository.installationId)
+            addCustomKeyUseCase(FirebaseKey.InstallationId, deviceRepository.installationId)
         }
 
         // Update Widgets
