@@ -93,11 +93,13 @@ sealed class SupportedTheme{
         val darkColors: AppColors = darkColours
     }
 
-    @RequiresApi(Build.VERSION_CODES.S)
     object MaterialYou: SupportedTheme() {
+        @RequiresApi(Build.VERSION_CODES.S)
         fun lightColors(context: Context): AppColors {
             return lightColours.dynamic(dynamicLightColorScheme(context), isLightMode = true)
         }
+
+        @RequiresApi(Build.VERSION_CODES.S)
         fun darkColors(context: Context): AppColors {
             return darkColours.dynamic(dynamicDarkColorScheme(context), isLightMode = false)
         }

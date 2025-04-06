@@ -17,4 +17,22 @@ interface BuildConfigManager {
     val isRuntimeNotificationsSupported: Boolean
 
     val isEmulator: Boolean
+
+    val isDebug: Boolean
+
+    val brand: String
+
+    val hardware: String
+
+    val board: String
+
+    val fingerprint: String
+
+    val model: String
+
+    val manufacturer: String
+
+    val product: String
+
+    val device: String
 }

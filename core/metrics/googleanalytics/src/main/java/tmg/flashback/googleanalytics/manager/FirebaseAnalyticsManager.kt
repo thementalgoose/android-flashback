@@ -2,7 +2,7 @@ package tmg.flashback.googleanalytics.manager
 
 import android.os.Bundle
 import tmg.flashback.googleanalytics.UserProperty
-import tmg.flashback.googleanalytics.services.FireabseAnalyticsService
+import tmg.flashback.googleanalytics.services.FirebaseAnalyticsService
 import tmg.flashback.device.repository.PrivacyRepository
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -10,7 +10,7 @@ import javax.inject.Singleton
 @Singleton
 class FirebaseAnalyticsManager @Inject constructor(
     private val privacyRepository: PrivacyRepository,
-    private val fireabseAnalyticsService: FireabseAnalyticsService
+    private val firebaseAnalyticsService: FirebaseAnalyticsService
 ) {
     var enabled: Boolean
         get() = privacyRepository.analytics
@@ -19,8 +19,8 @@ class FirebaseAnalyticsManager @Inject constructor(
         }
 
     fun initialise(userId: String) {
-        fireabseAnalyticsService.setUserId(userId)
-        fireabseAnalyticsService.setAnalyticsCollectionEnabled(enabled)
+        firebaseAnalyticsService.setUserId(userId)
+        firebaseAnalyticsService.setAnalyticsCollectionEnabled(enabled)
     }
 
     fun logEvent(key: String, params: Map<String, String> = emptyMap()) {
@@ -31,23 +31,23 @@ class FirebaseAnalyticsManager @Inject constructor(
                         putString(x.key, x.value)
                     }
                 }
-                fireabseAnalyticsService.logEvent(key, bundle)
+                firebaseAnalyticsService.logEvent(key, bundle)
             }
             else {
-                fireabseAnalyticsService.logEvent(key)
+                firebaseAnalyticsService.logEvent(key)
             }
         }
     }
 
     fun setUserProperty(property: UserProperty, value: String) {
         if (enabled) {
-            fireabseAnalyticsService.setProperty(property.key, value)
+            firebaseAnalyticsService.setProperty(property.key, value)
         }
     }
 
     fun viewScreen(screenName: String, params: Map<String, String> = emptyMap(), clazz: Class<*>? = null) {
         if (enabled) {
-            fireabseAnalyticsService.logViewScreen(screenName, params, clazz)
+            firebaseAnalyticsService.logViewScreen(screenName, params, clazz)
         }
     }
 }

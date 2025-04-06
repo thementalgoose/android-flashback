@@ -9,12 +9,12 @@ import javax.inject.Singleton
 
 @Singleton
 class CrashlyticsManager @Inject constructor(
-    private val crashRepository: PrivacyRepository,
+    private val privacyRepository: PrivacyRepository,
     private val firebaseCrashService: FirebaseCrashService
 ) {
 
     private val enabled
-        get() = crashRepository.crashReporting
+        get() = privacyRepository.crashReporting
 
     fun logError(msg: String) {
         if (enabled) {

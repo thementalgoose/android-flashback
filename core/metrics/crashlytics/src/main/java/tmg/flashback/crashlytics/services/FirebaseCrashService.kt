@@ -7,12 +7,10 @@ import tmg.flashback.crashlytics.model.FirebaseKey
  * Abstracted for testing
  */
 interface FirebaseCrashService {
-    fun initialise(
-        enableCrashReporting: Boolean,
-        deviceUuid: String,
-        extraKeys: Map<FirebaseKey, String>
-    )
+    fun setCrashlyticsCollectionEnabled(enabled: Boolean)
     fun setCustomKey(key: FirebaseKey, value: String)
+    fun setCustomKey(key: FirebaseKey, value: Boolean)
+    fun setUserId(userId: String)
     fun logInfo(msg: String)
     fun logError(msg: String)
     fun logException(error: Exception, context: String)
