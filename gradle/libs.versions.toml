@@ -33,7 +33,7 @@ firebase_perf_plugin = "com.google.firebase:perf-plugin:1.4.2"
 play_publisher = "com.github.triplet.gradle:play-publisher:3.12.1"
 
 ## App Dependencies
-androidx_core = "androidx.core:core-ktx:1.15.0"
+androidx_core = "androidx.core:core-ktx:1.16.0"
 androidx_appcompat = "androidx.appcompat:appcompat:1.7.0"
 androidx_browser = "androidx.browser:browser:1.8.0"
 androidx_constraintlayout = "androidx.constraintlayout:constraintlayout:2.2.1"
