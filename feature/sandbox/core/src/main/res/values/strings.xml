@@ -4,6 +4,7 @@
 
     <string name="debug_menu_styleguide">Style Guide</string>
     <string name="debug_menu_sync">Sync</string>
+    <string name="debug_menu_force_upgrade">Force upgrade</string>
     <string name="debug_menu_debug">Sandbox</string>
     <string name="debug_menu_ads_config">Ads Config</string>
     <string name="debug_menu_f1_race">Web: F1 Race</string>

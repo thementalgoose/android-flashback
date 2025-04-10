@@ -7,8 +7,10 @@ import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.configuration.usecases.ResetConfigUseCase
+import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.maintenance.repository.MaintenanceRepository
 import tmg.flashback.maintenance.repository.model.ForceUpgrade
 import tmg.testutils.BaseTest
@@ -17,11 +19,25 @@ internal class ForceUpgradeViewModelTest: BaseTest() {
 
     private val mockResetConfigUseCase: ResetConfigUseCase = mockk(relaxed = true)
     private val mockMaintenanceRepository: MaintenanceRepository = mockk(relaxed = true)
+    private val mockBuildConfigManager: BuildConfigManager = mockk(relaxed = true)
+
+    companion object {
+        private const val FAKE_APP_ID = "APP_ID"
+    }
 
     private lateinit var sut: ForceUpgradeViewModel
 
     private fun initSUT() {
-        sut = ForceUpgradeViewModel(mockMaintenanceRepository, mockResetConfigUseCase)
+        sut = ForceUpgradeViewModel(
+            maintenanceRepository = mockMaintenanceRepository,
+            resetConfigUseCase = mockResetConfigUseCase,
+            buildConfigManager = mockBuildConfigManager
+        )
+    }
+
+    @BeforeEach
+    fun setUp() {
+        every { mockBuildConfigManager.applicationId } returns FAKE_APP_ID
     }
 
     @Test
@@ -46,7 +62,7 @@ internal class ForceUpgradeViewModelTest: BaseTest() {
             assertEquals("Please restart the app", expectMostRecentItem())
         }
         sut.outputs.showLink.test {
-            assertEquals(null, expectMostRecentItem())
+            assertEquals("Go to the Play Store" to "https://play.google.com/store/apps/details?id=${FAKE_APP_ID}", expectMostRecentItem())
         }
     }
 

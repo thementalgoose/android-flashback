@@ -17,11 +17,14 @@ import tmg.flashback.sandbox.core.SandboxItems.MENU_STYLEGUIDE
 import tmg.flashback.sandbox.core.SandboxItems.MENU_SYNC
 import javax.inject.Inject
 import androidx.core.net.toUri
+import tmg.flashback.maintenance.contract.MaintenanceNavigationComponent
+import tmg.flashback.sandbox.core.SandboxItems.MENU_FORCE_UPGRADE
 import tmg.flashback.sandbox.core.presentation.SandboxActivity
 
 internal class SandboxNavigationComponentImpl @Inject constructor(
     private val activityProvider: ActivityProvider,
-    private val navComponent: ApplicationNavigationComponent
+    private val navComponent: ApplicationNavigationComponent,
+    private val maintenanceNavComponent: MaintenanceNavigationComponent
 ): SandboxNavigationComponent {
     override fun navigateTo(id: String) {
         when (id) {
@@ -37,6 +40,7 @@ internal class SandboxNavigationComponentImpl @Inject constructor(
             MENU_SYNC -> activityProvider.launch {
                 navComponent.syncActivity()
             }
+            MENU_FORCE_UPGRADE -> maintenanceNavComponent.forceUpgrade()
             MENU_F1_RESULTS -> activityProvider.launch {
                 val currentYear = Year.now().value
                 it.startActivity(Intent(Intent.ACTION_VIEW, "https://www.formula1.com/en/results.html/${currentYear}/races.html".toUri()))

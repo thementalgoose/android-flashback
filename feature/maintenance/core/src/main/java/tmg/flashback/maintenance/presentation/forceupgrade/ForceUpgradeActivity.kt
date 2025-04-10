@@ -20,7 +20,7 @@ import tmg.flashback.ui.model.DisplayType
 import tmg.utilities.extensions.viewUrl
 
 @AndroidEntryPoint
-internal class ForceUpgradeActivity: BaseActivity() {
+class ForceUpgradeActivity: BaseActivity() {
 
     private val viewModel: ForceUpgradeViewModel by viewModels()
 

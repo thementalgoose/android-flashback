@@ -9,4 +9,5 @@ internal object SandboxItems {
     const val MENU_STYLEGUIDE = "styleguide"
     const val MENU_ADVERTS = "adverts"
     const val MENU_SYNC = "sync"
+    const val MENU_FORCE_UPGRADE = "force_upgrade"
 }
