@@ -195,15 +195,6 @@ fun AppGraph(
                 windowSizeClass = windowSize,
             )
         }
-
-        composable(
-            Screen.AboutThisApp.route
-        ) {
-            AboutThisApp(
-                windowSizeClass = windowSize,
-                backClicked = { navController.popBackStack() }
-            )
-        }
     }
 
     DisposableEffect(Unit) {
