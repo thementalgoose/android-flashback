@@ -1,5 +1,6 @@
 package tmg.flashback.circuits
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import tmg.flashback.circuits.contract.CircuitNavigationComponent
@@ -10,12 +11,14 @@ class CircuitNavigationComponentImpl @Inject constructor(): CircuitNavigationCom
 
     @Composable
     override fun CircuitScreen(
+        paddingValues: PaddingValues,
         actionUpClicked: () -> Unit,
         windowSizeClass: WindowSizeClass,
         circuitId: String,
         circuitName: String
     ) {
         CircuitScreenVM(
+            paddingValues = paddingValues,
             actionUpClicked = actionUpClicked,
             windowSizeClass = windowSizeClass,
             circuitId = circuitId,

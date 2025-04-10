@@ -1,12 +1,11 @@
 package tmg.flashback.season.presentation.dashboard.drivers
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -51,12 +50,14 @@ import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.header.HeaderAction
 import tmg.flashback.ui.components.layouts.MasterDetailsPane
+import tmg.flashback.ui.components.list.LazyColumnEdgeToEdge
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.progressbar.ProgressBar
 import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
 
 @Composable
 fun DriverStandingsScreenVM(
+    paddingValues: PaddingValues,
     actionUpClicked: () -> Unit,
     windowSizeClass: WindowSizeClass,
     isRoot: (Boolean) -> Unit,
@@ -86,6 +87,7 @@ fun DriverStandingsScreenVM(
             when (val selected = state.value.currentlySelected!!) {
                 is Selected.Comparison -> {
                     driverNavigationComponent.DriverComparison(
+                        paddingValues = paddingValues,
                         windowSizeClass = windowSizeClass,
                         actionUpClicked = viewModel.inputs::closeDriverDetails,
                         season = state.value.season
@@ -93,6 +95,7 @@ fun DriverStandingsScreenVM(
                 }
                 is Selected.Driver -> {
                     driverNavigationComponent.DriverSeasonScreen(
+                        paddingValues = paddingValues,
                         windowSizeClass = windowSizeClass,
                         actionUpClicked = viewModel.inputs::closeDriverDetails,
                         driverId = selected.driver.driver.id,
@@ -122,10 +125,7 @@ internal fun DriverStandingsScreen(
         isLoading = uiState.isLoading,
         onRefresh = refresh
     ) {
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(AppTheme.colors.backgroundPrimary),
+        LazyColumnEdgeToEdge(
             content = {
                 item(key = "header") {
                     Header(

@@ -3,9 +3,13 @@ package tmg.flashback.weekend.presentation
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Scaffold
@@ -20,6 +24,7 @@ import tmg.flashback.googleanalytics.constants.AnalyticsConstants.analyticsRound
 import tmg.flashback.googleanalytics.constants.AnalyticsConstants.analyticsSeason
 import tmg.flashback.style.AppTheme
 import tmg.flashback.googleanalytics.presentation.ScreenView
+import tmg.flashback.ui.components.list.LazyColumnEdgeToEdge
 import tmg.flashback.ui.components.navigation.NavigationBar
 import tmg.flashback.ui.components.navigation.NavigationItem
 import tmg.flashback.ui.components.navigation.appBarHeight
@@ -59,7 +64,6 @@ fun WeekendTabScreen(
         analyticsRound to weekendInfo.round.toString()
     ))
 
-    val dbWeekendInfo = viewModel.outputs.weekendInfo.collectAsState(weekendInfo)
     val tabState = viewModel.outputs.tabs.collectAsState(listOf(
         WeekendScreenState(tab = WeekendNavItem.SCHEDULE, isSelected = true),
         WeekendScreenState(tab = WeekendNavItem.QUALIFYING, isSelected = false),
@@ -74,113 +78,107 @@ fun WeekendTabScreen(
         }
     }
 
-    Scaffold(
-        bottomBar = {
-            NavigationBar(
-                list = tabState.value.toNavigationItems(),
-                itemClicked = {
-                    val tab = it.id.toEnum() ?: WeekendNavItem.SCHEDULE
-                    viewModel.inputs.clickTab(tab)
-                    scrollToTop()
-                }
-            )
-        },
-        content = {
-            // Background box
-            Box(modifier = Modifier
-                .fillMaxSize()
-                .background(AppTheme.colors.backgroundPrimary)
-            )
-            val isRefreshing = viewModel.outputs.isRefreshing.collectAsState(false)
+    val isRefreshing = viewModel.outputs.isRefreshing.collectAsState(false)
 
-            val detailsVM: DetailsViewModel = hiltViewModel()
-            val detailsList = detailsVM.outputs.list.collectAsState(emptyList())
-            val qualifyingVM: QualifyingViewModel = hiltViewModel()
-            val qualifyingList = qualifyingVM.outputs.list.collectAsState(emptyList())
-            val qualifyingHeader = qualifyingVM.outputs.headersToShow.collectAsState(
-                QualifyingHeader(true, true, true)
-            )
-            val sprintQualifyingVM: SprintQualifyingViewModel = hiltViewModel()
-            val sprintQualifyingList = sprintQualifyingVM.outputs.list.collectAsState(emptyList())
-            val sprintVM: SprintViewModel = hiltViewModel()
-            val sprintList = sprintVM.outputs.list.collectAsState(emptyList())
-            val sprintResultType = sprintVM.outputs.sprintResultType.collectAsState(SprintResultType.DRIVERS)
-            val raceVM: RaceViewModel = hiltViewModel()
-            val raceList = raceVM.outputs.list.collectAsState(emptyList())
-            val raceResultType = raceVM.outputs.raceResultType.collectAsState(RaceResultType.DRIVERS)
+    val detailsVM: DetailsViewModel = hiltViewModel()
+    val detailsList = detailsVM.outputs.list.collectAsState(emptyList())
+    val qualifyingVM: QualifyingViewModel = hiltViewModel()
+    val qualifyingList = qualifyingVM.outputs.list.collectAsState(emptyList())
+    val qualifyingHeader = qualifyingVM.outputs.headersToShow.collectAsState(
+        QualifyingHeader(true, true, true)
+    )
+    val sprintQualifyingVM: SprintQualifyingViewModel = hiltViewModel()
+    val sprintQualifyingList = sprintQualifyingVM.outputs.list.collectAsState(emptyList())
+    val sprintVM: SprintViewModel = hiltViewModel()
+    val sprintList = sprintVM.outputs.list.collectAsState(emptyList())
+    val sprintResultType = sprintVM.outputs.sprintResultType.collectAsState(SprintResultType.DRIVERS)
+    val raceVM: RaceViewModel = hiltViewModel()
+    val raceList = raceVM.outputs.list.collectAsState(emptyList())
+    val raceResultType = raceVM.outputs.raceResultType.collectAsState(RaceResultType.DRIVERS)
 
-            detailsVM.inputs.load(weekendInfo.season, weekendInfo.round)
-            qualifyingVM.inputs.load(weekendInfo.season, weekendInfo.round)
-            sprintQualifyingVM.inputs.load(weekendInfo.season, weekendInfo.round)
-            sprintVM.inputs.load(weekendInfo.season, weekendInfo.round)
-            raceVM.inputs.load(weekendInfo.season, weekendInfo.round)
+    detailsVM.inputs.load(weekendInfo.season, weekendInfo.round)
+    qualifyingVM.inputs.load(weekendInfo.season, weekendInfo.round)
+    sprintQualifyingVM.inputs.load(weekendInfo.season, weekendInfo.round)
+    sprintVM.inputs.load(weekendInfo.season, weekendInfo.round)
+    raceVM.inputs.load(weekendInfo.season, weekendInfo.round)
 
-            SwipeRefresh(
-                isLoading = isRefreshing.value,
-                onRefresh = viewModel.inputs::refresh
-            ) {
-                LazyColumn(
-                    state = listState,
-                    content = {
-                        item("header") {
-                            RaceInfoHeader(
-                                model = weekendInfo,
-                                actionUpClicked = actionUpClicked,
+    val systemNavigationBarHeight = WindowInsets.safeDrawing.asPaddingValues().calculateBottomPadding()
+
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .background(AppTheme.colors.backgroundPrimary)
+    ) {
+        SwipeRefresh(
+            modifier = Modifier.weight(1f),
+            isLoading = isRefreshing.value,
+            onRefresh = viewModel.inputs::refresh
+        ) {
+            LazyColumnEdgeToEdge(
+                state = listState,
+                content = {
+                    item("header") {
+                        RaceInfoHeader(
+                            model = weekendInfo,
+                            actionUpClicked = actionUpClicked,
+                        )
+                    }
+
+                    when (tabState.value.firstOrNull { it.isSelected }?.tab) {
+                        WeekendNavItem.SCHEDULE -> {
+                            details(
+                                weekendInfo = weekendInfo,
+                                items = detailsList.value,
+                                linkClicked = detailsVM.inputs::linkClicked
                             )
                         }
-
-                        when (tabState.value.firstOrNull { it.isSelected }?.tab) {
-                            WeekendNavItem.SCHEDULE -> {
-                                details(
-                                    weekendInfo = weekendInfo,
-                                    items = detailsList.value,
-                                    linkClicked = detailsVM.inputs::linkClicked
-                                )
-                            }
-                            WeekendNavItem.QUALIFYING -> {
-                                qualifying(
-                                    driverClicked = qualifyingVM.inputs::clickDriver,
-                                    list = qualifyingList.value,
-                                    header = qualifyingHeader.value
-                                )
-                            }
-                            WeekendNavItem.SPRINT_QUALIFYING -> {
-                                sprintQualifying(
-                                    driverClicked = sprintQualifyingVM.inputs::clickDriver,
-                                    list = sprintQualifyingList.value
-                                )
-                            }
-                            WeekendNavItem.SPRINT -> {
-                                sprint(
-                                    season = weekendInfo.season,
-                                    showSprintType = sprintVM.inputs::show,
-                                    sprintResultType = sprintResultType.value,
-                                    list = sprintList.value,
-                                    driverClicked = sprintVM.inputs::clickDriver,
-                                    constructorClicked = sprintVM.inputs::clickConstructor
-                                )
-                            }
-                            WeekendNavItem.RACE -> {
-                                race(
-                                    season = weekendInfo.season,
-                                    showRaceType = raceVM.inputs::show,
-                                    raceResultType = raceResultType.value,
-                                    list = raceList.value,
-                                    driverClicked = raceVM.inputs::clickDriver,
-                                    constructorClicked = raceVM.inputs::clickConstructor
-                                )
-                            }
-                            null -> { }
+                        WeekendNavItem.QUALIFYING -> {
+                            qualifying(
+                                driverClicked = qualifyingVM.inputs::clickDriver,
+                                list = qualifyingList.value,
+                                header = qualifyingHeader.value
+                            )
                         }
-
-                        item(key = "footer") {
-                            Spacer(Modifier.height(appBarHeight))
+                        WeekendNavItem.SPRINT_QUALIFYING -> {
+                            sprintQualifying(
+                                driverClicked = sprintQualifyingVM.inputs::clickDriver,
+                                list = sprintQualifyingList.value
+                            )
                         }
+                        WeekendNavItem.SPRINT -> {
+                            sprint(
+                                season = weekendInfo.season,
+                                showSprintType = sprintVM.inputs::show,
+                                sprintResultType = sprintResultType.value,
+                                list = sprintList.value,
+                                driverClicked = sprintVM.inputs::clickDriver,
+                                constructorClicked = sprintVM.inputs::clickConstructor
+                            )
+                        }
+                        WeekendNavItem.RACE -> {
+                            race(
+                                season = weekendInfo.season,
+                                showRaceType = raceVM.inputs::show,
+                                raceResultType = raceResultType.value,
+                                list = raceList.value,
+                                driverClicked = raceVM.inputs::clickDriver,
+                                constructorClicked = raceVM.inputs::clickConstructor
+                            )
+                        }
+                        null -> { }
                     }
-                )
-            }
+                }
+            )
         }
-    )
+        NavigationBar(
+            bottomPadding = systemNavigationBarHeight,
+            list = tabState.value.toNavigationItems(),
+            itemClicked = {
+                val tab = it.id.toEnum() ?: WeekendNavItem.SCHEDULE
+                viewModel.inputs.clickTab(tab)
+                scrollToTop()
+            }
+        )
+    }
 }
 
 internal fun List<WeekendScreenState>.toNavigationItems(): List<NavigationItem> {

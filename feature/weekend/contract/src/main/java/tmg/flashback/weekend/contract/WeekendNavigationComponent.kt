@@ -1,5 +1,6 @@
 package tmg.flashback.weekend.contract
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import kotlinx.serialization.json.Json
@@ -46,6 +47,7 @@ interface WeekendNavigationComponent {
 
     @Composable
     fun Weekend(
+        paddingValues: PaddingValues,
         actionUpClicked: () -> Unit,
         windowSizeClass: WindowSizeClass,
         weekendData: ScreenWeekendData,

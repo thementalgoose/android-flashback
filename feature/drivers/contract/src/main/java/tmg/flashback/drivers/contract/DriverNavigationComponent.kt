@@ -1,5 +1,6 @@
 package tmg.flashback.drivers.contract
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import kotlinx.serialization.json.Json
@@ -22,6 +23,7 @@ interface DriverNavigationComponent {
 
     @Composable
     fun DriverScreen(
+        paddingValues: PaddingValues,
         actionUpClicked: () -> Unit,
         windowSizeClass: WindowSizeClass,
         driverId: String,
@@ -30,6 +32,7 @@ interface DriverNavigationComponent {
 
     @Composable
     fun DriverSeasonScreen(
+        paddingValues: PaddingValues,
         actionUpClicked: () -> Unit,
         windowSizeClass: WindowSizeClass,
         driverId: String,
@@ -49,6 +52,7 @@ interface DriverNavigationComponent {
 
     @Composable
     fun DriverComparison(
+        paddingValues: PaddingValues,
         actionUpClicked: () -> Unit,
         windowSizeClass: WindowSizeClass,
         season: Int

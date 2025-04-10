@@ -6,11 +6,12 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
@@ -27,13 +28,13 @@ import androidx.navigation.compose.rememberNavController
 import androidx.window.layout.WindowLayoutInfo
 import kotlinx.coroutines.launch
 import tmg.flashback.ads.ads.components.AdvertProvider
-import tmg.flashback.sandbox.model.SandboxMenuItem
 import tmg.flashback.eastereggs.model.MenuIcons
 import tmg.flashback.googleanalytics.presentation.ScreenView
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.presentation.AppGraph
 import tmg.flashback.presentation.dashboard.menu.DashboardMenuExpandedScreen
 import tmg.flashback.presentation.dashboard.menu.DashboardMenuScreen
+import tmg.flashback.sandbox.model.SandboxMenuItem
 import tmg.flashback.style.AppTheme
 import tmg.flashback.ui.components.layouts.OverlappingPanels
 import tmg.flashback.ui.components.layouts.OverlappingPanelsState
@@ -146,19 +147,21 @@ fun DashboardScreen(
         coroutineScope.launch { panelsState.openStartPanel() }
     }
 
+    val systemNavigationBarHeight = WindowInsets.safeDrawing.asPaddingValues().calculateBottomPadding()
+    val navigationBarHeight = appBarHeight + systemNavigationBarHeight
     val navigationBarPosition = animateDpAsState(
-        targetValue = if (panelsState.isStartPanelOpen || !showBottomBar) appBarHeight else 0.dp,
+        targetValue = if (panelsState.isStartPanelOpen || !showBottomBar) navigationBarHeight else 0.dp,
         label = "navigationBarPosition"
     )
     Scaffold(
         modifier = Modifier
-            .background(AppTheme.colors.backgroundContainer)
-            .navigationBarsPadding()
-            .statusBarsPadding(),
+            .background(AppTheme.colors.backgroundContainer),
         bottomBar = {
             if (windowSize.widthSizeClass == WindowWidthSizeClass.Compact) {
                 NavigationBar(
-                    modifier = Modifier.offset(y = navigationBarPosition.value),
+                    bottomPadding = systemNavigationBarHeight,
+                    modifier = Modifier
+                        .offset(y = navigationBarPosition.value),
                     list = seasonScreenItemsList.map { it.toNavigationItem(currentlySelectedItem == it) },
                     itemClicked = { item ->
                         menuItemClicked(seasonScreenItemsList.first { it.id == item.id })
@@ -250,7 +253,7 @@ fun DashboardScreen(
                                     .weight(1f)
                                     .padding(
                                         bottom = when (windowSize.widthSizeClass == WindowWidthSizeClass.Compact) {
-                                            true -> appBarHeight - navigationBarPosition.value
+                                            true -> (navigationBarHeight - navigationBarPosition.value).coerceAtLeast(0.dp)
                                             false -> 0.dp
                                         }
                                     ),
@@ -262,7 +265,8 @@ fun DashboardScreen(
                                 windowSize = windowSize,
                                 windowInfo = windowLayoutInfo,
                                 navigator = navigator,
-                                closeApp = closeApp
+                                closeApp = closeApp,
+                                paddingValues = it
                             )
                         }
                     }

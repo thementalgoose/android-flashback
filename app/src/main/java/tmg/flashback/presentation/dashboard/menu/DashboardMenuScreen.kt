@@ -10,8 +10,10 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -68,14 +70,21 @@ fun DashboardMenuScreen(
             .snow(easterEggSnow)
             .summer(easterEggSummer),
         content = {
-            item(key = "space1") { Spacer(Modifier.height(AppTheme.dimens.small)) }
-            item(key = "hero") { Row {
-                Spacer(Modifier.width(AppTheme.dimens.nsmall))
-                DashboardHero(
-                    menuIcons = easterEggTitleIcon,
-                    showUkraine = easterEggUkraine
-                )
-            } }
+            item(key = "space1") {
+                Spacer(Modifier.statusBarsPadding())
+            }
+            item(key = "hero") {
+                Row {
+                    DashboardHero(
+                        modifier = Modifier.padding(
+                            start = AppTheme.dimens.nsmall,
+                            top = AppTheme.dimens.xsmall
+                        ),
+                        menuIcons = easterEggTitleIcon,
+                        showUkraine = easterEggUkraine
+                    )
+                }
+            }
             item(key = "div1") { Divider() }
             item(key = "label1") { SubHeader(text = stringResource(id = string.dashboard_all_title)) }
             item(key = "button-results") {
@@ -152,6 +161,9 @@ fun DashboardMenuScreen(
             }
             item(key = "appversion") {
                 Label(msg = stringResource(id = string.app_version_placeholder, appVersion))
+            }
+            item(key = "spacer-bottom") {
+                Spacer(Modifier.navigationBarsPadding())
             }
         }
     )

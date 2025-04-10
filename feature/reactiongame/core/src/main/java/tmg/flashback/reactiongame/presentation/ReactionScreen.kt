@@ -2,32 +2,28 @@
 
 package tmg.flashback.reactiongame.presentation
 
-import android.view.MotionEvent
 import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.AnimatedContentScope
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.ContentTransform
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.windowsizeclass.WindowHeightSizeClass
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
@@ -37,7 +33,6 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.input.pointer.pointerInteropFilter
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -50,13 +45,10 @@ import tmg.flashback.strings.R.string
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.buttons.ButtonPrimary
 import tmg.flashback.style.text.TextBody1
-import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextHeadline1
 import tmg.flashback.style.text.TextTitle
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.header.HeaderAction
-import tmg.flashback.ui.components.layouts.MasterDetailsPane
-import tmg.flashback.ui.components.loading.Fade
 import tmg.flashback.ui.components.progressbar.ProgressBar
 import tmg.flashback.ui.foldables.isWidthExpanded
 
@@ -64,6 +56,7 @@ const val fadeTransitionDurationMs = 300
 
 @Composable
 fun ReactionScreenVM(
+    paddingValues: PaddingValues,
     actionUpClicked: () -> Unit,
     windowSizeClass: WindowSizeClass,
     viewModel: ReactionViewModel = hiltViewModel()
@@ -101,6 +94,8 @@ private fun ReactionScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .statusBarsPadding()
+            .navigationBarsPadding()
             .pointerInput(state is ReactionUiState.Game) {
                 detectTapGestures(
                     onPress = {
@@ -121,9 +116,10 @@ private fun ReactionScreen(
             },
             actionUpClicked = actionUpClicked
         )
-        Box(modifier = Modifier
-            .weight(1f)
-            .background(AppTheme.colors.backgroundPrimary)
+        Box(
+            modifier = Modifier
+                .weight(1f)
+                .background(AppTheme.colors.backgroundPrimary)
         ) {
 
             if (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact) {
@@ -150,7 +146,11 @@ private fun ReactionScreen(
                         AnimatedContent(
                             targetState = state,
                             transitionSpec = {
-                                fadeIn(tween(fadeTransitionDurationMs)) togetherWith fadeOut(tween(fadeTransitionDurationMs))
+                                fadeIn(tween(fadeTransitionDurationMs)) togetherWith fadeOut(
+                                    tween(
+                                        fadeTransitionDurationMs
+                                    )
+                                )
                             },
                             label = "Content"
                         ) {
@@ -194,7 +194,9 @@ private fun ReactionScreen(
                             .padding(AppTheme.dimens.medium),
                         verticalArrangement = Arrangement.spacedBy(AppTheme.dimens.medium)
                     ) {
-                        val modifier = Modifier.weight(1f).verticalScroll(rememberScrollState())
+                        val modifier = Modifier
+                            .weight(1f)
+                            .verticalScroll(rememberScrollState())
                         when (state) {
                             is ReactionUiState.Game -> Game(modifier)
                             ReactionUiState.JumpStart -> JumpStart(modifier)

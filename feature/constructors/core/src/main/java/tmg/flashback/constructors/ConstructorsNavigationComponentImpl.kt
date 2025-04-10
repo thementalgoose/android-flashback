@@ -1,5 +1,6 @@
 package tmg.flashback.constructors
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import tmg.flashback.constructors.contract.ConstructorsNavigationComponent
@@ -29,12 +30,14 @@ class ConstructorsNavigationComponentImpl @Inject constructor(): ConstructorsNav
 
     @Composable
     override fun ConstructorScreen(
+        paddingValues: PaddingValues,
         actionUpClicked: () -> Unit,
         windowSizeClass: WindowSizeClass,
         constructorId: String,
         constructorName: String
     ) {
         ConstructorOverviewScreenVM(
+            paddingValues = paddingValues,
             actionUpClicked = actionUpClicked,
             windowSizeClass = windowSizeClass,
             constructorId = constructorId,

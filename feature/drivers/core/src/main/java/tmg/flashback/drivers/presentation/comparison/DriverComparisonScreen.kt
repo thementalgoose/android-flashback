@@ -3,6 +3,7 @@ package tmg.flashback.drivers.presentation.comparison
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -48,6 +49,7 @@ import tmg.flashback.style.text.TextTitle
 import tmg.flashback.ui.components.drivers.DriverIcon
 import tmg.flashback.ui.components.errors.ErrorMessage
 import tmg.flashback.ui.components.header.HeaderAction
+import tmg.flashback.ui.components.list.LazyColumnEdgeToEdge
 import tmg.flashback.ui.components.progressbar.ProgressBar
 import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
 
@@ -55,6 +57,7 @@ private val headerImageSize: Dp = 120.dp
 
 @Composable
 fun DriverComparisonScreenVM(
+    paddingValues: PaddingValues,
     actionUpClicked: () -> Unit,
     windowSizeClass: WindowSizeClass,
     season: Int,
@@ -77,6 +80,7 @@ fun DriverComparisonScreenVM(
         onRefresh = viewModel.inputs::refresh
     ) {
         DriverComparisonScreen(
+            paddingValues = paddingValues,
             actionUpClicked = actionUpClicked,
             windowSizeClass = windowSizeClass,
             season = season,
@@ -93,6 +97,7 @@ fun DriverComparisonScreenVM(
 
 @Composable
 private fun DriverComparisonScreen(
+    paddingValues: PaddingValues,
     actionUpClicked: () -> Unit,
     windowSizeClass: WindowSizeClass,
     season: Int,
@@ -104,10 +109,7 @@ private fun DriverComparisonScreen(
     swapDriver: () -> Unit,
     comparison: Comparison?
 ) {
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(AppTheme.colors.backgroundPrimary),
+    LazyColumnEdgeToEdge(
         content = {
             item("header") {
                 tmg.flashback.ui.components.header.Header(
@@ -371,7 +373,8 @@ private fun Preview() {
         selectDriverLeft = { },
         selectDriverRight = { },
         swapDriver = { },
-        comparison = fakeComparison
+        comparison = fakeComparison,
+        paddingValues = PaddingValues.Absolute()
     )
 }
 

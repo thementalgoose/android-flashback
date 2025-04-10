@@ -1,5 +1,6 @@
 package tmg.flashback.search.presentation
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
@@ -8,6 +9,7 @@ import tmg.flashback.ads.ads.components.AdvertProvider
 
 @Composable
 fun SearchScreenVM(
+    paddingValues: PaddingValues,
     actionUpClicked: () -> Unit,
     windowSizeClass: WindowSizeClass,
     isRoot: (Boolean) -> Unit,
@@ -16,6 +18,7 @@ fun SearchScreenVM(
 ) {
     if (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Expanded) {
         SearchScreenList(
+            paddingValues = paddingValues,
             actionUpClicked = actionUpClicked,
             isRoot = isRoot,
             viewModel = viewModel,
@@ -23,6 +26,7 @@ fun SearchScreenVM(
         )
     } else {
         SearchScreenTab(
+            paddingValues = paddingValues,
             actionUpClicked = actionUpClicked,
             isRoot = isRoot,
             viewModel = viewModel,

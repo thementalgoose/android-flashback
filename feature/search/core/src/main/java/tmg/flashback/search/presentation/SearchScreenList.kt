@@ -4,11 +4,15 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imeNestedScroll
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
@@ -48,6 +52,7 @@ import tmg.flashback.ui.components.header.Header
 
 @Composable
 fun SearchScreenList(
+    paddingValues: PaddingValues,
     actionUpClicked: () -> Unit,
     isRoot: (Boolean) -> Unit,
     viewModel: SearchViewModel,
@@ -98,6 +103,7 @@ fun SearchScreenList(
             state = rememberLazyGridState(),
             columns = GridCells.Adaptive(minSize = 220.dp),
             content = {
+                item("edgetoedge-padding-top") { Spacer(Modifier.statusBarsPadding()) }
                 item("header", span = { GridItemSpan(maxLineSpan) }) {
                     SearchHeader(
                         actionUpClicked = actionUpClicked,
@@ -139,6 +145,7 @@ fun SearchScreenList(
                     }
                     null -> { }
                 }
+                item("edgetoedge-padding-bottom") { Spacer(Modifier.navigationBarsPadding()) }
             }
         )
     }
