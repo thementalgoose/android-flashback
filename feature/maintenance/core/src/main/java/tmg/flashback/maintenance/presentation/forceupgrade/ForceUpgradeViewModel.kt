@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import tmg.flashback.configuration.usecases.ResetConfigUseCase
+import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.maintenance.BuildConfig
 import tmg.flashback.maintenance.repository.MaintenanceRepository
 import javax.inject.Inject
@@ -31,7 +32,8 @@ interface ForceUpgradeViewModelOutputs {
 @HiltViewModel
 internal class ForceUpgradeViewModel @Inject constructor(
     private val maintenanceRepository: MaintenanceRepository,
-    private val resetConfigUseCase: ResetConfigUseCase
+    private val resetConfigUseCase: ResetConfigUseCase,
+    private val buildConfigManager: BuildConfigManager,
 ): ViewModel(), ForceUpgradeViewModelInputs, ForceUpgradeViewModelOutputs {
 
     var inputs: ForceUpgradeViewModelInputs = this
@@ -50,7 +52,7 @@ internal class ForceUpgradeViewModel @Inject constructor(
         if (maintenanceRepository.forceUpgrade == null) {
             title.value = "Error :("
             message.value = "Please restart the app"
-            showLink.value = null
+            showLink.value = "Go to the Play Store" to "https://play.google.com/store/apps/details?id=${buildConfigManager.applicationId}"
         }
 
         viewModelScope.launch {

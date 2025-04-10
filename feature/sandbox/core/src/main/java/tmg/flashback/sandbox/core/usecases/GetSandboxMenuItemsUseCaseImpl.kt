@@ -6,6 +6,7 @@ import tmg.flashback.sandbox.core.SandboxItems.MENU_DEBUG
 import tmg.flashback.sandbox.core.SandboxItems.MENU_F1_CONSTRUCTORS
 import tmg.flashback.sandbox.core.SandboxItems.MENU_F1_DRIVERS
 import tmg.flashback.sandbox.core.SandboxItems.MENU_F1_RESULTS
+import tmg.flashback.sandbox.core.SandboxItems.MENU_FORCE_UPGRADE
 import tmg.flashback.sandbox.core.SandboxItems.MENU_GITHUB_ACTIONS
 import tmg.flashback.sandbox.core.SandboxItems.MENU_STYLEGUIDE
 import tmg.flashback.sandbox.core.SandboxItems.MENU_SYNC
@@ -19,6 +20,7 @@ internal class GetSandboxMenuItemsUseCaseImpl @Inject constructor(): GetSandboxM
         SandboxMenuItem(R.string.debug_menu_styleguide, R.drawable.debug_list_styleguide, MENU_STYLEGUIDE),
         SandboxMenuItem(R.string.debug_menu_ads_config, R.drawable.debug_list_adverts, MENU_ADVERTS),
         SandboxMenuItem(R.string.debug_menu_sync, R.drawable.debug_list_sync, MENU_SYNC),
+        SandboxMenuItem(R.string.debug_menu_force_upgrade, R.drawable.debug_list_force_upgrade, MENU_FORCE_UPGRADE),
         SandboxMenuItem(R.string.debug_menu_f1_race, R.drawable.debug_list_formula1, MENU_F1_RESULTS),
         SandboxMenuItem(R.string.debug_menu_f1_drivers, R.drawable.debug_list_formula1, MENU_F1_DRIVERS),
         SandboxMenuItem(R.string.debug_menu_f1_constructors, R.drawable.debug_list_formula1, MENU_F1_CONSTRUCTORS),

@@ -21,6 +21,7 @@ dependencies {
     implementation(projects.feature.reactiongame.contract)
 
     implementation(projects.feature.sandbox.contract)
+    implementation(projects.feature.maintenance.contract)
     implementation(projects.core.ads.ads)
 
     // Core modules
