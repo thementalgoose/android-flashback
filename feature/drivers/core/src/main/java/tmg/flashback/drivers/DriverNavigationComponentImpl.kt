@@ -1,5 +1,6 @@
 package tmg.flashback.drivers
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import tmg.flashback.drivers.contract.DriverNavigationComponent
@@ -12,6 +13,7 @@ class DriverNavigationComponentImpl @Inject constructor(): DriverNavigationCompo
 
     @Composable
     override fun DriverSeasonScreen(
+        paddingValues: PaddingValues,
         actionUpClicked: () -> Unit,
         windowSizeClass: WindowSizeClass,
         driverId: String,
@@ -20,6 +22,7 @@ class DriverNavigationComponentImpl @Inject constructor(): DriverNavigationCompo
         seasonClicked: (season: Int, round: Int, raceName: String, circuitId: String, circuitName: String, country: String, countryISO: String, dateString: String) -> Unit
     ) {
         DriverSeasonScreenVM(
+            paddingValues = paddingValues,
             actionUpClicked = actionUpClicked,
             windowSizeClass = windowSizeClass,
             driverId = driverId,
@@ -30,11 +33,13 @@ class DriverNavigationComponentImpl @Inject constructor(): DriverNavigationCompo
 
     @Composable
     override fun DriverComparison(
+        paddingValues: PaddingValues,
         actionUpClicked: () -> Unit,
         windowSizeClass: WindowSizeClass,
         season: Int
     ) {
         DriverComparisonScreenVM(
+            paddingValues = paddingValues,
             actionUpClicked = actionUpClicked,
             windowSizeClass = windowSizeClass,
             season = season
@@ -43,12 +48,14 @@ class DriverNavigationComponentImpl @Inject constructor(): DriverNavigationCompo
 
     @Composable
     override fun DriverScreen(
+        paddingValues: PaddingValues,
         actionUpClicked: () -> Unit,
         windowSizeClass: WindowSizeClass,
         driverId: String,
         driverName: String
     ) {
         DriverOverviewScreenVM(
+            paddingValues = paddingValues,
             actionUpClicked = actionUpClicked,
             windowSizeClass = windowSizeClass,
             driverId = driverId,

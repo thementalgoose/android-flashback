@@ -56,6 +56,7 @@ import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.header.HeaderAction
+import tmg.flashback.ui.components.list.LazyColumnEdgeToEdge
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.messages.Message
 import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
@@ -109,10 +110,7 @@ fun ConstructorSeasonScreen(
     driverClicked: (ConstructorSeasonModel.Driver, Int) -> Unit,
     linkClicked: (String) -> Unit,
 ) {
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(AppTheme.colors.backgroundPrimary),
+    LazyColumnEdgeToEdge(
         content = {
             item(key = "header") {
                 Header(

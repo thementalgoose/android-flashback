@@ -35,6 +35,7 @@ import tmg.flashback.ui.components.loading.Fade
 private val detailsMinWidth = 320.dp
 private const val DETAILS_RATIO = 0.58f
 
+@SuppressLint("UnusedBoxWithConstraintsScope")
 @Composable
 fun MasterDetailsPane(
     windowSizeClass: WindowSizeClass,

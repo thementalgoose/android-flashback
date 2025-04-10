@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -50,21 +51,26 @@ fun NavigationBar(
     list: List<NavigationItem>,
     itemClicked: (NavigationItem) -> Unit,
     modifier: Modifier = Modifier,
+    bottomPadding: Dp = 0.dp
 ) {
-    Row(
-        modifier = modifier
-            .height(appBarHeight)
-            .shadow(elevation = 8.dp)
-            .background(AppTheme.colors.backgroundNav),
-        horizontalArrangement = Arrangement.Start,
-        verticalAlignment = Alignment.CenterVertically,
+    Column(modifier
+        .background(AppTheme.colors.backgroundNav)
+        .padding(bottom = bottomPadding)
     ) {
-        list.forEach { item ->
-            Item(
-                item = item,
-                itemClicked = itemClicked,
-                modifier = Modifier.weight(1f)
-            )
+        Row(
+            modifier = Modifier
+                .height(appBarHeight)
+                .background(AppTheme.colors.backgroundNav),
+            horizontalArrangement = Arrangement.Start,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            list.forEach { item ->
+                Item(
+                    item = item,
+                    itemClicked = itemClicked,
+                    modifier = Modifier.weight(1f)
+                )
+            }
         }
     }
 }
@@ -165,6 +171,18 @@ private fun Item(
 private fun Preview() {
     AppThemePreview {
         NavigationBar(
+            list = fakeNavigationItems,
+            itemClicked = {}
+        )
+    }
+}
+
+@PreviewTheme
+@Composable
+private fun PreviewWithBottomPadding() {
+    AppThemePreview {
+        NavigationBar(
+            bottomPadding = 10.dp,
             list = fakeNavigationItems,
             itemClicked = {}
         )

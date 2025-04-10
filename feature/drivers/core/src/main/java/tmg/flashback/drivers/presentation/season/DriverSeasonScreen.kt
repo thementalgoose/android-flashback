@@ -60,6 +60,7 @@ import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.header.HeaderAction
+import tmg.flashback.ui.components.list.LazyColumnEdgeToEdge
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.messages.Message
 import tmg.flashback.ui.components.navigation.PipeType
@@ -81,6 +82,7 @@ private val headerImageSize: Dp = 120.dp
 
 @Composable
 fun DriverSeasonScreenVM(
+    paddingValues: PaddingValues,
     actionUpClicked: () -> Unit,
     windowSizeClass: WindowSizeClass,
     driverId: String,
@@ -126,10 +128,7 @@ fun DriverSeasonScreen(
     showHeader: Boolean,
     resultClicked: (DriverSeasonModel.Result) -> Unit,
 ) {
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(AppTheme.colors.backgroundPrimary),
+    LazyColumnEdgeToEdge(
         content = {
             item(key = "header") {
                 Header(

@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -67,6 +68,7 @@ import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.header.HeaderAction
 import tmg.flashback.ui.components.layouts.MasterDetailsPane
+import tmg.flashback.ui.components.list.LazyColumnEdgeToEdge
 import tmg.flashback.ui.components.loading.Fade
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.now.Now
@@ -83,6 +85,7 @@ private val expandIcon = 20.dp
 
 @Composable
 fun RacesScreen(
+    paddingValues: PaddingValues,
     actionUpClicked: () -> Unit,
     windowSizeClass: WindowSizeClass,
     deeplink: String?,
@@ -123,9 +126,10 @@ fun RacesScreen(
         details = {
             val race = uiState.value.currentRace!!
             weekendNavigationComponent.Weekend(
+                paddingValues = paddingValues,
                 actionUpClicked = viewModel.inputs::back,
                 windowSizeClass = windowSizeClass,
-                weekendData = race
+                weekendData = race,
             )
         }
     )
@@ -176,10 +180,7 @@ fun ScheduleScreen(
         isLoading = uiState.isLoading,
         onRefresh = refresh
     ) {
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(AppTheme.colors.backgroundPrimary),
+        LazyColumnEdgeToEdge(
             content = {
                 item(key = "header") {
                     Header(

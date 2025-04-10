@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -56,6 +57,7 @@ import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.header.HeaderAction
 import tmg.flashback.ui.components.layouts.MasterDetailsPane
+import tmg.flashback.ui.components.list.LazyColumnEdgeToEdge
 import tmg.flashback.ui.components.messages.Message
 import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
 import tmg.flashback.web.presentation.browser.WebScreenVM
@@ -65,6 +67,7 @@ private val badgeSize: Dp = 40.dp
 
 @Composable
 fun RSSScreenVM(
+    paddingValues: PaddingValues,
     actionUpClicked: () -> Unit,
     windowSizeClass: WindowSizeClass,
     advertProvider: AdvertProvider,
@@ -128,10 +131,7 @@ fun RSSScreen(
     itemClicked: (Article) -> Unit,
     configureSources: () -> Unit,
 ) {
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(AppTheme.colors.backgroundPrimary),
+    LazyColumnEdgeToEdge(
         content = {
             item("header") {
                 Header(
