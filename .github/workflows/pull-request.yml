@@ -48,7 +48,7 @@ jobs:
         with:
           report_paths: '**/build/test-results/**/TEST-*.xml'
 
-  build_and_archive:
+  test_apk:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -105,7 +105,7 @@ jobs:
         with:
           name: APK
           path: app/build/outputs/apk/**/*.apk
-          retention-days: 7
+          retention-days: 2
 
       - name: Artifact info
         run: |
