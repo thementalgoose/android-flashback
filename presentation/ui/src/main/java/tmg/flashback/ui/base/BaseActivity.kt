@@ -53,15 +53,14 @@ abstract class BaseActivity : AppCompatActivity(), RationaleBottomSheetFragmentC
 
         setTheme(themeRes)
 
-//        this.enableEdgeToEdge()
         enableEdgeToEdge(
             statusBarStyle = SystemBarStyle.auto(
                 lightScrim = lightScrim,
                 darkScrim = darkScrim,
             ) { !styleManager.isDayMode },
             navigationBarStyle = SystemBarStyle.auto(
-                lightScrim = android.graphics.Color.TRANSPARENT,
-                darkScrim = android.graphics.Color.TRANSPARENT,
+                lightScrim = lightScrim,
+                darkScrim = darkScrim,
             ) { !styleManager.isDayMode },
         )
 
