@@ -54,6 +54,7 @@ fun NavigationBar(
     bottomPadding: Dp = 0.dp
 ) {
     Column(modifier
+        .shadow(8.dp)
         .background(AppTheme.colors.backgroundNav)
         .padding(bottom = bottomPadding)
     ) {
@@ -170,10 +171,12 @@ private fun Item(
 @Composable
 private fun Preview() {
     AppThemePreview {
-        NavigationBar(
-            list = fakeNavigationItems,
-            itemClicked = {}
-        )
+        Box(Modifier.padding(16.dp)) {
+            NavigationBar(
+                list = fakeNavigationItems,
+                itemClicked = {}
+            )
+        }
     }
 }
 
@@ -181,10 +184,12 @@ private fun Preview() {
 @Composable
 private fun PreviewWithBottomPadding() {
     AppThemePreview {
-        NavigationBar(
-            bottomPadding = 10.dp,
-            list = fakeNavigationItems,
-            itemClicked = {}
-        )
+        Box(Modifier.padding(16.dp)) {
+            NavigationBar(
+                bottomPadding = 10.dp,
+                list = fakeNavigationItems,
+                itemClicked = {}
+            )
+        }
     }
 }
