@@ -107,10 +107,6 @@ jobs:
           path: app/build/outputs/apk/**/*.apk
           retention-days: 2
 
-      - name: Artifact info
-        run: |
-          echo "::notice::URL: ${{ steps.artifact-upload-step.outputs.artifact-url }} (${{ steps.artifact-upload-step.outputs.artifact-id }})"
-
       - name: Find Comment
         uses: peter-evans/find-comment@v3
         id: fc
