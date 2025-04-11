@@ -2,7 +2,6 @@ package tmg.flashback.ui.base
 
 import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.content.res.Configuration
-import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
@@ -10,20 +9,17 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.StyleRes
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import tmg.flashback.crashlytics.manager.CrashlyticsManager
-import tmg.flashback.device.AppPermissions
 import tmg.flashback.device.ActivityProvider
+import tmg.flashback.device.AppPermissions
 import tmg.flashback.ui.managers.PermissionManager
 import tmg.flashback.ui.managers.StyleManager
 import tmg.flashback.ui.model.DisplayType
-import tmg.flashback.ui.model.NightMode
 import tmg.flashback.ui.permissions.RationaleBottomSheetFragment
 import tmg.flashback.ui.permissions.RationaleBottomSheetFragmentCallback
 import tmg.flashback.ui.repository.ThemeRepository
-import tmg.utilities.extensions.isInDayMode
 import javax.inject.Inject
 
 abstract class BaseActivity : AppCompatActivity(), RationaleBottomSheetFragmentCallback {
@@ -46,12 +42,28 @@ abstract class BaseActivity : AppCompatActivity(), RationaleBottomSheetFragmentC
      */
     open val themeType: DisplayType = DisplayType.TRANSLUCENT
 
+    companion object {
+        // https://cs.android.com/androidx/platform/frameworks/support/+/androidx-main:activity/activity/src/main/java/androidx/activity/EdgeToEdge.kt
+        private val lightScrim = android.graphics.Color.argb(0xe6, 0xFF, 0xFF, 0xFF)
+        private val darkScrim = android.graphics.Color.argb(0x80, 0x1b, 0x1b, 0x1b)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setTheme(themeRes)
 
-        this.enableEdgeToEdge()
+//        this.enableEdgeToEdge()
+        enableEdgeToEdge(
+            statusBarStyle = SystemBarStyle.auto(
+                lightScrim = lightScrim,
+                darkScrim = darkScrim,
+            ) { !styleManager.isDayMode },
+            navigationBarStyle = SystemBarStyle.auto(
+                lightScrim = android.graphics.Color.TRANSPARENT,
+                darkScrim = android.graphics.Color.TRANSPARENT,
+            ) { !styleManager.isDayMode },
+        )
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
 

@@ -197,12 +197,12 @@ fun AppColors.dynamic(colorScheme: ColorScheme, isLightMode: Boolean) = copy(
 
     backgroundContainer = when (isLightMode) {
         true -> colorScheme.surface
-        false -> colorScheme.surface //.copy(
-//            alpha = colorScheme.surface.alpha,
-//            red = colorScheme.surface.red * 0.8f,
-//            green = colorScheme.surface.green * 0.8f,
-//            blue = colorScheme.surface.blue * 0.8f
-//        )
+        false -> colorScheme.surface.copy(
+            alpha = colorScheme.surface.alpha,
+            red = colorScheme.surface.red * 0.8f,
+            green = colorScheme.surface.green * 0.8f,
+            blue = colorScheme.surface.blue * 0.8f
+        )
     },
     backgroundPrimary = colorScheme.background,
     backgroundSecondary = colorScheme.surfaceContainer,
