@@ -97,7 +97,7 @@ jobs:
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
           VERSION_CODE: ${{ steps.get_version_code.outputs.VERSION }}
           VERSION_NAME: ${{ steps.get_version_name.outputs.VERSION }}
-        run: ./gradlew ${{ inputs.variant }}
+        run: ./gradlew assembleSandRelease
 
       - name: Making build available
         id: artifact-upload-step
@@ -117,7 +117,7 @@ jobs:
         with:
           issue-number: ${{ github.event.pull_request.number }}
           comment-author: 'github-actions[bot]'
-          body-includes: APK Link
+          body-includes: Test APK
 
       - name: Create or update comment
         uses: peter-evans/create-or-update-comment@v4
@@ -125,7 +125,10 @@ jobs:
           comment-id: ${{ steps.fc.outputs.comment-id }}
           issue-number: ${{ github.event.pull_request.number }}
           body: |
-            APK Link
+            ### Test APK
+  
+            A test apk built against this change is available and will be available for 48 hours
+            
             ${{ steps.artifact-upload-step.outputs.artifact-url }}
           edit-mode: replace
 
