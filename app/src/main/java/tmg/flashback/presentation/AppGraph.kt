@@ -2,6 +2,7 @@ package tmg.flashback.presentation
 
 import android.os.Build
 import android.os.Parcelable
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
@@ -28,7 +29,6 @@ import tmg.flashback.drivers.presentation.overview.DriverOverviewScreenVM
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.flashback.navigation.asNavigationDestination
-import tmg.flashback.presentation.aboutthisapp.AboutThisApp
 import tmg.flashback.presentation.settings.All
 import tmg.flashback.presentation.settings.SettingsAllScreenVM
 import tmg.flashback.privacypolicy.contract.PrivacyPolicy
@@ -60,17 +60,17 @@ fun AppGraph(
     navigator: Navigator,
     closeApp: () -> Unit,
     advertProvider: AdvertProvider,
-    modifier: Modifier = Modifier
+    paddingValues: PaddingValues,
+    modifier: Modifier = Modifier,
 ) {
     NavHost(
         navController = navController,
         startDestination = Screen.Races.route,
         modifier = modifier
-            .statusBarsPadding()
-            .navigationBarsPadding()
     ) {
         composable(Screen.Races.route) {
             RacesScreen(
+                paddingValues = paddingValues,
                 actionUpClicked = openMenu,
                 windowSizeClass = windowSize,
                 deeplink = deeplink,
@@ -81,6 +81,7 @@ fun AppGraph(
 
         composable(Screen.ConstructorsStandings.route) {
             ConstructorStandingsScreenVM(
+                paddingValues = paddingValues,
                 actionUpClicked = openMenu,
                 windowSizeClass = windowSize,
                 isRoot = { isRoot(Screen.ConstructorsStandings.route, !it) }
@@ -89,6 +90,7 @@ fun AppGraph(
 
         composable(Screen.DriverStandings.route) {
             DriverStandingsScreenVM(
+                paddingValues = paddingValues,
                 actionUpClicked = openMenu,
                 windowSizeClass = windowSize,
                 isRoot = { isRoot(Screen.DriverStandings.route, !it) }
@@ -97,6 +99,7 @@ fun AppGraph(
 
         composable(Screen.Settings.All.route) {
             SettingsAllScreenVM(
+                paddingValues = paddingValues,
                 actionUpClicked = openMenu,
                 windowSizeClass = windowSize,
                 isRoot = { isRoot(Screen.Settings.All.route, !it) },
@@ -105,6 +108,7 @@ fun AppGraph(
 
         composable(Screen.Settings.PrivacyPolicy.route) {
             PrivacyPolicyScreenVM(
+                paddingValues = paddingValues,
                 windowSizeClass = windowSize,
                 actionUpClicked = { navController.popBackStack() }
             )
@@ -117,6 +121,7 @@ fun AppGraph(
         )) {
             val screenWeekendData = it.getArgument<ScreenWeekendData>("data")
             WeekendScreen(
+                paddingValues = paddingValues,
                 actionUpClicked = { navController.popBackStack() },
                 windowSizeClass = windowSize,
                 weekendInfo = screenWeekendData,
@@ -129,6 +134,7 @@ fun AppGraph(
         )) {
             val screenCircuitData = it.getArgument<ScreenCircuitData>("data")
             CircuitScreenVM(
+                paddingValues = paddingValues,
                 circuitId = screenCircuitData.circuitId,
                 circuitName = screenCircuitData.circuitName,
                 actionUpClicked = { navController.popBackStack() },
@@ -142,6 +148,7 @@ fun AppGraph(
         )) {
             val driverData = it.getArgument<ScreenDriverData>("data")
             DriverOverviewScreenVM(
+                paddingValues = paddingValues,
                 driverId = driverData.driverId,
                 driverName = driverData.driverName,
                 actionUpClicked = { navController.popBackStack() },
@@ -155,6 +162,7 @@ fun AppGraph(
         )) {
             val constructorData = it.getArgument<ScreenConstructorData>("data")
             ConstructorOverviewScreenVM(
+                paddingValues = paddingValues,
                 constructorId = constructorData.constructorId,
                 constructorName = constructorData.constructorName,
                 actionUpClicked = { navController.popBackStack() },
@@ -167,6 +175,7 @@ fun AppGraph(
             deepLinks = listOf(navDeepLink { uriPattern = "flashback://search" })
         ) {
             SearchScreenVM(
+                paddingValues = paddingValues,
                 actionUpClicked = openMenu,
                 windowSizeClass = windowSize,
                 isRoot = { isRoot(Screen.Search.route, !it) },
@@ -180,6 +189,7 @@ fun AppGraph(
             deepLinks = listOf(navDeepLink { uriPattern = "flashback://rss" })
         ) {
             RSSScreenVM(
+                paddingValues = paddingValues,
                 windowSizeClass = windowSize,
                 isRoot = { isRoot(Screen.RSS.route, !it) },
                 advertProvider = advertProvider,
@@ -191,17 +201,9 @@ fun AppGraph(
             Screen.Reaction.route,
         ) {
             ReactionScreenVM(
+                paddingValues = paddingValues,
                 actionUpClicked = openMenu,
                 windowSizeClass = windowSize,
-            )
-        }
-
-        composable(
-            Screen.AboutThisApp.route
-        ) {
-            AboutThisApp(
-                windowSizeClass = windowSize,
-                backClicked = { navController.popBackStack() }
             )
         }
     }

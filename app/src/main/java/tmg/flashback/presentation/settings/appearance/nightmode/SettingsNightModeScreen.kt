@@ -25,6 +25,7 @@ import tmg.flashback.ui.components.settings.Option
 import tmg.flashback.ui.model.NightMode
 import tmg.flashback.ui.settings.Setting
 import tmg.flashback.presentation.settings.Settings
+import tmg.flashback.ui.components.list.LazyColumnEdgeToEdge
 import tmg.utilities.extensions.toEnum
 
 @Composable
@@ -55,10 +56,7 @@ fun SettingsNightModeScreen(
 ) {
     ScreenView(screenName = "Settings Appearance Night Mode")
 
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(AppTheme.colors.backgroundPrimary),
+    LazyColumnEdgeToEdge(
         content = {
             item("header") {
                 tmg.flashback.ui.components.header.Header(

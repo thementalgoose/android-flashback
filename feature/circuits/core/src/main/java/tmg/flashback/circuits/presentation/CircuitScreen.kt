@@ -6,6 +6,7 @@ import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -15,7 +16,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.Icon
@@ -56,6 +56,7 @@ import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.header.HeaderAction
 import tmg.flashback.ui.components.layouts.MasterDetailsPane
+import tmg.flashback.ui.components.list.LazyColumnEdgeToEdge
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
 import tmg.flashback.weekend.contract.WeekendNavigationComponent
@@ -73,6 +74,7 @@ private val driverPodiumHeightP3 = 6.dp
 
 @Composable
 fun CircuitScreenVM(
+    paddingValues: PaddingValues,
     actionUpClicked: () -> Unit,
     windowSizeClass: WindowSizeClass,
     circuitId: String,
@@ -114,6 +116,7 @@ fun CircuitScreenVM(
             weekendNavigationComponent.Weekend(
                 actionUpClicked = viewModel.inputs::back,
                 windowSizeClass = windowSizeClass,
+                paddingValues = paddingValues,
                 weekendData = ScreenWeekendData(
                     season = selectedRace.season,
                     round = selectedRace.round,
@@ -140,10 +143,7 @@ fun CircuitScreen(
     linkClicked: (String) -> Unit,
     locationClicked: (Double, Double, String) -> Unit,
 ) {
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(AppTheme.colors.backgroundPrimary),
+    LazyColumnEdgeToEdge(
         content = {
             item(key = "header") {
                 Header(

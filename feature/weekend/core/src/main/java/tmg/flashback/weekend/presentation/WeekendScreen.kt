@@ -1,5 +1,6 @@
 package tmg.flashback.weekend.presentation
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
@@ -8,6 +9,7 @@ import tmg.flashback.weekend.contract.model.ScreenWeekendData
 
 @Composable
 fun WeekendScreen(
+    paddingValues: PaddingValues,
     actionUpClicked: () -> Unit,
     windowSizeClass: WindowSizeClass,
     weekendInfo: ScreenWeekendData,

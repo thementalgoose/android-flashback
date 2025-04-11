@@ -126,5 +126,7 @@ jobs:
             A test apk built against this change is available and will be available for 48 hours
             
             ${{ steps.artifact-upload-step.outputs.artifact-url }}
+            
+            <sup>Built at commit ${{ github.sha }}</sup>
           edit-mode: replace
 

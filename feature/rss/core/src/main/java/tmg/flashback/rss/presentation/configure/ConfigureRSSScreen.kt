@@ -49,6 +49,7 @@ import tmg.flashback.style.text.TextTitle
 import tmg.flashback.googleanalytics.presentation.ScreenView
 import tmg.flashback.strings.R.string
 import tmg.flashback.ui.components.header.HeaderAction
+import tmg.flashback.ui.components.list.LazyColumnEdgeToEdge
 import tmg.flashback.ui.components.settings.Footer
 import tmg.flashback.ui.components.settings.Header
 import tmg.flashback.ui.components.settings.Pref
@@ -102,10 +103,7 @@ fun ConfigureRSSScreen(
 ) {
     val customRssBox = remember { mutableStateOf(false) }
 
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(AppTheme.colors.backgroundPrimary),
+    LazyColumnEdgeToEdge(
         content = {
             item(key = "header") {
                 tmg.flashback.ui.components.header.Header(

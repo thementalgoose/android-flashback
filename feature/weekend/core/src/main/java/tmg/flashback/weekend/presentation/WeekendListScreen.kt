@@ -23,6 +23,7 @@ import tmg.flashback.ui.components.navigation.appBarHeight
 import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
 import tmg.flashback.weekend.R
 import tmg.flashback.strings.R.string
+import tmg.flashback.ui.components.list.LazyColumnEdgeToEdge
 import tmg.flashback.weekend.contract.model.ScreenWeekendData
 import tmg.flashback.weekend.presentation.details.DetailsViewModel
 import tmg.flashback.weekend.presentation.details.details
@@ -102,99 +103,101 @@ fun WeekendListScreen(
         isLoading = isRefreshing.value,
         onRefresh = viewModel.inputs::refresh
     ) {
-        LazyColumn(content = {
-            item("header") {
-                RaceInfoHeader(
-                    model = dbWeekendInfo.value ?: weekendInfo,
-                    showBack = false,
-                    actionUpClicked = actionUpClicked,
-                )
-            }
-
-            details(
-                weekendInfo = dbWeekendInfo.value ?: weekendInfo,
-                items = detailsList.value,
-                showTrack = false,
-                linkClicked = detailsVM.inputs::linkClicked
-            )
-
-            item("qualifying") {
-                CollapsibleBox(
-                    showCheckmark = qualifyingList.value.size > 1,
-                    isExpanded = qualifyingExpanded,
-                    title = stringResource(id = string.nav_qualifying)
-                )
-            }
-            qualifying(
-                itemModifier = Modifier
-                    .padding(horizontal = AppTheme.dimens.medium)
-                    .background(background),
-                driverClicked = qualifyingVM.inputs::clickDriver,
-                list = qualifyingList.value.takeIf { qualifyingExpanded.value } ?: emptyList(),
-                header = qualifyingHeader.value
-            )
-
-
-            if (tabState.value.any { it.tab == WeekendNavItem.SPRINT_QUALIFYING }) {
-                item("sprintQualifying") {
-                    CollapsibleBox(
-                        showCheckmark = sprintQualifyingList.value.size > 1,
-                        isExpanded = sprintQualifyingExpanded,
-                        title = stringResource(id = string.nav_sprint_qualifying)
+        LazyColumnEdgeToEdge(
+            content = {
+                item("header") {
+                    RaceInfoHeader(
+                        model = dbWeekendInfo.value ?: weekendInfo,
+                        showBack = false,
+                        actionUpClicked = actionUpClicked,
                     )
                 }
-                sprintQualifying(
+
+                details(
+                    weekendInfo = dbWeekendInfo.value ?: weekendInfo,
+                    items = detailsList.value,
+                    showTrack = false,
+                    linkClicked = detailsVM.inputs::linkClicked
+                )
+
+                item("qualifying") {
+                    CollapsibleBox(
+                        showCheckmark = qualifyingList.value.size > 1,
+                        isExpanded = qualifyingExpanded,
+                        title = stringResource(id = string.nav_qualifying)
+                    )
+                }
+                qualifying(
                     itemModifier = Modifier
                         .padding(horizontal = AppTheme.dimens.medium)
                         .background(background),
-                    driverClicked = sprintQualifyingVM.inputs::clickDriver,
-                    list = sprintQualifyingList.value.takeIf { sprintQualifyingExpanded.value } ?: emptyList()
+                    driverClicked = qualifyingVM.inputs::clickDriver,
+                    list = qualifyingList.value.takeIf { qualifyingExpanded.value } ?: emptyList(),
+                    header = qualifyingHeader.value
                 )
-            }
 
-            if (tabState.value.any { it.tab == WeekendNavItem.SPRINT }) {
-                item("sprintRace") {
-                    CollapsibleBox(
-                        showCheckmark = sprintList.value.size > 1,
-                        isExpanded = sprintRaceExpanded,
-                        title = stringResource(id = string.nav_sprint)
+
+                if (tabState.value.any { it.tab == WeekendNavItem.SPRINT_QUALIFYING }) {
+                    item("sprintQualifying") {
+                        CollapsibleBox(
+                            showCheckmark = sprintQualifyingList.value.size > 1,
+                            isExpanded = sprintQualifyingExpanded,
+                            title = stringResource(id = string.nav_sprint_qualifying)
+                        )
+                    }
+                    sprintQualifying(
+                        itemModifier = Modifier
+                            .padding(horizontal = AppTheme.dimens.medium)
+                            .background(background),
+                        driverClicked = sprintQualifyingVM.inputs::clickDriver,
+                        list = sprintQualifyingList.value.takeIf { sprintQualifyingExpanded.value } ?: emptyList()
                     )
                 }
-                sprint(
+
+                if (tabState.value.any { it.tab == WeekendNavItem.SPRINT }) {
+                    item("sprintRace") {
+                        CollapsibleBox(
+                            showCheckmark = sprintList.value.size > 1,
+                            isExpanded = sprintRaceExpanded,
+                            title = stringResource(id = string.nav_sprint)
+                        )
+                    }
+                    sprint(
+                        itemModifier = Modifier
+                            .padding(horizontal = AppTheme.dimens.medium)
+                            .background(background),
+                        season = weekendInfo.season,
+                        showSprintType = sprintVM.inputs::show,
+                        sprintResultType = sprintResultType.value,
+                        list = sprintList.value.takeIf { sprintRaceExpanded.value } ?: emptyList(),
+                        driverClicked = sprintVM.inputs::clickDriver,
+                        constructorClicked = sprintVM.inputs::clickConstructor
+                    )
+                }
+
+                item("race") {
+                    CollapsibleBox(
+                        showCheckmark = raceList.value.size > 1,
+                        isExpanded = raceExpanded,
+                        title = stringResource(id = string.nav_race)
+                    )
+                }
+                race(
                     itemModifier = Modifier
                         .padding(horizontal = AppTheme.dimens.medium)
                         .background(background),
                     season = weekendInfo.season,
-                    showSprintType = sprintVM.inputs::show,
-                    sprintResultType = sprintResultType.value,
-                    list = sprintList.value.takeIf { sprintRaceExpanded.value } ?: emptyList(),
-                    driverClicked = sprintVM.inputs::clickDriver,
-                    constructorClicked = sprintVM.inputs::clickConstructor
+                    showRaceType = raceVM.inputs::show,
+                    raceResultType = raceResultType.value,
+                    list = raceList.value.takeIf { raceExpanded.value } ?: emptyList(),
+                    driverClicked = raceVM.inputs::clickDriver,
+                    constructorClicked = raceVM.inputs::clickConstructor
                 )
-            }
 
-            item("race") {
-                CollapsibleBox(
-                    showCheckmark = raceList.value.size > 1,
-                    isExpanded = raceExpanded,
-                    title = stringResource(id = string.nav_race)
-                )
+                item(key = "footer") {
+                    Spacer(Modifier.height(appBarHeight))
+                }
             }
-            race(
-                itemModifier = Modifier
-                    .padding(horizontal = AppTheme.dimens.medium)
-                    .background(background),
-                season = weekendInfo.season,
-                showRaceType = raceVM.inputs::show,
-                raceResultType = raceResultType.value,
-                list = raceList.value.takeIf { raceExpanded.value } ?: emptyList(),
-                driverClicked = raceVM.inputs::clickDriver,
-                constructorClicked = raceVM.inputs::clickConstructor
-            )
-
-            item(key = "footer") {
-                Spacer(Modifier.height(appBarHeight))
-            }
-        })
+        )
     }
 }

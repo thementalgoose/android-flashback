@@ -2,6 +2,7 @@
 
 package tmg.flashback.ui.components.layouts
 
+import android.annotation.SuppressLint
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.background
@@ -35,6 +36,7 @@ import tmg.flashback.ui.components.loading.Fade
 private val detailsMinWidth = 320.dp
 private const val DETAILS_RATIO = 0.58f
 
+@SuppressLint("UnusedBoxWithConstraintsScope")
 @Composable
 fun MasterDetailsPane(
     windowSizeClass: WindowSizeClass,

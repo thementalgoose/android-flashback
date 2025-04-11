@@ -24,6 +24,7 @@ import tmg.flashback.ui.components.settings.Pref
 import tmg.flashback.ui.components.settings.Switch
 import tmg.flashback.ui.settings.Setting
 import tmg.flashback.presentation.settings.Settings
+import tmg.flashback.ui.components.list.LazyColumnEdgeToEdge
 
 @Composable
 fun SettingsPrivacyScreenVM(
@@ -53,10 +54,7 @@ fun SettingsPrivacyScreen(
     crashReportingEnabled: Boolean,
     analyticsEnabled: Boolean
 ) {
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(AppTheme.colors.backgroundPrimary),
+    LazyColumnEdgeToEdge(
         content = {
             item("header") {
                 tmg.flashback.ui.components.header.Header(

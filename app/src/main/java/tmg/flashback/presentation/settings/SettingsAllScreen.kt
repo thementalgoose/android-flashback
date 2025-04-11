@@ -1,35 +1,16 @@
 package tmg.flashback.presentation.settings
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.DpSize
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
-import tmg.flashback.R
-import tmg.flashback.strings.R.string
-import tmg.flashback.style.AppTheme
-import tmg.flashback.style.AppThemePreview
-import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.googleanalytics.presentation.ScreenView
-import tmg.flashback.rss.contract.RSSNavigationComponent
-import tmg.flashback.rss.contract.requireRSSNavigationComponent
-import tmg.flashback.ui.components.header.Header
-import tmg.flashback.ui.components.header.HeaderAction
-import tmg.flashback.ui.components.layouts.MasterDetailsPane
-import tmg.flashback.ui.components.settings.Footer
-import tmg.flashback.ui.components.settings.Header
-import tmg.flashback.ui.components.settings.Pref
-import tmg.flashback.ui.components.settings.Section
-import tmg.flashback.ui.lifecycle.OnLifecycleEvent
 import tmg.flashback.presentation.settings.about.SettingsAboutScreenVM
 import tmg.flashback.presentation.settings.about.SettingsPrivacyScreenVM
 import tmg.flashback.presentation.settings.ads.SettingsAdsScreenVM
@@ -40,10 +21,25 @@ import tmg.flashback.presentation.settings.data.SettingsWeatherScreenVM
 import tmg.flashback.presentation.settings.notifications.SettingsNotificationUpcomingNoticeScreenVM
 import tmg.flashback.presentation.settings.web.SettingsWebScreenVM
 import tmg.flashback.presentation.settings.widgets.SettingsWidgetScreenVM
+import tmg.flashback.rss.contract.RSSNavigationComponent
+import tmg.flashback.rss.contract.requireRSSNavigationComponent
+import tmg.flashback.strings.R.string
+import tmg.flashback.style.AppThemePreview
+import tmg.flashback.style.annotations.PreviewTheme
+import tmg.flashback.ui.components.header.Header
+import tmg.flashback.ui.components.header.HeaderAction
+import tmg.flashback.ui.components.layouts.MasterDetailsPane
+import tmg.flashback.ui.components.list.LazyColumnEdgeToEdge
+import tmg.flashback.ui.components.settings.Footer
+import tmg.flashback.ui.components.settings.Header
+import tmg.flashback.ui.components.settings.Pref
+import tmg.flashback.ui.components.settings.Section
+import tmg.flashback.ui.lifecycle.OnLifecycleEvent
 import tmg.flashback.ui.settings.Setting
 
 @Composable
 fun SettingsAllScreenVM(
+    paddingValues: PaddingValues,
     actionUpClicked: () -> Unit = { },
     windowSizeClass: WindowSizeClass,
     isRoot: (Boolean) -> Unit,
@@ -159,10 +155,7 @@ fun SettingsAllScreen(
     prefClicked: (Setting) -> Unit,
     uiState: SettingsAllViewModel.UiState,
 ) {
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(AppTheme.colors.backgroundPrimary),
+    LazyColumnEdgeToEdge(
         content = {
             item("header") {
                 Header(

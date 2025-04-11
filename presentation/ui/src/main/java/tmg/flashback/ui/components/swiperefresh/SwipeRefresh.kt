@@ -4,6 +4,7 @@ package tmg.flashback.ui.components.swiperefresh
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
@@ -27,6 +28,7 @@ fun SwipeRefresh(
             refreshing = isLoading,
             state = pullRefreshState,
             modifier = Modifier
+                .statusBarsPadding()
                 .align(Alignment.TopCenter)
         )
     }

@@ -1,5 +1,6 @@
 package tmg.flashback.constructors.contract
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import kotlinx.serialization.json.Json
@@ -31,6 +32,7 @@ interface ConstructorsNavigationComponent {
 
     @Composable
     fun ConstructorScreen(
+        paddingValues: PaddingValues,
         actionUpClicked: () -> Unit,
         windowSizeClass: WindowSizeClass,
         constructorId: String,
