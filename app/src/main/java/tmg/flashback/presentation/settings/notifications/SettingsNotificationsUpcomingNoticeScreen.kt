@@ -28,6 +28,7 @@ import tmg.flashback.ui.components.settings.Pref
 import tmg.flashback.ui.lifecycle.OnLifecycleEvent
 import tmg.flashback.ui.settings.Setting
 import tmg.flashback.presentation.settings.Settings
+import tmg.flashback.ui.components.list.LazyColumnEdgeToEdge
 
 @Composable
 fun SettingsNotificationUpcomingNoticeScreenVM(
@@ -67,10 +68,7 @@ fun SettingsNotificationUpcomingNoticeScreen(
     result: NotificationReminder,
     permissions: UpcomingNoticePermissionState
 ) {
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(AppTheme.colors.backgroundPrimary),
+    LazyColumnEdgeToEdge(
         content = {
             item("header") {
                 tmg.flashback.ui.components.header.Header(

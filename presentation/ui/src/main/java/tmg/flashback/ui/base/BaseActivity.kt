@@ -12,6 +12,7 @@ import androidx.annotation.StyleRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.core.content.ContextCompat
+import androidx.core.view.WindowCompat
 import tmg.flashback.crashlytics.manager.CrashlyticsManager
 import tmg.flashback.device.AppPermissions
 import tmg.flashback.device.ActivityProvider
@@ -47,21 +48,14 @@ abstract class BaseActivity : AppCompatActivity(), RationaleBottomSheetFragmentC
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions(), permissionManager.activityContract)
+
         setTheme(themeRes)
 
-        this.enableEdgeToEdge(
-            statusBarStyle = when (themeRepository.nightMode) {
-                NightMode.DEFAULT -> SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT)
-                NightMode.DAY -> SystemBarStyle.light(Color.TRANSPARENT, Color.TRANSPARENT)
-                NightMode.NIGHT -> SystemBarStyle.dark(Color.TRANSPARENT)
-            },
-            navigationBarStyle = when (themeRepository.nightMode) {
-                NightMode.DEFAULT -> SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT)
-                NightMode.DAY -> SystemBarStyle.light(Color.TRANSPARENT, Color.TRANSPARENT)
-                NightMode.NIGHT -> SystemBarStyle.dark(Color.TRANSPARENT)
-            },
-        )
+        this.enableEdgeToEdge()
+
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
+        requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions(), permissionManager.activityContract)
     }
 
     protected val themeRes: Int

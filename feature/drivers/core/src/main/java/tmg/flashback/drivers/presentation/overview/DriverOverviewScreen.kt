@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -58,6 +59,7 @@ import tmg.flashback.ui.components.drivers.DriverIcon
 import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.header.HeaderAction
 import tmg.flashback.ui.components.layouts.MasterDetailsPane
+import tmg.flashback.ui.components.list.LazyColumnEdgeToEdge
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.messages.Message
 import tmg.flashback.ui.components.navigation.PipeType
@@ -68,6 +70,7 @@ private val headerImageSize: Dp = 120.dp
 
 @Composable
 fun DriverOverviewScreenVM(
+    paddingValues: PaddingValues,
     actionUpClicked: () -> Unit,
     windowSizeClass: WindowSizeClass,
     driverId: String,
@@ -102,6 +105,7 @@ fun DriverOverviewScreenVM(
         detailsShow = uiState.value.selectedSeason != null,
         details = {
             DriverSeasonScreenVM(
+                paddingValues = paddingValues,
                 actionUpClicked = viewModel.inputs::back,
                 windowSizeClass = windowSizeClass,
                 driverId = driverId,
@@ -141,10 +145,7 @@ fun DriverOverviewScreen(
         )
     }
 
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(AppTheme.colors.backgroundPrimary),
+    LazyColumnEdgeToEdge(
         content = {
             item("header") {
                 tmg.flashback.ui.components.header.Header(

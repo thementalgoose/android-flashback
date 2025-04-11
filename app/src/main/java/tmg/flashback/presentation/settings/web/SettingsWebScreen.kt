@@ -23,6 +23,7 @@ import tmg.flashback.ui.components.settings.Header
 import tmg.flashback.ui.components.settings.Switch
 import tmg.flashback.ui.settings.Setting
 import tmg.flashback.presentation.settings.Settings
+import tmg.flashback.ui.components.list.LazyColumnEdgeToEdge
 
 @Composable
 fun SettingsWebScreenVM(
@@ -52,10 +53,7 @@ fun SettingsWebScreen(
     webBrowserEnabled: Boolean,
     javascriptEnabled: Boolean
 ) {
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(AppTheme.colors.backgroundPrimary),
+    LazyColumnEdgeToEdge(
         content = {
             item("header") {
                 tmg.flashback.ui.components.header.Header(

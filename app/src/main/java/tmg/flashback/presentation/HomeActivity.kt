@@ -75,8 +75,6 @@ class HomeActivity: BaseActivity(), SplashScreen.KeepOnScreenCondition {
         val splashScreen = installSplashScreen()
         setTheme(themeRes)
 
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-
         val windowInfoTracker = WindowInfoTracker.getOrCreate(this)
             .windowLayoutInfo(this@HomeActivity)
 
