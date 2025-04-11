@@ -81,7 +81,7 @@ internal class TimestampTest {
     @Test
     fun `is in past returns true when date is yesterday and original time is before`() {
         val date = LocalDate.now().minusDays(1L)
-        val time = LocalTime.now().plusMinutes(1L)
+        val time = LocalTime.now().plusHours(1L)
         val zone = ZoneId.ofOffset("", ZoneOffset.UTC)
 
         val sut = Timestamp(date, time, zone)
@@ -92,7 +92,7 @@ internal class TimestampTest {
     @Test
     fun `is in past returns true when date is today and original time is in past`() {
         val date = LocalDate.now()
-        val time = LocalTime.now().minusMinutes(1L)
+        val time = LocalTime.now().minusHours(6L)
         val zone = ZoneId.ofOffset("", ZoneOffset.UTC)
 
         val sut = Timestamp(date, time, zone)
@@ -103,7 +103,7 @@ internal class TimestampTest {
     @Test
     fun `is in past returns false when date is today and original time is now`() {
         val date = LocalDate.now()
-        val time = LocalTime.now().plusMinutes(1L)
+        val time = LocalTime.now().plusHours(1L)
         val zone = ZoneId.ofOffset("", ZoneOffset.UTC)
 
         val sut = Timestamp(date, time, zone)
@@ -114,7 +114,7 @@ internal class TimestampTest {
     @Test
     fun `is in past returns false when date is today and original time is in future`() {
         val date = LocalDate.now()
-        val time = LocalTime.now().plusMinutes(1L)
+        val time = LocalTime.now().plusHours(1L)
         val zone = ZoneId.ofOffset("", ZoneOffset.UTC)
 
         val sut = Timestamp(date, time, zone)
@@ -140,7 +140,7 @@ internal class TimestampTest {
     @Test
     fun `is today returns false when date is yesterday and original time is before`() {
         val date = LocalDate.now().minusDays(1L)
-        val time = LocalTime.now().plusMinutes(1L)
+        val time = LocalTime.now().plusHours(1L)
         val zone = ZoneId.ofOffset("", ZoneOffset.UTC)
 
         val sut = Timestamp(date, time, zone)
@@ -162,7 +162,7 @@ internal class TimestampTest {
     @Test
     fun `is today returns true when date is today and original time is now`() {
         val date = LocalDate.now()
-        val time = LocalTime.now().plusMinutes(1L)
+        val time = LocalTime.now().plusHours(1L)
         val zone = ZoneId.ofOffset("", ZoneOffset.UTC)
 
         val sut = Timestamp(date, time, zone)
@@ -173,7 +173,7 @@ internal class TimestampTest {
     @Test
     fun `is today returns true when date is today and original time is in future`() {
         val date = LocalDate.now()
-        val time = LocalTime.now().plusMinutes(1L)
+        val time = LocalTime.now().plusHours(1L)
         val zone = ZoneId.ofOffset("", ZoneOffset.UTC)
 
         val sut = Timestamp(date, time, zone)
