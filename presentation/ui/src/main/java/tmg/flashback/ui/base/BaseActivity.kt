@@ -51,18 +51,7 @@ abstract class BaseActivity : AppCompatActivity(), RationaleBottomSheetFragmentC
 
         setTheme(themeRes)
 
-        this.enableEdgeToEdge(
-            statusBarStyle = when (themeRepository.nightMode) {
-                NightMode.DEFAULT -> SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT)
-                NightMode.DAY -> SystemBarStyle.light(Color.TRANSPARENT, Color.TRANSPARENT)
-                NightMode.NIGHT -> SystemBarStyle.dark(Color.TRANSPARENT)
-            },
-            navigationBarStyle = when (themeRepository.nightMode) {
-                NightMode.DEFAULT -> SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT)
-                NightMode.DAY -> SystemBarStyle.light(Color.TRANSPARENT, Color.TRANSPARENT)
-                NightMode.NIGHT -> SystemBarStyle.dark(Color.TRANSPARENT)
-            },
-        )
+        this.enableEdgeToEdge()
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
