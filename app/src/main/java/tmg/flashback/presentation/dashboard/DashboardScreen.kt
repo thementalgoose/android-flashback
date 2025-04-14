@@ -8,6 +8,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.calculateEndPadding
+import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
@@ -21,6 +23,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModelStore
@@ -170,8 +173,16 @@ fun DashboardScreen(
             }
         },
         content = {
+            val layoutDirection = LocalLayoutDirection.current
+            val startPadding = it.calculateStartPadding(layoutDirection)
+            val endPadding = it.calculateEndPadding(layoutDirection)
             OverlappingPanels(
-                modifier = Modifier.background(AppTheme.colors.backgroundContainer),
+                modifier = Modifier
+                    .background(AppTheme.colors.backgroundContainer)
+                    .padding(
+                        start = startPadding,
+                        end = endPadding
+                    ),
                 panelsState = when (windowSize.widthSizeClass == WindowWidthSizeClass.Compact) {
                     true -> panelsState
                     false -> OverlappingPanelsState(OverlappingPanelsValue.Closed)
