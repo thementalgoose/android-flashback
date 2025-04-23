@@ -65,7 +65,7 @@ fun SettingPref(
             onClick = { onClick(model) }
         )
         .padding(
-            vertical = AppTheme.dimens.small,
+            vertical = AppTheme.dimens.nsmall,
             horizontal = AppTheme.dimens.medium
         )
     ) {
@@ -136,7 +136,7 @@ fun SettingSwitch(
             onClick(model)
         }, enabled = model.isEnabled)
         .padding(
-            vertical = AppTheme.dimens.small,
+            vertical = AppTheme.dimens.nsmall,
             horizontal = AppTheme.dimens.medium
         )
     ) {
@@ -215,7 +215,7 @@ fun SettingOption(
             onClick(model)
         }, enabled = model.isEnabled)
         .padding(
-            vertical = AppTheme.dimens.small,
+            vertical = AppTheme.dimens.nsmall,
             horizontal = AppTheme.dimens.medium
         )
     ) {
@@ -278,7 +278,7 @@ fun SettingHeader(
             .fillMaxWidth()
             .padding(
                 top = AppTheme.dimens.medium,
-                bottom = AppTheme.dimens.small,
+                bottom = AppTheme.dimens.nsmall,
                 start = AppTheme.dimens.medium,
                 end = AppTheme.dimens.medium
             ),
@@ -329,7 +329,7 @@ fun SettingSection(
             onClick = { onClick(model) }
         )
         .padding(
-            vertical = AppTheme.dimens.small,
+            vertical = AppTheme.dimens.nsmall,
             horizontal = AppTheme.dimens.medium
         )
     ) {
