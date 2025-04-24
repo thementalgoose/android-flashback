@@ -1,24 +1,20 @@
 package tmg.flashback.presentation.settings.appearance.theme
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.DpSize
 import androidx.hilt.navigation.compose.hiltViewModel
-import tmg.flashback.R
-import tmg.flashback.strings.R.string
 import tmg.flashback.googleanalytics.presentation.ScreenView
 import tmg.flashback.presentation.settings.Settings
-import tmg.flashback.style.AppTheme
+import tmg.flashback.strings.R.string
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.ui.components.header.HeaderAction
-import tmg.flashback.ui.components.list.LazyColumnEdgeToEdge
 import tmg.flashback.ui.components.settings.Footer
 import tmg.flashback.ui.components.settings.Header
 import tmg.flashback.ui.components.settings.Option
@@ -30,6 +26,7 @@ import tmg.utilities.extensions.toEnum
 fun SettingsThemeScreenVM(
     actionUpClicked: () -> Unit,
     windowSizeClass: WindowSizeClass,
+    paddingValues: PaddingValues,
     viewModel: SettingsThemeViewModel = hiltViewModel(),
 ) {
     val selected = viewModel.outputs.currentlySelected.collectAsState()
@@ -37,6 +34,7 @@ fun SettingsThemeScreenVM(
     SettingsThemeScreen(
         actionUpClicked = actionUpClicked,
         windowSizeClass = windowSizeClass,
+        paddingValues = paddingValues,
         selected = selected.value,
         prefClicked = { option ->
             val value = option.key.toEnum<Theme> { it.key }!!
@@ -49,17 +47,19 @@ fun SettingsThemeScreenVM(
 fun SettingsThemeScreen(
     actionUpClicked: () -> Unit,
     windowSizeClass: WindowSizeClass,
+    paddingValues: PaddingValues,
     selected: Theme,
     prefClicked: (Setting.Option) -> Unit
 ) {
     ScreenView(screenName = "Settings Appearance Theme")
 
-    LazyColumnEdgeToEdge(
+    LazyColumn(
+        contentPadding = paddingValues,
         content = {
             item("header") {
                 tmg.flashback.ui.components.header.Header(
                     text = stringResource(id = string.settings_theme_theme_title),
-                    action = HeaderAction.BACK,
+                    action = if (windowSizeClass.widthSizeClass != WindowWidthSizeClass.Expanded) HeaderAction.BACK else null,
                     actionUpClicked = actionUpClicked
                 )
             }
@@ -86,6 +86,7 @@ private fun Preview() {
     AppThemePreview {
         SettingsThemeScreen(
             windowSizeClass = WindowSizeClass.calculateFromSize(DpSize.Unspecified),
+            paddingValues = PaddingValues.Absolute(),
             actionUpClicked = {},
             prefClicked = {},
             selected = Theme.MATERIAL_YOU

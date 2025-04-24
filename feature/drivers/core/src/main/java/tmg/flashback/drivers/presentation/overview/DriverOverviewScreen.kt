@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -59,7 +58,6 @@ import tmg.flashback.ui.components.drivers.DriverIcon
 import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.header.HeaderAction
 import tmg.flashback.ui.components.layouts.MasterDetailsPane
-import tmg.flashback.ui.components.list.LazyColumnEdgeToEdge
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.messages.Message
 import tmg.flashback.ui.components.navigation.PipeType
@@ -94,6 +92,7 @@ fun DriverOverviewScreenVM(
                 DriverOverviewScreen(
                     actionUpClicked = actionUpClicked,
                     windowSizeClass = windowSizeClass,
+                    paddingValues = paddingValues,
                     uiState = uiState.value,
                     linkClicked = viewModel.inputs::openUrl,
                     racedForClicked = {
@@ -122,6 +121,7 @@ fun DriverOverviewScreenVM(
 fun DriverOverviewScreen(
     actionUpClicked: () -> Unit,
     windowSizeClass: WindowSizeClass,
+    paddingValues: PaddingValues,
     linkClicked: (String) -> Unit,
     uiState: DriverOverviewScreenState,
     racedForClicked: (DriverOverviewModel.RacedFor) -> Unit,
@@ -145,7 +145,8 @@ fun DriverOverviewScreen(
         )
     }
 
-    LazyColumnEdgeToEdge(
+    LazyColumn(
+        contentPadding = paddingValues,
         content = {
             item("header") {
                 tmg.flashback.ui.components.header.Header(
@@ -345,6 +346,7 @@ private fun Preview(
         DriverOverviewScreen(
             actionUpClicked = { },
             windowSizeClass = WindowSizeClass.calculateFromSize(DpSize.Unspecified),
+            paddingValues = PaddingValues.Absolute(),
             uiState = DriverOverviewScreenState(
                 driverId = "driverId",
                 driverName = "driverName",

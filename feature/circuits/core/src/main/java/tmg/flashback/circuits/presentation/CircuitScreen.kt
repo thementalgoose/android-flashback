@@ -10,12 +10,12 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.Icon
@@ -34,7 +34,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import java.time.format.DateTimeFormatter
 import tmg.flashback.formula1.R.drawable
 import tmg.flashback.formula1.enums.TrackLayout
 import tmg.flashback.formula1.extensions.positionIcon
@@ -56,13 +55,13 @@ import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.header.HeaderAction
 import tmg.flashback.ui.components.layouts.MasterDetailsPane
-import tmg.flashback.ui.components.list.LazyColumnEdgeToEdge
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
 import tmg.flashback.weekend.contract.WeekendNavigationComponent
 import tmg.flashback.weekend.contract.model.ScreenWeekendData
 import tmg.flashback.weekend.contract.requireWeekendNavigationComponent
 import tmg.utilities.extensions.ordinalAbbreviation
+import java.time.format.DateTimeFormatter
 
 private val trackImageSize: Dp = 180.dp
 private val resultIconSize = 16.dp
@@ -100,6 +99,7 @@ fun CircuitScreenVM(
                 CircuitScreen(
                     actionUpClicked = actionUpClicked,
                     windowSizeClass = windowSizeClass,
+                    paddingValues = paddingValues,
                     circuitName = circuitName,
                     uiState = uiState.value,
                     itemClicked = viewModel.inputs::itemClicked,
@@ -137,13 +137,15 @@ fun CircuitScreenVM(
 fun CircuitScreen(
     actionUpClicked: () -> Unit,
     windowSizeClass: WindowSizeClass,
+    paddingValues: PaddingValues,
     circuitName: String,
     uiState: CircuitScreenState,
     itemClicked: (CircuitModel.Item) -> Unit,
     linkClicked: (String) -> Unit,
     locationClicked: (Double, Double, String) -> Unit,
 ) {
-    LazyColumnEdgeToEdge(
+    LazyColumn(
+        contentPadding = paddingValues,
         content = {
             item(key = "header") {
                 Header(
@@ -475,7 +477,8 @@ private fun Preview(
             linkClicked = { },
             locationClicked = { lat, lng, name -> },
             actionUpClicked = { },
-            windowSizeClass = WindowSizeClass.calculateFromSize(DpSize.Unspecified)
+            windowSizeClass = WindowSizeClass.calculateFromSize(DpSize.Unspecified),
+            paddingValues = PaddingValues.Absolute()
         )
     }
 }

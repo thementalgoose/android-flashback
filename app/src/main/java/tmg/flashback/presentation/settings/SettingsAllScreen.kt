@@ -1,6 +1,7 @@
 package tmg.flashback.presentation.settings
 
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
@@ -29,7 +30,6 @@ import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.header.HeaderAction
 import tmg.flashback.ui.components.layouts.MasterDetailsPane
-import tmg.flashback.ui.components.list.LazyColumnEdgeToEdge
 import tmg.flashback.ui.components.settings.Footer
 import tmg.flashback.ui.components.settings.Header
 import tmg.flashback.ui.components.settings.Pref
@@ -66,6 +66,7 @@ fun SettingsAllScreenVM(
         windowSizeClass = windowSizeClass,
         master = {
             SettingsAllScreen(
+                paddingValues = paddingValues,
                 windowSizeClass = windowSizeClass,
                 actionUpClicked = actionUpClicked,
                 prefClicked = viewModel.inputs::itemClicked,
@@ -81,66 +82,77 @@ fun SettingsAllScreenVM(
                     SettingsNightModeScreenVM(
                         actionUpClicked = viewModel.inputs::back,
                         windowSizeClass = windowSizeClass,
+                        paddingValues = paddingValues,
                     )
                 }
                 SettingsAllViewModel.SettingsScreen.THEME -> {
                     SettingsThemeScreenVM(
                         actionUpClicked = viewModel.inputs::back,
                         windowSizeClass = windowSizeClass,
+                        paddingValues = paddingValues,
                     )
                 }
                 SettingsAllViewModel.SettingsScreen.LAYOUT -> {
                     SettingsLayoutScreenVM(
                         actionUpClicked = viewModel.inputs::back,
                         windowSizeClass = windowSizeClass,
+                        paddingValues = paddingValues,
                     )
                 }
                 SettingsAllViewModel.SettingsScreen.WEATHER -> {
                     SettingsWeatherScreenVM(
                         actionUpClicked = viewModel.inputs::back,
                         windowSizeClass = windowSizeClass,
+                        paddingValues = paddingValues,
                     )
                 }
                 SettingsAllViewModel.SettingsScreen.RSS_CONFIGURE -> {
                     rssNavigationComponent.Configure(
                         actionUpClicked = viewModel.inputs::back,
-                        windowSizeClass = windowSizeClass
+                        windowSizeClass = windowSizeClass,
+                        paddingValues = paddingValues,
                     )
                 }
                 SettingsAllViewModel.SettingsScreen.WEB_BROWSER -> {
                     SettingsWebScreenVM(
                         actionUpClicked = viewModel.inputs::back,
                         windowSizeClass = windowSizeClass,
+                        paddingValues = paddingValues,
                     )
                 }
                 SettingsAllViewModel.SettingsScreen.NOTIFICATIONS_TIMER -> {
                     SettingsNotificationUpcomingNoticeScreenVM(
                         actionUpClicked = viewModel.inputs::back,
                         windowSizeClass = windowSizeClass,
+                        paddingValues = paddingValues,
                     )
                 }
                 SettingsAllViewModel.SettingsScreen.WIDGETS -> {
                     SettingsWidgetScreenVM(
                         actionUpClicked = viewModel.inputs::back,
                         windowSizeClass = windowSizeClass,
+                        paddingValues = paddingValues,
                     )
                 }
                 SettingsAllViewModel.SettingsScreen.ADS -> {
                     SettingsAdsScreenVM(
                         actionUpClicked = viewModel.inputs::back,
                         windowSizeClass = windowSizeClass,
+                        paddingValues = paddingValues,
                     )
                 }
                 SettingsAllViewModel.SettingsScreen.PRIVACY -> {
                     SettingsPrivacyScreenVM(
                         actionUpClicked = viewModel.inputs::back,
                         windowSizeClass = windowSizeClass,
+                        paddingValues = paddingValues,
                     )
                 }
                 SettingsAllViewModel.SettingsScreen.ABOUT -> {
                     SettingsAboutScreenVM(
                         actionUpClicked = viewModel.inputs::back,
                         windowSizeClass = windowSizeClass,
+                        paddingValues = paddingValues,
                     )
                 }
             }
@@ -150,12 +162,14 @@ fun SettingsAllScreenVM(
 
 @Composable
 fun SettingsAllScreen(
+    paddingValues: PaddingValues,
     actionUpClicked: () -> Unit,
     windowSizeClass: WindowSizeClass,
     prefClicked: (Setting) -> Unit,
     uiState: SettingsAllViewModel.UiState,
 ) {
-    LazyColumnEdgeToEdge(
+    LazyColumn(
+        contentPadding = paddingValues,
         content = {
             item("header") {
                 Header(
@@ -245,6 +259,7 @@ private fun Preview() {
             windowSizeClass = WindowSizeClass.calculateFromSize(DpSize.Unspecified),
             actionUpClicked = {},
             prefClicked = {},
+            paddingValues = PaddingValues.Absolute(),
             uiState = SettingsAllViewModel.UiState(
                 adsEnabled = true,
                 rssEnabled = true,
@@ -265,6 +280,7 @@ private fun PreviewAllHidden() {
             actionUpClicked = {},
             windowSizeClass = WindowSizeClass.calculateFromSize(DpSize.Unspecified),
             prefClicked = {},
+            paddingValues = PaddingValues.Absolute(),
             uiState = SettingsAllViewModel.UiState(
                 adsEnabled = false,
                 rssEnabled = false,

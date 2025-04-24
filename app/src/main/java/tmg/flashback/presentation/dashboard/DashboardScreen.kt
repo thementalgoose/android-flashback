@@ -5,12 +5,14 @@ import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
@@ -21,6 +23,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
@@ -39,6 +43,7 @@ import tmg.flashback.presentation.dashboard.menu.DashboardMenuExpandedScreen
 import tmg.flashback.presentation.dashboard.menu.DashboardMenuScreen
 import tmg.flashback.sandbox.model.SandboxMenuItem
 import tmg.flashback.style.AppTheme
+import tmg.flashback.ui.components.layouts.AppScaffold
 import tmg.flashback.ui.components.layouts.OverlappingPanels
 import tmg.flashback.ui.components.layouts.OverlappingPanelsState
 import tmg.flashback.ui.components.layouts.OverlappingPanelsValue
@@ -46,6 +51,7 @@ import tmg.flashback.ui.components.layouts.rememberOverlappingPanelsState
 import tmg.flashback.ui.components.navigation.NavigationBar
 import tmg.flashback.ui.components.navigation.appBarHeight
 import tmg.flashback.ui.foldables.getFoldingConfig
+import tmg.flashback.ui.utils.asInsets
 
 @Composable
 fun DashboardScreen(
@@ -156,7 +162,7 @@ fun DashboardScreen(
         targetValue = if (panelsState.isStartPanelOpen || !showBottomBar) navigationBarHeight else 0.dp,
         label = "navigationBarPosition"
     )
-    Scaffold(
+    AppScaffold(
         modifier = Modifier
             .background(AppTheme.colors.backgroundContainer),
         bottomBar = {
@@ -172,17 +178,27 @@ fun DashboardScreen(
                 )
             }
         },
-        content = {
+        content = { paddingValues ->
+
+            // Override the padding values based on nav bar position as it hides
             val layoutDirection = LocalLayoutDirection.current
-            val startPadding = it.calculateStartPadding(layoutDirection)
-            val endPadding = it.calculateEndPadding(layoutDirection)
+            val navPadding = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
+            val paddingValuesWhenBottomBarTransformed = remember {
+                PaddingValues(
+                    start = paddingValues.calculateStartPadding(layoutDirection),
+                    end = paddingValues.calculateEndPadding(layoutDirection),
+                    top = paddingValues.calculateTopPadding(),
+                    bottom = navPadding
+                )
+            }
+            val paddingValues = when (!showBottomBar) {
+                true -> paddingValuesWhenBottomBarTransformed
+                false -> paddingValues
+            }
+
             OverlappingPanels(
                 modifier = Modifier
-                    .background(AppTheme.colors.backgroundContainer)
-                    .padding(
-                        start = startPadding,
-                        end = endPadding
-                    ),
+                    .background(AppTheme.colors.backgroundContainer),
                 panelsState = when (windowSize.widthSizeClass == WindowWidthSizeClass.Compact) {
                     true -> panelsState
                     false -> OverlappingPanelsState(OverlappingPanelsValue.Closed)
@@ -257,7 +273,7 @@ fun DashboardScreen(
                         }
                         Row(modifier = Modifier
                             .weight(1f)
-                            .background(AppTheme.colors.backgroundContainer)
+                            .background(AppTheme.colors.backgroundPrimary)
                         ) {
                             AppGraph(
                                 modifier = Modifier
@@ -277,7 +293,7 @@ fun DashboardScreen(
                                 windowInfo = windowLayoutInfo,
                                 navigator = navigator,
                                 closeApp = closeApp,
-                                paddingValues = it
+                                paddingValues = paddingValues
                             )
                         }
                     }

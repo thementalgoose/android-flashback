@@ -1,7 +1,6 @@
 package tmg.flashback.search.presentation
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.PaddingValues
@@ -11,27 +10,21 @@ import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imeNestedScroll
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import kotlinx.coroutines.launch
 import tmg.flashback.ads.ads.components.AdvertProvider
-import tmg.flashback.formula1.model.Circuit
 import tmg.flashback.search.R
 import tmg.flashback.search.presentation.SearchScreenStateCategory.CIRCUITS
 import tmg.flashback.search.presentation.SearchScreenStateCategory.CONSTRUCTORS
@@ -47,7 +40,6 @@ import tmg.flashback.style.AppTheme
 import tmg.flashback.style.input.InputPrimary
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.header.HeaderAction
-import tmg.flashback.ui.components.list.LazyColumnEdgeToEdge
 import tmg.flashback.ui.components.navigation.NavigationBar
 import tmg.flashback.ui.components.navigation.NavigationItem
 import tmg.utilities.extensions.toEnum
@@ -64,6 +56,7 @@ fun SearchScreenTab(
 
     SearchScreenTab(
         actionUpClicked = actionUpClicked,
+        paddingValues = paddingValues,
         isRoot = isRoot,
         tabClicked = viewModel.inputs::selectType,
         searchTermUpdated = viewModel.inputs::searchTermUpdated,
@@ -74,9 +67,10 @@ fun SearchScreenTab(
 }
 
 @Composable
-fun SearchScreenTab(
+private fun SearchScreenTab(
     actionUpClicked: () -> Unit,
     isRoot: (Boolean) -> Unit,
+    paddingValues: PaddingValues,
     tabClicked: (SearchScreenStateCategory) -> Unit,
     searchTermUpdated: (String) -> Unit,
     searchTermClear: () -> Unit,
@@ -103,7 +97,8 @@ fun SearchScreenTab(
             .fillMaxSize()
             .background(AppTheme.colors.backgroundPrimary)
     ) {
-        LazyColumnEdgeToEdge(
+        LazyColumn(
+            contentPadding = paddingValues,
             modifier = Modifier.weight(1f),
             content = {
                 item("header") {

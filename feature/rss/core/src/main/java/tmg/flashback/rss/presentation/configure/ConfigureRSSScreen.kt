@@ -6,17 +6,17 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.Text
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
@@ -24,7 +24,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -38,7 +37,9 @@ import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.toColorInt
 import androidx.hilt.navigation.compose.hiltViewModel
+import tmg.flashback.googleanalytics.presentation.ScreenView
 import tmg.flashback.rss.repo.model.SupportedArticleSource
+import tmg.flashback.strings.R.string
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
@@ -46,10 +47,7 @@ import tmg.flashback.style.buttons.ButtonSecondary
 import tmg.flashback.style.input.InputSwitch
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextTitle
-import tmg.flashback.googleanalytics.presentation.ScreenView
-import tmg.flashback.strings.R.string
 import tmg.flashback.ui.components.header.HeaderAction
-import tmg.flashback.ui.components.list.LazyColumnEdgeToEdge
 import tmg.flashback.ui.components.settings.Footer
 import tmg.flashback.ui.components.settings.Header
 import tmg.flashback.ui.components.settings.Pref
@@ -62,6 +60,7 @@ private val badgeSize: Dp = 42.dp
 fun ConfigureRSSScreenVM(
     actionUpClicked: () -> Unit,
     windowSizeClass: WindowSizeClass,
+    paddingValues: PaddingValues,
     viewModel: ConfigureRSSViewModel = hiltViewModel()
 ) {
     ScreenView(screenName = "RSS Configure")
@@ -73,6 +72,7 @@ fun ConfigureRSSScreenVM(
     ConfigureRSSScreen(
         actionUpClicked = actionUpClicked,
         windowSizeClass = windowSizeClass,
+        paddingValues = paddingValues,
         showDescriptionEnabled = showDescriptionEnabled.value,
         showDescriptionClicked = viewModel.inputs::clickShowDescription,
         sourceAdded = {
@@ -93,6 +93,7 @@ fun ConfigureRSSScreenVM(
 fun ConfigureRSSScreen(
     actionUpClicked: () -> Unit,
     windowSizeClass: WindowSizeClass,
+    paddingValues: PaddingValues,
     showDescriptionEnabled: Boolean,
     showDescriptionClicked: (newState: Boolean) -> Unit,
     sourceAdded: (rssLink: String) -> Unit,
@@ -103,7 +104,8 @@ fun ConfigureRSSScreen(
 ) {
     val customRssBox = remember { mutableStateOf(false) }
 
-    LazyColumnEdgeToEdge(
+    LazyColumn(
+        contentPadding = paddingValues,
         content = {
             item(key = "header") {
                 tmg.flashback.ui.components.header.Header(
@@ -264,6 +266,7 @@ private fun Preview() {
         ConfigureRSSScreen(
             actionUpClicked = {},
             windowSizeClass = WindowSizeClass.calculateFromSize(DpSize.Unspecified),
+            paddingValues = PaddingValues.Absolute(),
             showDescriptionEnabled = true,
             showDescriptionClicked = { },
             sourceAdded = { },

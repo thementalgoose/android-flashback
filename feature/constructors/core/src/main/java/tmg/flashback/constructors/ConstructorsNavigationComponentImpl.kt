@@ -14,6 +14,7 @@ class ConstructorsNavigationComponentImpl @Inject constructor(): ConstructorsNav
     override fun ConstructorSeasonScreen(
         actionUpClicked: () -> Unit,
         windowSizeClass: WindowSizeClass,
+        paddingValues: PaddingValues,
         constructorId: String,
         constructorName: String,
         season: Int,
@@ -22,6 +23,7 @@ class ConstructorsNavigationComponentImpl @Inject constructor(): ConstructorsNav
         ConstructorSeasonScreenVM(
             actionUpClicked = actionUpClicked,
             windowSizeClass = windowSizeClass,
+            paddingValues = paddingValues,
             constructorId = constructorId,
             constructorName = constructorName,
             season = season,

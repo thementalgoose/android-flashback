@@ -16,6 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import tmg.flashback.googleanalytics.presentation.ScreenView
 import tmg.flashback.style.AppTheme
 import tmg.flashback.ui.base.BaseActivity
+import tmg.flashback.ui.components.layouts.AppScaffold
 import tmg.flashback.ui.model.DisplayType
 import tmg.utilities.extensions.viewUrl
 
@@ -31,7 +32,7 @@ class ForceUpgradeActivity: BaseActivity() {
 
         setContent {
             AppTheme {
-                Scaffold(
+                AppScaffold(
                     content = {
                         val title = viewModel.outputs.title.collectAsState("")
                         val message = viewModel.outputs.message.collectAsState("")

@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -38,30 +37,29 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.graphics.toColorInt
 import androidx.hilt.navigation.compose.hiltViewModel
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 import tmg.flashback.ads.ads.components.AdvertProvider
 import tmg.flashback.ads.ads.components.fakeAdvertProvider
+import tmg.flashback.googleanalytics.presentation.ScreenView
 import tmg.flashback.rss.R
+import tmg.flashback.rss.presentation.configure.ConfigureRSSScreenVM
 import tmg.flashback.rss.repo.model.Article
 import tmg.flashback.rss.repo.model.ArticleSource
+import tmg.flashback.strings.R.string
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextCaption
-import tmg.flashback.googleanalytics.presentation.ScreenView
-import tmg.flashback.strings.R.string
-import tmg.flashback.rss.presentation.configure.ConfigureRSSScreenVM
 import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.header.HeaderAction
 import tmg.flashback.ui.components.layouts.MasterDetailsPane
-import tmg.flashback.ui.components.list.LazyColumnEdgeToEdge
 import tmg.flashback.ui.components.messages.Message
 import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
 import tmg.flashback.web.presentation.browser.WebScreenVM
 import tmg.utilities.extensions.fromHtml
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 private val badgeSize: Dp = 40.dp
 
@@ -93,6 +91,7 @@ fun RSSScreenVM(
                 RSSScreen(
                     actionUpClicked = actionUpClicked,
                     windowSizeClass = windowSizeClass,
+                    paddingValues = paddingValues,
                     advertProvider = advertProvider,
                     uiState = uiState.value,
                     itemClicked = viewModel.inputs::clickArticle,
@@ -107,7 +106,8 @@ fun RSSScreenVM(
                 RSSViewModel.UiStateOpened.ConfigureSources -> {
                     ConfigureRSSScreenVM(
                         actionUpClicked = viewModel.inputs::back,
-                        windowSizeClass = windowSizeClass
+                        windowSizeClass = windowSizeClass,
+                        paddingValues = paddingValues
                     )
                 }
                 is RSSViewModel.UiStateOpened.WebArticle -> {
@@ -126,12 +126,14 @@ fun RSSScreenVM(
 fun RSSScreen(
     actionUpClicked: () -> Unit,
     windowSizeClass: WindowSizeClass,
+    paddingValues: PaddingValues,
     advertProvider: AdvertProvider,
     uiState: RSSViewModel.UiState,
     itemClicked: (Article) -> Unit,
     configureSources: () -> Unit,
 ) {
-    LazyColumnEdgeToEdge(
+    LazyColumn(
+        contentPadding = paddingValues,
         content = {
             item("header") {
                 Header(
@@ -294,6 +296,7 @@ private fun Preview() {
     AppThemePreview {
         RSSScreen(
             windowSizeClass = WindowSizeClass.calculateFromSize(DpSize.Unspecified),
+            paddingValues = PaddingValues.Absolute(),
             advertProvider = fakeAdvertProvider,
             uiState = RSSViewModel.UiState.Data(
                 rssItems = listOf(fakeArticle)
@@ -311,6 +314,7 @@ private fun PreviewArticle() {
     AppThemePreview {
         RSSScreen(
             windowSizeClass = WindowSizeClass.calculateFromSize(DpSize.Unspecified),
+            paddingValues = PaddingValues.Absolute(),
             advertProvider = fakeAdvertProvider,
             uiState = RSSViewModel.UiState.Data(
                 rssItems = listOf(fakeArticle),
@@ -329,6 +333,7 @@ private fun PreviewArticleTablet() {
     AppThemePreview {
         RSSScreen(
             windowSizeClass = WindowSizeClass.calculateFromSize(DpSize.Unspecified),
+            paddingValues = PaddingValues.Absolute(),
             advertProvider = fakeAdvertProvider,
             uiState = RSSViewModel.UiState.Data(
                 rssItems = listOf(fakeArticle),

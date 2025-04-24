@@ -1,21 +1,17 @@
 package tmg.flashback.presentation.settings.appearance.nightmode
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.DpSize
 import androidx.hilt.navigation.compose.hiltViewModel
-import tmg.flashback.R
-import tmg.flashback.strings.R.string
 import tmg.flashback.googleanalytics.presentation.ScreenView
-import tmg.flashback.style.AppTheme
+import tmg.flashback.presentation.settings.Settings
+import tmg.flashback.strings.R.string
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.ui.components.header.HeaderAction
@@ -24,14 +20,13 @@ import tmg.flashback.ui.components.settings.Header
 import tmg.flashback.ui.components.settings.Option
 import tmg.flashback.ui.model.NightMode
 import tmg.flashback.ui.settings.Setting
-import tmg.flashback.presentation.settings.Settings
-import tmg.flashback.ui.components.list.LazyColumnEdgeToEdge
 import tmg.utilities.extensions.toEnum
 
 @Composable
 fun SettingsNightModeScreenVM(
     actionUpClicked: () -> Unit,
     windowSizeClass: WindowSizeClass,
+    paddingValues: PaddingValues,
     viewModel: SettingsNightModeViewModel = hiltViewModel(),
 ) {
     val selected = viewModel.outputs.currentlySelected.collectAsState()
@@ -39,6 +34,7 @@ fun SettingsNightModeScreenVM(
     SettingsNightModeScreen(
         actionUpClicked = actionUpClicked,
         windowSizeClass = windowSizeClass,
+        paddingValues = paddingValues,
         selected = selected.value,
         prefClicked = { option ->
             val value = option.key.toEnum<NightMode> { it.key }!!
@@ -51,12 +47,14 @@ fun SettingsNightModeScreenVM(
 fun SettingsNightModeScreen(
     actionUpClicked: () -> Unit,
     windowSizeClass: WindowSizeClass,
+    paddingValues: PaddingValues,
     selected: NightMode,
     prefClicked: (Setting.Option) -> Unit
 ) {
     ScreenView(screenName = "Settings Appearance Night Mode")
 
-    LazyColumnEdgeToEdge(
+    LazyColumn(
+        contentPadding = paddingValues,
         content = {
             item("header") {
                 tmg.flashback.ui.components.header.Header(
@@ -92,6 +90,7 @@ private fun Preview() {
     AppThemePreview {
         SettingsNightModeScreen(
             windowSizeClass = WindowSizeClass.calculateFromSize(DpSize.Unspecified),
+            paddingValues = PaddingValues.Absolute(),
             actionUpClicked = {},
             prefClicked = {},
             selected = NightMode.DAY
