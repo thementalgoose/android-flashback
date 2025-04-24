@@ -13,6 +13,7 @@ import androidx.core.view.WindowCompat
 import dagger.hilt.android.AndroidEntryPoint
 import tmg.flashback.style.AppTheme
 import tmg.flashback.ui.base.BaseActivity
+import tmg.flashback.ui.components.layouts.AppScaffold
 import tmg.flashback.web.R
 import tmg.utilities.extensions.viewUrl
 
@@ -29,7 +30,7 @@ internal class WebActivity: BaseActivity() {
 
         setContent {
             AppTheme {
-                Scaffold(
+                AppScaffold(
                     content = {
                         Box(modifier = Modifier
                             .background(AppTheme.colors.backgroundPrimary)

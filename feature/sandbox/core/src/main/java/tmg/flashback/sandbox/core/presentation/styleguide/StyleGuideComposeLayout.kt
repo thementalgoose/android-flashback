@@ -32,6 +32,7 @@ import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.buttons.ButtonPrimary
+import tmg.flashback.ui.components.layouts.AppScaffold
 
 @Composable
 internal fun StyleGuideComposeLayout(
@@ -41,7 +42,7 @@ internal fun StyleGuideComposeLayout(
     changeNightMode: () -> Unit,
 ) {
     val currentTab: MutableState<StyleGuideTabs?> = rememberSaveable { mutableStateOf(startingTab) }
-    Scaffold(
+    AppScaffold(
         content = {
             Column(modifier = modifier
                 .fillMaxSize()

@@ -39,6 +39,7 @@ import tmg.flashback.presentation.dashboard.menu.DashboardMenuExpandedScreen
 import tmg.flashback.presentation.dashboard.menu.DashboardMenuScreen
 import tmg.flashback.sandbox.model.SandboxMenuItem
 import tmg.flashback.style.AppTheme
+import tmg.flashback.ui.components.layouts.AppScaffold
 import tmg.flashback.ui.components.layouts.OverlappingPanels
 import tmg.flashback.ui.components.layouts.OverlappingPanelsState
 import tmg.flashback.ui.components.layouts.OverlappingPanelsValue
@@ -156,7 +157,7 @@ fun DashboardScreen(
         targetValue = if (panelsState.isStartPanelOpen || !showBottomBar) navigationBarHeight else 0.dp,
         label = "navigationBarPosition"
     )
-    Scaffold(
+    AppScaffold(
         modifier = Modifier
             .background(AppTheme.colors.backgroundContainer),
         bottomBar = {

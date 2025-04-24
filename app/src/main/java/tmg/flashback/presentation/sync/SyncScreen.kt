@@ -44,6 +44,7 @@ import tmg.flashback.style.buttons.ButtonSecondary
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextHeadline1
+import tmg.flashback.ui.components.layouts.AppScaffold
 
 private val progressHeight: Dp = 8.dp
 
@@ -67,7 +68,7 @@ fun SyncScreen(
         else -> 30.dp
     }
 
-    Scaffold(
+    AppScaffold(
         content = {
             val layoutDirection = LocalLayoutDirection.current
             Box(modifier = Modifier
