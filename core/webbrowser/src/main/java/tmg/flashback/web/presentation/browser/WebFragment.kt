@@ -48,13 +48,6 @@ internal class WebFragment : Fragment(R.layout.fragment_web) {
 
     internal var callback: WebUpdated? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        if (savedInstanceState != null)
-            binding.webview.restoreState(savedInstanceState.getBundle("webViewState")!!);
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -106,6 +99,14 @@ internal class WebFragment : Fragment(R.layout.fragment_web) {
             } catch (e: RuntimeException) {
                 /* Do nothing */
             }
+        }
+
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        if (savedInstanceState != null) {
+            binding.webview.restoreState(savedInstanceState.getBundle("webViewState")!!);
         }
     }
 
