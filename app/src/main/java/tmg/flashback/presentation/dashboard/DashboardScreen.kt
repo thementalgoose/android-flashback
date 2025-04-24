@@ -191,7 +191,7 @@ fun DashboardScreen(
                     bottom = navPadding
                 )
             }
-            val paddingValues = when (panelsState.isStartPanelOpen || !showBottomBar) {
+            val paddingValues = when (!showBottomBar) {
                 true -> paddingValuesWhenBottomBarTransformed
                 false -> paddingValues
             }

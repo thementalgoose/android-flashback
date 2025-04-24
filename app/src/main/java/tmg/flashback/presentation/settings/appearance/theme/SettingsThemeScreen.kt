@@ -3,6 +3,7 @@ package tmg.flashback.presentation.settings.appearance.theme
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.res.stringResource
@@ -58,7 +59,7 @@ fun SettingsThemeScreen(
             item("header") {
                 tmg.flashback.ui.components.header.Header(
                     text = stringResource(id = string.settings_theme_theme_title),
-                    action = HeaderAction.BACK,
+                    action = if (windowSizeClass.widthSizeClass != WindowWidthSizeClass.Expanded) HeaderAction.BACK else null,
                     actionUpClicked = actionUpClicked
                 )
             }

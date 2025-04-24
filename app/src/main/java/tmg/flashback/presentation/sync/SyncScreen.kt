@@ -73,7 +73,7 @@ fun SyncScreen(
             Box(modifier = Modifier
                 .fillMaxSize()
                 .background(AppTheme.colors.backgroundSplash)
-                .padding(it)
+                .padding(top = it.calculateTopPadding())
             ) {
                 Column(modifier = Modifier
                     .fillMaxSize()
