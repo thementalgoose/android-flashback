@@ -24,6 +24,7 @@ interface ConstructorsNavigationComponent {
     fun ConstructorSeasonScreen(
         actionUpClicked: () -> Unit,
         windowSizeClass: WindowSizeClass,
+        paddingValues: PaddingValues,
         constructorId: String,
         constructorName: String,
         season: Int,

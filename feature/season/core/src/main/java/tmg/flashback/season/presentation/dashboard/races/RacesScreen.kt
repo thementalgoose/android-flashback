@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -43,7 +42,6 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.serialization.json.Json
-import java.time.LocalDate
 import tmg.flashback.ads.ads.components.AdvertProvider
 import tmg.flashback.formula1.extensions.icon
 import tmg.flashback.formula1.extensions.label
@@ -68,7 +66,6 @@ import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.header.HeaderAction
 import tmg.flashback.ui.components.layouts.MasterDetailsPane
-import tmg.flashback.ui.components.list.LazyColumnEdgeToEdge
 import tmg.flashback.ui.components.loading.Fade
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.now.Now
@@ -79,6 +76,7 @@ import tmg.flashback.weekend.contract.requireWeekendNavigationComponent
 import tmg.flashback.weekend.contract.stripWeekendJsonData
 import tmg.utilities.extensions.format
 import tmg.utilities.extensions.startOfWeek
+import java.time.LocalDate
 
 private const val listAlpha = 0.6f
 private val expandIcon = 20.dp
@@ -113,6 +111,7 @@ fun RacesScreen(
         windowSizeClass = windowSizeClass,
         master = {
             ScheduleScreen(
+                paddingValues = paddingValues,
                 actionUpClicked = actionUpClicked,
                 windowSizeClass = windowSizeClass,
                 advertProvider = advertProvider,
@@ -137,6 +136,7 @@ fun RacesScreen(
 
 @Composable
 fun ScheduleScreen(
+    paddingValues: PaddingValues,
     actionUpClicked: () -> Unit,
     windowSizeClass: WindowSizeClass,
     advertProvider: AdvertProvider,
@@ -180,7 +180,8 @@ fun ScheduleScreen(
         isLoading = uiState.isLoading,
         onRefresh = refresh
     ) {
-        LazyColumnEdgeToEdge(
+        LazyColumn(
+            contentPadding = paddingValues,
             content = {
                 item(key = "header") {
                     Header(

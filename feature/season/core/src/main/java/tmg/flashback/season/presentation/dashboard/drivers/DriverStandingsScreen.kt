@@ -50,7 +50,6 @@ import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.header.HeaderAction
 import tmg.flashback.ui.components.layouts.MasterDetailsPane
-import tmg.flashback.ui.components.list.LazyColumnEdgeToEdge
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.progressbar.ProgressBar
 import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
@@ -73,6 +72,7 @@ fun DriverStandingsScreenVM(
         windowSizeClass = windowSizeClass,
         master = {
             DriverStandingsScreen(
+                paddingValues = paddingValues,
                 actionUpClicked = actionUpClicked,
                 uiState = state.value,
                 windowSizeClass = windowSizeClass,
@@ -114,6 +114,7 @@ fun DriverStandingsScreenVM(
 
 @Composable
 internal fun DriverStandingsScreen(
+    paddingValues: PaddingValues,
     actionUpClicked: () -> Unit,
     windowSizeClass: WindowSizeClass,
     uiState: DriverStandingsScreenState,
@@ -125,7 +126,8 @@ internal fun DriverStandingsScreen(
         isLoading = uiState.isLoading,
         onRefresh = refresh
     ) {
-        LazyColumnEdgeToEdge(
+        LazyColumn(
+            contentPadding = paddingValues,
             content = {
                 item(key = "header") {
                     Header(

@@ -1,5 +1,7 @@
 package tmg.flashback.presentation.settings.about
 
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
@@ -14,7 +16,6 @@ import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.header.HeaderAction
-import tmg.flashback.ui.components.list.LazyColumnEdgeToEdge
 import tmg.flashback.ui.components.settings.Footer
 import tmg.flashback.ui.components.settings.Header
 import tmg.flashback.ui.components.settings.Pref
@@ -25,6 +26,7 @@ import tmg.flashback.ui.settings.Setting
 fun SettingsAboutScreenVM(
     actionUpClicked: () -> Unit = { },
     windowSizeClass: WindowSizeClass,
+    paddingValues: PaddingValues,
     viewModel: SettingsAboutViewModel = hiltViewModel()
 ) {
     ScreenView(screenName = "Settings - About")
@@ -33,6 +35,7 @@ fun SettingsAboutScreenVM(
     SettingsAboutScreen(
         actionUpClicked = actionUpClicked,
         windowSizeClass = windowSizeClass,
+        paddingValues = paddingValues,
         prefClicked = viewModel.inputs::prefClicked,
         shakeToReportEnabled = shakeToReportEnabled.value
     )
@@ -42,10 +45,12 @@ fun SettingsAboutScreenVM(
 fun SettingsAboutScreen(
     actionUpClicked: () -> Unit,
     windowSizeClass: WindowSizeClass,
+    paddingValues: PaddingValues,
     prefClicked: (Setting) -> Unit,
     shakeToReportEnabled: Boolean
 ) {
-    LazyColumnEdgeToEdge(
+    LazyColumn(
+        contentPadding = paddingValues,
         content = {
             item("header") {
                 Header(
@@ -92,6 +97,7 @@ private fun Preview() {
             windowSizeClass = WindowSizeClass.calculateFromSize(DpSize.Unspecified),
             actionUpClicked = {},
             prefClicked = {},
+            paddingValues = PaddingValues.Absolute(),
             shakeToReportEnabled = true
         )
     }

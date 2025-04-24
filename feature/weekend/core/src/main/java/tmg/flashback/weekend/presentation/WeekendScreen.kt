@@ -21,6 +21,7 @@ fun WeekendScreen(
             actionUpClicked = actionUpClicked,
             windowSizeClass = windowSizeClass,
             weekendInfo = weekendInfo,
+            paddingValues = paddingValues,
             viewModel = viewModel
         )
     } else {
@@ -28,6 +29,7 @@ fun WeekendScreen(
             actionUpClicked = actionUpClicked,
             windowSizeClass = windowSizeClass,
             weekendInfo = weekendInfo,
+            paddingValues = paddingValues,
             viewModel = viewModel
         )
     }

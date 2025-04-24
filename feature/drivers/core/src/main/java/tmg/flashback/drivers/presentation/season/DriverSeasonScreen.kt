@@ -2,13 +2,22 @@ package tmg.flashback.drivers.presentation.season
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.horizontalScroll
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.Icon
-import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -16,12 +25,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.clearAndSetSemantics
-import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -29,20 +34,18 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import java.time.LocalDate
-import tmg.flashback.googleanalytics.constants.AnalyticsConstants.analyticsDriverId
-import tmg.flashback.googleanalytics.constants.AnalyticsConstants.analyticsSeason
-import tmg.flashback.drivers.R
-import tmg.flashback.strings.R.string
-import tmg.flashback.formula1.R.drawable
-import tmg.flashback.drivers.presentation.Delta
 import tmg.flashback.drivers.presentation.common.DriverBadges
+import tmg.flashback.formula1.R.drawable
 import tmg.flashback.formula1.enums.RaceStatus
 import tmg.flashback.formula1.enums.isStatusFinished
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.DriverEntry
+import tmg.flashback.googleanalytics.constants.AnalyticsConstants.analyticsDriverId
+import tmg.flashback.googleanalytics.constants.AnalyticsConstants.analyticsSeason
+import tmg.flashback.googleanalytics.presentation.ScreenView
 import tmg.flashback.providers.DriverConstructorProvider
+import tmg.flashback.strings.R.string
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
@@ -53,25 +56,20 @@ import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextCaption
 import tmg.flashback.style.text.TextTitle
-import tmg.flashback.googleanalytics.presentation.ScreenView
 import tmg.flashback.ui.components.constructorIndicator
 import tmg.flashback.ui.components.drivers.DriverIcon
 import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.header.HeaderAction
-import tmg.flashback.ui.components.list.LazyColumnEdgeToEdge
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.messages.Message
 import tmg.flashback.ui.components.navigation.PipeType
 import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
 import tmg.flashback.ui.components.timeline.Timeline
 import tmg.flashback.ui.foldables.isWidthExpanded
-import tmg.flashback.ui.utils.DrawableUtils.getFlagResourceAlpha3
-import tmg.flashback.ui.utils.isInPreview
-import tmg.utilities.extensions.format
 import tmg.utilities.extensions.ordinalAbbreviation
-import kotlin.math.roundToInt
+import java.time.LocalDate
 
 /**
  * If the width of the container is more than this value, put the stuff side by side
@@ -109,6 +107,7 @@ fun DriverSeasonScreenVM(
         DriverSeasonScreen(
             actionUpClicked = actionUpClicked,
             windowSizeClass = windowSizeClass,
+            paddingValues = paddingValues,
             list = list.value,
             driverName = driverName,
             season = season,
@@ -122,13 +121,15 @@ fun DriverSeasonScreenVM(
 fun DriverSeasonScreen(
     actionUpClicked: () -> Unit,
     windowSizeClass: WindowSizeClass,
+    paddingValues: PaddingValues,
     list: List<DriverSeasonModel>,
     driverName: String,
     season: Int,
     showHeader: Boolean,
     resultClicked: (DriverSeasonModel.Result) -> Unit,
 ) {
-    LazyColumnEdgeToEdge(
+    LazyColumn(
+        contentPadding = paddingValues,
         content = {
             item(key = "header") {
                 Header(
@@ -643,6 +644,7 @@ private fun Preview(
             season = 2020,
             actionUpClicked = { },
             windowSizeClass = WindowSizeClass.calculateFromSize(DpSize(400.dp, 400.dp)),
+            paddingValues = PaddingValues.Absolute(),
             resultClicked = { },
             showHeader = false
         )

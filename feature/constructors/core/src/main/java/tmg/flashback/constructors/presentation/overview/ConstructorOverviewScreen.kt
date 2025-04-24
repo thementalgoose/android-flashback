@@ -2,12 +2,23 @@ package tmg.flashback.constructors.presentation.overview
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
-import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
@@ -27,16 +38,16 @@ import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
-import tmg.flashback.googleanalytics.constants.AnalyticsConstants.analyticsConstructorId
-import tmg.flashback.constructors.R
-import tmg.flashback.formula1.R.drawable
-import tmg.flashback.strings.R.string
 import tmg.flashback.constructors.presentation.season.ConstructorSeasonScreenVM
+import tmg.flashback.formula1.R.drawable
 import tmg.flashback.formula1.constants.Formula1
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.ConstructorHistorySeasonDriver
 import tmg.flashback.formula1.model.DriverEntry
+import tmg.flashback.googleanalytics.constants.AnalyticsConstants.analyticsConstructorId
+import tmg.flashback.googleanalytics.presentation.ScreenView
 import tmg.flashback.providers.DriverConstructorProvider
+import tmg.flashback.strings.R.string
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
@@ -44,13 +55,11 @@ import tmg.flashback.style.buttons.ButtonSecondary
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextCaption
-import tmg.flashback.googleanalytics.presentation.ScreenView
 import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.header.HeaderAction
 import tmg.flashback.ui.components.layouts.MasterDetailsPane
-import tmg.flashback.ui.components.list.LazyColumnEdgeToEdge
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.navigation.PipeType
 import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
@@ -88,6 +97,7 @@ fun ConstructorOverviewScreenVM(
                 ConstructorOverviewScreen(
                     actionUpClicked = actionUpClicked,
                     windowSizeClass = windowSizeClass,
+                    paddingValues = paddingValues,
                     uiState = uiState.value,
                     constructorName = constructorName,
                     seasonClicked = viewModel.inputs::openSeason,
@@ -101,6 +111,7 @@ fun ConstructorOverviewScreenVM(
             ConstructorSeasonScreenVM(
                 actionUpClicked = viewModel.inputs::back,
                 windowSizeClass = windowSizeClass,
+                paddingValues = paddingValues,
                 constructorId = constructorId,
                 constructorName = constructorName,
                 showHeader = false,
@@ -113,12 +124,14 @@ fun ConstructorOverviewScreenVM(
 fun ConstructorOverviewScreen(
     actionUpClicked: () -> Unit,
     windowSizeClass: WindowSizeClass,
+    paddingValues: PaddingValues,
     uiState: ConstructorOverviewScreenState,
     constructorName: String,
     seasonClicked: (Int) -> Unit,
     linkClicked: (String) -> Unit,
 ) {
-    LazyColumnEdgeToEdge(
+    LazyColumn(
+        contentPadding = paddingValues,
         content = {
             item(key = "header") {
                 Header(
@@ -418,6 +431,7 @@ private fun Preview(
         ConstructorOverviewScreen(
             actionUpClicked = { },
             windowSizeClass = WindowSizeClass.calculateFromSize(DpSize.Unspecified),
+            paddingValues = PaddingValues.Absolute(),
             constructorName = "name",
             linkClicked = { },
             seasonClicked = { },

@@ -1,5 +1,6 @@
 package tmg.flashback.rss.contract
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import tmg.flashback.navigation.NavigationDestination
@@ -13,6 +14,7 @@ interface RSSNavigationComponent {
     @Composable
     fun Configure(
         actionUpClicked: () -> Unit,
-        windowSizeClass: WindowSizeClass
+        windowSizeClass: WindowSizeClass,
+        paddingValues: PaddingValues,
     )
 }

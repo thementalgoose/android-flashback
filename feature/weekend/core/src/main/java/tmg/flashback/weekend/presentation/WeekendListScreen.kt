@@ -3,6 +3,7 @@ package tmg.flashback.weekend.presentation
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -18,12 +19,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.googleanalytics.constants.AnalyticsConstants
 import tmg.flashback.googleanalytics.presentation.ScreenView
+import tmg.flashback.strings.R.string
 import tmg.flashback.style.AppTheme
 import tmg.flashback.ui.components.navigation.appBarHeight
 import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
-import tmg.flashback.weekend.R
-import tmg.flashback.strings.R.string
-import tmg.flashback.ui.components.list.LazyColumnEdgeToEdge
 import tmg.flashback.weekend.contract.model.ScreenWeekendData
 import tmg.flashback.weekend.presentation.details.DetailsViewModel
 import tmg.flashback.weekend.presentation.details.details
@@ -46,6 +45,7 @@ import tmg.flashback.weekend.presentation.sprintquali.sprintQualifying
 fun WeekendListScreen(
     actionUpClicked: () -> Unit,
     windowSizeClass: WindowSizeClass,
+    paddingValues: PaddingValues,
     weekendInfo: ScreenWeekendData,
     viewModel: WeekendViewModel
 ) {
@@ -103,7 +103,8 @@ fun WeekendListScreen(
         isLoading = isRefreshing.value,
         onRefresh = viewModel.inputs::refresh
     ) {
-        LazyColumnEdgeToEdge(
+        LazyColumn(
+            contentPadding = paddingValues,
             content = {
                 item("header") {
                     RaceInfoHeader(

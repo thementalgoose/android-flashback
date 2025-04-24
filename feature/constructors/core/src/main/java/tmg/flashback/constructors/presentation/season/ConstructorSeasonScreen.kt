@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,7 +19,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
-import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -34,15 +34,15 @@ import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
-import tmg.flashback.googleanalytics.constants.AnalyticsConstants.analyticsConstructorId
-import tmg.flashback.googleanalytics.constants.AnalyticsConstants.analyticsSeason
-import tmg.flashback.constructors.R
 import tmg.flashback.formula1.R.drawable
-import tmg.flashback.strings.R.string
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.ConstructorHistorySeasonDriver
 import tmg.flashback.formula1.model.DriverEntry
+import tmg.flashback.googleanalytics.constants.AnalyticsConstants.analyticsConstructorId
+import tmg.flashback.googleanalytics.constants.AnalyticsConstants.analyticsSeason
+import tmg.flashback.googleanalytics.presentation.ScreenView
 import tmg.flashback.providers.DriverConstructorProvider
+import tmg.flashback.strings.R.string
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
@@ -50,13 +50,11 @@ import tmg.flashback.style.buttons.ButtonSecondary
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextTitle
-import tmg.flashback.googleanalytics.presentation.ScreenView
 import tmg.flashback.ui.components.drivers.DriverIcon
 import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.header.HeaderAction
-import tmg.flashback.ui.components.list.LazyColumnEdgeToEdge
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.messages.Message
 import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
@@ -67,6 +65,7 @@ import tmg.utilities.extensions.ordinalAbbreviation
 fun ConstructorSeasonScreenVM(
     actionUpClicked: () -> Unit,
     windowSizeClass: WindowSizeClass,
+    paddingValues: PaddingValues,
     constructorId: String,
     constructorName: String,
     season: Int,
@@ -89,6 +88,7 @@ fun ConstructorSeasonScreenVM(
         ConstructorSeasonScreen(
             actionUpClicked = actionUpClicked,
             windowSizeClass = windowSizeClass,
+            paddingValues = paddingValues,
             list = list.value,
             constructorName = constructorName,
             season = season,
@@ -103,6 +103,7 @@ fun ConstructorSeasonScreenVM(
 fun ConstructorSeasonScreen(
     actionUpClicked: () -> Unit,
     windowSizeClass: WindowSizeClass,
+    paddingValues: PaddingValues,
     list: List<ConstructorSeasonModel>,
     constructorName: String,
     season: Int,
@@ -110,7 +111,8 @@ fun ConstructorSeasonScreen(
     driverClicked: (ConstructorSeasonModel.Driver, Int) -> Unit,
     linkClicked: (String) -> Unit,
 ) {
-    LazyColumnEdgeToEdge(
+    LazyColumn(
+        contentPadding = paddingValues,
         content = {
             item(key = "header") {
                 Header(
@@ -346,6 +348,7 @@ private fun Preview(
             linkClicked = { },
             driverClicked = { _, _ -> },
             windowSizeClass = WindowSizeClass.calculateFromSize(DpSize.Unspecified),
+            paddingValues = PaddingValues.Absolute(),
             showHeader = true,
             list = listOf(
                 fakeStat,

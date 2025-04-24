@@ -70,14 +70,10 @@ fun SyncScreen(
 
     AppScaffold(
         content = {
-            val layoutDirection = LocalLayoutDirection.current
             Box(modifier = Modifier
                 .fillMaxSize()
                 .background(AppTheme.colors.backgroundSplash)
-                .padding(
-                    start = it.calculateStartPadding(layoutDirection),
-                    end = it.calculateEndPadding(layoutDirection)
-                )
+                .padding(it)
             ) {
                 Column(modifier = Modifier
                     .fillMaxSize()

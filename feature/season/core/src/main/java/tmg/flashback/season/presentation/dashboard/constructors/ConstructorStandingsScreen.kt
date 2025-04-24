@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
@@ -41,7 +42,6 @@ import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.header.Header
 import tmg.flashback.ui.components.header.HeaderAction
 import tmg.flashback.ui.components.layouts.MasterDetailsPane
-import tmg.flashback.ui.components.list.LazyColumnEdgeToEdge
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.progressbar.ProgressBar
 import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
@@ -64,6 +64,7 @@ fun ConstructorStandingsScreenVM(
         windowSizeClass = windowSizeClass,
         master = {
             ConstructorStandingsScreen(
+                paddingValues = paddingValues,
                 actionUpClicked = actionUpClicked,
                 windowSizeClass = windowSizeClass,
                 uiState = state.value,
@@ -78,6 +79,7 @@ fun ConstructorStandingsScreenVM(
             constructorsNavigationComponent.ConstructorSeasonScreen(
                 actionUpClicked = viewModel.inputs::closeConstructor,
                 windowSizeClass = windowSizeClass,
+                paddingValues = paddingValues,
                 constructorId = selected.constructor.id,
                 constructorName = selected.constructor.name,
                 season = selected.season,
@@ -89,6 +91,7 @@ fun ConstructorStandingsScreenVM(
 
 @Composable
 fun ConstructorStandingsScreen(
+    paddingValues: PaddingValues,
     actionUpClicked: () -> Unit,
     windowSizeClass: WindowSizeClass,
     uiState: ConstructorStandingsScreenState,
@@ -99,7 +102,8 @@ fun ConstructorStandingsScreen(
         isLoading = uiState.isLoading,
         onRefresh = refresh
     ) {
-        LazyColumnEdgeToEdge(
+        LazyColumn(
+            contentPadding = paddingValues,
             content = {
                 item(key = "header") {
                     Header(
