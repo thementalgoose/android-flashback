@@ -26,6 +26,7 @@ import tmg.utilities.extensions.views.show
 import tmg.utilities.lifecycle.viewBinding
 import java.net.MalformedURLException
 import javax.inject.Inject
+import androidx.core.net.toUri
 
 @SuppressLint("SetJavaScriptEnabled")
 @AndroidEntryPoint
@@ -84,7 +85,7 @@ internal class WebFragment : Fragment(R.layout.fragment_web) {
             webview.scrollBarStyle = View.SCROLLBARS_INSIDE_OVERLAY
 
             try {
-                val host = Uri.parse(pageUrl).host
+                val host = pageUrl.toUri().host
                 host?.let {
                     firebaseAnalyticsManager.viewScreen(
                         screenName = "Webpage",

@@ -10,6 +10,7 @@ import tmg.flashback.device.ActivityProvider
 import tmg.flashback.web.repository.WebBrowserRepository
 import tmg.flashback.web.presentation.browser.WebActivity
 import javax.inject.Inject
+import androidx.core.net.toUri
 
 class OpenWebpageUseCase @Inject constructor(
     private val webBrowserRepository: WebBrowserRepository,
@@ -36,7 +37,7 @@ class OpenWebpageUseCase @Inject constructor(
                     .setShareState(CustomTabsIntent.SHARE_STATE_ON)
                     .setDownloadButtonEnabled(false)
                     .build()
-                intent.launchUrl(activity, Uri.parse(url))
+                intent.launchUrl(activity, url.toUri())
             }
             else -> {
                 activity.startActivity(

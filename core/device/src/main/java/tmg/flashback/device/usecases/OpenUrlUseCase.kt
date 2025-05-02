@@ -13,6 +13,7 @@ import tmg.flashback.device.ActivityProvider
 import tmg.utilities.extensions.managerClipboard
 import java.net.MalformedURLException
 import javax.inject.Inject
+import androidx.core.net.toUri
 
 class OpenUrlUseCase @Inject constructor(
     @ApplicationContext
@@ -42,7 +43,7 @@ class OpenUrlUseCase @Inject constructor(
 
     private fun webpageIntent(url: String): Intent? {
         val uri = try {
-            Uri.parse(url)
+            url.toUri()
         } catch (e: MalformedURLException) {
             return null
         }
@@ -50,7 +51,7 @@ class OpenUrlUseCase @Inject constructor(
         val browserSelectorIntent = Intent()
             .setAction(Intent.ACTION_VIEW)
             .addCategory(Intent.CATEGORY_BROWSABLE)
-            .setData(Uri.parse("https:"))
+            .setData("https:".toUri())
         val targetIntent = Intent()
             .setAction(Intent.ACTION_VIEW)
             .addCategory(Intent.CATEGORY_BROWSABLE)

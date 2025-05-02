@@ -1,10 +1,10 @@
 package tmg.flashback.web.client
 
-import android.net.Uri
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import tmg.utilities.extensions.views.show
+import androidx.core.net.toUri
 
 internal class FlashbackWebChromeClient(
     val updateProgressToo: (progress: Int) -> Unit
@@ -25,7 +25,7 @@ internal class FlashbackWebViewClient(
 
     override fun shouldOverrideUrlLoading(view: WebView?, url: String): Boolean {
         view?.loadUrl(url)
-        val uri = Uri.parse(url)
+        val uri = url.toUri()
         urlChanged(url)
         domainChanged(uri.host ?: "")
         return true

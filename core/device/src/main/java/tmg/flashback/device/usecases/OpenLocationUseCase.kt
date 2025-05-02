@@ -9,6 +9,7 @@ import tmg.flashback.strings.R.string
 import tmg.flashback.device.ActivityProvider
 import java.lang.RuntimeException
 import javax.inject.Inject
+import androidx.core.net.toUri
 
 class OpenLocationUseCase @Inject constructor(
     @ApplicationContext
@@ -22,13 +23,13 @@ class OpenLocationUseCase @Inject constructor(
         val googleMapsLink = "https://google.com/maps/search/?api=1&query=$lat,$lng"
         when {
             isPackageInstalled(PACKAGE_GOOGLE_MAPS) -> {
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(geoIntent))
+                val intent = Intent(Intent.ACTION_VIEW, geoIntent.toUri())
                     .apply { setPackage(PACKAGE_GOOGLE_MAPS) }
                 val chooser = Intent.createChooser(intent, context.getString(string.intent_chooser_open_maps))
                 topActivityProvider.activity?.startActivity(chooser)
             }
             isPackageInstalled(PACKAGE_WAZE) -> {
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(geoIntent))
+                val intent = Intent(Intent.ACTION_VIEW, geoIntent.toUri())
                     .apply { setPackage(PACKAGE_WAZE) }
                 val chooser = Intent.createChooser(intent, context.getString(string.intent_chooser_open_maps))
                 topActivityProvider.activity?.startActivity(chooser)
