@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import tmg.flashback.device.ActivityProvider
 import javax.inject.Inject
+import androidx.core.net.toUri
 
 class OpenSendEmailUseCase @Inject constructor(
     private val topActivityProvider: ActivityProvider,
@@ -13,7 +14,7 @@ class OpenSendEmailUseCase @Inject constructor(
 
     fun sendEmail(email: String, subject: String = "") {
         val intent = Intent(Intent.ACTION_SENDTO).apply {
-            data = Uri.parse("mailto:")
+            data = "mailto:".toUri()
             putExtra(Intent.EXTRA_EMAIL, email)
             putExtra(Intent.EXTRA_SUBJECT, subject)
         }
