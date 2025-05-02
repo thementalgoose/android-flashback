@@ -35,17 +35,14 @@ internal class WeekendViewModelTest: BaseTest() {
 
     private lateinit var underTest: WeekendViewModel
 
-    private fun underTest(screenWeekendData: ScreenWeekendData = fakeScreenWeekendData, tab: ScreenWeekendNav? = null) {
+    private fun underTest(screenWeekendData: ScreenWeekendData = fakeScreenWeekendData) {
         underTest = WeekendViewModel(
             raceRepository = mockRaceRepository,
-            savedStateHandle = SavedStateHandle(mapOf(
-                "data" to screenWeekendData,
-                "tab" to (tab?.name ?: "")
-            )),
             fetchSeasonUseCase = mockFetchSeasonUseCase,
             reviewSectionSeenUseCase = mockReviewSectionSeenUseCase,
             ioDispatcher = coroutineScope.testDispatcher
         )
+        underTest.load(screenWeekendData.season, screenWeekendData.round)
     }
 
     @BeforeEach

@@ -41,7 +41,6 @@ import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import kotlinx.serialization.json.Json
 import tmg.flashback.ads.ads.components.AdvertProvider
 import tmg.flashback.formula1.extensions.icon
 import tmg.flashback.formula1.extensions.label
@@ -71,9 +70,7 @@ import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.now.Now
 import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
 import tmg.flashback.weekend.contract.WeekendNavigationComponent
-import tmg.flashback.weekend.contract.model.ScreenWeekendData
 import tmg.flashback.weekend.contract.requireWeekendNavigationComponent
-import tmg.flashback.weekend.contract.stripWeekendJsonData
 import tmg.utilities.extensions.format
 import tmg.utilities.extensions.startOfWeek
 import java.time.LocalDate
@@ -99,11 +96,12 @@ fun RacesScreen(
 
     LaunchedEffect(Unit, block = {
         try {
-            if (deeplink?.startsWith("weekend/") == true) {
-                val json = deeplink.stripWeekendJsonData()
-                val model = Json.decodeFromString(ScreenWeekendData.serializer(), json)
-                viewModel.inputs.deeplinkToo(model)
-            }
+            // TODO
+//            if (deeplink?.startsWith("weekend/") == true) {
+//                val json = deeplink.stripWeekendJsonData()
+//                val model = Json.decodeFromString(ScreenWeekendData.serializer(), json)
+//                viewModel.inputs.deeplinkToo(model)
+//            }
         } catch (e: RuntimeException) { /* Do nothing */ }
     })
 

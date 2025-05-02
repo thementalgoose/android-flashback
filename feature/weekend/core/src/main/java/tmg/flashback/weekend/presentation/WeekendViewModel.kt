@@ -19,11 +19,9 @@ import kotlinx.coroutines.launch
 import tmg.flashback.data.repo.RaceRepository
 import tmg.flashback.data.repo.usecases.FetchSeasonUseCase
 import tmg.flashback.formula1.model.Race
-import tmg.flashback.reviews.usecases.AppSection
 import tmg.flashback.reviews.usecases.AppSection.DETAILS_QUALIFYING
 import tmg.flashback.reviews.usecases.AppSection.DETAILS_RACE
 import tmg.flashback.reviews.usecases.ReviewSectionSeenUseCase
-import tmg.flashback.weekend.contract.ScreenWeekend
 import tmg.flashback.weekend.contract.model.ScreenWeekendData
 import tmg.flashback.weekend.contract.model.ScreenWeekendNav
 import tmg.flashback.weekend.presentation.WeekendNavItem.QUALIFYING
@@ -53,29 +51,12 @@ class WeekendViewModel @Inject constructor(
     private val fetchSeasonUseCase: FetchSeasonUseCase,
     private val ioDispatcher: CoroutineDispatcher,
     private val reviewSectionSeenUseCase: ReviewSectionSeenUseCase,
-    private val savedStateHandle: SavedStateHandle
 ): ViewModel(), WeekendViewModelInputs, WeekendViewModelOutputs {
 
     val inputs: WeekendViewModelInputs = this
     val outputs: WeekendViewModelOutputs = this
 
-    private val screenWeekendData: ScreenWeekendData?
-        get() {
-            return try {
-                savedStateHandle.get<ScreenWeekendData>(ScreenWeekend.DATA)
-            } catch (e: ClassCastException) {
-                /* Incorrect data param */
-                null
-            }
-        }
-
-    private val defaultTab: WeekendNavItem
-        get() = when (savedStateHandle.get<String>(ScreenWeekend.TAB)?.toEnum<ScreenWeekendNav>()) {
-            ScreenWeekendNav.SCHEDULE -> SCHEDULE
-            ScreenWeekendNav.QUALIFYING -> QUALIFYING
-            ScreenWeekendNav.RACE -> RACE
-            null -> SCHEDULE
-        }
+    private val defaultTab: WeekendNavItem = SCHEDULE
 
     private val selectedTab: MutableStateFlow<WeekendNavItem> = MutableStateFlow(defaultTab)
     private val seasonRound: MutableStateFlow<Pair<Int, Int>?> = MutableStateFlow(null)
@@ -136,12 +117,6 @@ class WeekendViewModel @Inject constructor(
         }
         if (state == QUALIFYING) {
             reviewSectionSeenUseCase(DETAILS_QUALIFYING)
-        }
-    }
-
-    init {
-        screenWeekendData?.let {
-            load(season = it.season, round = it.round)
         }
     }
 
