@@ -1,4 +1,4 @@
-package tmg.flashback.circuits.contract.model
+package tmg.flashback.circuits.navigation
 
 import android.os.Build
 import android.os.Bundle
@@ -23,7 +23,7 @@ data class ScreenCircuitData(
             }
         }
         override fun parseValue(value: String): ScreenCircuitData {
-            return Json.decodeFromString(serializer(), value)
+            return Json.Default.decodeFromString(serializer(), value)
         }
         override fun put(bundle: Bundle, key: String, value: ScreenCircuitData) {
             bundle.putParcelable(key, value)

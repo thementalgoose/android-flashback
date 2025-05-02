@@ -19,7 +19,7 @@ import tmg.flashback.drivers.R
 import tmg.flashback.formula1.R.drawable
 import tmg.flashback.drivers.contract.DriverNavigationComponent
 import tmg.flashback.drivers.contract.model.DriverStatHistoryType
-import tmg.flashback.drivers.contract.model.ScreenDriverData
+import tmg.flashback.drivers.navigation.ScreenDriverData
 import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.model.DriverHistory
 import tmg.flashback.formula1.model.DriverHistorySeason

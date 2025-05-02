@@ -20,8 +20,8 @@ import tmg.flashback.ads.ads.components.AdvertProvider
 import tmg.flashback.configuration.usecases.ConfigSyncUseCase
 import tmg.flashback.crashlytics.manager.CrashlyticsManager
 import tmg.flashback.maintenance.contract.MaintenanceNavigationComponent
-import tmg.flashback.navigation.Deeplink.SCREEN_PARAM
 import tmg.flashback.navigation.Navigator
+import tmg.flashback.navigation.constants.SCREEN_PARAM
 import tmg.flashback.presentation.dashboard.DashboardScreen
 import tmg.flashback.presentation.sync.SyncActivity
 import tmg.flashback.season.usecases.ContentSyncUseCase

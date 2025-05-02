@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 import tmg.flashback.constructors.R
 import tmg.flashback.formula1.R.drawable
 import tmg.flashback.strings.R.string
-import tmg.flashback.constructors.contract.model.ScreenConstructorData
+import tmg.flashback.constructors.navigation.ScreenConstructorData
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.device.usecases.OpenUrlUseCase
 import tmg.flashback.data.repo.ConstructorRepository

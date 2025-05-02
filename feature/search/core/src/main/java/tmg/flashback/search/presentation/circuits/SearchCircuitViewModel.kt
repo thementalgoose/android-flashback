@@ -7,8 +7,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
-import tmg.flashback.circuits.contract.Circuit
-import tmg.flashback.circuits.contract.with
 import tmg.flashback.data.repo.CircuitRepository
 import tmg.flashback.formula1.model.Circuit
 import tmg.flashback.navigation.Navigator
@@ -66,7 +64,7 @@ class SearchCircuitViewModel @Inject constructor(
     }
 
     override fun clickCircuit(circuit: Circuit) {
-        navigator.navigate(Screen.Circuit.with(circuitId = circuit.id, circuitName = circuit.name))
+        navigator.navigate(Screen.Circuit(circuitId = circuit.id, circuitName = circuit.name))
     }
 
     private fun List<Circuit>.filtered(searchTerm: String): List<Circuit> {

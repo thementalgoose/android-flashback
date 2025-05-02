@@ -1,4 +1,4 @@
-package tmg.flashback.constructors.contract.model
+package tmg.flashback.constructors.navigation
 
 import android.os.Build
 import android.os.Bundle
@@ -23,7 +23,7 @@ data class ScreenConstructorData(
             }
         }
         override fun parseValue(value: String): ScreenConstructorData {
-            return Json.decodeFromString(serializer(), value)
+            return Json.Default.decodeFromString(serializer(), value)
         }
         override fun put(bundle: Bundle, key: String, value: ScreenConstructorData) {
             bundle.putParcelable(key, value)

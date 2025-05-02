@@ -2,18 +2,11 @@ package tmg.flashback
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import tmg.flashback.circuits.contract.Circuit
 import tmg.flashback.circuits.contract.with
-import tmg.flashback.constructors.contract.Constructor
 import tmg.flashback.constructors.contract.with
-import tmg.flashback.drivers.contract.Driver
 import tmg.flashback.drivers.contract.with
 import tmg.flashback.navigation.Screen
 import tmg.flashback.rss.contract.RSS
-import tmg.flashback.search.contract.Search
-import tmg.flashback.season.contract.ConstructorsStandings
-import tmg.flashback.season.contract.DriverStandings
-import tmg.flashback.season.contract.Races
 import tmg.flashback.weekend.contract.Weekend
 import tmg.flashback.weekend.contract.model.ScreenWeekendData
 import tmg.flashback.weekend.contract.with
@@ -28,7 +21,7 @@ class ScreenPathTest {
 
     @Test
     fun `screen constructors`() {
-        assertEquals("results/constructors", Screen.ConstructorsStandings.route)
+        assertEquals("results/constructors", Screen.ConstructorStandings.route)
     }
 
     @Test

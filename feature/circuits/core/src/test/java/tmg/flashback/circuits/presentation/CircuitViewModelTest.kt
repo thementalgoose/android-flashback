@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.flashback.circuits.contract.model.ScreenCircuitData
+import tmg.flashback.circuits.navigation.ScreenCircuitData
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.device.usecases.OpenLocationUseCase
 import tmg.flashback.data.repo.CircuitRepository

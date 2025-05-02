@@ -12,8 +12,6 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import tmg.flashback.circuits.contract.Circuit
-import tmg.flashback.circuits.contract.with
 import tmg.flashback.device.usecases.OpenLocationUseCase
 import tmg.flashback.data.repo.RaceRepository
 import tmg.flashback.formula1.enums.RaceWeekend
@@ -29,7 +27,6 @@ import tmg.flashback.season.contract.repository.models.NotificationUpcoming.RACE
 import tmg.flashback.season.contract.repository.models.NotificationUpcoming.SPRINT
 import tmg.flashback.season.contract.repository.models.NotificationUpcoming.SPRINT_QUALIFYING
 import tmg.flashback.web.usecases.OpenWebpageUseCase
-import tmg.flashback.weekend.R
 import tmg.flashback.strings.R.string
 import tmg.flashback.ui.R.drawable
 import tmg.flashback.weekend.repository.WeatherRepository
@@ -143,7 +140,7 @@ class DetailsViewModel @Inject constructor(
                     val circuitName = parts.getOrNull(parts.size - 1)
                     if (circuitId != null && circuitName != null) {
                         navigator.navigate(
-                            Screen.Circuit.with(
+                            Screen.Circuit(
                                 circuitId = circuitId,
                                 circuitName = circuitName
                             )

@@ -15,17 +15,12 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import tmg.flashback.constructors.contract.Constructor
-import tmg.flashback.constructors.contract.with
 import tmg.flashback.data.repo.RaceRepository
-import tmg.flashback.drivers.contract.Driver
-import tmg.flashback.drivers.contract.with
 import tmg.flashback.formula1.constants.Formula1
 import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.DriverEntry
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
-import tmg.flashback.weekend.R
 import tmg.flashback.strings.R.string
 import javax.inject.Inject
 
@@ -122,21 +117,23 @@ class SprintViewModel @Inject constructor(
     override fun clickDriver(result: DriverEntry) {
         val season = seasonRound.value?.first ?: return
         navigator.navigate(
-            Screen.Driver.with(
-            driverId = result.driver.id,
-            driverName = result.driver.name,
-//            season = season
-        ))
+            Screen.Driver(
+                driverId = result.driver.id,
+                driverName = result.driver.name,
+    //            season = season
+            )
+        )
     }
 
     override fun clickConstructor(constructor: Constructor) {
         val season = seasonRound.value?.first ?: return
         navigator.navigate(
-            Screen.Constructor.with(
+            Screen.Constructor(
                 constructorId = constructor.id,
                 constructorName = constructor.name,
 //                season = season
-            ))
+            )
+        )
     }
 }
 

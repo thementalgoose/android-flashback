@@ -1,18 +1,13 @@
 package tmg.flashback.search.presentation.drivers
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import tmg.flashback.data.repo.DriverRepository
-import tmg.flashback.drivers.contract.Driver
-import tmg.flashback.drivers.contract.with
 import tmg.flashback.formula1.model.Driver
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
@@ -69,7 +64,7 @@ class SearchDriverViewModel @Inject constructor(
     }
 
     override fun clickDriver(driver: Driver) {
-        navigator.navigate(Screen.Driver.with(driverId = driver.id, driverName = driver.name))
+        navigator.navigate(Screen.Driver(driverId = driver.id, driverName = driver.name))
     }
 
     private fun List<Driver>.filtered(searchTerm: String): List<Driver> {

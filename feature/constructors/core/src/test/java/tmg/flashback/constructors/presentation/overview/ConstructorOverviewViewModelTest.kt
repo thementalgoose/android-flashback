@@ -15,7 +15,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.constructors.R
 import tmg.flashback.formula1.R.drawable
-import tmg.flashback.constructors.contract.model.ScreenConstructorData
+import tmg.flashback.constructors.navigation.ScreenConstructorData
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.data.repo.ConstructorRepository
 import tmg.flashback.formula1.model.Constructor

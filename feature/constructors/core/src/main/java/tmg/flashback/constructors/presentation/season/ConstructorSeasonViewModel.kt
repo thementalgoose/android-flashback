@@ -18,17 +18,14 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import tmg.flashback.constructors.R
-import tmg.flashback.formula1.R.drawable
-import tmg.flashback.strings.R.string
-import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.data.repo.ConstructorRepository
-import tmg.flashback.drivers.contract.Driver
-import tmg.flashback.drivers.contract.with
+import tmg.flashback.device.managers.NetworkConnectivityManager
+import tmg.flashback.formula1.R.drawable
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.ConstructorHistorySeason
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
+import tmg.flashback.strings.R.string
 import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.utilities.extensions.ordinalAbbreviation
 import javax.inject.Inject
@@ -154,7 +151,7 @@ class ConstructorSeasonViewModel @Inject constructor(
     }
 
     override fun driverClicked(model: ConstructorSeasonModel.Driver, season: Int) {
-        navigator.navigate(Screen.Driver.with(
+        navigator.navigate(Screen.Driver(
             driverId = model.data.driver.driver.id,
             driverName = model.data.driver.driver.name,
         ))

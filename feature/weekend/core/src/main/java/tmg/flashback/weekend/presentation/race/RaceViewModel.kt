@@ -15,11 +15,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import tmg.flashback.constructors.contract.Constructor
-import tmg.flashback.constructors.contract.with
 import tmg.flashback.data.repo.RaceRepository
-import tmg.flashback.drivers.contract.Driver
-import tmg.flashback.drivers.contract.with
 import tmg.flashback.formula1.constants.Formula1
 import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.Driver
@@ -27,7 +23,6 @@ import tmg.flashback.formula1.model.DriverEntry
 import tmg.flashback.formula1.model.Race
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
-import tmg.flashback.weekend.R
 import tmg.flashback.strings.R.string
 import javax.inject.Inject
 
@@ -133,7 +128,7 @@ class RaceViewModel @Inject constructor(
 
     override fun clickConstructor(constructor: Constructor) {
         navigator.navigate(
-            Screen.Constructor.with(
+            Screen.Constructor(
                 constructorId = constructor.id,
                 constructorName = constructor.name,
             )
@@ -142,7 +137,7 @@ class RaceViewModel @Inject constructor(
 
     override fun clickDriver(result: DriverEntry) {
         navigator.navigate(
-            Screen.Driver.with(
+            Screen.Driver(
                 driverId = result.driver.id,
                 driverName = result.driver.name,
             )

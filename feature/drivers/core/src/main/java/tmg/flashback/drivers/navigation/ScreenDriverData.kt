@@ -1,4 +1,4 @@
-package tmg.flashback.drivers.contract.model
+package tmg.flashback.drivers.navigation
 
 import android.os.Build
 import android.os.Bundle
@@ -23,7 +23,7 @@ data class ScreenDriverData(
             }
         }
         override fun parseValue(value: String): ScreenDriverData {
-            return Json.decodeFromString(serializer(), value)
+            return Json.Default.decodeFromString(serializer(), value)
         }
         override fun put(bundle: Bundle, key: String, value: ScreenDriverData) {
             bundle.putParcelable(key, value)

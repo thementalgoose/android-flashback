@@ -7,8 +7,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
-import tmg.flashback.constructors.contract.Constructor
-import tmg.flashback.constructors.contract.with
 import tmg.flashback.data.repo.ConstructorRepository
 import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.navigation.Navigator
@@ -67,7 +65,7 @@ class SearchConstructorViewModel @Inject constructor(
     }
 
     override fun clickConstructor(constructor: Constructor) {
-        navigator.navigate(Screen.Constructor.with(constructorId = constructor.id, constructorName = constructor.name))
+        navigator.navigate(Screen.Constructor(constructorId = constructor.id, constructorName = constructor.name))
     }
 
     private fun List<Constructor>.filtered(searchTerm: String): List<Constructor> {

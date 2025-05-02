@@ -15,7 +15,7 @@ import tmg.flashback.formula1.R.drawable
 import tmg.flashback.strings.R.string
 import tmg.flashback.drivers.contract.DriverNavigationComponent
 import tmg.flashback.drivers.contract.model.DriverStatHistoryType
-import tmg.flashback.drivers.contract.model.ScreenDriverData
+import tmg.flashback.drivers.navigation.ScreenDriverData
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.DriverHistory
 import tmg.flashback.ui.components.navigation.PipeType

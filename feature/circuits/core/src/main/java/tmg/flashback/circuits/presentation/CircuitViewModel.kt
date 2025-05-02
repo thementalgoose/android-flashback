@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
-import tmg.flashback.circuits.contract.model.ScreenCircuitData
+import tmg.flashback.circuits.navigation.ScreenCircuitData
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.device.usecases.OpenLocationUseCase
 import tmg.flashback.data.repo.CircuitRepository
