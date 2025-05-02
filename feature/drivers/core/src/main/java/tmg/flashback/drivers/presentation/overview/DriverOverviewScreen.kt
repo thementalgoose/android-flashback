@@ -38,7 +38,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import tmg.flashback.drivers.contract.model.DriverStatHistoryType
+import tmg.flashback.drivers.navigation.DriverStatHistoryType
 import tmg.flashback.drivers.presentation.common.DriverBadges
 import tmg.flashback.drivers.presentation.season.DriverSeasonScreenVM
 import tmg.flashback.drivers.presentation.stathistory.DriverStatHistoryScreenVM

@@ -69,8 +69,6 @@ import tmg.flashback.ui.components.loading.Fade
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.now.Now
 import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
-import tmg.flashback.weekend.contract.WeekendNavigationComponent
-import tmg.flashback.weekend.contract.requireWeekendNavigationComponent
 import tmg.utilities.extensions.format
 import tmg.utilities.extensions.startOfWeek
 import java.time.LocalDate
@@ -86,8 +84,7 @@ fun RacesScreen(
     deeplink: String?,
     isRoot: (Boolean) -> Unit,
     advertProvider: AdvertProvider,
-    viewModel: RacesViewModel = hiltViewModel(),
-    weekendNavigationComponent: WeekendNavigationComponent = requireWeekendNavigationComponent()
+    viewModel: RacesViewModel = hiltViewModel()
 ) {
     val uiState = viewModel.outputs.uiState.collectAsState()
     LaunchedEffect(uiState.value.currentRace != null, block = {

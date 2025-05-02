@@ -5,7 +5,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import tmg.flashback.privacypolicy.PrivacyPolicyNavigationComponentImpl
-import tmg.flashback.privacypolicy.contract.PrivacyPolicyNavigationComponent
 
 @Module
 @InstallIn(SingletonComponent::class)

@@ -3,7 +3,7 @@ package tmg.flashback.drivers.presentation.stathistory
 import androidx.annotation.StringRes
 import tmg.flashback.drivers.R
 import tmg.flashback.strings.R.string
-import tmg.flashback.drivers.contract.model.DriverStatHistoryType
+import tmg.flashback.drivers.navigation.DriverStatHistoryType
 
 val DriverStatHistoryType.label: Int
     @StringRes

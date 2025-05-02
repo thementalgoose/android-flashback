@@ -29,8 +29,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import tmg.flashback.drivers.contract.DriverNavigationComponent
-import tmg.flashback.drivers.contract.requireDriverNavigationComponent
 import tmg.flashback.formula1.model.SeasonDriverStandingSeason
 import tmg.flashback.providers.SeasonDriverStandingSeasonProvider
 import tmg.flashback.season.R
@@ -60,8 +58,7 @@ fun DriverStandingsScreenVM(
     actionUpClicked: () -> Unit,
     windowSizeClass: WindowSizeClass,
     isRoot: (Boolean) -> Unit,
-    viewModel: DriverStandingsViewModel = hiltViewModel(),
-    driverNavigationComponent: DriverNavigationComponent = requireDriverNavigationComponent(),
+    viewModel: DriverStandingsViewModel = hiltViewModel()
 ) {
     val state = viewModel.outputs.uiState.collectAsState()
     LaunchedEffect(state.value.currentlySelected != null, block = {

@@ -8,7 +8,7 @@ import tmg.flashback.drivers.contract.with
 import tmg.flashback.navigation.Screen
 import tmg.flashback.rss.contract.RSS
 import tmg.flashback.weekend.contract.Weekend
-import tmg.flashback.weekend.contract.model.ScreenWeekendData
+import tmg.flashback.weekend.navigation.ScreenWeekendData
 import tmg.flashback.weekend.contract.with
 
 class ScreenPathTest {

@@ -57,9 +57,6 @@ import tmg.flashback.ui.components.header.HeaderAction
 import tmg.flashback.ui.components.layouts.MasterDetailsPane
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
-import tmg.flashback.weekend.contract.WeekendNavigationComponent
-import tmg.flashback.weekend.contract.model.ScreenWeekendData
-import tmg.flashback.weekend.contract.requireWeekendNavigationComponent
 import tmg.utilities.extensions.ordinalAbbreviation
 import java.time.format.DateTimeFormatter
 
@@ -78,8 +75,7 @@ fun CircuitScreenVM(
     windowSizeClass: WindowSizeClass,
     circuitId: String,
     circuitName: String,
-    viewModel: CircuitViewModel = hiltViewModel(),
-    weekendNavigationComponent: WeekendNavigationComponent = requireWeekendNavigationComponent()
+    viewModel: CircuitViewModel = hiltViewModel()
 ) {
     ScreenView(
         screenName = "Circuit Overview", args = mapOf(

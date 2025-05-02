@@ -3,7 +3,7 @@ package tmg.flashback.drivers.presentation.overview
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import java.time.LocalDate
-import tmg.flashback.drivers.contract.model.DriverStatHistoryType
+import tmg.flashback.drivers.navigation.DriverStatHistoryType
 import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.Driver
 import tmg.flashback.ui.components.navigation.PipeType

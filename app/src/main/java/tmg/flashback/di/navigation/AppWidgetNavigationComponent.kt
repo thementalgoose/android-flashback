@@ -7,7 +7,7 @@ import tmg.flashback.googleanalytics.constants.AnalyticsConstants.analyticsRound
 import tmg.flashback.googleanalytics.constants.AnalyticsConstants.analyticsSeason
 import tmg.flashback.googleanalytics.manager.FirebaseAnalyticsManager
 import tmg.flashback.presentation.HomeActivity
-import tmg.flashback.weekend.contract.model.ScreenWeekendData
+import tmg.flashback.weekend.navigation.ScreenWeekendData
 import tmg.flashback.widgets.upnext.contract.WidgetNavigationComponent
 import java.time.LocalDate
 import javax.inject.Inject

@@ -22,8 +22,8 @@ import tmg.flashback.formula1.model.Race
 import tmg.flashback.reviews.usecases.AppSection.DETAILS_QUALIFYING
 import tmg.flashback.reviews.usecases.AppSection.DETAILS_RACE
 import tmg.flashback.reviews.usecases.ReviewSectionSeenUseCase
-import tmg.flashback.weekend.contract.model.ScreenWeekendData
-import tmg.flashback.weekend.contract.model.ScreenWeekendNav
+import tmg.flashback.weekend.navigation.ScreenWeekendData
+import tmg.flashback.weekend.navigation.ScreenWeekendNav
 import tmg.flashback.weekend.presentation.WeekendNavItem.QUALIFYING
 import tmg.flashback.weekend.presentation.WeekendNavItem.RACE
 import tmg.flashback.weekend.presentation.WeekendNavItem.SCHEDULE

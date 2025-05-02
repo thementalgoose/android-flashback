@@ -34,7 +34,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import tmg.flashback.drivers.contract.model.DriverStatHistoryType
+import tmg.flashback.drivers.navigation.DriverStatHistoryType
 import tmg.flashback.formula1.R.drawable
 import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.Race

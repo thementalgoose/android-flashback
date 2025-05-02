@@ -22,8 +22,7 @@ import tmg.flashback.presentation.settings.data.SettingsWeatherScreenVM
 import tmg.flashback.presentation.settings.notifications.SettingsNotificationUpcomingNoticeScreenVM
 import tmg.flashback.presentation.settings.web.SettingsWebScreenVM
 import tmg.flashback.presentation.settings.widgets.SettingsWidgetScreenVM
-import tmg.flashback.rss.contract.RSSNavigationComponent
-import tmg.flashback.rss.contract.requireRSSNavigationComponent
+import tmg.flashback.rss.presentation.configure.ConfigureRSSScreenVM
 import tmg.flashback.strings.R.string
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
@@ -43,8 +42,7 @@ fun SettingsAllScreenVM(
     actionUpClicked: () -> Unit = { },
     windowSizeClass: WindowSizeClass,
     isRoot: (Boolean) -> Unit,
-    viewModel: SettingsAllViewModel = hiltViewModel(),
-    rssNavigationComponent: RSSNavigationComponent = requireRSSNavigationComponent()
+    viewModel: SettingsAllViewModel = hiltViewModel()
 ) {
     ScreenView(screenName = "Settings")
 
@@ -107,7 +105,7 @@ fun SettingsAllScreenVM(
                     )
                 }
                 SettingsAllViewModel.SettingsScreen.RSS_CONFIGURE -> {
-                    rssNavigationComponent.Configure(
+                    ConfigureRSSScreenVM(
                         actionUpClicked = viewModel.inputs::back,
                         windowSizeClass = windowSizeClass,
                         paddingValues = paddingValues,

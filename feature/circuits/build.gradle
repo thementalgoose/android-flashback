@@ -29,7 +29,6 @@ dependencies {
 
     implementation(projects.formula1)
     implementation(projects.data.repo)
-    implementation(projects.feature.circuits.contract)
 
     implementation(projects.feature.weekend.contract)
 

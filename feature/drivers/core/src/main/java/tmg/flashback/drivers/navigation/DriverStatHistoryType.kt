@@ -1,2 +1,8 @@
-package tmg.flashback.drivers.navigation 
+package tmg.flashback.drivers.navigation
 
+enum class DriverStatHistoryType {
+    CHAMPIONSHIPS,
+    WINS,
+    POLES,
+    PODIUMS;
+}

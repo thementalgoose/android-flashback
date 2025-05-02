@@ -24,7 +24,7 @@ import tmg.flashback.style.AppTheme
 import tmg.flashback.ui.components.navigation.NavigationBar
 import tmg.flashback.ui.components.navigation.NavigationItem
 import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
-import tmg.flashback.weekend.contract.model.ScreenWeekendData
+import tmg.flashback.weekend.navigation.ScreenWeekendData
 import tmg.flashback.weekend.presentation.details.DetailsViewModel
 import tmg.flashback.weekend.presentation.details.details
 import tmg.flashback.weekend.presentation.info.RaceInfoHeader

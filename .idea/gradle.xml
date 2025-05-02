@@ -32,8 +32,6 @@
             <option value="$PROJECT_DIR$/eastereggs" />
             <option value="$PROJECT_DIR$/feature" />
             <option value="$PROJECT_DIR$/feature/circuits" />
-            <option value="$PROJECT_DIR$/feature/circuits/contract" />
-            <option value="$PROJECT_DIR$/feature/circuits/core" />
             <option value="$PROJECT_DIR$/feature/constructors" />
             <option value="$PROJECT_DIR$/feature/constructors/contract" />
             <option value="$PROJECT_DIR$/feature/constructors/core" />

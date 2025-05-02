@@ -5,7 +5,7 @@ import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
-import tmg.flashback.weekend.contract.model.ScreenWeekendData
+import tmg.flashback.weekend.navigation.ScreenWeekendData
 
 @Composable
 fun WeekendScreen(

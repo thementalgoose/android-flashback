@@ -13,8 +13,7 @@ import tmg.flashback.data.repo.DriverRepository
 import tmg.flashback.drivers.R
 import tmg.flashback.formula1.R.drawable
 import tmg.flashback.strings.R.string
-import tmg.flashback.drivers.contract.DriverNavigationComponent
-import tmg.flashback.drivers.contract.model.DriverStatHistoryType
+import tmg.flashback.drivers.navigation.DriverStatHistoryType
 import tmg.flashback.drivers.navigation.ScreenDriverData
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.DriverHistory

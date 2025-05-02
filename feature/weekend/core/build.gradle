@@ -37,7 +37,6 @@ dependencies {
 
     implementation(projects.feature.constructors.contract)
     implementation(projects.feature.drivers.contract)
-    implementation(projects.feature.circuits.contract)
     implementation(projects.feature.season.contract)
 
     implementation libs.bundles.retrofit

@@ -2,7 +2,7 @@ package tmg.flashback.weekend.presentation
 
 import java.time.LocalDate
 import tmg.flashback.formula1.model.RaceInfo
-import tmg.flashback.weekend.contract.model.ScreenWeekendData
+import tmg.flashback.weekend.navigation.ScreenWeekendData
 
 fun RaceInfo.toWeekendInfo(): ScreenWeekendData {
     return ScreenWeekendData(

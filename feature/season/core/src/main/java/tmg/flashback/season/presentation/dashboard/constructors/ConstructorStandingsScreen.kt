@@ -24,8 +24,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import tmg.flashback.constructors.contract.ConstructorsNavigationComponent
-import tmg.flashback.constructors.contract.requireConstructorsNavigationComponent
 import tmg.flashback.formula1.model.SeasonConstructorStandingSeason
 import tmg.flashback.providers.SeasonConstructorStandingSeasonProvider
 import tmg.flashback.season.presentation.dashboard.shared.seasonpicker.SeasonTitleVM
@@ -52,8 +50,7 @@ fun ConstructorStandingsScreenVM(
     actionUpClicked: () -> Unit,
     windowSizeClass: WindowSizeClass,
     isRoot: (Boolean) -> Unit,
-    viewModel: ConstructorStandingsViewModel = hiltViewModel(),
-    constructorsNavigationComponent: ConstructorsNavigationComponent = requireConstructorsNavigationComponent()
+    viewModel: ConstructorStandingsViewModel = hiltViewModel()
 ) {
     val state = viewModel.outputs.uiState.collectAsState()
     LaunchedEffect(state.value.currentlySelected != null, block = {

@@ -22,7 +22,7 @@ import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.weekend.R
 import tmg.flashback.strings.R.string
 import tmg.flashback.ui.R.drawable
-import tmg.flashback.weekend.contract.model.ScreenWeekendData
+import tmg.flashback.weekend.navigation.ScreenWeekendData
 import tmg.flashback.weekend.presentation.toWeekendInfo
 import tmg.utilities.extensions.format
 import tmg.utilities.extensions.ordinalAbbreviation

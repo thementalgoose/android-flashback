@@ -23,8 +23,8 @@ import tmg.flashback.formula1.model.SprintResult
 import tmg.flashback.formula1.model.model
 import tmg.flashback.reviews.usecases.AppSection
 import tmg.flashback.reviews.usecases.ReviewSectionSeenUseCase
-import tmg.flashback.weekend.contract.model.ScreenWeekendData
-import tmg.flashback.weekend.contract.model.ScreenWeekendNav
+import tmg.flashback.weekend.navigation.ScreenWeekendData
+import tmg.flashback.weekend.navigation.ScreenWeekendNav
 import tmg.testutils.BaseTest
 
 internal class WeekendViewModelTest: BaseTest() {

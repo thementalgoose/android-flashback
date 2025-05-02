@@ -4,8 +4,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import tmg.flashback.constructors.ConstructorsNavigationComponentImpl
-import tmg.flashback.constructors.contract.ConstructorsNavigationComponent
 
 @Module
 @InstallIn(SingletonComponent::class)

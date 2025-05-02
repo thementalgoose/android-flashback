@@ -5,7 +5,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import tmg.flashback.circuits.CircuitNavigationComponentImpl
-import tmg.flashback.circuits.contract.CircuitNavigationComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
