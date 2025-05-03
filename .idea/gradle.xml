@@ -36,8 +36,6 @@
             <option value="$PROJECT_DIR$/feature/constructors/contract" />
             <option value="$PROJECT_DIR$/feature/constructors/core" />
             <option value="$PROJECT_DIR$/feature/drivers" />
-            <option value="$PROJECT_DIR$/feature/drivers/contract" />
-            <option value="$PROJECT_DIR$/feature/drivers/core" />
             <option value="$PROJECT_DIR$/feature/maintenance" />
             <option value="$PROJECT_DIR$/feature/maintenance/contract" />
             <option value="$PROJECT_DIR$/feature/maintenance/core" />

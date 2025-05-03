@@ -31,8 +31,6 @@ dependencies {
     implementation(projects.presentation.strings)
     implementation(projects.presentation.navigation)
 
-    implementation(projects.feature.drivers.contract)
-
     implementation libs.bundles.retrofit
     implementation libs.bundles.okhttp
 

@@ -32,7 +32,7 @@ dependencies {
     implementation(projects.data.repo)
     implementation(projects.feature.constructors.contract)
 
-    implementation(projects.feature.drivers.contract)
+    implementation(projects.feature.drivers)
 
     implementation libs.bundles.retrofit
     implementation libs.bundles.okhttp

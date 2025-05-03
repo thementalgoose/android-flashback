@@ -42,7 +42,7 @@ dependencies {
     implementation(projects.presentation.strings)
 
     // Navigation
-    implementation(projects.feature.drivers.contract)
+    implementation(projects.feature.drivers)
     implementation(projects.feature.constructors.contract)
     implementation(projects.feature.weekend.contract)
     implementation(projects.feature.season.contract)
