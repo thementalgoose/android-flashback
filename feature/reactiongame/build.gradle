@@ -25,6 +25,4 @@ dependencies {
 
     implementation(projects.presentation.strings)
     implementation(projects.presentation.ui)
-
-    implementation(projects.feature.reactiongame.contract)
 }

@@ -11,10 +11,10 @@ internal class IsReactionGameEnabledUseCaseImplTest {
 
     private val mockReactionGameRepository: ReactionGameRepository = mockk(relaxed = true)
 
-    private lateinit var underTest: IsReactionGameEnabledUseCaseImpl
+    private lateinit var underTest: IsReactionGameEnabledUseCase
 
     private fun initUnderTest() {
-        underTest = IsReactionGameEnabledUseCaseImpl(
+        underTest = IsReactionGameEnabledUseCase(
             reactionGameRepository = mockReactionGameRepository
         )
     }
