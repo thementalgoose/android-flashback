@@ -16,12 +16,12 @@ internal class RssShortcutUseCaseTest: BaseTest() {
     private val mockRssRepository: RssRepository = mockk(relaxed = true)
     private val mockAppShortcutManager: AppShortcutManager = mockk(relaxed = true)
 
-    private lateinit var underTest: RSSAppShortcutUseCaseImpl
+    private lateinit var underTest: RSSAppShortcutUseCase
 
     private val rssId: String = "rss"
 
     private fun initUnderTest() {
-        underTest = RSSAppShortcutUseCaseImpl(
+        underTest = RSSAppShortcutUseCase(
             rssRepository = mockRssRepository,
             appShortcutManager = mockAppShortcutManager,
         )

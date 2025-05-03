@@ -2,8 +2,7 @@ rootProject.name = "android-flashback"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 include ':app'
 
-include ':feature:rss:core'
-include ':feature:rss:contract'
+include ':feature:rss'
 include ':feature:maintenance'
 include ':feature:privacypolicy'
 include ':feature:widget-upnext:core'

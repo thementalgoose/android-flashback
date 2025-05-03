@@ -8,16 +8,15 @@ import tmg.flashback.navigation.constants.Deeplink
 import tmg.flashback.navigation.constants.SCREEN_PARAM
 import tmg.flashback.rss.R
 import tmg.flashback.strings.R.string
-import tmg.flashback.rss.contract.usecases.RSSAppShortcutUseCase
 import tmg.flashback.rss.repo.RssRepository
 import javax.inject.Inject
 
-internal class RSSAppShortcutUseCaseImpl @Inject constructor(
+internal class RSSAppShortcutUseCase @Inject constructor(
     private val rssRepository: RssRepository,
     private val appShortcutManager: AppShortcutManager
-): RSSAppShortcutUseCase {
+) {
 
-    override fun setup() {
+    fun setup() {
         if (rssRepository.enabled) {
             appShortcutManager.addDynamicShortcut(rssShortcutInfo)
         } else {

@@ -123,8 +123,7 @@ tasks.configureEach { task ->
 dependencies {
 
     // Feature modules
-    implementation(projects.feature.rss.core)
-    implementation(projects.feature.rss.contract)
+    implementation(projects.feature.rss)
     implementation(projects.feature.maintenance)
     implementation(projects.feature.privacypolicy)
     implementation(projects.feature.widgetUpnext.core)
