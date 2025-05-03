@@ -34,8 +34,6 @@ dependencies {
     implementation(projects.data.repo)
     implementation(projects.formula1)
 
-    implementation(projects.feature.season.contract)
-
     implementation libs.bundles.retrofit
     implementation libs.bundles.okhttp
 

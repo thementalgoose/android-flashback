@@ -45,7 +45,6 @@ dependencies {
     implementation(projects.feature.drivers)
     implementation(projects.feature.constructors)
     implementation(projects.feature.weekend)
-    implementation(projects.feature.season.contract)
 
     implementation libs.bundles.androidx.workmanager
     implementation libs.flagkit

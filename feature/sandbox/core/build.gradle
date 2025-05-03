@@ -38,6 +38,5 @@ dependencies {
     implementation(projects.data.repo)
 
     // Stats
-    implementation(projects.feature.season.core)
-    implementation(projects.feature.season.contract)
+    implementation(projects.feature.season)
 }

@@ -44,8 +44,6 @@
             <option value="$PROJECT_DIR$/feature/sandbox/noop" />
             <option value="$PROJECT_DIR$/feature/search" />
             <option value="$PROJECT_DIR$/feature/season" />
-            <option value="$PROJECT_DIR$/feature/season/contract" />
-            <option value="$PROJECT_DIR$/feature/season/core" />
             <option value="$PROJECT_DIR$/feature/weekend" />
             <option value="$PROJECT_DIR$/feature/widget-upnext" />
             <option value="$PROJECT_DIR$/formula1" />
