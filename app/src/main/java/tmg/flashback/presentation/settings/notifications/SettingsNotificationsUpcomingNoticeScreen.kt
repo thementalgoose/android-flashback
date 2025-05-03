@@ -13,7 +13,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import tmg.flashback.googleanalytics.presentation.ScreenView
 import tmg.flashback.presentation.settings.Settings
-import tmg.flashback.season.contract.repository.models.NotificationReminder
+import tmg.flashback.formula1.model.notifications.NotificationReminder
 import tmg.flashback.strings.R.string
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme

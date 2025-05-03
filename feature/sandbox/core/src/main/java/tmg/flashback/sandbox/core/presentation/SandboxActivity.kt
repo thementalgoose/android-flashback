@@ -35,7 +35,7 @@ import tmg.flashback.data.repo.DriverRepository
 import tmg.flashback.data.repo.OverviewRepository
 import tmg.flashback.navigation.ApplicationNavigationComponent
 import tmg.flashback.notifications.receiver.LocalNotificationBroadcastReceiver
-import tmg.flashback.notifications.repository.NotificationRepository
+import tmg.flashback.notifications.repository.NotificationIdsRepository
 import tmg.flashback.prefs.manager.PreferenceManager
 import tmg.flashback.season.contract.repository.models.NotificationUpcoming
 import tmg.flashback.style.AppTheme
@@ -79,7 +79,7 @@ class SandboxActivity: BaseActivity() {
     @Inject
     lateinit var adsRepository: AdsRepository
     @Inject
-    lateinit var notificationRepository: NotificationRepository
+    lateinit var notificationIdsRepository: NotificationIdsRepository
 
     @Inject
     lateinit var scheduleNotificationsUseCase: ScheduleNotificationsUseCase
@@ -180,11 +180,11 @@ class SandboxActivity: BaseActivity() {
         Row(modifier = Modifier
             .fillMaxWidth()
             .background(AppTheme.colors.backgroundSecondary)
-            .longClick { copyToClipboard(notificationRepository.remoteNotificationToken ?: "") }
+            .longClick { copyToClipboard(notificationIdsRepository.remoteNotificationToken ?: "") }
             .padding(horizontal = 4.dp, vertical = 4.dp)
         ) {
             TextBody1(text = "FCM ID:", modifier = Modifier.weight(1f))
-            TextBody2(text = notificationRepository.remoteNotificationToken ?: "", modifier = Modifier.weight(1f))
+            TextBody2(text = notificationIdsRepository.remoteNotificationToken ?: "", modifier = Modifier.weight(1f))
         }
         Row(modifier = Modifier
             .fillMaxWidth()

@@ -1,12 +1,12 @@
 package tmg.flashback.notifications.usecases
 
 import tmg.flashback.notifications.managers.RemoteNotificationManager
-import tmg.flashback.notifications.repository.NotificationRepository
+import tmg.flashback.notifications.repository.NotificationIdsRepository
 import javax.inject.Inject
 
 class RemoteNotificationUnsubscribeUseCase @Inject constructor(
     private val remoteNotificationManager: RemoteNotificationManager,
-    private val notificationRepository: NotificationRepository
+    private val notificationIdsRepository: NotificationIdsRepository
 ) {
     suspend fun unsubscribe(topic: String): Boolean {
         val unsubscribed = remoteNotificationManager.unsubscribeToTopic(topic)
@@ -14,13 +14,13 @@ class RemoteNotificationUnsubscribeUseCase @Inject constructor(
             return false
         }
 
-        val topics = notificationRepository
+        val topics = notificationIdsRepository
             .remoteNotificationTopics
             .toMutableSet()
             .apply {
                 remove(topic)
             }
-        notificationRepository.remoteNotificationTopics = topics
+        notificationIdsRepository.remoteNotificationTopics = topics
         return true
     }
 }

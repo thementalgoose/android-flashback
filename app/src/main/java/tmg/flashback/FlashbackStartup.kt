@@ -20,7 +20,6 @@ import tmg.flashback.googleanalytics.UserProperty.WIDGET_USAGE
 import tmg.flashback.googleanalytics.manager.FirebaseAnalyticsManager
 import tmg.flashback.configuration.usecases.InitialiseConfigUseCase
 import tmg.flashback.crashlytics.model.FirebaseKey
-import tmg.flashback.crashlytics.services.FirebaseCrashService
 import tmg.flashback.crashlytics.usecases.AddCustomKeyUseCase
 import tmg.flashback.crashlytics.usecases.InitialiseCrashReportingUseCase
 import tmg.flashback.device.managers.BuildConfigManager
@@ -38,8 +37,8 @@ import tmg.flashback.notifications.usecases.RemoteNotificationSubscribeUseCase
 import tmg.flashback.notifications.usecases.RemoteNotificationUnsubscribeUseCase
 import tmg.flashback.repositories.ContactRepository
 import tmg.flashback.season.contract.repository.NotificationsRepository
-import tmg.flashback.season.contract.repository.models.NotificationResultsAvailable
-import tmg.flashback.season.contract.repository.models.NotificationUpcoming
+import tmg.flashback.formula1.model.notifications.NotificationResultsAvailable
+import tmg.flashback.formula1.model.notifications.NotificationUpcoming
 import tmg.flashback.season.repository.HomeRepository
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.SupportedTheme
@@ -48,7 +47,6 @@ import tmg.flashback.ui.model.Theme
 import tmg.flashback.ui.repository.ThemeRepository
 import tmg.flashback.usecases.RefreshWidgetsUseCase
 import tmg.flashback.widgets.upnext.contract.usecases.HasUpNextWidgetsUseCase
-import tmg.utilities.extensions.format
 import tmg.utilities.extensions.isInDayMode
 import java.time.format.DateTimeFormatter
 import java.util.Locale

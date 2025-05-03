@@ -8,7 +8,7 @@ import tmg.flashback.formula1.model.Event
 import tmg.flashback.formula1.model.Overview
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.model.model
-import tmg.flashback.season.contract.repository.models.NotificationSchedule
+import tmg.flashback.formula1.model.notifications.NotificationSchedule
 
 internal class RacesModelBuilderTest {
 

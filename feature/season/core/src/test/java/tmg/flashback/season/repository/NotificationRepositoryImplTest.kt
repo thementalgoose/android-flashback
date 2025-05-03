@@ -6,24 +6,24 @@ import io.mockk.verify
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import tmg.flashback.notifications.repository.NotificationRepository
+import tmg.flashback.data.repo.NotificationsRepositoryImpl
+import tmg.flashback.notifications.repository.NotificationIdsRepository
 import tmg.flashback.prefs.manager.PreferenceManager
-import tmg.flashback.season.contract.repository.models.NotificationResultsAvailable
-import tmg.flashback.season.contract.repository.models.NotificationUpcoming
-import tmg.flashback.season.contract.repository.models.NotificationReminder
-import tmg.flashback.season.contract.repository.models.NotificationSchedule
-import tmg.flashback.season.repository.models.prefKey
+import tmg.flashback.formula1.model.notifications.NotificationResultsAvailable
+import tmg.flashback.formula1.model.notifications.NotificationUpcoming
+import tmg.flashback.formula1.model.notifications.NotificationReminder
+import tmg.flashback.formula1.model.notifications.NotificationSchedule
 
 internal class NotificationRepositoryImplTest {
 
     private val mockPreferenceManager: PreferenceManager = mockk(relaxed = true)
-    private val mockNotificationRepository: NotificationRepository = mockk(relaxed = true)
+    private val mockNotificationIdsRepository: NotificationIdsRepository = mockk(relaxed = true)
 
     private lateinit var underTest: NotificationsRepositoryImpl
 
     private fun initUnderTest() {
         underTest = NotificationsRepositoryImpl(
-            notificationRepository = mockNotificationRepository,
+            notificationIdsRepository = mockNotificationIdsRepository,
             preferenceManager = mockPreferenceManager
         )
     }
@@ -31,7 +31,7 @@ internal class NotificationRepositoryImplTest {
 
     @Test
     fun `getting notification schedule queries all preferences`() {
-        every { mockNotificationRepository.isChannelEnabled(any()) } returns true
+        every { mockNotificationIdsRepository.isChannelEnabled(any()) } returns true
         initUnderTest()
 
         val expected = NotificationSchedule(
@@ -89,26 +89,26 @@ internal class NotificationRepositoryImplTest {
 
     @Test
     fun `is enabled for upcoming notifications sends key to pref manager`() {
-        every { mockNotificationRepository.isChannelEnabled(NotificationUpcoming.RACE.channelId) } returns true
+        every { mockNotificationIdsRepository.isChannelEnabled(NotificationUpcoming.RACE.channelId) } returns true
 
         initUnderTest()
         assertEquals(true, underTest.isUpcomingEnabled(NotificationUpcoming.RACE))
 
         verify {
-            mockNotificationRepository.isChannelEnabled(NotificationUpcoming.RACE.channelId)
+            mockNotificationIdsRepository.isChannelEnabled(NotificationUpcoming.RACE.channelId)
         }
     }
 
 
     @Test
     fun `is enabled for results available notifications sends key to pref manager`() {
-        every { mockNotificationRepository.isChannelEnabled(NotificationResultsAvailable.RACE.channelId) } returns true
+        every { mockNotificationIdsRepository.isChannelEnabled(NotificationResultsAvailable.RACE.channelId) } returns true
 
         initUnderTest()
         assertEquals(true, underTest.isEnabled(NotificationResultsAvailable.RACE))
 
         verify {
-            mockNotificationRepository.isChannelEnabled(NotificationResultsAvailable.RACE.channelId)
+            mockNotificationIdsRepository.isChannelEnabled(NotificationResultsAvailable.RACE.channelId)
         }
     }
 

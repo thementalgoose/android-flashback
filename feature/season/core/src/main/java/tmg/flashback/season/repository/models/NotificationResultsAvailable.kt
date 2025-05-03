@@ -1,6 +1,6 @@
 package tmg.flashback.season.repository.models
 
-import tmg.flashback.season.contract.repository.models.NotificationResultsAvailable
+import tmg.flashback.formula1.model.notifications.NotificationResultsAvailable
 
 
 val NotificationResultsAvailable.prefKey: String

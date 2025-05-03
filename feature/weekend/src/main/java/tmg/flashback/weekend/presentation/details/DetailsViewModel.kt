@@ -1,6 +1,5 @@
 package tmg.flashback.weekend.presentation.details
 
-import android.net.Uri
 import android.webkit.URLUtil
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -20,12 +19,12 @@ import tmg.flashback.formula1.utils.NotificationUtils
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.flashback.season.contract.repository.NotificationsRepository
-import tmg.flashback.season.contract.repository.models.NotificationUpcoming.FREE_PRACTICE
-import tmg.flashback.season.contract.repository.models.NotificationUpcoming.OTHER
-import tmg.flashback.season.contract.repository.models.NotificationUpcoming.QUALIFYING
-import tmg.flashback.season.contract.repository.models.NotificationUpcoming.RACE
-import tmg.flashback.season.contract.repository.models.NotificationUpcoming.SPRINT
-import tmg.flashback.season.contract.repository.models.NotificationUpcoming.SPRINT_QUALIFYING
+import tmg.flashback.formula1.model.notifications.NotificationUpcoming.FREE_PRACTICE
+import tmg.flashback.formula1.model.notifications.NotificationUpcoming.OTHER
+import tmg.flashback.formula1.model.notifications.NotificationUpcoming.QUALIFYING
+import tmg.flashback.formula1.model.notifications.NotificationUpcoming.RACE
+import tmg.flashback.formula1.model.notifications.NotificationUpcoming.SPRINT
+import tmg.flashback.formula1.model.notifications.NotificationUpcoming.SPRINT_QUALIFYING
 import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.flashback.strings.R.string
 import tmg.flashback.ui.R.drawable

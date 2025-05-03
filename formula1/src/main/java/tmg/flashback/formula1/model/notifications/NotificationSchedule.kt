@@ -1,4 +1,4 @@
-package tmg.flashback.season.contract.repository.models
+package tmg.flashback.formula1.model.notifications
 
 import tmg.flashback.formula1.enums.RaceWeekend
 import tmg.flashback.formula1.utils.NotificationUtils

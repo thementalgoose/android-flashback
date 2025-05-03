@@ -2,7 +2,7 @@ package tmg.flashback.season.repository.models
 
 import androidx.annotation.DrawableRes
 import tmg.flashback.season.R
-import tmg.flashback.season.contract.repository.models.NotificationReminder
+import tmg.flashback.formula1.model.notifications.NotificationReminder
 
 val NotificationReminder.icon: Int
     @DrawableRes

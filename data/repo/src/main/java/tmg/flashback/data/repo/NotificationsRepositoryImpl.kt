@@ -1,19 +1,17 @@
-package tmg.flashback.season.repository
+package tmg.flashback.data.repo
 
-import tmg.flashback.notifications.repository.NotificationRepository
+import tmg.flashback.formula1.model.notifications.NotificationReminder
+import tmg.flashback.formula1.model.notifications.NotificationResultsAvailable
+import tmg.flashback.formula1.model.notifications.NotificationSchedule
+import tmg.flashback.formula1.model.notifications.NotificationUpcoming
 import tmg.flashback.prefs.manager.PreferenceManager
-import tmg.flashback.season.contract.repository.NotificationsRepository
-import tmg.flashback.season.contract.repository.models.NotificationUpcoming
-import tmg.flashback.season.contract.repository.models.NotificationResultsAvailable
-import tmg.flashback.season.contract.repository.models.NotificationReminder
-import tmg.flashback.season.contract.repository.models.NotificationSchedule
 import tmg.utilities.extensions.toEnum
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class NotificationsRepositoryImpl @Inject constructor(
-    private val notificationRepository: NotificationRepository,
+    private val notificationIdsRepository: NotificationIdsRepository,
     private val preferenceManager: PreferenceManager
 ): NotificationsRepository {
 
@@ -25,12 +23,12 @@ class NotificationsRepositoryImpl @Inject constructor(
 
 
     override fun isEnabled(resultsAvailable: NotificationResultsAvailable): Boolean {
-        return notificationRepository.isChannelEnabled(resultsAvailable.channelId)
+        return notificationIdsRepository.isChannelEnabled(resultsAvailable.channelId)
     }
 
 
     override fun isUpcomingEnabled(upcoming: NotificationUpcoming): Boolean {
-        return notificationRepository.isChannelEnabled(upcoming.channelId)
+        return notificationIdsRepository.isChannelEnabled(upcoming.channelId)
     }
 
 

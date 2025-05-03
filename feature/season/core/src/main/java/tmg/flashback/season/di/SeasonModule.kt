@@ -5,7 +5,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import tmg.flashback.season.contract.repository.NotificationsRepository
-import tmg.flashback.season.repository.NotificationsRepositoryImpl
+import tmg.flashback.data.repo.NotificationsRepositoryImpl
 
 @Module
 @InstallIn(SingletonComponent::class)

@@ -47,7 +47,7 @@ import tmg.flashback.formula1.extensions.label
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.providers.OverviewRaceProvider
 import tmg.flashback.season.R
-import tmg.flashback.season.contract.repository.models.NotificationSchedule
+import tmg.flashback.formula1.model.notifications.NotificationSchedule
 import tmg.flashback.season.presentation.dashboard.DashboardQuickLinks
 import tmg.flashback.season.presentation.dashboard.shared.seasonpicker.SeasonTitleVM
 import tmg.flashback.season.presentation.events.EventsScreenVM

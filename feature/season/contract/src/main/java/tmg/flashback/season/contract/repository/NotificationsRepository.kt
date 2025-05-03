@@ -1,9 +1,9 @@
 package tmg.flashback.season.contract.repository
 
-import tmg.flashback.season.contract.repository.models.NotificationReminder
-import tmg.flashback.season.contract.repository.models.NotificationResultsAvailable
-import tmg.flashback.season.contract.repository.models.NotificationSchedule
-import tmg.flashback.season.contract.repository.models.NotificationUpcoming
+import tmg.flashback.formula1.model.notifications.NotificationReminder
+import tmg.flashback.formula1.model.notifications.NotificationResultsAvailable
+import tmg.flashback.formula1.model.notifications.NotificationSchedule
+import tmg.flashback.formula1.model.notifications.NotificationUpcoming
 
 interface NotificationsRepository {
 

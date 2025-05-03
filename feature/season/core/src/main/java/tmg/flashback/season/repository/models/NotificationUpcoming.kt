@@ -2,7 +2,7 @@ package tmg.flashback.season.repository.models
 
 import androidx.annotation.DrawableRes
 import tmg.flashback.season.R
-import tmg.flashback.season.contract.repository.models.NotificationUpcoming
+import tmg.flashback.formula1.model.notifications.NotificationUpcoming
 
 val NotificationUpcoming.prefKey: String
     get() = when (this) {

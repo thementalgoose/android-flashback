@@ -16,24 +16,24 @@ import tmg.flashback.data.repo.ScheduleRepository
 import tmg.flashback.formula1.enums.RaceWeekend
 import tmg.flashback.formula1.model.Timestamp
 import tmg.flashback.formula1.utils.NotificationUtils
-import tmg.flashback.notifications.repository.NotificationRepository
+import tmg.flashback.notifications.repository.NotificationIdsRepository
 import tmg.flashback.notifications.usecases.LocalNotificationCancelUseCase
 import tmg.flashback.notifications.usecases.LocalNotificationScheduleUseCase
 import tmg.flashback.season.contract.repository.NotificationsRepository
-import tmg.flashback.season.contract.repository.models.NotificationUpcoming
-import tmg.flashback.season.contract.repository.models.NotificationUpcoming.FREE_PRACTICE
-import tmg.flashback.season.contract.repository.models.NotificationUpcoming.OTHER
-import tmg.flashback.season.contract.repository.models.NotificationUpcoming.QUALIFYING
-import tmg.flashback.season.contract.repository.models.NotificationUpcoming.RACE
-import tmg.flashback.season.contract.repository.models.NotificationUpcoming.SPRINT
-import tmg.flashback.season.contract.repository.models.NotificationUpcoming.SPRINT_QUALIFYING
-import tmg.flashback.season.contract.utils.NotificationUtils.getInexactNotificationTitleText
-import tmg.flashback.season.contract.utils.NotificationUtils.getNotificationTitleText
+import tmg.flashback.formula1.model.notifications.NotificationUpcoming
+import tmg.flashback.formula1.model.notifications.NotificationUpcoming.FREE_PRACTICE
+import tmg.flashback.formula1.model.notifications.NotificationUpcoming.OTHER
+import tmg.flashback.formula1.model.notifications.NotificationUpcoming.QUALIFYING
+import tmg.flashback.formula1.model.notifications.NotificationUpcoming.RACE
+import tmg.flashback.formula1.model.notifications.NotificationUpcoming.SPRINT
+import tmg.flashback.formula1.model.notifications.NotificationUpcoming.SPRINT_QUALIFYING
+import tmg.flashback.notifications.utils.NotificationUtils.getInexactNotificationTitleText
+import tmg.flashback.notifications.utils.NotificationUtils.getNotificationTitleText
 
 @HiltWorker
 class ScheduleNotificationsJob @AssistedInject constructor(
     private val scheduleRepository: ScheduleRepository,
-    private val notificationConfigRepository: NotificationRepository,
+    private val notificationConfigRepository: NotificationIdsRepository,
     private val localNotificationCancelUseCase: LocalNotificationCancelUseCase,
     private val localNotificationScheduleUseCase: LocalNotificationScheduleUseCase,
     private val notificationRepository: NotificationsRepository,
@@ -73,7 +73,7 @@ class ScheduleNotificationsJob @AssistedInject constructor(
             .map {
                 it.apply {
                     this.utcDateTime = it.timestamp.utcLocalDateTime
-                    this.requestCode = tmg.flashback.season.contract.utils.NotificationUtils.getRequestCode(utcDateTime)
+                    this.requestCode = tmg.flashback.notifications.utils.NotificationUtils.getRequestCode(utcDateTime)
                 }
             }
 

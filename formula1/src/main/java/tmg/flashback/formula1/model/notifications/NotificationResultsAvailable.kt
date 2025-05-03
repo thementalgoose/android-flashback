@@ -1,7 +1,6 @@
-package tmg.flashback.season.contract.repository.models
+package tmg.flashback.formula1.model.notifications
 
 import androidx.annotation.StringRes
-import tmg.flashback.season.contract.R
 import tmg.flashback.strings.R.string
 
 enum class NotificationResultsAvailable(

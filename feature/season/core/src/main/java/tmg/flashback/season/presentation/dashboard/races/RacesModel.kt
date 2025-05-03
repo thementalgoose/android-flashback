@@ -2,7 +2,7 @@ package tmg.flashback.season.presentation.dashboard.races
 
 import java.time.LocalDate
 import tmg.flashback.formula1.model.OverviewRace
-import tmg.flashback.season.contract.repository.models.NotificationSchedule
+import tmg.flashback.formula1.model.notifications.NotificationSchedule
 
 sealed class RacesModel(
     val key: String

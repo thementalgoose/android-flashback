@@ -4,7 +4,7 @@ import java.time.LocalDate
 import tmg.flashback.formula1.model.Event
 import tmg.flashback.formula1.model.Overview
 import tmg.flashback.formula1.model.OverviewRace
-import tmg.flashback.season.contract.repository.models.NotificationSchedule
+import tmg.flashback.formula1.model.notifications.NotificationSchedule
 import tmg.utilities.extensions.format
 import tmg.utilities.extensions.startOfWeek
 import tmg.utilities.utils.LocalDateUtils

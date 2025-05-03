@@ -1,19 +1,15 @@
 package tmg.flashback.season.usecases
 
-import android.app.Notification
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.notifications.usecases.RemoteNotificationSubscribeUseCase
 import tmg.flashback.notifications.usecases.RemoteNotificationUnsubscribeUseCase
 import tmg.flashback.season.contract.repository.NotificationsRepository
-import tmg.flashback.season.contract.repository.models.NotificationResultsAvailable
-import tmg.flashback.season.contract.repository.models.NotificationResultsAvailable.QUALIFYING
-import tmg.flashback.season.contract.repository.models.NotificationResultsAvailable.RACE
-import tmg.flashback.season.repository.NotificationsRepositoryImpl
+import tmg.flashback.formula1.model.notifications.NotificationResultsAvailable.QUALIFYING
+import tmg.flashback.formula1.model.notifications.NotificationResultsAvailable.RACE
 import tmg.testutils.BaseTest
 
 internal class ResubscribeNotificationsUseCaseTest: BaseTest() {

@@ -6,18 +6,18 @@ import io.mockk.verify
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
 import tmg.flashback.notifications.managers.SystemAlarmManager
-import tmg.flashback.notifications.repository.NotificationRepository
+import tmg.flashback.notifications.repository.NotificationIdsRepository
 
 internal class LocalNotificationScheduleUseCaseTest {
 
-    private val mockNotificationRepository: NotificationRepository = mockk(relaxed = true)
+    private val mockNotificationIdsRepository: NotificationIdsRepository = mockk(relaxed = true)
     private val mockAlarmManager: SystemAlarmManager = mockk(relaxed = true)
 
     private lateinit var underTest: LocalNotificationScheduleUseCase
 
     private fun initUnderTest() {
         underTest = LocalNotificationScheduleUseCase(
-            mockNotificationRepository,
+            mockNotificationIdsRepository,
             mockAlarmManager
         )
     }
@@ -50,7 +50,7 @@ internal class LocalNotificationScheduleUseCaseTest {
 
     @Test
     fun `scheduling notification updates request code notification ids`() {
-        every { mockNotificationRepository.notificationIds } returns setOf(102)
+        every { mockNotificationIdsRepository.notificationIds } returns setOf(102)
         val timestamp = LocalDateTime.of(2020, 1, 1, 1, 1)
 
         initUnderTest()
@@ -64,7 +64,7 @@ internal class LocalNotificationScheduleUseCaseTest {
         )
 
         verify {
-            mockNotificationRepository.notificationIds = setOf(1, 102)
+            mockNotificationIdsRepository.notificationIds = setOf(1, 102)
         }
     }
 }

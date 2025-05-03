@@ -30,7 +30,7 @@ import tmg.flashback.formula1.constants.Formula1.sprintsIntroducedIn
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.model.Schedule
 import tmg.flashback.providers.OverviewRaceProvider
-import tmg.flashback.season.contract.repository.models.NotificationSchedule
+import tmg.flashback.formula1.model.notifications.NotificationSchedule
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme

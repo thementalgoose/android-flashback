@@ -5,8 +5,9 @@ import tmg.flashback.prefs.manager.PreferenceManager
 import javax.inject.Inject
 import javax.inject.Singleton
 
+// TODO: Find a better name for this.
 @Singleton
-class NotificationRepository @Inject constructor(
+class NotificationIdsRepository @Inject constructor(
     private val preferenceManager: PreferenceManager,
     private val systemNotificationManager: SystemNotificationManager,
 ) {
