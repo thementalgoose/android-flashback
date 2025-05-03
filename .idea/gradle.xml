@@ -39,8 +39,6 @@
             <option value="$PROJECT_DIR$/feature/maintenance/core" />
             <option value="$PROJECT_DIR$/feature/privacypolicy" />
             <option value="$PROJECT_DIR$/feature/reactiongame" />
-            <option value="$PROJECT_DIR$/feature/reactiongame/contract" />
-            <option value="$PROJECT_DIR$/feature/reactiongame/core" />
             <option value="$PROJECT_DIR$/feature/rss" />
             <option value="$PROJECT_DIR$/feature/rss/contract" />
             <option value="$PROJECT_DIR$/feature/rss/core" />
@@ -55,8 +53,6 @@
             <option value="$PROJECT_DIR$/feature/season/contract" />
             <option value="$PROJECT_DIR$/feature/season/core" />
             <option value="$PROJECT_DIR$/feature/weekend" />
-            <option value="$PROJECT_DIR$/feature/weekend/contract" />
-            <option value="$PROJECT_DIR$/feature/weekend/core" />
             <option value="$PROJECT_DIR$/feature/widget-upnext" />
             <option value="$PROJECT_DIR$/feature/widget-upnext/contract" />
             <option value="$PROJECT_DIR$/feature/widget-upnext/core" />

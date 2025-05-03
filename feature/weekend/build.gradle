@@ -33,7 +33,6 @@ dependencies {
 
     implementation(projects.data.repo)
     implementation(projects.formula1)
-    implementation(projects.feature.weekend.contract)
 
     implementation(projects.feature.season.contract)
 

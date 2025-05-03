@@ -30,7 +30,7 @@ dependencies {
     implementation(projects.formula1)
     implementation(projects.data.repo)
 
-    implementation(projects.feature.weekend.contract)
+    implementation(projects.feature.weekend)
 
     implementation libs.bundles.retrofit
     implementation libs.bundles.okhttp

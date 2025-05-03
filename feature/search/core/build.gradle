@@ -37,7 +37,7 @@ dependencies {
     implementation(projects.feature.drivers)
     implementation(projects.feature.constructors)
     implementation(projects.feature.circuits)
-    implementation(projects.feature.weekend.contract)
+    implementation(projects.feature.weekend)
 
     implementation libs.bundles.retrofit
     implementation libs.bundles.okhttp
