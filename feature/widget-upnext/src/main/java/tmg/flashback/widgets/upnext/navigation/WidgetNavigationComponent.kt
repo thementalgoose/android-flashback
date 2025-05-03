@@ -1,4 +1,4 @@
-package tmg.flashback.widgets.upnext.contract
+package tmg.flashback.widgets.upnext.navigation
 
 import android.content.Context
 import android.content.Intent
