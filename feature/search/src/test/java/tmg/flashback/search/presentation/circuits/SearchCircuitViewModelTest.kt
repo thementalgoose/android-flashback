@@ -10,8 +10,6 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.flashback.circuits.contract.Circuit
-import tmg.flashback.circuits.contract.with
 import tmg.flashback.data.repo.CircuitRepository
 import tmg.flashback.formula1.model.Circuit
 import tmg.flashback.formula1.model.model
@@ -98,7 +96,7 @@ internal class SearchCircuitViewModelTest: BaseTest() {
         underTest.clickCircuit(circuit)
 
         verify {
-            mockNavigator.navigate(Screen.Circuit.with(circuit.id, circuit.name))
+            mockNavigator.navigate(Screen.Circuit(circuit.id, circuit.name))
         }
     }
 

@@ -10,8 +10,6 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.flashback.constructors.contract.Constructor
-import tmg.flashback.constructors.contract.with
 import tmg.flashback.data.repo.ConstructorRepository
 import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.model
@@ -97,7 +95,7 @@ internal class SearchConstructorViewModelTest: BaseTest() {
         underTest.clickConstructor(constructor)
 
         verify {
-            mockNavigator.navigate(Screen.Constructor.with(constructor.id, constructor.name))
+            mockNavigator.navigate(Screen.Constructor(constructor.id, constructor.name))
         }
     }
 

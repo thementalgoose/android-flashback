@@ -21,7 +21,7 @@ import tmg.flashback.sandbox.model.SandboxMenuItem
 import tmg.flashback.navigation.ApplicationNavigationComponent
 import tmg.flashback.navigation.NavigationDestination
 import tmg.flashback.navigation.Navigator
-import tmg.flashback.reactiongame.contract.usecases.IsReactionGameEnabledUseCase
+import tmg.flashback.reactiongame.usecases.IsReactionGameEnabledUseCase
 import tmg.flashback.rss.repo.RssRepository
 import tmg.flashback.sandbox.usecases.GetSandboxMenuItemsUseCase
 import tmg.flashback.season.presentation.dashboard.shared.seasonpicker.CurrentSeasonHolder

@@ -5,7 +5,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-internal class ShouldForceUpgradeUseCase @Inject constructor(
+class ShouldForceUpgradeUseCase @Inject constructor(
     private val repository: MaintenanceRepository
 ) {
     fun shouldForceUpgrade(): Boolean {

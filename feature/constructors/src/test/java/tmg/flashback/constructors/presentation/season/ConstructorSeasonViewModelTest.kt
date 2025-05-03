@@ -13,12 +13,9 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.flashback.constructors.R
 import tmg.flashback.formula1.R.drawable
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.data.repo.ConstructorRepository
-import tmg.flashback.drivers.contract.Driver
-import tmg.flashback.drivers.contract.with
 import tmg.flashback.formula1.model.ConstructorHistory
 import tmg.flashback.formula1.model.ConstructorHistorySeason
 import tmg.flashback.formula1.model.Driver
@@ -234,7 +231,7 @@ internal class ConstructorSeasonViewModelTest: BaseTest() {
         initSUT()
         sut.inputs.driverClicked(ConstructorSeasonModel.driverModel(), 2020)
 
-        val expected = Screen.Driver.with("driverId", "firstName lastName")
+        val expected = Screen.Driver("driverId", "firstName lastName")
         verify {
             mockNavigator.navigate(expected)
         }

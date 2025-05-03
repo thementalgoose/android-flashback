@@ -7,10 +7,9 @@ import io.mockk.verify
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import tmg.flashback.R
 import tmg.flashback.strings.R.string
 import tmg.flashback.device.repository.PrivacyRepository
-import tmg.flashback.privacypolicy.contract.PrivacyPolicy
+import tmg.flashback.navigation.Screen
 import tmg.flashback.ui.managers.ToastManager
 import tmg.flashback.presentation.settings.Settings
 import tmg.testutils.BaseTest
@@ -77,7 +76,7 @@ internal class SettingsPrivacyViewModelTest: BaseTest() {
         underTest.inputs.prefClicked(Settings.Other.privacyPolicy)
 
         verify {
-            mockNavigator.navigate(tmg.flashback.navigation.Screen.Settings.PrivacyPolicy)
+            mockNavigator.navigate(Screen.PrivacyPolicy)
         }
     }
 

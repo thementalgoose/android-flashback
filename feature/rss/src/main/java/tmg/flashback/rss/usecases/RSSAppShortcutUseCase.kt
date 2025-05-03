@@ -11,7 +11,7 @@ import tmg.flashback.strings.R.string
 import tmg.flashback.rss.repo.RssRepository
 import javax.inject.Inject
 
-internal class RSSAppShortcutUseCase @Inject constructor(
+class RSSAppShortcutUseCase @Inject constructor(
     private val rssRepository: RssRepository,
     private val appShortcutManager: AppShortcutManager
 ) {

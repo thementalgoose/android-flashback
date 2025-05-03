@@ -11,7 +11,6 @@ import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.collectAsState
 import androidx.core.splashscreen.SplashScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.core.view.WindowCompat
 import androidx.window.layout.WindowInfoTracker
 import androidx.window.layout.WindowLayoutInfo
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,7 +18,7 @@ import tmg.flashback.BuildConfig
 import tmg.flashback.ads.ads.components.AdvertProvider
 import tmg.flashback.configuration.usecases.ConfigSyncUseCase
 import tmg.flashback.crashlytics.manager.CrashlyticsManager
-import tmg.flashback.maintenance.contract.MaintenanceNavigationComponent
+import tmg.flashback.navigation.ApplicationNavigationComponent
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.constants.SCREEN_PARAM
 import tmg.flashback.presentation.dashboard.DashboardScreen
@@ -44,7 +43,7 @@ class HomeActivity: BaseActivity(), SplashScreen.KeepOnScreenCondition {
     @Inject
     lateinit var navigator: Navigator
     @Inject
-    lateinit var maintenanceNavigationComponent: MaintenanceNavigationComponent
+    lateinit var applicationNavigationComponent: ApplicationNavigationComponent
 
     @Inject
     lateinit var advertProvider: AdvertProvider
@@ -102,7 +101,7 @@ class HomeActivity: BaseActivity(), SplashScreen.KeepOnScreenCondition {
                 finish()
             }
             viewModel.forceUpgrade -> {
-                maintenanceNavigationComponent.forceUpgrade()
+                applicationNavigationComponent.forceUpgrade()
                 finish()
             }
         }

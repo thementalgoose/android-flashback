@@ -22,6 +22,7 @@ import tmg.flashback.configuration.usecases.InitialiseConfigUseCase
 import tmg.flashback.crashlytics.model.FirebaseKey
 import tmg.flashback.crashlytics.usecases.AddCustomKeyUseCase
 import tmg.flashback.crashlytics.usecases.InitialiseCrashReportingUseCase
+import tmg.flashback.data.repo.NotificationsRepository
 import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.device.repository.DeviceRepository
 import tmg.flashback.device.repository.PrivacyRepository
@@ -45,7 +46,7 @@ import tmg.flashback.ui.model.NightMode
 import tmg.flashback.ui.model.Theme
 import tmg.flashback.ui.repository.ThemeRepository
 import tmg.flashback.usecases.RefreshWidgetsUseCase
-import tmg.flashback.widgets.upnext.contract.usecases.HasUpNextWidgetsUseCase
+import tmg.flashback.widgets.upnext.usecases.HasUpNextWidgetsUseCase
 import tmg.utilities.extensions.isInDayMode
 import java.time.format.DateTimeFormatter
 import java.util.Locale

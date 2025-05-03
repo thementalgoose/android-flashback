@@ -7,7 +7,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import tmg.flashback.widgets.upnext.presentation.UpNextWidgetReceiver
 import javax.inject.Inject
 
-internal class HasUpNextUpNextWidgetsUseCase @Inject constructor(
+class HasUpNextWidgetsUseCase @Inject constructor(
     @ApplicationContext
     private val applicationContext: Context
 ) {

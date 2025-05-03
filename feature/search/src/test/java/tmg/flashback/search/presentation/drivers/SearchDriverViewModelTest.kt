@@ -11,8 +11,6 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.data.repo.DriverRepository
-import tmg.flashback.drivers.contract.Driver
-import tmg.flashback.drivers.contract.with
 import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.model.model
 import tmg.flashback.navigation.Navigator
@@ -98,7 +96,7 @@ internal class SearchDriverViewModelTest: BaseTest() {
         underTest.clickDriver(driver)
 
         verify {
-            mockNavigator.navigate(Screen.Driver.with(driver.id, driver.name))
+            mockNavigator.navigate(Screen.Driver(driver.id, driver.name))
         }
     }
 

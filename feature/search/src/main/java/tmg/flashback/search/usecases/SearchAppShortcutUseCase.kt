@@ -10,7 +10,7 @@ import tmg.flashback.search.R
 import tmg.flashback.strings.R.string
 import javax.inject.Inject
 
-internal class SearchAppShortcutUseCase @Inject constructor(
+class SearchAppShortcutUseCase @Inject constructor(
     private val appShortcutManager: AppShortcutManager
 ) {
     fun setup() {

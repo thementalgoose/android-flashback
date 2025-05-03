@@ -1,5 +1,6 @@
 package tmg.flashback.di
 
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -9,8 +10,8 @@ import tmg.flashback.ui.managers.StyleManager
 
 @Module
 @InstallIn(SingletonComponent::class)
-class ThemeModule {
+interface ThemeModule {
 
-    @Provides
-    fun provideStyleManager(impl: AppStyleManager): StyleManager = impl
+    @Binds
+    fun provideStyleManager(impl: AppStyleManager): StyleManager
 }

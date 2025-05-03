@@ -8,7 +8,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-internal class MaintenanceRepository @Inject constructor(
+class MaintenanceRepository @Inject constructor(
     private val configManager: ConfigManager
 ) {
     companion object {

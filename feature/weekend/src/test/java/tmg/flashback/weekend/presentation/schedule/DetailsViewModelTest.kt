@@ -13,8 +13,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
 import java.time.LocalTime
-import tmg.flashback.circuits.contract.Circuit
-import tmg.flashback.circuits.contract.with
 import tmg.flashback.data.repo.NotificationsRepository
 import tmg.flashback.device.usecases.OpenLocationUseCase
 import tmg.flashback.data.repo.RaceRepository
@@ -24,7 +22,6 @@ import tmg.flashback.formula1.model.model
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.flashback.web.usecases.OpenWebpageUseCase
-import tmg.flashback.weekend.R
 import tmg.flashback.ui.R.drawable
 import tmg.flashback.strings.R.string
 import tmg.flashback.weekend.repository.WeatherRepository

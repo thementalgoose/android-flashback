@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
+import tmg.flashback.data.repo.NotificationsRepository
 import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.eastereggs.model.MenuIcons
 import tmg.flashback.eastereggs.usecases.IsMenuIconEnabledUseCase
@@ -26,7 +27,7 @@ import tmg.flashback.ui.model.NightMode
 import tmg.flashback.device.repository.PermissionRepository
 import tmg.flashback.device.usecases.OpenPlayStoreUseCase
 import tmg.flashback.eastereggs.usecases.IsSummerEnabledUseCase
-import tmg.flashback.maintenance.contract.usecases.ShouldSoftUpgradeUseCase
+import tmg.flashback.maintenance.usecases.ShouldSoftUpgradeUseCase
 import tmg.flashback.ui.usecases.ChangeNightModeUseCase
 import tmg.testutils.BaseTest
 

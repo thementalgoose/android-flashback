@@ -22,7 +22,7 @@ import tmg.flashback.navigation.ApplicationNavigationComponent
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.flashback.navigation.route
-import tmg.flashback.reactiongame.contract.usecases.IsReactionGameEnabledUseCase
+import tmg.flashback.reactiongame.usecases.IsReactionGameEnabledUseCase
 import tmg.flashback.rss.repo.RssRepository
 import tmg.flashback.sandbox.SandboxNavigationComponent
 import tmg.flashback.sandbox.model.SandboxMenuItem
