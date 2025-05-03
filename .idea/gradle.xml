@@ -39,9 +39,9 @@
             <option value="$PROJECT_DIR$/feature/reactiongame" />
             <option value="$PROJECT_DIR$/feature/rss" />
             <option value="$PROJECT_DIR$/feature/sandbox" />
-            <option value="$PROJECT_DIR$/feature/sandbox/contract" />
-            <option value="$PROJECT_DIR$/feature/sandbox/core" />
-            <option value="$PROJECT_DIR$/feature/sandbox/noop" />
+            <option value="$PROJECT_DIR$/feature/sandbox/sandbox" />
+            <option value="$PROJECT_DIR$/feature/sandbox/sandbox-impl" />
+            <option value="$PROJECT_DIR$/feature/sandbox/sandbox-noop" />
             <option value="$PROJECT_DIR$/feature/search" />
             <option value="$PROJECT_DIR$/feature/season" />
             <option value="$PROJECT_DIR$/feature/weekend" />

@@ -15,5 +15,5 @@ android {
 }
 
 dependencies {
-    implementation(projects.feature.sandbox.api)
+    implementation(projects.feature.sandbox.sandbox)
 }
