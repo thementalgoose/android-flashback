@@ -2,8 +2,7 @@ package tmg.flashback.season.presentation.dashboard.races
 
 import tmg.flashback.formula1.enums.SeasonTyres
 import tmg.flashback.formula1.enums.getBySeason
-import tmg.flashback.formula1.model.OverviewRace
-import tmg.flashback.weekend.contract.model.ScreenWeekendData
+import tmg.flashback.weekend.navigation.ScreenWeekendData
 
 
 data class RacesScreenState(

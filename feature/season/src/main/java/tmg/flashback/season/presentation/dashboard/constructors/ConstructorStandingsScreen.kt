@@ -24,6 +24,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import tmg.flashback.constructors.presentation.season.ConstructorSeasonScreen
+import tmg.flashback.constructors.presentation.season.ConstructorSeasonScreenVM
 import tmg.flashback.formula1.model.SeasonConstructorStandingSeason
 import tmg.flashback.providers.SeasonConstructorStandingSeasonProvider
 import tmg.flashback.season.presentation.dashboard.shared.seasonpicker.SeasonTitleVM
@@ -73,14 +75,13 @@ fun ConstructorStandingsScreenVM(
         detailsActionUpClicked = viewModel.inputs::closeConstructor,
         details = {
             val selected = state.value.currentlySelected!!
-            constructorsNavigationComponent.ConstructorSeasonScreen(
+            ConstructorSeasonScreenVM(
                 actionUpClicked = viewModel.inputs::closeConstructor,
                 windowSizeClass = windowSizeClass,
                 paddingValues = paddingValues,
                 constructorId = selected.constructor.id,
                 constructorName = selected.constructor.name,
-                season = selected.season,
-                driverClicked = { id, name, season -> }
+                season = selected.season
             )
         }
     )

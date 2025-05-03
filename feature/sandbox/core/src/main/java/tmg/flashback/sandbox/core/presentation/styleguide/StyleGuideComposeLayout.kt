@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalPagerApi::class, ExperimentalPagerApi::class)
-
 package tmg.flashback.sandbox.core.presentation.styleguide
 
 import androidx.compose.foundation.layout.Arrangement

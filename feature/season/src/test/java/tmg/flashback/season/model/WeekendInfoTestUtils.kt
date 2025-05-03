@@ -1,8 +1,7 @@
 package tmg.flashback.season.model
 
 import tmg.flashback.formula1.model.RaceInfo
-import tmg.flashback.weekend.contract.model.ScreenWeekendData
-
+import tmg.flashback.weekend.navigation.ScreenWeekendData
 
 fun RaceInfo.toScreenWeekendData(): ScreenWeekendData {
     return ScreenWeekendData(

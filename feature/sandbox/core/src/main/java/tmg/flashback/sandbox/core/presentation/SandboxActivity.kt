@@ -37,7 +37,6 @@ import tmg.flashback.navigation.ApplicationNavigationComponent
 import tmg.flashback.notifications.receiver.LocalNotificationBroadcastReceiver
 import tmg.flashback.notifications.repository.NotificationIdsRepository
 import tmg.flashback.prefs.manager.PreferenceManager
-import tmg.flashback.season.contract.repository.models.NotificationUpcoming
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.buttons.ButtonPrimary
 import tmg.flashback.style.buttons.ButtonTertiary
@@ -280,7 +279,7 @@ class SandboxActivity: BaseActivity() {
             onClick = {
                 val intent = LocalNotificationBroadcastReceiver.intent(
                     context = applicationContext,
-                    channelId = NotificationUpcoming.RACE.channelId,
+                    channelId = "notify_race",
                     title = "This is a debug notification!",
                     description = "This is a long description inside the notification"
                 )

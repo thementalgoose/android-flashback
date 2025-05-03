@@ -1,5 +1,6 @@
 package tmg.flashback.season.usecases
 
+import tmg.flashback.data.repo.NotificationsRepository
 import tmg.flashback.notifications.usecases.RemoteNotificationSubscribeUseCase
 import tmg.flashback.notifications.usecases.RemoteNotificationUnsubscribeUseCase
 import tmg.flashback.formula1.model.notifications.NotificationResultsAvailable
@@ -11,7 +12,7 @@ class ResubscribeNotificationsUseCase @Inject constructor(
     private val remoteNotificationUnsubscribeUseCase: RemoteNotificationUnsubscribeUseCase
 ) {
     suspend fun resubscribe() {
-        NotificationResultsAvailable.values().forEach {
+        NotificationResultsAvailable.entries.forEach {
             when (notificationRepository.isEnabled(it)) {
                 true -> remoteNotificationSubscribeUseCase.subscribe(it.remoteSubscriptionTopic)
                 false -> remoteNotificationUnsubscribeUseCase.unsubscribe(it.remoteSubscriptionTopic)

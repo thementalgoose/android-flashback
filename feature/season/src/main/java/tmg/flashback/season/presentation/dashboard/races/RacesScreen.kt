@@ -69,6 +69,7 @@ import tmg.flashback.ui.components.loading.Fade
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.now.Now
 import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
+import tmg.flashback.weekend.presentation.WeekendScreen
 import tmg.utilities.extensions.format
 import tmg.utilities.extensions.startOfWeek
 import java.time.LocalDate
@@ -119,11 +120,11 @@ fun RacesScreen(
         detailsActionUpClicked = viewModel.inputs::back,
         details = {
             val race = uiState.value.currentRace!!
-            weekendNavigationComponent.Weekend(
+            WeekendScreen(
                 paddingValues = paddingValues,
                 actionUpClicked = viewModel.inputs::back,
                 windowSizeClass = windowSizeClass,
-                weekendData = race,
+                weekendInfo = race,
             )
         }
     )

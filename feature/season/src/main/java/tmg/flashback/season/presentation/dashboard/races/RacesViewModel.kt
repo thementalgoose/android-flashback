@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import tmg.flashback.ads.ads.repository.AdsRepository
 import tmg.flashback.data.repo.EventsRepository
+import tmg.flashback.data.repo.NotificationsRepository
 import tmg.flashback.data.repo.OverviewRepository
 import tmg.flashback.data.repo.usecases.FetchSeasonUseCase
 import tmg.flashback.device.managers.NetworkConnectivityManager
@@ -22,8 +23,8 @@ import tmg.flashback.reviews.usecases.ReviewSectionSeenUseCase
 import tmg.flashback.season.presentation.dashboard.races.RacesModelBuilder.generateScheduleModel
 import tmg.flashback.season.presentation.dashboard.shared.seasonpicker.CurrentSeasonHolder
 import tmg.flashback.season.repository.HomeRepository
-import tmg.flashback.weekend.contract.model.ScreenWeekendData
-import tmg.flashback.weekend.contract.model.ScreenWeekendNav
+import tmg.flashback.weekend.navigation.ScreenWeekendData
+import tmg.flashback.weekend.navigation.ScreenWeekendNav
 import javax.inject.Inject
 
 interface RacesViewModelInputs {

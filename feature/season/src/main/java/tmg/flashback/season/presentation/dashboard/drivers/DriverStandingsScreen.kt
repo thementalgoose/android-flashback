@@ -29,6 +29,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import tmg.flashback.drivers.presentation.comparison.DriverComparisonScreenVM
+import tmg.flashback.drivers.presentation.season.DriverSeasonScreenVM
 import tmg.flashback.formula1.model.SeasonDriverStandingSeason
 import tmg.flashback.providers.SeasonDriverStandingSeasonProvider
 import tmg.flashback.season.R
@@ -83,7 +85,7 @@ fun DriverStandingsScreenVM(
         details = {
             when (val selected = state.value.currentlySelected!!) {
                 is Selected.Comparison -> {
-                    driverNavigationComponent.DriverComparison(
+                    DriverComparisonScreenVM(
                         paddingValues = paddingValues,
                         windowSizeClass = windowSizeClass,
                         actionUpClicked = viewModel.inputs::closeDriverDetails,
@@ -91,16 +93,13 @@ fun DriverStandingsScreenVM(
                     )
                 }
                 is Selected.Driver -> {
-                    driverNavigationComponent.DriverSeasonScreen(
+                    DriverSeasonScreenVM(
                         paddingValues = paddingValues,
                         windowSizeClass = windowSizeClass,
                         actionUpClicked = viewModel.inputs::closeDriverDetails,
                         driverId = selected.driver.driver.id,
                         driverName = selected.driver.driver.name,
-                        season = selected.driver.season,
-                        seasonClicked = { season: Int, round: Int, raceName: String, circuitId: String, circuitName: String, country: String, countryISO: String, dateString: String ->
-                            // Do something
-                        }
+                        season = selected.driver.season
                     )
                 }
             }
