@@ -60,7 +60,8 @@ class AppInternalNavigationComponent @Inject constructor(): InternalNavigationCo
             )
             Screen.Search -> NavigationDestination(
                 route = screen.route,
-                launchSingleTop = true, popUpTo = Screen.Races.route
+                launchSingleTop = true,
+                popUpTo = Screen.Races.route
             )
         }
     }
