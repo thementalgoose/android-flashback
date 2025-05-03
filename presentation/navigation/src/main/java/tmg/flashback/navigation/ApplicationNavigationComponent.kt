@@ -17,10 +17,10 @@ interface ApplicationNavigationComponent {
 
     fun settings()
 
-
+    fun forceUpgrade()
+    fun forceUpgradeIntent(context: Context): Intent
 
     fun appSettingsNotifications()
-
     fun appSettingsNotificationsIntent(): Intent
 
     @RequiresApi(Build.VERSION_CODES.S)

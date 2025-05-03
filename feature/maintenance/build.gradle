@@ -30,6 +30,4 @@ dependencies {
     implementation(projects.presentation.navigation)
     implementation(projects.presentation.style)
     implementation(projects.presentation.strings)
-
-    implementation(projects.feature.maintenance.contract)
 }

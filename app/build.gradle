@@ -125,8 +125,7 @@ dependencies {
     // Feature modules
     implementation(projects.feature.rss.core)
     implementation(projects.feature.rss.contract)
-    implementation(projects.feature.maintenance.core)
-    implementation(projects.feature.maintenance.contract)
+    implementation(projects.feature.maintenance)
     implementation(projects.feature.privacypolicy)
     implementation(projects.feature.widgetUpnext.core)
     implementation(projects.feature.widgetUpnext.contract)

@@ -9,7 +9,7 @@ import tmg.flashback.maintenance.contract.MaintenanceNavigationComponent
 import tmg.flashback.maintenance.contract.usecases.ShouldForceUpgradeUseCase
 import tmg.flashback.maintenance.contract.usecases.ShouldSoftUpgradeUseCase
 import tmg.flashback.maintenance.usecases.ShouldForceUpgradeUseCaseImpl
-import tmg.flashback.maintenance.usecases.ShouldSoftUpgradeUseCaseImpl
+import tmg.flashback.maintenance.usecases.ShouldSoftUpgradeUseCase
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -22,5 +22,5 @@ internal class MaintenanceModule {
     fun provideShouldForceUpgradeUseCase(impl: ShouldForceUpgradeUseCaseImpl): ShouldForceUpgradeUseCase = impl
 
     @Provides
-    fun provideShouldSoftUpgradeUseCase(impl: ShouldSoftUpgradeUseCaseImpl): ShouldSoftUpgradeUseCase = impl
+    fun provideShouldSoftUpgradeUseCase(impl: tmg.flashback.maintenance.usecases.ShouldSoftUpgradeUseCase): ShouldSoftUpgradeUseCase = impl
 }

@@ -19,7 +19,6 @@ android {
 dependencies {
 
     implementation(projects.feature.sandbox.contract)
-    implementation(projects.feature.maintenance.contract)
     implementation(projects.core.ads.ads)
 
     // Core modules

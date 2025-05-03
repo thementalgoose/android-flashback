@@ -11,10 +11,10 @@ internal class ShouldSoftUpgradeUseCaseImplTest {
 
     private val mockMaintenanceRepository: MaintenanceRepository = mockk(relaxed = true)
 
-    private lateinit var underTest: ShouldSoftUpgradeUseCaseImpl
+    private lateinit var underTest: ShouldSoftUpgradeUseCase
 
     private fun initUnderTest() {
-        underTest = ShouldSoftUpgradeUseCaseImpl(
+        underTest = ShouldSoftUpgradeUseCase(
             repository = mockMaintenanceRepository
         )
     }

@@ -9,6 +9,7 @@ import tmg.aboutthisapp.AboutThisAppActivity
 import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.googleanalytics.manager.FirebaseAnalyticsManager
 import tmg.flashback.device.ActivityProvider
+import tmg.flashback.maintenance.presentation.forceupgrade.ForceUpgradeActivity
 import tmg.flashback.notifications.navigation.NotificationNavigationProvider
 import tmg.flashback.presentation.HomeActivity
 import tmg.flashback.presentation.aboutthisapp.AboutThisAppConfigProvider
@@ -43,7 +44,6 @@ class AppApplicationNavigationComponent @Inject constructor(
             val config = aboutThisAppConfigProvider.getConfig()
             it.startActivity(AboutThisAppActivity.intent(it, config))
         }
-//        navigator.navigate(Screen.AboutThisApp)
     }
 
 
@@ -57,6 +57,14 @@ class AppApplicationNavigationComponent @Inject constructor(
 
     override fun settings() {
         navigator.navigate(Screen.Settings)
+    }
+
+    override fun forceUpgrade() = activityProvider.launch {
+        it.startActivity(forceUpgradeIntent(it))
+    }
+
+    override fun forceUpgradeIntent(context: Context): Intent {
+        return ForceUpgradeActivity.intent(context)
     }
 
 
