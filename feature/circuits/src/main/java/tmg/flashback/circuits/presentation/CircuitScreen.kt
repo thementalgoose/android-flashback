@@ -57,6 +57,8 @@ import tmg.flashback.ui.components.header.HeaderAction
 import tmg.flashback.ui.components.layouts.MasterDetailsPane
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.ui.components.swiperefresh.SwipeRefresh
+import tmg.flashback.weekend.navigation.ScreenWeekendData
+import tmg.flashback.weekend.presentation.WeekendScreen
 import tmg.utilities.extensions.ordinalAbbreviation
 import java.time.format.DateTimeFormatter
 
@@ -109,11 +111,11 @@ fun CircuitScreenVM(
         details = {
             val selectedRace = uiState.value.selectedRace!!
             val circuit = uiState.value.circuit!!
-            weekendNavigationComponent.Weekend(
+            WeekendScreen(
                 actionUpClicked = viewModel.inputs::back,
                 windowSizeClass = windowSizeClass,
                 paddingValues = paddingValues,
-                weekendData = ScreenWeekendData(
+                weekendInfo = ScreenWeekendData(
                     season = selectedRace.season,
                     round = selectedRace.round,
                     raceName = selectedRace.name,

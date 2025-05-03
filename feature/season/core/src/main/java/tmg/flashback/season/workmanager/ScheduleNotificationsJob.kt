@@ -10,6 +10,7 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import tmg.flashback.data.repo.NotificationsRepository
 import java.time.LocalDateTime
 import tmg.flashback.device.repository.PermissionRepository
 import tmg.flashback.data.repo.ScheduleRepository
@@ -26,8 +27,6 @@ import tmg.flashback.formula1.model.notifications.NotificationUpcoming.QUALIFYIN
 import tmg.flashback.formula1.model.notifications.NotificationUpcoming.RACE
 import tmg.flashback.formula1.model.notifications.NotificationUpcoming.SPRINT
 import tmg.flashback.formula1.model.notifications.NotificationUpcoming.SPRINT_QUALIFYING
-import tmg.flashback.notifications.utils.NotificationUtils.getInexactNotificationTitleText
-import tmg.flashback.notifications.utils.NotificationUtils.getNotificationTitleText
 
 @HiltWorker
 class ScheduleNotificationsJob @AssistedInject constructor(
@@ -43,7 +42,7 @@ class ScheduleNotificationsJob @AssistedInject constructor(
     context,
     parameters
 ) {
-    override suspend fun doWork(): ListenableWorker.Result = withContext(Dispatchers.IO) {
+    override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         if (isStopped) {
             return@withContext Result.success()
         }
@@ -72,7 +71,7 @@ class ScheduleNotificationsJob @AssistedInject constructor(
             .map {
                 it.apply {
                     this.utcDateTime = it.timestamp.utcLocalDateTime
-                    this.requestCode = tmg.flashback.notifications.utils.NotificationUtils.getRequestCode(utcDateTime)
+                    this.requestCode = NotificationUtils.getRequestCode(utcDateTime)
                 }
             }
 
@@ -97,7 +96,7 @@ class ScheduleNotificationsJob @AssistedInject constructor(
             when (exactSupported) {
                 true -> {
                     val time = it.utcDateTime.minusSeconds(reminderPeriod.seconds.toLong())
-                    val (title, text) = getNotificationTitleText(
+                    val (title, text) = NotificationUtils.getNotificationTitleText(
                         applicationContext,
                         it.title,
                         it.label,
@@ -117,7 +116,7 @@ class ScheduleNotificationsJob @AssistedInject constructor(
                 }
                 false -> {
                     val time = it.utcDateTime.minusHours(1L)
-                    val (title, text) = getInexactNotificationTitleText(
+                    val (title, text) = NotificationUtils.getInexactNotificationTitleText(
                         applicationContext,
                         it.title,
                         it.label,
