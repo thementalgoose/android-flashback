@@ -7,14 +7,13 @@ import tmg.flashback.appshortcuts.models.ShortcutInfo
 import tmg.flashback.navigation.constants.Deeplink
 import tmg.flashback.navigation.constants.SCREEN_PARAM
 import tmg.flashback.search.R
-import tmg.flashback.search.contract.usecases.SearchAppShortcutUseCase
 import tmg.flashback.strings.R.string
 import javax.inject.Inject
 
-internal class SearchAppShortcutUseCaseImpl @Inject constructor(
+internal class SearchAppShortcutUseCase @Inject constructor(
     private val appShortcutManager: AppShortcutManager
-) : SearchAppShortcutUseCase {
-    override fun setup() {
+) {
+    fun setup() {
         appShortcutManager.addDynamicShortcut(searchShortcutInfo)
     }
 

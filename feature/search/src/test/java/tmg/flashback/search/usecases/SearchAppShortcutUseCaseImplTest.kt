@@ -12,12 +12,12 @@ internal class SearchAppShortcutUseCaseImplTest {
 
     private val mockAppShortcutManager: AppShortcutManager = mockk(relaxed = true)
 
-    private lateinit var underTest: SearchAppShortcutUseCaseImpl
+    private lateinit var underTest: SearchAppShortcutUseCase
 
     private val searchId: String = "search"
 
     private fun initUnderTest() {
-        underTest = SearchAppShortcutUseCaseImpl(
+        underTest = SearchAppShortcutUseCase(
             mockAppShortcutManager
         )
     }
