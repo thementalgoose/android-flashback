@@ -2,17 +2,10 @@ package tmg.flashback
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import tmg.flashback.circuits.contract.with
-import tmg.flashback.constructors.contract.with
-import tmg.flashback.drivers.contract.with
 import tmg.flashback.navigation.Screen
-import tmg.flashback.rss.contract.RSS
-import tmg.flashback.weekend.contract.Weekend
-import tmg.flashback.weekend.navigation.ScreenWeekendData
-import tmg.flashback.weekend.contract.with
+import tmg.flashback.navigation.route
 
 class ScreenPathTest {
-
 
     @Test
     fun `screen calendar`() {
@@ -34,7 +27,7 @@ class ScreenPathTest {
         assertEquals("driver/{data}", Screen.Driver.route)
         assertEquals(
             """driver/{"driverId":"id","driverName":"name"}""",
-            Screen.Driver.with("id", "name").route
+            Screen.Driver("id", "name").route
         )
     }
 
@@ -46,7 +39,7 @@ class ScreenPathTest {
         )
         assertEquals(
             """constructors/{"constructorId":"id","constructorName":"name"}""",
-            Screen.Constructor.with("id", "name").route
+            Screen.Constructor("id", "name").route
         )
     }
 
@@ -58,7 +51,7 @@ class ScreenPathTest {
         )
         assertEquals(
             """circuit/{"circuitId":"id","circuitName":"name"}""",
-            Screen.Circuit.with("id", "name").route
+            Screen.Circuit("id", "name").route
         )
     }
 
@@ -68,29 +61,7 @@ class ScreenPathTest {
     }
 
     @Test
-    fun weekend() {
-        assertEquals(
-            "weekend/{data}?tab={tab}", Screen.Weekend.route
-        )
-        assertEquals(
-            """weekend/{"season":2020,"round":1,"raceName":"raceName","circuitId":"circuitId","circuitName":"circuitName","country":"country","countryISO":"countryISO","dateString":"date"}?tab=RACE""".trimIndent(),
-            Screen.Weekend.with(
-                ScreenWeekendData(
-                    season = 2020,
-                    round = 1,
-                    raceName = "raceName",
-                    circuitId = "circuitId",
-                    circuitName = "circuitName",
-                    country = "country",
-                    countryISO = "countryISO",
-                    dateString = "date",
-                )
-            ).route
-        )
-    }
-
-    @Test
     fun rss() {
-        assertEquals("rss", Screen.RSS.route)
+        assertEquals("rss", Screen.Rss.route)
     }
 }

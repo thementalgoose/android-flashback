@@ -36,7 +36,6 @@ import tmg.flashback.notifications.managers.SystemNotificationManager
 import tmg.flashback.notifications.usecases.RemoteNotificationSubscribeUseCase
 import tmg.flashback.notifications.usecases.RemoteNotificationUnsubscribeUseCase
 import tmg.flashback.repositories.ContactRepository
-import tmg.flashback.season.contract.repository.NotificationsRepository
 import tmg.flashback.formula1.model.notifications.NotificationResultsAvailable
 import tmg.flashback.formula1.model.notifications.NotificationUpcoming
 import tmg.flashback.season.repository.HomeRepository

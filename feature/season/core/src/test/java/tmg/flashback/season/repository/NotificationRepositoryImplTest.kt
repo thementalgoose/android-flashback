@@ -6,7 +6,7 @@ import io.mockk.verify
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import tmg.flashback.data.repo.NotificationsRepositoryImpl
+import tmg.flashback.data.repo.NotificationsRepository
 import tmg.flashback.notifications.repository.NotificationIdsRepository
 import tmg.flashback.prefs.manager.PreferenceManager
 import tmg.flashback.formula1.model.notifications.NotificationResultsAvailable
@@ -19,10 +19,10 @@ internal class NotificationRepositoryImplTest {
     private val mockPreferenceManager: PreferenceManager = mockk(relaxed = true)
     private val mockNotificationIdsRepository: NotificationIdsRepository = mockk(relaxed = true)
 
-    private lateinit var underTest: NotificationsRepositoryImpl
+    private lateinit var underTest: NotificationsRepository
 
     private fun initUnderTest() {
-        underTest = NotificationsRepositoryImpl(
+        underTest = NotificationsRepository(
             notificationIdsRepository = mockNotificationIdsRepository,
             preferenceManager = mockPreferenceManager
         )

@@ -2,7 +2,6 @@ package tmg.flashback.season.usecases
 
 import tmg.flashback.notifications.usecases.RemoteNotificationSubscribeUseCase
 import tmg.flashback.notifications.usecases.RemoteNotificationUnsubscribeUseCase
-import tmg.flashback.season.contract.repository.NotificationsRepository
 import tmg.flashback.formula1.model.notifications.NotificationResultsAvailable
 import javax.inject.Inject
 

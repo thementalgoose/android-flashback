@@ -24,7 +24,6 @@ import tmg.flashback.formula1.model.model
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.reviews.usecases.AppSection
 import tmg.flashback.reviews.usecases.ReviewSectionSeenUseCase
-import tmg.flashback.season.contract.repository.NotificationsRepository
 import tmg.flashback.season.presentation.dashboard.shared.seasonpicker.CurrentSeasonHolder
 import tmg.flashback.season.repository.HomeRepository
 import tmg.flashback.weekend.contract.model.ScreenWeekendData

@@ -19,7 +19,6 @@ import tmg.flashback.formula1.utils.NotificationUtils
 import tmg.flashback.notifications.repository.NotificationIdsRepository
 import tmg.flashback.notifications.usecases.LocalNotificationCancelUseCase
 import tmg.flashback.notifications.usecases.LocalNotificationScheduleUseCase
-import tmg.flashback.season.contract.repository.NotificationsRepository
 import tmg.flashback.formula1.model.notifications.NotificationUpcoming
 import tmg.flashback.formula1.model.notifications.NotificationUpcoming.FREE_PRACTICE
 import tmg.flashback.formula1.model.notifications.NotificationUpcoming.OTHER

@@ -6,7 +6,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import tmg.flashback.navigation.ApplicationNavigationComponent
-import tmg.flashback.season.contract.repository.NotificationsRepository
 import tmg.flashback.season.usecases.ScheduleNotificationsUseCase
 import tmg.flashback.device.AppPermissions
 import tmg.flashback.ui.managers.PermissionManager

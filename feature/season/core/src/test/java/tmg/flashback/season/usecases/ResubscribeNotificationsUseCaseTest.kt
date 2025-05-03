@@ -7,7 +7,6 @@ import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
 import tmg.flashback.notifications.usecases.RemoteNotificationSubscribeUseCase
 import tmg.flashback.notifications.usecases.RemoteNotificationUnsubscribeUseCase
-import tmg.flashback.season.contract.repository.NotificationsRepository
 import tmg.flashback.formula1.model.notifications.NotificationResultsAvailable.QUALIFYING
 import tmg.flashback.formula1.model.notifications.NotificationResultsAvailable.RACE
 import tmg.testutils.BaseTest

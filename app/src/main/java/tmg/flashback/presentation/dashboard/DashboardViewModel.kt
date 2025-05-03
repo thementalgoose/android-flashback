@@ -12,7 +12,6 @@ import tmg.flashback.eastereggs.usecases.IsMenuIconEnabledUseCase
 import tmg.flashback.eastereggs.usecases.IsSnowEnabledUseCase
 import tmg.flashback.eastereggs.usecases.IsUkraineEnabledUseCase
 import tmg.flashback.navigation.ApplicationNavigationComponent
-import tmg.flashback.season.contract.repository.NotificationsRepository
 import tmg.flashback.device.AppPermissions
 import tmg.flashback.ui.managers.PermissionManager
 import tmg.flashback.ui.managers.StyleManager

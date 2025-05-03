@@ -19,7 +19,6 @@ import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.reviews.usecases.AppSection.HOME_CALENDAR
 import tmg.flashback.reviews.usecases.ReviewSectionSeenUseCase
-import tmg.flashback.season.contract.repository.NotificationsRepository
 import tmg.flashback.season.presentation.dashboard.races.RacesModelBuilder.generateScheduleModel
 import tmg.flashback.season.presentation.dashboard.shared.seasonpicker.CurrentSeasonHolder
 import tmg.flashback.season.repository.HomeRepository

@@ -15,6 +15,7 @@ import java.time.LocalDate
 import java.time.LocalTime
 import tmg.flashback.circuits.contract.Circuit
 import tmg.flashback.circuits.contract.with
+import tmg.flashback.data.repo.NotificationsRepository
 import tmg.flashback.device.usecases.OpenLocationUseCase
 import tmg.flashback.data.repo.RaceRepository
 import tmg.flashback.formula1.model.Race
@@ -22,7 +23,6 @@ import tmg.flashback.formula1.model.Schedule
 import tmg.flashback.formula1.model.model
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
-import tmg.flashback.season.contract.repository.NotificationsRepository
 import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.flashback.weekend.R
 import tmg.flashback.ui.R.drawable
@@ -110,7 +110,7 @@ internal class DetailsViewModelTest: BaseTest() {
         underTest.inputs.linkClicked(link)
 
         verify {
-            mockNavigator.navigate(Screen.Circuit.with("circuitId", "circuitName"))
+            mockNavigator.navigate(Screen.Circuit("circuitId", "circuitName"))
         }
     }
 

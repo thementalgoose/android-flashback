@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import tmg.flashback.data.repo.NotificationsRepository
 import tmg.flashback.device.usecases.OpenLocationUseCase
 import tmg.flashback.data.repo.RaceRepository
 import tmg.flashback.formula1.enums.RaceWeekend
@@ -18,7 +19,6 @@ import tmg.flashback.formula1.model.Schedule
 import tmg.flashback.formula1.utils.NotificationUtils
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
-import tmg.flashback.season.contract.repository.NotificationsRepository
 import tmg.flashback.formula1.model.notifications.NotificationUpcoming.FREE_PRACTICE
 import tmg.flashback.formula1.model.notifications.NotificationUpcoming.OTHER
 import tmg.flashback.formula1.model.notifications.NotificationUpcoming.QUALIFYING
