@@ -27,6 +27,7 @@ import tmg.flashback.reviews.usecases.AppSection
 import tmg.flashback.reviews.usecases.ReviewSectionSeenUseCase
 import tmg.flashback.season.presentation.dashboard.shared.seasonpicker.CurrentSeasonHolder
 import tmg.flashback.season.repository.HomeRepository
+import tmg.flashback.weekend.navigation.ScreenWeekendData
 import tmg.testutils.BaseTest
 
 internal class RacesViewModelTest: BaseTest() {
