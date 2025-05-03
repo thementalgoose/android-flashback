@@ -19,8 +19,9 @@ import tmg.flashback.crashlytics.manager.CrashlyticsManager
 import tmg.flashback.sandbox.SandboxNavigationComponent
 import tmg.flashback.sandbox.model.SandboxMenuItem
 import tmg.flashback.navigation.ApplicationNavigationComponent
-import tmg.flashback.navigation.NavigationDestination
 import tmg.flashback.navigation.Navigator
+import tmg.flashback.navigation.Screen
+import tmg.flashback.navigation.route
 import tmg.flashback.reactiongame.usecases.IsReactionGameEnabledUseCase
 import tmg.flashback.rss.repo.RssRepository
 import tmg.flashback.sandbox.usecases.GetSandboxMenuItemsUseCase
@@ -110,10 +111,10 @@ internal class DashboardNavViewModelTest: BaseTest() {
         "rss,true",
         "search,true",
         "reaction,true",
-        "drivers/,false",
+        "driver/,false",
         "settings/rss,false",
-        "constructors/,false",
-        "circuits/,false"
+        "constructor/,false",
+        "circuit/,false"
     )
     fun `menu is shown when route is updated`(route: String, showMenu: Boolean) = runTest(testDispatcher) {
 
@@ -165,11 +166,11 @@ internal class DashboardNavViewModelTest: BaseTest() {
         initUnderTest()
         underTest.inputs.clickItem(menuItem)
 
-        val destination = slot<NavigationDestination>()
+        val screen = slot<Screen>()
         verify {
-            mockNavigator.navigate(capture(destination))
+            mockNavigator.navigate(capture(screen))
         }
-        assertEquals(route, destination.captured.route)
+        assertEquals(route, screen.captured.route)
     }
 
     @ParameterizedTest(name = "Navigation in root locks {0} route showMenu to {1} ")

@@ -16,10 +16,10 @@ val Screen.route: String
     }
 
 val Screen.Circuit.Companion.route: String
-    get() = "circuits/{data}"
+    get() = "circuit/{data}"
 
 val Screen.Driver.Companion.route: String
     get() = "driver/{data}"
 
 val Screen.Constructor.Companion.route: String
-    get() = "constructors/{data}"
+    get() = "constructor/{data}"

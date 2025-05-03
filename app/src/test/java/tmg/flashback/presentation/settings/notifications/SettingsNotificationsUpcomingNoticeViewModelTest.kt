@@ -11,6 +11,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.EnumSource
+import tmg.flashback.data.repo.NotificationsRepository
 import tmg.flashback.navigation.ApplicationNavigationComponent
 import tmg.flashback.formula1.model.notifications.NotificationReminder
 import tmg.flashback.season.usecases.ScheduleNotificationsUseCase
