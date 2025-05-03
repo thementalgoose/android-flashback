@@ -3,17 +3,13 @@ package tmg.flashback.di.navigation
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import java.time.LocalDate
 import tmg.flashback.googleanalytics.constants.AnalyticsConstants.analyticsRound
 import tmg.flashback.googleanalytics.constants.AnalyticsConstants.analyticsSeason
 import tmg.flashback.googleanalytics.manager.FirebaseAnalyticsManager
-import tmg.flashback.navigation.Deeplink.SCREEN_PARAM
-import tmg.flashback.navigation.Screen
 import tmg.flashback.presentation.HomeActivity
-import tmg.flashback.weekend.contract.Weekend
-import tmg.flashback.weekend.contract.model.ScreenWeekendData
-import tmg.flashback.weekend.contract.with
-import tmg.flashback.widgets.upnext.contract.WidgetNavigationComponent
+import tmg.flashback.weekend.navigation.ScreenWeekendData
+import tmg.flashback.widgets.upnext.navigation.WidgetNavigationComponent
+import java.time.LocalDate
 import javax.inject.Inject
 
 class AppWidgetNavigationComponent @Inject constructor(
@@ -52,10 +48,11 @@ class AppWidgetNavigationComponent @Inject constructor(
             countryISO = countryISO,
             date = date
         )
-        val deeplink = Screen.Weekend.with(screenWeekendData).route
+        // TODO: Fix this
+//        val deeplink = Screen.Weekend.with(screenWeekendData).route
         return Intent(Intent.ACTION_MAIN, Uri.EMPTY, context, HomeActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            putExtra(SCREEN_PARAM, deeplink)
+//            putExtra(SCREEN_PARAM, deeplink)
         }
     }
 }

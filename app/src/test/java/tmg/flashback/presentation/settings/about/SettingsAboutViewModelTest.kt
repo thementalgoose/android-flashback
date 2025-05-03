@@ -17,8 +17,6 @@ import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import tmg.flashback.ui.managers.ToastManager
 import tmg.flashback.presentation.settings.Settings
-import tmg.flashback.reactiongame.contract.Reaction
-import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.testutils.BaseTest
 
 internal class SettingsAboutViewModelTest: BaseTest() {
@@ -116,7 +114,7 @@ internal class SettingsAboutViewModelTest: BaseTest() {
         underTest.inputs.prefClicked(Settings.Other.buildVersion)
 
         verify(exactly = 1) {
-            mockNavigator.navigate(Screen.Reaction)
+            mockNavigator.navigate(Screen.ReactionGame)
         }
     }
 

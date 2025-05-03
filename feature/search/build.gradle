@@ -1,0 +1,45 @@
+apply plugin:  'com.android.library'
+apply from: rootDir.absolutePath + "/gradle/config-android.gradle"
+apply from: rootDir.absolutePath + "/gradle/config-util.gradle"
+apply from: rootDir.absolutePath + "/gradle/config-junit5.gradle"
+apply from: rootDir.absolutePath + "/gradle/config-hilt.gradle"
+apply from: rootDir.absolutePath + "/gradle/config-compose.gradle"
+apply from: rootDir.absolutePath + "/gradle/config-compose-providers.gradle"
+
+android {
+    compileSdk project.ext.compileSdk
+
+    defaultConfig {
+        minSdkVersion project.ext.minSdkVersion
+        targetSdkVersion project.ext.targetSdkVersion
+    }
+    namespace 'tmg.flashback.search'
+}
+
+dependencies {
+    implementation(projects.core.ads.ads)
+    // Core modules
+    implementation(projects.core.metrics.googleanalytics)
+    implementation(projects.core.appshortcuts)
+    implementation(projects.core.metrics.crashlytics)
+    implementation(projects.core.device)
+    implementation(projects.core.preferences)
+    implementation(projects.core.webbrowser)
+
+    implementation(projects.presentation.ui)
+    implementation(projects.presentation.strings)
+    implementation(projects.presentation.navigation)
+
+    implementation(projects.formula1)
+    implementation(projects.data.repo)
+
+    implementation(projects.feature.drivers)
+    implementation(projects.feature.constructors)
+    implementation(projects.feature.circuits)
+    implementation(projects.feature.weekend)
+
+    implementation libs.bundles.retrofit
+    implementation libs.bundles.okhttp
+
+    testImplementation(testFixtures(projects.formula1))
+}

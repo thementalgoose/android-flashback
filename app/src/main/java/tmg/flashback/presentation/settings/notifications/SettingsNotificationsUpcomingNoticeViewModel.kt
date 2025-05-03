@@ -5,13 +5,13 @@ import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import tmg.flashback.data.repo.NotificationsRepository
 import tmg.flashback.navigation.ApplicationNavigationComponent
-import tmg.flashback.season.contract.repository.NotificationsRepository
 import tmg.flashback.season.usecases.ScheduleNotificationsUseCase
 import tmg.flashback.device.AppPermissions
 import tmg.flashback.ui.managers.PermissionManager
 import tmg.flashback.device.repository.PermissionRepository
-import tmg.flashback.season.contract.repository.models.NotificationReminder
+import tmg.flashback.formula1.model.notifications.NotificationReminder
 import tmg.flashback.ui.settings.Setting
 import tmg.flashback.presentation.settings.Settings
 import javax.inject.Inject

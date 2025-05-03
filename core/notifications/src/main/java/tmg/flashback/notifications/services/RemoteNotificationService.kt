@@ -12,7 +12,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import tmg.flashback.notifications.BuildConfig
 import tmg.flashback.notifications.R
 import tmg.flashback.notifications.navigation.NotificationNavigationProvider
-import tmg.flashback.notifications.repository.NotificationRepository
+import tmg.flashback.notifications.repository.NotificationIdsRepository
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -22,7 +22,7 @@ class RemoteNotificationService : FirebaseMessagingService() {
     lateinit var navigationProvider: NotificationNavigationProvider
 
     @Inject
-    lateinit var notificationRepository: NotificationRepository
+    lateinit var notificationIdsRepository: NotificationIdsRepository
 
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)
@@ -43,7 +43,7 @@ class RemoteNotificationService : FirebaseMessagingService() {
         if (BuildConfig.DEBUG) {
             Log.i("Notifications", "New token for remote push notifications '$token'")
         }
-        notificationRepository.remoteNotificationToken = token
+        notificationIdsRepository.remoteNotificationToken = token
         /* Do nothing with a new token */
     }
 

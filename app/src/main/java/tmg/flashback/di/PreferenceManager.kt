@@ -1,5 +1,6 @@
 package tmg.flashback.di
 
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -9,8 +10,8 @@ import tmg.flashback.prefs.manager.PreferenceManager
 
 @Module
 @InstallIn(SingletonComponent::class)
-class PreferenceManager {
+interface PreferenceManager {
 
-    @Provides
-    fun providesPreferenceManager(impl: AppPreferencesManager): PreferenceManager = impl
+    @Binds
+    fun providesPreferenceManager(impl: AppPreferencesManager): PreferenceManager
 }

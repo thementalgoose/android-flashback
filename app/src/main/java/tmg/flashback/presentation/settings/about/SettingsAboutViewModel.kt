@@ -4,19 +4,15 @@ import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import tmg.flashback.R
-import tmg.flashback.strings.R.string
-import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.device.repository.PrivacyRepository
 import tmg.flashback.device.usecases.OpenPlayStoreUseCase
 import tmg.flashback.navigation.ApplicationNavigationComponent
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
+import tmg.flashback.presentation.settings.Settings
+import tmg.flashback.strings.R.string
 import tmg.flashback.ui.managers.ToastManager
 import tmg.flashback.ui.settings.Setting
-import tmg.flashback.presentation.settings.Settings
-import tmg.flashback.reactiongame.contract.Reaction
-import tmg.flashback.web.usecases.OpenWebpageUseCase
 import javax.inject.Inject
 
 interface SettingsAboutViewModelInputs {
@@ -61,7 +57,7 @@ class SettingsAboutViewModel @Inject constructor(
             Settings.Other.buildVersion.key -> {
                 numberOfTimesClicked--
                 if (numberOfTimesClicked <= 0) {
-                    navigator.navigate(Screen.Reaction)
+                    navigator.navigate(Screen.ReactionGame)
                     return
                 }
             }

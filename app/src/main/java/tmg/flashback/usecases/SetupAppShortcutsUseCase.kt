@@ -1,7 +1,7 @@
 package tmg.flashback.usecases
 
-import tmg.flashback.rss.contract.usecases.RSSAppShortcutUseCase
-import tmg.flashback.search.contract.usecases.SearchAppShortcutUseCase
+import tmg.flashback.rss.usecases.RSSAppShortcutUseCase
+import tmg.flashback.search.usecases.SearchAppShortcutUseCase
 import javax.inject.Inject
 
 class SetupAppShortcutUseCase @Inject constructor(

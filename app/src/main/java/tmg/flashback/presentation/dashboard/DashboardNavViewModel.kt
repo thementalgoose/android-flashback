@@ -18,21 +18,15 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import tmg.flashback.crashlytics.manager.CrashlyticsManager
-import tmg.flashback.sandbox.SandboxNavigationComponent
-import tmg.flashback.sandbox.model.SandboxMenuItem
 import tmg.flashback.navigation.ApplicationNavigationComponent
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
-import tmg.flashback.rss.contract.RSS
+import tmg.flashback.navigation.route
+import tmg.flashback.reactiongame.usecases.IsReactionGameEnabledUseCase
 import tmg.flashback.rss.repo.RssRepository
-import tmg.flashback.search.contract.Search
-import tmg.flashback.season.contract.ConstructorsStandings
-import tmg.flashback.season.contract.DriverStandings
-import tmg.flashback.season.contract.Races
-import tmg.flashback.presentation.settings.All
-import tmg.flashback.reactiongame.contract.Reaction
+import tmg.flashback.sandbox.SandboxNavigationComponent
+import tmg.flashback.sandbox.model.SandboxMenuItem
 import tmg.flashback.sandbox.usecases.GetSandboxMenuItemsUseCase
-import tmg.flashback.reactiongame.contract.usecases.IsReactionGameEnabledUseCase
 import tmg.flashback.season.presentation.dashboard.shared.seasonpicker.CurrentSeasonHolder
 import tmg.flashback.usecases.DashboardSyncUseCase
 import tmg.utilities.extensions.combinePair
@@ -83,11 +77,11 @@ class DashboardNavViewModel @Inject constructor(
             val item: MenuItem? = when {
                 destination == Screen.Races.route -> MenuItem.Calendar
                 destination == Screen.DriverStandings.route -> MenuItem.Drivers
-                destination == Screen.ConstructorsStandings.route -> MenuItem.Constructors
+                destination == Screen.ConstructorStandings.route -> MenuItem.Constructors
                 destination.startsWith("settings") -> MenuItem.Settings
                 destination.startsWith("rss") -> MenuItem.RSS
                 destination.startsWith("search") -> MenuItem.Search
-                destination == Screen.Reaction.route -> MenuItem.Reaction
+                destination == Screen.ReactionGame.route -> MenuItem.Reaction
                 else -> null
             }
             return@map item
@@ -120,7 +114,7 @@ class DashboardNavViewModel @Inject constructor(
             Log.i("Nav", "showBottomBar $destination")
             return@map when (destination) {
                 Screen.Races.route -> destinationInRoot.includes(destination)
-                Screen.ConstructorsStandings.route -> destinationInRoot.includes(destination)
+                Screen.ConstructorStandings.route -> destinationInRoot.includes(destination)
                 Screen.DriverStandings.route -> destinationInRoot.includes(destination)
                 null -> false
                 else -> false
@@ -163,12 +157,12 @@ class DashboardNavViewModel @Inject constructor(
         when (navigationItem) {
             MenuItem.Calendar -> navigator.navigate(Screen.Races)
             MenuItem.Drivers -> navigator.navigate(Screen.DriverStandings)
-            MenuItem.Constructors -> navigator.navigate(Screen.ConstructorsStandings)
+            MenuItem.Constructors -> navigator.navigate(Screen.ConstructorStandings)
             MenuItem.Contact -> applicationNavigationComponent.aboutApp()
-            MenuItem.RSS -> navigator.navigate(Screen.RSS)
-            MenuItem.Reaction -> navigator.navigate(Screen.Reaction)
+            MenuItem.RSS -> navigator.navigate(Screen.Rss)
+            MenuItem.Reaction -> navigator.navigate(Screen.ReactionGame)
             MenuItem.Search -> navigator.navigate(Screen.Search)
-            MenuItem.Settings -> navigator.navigate(Screen.Settings.All)
+            MenuItem.Settings -> navigator.navigate(Screen.Settings)
         }
     }
 

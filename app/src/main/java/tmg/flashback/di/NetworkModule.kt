@@ -1,5 +1,6 @@
 package tmg.flashback.di
 
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -10,12 +11,11 @@ import tmg.flashback.managers.AppNetworkConfigManager
 
 @Module
 @InstallIn(SingletonComponent::class)
-class NetworkModule {
+interface NetworkModule {
 
-    @Provides
-    fun providesNetworkConfigManager(impl: AppNetworkConfigManager): NetworkConfigManager = impl
+    @Binds
+    fun providesNetworkConfigManager(impl: AppNetworkConfigManager): NetworkConfigManager
 
-    // News temporarily served by flashback.pages.dev until better solution found
-    @Provides
-    fun providesNewsNetworkConfigManager(impl: AppNetworkConfigManager): NewsNetworkConfigManager = impl
+    @Binds
+    fun providesNewsNetworkConfigManager(impl: AppNetworkConfigManager): NewsNetworkConfigManager
 }

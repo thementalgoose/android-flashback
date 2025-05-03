@@ -276,7 +276,7 @@ private fun Breakdown(
                     .height(progressHeight)
                     .clip(RoundedCornerShape(AppTheme.dimens.radiusLarge)),
                 color = colour.value,
-                progress = progress.value
+                progress = { progress.value }
             )
         }
     }

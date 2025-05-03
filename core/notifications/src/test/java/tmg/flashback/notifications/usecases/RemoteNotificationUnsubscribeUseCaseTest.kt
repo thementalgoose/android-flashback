@@ -11,19 +11,19 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.notifications.managers.RemoteNotificationManager
-import tmg.flashback.notifications.repository.NotificationRepository
+import tmg.flashback.notifications.repository.NotificationIdsRepository
 
 internal class RemoteNotificationUnsubscribeUseCaseTest {
 
     private val mockRemoteNotificationManager: RemoteNotificationManager = mockk(relaxed = true)
-    private val mockNotificationRepository: NotificationRepository = mockk(relaxed = true)
+    private val mockNotificationIdsRepository: NotificationIdsRepository = mockk(relaxed = true)
 
     private lateinit var underTest: RemoteNotificationUnsubscribeUseCase
 
     private fun initUnderTest() {
         underTest = RemoteNotificationUnsubscribeUseCase(
             mockRemoteNotificationManager,
-            mockNotificationRepository
+            mockNotificationIdsRepository
         )
     }
 
@@ -47,7 +47,7 @@ internal class RemoteNotificationUnsubscribeUseCaseTest {
     @Test
     fun `unsubscribe from topic doesnt update remote topics if unsubscription fail`() {
         coEvery { mockRemoteNotificationManager.unsubscribeToTopic(any()) } returns false
-        every { mockNotificationRepository.remoteNotificationTopics } returns setOf("topic", "topic2")
+        every { mockNotificationIdsRepository.remoteNotificationTopics } returns setOf("topic", "topic2")
 
         initUnderTest()
         runBlocking {
@@ -55,7 +55,7 @@ internal class RemoteNotificationUnsubscribeUseCaseTest {
         }
 
         verify(exactly = 0) {
-            mockNotificationRepository.remoteNotificationTopics = any()
+            mockNotificationIdsRepository.remoteNotificationTopics = any()
         }
         coVerify {
             mockRemoteNotificationManager.unsubscribeToTopic("topic")
@@ -65,7 +65,7 @@ internal class RemoteNotificationUnsubscribeUseCaseTest {
     @Test
     fun `unsubscribe from topic updates remote topics if unsubscription succeeds`() {
         coEvery { mockRemoteNotificationManager.unsubscribeToTopic(any()) } returns true
-        every { mockNotificationRepository.remoteNotificationTopics } returns setOf("topic", "topic2")
+        every { mockNotificationIdsRepository.remoteNotificationTopics } returns setOf("topic", "topic2")
 
         initUnderTest()
         runBlocking {
@@ -73,7 +73,7 @@ internal class RemoteNotificationUnsubscribeUseCaseTest {
         }
 
         verify {
-            mockNotificationRepository.remoteNotificationTopics = setOf("topic2")
+            mockNotificationIdsRepository.remoteNotificationTopics = setOf("topic2")
         }
         coVerify {
             mockRemoteNotificationManager.unsubscribeToTopic("topic")

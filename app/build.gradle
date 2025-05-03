@@ -123,31 +123,20 @@ tasks.configureEach { task ->
 dependencies {
 
     // Feature modules
-    implementation(projects.feature.rss.core)
-    implementation(projects.feature.rss.contract)
-    implementation(projects.feature.maintenance.core)
-    implementation(projects.feature.maintenance.contract)
-    implementation(projects.feature.privacypolicy.core)
-    implementation(projects.feature.privacypolicy.contract)
-    implementation(projects.feature.widgetUpnext.core)
-    implementation(projects.feature.widgetUpnext.contract)
-    implementation(projects.feature.drivers.contract)
-    implementation(projects.feature.drivers.core)
-    implementation(projects.feature.constructors.contract)
-    implementation(projects.feature.constructors.core)
-    implementation(projects.feature.circuits.contract)
-    implementation(projects.feature.circuits.core)
-    implementation(projects.feature.season.contract)
-    implementation(projects.feature.season.core)
-    implementation(projects.feature.search.contract)
-    implementation(projects.feature.search.core)
-    implementation(projects.feature.weekend.contract)
-    implementation(projects.feature.weekend.core)
-    implementation(projects.feature.reactiongame.contract)
-    implementation(projects.feature.reactiongame.core)
-    implementation(projects.feature.sandbox.contract)
-    sandImplementation(projects.feature.sandbox.core)
-    liveImplementation(projects.feature.sandbox.noop)
+    implementation(projects.feature.rss)
+    implementation(projects.feature.maintenance)
+    implementation(projects.feature.privacypolicy)
+    implementation(projects.feature.widgetUpnext)
+    implementation(projects.feature.drivers)
+    implementation(projects.feature.constructors)
+    implementation(projects.feature.circuits)
+    implementation(projects.feature.season)
+    implementation(projects.feature.search)
+    implementation(projects.feature.weekend)
+    implementation(projects.feature.reactiongame)
+    implementation(projects.feature.sandbox.sandbox)
+    sandImplementation(projects.feature.sandbox.sandboxImpl)
+    liveImplementation(projects.feature.sandbox.sandboxNoop)
 
     // Data
     implementation(projects.data.repo)
@@ -202,7 +191,7 @@ dependencies {
 
     // Test Utils
     testImplementation(testFixtures(projects.formula1))
-    testImplementation(projects.feature.sandbox.core)
+    testImplementation(projects.feature.sandbox.sandboxImpl)
 
     // Android Test
     androidTestImplementation libs.bundles.androidxtest

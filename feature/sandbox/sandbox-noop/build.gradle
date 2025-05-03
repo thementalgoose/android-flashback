@@ -1,0 +1,19 @@
+apply plugin:  'com.android.library'
+apply from: rootDir.absolutePath + "/gradle/config-android.gradle"
+apply from: rootDir.absolutePath + "/gradle/config-util.gradle"
+apply from: rootDir.absolutePath + "/gradle/config-hilt.gradle"
+
+android {
+    compileSdk project.ext.compileSdk
+
+    defaultConfig {
+        minSdkVersion project.ext.minSdkVersion
+        targetSdkVersion project.ext.targetSdkVersion
+    }
+
+    namespace 'tmg.flashback.sandbox.noop'
+}
+
+dependencies {
+    implementation(projects.feature.sandbox.sandbox)
+}

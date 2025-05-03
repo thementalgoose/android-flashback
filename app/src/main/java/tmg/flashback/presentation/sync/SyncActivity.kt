@@ -12,7 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import tmg.flashback.maintenance.contract.MaintenanceNavigationComponent
+import tmg.flashback.navigation.AppApplicationNavigationComponent
 import tmg.flashback.presentation.HomeActivity
 import tmg.flashback.presentation.sync.SyncState.LOADING
 import tmg.flashback.style.AppTheme
@@ -25,7 +25,7 @@ class SyncActivity: BaseActivity() {
     private val viewModel: SyncViewModel by viewModels()
 
     @Inject
-    lateinit var maintenanceNavigationComponent: MaintenanceNavigationComponent
+    lateinit var applicationNavigationComponent: AppApplicationNavigationComponent
 
     @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,7 +63,7 @@ class SyncActivity: BaseActivity() {
                             finish()
                         }
                         SyncNavTarget.FORCE_UPGRADE -> {
-                            maintenanceNavigationComponent.forceUpgrade()
+                            applicationNavigationComponent.forceUpgrade()
                             finish()
                         }
                         else -> { /* Do nothing */ }

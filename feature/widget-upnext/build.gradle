@@ -1,0 +1,32 @@
+apply plugin:  'com.android.library'
+apply from: rootDir.absolutePath + "/gradle/config-android.gradle"
+apply from: rootDir.absolutePath + "/gradle/config-util.gradle"
+apply from: rootDir.absolutePath + "/gradle/config-junit5.gradle"
+apply from: rootDir.absolutePath + "/gradle/config-hilt.gradle"
+apply from: rootDir.absolutePath + "/gradle/config-compose-glance.gradle"
+
+android {
+    compileSdk project.ext.compileSdk
+
+    defaultConfig {
+        minSdkVersion project.ext.minSdkVersion
+        targetSdkVersion project.ext.targetSdkVersion
+    }
+    namespace 'tmg.flashback.widgets.upnext'
+}
+
+dependencies {
+    implementation(projects.formula1)
+    implementation(projects.data.repo)
+
+    implementation(projects.presentation.strings)
+    implementation(projects.presentation.styleWidgets)
+
+    // Core modules
+    implementation(projects.core.metrics.googleanalytics)
+    implementation(projects.core.configuration)
+    implementation(projects.core.metrics.crashlytics)
+    implementation(projects.core.device)
+    implementation(projects.core.notifications)
+    implementation(projects.core.preferences)
+}

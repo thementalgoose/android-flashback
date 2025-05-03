@@ -6,13 +6,13 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import tmg.flashback.data.repo.NotificationsRepository
 import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.eastereggs.model.MenuIcons
 import tmg.flashback.eastereggs.usecases.IsMenuIconEnabledUseCase
 import tmg.flashback.eastereggs.usecases.IsSnowEnabledUseCase
 import tmg.flashback.eastereggs.usecases.IsUkraineEnabledUseCase
 import tmg.flashback.navigation.ApplicationNavigationComponent
-import tmg.flashback.season.contract.repository.NotificationsRepository
 import tmg.flashback.device.AppPermissions
 import tmg.flashback.ui.managers.PermissionManager
 import tmg.flashback.ui.managers.StyleManager
@@ -20,7 +20,7 @@ import tmg.flashback.ui.model.NightMode
 import tmg.flashback.device.repository.PermissionRepository
 import tmg.flashback.device.usecases.OpenPlayStoreUseCase
 import tmg.flashback.eastereggs.usecases.IsSummerEnabledUseCase
-import tmg.flashback.maintenance.contract.usecases.ShouldSoftUpgradeUseCase
+import tmg.flashback.maintenance.usecases.ShouldSoftUpgradeUseCase
 import tmg.flashback.ui.usecases.ChangeNightModeUseCase
 import javax.inject.Inject
 

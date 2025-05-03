@@ -23,6 +23,7 @@ dependencies {
     implementation(projects.core.metrics.crashlytics)
     implementation(projects.core.preferences)
     implementation(projects.core.device)
+    implementation(projects.core.notifications)
 
     implementation libs.bundles.retrofit
     implementation libs.bundles.androidx.workmanager

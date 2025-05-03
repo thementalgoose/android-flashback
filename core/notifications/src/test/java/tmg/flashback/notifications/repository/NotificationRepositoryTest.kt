@@ -13,10 +13,10 @@ internal class NotificationRepositoryTest {
     private val mockPreferenceManager: PreferenceManager = mockk(relaxed = true)
     private val mockSystemNotificationManager: SystemNotificationManager = mockk(relaxed = true)
 
-    private lateinit var underTest: NotificationRepository
+    private lateinit var underTest: NotificationIdsRepository
 
     private fun initUnderTest() {
-        underTest = NotificationRepository(
+        underTest = NotificationIdsRepository(
             preferenceManager = mockPreferenceManager,
             systemNotificationManager = mockSystemNotificationManager
         )

@@ -2,8 +2,8 @@ package tmg.flashback.presentation.settings
 
 import tmg.flashback.R
 import tmg.flashback.strings.R.string
-import tmg.flashback.season.contract.repository.models.NotificationResultsAvailable
-import tmg.flashback.season.contract.repository.models.NotificationReminder
+import tmg.flashback.formula1.model.notifications.NotificationResultsAvailable
+import tmg.flashback.formula1.model.notifications.NotificationReminder
 import tmg.flashback.season.repository.models.prefKey
 import tmg.flashback.ui.model.NightMode
 import tmg.flashback.presentation.settings.appearance.nightmode.title

@@ -4,14 +4,13 @@ import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import tmg.flashback.R
-import tmg.flashback.strings.R.string
 import tmg.flashback.device.repository.PrivacyRepository
 import tmg.flashback.navigation.Navigator
-import tmg.flashback.privacypolicy.contract.PrivacyPolicy
+import tmg.flashback.navigation.Screen
+import tmg.flashback.presentation.settings.Settings
+import tmg.flashback.strings.R.string
 import tmg.flashback.ui.managers.ToastManager
 import tmg.flashback.ui.settings.Setting
-import tmg.flashback.presentation.settings.Settings
 import javax.inject.Inject
 
 interface SettingsPrivacyViewModelInputs {
@@ -39,7 +38,7 @@ class SettingsPrivacyViewModel @Inject constructor(
     override fun prefClicked(pref: Setting) {
         when (pref.key) {
             Settings.Other.privacyPolicy.key -> {
-                navigator.navigate(tmg.flashback.navigation.Screen.Settings.PrivacyPolicy)
+                navigator.navigate(Screen.PrivacyPolicy)
             }
             Settings.Other.crashReporting -> {
                 privacyRepository.crashReporting = !privacyRepository.crashReporting

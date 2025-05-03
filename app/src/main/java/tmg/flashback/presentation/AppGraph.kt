@@ -15,37 +15,23 @@ import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
 import androidx.window.layout.WindowLayoutInfo
 import tmg.flashback.ads.ads.components.AdvertProvider
-import tmg.flashback.circuits.contract.Circuit
-import tmg.flashback.circuits.contract.model.ScreenCircuitData
+import tmg.flashback.circuits.navigation.ScreenCircuitData
 import tmg.flashback.circuits.presentation.CircuitScreenVM
-import tmg.flashback.constructors.contract.Constructor
-import tmg.flashback.constructors.contract.model.ScreenConstructorData
+import tmg.flashback.constructors.navigation.ScreenConstructorData
 import tmg.flashback.constructors.presentation.overview.ConstructorOverviewScreenVM
-import tmg.flashback.drivers.contract.Driver
-import tmg.flashback.drivers.contract.model.ScreenDriverData
+import tmg.flashback.drivers.navigation.ScreenDriverData
 import tmg.flashback.drivers.presentation.overview.DriverOverviewScreenVM
 import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
-import tmg.flashback.navigation.asNavigationDestination
-import tmg.flashback.presentation.settings.All
+import tmg.flashback.navigation.route
 import tmg.flashback.presentation.settings.SettingsAllScreenVM
-import tmg.flashback.privacypolicy.contract.PrivacyPolicy
 import tmg.flashback.privacypolicy.presentation.PrivacyPolicyScreenVM
-import tmg.flashback.reactiongame.contract.Reaction
 import tmg.flashback.reactiongame.presentation.ReactionScreenVM
-import tmg.flashback.rss.contract.RSS
 import tmg.flashback.rss.presentation.feed.RSSScreenVM
-import tmg.flashback.search.contract.Search
 import tmg.flashback.search.presentation.SearchScreenVM
-import tmg.flashback.season.contract.ConstructorsStandings
-import tmg.flashback.season.contract.DriverStandings
-import tmg.flashback.season.contract.Races
 import tmg.flashback.season.presentation.dashboard.constructors.ConstructorStandingsScreenVM
 import tmg.flashback.season.presentation.dashboard.drivers.DriverStandingsScreenVM
 import tmg.flashback.season.presentation.dashboard.races.RacesScreen
-import tmg.flashback.weekend.contract.Weekend
-import tmg.flashback.weekend.contract.model.ScreenWeekendData
-import tmg.flashback.weekend.presentation.WeekendScreen
 
 @Composable
 fun AppGraph(
@@ -77,12 +63,12 @@ fun AppGraph(
             )
         }
 
-        composable(Screen.ConstructorsStandings.route) {
+        composable(Screen.ConstructorStandings.route) {
             ConstructorStandingsScreenVM(
                 paddingValues = paddingValues,
                 actionUpClicked = openMenu,
                 windowSizeClass = windowSize,
-                isRoot = { isRoot(Screen.ConstructorsStandings.route, !it) }
+                isRoot = { isRoot(Screen.ConstructorStandings.route, !it) }
             )
         }
 
@@ -95,34 +81,20 @@ fun AppGraph(
             )
         }
 
-        composable(Screen.Settings.All.route) {
+        composable(Screen.Settings.route) {
             SettingsAllScreenVM(
                 paddingValues = paddingValues,
                 actionUpClicked = openMenu,
                 windowSizeClass = windowSize,
-                isRoot = { isRoot(Screen.Settings.All.route, !it) },
+                isRoot = { isRoot(Screen.Settings.route, !it) },
             )
         }
 
-        composable(Screen.Settings.PrivacyPolicy.route) {
+        composable(Screen.PrivacyPolicy.route) {
             PrivacyPolicyScreenVM(
                 paddingValues = paddingValues,
                 windowSizeClass = windowSize,
                 actionUpClicked = { navController.popBackStack() }
-            )
-        }
-
-        // TODO: Remove?
-        composable(
-            Screen.Weekend.route, arguments = listOf(
-                navArgument("data") { type = ScreenWeekendData.NavType }
-        )) {
-            val screenWeekendData = it.getArgument<ScreenWeekendData>("data")
-            WeekendScreen(
-                paddingValues = paddingValues,
-                actionUpClicked = { navController.popBackStack() },
-                windowSizeClass = windowSize,
-                weekendInfo = screenWeekendData,
             )
         }
 
@@ -183,20 +155,20 @@ fun AppGraph(
 
         // RSS
         composable(
-            Screen.RSS.route,
+            Screen.Rss.route,
             deepLinks = listOf(navDeepLink { uriPattern = "flashback://rss" })
         ) {
             RSSScreenVM(
                 paddingValues = paddingValues,
                 windowSizeClass = windowSize,
-                isRoot = { isRoot(Screen.RSS.route, !it) },
+                isRoot = { isRoot(Screen.Rss.route, !it) },
                 advertProvider = advertProvider,
                 actionUpClicked = openMenu
             )
         }
 
         composable(
-            Screen.Reaction.route,
+            Screen.ReactionGame.route,
         ) {
             ReactionScreenVM(
                 paddingValues = paddingValues,
@@ -208,8 +180,8 @@ fun AppGraph(
 
     DisposableEffect(Unit) {
         when (deeplink) {
-            Screen.RSS.route -> navigator.navigate(deeplink.asNavigationDestination())
-            Screen.Search.route -> navigator.navigate(deeplink.asNavigationDestination())
+            Screen.Rss.route -> navigator.navigate(Screen.Rss)
+            Screen.Search.route -> navigator.navigate(Screen.Search)
         }
         this.onDispose { }
     }

@@ -2,14 +2,13 @@ package tmg.flashback.notifications.usecases
 
 import android.util.Log
 import java.time.LocalDateTime
-import tmg.flashback.notifications.BuildConfig
 import tmg.flashback.notifications.managers.SystemAlarmManager
-import tmg.flashback.notifications.repository.NotificationRepository
+import tmg.flashback.notifications.repository.NotificationIdsRepository
 import tmg.utilities.extensions.format
 import javax.inject.Inject
 
 class LocalNotificationScheduleUseCase @Inject constructor(
-    private val notificationRepository: NotificationRepository,
+    private val notificationIdsRepository: NotificationIdsRepository,
     private val alarmManager: SystemAlarmManager
 ) {
     fun schedule(
@@ -21,7 +20,7 @@ class LocalNotificationScheduleUseCase @Inject constructor(
         exact: Boolean = true
     ) {
         alarmManager.schedule(requestCode, channelId, title, text, timestamp, exact)
-        notificationRepository.notificationIds = notificationRepository.notificationIds
+        notificationIdsRepository.notificationIds = notificationIdsRepository.notificationIds
             .toMutableSet()
             .apply { add(requestCode) }
 

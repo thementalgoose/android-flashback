@@ -1,5 +1,6 @@
 package tmg.flashback.di
 
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,14 +14,12 @@ import tmg.flashback.managers.deviceconfig.AppDeviceConfigManager
 
 @Module
 @InstallIn(SingletonComponent::class)
-class AppModule {
+interface AppModule {
 
-    @Provides
-    fun providesDeviceConfigManager(impl: AppDeviceConfigManager): DeviceConfigManager = impl
+    @Binds
+    fun providesDeviceConfigManager(impl: AppDeviceConfigManager): DeviceConfigManager
 
-    @Provides
-    fun providesBuildConfigManager(impl: AppBuildConfigManager): BuildConfigManager = impl
-
-    @Provides
-    fun providesCoroutineDispatcher(): CoroutineDispatcher = Dispatchers.IO
+    @Binds
+    fun providesBuildConfigManager(impl: AppBuildConfigManager): BuildConfigManager
 }
+
