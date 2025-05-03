@@ -35,7 +35,6 @@ dependencies {
     implementation(projects.formula1)
     implementation(projects.feature.weekend.contract)
 
-    implementation(projects.feature.constructors.contract)
     implementation(projects.feature.season.contract)
 
     implementation libs.bundles.retrofit

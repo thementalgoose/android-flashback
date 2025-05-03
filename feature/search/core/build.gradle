@@ -35,7 +35,7 @@ dependencies {
     implementation(projects.data.repo)
 
     implementation(projects.feature.drivers)
-    implementation(projects.feature.constructors.contract)
+    implementation(projects.feature.constructors)
     implementation(projects.feature.circuits)
     implementation(projects.feature.weekend.contract)
 
