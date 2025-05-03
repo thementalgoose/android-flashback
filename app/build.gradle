@@ -134,8 +134,8 @@ dependencies {
     implementation(projects.feature.search)
     implementation(projects.feature.weekend)
     implementation(projects.feature.reactiongame)
-    implementation(projects.feature.sandbox.contract)
-    sandImplementation(projects.feature.sandbox.core)
+    implementation(projects.feature.sandbox.api)
+    sandImplementation(projects.feature.sandbox.impl)
     liveImplementation(projects.feature.sandbox.noop)
 
     // Data
@@ -191,7 +191,7 @@ dependencies {
 
     // Test Utils
     testImplementation(testFixtures(projects.formula1))
-    testImplementation(projects.feature.sandbox.core)
+    testImplementation(projects.feature.sandbox.impl)
 
     // Android Test
     androidTestImplementation libs.bundles.androidxtest
