@@ -7,14 +7,14 @@ import org.junit.Assert.assertTrue
 import org.junit.jupiter.api.Test
 import tmg.flashback.maintenance.repository.MaintenanceRepository
 
-internal class ShouldForceUpgradeUseCaseImplTest {
+internal class ShouldForceUpgradeUseCaseTest {
 
     private val mockMaintenanceRepository: MaintenanceRepository = mockk(relaxed = true)
 
-    private lateinit var underTest: ShouldForceUpgradeUseCaseImpl
+    private lateinit var underTest: ShouldForceUpgradeUseCase
 
     private fun initUnderTest() {
-        underTest = ShouldForceUpgradeUseCaseImpl(
+        underTest = ShouldForceUpgradeUseCase(
             repository = mockMaintenanceRepository
         )
     }

@@ -7,7 +7,7 @@ import org.junit.Test
 import org.junit.jupiter.api.Assertions.*
 import tmg.flashback.maintenance.repository.MaintenanceRepository
 
-internal class ShouldSoftUpgradeUseCaseImplTest {
+internal class ShouldSoftUpgradeUseCaseTest {
 
     private val mockMaintenanceRepository: MaintenanceRepository = mockk(relaxed = true)
 
