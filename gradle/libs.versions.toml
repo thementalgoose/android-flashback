@@ -127,7 +127,7 @@ play_review_ktx = { module = "com.google.android.play:review-ktx", version.ref =
 playservicesads = "com.google.android.gms:play-services-ads:24.2.0"
 
 tmg_utils = "com.github.thementalgoose:android-utilities:2.8.0"
-tmg_aboutthisapp = "com.github.thementalgoose:android-about-this-app:6.0.7"
+tmg_aboutthisapp = "com.github.thementalgoose:android-about-this-app:6.1.0"
 
 ## Test
 test_androidx_core = "androidx.test:core:1.6.1"
