@@ -33,6 +33,7 @@ buildscript {
         classpath libs.play.publisher
         classpath libs.kotlinx.serialization.core
         classpath libs.firebase.perf.plugin
+        classpath libs.oss.licenses.plugin
         //noinspection GradleDependency
     }
 }
