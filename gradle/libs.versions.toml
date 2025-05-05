@@ -30,6 +30,7 @@ gradle_kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.
 google_services = "com.google.gms:google-services:4.4.2"
 kotlinx_serialization_core = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin" }
 firebase_perf_plugin = "com.google.firebase:perf-plugin:1.4.2"
+oss_licenses_plugin = "com.google.android.gms:oss-licenses-plugin:0.10.6"
 play_publisher = "com.github.triplet.gradle:play-publisher:3.12.1"
 
 ## App Dependencies
