@@ -1,6 +1,7 @@
 package tmg.flashback.web.client
 
 import android.webkit.WebChromeClient
+import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import tmg.utilities.extensions.views.show
@@ -23,7 +24,8 @@ internal class FlashbackWebViewClient(
     val urlChanged: (url: String) -> Unit
 ): WebViewClient() {
 
-    override fun shouldOverrideUrlLoading(view: WebView?, url: String): Boolean {
+    override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
+        val url = request?.url?.toString() ?: return false
         view?.loadUrl(url)
         val uri = url.toUri()
         urlChanged(url)
