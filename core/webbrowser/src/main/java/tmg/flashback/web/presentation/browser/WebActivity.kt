@@ -34,7 +34,6 @@ internal class WebActivity: BaseActivity() {
                     content = {
                         Box(modifier = Modifier
                             .background(AppTheme.colors.backgroundPrimary)
-                            .padding(it)
                         ) {
                             WebScreenVM(
                                 title = title,

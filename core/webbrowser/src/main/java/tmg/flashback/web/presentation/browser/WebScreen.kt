@@ -1,12 +1,13 @@
 package tmg.flashback.web.presentation.browser
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
@@ -19,11 +20,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidViewBinding
 import androidx.hilt.navigation.compose.hiltViewModel
 import tmg.flashback.googleanalytics.presentation.ScreenView
+import tmg.flashback.strings.R.string
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.web.R
-import tmg.flashback.strings.R.string
 import tmg.flashback.web.databinding.ActivityWebBinding
 
 @Composable
@@ -58,7 +59,7 @@ fun WebScreen(
     Column(
         Modifier
             .background(AppTheme.colors.backgroundPrimary)
-            .statusBarsPadding()
+            .windowInsetsPadding(WindowInsets.safeDrawing)
             .fillMaxSize()
     ) {
         val titleValue = remember { mutableStateOf(title) }
@@ -115,19 +116,14 @@ fun WebScreen(
         AndroidViewBinding(
             factory = ActivityWebBinding::inflate,
             modifier = Modifier.weight(1f),
-            onReset = {
-                Log.i("WebView", "onReset")
-            },
+            onReset = { },
             onRelease = {
                 val frag = container.getFragment<WebFragment>()
                 domainValue.value = frag.pageUrl
                 titleValue.value = frag.pageTitle
-                Log.i("WebView", "onRelease")
             },
             update = {
-                Log.i("WebView", "onUpdate")
                 val frag = container.getFragment<WebFragment>()
-                Log.i("WebView", "Frag arguments ${domainValue}, ${titleValue}, $title, $url, ${frag.arguments}")
                 frag.load(pageTitle = title, url = url)
                 frag.callback = object : WebUpdated {
                     override fun domainChanged(domain: String) {
