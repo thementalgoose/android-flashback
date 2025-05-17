@@ -120,20 +120,6 @@ internal class HomeRepositoryTest {
 
     //endregion
 
-    //region Server search enabled
-
-    @Test
-    fun `server search is returned from config repository`() {
-        every { mockConfigManager.getBoolean(keySearch) } returns true
-        initSUT()
-        assertTrue(sut.searchEnabled)
-        verify {
-            mockConfigManager.getBoolean(keySearch)
-        }
-    }
-
-    //endregion
-
     //region Supported Seasons
 
     @Test
@@ -337,32 +323,6 @@ internal class HomeRepositoryTest {
 
     //endregion
 
-    //region Data Provided by label at top
-
-    @Test
-    fun `provided by at top reads value from preferences repository`() {
-
-        every { mockPreferenceManager.getBoolean(keyProvidedByAtTop, true) } returns true
-        initSUT()
-
-        assertTrue(sut.dataProvidedByAtTop)
-        verify {
-            mockPreferenceManager.getBoolean(keyProvidedByAtTop, true)
-        }
-    }
-
-    @Test
-    fun `provided by at top saves value to shared prefs repository`() {
-        initSUT()
-
-        sut.dataProvidedByAtTop = true
-        verify {
-            mockPreferenceManager.save(keyProvidedByAtTop, true)
-        }
-    }
-
-    //endregion
-
     companion object {
 
         // Config
@@ -370,14 +330,12 @@ internal class HomeRepositoryTest {
         private const val keyDefaultBanners: String = "banners"
         private const val keyDataProvidedBy: String = "data_provided"
         private const val keySupportedSeasons: String = "supported_seasons"
-        private const val keySearch: String = "search"
 
         // Prefs
         private const val keyEmptyWeeksInSchedule: String = "empty_weeks_in_schedule"
         private const val keyRecentHighlights: String = "RECENT_HIGHLIGHTS"
         private const val keySeenSeasons: String = "SEASONS_VIEWED"
         private const val keyDashboardCollapseList: String = "DASHBOARD_COLLAPSE_LIST"
-        private const val keyProvidedByAtTop: String = "PROVIDED_BY_AT_TOP"
         private const val keySeasonOnboarding: String = "ONBOARDING_SEASON"
         private const val keyRememberSeasonChange: String = "REMEMBER_SEASON_CHANGE"
         private const val keyUserSeasonChange: String = "USER_SEASON_CHANGE"
