@@ -13,9 +13,9 @@ import javax.inject.Singleton
 
 @Singleton
 class HomeRepository @Inject constructor(
-        private val preferenceManager: PreferenceManager,
-        private val configManager: ConfigManager,
-        private val crashlyticsManager: CrashlyticsManager
+    private val preferenceManager: PreferenceManager,
+    private val configManager: ConfigManager,
+    private val crashlyticsManager: CrashlyticsManager
 ) {
 
     companion object {
@@ -25,25 +25,17 @@ class HomeRepository @Inject constructor(
         private const val keyDefaultBanners: String = "banners"
         private const val keyDataProvidedBy: String = "data_provided"
         private const val keySupportedSeasons: String = "supported_seasons"
-        private const val keySearch: String = "search"
 
         // Prefs
         private const val keyEmptyWeeksInSchedule: String = "empty_weeks_in_schedule"
         private const val keyRecentHighlights: String = "RECENT_HIGHLIGHTS"
         private const val keySeenSeasons: String = "SEASONS_VIEWED"
         private const val keyDashboardCollapseList: String = "DASHBOARD_COLLAPSE_LIST"
-        private const val keyProvidedByAtTop: String = "PROVIDED_BY_AT_TOP"
         private const val keyRememberSeasonChange: String = "REMEMBER_SEASON_CHANGE"
         private const val keyUserSeasonChange: String = "USER_SEASON_CHANGE"
 
         private const val keySeasonOnboarding: String = "ONBOARDING_SEASON"
     }
-
-    /**
-     * Is the searching of the statistics functionality enabled server side
-     */
-    val searchEnabled: Boolean
-        get() = configManager.getBoolean(keySearch)
 
     /**
      * Banner to be displayed at the top of the screen
@@ -123,11 +115,4 @@ class HomeRepository @Inject constructor(
     fun setHasSeenSeasonOnboarding() {
         preferenceManager.save(keySeasonOnboarding, true)
     }
-
-    /**
-     * Whether or not the "Data provided by" cell is displayed at the top of lists or not
-     */
-    var dataProvidedByAtTop: Boolean
-        get() = preferenceManager.getBoolean(keyProvidedByAtTop, true)
-        set(value) = preferenceManager.save(keyProvidedByAtTop, value)
 }
