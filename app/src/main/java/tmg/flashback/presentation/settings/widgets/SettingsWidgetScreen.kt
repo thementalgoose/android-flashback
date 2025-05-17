@@ -73,7 +73,7 @@ fun SettingsWidgetScreen(
                 onClick = prefClicked
             )
             Switch(
-                model = Settings.Widgets.deeplinkToEvent(deeplinkToEvent),
+                model = Settings.Widgets.deeplinkToEvent(deeplinkToEvent, isEnabled = false),
                 onClick = prefClicked
             )
             Header(title = R.string.settings_section_refresh_title)
