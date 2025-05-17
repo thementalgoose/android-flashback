@@ -17,6 +17,7 @@ interface SettingsLayoutViewModelOutputs {
     val collapsedListEnabled: StateFlow<Boolean>
     val emptyWeeksInSchedule: StateFlow<Boolean>
     val recentHighlights: StateFlow<Boolean>
+    val rememberSeasonChange: StateFlow<Boolean>
 }
 
 @HiltViewModel
@@ -30,6 +31,7 @@ class SettingsLayoutViewModel @Inject constructor(
     override val collapsedListEnabled: MutableStateFlow<Boolean> = MutableStateFlow(homeRepository.collapseList)
     override val emptyWeeksInSchedule: MutableStateFlow<Boolean> = MutableStateFlow(homeRepository.emptyWeeksInSchedule)
     override val recentHighlights: MutableStateFlow<Boolean> = MutableStateFlow(homeRepository.recentHighlights)
+    override val rememberSeasonChange: MutableStateFlow<Boolean> = MutableStateFlow(homeRepository.keepUserSelectedSeason)
 
     override fun prefClicked(pref: Setting) {
         when (pref.key) {
@@ -44,6 +46,10 @@ class SettingsLayoutViewModel @Inject constructor(
             Settings.Data.recentHighlights -> {
                 homeRepository.recentHighlights = !homeRepository.recentHighlights
                 recentHighlights.value = homeRepository.recentHighlights
+            }
+            Settings.Data.rememberSeasonChange -> {
+                homeRepository.keepUserSelectedSeason = !homeRepository.keepUserSelectedSeason
+                rememberSeasonChange.value = homeRepository.keepUserSelectedSeason
             }
         }
     }

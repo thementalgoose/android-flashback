@@ -33,16 +33,17 @@ class HomeRepository @Inject constructor(
         private const val keySeenSeasons: String = "SEASONS_VIEWED"
         private const val keyDashboardCollapseList: String = "DASHBOARD_COLLAPSE_LIST"
         private const val keyProvidedByAtTop: String = "PROVIDED_BY_AT_TOP"
+        private const val keyRememberSeasonChange: String = "REMEMBER_SEASON_CHANGE"
+        private const val keyUserSeasonChange: String = "USER_SEASON_CHANGE"
 
         private const val keySeasonOnboarding: String = "ONBOARDING_SEASON"
     }
 
     /**
-     * Default year as specified by the server.
+     * Is the searching of the statistics functionality enabled server side
      */
-    val serverDefaultYear: Int by lazy {
-        configManager.getString(keyDefaultYear)?.toIntOrNull() ?: Year.now().value
-    }
+    val searchEnabled: Boolean
+        get() = configManager.getBoolean(keySearch)
 
     /**
      * Banner to be displayed at the top of the screen
@@ -57,6 +58,14 @@ class HomeRepository @Inject constructor(
      */
     val dataProvidedBy: String?
         get() = configManager.getString(keyDataProvidedBy)
+
+
+    /**
+     * Default year as specified by the server.
+     */
+    val defaultSeason: Int by lazy {
+        configManager.getString(keyDefaultYear)?.toIntOrNull() ?: Year.now().value
+    }
 
     /**
      * Supported seasons
@@ -77,12 +86,6 @@ class HomeRepository @Inject constructor(
         set(value) = preferenceManager.save(keySeenSeasons, value.map { it.toString() }.toSet())
 
     /**
-     * Is the searching of the statistics functionality enabled server side
-     */
-    val searchEnabled: Boolean
-        get() = configManager.getBoolean(keySearch)
-
-    /**
      * Show empty week indicators
      */
     var emptyWeeksInSchedule: Boolean
@@ -96,6 +99,17 @@ class HomeRepository @Inject constructor(
         get() = preferenceManager.getBoolean(keyRecentHighlights, true)
         set(value) = preferenceManager.save(keyRecentHighlights, value)
 
+
+    /**
+     * Remembering a season change
+     */
+    var keepUserSelectedSeason: Boolean
+        get() = preferenceManager.getBoolean(keyRememberSeasonChange, false)
+        set(value) = preferenceManager.save(keyRememberSeasonChange, value)
+
+    var userSelectedSeason: Int?
+        get() = preferenceManager.getInt(keyUserSeasonChange, -1).takeIf { it != -1 }
+        set(value) = preferenceManager.save(keyUserSeasonChange, value ?: -1)
 
     /**
      * Default to which tab

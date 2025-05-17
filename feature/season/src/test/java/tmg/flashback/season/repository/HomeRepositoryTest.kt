@@ -4,7 +4,6 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import tmg.flashback.configuration.manager.ConfigManager
@@ -38,7 +37,7 @@ internal class HomeRepositoryTest {
     fun `server default year is current year if from config returns valid string`() {
         every { mockConfigManager.getString(keyDefaultYear) } returns "2020"
         initSUT()
-        assertEquals(2020, sut.serverDefaultYear)
+        assertEquals(2020, sut.defaultSeason)
         verify {
             mockConfigManager.getString(keyDefaultYear)
         }
@@ -48,7 +47,7 @@ internal class HomeRepositoryTest {
     fun `server default year is current year if from config returns non int string`() {
         every { mockConfigManager.getString(keyDefaultYear) } returns "testing"
         initSUT()
-        assertEquals(Year.now().value, sut.serverDefaultYear)
+        assertEquals(Year.now().value, sut.defaultSeason)
         verify {
             mockConfigManager.getString(keyDefaultYear)
         }
@@ -58,7 +57,7 @@ internal class HomeRepositoryTest {
     fun `server default year is current year if from config returns null`() {
         every { mockConfigManager.getString(keyDefaultYear) } returns "testing"
         initSUT()
-        assertEquals(Year.now().value, sut.serverDefaultYear)
+        assertEquals(Year.now().value, sut.defaultSeason)
         verify {
             mockConfigManager.getString(keyDefaultYear)
         }
@@ -68,12 +67,12 @@ internal class HomeRepositoryTest {
     fun `server default year is lazy loaded`() {
         every { mockConfigManager.getString(keyDefaultYear) } returns "2020"
         initSUT()
-        assertEquals(2020, sut.serverDefaultYear)
+        assertEquals(2020, sut.defaultSeason)
         verify(exactly = 1) {
             mockConfigManager.getString(keyDefaultYear)
         }
         every { mockConfigManager.getString(keyDefaultYear) } returns "2021"
-        assertEquals(2020, sut.serverDefaultYear)
+        assertEquals(2020, sut.defaultSeason)
         verify(exactly = 1) {
             mockConfigManager.getString(keyDefaultYear)
         }
@@ -230,6 +229,69 @@ internal class HomeRepositoryTest {
     }
 
     @Test
+    fun `remember season change reads value from preferences repository`() {
+        every { mockPreferenceManager.getBoolean(keyRememberSeasonChange, false) } returns true
+        initSUT()
+
+        assertTrue(sut.keepUserSelectedSeason)
+        verify {
+            mockPreferenceManager.getBoolean(keyRememberSeasonChange, false)
+        }
+    }
+
+    @Test
+    fun `remember season change saves value to shared prefs repository`() {
+        initSUT()
+
+        sut.keepUserSelectedSeason = true
+        verify {
+            mockPreferenceManager.save(keyRememberSeasonChange, true)
+        }
+    }
+
+
+    @Test
+    fun `user season change reads value from preferences repository null when not set`() {
+        every { mockPreferenceManager.getInt(keyUserSeasonChange, -1) } returns -1
+        initSUT()
+
+        assertEquals(null, sut.userSelectedSeason)
+        verify {
+            mockPreferenceManager.getInt(keyUserSeasonChange, -1)
+        }
+    }
+    @Test
+    fun `user season change reads value from preferences repository value when valid`() {
+        every { mockPreferenceManager.getInt(keyUserSeasonChange, -1) } returns 2023
+        initSUT()
+
+        assertEquals(2023, sut.userSelectedSeason)
+        verify {
+            mockPreferenceManager.getInt(keyUserSeasonChange, -1)
+        }
+    }
+
+    @Test
+    fun `user season change setting value to null saves -1`() {
+        initSUT()
+
+        sut.userSelectedSeason = null
+        verify {
+            mockPreferenceManager.save(keyUserSeasonChange, -1)
+        }
+    }
+
+    @Test
+    fun `user season change saves value to shared prefs repository`() {
+        initSUT()
+
+        sut.userSelectedSeason = 2024
+        verify {
+            mockPreferenceManager.save(keyUserSeasonChange, 2024)
+        }
+    }
+
+    @Test
     fun `seasons seen reads value from preferences repository`() {
         every { mockPreferenceManager.getSet(keySeenSeasons, any()) } returns mutableSetOf("1234")
         initSUT()
@@ -317,5 +379,7 @@ internal class HomeRepositoryTest {
         private const val keyDashboardCollapseList: String = "DASHBOARD_COLLAPSE_LIST"
         private const val keyProvidedByAtTop: String = "PROVIDED_BY_AT_TOP"
         private const val keySeasonOnboarding: String = "ONBOARDING_SEASON"
+        private const val keyRememberSeasonChange: String = "REMEMBER_SEASON_CHANGE"
+        private const val keyUserSeasonChange: String = "USER_SEASON_CHANGE"
     }
 }

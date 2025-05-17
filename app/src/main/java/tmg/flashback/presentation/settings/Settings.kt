@@ -79,6 +79,16 @@ object Settings {
             isEnabled = isEnabled
         )
 
+        const val rememberSeasonChange = "remember_season_change"
+        fun rememberSeasonChange(isChecked: Boolean, isEnabled: Boolean = true) = Setting.Switch(
+            _key = rememberSeasonChange,
+            title = string.settings_pref_remember_season_change_title,
+            subtitle = string.settings_pref_remember_season_change_description,
+            isBeta = true,
+            isChecked = isChecked,
+            isEnabled = isEnabled
+        )
+
         val weather = Setting.Section(
             _key = "weather",
             title = string.settings_section_weather_title,
