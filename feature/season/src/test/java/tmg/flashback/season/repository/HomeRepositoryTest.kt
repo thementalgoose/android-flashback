@@ -230,6 +230,27 @@ internal class HomeRepositoryTest {
     }
 
     @Test
+    fun `remember season change reads value from preferences repository`() {
+        every { mockPreferenceManager.getBoolean(keyRememberSeasonChange, false) } returns true
+        initSUT()
+
+        assertTrue(sut.rememberSeasonChange)
+        verify {
+            mockPreferenceManager.getBoolean(keyRememberSeasonChange, false)
+        }
+    }
+
+    @Test
+    fun `remember season change saves value to shared prefs repository`() {
+        initSUT()
+
+        sut.rememberSeasonChange = true
+        verify {
+            mockPreferenceManager.save(keyRememberSeasonChange, true)
+        }
+    }
+
+    @Test
     fun `seasons seen reads value from preferences repository`() {
         every { mockPreferenceManager.getSet(keySeenSeasons, any()) } returns mutableSetOf("1234")
         initSUT()
@@ -317,5 +338,6 @@ internal class HomeRepositoryTest {
         private const val keyDashboardCollapseList: String = "DASHBOARD_COLLAPSE_LIST"
         private const val keyProvidedByAtTop: String = "PROVIDED_BY_AT_TOP"
         private const val keySeasonOnboarding: String = "ONBOARDING_SEASON"
+        private const val keyRememberSeasonChange: String = "REMEMBER_SEASON_CHANGE"
     }
 }

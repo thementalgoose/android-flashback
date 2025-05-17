@@ -33,6 +33,7 @@ class HomeRepository @Inject constructor(
         private const val keySeenSeasons: String = "SEASONS_VIEWED"
         private const val keyDashboardCollapseList: String = "DASHBOARD_COLLAPSE_LIST"
         private const val keyProvidedByAtTop: String = "PROVIDED_BY_AT_TOP"
+        private const val keyRememberSeasonChange: String = "REMEMBER_SEASON_CHANGE"
 
         private const val keySeasonOnboarding: String = "ONBOARDING_SEASON"
     }
@@ -96,6 +97,13 @@ class HomeRepository @Inject constructor(
         get() = preferenceManager.getBoolean(keyRecentHighlights, true)
         set(value) = preferenceManager.save(keyRecentHighlights, value)
 
+
+    /**
+     * Remembering season change
+     */
+    var rememberSeasonChange: Boolean
+        get() = preferenceManager.getBoolean(keyRememberSeasonChange, false)
+        set(value) = preferenceManager.save(keyRememberSeasonChange, value)
 
     /**
      * Default to which tab

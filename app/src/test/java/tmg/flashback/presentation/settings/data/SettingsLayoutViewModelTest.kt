@@ -124,4 +124,39 @@ internal class SettingsLayoutViewModelTest: BaseTest() {
         }
         underTest.outputs.recentHighlights.test { awaitItem() }
     }
+
+
+    @Test
+    fun `remember season change is true when pref is true`() = runTest(testDispatcher) {
+        every { mockHomeRepository.rememberSeasonChange } returns true
+
+        initUnderTest()
+        underTest.outputs.rememberSeasonChange.test {
+            assertEquals(true, awaitItem())
+        }
+    }
+
+    @Test
+    fun `remember season change is false when pref is false`() = runTest(testDispatcher) {
+        every { mockHomeRepository.rememberSeasonChange } returns false
+
+        initUnderTest()
+        underTest.outputs.rememberSeasonChange.test {
+            assertEquals(false, awaitItem())
+        }
+    }
+
+    @Test
+    fun `click show remember season change updates pref and updates value`() = runTest(testDispatcher) {
+        every { mockHomeRepository.rememberSeasonChange } returns false
+
+        initUnderTest()
+        underTest.outputs.rememberSeasonChange.test { awaitItem() }
+        underTest.inputs.prefClicked(Settings.Data.rememberSeasonChange(true))
+
+        verify {
+            mockHomeRepository.rememberSeasonChange = true
+        }
+        underTest.outputs.rememberSeasonChange.test { awaitItem() }
+    }
 }
