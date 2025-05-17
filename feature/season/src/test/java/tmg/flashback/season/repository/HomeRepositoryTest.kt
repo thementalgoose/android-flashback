@@ -250,6 +250,48 @@ internal class HomeRepositoryTest {
         }
     }
 
+
+    @Test
+    fun `user season change reads value from preferences repository null when not set`() {
+        every { mockPreferenceManager.getInt(keyUserSeasonChange, -1) } returns -1
+        initSUT()
+
+        assertEquals(null, sut.userSeasonChange)
+        verify {
+            mockPreferenceManager.getInt(keyUserSeasonChange, -1)
+        }
+    }
+    @Test
+    fun `user season change reads value from preferences repository value when valid`() {
+        every { mockPreferenceManager.getInt(keyUserSeasonChange, -1) } returns 2023
+        initSUT()
+
+        assertEquals(2023, sut.userSeasonChange)
+        verify {
+            mockPreferenceManager.getInt(keyUserSeasonChange, -1)
+        }
+    }
+
+    @Test
+    fun `user season change setting value to null saves -1`() {
+        initSUT()
+
+        sut.userSeasonChange = null
+        verify {
+            mockPreferenceManager.save(keyUserSeasonChange, -1)
+        }
+    }
+
+    @Test
+    fun `user season change saves value to shared prefs repository`() {
+        initSUT()
+
+        sut.userSeasonChange = 2024
+        verify {
+            mockPreferenceManager.save(keyUserSeasonChange, 2024)
+        }
+    }
+
     @Test
     fun `seasons seen reads value from preferences repository`() {
         every { mockPreferenceManager.getSet(keySeenSeasons, any()) } returns mutableSetOf("1234")
@@ -339,5 +381,6 @@ internal class HomeRepositoryTest {
         private const val keyProvidedByAtTop: String = "PROVIDED_BY_AT_TOP"
         private const val keySeasonOnboarding: String = "ONBOARDING_SEASON"
         private const val keyRememberSeasonChange: String = "REMEMBER_SEASON_CHANGE"
+        private const val keyUserSeasonChange: String = "USER_SEASON_CHANGE"
     }
 }
