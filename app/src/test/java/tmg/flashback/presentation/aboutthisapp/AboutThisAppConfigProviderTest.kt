@@ -69,7 +69,7 @@ internal class AboutThisAppConfigProviderTest {
         assertEquals("footer", config.footnote)
 
         assertEquals("email", config.email)
-        assertEquals("https://www.github.com/thementalgoose", config.github)
+        assertEquals("https://www.github.com/thementalgoose/android-flashback", config.github)
 
         assertEquals("deviceUdid\ninstallationId", config.debugInfo)
 
