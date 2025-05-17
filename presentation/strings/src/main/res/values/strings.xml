@@ -278,8 +278,8 @@
     <string name="settings_pref_empty_week_description">Show a little spacing indicator between races to highlight double and triple headers in the upcoming season</string>
     <string name="settings_pref_recent_highlights_title">Recent highlights</string>
     <string name="settings_pref_recent_highlights_description">Show the recent highlights banner on the home page if connected to the internet. This usually contains links to significant stores within the past week or so</string>
-    <string name="settings_pref_remember_season_change_title">Remember season change</string>
-    <string name="settings_pref_remember_season_change_description">Remember the last season viewed between app restarts</string>
+    <string name="settings_pref_remember_season_change_title">Keep last season</string>
+    <string name="settings_pref_remember_season_change_description">Resume from the season that was last being viewed</string>
 
     <string name="settings_section_rss_configure_title">Configure</string>
     <string name="settings_section_rss_configure_description">Setup RSS sources or customise appearance</string>
@@ -437,7 +437,7 @@
     <string name="settings_web_browser_javascript_description">Enable javascript in the in-app browser. This can help webpages load quicker, but may affect page functionality</string>
 
     <string name="settings_restart_app_required">Your change will take effect when the app restarts</string>
-    <string name="settings_experimental">Experimental</string>
+    <string name="settings_experimental">BETA</string>
     <string name="settings_experimental_description">This feature is in beta, and as such may not be working correctly.</string>
 
     <string name="settings_rss_title">RSS</string>
