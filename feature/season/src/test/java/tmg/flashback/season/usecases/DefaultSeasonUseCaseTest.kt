@@ -20,8 +20,6 @@ internal class DefaultSeasonUseCaseTest {
         underTest = DefaultSeasonUseCase(mockHomeRepository)
     }
 
-    //region Default year
-
     @Test
     fun `returns current year if supported season list is empty`() {
         every { mockHomeRepository.supportedSeasons } returns emptySet()
@@ -32,58 +30,45 @@ internal class DefaultSeasonUseCaseTest {
     }
 
     @Test
-    fun `returns user defined value if its supported`() {
-        every { mockHomeRepository.supportedSeasons } returns setOf(2017, 2018)
-        every { mockHomeRepository.serverDefaultYear } returns 2018
+    fun `returns users last selected season if pref is enabled and season is supported`() {
+        every { mockHomeRepository.supportedSeasons } returns setOf(2016, 2017, 2018)
+        every { mockHomeRepository.userSeasonChange } returns 2017
+        every { mockHomeRepository.serverDefaultYear } returns 2016
+        every { mockHomeRepository.rememberSeasonChange } returns true
+
         initUnderTest()
 
-        assertEquals(2018, underTest.defaultSeason)
+        assertEquals(2017, underTest.defaultSeason)
     }
 
     @Test
-    fun `runs clear default method if user defined value found to be invalid`() {
-        every { mockHomeRepository.supportedSeasons } returns setOf(2019)
-        every { mockHomeRepository.serverDefaultYear } returns 2018
-        initUnderTest()
+    fun `returns server season if season if users last selected season pref is disabled`() {
+        every { mockHomeRepository.supportedSeasons } returns setOf(2016, 2017, 2018)
+        every { mockHomeRepository.userSeasonChange } returns 2017
+        every { mockHomeRepository.serverDefaultYear } returns 2016
+        every { mockHomeRepository.rememberSeasonChange } returns false
 
-        assertEquals(2019, underTest.defaultSeason)
+        initUnderTest()
+        assertEquals(2016, underTest.defaultSeason)
     }
 
     @Test
-    fun `if user defined value invalid, return server value if in supported seasons`() {
-        every { mockHomeRepository.supportedSeasons } returns setOf(2018,2019)
-        every { mockHomeRepository.serverDefaultYear } returns 2018
-        initUnderTest()
-
-        assertEquals(2018, underTest.defaultSeason)
-    }
-
-    @Test
-    fun `if user defined value is null, return server value if in supported seasons`() {
-        every { mockHomeRepository.supportedSeasons } returns setOf(2018,2019)
-        every { mockHomeRepository.serverDefaultYear } returns 2018
-        initUnderTest()
-
-        assertEquals(2018, underTest.defaultSeason)
-    }
-
-    @Test
-    fun `if user defined value invalid or null, return max in supported seasons value if server value is not valid`() {
-        every { mockHomeRepository.supportedSeasons } returns setOf(2018,2019)
+    fun `returns server season if season is supported`() {
+        every { mockHomeRepository.supportedSeasons } returns setOf(2016, 2017, 2018)
         every { mockHomeRepository.serverDefaultYear } returns 2017
-        initUnderTest()
+        every { mockHomeRepository.rememberSeasonChange } returns false
 
-        assertEquals(2019, underTest.defaultSeason)
+        initUnderTest()
+        assertEquals(2017, underTest.defaultSeason)
     }
 
     @Test
-    fun `default season server returns the server configured default season`() {
-        every { mockHomeRepository.serverDefaultYear } returns 2018
+    fun `returns latest supported season if server season doesnt exist`() {
+        every { mockHomeRepository.supportedSeasons } returns setOf(2016, 2017, 2018)
+        every { mockHomeRepository.serverDefaultYear } returns 2020
+        every { mockHomeRepository.rememberSeasonChange } returns false
+
         initUnderTest()
-        assertEquals(2018, underTest.serverDefaultSeason)
-        verify {
-            mockHomeRepository.serverDefaultYear
-        }
+        assertEquals(2018, underTest.defaultSeason)
     }
-    //endregion
 }

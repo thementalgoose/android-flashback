@@ -3,6 +3,7 @@ package tmg.flashback.season.presentation.dashboard.shared.seasonpicker
 import app.cash.turbine.test
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.verify
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
@@ -97,6 +98,9 @@ internal class CurrentSeasonHolderTest: BaseTest() {
 
         assertEquals(2022, underTest.currentSeason)
         assertEquals(listOf(2022, 2021), underTest.supportedSeasons)
+        verify {
+            mockHomeRepository.userSeasonChange = 2022
+        }
     }
 
     @Test
@@ -110,5 +114,8 @@ internal class CurrentSeasonHolderTest: BaseTest() {
 
         assertEquals(2020, underTest.currentSeason) // Set to 2019 via. internal logic of DefaultSeasonUseCase!!
         assertEquals(listOf(2022, 2021), underTest.supportedSeasons)
+        verify {
+            mockHomeRepository.userSeasonChange = 2019
+        }
     }
 }

@@ -11,18 +11,31 @@ class DefaultSeasonUseCase @Inject constructor(
     val defaultSeason: Int
         get() {
             val supportedSeasons = homeRepository.supportedSeasons
-            val serverSeason = homeRepository.serverDefaultYear
-
+            // No season list available, so default to current yeah
             if (supportedSeasons.isEmpty()) {
                 return Formula1.currentSeasonYear
             }
-            return if (!supportedSeasons.contains(serverSeason)) {
-                supportedSeasons.maxOrNull()!!
+
+
+            val serverSeason = serverDefaultSeason
+            if (homeRepository.rememberSeasonChange) {
+                val usersLastSeasonSelection = homeRepository.userSeasonChange ?: serverSeason
+                if (supportedSeasons.contains(usersLastSeasonSelection)) {
+                    return usersLastSeasonSelection
+                } else {
+                    // Users last viewed season has been removed
+                    //  from supported seasons list. Reset the pref
+                    homeRepository.userSeasonChange = null
+                }
+            }
+
+            return if (!supportedSeasons.contains(serverDefaultSeason)) {
+                supportedSeasons.max()
             } else {
                 serverSeason
             }
         }
 
-    val serverDefaultSeason: Int
+    private val serverDefaultSeason: Int
         get() = homeRepository.serverDefaultYear
 }

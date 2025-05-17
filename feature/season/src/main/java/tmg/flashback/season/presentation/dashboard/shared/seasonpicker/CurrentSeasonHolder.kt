@@ -40,6 +40,7 @@ class CurrentSeasonHolder @Inject constructor(
 
     fun updateTo(season: Int) {
         homeRepository.viewedSeasons = (homeRepository.viewedSeasons + season)
+        homeRepository.userSeasonChange = season
         if (supportedSeasons.contains(season)) {
             _currentSeason.value = season
         }
