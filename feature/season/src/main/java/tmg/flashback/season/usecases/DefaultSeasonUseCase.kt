@@ -18,14 +18,14 @@ class DefaultSeasonUseCase @Inject constructor(
 
 
             val serverSeason = serverDefaultSeason
-            if (homeRepository.rememberSeasonChange) {
-                val usersLastSeasonSelection = homeRepository.userSeasonChange ?: serverSeason
+            if (homeRepository.keepUserSelectedSeason) {
+                val usersLastSeasonSelection = homeRepository.userSelectedSeason ?: serverSeason
                 if (supportedSeasons.contains(usersLastSeasonSelection)) {
                     return usersLastSeasonSelection
                 } else {
                     // Users last viewed season has been removed
                     //  from supported seasons list. Reset the pref
-                    homeRepository.userSeasonChange = null
+                    homeRepository.userSelectedSeason = null
                 }
             }
 
@@ -37,5 +37,5 @@ class DefaultSeasonUseCase @Inject constructor(
         }
 
     private val serverDefaultSeason: Int
-        get() = homeRepository.serverDefaultYear
+        get() = homeRepository.defaultSeason
 }

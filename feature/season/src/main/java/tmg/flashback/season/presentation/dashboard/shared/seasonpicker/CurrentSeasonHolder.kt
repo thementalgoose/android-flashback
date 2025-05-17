@@ -1,12 +1,7 @@
 package tmg.flashback.season.presentation.dashboard.shared.seasonpicker
 
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
-import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
 import tmg.flashback.season.repository.HomeRepository
 import tmg.flashback.season.usecases.DefaultSeasonUseCase
 import javax.inject.Inject
@@ -40,7 +35,7 @@ class CurrentSeasonHolder @Inject constructor(
 
     fun updateTo(season: Int) {
         homeRepository.viewedSeasons = (homeRepository.viewedSeasons + season)
-        homeRepository.userSeasonChange = season
+        homeRepository.userSelectedSeason = season
         if (supportedSeasons.contains(season)) {
             _currentSeason.value = season
         }

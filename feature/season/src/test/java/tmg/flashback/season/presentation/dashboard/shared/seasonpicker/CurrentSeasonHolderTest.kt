@@ -99,7 +99,7 @@ internal class CurrentSeasonHolderTest: BaseTest() {
         assertEquals(2022, underTest.currentSeason)
         assertEquals(listOf(2022, 2021), underTest.supportedSeasons)
         verify {
-            mockHomeRepository.userSeasonChange = 2022
+            mockHomeRepository.userSelectedSeason = 2022
         }
     }
 
@@ -115,7 +115,7 @@ internal class CurrentSeasonHolderTest: BaseTest() {
         assertEquals(2020, underTest.currentSeason) // Set to 2019 via. internal logic of DefaultSeasonUseCase!!
         assertEquals(listOf(2022, 2021), underTest.supportedSeasons)
         verify {
-            mockHomeRepository.userSeasonChange = 2019
+            mockHomeRepository.userSelectedSeason = 2019
         }
     }
 }

@@ -2,10 +2,7 @@ package tmg.flashback.season.usecases
 
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.verify
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertFalse
-import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import tmg.flashback.formula1.constants.Formula1
 import tmg.flashback.season.repository.HomeRepository
@@ -23,7 +20,7 @@ internal class DefaultSeasonUseCaseTest {
     @Test
     fun `returns current year if supported season list is empty`() {
         every { mockHomeRepository.supportedSeasons } returns emptySet()
-        every { mockHomeRepository.serverDefaultYear } returns 2018
+        every { mockHomeRepository.defaultSeason } returns 2018
         initUnderTest()
 
         assertEquals(Formula1.currentSeasonYear, underTest.defaultSeason)
@@ -32,9 +29,9 @@ internal class DefaultSeasonUseCaseTest {
     @Test
     fun `returns users last selected season if pref is enabled and season is supported`() {
         every { mockHomeRepository.supportedSeasons } returns setOf(2016, 2017, 2018)
-        every { mockHomeRepository.userSeasonChange } returns 2017
-        every { mockHomeRepository.serverDefaultYear } returns 2016
-        every { mockHomeRepository.rememberSeasonChange } returns true
+        every { mockHomeRepository.userSelectedSeason } returns 2017
+        every { mockHomeRepository.defaultSeason } returns 2016
+        every { mockHomeRepository.keepUserSelectedSeason } returns true
 
         initUnderTest()
 
@@ -44,9 +41,9 @@ internal class DefaultSeasonUseCaseTest {
     @Test
     fun `returns server season if season if users last selected season pref is disabled`() {
         every { mockHomeRepository.supportedSeasons } returns setOf(2016, 2017, 2018)
-        every { mockHomeRepository.userSeasonChange } returns 2017
-        every { mockHomeRepository.serverDefaultYear } returns 2016
-        every { mockHomeRepository.rememberSeasonChange } returns false
+        every { mockHomeRepository.userSelectedSeason } returns 2017
+        every { mockHomeRepository.defaultSeason } returns 2016
+        every { mockHomeRepository.keepUserSelectedSeason } returns false
 
         initUnderTest()
         assertEquals(2016, underTest.defaultSeason)
@@ -55,8 +52,8 @@ internal class DefaultSeasonUseCaseTest {
     @Test
     fun `returns server season if season is supported`() {
         every { mockHomeRepository.supportedSeasons } returns setOf(2016, 2017, 2018)
-        every { mockHomeRepository.serverDefaultYear } returns 2017
-        every { mockHomeRepository.rememberSeasonChange } returns false
+        every { mockHomeRepository.defaultSeason } returns 2017
+        every { mockHomeRepository.keepUserSelectedSeason } returns false
 
         initUnderTest()
         assertEquals(2017, underTest.defaultSeason)
@@ -65,8 +62,8 @@ internal class DefaultSeasonUseCaseTest {
     @Test
     fun `returns latest supported season if server season doesnt exist`() {
         every { mockHomeRepository.supportedSeasons } returns setOf(2016, 2017, 2018)
-        every { mockHomeRepository.serverDefaultYear } returns 2020
-        every { mockHomeRepository.rememberSeasonChange } returns false
+        every { mockHomeRepository.defaultSeason } returns 2020
+        every { mockHomeRepository.keepUserSelectedSeason } returns false
 
         initUnderTest()
         assertEquals(2018, underTest.defaultSeason)

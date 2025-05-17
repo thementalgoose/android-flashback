@@ -40,11 +40,10 @@ class HomeRepository @Inject constructor(
     }
 
     /**
-     * Default year as specified by the server.
+     * Is the searching of the statistics functionality enabled server side
      */
-    val serverDefaultYear: Int by lazy {
-        configManager.getString(keyDefaultYear)?.toIntOrNull() ?: Year.now().value
-    }
+    val searchEnabled: Boolean
+        get() = configManager.getBoolean(keySearch)
 
     /**
      * Banner to be displayed at the top of the screen
@@ -59,6 +58,14 @@ class HomeRepository @Inject constructor(
      */
     val dataProvidedBy: String?
         get() = configManager.getString(keyDataProvidedBy)
+
+
+    /**
+     * Default year as specified by the server.
+     */
+    val defaultSeason: Int by lazy {
+        configManager.getString(keyDefaultYear)?.toIntOrNull() ?: Year.now().value
+    }
 
     /**
      * Supported seasons
@@ -79,12 +86,6 @@ class HomeRepository @Inject constructor(
         set(value) = preferenceManager.save(keySeenSeasons, value.map { it.toString() }.toSet())
 
     /**
-     * Is the searching of the statistics functionality enabled server side
-     */
-    val searchEnabled: Boolean
-        get() = configManager.getBoolean(keySearch)
-
-    /**
      * Show empty week indicators
      */
     var emptyWeeksInSchedule: Boolean
@@ -102,11 +103,11 @@ class HomeRepository @Inject constructor(
     /**
      * Remembering a season change
      */
-    var rememberSeasonChange: Boolean
+    var keepUserSelectedSeason: Boolean
         get() = preferenceManager.getBoolean(keyRememberSeasonChange, false)
         set(value) = preferenceManager.save(keyRememberSeasonChange, value)
 
-    var userSeasonChange: Int?
+    var userSelectedSeason: Int?
         get() = preferenceManager.getInt(keyUserSeasonChange, -1).takeIf { it != -1 }
         set(value) = preferenceManager.save(keyUserSeasonChange, value ?: -1)
 

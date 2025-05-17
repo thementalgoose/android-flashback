@@ -128,7 +128,7 @@ internal class SettingsLayoutViewModelTest: BaseTest() {
 
     @Test
     fun `remember season change is true when pref is true`() = runTest(testDispatcher) {
-        every { mockHomeRepository.rememberSeasonChange } returns true
+        every { mockHomeRepository.keepUserSelectedSeason } returns true
 
         initUnderTest()
         underTest.outputs.rememberSeasonChange.test {
@@ -138,7 +138,7 @@ internal class SettingsLayoutViewModelTest: BaseTest() {
 
     @Test
     fun `remember season change is false when pref is false`() = runTest(testDispatcher) {
-        every { mockHomeRepository.rememberSeasonChange } returns false
+        every { mockHomeRepository.keepUserSelectedSeason } returns false
 
         initUnderTest()
         underTest.outputs.rememberSeasonChange.test {
@@ -148,14 +148,14 @@ internal class SettingsLayoutViewModelTest: BaseTest() {
 
     @Test
     fun `click show remember season change updates pref and updates value`() = runTest(testDispatcher) {
-        every { mockHomeRepository.rememberSeasonChange } returns false
+        every { mockHomeRepository.keepUserSelectedSeason } returns false
 
         initUnderTest()
         underTest.outputs.rememberSeasonChange.test { awaitItem() }
         underTest.inputs.prefClicked(Settings.Data.rememberSeasonChange(true))
 
         verify {
-            mockHomeRepository.rememberSeasonChange = true
+            mockHomeRepository.keepUserSelectedSeason = true
         }
         underTest.outputs.rememberSeasonChange.test { awaitItem() }
     }
