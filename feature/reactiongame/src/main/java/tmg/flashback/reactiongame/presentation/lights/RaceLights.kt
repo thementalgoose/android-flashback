@@ -20,16 +20,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
+import tmg.flashback.style.annotations.PreviewTheme
 
 
-private val columnColor: Color = Color(0xFF202020)
+private val columnColor: Color = Color(0xFF383838)
 private val panelBarColor: Color = Color(0xFF0A0A0A)
 private val lightOffColor: Color = Color(0xFF282828)
 private val lightShadeColor: Color = Color(0xFF080808)
@@ -58,8 +59,10 @@ internal fun RaceStartLights(
 ) {
     Box(
         modifier = modifier
-            .padding(8.dp)
-            .aspectRatio(if (panelType == LightPanel.HALF_HEIGHT) 2.2f else 1.4f),
+            .clip(RoundedCornerShape(AppTheme.dimens.radiusMedium))
+            .background(AppTheme.colors.backgroundSecondary)
+            .padding(16.dp)
+            .aspectRatio(if (panelType == LightPanel.HALF_HEIGHT) 2.2f else 1.4f)
     ) {
         Column(modifier = Modifier.fillMaxSize()) {
             Spacer(Modifier.weight(2f))
@@ -191,6 +194,7 @@ private fun RowScope.LightFourColumn(
     red: Boolean = false
 ) {
     Column(modifier = modifier
+        .shadow(elevation = 8.dp)
         .clip(RoundedCornerShape(8.dp))
         .background(columnColor)
         .padding(8.dp)
@@ -278,39 +282,42 @@ private fun ColumnScope.Light(
     }
 }
 
-@Preview(backgroundColor = 0xFF000000)
+@PreviewTheme
 @Composable
 private fun Preview10(
     @PreviewParameter(StartLightStateProvider::class) state: StartLightState
 ) {
     AppThemePreview {
         RaceStartLights(
+            modifier = Modifier.padding(16.dp),
             state = state,
             panelType = LightPanel.HALF_HEIGHT
         )
     }
 }
 
-@Preview(backgroundColor = 0xFF000000)
+@PreviewTheme
 @Composable
 private fun Preview20(
     @PreviewParameter(StartLightStateProvider::class) state: StartLightState
 ) {
     AppThemePreview {
         RaceStartLights(
+            modifier = Modifier.padding(16.dp),
             state = state,
             panelType = LightPanel.FULL_HEIGHT
         )
     }
 }
 
-@Preview(backgroundColor = 0xFF000000)
+@PreviewTheme
 @Composable
 private fun Preview20HalfHeight(
     @PreviewParameter(StartLightStateProvider::class) state: StartLightState
 ) {
     AppThemePreview {
         RaceStartLights(
+            modifier = Modifier.padding(16.dp),
             state = state,
             panelType = LightPanel.FULL_HEIGHT_DOUBLE_HEIGHT_RED
         )
