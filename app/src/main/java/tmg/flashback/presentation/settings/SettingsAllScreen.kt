@@ -1,12 +1,14 @@
 package tmg.flashback.presentation.settings
 
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.DpSize
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -167,6 +169,7 @@ fun SettingsAllScreen(
     uiState: SettingsAllViewModel.UiState,
 ) {
     LazyColumn(
+        modifier = Modifier.fillMaxSize(),
         contentPadding = paddingValues,
         content = {
             item("header") {
