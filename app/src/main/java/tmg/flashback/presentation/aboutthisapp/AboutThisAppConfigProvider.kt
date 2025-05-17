@@ -54,7 +54,7 @@ class AboutThisAppConfigProvider @Inject constructor(
             header = context.getString(string.dependency_thank_you),
             footnote = context.getString(string.about_additional),
             email = contactRepository.contactEmail,
-            github = "https://www.github.com/thementalgoose",
+            github = "https://www.github.com/thementalgoose/android-flashback",
             debugInfo = "${deviceRepository.deviceUdid}\n${deviceRepository.installationId}",
             setIsDarkMode = !styleManager.isDayMode,
             lightColors = lightColours,
