@@ -1,6 +1,5 @@
 package tmg.flashback.weekend.presentation
 
-import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import io.mockk.coVerify
 import io.mockk.every
@@ -13,7 +12,6 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import java.time.LocalDate
 import tmg.flashback.data.repo.RaceRepository
 import tmg.flashback.data.repo.usecases.FetchSeasonUseCase
 import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
@@ -24,8 +22,8 @@ import tmg.flashback.formula1.model.model
 import tmg.flashback.reviews.usecases.AppSection
 import tmg.flashback.reviews.usecases.ReviewSectionSeenUseCase
 import tmg.flashback.weekend.navigation.ScreenWeekendData
-import tmg.flashback.weekend.navigation.ScreenWeekendNav
 import tmg.testutils.BaseTest
+import java.time.LocalDate
 
 internal class WeekendViewModelTest: BaseTest() {
 

@@ -7,5 +7,5 @@ class HasSyncedSeasonUseCase @Inject constructor(
     private val racesRepository: RaceRepository
 ) {
     fun hasSynced(season: Int): Boolean =
-        !racesRepository.hasntPreviouslySynced(season)
+        racesRepository.hasPreviouslySynced(season)
 }

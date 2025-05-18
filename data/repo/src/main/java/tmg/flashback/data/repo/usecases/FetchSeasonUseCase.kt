@@ -13,7 +13,7 @@ class FetchSeasonUseCase @Inject constructor(
     private val raceRepository: RaceRepository,
 ) {
     fun fetch(season: Int): Flow<Boolean> = flow {
-        if (raceRepository.hasntPreviouslySynced(season)) {
+        if (!raceRepository.hasPreviouslySynced(season)) {
             emit(false)
             fetchSeason(season)
             emit(true)
