@@ -46,7 +46,6 @@ class RacesViewModel @Inject constructor(
     private val notificationRepository: NotificationsRepository,
     private val homeRepository: HomeRepository,
     private val eventsRepository: EventsRepository,
-    private val navigator: Navigator,
     private val networkConnectivityManager: NetworkConnectivityManager,
     private val adsRepository: AdsRepository,
     private val reviewSectionSeenUseCase: ReviewSectionSeenUseCase,
@@ -68,7 +67,8 @@ class RacesViewModel @Inject constructor(
         viewModelScope.launch(ioDispatcher) {
             currentSeasonHolder.currentSeasonFlow.collectLatest {
                 uiState.value = uiState.value.copy(season = it)
-                if (!populate(it) || it == currentSeasonHolder.defaultSeason) {
+                populate(it)
+                if (it == currentSeasonHolder.defaultSeason) {
                     refresh()
                 }
             }

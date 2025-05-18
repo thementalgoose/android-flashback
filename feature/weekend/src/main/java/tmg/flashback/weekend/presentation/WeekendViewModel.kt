@@ -1,6 +1,5 @@
 package tmg.flashback.weekend.presentation
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,14 +22,11 @@ import tmg.flashback.reviews.usecases.AppSection.DETAILS_QUALIFYING
 import tmg.flashback.reviews.usecases.AppSection.DETAILS_RACE
 import tmg.flashback.reviews.usecases.ReviewSectionSeenUseCase
 import tmg.flashback.weekend.navigation.ScreenWeekendData
-import tmg.flashback.weekend.navigation.ScreenWeekendNav
 import tmg.flashback.weekend.presentation.WeekendNavItem.QUALIFYING
 import tmg.flashback.weekend.presentation.WeekendNavItem.RACE
 import tmg.flashback.weekend.presentation.WeekendNavItem.SCHEDULE
 import tmg.flashback.weekend.utils.getWeekendEventOrder
 import tmg.utilities.extensions.combinePair
-import tmg.utilities.extensions.toEnum
-import java.lang.ClassCastException
 import java.time.Year
 import javax.inject.Inject
 
@@ -64,18 +60,16 @@ class WeekendViewModel @Inject constructor(
         .filterNotNull()
         .flatMapLatest { (season, round) ->
             return@flatMapLatest flow {
-                if (!raceRepository.hasntPreviouslySynced(season)) {
+                if (raceRepository.hasPreviouslySynced(season)) {
+                    emit(Pair(season, round))
+                    isRefreshing.value = false
+                }
+                else {
                     isRefreshing.value = true
                     emit(null)
                     fetchSeasonUseCase.fetchSeason(season)
                     isRefreshing.value = false
                     emit(Pair(season, round))
-                }
-                else {
-                    emit(Pair(season, round))
-                    isRefreshing.value = true
-                    fetchSeasonUseCase.fetchSeason(season)
-                    isRefreshing.value = false
                 }
             }
         }
@@ -90,7 +84,7 @@ class WeekendViewModel @Inject constructor(
         .map { it.raceInfo.toWeekendInfo() }
         .stateIn(viewModelScope, SharingStarted.Lazily, null)
 
-    override val tabs: StateFlow<List<WeekendScreenState>> = seasonRound
+    override val tabs: StateFlow<List<WeekendScreenState>> = seasonRoundWithRequest
         .filterNotNull()
         .flatMapLatest { (season, round) -> raceRepository.getRace(season, round) }
         .combinePair(selectedTab)

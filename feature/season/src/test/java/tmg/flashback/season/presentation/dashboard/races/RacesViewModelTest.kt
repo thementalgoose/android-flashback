@@ -38,7 +38,6 @@ internal class RacesViewModelTest: BaseTest() {
     private val mockNotificationRepository: NotificationsRepository = mockk(relaxed = true)
     private val mockCurrentSeasonHolder: CurrentSeasonHolder = mockk(relaxed = true)
     private val mockHomeRepository: HomeRepository = mockk(relaxed = true)
-    private val mockNavigator: Navigator = mockk(relaxed = true)
     private val mockAdvertRepository: AdsRepository = mockk(relaxed = true)
     private val mockReviewSectionSeenUseCase: ReviewSectionSeenUseCase = mockk(relaxed = true)
     private val mockNetworkConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
@@ -53,7 +52,6 @@ internal class RacesViewModelTest: BaseTest() {
             notificationRepository = mockNotificationRepository,
             homeRepository = mockHomeRepository,
             eventsRepository = mockEventsRepository,
-            navigator = mockNavigator,
             networkConnectivityManager = mockNetworkConnectivityManager,
             adsRepository = mockAdvertRepository,
             reviewSectionSeenUseCase = mockReviewSectionSeenUseCase,

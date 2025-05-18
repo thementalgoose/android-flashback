@@ -36,8 +36,8 @@ internal class FetchSeasonUseCaseTest: BaseTest() {
     }
 
     @Test
-    fun `fetch emits true when race hasnt previously been synced`() = coroutineTest {
-        coEvery { mockRaceRepository.hasntPreviouslySynced(any()) } returns false
+    fun `fetch emits false then true has previously been synced`() = coroutineTest {
+        coEvery { mockRaceRepository.hasPreviouslySynced(any()) } returns true
 
         val flowCollector = TestFlowCollector()
         initUnderTest()
@@ -46,7 +46,7 @@ internal class FetchSeasonUseCaseTest: BaseTest() {
         }
 
         coVerify {
-            mockRaceRepository.hasntPreviouslySynced(2020)
+            mockRaceRepository.hasPreviouslySynced(2020)
         }
         coVerify(exactly = 0) {
             mockRaceRepository.fetchRaces(2020)
@@ -58,7 +58,7 @@ internal class FetchSeasonUseCaseTest: BaseTest() {
 
     @Test
     fun `fetch emits false then true and calls fetch season if we should sync`() = coroutineTest {
-        coEvery { mockRaceRepository.hasntPreviouslySynced(any()) } returns true
+        coEvery { mockRaceRepository.hasPreviouslySynced(any()) } returns false
 
         val flowCollector = TestFlowCollector()
         initUnderTest()
@@ -67,7 +67,7 @@ internal class FetchSeasonUseCaseTest: BaseTest() {
         }
 
         coVerify {
-            mockRaceRepository.hasntPreviouslySynced(2020)
+            mockRaceRepository.hasPreviouslySynced(2020)
             mockRaceRepository.fetchRaces(2020)
             mockOverviewRepository.fetchOverview(2020)
             mockEventsRepository.fetchEvents(2020)
@@ -77,6 +77,7 @@ internal class FetchSeasonUseCaseTest: BaseTest() {
 
     @Test
     fun `fetch season calls repositories to fetch race and events data`() = coroutineTest {
+        coEvery { mockRaceRepository.hasPreviouslySynced(any()) } returns true
         initUnderTest()
         runBlocking {
             assertTrue(underTest.fetchSeason(2020))
