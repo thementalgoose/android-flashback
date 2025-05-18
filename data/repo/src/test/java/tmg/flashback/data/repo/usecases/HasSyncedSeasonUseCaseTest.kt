@@ -20,8 +20,8 @@ class HasSyncedSeasonUseCaseTest {
 
     @Test
     fun `has synced returns status from races repository`() {
-        every { mockRacesRepository.hasPreviouslySynced(2020) } returns true
-        every { mockRacesRepository.hasPreviouslySynced(2021) } returns false
+        every { mockRacesRepository.hasPreviouslySynced(2020) } returns false
+        every { mockRacesRepository.hasPreviouslySynced(2021) } returns true
 
         initUnderTest()
 
