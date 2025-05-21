@@ -4,7 +4,7 @@
 <h1 align="center">Flashback</h1>
 <p align="center">
   <a href="https://play.google.com/store/apps/details?id=tmg.flashback"><img src="https://img.shields.io/static/v1?label=Google%20Play&message=%20&logo=google-play&color=success&style=flat"/></a>
-  <a href="https://github.com/thementalgoose/android-flashback/RELEASES/tag/9.107.1"><img src="https://img.shields.io/static/v1?label=Latest%20Release&message=9.107.1&logo=github&color=blue&style=flat"/></a>
+  <a href="https://github.com/thementalgoose/android-flashback/RELEASES/tag/9.108.0"><img src="https://img.shields.io/static/v1?label=Latest%20Release&message=9.108.0&logo=github&color=blue&style=flat"/></a>
   <a href="https://github.com/thementalgoose/android-flashback/actions"><img src="https://github.com/thementalgoose/android-flashback/workflows/Release/badge.svg"/></a>
 </p>
 
