@@ -1,10 +1,17 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package tmg.flashback.weekend.presentation.qualifying
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -27,6 +34,8 @@ import tmg.flashback.ui.components.errors.NotAvailableYet
 import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.weekend.R
 import tmg.flashback.strings.R.string
+import tmg.flashback.style.buttons.ButtonPrimary
+import tmg.flashback.weekend.presentation.qualifying.visualisation.VisualisationScreenVM
 import tmg.flashback.weekend.presentation.shared.Position
 import tmg.utilities.extensions.ordinalAbbreviation
 
@@ -38,6 +47,28 @@ internal fun LazyListScope.qualifying(
     header: QualifyingHeader,
     itemModifier: Modifier = Modifier,
 ) {
+    item {
+        var showVisualisation = remember { mutableStateOf(false) }
+        ButtonPrimary(
+            text = "Visualisation",
+            onClick = {
+                showVisualisation.value = true
+            }
+        )
+        if (showVisualisation.value) {
+            ModalBottomSheet(
+                onDismissRequest = {
+                    showVisualisation.value = false
+                },
+                content = {
+                    VisualisationScreenVM(
+                        season = 2025,
+                        round = 8
+                    )
+                }
+            )
+        }
+    }
     if (list.any { it.isResult }) {
         item("qheader") {
             Header(

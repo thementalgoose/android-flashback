@@ -29,6 +29,7 @@ import tmg.flashback.web.usecases.OpenWebpageUseCase
 import tmg.flashback.strings.R.string
 import tmg.flashback.ui.R.drawable
 import tmg.flashback.weekend.repository.WeatherRepository
+import tmg.utilities.models.StringHolder
 import javax.inject.Inject
 
 interface DetailsViewModelInputs {

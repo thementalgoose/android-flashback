@@ -99,22 +99,7 @@ class RaceProvider: PreviewParameterProvider<Race> {
 }
 
 class DriverConstructorProvider: PreviewParameterProvider<DriverEntry> {
-    override val values: Sequence<DriverEntry> = sequenceOf(
-        DriverEntry.model(),
-        DriverEntry.model(
-            driver = Driver.model(
-                id = "2",
-                firstName = "firstName2",
-                lastName = "lastName2",
-                code = "CODE2"
-            ),
-            constructor = Constructor.model(
-                id = "constructorId2",
-                name = "name2",
-                color = Color.MAGENTA
-            )
-        )
-    )
+    override val values: Sequence<DriverEntry> = sequenceOf(DriverEntry.model())
 }
 
 class RaceRaceResultProvider: PreviewParameterProvider<RaceResult> {

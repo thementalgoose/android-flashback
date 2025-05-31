@@ -2,7 +2,9 @@ package tmg.flashback.weekend.presentation.qualifying.visualisation
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -13,19 +15,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import tmg.flashback.formula1.model.DriverEntry
 import tmg.flashback.providers.DriverConstructorProvider
+import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
-import tmg.flashback.style.text.TextBody2
-import tmg.flashback.style.text.TextBodyAutosize
 import tmg.flashback.weekend.R
 
 @Composable
-fun VisualisationCar(
+internal fun CarLabel(
     entry: DriverEntry,
     modifier: Modifier = Modifier,
 ) {
@@ -48,12 +50,27 @@ fun VisualisationCar(
             )
         }
         val label = (entry.driver.code ?: entry.driver.lastName.take(3)).uppercase()
-        TextBodyAutosize(
-            maxLines = 1,
-            maxTextSize = 18.sp,
+        DriverCode(
             text = label
         )
     }
+}
+
+@Composable
+private fun RowScope.DriverCode(
+    text: String,
+    modifier: Modifier = Modifier
+) {
+    BasicText(
+        text = text,
+        modifier = modifier,
+        maxLines = 1,
+        style = AppTheme.typography.block.copy(
+            fontWeight = FontWeight.Bold,
+            color = AppTheme.colors.contentSecondary
+        ),
+        autoSize = TextAutoSize.StepBased(minFontSize = 8.sp, maxFontSize = 18.sp, stepSize = 2.sp)
+    )
 }
 
 @PreviewTheme
@@ -62,7 +79,7 @@ private fun Preview(
     @PreviewParameter(DriverConstructorProvider::class) driverEntry: DriverEntry
 ) {
     AppThemePreview {
-        VisualisationCar(
+        CarLabel(
             modifier = Modifier.width(85.dp).height(24.dp),
             entry = driverEntry
         )

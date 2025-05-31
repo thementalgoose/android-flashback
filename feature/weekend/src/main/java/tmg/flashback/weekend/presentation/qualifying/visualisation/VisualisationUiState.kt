@@ -15,12 +15,12 @@ sealed class VisualisationUiState {
 }
 
 data class IndicatorEntry(
-    val offset: Float,
-    val label: String
+    val normalizedMillis: Int,
+    val millis: Int,
+    val label: String?
 )
 
 data class ResultEntry(
     val driverEntry: DriverEntry,
-    val offset: Float,
-    val row: Int,
+    val normalisedQualifyingMillis: Int
 )

@@ -1,58 +1,75 @@
 package tmg.flashback.weekend.presentation.qualifying.visualisation
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.DpSize
-import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import tmg.flashback.formula1.model.QualifyingResult
+import androidx.hilt.navigation.compose.hiltViewModel
+import tmg.flashback.formula1.model.DriverEntry
 import tmg.flashback.formula1.model.QualifyingType
 import tmg.flashback.formula1.model.QualifyingType.Q1
 import tmg.flashback.formula1.model.QualifyingType.Q2
 import tmg.flashback.formula1.model.QualifyingType.Q3
-import tmg.flashback.formula1.model.Race
 import tmg.flashback.formula1.model.headerLabel
-import tmg.flashback.providers.RaceProvider
+import tmg.flashback.googleanalytics.presentation.ScreenView
+import tmg.flashback.providers.DriverConstructorProvider
 import tmg.flashback.strings.R.string
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.buttons.ButtonSecondarySegments
-import tmg.flashback.style.text.TextBody2
+import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextHeadline2
-
-private val widthOfASecond = 140.dp
-private val sizeOfVisualisedCar = DpSize(75.dp, 25.dp)
 
 @Composable
 fun VisualisationScreenVM(
-    viewModel: VisualisationViewModel = viewModel()
+    season: Int,
+    round: Int,
+    viewModel: VisualisationViewModel = hiltViewModel()
 ) {
     val uiState = viewModel.uiState.collectAsState()
+
+    LaunchedEffect(season, round) {
+        viewModel.load(season, round)
+    }
+
+    when (val state = uiState.value) {
+        VisualisationUiState.Loading -> {
+
+        }
+        VisualisationUiState.QualifyingDataNotAvailable -> {
+            VisualisationUnavailableScreen()
+        }
+        is VisualisationUiState.Visualisation -> {
+            VisualisationScreen(
+                availableQualifyingTypes = state.availableQualifyingTypes,
+                selectedQualifyingType = state.qualifyingType,
+                clickQualifyingType = viewModel::selectType,
+                resultEntries = state.resultEntries,
+                indicatorEntries = state.indicatorEntries
+            )
+        }
+    }
 }
 
 @Composable
-private fun VisualisationUnavailableScreen(
-
-) {
+private fun VisualisationUnavailableScreen() {
     Column(Modifier.fillMaxWidth()) {
-
+        TextBody1(
+            text = stringResource(string.qualifying_visualisation_not_found)
+        )
     }
 }
 
@@ -61,14 +78,15 @@ private fun VisualisationScreen(
     availableQualifyingTypes: List<QualifyingType>,
     selectedQualifyingType: QualifyingType,
     clickQualifyingType: (QualifyingType) -> Unit,
-    qualifyingResults: List<QualifyingResult>,
-    timestampSecondsIndicators: List<Int>
+    resultEntries: List<ResultEntry>,
+    indicatorEntries: List<IndicatorEntry>
 ) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
     ) {
         ButtonSecondarySegments(
+            modifier = Modifier.padding(horizontal = AppTheme.dimens.medium),
             items = availableQualifyingTypes.map { it.headerLabel },
             selected = selectedQualifyingType.headerLabel,
             onClick = {
@@ -86,46 +104,17 @@ private fun VisualisationScreen(
                 .fillMaxWidth(),
             text = stringResource(selectedQualifyingType.headerLabel)
         )
-
-        Row(
+        Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .horizontalScroll(rememberScrollState())
+                .wrapContentHeight()
+                .horizontalScroll(rememberScrollState()),
         ) {
-            Box(modifier = Modifier.fillMaxSize()) {
-                timestampSecondsIndicators.forEachIndexed { index, seconds ->
-                    Indicator(
-                        modifier = Modifier.offset(widthOfASecond * index),
-                        second = seconds
-                    )
-                }
-
-                qualifyingResults.forEach { item ->
-                    VisualisationCar(
-                        modifier = Modifier.offset(23.dp, 50.dp),
-                        entry = item.entry,
-                    )
-                }
-            }
+            Graph(
+                indicators = indicatorEntries,
+                results = resultEntries
+            )
         }
-    }
-}
-
-@Composable
-private fun Indicator(
-    second: Int,
-    modifier: Modifier = Modifier
-) {
-    Column(
-        modifier = modifier
-    ) {
-        TextBody2("${second}s")
-        Box(modifier = Modifier
-            .background(AppTheme.colors.contentTertiary)
-            .width(1.dp)
-            .fillMaxHeight()
-            .height(IntrinsicSize.Max)
-        )
     }
 }
 
@@ -140,15 +129,15 @@ private fun PreviewUnavailable() {
 @PreviewTheme
 @Composable
 private fun Preview(
-    @PreviewParameter(RaceProvider::class) race: Race
+    @PreviewParameter(DriverConstructorProvider ::class) driverEntry: DriverEntry
 ) {
     AppThemePreview {
         VisualisationScreen(
             availableQualifyingTypes = listOf(Q3, Q2, Q1),
             selectedQualifyingType = Q3,
             clickQualifyingType = { },
-            qualifyingResults = race.qualifying.first { it.label == Q3 }.results,
-            timestampSecondsIndicators = listOf(70, 71, 72, 73)
+            resultEntries = fakeResults(driverEntry.driver, driverEntry.constructor),
+            indicatorEntries = fakeIndicators(),
         )
     }
 }

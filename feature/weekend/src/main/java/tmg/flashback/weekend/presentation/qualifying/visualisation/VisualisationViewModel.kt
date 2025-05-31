@@ -1,5 +1,6 @@
 package tmg.flashback.weekend.presentation.qualifying.visualisation
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,9 +14,9 @@ import kotlinx.coroutines.flow.stateIn
 import tmg.flashback.data.repo.RaceRepository
 import tmg.flashback.formula1.model.QualifyingResult
 import tmg.flashback.formula1.model.QualifyingType
-import tmg.flashback.formula1.model.Timestamp
 import tmg.flashback.weekend.presentation.qualifying.visualisation.VisualisationUiState.QualifyingDataNotAvailable
 import tmg.flashback.weekend.presentation.qualifying.visualisation.VisualisationUiState.Visualisation
+import tmg.utilities.extensions.secondsToHHmm
 import javax.inject.Inject
 import kotlin.math.ceil
 import kotlin.math.floor
@@ -45,25 +46,28 @@ class VisualisationViewModel @Inject constructor(
         val availableTypes = race.qualifying
             .map { it.label }
             .distinct()
+            .sortedByDescending { it.order }
 
         val qualifying = race.qualifying
             .firstOrNull { it.label == type }
             ?.results
             ?.filter { it.lapTime != null }
             ?.sortedBy { it.position }
-            ?.map {
-                ResultEntry(
-                    driverEntry = it.entry,
-                    offset =
-                )
-            }
             ?: emptyList()
+
+        if (qualifying.none { it.lapTime != null }) {
+            return@combine QualifyingDataNotAvailable
+        }
+
+        val indicatorEntries = qualifying.calculateIndicatorEntries()
 
         return@combine Visualisation(
             availableQualifyingTypes = availableTypes,
             qualifyingType = type,
-            qualifyingResults = qualifying,
-            timestampSecondIndicators = qualifying.calculateTimestampIndicators()
+            resultEntries = qualifying.calculateResultEntries(
+                indicatorEntries.first().millis
+            ),
+            indicatorEntries = indicatorEntries
         )
     }
         .stateIn(viewModelScope, SharingStarted.Lazily, QualifyingDataNotAvailable)
@@ -76,11 +80,31 @@ class VisualisationViewModel @Inject constructor(
         this.seasonRound.value = season to round
     }
 
-    private fun List<QualifyingResult>.calculateTimestampIndicators(): List<Int> {
+    private fun List<QualifyingResult>.calculateResultEntries(
+        minimumQualifyingMillis: Int
+    ): List<ResultEntry> {
+        return this.mapNotNull {
+            val lapTime = it.lapTime ?: return@mapNotNull null
+            ResultEntry(
+                driverEntry = it.entry,
+                normalisedQualifyingMillis = lapTime.totalMillis - minimumQualifyingMillis
+            )
+        }
+    }
+
+    private fun List<QualifyingResult>.calculateIndicatorEntries(): List<IndicatorEntry> {
         val validTimestamps = this.mapNotNull { it.lapTime }
         val minSeconds = floor(validTimestamps.minOf { it.totalMillis } / 1000f).roundToInt()
         val maxSeconds = ceil(validTimestamps.maxOf { it.totalMillis } / 1000f).roundToInt()
+        val indicators = (maxSeconds - minSeconds) + 1
 
-        return List((maxSeconds - minSeconds) + 1) { minSeconds + it }
+        return List(indicators) {
+            val seconds = minSeconds + it
+            IndicatorEntry(
+                millis = seconds * 1000,
+                normalizedMillis = it * 1000,
+                label = "${seconds.secondsToHHmm()}"
+            )
+        }
     }
 }
