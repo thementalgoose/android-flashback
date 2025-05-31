@@ -2,7 +2,9 @@ package tmg.flashback.sandbox.core.presentation.styleguide.tabs
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -17,6 +19,7 @@ import tmg.flashback.style.badge.Badge
 import tmg.flashback.style.badge.BadgesView
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
+import tmg.flashback.style.text.TextBodyAutosize
 import tmg.flashback.style.text.TextCaption
 import tmg.flashback.style.text.TextHeadline1
 import tmg.flashback.style.text.TextHeadline2
@@ -46,6 +49,26 @@ internal fun TextTabScreen() {
         TextBody2(
             text = "Body 2"
         )
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            TextBodyAutosize(
+                maxLines = 1,
+                modifier = Modifier.weight(1f),
+                text = "Autosize"
+            )
+            TextBodyAutosize(
+                maxLines = 1,
+                modifier = Modifier.weight(3f),
+                text = "Autosize"
+            )
+            TextBodyAutosize(
+                maxLines = 1,
+                modifier = Modifier.weight(5f),
+                text = "Autosize"
+            )
+        }
         TextCaption(
             text = "Caption"
         )

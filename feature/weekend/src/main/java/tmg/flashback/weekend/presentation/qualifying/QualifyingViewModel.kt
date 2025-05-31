@@ -17,6 +17,7 @@ import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
 import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.model.QualifyingType
 import tmg.flashback.formula1.model.Race
+import tmg.flashback.navigation.Navigator
 import tmg.flashback.navigation.Screen
 import javax.inject.Inject
 
@@ -35,8 +36,8 @@ typealias QualifyingHeader = Triple<Boolean, Boolean, Boolean>
 @HiltViewModel
 class QualifyingViewModel @Inject constructor(
     private val raceRepository: RaceRepository,
-    private val navigator: tmg.flashback.navigation.Navigator,
-    private val ioDispatcher: CoroutineDispatcher
+    private val navigator: Navigator,
+    ioDispatcher: CoroutineDispatcher
 ): ViewModel(), QualifyingViewModelInputs, QualifyingViewModelOutputs {
 
     val inputs: QualifyingViewModelInputs = this
@@ -94,8 +95,9 @@ class QualifyingViewModel @Inject constructor(
 
     private fun Race.getQ1Q2Q3QualifyingList(forType: QualifyingType): List<QualifyingModel> {
         val list = when (forType) {
-            QualifyingType.Q1, QualifyingType.Q2, QualifyingType.Q3 -> this.qualifying.firstOrNull { it.label == forType } ?: return emptyList()
-            else -> return emptyList()
+            QualifyingType.Q1,
+            QualifyingType.Q2,
+            QualifyingType.Q3 -> this.qualifying.firstOrNull { it.label == forType } ?: return emptyList()
         }
 
         return list.results.map {

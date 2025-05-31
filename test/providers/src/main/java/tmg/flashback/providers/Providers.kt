@@ -1,5 +1,6 @@
 package tmg.flashback.providers
 
+import android.graphics.Color
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import java.time.LocalDate
 import java.time.LocalTime
@@ -98,7 +99,22 @@ class RaceProvider: PreviewParameterProvider<Race> {
 }
 
 class DriverConstructorProvider: PreviewParameterProvider<DriverEntry> {
-    override val values: Sequence<DriverEntry> = sequenceOf(DriverEntry.model())
+    override val values: Sequence<DriverEntry> = sequenceOf(
+        DriverEntry.model(),
+        DriverEntry.model(
+            driver = Driver.model(
+                id = "2",
+                firstName = "firstName2",
+                lastName = "lastName2",
+                code = "CODE2"
+            ),
+            constructor = Constructor.model(
+                id = "constructorId2",
+                name = "name2",
+                color = Color.MAGENTA
+            )
+        )
+    )
 }
 
 class RaceRaceResultProvider: PreviewParameterProvider<RaceResult> {
