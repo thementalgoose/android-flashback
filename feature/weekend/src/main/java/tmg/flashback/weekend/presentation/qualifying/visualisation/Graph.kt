@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -31,9 +32,10 @@ import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 
-private val widthOfASecond = 180.dp
-private val sizeOfVisualisedCar = DpSize(75.dp, 25.dp)
-private val rowSpacingBetweenCars = 0.dp
+private val widthOfASecond = 155.dp
+private val sizeOfVisualisedCar = DpSize(70.dp, 25.dp)
+private val rowSpacingBetweenCars = 1.dp
+private val minCarHeight = 14
 
 /**
  * 1:10                1:11                1:12
@@ -47,11 +49,14 @@ private val rowSpacingBetweenCars = 0.dp
 @Composable
 internal fun Graph(
     indicators: List<IndicatorEntry>,
-    results: List<ResultEntry>
+    results: List<ResultEntry>,
 ) {
+    val indicatorTextPadding = with(LocalDensity.current) { 14.sp.toDp() + AppTheme.dimens.xsmall }
     val width = widthOfASecond * (indicators.size)
+    val minHeight = ((sizeOfVisualisedCar.height + rowSpacingBetweenCars) * minCarHeight) + indicatorTextPadding
     Box(modifier = Modifier
         .width(width)
+        .defaultMinSize(minHeight = minHeight)
         .height(IntrinsicSize.Min)
         .padding(horizontal = AppTheme.dimens.medium)
     ) {
@@ -63,7 +68,7 @@ internal fun Graph(
                     .offset(x = widthOfASecond * index)
             )
         }
-        val indicatorTextPadding = with(LocalDensity.current) { 14.sp.toDp() }
+
 
         var indexMap = mutableMapOf<Int, Dp>()
         for (entry in results) {
@@ -86,7 +91,7 @@ internal fun Graph(
                 entry = entry.driverEntry,
                 modifier = Modifier.padding(
                     start = widthOfASecond * (entry.normalisedQualifyingMillis / 1000f),
-                    top = (sizeOfVisualisedCar.height * rowToAddCarToo) + indicatorTextPadding
+                    top = ((sizeOfVisualisedCar.height + rowSpacingBetweenCars) * rowToAddCarToo) + indicatorTextPadding
                 )
             )
             indexMap.put(rowToAddCarToo, carOffset + sizeOfVisualisedCar.width)
@@ -107,6 +112,7 @@ private fun Indicator(
             modifier = Modifier.padding(start = 2.dp)
         )
         Box(modifier = Modifier
+            .alpha(0.2f)
             .background(AppTheme.colors.contentTertiary)
             .width(1.dp)
             .fillMaxHeight()

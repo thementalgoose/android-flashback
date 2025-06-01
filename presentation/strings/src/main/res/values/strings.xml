@@ -60,6 +60,8 @@
     <string name="qualifying_penalty_starts">Penalty, starts %s</string>
     <string name="qualifying_penalty">Penalty, pit-lane start</string>
     <string name="qualifying_penalty_starts_sprint">Penalty, starts sprint %s</string>
+    <string name="qualifying_visualisation_subtitle">Visualise the qualifying gaps in the qualifying session</string>
+    <string name="qualifying_visualisation_title">Qualifying gaps</string>
     <string name="qualifying_visualisation_not_found">No qualifying data is available to visualise</string>
 
 

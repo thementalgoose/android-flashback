@@ -62,8 +62,8 @@ internal fun LazyListScope.qualifying(
                 },
                 content = {
                     VisualisationScreenVM(
-                        season = 2025,
-                        round = 8
+                        season = 2022,
+                        round = 21
                     )
                 }
             )

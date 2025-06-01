@@ -13,10 +13,13 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
 import tmg.flashback.data.repo.RaceRepository
 import tmg.flashback.formula1.model.QualifyingResult
+import tmg.flashback.formula1.model.QualifyingRound
 import tmg.flashback.formula1.model.QualifyingType
 import tmg.flashback.weekend.presentation.qualifying.visualisation.VisualisationUiState.QualifyingDataNotAvailable
 import tmg.flashback.weekend.presentation.qualifying.visualisation.VisualisationUiState.Visualisation
 import tmg.utilities.extensions.secondsToHHmm
+import tmg.utilities.extensions.secondsToHoursMinutes
+import tmg.utilities.extensions.secondsToMinutesSeconds
 import javax.inject.Inject
 import kotlin.math.ceil
 import kotlin.math.floor
@@ -59,7 +62,7 @@ class VisualisationViewModel @Inject constructor(
             return@combine QualifyingDataNotAvailable
         }
 
-        val indicatorEntries = qualifying.calculateIndicatorEntries()
+        val indicatorEntries = race.qualifying.calculateIndicatorEntries()
 
         return@combine Visualisation(
             availableQualifyingTypes = availableTypes,
@@ -92,8 +95,8 @@ class VisualisationViewModel @Inject constructor(
         }
     }
 
-    private fun List<QualifyingResult>.calculateIndicatorEntries(): List<IndicatorEntry> {
-        val validTimestamps = this.mapNotNull { it.lapTime }
+    private fun List<QualifyingRound>.calculateIndicatorEntries(): List<IndicatorEntry> {
+        val validTimestamps = this.flatMap { it.results }.mapNotNull { it.lapTime }
         val minSeconds = floor(validTimestamps.minOf { it.totalMillis } / 1000f).roundToInt()
         val maxSeconds = ceil(validTimestamps.maxOf { it.totalMillis } / 1000f).roundToInt()
         val indicators = (maxSeconds - minSeconds) + 1
@@ -103,7 +106,7 @@ class VisualisationViewModel @Inject constructor(
             IndicatorEntry(
                 millis = seconds * 1000,
                 normalizedMillis = it * 1000,
-                label = "${seconds.secondsToHHmm()}"
+                label = seconds.secondsToMinutesSeconds(extendMinutes = false)
             )
         }
     }

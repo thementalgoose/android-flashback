@@ -8,17 +8,17 @@ sealed class QualifyingModel(
     val isResult: Boolean
 ) {
 
-    object NotAvailableYet: QualifyingModel(
+    object NotAvailableYet : QualifyingModel(
         id = "not_available_yet",
         isResult = false
     )
 
-    object NotAvailable: QualifyingModel(
+    object NotAvailable : QualifyingModel(
         id = "not_available",
         isResult = false
     )
 
-    object Loading: QualifyingModel(
+    object Loading : QualifyingModel(
         id = "loading",
         isResult = false
     )

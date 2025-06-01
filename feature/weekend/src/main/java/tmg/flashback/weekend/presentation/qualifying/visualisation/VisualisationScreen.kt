@@ -1,6 +1,7 @@
 package tmg.flashback.weekend.presentation.qualifying.visualisation
 
 import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -85,25 +86,37 @@ private fun VisualisationScreen(
         modifier = Modifier
             .fillMaxWidth()
     ) {
-        ButtonSecondarySegments(
-            modifier = Modifier.padding(horizontal = AppTheme.dimens.medium),
-            items = availableQualifyingTypes.map { it.headerLabel },
-            selected = selectedQualifyingType.headerLabel,
-            onClick = {
-                when (it) {
-                    string.qualifying_header_q3 -> clickQualifyingType(Q3)
-                    string.qualifying_header_q2 -> clickQualifyingType(Q2)
-                    string.qualifying_header_q1 -> clickQualifyingType(Q1)
-                }
-            },
-            showTick = true
-        )
-
-        TextHeadline2(
+        Column(
             modifier = Modifier
-                .fillMaxWidth(),
-            text = stringResource(selectedQualifyingType.headerLabel)
-        )
+                .fillMaxWidth()
+                .padding(
+                    horizontal = AppTheme.dimens.medium,
+                    vertical = AppTheme.dimens.small
+                ),
+            verticalArrangement = Arrangement.spacedBy(AppTheme.dimens.small)
+        ) {
+            TextHeadline2(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                text = stringResource(string.qualifying_visualisation_title)
+            )
+            ButtonSecondarySegments(
+                items = availableQualifyingTypes.map { it.headerLabel },
+                selected = selectedQualifyingType.headerLabel,
+                onClick = {
+                    when (it) {
+                        string.qualifying_header_q3 -> clickQualifyingType(Q3)
+                        string.qualifying_header_q2 -> clickQualifyingType(Q2)
+                        string.qualifying_header_q1 -> clickQualifyingType(Q1)
+                    }
+                },
+                showTick = true
+            )
+            TextBody1(
+                text = stringResource(string.qualifying_visualisation_subtitle)
+            )
+        }
+
         Box(
             modifier = Modifier
                 .fillMaxWidth()

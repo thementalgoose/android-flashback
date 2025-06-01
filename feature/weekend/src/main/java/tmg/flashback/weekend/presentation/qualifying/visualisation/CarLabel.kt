@@ -40,7 +40,8 @@ internal fun CarLabel(
             Icon(
                 modifier = Modifier.size(width = 40.dp, height = 18.dp),
                 painter = painterResource(R.drawable.ic_qualifying_car),
-                contentDescription = null
+                contentDescription = null,
+                tint = AppTheme.colors.backgroundTertiary
             )
             Icon(
                 modifier = Modifier.size(width = 40.dp, height = 18.dp),
@@ -69,7 +70,7 @@ private fun RowScope.DriverCode(
             fontWeight = FontWeight.Bold,
             color = AppTheme.colors.contentSecondary
         ),
-        autoSize = TextAutoSize.StepBased(minFontSize = 8.sp, maxFontSize = 18.sp, stepSize = 2.sp)
+        autoSize = TextAutoSize.StepBased(minFontSize = 6.sp, maxFontSize = 16.sp, stepSize = 2.sp)
     )
 }
 
