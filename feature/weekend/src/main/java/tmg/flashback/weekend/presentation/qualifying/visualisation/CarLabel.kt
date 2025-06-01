@@ -1,5 +1,6 @@
 package tmg.flashback.weekend.presentation.qualifying.visualisation
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
@@ -37,11 +38,10 @@ internal fun CarLabel(
         horizontalArrangement = Arrangement.spacedBy(2.dp)
     ) {
         Box {
-            Icon(
+            Image(
                 modifier = Modifier.size(width = 40.dp, height = 18.dp),
                 painter = painterResource(R.drawable.ic_qualifying_car),
                 contentDescription = null,
-                tint = AppTheme.colors.backgroundTertiary
             )
             Icon(
                 modifier = Modifier.size(width = 40.dp, height = 18.dp),
