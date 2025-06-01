@@ -15,7 +15,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
@@ -47,6 +46,7 @@ import tmg.flashback.style.buttons.ButtonSecondary
 import tmg.flashback.style.input.InputSwitch
 import tmg.flashback.style.text.TextBody2
 import tmg.flashback.style.text.TextTitle
+import tmg.flashback.ui.bottomsheets.AppBottomSheet
 import tmg.flashback.ui.components.header.HeaderAction
 import tmg.flashback.ui.components.settings.Footer
 import tmg.flashback.ui.components.settings.Header
@@ -163,22 +163,17 @@ fun ConfigureRSSScreen(
             keyboardController?.hide()
         }
     }
-    if (customRssBox.value) {
-        ModalBottomSheet(
-            containerColor = AppTheme.colors.backgroundPrimary,
-            onDismissRequest = {
-                customRssBox.value = false
-            },
-            content = {
-                AddRSSScreen(
-                    sourceAdded = {
-                        keyboardController?.hide()
-                        sourceAdded(it)
-                    }
-                )
-            }
-        )
-    }
+    AppBottomSheet(
+        visibility = customRssBox,
+        content = {
+            AddRSSScreen(
+                sourceAdded = {
+                    keyboardController?.hide()
+                    sourceAdded(it)
+                }
+            )
+        }
+    )
 }
 
 @Composable

@@ -20,8 +20,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
@@ -60,6 +58,7 @@ import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.buttons.ButtonSecondary
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
+import tmg.flashback.ui.bottomsheets.AppBottomSheet
 import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.flag.Flag
 import tmg.flashback.ui.components.header.Header
@@ -142,9 +141,7 @@ fun ScheduleScreen(
 ) {
     var showEvents = rememberSaveable { mutableStateOf(false) }
     if (showEvents.value && uiState.showEvents) {
-        ModalBottomSheet(
-            sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
-            containerColor = AppTheme.colors.backgroundPrimary,
+        AppBottomSheet(
             onDismissRequest = {
                 showEvents.value = false
             },
@@ -158,9 +155,7 @@ fun ScheduleScreen(
 
     var showTyres = rememberSaveable { mutableStateOf(false) }
     if (showTyres.value && uiState.showTyres) {
-        ModalBottomSheet(
-            sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
-            containerColor = AppTheme.colors.backgroundPrimary,
+        AppBottomSheet(
             onDismissRequest = {
                 showTyres.value = false
             },

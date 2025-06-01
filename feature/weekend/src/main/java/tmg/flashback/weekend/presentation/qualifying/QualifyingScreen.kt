@@ -8,7 +8,6 @@ import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -35,6 +34,7 @@ import tmg.flashback.ui.components.loading.SkeletonViewList
 import tmg.flashback.weekend.R
 import tmg.flashback.strings.R.string
 import tmg.flashback.style.buttons.ButtonPrimary
+import tmg.flashback.ui.bottomsheets.AppBottomSheet
 import tmg.flashback.weekend.presentation.qualifying.visualisation.VisualisationScreenVM
 import tmg.flashback.weekend.presentation.shared.Position
 import tmg.utilities.extensions.ordinalAbbreviation
@@ -55,19 +55,15 @@ internal fun LazyListScope.qualifying(
                 showVisualisation.value = true
             }
         )
-        if (showVisualisation.value) {
-            ModalBottomSheet(
-                onDismissRequest = {
-                    showVisualisation.value = false
-                },
-                content = {
-                    VisualisationScreenVM(
-                        season = 2022,
-                        round = 21
-                    )
-                }
-            )
-        }
+        AppBottomSheet(
+            visibility = showVisualisation,
+            content = {
+                VisualisationScreenVM(
+                    season = 2022,
+                    round = 21
+                )
+            }
+        )
     }
     if (list.any { it.isResult }) {
         item("qheader") {

@@ -20,8 +20,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
@@ -54,6 +52,7 @@ import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.annotations.PreviewTheme
 import tmg.flashback.style.buttons.ButtonSecondary
 import tmg.flashback.style.text.TextBody1
+import tmg.flashback.ui.bottomsheets.AppBottomSheet
 import tmg.flashback.ui.components.drivers.DriverIcon
 import tmg.flashback.ui.components.errors.NetworkError
 import tmg.flashback.ui.components.header.HeaderAction
@@ -127,14 +126,11 @@ fun DriverOverviewScreen(
     racedForClicked: (DriverOverviewModel.RacedFor) -> Unit,
 ) {
     var showDriverStatHistoryType = rememberSaveable { mutableStateOf<DriverStatHistoryType?>(null) }
-    val bottomSheetState = rememberModalBottomSheetState()
     if (showDriverStatHistoryType.value != null) {
-        ModalBottomSheet(
-            containerColor = AppTheme.colors.backgroundPrimary,
+        AppBottomSheet(
             onDismissRequest = {
                 showDriverStatHistoryType.value = null
             },
-            sheetState = bottomSheetState,
             content = {
                 DriverStatHistoryScreenVM(
                     driverId = uiState.driverId,
