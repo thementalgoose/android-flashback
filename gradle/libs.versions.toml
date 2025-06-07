@@ -35,7 +35,7 @@ play_publisher = "com.github.triplet.gradle:play-publisher:3.12.1"
 
 ## App Dependencies
 androidx_core = "androidx.core:core-ktx:1.16.0"
-androidx_appcompat = "androidx.appcompat:appcompat:1.7.0"
+androidx_appcompat = "androidx.appcompat:appcompat:1.7.1"
 androidx_browser = "androidx.browser:browser:1.8.0"
 androidx_constraintlayout = "androidx.constraintlayout:constraintlayout:2.2.1"
 androidx_lifecycle_viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "androidx_lifecycle" }
