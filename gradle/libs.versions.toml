@@ -62,7 +62,7 @@ kotlin_reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref =
 kotlinx_coroutines_core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 kotlinx_coroutines_android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
 kotlinx_coroutines_play_services = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services", version.ref = "coroutines" }
-kotlinx_serialization_json = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.1"
+kotlinx_serialization_json = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0"
 
 accompanist_horizontalpager = { module = "com.google.accompanist:accompanist-pager", version.ref = "compose_accompanist" }
 accompanist_systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "compose_accompanist" }
