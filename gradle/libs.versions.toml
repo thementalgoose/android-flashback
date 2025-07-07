@@ -15,7 +15,7 @@ coroutines = "1.10.2"
 firebase = "33.16.0"
 junit = "5.13.2"
 junit5 = "1.8.0"
-okhttp = "4.12.0"
+okhttp = "5.1.0"
 retrofit = "3.0.0"
 google_playreview = "2.0.2"
 
