@@ -29,7 +29,7 @@ gradle_junit5 = "de.mannodermaus.gradle.plugins:android-junit5:1.13.1.0"
 gradle_kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 google_services = "com.google.gms:google-services:4.4.3"
 kotlinx_serialization_core = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin" }
-firebase_perf_plugin = "com.google.firebase:perf-plugin:1.4.2"
+firebase_perf_plugin = "com.google.firebase:perf-plugin:2.0.0"
 oss_licenses_plugin = "com.google.android.gms:oss-licenses-plugin:0.10.6"
 play_publisher = "com.github.triplet.gradle:play-publisher:3.12.1"
 
