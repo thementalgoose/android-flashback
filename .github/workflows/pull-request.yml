@@ -1,132 +1,132 @@
-name: Pull Request
-'on':
-  pull_request:
-    branches:
-      - main
-    paths-ignore:
-      - '**.md'
-      - '**.png'
-jobs:
-  unit_test:
-    runs-on: ubuntu-latest
-    timeout-minutes: 25
-    steps:
-      # Checkout
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      # Setup Java 21
-      - uses: actions/setup-java@v4
-        with:
-          distribution: 'zulu'
-          java-version: '21'
-
-      # Caching gradle
-      - uses: actions/cache@v4
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/*.toml*') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
-
-      # Environment
-      - name: Environment variables
-        run: |
-          echo ${{ secrets.ENCODED_GOOGLE_SERVICES_SAND }} | base64 --decode >> app/src/sand/google-services.json
-
-      # Running unit tests
-      - name: Unit tests
-        run: ./gradlew cleanTestDebugUnitTest testDebugUnitTest :app:testSandDebugUnitTest
-
-      # Publish test report
-      - name: Publish Test Report
-        uses: mikepenz/action-junit-report@v5
-        if: always()
-        with:
-          report_paths: '**/build/test-results/**/TEST-*.xml'
-
-  test_apk:
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - uses: actions/setup-java@v4
-        with:
-          distribution: 'zulu'
-          java-version: '21'
-
-      - uses: actions/cache@v4
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/*.toml*') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
-
-      - name: Environment and google services
-        run: |
-          echo ${{ secrets.ENCODED_GOOGLE_SERVICES_SAND }} | base64 --decode >> app/src/sand/google-services.json
-          echo ${{ secrets.ENCODED_KEYSTORE }} | base64 --decode >> flashback.keystore
-          echo ${{ secrets.ENCODED_DEPLOYMENT_KEY }} | base64 --decode >> deployment_private_key.json
-
-      - name: Version Name
-        id: get_version_name
-        run: echo "VERSION=0.0.0" >> $GITHUB_OUTPUT
-
-      - name: Version Code
-        id: get_version_code
-        run: echo "VERSION=1" >> $GITHUB_OUTPUT
-
-      - name: Outputting codes
-        run: |
-          echo "NAME: ${{ steps.get_version_name.outputs.VERSION }}"
-          echo "CODE: ${{ steps.get_version_code.outputs.VERSION }}"
-
-      - name: Run build
-        env:
-          KEYSTORE: ${{ github.workspace }}/flashback.keystore
-          PRIVATE_KEY: ${{ github.workspace }}/deployment_private_key.json
-          KEYSTORE_ALIAS: ${{ secrets.KEYSTORE_ALIAS }}
-          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
-          VERSION_CODE: ${{ steps.get_version_code.outputs.VERSION }}
-          VERSION_NAME: ${{ steps.get_version_name.outputs.VERSION }}
-        run: ./gradlew assembleSandRelease
-
-      - name: Making build available
-        id: artifact-upload-step
-        uses: actions/upload-artifact@v4
-        with:
-          name: APK
-          path: app/build/outputs/apk/**/*.apk
-          retention-days: 2
-
-      - name: Find Comment
-        uses: peter-evans/find-comment@v3
-        id: fc
-        with:
-          issue-number: ${{ github.event.pull_request.number }}
-          comment-author: 'github-actions[bot]'
-          body-includes: Test APK
-
-      - name: Create or update comment
-        uses: peter-evans/create-or-update-comment@v4
-        with:
-          comment-id: ${{ steps.fc.outputs.comment-id }}
-          issue-number: ${{ github.event.pull_request.number }}
-          body: |
-            ### Test APK
-  
-            A test apk built against this change is available and will be available for 48 hours
-            
-            ${{ steps.artifact-upload-step.outputs.artifact-url }}
-            
-            <sup>Built at commit ${{ github.sha }}</sup>
-          edit-mode: replace
-
+#name: Pull Request
+#'on':
+#  pull_request:
+#    branches:
+#      - main
+#    paths-ignore:
+#      - '**.md'
+#      - '**.png'
+#jobs:
+#  unit_test:
+#    runs-on: ubuntu-latest
+#    timeout-minutes: 25
+#    steps:
+#      # Checkout
+#      - uses: actions/checkout@v4
+#        with:
+#          fetch-depth: 0
+#
+#      # Setup Java 21
+#      - uses: actions/setup-java@v4
+#        with:
+#          distribution: 'zulu'
+#          java-version: '21'
+#
+#      # Caching gradle
+#      - uses: actions/cache@v4
+#        with:
+#          path: |
+#            ~/.gradle/caches
+#            ~/.gradle/wrapper
+#          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/*.toml*') }}
+#          restore-keys: |
+#            ${{ runner.os }}-gradle-
+#
+#      # Environment
+#      - name: Environment variables
+#        run: |
+#          echo ${{ secrets.ENCODED_GOOGLE_SERVICES_SAND }} | base64 --decode >> app/src/sand/google-services.json
+#
+#      # Running unit tests
+#      - name: Unit tests
+#        run: ./gradlew cleanTestDebugUnitTest testDebugUnitTest :app:testSandDebugUnitTest
+#
+#      # Publish test report
+#      - name: Publish Test Report
+#        uses: mikepenz/action-junit-report@v5
+#        if: always()
+#        with:
+#          report_paths: '**/build/test-results/**/TEST-*.xml'
+#
+#  test_apk:
+#    runs-on: ubuntu-latest
+#    timeout-minutes: 30
+#    steps:
+#      - uses: actions/checkout@v4
+#        with:
+#          fetch-depth: 0
+#
+#      - uses: actions/setup-java@v4
+#        with:
+#          distribution: 'zulu'
+#          java-version: '21'
+#
+#      - uses: actions/cache@v4
+#        with:
+#          path: |
+#            ~/.gradle/caches
+#            ~/.gradle/wrapper
+#          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/*.toml*') }}
+#          restore-keys: |
+#            ${{ runner.os }}-gradle-
+#
+#      - name: Environment and google services
+#        run: |
+#          echo ${{ secrets.ENCODED_GOOGLE_SERVICES_SAND }} | base64 --decode >> app/src/sand/google-services.json
+#          echo ${{ secrets.ENCODED_KEYSTORE }} | base64 --decode >> flashback.keystore
+#          echo ${{ secrets.ENCODED_DEPLOYMENT_KEY }} | base64 --decode >> deployment_private_key.json
+#
+#      - name: Version Name
+#        id: get_version_name
+#        run: echo "VERSION=0.0.0" >> $GITHUB_OUTPUT
+#
+#      - name: Version Code
+#        id: get_version_code
+#        run: echo "VERSION=1" >> $GITHUB_OUTPUT
+#
+#      - name: Outputting codes
+#        run: |
+#          echo "NAME: ${{ steps.get_version_name.outputs.VERSION }}"
+#          echo "CODE: ${{ steps.get_version_code.outputs.VERSION }}"
+#
+#      - name: Run build
+#        env:
+#          KEYSTORE: ${{ github.workspace }}/flashback.keystore
+#          PRIVATE_KEY: ${{ github.workspace }}/deployment_private_key.json
+#          KEYSTORE_ALIAS: ${{ secrets.KEYSTORE_ALIAS }}
+#          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+#          VERSION_CODE: ${{ steps.get_version_code.outputs.VERSION }}
+#          VERSION_NAME: ${{ steps.get_version_name.outputs.VERSION }}
+#        run: ./gradlew assembleSandRelease
+#
+#      - name: Making build available
+#        id: artifact-upload-step
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: APK
+#          path: app/build/outputs/apk/**/*.apk
+#          retention-days: 2
+#
+#      - name: Find Comment
+#        uses: peter-evans/find-comment@v3
+#        id: fc
+#        with:
+#          issue-number: ${{ github.event.pull_request.number }}
+#          comment-author: 'github-actions[bot]'
+#          body-includes: Test APK
+#
+#      - name: Create or update comment
+#        uses: peter-evans/create-or-update-comment@v4
+#        with:
+#          comment-id: ${{ steps.fc.outputs.comment-id }}
+#          issue-number: ${{ github.event.pull_request.number }}
+#          body: |
+#            ### Test APK
+#
+#            A test apk built against this change is available and will be available for 48 hours
+#
+#            ${{ steps.artifact-upload-step.outputs.artifact-url }}
+#
+#            <sup>Built at commit ${{ github.sha }}</sup>
+#          edit-mode: replace
+#

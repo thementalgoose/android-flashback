@@ -1,3 +1,16 @@
+# Archived
+
+Flashback has been migrated over to [KMP](https://kotlinlang.org/docs/multiplatform.html) + [CMP](https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-multiplatform.html) to make it available on the iOS App Store. 
+
+Find the open sourced KMP project here: https://github.com/thementalgoose/kmp-flashback
+
+--- 
+
+<details>
+<summary>README</summary>
+
+
+
 <p align="center">
   <img width="180" src="res/logo-playstore.png" />
 </p>
@@ -72,3 +85,5 @@ Flashback includes quick links for Formula 1 RSS feeds from autosport.com, crash
 Flashback is also not affiliated in any way with any of the Formula One group of companies: FORMULA 1, FIA FORMULA ONE and related trademarks of Formula One Licensing BV
 
 Contact Email: thementalgoose@gmail.com
+
+</details>
